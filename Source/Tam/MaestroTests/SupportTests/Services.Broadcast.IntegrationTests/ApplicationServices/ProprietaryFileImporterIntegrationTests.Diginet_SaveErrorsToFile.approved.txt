@@ -1,6 +1,6 @@
 ﻿{
   "headerErrors": {
-    "E3": "",
+    "E3": "Inventory Source value is empty.",
     "E4": "Effective date is missing",
     "E5": "End date is missing",
     "E6": "NTI to NSI Increase is missing"

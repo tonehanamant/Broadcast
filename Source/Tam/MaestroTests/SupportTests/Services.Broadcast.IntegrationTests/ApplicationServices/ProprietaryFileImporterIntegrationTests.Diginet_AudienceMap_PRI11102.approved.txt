@@ -49,7 +49,7339 @@
       "Program": null,
       "RowIndex": 0,
       "SpotCost": 2000.0,
-      "Station": null,
+      "Station": "WXTV-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KMEX-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WCIU-DT5",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WUVP-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WUVP-DT4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KUVN-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KFSF-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WFDC-DT4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WUNI-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WSB-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KTVW-DT4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WVEA-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KONG-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WXYZ-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KMBD-LD",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WAMI-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KCEC-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WVEN-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WUAB-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KUVS-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WBTV-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KOIN-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KSDK-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WIIC-LD",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WPCB-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WPTG-CD",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WNDY-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WMAR-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WUVC-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WKRN-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WLLC-LD3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KSDY-LD2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KBTU-LD3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KCWX-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KMCI-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WTNH-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "W23BZ-LD",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WMLW-LD2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WFLX-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WXIX-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KVVU-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WCWJ-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WAVY-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WKTD-CD2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KSBI-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WBRC-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WOOD-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KRQE-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WAVE-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WCWG-DT4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WVUE-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WMC-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WGPS-LD5",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WUPV-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KSEE-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WPRI-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WFNA-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KJRH-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WXXA-DT4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WYOU-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WTNZ-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KARZ-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WBDT-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WLEX-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KGUN-DT4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KGMB-DT4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WFRV-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KCWI-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WFXR-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KGPT-CD2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KOZL-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WIS-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WROC-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WAFF-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WUPW-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KWKT-DT4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KZCZ-LD",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KCWT-CD2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KXTU-LD2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KSLA-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WSYR-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WCIA-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WTOC-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KWKB-DT4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WCSC-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WDEF-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WAFB-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WHCQ-LD2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WLBT-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WFFF-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WMBF-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WSJV-DT7",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WAPK-CD3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WYDO-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KFTA-DT4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KIVI-DT4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KGCW-DT4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KRNS-CD4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WTVW-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WFXG-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WTXL-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WFFT-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WSYM-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KLTV-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WYFX-LD4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WYTV-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KRDK-DT5",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WMBD-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WSFA-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KEYT-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WECT-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KORO-DT5",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WEUX-DT4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WTVM-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KCIT-DT4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WGDV-LD2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KMIZ-DT5",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WQRF-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KARD-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KPSE-LD3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KAMC-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KNDB-DT5",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KNDM-DT5",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KJTL-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KCAU-DT4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WPGX-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WFXP-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KODE-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WLOX-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WAWV-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KRBC-DT4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WDAM-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KSVI-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KPLC-DT3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WDFX-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WUTR-DT4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WYJJ-LD2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WCZU-LD3",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WNTZ-DT2",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WJMN-DT4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "KREX-DT4",
+      "Units": [],
+      "Weeks": []
+    },
+    {
+      "Audiences": [
+        {
+          "Audience": {
+            "AudienceString": "Households",
+            "Id": 31
+          },
+          "Cpm": null,
+          "Impressions": 1900.0,
+          "Rating": 1.36,
+          "Vpvh": null
+        },
+        {
+          "Audience": {
+            "AudienceString": "Men 18+",
+            "Id": 277
+          },
+          "Cpm": null,
+          "Impressions": 333.0,
+          "Rating": 25.01,
+          "Vpvh": null
+        }
+      ],
+      "Comment": null,
+      "CPM": null,
+      "Dayparts": [
+        {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Id": 9491,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 21600,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        }
+      ],
+      "Impressions": null,
+      "Program": null,
+      "RowIndex": 0,
+      "SpotCost": 2000.0,
+      "Station": "WMDN-DT2",
       "Units": [],
       "Weeks": []
     }
@@ -59,7 +7391,18 @@
   "FileName": null,
   "FileStatus": 0,
   "Hash": null,
-  "Header": null,
+  "Header": {
+    "Audience": null,
+    "Cpm": null,
+    "DaypartCode": null,
+    "EffectiveDate": "2019-07-20T00:00:00",
+    "EndDate": "2019-08-25T00:00:00",
+    "HutBookId": null,
+    "NtiToNsiIncrease": 50.000,
+    "PlaybackType": null,
+    "ShareBookId": null,
+    "SpotLengthId": null
+  },
   "InventoryGroups": [],
   "InventoryManifests": [],
   "InventorySource": null,

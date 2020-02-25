@@ -1,21 +1,20 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services;
+using Common.Services.Repositories;
 using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Tam.Maestro.Common;
-using Common.Services;
-using System.IO;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
-using Services.Broadcast.Cache;
 
 namespace Services.Broadcast.Converters.RateImport
 {
@@ -75,6 +74,12 @@ namespace Services.Broadcast.Converters.RateImport
         protected readonly ISpotLengthEngine SpotLengthEngine;
         protected readonly IDaypartDefaultRepository DaypartDefaultRepository;
         private readonly IFileService _FileService;
+
+        /// <summary>
+        /// Indicates that a second worksheet needs to be processed.
+        /// Override in your base class and return true to opt-in.
+        /// </summary>
+        public virtual bool HasSecondWorksheet { get; } = false;
 
         /// <summary>
         /// Constructor
@@ -143,6 +148,19 @@ namespace Services.Broadcast.Converters.RateImport
             {
                 var worksheet = package.Workbook.Worksheets.First();
                 LoadAndValidateHeaderData(worksheet, proprietaryFile);
+                if (HasSecondWorksheet)
+                {
+                    if (package.Workbook.Worksheets.Count > 1)
+                    {
+                        // worksheets are 1-indexed.
+                        LoadAndValidateSecondWorksheet(package.Workbook.Worksheets[2], proprietaryFile);
+                    }
+                    else
+                    {
+                        throw new BroadcastDuplicateInventoryFileException($"Unable to load file. Expected a second worksheet that is not in the file.");
+                    }
+                }
+                
                 LoadAndValidateDataLines(worksheet, proprietaryFile);
 
                 package.SaveAs(result);
@@ -155,6 +173,11 @@ namespace Services.Broadcast.Converters.RateImport
         {
             var mediaWeeks = MediaMonthAndWeekAggregateCache.GetMediaWeeksIntersecting(startDate, endDate);
             return mediaWeeks.Select(x => new StationInventoryManifestWeek { MediaWeek = x, Spots = spots }).ToList();
+        }
+
+        public virtual void LoadAndValidateSecondWorksheet(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
+        {
+            // implement as needed.
         }
 
         /// <summary>

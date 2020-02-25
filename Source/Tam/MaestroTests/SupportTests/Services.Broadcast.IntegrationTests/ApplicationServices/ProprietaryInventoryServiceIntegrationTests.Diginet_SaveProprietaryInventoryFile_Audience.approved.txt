@@ -1,20 +1,21 @@
 ﻿{
   "CreatedBy": "IntegrationTestUser",
+  "CreatedDate": "2019-02-02T00:00:00",
   "DataLines": [],
-  "EffectiveDate": null,
-  "EndDate": null,
-  "FileName": "ProprietaryDataFiles\\Diginet_ValidFile1.xlsx",
+  "EffectiveDate": "2019-07-15T00:00:00",
+  "EndDate": "2019-08-25T00:00:00",
+  "FileName": "ProprietaryDataFiles\\Diginet_Bounce_M18+_7.1.19 .xlsx",
   "FileStatus": 2,
-  "Hash": "71-00-E2-07-16-C4-4E-F6-F9-80-45-32-3C-9B-D6-BA-11-DD-6A-D9",
+  "Hash": "4A-99-4C-A1-92-90-82-7D-E6-A7-7F-FD-8B-3B-C1-88-F5-8E-00-1A",
   "Header": {
     "Audience": null,
     "ContractedDaypartId": null,
     "Cpm": null,
     "DaypartCode": null,
-    "EffectiveDate": "2018-10-10T00:00:00",
-    "EndDate": "2018-10-17T00:00:00",
+    "EffectiveDate": "2019-07-20T00:00:00",
+    "EndDate": "2019-08-25T00:00:00",
     "HutBookId": null,
-    "NtiToNsiIncrease": 25.1230000000,
+    "NtiToNsiIncrease": 50.0000000000,
     "PlaybackType": null,
     "ShareBookId": null,
     "SpotLengthId": null
@@ -22,11 +23,12 @@
   "InventoryGroups": [],
   "InventoryManifests": [],
   "InventorySource": {
+    "Id": 18,
     "InventoryType": 5,
     "IsActive": true,
-    "Name": "COZI"
+    "Name": "Bounce"
   },
-  "RowsProcessed": 0,
+  "RowsProcessed": 142,
   "UniqueIdentifier": null,
   "ValidationProblems": []
 }

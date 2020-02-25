@@ -107,7 +107,6 @@ namespace Services.Broadcast.Converters.RateImport
                         _MediaMonthAndWeekAggregateCache,
                         _StationProcessingEngine,
                         _SpotLengthEngine,
-                        _DaypartCache,
                         _ImpressionAdjustmentEngine,
                         _FileService);
                     break;

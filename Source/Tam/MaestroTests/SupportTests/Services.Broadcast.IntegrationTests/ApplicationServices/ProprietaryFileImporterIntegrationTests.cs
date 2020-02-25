@@ -401,6 +401,37 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void Diginet_ExtractData_Bounce_Audience()
+        {
+            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Diginet };
+            var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
+            const string fileName = @"ProprietaryDataFiles\Diginet_Bounce_M18+_7.1.19 .xlsx";
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new FileRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+                fileImporter.LoadFromSaveRequest(request);
+                ProprietaryInventoryFile file = fileImporter.GetPendingProprietaryInventoryFile("integration test", inventorySource);
+
+                var result = fileImporter.ExtractData(file);
+
+                Assert.AreNotEqual(request.StreamData, result);
+                using (var package = new ExcelPackage(result))
+                {
+                    var worksheet = package.Workbook.Worksheets.First();
+                    var headerErrors = worksheet.Cells["E3:E6"].ToDictionary(x => x.Address, x => x.Text);
+                    var lineErrors = worksheet.Cells["J11:J15"].ToDictionary(x => x.Address, x => x.Text);
+                    Approvals.Verify(IntegrationTestHelper.ConvertToJson(new { headerErrors, lineErrors }));
+                }
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void OAndO_SaveErrorsToFile()
         {
             var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.ProprietaryOAndO };
@@ -510,9 +541,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (var package = new ExcelPackage(new FileInfo(fileName)))
             {
-                
                 var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
                 var proprietaryFile = new ProprietaryInventoryFile();
+                if (inventorySource.InventoryType == InventorySourceTypeEnum.Diginet)
+                {
+                    // tie in the 'Diginet Stations' tab.
+                    fileImporter.LoadAndValidateHeaderData(package.Workbook.Worksheets[1], proprietaryFile);
+                    fileImporter.LoadAndValidateSecondWorksheet(package.Workbook.Worksheets[2], proprietaryFile);
+                }
                 fileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], proprietaryFile);
                 _VerifyProprietaryInventoryFile(proprietaryFile);
             }

@@ -570,6 +570,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyInventoryFileMetadataAndHeaderData(fileName);
         }
 
+        /// <summary>
+        /// TODO: Bring this back once
+        ///     - all the stations are loaded into the integration db.
+        ///     - PRI-21025 resolves the way imports resolves the station records.
+        /// </summary>
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavesDiginetInventoryFileManifests()
@@ -578,6 +584,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyFileInventoryManifests(fileName);
         }
 
+        /// <summary>
+        /// TODO: Bring this back once
+        ///     - all the stations are loaded into the integration db.
+        ///     - PRI-21025 resolves the way imports resolves the station records.
+        /// </summary>
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavesDiginetInventoryFileManifests_WithDaypartCodes()
@@ -586,6 +598,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyFileInventoryManifests(fileName);
         }
 
+        /// <summary>
+        /// TODO: Bring this back once
+        ///     - all the stations are loaded into the integration db.
+        ///     - PRI-21025 resolves the way imports resolves the station records.
+        /// </summary>
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavesDiginetInventoryFileManifests_WithSpacesInAudience()
@@ -594,6 +612,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyFileInventoryManifests(fileName);
         }
 
+        /// <summary>
+        /// TODO: Bring this back once
+        ///     - all the stations are loaded into the integration db.
+        ///     - PRI-21025 resolves the way imports resolves the station records.
+        /// </summary>
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavesDiginetInventoryFileManifests_WithSpacesInDaypart()
@@ -914,6 +938,45 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        
+        /// <summary>
+        /// TODO: Bring this back once all the stations are loaded into the integration db.
+        /// </summary>
+        [Ignore]
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Diginet_SaveProprietaryInventoryFile_Audience()
+        {
+            const string fileName = @"ProprietaryDataFiles\Diginet_Bounce_M18+_7.1.19 .xlsx";
+
+            using (new TransactionScopeWrapper())
+            {
+                var request = new FileRequest
+                {
+                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var now = new DateTime(2019, 02, 02);
+                var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
+                var file = _ProprietaryRepository.GetInventoryFileWithHeaderById(result.FileId);
+
+                var manifests = _IInventoryRepository.GetStationInventoryManifestsByFileId(file.Id);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventoryFileBase), "Id");
+                jsonResolver.Ignore(typeof(ProprietaryInventoryHeader), "Id");
+                jsonResolver.Ignore(typeof(ProprietaryInventoryFile), "CreatedDate");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                var fileJson = IntegrationTestHelper.ConvertToJson(file, jsonSettings);
+
+                Approvals.Verify(fileJson);
+            }
+        }
+
     }
 }

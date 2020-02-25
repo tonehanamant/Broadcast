@@ -352,6 +352,7 @@
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryQuarterCalculatorEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventorySourceSortEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\TrackingEngineUnitTests.cs" />
+    <Compile Include="UnitTests\Converters\RateImport\DiginetFileImporterUnitTests.cs" />
     <Compile Include="UnitTests\DaytimeCleanupServiceTests.cs" />
     <Compile Include="UnitTests\TrafficApiCacheTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\AdvertiserServiceUnitTests.cs" />
@@ -553,6 +554,9 @@
     </None>
     <None Include="Files\ProprietaryDataFiles\Barter_Valid_AudienceMap1.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ProprietaryDataFiles\Diginet_Template.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\ProprietaryDataFiles\Diginet_Bounce_M18+_7.1.19 .xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -1,19 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text.RegularExpressions;
-using Common.Services;
+﻿using Common.Services;
 using Common.Services.Repositories;
 using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
+using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.Entities.ProprietaryInventory.ProprietaryInventoryFile;
 using static Services.Broadcast.Entities.ProprietaryInventory.ProprietaryInventoryFile.ProprietaryInventoryDataLine;
@@ -22,15 +24,30 @@ namespace Services.Broadcast.Converters.RateImport
 {
     public class DiginetFileImporter : ProprietaryFileImporterBase
     {
+        private enum StationColumnIndex
+        {
+            CallSign = 1,
+            StationName = 2,
+            Affiliate = 3,
+            TimeZone = 4
+        }
+
+        private readonly FileCell INVENTORY_SOURCE_CELL = new FileCell {ColumnLetter = "B", RowIndex = 3};
         private readonly FileCell EFFECTIVE_DATE_CELL = new FileCell { ColumnLetter = "B", RowIndex = 4 };
         private readonly FileCell END_DATE_CELL = new FileCell { ColumnLetter = "B", RowIndex = 5 };
         private readonly FileCell NTI_TO_NSI_INCREASE_CELL = new FileCell { ColumnLetter = "B", RowIndex = 6 };
 
-        private readonly IDaypartCache _DaypartCache;
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
         private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
+        private readonly IStationMappingRepository _StationMappingRepository;
+
         private int _ErrorColumnIndex = 0;
         private const int audienceRowIndex = 11;
+
+        public string InventorySourceName { get; set; } = string.Empty;
+        public List<string> FileStationsCallsigns { get; private set; } = new List<string>();
+
+        public override bool HasSecondWorksheet { get; } = true;
 
         public DiginetFileImporter(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -39,7 +56,6 @@ namespace Services.Broadcast.Converters.RateImport
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IStationProcessingEngine stationProcessingEngine,
             ISpotLengthEngine spotLengthEngine,
-            IDaypartCache daypartCache,
             IImpressionAdjustmentEngine impressionAdjustmentEngine,
             IFileService fileService) : base(
                 broadcastDataRepositoryFactory,
@@ -50,9 +66,9 @@ namespace Services.Broadcast.Converters.RateImport
                 spotLengthEngine,
                 fileService)
         {
-            _DaypartCache = daypartCache;
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
             _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
+            _StationMappingRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationMappingRepository>();
         }
 
         public override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
@@ -60,6 +76,7 @@ namespace Services.Broadcast.Converters.RateImport
             var header = new ProprietaryInventoryHeader();
             var validationProblems = new List<string>();
 
+            _ValidateAndSetInventorySourceName(worksheet, validationProblems);
             _ValidateAndSetEffectiveAndEndDates(worksheet, validationProblems, header);
             _ValidateAndSetNTIToNSIIncrease(worksheet, validationProblems, header);
 
@@ -157,6 +174,60 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
+        private void _ValidateAndSetInventorySourceName(ExcelWorksheet worksheet, List<string> validationProblems)
+        {
+            var inventorySourceName = worksheet.Cells[3, 2].GetStringValue();
+            if (string.IsNullOrWhiteSpace(inventorySourceName))
+            {
+                var errorMessage = "Inventory Source value is empty.";
+                validationProblems.Add(errorMessage);
+                worksheet.Cells[$"{HEADER_ERROR_COLUMN}{INVENTORY_SOURCE_CELL.RowIndex}"].Value = errorMessage;
+                return;
+            }
+            InventorySourceName = inventorySourceName;
+        }
+
+        public override void LoadAndValidateSecondWorksheet(ExcelWorksheet worksheet,
+            ProprietaryInventoryFile proprietaryFile)
+        {
+            const string stationsWorksheetName = "Diginet Stations";
+            if (worksheet.Name.Equals(stationsWorksheetName) == false)
+            {
+                proprietaryFile.ValidationProblems.Add($"File '{proprietaryFile.FileName}' is a {proprietaryFile.InventorySource.Name} template that requires a second tab named '{stationsWorksheetName}'.");
+                return;
+            }
+
+            // skip the header on line 1
+            const int startingRowNumber = 2;
+            var rowIndex = startingRowNumber;
+            var lastRowIndex = worksheet.Dimension.End.Row;
+            var fileStationsCallsigns = new List<string>();
+
+            // ingest all
+            // Call Sign | Station Name | Affiliate | TZ
+            while (rowIndex <= lastRowIndex)
+            {
+                var stationAffiliate = worksheet.Cells[rowIndex, (int) StationColumnIndex.Affiliate].GetStringValue();
+                if (InventorySourceName.Equals(stationAffiliate, StringComparison.OrdinalIgnoreCase) == false)
+                {
+                    rowIndex++;
+                    continue;
+                }
+
+                fileStationsCallsigns.Add(worksheet.Cells[rowIndex, (int)StationColumnIndex.CallSign].GetStringValue());
+                rowIndex++;
+            }
+
+            // store them in a list member var
+            if (fileStationsCallsigns.Any() == false)
+            {
+                proprietaryFile.ValidationProblems.Add($"In file '{proprietaryFile.FileName}' the '{stationsWorksheetName}' tab didn't produce station information.");
+                return;
+            }
+
+            FileStationsCallsigns = fileStationsCallsigns;
+        }
+
         public override void LoadAndValidateDataLines(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
         {
             const int firstColumnIndex = 1;
@@ -177,7 +248,8 @@ namespace Services.Broadcast.Converters.RateImport
                 worksheet.Cells[audienceRowIndex, _ErrorColumnIndex].Value = string.Join(FILE_MULTIPLE_ERRORS_SEPARATOR, audienceProblems);
                 return;
             }
-            else if (!audiences.Where(x => x != null).Any(x => x.Code.Equals(BroadcastConstants.HOUSEHOLD_CODE, StringComparison.OrdinalIgnoreCase)))
+
+            if (!audiences.Where(x => x != null).Any(x => x.Code.Equals(BroadcastConstants.HOUSEHOLD_CODE, StringComparison.OrdinalIgnoreCase)))
             {
                 var errorMessage = "File must contain data for HouseHolds(HH)";
                 proprietaryFile.ValidationProblems.Add(errorMessage);
@@ -202,7 +274,20 @@ namespace Services.Broadcast.Converters.RateImport
                 }
                 else
                 {
-                    proprietaryFile.DataLines.Add(line);
+                    FileStationsCallsigns.ForEach(FileCallsign => proprietaryFile.DataLines.Add(new ProprietaryInventoryDataLine
+                    {
+                        Station = FileCallsign,
+                        Comment = line.Comment,
+                        Program = line.Program,
+                        Impressions = line.Impressions,
+                        CPM = line.CPM,
+                        SpotCost = line.SpotCost,
+                        Dayparts = line.Dayparts,
+                        Units = line.Units,
+                        Weeks = line.Weeks,
+                        Audiences = line.Audiences,
+                        RowIndex = line.RowIndex
+                    }));
                 }
                 
                 columnIndex = firstColumnIndex;
@@ -370,8 +455,26 @@ namespace Services.Broadcast.Converters.RateImport
                             SpotLengthId = defaultSpotLengthId,
                             SpotCost = x.SpotCost.Value
                         }
-                    }
+                    },
+                    Station = _GetStationFromMappedCallsign(x.Station)
                 }).ToList();
+        }
+
+        private DisplayBroadcastStation _GetStationFromMappedCallsign(string mappedCallsign)
+        {
+            const StationMapSetNamesEnum mapSet = StationMapSetNamesEnum.Extended;
+            try
+            {
+                // throws an exception if station not found.
+                var cadentStation = _StationMappingRepository.GetCadentStationFromMappedCallLetters(mappedCallsign, mapSet);
+                return cadentStation;
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = $"Error attempting to resolve a station mapping during a Diginet file Import.  MapSet = '{mapSet}'; Callsign = '{mappedCallsign}'.";
+                LogHelper.Logger.Error(errorMessage, ex);
+                throw ex;
+            }
         }
 
         private DaypartDefaultDto _MapToDaypartCode(DisplayDaypart displayDaypart, List<DaypartDefaultDto> allDaypartDefaults)

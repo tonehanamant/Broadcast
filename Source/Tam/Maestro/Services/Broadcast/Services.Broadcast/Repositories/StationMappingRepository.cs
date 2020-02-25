@@ -1,4 +1,5 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services.Extensions;
+using Common.Services.Repositories;
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
@@ -9,6 +10,7 @@ using System.Data.Entity;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
+using Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast;
 
 namespace Services.Broadcast.Repositories
 {
@@ -44,6 +46,15 @@ namespace Services.Broadcast.Repositories
         /// <param name="cadentCallLetters">The cadent call letters.</param>
         /// <returns>The list of station mappings</returns>
         List<StationMappingsDto> GetStationMappingsByCadentCallLetters(string cadentCallLetters);
+
+        /// <summary>
+        /// Gets the cadent station from mapped call letters.
+        /// </summary>
+        /// <param name="mappedCallLetters">The mapped call letters.</param>
+        /// <param name="mapSet">The map set.</param>
+        /// <returns></returns>
+        DisplayBroadcastStation GetCadentStationFromMappedCallLetters(string mappedCallLetters,
+            StationMapSetNamesEnum mapSet);
 
         /// <summary>
         /// Removes all mappings for cadent call letters.
@@ -134,6 +145,24 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        /// <inheritdoc />
+        public DisplayBroadcastStation GetCadentStationFromMappedCallLetters(string mappedCallLetters,
+            StationMapSetNamesEnum mapSet)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var mapping = context.station_mappings
+                    .Include(x => x.station)
+                    .Single(x => x.map_set == (int) mapSet &&
+                                 x.mapped_call_letters == mappedCallLetters,
+                        $"Cadent station not found for mapped call letters '{mappedCallLetters}' and map set '{mapSet}'.");
+
+                var station = mapping.station;
+
+                return _MapToStationDto(station);
+            });
+        }
+
         private List<StationMappingsDto> _MapToDto(List<station_mappings> entities)
         {
             var stationMappingsList = new List<StationMappingsDto>();
@@ -148,6 +177,20 @@ namespace Services.Broadcast.Repositories
             });
 
             return stationMappingsList;
+        }
+
+        private DisplayBroadcastStation _MapToStationDto(station entity)
+        {
+            return new DisplayBroadcastStation
+            {
+                Id = entity.id,
+                Code = entity.station_code,
+                CallLetters = entity.station_call_letters,
+                Affiliation = entity.affiliation,
+                MarketCode = entity.market_code,
+                LegacyCallLetters = entity.legacy_call_letters,
+                ModifiedDate = entity.modified_date
+            };
         }
 
         /// <inheritdoc />
