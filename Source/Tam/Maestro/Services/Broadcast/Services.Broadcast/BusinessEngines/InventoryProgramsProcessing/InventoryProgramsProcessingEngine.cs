@@ -1,4 +1,6 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services.Extensions;
+using Common.Services.Repositories;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
@@ -32,10 +34,12 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         private readonly IInventoryProgramsBySourceJobsRepository _InventoryProgramsBySourceJobsRepository;
         private readonly IMediaMonthAndWeekAggregateCache _MediaWeekCache;
         private readonly IProgramGuideApiClient _ProgramGuideApiClient;
+        private readonly IStationMappingService _StationMappingService;
 
         public InventoryProgramsProcessingEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-            IProgramGuideApiClient programGuideApiClient)
+            IProgramGuideApiClient programGuideApiClient,
+            IStationMappingService stationMappingService)
         {
             _GenreRepository = broadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -44,6 +48,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             _InventoryProgramsBySourceJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProgramsBySourceJobsRepository>();
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _ProgramGuideApiClient = programGuideApiClient;
+            _StationMappingService = stationMappingService;
         }
 
         public InventoryProgramsProcessingJobByFileDiagnostics ProcessInventoryProgramsByFileJob(int jobId)
@@ -226,7 +231,6 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                     foreach (var daypart in manifest.ManifestDayparts.OrderBy(d => d.Daypart.StartTime))
                     {
                         var stationCallLetters = _GetManifestStationCallLetters(manifest, inventorySource);
-                        var networkAffiliate = _GetManifestNetworkAffiliation(manifest, inventorySource);
 
                         var requestElementMapping = new GuideRequestResponseMapping
                         {
@@ -238,7 +242,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                             WeekEndDate = week.EndDate,
                             DaypartText = daypart.Daypart.Preview,
                             StationCallLetters = stationCallLetters,
-                            NetworkAffiliate = networkAffiliate
+                            NetworkAffiliate = manifest.Station.Affiliation
                         };
                         requestMappings.Add(requestElementMapping);
                         requestElements.Add(
@@ -248,7 +252,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                                 StartDate = week.StartDate,
                                 EndDate = week.EndDate,
                                 StationCallLetters = stationCallLetters,
-                                NetworkAffiliate = networkAffiliate,
+                                NetworkAffiliate = manifest.Station.Affiliation,
                                 Daypart = new GuideRequestDaypartDto
                                 {
                                     Id = requestElementMapping.RequestEntryId,
@@ -390,23 +394,27 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         private string _GetManifestStationCallLetters(StationInventoryManifest manifest, InventorySource source)
         {
-            // TODO : maybe a mapping
-            if (source.InventoryType == InventorySourceTypeEnum.Diginet)
-            {
-                return source.Name;
-            }
-            return manifest.Station.LegacyCallLetters;
-        }
+            const StationMapSetNamesEnum programGuideMapSet = StationMapSetNamesEnum.Extended;
+            // get the Cadent Callsign for the inventory station
+            var cadentCallsign = manifest.Station.LegacyCallLetters;
+            // call the mappings service to get all stations mapped to that guy
+            var mappings = _StationMappingService.GetStationMappingsByCadentCallLetter(cadentCallsign);
+            // find the station callsign for my map_set
 
-        private string _GetManifestNetworkAffiliation(StationInventoryManifest manifest, InventorySource source)
-        {
-            // TODO : maybe a mapping
-            if (source.InventoryType == InventorySourceTypeEnum.Diginet)
-            {
-                return source.Name;
-            }
-            return manifest.Station.Affiliation;
-        }
+            var mappedStations = mappings.Where(m => m.MapSet == programGuideMapSet).Select(s => s.MapValue).ToList();
 
+            // not using single to provide informative messages.
+            if (mappedStations.Count == 0)
+            {
+                throw new Exception($"Mapping for CadentCallsign '{cadentCallsign}' and Map Set '{programGuideMapSet}' not found.");
+            }
+            if (mappedStations.Count > 1)
+            {
+                throw new Exception($"Mapping for CadentCallsign '{cadentCallsign}' and Map Set '{programGuideMapSet}' has {mappedStations.Count} mappings when only one expected.");
+            }
+
+            var mappedStationInfo = mappedStations.Single();
+            return mappedStationInfo;
+        }
     }
 }

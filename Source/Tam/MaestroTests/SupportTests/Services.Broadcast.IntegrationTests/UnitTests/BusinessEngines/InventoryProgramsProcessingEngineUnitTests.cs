@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Common.Services.Repositories;
+﻿using Common.Services.Repositories;
 using Moq;
 using NUnit.Framework;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
@@ -10,6 +9,9 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.ProgramGuide;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -26,6 +28,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         private Mock<IInventoryProgramsBySourceJobsRepository> _InventoryProgramsBySourceJobsRepo = new Mock<IInventoryProgramsBySourceJobsRepository>();
         private Mock<IMediaMonthAndWeekAggregateCache> _MediaWeekCache = new Mock<IMediaMonthAndWeekAggregateCache>();
         private Mock<IProgramGuideApiClient> _ProgramGuidClient = new Mock<IProgramGuideApiClient>();
+        private Mock<IStationMappingService> _StationMappingService = new Mock<IStationMappingService>();
 
         [Test]
         public void ProcessInventoryProgramsByFileJob_NoManifests()
@@ -143,6 +146,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [Test]
         public void ProcessInventoryProgramsByFileJob()
         {
+            /*** Arrange ***/
             const int jobId = 13;
             const int fileId = 12;
             var inventorySource = new InventorySource
@@ -195,15 +199,32 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var setJobCompleteErrorCalled = 0;
             _InventoryProgramsByFileJobsRepo.Setup(r => r.SetJobCompleteError(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>())).Callback(() => setJobCompleteErrorCalled++);
 
-            var getProgramsForGuideCalled = 0;
+            var getProgramsForGuidCallCount = 0;
+            var guideRequests = new List<GuideRequestElementDto>();
             _ProgramGuidClient.Setup(s => s.GetProgramsForGuide(It.IsAny<List<GuideRequestElementDto>>()))
-                .Callback(() => getProgramsForGuideCalled++)
+                .Callback<List<GuideRequestElementDto>>((r) =>
+                {
+                    getProgramsForGuidCallCount++;
+                    guideRequests.AddRange(r);
+                })
                 .Returns(guideResponse);
+
+            var mappedStations = new List<StationMappingsDto>
+            {
+                new StationMappingsDto {StationId =  1, MapSet = StationMapSetNamesEnum.Sigma, MapValue = "SigmaMappedValue"},
+                new StationMappingsDto {StationId =  2, MapSet = StationMapSetNamesEnum.NSI, MapValue = "NSIMappedValue"},
+                new StationMappingsDto {StationId =  3, MapSet = StationMapSetNamesEnum.Extended, MapValue = "ExtendedMappedValue"},
+                new StationMappingsDto {StationId =  4, MapSet = StationMapSetNamesEnum.NSILegacy, MapValue = "NSILegacyMappedValue"}
+            };
+            _StationMappingService.Setup(s => s.GetStationMappingsByCadentCallLetter(It.IsAny<string>()))
+                .Returns(mappedStations);
 
             var engine = _GetInventoryProgramsProcessingEngine();
 
+            /*** Act ***/
             var results = engine.ProcessInventoryProgramsByFileJob(jobId);
 
+            /*** Assert ***/
             Assert.NotNull(results);
             Assert.AreEqual(1, inventoryProgramsByFileJobsRepoCalls);
             Assert.AreEqual(1, getStationInventoryManifestsByFileIdCalled);
@@ -211,9 +232,174 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             Assert.AreEqual(1, setJobCompleteSuccessCalled);
             Assert.AreEqual(0, setJobCompleteErrorCalled);
-            Assert.AreEqual(3, getProgramsForGuideCalled);
+            Assert.AreEqual(3, getProgramsForGuidCallCount);
             Assert.AreEqual(3, deleteInventoryProgramsFromManifestDaypartsCalled);
             Assert.AreEqual(3, updateInventoryProgramsCalled);
+            Assert.AreEqual(0, guideRequests.Count(s => s.StationCallLetters.Equals("ExtendedMappedValue") == false));
+        }
+
+        [Test]
+        public void ProcessInventoryProgramsByFileJob_WithoutStationMapping()
+        {
+            /*** Arrange ***/
+            const int jobId = 13;
+            const int fileId = 12;
+            var inventorySource = new InventorySource
+            {
+                Id = 1,
+                Name = "NumberOneSource",
+                IsActive = true,
+                InventoryType = InventorySourceTypeEnum.OpenMarket
+            };
+            var manifests = _GetManifests();
+            var genres = _GetGenres();
+            var guideResponse = _GetGuideResponse();
+
+            var getStationInventoryManifestsByFileIdCalled = 0;
+            _InventoryRepo.Setup(r => r.GetStationInventoryManifestsByFileId(It.IsAny<int>()))
+                .Callback(() => getStationInventoryManifestsByFileIdCalled++)
+                .Returns(manifests);
+
+            var deleteInventoryProgramsFromManifestDaypartsCalled = 0;
+            _InventoryRepo.Setup(r => r.DeleteInventoryProgramsFromManifestDayparts(It.IsAny<List<int>>(),
+                    It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback(() => deleteInventoryProgramsFromManifestDaypartsCalled++);
+            var updateInventoryProgramsCalled = 0;
+            _InventoryRepo.Setup(r => r.UpdateInventoryPrograms(
+                    It.IsAny<List<StationInventoryManifestDaypartProgram>>(), It.IsAny<DateTime>()))
+                .Callback(() => updateInventoryProgramsCalled++);
+
+            _InventoryFileRepo.Setup(r => r.GetInventoryFileById(It.IsAny<int>()))
+                .Returns(new InventoryFile { InventorySource = inventorySource });
+
+            var inventoryProgramsByFileJobsRepoCalls = 0;
+            _InventoryProgramsByFileJobsRepo.Setup(r => r.GetJob(It.IsAny<int>()))
+                .Callback(() => inventoryProgramsByFileJobsRepoCalls++)
+                .Returns<int>((id) => new InventoryProgramsByFileJob
+                {
+                    Id = id,
+                    InventoryFileId = fileId,
+                    Status = InventoryProgramsJobStatus.Queued,
+                    QueuedAt = DateTime.Now,
+                    QueuedBy = "TestUser"
+                });
+
+            var getGenresBySourceIdCalled = 0;
+            _GenreRepo.Setup(r => r.GetGenresBySourceId(It.IsAny<int>()))
+                .Callback(() => getGenresBySourceIdCalled++)
+                .Returns(genres);
+
+            var setJobCompleteSuccessCalled = 0;
+            _InventoryProgramsByFileJobsRepo.Setup(r => r.SetJobCompleteSuccess(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>())).Callback(() => setJobCompleteSuccessCalled++);
+            var setJobCompleteErrorCalled = 0;
+            _InventoryProgramsByFileJobsRepo.Setup(r => r.SetJobCompleteError(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>())).Callback(() => setJobCompleteErrorCalled++);
+
+            var getProgramsForGuidCallCount = 0;
+            var guideRequests = new List<GuideRequestElementDto>();
+            _ProgramGuidClient.Setup(s => s.GetProgramsForGuide(It.IsAny<List<GuideRequestElementDto>>()))
+                .Callback<List<GuideRequestElementDto>>((r) =>
+                {
+                    getProgramsForGuidCallCount++;
+                    guideRequests.AddRange(r);
+                })
+                .Returns(guideResponse);
+
+            var mappedStations = new List<StationMappingsDto>();
+            _StationMappingService.Setup(s => s.GetStationMappingsByCadentCallLetter(It.IsAny<string>()))
+                .Returns(mappedStations);
+
+            var engine = _GetInventoryProgramsProcessingEngine();
+
+            /*** Act ***/
+            var caught = Assert.Throws<Exception>(() => engine.ProcessInventoryProgramsByFileJob(jobId));
+
+            /*** Assert ***/
+            Assert.IsTrue(caught.Message.Contains($"Mapping for CadentCallsign 'CadentStationName' and Map Set 'Extended' not found."));
+        }
+
+        [Test]
+        public void ProcessInventoryProgramsByFileJob_WithTooManyStationMappings()
+        {
+            /*** Arrange ***/
+            const int jobId = 13;
+            const int fileId = 12;
+            var inventorySource = new InventorySource
+            {
+                Id = 1,
+                Name = "NumberOneSource",
+                IsActive = true,
+                InventoryType = InventorySourceTypeEnum.OpenMarket
+            };
+            var manifests = _GetManifests();
+            var genres = _GetGenres();
+            var guideResponse = _GetGuideResponse();
+
+            var getStationInventoryManifestsByFileIdCalled = 0;
+            _InventoryRepo.Setup(r => r.GetStationInventoryManifestsByFileId(It.IsAny<int>()))
+                .Callback(() => getStationInventoryManifestsByFileIdCalled++)
+                .Returns(manifests);
+
+            var deleteInventoryProgramsFromManifestDaypartsCalled = 0;
+            _InventoryRepo.Setup(r => r.DeleteInventoryProgramsFromManifestDayparts(It.IsAny<List<int>>(),
+                    It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback(() => deleteInventoryProgramsFromManifestDaypartsCalled++);
+            var updateInventoryProgramsCalled = 0;
+            _InventoryRepo.Setup(r => r.UpdateInventoryPrograms(
+                    It.IsAny<List<StationInventoryManifestDaypartProgram>>(), It.IsAny<DateTime>()))
+                .Callback(() => updateInventoryProgramsCalled++);
+
+            _InventoryFileRepo.Setup(r => r.GetInventoryFileById(It.IsAny<int>()))
+                .Returns(new InventoryFile { InventorySource = inventorySource });
+
+            var inventoryProgramsByFileJobsRepoCalls = 0;
+            _InventoryProgramsByFileJobsRepo.Setup(r => r.GetJob(It.IsAny<int>()))
+                .Callback(() => inventoryProgramsByFileJobsRepoCalls++)
+                .Returns<int>((id) => new InventoryProgramsByFileJob
+                {
+                    Id = id,
+                    InventoryFileId = fileId,
+                    Status = InventoryProgramsJobStatus.Queued,
+                    QueuedAt = DateTime.Now,
+                    QueuedBy = "TestUser"
+                });
+
+            var getGenresBySourceIdCalled = 0;
+            _GenreRepo.Setup(r => r.GetGenresBySourceId(It.IsAny<int>()))
+                .Callback(() => getGenresBySourceIdCalled++)
+                .Returns(genres);
+
+            var setJobCompleteSuccessCalled = 0;
+            _InventoryProgramsByFileJobsRepo.Setup(r => r.SetJobCompleteSuccess(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>())).Callback(() => setJobCompleteSuccessCalled++);
+            var setJobCompleteErrorCalled = 0;
+            _InventoryProgramsByFileJobsRepo.Setup(r => r.SetJobCompleteError(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>())).Callback(() => setJobCompleteErrorCalled++);
+
+            var getProgramsForGuidCallCount = 0;
+            var guideRequests = new List<GuideRequestElementDto>();
+            _ProgramGuidClient.Setup(s => s.GetProgramsForGuide(It.IsAny<List<GuideRequestElementDto>>()))
+                .Callback<List<GuideRequestElementDto>>((r) =>
+                {
+                    getProgramsForGuidCallCount++;
+                    guideRequests.AddRange(r);
+                })
+                .Returns(guideResponse);
+
+            var mappedStations = new List<StationMappingsDto>
+            {
+                new StationMappingsDto {StationId =  1, MapSet = StationMapSetNamesEnum.Sigma, MapValue = "SigmaMappedValue"},
+                new StationMappingsDto {StationId =  2, MapSet = StationMapSetNamesEnum.Extended, MapValue = "ExtendedMappedValue"},
+                new StationMappingsDto {StationId =  3, MapSet = StationMapSetNamesEnum.Extended, MapValue = "ExtendedMappedValueTwo"},
+                new StationMappingsDto {StationId =  4, MapSet = StationMapSetNamesEnum.NSILegacy, MapValue = "NSILegacyMappedValue"}
+            };
+            _StationMappingService.Setup(s => s.GetStationMappingsByCadentCallLetter(It.IsAny<string>()))
+                .Returns(mappedStations);
+
+            var engine = _GetInventoryProgramsProcessingEngine();
+
+            /*** Act ***/
+            var caught = Assert.Throws<Exception>(() => engine.ProcessInventoryProgramsByFileJob(jobId));
+
+            /*** Assert ***/
+            Assert.IsTrue(caught.Message.Contains($"Mapping for CadentCallsign 'CadentStationName' and Map Set 'Extended' has 2 mappings when only one expected."));
         }
 
         [Test]
@@ -369,6 +555,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [Test]
         public void ProcessInventoryProgramsBySourceJob()
         {
+            /*** Arrange ***/
             const int jobId = 13;
             const int sourceID = 1;
             var startDate = new DateTime(2020, 01, 01);
@@ -437,15 +624,32 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var setJobCompleteErrorCalled = 0;
             _InventoryProgramsBySourceJobsRepo.Setup(r => r.SetJobCompleteError(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>())).Callback(() => setJobCompleteErrorCalled++);
 
-            var getProgramsForGuideCalled = 0;
+            var getProgramsForGuidCallCount = 0;
+            var guideRequests = new List<GuideRequestElementDto>();
             _ProgramGuidClient.Setup(s => s.GetProgramsForGuide(It.IsAny<List<GuideRequestElementDto>>()))
-                .Callback(() => getProgramsForGuideCalled++)
+                .Callback<List<GuideRequestElementDto>>((r) =>
+                {
+                    getProgramsForGuidCallCount++;
+                    guideRequests.AddRange(r);
+                })
                 .Returns(guideResponse);
+
+            var mappedStations = new List<StationMappingsDto>
+            {
+                new StationMappingsDto {StationId =  1, MapSet = StationMapSetNamesEnum.Sigma, MapValue = "SigmaMappedValue"},
+                new StationMappingsDto {StationId =  2, MapSet = StationMapSetNamesEnum.NSI, MapValue = "NSIMappedValue"},
+                new StationMappingsDto {StationId =  3, MapSet = StationMapSetNamesEnum.Extended, MapValue = "ExtendedMappedValue"},
+                new StationMappingsDto {StationId =  4, MapSet = StationMapSetNamesEnum.NSILegacy, MapValue = "NSILegacyMappedValue"}
+            };
+            _StationMappingService.Setup(s => s.GetStationMappingsByCadentCallLetter(It.IsAny<string>()))
+                .Returns(mappedStations);
 
             var engine = _GetInventoryProgramsProcessingEngine();
 
+            /*** Act ***/
             var results = engine.ProcessInventoryProgramsBySourceJob(jobId);
 
+            /*** Assert ***/
             Assert.NotNull(results);
             Assert.AreEqual(1, inventoryProgramsBySourceJobsRepoCalls);
             Assert.AreEqual(1, getInventorySourceCalled);
@@ -454,9 +658,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Assert.AreEqual(3, getInventoryManifestsBySourceAndMediaWeekCalled);
             Assert.AreEqual(1, setJobCompleteSuccessCalled);
             Assert.AreEqual(0, setJobCompleteErrorCalled);
-            Assert.AreEqual(3, getProgramsForGuideCalled);
+            Assert.AreEqual(3, getProgramsForGuidCallCount);
             Assert.AreEqual(3, deleteInventoryProgramsFromManifestDaypartsCalled);
             Assert.AreEqual(3, updateInventoryProgramsCalled);
+            Assert.AreEqual(0, guideRequests.Count(s => s.StationCallLetters.Equals("ExtendedMappedValue") == false));
         }
 
         [Test]
@@ -696,7 +901,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         {
             var dataRepoFactory = _GetDataRepositoryFactory();
             var engine = new InventoryProgramsProcessingEngineTestClass(
-                dataRepoFactory.Object, _MediaWeekCache.Object, _ProgramGuidClient.Object);
+                dataRepoFactory.Object, _MediaWeekCache.Object, _ProgramGuidClient.Object,
+                _StationMappingService.Object);
             return engine;
         }
 
@@ -720,7 +926,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 new StationInventoryManifest
                 {
                     Id = 1,
-                    Station = new DisplayBroadcastStation(),
+                    Station = new DisplayBroadcastStation
+                    {
+                        LegacyCallLetters = "CadentStationName",
+                        Affiliation = "ABC"
+                    },
                     ManifestDayparts = new List<StationInventoryManifestDaypart>
                     {
                         new StationInventoryManifestDaypart
@@ -730,7 +940,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             {
                                 StartTime = 0,
                                 EndTime = (3600 * 3) - 1
-                            }
+                            },
                         },
                         new StationInventoryManifestDaypart
                         {
