@@ -165,12 +165,10 @@ namespace Services.Broadcast.Validators
                 throw new Exception(INVALID_FLIGHT_DATES);
             }
 
-            /* REMOVED UNTIL FE IS DONE ON PRI-20800
             if (plan.FlightDays == null || !plan.FlightDays.Any())
             {
                 throw new Exception(INVALID_FLIGHT_DAYS);
             }
-            */
 
             if (plan.FlightHiatusDays?.Any() == true)
             {
@@ -180,8 +178,7 @@ namespace Services.Broadcast.Validators
                 {
                     throw new Exception(INVALID_FLIGHT_HIATUS_DAY);
                 }
-
-                /* REMOVED UNTIL FE IS DONE ON PRI-20800
+                
                 var hasInvalidHiatusDaysWithFlightDays =
                     plan.FlightHiatusDays
                     .Select(hiatus => (int)hiatus.GetBroadcastDayOfWeek()).Distinct()
@@ -190,21 +187,18 @@ namespace Services.Broadcast.Validators
                 {
                     throw new Exception(INVALID_FLIGHT_HIATUS_DAY_WITH_FLIGHT_DAYS);
                 }
-                */
 
             }
 
             if (!string.IsNullOrEmpty(plan.FlightNotes) && plan.FlightNotes.Length > 1024)
                 throw new Exception(INVALID_FLIGHT_NOTES);
-
-            /* REMOVED UNTIL FE IS DONE ON PRI-20800
+            
             var planFlightStartDateDayofWeek = (int)plan.FlightStartDate.Value.GetBroadcastDayOfWeek();
             var planFlightEndDateDayofWeek = (int)plan.FlightEndDate.Value.GetBroadcastDayOfWeek();
             if (!plan.FlightDays.Any(day => day == planFlightStartDateDayofWeek || day == planFlightEndDateDayofWeek))
             {
                 throw new Exception(INVALID_FLIGHT_DATES_WITH_FLIGHT_DAYS);
             }
-            */
         }
 
         private void _ValidatePrimaryAudience(PlanDto plan)
