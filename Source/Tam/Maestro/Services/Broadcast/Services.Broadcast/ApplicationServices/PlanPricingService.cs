@@ -8,6 +8,7 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.PlanPricing;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
@@ -502,7 +503,8 @@ namespace Services.Broadcast.ApplicationServices
             var supportedInventorySourceIds = _GetInventorySourceIdsByTypes(new List<InventorySourceTypeEnum>
             {
                 InventorySourceTypeEnum.Barter,
-                InventorySourceTypeEnum.ProprietaryOAndO
+                InventorySourceTypeEnum.ProprietaryOAndO,
+                InventorySourceTypeEnum.Diginet
             });
 
             var inventorySourcePreferences = plan.PricingParameters.InventorySourcePercentages
@@ -778,7 +780,10 @@ namespace Services.Broadcast.ApplicationServices
                 InflationFactor = requestParameters.InflationFactor
             };
 
-            var inventorySourceIds = _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes());
+            var inventorySourceIds = requestParameters.InventorySourceIds.IsEmpty() ?
+                _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes()) :
+                requestParameters.InventorySourceIds;
+            
             var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, pricingParams, inventorySourceIds);
 
             var pricingApiRequest = new PlanPricingApiRequestDto

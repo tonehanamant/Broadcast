@@ -607,7 +607,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Verify(x => x.GetInventoryForPlan(
                     It.IsAny<PlanDto>(),
                     It.IsAny<ProgramInventoryOptionalParametersDto>(),
-                    It.Is<IEnumerable<int>>(list => list.SequenceEqual(new List<int> { 3, 5, 7, 10, 11, 12 }))), Times.Once);
+                    It.Is<IEnumerable<int>>(list => list.SequenceEqual(new List<int> { 3, 5, 7, 10, 11, 12, 18 }))), Times.Once);
 
             _PlanRepositoryMock
                 .Verify(x => x.SavePlanPricingEstimates(jobId, It.IsAny<List<PricingEstimate>>()), Times.Once);
@@ -639,6 +639,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new PlanPricingInventorySourceDto{Id = 10, Percentage = 16},
                         new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
                         new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
+                        new PlanPricingInventorySourceDto{Id = 18, Percentage = 5},
+                        new PlanPricingInventorySourceDto{Id = 19, Percentage = 0}
                     }
             };
         }
@@ -1087,6 +1089,94 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             Spots = 7,
                             MediaWeekId = 101,
+                        }
+                    }
+                },
+                new PlanPricingInventoryProgram
+                {
+                    ManifestId = 7,
+                    StationLegacyCallLetters = "kpdx",
+                    MarketCode = 100,
+                    ProvidedImpressions = null,
+                    ProjectedImpressions = 700,
+                    SpotCost = 40,
+                    InventorySource = new InventorySource
+                    {
+                        Id = 18
+                    },
+                    ManifestDayparts = new List<ManifestDaypart>
+                    {
+                        new ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 7
+                            },
+                            Programs = new List<Program>
+                            {
+                                new Program
+                                {
+                                    Name = "Good morning america",
+                                    MaestroGenre = "Early News"
+                                }
+                            },
+                            PrimaryProgram = new Program
+                            {
+                                Name = "Good morning america",
+                                MaestroGenre = "Early News"
+                            }
+                        }
+                    },
+                    ManifestWeeks = new List<ManifestWeek>
+                    {
+                        new ManifestWeek
+                        {
+                            Spots = 1,
+                            MediaWeekId = 100,
+                        },
+                    }
+                },
+                new PlanPricingInventoryProgram
+                {
+                    ManifestId = 7,
+                    StationLegacyCallLetters = "kpdx",
+                    MarketCode = 100,
+                    ProvidedImpressions = null,
+                    ProjectedImpressions = 700,
+                    SpotCost = 40,
+                    InventorySource = new InventorySource
+                    {
+                        Id = 19
+                    },
+                    ManifestDayparts = new List<ManifestDaypart>
+                    {
+                        new ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 7
+                            },
+                            Programs = new List<Program>
+                            {
+                                new Program
+                                {
+                                    Name = "Good morning america",
+                                    MaestroGenre = "Early News"
+                                }
+                            },
+                            PrimaryProgram = new Program
+                            {
+                                Name = "Good morning america",
+                                MaestroGenre = "Early News"
+                            }
+                        }
+                    },
+                    ManifestWeeks = new List<ManifestWeek>
+                    {
+                        new ManifestWeek
+                        {
+                            Spots = 1,
+                            MediaWeekId = 100,
                         }
                     }
                 }

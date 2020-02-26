@@ -28,5 +28,11 @@
     "Impressions": 960.0,
     "InventorySourceId": 10,
     "MediaWeekId": 100
+  },
+  {
+    "Cost": 2.0,
+    "Impressions": 35.0,
+    "InventorySourceId": 18,
+    "MediaWeekId": 100
   }
 ]
