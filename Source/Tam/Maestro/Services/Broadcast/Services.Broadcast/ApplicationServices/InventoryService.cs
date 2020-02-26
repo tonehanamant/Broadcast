@@ -285,9 +285,10 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     _DataLakeFileService.Save(request);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    throw new ApplicationException("Unable to send file to Data Lake shared folder and e-mail reporting the error.");
+                    var msg = "Unable to send file to Data Lake shared folder and e-mail reporting the error.";
+                    LogHelper.Logger.Error(msg, ex);
                 }
             }
 

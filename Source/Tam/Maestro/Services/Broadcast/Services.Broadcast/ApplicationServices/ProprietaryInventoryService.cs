@@ -1,4 +1,5 @@
-﻿using Common.Services.ApplicationServices;
+﻿using Common.Services;
+using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines;
@@ -6,8 +7,8 @@ using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Converters.RateImport;
 using Services.Broadcast.Converters.Scx;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Extensions;
@@ -18,8 +19,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
-using Common.Services;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -189,7 +190,8 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 catch (Exception ex)
                 {
-                    throw new ApplicationException("Unable to send file to Data Lake shared folder and e-mail reporting the error:" + ex);
+                    var msg = "Unable to send file to Data Lake shared folder and e-mail reporting the error.";
+                    LogHelper.Logger.Error(msg, ex);
                 }
             }            
 

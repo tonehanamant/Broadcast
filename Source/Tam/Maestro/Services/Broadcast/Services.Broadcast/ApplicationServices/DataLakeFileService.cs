@@ -2,13 +2,12 @@
 using Common.Services.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Mail;
 using System.Text;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using Tam.Maestro.Common.Utilities.Logging;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -111,9 +110,17 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SendErrorEmail(string filePath, string errorMessage)
         {
-            var to = new List<MailAddress>() { new MailAddress(_DataLakeSystemParameter.GetNotificationEmail()) };
-
-            _EmailerService.QuickSend(false, _CreateErrorEmail(filePath, errorMessage), "Data Lake File Failure", MailPriority.Normal, to);
+            try
+            {
+                var to = new List<MailAddress>() { new MailAddress(_DataLakeSystemParameter.GetNotificationEmail()) };
+                _EmailerService.QuickSend(false, _CreateErrorEmail(filePath, errorMessage), "Data Lake File Failure",
+                    MailPriority.Normal, to);
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Exception attempting to send email about an error communicating with the DataLake Files : File Path ='{filePath}'; ErrorMessage = '{errorMessage}';";
+                LogHelper.Logger.Error(msg, ex);
+            }
         }
 
         private string _CreateErrorEmail(string filePath, string errorMessage)
