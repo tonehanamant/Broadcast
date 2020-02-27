@@ -1,4 +1,5 @@
 ﻿using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using Services.Broadcast.Entities.Campaign;
 using System;
 using System.Collections.Generic;
@@ -143,16 +144,16 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
                 , _GetQuarterTableTotalRowObjects(campaignReportData.ProposalCampaignTotalsTable.TotalRow));
 
             //this logic needs adjusting when populating secondary audiences tables for campaign totals
-            if (!HasSecondaryAudiences)
-            {
-                _DeleteSecondaryAudienceEmptyTemplateTable();
-            }
-            else
+            if (campaignReportData.ProposalCampaignTotalsTable.HasSecondaryAudiences)
             {
                 _AddSecondaryAudiencesTables(campaignReportData.ProposalCampaignTotalsTable);
 
                 //delete the extra space (2 rows) that was added by the secondary audiences template
                 WORKSHEET.DeleteRow(currentRowIndex + 1, 2);
+            }
+            else if(HasSecondaryAudiences)
+            {
+                _DeleteSecondaryAudienceEmptyTemplateTable();
             }
         }
 
@@ -241,6 +242,10 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
                     secondTable = table.SecondaryAudiencesTables[i + 1];
                     WORKSHEET.Cells[$"{SECONDARY_AUDIENCE_LABEL_SECOND_COLUMN}{currentRowIndex}"].Value = secondTable.AudienceCode;
                 }
+                else
+                {
+                    _DeleteEmptyTable();
+                }
 
                 //set the height of the audience row and the table header row
                 WORKSHEET.Row(currentRowIndex).Height = ExportSharedLogic.ROW_HEIGHT;
@@ -258,8 +263,6 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
                         WORKSHEET.Cells[currentRowIndex - 1, ExportSharedLogic.FIRST_COLUMNS_INDEX, currentRowIndex - 1, ExportSharedLogic.END_COLUMN_INDEX]
                                 .Copy(WORKSHEET.Cells[currentRowIndex, ExportSharedLogic.FIRST_COLUMNS_INDEX]);
                     }
-                    //add this for conditional formating
-                    WORKSHEET.Cells[$"{START_COLUMN}{currentRowIndex}"].Value = (rowIndex % 2 == 0) ? "Even" : "Odd";
 
                     List<object> row =
                         _GetSecondaryAudienceRowObjects(firstTable.Rows[rowIndex], secondTable?.Rows[rowIndex], rowIndex);
@@ -281,6 +284,13 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             }
         }
 
+        private void _DeleteEmptyTable()
+        {
+            string rangeAddress = $"O{currentRowIndex}:U{currentRowIndex + ROWS_TO_COPY_SECONDARY_ONLY_TABLE}";
+            WORKSHEET.Cells[rangeAddress].Style.Fill.PatternType = ExcelFillStyle.None;
+            WORKSHEET.Cells[rangeAddress].Clear();
+        }
+
         private void _DeleteSecondaryAudienceEmptyTemplateTable()
         {
             //because the template file has secondary audiences tables for all the quarters
@@ -292,9 +302,11 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         private List<object> _GetSecondaryAudienceRowObjects(AudienceData firstTableRow
             , AudienceData secondTableRow, int rowIndex)
         {
+            //We use "OddSA1 and EvenSA1" when there is a single secondary audience table
+            //We use "OddSA2 and EvenSA2" when there are 2 secondary audience tables
             List<object> row = new List<object>
             {
-                (rowIndex % 2 == 0) ? "Even" : "Odd",
+                (rowIndex % 2 == 0) ? "OddSA1" : "EvenSA1",  //used for conditional formatting)
                 ExportSharedLogic.EMPTY_CELL,
                 ExportSharedLogic.EMPTY_CELL,
                 ExportSharedLogic.EMPTY_CELL,
@@ -318,7 +330,9 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
                 row.Add(secondTableRow.TotalImpressions);
                 row.Add(secondTableRow.CPM);
                 row.Add(secondTableRow.CPP);
+                row[0] = (rowIndex % 2 == 0) ? "OddSA2" : "EvenSA2";   //used for conditional formatting)
             }
+            
             return row;
         }
 
