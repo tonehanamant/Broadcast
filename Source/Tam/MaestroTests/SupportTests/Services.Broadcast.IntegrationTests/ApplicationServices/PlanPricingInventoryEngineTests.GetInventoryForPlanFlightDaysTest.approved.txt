@@ -1,0 +1,446 @@
+﻿[
+  {
+    "InventoryPricingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 34500.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 22700.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 26200.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 20000.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 27900.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": true,
+          "_Id": 32941,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 358772,
+        "PrimaryProgram": {
+          "DativaGenre": "Family",
+          "EndTime": 7200,
+          "MaestroGenre": "Children",
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
+        },
+        "ProgramName": "FRIENDS",
+        "Programs": [
+          {
+            "DativaGenre": "Family",
+            "EndTime": 7200,
+            "MaestroGenre": "Children",
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
+      }
+    ],
+    "ManifestId": 287146,
+    "ManifestWeeks": [
+      {
+        "Id": 1697537,
+        "MediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "Id": 1704819,
+        "MediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "Id": 1712148,
+        "MediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "Id": 1719502,
+        "MediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "Id": 1727234,
+        "MediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "MarketCode": 101,
+    "ProjectedImpressions": 70841.65625,
+    "ProvidedImpressions": 58650.0,
+    "SpotCost": 750.0000,
+    "StationLegacyCallLetters": "WPIX",
+    "Unit": null
+  },
+  {
+    "InventoryPricingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 29600.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 18000.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 18000.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 13700.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 21900.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": true,
+          "_Id": 32055,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 1800,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 358773,
+        "PrimaryProgram": {
+          "DativaGenre": "Family",
+          "EndTime": 7200,
+          "MaestroGenre": "Children",
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
+        },
+        "ProgramName": "TWO & A HALF MEN",
+        "Programs": [
+          {
+            "DativaGenre": "Family",
+            "EndTime": 7200,
+            "MaestroGenre": "Children",
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
+      }
+    ],
+    "ManifestId": 287147,
+    "ManifestWeeks": [
+      {
+        "Id": 1697538,
+        "MediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "Id": 1704820,
+        "MediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "Id": 1712149,
+        "MediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "Id": 1719503,
+        "MediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "Id": 1727235,
+        "MediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "MarketCode": 101,
+    "ProjectedImpressions": 59912.78125,
+    "ProvidedImpressions": 50320.0,
+    "SpotCost": 700.0000,
+    "StationLegacyCallLetters": "WPIX",
+    "Unit": null
+  },
+  {
+    "InventoryPricingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 300.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 300.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": true,
+          "_Id": 32941,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 360318,
+        "PrimaryProgram": {
+          "DativaGenre": "Comedy",
+          "EndTime": 7200,
+          "MaestroGenre": "Comedy",
+          "Name": "Late news",
+          "ShowType": "Sports",
+          "StartTime": 3600
+        },
+        "ProgramName": "TWO & HALF MEN",
+        "Programs": [
+          {
+            "DativaGenre": "Comedy",
+            "EndTime": 7200,
+            "MaestroGenre": "Comedy",
+            "Name": "Late news",
+            "ShowType": "Sports",
+            "StartTime": 3600
+          }
+        ]
+      }
+    ],
+    "ManifestId": 288692,
+    "ManifestWeeks": [
+      {
+        "Id": 1698584,
+        "MediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "Id": 1705866,
+        "MediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "Id": 1713195,
+        "MediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "Id": 1720549,
+        "MediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "Id": 1728281,
+        "MediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "MarketCode": 100,
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": 510.0,
+    "SpotCost": 50.0000,
+    "StationLegacyCallLetters": "WPFO",
+    "Unit": null
+  },
+  {
+    "InventoryPricingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 200.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 200.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": true,
+          "_Id": 32055,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 1800,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 360321,
+        "PrimaryProgram": {
+          "DativaGenre": "Comedy",
+          "EndTime": 7200,
+          "MaestroGenre": "Comedy",
+          "Name": "Late news",
+          "ShowType": "Sports",
+          "StartTime": 3600
+        },
+        "ProgramName": "2 BROKE GIRLS",
+        "Programs": [
+          {
+            "DativaGenre": "Comedy",
+            "EndTime": 7200,
+            "MaestroGenre": "Comedy",
+            "Name": "Late news",
+            "ShowType": "Sports",
+            "StartTime": 3600
+          }
+        ]
+      }
+    ],
+    "ManifestId": 288695,
+    "ManifestWeeks": [
+      {
+        "Id": 1698587,
+        "MediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "Id": 1705869,
+        "MediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "Id": 1713198,
+        "MediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "Id": 1720552,
+        "MediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "Id": 1728284,
+        "MediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "MarketCode": 100,
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": 340.0,
+    "SpotCost": 12.0000,
+    "StationLegacyCallLetters": "WPFO",
+    "Unit": null
+  }
+]

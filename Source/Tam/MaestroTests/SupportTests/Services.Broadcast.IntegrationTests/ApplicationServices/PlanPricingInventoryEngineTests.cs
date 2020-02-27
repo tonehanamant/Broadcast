@@ -147,6 +147,26 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void GetInventoryForPlanFlightDaysTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var plan = _PlanRepository.GetPlan(1197);
+                plan.FlightDays.Clear();
+                plan.FlightDays.Add(1);
+                plan.FlightDays.Add(5);
+                _PlanRepository.SavePlan(plan, "IntegrationTestUser", new System.DateTime(2020, 2, 27));
+                var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
+                    plan,
+                    new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    _GetAvailableInventorySources());
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void RunWithProgramWithMultipleAudiencesTest()
         {
             using (new TransactionScopeWrapper())

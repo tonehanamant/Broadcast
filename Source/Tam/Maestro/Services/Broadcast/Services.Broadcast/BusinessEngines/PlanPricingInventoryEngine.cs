@@ -63,7 +63,10 @@ namespace Services.Broadcast.BusinessEngines
 
             programs = FilterProgramsByDayparts(plan, programs, planDisplayDaypartDays);
 
+            
             ApplyInflationFactorToSpotCost(programs, parameters?.InflationFactor);
+            // Set the plan flight days to programs so impressions are calculated for those days.
+            _SetProgramsFlightDays(programs, plan);
             _ApplyProjectedImpressions(programs, plan);
             _ApplyProvidedImpressions(programs, plan);
             ApplyNTIConversionToNSI(plan, programs, planDisplayDaypartDays);
@@ -71,6 +74,42 @@ namespace Services.Broadcast.BusinessEngines
             programs = FilterProgramsByMinAndMaxCPM(programs, parameters?.MinCPM, parameters?.MaxCPM);
 
             return programs;
+        }
+
+        private void _SetProgramsFlightDays(List<PlanPricingInventoryProgram> programs, PlanDto plan)
+        {
+            var days = _DayRepository.GetDays();
+            var flightDayNames = days
+                .Where(x => plan.FlightDays.Contains(x.Id))
+                .Select(x => x.Name);
+            var flightDaysSet = new HashSet<string>(flightDayNames);
+
+            foreach (var program in programs)
+            {
+                foreach(var manifestDaypart in program.ManifestDayparts)
+                {
+                    manifestDaypart.Daypart.Sunday = 
+                        manifestDaypart.Daypart.Sunday && flightDaysSet.Contains("Sunday");
+
+                    manifestDaypart.Daypart.Monday = 
+                        manifestDaypart.Daypart.Monday && flightDaysSet.Contains("Monday");
+
+                    manifestDaypart.Daypart.Tuesday = 
+                        manifestDaypart.Daypart.Tuesday && flightDaysSet.Contains("Tuesday");
+
+                    manifestDaypart.Daypart.Wednesday = 
+                        manifestDaypart.Daypart.Wednesday && flightDaysSet.Contains("Wednesday");
+
+                    manifestDaypart.Daypart.Thursday = 
+                        manifestDaypart.Daypart.Thursday && flightDaysSet.Contains("Thursday");
+
+                    manifestDaypart.Daypart.Friday = 
+                        manifestDaypart.Daypart.Friday && flightDaysSet.Contains("Friday");
+
+                    manifestDaypart.Daypart.Saturday = 
+                        manifestDaypart.Daypart.Saturday && flightDaysSet.Contains("Saturday");
+                }
+            }
         }
 
         protected void ApplyInflationFactorToSpotCost(List<PlanPricingInventoryProgram> programs, double? inflationFactor)

@@ -96,13 +96,14 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 ModifiedDate = modifiedDateTime,
                 GoalBreakdownType = PlanGoalBreakdownTypeEnum.Even,
                 FlightStartDate = new DateTime(2019, 8, 1),
-                FlightEndDate = new DateTime(2019,9,1),
+                FlightEndDate = new DateTime(2019, 9, 1),
                 Budget = 500000m,
                 TargetImpressions = 50000000,
                 TargetCPM = 10m,
                 CoverageGoalPercent = 60,
                 TargetRatingPoints = 0.00248816152650979,
-                TargetCPP = 200951583.9999m
+                TargetCPP = 200951583.9999m,
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 }
             };
             _PlanRepository.SaveNewPlan(planDto, modifiedUser, modifiedDateTime);
             planId = planDto.Id;
