@@ -313,10 +313,8 @@
         <AssociationConnector Association="BroadcastModel.FK__plan_vers__genre__029EE365" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_execution_markets" Width="1.5" PointX="16.75" PointY="51" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_executions" Width="1.5" PointX="14.5" PointY="50" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_job" Width="1.5" PointX="14.5" PointY="54.625" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_execution_markets_plan_version_pricing_executions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_executions_plan_versions" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_job_plan_versions" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_inventory_source_percentages" Width="1.5" PointX="17.75" PointY="46.75" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_inventory_source_percentages_inventory_sources" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_inventory_source_percentages_plan_version_pricing_executions" />
@@ -416,7 +414,9 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_job_inventory_source_estimates" Width="1.5" PointX="16.75" PointY="36" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_job_inventory_source_estimates_inventory_sources" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_job_inventory_source_estimates_media_weeks" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_job" Width="1.5" PointX="14.875" PointY="0.75" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_job_inventory_source_estimates_plan_version_pricing_job" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_job_plan_versions" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

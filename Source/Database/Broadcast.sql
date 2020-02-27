@@ -170,6 +170,23 @@ BEGIN
 END
 /*************************************** END PRI-20833 *****************************************************/
 
+/*************************************** START - PRI-22728 *****************************************************/
+GO
+
+IF ((SELECT CHARACTER_MAXIMUM_LENGTH
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE 
+     TABLE_NAME = 'plan_version_pricing_job' AND 
+     COLUMN_NAME = 'error_message') = 2000)
+BEGIN
+	ALTER TABLE plan_version_pricing_job
+	ALTER COLUMN error_message nvarchar(max) NULL
+END
+
+GO
+/*************************************** END - PRI-22728 *****************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

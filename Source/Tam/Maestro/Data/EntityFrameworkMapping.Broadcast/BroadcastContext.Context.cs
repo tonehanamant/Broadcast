@@ -147,7 +147,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_daypart_program_restrictions> plan_version_daypart_program_restrictions { get; set; }
         public virtual DbSet<plan_version_pricing_execution_markets> plan_version_pricing_execution_markets { get; set; }
         public virtual DbSet<plan_version_pricing_executions> plan_version_pricing_executions { get; set; }
-        public virtual DbSet<plan_version_pricing_job> plan_version_pricing_job { get; set; }
         public virtual DbSet<plan_version_pricing_inventory_source_percentages> plan_version_pricing_inventory_source_percentages { get; set; }
         public virtual DbSet<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
         public virtual DbSet<plan_version_pricing_parameters_inventory_source_percentages> plan_version_pricing_parameters_inventory_source_percentages { get; set; }
@@ -190,5 +189,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station_mappings> station_mappings { get; set; }
         public virtual DbSet<station_month_details> station_month_details { get; set; }
         public virtual DbSet<plan_version_pricing_job_inventory_source_estimates> plan_version_pricing_job_inventory_source_estimates { get; set; }
+        public virtual DbSet<plan_version_pricing_job> plan_version_pricing_job { get; set; }
     }
 }

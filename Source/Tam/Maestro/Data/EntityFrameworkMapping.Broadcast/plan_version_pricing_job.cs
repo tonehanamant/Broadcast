@@ -27,7 +27,7 @@ namespace EntityFrameworkMapping.Broadcast
         public string error_message { get; set; }
         public string diagnostic_result { get; set; }
     
-        public virtual plan_versions plan_versions { get; set; }
         public virtual ICollection<plan_version_pricing_job_inventory_source_estimates> plan_version_pricing_job_inventory_source_estimates { get; set; }
+        public virtual plan_versions plan_versions { get; set; }
     }
 }
