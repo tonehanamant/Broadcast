@@ -3,6 +3,7 @@ using Services.Broadcast.Entities.Campaign;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Services.Broadcast.Entities.Campaign.ProposalQuarterTableData;
 using SecondaryDemoTable = Services.Broadcast.Entities.Campaign.ProposalQuarterTableData.SecondayAudienceTable;
 
 namespace Services.Broadcast.ReportGenerators.CampaignExport
@@ -45,10 +46,15 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         private int quarterLabelRowIndex = 7;
         private int firstDataRowIndex = 9;
         private int currentRowIndex = 0;
+        private int SecondaryAudiencesOffset;
+        private bool HasSecondaryAudiences;
 
         public void PopulateProposalTab(CampaignReportData campaignReportData, ExcelWorksheet proposalWorksheet)
         {
             WORKSHEET = proposalWorksheet;
+            HasSecondaryAudiences = campaignReportData.HasSecondaryAudiences;
+            SecondaryAudiencesOffset = HasSecondaryAudiences ? 1 : 0;
+
             _PopulateHeader(campaignReportData);
             _PopulateQuarterTables(campaignReportData);
             _PopulateTotalsTable(campaignReportData);
@@ -129,34 +135,47 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             quarterLabelRowIndex = currentRowIndex - 2;
             firstDataRowIndex = currentRowIndex;
 
-            _InsertQuarterMainTableRowsData(campaignReportData.GuaranteedDemo,
-                campaignReportData.ProposalCampaignTotalsTable, campaignReportData.HasSecondaryAudiences);
+            _InsertQuarterTableRows(campaignReportData.GuaranteedDemo,
+                campaignReportData.ProposalCampaignTotalsTable);
 
             //add total row data
-            _SetRowData(currentRowIndex, START_TOTAL_COLUMN, campaignReportData.ProposalCampaignTotalsTable.TotalRow);
+            _SetRowData(currentRowIndex, START_TOTAL_COLUMN
+                , _GetQuarterTableTotalRowObjects(campaignReportData.ProposalCampaignTotalsTable.TotalRow));
 
             //this logic needs adjusting when populating secondary audiences tables for campaign totals
-            if (!campaignReportData.ProposalCampaignTotalsTable.HasSecondaryAudiences && campaignReportData.HasSecondaryAudiences)
+            if (!HasSecondaryAudiences)
             {
                 _DeleteSecondaryAudienceEmptyTemplateTable();
+            }
+            else
+            {
+                _AddSecondaryAudiencesTables(campaignReportData.ProposalCampaignTotalsTable);
+
+                //delete the extra space (2 rows) that was added by the secondary audiences template
+                WORKSHEET.DeleteRow(currentRowIndex + 1, 2);
             }
         }
 
         private void _PopulateHeader(CampaignReportData data)
         {
-            int offset = data.HasSecondaryAudiences ? 1 : 0;
-            WORKSHEET.Cells[CREATED_DATE_CELL.RowIndex, CREATED_DATE_CELL.ColumnIndex + offset].Value += data.CreatedDate;
-            WORKSHEET.Cells[CAMPAIGN_NAME_CELL.RowIndex, CAMPAIGN_NAME_CELL.ColumnIndex].Value += data.CampaignName;
-            WORKSHEET.Cells[AGENCY_NAME_CELL.RowIndex, AGENCY_NAME_CELL.ColumnIndex].Value = data.AgencyName;
-            WORKSHEET.Cells[CLIENT_NAME_CELL.RowIndex, CLIENT_NAME_CELL.ColumnIndex].Value = data.ClientName;
-            WORKSHEET.Cells[CAMPAIGN_FLIGHT_CELL.RowIndex, CAMPAIGN_FLIGHT_CELL.ColumnIndex + offset].Value
-                = $"{data.CampaignFlightStartDate} - {data.CampaignFlightEndDate}";
-            WORKSHEET.Cells[GUARANTEED_DEMO_CELL.RowIndex, GUARANTEED_DEMO_CELL.ColumnIndex + offset].Value
-                = string.Join(",", data.GuaranteedDemo);
-            WORKSHEET.Cells[CAMPAIGN_SPOT_LENGTH_CELL.RowIndex, CAMPAIGN_SPOT_LENGTH_CELL.ColumnIndex + offset].Value
-                = string.Join(", ", data.SpotLengths);
-            WORKSHEET.Cells[POSTING_TYPE_CELL.RowIndex, POSTING_TYPE_CELL.ColumnIndex + offset].Value = data.PostingType;
-            WORKSHEET.Cells[STATUS_CELL.RowIndex, STATUS_CELL.ColumnIndex + offset].Value = data.Status;
+            WORKSHEET.Cells[CREATED_DATE_CELL.RowIndex, CREATED_DATE_CELL.ColumnIndex + SecondaryAudiencesOffset]
+                .Value += data.CreatedDate;
+            WORKSHEET.Cells[CAMPAIGN_NAME_CELL.RowIndex, CAMPAIGN_NAME_CELL.ColumnIndex]
+                .Value += data.CampaignName;
+            WORKSHEET.Cells[AGENCY_NAME_CELL.RowIndex, AGENCY_NAME_CELL.ColumnIndex]
+                .Value = data.AgencyName;
+            WORKSHEET.Cells[CLIENT_NAME_CELL.RowIndex, CLIENT_NAME_CELL.ColumnIndex]
+                .Value = data.ClientName;
+            WORKSHEET.Cells[CAMPAIGN_FLIGHT_CELL.RowIndex, CAMPAIGN_FLIGHT_CELL.ColumnIndex + SecondaryAudiencesOffset]
+                .Value = $"{data.CampaignFlightStartDate} - {data.CampaignFlightEndDate}";
+            WORKSHEET.Cells[GUARANTEED_DEMO_CELL.RowIndex, GUARANTEED_DEMO_CELL.ColumnIndex + SecondaryAudiencesOffset]
+                .Value = string.Join(",", data.GuaranteedDemo);
+            WORKSHEET.Cells[CAMPAIGN_SPOT_LENGTH_CELL.RowIndex, CAMPAIGN_SPOT_LENGTH_CELL.ColumnIndex + SecondaryAudiencesOffset]
+                .Value = string.Join(", ", data.SpotLengths);
+            WORKSHEET.Cells[POSTING_TYPE_CELL.RowIndex, POSTING_TYPE_CELL.ColumnIndex + SecondaryAudiencesOffset]
+                .Value = data.PostingType;
+            WORKSHEET.Cells[STATUS_CELL.RowIndex, STATUS_CELL.ColumnIndex + SecondaryAudiencesOffset]
+                .Value = data.Status;
         }
 
         private void _PutDataIntoPlanQuarterTables(CampaignReportData campaignReportData)
@@ -180,74 +199,84 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
                     firstDataRowIndex = currentRowIndex;
                 }
 
-                _InsertQuarterMainTableRowsData(campaignReportData.GuaranteedDemo, table, campaignReportData.HasSecondaryAudiences);
+                _InsertQuarterTableRows(campaignReportData.GuaranteedDemo, table);
 
-                _SetRowData(currentRowIndex, START_TOTAL_COLUMN, table.TotalRow);
+                _SetRowData(currentRowIndex, START_TOTAL_COLUMN, _GetQuarterTableTotalRowObjects(table.TotalRow));
                 if (table.HasSecondaryAudiences)
                 {
-                    currentRowIndex += 3; //there are 3 rows from the total row to the secondary audiences row
-
-                    //the secondary audiences are displayed in pears
-                    //add missing tables
-                    int numberOfSecondaryDoubleTables = table.SecondaryAudiencesTables.Count % 2 == 0
-                                    ? table.SecondaryAudiencesTables.Count / 2
-                                    : (table.SecondaryAudiencesTables.Count / 2) + 1;
-                    if (numberOfSecondaryDoubleTables - 1 > 0)
-                    {
-                        ExportSharedLogic.AddEmptyTables(WORKSHEET,
-                            numberOfSecondaryDoubleTables,
-                            currentRowIndex, ROWS_TO_COPY_SECONDARY_ONLY_TABLE);
-                    }
-
-                    for (int i = 0; i < table.SecondaryAudiencesTables.Count; i += 2)
-                    {
-                        //we display 2 tables side by side
-                        SecondaryDemoTable firstTable = table.SecondaryAudiencesTables[i];
-                        SecondaryDemoTable secondTable = null;
-                        WORKSHEET.Cells[$"{SECONDARY_AUDIENCE_LABEL_FIRST_COLUMN}{currentRowIndex}"].Value = firstTable.AudienceCode;
-
-                        if (i + 1 < table.SecondaryAudiencesTables.Count)   //if there is a second table
-                        {
-                            secondTable = table.SecondaryAudiencesTables[i + 1];
-                            WORKSHEET.Cells[$"{SECONDARY_AUDIENCE_LABEL_SECOND_COLUMN}{currentRowIndex}"].Value = secondTable.AudienceCode;
-                        }
-
-                        //set the height of the audience row and the table header row
-                        WORKSHEET.Row(currentRowIndex).Height = ExportSharedLogic.ROW_HEIGHT;
-                        WORKSHEET.Row(currentRowIndex + 1).Height = ExportSharedLogic.ROW_HEIGHT;
-
-                        currentRowIndex += 2; //skip table header row
-
-                        //insert the necessary rows
-                        WORKSHEET.InsertRow(currentRowIndex + 1, firstTable.Rows.Count - 1);
-
-                        for (int rowIndex = 0; rowIndex < firstTable.Rows.Count; rowIndex++)
-                        {
-                            if (rowIndex > 0)
-                            {   //copy the previous row styles
-                                WORKSHEET.Cells[currentRowIndex - 1, ExportSharedLogic.FIRST_COLUMNS_INDEX, currentRowIndex - 1, ExportSharedLogic.END_COLUMN_INDEX]
-                                        .Copy(WORKSHEET.Cells[currentRowIndex, ExportSharedLogic.FIRST_COLUMNS_INDEX]);
-                            }
-                            //add this for conditional formating
-                            WORKSHEET.Cells[$"{START_COLUMN}{currentRowIndex}"].Value = (rowIndex % 2 == 0) ? "Even" : "Odd";
-
-                            _AddSecondaryAudienceRowData(firstTable.Rows[rowIndex], secondTable?.Rows[rowIndex]);
-
-                            currentRowIndex++;
-                        }
-                        _AddSecondaryAudienceRowData(firstTable.TotalRow, secondTable?.TotalRow);
-
-                        //if we have other secondary audiences to display, increment row index
-                        if (i + 2 < table.SecondaryAudiencesTables.Count)
-                        {
-                            //next secondary tables start after 2 rows
-                            currentRowIndex += 2;
-                        }
-                    }
+                    _AddSecondaryAudiencesTables(table);
                 }
-                if (campaignReportData.HasSecondaryAudiences && !table.HasSecondaryAudiences)
+                else if (HasSecondaryAudiences)
                 {
                     _DeleteSecondaryAudienceEmptyTemplateTable();
+                }
+            }
+        }
+
+        private void _AddSecondaryAudiencesTables(ProposalQuarterTableData table)
+        {
+            currentRowIndex += 3; //there are 3 rows from the total row to the secondary audiences row
+
+            //the secondary audiences are displayed in pears
+            //add missing tables
+            int numberOfSecondaryDoubleTables = table.SecondaryAudiencesTables.Count % 2 == 0
+                            ? table.SecondaryAudiencesTables.Count / 2
+                            : (table.SecondaryAudiencesTables.Count / 2) + 1;
+            if (numberOfSecondaryDoubleTables - 1 > 0)
+            {
+                ExportSharedLogic.AddEmptyTables(WORKSHEET,
+                    numberOfSecondaryDoubleTables,
+                    currentRowIndex, ROWS_TO_COPY_SECONDARY_ONLY_TABLE);
+            }
+
+            for (int i = 0; i < table.SecondaryAudiencesTables.Count; i += 2)
+            {
+                //we display 2 tables side by side
+                SecondaryDemoTable firstTable = table.SecondaryAudiencesTables[i];
+                SecondaryDemoTable secondTable = null;
+                WORKSHEET.Cells[$"{SECONDARY_AUDIENCE_LABEL_FIRST_COLUMN}{currentRowIndex}"].Value = firstTable.AudienceCode;
+
+                if (i + 1 < table.SecondaryAudiencesTables.Count)   //if there is a second table
+                {
+                    secondTable = table.SecondaryAudiencesTables[i + 1];
+                    WORKSHEET.Cells[$"{SECONDARY_AUDIENCE_LABEL_SECOND_COLUMN}{currentRowIndex}"].Value = secondTable.AudienceCode;
+                }
+
+                //set the height of the audience row and the table header row
+                WORKSHEET.Row(currentRowIndex).Height = ExportSharedLogic.ROW_HEIGHT;
+                WORKSHEET.Row(currentRowIndex + 1).Height = ExportSharedLogic.ROW_HEIGHT;
+
+                currentRowIndex += 2; //skip table header row
+
+                //insert the necessary rows
+                WORKSHEET.InsertRow(currentRowIndex + 1, firstTable.Rows.Count - 1);
+
+                for (int rowIndex = 0; rowIndex < firstTable.Rows.Count; rowIndex++)
+                {
+                    if (rowIndex > 0)
+                    {   //copy the previous row styles
+                        WORKSHEET.Cells[currentRowIndex - 1, ExportSharedLogic.FIRST_COLUMNS_INDEX, currentRowIndex - 1, ExportSharedLogic.END_COLUMN_INDEX]
+                                .Copy(WORKSHEET.Cells[currentRowIndex, ExportSharedLogic.FIRST_COLUMNS_INDEX]);
+                    }
+                    //add this for conditional formating
+                    WORKSHEET.Cells[$"{START_COLUMN}{currentRowIndex}"].Value = (rowIndex % 2 == 0) ? "Even" : "Odd";
+
+                    List<object> row =
+                        _GetSecondaryAudienceRowObjects(firstTable.Rows[rowIndex], secondTable?.Rows[rowIndex], rowIndex);
+                    _SetRowData(currentRowIndex, START_COLUMN, row);
+
+                    currentRowIndex++;
+                }
+
+                List<object> totalRow =
+                        _GetSecondaryAudienceTotalRowObjects(firstTable.TotalRow, secondTable?.TotalRow);
+                _SetRowData(currentRowIndex, START_SECONDARY_AUDIENCE_COLUMN, totalRow);
+
+                //if we have other secondary audiences to display, increment row index
+                if (i + 2 < table.SecondaryAudiencesTables.Count)
+                {
+                    //next secondary tables start after 2 rows
+                    currentRowIndex += 2;
                 }
             }
         }
@@ -260,23 +289,69 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             WORKSHEET.DeleteRow(currentRowIndex + 1, ROWS_SECONDARY_TABLE_WITH_SEPARATOR);
         }
 
-        private void _AddSecondaryAudienceRowData(List<object> firstTableRow,
-            List<object> secondTableRow)
+        private List<object> _GetSecondaryAudienceRowObjects(AudienceData firstTableRow
+            , AudienceData secondTableRow, int rowIndex)
         {
-            var completeRow = new List<object>();
-            completeRow.AddRange(firstTableRow);
+            List<object> row = new List<object>
+            {
+                (rowIndex % 2 == 0) ? "Even" : "Odd",
+                ExportSharedLogic.EMPTY_CELL,
+                ExportSharedLogic.EMPTY_CELL,
+                ExportSharedLogic.EMPTY_CELL,
+                ExportSharedLogic.EMPTY_CELL,
+                ExportSharedLogic.EMPTY_CELL,
+                ExportSharedLogic.EMPTY_CELL,
+                firstTableRow.VPVH,
+                firstTableRow.RatingPoints,
+                firstTableRow.TotalRatingPoints,
+                firstTableRow.Impressions,
+                firstTableRow.TotalImpressions,
+                firstTableRow.CPM,
+                firstTableRow.CPP
+            };
             if (secondTableRow != null)
             {
-                completeRow.AddRange(secondTableRow);
+                row.Add(secondTableRow.VPVH);
+                row.Add(secondTableRow.RatingPoints);
+                row.Add(secondTableRow.TotalRatingPoints);
+                row.Add(secondTableRow.Impressions);
+                row.Add(secondTableRow.TotalImpressions);
+                row.Add(secondTableRow.CPM);
+                row.Add(secondTableRow.CPP);
             }
-
-            _SetRowData(currentRowIndex, START_SECONDARY_AUDIENCE_COLUMN, completeRow);
+            return row;
         }
 
-        private void _InsertQuarterMainTableRowsData(List<string> guaranteedDemo, ProposalQuarterTableData table, bool hasSecondaryAudiences)
+        private List<object> _GetSecondaryAudienceTotalRowObjects(AudienceData firstTableRow
+            , AudienceData secondTableRow)
+        {
+            List<object> row = new List<object>
+            {
+                ExportSharedLogic.NO_VALUE_CELL,
+                ExportSharedLogic.NO_VALUE_CELL,
+                firstTableRow.TotalRatingPoints,
+                ExportSharedLogic.NO_VALUE_CELL,
+                firstTableRow.TotalImpressions,
+                firstTableRow.CPM,
+                firstTableRow.CPP
+            };
+            if (secondTableRow != null)
+            {
+                row.Add(ExportSharedLogic.NO_VALUE_CELL);
+                row.Add(ExportSharedLogic.NO_VALUE_CELL);
+                row.Add(secondTableRow.TotalRatingPoints);
+                row.Add(ExportSharedLogic.NO_VALUE_CELL);
+                row.Add(secondTableRow.TotalImpressions);
+                row.Add(secondTableRow.CPM);
+                row.Add(secondTableRow.CPP);
+            }
+            return row;
+        }
+
+        private void _InsertQuarterTableRows(List<string> guaranteedDemo, ProposalQuarterTableData table)
         {
             WORKSHEET.Cells[$"{PLAN_NAME_COLUMN}{quarterLabelRowIndex}"].Value = table.QuarterLabel;
-            if (hasSecondaryAudiences)
+            if (HasSecondaryAudiences)
             {
                 WORKSHEET.Cells[$"{SECONDARY_AUDIENCE_LABEL_SECOND_COLUMN}{quarterLabelRowIndex}"].Value = string.Join(",", guaranteedDemo);
             }
@@ -298,13 +373,69 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
                 WORKSHEET.Cells[firstDataRowIndex, ExportSharedLogic.FIRST_COLUMNS_INDEX, firstDataRowIndex, ExportSharedLogic.END_COLUMN_INDEX]
                     .Copy(WORKSHEET.Cells[currentRowIndex, ExportSharedLogic.FIRST_COLUMNS_INDEX]);
 
-                var row = table.Rows[i];
-                row.Insert(0, (i % 2 == 0 ? "Odd" : "Even"));
-                row.Insert(1, null); //there is an empty cell
-
-                _SetRowData(currentRowIndex, START_COLUMN, row);
+                _SetRowData(currentRowIndex, START_COLUMN, _GetQuarterTableRowObjects(table.Rows[i], i));
                 currentRowIndex++;
             }
+        }
+
+        private List<object> _GetQuarterTableRowObjects(ProposalQuarterTableRowData rowData, int index)
+        {
+            var row = new List<object>() {
+                rowData.DaypartCode,
+                rowData.SpotLengthLabel,
+                rowData.Units,
+                rowData.UnitsCost,
+                rowData.TotalCost,
+                rowData.HHData.RatingPoints,
+                rowData.HHData.TotalRatingPoints,
+                rowData.HHData.Impressions,
+                rowData.HHData.TotalImpressions,
+                rowData.HHData.CPM,
+                rowData.HHData.CPP,
+                rowData.GuaranteedData.VPVH,
+                rowData.GuaranteedData.RatingPoints,
+                rowData.GuaranteedData.TotalRatingPoints,
+                rowData.GuaranteedData.Impressions,
+                rowData.GuaranteedData.TotalImpressions,
+                rowData.GuaranteedData.CPM,
+                rowData.GuaranteedData.CPP,
+            };
+            if (HasSecondaryAudiences)
+            {
+                row.Insert(5, ExportSharedLogic.EMPTY_CELL);
+            }
+            row.Insert(0, (index % 2 == 0 ? "Odd" : "Even"));
+            row.Insert(1, ExportSharedLogic.EMPTY_CELL); //column B is empty
+
+            return row;
+        }
+
+        private List<object> _GetQuarterTableTotalRowObjects(ProposalQuarterTableRowData totalRow)
+        {
+            var row = new List<object>() {
+                totalRow.Units,
+                ExportSharedLogic.NO_VALUE_CELL,
+                totalRow.TotalCost,
+                ExportSharedLogic.NO_VALUE_CELL,
+                totalRow.HHData.TotalRatingPoints,
+                ExportSharedLogic.NO_VALUE_CELL,
+                totalRow.HHData.TotalImpressions,
+                totalRow.HHData.CPM,
+                totalRow.HHData.CPP,
+                ExportSharedLogic.NO_VALUE_CELL,
+                ExportSharedLogic.NO_VALUE_CELL,
+                totalRow.GuaranteedData.TotalRatingPoints,
+                ExportSharedLogic.NO_VALUE_CELL,
+                totalRow.GuaranteedData.TotalImpressions,
+                totalRow.GuaranteedData.CPM,
+                totalRow.GuaranteedData.CPP,
+            };
+            if (HasSecondaryAudiences)
+            {
+                row.Insert(5, ExportSharedLogic.EMPTY_CELL);
+            }
+
+            return row;
         }
 
         private void _SetRowData(int rowIndex, string columnIndex, List<object> totalRow)

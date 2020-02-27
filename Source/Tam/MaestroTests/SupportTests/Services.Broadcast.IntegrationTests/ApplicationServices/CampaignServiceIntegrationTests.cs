@@ -902,7 +902,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     CampaignId = 652,
                     ExportType = CampaignExportTypeEnum.Proposal,
-                    SelectedPlans = new List<int> { 1848, 1850, 2052 }
+                    SelectedPlans = new List<int> { 1848, 2052 }
                 });
 
                 //write excel file to file system(this is used for manual testing only)

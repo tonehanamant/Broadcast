@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using static Services.Broadcast.Entities.Campaign.ProposalQuarterTableData;
 
 namespace Services.Broadcast.Entities.Campaign
 {
@@ -68,6 +69,7 @@ namespace Services.Broadcast.Entities.Campaign
             //proposal tab
             _PopulateProposalQuarterTableData(projectedPlans, orderedAudiences);
             _PopulateCampaignTotalsTable();
+
             _PopulateMarketCoverate(plans);
             _PopulateDaypartsData(projectedPlans);
             _PopulateContentRestrictions(plans);
@@ -432,37 +434,37 @@ namespace Services.Broadcast.Entities.Campaign
                         double totalImpressions = items.Sum(x => x.GuaranteedAudience.TotalImpressions) / 1000;
                         double totalHHRatingPoints = items.Sum(x => x.TotalHHRatingPoints);
                         double totalHHImpressions = items.Sum(x => x.TotalHHImpressions) / 1000;
-
-                        var row = new List<object>
+                        string spotLengthLabel = $"{daypartGroup.Key.SpotLength}{_GetEquivalizedStatus(daypartGroup.Key.Equivalized, daypartGroup.Key.SpotLength)}";
+                        var row = new ProposalQuarterTableRowData
                         {
-                            daypartGroup.Key.DaypartCode,
-                            $"{daypartGroup.Key.SpotLength}{_GetEquivalizedStatus(daypartGroup.Key.Equivalized, daypartGroup.Key.SpotLength)}",
-                            unitsSum,
-                            (unitsSum == 0 ? 0 : totalCost / unitsSum),
-                            totalCost,
+                            DaypartCode = daypartGroup.Key.DaypartCode,
+                            SpotLengthLabel = spotLengthLabel,
+                            Units = unitsSum,
+                            UnitsCost = (unitsSum == 0 ? 0 : totalCost / unitsSum),
+                            TotalCost = totalCost,
 
                             //HH data
-                            (unitsSum == 0 ? 0 : totalHHRatingPoints / unitsSum),
-                            totalHHRatingPoints,
-                            (unitsSum == 0 ? 0 : totalHHImpressions / unitsSum),
-                            totalHHImpressions,
-                            _CalculateCost(totalHHImpressions, totalCost),
-                            _CalculateCost(totalHHRatingPoints, totalCost),
+                            HHData = new AudienceData
+                            {
+                                RatingPoints = (unitsSum == 0 ? 0 : totalHHRatingPoints / unitsSum),
+                                TotalRatingPoints = totalHHRatingPoints,
+                                Impressions = (unitsSum == 0 ? 0 : totalHHImpressions / unitsSum),
+                                TotalImpressions = totalHHImpressions,
+                                CPM = _CalculateCost(totalHHImpressions, totalCost),
+                                CPP = _CalculateCost(totalHHRatingPoints, totalCost),
 
-                            //guaranteedData
-                            (totalHHImpressions == 0 ? 0 : totalImpressions / totalHHImpressions),    //VPVH
-                            (unitsSum == 0 ? 0 : totalRatingPoints / unitsSum),
-                            totalRatingPoints,
-                            (unitsSum == 0 ? 0 : totalImpressions / unitsSum),
-                            totalImpressions,
-                            _CalculateCost(totalImpressions, totalCost),
-                            _CalculateCost(totalRatingPoints, totalCost)
+                            },
+                            GuaranteedData = new AudienceData
+                            {
+                                VPVH = _CalculateVPVH(totalImpressions, totalHHImpressions),
+                                RatingPoints = (unitsSum == 0 ? 0 : totalRatingPoints / unitsSum),
+                                TotalRatingPoints = totalRatingPoints,
+                                Impressions = (unitsSum == 0 ? 0 : totalImpressions / unitsSum),
+                                TotalImpressions = totalImpressions,
+                                CPM = _CalculateCost(totalImpressions, totalCost),
+                                CPP = _CalculateCost(totalRatingPoints, totalCost)
+                            }
                         };
-                        if (HasSecondaryAudiences)  //this check is for the entire file
-                        {
-                            //add an empty cell to account for the differences in layout
-                            row.Insert(5, EMPTY_CELL);
-                        }
                         if (secondaryAudiences.Any())   //this check is for the current group 
                         {
                             foreach (var demo in secondaryAudiences)
@@ -471,16 +473,20 @@ namespace Services.Broadcast.Entities.Campaign
                                 var demoData = items.SelectMany(x => x.SecondaryAudiences).Where(x => x.AudienceId == demo.AudienceId).ToList();
                                 double totalRatingPointsForDemo = demoData.Sum(x => x.TotalRatingPoints);
                                 double totalImpressionsForDemo = demoData.Sum(x => x.TotalImpressions) / 1000;
-                                demoTable.Rows.Add(new List<object>
-                                {
-                                    (totalHHImpressions == 0 ? 0 : totalImpressionsForDemo / totalHHImpressions),    //VPVH
-                                    (unitsSum == 0 ? 0 : totalRatingPointsForDemo / unitsSum),
-                                    totalRatingPointsForDemo,
-                                    (unitsSum == 0 ? 0 : totalImpressionsForDemo / unitsSum),
-                                    totalImpressionsForDemo,
-                                    _CalculateCost(totalImpressionsForDemo, totalCost),
-                                    _CalculateCost(totalRatingPointsForDemo, totalCost)
-                                });
+                                demoTable.Rows.Add(
+                                    new AudienceData
+                                    {
+                                        DaypartCode = daypartGroup.Key.DaypartCode,
+                                        SpotLengthLabel = spotLengthLabel,
+                                        VPVH = _CalculateVPVH(totalImpressionsForDemo, totalHHImpressions),
+                                        RatingPoints = (unitsSum == 0 ? 0 : totalRatingPointsForDemo / unitsSum),
+                                        TotalRatingPoints = totalRatingPointsForDemo,
+                                        Impressions = (unitsSum == 0 ? 0 : totalImpressionsForDemo / unitsSum),
+                                        TotalImpressions = totalImpressionsForDemo,
+                                        CPM = _CalculateCost(totalImpressionsForDemo, totalCost),
+                                        CPP = _CalculateCost(totalRatingPointsForDemo, totalCost)
+                                    }
+                                );
                             }
                         }
                         newTable.Rows.Add(row);
@@ -531,7 +537,7 @@ namespace Services.Broadcast.Entities.Campaign
                 Months = firstTable.Months
             };
             for (int i = 0; i < tableData.TotalWeeksInQuarter; i++)
-            {                
+            {
                 tableData.UnitsValues.Add(tablesInQuarterDaypart.Sum(x => Convert.ToInt32(x.UnitsValues[i])));
                 double impressions = tablesInQuarterDaypart.Sum(x => Convert.ToDouble(x.ImpressionsValues[i]));
                 tableData.ImpressionsValues.Add(impressions);
@@ -718,10 +724,10 @@ namespace Services.Broadcast.Entities.Campaign
                         Title = quarter.LongFormat(),
                     };
                     qDGrp.ToList().GroupBy(y => new { y.DaypartCode, y.SpotLength, y.Equivalized, y.WeekStartDate })
-                    .OrderBy(x=>x.Key.WeekStartDate)    //ASC by week
-                    .ThenBy(x=> x.Key.DaypartCode)      //Alphabetically ASC by daypart code
-                    .ThenBy(x=> Convert.ToInt32(x.Key.SpotLength))  // ASC by order of time length
-                    .ThenByDescending(x=> x.Key.Equivalized)  // then by equivalized
+                    .OrderBy(x => x.Key.WeekStartDate)    //ASC by week
+                    .ThenBy(x => x.Key.DaypartCode)      //Alphabetically ASC by daypart code
+                    .ThenBy(x => Convert.ToInt32(x.Key.SpotLength))  // ASC by order of time length
+                    .ThenByDescending(x => x.Key.Equivalized)  // then by equivalized
                     .ToList()
                     .ForEach(row =>  //quarter daypart spot length equivalized group in the same week
                     {
@@ -781,8 +787,8 @@ namespace Services.Broadcast.Entities.Campaign
                 }
 
                 plans.GroupBy(x => new { SpotLength = spotLenghts.Single(y => y.Id == x.SpotLengthId).Display, x.Equivalized })
-                    .OrderBy(x=> Convert.ToInt32(x.Key.SpotLength))
-                    .ThenByDescending(x=>x.Key.Equivalized)
+                    .OrderBy(x => Convert.ToInt32(x.Key.SpotLength))
+                    .ThenByDescending(x => x.Key.Equivalized)
                     .ToList()
                     .ForEach(group =>
                     {
@@ -886,108 +892,143 @@ namespace Services.Broadcast.Entities.Campaign
             ProposalCampaignTotalsTable.QuarterLabel = "Campaign Totals";
 
             ProposalQuarterTables.SelectMany(x => x.Rows)
-                .GroupBy(x => new { SpotLength = x[1], DaypartCode = x[0] })
+                .GroupBy(x => new { SpotLength = x.SpotLengthLabel, DaypartCode = x.DaypartCode })
                 .ToList()
                 .ForEach(group =>
                 {
-                    int offset = HasSecondaryAudiences ? 1 : 0;
                     var items = group.ToList();
-                    int unitsSum = items.Sum(x => (int)x[2]);
-                    decimal totalCost = items.Sum(x => (decimal)x[4]);
-                    double totalHHRatingPoints = items.Sum(x => (double)x[6 + offset]);
-                    double totalHHImpressions = items.Sum(x => (double)x[8 + offset]);
-                    double totalRatingPoints = items.Sum(x => (double)x[13 + offset]);
-                    double totalImpressions = items.Sum(x => (double)x[15 + offset]);
+                    int unitsSum = items.Sum(x => x.Units);
+                    decimal totalCost = items.Sum(x => x.TotalCost);
+                    double totalHHRatingPoints = items.Sum(x => x.HHData.TotalRatingPoints);
+                    double totalHHImpressions = items.Sum(x => x.HHData.TotalImpressions);
+                    double totalRatingPoints = items.Sum(x => x.GuaranteedData.TotalRatingPoints);
+                    double totalImpressions = items.Sum(x => x.GuaranteedData.TotalImpressions);
 
-                    List<object> row = new List<object>
+                    var row = new ProposalQuarterTableRowData
                     {
-                        group.Key.DaypartCode,
-                        group.Key.SpotLength,
-                        unitsSum,
-                        NO_VALUE_CELL,
-                        totalCost,
-                        items.Sum(x=> (double)x[5 + offset]),
-                        totalHHRatingPoints,
-                        items.Sum(x=> (double)x[7 + offset]),
-                        totalHHImpressions,
-                        _CalculateCost(totalHHImpressions, totalCost),
-                        _CalculateCost(totalHHRatingPoints, totalCost),
-                        (totalHHImpressions == 0 ? 0 : totalImpressions / totalHHImpressions),
-                        items.Sum(x=> (double)x[12 + offset]),
-                        totalRatingPoints,
-                        items.Sum(x=> (double)x[14 + offset]),
-                        totalImpressions,
-                        _CalculateCost(totalImpressions, totalCost),
-                        _CalculateCost(totalRatingPoints, totalCost)
+                        DaypartCode = group.Key.DaypartCode,
+                        SpotLengthLabel = group.Key.SpotLength,
+                        Units = unitsSum,
+                        TotalCost = totalCost,
+                        HHData = new AudienceData
+                        {
+                            RatingPoints = items.Sum(x => x.HHData.RatingPoints),
+                            TotalRatingPoints = totalHHRatingPoints,
+                            Impressions = items.Sum(x => x.HHData.Impressions),
+                            TotalImpressions = totalHHImpressions,
+                            CPM = _CalculateCost(totalHHImpressions, totalCost),
+                            CPP = _CalculateCost(totalHHRatingPoints, totalCost)
+                        },
+                        GuaranteedData = new AudienceData
+                        {
+                            VPVH = _CalculateVPVH(totalImpressions, totalHHImpressions),
+                            RatingPoints = items.Sum(x => x.GuaranteedData.RatingPoints),
+                            TotalRatingPoints = totalRatingPoints,
+                            Impressions = items.Sum(x => x.GuaranteedData.Impressions),
+                            TotalImpressions = totalImpressions,
+                            CPM = _CalculateCost(totalImpressions, totalCost),
+                            CPP = _CalculateCost(totalRatingPoints, totalCost)
+                        }
                     };
-                    if (HasSecondaryAudiences)  //this check is for the entire file
-                    {
-                        //add an empty cell to account for the differences in layout
-                        row.Insert(5, EMPTY_CELL);
-                    }
                     ProposalCampaignTotalsTable.Rows.Add(row);
                 });
+            _PopulateCampainTotalTableSecondaryAudiences();
             _SetTableTotals(ProposalCampaignTotalsTable);
+        }
+
+        private void _PopulateCampainTotalTableSecondaryAudiences()
+        {
+            ProposalQuarterTables
+                .SelectMany(x => x.SecondaryAudiencesTables)
+                .GroupBy(x => x.AudienceCode)
+                .ToList()
+                .ForEach(table =>
+                {
+                    var newTable = new SecondayAudienceTable
+                    {
+                        AudienceCode = table.Key
+                    };
+                    table.SelectMany(x => x.Rows).GroupBy(x => new { x.DaypartCode, x.SpotLengthLabel } )
+                    .ToList()
+                    .ForEach(row =>
+                    {
+                        var quarterRows = ProposalQuarterTables
+                            .SelectMany(x => x.Rows.Where(y => y.DaypartCode.Equals(row.Key.DaypartCode) && y.SpotLengthLabel.Equals(row.Key.SpotLengthLabel)));
+                        int unitsSum = quarterRows.Sum(x => x.Units);
+                        decimal totalCost = quarterRows.Sum(x => x.TotalCost);
+                        double totalHHImpressions = quarterRows.Sum(x => x.HHData.TotalImpressions);
+
+                        var demoData = row.ToList();
+                        double totalRatingPointsForDemo = demoData.Sum(x => x.TotalRatingPoints);
+                        double totalImpressionsForDemo = demoData.Sum(x => x.TotalImpressions);
+
+                        newTable.Rows.Add(
+                            new AudienceData
+                            {
+                                VPVH = _CalculateVPVH(totalImpressionsForDemo, totalHHImpressions),
+                                RatingPoints = (unitsSum == 0 ? 0 : totalRatingPointsForDemo / unitsSum),
+                                TotalRatingPoints = totalRatingPointsForDemo,
+                                Impressions = (unitsSum == 0 ? 0 : totalImpressionsForDemo / unitsSum),
+                                TotalImpressions = totalImpressionsForDemo,
+                                CPM = _CalculateCost(totalImpressionsForDemo, totalCost),
+                                CPP = _CalculateCost(totalRatingPointsForDemo, totalCost)
+                            });
+                    });
+                    ProposalCampaignTotalsTable.SecondaryAudiencesTables.Add(newTable);
+                });
         }
 
         private void _SetTableTotals(ProposalQuarterTableData table)
         {
-            decimal totalCost = table.Rows.Sum(x => (decimal)x[4]);
+            decimal totalCost = table.Rows.Sum(x => x.TotalCost);
             _SetQuarterTableTotals(table, totalCost);
             foreach (var demoTable in table.SecondaryAudiencesTables)
             {
-                _SetQuarterTableSecondaryAudienceTableTotals(demoTable, totalCost);
+                _SetTableSecondaryAudienceTableTotals(demoTable, totalCost);
             }
         }
 
-        private void _SetQuarterTableSecondaryAudienceTableTotals(ProposalQuarterTableData.SecondayAudienceTable demoTable, decimal totalCost)
+        private void _SetTableSecondaryAudienceTableTotals(ProposalQuarterTableData.SecondayAudienceTable demoTable, decimal totalCost)
         {
-            var totalImpressions = demoTable.Rows.Sum(x => (double)x[4]);
-            var totalRatingPoints = demoTable.Rows.Sum(x => (double)x[2]);
-            demoTable.TotalRow = new List<object>
+            var totalImpressions = demoTable.Rows.Sum(x => x.TotalImpressions);
+            var totalRatingPoints = demoTable.Rows.Sum(x => x.TotalRatingPoints);
+            demoTable.TotalRow = new AudienceData
             {
-                NO_VALUE_CELL,
-                NO_VALUE_CELL,
-                totalRatingPoints,
-                NO_VALUE_CELL,
-                totalImpressions,
-                _CalculateCost(totalImpressions, totalCost),
-                _CalculateCost(totalRatingPoints, totalCost)
+                TotalRatingPoints = totalRatingPoints,
+                TotalImpressions = totalImpressions,
+                CPM = _CalculateCost(totalImpressions, totalCost),
+                CPP = _CalculateCost(totalRatingPoints, totalCost)
             };
         }
 
         private void _SetQuarterTableTotals(ProposalQuarterTableData table, decimal totalCost)
         {
-            int offset = HasSecondaryAudiences ? 1 : 0;
-            int totalUnits = table.Rows.Sum(x => (int)x[2]);
-            var totalHHImpressions = table.Rows.Sum(x => (double)x[8 + offset]);
-            var totalHHRatingPoints = table.Rows.Sum(x => (double)x[6 + offset]);
-            var totalImpressions = table.Rows.Sum(x => (double)x[15 + offset]);
-            var totalRatingPoints = table.Rows.Sum(x => (double)x[13 + offset]);
+            int totalUnits = table.Rows.Sum(x => x.Units);
+            var totalHHImpressions = table.Rows.Sum(x => x.HHData.TotalImpressions);
+            var totalHHRatingPoints = table.Rows.Sum(x => x.HHData.TotalRatingPoints);
+            var totalImpressions = table.Rows.Sum(x => x.GuaranteedData.TotalImpressions);
+            var totalRatingPoints = table.Rows.Sum(x => x.GuaranteedData.TotalRatingPoints);
 
-            table.TotalRow = new List<object>
+            table.TotalRow = new ProposalQuarterTableRowData
             {
-                totalUnits,
-                NO_VALUE_CELL,
-                totalCost,
-                NO_VALUE_CELL,
-                totalHHRatingPoints,
-                NO_VALUE_CELL,
-                totalHHImpressions,
-                _CalculateCost(totalHHImpressions, totalCost),
-                _CalculateCost(totalHHRatingPoints, totalCost),
-                NO_VALUE_CELL,
-                NO_VALUE_CELL,
-                totalRatingPoints,
-                NO_VALUE_CELL,
-                totalImpressions,
-                _CalculateCost(totalImpressions, totalCost),
-                _CalculateCost(totalRatingPoints, totalCost)
+                Units = totalUnits,
+                TotalCost = totalCost,
+                HHData = new AudienceData
+                {
+                    TotalRatingPoints = totalHHRatingPoints,
+
+                    TotalImpressions = totalHHImpressions,
+                    CPM = _CalculateCost(totalHHImpressions, totalCost),
+                    CPP = _CalculateCost(totalHHRatingPoints, totalCost),
+                },
+                GuaranteedData = new AudienceData
+                {
+                    TotalRatingPoints = totalRatingPoints,
+                    TotalImpressions = totalImpressions,
+                    CPM = _CalculateCost(totalImpressions, totalCost),
+                    CPP = _CalculateCost(totalRatingPoints, totalCost)
+                }
             };
-            if (HasSecondaryAudiences)
-            {   //add empty column for the secondary audiences template
-                table.TotalRow.Insert(3, EMPTY_CELL);
-            }
         }
 
         private void _PopulateHeaderData(CampaignExportTypeEnum exportType
@@ -1015,7 +1056,7 @@ namespace Services.Broadcast.Entities.Campaign
         private void _SetSpotLengths(List<PlanDto> plans, List<LookupDto> spotLenghts)
         {
             SpotLengths = plans
-                            .Select(x => new { spotLenghts.Single(y => y.Id == x.SpotLengthId).Display, x.Equivalized })                            
+                            .Select(x => new { spotLenghts.Single(y => y.Id == x.SpotLengthId).Display, x.Equivalized })
                             .OrderBy(x => int.Parse(x.Display))
                             .Select(x => $":{x.Display}{_GetEquivalizedStatus(x.Equivalized, x.Display)}")
                             .Distinct()
@@ -1110,8 +1151,8 @@ namespace Services.Broadcast.Entities.Campaign
     public class ProposalQuarterTableData
     {
         public string QuarterLabel { get; set; }
-        public List<List<object>> Rows { get; set; } = new List<List<object>>();
-        public List<object> TotalRow { get; set; } = new List<object>();
+        public List<ProposalQuarterTableRowData> Rows { get; set; } = new List<ProposalQuarterTableRowData>();
+        public ProposalQuarterTableRowData TotalRow { get; set; }
         public List<SecondayAudienceTable> SecondaryAudiencesTables { get; set; } = new List<SecondayAudienceTable>();
         public bool HasSecondaryAudiences
         {
@@ -1121,12 +1162,36 @@ namespace Services.Broadcast.Entities.Campaign
             }
         }
 
+        public class ProposalQuarterTableRowData
+        {
+            public string DaypartCode { get; set; }
+            public string SpotLengthLabel { get; set; }
+            public int Units { get; set; }
+            public decimal UnitsCost { get; set; }
+            public decimal TotalCost { get; set; }
+            public AudienceData HHData { get; set; }
+            public AudienceData GuaranteedData { get; set; }
+        }
+
         public class SecondayAudienceTable
         {
             public int AudienceId { get; set; }
             public string AudienceCode { get; set; }
-            public List<List<object>> Rows { get; set; } = new List<List<object>>();
-            public List<object> TotalRow { get; set; } = new List<object>();
+            public List<AudienceData> Rows { get; set; } = new List<AudienceData>();
+            public AudienceData TotalRow { get; set; }
+        }
+
+        public class AudienceData
+        {
+            public string DaypartCode { get; set; }
+            public string SpotLengthLabel { get; set; }
+            public double VPVH { get; set; }
+            public double RatingPoints { get; set; }
+            public double TotalRatingPoints { get; set; }
+            public double Impressions { get; set; }
+            public double TotalImpressions { get; set; }
+            public decimal CPM { get; set; }
+            public decimal CPP { get; set; }
         }
     }
 

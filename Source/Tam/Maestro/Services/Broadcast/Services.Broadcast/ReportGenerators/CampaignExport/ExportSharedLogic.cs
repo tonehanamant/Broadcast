@@ -19,6 +19,8 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         public static readonly int FIRST_COLUMNS_INDEX = 1;
         private static readonly string NOT_FOUND_WORKSHEET = "Could not find worksheet {0} in template file {1}";
         private static readonly Color fontColor = ColorTranslator.FromHtml(FONT_COLOR);
+        public static readonly string NO_VALUE_CELL = "-";
+        public static readonly string EMPTY_CELL = null;
 
         /// <summary>
         /// Gets a worksheet by name.
