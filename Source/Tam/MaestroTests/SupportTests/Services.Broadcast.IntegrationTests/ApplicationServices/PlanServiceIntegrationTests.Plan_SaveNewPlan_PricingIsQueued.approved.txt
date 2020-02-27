@@ -1,12 +1,6 @@
 ﻿{
-  "IsPricingModelRunning": true,
-  "Job": {
-    "Completed": null,
-    "DiagnosticResult": null,
-    "ErrorMessage": null,
-    "Queued": "2019-01-01T00:00:00",
-    "Status": 1
-  },
+  "IsPricingModelRunning": false,
+  "Job": null,
   "Result": {
     "OptimalCpm": 0.0,
     "Programs": [],

@@ -222,76 +222,12 @@
   "HUTBookId": null,
   "IsAduEnabled": true,
   "IsDraft": false,
-  "IsPricingModelRunning": true,
+  "IsPricingModelRunning": false,
   "ModifiedBy": "integration_test",
   "ModifiedDate": "2019-01-01T00:00:00",
   "Name": "New Plan",
   "PostingType": 2,
-  "PricingParameters": {
-    "Budget": 100.0000,
-    "CompetitionFactor": null,
-    "CPM": 12.0000,
-    "CPP": 12.0000,
-    "Currency": 1,
-    "DeliveryImpressions": 100.0,
-    "DeliveryRatingPoints": 100.0,
-    "InflationFactor": null,
-    "InventorySourcePercentages": [
-      {
-        "Id": 10,
-        "Name": "ABC O&O",
-        "Percentage": 10
-      },
-      {
-        "Id": 5,
-        "Name": "CNN",
-        "Percentage": 10
-      },
-      {
-        "Id": 12,
-        "Name": "KATZ",
-        "Percentage": 10
-      },
-      {
-        "Id": 7,
-        "Name": "LilaMax",
-        "Percentage": 10
-      },
-      {
-        "Id": 11,
-        "Name": "NBC O&O",
-        "Percentage": 10
-      },
-      {
-        "Id": 6,
-        "Name": "Sinclair",
-        "Percentage": 10
-      },
-      {
-        "Id": 3,
-        "Name": "TVB",
-        "Percentage": 10
-      }
-    ],
-    "InventorySourceTypePercentages": [
-      {
-        "Id": 4,
-        "Name": "Syndication",
-        "Percentage": 10
-      },
-      {
-        "Id": 5,
-        "Name": "Diginet",
-        "Percentage": 10
-      }
-    ],
-    "Margin": 20.0,
-    "MaxCpm": null,
-    "MinCpm": null,
-    "ProprietaryBlend": 0.0,
-    "UnitCaps": 1,
-    "UnitCapsType": 1
-  },
+  "PricingParameters": null,
   "ProductId": 1,
   "SecondaryAudiences": [],
   "ShareBookId": 437,

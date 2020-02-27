@@ -245,8 +245,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
                 _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
 
-                _SetPlanPricingParameters(plan);
-                _PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate);
+                // Running price job on plan creation/edits/saves its temporary disabled
+                //_SetPlanPricingParameters(plan);
+                //_PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate);
             }
 
             return plan.Id;
