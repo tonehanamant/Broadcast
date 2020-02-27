@@ -542,7 +542,7 @@
       "DaypartCodeId": 6,
       "DaysLabel": null,
       "EndTime": "06:00pm",
-      "FlightDays": "M-TU,TH-SU",
+      "FlightDays": "W-SU",
       "GenreRestrictions": [],
       "ProgramRestrictions": [],
       "StartTime": "03:00pm"
@@ -552,7 +552,7 @@
       "DaypartCodeId": 6,
       "DaysLabel": null,
       "EndTime": "06:00pm",
-      "FlightDays": "M-SU",
+      "FlightDays": "TH-SU",
       "GenreRestrictions": [],
       "ProgramRestrictions": [],
       "StartTime": "03:00pm"
@@ -562,7 +562,7 @@
       "DaypartCodeId": 14,
       "DaysLabel": null,
       "EndTime": "09:00am",
-      "FlightDays": "M-TU,TH-SU",
+      "FlightDays": "W-SU",
       "GenreRestrictions": [],
       "ProgramRestrictions": [],
       "StartTime": "06:00am"
@@ -572,7 +572,7 @@
       "DaypartCodeId": 14,
       "DaysLabel": null,
       "EndTime": "09:00am",
-      "FlightDays": "M-SU",
+      "FlightDays": "TH-SU",
       "GenreRestrictions": [],
       "ProgramRestrictions": [],
       "StartTime": "06:00am"
@@ -582,7 +582,7 @@
       "DaypartCodeId": 2,
       "DaysLabel": null,
       "EndTime": "01:00pm",
-      "FlightDays": "M-TU,TH-SU",
+      "FlightDays": "W-SU",
       "GenreRestrictions": [],
       "ProgramRestrictions": [],
       "StartTime": "11:00am"
@@ -592,7 +592,7 @@
       "DaypartCodeId": 2,
       "DaysLabel": null,
       "EndTime": "01:00pm",
-      "FlightDays": "M-SU",
+      "FlightDays": "TH-SU",
       "GenreRestrictions": [],
       "ProgramRestrictions": [],
       "StartTime": "11:00am"

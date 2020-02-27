@@ -50,8 +50,20 @@ namespace Services.Broadcast.Extensions
 
         public static List<DaypartData> OrderDayparts(this List<DaypartData> daypartList)
         {
+            const string MONDAY = "M";
+            const string TUESDAY = "TU";
+            const string WEDNESDAY = "W";
+            const string THURSDAY = "TH";
+            const string FRIDAY = "F";
+            const string SATURDAY = "SA";
             return daypartList
                 .OrderBy(daypart => daypart.DaypartCode)
+                .ThenByDescending(daypart => daypart.FlightDays.StartsWith(MONDAY))
+                .ThenByDescending(daypart => daypart.FlightDays.StartsWith(TUESDAY))
+                .ThenByDescending(daypart => daypart.FlightDays.StartsWith(WEDNESDAY))
+                .ThenByDescending(daypart => daypart.FlightDays.StartsWith(THURSDAY))
+                .ThenByDescending(daypart => daypart.FlightDays.StartsWith(FRIDAY))
+                .ThenByDescending(daypart => daypart.FlightDays.StartsWith(SATURDAY))
                 .ThenBy(daypart => DaypartTimeHelper.ConvertFormattedTimeToSeconds(daypart.StartTime))
                 .ThenBy(daypart => DaypartTimeHelper.ConvertFormattedTimeToSeconds(daypart.EndTime))
                 .ToList();
