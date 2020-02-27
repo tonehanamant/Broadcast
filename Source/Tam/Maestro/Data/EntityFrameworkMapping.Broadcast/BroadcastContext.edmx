@@ -13357,7 +13357,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="status" Type="Int32" Nullable="false" />
           <Property Name="queued_at" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="completed_at" Type="DateTime" Precision="3" />
-          <Property Name="error_message" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="error_message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="diagnostic_result" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="plan_version_pricing_job_inventory_source_estimates" Relationship="BroadcastModel.FK_plan_version_pricing_job_inventory_source_estimates_plan_version_pricing_job" FromRole="plan_version_pricing_job" ToRole="plan_version_pricing_job_inventory_source_estimates" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_pricing_job_plan_versions" FromRole="plan_version_pricing_job" ToRole="plan_versions" />
