@@ -342,7 +342,7 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
-        protected List<PlanPricingApiRequestWeekDto> _GetPricingModelWeeks(PlanDto plan)
+        protected List<PlanPricingApiRequestWeekDto> _GetPricingModelWeeks(PlanDto plan, List<PricingEstimate> proprietaryEstimates)
         {
             var pricingModelWeeks = new List<PlanPricingApiRequestWeekDto>();
 
@@ -353,11 +353,20 @@ namespace Services.Broadcast.ApplicationServices
                     continue;
                 }
 
+                var mediaWeekId = week.MediaWeekId;
+                var estimatesForWeek = proprietaryEstimates.Where(x => x.MediaWeekId == mediaWeekId);
+                var estimatedImpressions = estimatesForWeek.Sum(x => x.Impressions);
+                var estimatedCost = estimatesForWeek.Sum(x => x.Cost);
+
+                var impressionGoal = week.WeeklyImpressions > estimatedImpressions ? week.WeeklyImpressions - estimatedImpressions : 0;
+                var weeklyBudget = week.WeeklyBudget > estimatedCost ? week.WeeklyBudget - estimatedCost : 0;
+                var cpmGoal = ProposalMath.CalculateCpm(weeklyBudget, impressionGoal);
+                
                 pricingModelWeeks.Add(new PlanPricingApiRequestWeekDto
                 {
-                    MediaWeekId = week.MediaWeekId,
-                    ImpressionGoal = week.WeeklyImpressions,
-                    CpmGoal = (week.WeeklyBudget / (decimal)week.WeeklyImpressions) * 1000
+                    MediaWeekId = mediaWeekId,
+                    ImpressionGoal = impressionGoal,
+                    CpmGoal = cpmGoal
                 });
             }
 
@@ -412,8 +421,8 @@ namespace Services.Broadcast.ApplicationServices
 
                 planPricingJobDiagnostic.RecordInventorySourceEstimatesCalculationStart();
 
-                var inventorySourceEstimates = _CalculateProprietaryInventorySourceEstimates(plan, programInventoryParameters);
-                _PlanRepository.SavePlanPricingEstimates(jobId, inventorySourceEstimates);
+                var proprietaryEstimates = _CalculateProprietaryInventorySourceEstimates(plan, programInventoryParameters);
+                _PlanRepository.SavePlanPricingEstimates(jobId, proprietaryEstimates);
 
                 planPricingJobDiagnostic.RecordInventorySourceEstimatesCalculationEnd();
 
@@ -437,7 +446,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 var pricingApiRequest = new PlanPricingApiRequestDto
                 {
-                    Weeks = _GetPricingModelWeeks(plan),
+                    Weeks = _GetPricingModelWeeks(plan, proprietaryEstimates),
                     Spots = _GetPricingModelSpots(inventory)
                 };
 
@@ -680,7 +689,7 @@ namespace Services.Broadcast.ApplicationServices
                 MarketCount = programs.SelectMany(x => x.MarketCodes).Distinct().Count(),
                 StationCount = programs.SelectMany(x => x.Stations).Distinct().Count(),
                 AvgImpressions = ProposalMath.CalculateAvgImpressions(totalImpressionsForAllProgams, totalSpotsForAllPrograms),
-                AvgCpm = ProposalMath.CalculateAvgCpm(totalCostForAllPrograms, totalImpressionsForAllProgams)
+                AvgCpm = ProposalMath.CalculateCpm(totalCostForAllPrograms, totalImpressionsForAllProgams)
             };
 
             result.OptimalCpm = apiResponse.Results.OptimalCpm;
@@ -717,7 +726,7 @@ namespace Services.Broadcast.ApplicationServices
                     ProgramName = inventoryByProgramName.Key,
                     Genre = inventoryByProgramName.First().ManifestDaypart.PrimaryProgram.MaestroGenre,
                     AvgImpressions = ProposalMath.CalculateAvgImpressions(programImpressions, programSpots),
-                    AvgCpm = ProposalMath.CalculateAvgCpm(programCost, programImpressions),
+                    AvgCpm = ProposalMath.CalculateCpm(programCost, programImpressions),
                     TotalImpressions = programImpressions,
                     TotalCost = programCost,
                     TotalSpots = programSpots,
@@ -773,7 +782,7 @@ namespace Services.Broadcast.ApplicationServices
         public PlanPricingApiRequestDto GetPricingInventory(int planId, PricingInventoryGetRequestParametersDto requestParameters)
         {
             var plan = _PlanRepository.GetPlan(planId);
-            var pricingParams = new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto
+            var pricingParams = new ProgramInventoryOptionalParametersDto
             {
                 MinCPM = requestParameters.MinCpm,
                 MaxCPM = requestParameters.MaxCpm,
@@ -783,12 +792,13 @@ namespace Services.Broadcast.ApplicationServices
             var inventorySourceIds = requestParameters.InventorySourceIds.IsEmpty() ?
                 _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes()) :
                 requestParameters.InventorySourceIds;
-            
+
+            var proprietaryEstimates = _CalculateProprietaryInventorySourceEstimates(plan, pricingParams);
             var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, pricingParams, inventorySourceIds);
 
             var pricingApiRequest = new PlanPricingApiRequestDto
             {
-                Weeks = _GetPricingModelWeeks(plan),
+                Weeks = _GetPricingModelWeeks(plan, proprietaryEstimates),
                 Spots = _GetPricingModelSpots(inventory)
             };
 

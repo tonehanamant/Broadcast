@@ -27,8 +27,7 @@ namespace Services.Broadcast.BusinessEngines
 
         public static decimal CalculateCpm(decimal totalCost, double totalImpressions)
         {
-            if (totalImpressions == 0) return 0;
-            return totalCost / (decimal)(totalImpressions / 1000);
+            return totalImpressions == 0 ? 0 : (totalCost / (decimal)totalImpressions) * 1000;
         }
 
         public static decimal CalculateCost(decimal cpm, double impressions)
@@ -52,11 +51,6 @@ namespace Services.Broadcast.BusinessEngines
         public static double CalculateAvgImpressions(double totalImpressions, int spots)
         {
             return spots == 0 ? 0 : totalImpressions / spots;
-        }
-
-        public static decimal CalculateAvgCpm(decimal totalCost, double totalImpressions)
-        {
-            return totalImpressions == 0 ? 0 : totalCost / (decimal)totalImpressions * 1000;
         }
 
         public static double CalculateImpressionsPercentage(double impressions, double totalImpressions)

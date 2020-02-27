@@ -523,8 +523,34 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        public void GetPricingModelWeeks_Filter()
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingModelWeeks()
         {
+            var proprietaryEstimates = new List<PricingEstimate>
+            {
+                new PricingEstimate
+                {
+                    InventorySourceId = 5,
+                    MediaWeekId = 1,
+                    Impressions = 500,
+                    Cost = 500
+                },
+                new PricingEstimate
+                {
+                    InventorySourceId = 6,
+                    MediaWeekId = 2,
+                    Impressions = 400,
+                    Cost = 400
+                },
+                new PricingEstimate
+                {
+                    InventorySourceId = 7,
+                    MediaWeekId = 3,
+                    Impressions = 300,
+                    Cost = 300
+                }
+            };
+
             var plan = new PlanDto
             {
                 WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
@@ -548,10 +574,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var service = _GetService();
 
-            var result = service.UT_GetPricingModelWeeks(plan);
+            var result = service.UT_GetPricingModelWeeks(plan, proprietaryEstimates);
 
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual(2, result.First()?.MediaWeekId);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         private PlanPricingServiceUnitTestClass _GetService()

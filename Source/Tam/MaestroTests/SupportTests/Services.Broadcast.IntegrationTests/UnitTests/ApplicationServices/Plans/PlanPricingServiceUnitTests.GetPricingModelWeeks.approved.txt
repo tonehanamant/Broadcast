@@ -1,0 +1,7 @@
+﻿[
+  {
+    "cpm_goal": 124750.00,
+    "impression_goal": 1600.0,
+    "week_id": 2
+  }
+]

@@ -4,6 +4,7 @@ using Hangfire;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Clients;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
 
@@ -39,9 +40,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             return _IsSpotCostValidForPricingModelInput(spotCost);
         }
 
-        public List<PlanPricingApiRequestWeekDto> UT_GetPricingModelWeeks(PlanDto plan)
+        public List<PlanPricingApiRequestWeekDto> UT_GetPricingModelWeeks(PlanDto plan, List<PricingEstimate> proprietaryEstimates)
         {
-            return _GetPricingModelWeeks(plan);
+            return _GetPricingModelWeeks(plan, proprietaryEstimates);
         }
 
         public bool UT_AreWeeklyImpressionsValidForPricingModelInput(double? impressions)
