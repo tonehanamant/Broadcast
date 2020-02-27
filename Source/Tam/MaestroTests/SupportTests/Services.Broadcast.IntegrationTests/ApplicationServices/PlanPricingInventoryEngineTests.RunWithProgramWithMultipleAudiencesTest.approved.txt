@@ -1,5 +1,6 @@
 ﻿[
   {
+    "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 1,
       "InventoryType": 1,
@@ -166,6 +167,7 @@
     "Unit": null
   },
   {
+    "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 1,
       "InventoryType": 1,

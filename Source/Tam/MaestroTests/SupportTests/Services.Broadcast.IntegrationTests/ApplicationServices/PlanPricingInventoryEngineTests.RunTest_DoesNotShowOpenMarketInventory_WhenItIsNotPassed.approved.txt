@@ -1,5 +1,6 @@
 ﻿[
   {
+    "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 10,
       "InventoryType": 3,

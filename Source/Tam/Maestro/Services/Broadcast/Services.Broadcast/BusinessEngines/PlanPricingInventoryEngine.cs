@@ -22,7 +22,7 @@ namespace Services.Broadcast.BusinessEngines
     public interface IPlanPricingInventoryEngine : IApplicationService
     {
         List<PlanPricingInventoryProgram> GetInventoryForPlan(
-            PlanDto plan, 
+            PlanDto plan,
             ProgramInventoryOptionalParametersDto parameters,
             IEnumerable<int> inventorySourceIds);
     }
@@ -53,7 +53,7 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         public List<PlanPricingInventoryProgram> GetInventoryForPlan(
-            PlanDto plan, 
+            PlanDto plan,
             ProgramInventoryOptionalParametersDto parameters,
             IEnumerable<int> inventorySourceIds)
         {
@@ -78,11 +78,21 @@ namespace Services.Broadcast.BusinessEngines
             if (!inflationFactor.HasValue)
                 return;
 
-            foreach (var program in programs)
+            var fallbackPrograms = programs.Where(p => p.InventoryPricingQuarterType == InventoryPricingQuarterType.Fallback);
+            if (fallbackPrograms.Any())
             {
-                program.SpotCost = program.SpotCost + (program.SpotCost * (decimal)inflationFactor.Value / 100);
+                foreach (var program in fallbackPrograms)
+                    program.SpotCost = _CalculateInflationFactor(program.SpotCost, inflationFactor.Value);
+            }
+            else
+            {
+                foreach (var program in programs)
+                    program.SpotCost = _CalculateInflationFactor(program.SpotCost, inflationFactor.Value);
             }
         }
+
+        private decimal _CalculateInflationFactor(decimal spotCost, double inflationFactor) =>
+            spotCost + (spotCost * ((decimal)inflationFactor / 100));
 
         /// <summary>
         /// Attempts to gather the full inventory set from the plan's quarter or the fallback quarter.
@@ -190,7 +200,7 @@ namespace Services.Broadcast.BusinessEngines
                     program = x,
                     totalTimeInSeconds = _GetTotalTimeInSeconds(x.StartTime, x.EndTime)
                 });
-                
+
                 // PrimaryProgram is the one that has the most time
                 manifestDaypart.PrimaryProgram = programs.OrderByDescending(x => x.totalTimeInSeconds).First().program;
             }
@@ -268,7 +278,7 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         protected List<PlanPricingInventoryProgram> FilterProgramsByDayparts(
-            PlanDto plan, 
+            PlanDto plan,
             List<PlanPricingInventoryProgram> programs,
             DisplayDaypart planDisplayDaypartDays)
         {
@@ -277,7 +287,7 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var program in programs)
             {
                 var inventoryDayparts = _GetInventoryDaypartsThatMatchProgram(plan.Dayparts, planDisplayDaypartDays, program);
-                
+
                 if (inventoryDayparts.Any() && _IsProgramAllowedByRestrictions(inventoryDayparts))
                 {
                     result.Add(program);
@@ -331,12 +341,12 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach (var program in programs)
             {
-                var programCPM = 
+                var programCPM =
                     ProposalMath.CalculateCpm(
                         program.SpotCost,
                         program.ProvidedImpressions.HasValue ? program.ProvidedImpressions.Value : program.ProjectedImpressions);
 
-                if (!(minCPM.HasValue && programCPM < minCPM.Value) 
+                if (!(minCPM.HasValue && programCPM < minCPM.Value)
                     && !(maxCPM.HasValue && programCPM > maxCPM.Value))
                 {
                     result.Add(program);
@@ -374,8 +384,8 @@ namespace Services.Broadcast.BusinessEngines
             var manifestDaypartProgramNames = programInventoryDaypart.ManifestDaypart.Programs.Select(x => x.Name);
             var hasIntersections = manifestDaypartProgramNames.ContainsAny(programNames);
 
-            return programRestrictions.ContainType == ContainTypeEnum.Include ? 
-                hasIntersections : 
+            return programRestrictions.ContainType == ContainTypeEnum.Include ?
+                hasIntersections :
                 !hasIntersections;
         }
 
@@ -436,7 +446,7 @@ namespace Services.Broadcast.BusinessEngines
 
             return result;
         }
-        
+
         protected DisplayDaypart GetPlanDaypartDaysFromPlanFlight(PlanDto plan, List<DateRange> planFlightDateRanges)
         {
             var days = _DayRepository.GetDays();
@@ -461,27 +471,27 @@ namespace Services.Broadcast.BusinessEngines
                 var start = dateRange.Start.Value;
                 var end = dateRange.End.Value;
 
-                while(start <= end)
+                while (start <= end)
                 {
-                    if (start.DayOfWeek == DayOfWeek.Monday    && flightDaysSet.Contains("Monday"))
+                    if (start.DayOfWeek == DayOfWeek.Monday && flightDaysSet.Contains("Monday"))
                         result.Monday = true;
 
-                    if (start.DayOfWeek == DayOfWeek.Tuesday   && flightDaysSet.Contains("Tuesday"))
+                    if (start.DayOfWeek == DayOfWeek.Tuesday && flightDaysSet.Contains("Tuesday"))
                         result.Tuesday = true;
 
                     if (start.DayOfWeek == DayOfWeek.Wednesday && flightDaysSet.Contains("Wednesday"))
                         result.Wednesday = true;
 
-                    if (start.DayOfWeek == DayOfWeek.Thursday  && flightDaysSet.Contains("Thursday"))
+                    if (start.DayOfWeek == DayOfWeek.Thursday && flightDaysSet.Contains("Thursday"))
                         result.Thursday = true;
 
-                    if (start.DayOfWeek == DayOfWeek.Friday    && flightDaysSet.Contains("Friday"))
+                    if (start.DayOfWeek == DayOfWeek.Friday && flightDaysSet.Contains("Friday"))
                         result.Friday = true;
 
-                    if (start.DayOfWeek == DayOfWeek.Saturday  && flightDaysSet.Contains("Saturday"))
+                    if (start.DayOfWeek == DayOfWeek.Saturday && flightDaysSet.Contains("Saturday"))
                         result.Saturday = true;
 
-                    if (start.DayOfWeek == DayOfWeek.Sunday    && flightDaysSet.Contains("Sunday"))
+                    if (start.DayOfWeek == DayOfWeek.Sunday && flightDaysSet.Contains("Sunday"))
                         result.Sunday = true;
 
                     if (result.ActiveDays == 7)
@@ -490,7 +500,7 @@ namespace Services.Broadcast.BusinessEngines
                     start = start.AddDays(1);
                 }
             }
-            
+
             return result;
         }
 

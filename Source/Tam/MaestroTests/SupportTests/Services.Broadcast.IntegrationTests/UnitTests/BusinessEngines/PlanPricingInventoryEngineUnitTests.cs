@@ -584,12 +584,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [TestCase(5.0, 315.0)]
         [TestCase(10.0, 330.0)]
         [TestCase(4.5, 313.5)]
-        public void ApplyInflationToSpotCost(double? inflationFactor, double expectedResult)
+        public void ApplyInflationToSpotCost_ProgramsWithPlanInventoryPricingQuarterType(double? inflationFactor, double expectedResult)
         {
             var programs = new List<PlanPricingInventoryProgram>
             {
                 new PlanPricingInventoryProgram
                 {
+                    InventoryPricingQuarterType = InventoryPricingQuarterType.Plan,
                     SpotCost = 300.00M,
                 }
             };
@@ -597,6 +598,55 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _PlanPricingInventoryEngine.UT_ApplyInflationFactorToSpotCost(programs, inflationFactor);
 
             Assert.AreEqual((decimal)expectedResult, programs.Single().SpotCost);
+        }
+
+        [Test]
+        [TestCase(null, 300.0)]
+        [TestCase(5.0, 315.0)]
+        [TestCase(10.0, 330.0)]
+        [TestCase(4.5, 313.5)]
+        public void ApplyInflationToSpotCost_ProgramsWithFallbackInventoryPricingQuarterType(double? inflationFactor, double expectedResult)
+        {
+            var programs = new List<PlanPricingInventoryProgram>
+            {
+                new PlanPricingInventoryProgram
+                {
+                    InventoryPricingQuarterType = InventoryPricingQuarterType.Fallback,
+                    SpotCost = 300.00M,
+                }
+            };
+
+            _PlanPricingInventoryEngine.UT_ApplyInflationFactorToSpotCost(programs, inflationFactor);
+
+            Assert.AreEqual((decimal)expectedResult, programs.Single().SpotCost);
+        }
+
+        [Test]
+        [TestCase(null, 300.0)]
+        [TestCase(5.0, 315.0)]
+        [TestCase(10.0, 330.0)]
+        [TestCase(4.5, 313.5)]
+        public void ApplyInflationToSpotCost_ProgramsWithMixedInventoryPricingQuarterType(double? inflationFactor, double expectedResult)
+        {
+            const decimal defaultSpotCost = 300;
+            var programs = new List<PlanPricingInventoryProgram>
+            {
+                new PlanPricingInventoryProgram
+                {
+                    InventoryPricingQuarterType = InventoryPricingQuarterType.Fallback,
+                    SpotCost = defaultSpotCost,
+                },
+                new PlanPricingInventoryProgram
+                {
+                    InventoryPricingQuarterType = InventoryPricingQuarterType.Plan,
+                    SpotCost = defaultSpotCost
+                }
+            };
+
+            _PlanPricingInventoryEngine.UT_ApplyInflationFactorToSpotCost(programs, inflationFactor);
+
+            Assert.AreEqual((decimal)expectedResult, programs.FirstOrDefault().SpotCost);
+            Assert.AreEqual(defaultSpotCost, programs.LastOrDefault().SpotCost);
         }
 
         [Test]
