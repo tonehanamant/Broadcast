@@ -34,8 +34,15 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
+        [Route("PricingApiRequestPrograms")]
+        public BaseResponse<PlanPricingApiRequestDto> GetPricingProgramApiRequest(int planId, PricingInventoryGetRequestParametersDto requestParameters)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPricingApiRequestPrograms(planId, requestParameters));
+        }
+
+        [HttpPost]
         [Route("Inventory")]
-        public BaseResponse<PlanPricingApiRequestDto> GetPricingInventory(int planId, PricingInventoryGetRequestParametersDto requestParameters)
+        public BaseResponse<List<PlanPricingInventoryProgram>> GetPricingInventory(int planId, PricingInventoryGetRequestParametersDto requestParameters)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPricingInventory(planId, requestParameters));
         }

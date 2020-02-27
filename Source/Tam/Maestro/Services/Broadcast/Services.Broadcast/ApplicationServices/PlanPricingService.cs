@@ -30,9 +30,8 @@ namespace Services.Broadcast.ApplicationServices
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void RunPricingJob(PlanPricingParametersDto planPricingParametersDto, int jobId);
         List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId);
-
-        PlanPricingApiRequestDto GetPricingInventory(int planId, PricingInventoryGetRequestParametersDto requestParameters);
-
+        PlanPricingApiRequestDto GetPricingApiRequestPrograms(int planId, PricingInventoryGetRequestParametersDto requestParameters);
+        List<PlanPricingInventoryProgram> GetPricingInventory(int planId, PricingInventoryGetRequestParametersDto requestParameters);
         /// <summary>
         /// Gets the unit caps.
         /// </summary>
@@ -40,9 +39,7 @@ namespace Services.Broadcast.ApplicationServices
         List<LookupDto> GetUnitCaps();
         PlanPricingDefaults GetPlanPricingDefaults();
         bool IsPricingModelRunningForPlan(int planId);
-
         string ForceCompletePlanPricingJob(int jobId, string username);
-
         /// <summary>
         /// For troubleshooting.  This will bypass the queue to allow rerunning directly.
         /// </summary>
@@ -779,7 +776,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        public PlanPricingApiRequestDto GetPricingInventory(int planId, PricingInventoryGetRequestParametersDto requestParameters)
+        public PlanPricingApiRequestDto GetPricingApiRequestPrograms(int planId, PricingInventoryGetRequestParametersDto requestParameters)
         {
             var plan = _PlanRepository.GetPlan(planId);
             var pricingParams = new ProgramInventoryOptionalParametersDto
@@ -788,13 +785,12 @@ namespace Services.Broadcast.ApplicationServices
                 MaxCPM = requestParameters.MaxCpm,
                 InflationFactor = requestParameters.InflationFactor
             };
-
             var inventorySourceIds = requestParameters.InventorySourceIds.IsEmpty() ?
                 _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes()) :
                 requestParameters.InventorySourceIds;
 
-            var proprietaryEstimates = _CalculateProprietaryInventorySourceEstimates(plan, pricingParams);
             var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, pricingParams, inventorySourceIds);
+            var proprietaryEstimates = _CalculateProprietaryInventorySourceEstimates(plan, pricingParams);
 
             var pricingApiRequest = new PlanPricingApiRequestDto
             {
@@ -803,6 +799,23 @@ namespace Services.Broadcast.ApplicationServices
             };
 
             return pricingApiRequest;
+        }
+
+        public List<PlanPricingInventoryProgram> GetPricingInventory(int planId, PricingInventoryGetRequestParametersDto requestParameters)
+        {
+            var plan = _PlanRepository.GetPlan(planId);
+            var pricingParams = new ProgramInventoryOptionalParametersDto
+            {
+                MinCPM = requestParameters.MinCpm,
+                MaxCPM = requestParameters.MaxCpm,
+                InflationFactor = requestParameters.InflationFactor
+            };
+            var inventorySourceIds = requestParameters.InventorySourceIds.IsEmpty() ?
+                _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes()) :
+                requestParameters.InventorySourceIds;
+
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, pricingParams, inventorySourceIds);
+            return inventory;
         }
 
         public string ForceCompletePlanPricingJob(int jobId, string username)
