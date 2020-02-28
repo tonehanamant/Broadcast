@@ -1,0 +1,10 @@
+﻿[
+  {
+    "MapSet": 1,
+    "MapValue": "KPLC-DT3"
+  },
+  {
+    "MapSet": 4,
+    "MapValue": "NPLC"
+  }
+]

@@ -101,24 +101,19 @@ namespace Services.Broadcast.ApplicationServices
 
             // Get the station
             var station = _StationRepository.GetBroadcastStationByLegacyCallLetters(cadentCallLetters);
-            // If the station doesn't exist, and we have an NSI call letter for it, create it
-            if (station == null && !string.IsNullOrEmpty(nsiCallLettersList.FirstOrDefault()))
-            {
-                station = _StationRepository.CreateStation(
-                    new DisplayBroadcastStation
-                    {
-                        CallLetters = nsiCallLettersList.FirstOrDefault(),
-                        Affiliation = stationGroup.First().Affiliate,
-                        LegacyCallLetters = stationGroup.First().CadentCallLetters,
-                        ModifiedDate = createdDate,
-                    },
-                    userName);
-            }
-
-            // If we still don't have a station, don't save mappings
+            // If the station doesn't exist, create it
             if (station == null)
             {
-                return;
+                var stationDtoToSave = new DisplayBroadcastStation
+                {
+                    CallLetters = nsiCallLettersList.FirstOrDefault() ?? stationGroup.First().CadentCallLetters,
+                    Affiliation = stationGroup.First().Affiliate,
+                    LegacyCallLetters = stationGroup.First().CadentCallLetters,
+                    ModifiedDate = createdDate,
+                };
+
+                var stationMediaMonthId = _StationRepository.GetLatestMediaMonthIdFromStationMonthDetailsList();
+                station = _StationRepository.CreateStationWithMonthDetails(stationDtoToSave, stationMediaMonthId, userName);
             }
 
             // Since we allow multiple map sets for a station, remove the existing ones, and add the new ones, to avoid duplicate mappings

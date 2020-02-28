@@ -1,9 +1,11 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +18,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     {
         private readonly IStationMappingService _StationMappingService;
         private readonly IStationService _StationService;
+        private readonly IStationRepository _StationRepository;
 
         public StationMappingsIntegationTests()
         {
             _StationMappingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IStationMappingService>();
             _StationService = IntegrationTestApplicationServiceFactory.GetApplicationService<IStationService>();
+            _StationRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+                .GetDataRepository<IStationRepository>();
         }
 
         [Test]
@@ -104,7 +109,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        public void IfNewStationIsProvidedWithNoNSICallLettersNoNewStationIsSaved()
+        [UseReporter(typeof(DiffReporter))]
+        public void CreateNewUnratedStation()
         {
             using (new TransactionScopeWrapper())
             {
@@ -112,19 +118,93 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     new StationMappingsFileRequestDto
                     {
-                        CadentCallLetters = "CLTV",
-                        ExtendedCallLetters = "CLTV-DT2",
-                        Affiliate = "POS"
+                        CadentCallLetters = "NPLC",
+                        ExtendedCallLetters = "KPLC-DT3",
+                        SigmaCallLetters = "NPLC",
+                        NSILegacyCallLetters = null,
+                        NSICallLetters = null,
+                        Affiliate = "BOU"
                     }
                 }).GroupBy(x => x.CadentCallLetters).First();
 
                 _StationMappingService.SaveStationMappings(stationMappings, "integration_test", DateTime.Now);
-                var results = _StationMappingService.GetStationMappingsByCadentCallLetter("CLTV");
-                var newStationExists = _StationService.StationExistsInBroadcastDatabase("CLTV");
+                var results = _StationMappingService.GetStationMappingsByCadentCallLetter("NPLC");
+                var newStation = _StationRepository.GetBroadcastStationByCallLetters("NPLC");
+                var newStationMonths = _StationRepository.GetStationMonthDetailsForStation(newStation.Id);
+                var latestMediaMonth = _StationRepository.GetLatestMediaMonthIdFromStationMonthDetailsList();
 
-                Assert.IsEmpty(results);
-                Assert.AreEqual(false, newStationExists);
+                Assert.IsNotEmpty(results);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, _GetJsonSettings()));
+                
+                Assert.AreEqual("NPLC", newStation.CallLetters);
+                Assert.AreEqual("NPLC", newStation.LegacyCallLetters);
+                Assert.AreEqual("BOU", newStation.Affiliation);
+                Assert.IsNull(newStation.Code);
+                Assert.IsNull(newStation.MarketCode);
+
+                Assert.IsNotNull(newStationMonths);
+                Assert.AreEqual(1, newStationMonths.Count);
+                Assert.IsNull(newStationMonths[0].DistributorCode);
+                Assert.IsNull(newStationMonths[0].MarketCode);
+                Assert.AreEqual("BOU", newStationMonths[0].Affiliation);
+                Assert.AreEqual(latestMediaMonth, newStationMonths[0].MediaMonthId);
             }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CreateNewUnratedStationWithoutAffiliate()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var stationMappings = (new List<StationMappingsFileRequestDto>
+                {
+                    new StationMappingsFileRequestDto
+                    {
+                        CadentCallLetters = "QAUO",
+                        ExtendedCallLetters = "KAUO-LD4",
+                        SigmaCallLetters = null,
+                        NSILegacyCallLetters = null,
+                        NSICallLetters = null,
+                        Affiliate = null
+                    }
+                }).GroupBy(x => x.CadentCallLetters).First();
+
+                _StationMappingService.SaveStationMappings(stationMappings, "integration_test", DateTime.Now);
+                var results = _StationMappingService.GetStationMappingsByCadentCallLetter("QAUO");
+                var newStation = _StationRepository.GetBroadcastStationByCallLetters("QAUO");
+                var newStationMonths = _StationRepository.GetStationMonthDetailsForStation(newStation.Id);
+                var latestMediaMonth = _StationRepository.GetLatestMediaMonthIdFromStationMonthDetailsList();
+
+                Assert.IsNotEmpty(results);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, _GetJsonSettings()));
+
+                Assert.AreEqual("QAUO", newStation.CallLetters);
+                Assert.AreEqual("QAUO", newStation.LegacyCallLetters);
+                Assert.IsNull(newStation.Affiliation);
+                Assert.IsNull(newStation.Code);
+                Assert.IsNull(newStation.MarketCode);
+
+                Assert.IsNotNull(newStationMonths);
+                Assert.AreEqual(1, newStationMonths.Count);
+                Assert.IsNull(newStationMonths[0].DistributorCode);
+                Assert.IsNull(newStationMonths[0].MarketCode);
+                Assert.IsNull(newStationMonths[0].Affiliation);
+                Assert.AreEqual(latestMediaMonth, newStationMonths[0].MediaMonthId);
+            }
+        }
+
+        private JsonSerializerSettings _GetJsonSettings()
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(StationMappingsDto), "StationId");
+
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+            return jsonSettings;
         }
     }
 }
