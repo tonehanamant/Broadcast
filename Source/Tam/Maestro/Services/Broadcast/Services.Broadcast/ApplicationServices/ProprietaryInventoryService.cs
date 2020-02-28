@@ -72,6 +72,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IFileService _FileService;
         private readonly IInventoryScxDataPrepFactory _InventoryScxDataPrepFactory;
         private readonly IInventoryProgramsProcessingService _InventoryProgramsProcessingService;
+        private readonly IStationMappingService _IStationMappingService;
 
         public ProprietaryInventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IProprietaryFileImporterFactory proprietaryFileImporterFactory
@@ -88,7 +89,8 @@ namespace Services.Broadcast.ApplicationServices
             , IInventoryWeekEngine inventoryWeekEngine
             , IFileService fileService
             , IInventoryScxDataPrepFactory inventoryScxDataPrepFactory
-            ,IInventoryProgramsProcessingService inventoryProgramsProcessingService)
+            , IInventoryProgramsProcessingService inventoryProgramsProcessingService
+            , IStationMappingService stationMappingService)
         {
             _ProprietaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IProprietaryRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -109,6 +111,7 @@ namespace Services.Broadcast.ApplicationServices
             _FileService = fileService;
             _InventoryScxDataPrepFactory = inventoryScxDataPrepFactory;
             _InventoryProgramsProcessingService = inventoryProgramsProcessingService;
+            _IStationMappingService = stationMappingService;
         }
 
         ///<inheritdoc/>
@@ -149,7 +152,7 @@ namespace Services.Broadcast.ApplicationServices
                     using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                     {
                         var header = proprietaryFile.Header;
-                        var stations = _GetFileStationsOrCreate(proprietaryFile, userName, nowDate);
+                        var stations = _GetFileStations(proprietaryFile);
                         var stationsDict = stations.ToDictionary(x => x.Id, x => x.LegacyCallLetters);
                         
                         fileImporter.PopulateManifests(proprietaryFile, stations);
@@ -295,34 +298,18 @@ namespace Services.Broadcast.ApplicationServices
             return inventorySource;
         }
 
-        private List<DisplayBroadcastStation> _GetFileStationsOrCreate(ProprietaryInventoryFile proprietaryFile, string userName, DateTime now)
+        private List<DisplayBroadcastStation> _GetFileStations(ProprietaryInventoryFile proprietaryFile)
         {
-            var allStationNames = proprietaryFile.DataLines.Select(x => x.Station).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct();
-            var allLegacyStationNames = allStationNames.Select(_StationProcessingEngine.StripStationSuffix).Distinct().ToList();
-            var existingStations = _StationRepository.GetBroadcastStationListByLegacyCallLetters(allLegacyStationNames);
-            var existingStationNames = existingStations.Select(x => x.LegacyCallLetters);
-            var notExistingStations = allLegacyStationNames.Except(existingStationNames, StringComparer.OrdinalIgnoreCase).ToList();
-            var stationsToCreate = new List<DisplayBroadcastStation>();
+            var allStationNames = proprietaryFile.DataLines.Select(x => x.Station).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct();            
+            var stationsList = new List<DisplayBroadcastStation>();
 
             foreach (var stationName in allStationNames)
             {
-                var legacyStationName = _StationProcessingEngine.StripStationSuffix(stationName);
-
-                if (notExistingStations.Contains(legacyStationName))
-                {
-                    stationsToCreate.Add(new DisplayBroadcastStation
-                    {
-                        CallLetters = stationName,
-                        LegacyCallLetters = legacyStationName,
-                        ModifiedDate = now
-                    });
-                }
+                var station = _IStationMappingService.GetStationByCallLetters(stationName);
+                stationsList.Add(station);
             }
 
-            var newStations = _StationRepository.CreateStations(stationsToCreate, userName);
-            existingStations.AddRange(newStations);
-
-            return existingStations;
+            return stationsList;
         }
                 
         private void WriteErrorFileToDisk(Stream stream, int fileId, string fileName)

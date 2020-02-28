@@ -61,6 +61,20 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="cadentCallLetters">The cadent call letters.</param>
         void RemoveAllMappingsForCadentCallLetters(string cadentCallLetters);
+
+        /// <summary>
+        /// Gets the station by call letters.
+        /// </summary>
+        /// <param name="callLetters">Name of the station.</param>
+        /// <returns></returns>
+        DisplayBroadcastStation GetBroadcastStationByCallLetters(string callLetters);
+
+        /// <summary>
+        /// Gets the broadcast station starting with call letters.
+        /// </summary>
+        /// <param name="callLetters">The call letters.</param>
+        /// <returns></returns>
+        DisplayBroadcastStation GetBroadcastStationStartingWithCallLetters(string callLetters);
     }
 
     public class StationMappingRepository : BroadcastRepositoryBase, IStationMappingRepository
@@ -244,6 +258,52 @@ namespace Services.Broadcast.Repositories
                 .RemoveRange(entities);
 
                 context.SaveChanges();
+            });
+        }
+
+        /// <inheritdoc />
+        public DisplayBroadcastStation GetBroadcastStationByCallLetters(string callLetters)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                return context.stations
+                    .Include(x => x.station_mappings)
+                    .Where(station =>
+                        station.station_mappings.Any(mapping => mapping.mapped_call_letters == callLetters))
+                        .Select(s => new DisplayBroadcastStation
+                        {
+                            Id = s.id,
+                            Code = s.station_code,
+                            Affiliation = s.affiliation,
+                            CallLetters = s.station_call_letters,
+                            LegacyCallLetters = s.legacy_call_letters,
+                            ModifiedDate = s.modified_date,
+                            MarketCode = s.market_code
+                        })
+                    .FirstOrDefault();
+            });
+        }
+
+        /// <inheritdoc />
+        public DisplayBroadcastStation GetBroadcastStationStartingWithCallLetters(string callLetters)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                return context.stations
+                    .Include(x => x.station_mappings)
+                    .Where(station =>
+                        station.station_mappings.Any(mapping => mapping.mapped_call_letters.StartsWith(callLetters)))
+                        .Select(s => new DisplayBroadcastStation
+                        {
+                            Id = s.id,
+                            Code = s.station_code,
+                            Affiliation = s.affiliation,
+                            CallLetters = s.station_call_letters,
+                            LegacyCallLetters = s.legacy_call_letters,
+                            ModifiedDate = s.modified_date,
+                            MarketCode = s.market_code
+                        })
+                    .Single($"No single station found for call letters {callLetters}");
             });
         }
     }

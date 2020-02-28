@@ -1,0 +1,7 @@
+﻿{
+  "Affiliation": "MET",
+  "CallLetters": "KOCO-TV 5.2",
+  "Code": 1378,
+  "LegacyCallLetters": "OOCO",
+  "MarketCode": 250
+}

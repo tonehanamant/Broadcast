@@ -53,6 +53,13 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="updatedBy">The updated by.</param>
         /// <param name="updatedDate">The updated date.</param>
         void AddNewStationMappings(List<StationMappingsDto> stationMappingList, string updatedBy, DateTime updatedDate);
+
+        /// <summary>
+        /// Gets the station by call letters.
+        /// </summary>
+        /// <param name="stationCallLetters">The station call letters.</param>
+        /// <returns></returns>
+        DisplayBroadcastStation GetStationByCallLetters(string stationCallLetters);
     }
 
     public class StationMappingService : IStationMappingService
@@ -74,7 +81,10 @@ namespace Services.Broadcast.ApplicationServices
             var stationGroups = stationMappings.GroupBy(x => x.CadentCallLetters);
             foreach (var stationGroup in stationGroups)
             {
-                SaveStationMappings(stationGroup, userName, createdDate);
+                if (stationGroup.Key != null)
+                {
+                    SaveStationMappings(stationGroup, userName, createdDate);
+                }
             }
         }
 
@@ -185,6 +195,28 @@ namespace Services.Broadcast.ApplicationServices
             var stationMappings = worksheet.ConvertSheetToObjects<StationMappingsFileRequestDto>();
 
             return stationMappings.ToList();
+        }
+
+        /// <inheritdoc />
+        public DisplayBroadcastStation GetStationByCallLetters(string stationCallLetters)
+        {
+            // Check station(Cadent Call Letters)
+            var station = _StationRepository.GetBroadcastStationByCallLetters(stationCallLetters);
+
+            // If not found, check exact match in mappings
+            if (station == null)
+            {
+                station = _StationMappingRepository.GetBroadcastStationByCallLetters(stationCallLetters);
+            }
+
+            // If not found, check starts with in mappings
+            // If not found or multiple stations found, throw an error
+            if (station == null)
+            {
+                station = _StationMappingRepository.GetBroadcastStationStartingWithCallLetters(stationCallLetters);
+            }
+
+            return station;
         }
     }
 }

@@ -8,6 +8,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 
@@ -205,6 +206,103 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ContractResolver = jsonResolver
             };
             return jsonSettings;
+        }
+
+        [Test]
+        public void CanGetStationByCallLetters()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _StationMappingService.GetStationByCallLetters("KOB+");
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "RateDataThrough");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ManifestMaxEndDate");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "OriginMarket");
+
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver,
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        public void CanGetStationByCadentCallLetters()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                // Use an existing station
+                var result = _StationMappingService.GetStationByCallLetters("KOCO-TV 5.2");
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "RateDataThrough");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ManifestMaxEndDate");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "OriginMarket");
+
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver,
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        public void CanGetStationStartingWithCallLetters()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var stationMappings = (new List<StationMappingsFileRequestDto>
+                {
+                    new StationMappingsFileRequestDto
+                    {
+                        CadentCallLetters = "TOOCO",
+                        ExtendedCallLetters = "TOOCO-DT2",
+                        NSICallLetters = "TKOCO-TV 5.2",
+                        NSILegacyCallLetters = "TKOCO",
+                        SigmaCallLetters = "TOOCO"
+                    }
+                }).GroupBy(x => x.CadentCallLetters).First();
+
+                _StationMappingService.SaveStationMappings(stationMappings, "integration_test", DateTime.Now);
+                var result = _StationMappingService.GetStationByCallLetters("TKOCO-TV");
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "RateDataThrough");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ManifestMaxEndDate");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "OriginMarket");
+
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver,
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [Ignore] // This was only used to introduce the mappings to the integration database
+        public void UploadStationMappingsExcellFile()
+        {
+            var fileName = "CadentBroadcastStationList.xlsx";
+            _StationMappingService.LoadStationMappings(new FileStream($@".\Files\ImportStationMappings\{fileName}", FileMode.Open, FileAccess.Read), fileName, "integration_test", DateTime.Now);
         }
     }
 }

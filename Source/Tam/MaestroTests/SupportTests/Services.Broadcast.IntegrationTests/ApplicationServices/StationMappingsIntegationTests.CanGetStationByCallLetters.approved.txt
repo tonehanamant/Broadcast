@@ -1,0 +1,7 @@
+﻿{
+  "Affiliation": "NBC",
+  "CallLetters": "KOB+",
+  "Code": 30,
+  "LegacyCallLetters": "KOB",
+  "MarketCode": 390
+}
