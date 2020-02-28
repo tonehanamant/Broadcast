@@ -755,8 +755,12 @@ namespace Services.Broadcast.Entities.Campaign
 
                         quarterTable.Rows.Add(tableRow);
                     });
-                    _CalculateTotalsForContractTable(quarterTable, quarter.ShortFormatQuarterNumberFirst());
-                    ContractQuarterTables.Add(quarterTable);
+                    if (quarterTable.Rows.Any())
+                    {//don't add tables that don't have any rows because there are no impressions for this quarter
+                        _CalculateTotalsForContractTable(quarterTable, quarter.ShortFormatQuarterNumberFirst());
+                        ContractQuarterTables.Add(quarterTable);
+                    }
+
                     _CalculateAduTableData(quarter, plans, spotLenghts, mediaMonthAndWeekAggregateCache);
                 });
             _CalculateContractTabTotals();
