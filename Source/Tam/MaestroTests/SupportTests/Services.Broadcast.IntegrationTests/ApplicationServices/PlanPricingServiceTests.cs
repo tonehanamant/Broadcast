@@ -105,6 +105,35 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void GetCurrentPricingExecutionFailedTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _PlanPricingService.QueuePricingJob(new PlanPricingParametersDto
+                {
+                    PlanId = 1196
+                }, new DateTime(2020, 3, 3));
+
+                _PlanPricingService.ForceCompletePlanPricingJob(result.Id, "Test User");
+
+                Exception problems = new Exception();
+                PlanPricingResponseDto resultPayload = new PlanPricingResponseDto();
+
+                try
+                {
+                    resultPayload = _PlanPricingService.GetCurrentPricingExecution(1196);
+                }
+                catch (Exception e)
+                {
+                    problems = e;
+                }
+
+                Assert.IsNotEmpty(problems.Message);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetCurrentProcessingPricingExecution_WithCompletedJobs()
         {
             var currentDate = new DateTime(2019, 11, 4);

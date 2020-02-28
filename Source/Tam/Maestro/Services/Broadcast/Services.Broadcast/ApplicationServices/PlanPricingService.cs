@@ -151,15 +151,17 @@ namespace Services.Broadcast.ApplicationServices
         public PlanPricingResponseDto GetCurrentPricingExecution(int planId)
         {
             var job = _PlanRepository.GetLatestPricingJob(planId);
-
             PlanPricingResultDto pricingExecutionResult = null;
+
+            if(job.Status == BackgroundJobProcessingStatus.Failed)
+            {
+                throw new Exception("Error encountered while running Pricing Model, please contact a system administrator for help");
+            }
 
             if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
             {
-                pricingExecutionResult = _PlanRepository.GetPricingResults(planId);
-            }
-            else
-            {
+                pricingExecutionResult = _PlanRepository.GetPricingResults(planId); 
+            } else {
                 pricingExecutionResult = new PlanPricingResultDto
                 {
                     Totals = new PlanPricingTotalsDto(),
