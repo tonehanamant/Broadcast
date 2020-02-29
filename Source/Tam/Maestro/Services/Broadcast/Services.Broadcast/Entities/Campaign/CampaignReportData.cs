@@ -523,6 +523,8 @@ namespace Services.Broadcast.Entities.Campaign
                 tableData.CostValues.Add(ADU);
                 tableData.CPMValues.Add(ADU);
             }
+            var hiatusDaysCount = tableData.HiatusDays.SelectMany(x => x).Count();
+            tableData.HiatusDaysFormattedValues.Add(hiatusDaysCount == 0 ? (int?)null : hiatusDaysCount);
         }
 
         //this is the total table
@@ -560,11 +562,12 @@ namespace Services.Broadcast.Entities.Campaign
             FlowChartQuarterTables.Add(tableData);
         }
 
-        //this is the adu table for a quarter and daypart
-        private void _CalculateAduTableData(FlowChartQuarterTableData templateTable, List<PlanDto> plans)
+        //this is the adu table for a quarter
+        private void _CalculateAduTableData(List<FlowChartQuarterTableData> tables, List<PlanDto> plans)
         {
+            var firstTable = tables.First();
             //check if we have an ADU table for this quarter
-            var weeksStartDates = templateTable.WeeksStartDate.Select(w => Convert.ToDateTime(w));
+            var weeksStartDates = firstTable.WeeksStartDate.Select(w => Convert.ToDateTime(w));
             if (!plans.Any(x => x.WeeklyBreakdownWeeks.Any(y => weeksStartDates.Contains(y.StartDate) && y.WeeklyAdu > 0)))
             {
                 return;
@@ -572,14 +575,14 @@ namespace Services.Broadcast.Entities.Campaign
 
             var tableData = new FlowChartQuarterTableData
             {
-                TableTitle = $"{templateTable.QuarterLabel} {ADU}",
-                WeeksStartDate = templateTable.WeeksStartDate
+                TableTitle = $"{firstTable.QuarterLabel} {ADU}",
+                WeeksStartDate = firstTable.WeeksStartDate
             };
-            tableData.Months = templateTable.Months;
-            for (int i = 0; i < templateTable.WeeksStartDate.Count; i++)
+            tableData.Months = firstTable.Months;
+            for (int i = 0; i < firstTable.WeeksStartDate.Count; i++)
             {
                 int thisWeekADUUnits = plans.SelectMany(x => x.WeeklyBreakdownWeeks
-                                    .Where(y => y.StartDate.Equals(Convert.ToDateTime(templateTable.WeeksStartDate[i]))
+                                    .Where(y => y.StartDate.Equals(Convert.ToDateTime(firstTable.WeeksStartDate[i]))
                                             && y.WeeklyAdu > 0).Select(y => y.WeeklyAdu)).Sum();
                 if (thisWeekADUUnits > 0)
                 {
@@ -597,6 +600,10 @@ namespace Services.Broadcast.Entities.Campaign
                     tableData.CostValues.Add(EMPTY_CELL);
                     tableData.CPMValues.Add(EMPTY_CELL);
                 }
+                var hiatusDaysThisWeek = tables.SelectMany(x => x.HiatusDays[i]).Distinct().ToList();
+                tableData.HiatusDays.Add(hiatusDaysThisWeek);
+                tableData.HiatusDaysFormattedValues
+                .Add(_GetHiatusDaysFormattedForWeek(hiatusDaysThisWeek));
             }
 
             _CalculateTotalsForAduTable(tableData);
@@ -685,7 +692,7 @@ namespace Services.Broadcast.Entities.Campaign
                         _CalculateTotalTableData(tablesInQuarterDaypart, totalNumberOfImpressionsForExportedPlans);
                     });
 
-                    _CalculateAduTableData(tablesInQuarter.First(), plans);
+                    _CalculateAduTableData(tablesInQuarter, plans);
                 });
         }
 
@@ -952,7 +959,7 @@ namespace Services.Broadcast.Entities.Campaign
                     {
                         AudienceCode = table.Key
                     };
-                    table.SelectMany(x => x.Rows).GroupBy(x => new { x.DaypartCode, x.SpotLengthLabel } )
+                    table.SelectMany(x => x.Rows).GroupBy(x => new { x.DaypartCode, x.SpotLengthLabel })
                     .ToList()
                     .ForEach(row =>
                     {
