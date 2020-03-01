@@ -29,6 +29,7 @@ namespace Services.Broadcast.Converters.RateImport
         private readonly IDaypartCache _DaypartCache;
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
         private readonly IFileService _FileService;
+        private readonly IStationMappingService _StationMappingService;
 
         public ProprietaryFileImporterFactory(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -41,7 +42,8 @@ namespace Services.Broadcast.Converters.RateImport
             IImpressionsService impressionsService,
             IDaypartCache daypartCache,
             IImpressionAdjustmentEngine impressionAdjustmentEngine,
-            IFileService fileService)
+            IFileService fileService,
+            IStationMappingService stationMappingService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _BroadcastAudiencesCache = broadcastAudiencesCache;
@@ -54,6 +56,7 @@ namespace Services.Broadcast.Converters.RateImport
             _DaypartCache = daypartCache;
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
             _FileService = fileService;
+            _StationMappingService = stationMappingService;
         }
 
         public ProprietaryFileImporterBase GetFileImporterInstance(InventorySource inventorySource)
@@ -108,7 +111,8 @@ namespace Services.Broadcast.Converters.RateImport
                         _StationProcessingEngine,
                         _SpotLengthEngine,
                         _ImpressionAdjustmentEngine,
-                        _FileService);
+                        _FileService,
+                        _StationMappingService);
                     break;
 
                 default:

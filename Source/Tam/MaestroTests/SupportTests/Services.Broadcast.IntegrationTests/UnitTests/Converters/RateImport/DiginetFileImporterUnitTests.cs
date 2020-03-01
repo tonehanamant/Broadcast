@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Services.Broadcast.ApplicationServices;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -40,14 +41,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
         private readonly Mock<IFileService> _FileService = new Mock<IFileService>();
 
         private readonly Mock<IDaypartDefaultRepository> _DaypartDefaultRepository = new Mock<IDaypartDefaultRepository>();
-        private readonly Mock<IStationMappingRepository> _StationMappingRepository = new Mock<IStationMappingRepository>();
+        private readonly Mock<IStationMappingService> _StationMappingService = new Mock<IStationMappingService>();
 
         private DiginetFileImporter _GetDiginetFileImporter()
         {
             _BroadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
                 .Returns(_DaypartDefaultRepository.Object);
-            _BroadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IStationMappingRepository>())
-                .Returns(_StationMappingRepository.Object);
 
             return new DiginetFileImporter(
                 _BroadcastDataRepositoryFactory.Object,
@@ -57,7 +56,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
                 _StationProcessingEngine.Object,
                 _SpotLengthEngine.Object,
                 _ImpressionAdjustmentEngine.Object,
-                _FileService.Object);
+                _FileService.Object,
+                _StationMappingService.Object);
         }
 
         /// <summary>
@@ -228,12 +228,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
                 .Setup(s => s.GetMediaWeeksIntersecting(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(new List<MediaWeek> {new MediaWeek(), new MediaWeek()});
 
-            var getMappedCallLettersCalls = new List<Tuple<string, StationMapSetNamesEnum>>();
-            _StationMappingRepository.Setup(s =>
-                    s.GetCadentStationFromMappedCallLetters(It.IsAny<string>(), It.IsAny<StationMapSetNamesEnum>()))
-                .Callback<string, StationMapSetNamesEnum>((mappedCallsign, mapSetId) =>
-                    getMappedCallLettersCalls.Add(new Tuple<string, StationMapSetNamesEnum>(mappedCallsign, mapSetId)))
-                .Returns(new DisplayBroadcastStation {LegacyCallLetters = "CadentStationCallsign"});
+            var getMappedCallLettersCalls = new List<string>();
+            _StationMappingService.Setup(s => s.GetStationByCallLetters(It.IsAny<string>()))
+                .Callback<string>((mappedCallsign) => getMappedCallLettersCalls.Add(mappedCallsign))
+                .Returns(new DisplayBroadcastStation { LegacyCallLetters = "CadentStationCallsign" });
 
             var importer = _GetDiginetFileImporter();
 
@@ -243,7 +241,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
             /*** Assert ***/
             Assert.AreEqual(1, proprietaryFile.InventoryManifests.Count);
             Assert.AreEqual("CadentStationCallsign", proprietaryFile.InventoryManifests[0].Station.LegacyCallLetters);
-            Assert.AreEqual(StationMapSetNamesEnum.Extended, getMappedCallLettersCalls[0].Item2);
             Assert.AreEqual(1, getMappedCallLettersCalls.Count);
         }
 
@@ -287,11 +284,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
                 .Setup(s => s.GetMediaWeeksIntersecting(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(new List<MediaWeek> { new MediaWeek(), new MediaWeek() });
 
-            var getMappedCallLettersCalls = new List<Tuple<string, StationMapSetNamesEnum>>();
-            _StationMappingRepository.Setup(s =>
-                    s.GetCadentStationFromMappedCallLetters(It.IsAny<string>(), It.IsAny<StationMapSetNamesEnum>()))
-                .Callback<string, StationMapSetNamesEnum>((mappedCallsign, mapSetId) =>
-                    getMappedCallLettersCalls.Add(new Tuple<string, StationMapSetNamesEnum>(mappedCallsign, mapSetId)))
+            var getMappedCallLettersCalls = new List<string>();
+            _StationMappingService.Setup(s => s.GetStationByCallLetters(It.IsAny<string>()))
+                .Callback<string>((mappedCallsign) => getMappedCallLettersCalls.Add(mappedCallsign))
                 .Throws(new Exception("Station not found test message."));
 
             var importer = _GetDiginetFileImporter();
@@ -302,7 +297,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
             /*** Assert ***/
             Assert.IsNotNull(caught);
             Assert.IsTrue(caught.Message.Contains("Station not found test message."));
-            Assert.AreEqual(StationMapSetNamesEnum.Extended, getMappedCallLettersCalls[0].Item2);
             Assert.AreEqual(1, getMappedCallLettersCalls.Count);
         }
 

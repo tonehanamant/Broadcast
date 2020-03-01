@@ -10,7 +10,6 @@ using System.Data.Entity;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast;
 
 namespace Services.Broadcast.Repositories
 {
@@ -46,15 +45,6 @@ namespace Services.Broadcast.Repositories
         /// <param name="cadentCallLetters">The cadent call letters.</param>
         /// <returns>The list of station mappings</returns>
         List<StationMappingsDto> GetStationMappingsByCadentCallLetters(string cadentCallLetters);
-
-        /// <summary>
-        /// Gets the cadent station from mapped call letters.
-        /// </summary>
-        /// <param name="mappedCallLetters">The mapped call letters.</param>
-        /// <param name="mapSet">The map set.</param>
-        /// <returns></returns>
-        DisplayBroadcastStation GetCadentStationFromMappedCallLetters(string mappedCallLetters,
-            StationMapSetNamesEnum mapSet);
 
         /// <summary>
         /// Removes all mappings for cadent call letters.
@@ -156,24 +146,6 @@ namespace Services.Broadcast.Repositories
                     .Where(x => x.station.legacy_call_letters == cadentCallLetters)
                     .ToList();
                 return _MapToDto(entities);
-            });
-        }
-
-        /// <inheritdoc />
-        public DisplayBroadcastStation GetCadentStationFromMappedCallLetters(string mappedCallLetters,
-            StationMapSetNamesEnum mapSet)
-        {
-            return _InReadUncommitedTransaction(context =>
-            {
-                var mapping = context.station_mappings
-                    .Include(x => x.station)
-                    .Single(x => x.map_set == (int) mapSet &&
-                                 x.mapped_call_letters == mappedCallLetters,
-                        $"Cadent station not found for mapped call letters '{mappedCallLetters}' and map set '{mapSet}'.");
-
-                var station = mapping.station;
-
-                return _MapToStationDto(station);
             });
         }
 

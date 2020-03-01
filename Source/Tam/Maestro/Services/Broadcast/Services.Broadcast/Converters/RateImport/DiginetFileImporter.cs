@@ -1,11 +1,11 @@
 ﻿using Common.Services;
 using Common.Services.Repositories;
 using OfficeOpenXml;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Extensions;
@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.Entities.ProprietaryInventory.ProprietaryInventoryFile;
 using static Services.Broadcast.Entities.ProprietaryInventory.ProprietaryInventoryFile.ProprietaryInventoryDataLine;
@@ -39,7 +38,7 @@ namespace Services.Broadcast.Converters.RateImport
 
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
         private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
-        private readonly IStationMappingRepository _StationMappingRepository;
+        private readonly IStationMappingService _StationMappingService;
 
         private int _ErrorColumnIndex = 0;
         private const int audienceRowIndex = 11;
@@ -57,7 +56,8 @@ namespace Services.Broadcast.Converters.RateImport
             IStationProcessingEngine stationProcessingEngine,
             ISpotLengthEngine spotLengthEngine,
             IImpressionAdjustmentEngine impressionAdjustmentEngine,
-            IFileService fileService) : base(
+            IFileService fileService,
+            IStationMappingService stationMappingService) : base(
                 broadcastDataRepositoryFactory,
                 broadcastAudiencesCache,
                 inventoryDaypartParsingEngine,
@@ -68,7 +68,7 @@ namespace Services.Broadcast.Converters.RateImport
         {
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
             _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
-            _StationMappingRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationMappingRepository>();
+            _StationMappingService = stationMappingService;
         }
 
         public override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
@@ -429,8 +429,8 @@ namespace Services.Broadcast.Converters.RateImport
             var defaultSpotLengthId = SpotLengthEngine.GetSpotLengthIdByValue(defaultSpotLength);
             var allDaypartCodes = _DaypartDefaultRepository.GetAllActiveDaypartDefaults();
 
-            proprietaryFile.InventoryManifests = proprietaryFile.DataLines
-                .Select(x => new StationInventoryManifest
+            proprietaryFile.InventoryManifests = proprietaryFile.DataLines.Select(x =>
+                new StationInventoryManifest
                 {
                     InventorySourceId = proprietaryFile.InventorySource.Id,
                     InventoryFileId = proprietaryFile.Id,
@@ -440,12 +440,14 @@ namespace Services.Broadcast.Converters.RateImport
                         Daypart = d,
                         DaypartDefault = _MapToDaypartCode(d, allDaypartCodes)
                     }).ToList(),
-                    ManifestWeeks = GetManifestWeeksInRange(fileHeader.EffectiveDate, fileHeader.EndDate, defaultSpotsNumberPerWeek),
+                    ManifestWeeks = GetManifestWeeksInRange(fileHeader.EffectiveDate, fileHeader.EndDate,
+                        defaultSpotsNumberPerWeek),
                     ManifestAudiences = x.Audiences.Select(a => new StationInventoryManifestAudience
                     {
                         Audience = a.Audience,
                         IsReference = true,
-                        Impressions = _ImpressionAdjustmentEngine.ConvertNtiImpressionsToNsi(a.Impressions.Value * 1000, ntiToNsiIncreaseInDecimals),
+                        Impressions = _ImpressionAdjustmentEngine.ConvertNtiImpressionsToNsi(a.Impressions.Value * 1000,
+                            ntiToNsiIncreaseInDecimals),
                         Rating = a.Rating
                     }).ToList(),
                     ManifestRates = new List<StationInventoryManifestRate>
@@ -456,25 +458,9 @@ namespace Services.Broadcast.Converters.RateImport
                             SpotCost = x.SpotCost.Value
                         }
                     },
-                    Station = _GetStationFromMappedCallsign(x.Station)
-                }).ToList();
-        }
-
-        private DisplayBroadcastStation _GetStationFromMappedCallsign(string mappedCallsign)
-        {
-            const StationMapSetNamesEnum mapSet = StationMapSetNamesEnum.Extended;
-            try
-            {
-                // throws an exception if station not found.
-                var cadentStation = _StationMappingRepository.GetCadentStationFromMappedCallLetters(mappedCallsign, mapSet);
-                return cadentStation;
-            }
-            catch (Exception ex)
-            {
-                var errorMessage = $"Error attempting to resolve a station mapping during a Diginet file Import.  MapSet = '{mapSet}'; Callsign = '{mappedCallsign}'.";
-                LogHelper.Logger.Error(errorMessage, ex);
-                throw ex;
-            }
+                    Station = _StationMappingService.GetStationByCallLetters(x.Station)
+                }
+            ).ToList();
         }
 
         private DaypartDefaultDto _MapToDaypartCode(DisplayDaypart displayDaypart, List<DaypartDefaultDto> allDaypartDefaults)
