@@ -134,17 +134,17 @@ namespace Services.Broadcast.ApplicationServices
 
         public PlanPricingDefaults GetPlanPricingDefaults()
         {
-            const int default_percent = 10;
-            const float default_margin = 20;
+            const int defaultPercent = 0;
+            const float defaultMargin = 20;
             var allSources = _InventoryRepository.GetInventorySources();
 
             return new PlanPricingDefaults
             {
                 UnitCaps = 1,
                 UnitCapType = UnitCapEnum.Per30Min,
-                InventorySourcePercentages = PlanPricingInventorySourceSortEngine.GetSortedInventorySourcePercents(default_percent, allSources),
-                InventorySourceTypePercentages = PlanPricingInventorySourceSortEngine.GetSortedInventorySourceTypePercents(default_percent),
-                Margin = default_margin
+                InventorySourcePercentages = PlanPricingInventorySourceSortEngine.GetSortedInventorySourcePercents(defaultPercent, allSources),
+                InventorySourceTypePercentages = PlanPricingInventorySourceSortEngine.GetSortedInventorySourceTypePercents(defaultPercent),
+                Margin = defaultMargin
             };
         }
 

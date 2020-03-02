@@ -35,28 +35,24 @@ namespace Services.Broadcast.BusinessEngines
 
         public static List<PlanPricingInventorySourceDto> GetSortedInventorySourcePercents(int defaultPercent, List<InventorySource> allSources)
         {
-            var sourcePercents = _OrderedPricingSources.OrderBy(sn => sn.OrderBy).Select(sn =>
+            return _OrderedPricingSources.OrderBy(sn => sn.OrderBy).Select(sn =>
                 new PlanPricingInventorySourceDto
                 {
                     Id = allSources.Single(s => s.Name.Equals(sn.OrderedValue)).Id,
                     Name = sn.OrderedValue,
                     Percentage = defaultPercent
                 }).ToList();
-
-            return sourcePercents;
         }
 
         public static List<PlanPricingInventorySourceTypeDto> GetSortedInventorySourceTypePercents(int defaultPercent)
         {
-            var sourcePercents = _OrderedPricingSourceTypes.OrderBy(st => st.OrderBy).Select(st =>
+            return _OrderedPricingSourceTypes.OrderBy(st => st.OrderBy).Select(st =>
                 new PlanPricingInventorySourceTypeDto
                 {
                     Id = (int)st.OrderedValue,
                     Name = st.OrderedValue.GetDescriptionAttribute(),
                     Percentage = defaultPercent
                 }).ToList();
-
-            return sourcePercents;
         }
 
         public static List<PlanPricingInventorySourceDto> SortInventorySourcePercents(List<PlanPricingInventorySourceDto> toSort)
