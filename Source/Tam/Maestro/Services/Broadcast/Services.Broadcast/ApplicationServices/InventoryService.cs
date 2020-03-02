@@ -781,7 +781,8 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             if (inventoryUploadHistory.RatingProcessingJobStatus == BackgroundJobProcessingStatus.Succeeded &&
-                inventoryUploadHistory.ProgramsJobStatus == InventoryProgramsJobStatus.Completed)
+                (inventoryUploadHistory.ProgramsJobStatus == InventoryProgramsJobStatus.Completed || 
+                 inventoryUploadHistory.ProgramsJobStatus == InventoryProgramsJobStatus.Warning))
             {
                 return "Succeeded";
             }

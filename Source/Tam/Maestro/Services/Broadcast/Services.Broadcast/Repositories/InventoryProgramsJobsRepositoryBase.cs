@@ -71,5 +71,15 @@ namespace Services.Broadcast.Repositories
                 _UpdateJobNotes(jobId, notesMessage, DateTime.Now);
             }
         }
+
+        protected string _GetSizedStatusMessage(string candidate)
+        {
+            const int statusMessageFieldSize = 200;
+            if (candidate?.Length > statusMessageFieldSize)
+            {
+                return candidate.Substring(0, statusMessageFieldSize - 4) + "...";
+            }
+            return candidate;
+        }
     }
 }

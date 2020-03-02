@@ -77,7 +77,7 @@ namespace Services.Broadcast.Repositories
                 {
                     var job = context.inventory_programs_by_file_jobs.Single(j => j.id == jobId, $"Job with id '{jobId}' not found.");
                     job.status = (int)status;
-                    job.status_message = statusMessage;
+                    job.status_message = _GetSizedStatusMessage(statusMessage);
                     job.completed_at = completedAt;
 
                     context.SaveChanges();
