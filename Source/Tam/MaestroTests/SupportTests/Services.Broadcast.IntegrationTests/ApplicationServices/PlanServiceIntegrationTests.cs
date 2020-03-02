@@ -2114,6 +2114,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Ignore("PRI-23204 Pricing is not queued on save, anymore")]
         [UseReporter(typeof(DiffReporter))]
         public void Plan_SaveNewPlan_PricingIsQueued()
         {
@@ -2452,9 +2453,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var planRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             var job = planRepo.GetLatestPricingJob(planId);
-            job.Status = BackgroundJobProcessingStatus.Succeeded;
-            job.Completed = DateTime.Now;
-            planRepo.UpdatePlanPricingJob(job);
+            if(job != null)
+            {
+                job.Status = BackgroundJobProcessingStatus.Succeeded;
+                job.Completed = DateTime.Now;
+                planRepo.UpdatePlanPricingJob(job);
+            }
         }
     }
 }

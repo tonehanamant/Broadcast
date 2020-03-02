@@ -1407,8 +1407,9 @@ namespace Services.Broadcast.Repositories
             {
                 var plan = context.plans.Single(x => x.id == planId);
                 var planVersionId = plan.latest_version_id;
-                var result = context.plan_version_pricing_results.Single(p => p.plan_version_id == planVersionId);
-
+                var result = context.plan_version_pricing_results.SingleOrDefault(p => p.plan_version_id == planVersionId);
+                if (result == null)
+                    return null;
                 return new PlanPricingResultDto
                 {
                     OptimalCpm = result.optimal_cpm,

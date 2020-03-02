@@ -222,7 +222,7 @@
   "HUTBookId": 437,
   "IsAduEnabled": true,
   "IsDraft": false,
-  "IsPricingModelRunning": true,
+  "IsPricingModelRunning": false,
   "ModifiedBy": "integration_test",
   "ModifiedDate": "2019-01-15T00:00:00",
   "Name": "Renamed Plan",

@@ -161,18 +161,13 @@ namespace Services.Broadcast.ApplicationServices
             if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
             {
                 pricingExecutionResult = _PlanRepository.GetPricingResults(planId); 
-            } else {
-                pricingExecutionResult = new PlanPricingResultDto
-                {
-                    Totals = new PlanPricingTotalsDto(),
-                    Programs = new List<PlanPricingProgramDto>()
-                };
-            }
+            } 
 
+            //pricingExecutionResult might be null when there is no pricing run for the latest version            
             return new PlanPricingResponseDto
             {
                 Job = job,
-                Result = pricingExecutionResult,
+                Result = pricingExecutionResult ?? new PlanPricingResultDto(),
                 IsPricingModelRunning = IsPricingModelRunning(job)
             };
         }

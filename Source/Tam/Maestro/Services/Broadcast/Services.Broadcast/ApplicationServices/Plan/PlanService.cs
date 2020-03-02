@@ -246,7 +246,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
 
                 // Running price job on plan creation/edits/saves its temporary disabled
-                //_SetPlanPricingParameters(plan);
+                _SetPlanPricingParameters(plan);
+                _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
                 //_PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate);
             }
 
