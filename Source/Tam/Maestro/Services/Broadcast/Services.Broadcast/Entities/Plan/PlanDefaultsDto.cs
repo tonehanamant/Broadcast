@@ -22,6 +22,7 @@ namespace Services.Broadcast.Entities.Plan
         public double CoverageGoalPercent { get; set; }
         public List<PlanBlackoutMarketDto> BlackoutMarkets { get; set; }
         public List<DateTime> FlightHiatusDays { get; set; }
+        public List<int> FlightDays { get; set; }
         public List<WeeklyBreakdownWeek> WeeklyBreakdownWeeks { get; set; }
     }
 }
