@@ -29,14 +29,14 @@
   "CC": [],
   "DeliveryNotificationOptions": 0,
   "From": {
-    "Address": "broadcast@crossmw.com",
+    "Address": "broadcastsmtp@crossmw.com",
     "DisplayName": "",
     "Host": "crossmw.com",
-    "User": "broadcast"
+    "User": "broadcastsmtp"
   },
   "Headers": [],
   "HeadersEncoding": null,
-  "IsBodyHtml": true,
+  "IsBodyHtml": false,
   "Priority": 2,
   "ReplyTo": null,
   "ReplyToList": [],

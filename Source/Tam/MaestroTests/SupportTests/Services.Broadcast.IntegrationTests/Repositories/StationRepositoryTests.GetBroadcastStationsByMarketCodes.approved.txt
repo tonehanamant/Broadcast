@@ -648,15 +648,5 @@
     "MarketCode": 101,
     "OriginMarket": "New York",
     "RateDataThrough": null
-  },
-  {
-    "Affiliation": "UMA",
-    "CallLetters": "WFTY-DT 67.2",
-    "Code": 6824,
-    "LegacyCallLetters": "DFTY",
-    "ManifestMaxEndDate": null,
-    "MarketCode": 101,
-    "OriginMarket": "New York",
-    "RateDataThrough": null
   }
 ]
