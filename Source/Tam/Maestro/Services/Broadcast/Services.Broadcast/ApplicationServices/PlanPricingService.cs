@@ -153,7 +153,7 @@ namespace Services.Broadcast.ApplicationServices
             var job = _PlanRepository.GetLatestPricingJob(planId);
             PlanPricingResultDto pricingExecutionResult = null;
 
-            if(job.Status == BackgroundJobProcessingStatus.Failed)
+            if(job != null && job.Status == BackgroundJobProcessingStatus.Failed)
             {
                 throw new Exception("Error encountered while running Pricing Model, please contact a system administrator for help");
             }
