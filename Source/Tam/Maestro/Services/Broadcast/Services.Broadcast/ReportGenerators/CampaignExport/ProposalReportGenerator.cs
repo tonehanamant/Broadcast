@@ -446,7 +446,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             };
             if (HasSecondaryAudiences)
             {
-                row.Insert(5, ExportSharedLogic.EMPTY_CELL);
+                row.Insert(3, ExportSharedLogic.EMPTY_CELL);
             }
 
             return row;
