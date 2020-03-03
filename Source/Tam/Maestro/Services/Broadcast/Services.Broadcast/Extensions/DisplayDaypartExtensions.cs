@@ -4,22 +4,37 @@ namespace Services.Broadcast.Extensions
 {
     public static class DisplayDaypartExtensions
     {
-        private const int _OneDayInSeconds = 86400;
+        public static int GetTotalDurationInSeconds(this DisplayDaypart daypart)
+        {
+            var duration = _GetDurationInSeconds(daypart.StartTime, daypart.EndTime);
 
-        public static int GetTotalTimeDuration(this DisplayDaypart daypart)
+            return duration * daypart.Days.Count;
+        }
+
+        public static double GetDurationPerDayInHours(this DisplayDaypart daypart)
+        {
+            var duration = _GetDurationInSeconds(daypart.StartTime, daypart.EndTime);
+            var hours = ((double)duration) / BroadcastConstants.OneHourInSeconds;
+
+            return hours;
+        }
+
+        private static int _GetDurationInSeconds(int startTime, int endTime)
         {
             var duration = 0;
 
-            if (daypart.StartTime < daypart.EndTime)
+            if (startTime < endTime)
             {
-                duration = daypart.EndTime - daypart.StartTime;
+                duration = endTime - startTime;
             }
-            else if (daypart.StartTime > daypart.EndTime)
+            else if (startTime > endTime)
             {
-                duration = _OneDayInSeconds - daypart.StartTime + daypart.EndTime;
+                duration = BroadcastConstants.OneDayInSeconds - startTime + endTime;
             }
 
-            return duration * daypart.Days.Count;
+            // to include last second, e.g.
+            // startTime = 4, EndTime = 6. Seconds 4,5,6 should be counted. 6 - 4 + 1 = 3
+            return duration + 1;
         }
     }
 }

@@ -102,11 +102,21 @@
         "Spots": 0
       }
     ],
-    "MarketCode": 101,
     "ProjectedImpressions": 33431.66875,
     "ProvidedImpressions": 29325.0,
     "SpotCost": 375.0000,
-    "StationLegacyCallLetters": "WPIX",
+    "Station": {
+      "Affiliation": "CW",
+      "CallLetters": "WPIX 11.1",
+      "Code": 5014,
+      "Id": 575,
+      "LegacyCallLetters": "WPIX",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
     "Unit": null
   },
   {
@@ -212,11 +222,21 @@
         "Spots": 0
       }
     ],
-    "MarketCode": 101,
     "ProjectedImpressions": 28572.98375,
     "ProvidedImpressions": 25160.0,
     "SpotCost": 350.0000,
-    "StationLegacyCallLetters": "WPIX",
+    "Station": {
+      "Affiliation": "CW",
+      "CallLetters": "WPIX 11.1",
+      "Code": 5014,
+      "Id": 575,
+      "LegacyCallLetters": "WPIX",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
     "Unit": null
   },
   {
@@ -322,11 +342,21 @@
         "Spots": 0
       }
     ],
-    "MarketCode": 101,
     "ProjectedImpressions": 38248.5125,
     "ProvidedImpressions": 25670.0,
     "SpotCost": 400.0000,
-    "StationLegacyCallLetters": "WPIX",
+    "Station": {
+      "Affiliation": "CW",
+      "CallLetters": "WPIX 11.1",
+      "Code": 5014,
+      "Id": 575,
+      "LegacyCallLetters": "WPIX",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
     "Unit": null
   },
   {
@@ -432,11 +462,21 @@
         "Spots": 0
       }
     ],
-    "MarketCode": 101,
     "ProjectedImpressions": 26080.55,
     "ProvidedImpressions": 18530.0,
     "SpotCost": 375.0000,
-    "StationLegacyCallLetters": "WPIX",
+    "Station": {
+      "Affiliation": "CW",
+      "CallLetters": "WPIX 11.1",
+      "Code": 5014,
+      "Id": 575,
+      "LegacyCallLetters": "WPIX",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
     "Unit": null
   },
   {
@@ -542,11 +582,21 @@
         "Spots": 0
       }
     ],
-    "MarketCode": 101,
     "ProjectedImpressions": 34029.484375,
     "ProvidedImpressions": 19890.0,
     "SpotCost": 300.0000,
-    "StationLegacyCallLetters": "WPIX",
+    "Station": {
+      "Affiliation": "CW",
+      "CallLetters": "WPIX 11.1",
+      "Code": 5014,
+      "Id": 575,
+      "LegacyCallLetters": "WPIX",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
     "Unit": null
   },
   {
@@ -652,11 +702,21 @@
         "Spots": 0
       }
     ],
-    "MarketCode": 100,
     "ProjectedImpressions": 74.545,
     "ProvidedImpressions": 255.0,
     "SpotCost": 25.0000,
-    "StationLegacyCallLetters": "WPFO",
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "Code": 8346,
+      "Id": 2106,
+      "LegacyCallLetters": "WPFO",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 100,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
     "Unit": null
   },
   {
@@ -762,11 +822,21 @@
         "Spots": 0
       }
     ],
-    "MarketCode": 100,
     "ProjectedImpressions": 184.715625,
     "ProvidedImpressions": 255.0,
     "SpotCost": 6.0000,
-    "StationLegacyCallLetters": "WPFO",
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "Code": 8346,
+      "Id": 2106,
+      "LegacyCallLetters": "WPFO",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 100,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
     "Unit": null
   },
   {
@@ -872,11 +942,21 @@
         "Spots": 0
       }
     ],
-    "MarketCode": 100,
     "ProjectedImpressions": 246.5,
     "ProvidedImpressions": 170.0,
     "SpotCost": 6.0000,
-    "StationLegacyCallLetters": "WPFO",
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "Code": 8346,
+      "Id": 2106,
+      "LegacyCallLetters": "WPFO",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 100,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
     "Unit": null
   },
   {
@@ -982,11 +1062,21 @@
         "Spots": 0
       }
     ],
-    "MarketCode": 100,
     "ProjectedImpressions": 49.895,
     "ProvidedImpressions": 170.0,
     "SpotCost": 6.0000,
-    "StationLegacyCallLetters": "WPFO",
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "Code": 8346,
+      "Id": 2106,
+      "LegacyCallLetters": "WPFO",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 100,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
     "Unit": null
   },
   {
@@ -1153,11 +1243,21 @@
         "Spots": 2
       }
     ],
-    "MarketCode": 101,
     "ProjectedImpressions": 7010.4175,
     "ProvidedImpressions": null,
     "SpotCost": 710.1468,
-    "StationLegacyCallLetters": "HPIX",
+    "Station": {
+      "Affiliation": "IND",
+      "CallLetters": "WPIX 11.2",
+      "Code": 1168,
+      "Id": 96,
+      "LegacyCallLetters": "HPIX",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
     "Unit": "AM 1"
   },
   {
@@ -1324,11 +1424,21 @@
         "Spots": 1
       }
     ],
-    "MarketCode": 101,
     "ProjectedImpressions": 7010.4175,
     "ProvidedImpressions": null,
     "SpotCost": 710.1468,
-    "StationLegacyCallLetters": "HPIX",
+    "Station": {
+      "Affiliation": "IND",
+      "CallLetters": "WPIX 11.2",
+      "Code": 1168,
+      "Id": 96,
+      "LegacyCallLetters": "HPIX",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
     "Unit": "AM 2"
   },
   {
@@ -1505,11 +1615,21 @@
         "Spots": 4
       }
     ],
-    "MarketCode": 101,
     "ProjectedImpressions": 154195.29125,
     "ProvidedImpressions": 74800.0,
     "SpotCost": 600.0016,
-    "StationLegacyCallLetters": "WCBS",
+    "Station": {
+      "Affiliation": "CBS",
+      "CallLetters": "WCBS-TV 2.1",
+      "Code": 5012,
+      "Id": 573,
+      "LegacyCallLetters": "WCBS",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
     "Unit": null
   }
 ]

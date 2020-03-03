@@ -107,8 +107,8 @@ namespace Services.Broadcast.Converters.InventorySummary
                 var spotCost = manifest.ManifestRates.First(r => r.SpotLengthId == manifest.SpotLengthId).SpotCost;
 
                 var manifestDayparts = manifest.ManifestDayparts.ToList();
-                var totalTimeDuration = manifestDayparts.Sum(x => x.Daypart.GetTotalTimeDuration());
-                var totalTimeDurationForDaypartCode = manifestDayparts.Where(x => x.DaypartDefault.Id == daypartCode).Sum(x => x.Daypart.GetTotalTimeDuration());
+                var totalTimeDuration = manifestDayparts.Sum(x => x.Daypart.GetTotalDurationInSeconds());
+                var totalTimeDurationForDaypartCode = manifestDayparts.Where(x => x.DaypartDefault.Id == daypartCode).Sum(x => x.Daypart.GetTotalDurationInSeconds());
 
                 if (totalTimeDuration == 0 || totalTimeDurationForDaypartCode == 0)
                     throw new Exception("Invalid daypart with zero time found");

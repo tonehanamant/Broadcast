@@ -83,11 +83,21 @@
         "Spots": 0
       }
     ],
-    "MarketCode": 101,
     "ProjectedImpressions": 33431.66875,
     "ProvidedImpressions": 29325.0,
     "SpotCost": 375.0000,
-    "StationLegacyCallLetters": "WPIX",
+    "Station": {
+      "Affiliation": "CW",
+      "CallLetters": "WPIX 11.1",
+      "Code": 5014,
+      "Id": 575,
+      "LegacyCallLetters": "WPIX",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
     "Unit": null
   },
   {
@@ -174,11 +184,21 @@
         "Spots": 0
       }
     ],
-    "MarketCode": 101,
     "ProjectedImpressions": 28572.98375,
     "ProvidedImpressions": 25160.0,
     "SpotCost": 350.0000,
-    "StationLegacyCallLetters": "WPIX",
+    "Station": {
+      "Affiliation": "CW",
+      "CallLetters": "WPIX 11.1",
+      "Code": 5014,
+      "Id": 575,
+      "LegacyCallLetters": "WPIX",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
     "Unit": null
   },
   {
@@ -265,11 +285,21 @@
         "Spots": 0
       }
     ],
-    "MarketCode": 100,
     "ProjectedImpressions": 74.545,
     "ProvidedImpressions": 255.0,
     "SpotCost": 25.0000,
-    "StationLegacyCallLetters": "WPFO",
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "Code": 8346,
+      "Id": 2106,
+      "LegacyCallLetters": "WPFO",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 100,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
     "Unit": null
   },
   {
@@ -356,11 +386,21 @@
         "Spots": 0
       }
     ],
-    "MarketCode": 100,
     "ProjectedImpressions": 49.895,
     "ProvidedImpressions": 170.0,
     "SpotCost": 6.0000,
-    "StationLegacyCallLetters": "WPFO",
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "Code": 8346,
+      "Id": 2106,
+      "LegacyCallLetters": "WPFO",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 100,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
     "Unit": null
   }
 ]

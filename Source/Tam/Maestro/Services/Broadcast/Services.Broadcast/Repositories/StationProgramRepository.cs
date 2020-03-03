@@ -166,8 +166,15 @@ namespace Services.Broadcast.Repositories
                                 })
                                 .ToList(),
                             SpotCost = x.station_inventory_manifest_rates.Single(r => r.spot_length_id == spotLengthId).spot_cost,
-                            StationLegacyCallLetters = x.station.legacy_call_letters,
-                            MarketCode = x.station.market_code.Value,
+                            Station = new DisplayBroadcastStation()
+                            {
+                                Id = x.station.id,
+                                Affiliation = x.station.affiliation,
+                                Code = x.station.station_code,
+                                CallLetters = x.station.station_call_letters,
+                                LegacyCallLetters = x.station.legacy_call_letters,
+                                MarketCode = x.station.market_code
+                            },
                             Unit = x.station_inventory_group?.name,
                             InventorySource = new InventorySource
                             {

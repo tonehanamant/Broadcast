@@ -16,9 +16,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 
         public double? ProvidedImpressions { get; set; }
 
-        public string StationLegacyCallLetters { get; set; }
-
-        public int MarketCode { get; set; }
+        public DisplayBroadcastStation Station { get; set; }
 
         public string Unit { get; set; }
 

@@ -806,7 +806,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var availableStations = _GetAvailableStations(marketCount, stationPerMarketCount);
 
             var inventory = availableStations.Select(s =>
-                    new PlanPricingInventoryProgram {StationLegacyCallLetters = s.LegacyCallLetters})
+                   new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = s.LegacyCallLetters } })
                 .ToList();
 
             _StationRepository.Setup(s => s.GetBroadcastStationsByMarketCodes(It.IsAny<List<short>>()))
@@ -833,7 +833,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Assert.AreEqual(6, result.Count);
             foreach (var station in availableStations)
             {
-                Assert.AreEqual(1, result.Count(i => i.StationLegacyCallLetters == station.LegacyCallLetters));
+                Assert.AreEqual(1, result.Count(i => i.Station.LegacyCallLetters == station.LegacyCallLetters));
             }
         }
 
@@ -880,15 +880,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             var inventoryOne = new List<PlanPricingInventoryProgram>
             {
-                new PlanPricingInventoryProgram {StationLegacyCallLetters = availableStations[0].LegacyCallLetters},
-                new PlanPricingInventoryProgram {StationLegacyCallLetters = availableStations[1].LegacyCallLetters},
-                new PlanPricingInventoryProgram {StationLegacyCallLetters = availableStations[2].LegacyCallLetters}
+                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[0].LegacyCallLetters } },
+                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[1].LegacyCallLetters } },
+                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[2].LegacyCallLetters } },
             };
             var inventoryTwo = new List<PlanPricingInventoryProgram>
             {
-                new PlanPricingInventoryProgram { StationLegacyCallLetters = availableStations[3].LegacyCallLetters },
-                new PlanPricingInventoryProgram { StationLegacyCallLetters = availableStations[4].LegacyCallLetters },
-                new PlanPricingInventoryProgram { StationLegacyCallLetters = availableStations[5].LegacyCallLetters },
+                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[3].LegacyCallLetters } },
+                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[4].LegacyCallLetters } },
+                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[5].LegacyCallLetters } },
             };
 
             _StationRepository.Setup(s => s.GetBroadcastStationsByMarketCodes(It.IsAny<List<short>>()))
@@ -916,7 +916,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Assert.AreEqual(6, result.Count);
             foreach (var station in availableStations)
             {
-                Assert.AreEqual(1, result.Count(i => i.StationLegacyCallLetters == station.LegacyCallLetters));
+                Assert.AreEqual(1, result.Count(i => i.Station.LegacyCallLetters == station.LegacyCallLetters));
             }
         }
 
@@ -964,14 +964,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             var inventoryOne = new List<PlanPricingInventoryProgram>
             {
-                new PlanPricingInventoryProgram {StationLegacyCallLetters = availableStations[0].LegacyCallLetters},
-                new PlanPricingInventoryProgram {StationLegacyCallLetters = availableStations[1].LegacyCallLetters},
-                new PlanPricingInventoryProgram {StationLegacyCallLetters = availableStations[2].LegacyCallLetters}
+                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[0].LegacyCallLetters } },
+                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[1].LegacyCallLetters } },
+                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[2].LegacyCallLetters } }
             };
             var inventoryTwo = new List<PlanPricingInventoryProgram>
             {
-                new PlanPricingInventoryProgram { StationLegacyCallLetters = availableStations[3].LegacyCallLetters },
-                new PlanPricingInventoryProgram { StationLegacyCallLetters = availableStations[4].LegacyCallLetters },
+                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[3].LegacyCallLetters } },
+                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[4].LegacyCallLetters } }
             };
 
             _StationRepository.Setup(s => s.GetBroadcastStationsByMarketCodes(It.IsAny<List<short>>()))
@@ -1000,7 +1000,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             foreach (var station in availableStations)
             {
                 var expectedCount = station.LegacyCallLetters == availableStations[5].LegacyCallLetters ? 0 : 1;
-                Assert.AreEqual(expectedCount, result.Count(i => i.StationLegacyCallLetters == station.LegacyCallLetters));
+                Assert.AreEqual(expectedCount, result.Count(i => i.Station.LegacyCallLetters == station.LegacyCallLetters));
             }
         }
 

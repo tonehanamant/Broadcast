@@ -1,9 +1,11 @@
 ﻿using NUnit.Framework;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Helpers;
 using System;
+using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests
 {
@@ -56,6 +58,24 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             Assert.IsNotNull(caught.InnerException);
             Assert.IsTrue(caught.InnerException is InvalidOperationException);
             Assert.AreEqual(caught.InnerException.Message, "Invalid type provided in list.");
+        }
+
+        [Test]
+        [TestCase(3600, 7199, 1d)]
+        [TestCase(7200, 3599, 23d)]
+        [TestCase(7200, 7199, 24d)]
+        [TestCase(7200, 7200, 0.00027777777777777778d)]
+        public void GetOneDayHoursTest(int startTime, int endTime, double expectedHours)
+        {
+            var daypart = new DisplayDaypart
+            {
+                Monday = true,
+                Tuesday = true,
+                StartTime = startTime,
+                EndTime = endTime
+            };
+
+            Assert.AreEqual(expectedHours, daypart.GetDurationPerDayInHours());
         }
     }
 }

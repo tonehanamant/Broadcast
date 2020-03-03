@@ -74,7 +74,7 @@ namespace Services.Broadcast.BusinessEngines
                 {
                     var stationDaypart = new ManifestDetailDaypart
                     {
-                        LegacyCallLetters = program.StationLegacyCallLetters,
+                        LegacyCallLetters = program.Station.LegacyCallLetters,
                         Id = manifestDaypart.Id,
                         DisplayDaypart = manifestDaypart.Daypart
                     };

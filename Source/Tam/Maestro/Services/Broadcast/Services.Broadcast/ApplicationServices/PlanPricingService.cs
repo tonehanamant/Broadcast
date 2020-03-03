@@ -1,4 +1,5 @@
-﻿using Common.Services.ApplicationServices;
+﻿using Common.Services;
+using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Hangfire;
 using Services.Broadcast.BusinessEngines;
@@ -58,13 +59,16 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IBackgroundJobClient _BackgroundJobClient;
         private readonly IBroadcastLockingManagerApplicationService _LockingManagerApplicationService;
+        private readonly IMarketCoverageRepository _MarketCoverageRepository;
+        private readonly IDaypartCache _DaypartCache;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
                                   IPricingApiClient pricingApiClient,
                                   IBackgroundJobClient backgroundJobClient,
                                   IPlanPricingInventoryEngine planPricingInventoryEngine,
-                                  IBroadcastLockingManagerApplicationService lockingManagerApplicationService)
+                                  IBroadcastLockingManagerApplicationService lockingManagerApplicationService,
+                                  IDaypartCache daypartCache)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
@@ -74,6 +78,8 @@ namespace Services.Broadcast.ApplicationServices
             _BackgroundJobClient = backgroundJobClient;
             _PlanPricingInventoryEngine = planPricingInventoryEngine;
             _LockingManagerApplicationService = lockingManagerApplicationService;
+            _MarketCoverageRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
+            _DaypartCache = daypartCache;
         }
 
         public PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate)
@@ -282,6 +288,7 @@ namespace Services.Broadcast.ApplicationServices
 
         protected List<PlanPricingApiRequestSpotsDto> _GetPricingModelSpots(List<PlanPricingInventoryProgram> programs)
         {
+            var marketCoveragesByMarketCode = _MarketCoverageRepository.GetLatestMarketCoverages().MarketCoveragesByMarketCode;
             var pricingModelSpots = new List<PlanPricingApiRequestSpotsDto>();
 
             foreach (var program in programs)
@@ -305,6 +312,12 @@ namespace Services.Broadcast.ApplicationServices
                         DaypartId = daypart.Daypart.Id,
                         Impressions = impressions,
                         Cost = program.SpotCost,
+                        StationId = program.Station.Id,
+                        MarketCode = program.Station.MarketCode.Value,
+                        PercentageOfUs = marketCoveragesByMarketCode[program.Station.MarketCode.Value],
+                        SpotDays = daypart.Daypart.ActiveDays,
+                        SpotHours = daypart.Daypart.GetDurationPerDayInHours()
+
                         // Data Science API does not yet handle these fields.
                         //Unit = program.Unit,
                         //InventorySource = program.InventorySource,
@@ -336,9 +349,15 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
-        protected List<PlanPricingApiRequestWeekDto> _GetPricingModelWeeks(PlanDto plan, List<PricingEstimate> proprietaryEstimates)
+        protected List<PlanPricingApiRequestWeekDto> _GetPricingModelWeeks(
+            PlanDto plan, 
+            List<PricingEstimate> proprietaryEstimates)
         {
             var pricingModelWeeks = new List<PlanPricingApiRequestWeekDto>();
+            var marketCoverageGoal = GeneralMath.ConvertPercentageToFraction(plan.CoverageGoalPercent.Value);
+            var marketsWithSov = plan.AvailableMarkets.Where(x => x.ShareOfVoicePercent.HasValue);
+            var daypartsWithWeighting = plan.Dayparts.Where(x => x.WeightingGoalPercent.HasValue);
+            var planPricingParameters = plan.PricingParameters;
 
             foreach (var week in plan.WeeklyBreakdownWeeks)
             {
@@ -355,16 +374,59 @@ namespace Services.Broadcast.ApplicationServices
                 var impressionGoal = week.WeeklyImpressions > estimatedImpressions ? week.WeeklyImpressions - estimatedImpressions : 0;
                 var weeklyBudget = week.WeeklyBudget > estimatedCost ? week.WeeklyBudget - estimatedCost : 0;
                 var cpmGoal = ProposalMath.CalculateCpm(weeklyBudget, impressionGoal);
-                
-                pricingModelWeeks.Add(new PlanPricingApiRequestWeekDto
+                (double capTime, string capType) = _GetFrequencyCapTimeAndCapTypeString(planPricingParameters.UnitCapsType);
+
+                var pricingWeek = new PlanPricingApiRequestWeekDto
                 {
                     MediaWeekId = mediaWeekId,
                     ImpressionGoal = impressionGoal,
-                    CpmGoal = cpmGoal
-                });
+                    CpmGoal = cpmGoal,
+                    MarketCoverageGoal = marketCoverageGoal,
+                    FrequencyCapSpots = planPricingParameters.UnitCaps,
+                    FrequencyCapTime = capTime,
+                    FrequencyCapUnit = capType,
+                    ShareOfVoice = marketsWithSov.Select(x => new ShareOfVoice
+                    {
+                        MarketCode = x.MarketCode,
+                        MarketGoal = GeneralMath.ConvertPercentageToFraction(x.ShareOfVoicePercent.Value)
+                    }).ToList(),
+                    DaypartWeighting = daypartsWithWeighting.Select(x => new DaypartWeighting
+                    {
+                        DaypartId = _GetDaypartId(plan, x),
+                        DaypartGoal = GeneralMath.ConvertPercentageToFraction(x.WeightingGoalPercent.Value)
+                    }).ToList()
+                };
+
+                pricingModelWeeks.Add(pricingWeek);
             }
 
             return pricingModelWeeks;
+        }
+
+        private int _GetDaypartId(PlanDto plan, PlanDaypartDto planDaypartDto)
+        {
+            var daypart = DaypartHelper.ConvertDaypartDaysToDaypart(plan.FlightDays);
+            daypart.StartTime = planDaypartDto.StartTimeSeconds;
+            daypart.EndTime = planDaypartDto.EndTimeSeconds;
+
+            return _DaypartCache.GetIdByDaypart(daypart);
+        }
+
+        private (double capTime, string capType) _GetFrequencyCapTimeAndCapTypeString(UnitCapEnum unitCap)
+        {
+            if (unitCap == UnitCapEnum.Per30Min)
+                return (capTime: 0.5d, "hour");
+
+            if (unitCap == UnitCapEnum.PerHour)
+                return (capTime: 1d, "hour");
+
+            if (unitCap == UnitCapEnum.PerDay)
+                return (capTime: 1d, "day");
+
+            if (unitCap == UnitCapEnum.PerWeek)
+                return (capTime: 1d, "week");
+            
+            throw new ApplicationException("Unsupported unit cap type was discovered");
         }
 
         /// <inheritdoc />
@@ -724,8 +786,8 @@ namespace Services.Broadcast.ApplicationServices
                     TotalImpressions = programImpressions,
                     TotalCost = programCost,
                     TotalSpots = programSpots,
-                    Stations = programInventory.Select(x => x.Manifest.StationLegacyCallLetters).Distinct().ToList(),
-                    MarketCodes = programInventory.Select(x => x.Manifest.MarketCode).Distinct().ToList()
+                    Stations = programInventory.Select(x => x.Manifest.Station.LegacyCallLetters).Distinct().ToList(),
+                    MarketCodes = programInventory.Select(x => x.Manifest.Station.MarketCode.Value).Distinct().ToList()
                 };
 
                 result.Add(program);
@@ -775,13 +837,14 @@ namespace Services.Broadcast.ApplicationServices
 
         public PlanPricingApiRequestDto GetPricingApiRequestPrograms(int planId, PricingInventoryGetRequestParametersDto requestParameters)
         {
-            var plan = _PlanRepository.GetPlan(planId);
             var pricingParams = new ProgramInventoryOptionalParametersDto
             {
                 MinCPM = requestParameters.MinCpm,
                 MaxCPM = requestParameters.MaxCpm,
                 InflationFactor = requestParameters.InflationFactor
             };
+
+            var plan = _PlanRepository.GetPlan(planId);
             var inventorySourceIds = requestParameters.InventorySourceIds.IsEmpty() ?
                 _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes()) :
                 requestParameters.InventorySourceIds;

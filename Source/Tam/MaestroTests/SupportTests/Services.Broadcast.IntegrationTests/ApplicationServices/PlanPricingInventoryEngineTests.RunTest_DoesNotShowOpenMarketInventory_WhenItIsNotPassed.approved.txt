@@ -173,11 +173,21 @@
         "Spots": 4
       }
     ],
-    "MarketCode": 101,
     "ProjectedImpressions": 154195.29125,
     "ProvidedImpressions": 74800.0,
     "SpotCost": 600.0016,
-    "StationLegacyCallLetters": "WCBS",
+    "Station": {
+      "Affiliation": "CBS",
+      "CallLetters": "WCBS-TV 2.1",
+      "Code": 5012,
+      "Id": 573,
+      "LegacyCallLetters": "WCBS",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
     "Unit": null
   }
 ]

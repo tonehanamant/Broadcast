@@ -159,11 +159,21 @@
         "Spots": 0
       }
     ],
-    "MarketCode": 132,
     "ProjectedImpressions": 18139.87125,
     "ProvidedImpressions": null,
     "SpotCost": 75.0000,
-    "StationLegacyCallLetters": "WTEN",
+    "Station": {
+      "Affiliation": "ABC",
+      "CallLetters": "WTEN 10.1",
+      "Code": 428,
+      "Id": 36,
+      "LegacyCallLetters": "WTEN",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 132,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
     "Unit": null
   },
   {
@@ -326,11 +336,21 @@
         "Spots": 0
       }
     ],
-    "MarketCode": 132,
     "ProjectedImpressions": 18139.87125,
     "ProvidedImpressions": 850.0,
     "SpotCost": 75.0000,
-    "StationLegacyCallLetters": "WTEN",
+    "Station": {
+      "Affiliation": "ABC",
+      "CallLetters": "WTEN 10.1",
+      "Code": 428,
+      "Id": 36,
+      "LegacyCallLetters": "WTEN",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 132,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
     "Unit": null
   }
 ]

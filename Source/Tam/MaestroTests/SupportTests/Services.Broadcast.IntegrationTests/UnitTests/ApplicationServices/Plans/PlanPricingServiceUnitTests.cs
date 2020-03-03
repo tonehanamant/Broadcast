@@ -20,6 +20,7 @@ using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgra
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram.ManifestDaypart;
 using Services.Broadcast.Entities;
 using static Services.Broadcast.BusinessEngines.PlanPricingInventoryEngine;
+using Common.Services;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {
@@ -34,6 +35,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private readonly Mock<IBroadcastLockingManagerApplicationService> _BroadcastLockingManagerApplicationServiceMock;
         private readonly Mock<IPlanRepository> _PlanRepositoryMock;
         private readonly Mock<IInventoryRepository> _InventoryRepositoryMock;
+        private readonly Mock<IDaypartCache> _DaypartCacheMock;
+        private readonly Mock<IMarketCoverageRepository> _MarketCoverageRepositoryMock;
 
         public PlanPricingServiceUnitTests()
         {
@@ -45,6 +48,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _BroadcastLockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
             _PlanRepositoryMock = new Mock<IPlanRepository>();
             _InventoryRepositoryMock = new Mock<IInventoryRepository>();
+            _DaypartCacheMock = new Mock<IDaypartCache>();
+            _MarketCoverageRepositoryMock = new Mock<IMarketCoverageRepository>();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IPlanRepository>())
@@ -53,6 +58,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IInventoryRepository>())
                 .Returns(_InventoryRepositoryMock.Object);
+
+            _DataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<IMarketCoverageRepository>())
+                .Returns(_MarketCoverageRepositoryMock.Object);
         }
 
         [Test]
@@ -165,16 +174,53 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        public void GetPricingModelSpots_Filter()
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingModelSpots()
         {
-            var inventory = new List<PlanPricingInventoryProgram>
+            // Arrange
+            var inventory = _GetInventory();
+
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestMarketCoverages(null))
+                .Returns(_GetLatestMarketCoverages());
+
+            var service = _GetService();
+            
+            // Act
+            var result = service.UT_GetPricingModelSpots(inventory);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        private MarketCoverageDto _GetLatestMarketCoverages()
+        {
+            return new MarketCoverageDto
+            {
+                MarketCoverageFileId = 1,
+                MarketCoveragesByMarketCode = new Dictionary<int, double>
+                {
+                    { 101, 0.101d },
+                    { 100, 0.1d },
+                    { 302, 0.302d }
+                }
+            };
+        }
+
+        private List<PlanPricingInventoryProgram> _GetInventory()
+        {
+            return new List<PlanPricingInventoryProgram>
             {
                 // should keep.  All good.
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 1,
-                    StationLegacyCallLetters = "wnbc",
-                    MarketCode = 101,
+                    Station = new DisplayBroadcastStation
+                    {
+                        Id = 1,
+                        LegacyCallLetters = "wnbc",
+                        MarketCode = 101,
+                    },
                     ProvidedImpressions = 12,
                     ProjectedImpressions = 13,
                     SpotCost = 1,
@@ -185,6 +231,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             Daypart = new DisplayDaypart
                             {
                                 Id = 1,
+                                Monday = true,
+                                Friday = true,
+                                StartTime = 36000,
+                                EndTime = 43199
                             },
                             Programs = new List<Program>
                             {
@@ -211,8 +261,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 2,
-                    StationLegacyCallLetters = "wabc",
-                    MarketCode = 101,
+                    Station = new DisplayBroadcastStation
+                    {
+                        Id = 2,
+                        LegacyCallLetters = "wabc",
+                        MarketCode = 101,
+                    },
                     ProvidedImpressions = 12,
                     ProjectedImpressions = 13,
                     SpotCost = 1,
@@ -222,7 +276,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             Daypart = new DisplayDaypart
                             {
-                                Id = 2
+                                Id = 2,
+                                Monday = true,
+                                Friday = true,
+                                Sunday = true,
+                                StartTime = 36000,
+                                EndTime = 43199
                             },
                             Programs = new List<Program>
                             {
@@ -249,8 +308,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 3,
-                    StationLegacyCallLetters = "kpdx",
-                    MarketCode = 100,
+                    Station = new DisplayBroadcastStation
+                    {
+                        Id = 3,
+                        LegacyCallLetters = "kpdx",
+                        MarketCode = 100,
+                    },
                     ProvidedImpressions = null,
                     ProjectedImpressions = 13,
                     SpotCost = 1,
@@ -260,7 +323,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             Daypart = new DisplayDaypart
                             {
-                                Id = 3
+                                Id = 3,
+                                Monday = true,
+                                Friday = true,
+                                StartTime = 36000,
+                                EndTime = 43699
                             },
                             Programs = new List<Program>
                             {
@@ -287,8 +354,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 4,
-                    StationLegacyCallLetters = "kabc",
-                    MarketCode = 302,
+                    Station = new DisplayBroadcastStation
+                    {
+                        Id = 4,
+                        LegacyCallLetters = "kabc",
+                        MarketCode = 302,
+                    },
                     ProvidedImpressions = null,
                     ProjectedImpressions = 0,
                     SpotCost = 1,
@@ -298,7 +369,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             Daypart = new DisplayDaypart
                             {
-                                Id = 4
+                                Id = 4,
+                                Monday = true,
+                                Friday = true,
+                                StartTime = 36000,
+                                EndTime = 43199
                             },
                             Programs = new List<Program>
                             {
@@ -325,8 +400,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 5,
-                    StationLegacyCallLetters = "wnbc",
-                    MarketCode = 101,
+                    Station = new DisplayBroadcastStation
+                    {
+                        Id = 1,
+                        LegacyCallLetters = "wnbc",
+                        MarketCode = 101,
+                    },
                     ProvidedImpressions = 0,
                     ProjectedImpressions = 13,
                     SpotCost = 1,
@@ -336,7 +415,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             Daypart = new DisplayDaypart
                             {
-                                Id = 5
+                                Id = 5,
+                                Monday = true,
+                                Friday = true,
+                                StartTime = 36000,
+                                EndTime = 43199
                             },
                             Programs = new List<Program>
                             {
@@ -363,8 +446,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 6,
-                    StationLegacyCallLetters = "wabc",
-                    MarketCode = 101,
+                    Station = new DisplayBroadcastStation
+                    {
+                        Id = 2,
+                        LegacyCallLetters = "wabc",
+                        MarketCode = 101,
+                    },
                     ProvidedImpressions = null,
                     ProjectedImpressions = 0,
                     SpotCost = 1,
@@ -374,7 +461,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             Daypart = new DisplayDaypart
                             {
-                                Id = 6
+                                Id = 6,
+                                Monday = true,
+                                Friday = true,
+                                StartTime = 36000,
+                                EndTime = 43199
                             },
                             Programs = new List<Program>
                             {
@@ -401,8 +492,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 7,
-                    StationLegacyCallLetters = "kpdx",
-                    MarketCode = 100,
+                    Station = new DisplayBroadcastStation
+                    {
+                        Id = 3,
+                        LegacyCallLetters = "kpdx",
+                        MarketCode = 100,
+                    },
                     ProvidedImpressions = 12,
                     ProjectedImpressions = 13,
                     SpotCost = 0,
@@ -412,7 +507,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             Daypart = new DisplayDaypart
                             {
-                                Id = 7
+                                Id = 7,
+                                Monday = true,
+                                Friday = true,
+                                StartTime = 36000,
+                                EndTime = 43199
                             },
                             Programs = new List<Program>
                             {
@@ -436,15 +535,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 }
             };
-
-            var service = _GetService();
-            var result = service.UT_GetPricingModelSpots(inventory);
-
-            Assert.AreEqual(6, result.Count);
-            // kept these two and filtered out the rest
-            Assert.AreEqual(2, result.Count(i => i.Id == 1));
-            Assert.AreEqual(2, result.Count(i => i.Id == 2));
-            Assert.AreEqual(2, result.Count(i => i.Id == 3));
         }
 
         [Test]
@@ -526,7 +616,153 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [UseReporter(typeof(DiffReporter))]
         public void GetPricingModelWeeks()
         {
-            var proprietaryEstimates = new List<PricingEstimate>
+            // Arrange
+            var usedDayparts = new List<DisplayDaypart>();
+            var proprietaryEstimates = _GetProprietaryEstimates();
+            var plan = _GetPlan();
+
+            _DaypartCacheMock
+                .Setup(x => x.GetIdByDaypart(It.IsAny<DisplayDaypart>()))
+                .Returns<DisplayDaypart>(x => x.StartTime + x.EndTime)
+                .Callback<DisplayDaypart>(x => usedDayparts.Add(x));
+
+            var service = _GetService();
+
+            // Act
+            var weeks = service.UT_GetPricingModelWeeks(plan, proprietaryEstimates);
+
+            // Assert
+            var result = new
+            {
+                weeks,
+                usedDayparts
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [TestCase(UnitCapEnum.Per30Min, "hour", 0.5)]
+        [TestCase(UnitCapEnum.PerHour, "hour", 1)]
+        [TestCase(UnitCapEnum.PerDay, "day", 1)]
+        [TestCase(UnitCapEnum.PerWeek, "week", 1)]
+        public void GetPricingModelWeeks_CapSpotTypes(
+            UnitCapEnum unitCapType,
+            string expectedFrequencyCapUnit,
+            double expectedFrequencyCapTime)
+        {
+            // Arrange
+            var usedDayparts = new List<DisplayDaypart>();
+            var proprietaryEstimates = _GetProprietaryEstimates();
+            var plan = _GetPlan();
+
+            plan.PricingParameters.UnitCapsType = unitCapType;
+
+            _DaypartCacheMock
+                .Setup(x => x.GetIdByDaypart(It.IsAny<DisplayDaypart>()))
+                .Returns<DisplayDaypart>(x => x.StartTime + x.EndTime)
+                .Callback<DisplayDaypart>(x => usedDayparts.Add(x));
+
+            var service = _GetService();
+
+            // Act
+            var weeks = service.UT_GetPricingModelWeeks(plan, proprietaryEstimates);
+
+            // Assert
+            var firstWeek = weeks.First();
+
+            Assert.AreEqual(expectedFrequencyCapUnit, firstWeek.FrequencyCapUnit);
+            Assert.AreEqual(expectedFrequencyCapTime, firstWeek.FrequencyCapTime);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ThrowsException_WhenWrongUnitCapType_IsPassed()
+        {
+            // Arrange
+            const string expectedMessage = "Unsupported unit cap type was discovered";
+
+            var proprietaryEstimates = _GetProprietaryEstimates();
+            var plan = _GetPlan();
+
+            plan.PricingParameters.UnitCapsType = UnitCapEnum.PerMonth;
+
+            var service = _GetService();
+
+            // Act
+            var exception = Assert.Throws<ApplicationException>(() => service.UT_GetPricingModelWeeks(plan, proprietaryEstimates));
+
+            // Assert
+            Assert.AreEqual(expectedMessage, exception.Message);
+        }
+
+        private PlanDto _GetPlan()
+        {
+            return new PlanDto
+            {
+                CoverageGoalPercent = 80,
+                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                {
+                    // should be filtered out.
+                    new WeeklyBreakdownWeek
+                    {
+                        MediaWeekId = 1,
+                        WeeklyImpressions = 0,
+                        WeeklyBudget = 200000
+                    },
+                    // should stay
+                    new WeeklyBreakdownWeek
+                    {
+                        MediaWeekId = 2,
+                        WeeklyImpressions = 2000,
+                        WeeklyBudget = 200000
+                    }
+                },
+                AvailableMarkets = new List<PlanAvailableMarketDto>
+                {
+                    new PlanAvailableMarketDto
+                    {
+                        MarketCode = 101,
+                        ShareOfVoicePercent = 11
+                    },
+                    new PlanAvailableMarketDto
+                    {
+                        MarketCode = 102,
+                        ShareOfVoicePercent = null
+                    },
+                    new PlanAvailableMarketDto
+                    {
+                        MarketCode = 103,
+                        ShareOfVoicePercent = 55
+                    }
+                },
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypartDto
+                    {
+                        WeightingGoalPercent = 17,
+                        StartTimeSeconds = 100,
+                        EndTimeSeconds = 199
+                    },
+                    new PlanDaypartDto
+                    {
+                        WeightingGoalPercent = 19,
+                        StartTimeSeconds = 100,
+                        EndTimeSeconds = 299
+                    }
+                },
+                PricingParameters = new PlanPricingParametersDto
+                {
+                    UnitCapsType = UnitCapEnum.Per30Min,
+                    UnitCaps = 2
+                },
+                FlightDays = new List<int> { 1, 2, 3, 4, 6 }
+            };
+        }
+
+        private List<PricingEstimate> _GetProprietaryEstimates()
+        {
+            return new List<PricingEstimate>
             {
                 new PricingEstimate
                 {
@@ -550,33 +786,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     Cost = 300
                 }
             };
-
-            var plan = new PlanDto
-            {
-                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
-                {
-                    // should be filtered out.
-                    new WeeklyBreakdownWeek
-                    {
-                        MediaWeekId = 1,
-                        WeeklyImpressions = 0,
-                        WeeklyBudget = 200000
-                    },
-                    // should stay
-                    new WeeklyBreakdownWeek
-                    {
-                        MediaWeekId = 2,
-                        WeeklyImpressions = 2000,
-                        WeeklyBudget = 200000
-                    }
-                }
-            };
-
-            var service = _GetService();
-
-            var result = service.UT_GetPricingModelWeeks(plan, proprietaryEstimates);
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         private PlanPricingServiceUnitTestClass _GetService()
@@ -587,7 +796,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _PricingApiClientMock.Object,
                 _BackgroundJobClientMock.Object,
                 _PlanPricingInventoryEngineMock.Object,
-                _BroadcastLockingManagerApplicationServiceMock.Object);
+                _BroadcastLockingManagerApplicationServiceMock.Object,
+                _DaypartCacheMock.Object);
 
             return service;
         }
@@ -822,8 +1032,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 1,
-                    StationLegacyCallLetters = "wnbc",
-                    MarketCode = 101,
+                    Station = new DisplayBroadcastStation
+                    {
+                        LegacyCallLetters = "wnbc",
+                        MarketCode = 101,
+                    },
                     ProvidedImpressions = 1000,
                     ProjectedImpressions = 1100,
                     SpotCost = 50,
@@ -871,8 +1084,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 2,
-                    StationLegacyCallLetters = "wabc",
-                    MarketCode = 101,
+                    Station = new DisplayBroadcastStation
+                    {
+                        LegacyCallLetters = "wabc",
+                        MarketCode = 101,
+                    },
                     ProvidedImpressions = 1000,
                     ProjectedImpressions = 1100,
                     SpotCost = 50,
@@ -915,8 +1131,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 3,
-                    StationLegacyCallLetters = "kpdx",
-                    MarketCode = 100,
+                    Station = new DisplayBroadcastStation
+                    {
+                        LegacyCallLetters = "kpdx",
+                        MarketCode = 100,
+                    },
                     ProvidedImpressions = 1000,
                     ProjectedImpressions = 1100,
                     SpotCost = 50,
@@ -959,8 +1178,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 4,
-                    StationLegacyCallLetters = "kabc",
-                    MarketCode = 302,
+                    Station = new DisplayBroadcastStation
+                    {
+                        LegacyCallLetters = "kabc",
+                        MarketCode = 302,
+                    },
                     ProvidedImpressions = 3000,
                     ProjectedImpressions = 2900,
                     SpotCost = 130,
@@ -1003,8 +1225,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 5,
-                    StationLegacyCallLetters = "wnbc",
-                    MarketCode = 101,
+                    Station = new DisplayBroadcastStation
+                    {
+                        LegacyCallLetters = "wnbc",
+                        MarketCode = 101,
+                    },
                     InventorySource = new InventorySource
                     {
                         Id = 13
@@ -1037,8 +1262,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 6,
-                    StationLegacyCallLetters = "wabc",
-                    MarketCode = 101,
+                    Station = new DisplayBroadcastStation
+                    {
+                        LegacyCallLetters = "wabc",
+                        MarketCode = 101,
+                    },
                     InventorySource = new InventorySource
                     {
                         Id = 17
@@ -1071,8 +1299,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 7,
-                    StationLegacyCallLetters = "kpdx",
-                    MarketCode = 100,
+                    Station = new DisplayBroadcastStation
+                    {
+                        LegacyCallLetters = "kpdx",
+                        MarketCode = 100,
+                    },
                     ProvidedImpressions = null,
                     ProjectedImpressions = 700,
                     SpotCost = 40,
@@ -1120,8 +1351,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 7,
-                    StationLegacyCallLetters = "kpdx",
-                    MarketCode = 100,
+                    Station = new DisplayBroadcastStation
+                    {
+                        LegacyCallLetters = "kpdx",
+                        MarketCode = 100,
+                    },
                     ProvidedImpressions = null,
                     ProjectedImpressions = 700,
                     SpotCost = 40,
@@ -1164,8 +1398,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingInventoryProgram
                 {
                     ManifestId = 7,
-                    StationLegacyCallLetters = "kpdx",
-                    MarketCode = 100,
+                    Station = new DisplayBroadcastStation
+                    {
+                        LegacyCallLetters = "kpdx",
+                        MarketCode = 100,
+                    },
                     ProvidedImpressions = null,
                     ProjectedImpressions = 700,
                     SpotCost = 40,

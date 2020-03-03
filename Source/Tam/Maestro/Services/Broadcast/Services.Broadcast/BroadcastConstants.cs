@@ -20,6 +20,8 @@
 
         public const int OneDayInSeconds = 86400;
 
+        public const int OneHourInSeconds = 3600;
+
         public const string DATE_FORMAT_STANDARD = "yyyy-MM-dd";
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Common.Services;
 using Common.Services.Repositories;
 using Hangfire;
 using Services.Broadcast.ApplicationServices;
@@ -17,17 +18,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             IPricingApiClient pricingApiClient,
             IBackgroundJobClient backgroundJobClient,
             IPlanPricingInventoryEngine planPricingInventoryEngine,
-            IBroadcastLockingManagerApplicationService lockingManagerApplicationService)
-            : base(broadcastDataRepositoryFactory, spotLengthEngine, pricingApiClient, backgroundJobClient,
-                planPricingInventoryEngine, lockingManagerApplicationService)
+            IBroadcastLockingManagerApplicationService lockingManagerApplicationService,
+            IDaypartCache daypartCache)
+            : base(
+                  broadcastDataRepositoryFactory, 
+                  spotLengthEngine, 
+                  pricingApiClient, 
+                  backgroundJobClient,
+                  planPricingInventoryEngine, 
+                  lockingManagerApplicationService,
+                  daypartCache)
         {
 
         }
 
         public List<PlanPricingApiRequestSpotsDto> UT_GetPricingModelSpots(List<PlanPricingInventoryProgram> programs)
         {
-            var result = _GetPricingModelSpots(programs);
-            return result;
+            return _GetPricingModelSpots(programs);
         }
 
         public bool UT_AreImpressionsValidForPricingModelInput(decimal? impressions)

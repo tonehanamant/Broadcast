@@ -158,7 +158,7 @@ namespace Services.Broadcast.BusinessEngines
                 inventoryForDateRange.ForEach(p => p.InventoryPricingQuarterType = InventoryPricingQuarterType.Plan);
                 totalInventory.AddRange(inventoryForDateRange);
 
-                var gatheredStationCallsigns = totalInventory.Select(s => s.StationLegacyCallLetters).Distinct().ToList();
+                var gatheredStationCallsigns = totalInventory.Select(s => s.Station.LegacyCallLetters).Distinct().ToList();
                 var fallbackStationIds = availableStations.Where(a => gatheredStationCallsigns.Contains(a.LegacyCallLetters) == false)
                     .Select(s => s.Id).ToList();
 
@@ -176,7 +176,7 @@ namespace Services.Broadcast.BusinessEngines
                         totalInventory.AddRange(fallbackInventory);
                     }
 
-                    gatheredStationCallsigns = totalInventory.Select(s => s.StationLegacyCallLetters).Distinct().ToList();
+                    gatheredStationCallsigns = totalInventory.Select(s => s.Station.LegacyCallLetters).Distinct().ToList();
                     var stationsWithoutInventory = availableStations.Where(a => gatheredStationCallsigns.Contains(a.LegacyCallLetters) == false).ToList();
 
                     if (stationsWithoutInventory.Any())
