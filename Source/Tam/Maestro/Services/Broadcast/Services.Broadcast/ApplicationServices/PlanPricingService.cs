@@ -565,11 +565,23 @@ namespace Services.Broadcast.ApplicationServices
             ProgramInventoryOptionalParametersDto parameters)
         {
             var result = new List<PricingEstimate>();
+
+            result.AddRange(_GetPricingEstimatesBasedOnInventorySourcePreferences(plan, parameters));
+            result.AddRange(_GetPricingEstimatesBasedOnInventorySourceTypePreferences(plan, parameters));
+
+            return result;
+        }
+
+        private List<PricingEstimate> _GetPricingEstimatesBasedOnInventorySourcePreferences(
+            PlanDto plan,
+            ProgramInventoryOptionalParametersDto parameters)
+        {
+            var result = new List<PricingEstimate>();
+
             var supportedInventorySourceIds = _GetInventorySourceIdsByTypes(new List<InventorySourceTypeEnum>
             {
                 InventorySourceTypeEnum.Barter,
-                InventorySourceTypeEnum.ProprietaryOAndO,
-                InventorySourceTypeEnum.Diginet
+                InventorySourceTypeEnum.ProprietaryOAndO
             });
 
             var inventorySourcePreferences = plan.PricingParameters.InventorySourcePercentages
@@ -581,40 +593,93 @@ namespace Services.Broadcast.ApplicationServices
                     parameters,
                     inventorySourcePreferences.Select(x => x.Id));
 
-            foreach (var inventorySourcePreference in inventorySourcePreferences)
+            foreach (var preference in inventorySourcePreferences)
             {
-                var inventorySourceId = inventorySourcePreference.Id;
+                var inventorySourceId = preference.Id;
+                var programs = inventory.Where(x => x.InventorySource.Id == inventorySourceId);
 
-                var estimates = inventory
-                    .Where(x => x.InventorySource.Id == inventorySourceId)
-                    .SelectMany(x => x.ManifestWeeks.Select(w => new ProgramWithManifestWeek
-                    {
-                        Program = x,
-                        ManifestWeek = w
-                    }))
-                    .Where(x => x.ManifestWeek.Spots > 0)
-                    .GroupBy(x => x.ManifestWeek.MediaWeekId)
-                    .Select(programsByMediaWeekGrouping =>
-                    {
-                        _CalculateImpressionsAndCost(
-                            programsByMediaWeekGrouping,
-                            inventorySourcePreference.Percentage,
-                            out var totalWeekImpressions,
-                            out var totalWeekCost);
-
-                        return new PricingEstimate
-                        {
-                            InventorySourceId = inventorySourceId,
-                            MediaWeekId = programsByMediaWeekGrouping.Key,
-                            Impressions = totalWeekImpressions,
-                            Cost = totalWeekCost
-                        };
-                    });
+                var estimates = _GetPricingEstimates(
+                    programs,
+                    preference.Percentage,
+                    inventorySourceId,
+                    null);
 
                 result.AddRange(estimates);
             }
 
             return result;
+        }
+
+        private List<PricingEstimate> _GetPricingEstimatesBasedOnInventorySourceTypePreferences(
+            PlanDto plan,
+            ProgramInventoryOptionalParametersDto parameters)
+        {
+            var result = new List<PricingEstimate>();
+
+            var supportedInventorySourceTypes = new List<InventorySourceTypeEnum>
+            {
+                InventorySourceTypeEnum.Diginet
+            };
+
+            var inventorySourceTypePreferences = plan.PricingParameters.InventorySourceTypePercentages
+                .Where(x => x.Percentage > 0 && supportedInventorySourceTypes.Contains((InventorySourceTypeEnum)x.Id))
+                .ToList();
+
+            var inventorySourceIds = _GetInventorySourceIdsByTypes(inventorySourceTypePreferences.Select(x => (InventorySourceTypeEnum)x.Id));
+
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(
+                    plan,
+                    parameters,
+                    inventorySourceIds);
+
+            foreach (var preference in inventorySourceTypePreferences)
+            {
+                var inventorySourceType = (InventorySourceTypeEnum)preference.Id;
+                var programs = inventory.Where(x => x.InventorySource.InventoryType == inventorySourceType);
+
+                var estimates = _GetPricingEstimates(
+                    programs,
+                    preference.Percentage,
+                    null,
+                    inventorySourceType);
+
+                result.AddRange(estimates);
+            }
+
+            return result;
+        }
+
+        private IEnumerable<PricingEstimate> _GetPricingEstimates(
+            IEnumerable<PlanPricingInventoryProgram> programs, 
+            int percentage,
+            int? inventorySourceId,
+            InventorySourceTypeEnum? inventorySourceType)
+        {
+            return programs
+                .SelectMany(x => x.ManifestWeeks.Select(w => new ProgramWithManifestWeek
+                {
+                    Program = x,
+                    ManifestWeek = w
+                }))
+                .Where(x => x.ManifestWeek.Spots > 0)
+                .GroupBy(x => x.ManifestWeek.MediaWeekId)
+                .Select(programsByMediaWeekGrouping =>
+                {
+                    _CalculateImpressionsAndCost(
+                        programsByMediaWeekGrouping,
+                        percentage,
+                        out var totalWeekImpressions,
+                        out var totalWeekCost);
+
+                    return new PricingEstimate
+                    {
+                        InventorySourceId = inventorySourceId,
+                        InventorySourceType = inventorySourceType,
+                        MediaWeekId = programsByMediaWeekGrouping.Key,
+                        Impressions = totalWeekImpressions,
+                        Cost = totalWeekCost
+                    };
+                });
         }
 
         private void _CalculateImpressionsAndCost(
@@ -639,7 +704,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private List<int> _GetInventorySourceIdsByTypes(List<InventorySourceTypeEnum> inventorySourceTypes)
+        private List<int> _GetInventorySourceIdsByTypes(IEnumerable<InventorySourceTypeEnum> inventorySourceTypes)
         {
             return _InventoryRepository
                 .GetInventorySources()

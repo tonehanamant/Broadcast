@@ -16,10 +16,11 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public int id { get; set; }
         public int media_week_id { get; set; }
-        public int inventory_source_id { get; set; }
+        public Nullable<int> inventory_source_id { get; set; }
         public int plan_version_pricing_job_id { get; set; }
         public double impressions { get; set; }
         public decimal cost { get; set; }
+        public Nullable<int> inventory_source_type { get; set; }
     
         public virtual inventory_sources inventory_sources { get; set; }
         public virtual media_weeks media_weeks { get; set; }

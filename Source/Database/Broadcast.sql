@@ -186,6 +186,20 @@ END
 GO
 /*************************************** END - PRI-22728 *****************************************************/
 
+/*************************************** START - PRI-20833 PART 2 ****************************************************/
+-- make inventory_source_id to be nullable
+IF EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_job_inventory_source_estimates') AND name = 'inventory_source_id')
+BEGIN
+	ALTER TABLE plan_version_pricing_job_inventory_source_estimates ALTER COLUMN inventory_source_id INT NULL
+END
+
+-- add nullable inventory_source_type
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_job_inventory_source_estimates') AND name = 'inventory_source_type')
+BEGIN
+	ALTER TABLE plan_version_pricing_job_inventory_source_estimates ADD inventory_source_type INT NULL
+END
+
+/*************************************** END - PRI-20833 PART 2 ****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

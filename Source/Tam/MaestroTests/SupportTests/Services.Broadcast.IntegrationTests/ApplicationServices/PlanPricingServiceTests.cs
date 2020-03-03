@@ -265,6 +265,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         new PlanPricingInventorySourceDto{Id = 10, Percentage = 16},
                         new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
                         new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
+                    },
+                    InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                    {
+                        new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
+                        new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
                     }
                 };
 
@@ -318,6 +323,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         new PlanPricingInventorySourceDto{Id = 10, Percentage = 16},
                         new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
                         new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
+                    },
+                    InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                    {
+                        new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
+                        new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
                     }
                 };
 
@@ -436,6 +446,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         new PlanPricingInventorySourceDto{Id = 10, Percentage = 16},
                         new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
                         new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
+                    },
+                    InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                    {
+                        new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
+                        new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
                     }
                 };
 
@@ -485,6 +500,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         new PlanPricingInventorySourceDto{Id = 10, Percentage = 16},
                         new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
                         new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
+                    },
+                    InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                    {
+                        new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
+                        new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
                     }
                 };
 

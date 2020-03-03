@@ -842,7 +842,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Verify(x => x.GetInventoryForPlan(
                     It.IsAny<PlanDto>(),
                     It.IsAny<ProgramInventoryOptionalParametersDto>(),
-                    It.Is<IEnumerable<int>>(list => list.SequenceEqual(new List<int> { 3, 5, 7, 10, 11, 12, 18 }))), Times.Once);
+                    It.Is<IEnumerable<int>>(list => list.SequenceEqual(new List<int> { 3, 5, 7, 10, 11, 12 }))), Times.Once);
+
+            _PlanPricingInventoryEngineMock
+                .Verify(x => x.GetInventoryForPlan(
+                    It.IsAny<PlanDto>(),
+                    It.IsAny<ProgramInventoryOptionalParametersDto>(),
+                    It.Is<IEnumerable<int>>(list => list.SequenceEqual(new List<int> { 17, 18, 19, 20, 21, 22, 23, 24, 25 }))), Times.Once);
 
             _PlanRepositoryMock
                 .Verify(x => x.SavePlanPricingEstimates(jobId, It.IsAny<List<PricingEstimate>>()), Times.Once);
@@ -866,17 +872,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 UnitCaps = 10,
                 UnitCapsType = UnitCapEnum.PerDay,
                 InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
-                    {
-                        new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
-                        new PlanPricingInventorySourceDto{Id = 5, Percentage = 13},
-                        new PlanPricingInventorySourceDto{Id = 6, Percentage = 14},
-                        new PlanPricingInventorySourceDto{Id = 7, Percentage = 15},
-                        new PlanPricingInventorySourceDto{Id = 10, Percentage = 16},
-                        new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
-                        new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
-                        new PlanPricingInventorySourceDto{Id = 18, Percentage = 5},
-                        new PlanPricingInventorySourceDto{Id = 19, Percentage = 0}
-                    }
+                {
+                    new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
+                    new PlanPricingInventorySourceDto{Id = 5, Percentage = 13},
+                    new PlanPricingInventorySourceDto{Id = 6, Percentage = 14},
+                    new PlanPricingInventorySourceDto{Id = 7, Percentage = 15},
+                    new PlanPricingInventorySourceDto{Id = 10, Percentage = 16},
+                    new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
+                    new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
+                },
+                InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                {
+                    new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
+                    new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
+                }
             };
         }
 
@@ -1042,7 +1051,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     SpotCost = 50,
                     InventorySource = new InventorySource
                     {
-                        Id = 3
+                        Id = 3,
+                        InventoryType = InventorySourceTypeEnum.Barter
                     },
                     ManifestDayparts = new List<ManifestDaypart>
                     {
@@ -1094,7 +1104,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     SpotCost = 50,
                     InventorySource = new InventorySource
                     {
-                        Id = 5
+                        Id = 5,
+                        InventoryType = InventorySourceTypeEnum.Barter
                     },
                     ManifestDayparts = new List<ManifestDaypart>
                     {
@@ -1141,7 +1152,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     SpotCost = 50,
                     InventorySource = new InventorySource
                     {
-                        Id = 7
+                        Id = 7,
+                        InventoryType = InventorySourceTypeEnum.Barter
                     },
                     ManifestDayparts = new List<ManifestDaypart>
                     {
@@ -1188,7 +1200,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     SpotCost = 130,
                     InventorySource = new InventorySource
                     {
-                        Id = 10
+                        Id = 10,
+                        InventoryType = InventorySourceTypeEnum.ProprietaryOAndO
                     },
                     ManifestDayparts = new List<ManifestDaypart>
                     {
@@ -1232,7 +1245,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     InventorySource = new InventorySource
                     {
-                        Id = 13
+                        Id = 13,
+                        InventoryType = InventorySourceTypeEnum.Syndication
                     },
                     ManifestDayparts = new List<ManifestDaypart>
                     {
@@ -1269,7 +1283,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     InventorySource = new InventorySource
                     {
-                        Id = 17
+                        Id = 17,
+                        InventoryType = InventorySourceTypeEnum.Diginet
                     },
                     ManifestDayparts = new List<ManifestDaypart>
                     {
@@ -1309,7 +1324,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     SpotCost = 40,
                     InventorySource = new InventorySource
                     {
-                        Id = 3
+                        Id = 3,
+                        InventoryType = InventorySourceTypeEnum.Barter
                     },
                     ManifestDayparts = new List<ManifestDaypart>
                     {
@@ -1361,7 +1377,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     SpotCost = 40,
                     InventorySource = new InventorySource
                     {
-                        Id = 18
+                        Id = 18,
+                        InventoryType = InventorySourceTypeEnum.Diginet
                     },
                     ManifestDayparts = new List<ManifestDaypart>
                     {
@@ -1408,7 +1425,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     SpotCost = 40,
                     InventorySource = new InventorySource
                     {
-                        Id = 19
+                        Id = 19,
+                        InventoryType = InventorySourceTypeEnum.Diginet
                     },
                     ManifestDayparts = new List<ManifestDaypart>
                     {

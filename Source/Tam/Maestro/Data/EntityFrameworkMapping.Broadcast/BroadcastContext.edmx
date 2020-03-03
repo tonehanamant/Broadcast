@@ -925,10 +925,11 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="media_week_id" Type="int" Nullable="false" />
-          <Property Name="inventory_source_id" Type="int" Nullable="false" />
+          <Property Name="inventory_source_id" Type="int" />
           <Property Name="plan_version_pricing_job_id" Type="int" Nullable="false" />
           <Property Name="impressions" Type="float" Nullable="false" />
           <Property Name="cost" Type="money" Nullable="false" />
+          <Property Name="inventory_source_type" Type="int" />
         </EntityType>
         <EntityType Name="plan_version_pricing_parameters">
           <Key>
@@ -3338,7 +3339,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_pricing_job_inventory_source_estimates_inventory_sources">
-          <End Role="inventory_sources" Type="Self.inventory_sources" Multiplicity="1" />
+          <End Role="inventory_sources" Type="Self.inventory_sources" Multiplicity="0..1" />
           <End Role="plan_version_pricing_job_inventory_source_estimates" Type="Self.plan_version_pricing_job_inventory_source_estimates" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="inventory_sources">
@@ -13316,16 +13317,17 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="media_week_id" Type="Int32" Nullable="false" />
-          <Property Name="inventory_source_id" Type="Int32" Nullable="false" />
+          <Property Name="inventory_source_id" Type="Int32" />
           <Property Name="plan_version_pricing_job_id" Type="Int32" Nullable="false" />
           <Property Name="impressions" Type="Double" Nullable="false" />
           <Property Name="cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="inventory_source_type" Type="Int32" />
           <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_plan_version_pricing_job_inventory_source_estimates_inventory_sources" FromRole="plan_version_pricing_job_inventory_source_estimates" ToRole="inventory_sources" />
           <NavigationProperty Name="media_weeks" Relationship="BroadcastModel.FK_plan_version_pricing_job_inventory_source_estimates_media_weeks" FromRole="plan_version_pricing_job_inventory_source_estimates" ToRole="media_weeks" />
           <NavigationProperty Name="plan_version_pricing_job" Relationship="BroadcastModel.FK_plan_version_pricing_job_inventory_source_estimates_plan_version_pricing_job" FromRole="plan_version_pricing_job_inventory_source_estimates" ToRole="plan_version_pricing_job" />
         </EntityType>
         <Association Name="FK_plan_version_pricing_job_inventory_source_estimates_inventory_sources">
-          <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="0..1" />
           <End Type="BroadcastModel.plan_version_pricing_job_inventory_source_estimates" Role="plan_version_pricing_job_inventory_source_estimates" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="inventory_sources">
@@ -15620,18 +15622,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="plan_version_pricing_job_inventory_source_estimates">
-            <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_job_inventory_source_estimates">
-              <MappingFragment StoreEntitySet="plan_version_pricing_job_inventory_source_estimates">
-                <ScalarProperty Name="cost" ColumnName="cost" />
-                <ScalarProperty Name="impressions" ColumnName="impressions" />
-                <ScalarProperty Name="plan_version_pricing_job_id" ColumnName="plan_version_pricing_job_id" />
-                <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
-                <ScalarProperty Name="media_week_id" ColumnName="media_week_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="plan_version_pricing_job">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_job">
               <MappingFragment StoreEntitySet="plan_version_pricing_job">
@@ -15641,6 +15631,19 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="queued_at" ColumnName="queued_at" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="plan_version_id" ColumnName="plan_version_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_pricing_job_inventory_source_estimates">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_job_inventory_source_estimates">
+              <MappingFragment StoreEntitySet="plan_version_pricing_job_inventory_source_estimates">
+                <ScalarProperty Name="inventory_source_type" ColumnName="inventory_source_type" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="plan_version_pricing_job_id" ColumnName="plan_version_pricing_job_id" />
+                <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
+                <ScalarProperty Name="media_week_id" ColumnName="media_week_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

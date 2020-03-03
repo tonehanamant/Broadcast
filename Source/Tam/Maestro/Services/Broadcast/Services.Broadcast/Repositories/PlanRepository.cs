@@ -1448,6 +1448,7 @@ namespace Services.Broadcast.Repositories
                     {
                         media_week_id = x.MediaWeekId,
                         inventory_source_id = x.InventorySourceId,
+                        inventory_source_type = (int?)x.InventorySourceType,
                         plan_version_pricing_job_id = jobId,
                         impressions = x.Impressions,
                         cost = x.Cost
