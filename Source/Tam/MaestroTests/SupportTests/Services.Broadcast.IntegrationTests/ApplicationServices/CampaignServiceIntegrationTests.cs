@@ -785,6 +785,25 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        public void CampaignExport_ValidateSecondaryAudiences()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+
+                var exception = Assert.Throws<ApplicationException>(() =>
+                _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
+                {
+                    CampaignId = 652,
+                    ExportType = CampaignExportTypeEnum.Proposal,
+                    SelectedPlans = new List<int> { 1848, 2541 }
+                }));
+                Assert.That(exception.Message, Is.EqualTo("Cannot have multiple plans with varying secondary audiences in the export. Please select only plans with the same secondary audiences."));
+            }
+        }
+
+        [Test]
         public void CampaignExport_ValidateExportType_ContractedWithProposal()
         {
             using (new TransactionScopeWrapper())

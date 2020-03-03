@@ -504,6 +504,7 @@ namespace Services.Broadcast.ApplicationServices
                     return plan;
                 }).ToList();
             _ValidateGuaranteedAudiences(plans);
+            _ValidateSecondaryAudiences(plans);
             List<PlanAudienceDisplay> guaranteedDemos = plans.Select(x => x.AudienceId).Distinct()
                 .Select(x => _AudienceService.GetAudienceById(x)).ToList();
 
@@ -592,6 +593,23 @@ namespace Services.Broadcast.ApplicationServices
             if (plans.Select(x => x.AudienceId).Distinct().Count() != 1)
             {
                 throw new ApplicationException(MULTIPLE_GUARANTEED_AUDIENCES_EXCEPTION);
+            }
+        }
+
+        private static void _ValidateSecondaryAudiences(List<PlanDto> plans)
+        {
+            const string SECONDARY_AUDIENCES_EXCEPTION = "Cannot have multiple plans with varying secondary audiences in the export. Please select only plans with the same secondary audiences.";
+            if (plans.Count == 1)
+                return;
+
+            var firstPlanSecondaryAudiencesIds = plans.First().SecondaryAudiences.Select(x => x.AudienceId).ToList();
+            foreach(var plan in plans.Skip(1))
+            {
+                if (plan.SecondaryAudiences.Count != firstPlanSecondaryAudiencesIds.Count ||
+                    plan.SecondaryAudiences.Any(x => !firstPlanSecondaryAudiencesIds.Contains(x.AudienceId)))
+                {
+                    throw new ApplicationException(SECONDARY_AUDIENCES_EXCEPTION);
+                }
             }
         }
 
