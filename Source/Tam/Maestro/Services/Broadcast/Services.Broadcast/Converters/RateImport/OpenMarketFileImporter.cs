@@ -26,6 +26,7 @@ using Services.Broadcast.Cache;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.ApplicationServices;
 
 namespace Services.Broadcast.Converters.RateImport
 {
@@ -54,6 +55,7 @@ namespace Services.Broadcast.Converters.RateImport
         private readonly IInventoryDaypartParsingEngine _InventoryDaypartParsingEngine;
         private readonly IBroadcastAudiencesCache _AudienceCache;
         private readonly StationProcessingEngine _StationEngine;
+        private readonly IStationMappingService _StationMappingService;
         private readonly List<DisplayBroadcastStation> _AvailableStations;
 
         public OpenMarketFileImporter(IDataRepositoryFactory dataRepositoryFactory
@@ -61,7 +63,8 @@ namespace Services.Broadcast.Converters.RateImport
             , IDaypartCache daypartCache
             , IInventoryDaypartParsingEngine inventoryDaypartParsingEngine
             , IBroadcastAudiencesCache broadcastAudiencesCache
-            , StationProcessingEngine stationProcessingEngine)
+            , StationProcessingEngine stationProcessingEngine
+            , IStationMappingService stationMappingService)
         {
             _BroadcastDataRepositoryFactory = dataRepositoryFactory;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
@@ -69,6 +72,7 @@ namespace Services.Broadcast.Converters.RateImport
             _InventoryDaypartParsingEngine = inventoryDaypartParsingEngine;
             _AudienceCache = broadcastAudiencesCache;
             _StationEngine = stationProcessingEngine;
+            _StationMappingService = stationMappingService;
             _AvailableStations = dataRepositoryFactory.GetDataRepository<IStationRepository>().GetBroadcastStations();
         }
 
@@ -235,7 +239,6 @@ namespace Services.Broadcast.Converters.RateImport
         {
             var audienceMap = _GetAudienceMap(availList.DemoCategories);
             var allStationNames = proposal.Outlets.Select(o => o.callLetters).Distinct().ToList();
-            var foundStations = FindStations(allStationNames);
             int rowsProcessed = 0;
             foreach (var availLine in availLines)
             {
@@ -252,7 +255,7 @@ namespace Services.Broadcast.Converters.RateImport
                         .Select(a => a.callLetters)
                         .First();
 
-                    var station = foundStations.ContainsKey(callLetters) ? foundStations[callLetters] : null;
+                    var station = _StationMappingService.GetStationByCallLetters(callLetters); ;
                     var spotLength = availLine.SpotLength.Minute * SecondsPerMinute + availLine.SpotLength.Second;
                     var spotLengthProblem = _CheckSpotLength(spotLength, callLetters, programName);
 
@@ -269,7 +272,6 @@ namespace Services.Broadcast.Converters.RateImport
                         var manifestAudiences = _GetManifestAudienceListForAvailLine(availList, audienceMap, _ToDemoValueDict(availLinePeriod.DemoValues));
                         var manifestRates = _GetManifestRatesforAvailLineWithDetailedPeriods(spotLengthId, spotLength, availLinePeriod.Rate, programName, callLetters, fileProblems);
                         var manifestWeeks = _GetManifestWeeksForAvailLine(availLinePeriod.StartDate, availLinePeriod.EndDate);
-                        var manifestStation = station ?? new DisplayBroadcastStation { CallLetters = callLetters };
 
                         // let`s group all weeks by quarter and create a manifest per each quarter
                         var allMediaMonthIds = manifestWeeks.Select(x => x.MediaWeek.MediaMonthId).Distinct();
@@ -286,7 +288,7 @@ namespace Services.Broadcast.Converters.RateImport
                         {
                             results.Add(new StationInventoryManifest
                             {
-                                Station = manifestStation,
+                                Station = station,
                                 DaypartCode = availLine.DaypartName,
                                 SpotLengthId = spotLengthId,
                                 ManifestDayparts = _GetDaypartsListForAvailLineWithPeriods(availLine),

@@ -17,6 +17,7 @@ using Tam.Maestro.Data.Entities;
 using static Services.Broadcast.Entities.ProprietaryInventory.ProprietaryInventoryFile;
 using Common.Services;
 using Services.Broadcast.Cache;
+using Services.Broadcast.ApplicationServices;
 
 namespace Services.Broadcast.Converters.RateImport
 {
@@ -39,14 +40,16 @@ namespace Services.Broadcast.Converters.RateImport
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IStationProcessingEngine stationProcessingEngine,
             ISpotLengthEngine spotLengthEngine,
-            IFileService fileService) : base(
+            IFileService fileService,
+            IStationMappingService stationMappingService) : base(
                 broadcastDataRepositoryFactory,
                 broadcastAudiencesCache,
                 inventoryDaypartParsingEngine,
                 mediaMonthAndWeekAggregateCache,
                 stationProcessingEngine,
                 spotLengthEngine,
-                fileService)
+                fileService,
+                stationMappingService)
         {
         }
 
@@ -410,6 +413,17 @@ namespace Services.Broadcast.Converters.RateImport
             if (string.IsNullOrWhiteSpace(line.Station))
             {
                 validationProblems.Add($"Line {rowIndex} contains an empty station cell");
+            }
+            else
+            {
+                try
+                {
+                    _StationMappingService.GetStationByCallLetters(line.Station);
+                }
+                catch (Exception ex)
+                {
+                    validationProblems.Add(ex.Message);
+                }
             }
 
             if (string.IsNullOrWhiteSpace(line.Program))

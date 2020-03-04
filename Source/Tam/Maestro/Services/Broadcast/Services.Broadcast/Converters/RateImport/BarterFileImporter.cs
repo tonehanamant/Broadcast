@@ -52,14 +52,16 @@ namespace Services.Broadcast.Converters.RateImport
             ISpotLengthEngine spotLengthEngine,
             IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine,
             IImpressionsService impressionsService,
-            IFileService fileService) : base(
+            IFileService fileService,
+            IStationMappingService stationMappingService) : base(
                 broadcastDataRepositoryFactory,
                 broadcastAudiencesCache,
                 inventoryDaypartParsingEngine,
                 mediaMonthAndWeekAggregateCache,
                 stationProcessingEngine,
                 spotLengthEngine,
-                fileService)
+                fileService,
+                stationMappingService)
         {
             _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _ImpressionsService = impressionsService;
@@ -305,10 +307,21 @@ namespace Services.Broadcast.Converters.RateImport
                 {
                     break;
                 }
-                                
+
                 if (string.IsNullOrWhiteSpace(line.Station))
                 {
                     validationProblems.Add($"Line {rowIndex} contains an empty station cell");
+                }
+                else
+                {
+                    try
+                    {
+                        _StationMappingService.GetStationByCallLetters(line.Station);
+                    }
+                    catch (Exception ex)
+                    {
+                        validationProblems.Add(ex.Message);
+                    }
                 }
 
                 if (line.Dayparts == null)

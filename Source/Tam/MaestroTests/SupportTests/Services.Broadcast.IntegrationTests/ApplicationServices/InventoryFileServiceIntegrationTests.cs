@@ -1244,6 +1244,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Ignore] // This does not apply after PRI-22785
         public void CanLoadOpenMarketInventoryFileWithUnknownStation()
         {
             using (new TransactionScopeWrapper())
@@ -1278,6 +1279,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Ignore] // This does not apply after PRI-22785
         public void CanLoadOpenMarketInventoryFileWithUnknownStation_Contacts()
         {
             var contactQueryString = "Hanington, Jack";

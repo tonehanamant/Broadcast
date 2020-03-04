@@ -73,7 +73,8 @@ namespace Services.Broadcast.Converters.RateImport
                         _MediaMonthAndWeekAggregateCache,
                         _StationProcessingEngine,
                         _SpotLengthEngine,
-                        _FileService);
+                        _FileService,
+                        _StationMappingService);
                     break;
 
                 case InventorySourceTypeEnum.Barter:
@@ -86,7 +87,8 @@ namespace Services.Broadcast.Converters.RateImport
                         _SpotLengthEngine,
                         _ProprietarySpotCostCalculationEngine,
                         _ImpressionsService,
-                        _FileService);
+                        _FileService,
+                        _StationMappingService);
                     break;
 
                 case InventorySourceTypeEnum.Syndication:
@@ -99,7 +101,8 @@ namespace Services.Broadcast.Converters.RateImport
                         _SpotLengthEngine,
                         _DaypartCache,
                         _ImpressionAdjustmentEngine,
-                        _FileService);
+                        _FileService,
+                        _StationMappingService);
                     break;
 
                 case InventorySourceTypeEnum.Diginet:

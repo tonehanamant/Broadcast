@@ -598,12 +598,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _VerifyFileInventoryManifests(fileName);
         }
 
-        /// <summary>
-        /// TODO: Bring this back once
-        ///     - all the stations are loaded into the integration db.
-        ///     - PRI-21025 resolves the way imports resolves the station records.
-        /// </summary>
-        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavesDiginetInventoryFileManifests_WithSpacesInAudience()

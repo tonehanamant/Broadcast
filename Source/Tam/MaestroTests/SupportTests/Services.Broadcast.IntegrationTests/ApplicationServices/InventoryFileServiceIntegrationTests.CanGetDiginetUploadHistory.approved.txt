@@ -16,7 +16,7 @@
         "Year": 2018
       }
     ],
-    "Rows": 2,
+    "Rows": 52,
     "ShareBook": null,
     "Status": "Processing",
     "UploadDateTime": "2019-02-02T00:00:00",

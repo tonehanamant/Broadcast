@@ -95,7 +95,2717 @@
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
-    "Station": null
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "KGBY 20.1",
+      "Code": 10405,
+      "LegacyCallLetters": "KGBY",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 373,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "KGPT-CD 26.1",
+      "Code": null,
+      "LegacyCallLetters": "KGPT",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "MET",
+      "CallLetters": "KMOV 4.2",
+      "Code": 1379,
+      "LegacyCallLetters": "NMOV",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 209,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "KNBC 4.2",
+      "Code": 4543,
+      "LegacyCallLetters": "NNBC",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 403,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "KNTV 11.2",
+      "Code": 4527,
+      "LegacyCallLetters": "NNTV",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 407,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "KRDK-TV 4.1",
+      "Code": null,
+      "LegacyCallLetters": "KRDK",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "KSHB-TV 41.2",
+      "Code": 3351,
+      "LegacyCallLetters": "NSHB",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 216,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "KSL-TV 5.2",
+      "Code": 8389,
+      "LegacyCallLetters": "NSL",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 370,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "MET",
+      "CallLetters": "KUBE-TV 57.4",
+      "Code": 2335,
+      "LegacyCallLetters": "OUBE",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 218,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "KXAS-TV 5.2",
+      "Code": 4534,
+      "LegacyCallLetters": "NXAS",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 223,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WBQC-LD 25.1",
+      "Code": 8822,
+      "LegacyCallLetters": "WBQC",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 115,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WCAU 10.2",
+      "Code": 4535,
+      "LegacyCallLetters": "ECAU",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 104,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WTAE-TV 4.2",
+      "Code": 1611,
+      "LegacyCallLetters": "ETAE",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 108,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WIWN 68.1",
+      "Code": 4368,
+      "LegacyCallLetters": "WIWN",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 217,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WIYC 48.1",
+      "Code": 7460,
+      "LegacyCallLetters": "WIYC",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 298,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "IND",
+      "CallLetters": "WKMG-TV 6.3",
+      "Code": 7912,
+      "LegacyCallLetters": "GKMG",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 134,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WKPT-TV 19.1",
+      "Code": 5934,
+      "LegacyCallLetters": "WKPT",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 131,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "IND",
+      "CallLetters": "WLGA 66.1",
+      "Code": 6894,
+      "LegacyCallLetters": "WLGA",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 122,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "IND",
+      "CallLetters": "WLJC-TV 65.1",
+      "Code": 6921,
+      "LegacyCallLetters": "WLJC",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 141,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WMAQ-TV 5.2",
+      "Code": 4542,
+      "LegacyCallLetters": "HMAQ",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 202,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WNBC 4.2",
+      "Code": 4544,
+      "LegacyCallLetters": "ENBC",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WOWT-TV 6.2",
+      "Code": 4175,
+      "LegacyCallLetters": "EOWT",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 252,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WRAL-TV 5.2",
+      "Code": 9242,
+      "LegacyCallLetters": "ERAL",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 160,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WRC-TV 4.2",
+      "Code": 4541,
+      "LegacyCallLetters": "ERC",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 111,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WRDE-LD 31.2",
+      "Code": 10280,
+      "LegacyCallLetters": "ERDE",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 176,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 17500.0,
+        "IsReference": true,
+        "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 28799,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 25200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 10.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WTVJ 6.2",
+      "Code": 4540,
+      "LegacyCallLetters": "ETVJ",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 128,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
   },
   {
     "Comment": null,
@@ -218,6 +2928,3341 @@
     "SpotLengthId": 1,
     "SpotsPerDay": null,
     "SpotsPerWeek": null,
-    "Station": null
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "KGBY 20.1",
+      "Code": 10405,
+      "LegacyCallLetters": "KGBY",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 373,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "KGPT-CD 26.1",
+      "Code": null,
+      "LegacyCallLetters": "KGPT",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "MET",
+      "CallLetters": "KMOV 4.2",
+      "Code": 1379,
+      "LegacyCallLetters": "NMOV",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 209,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "KNBC 4.2",
+      "Code": 4543,
+      "LegacyCallLetters": "NNBC",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 403,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "KNTV 11.2",
+      "Code": 4527,
+      "LegacyCallLetters": "NNTV",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 407,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "KRDK-TV 4.1",
+      "Code": null,
+      "LegacyCallLetters": "KRDK",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "KSHB-TV 41.2",
+      "Code": 3351,
+      "LegacyCallLetters": "NSHB",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 216,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "KSL-TV 5.2",
+      "Code": 8389,
+      "LegacyCallLetters": "NSL",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 370,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "MET",
+      "CallLetters": "KUBE-TV 57.4",
+      "Code": 2335,
+      "LegacyCallLetters": "OUBE",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 218,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "KXAS-TV 5.2",
+      "Code": 4534,
+      "LegacyCallLetters": "NXAS",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 223,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WBQC-LD 25.1",
+      "Code": 8822,
+      "LegacyCallLetters": "WBQC",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 115,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WCAU 10.2",
+      "Code": 4535,
+      "LegacyCallLetters": "ECAU",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 104,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WTAE-TV 4.2",
+      "Code": 1611,
+      "LegacyCallLetters": "ETAE",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 108,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WIWN 68.1",
+      "Code": 4368,
+      "LegacyCallLetters": "WIWN",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 217,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WIYC 48.1",
+      "Code": 7460,
+      "LegacyCallLetters": "WIYC",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 298,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "IND",
+      "CallLetters": "WKMG-TV 6.3",
+      "Code": 7912,
+      "LegacyCallLetters": "GKMG",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 134,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WKPT-TV 19.1",
+      "Code": 5934,
+      "LegacyCallLetters": "WKPT",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 131,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "IND",
+      "CallLetters": "WLGA 66.1",
+      "Code": 6894,
+      "LegacyCallLetters": "WLGA",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 122,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "IND",
+      "CallLetters": "WLJC-TV 65.1",
+      "Code": 6921,
+      "LegacyCallLetters": "WLJC",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 141,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WMAQ-TV 5.2",
+      "Code": 4542,
+      "LegacyCallLetters": "HMAQ",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 202,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WNBC 4.2",
+      "Code": 4544,
+      "LegacyCallLetters": "ENBC",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WOWT-TV 6.2",
+      "Code": 4175,
+      "LegacyCallLetters": "EOWT",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 252,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WRAL-TV 5.2",
+      "Code": 9242,
+      "LegacyCallLetters": "ERAL",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 160,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WRC-TV 4.2",
+      "Code": 4541,
+      "LegacyCallLetters": "ERC",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 111,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WRDE-LD 31.2",
+      "Code": 10280,
+      "LegacyCallLetters": "ERDE",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 176,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
+  },
+  {
+    "Comment": null,
+    "DaypartCode": null,
+    "InventorySourceId": 20,
+    "ManifestAudiences": [],
+    "ManifestAudiencesReferences": [
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Men 18-20",
+          "Id": 21
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 23750.0,
+        "IsReference": true,
+        "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 35999,
+          "_Friday": true,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 32400,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "DaypartDefault": {
+          "Code": "DAY",
+          "FullName": "Daytime",
+          "Id": 12
+        },
+        "Genres": [],
+        "ProgramName": null
+      },
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 25199,
+          "_Friday": false,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "Custom",
+          "_Saturday": true,
+          "_StartTime": 21600,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "DaypartDefault": {
+          "Code": "EM",
+          "FullName": "Early morning",
+          "Id": 14
+        },
+        "Genres": [],
+        "ProgramName": null
+      }
+    ],
+    "ManifestRates": [
+      {
+        "SpotCost": 15.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "EndDate": "2018-10-14T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-14T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-08T00:00:00",
+          "_WeekNumber": 2,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-10T00:00:00"
+      },
+      {
+        "EndDate": "2018-10-17T00:00:00",
+        "MediaWeek": {
+          "_EndDate": "2018-10-21T00:00:00",
+          "_MediaMonthId": 445,
+          "_StartDate": "2018-10-15T00:00:00",
+          "_WeekNumber": 3,
+          "IsDirty": true
+        },
+        "Spots": 1,
+        "StartDate": "2018-10-15T00:00:00"
+      }
+    ],
+    "ProjectedStationImpressions": [],
+    "SpotLengthId": 1,
+    "SpotsPerDay": null,
+    "SpotsPerWeek": null,
+    "Station": {
+      "Affiliation": "COZ",
+      "CallLetters": "WTVJ 6.2",
+      "Code": 4540,
+      "LegacyCallLetters": "ETVJ",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 128,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    }
   }
 ]

@@ -20,6 +20,581 @@
       ]
     },
     {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": []
+    },
+    {
       "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
       "Weeks": []
     },
@@ -60,6 +635,956 @@
   "manifestsBeforeExpiring": [
     {
       "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 7AM-8AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
+      "Weeks": [
+        {
+          "EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_EndDate": "2018-10-14T00:00:00",
+          "MediaWeek_StartDate": "2018-10-08T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-10T00:00:00"
+        },
+        {
+          "EndDate": "2018-10-17T00:00:00",
+          "MediaWeek_EndDate": "2018-10-21T00:00:00",
+          "MediaWeek_StartDate": "2018-10-15T00:00:00",
+          "Spots": 1,
+          "StartDate": "2018-10-15T00:00:00"
+        }
+      ]
+    },
+    {
+      "Dayparts": "M-F 9AM-10AM SA-SU 6AM-7AM",
       "Weeks": [
         {
           "EndDate": "2018-10-14T00:00:00",

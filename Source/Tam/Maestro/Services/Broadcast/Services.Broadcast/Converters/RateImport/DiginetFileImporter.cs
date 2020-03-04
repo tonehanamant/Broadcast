@@ -38,7 +38,6 @@ namespace Services.Broadcast.Converters.RateImport
 
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
         private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
-        private readonly IStationMappingService _StationMappingService;
 
         private int _ErrorColumnIndex = 0;
         private const int audienceRowIndex = 11;
@@ -64,11 +63,11 @@ namespace Services.Broadcast.Converters.RateImport
                 mediaMonthAndWeekAggregateCache,
                 stationProcessingEngine,
                 spotLengthEngine,
-                fileService)
+                fileService,
+                stationMappingService)
         {
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
             _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
-            _StationMappingService = stationMappingService;
         }
 
         public override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)

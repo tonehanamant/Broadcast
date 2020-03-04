@@ -1,6 +1,7 @@
 ﻿using Common.Services;
 using Common.Services.Repositories;
 using OfficeOpenXml;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Cache;
@@ -73,14 +74,15 @@ namespace Services.Broadcast.Converters.RateImport
         protected readonly IStationProcessingEngine StationProcessingEngine;
         protected readonly ISpotLengthEngine SpotLengthEngine;
         protected readonly IDaypartDefaultRepository DaypartDefaultRepository;
+        protected readonly IStationMappingService _StationMappingService;
         private readonly IFileService _FileService;
+
 
         /// <summary>
         /// Indicates that a second worksheet needs to be processed.
         /// Override in your base class and return true to opt-in.
         /// </summary>
         public virtual bool HasSecondWorksheet { get; } = false;
-
         /// <summary>
         /// Constructor
         /// </summary>        
@@ -91,7 +93,8 @@ namespace Services.Broadcast.Converters.RateImport
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IStationProcessingEngine stationProcessingEngine,
             ISpotLengthEngine spotLengthEngine,
-            IFileService fileService)
+            IFileService fileService,
+            IStationMappingService stationMappingService)
         {
             _InventoryFileRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -102,6 +105,7 @@ namespace Services.Broadcast.Converters.RateImport
             StationProcessingEngine = stationProcessingEngine;
             SpotLengthEngine = spotLengthEngine;
             _FileService = fileService;
+            _StationMappingService = stationMappingService;
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using Common.Services;
 using Common.Services.Repositories;
 using OfficeOpenXml;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Cache;
@@ -44,9 +45,10 @@ namespace Services.Broadcast.Converters.RateImport
             ISpotLengthEngine spotLengthEngine,
             IDaypartCache daypartCache,
             IImpressionAdjustmentEngine impressionAdjustmentEngine,
-            IFileService fileService) : base(broadcastDataRepositoryFactory, broadcastAudiencesCache,
+            IFileService fileService,
+            IStationMappingService stationMappingService) : base(broadcastDataRepositoryFactory, broadcastAudiencesCache,
                 inventoryDaypartParsingEngine, mediaMonthAndWeekAggregateCache,
-                stationProcessingEngine, spotLengthEngine, fileService)
+                stationProcessingEngine, spotLengthEngine, fileService, stationMappingService)
         {
             _DaypartCache = daypartCache;
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
