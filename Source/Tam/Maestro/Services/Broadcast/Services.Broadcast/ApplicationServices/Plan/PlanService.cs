@@ -710,7 +710,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var weekNumber = 1;
             foreach (DisplayMediaWeek week in weeks)
             {
-                var activeDays = _CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, request.FlightHiatusDays, out string activeDaysString);
+                var activeDays = _CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, request.FlightDays, request.FlightHiatusDays, out string activeDaysString);
                 var weeklyBreakdown = new WeeklyBreakdownWeek
                 {
                     ActiveDays = activeDaysString,
@@ -757,7 +757,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             //update ActiveDays remain weeks
             foreach (var week in result.Weeks)
             {
-                week.NumberOfActiveDays = _CalculateActiveDays(week.StartDate, week.EndDate, request.FlightHiatusDays, out string activeDaysString);
+                week.NumberOfActiveDays = _CalculateActiveDays(week.StartDate, week.EndDate, request.FlightDays, request.FlightHiatusDays, out string activeDaysString);
                 week.ActiveDays = activeDaysString;
                 if (week.NumberOfActiveDays < 1)
                 {
@@ -868,18 +868,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        private int _CalculateActiveDays(DateTime weekStartDate, DateTime weekEndDate, List<DateTime> hiatusDays, out string activeDaysString)
+        private int _CalculateActiveDays(DateTime weekStartDate, DateTime weekEndDate, List<int> flightDays, List<DateTime> hiatusDays, out string activeDaysString)
         {
             var daysOfWeek = new List<string> { "M", "Tu", "W", "Th", "F", "Sa", "Su" };
             activeDaysString = string.Empty;
             var hiatusDaysInWeek = hiatusDays.Where(x => weekStartDate <= x && weekEndDate >= x).ToList();
+            var days = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            var daysToRemove = days.Except(flightDays);
 
-            //if there are no hiatus days in this week just return 7 active days
-            if (!hiatusDaysInWeek.Any())
+            foreach(var day in daysToRemove)
             {
-                activeDaysString = "M-Su";
-                return 7;
+                daysOfWeek[day - 1] = null;
             }
+
             //if all the week is hiatus, return 0 active days
             if (hiatusDaysInWeek.Count == 7)
             {
@@ -913,8 +914,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             activeDaysString = string.Join(",", activeDaysList);
+            var numberOfActiveDays = daysOfWeek.Where(x => x != null).Count();
             //number of active days this week is 7 minus number of hiatus days
-            return 7 - hiatusDaysInWeek.Count();
+            return numberOfActiveDays;
         }
 
         private void _DispatchPlanAggregation(PlanDto plan, bool aggregatePlanSynchronously)

@@ -8,6 +8,7 @@ namespace Services.Broadcast.Entities.Plan
     {
         public DateTime FlightStartDate { get; set; }
         public DateTime FlightEndDate { get; set; }
+        public List<int> FlightDays { get; set; }
         public List<DateTime> FlightHiatusDays { get; set; }
         public PlanGoalBreakdownTypeEnum DeliveryType { get; set; }
         public double TotalImpressions { get; set; }        

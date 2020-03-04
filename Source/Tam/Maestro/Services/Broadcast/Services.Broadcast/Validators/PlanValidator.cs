@@ -151,6 +151,11 @@ namespace Services.Broadcast.Validators
             {
                 throw new Exception(INVALID_FLIGHT_DATES);
             }
+
+            if (request.FlightDays == null || !request.FlightDays.Any())
+            {
+                throw new Exception(INVALID_FLIGHT_DAYS);
+            }
         }
 
         private void _ValidateFlightAndHiatus(PlanDto plan)

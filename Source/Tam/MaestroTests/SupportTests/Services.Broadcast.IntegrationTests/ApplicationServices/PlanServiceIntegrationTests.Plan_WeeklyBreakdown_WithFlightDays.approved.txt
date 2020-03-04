@@ -1,0 +1,71 @@
+﻿{
+  "TotalActiveDays": 17,
+  "TotalShareOfVoice": 100.0,
+  "Weeks": [
+    {
+      "ActiveDays": "Su",
+      "EndDate": "2019-08-04T00:00:00",
+      "MediaWeekId": 814,
+      "NumberOfActiveDays": 1,
+      "StartDate": "2019-07-29T00:00:00",
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 0.0,
+      "WeeklyImpressions": 200.0,
+      "WeeklyImpressionsPercentage": 20.0,
+      "WeeklyRatings": 0.00018146,
+      "WeekNumber": 1
+    },
+    {
+      "ActiveDays": "M-Th,Su",
+      "EndDate": "2019-08-11T00:00:00",
+      "MediaWeekId": 815,
+      "NumberOfActiveDays": 5,
+      "StartDate": "2019-08-05T00:00:00",
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 0.0,
+      "WeeklyImpressions": 200.0,
+      "WeeklyImpressionsPercentage": 20.0,
+      "WeeklyRatings": 0.00018146,
+      "WeekNumber": 2
+    },
+    {
+      "ActiveDays": "M-W,Su",
+      "EndDate": "2019-08-18T00:00:00",
+      "MediaWeekId": 816,
+      "NumberOfActiveDays": 4,
+      "StartDate": "2019-08-12T00:00:00",
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 0.0,
+      "WeeklyImpressions": 200.0,
+      "WeeklyImpressionsPercentage": 20.0,
+      "WeeklyRatings": 0.00018146,
+      "WeekNumber": 3
+    },
+    {
+      "ActiveDays": "M-Th,Su",
+      "EndDate": "2019-08-25T00:00:00",
+      "MediaWeekId": 817,
+      "NumberOfActiveDays": 5,
+      "StartDate": "2019-08-19T00:00:00",
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 0.0,
+      "WeeklyImpressions": 200.0,
+      "WeeklyImpressionsPercentage": 20.0,
+      "WeeklyRatings": 0.00018146,
+      "WeekNumber": 4
+    },
+    {
+      "ActiveDays": "M,Tu",
+      "EndDate": "2019-09-01T00:00:00",
+      "MediaWeekId": 818,
+      "NumberOfActiveDays": 2,
+      "StartDate": "2019-08-26T00:00:00",
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 0.0,
+      "WeeklyImpressions": 200.0,
+      "WeeklyImpressionsPercentage": 20.0,
+      "WeeklyRatings": 0.00018146,
+      "WeekNumber": 5
+    }
+  ]
+}
