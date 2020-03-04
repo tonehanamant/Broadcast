@@ -6,17 +6,16 @@ namespace Services.Broadcast.Entities.ProgramGuide
     public class GuideRequestResponseMapping
     {
         public int RequestElementNumber { get; set; }
-        public int WeekNumber { get; set; }
         public int ManifestId { get; set; }
         public int ManifestDaypartId { get; set; }
-        public DateTime WeekStartDte { get; set; }
-        public DateTime WeekEndDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         public string DaypartText { get; set; }
         public string StationCallLetters { get; set; }
         public string NetworkAffiliate { get; set; }
 
-        public string RequestEntryId => $"R{RequestElementNumber.ToString().PadLeft(6, '0')}.M{ManifestId.ToString().PadLeft(3, '0')}.W{WeekNumber}.D{ManifestDaypartId}";
+        public string RequestEntryId => $"R{RequestElementNumber.ToString().PadLeft(6, '0')}.M{ManifestId.ToString().PadLeft(3, '0')}.D{ManifestDaypartId}";
 
         public override string ToString()
         {
@@ -24,12 +23,11 @@ namespace Services.Broadcast.Entities.ProgramGuide
 
             sb.AppendLine($"RequestEntryId : {RequestEntryId}");
             sb.AppendLine($"RequestElementNumber : {RequestElementNumber}");
-            sb.AppendLine($"WeekNumber : {WeekNumber}");
             sb.AppendLine($"ManifestId : {ManifestId}");
             sb.AppendLine($"ManifestDaypartId : {ManifestDaypartId}");
             sb.AppendLine();
-            sb.AppendLine($"WeekStartDte : {WeekStartDte.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}");
-            sb.AppendLine($"WeekEndDate : {WeekEndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}");
+            sb.AppendLine($"StartDate : {StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}");
+            sb.AppendLine($"EndDate : {EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}");
             sb.AppendLine();
             sb.AppendLine($"DaypartText : {DaypartText}");
             sb.AppendLine($"StationCallLetters : {StationCallLetters}");

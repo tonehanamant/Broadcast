@@ -1,4 +1,5 @@
-﻿using Services.Broadcast.Entities;
+﻿using System;
+using Services.Broadcast.Entities;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -24,8 +25,6 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         public InventorySource InventorySource { get; set; }
 
         public int TotalManifestCount { get; set; }
-        public int TotalWeekCount { get; set; }
-        public int TotalDaypartCount { get; set; }
         public int TotalRequestCount { get; set; }
         public int TotalApiCallCount { get; set; }
         public int TotalResponseCount { get; set; }
@@ -75,22 +74,14 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             _ReportToConsoleAndJobNotes(GetDurationString(SW_KEY_TOTAL_DURATION_GATHER_INVENTORY));
         }
 
-        public void RecordManifestDetails(int manifestCount, int weekCount, int daypartCount)
+        public void RecordTransformToInputStart(int inventoryCount, DateTime startDate, DateTime endDate)
         {
-            TotalManifestCount += manifestCount;
-            TotalWeekCount += weekCount;
-            TotalDaypartCount += daypartCount;
+            TotalManifestCount += inventoryCount;
 
-            _ReportToConsoleAndJobNotes($"Adding Iteration counts : Inventory manifest count {manifestCount} translated to {weekCount} distinct weeks for {daypartCount} dayparts.");
-        }
-
-        public void RecordIterationStart(int iterationNumber, int iterationTotalNumber)
-        {
-            _ReportToConsoleAndJobNotes($"Beginning manifest processing iteration {iterationNumber} of {iterationTotalNumber}.");
-        }
-        
-        public void RecordTransformToInputStart()
-        {
+            _ReportToConsoleAndJobNotes($"Beginning manifest processing of {inventoryCount} inventory manifests from " +
+                                        $"{startDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)} to " +
+                                        $"{endDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}.");
+            _ReportToConsoleAndJobNotes("Beginning transforming from inventory manifests to request elements.");
             _StartTimer(SW_KEY_TOTAL_DURATION_TRANSFORM_TO_INPUT);
             _RestartTimer(SW_KEY_ITERATION_TRANSFORM_TO_INPUT);
         }
@@ -185,8 +176,6 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             sb.AppendLine($"SaveChunkSize : {SaveChunkSize}");
             sb.AppendLine();
             sb.AppendLine($"Total Manifest Count : {TotalManifestCount}");
-            sb.AppendLine($"Total Week Count : {TotalWeekCount}");
-            sb.AppendLine($"Total Daypart Count : {TotalDaypartCount}");
             sb.AppendLine($"Total Request Count : {TotalRequestCount}");
             sb.AppendLine($"Total ApiCall Count : {TotalApiCallCount}");
             sb.AppendLine($"Total Response Count : {TotalResponseCount}");

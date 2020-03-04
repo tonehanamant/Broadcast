@@ -364,27 +364,19 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var newStation = _MapFromDto(station, user);
-
+                    newStation.station_month_details.Add(new station_month_details
+                    {
+                        media_month_id = mediaMonthId,
+                        affiliation = newStation.affiliation,
+                        market_code = newStation.market_code,
+                        distributor_code = newStation.station_code
+                    });
                     context.stations.Add(newStation);
-                    context.SaveChanges();
-
-                    context.station_month_details.Add(
-                        new station_month_details
-                        {
-                            station_id = newStation.id,
-                            media_month_id = mediaMonthId,
-                            affiliation = newStation.affiliation,
-                            market_code = newStation.market_code,
-                            distributor_code = newStation.station_code
-                        });
-
                     context.SaveChanges();
 
                     return _MapToDto(newStation);
                 });
         }
-
-        
 
         private DisplayBroadcastStation _MapToDto(station newStation)
         {

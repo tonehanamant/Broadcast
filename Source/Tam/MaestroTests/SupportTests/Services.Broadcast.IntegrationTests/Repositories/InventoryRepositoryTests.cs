@@ -14,12 +14,18 @@ namespace Services.Broadcast.IntegrationTests.Repositories
     [TestFixture]
     public class InventoryRepositoryTests
     {
+        /// <summary>
+        /// Tests both delete within daterange and update.
+        /// Within the delete only a subset are deleted.
+        /// The result is a mix of old and new programs.
+        /// </summary>
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void StationInventoryManifestDaypartProgramsUpdate()
         {
             const int expectedBeforeProgramCount = 9;
-            const int newProgramCountPerManifestDaypart = 2;
+            const int newProgramCountPerManifestDaypart = 6;
+            const int expectedAfterProgramCount = 58;
             var startDate = new DateTime(2019, 02, 01);
             var endDate = new DateTime(2019, 02, 12);
             var createdAtDate = new DateTime(2019,01, 25);
@@ -35,6 +41,19 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 360320,
                 360321
             };
+            var relatedStationInventoryManifestIds = new List<int>
+            {
+                287146,
+                287147,
+                287150,
+                287151,
+                287154,
+                288692,
+                288693,
+                288694,
+                288695
+            };
+
             var newPrograms = new List<StationInventoryManifestDaypartProgram>();
             foreach (var daypartId in stationInventoryManifestDaypartIds)
             {
@@ -62,13 +81,47 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 var beforePrograms = repo.GetDaypartProgramsForInventoryDayparts(stationInventoryManifestDaypartIds);
                 Assert.AreEqual(expectedBeforeProgramCount, beforePrograms.Count);
 
-                repo.DeleteInventoryProgramsFromManifestDayparts(stationInventoryManifestDaypartIds, startDate, endDate);
+                // only deletes some of them.
+                repo.DeleteInventoryPrograms(relatedStationInventoryManifestIds, startDate, endDate);
                 repo.UpdateInventoryPrograms(newPrograms, createdAtDate);
 
                 var afterPrograms = repo.GetDaypartProgramsForInventoryDayparts(stationInventoryManifestDaypartIds);
 
-                Assert.AreEqual(newPrograms.Count, afterPrograms.Count);
+                Assert.AreEqual(expectedAfterProgramCount, afterPrograms.Count);
+                // contains a mix of old and new.
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(afterPrograms, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventoryByFileIdForProgramsProcessing()
+        {
+            const int testFileId = 251392;
+            var repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+
+            using (new TransactionScopeWrapper())
+            {
+                var results = repo.GetInventoryByFileIdForProgramsProcessing(testFileId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventoryBySourceForProgramsProcessing()
+        {
+            const int inventorySourceId = 1;
+            var weekIds = new List<int> {743, 744, 745};
+
+            var repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+
+            using (new TransactionScopeWrapper())
+            {
+                var results = repo.GetInventoryBySourceForProgramsProcessing(inventorySourceId, weekIds);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, _GetJsonSettings()));
             }
         }
 

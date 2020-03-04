@@ -14,12 +14,10 @@
   "RequestChunkSize": 10,
   "SaveChunkSize": 1000,
   "StartDate": "2018-09-20T00:00:00",
-  "TotalApiCallCount": 2,
-  "TotalDaypartCount": 16,
-  "TotalManifestCount": 16,
-  "TotalProgramsSaved": 34,
-  "TotalRequestCount": 16,
-  "TotalResponseCount": 16,
-  "TotalSavesCount": 2,
-  "TotalWeekCount": 2
+  "TotalApiCallCount": 1,
+  "TotalManifestCount": 8,
+  "TotalProgramsSaved": 17,
+  "TotalRequestCount": 8,
+  "TotalResponseCount": 8,
+  "TotalSavesCount": 1
 }

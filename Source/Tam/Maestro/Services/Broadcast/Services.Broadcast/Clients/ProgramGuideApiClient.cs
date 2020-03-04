@@ -19,7 +19,7 @@ namespace Services.Broadcast.Clients
     {
         private const string AUTHORIZATION = "Authorization";
         private const string BEARER = "Bearer";
-        private const int RESPONSE_NOT_READY_PAUSE_MS = 500;
+        private const int RESPONSE_NOT_READY_PAUSE_MS = 15000;
 
         private readonly IAwsCognitoClient _TokenClient;
         private readonly string _ProgramGuideUrl;

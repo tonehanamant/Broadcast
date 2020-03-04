@@ -293,6 +293,15 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 case "InventoryProcessingGroupMonitorPauseSeconds":
                     result = "300";
                     break;
+                case "InventoryProgramsEngineParallelEnabled":
+                    result = "false";
+                    break;
+                case "InventoryProgramsEngineMaxDop":
+                    result = "-1";
+                    break;
+                case "InventoryProgramsEngineParallelBatchSize":
+                    result = "10";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }

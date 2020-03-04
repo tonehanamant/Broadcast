@@ -321,9 +321,13 @@
     <Compile Include="BusinessEngines\DetectionPostingEngine.cs" />
     <Compile Include="BusinessEngines\GeneralMath.cs" />
     <Compile Include="BusinessEngines\ImpressionsCalculationEngine.cs" />
+    <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsByFileProcessor.cs" />
+    <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsBySourceProcessor.cs" />
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsProcessingBySourceDiagnostics.cs" />
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsProcessingByFileDiagnostics.cs" />
-    <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsProcessingEngine.cs" />
+    <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsProcessingEngineBase.cs" />
+    <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsProcessorFactory.cs" />
+    <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsRequestPackage.cs" />
     <Compile Include="BusinessEngines\PlanPricingInventoryEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricingInventorySourceSortEngine.cs" />
     <Compile Include="Clients\PricingApiClient.cs" />
@@ -365,6 +369,7 @@
     <Compile Include="Entities\DaypartCleanupDto.cs" />
     <Compile Include="Entities\Enums\BroadcastDayOfWeek.cs" />
     <Compile Include="Entities\Enums\InventoryPricingQuarterType.cs" />
+    <Compile Include="Entities\Enums\InventoryProgramsProcessorType.cs" />
     <Compile Include="Entities\Enums\PlanBuyingStatusEnum.cs" />
     <Compile Include="Entities\Enums\PlanBuyingTimeFramesEnum.cs" />
     <Compile Include="Entities\Enums\StationMapSetNamesEnum.cs" />

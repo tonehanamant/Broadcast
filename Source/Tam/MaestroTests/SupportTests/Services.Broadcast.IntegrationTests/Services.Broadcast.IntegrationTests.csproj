@@ -343,8 +343,11 @@
     <Compile Include="UnitTests\ApplicationServices\Plans\PlanPricingServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\SharedFolderServiceUnitTests.cs" />
-    <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessingEngineTestClass.cs" />
-    <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessingEngineUnitTests.cs" />
+    <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsBySourceProcessorUnitTests.cs" />
+    <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsBySourceProcessorTestClass.cs" />
+    <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsByFileProcessorTestClass.cs" />
+    <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsByFileProcessorUnitTests.cs" />
+    <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsProcessingTestHelper.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanBudgetDeliveryCalculatorUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryEngineTestClass.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryEngineUnitTests.cs" />

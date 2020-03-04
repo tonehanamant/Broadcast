@@ -182,7 +182,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<ILockingEngine, LockingEngine>();
             unityContainer.RegisterType<IInventoryRatingsProcessingService, InventoryRatingsProcessingService>();
             unityContainer.RegisterType<IInventoryProgramsProcessingService, InventoryProgramsProcessingService>();
-            unityContainer.RegisterType<IInventoryProgramsProcessingEngine, InventoryProgramsProcessingEngine>();
+            unityContainer.RegisterType<IInventoryProgramsProcessorFactory, InventoryProgramsProcessorFactory>();
             unityContainer.RegisterType<IInventoryWeekEngine, InventoryWeekEngine>();
 
             unityContainer.RegisterType<IDataLakeFileService, DataLakeFileService>();

@@ -17,7 +17,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
     [TestFixture]
     public class InventoryProgramsProcessingServiceUnitTests
     {
-        private readonly DateTime _CurrentDateTime = new DateTime(2020, 02, 02);
         private const string TEST_USERNAME = "TestUser";
 
         private readonly Mock<IInventoryRepository> _InventoryRepository = new Mock<IInventoryRepository>();
@@ -124,7 +123,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             const int jobId = 13;
 
             var processInventoryProgramsByFileJobCalled = new List<int>();
-            _InventoryProgramsProcessingEngine.Setup(s => s.ProcessInventoryProgramsByFileJob(It.IsAny<int>()))
+            _InventoryProgramsProcessingEngine.Setup(s => s.ProcessInventoryJob(It.IsAny<int>()))
                 .Callback<int>((j) => processInventoryProgramsByFileJobCalled.Add(j))
                 .Returns(new InventoryProgramsProcessingJobByFileDiagnostics(null));
 
@@ -252,7 +251,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 Status = InventoryProgramsJobStatus.Error
             };
             var processInventoryProgramsBySourceJobCalled = new List<int>();
-            _InventoryProgramsProcessingEngine.Setup(s => s.ProcessInventoryProgramsBySourceJob(It.IsAny<int>()))
+            _InventoryProgramsProcessingEngine.Setup(s => s.ProcessInventoryJob(It.IsAny<int>()))
                 .Callback<int>((j) => processInventoryProgramsBySourceJobCalled.Add(j))
                 .Returns(new InventoryProgramsProcessingJobBySourceDiagnostics(null));
             var getJobCalled = 0;
@@ -289,7 +288,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 Status = InventoryProgramsJobStatus.Completed
             };
             var processInventoryProgramsBySourceJobCalled = new List<int>();
-            _InventoryProgramsProcessingEngine.Setup(s => s.ProcessInventoryProgramsBySourceJob(It.IsAny<int>()))
+            _InventoryProgramsProcessingEngine.Setup(s => s.ProcessInventoryJob(It.IsAny<int>()))
                 .Callback<int>((j) => processInventoryProgramsBySourceJobCalled.Add(j))
                 .Returns(new InventoryProgramsProcessingJobBySourceDiagnostics(null));
             var getJobCalled = 0;
@@ -329,7 +328,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 StatusMessage = "TestWarningMessage"
             };
             var processInventoryProgramsBySourceJobCalled = new List<int>();
-            _InventoryProgramsProcessingEngine.Setup(s => s.ProcessInventoryProgramsBySourceJob(It.IsAny<int>()))
+            _InventoryProgramsProcessingEngine.Setup(s => s.ProcessInventoryJob(It.IsAny<int>()))
                 .Callback<int>((j) => processInventoryProgramsBySourceJobCalled.Add(j))
                 .Returns(new InventoryProgramsProcessingJobBySourceDiagnostics(null));
             var getJobCalled = 0;
@@ -372,7 +371,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 StatusMessage = "TestErrorMessage"
             };
             var processInventoryProgramsBySourceJobCalled = new List<int>();
-            _InventoryProgramsProcessingEngine.Setup(s => s.ProcessInventoryProgramsBySourceJob(It.IsAny<int>()))
+            _InventoryProgramsProcessingEngine.Setup(s => s.ProcessInventoryJob(It.IsAny<int>()))
                 .Callback<int>((j) => processInventoryProgramsBySourceJobCalled.Add(j))
                 .Returns(new InventoryProgramsProcessingJobBySourceDiagnostics(null));
             var getJobCalled = 0;
@@ -477,15 +476,25 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             return dataRepoFactory;
         }
 
+        private Mock<IInventoryProgramsProcessorFactory> _GetInventoryProgramsProcessorFactory()
+        {
+            var engineFactory = new Mock<IInventoryProgramsProcessorFactory>();
+            engineFactory.Setup(s => s.GetInventoryProgramsProcessingEngine(It.IsAny<InventoryProgramsProcessorType>()))
+                .Returns(_InventoryProgramsProcessingEngine.Object);
+            return engineFactory;
+        }
+
         private InventoryProgramsProcessingServiceTestClass _GetService()
         {
             var dataRepoFactory = _GetDataRepositoryFactory();
 
+            var engineFactory = _GetInventoryProgramsProcessorFactory();
+
             var service = new InventoryProgramsProcessingServiceTestClass(
                 dataRepoFactory.Object,
                 _BackgroundJobClient.Object,
-                _InventoryProgramsProcessingEngine.Object,
-                _EmailerService.Object);
+                _EmailerService.Object,
+                engineFactory.Object);
 
             return service;
         }

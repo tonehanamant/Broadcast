@@ -46,7 +46,7 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 			throw;
 		}
 		
-		string command = "select * from system_component_parameters";
+		string command = "select * from system_component_parameters where component_id in ('BroadcastService', 'TrackerService', 'TrafficComposerWeb', 'BroadcastComposerWeb', 'MaestroEnvironment', 'Releases2Service')";
 		SqlCommand comm = new SqlCommand(command, conn);
 		
 			SqlDataReader reader = comm.ExecuteReader();

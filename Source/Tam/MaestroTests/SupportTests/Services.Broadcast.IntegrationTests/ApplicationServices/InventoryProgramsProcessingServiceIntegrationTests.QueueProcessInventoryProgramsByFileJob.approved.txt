@@ -8,12 +8,10 @@
   },
   "RequestChunkSize": 10,
   "SaveChunkSize": 1000,
-  "TotalApiCallCount": 7,
-  "TotalDaypartCount": 2,
+  "TotalApiCallCount": 1,
   "TotalManifestCount": 2,
-  "TotalProgramsSaved": 28,
-  "TotalRequestCount": 14,
-  "TotalResponseCount": 14,
-  "TotalSavesCount": 7,
-  "TotalWeekCount": 7
+  "TotalProgramsSaved": 2,
+  "TotalRequestCount": 2,
+  "TotalResponseCount": 2,
+  "TotalSavesCount": 1
 }

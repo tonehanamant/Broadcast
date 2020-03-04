@@ -38,8 +38,6 @@ namespace Services.Broadcast.Repositories
         List<StationInventoryManifestWeekHistory> GetStationInventoryManifestWeeksHistory(IEnumerable<int> manifestIds);
         List<StationInventoryManifest> GetInventoryManifestsBySource(InventorySource source);
 
-        List<StationInventoryManifest> GetInventoryManifestsBySourceAndMediaWeek(int sourceId, List<int> mediaWeekIds);
-
         InventorySummaryTotals GetInventorySummaryDateRangeTotalsForSource(InventorySource inventorySource, DateTime startDate, DateTime endDate);
 
         /// <summary>
@@ -129,8 +127,27 @@ namespace Services.Broadcast.Repositories
 
         List<StationInventoryManifestDaypartProgram> GetDaypartProgramsForInventoryDayparts(List<int> stationInventoryManifestDaypartIds);
 
-        void DeleteInventoryProgramsFromManifestDayparts(List<int> manifestDaypartIds, DateTime startDate,
+        void DeleteInventoryPrograms(List<int> manifestIds, DateTime startDate,
             DateTime endDate);
+
+        /// <summary>
+        /// Gets the inventory by file identifier for programs processing.
+        /// </summary>
+        /// <param name="fileId">The file identifier.</param>
+        /// <remarks>
+        /// The data is limited by what the process uses.
+        /// </remarks>
+        List<StationInventoryManifest> GetInventoryByFileIdForProgramsProcessing(int fileId);
+
+        /// <summary>
+        /// Gets the inventory by source for programs processing.
+        /// </summary>
+        /// <param name="sourceId">The source identifier.</param>
+        /// <param name="mediaWeekIds">The media week ids.</param>
+        /// <remarks>
+        /// The data is limited by what the process uses.
+        /// </remarks>
+        List<StationInventoryManifest> GetInventoryBySourceForProgramsProcessing(int sourceId, List<int> mediaWeekIds);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -485,27 +502,6 @@ namespace Services.Broadcast.Repositories
                                     x.inventory_files.status == (int)FileStatusEnum.Loaded);
 
                     return query.ToList().Select(x => _MapToInventoryManifest(x)).ToList();
-                });
-        }
-
-        public List<StationInventoryManifest> GetInventoryManifestsBySourceAndMediaWeek(int sourceId, List<int> mediaWeekIds)
-        {
-            return _InReadUncommitedTransaction(
-                c =>
-                {
-                    var foundManifests = c.station_inventory_manifest_weeks
-                        .Include(x => x.station_inventory_manifest)
-                        .Include(x => x.station_inventory_manifest.station_inventory_manifest_dayparts)
-                        .Include(x => x.station_inventory_manifest.station)
-                        .Where(x => mediaWeekIds.Contains(x.media_week_id) &&
-                            x.station_inventory_manifest.inventory_source_id == sourceId &&
-                            x.station_inventory_manifest.inventory_files.status == (int)FileStatusEnum.Loaded)
-                        .Select(x=> x.station_inventory_manifest)
-                        .Distinct()
-                        .ToList();
-
-                    var manifestDtos = foundManifests.Select(x => _MapToInventoryManifest(_PruneManifestWeeks(x, mediaWeekIds))).ToList();
-                    return manifestDtos;
                 });
         }
 
@@ -1501,13 +1497,13 @@ namespace Services.Broadcast.Repositories
             return dto;
         }
 
-        public void DeleteInventoryProgramsFromManifestDayparts(List<int> manifestDaypartIds, DateTime startDate, DateTime endDate)
+        public void DeleteInventoryPrograms(List<int> manifestIds, DateTime startDate, DateTime endDate)
         {
             _InReadUncommitedTransaction(
                 context =>
                 {
                     var toRemove = context.station_inventory_manifest_daypart_programs.Where(p =>
-                        manifestDaypartIds.Contains(p.station_inventory_manifest_daypart_id) 
+                        manifestIds.Contains(p.station_inventory_manifest_dayparts.station_inventory_manifest_id) 
                         && p.start_date <= endDate && p.end_date >= startDate);
 
                     if (toRemove.Any() == false)
@@ -1572,6 +1568,55 @@ namespace Services.Broadcast.Repositories
 
                    return result;
                });
+        }
+
+        ///<inheritdoc/>
+        public List<StationInventoryManifest> GetInventoryByFileIdForProgramsProcessing(int fileId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var manifests =
+                        (from m in
+                                context.station_inventory_manifest
+                                    .Include(x => x.station_inventory_manifest_weeks)
+                                    .Include(x => x.station_inventory_manifest_dayparts)
+                                    .Include(s => s.station)
+                         where m.file_id == fileId &&
+                               m.station != null &&
+                               m.station.affiliation != null &&
+                               m.station_inventory_manifest_weeks.Any() &&
+                               m.station_inventory_manifest_dayparts.Any()
+                         select m).ToList();
+
+                    return manifests
+                        .Select(manifest => _MapToInventoryManifest(manifest, manifest.inventory_files.inventory_file_proprietary_header.SingleOrDefault()?.daypart_defaults?.code))
+                        .ToList();
+                });
+        }
+
+        ///<inheritdoc/>
+        public List<StationInventoryManifest> GetInventoryBySourceForProgramsProcessing(int sourceId, List<int> mediaWeekIds)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var manifests =
+                        (from m in
+                                context.station_inventory_manifest
+                                    .Include(x => x.station_inventory_manifest_weeks)
+                                    .Include(x => x.station_inventory_manifest_dayparts)
+                                    .Include(s => s.station)
+                            where m.inventory_source_id == sourceId &&
+                                  m.station != null &&
+                                  m.station.affiliation != null &&
+                                  m.station_inventory_manifest_weeks.Any(w => mediaWeekIds.Contains(w.media_week_id)) &&
+                                  m.station_inventory_manifest_dayparts.Any()
+                            select m).ToList();
+
+                    var manifestDtos = manifests.Select(x => _MapToInventoryManifest(_PruneManifestWeeks(x, mediaWeekIds))).ToList();
+                    return manifestDtos;
+                });
         }
     }
 }

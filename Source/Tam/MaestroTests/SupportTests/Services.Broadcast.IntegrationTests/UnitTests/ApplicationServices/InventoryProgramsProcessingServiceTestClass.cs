@@ -15,9 +15,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         public InventoryProgramsProcessingServiceTestClass(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IBackgroundJobClient backgroundJobClient,
-            IInventoryProgramsProcessingEngine inventoryProgramsProcessingEngine,
-            IEmailerService emailerService)
-        : base(broadcastDataRepositoryFactory, backgroundJobClient, inventoryProgramsProcessingEngine, emailerService)
+            IEmailerService emailerService,
+            IInventoryProgramsProcessorFactory iInventoryProgramsProcessorFactory)
+        : base(broadcastDataRepositoryFactory, backgroundJobClient, emailerService, iInventoryProgramsProcessorFactory)
         {
         }
 

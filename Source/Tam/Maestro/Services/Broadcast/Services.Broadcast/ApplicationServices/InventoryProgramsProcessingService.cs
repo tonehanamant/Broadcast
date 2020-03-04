@@ -49,23 +49,24 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryFileRepository _InventoryFileRepository;
         private readonly IInventoryProgramsByFileJobsRepository _InventoryProgramsByFileJobsRepository;
         private readonly IInventoryProgramsBySourceJobsRepository _InventoryProgramsBySourceJobsRepository;
-        private readonly IInventoryProgramsProcessingEngine _InventoryProgramsProcessingEngine;
         private readonly IEmailerService _EmailerService;
+
+        private readonly IInventoryProgramsProcessorFactory _InventoryProgramsProcessorFactory;
 
 
         public InventoryProgramsProcessingService(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IBackgroundJobClient backgroundJobClient,
-            IInventoryProgramsProcessingEngine inventoryProgramsProcessingEngine,
-            IEmailerService emailerService)
+            IEmailerService emailerService,
+            IInventoryProgramsProcessorFactory inventoryProgramsProcessorFactory)
         {
             _BackgroundJobClient = backgroundJobClient;
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _InventoryFileRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _InventoryProgramsByFileJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProgramsByFileJobsRepository>();
             _InventoryProgramsBySourceJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProgramsBySourceJobsRepository>();
-            _InventoryProgramsProcessingEngine = inventoryProgramsProcessingEngine;
             _EmailerService = emailerService;
+            _InventoryProgramsProcessorFactory = inventoryProgramsProcessorFactory;
         }
 
         public InventoryProgramsByFileJobEnqueueResultDto QueueProcessInventoryProgramsByFileJob(int fileId, string username)
@@ -95,7 +96,8 @@ namespace Services.Broadcast.ApplicationServices
 
         public InventoryProgramsProcessingJobDiagnostics ProcessInventoryProgramsByFileJob(int jobId)
         {
-            var result = _InventoryProgramsProcessingEngine.ProcessInventoryProgramsByFileJob(jobId);
+            var engine = _InventoryProgramsProcessorFactory.GetInventoryProgramsProcessingEngine(InventoryProgramsProcessorType.ByFile);
+            var result = engine.ProcessInventoryJob(jobId);
             return result;
         }
 
@@ -130,7 +132,8 @@ namespace Services.Broadcast.ApplicationServices
         {
             try
             {
-                var result = _InventoryProgramsProcessingEngine.ProcessInventoryProgramsBySourceJob(jobId);
+                var engine = _InventoryProgramsProcessorFactory.GetInventoryProgramsProcessingEngine(InventoryProgramsProcessorType.BySource);
+                var result = engine.ProcessInventoryJob(jobId);
                 return result;
             }
             finally
