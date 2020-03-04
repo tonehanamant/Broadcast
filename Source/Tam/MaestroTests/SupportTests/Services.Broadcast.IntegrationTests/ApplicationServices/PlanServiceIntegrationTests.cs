@@ -1643,9 +1643,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
 
-            Assert.AreEqual(105, result.TotalShareOfVoice);
-            Assert.AreEqual(300, result.Weeks.First(w => w.WeekNumber == 2).WeeklyImpressions);
-            Assert.AreEqual(30, result.Weeks.First(w => w.WeekNumber == 2).WeeklyImpressionsPercentage);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
@@ -1657,10 +1654,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             request.Weeks.First(w => w.WeekNumber == 2).WeeklyImpressions = 300;
 
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
-
-            Assert.AreEqual(105, result.TotalShareOfVoice);
-            Assert.AreEqual(.03, result.Weeks.First(w => w.WeekNumber == 2).WeeklyRatings);
-            Assert.AreEqual(30, result.Weeks.First(w => w.WeekNumber == 2).WeeklyImpressionsPercentage);
+            
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
@@ -1674,9 +1668,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
 
-            Assert.AreEqual(105, result.TotalShareOfVoice);
-            Assert.AreEqual(.03, result.Weeks.First(w => w.WeekNumber == 2).WeeklyRatings);
-            Assert.AreEqual(300, result.Weeks.First(w => w.WeekNumber == 2).WeeklyImpressions);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 

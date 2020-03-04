@@ -361,13 +361,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private void _SetWeeklyBreakdownTotals(PlanDto plan)
         {
             plan.WeeklyBreakdownTotals.TotalActiveDays = plan.WeeklyBreakdownWeeks.Sum(w => w.NumberOfActiveDays);
-            plan.WeeklyBreakdownTotals.TotalBudget = plan.WeeklyBreakdownWeeks.Sum(w => w.WeeklyBudget);
             plan.WeeklyBreakdownTotals.TotalImpressions = Math.Floor(plan.WeeklyBreakdownWeeks.Sum(w => w.WeeklyImpressions)/1000);
             var impressionsTotalsRatio = plan.TargetImpressions.HasValue && plan.TargetImpressions.Value > 0 
-                ? plan.WeeklyBreakdownTotals.TotalImpressions / plan.TargetImpressions.Value : 0;
+                ? plan.WeeklyBreakdownTotals.TotalImpressions * 1000 //because weekly breakdown is already in thousands
+                / plan.TargetImpressions.Value : 0;
 
             plan.WeeklyBreakdownTotals.TotalRatingPoints = Math.Round(plan.TargetRatingPoints ?? 0 * impressionsTotalsRatio, 1);
             plan.WeeklyBreakdownTotals.TotalImpressionsPercentage = Math.Round(100 * impressionsTotalsRatio, 0);
+            plan.WeeklyBreakdownTotals.TotalBudget = plan.Budget.Value * (decimal) impressionsTotalsRatio;
         }
 
         private void _SortPlanDayparts(PlanDto plan)
@@ -751,7 +752,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _MapWeeksToResult(result, weeks, request);
 
             _CalculateEvenRatingPointsImpressionsAndPercentage(request, result.Weeks);
-            _CalculateWeeklyGoalBreakdownTotals(result, request.TotalImpressions, request.TotalRatings);
+            _CalculateWeeklyGoalBreakdownTotals(result, request.TotalImpressions, request.TotalRatings, request.TotalBudget);
             return result;
         }
 
@@ -827,7 +828,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 UpdateFirstWeekAndBudgetAdjustment(request, result.Weeks);
             }
-            _CalculateWeeklyGoalBreakdownTotals(result, request.TotalImpressions, request.TotalRatings);
+            _CalculateWeeklyGoalBreakdownTotals(result, request.TotalImpressions, request.TotalRatings, request.TotalBudget);
 
 
             //the order of the weeks might be incorrect, so do the order
@@ -856,10 +857,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return result;
         }
 
-        private static void _CalculateWeeklyGoalBreakdownTotals(WeeklyBreakdownResponseDto weeklyBreakdown, double goalImpressions, double goalRatingPoints)
+        private static void _CalculateWeeklyGoalBreakdownTotals(WeeklyBreakdownResponseDto weeklyBreakdown, double goalImpressions, double goalRatingPoints, decimal goalBudget)
         {
             weeklyBreakdown.TotalActiveDays = weeklyBreakdown.Weeks.Sum(x => x.NumberOfActiveDays);
-            weeklyBreakdown.TotalBudget = weeklyBreakdown.Weeks.Sum(w => w.WeeklyBudget);
             weeklyBreakdown.TotalImpressions = weeklyBreakdown.Weeks.Sum(w => w.WeeklyImpressions);
             var impressionsTotalRatio = goalImpressions > 0 ? weeklyBreakdown.TotalImpressions / goalImpressions : 0;
 
@@ -867,6 +867,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             weeklyBreakdown.TotalImpressionsPercentage = weeklyBreakdown.TotalShareOfVoice;
 
             weeklyBreakdown.TotalRatingPoints = Math.Round(goalRatingPoints * impressionsTotalRatio, 1);
+            weeklyBreakdown.TotalBudget = goalBudget * (decimal) impressionsTotalRatio;
 
         }
 

@@ -148,10 +148,10 @@
   "Vpvh": 0.012,
   "WeeklyBreakdownTotals": {
     "TotalActiveDays": 0,
-    "TotalBudget": 0.0,
+    "TotalBudget": 0.0000,
     "TotalImpressions": 0.0,
     "TotalImpressionsPercentage": 0.0,
-    "TotalRatingPoints": 0.0
+    "TotalRatingPoints": 6.0
   },
   "WeeklyBreakdownWeeks": []
 }

@@ -1,6 +1,10 @@
 ﻿{
   "TotalActiveDays": 17,
-  "TotalShareOfVoice": 105.0,
+  "TotalBudget": 20000.0,
+  "TotalImpressions": 1000.0,
+  "TotalImpressionsPercentage": 100.0,
+  "TotalRatingPoints": 0.1,
+  "TotalShareOfVoice": 100.0,
   "Weeks": [
     {
       "ActiveDays": "Sa,Su",
@@ -12,7 +16,7 @@
       "WeeklyBudget": 5000.0,
       "WeeklyImpressions": 250.0,
       "WeeklyImpressionsPercentage": 25.0,
-      "WeeklyRatings": 0.025,
+      "WeeklyRatings": 0.1,
       "WeekNumber": 1
     },
     {
@@ -22,10 +26,10 @@
       "NumberOfActiveDays": 7,
       "StartDate": "2019-08-05T00:00:00",
       "WeeklyAdu": 0,
-      "WeeklyBudget": 6000.0,
-      "WeeklyImpressions": 300.0,
-      "WeeklyImpressionsPercentage": 30.0,
-      "WeeklyRatings": 0.03,
+      "WeeklyBudget": 5000.0,
+      "WeeklyImpressions": 250.0,
+      "WeeklyImpressionsPercentage": 25.0,
+      "WeeklyRatings": 0.0,
       "WeekNumber": 2
     },
     {
@@ -38,7 +42,7 @@
       "WeeklyBudget": 5000.0,
       "WeeklyImpressions": 250.0,
       "WeeklyImpressionsPercentage": 25.0,
-      "WeeklyRatings": 0.025,
+      "WeeklyRatings": 0.0,
       "WeekNumber": 3
     },
     {
@@ -51,7 +55,7 @@
       "WeeklyBudget": 5000.0,
       "WeeklyImpressions": 250.0,
       "WeeklyImpressionsPercentage": 25.0,
-      "WeeklyRatings": 0.025,
+      "WeeklyRatings": 0.0,
       "WeekNumber": 4
     }
   ]
