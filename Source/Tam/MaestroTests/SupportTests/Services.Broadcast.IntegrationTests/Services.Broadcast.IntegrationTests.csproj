@@ -357,6 +357,7 @@
     <Compile Include="UnitTests\BusinessEngines\TrackingEngineUnitTests.cs" />
     <Compile Include="UnitTests\Converters\RateImport\DiginetFileImporterUnitTests.cs" />
     <Compile Include="UnitTests\DaytimeCleanupServiceTests.cs" />
+    <Compile Include="UnitTests\PlanServices\PlanServiceTests.cs" />
     <Compile Include="UnitTests\TrafficApiCacheTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\AdvertiserServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\AgencyServiceUnitTests.cs" />

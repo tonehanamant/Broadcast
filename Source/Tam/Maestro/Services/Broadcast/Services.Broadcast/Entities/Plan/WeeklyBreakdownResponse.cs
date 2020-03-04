@@ -7,5 +7,9 @@ namespace Services.Broadcast.Entities.Plan
         public List<WeeklyBreakdownWeek> Weeks { get; set; } = new List<WeeklyBreakdownWeek>();
         public int TotalActiveDays { get; set; }
         public double TotalShareOfVoice { get; set; }
+        public double TotalImpressions { get; set; }
+        public double TotalRatingPoints { get; set; }
+        public double TotalImpressionsPercentage { get; set; }
+        public decimal TotalBudget { get; set; }
     }
 }

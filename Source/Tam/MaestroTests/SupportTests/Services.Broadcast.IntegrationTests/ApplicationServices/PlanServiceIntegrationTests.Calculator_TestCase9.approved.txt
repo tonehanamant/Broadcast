@@ -5,6 +5,6 @@
   "CPP": 1205.99999999999823924,
   "Impressions": 3000.0,
   "MediaMonthId": 450,
-  "RatingPoints": 2.4875621890547266,
+  "RatingPoints": 2.5,
   "Universe": 120600000.0
 }

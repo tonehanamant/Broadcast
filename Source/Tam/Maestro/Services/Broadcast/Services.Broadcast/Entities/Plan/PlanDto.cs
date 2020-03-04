@@ -273,7 +273,10 @@ namespace Services.Broadcast.Entities.Plan
         /// The weekly breakdown weeks.
         /// </value>
         public List<WeeklyBreakdownWeek> WeeklyBreakdownWeeks { get; set; } = new List<WeeklyBreakdownWeek>();
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        public WeeklyBreakdownTotals WeeklyBreakdownTotals { get; set; } = new WeeklyBreakdownTotals();
         /// <summary>
         /// Gets or sets the total share of voice.
         /// </summary>

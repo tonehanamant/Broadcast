@@ -16,4 +16,13 @@ namespace Services.Broadcast.Entities.Plan
         public decimal WeeklyBudget { get; set; }
         public int WeeklyAdu { get; set; }
     }
+
+    public class WeeklyBreakdownTotals
+    {
+        public decimal TotalBudget { get; set; }
+        public double TotalImpressions { get; set; }
+        public double TotalRatingPoints { get; set; }
+        public double TotalImpressionsPercentage { get; set; }
+        public int TotalActiveDays { get; set; }
+    }
 }

@@ -1,5 +1,9 @@
 ﻿{
   "TotalActiveDays": 35,
+  "TotalBudget": 75000.0,
+  "TotalImpressions": 5.0,
+  "TotalImpressionsPercentage": 100.0,
+  "TotalRatingPoints": 0.0,
   "TotalShareOfVoice": 100.0,
   "Weeks": [
     {
@@ -12,7 +16,7 @@
       "WeeklyBudget": 30000.0,
       "WeeklyImpressions": 2.0,
       "WeeklyImpressionsPercentage": 40.0,
-      "WeeklyRatings": 0.00108875,
+      "WeeklyRatings": 0.0,
       "WeekNumber": 1
     },
     {
@@ -38,7 +42,7 @@
       "WeeklyBudget": 15000.0,
       "WeeklyImpressions": 1.0,
       "WeeklyImpressionsPercentage": 20.0,
-      "WeeklyRatings": 0.00054438,
+      "WeeklyRatings": 0.0,
       "WeekNumber": 3
     },
     {
@@ -51,7 +55,7 @@
       "WeeklyBudget": 15000.0,
       "WeeklyImpressions": 1.0,
       "WeeklyImpressionsPercentage": 20.0,
-      "WeeklyRatings": 0.00054438,
+      "WeeklyRatings": 0.0,
       "WeekNumber": 4
     },
     {
@@ -64,7 +68,7 @@
       "WeeklyBudget": 15000.0,
       "WeeklyImpressions": 1.0,
       "WeeklyImpressionsPercentage": 20.0,
-      "WeeklyRatings": 0.00054438,
+      "WeeklyRatings": 0.0,
       "WeekNumber": 5
     }
   ]

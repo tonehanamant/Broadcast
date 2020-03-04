@@ -1,0 +1,75 @@
+﻿{
+    "Weeks": [
+        {
+            "WeekNumber": 1,
+            "MediaWeekId": 844,
+            "StartDate": "2020-02-24T00:00:00",
+            "EndDate": "2020-03-01T00:00:00",
+            "NumberOfActiveDays": 7,
+            "ActiveDays": "M-Su",
+            "WeeklyImpressions": 6000.0,
+            "WeeklyImpressionsPercentage": 20.0,
+            "WeeklyRatings": 5.6082340091722678,
+            "WeeklyBudget": 60000.0,
+            "WeeklyAdu": 0
+        },
+        {
+            "WeekNumber": 2,
+            "MediaWeekId": 845,
+            "StartDate": "2020-03-02T00:00:00",
+            "EndDate": "2020-03-08T00:00:00",
+            "NumberOfActiveDays": 7,
+            "ActiveDays": "M-Su",
+            "WeeklyImpressions": 6000.0,
+            "WeeklyImpressionsPercentage": 20.0,
+            "WeeklyRatings": 5.6082340091722678,
+            "WeeklyBudget": 60000.0,
+            "WeeklyAdu": 0
+        },
+        {
+            "WeekNumber": 3,
+            "MediaWeekId": 846,
+            "StartDate": "2020-03-09T00:00:00",
+            "EndDate": "2020-03-15T00:00:00",
+            "NumberOfActiveDays": 7,
+            "ActiveDays": "M-Su",
+            "WeeklyImpressions": 3000.0,
+            "WeeklyImpressionsPercentage": 10.0,
+            "WeeklyRatings": 2.8,
+            "WeeklyBudget": 30000.0,
+            "WeeklyAdu": 0
+        },
+        {
+            "WeekNumber": 4,
+            "MediaWeekId": 847,
+            "StartDate": "2020-03-16T00:00:00",
+            "EndDate": "2020-03-22T00:00:00",
+            "NumberOfActiveDays": 7,
+            "ActiveDays": "M-Su",
+            "WeeklyImpressions": 6000.0,
+            "WeeklyImpressionsPercentage": 20.0,
+            "WeeklyRatings": 5.6082340091722678,
+            "WeeklyBudget": 60000.0,
+            "WeeklyAdu": 0
+        },
+        {
+            "WeekNumber": 5,
+            "MediaWeekId": 848,
+            "StartDate": "2020-03-23T00:00:00",
+            "EndDate": "2020-03-29T00:00:00",
+            "NumberOfActiveDays": 7,
+            "ActiveDays": "M-Su",
+            "WeeklyImpressions": 6000.0,
+            "WeeklyImpressionsPercentage": 20.0,
+            "WeeklyRatings": 5.6082340091722678,
+            "WeeklyBudget": 60000.0,
+            "WeeklyAdu": 0
+        }
+    ],
+    "TotalActiveDays": 35,
+    "TotalShareOfVoice": 90.0,
+    "TotalImpressions": 27000.0,
+    "TotalRatingPoints": 25.2,
+    "TotalImpressionsPercentage": 90.0,
+    "TotalBudget": 270000.0
+}

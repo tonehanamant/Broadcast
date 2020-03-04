@@ -1,5 +1,9 @@
 ﻿{
   "TotalActiveDays": 13,
+  "TotalBudget": 0.0,
+  "TotalImpressions": 1000.0,
+  "TotalImpressionsPercentage": 100.0,
+  "TotalRatingPoints": 0.0,
   "TotalShareOfVoice": 100.0,
   "Weeks": [
     {
@@ -12,7 +16,7 @@
       "WeeklyBudget": 0.0,
       "WeeklyImpressions": 500.0,
       "WeeklyImpressionsPercentage": 50.0,
-      "WeeklyRatings": 0.00045365,
+      "WeeklyRatings": 0.0,
       "WeekNumber": 1
     },
     {
@@ -25,7 +29,7 @@
       "WeeklyBudget": 0.0,
       "WeeklyImpressions": 500.0,
       "WeeklyImpressionsPercentage": 50.0,
-      "WeeklyRatings": 0.00045365,
+      "WeeklyRatings": 0.0,
       "WeekNumber": 2
     }
   ]

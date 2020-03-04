@@ -1,6 +1,10 @@
 ﻿{
   "TotalActiveDays": 35,
-  "TotalShareOfVoice": 66.67,
+  "TotalBudget": 75000.0,
+  "TotalImpressions": 3.0,
+  "TotalImpressionsPercentage": 100.0,
+  "TotalRatingPoints": 0.0,
+  "TotalShareOfVoice": 100.0,
   "Weeks": [
     {
       "ActiveDays": "M-Su",
@@ -9,10 +13,10 @@
       "NumberOfActiveDays": 7,
       "StartDate": "2019-12-30T00:00:00",
       "WeeklyAdu": 0,
-      "WeeklyBudget": 10000.0,
-      "WeeklyImpressions": 0.4,
-      "WeeklyImpressionsPercentage": 13.33333333,
-      "WeeklyRatings": 0.00036292,
+      "WeeklyBudget": 75000.0,
+      "WeeklyImpressions": 3.0,
+      "WeeklyImpressionsPercentage": 100.0,
+      "WeeklyRatings": 0.0,
       "WeekNumber": 1
     },
     {
@@ -22,10 +26,10 @@
       "NumberOfActiveDays": 7,
       "StartDate": "2020-01-06T00:00:00",
       "WeeklyAdu": 0,
-      "WeeklyBudget": 10000.0,
-      "WeeklyImpressions": 0.4,
-      "WeeklyImpressionsPercentage": 13.33333333,
-      "WeeklyRatings": 0.00036292,
+      "WeeklyBudget": 0.0,
+      "WeeklyImpressions": 0.0,
+      "WeeklyImpressionsPercentage": 0.0,
+      "WeeklyRatings": 0.0,
       "WeekNumber": 2
     },
     {
@@ -35,10 +39,10 @@
       "NumberOfActiveDays": 7,
       "StartDate": "2020-01-13T00:00:00",
       "WeeklyAdu": 0,
-      "WeeklyBudget": 10000.0,
-      "WeeklyImpressions": 0.4,
-      "WeeklyImpressionsPercentage": 13.33333333,
-      "WeeklyRatings": 0.00036292,
+      "WeeklyBudget": 0.0,
+      "WeeklyImpressions": 0.0,
+      "WeeklyImpressionsPercentage": 0.0,
+      "WeeklyRatings": 0.0,
       "WeekNumber": 3
     },
     {
@@ -48,10 +52,10 @@
       "NumberOfActiveDays": 7,
       "StartDate": "2020-01-20T00:00:00",
       "WeeklyAdu": 0,
-      "WeeklyBudget": 10000.0,
-      "WeeklyImpressions": 0.4,
-      "WeeklyImpressionsPercentage": 13.33333333,
-      "WeeklyRatings": 0.00036292,
+      "WeeklyBudget": 0.0,
+      "WeeklyImpressions": 0.0,
+      "WeeklyImpressionsPercentage": 0.0,
+      "WeeklyRatings": 0.0,
       "WeekNumber": 4
     },
     {
@@ -61,10 +65,10 @@
       "NumberOfActiveDays": 7,
       "StartDate": "2020-01-27T00:00:00",
       "WeeklyAdu": 0,
-      "WeeklyBudget": 10000.0,
-      "WeeklyImpressions": 0.4,
-      "WeeklyImpressionsPercentage": 13.33333333,
-      "WeeklyRatings": 0.00036292,
+      "WeeklyBudget": 0.0,
+      "WeeklyImpressions": 0.0,
+      "WeeklyImpressionsPercentage": 0.0,
+      "WeeklyRatings": 0.0,
       "WeekNumber": 5
     }
   ]

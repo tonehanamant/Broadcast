@@ -57,5 +57,11 @@ namespace Services.Broadcast.BusinessEngines
         {
             return totalImpressions == 0 ? 0 : impressions / totalImpressions * 100;
         }
+
+        public static double RoundDownWithDecimals(double i, double decimalPlaces)
+        {
+            var power = Math.Pow(10, decimalPlaces);
+            return Math.Floor(i * power) / power;
+        }
     }
 }

@@ -215,9 +215,9 @@
   "FlightStartDate": "2019-01-01T00:00:00",
   "GoalBreakdownType": 1,
   "HHCPM": 0.0120,
-  "HHCPP": 14.4839,
-  "HHImpressions": 8333333.33333333,
-  "HHRatingPoints": 6.90417012,
+  "HHCPP": 14.4840,
+  "HHImpressions": 8333333.0,
+  "HHRatingPoints": 6.9,
   "HHUniverse": 120700000.0,
   "HUTBookId": 437,
   "IsAduEnabled": true,
@@ -297,9 +297,9 @@
     {
       "AudienceId": 7,
       "CPM": 0.0275,
-      "CPP": 2.17931034482759,
-      "Impressions": 3625.0,
-      "RatingPoints": 45.88607594936709,
+      "CPP": 2.17931094601681,
+      "Impressions": 3624.999,
+      "RatingPoints": 45.9,
       "Type": 1,
       "Universe": 7900000.0,
       "Vpvh": 0.435
@@ -307,9 +307,9 @@
     {
       "AudienceId": 6,
       "CPM": 0.0188,
-      "CPP": 1.18110236220472,
-      "Impressions": 5291.666666666667,
-      "RatingPoints": 84.666666666666671,
+      "CPP": 1.18110251100504,
+      "Impressions": 5291.666,
+      "RatingPoints": 84.7,
       "Type": 1,
       "Universe": 6250000.0,
       "Vpvh": 0.635
@@ -328,6 +328,13 @@
   "TotalShareOfVoice": 100.0,
   "VersionNumber": 1,
   "Vpvh": 0.012,
+  "WeeklyBreakdownTotals": {
+    "TotalActiveDays": 29,
+    "TotalBudget": 100.0000,
+    "TotalImpressions": 100.0,
+    "TotalImpressionsPercentage": 100.0,
+    "TotalRatingPoints": 0.0615
+  },
   "WeeklyBreakdownWeeks": [
     {
       "ActiveDays": "Tu-Su",

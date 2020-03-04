@@ -206,9 +206,9 @@
   "FlightStartDate": "2019-01-01T00:00:00",
   "GoalBreakdownType": 1,
   "HHCPM": 0.0120,
-  "HHCPP": 14.4839,
-  "HHImpressions": 8333333.33333333,
-  "HHRatingPoints": 6.90417012,
+  "HHCPP": 14.4840,
+  "HHImpressions": 8333333.0,
+  "HHRatingPoints": 6.9,
   "HHUniverse": 120700000.0,
   "HUTBookId": 437,
   "IsAduEnabled": true,
@@ -298,6 +298,13 @@
   "TotalShareOfVoice": 100.0,
   "VersionNumber": 1,
   "Vpvh": 0.012,
+  "WeeklyBreakdownTotals": {
+    "TotalActiveDays": 29,
+    "TotalBudget": 100.0000,
+    "TotalImpressions": 100.0,
+    "TotalImpressionsPercentage": 100.0,
+    "TotalRatingPoints": 0.0615
+  },
   "WeeklyBreakdownWeeks": [
     {
       "ActiveDays": "Tu-Su",

@@ -1,5 +1,9 @@
 ﻿{
   "TotalActiveDays": 35,
+  "TotalBudget": 85000.0,
+  "TotalImpressions": 5.0,
+  "TotalImpressionsPercentage": 100.0,
+  "TotalRatingPoints": 0.0,
   "TotalShareOfVoice": 100.0,
   "Weeks": [
     {

@@ -146,5 +146,12 @@
   "TotalShareOfVoice": 0.0,
   "VersionNumber": 1,
   "Vpvh": 0.012,
+  "WeeklyBreakdownTotals": {
+    "TotalActiveDays": 0,
+    "TotalBudget": 0.0,
+    "TotalImpressions": 0.0,
+    "TotalImpressionsPercentage": 0.0,
+    "TotalRatingPoints": 0.0
+  },
   "WeeklyBreakdownWeeks": []
 }
