@@ -22,7 +22,6 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         private static readonly Color fontColor = ColorTranslator.FromHtml(FONT_COLOR);
         public static readonly string NO_VALUE_CELL = "-";
         public static readonly string EMPTY_CELL = null;
-        public static readonly Color EvenRowColor = Color.FromArgb(245, 248, 248);
 
         /// <summary>
         /// Gets a worksheet by name.
@@ -65,14 +64,13 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
 
         public static void ExtendTable(
             ExcelWorksheet worksheet,
-            Cell fromSourceCell,
-            Cell toSourceCell,
+            (int Row, int Column) fromSourceCell,
+            (int Row, int Column) toSourceCell,
             int rowsToCopy)
         {
             var rowsBatchSize = toSourceCell.Row - fromSourceCell.Row + 1;
-            var rowsBatchToCopy = worksheet.Cells[
-                fromSourceCell.Row, fromSourceCell.Column,
-                toSourceCell.Row, toSourceCell.Column];
+            var rowsBatchToCopy = worksheet
+                .Cells[fromSourceCell.Row, fromSourceCell.Column, toSourceCell.Row, toSourceCell.Column];
 
             var firstRow = fromSourceCell.Row + 1;
             var lastRow = fromSourceCell.Row + rowsToCopy * rowsBatchSize;
@@ -87,8 +85,8 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
 
         public static void FormatTableRows(
             ExcelWorksheet worksheet,
-            Cell topLeftCell,
-            Cell bottomRightCell)
+            (int Row, int Column) topLeftCell,
+            (int Row, int Column) bottomRightCell)
         {
             // remove bottom borders from all rows except the last one
             worksheet.Cells[
@@ -106,11 +104,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
 
                 if (count % 2 == 0)
                 {
-                    var rowCells = worksheet.Cells[
-                        row, topLeftCell.Column,
-                        row, bottomRightCell.Column];
-
-                    rowCells.Style.Fill.BackgroundColor.SetColor(EvenRowColor);
+                    worksheet.Cells[row, FIRST_COLUMNS_INDEX].Value = "Even";
                 }
             }
         }
@@ -122,7 +116,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             {
                 ExcelRichText richText = null;
                 foreach (var daypart in daypartsData
-                    .Where(x=>x.GenreRestrictions.Any() || x.ProgramRestrictions.Any()).ToList())
+                    .Where(x => x.GenreRestrictions.Any() || x.ProgramRestrictions.Any()).ToList())
                 {
                     if (worksheet.Cells[cellAddress].Value == null)
                     {

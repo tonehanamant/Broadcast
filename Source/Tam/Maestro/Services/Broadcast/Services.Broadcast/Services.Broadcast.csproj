@@ -366,7 +366,6 @@
     <Compile Include="Clients\ConfigurationClientSwitch.cs" />
     <Compile Include="Entities\CampaignListItemDto.cs" />
     <Compile Include="Entities\CampaignQuarterDto.cs" />
-    <Compile Include="Entities\Cell.cs" />
     <Compile Include="Entities\Day.cs" />
     <Compile Include="Entities\DaypartCleanupDto.cs" />
     <Compile Include="Entities\Enums\BroadcastDayOfWeek.cs" />

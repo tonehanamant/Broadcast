@@ -149,7 +149,7 @@ namespace Services.Broadcast.Repositories
         /// </remarks>
         List<StationInventoryManifest> GetInventoryBySourceForProgramsProcessing(int sourceId, List<int> mediaWeekIds);
 
-        void UpdatePrimaryProrgamsForManifestDayparts(IEnumerable<StationInventoryManifestDaypart> manifestDayparts);
+        void UpdatePrimaryProgramsForManifestDayparts(IEnumerable<StationInventoryManifestDaypart> manifestDayparts);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -1544,7 +1544,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public void UpdatePrimaryProrgamsForManifestDayparts(IEnumerable<StationInventoryManifestDaypart> manifestDayparts)
+        public void UpdatePrimaryProgramsForManifestDayparts(IEnumerable<StationInventoryManifestDaypart> manifestDayparts)
         {
             _InReadUncommitedTransaction(
                 context =>

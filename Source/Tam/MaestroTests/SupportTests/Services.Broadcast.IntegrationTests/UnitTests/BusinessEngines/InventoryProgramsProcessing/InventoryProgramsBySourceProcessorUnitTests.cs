@@ -751,7 +751,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.IsTrue(updateProgramsCalls[0].Item1.Select(s => s.StationInventoryManifestDaypartId).Contains(4));
 
             // Verify that the program with the most time is chosen
-            _InventoryRepo.Verify(x => x.UpdatePrimaryProrgamsForManifestDayparts(It.Is<List<StationInventoryManifestDaypart>>(list =>
+            _InventoryRepo.Verify(x => x.UpdatePrimaryProgramsForManifestDayparts(It.Is<List<StationInventoryManifestDaypart>>(list =>
                 list.Single(d => d.Id == 1).PrimaryProgramId == 2)));
         }
 

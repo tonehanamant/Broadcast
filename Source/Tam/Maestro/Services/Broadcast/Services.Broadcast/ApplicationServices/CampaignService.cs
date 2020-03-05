@@ -677,9 +677,9 @@ namespace Services.Broadcast.ApplicationServices
 
             // for now we generate reports only for one plan
             var planId = request.SelectedPlans.First();
-            var plan = _PlanRepository.GetPlan(planId);
-            var campaign = _CampaignRepository.GetCampaign(plan.CampaignId);
             var pricingJob = _GetLatestPricingJob(planId);
+            var plan = _PlanRepository.GetPlan(planId);
+            var campaign = _CampaignRepository.GetCampaign(plan.CampaignId);            
             var agency = _TrafficApiCache.GetAgency(campaign.AgencyId);
             var advertiser = _TrafficApiCache.GetAdvertiser(campaign.AdvertiserId);
             var guaranteedDemo = _AudienceService.GetAudienceById(plan.AudienceId);

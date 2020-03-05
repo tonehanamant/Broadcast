@@ -162,7 +162,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var result = service.DownloadErrorFile(fileId);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual($"{fileName}.txt", result.Item1);
             Assert.IsNotNull(result.Item2); // stream
             Assert.AreEqual(@"text/plain", result.Item3); // mimeType
 

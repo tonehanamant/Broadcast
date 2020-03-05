@@ -29,6 +29,7 @@ namespace Services.Broadcast.Entities.Campaign
         public string AccountExecutive { get; set; }
         public string ClientContact { get; set; }
         public List<DetailedViewRowDisplay> DetailedViewRows { get; set; }
+        public List<DefaultViewRowDisplay> DefaultViewRows { get; set; }
         
         private const string FILENAME_FORMAT = "Program_Lineup_Report_{0}_{1}.xlsx";
         private const string PLAN_HEADER_NAME_FORMAT = "{0} | Program Lineup*";
@@ -55,11 +56,13 @@ namespace Services.Broadcast.Entities.Campaign
             ExportFileName = string.Format(FILENAME_FORMAT, plan.Name, currentDate.ToString(DATE_FORMAT_FILENAME));
 
             _PopulateHeaderData(plan, planPricingJob, agency, advertiser, guaranteedDemo, spotLenghts, currentDate);
-            _PopulateDetailedViewRows(
+            List<DetailedViewRowData> detailedRowsData = _PopulateDetailedViewRows(
                 allocatedSpots,
                 manifests,
                 marketCoverageByStation,
                 primaryProgramsByManifestDaypartIds);
+            DetailedViewRows = _MapToDetailedViewRows(detailedRowsData);
+            DefaultViewRows = _MapToDefaultViewRows(detailedRowsData, plan.TargetImpressions.Value);
         }
 
         private void _PopulateHeaderData(
@@ -85,7 +88,7 @@ namespace Services.Broadcast.Entities.Campaign
             ClientContact = string.Empty;
         }
 
-        public void _PopulateDetailedViewRows(
+        private List<DetailedViewRowData> _PopulateDetailedViewRows(
             List<PlanPricingAllocatedSpot> allocatedSpots,
             List<StationInventoryManifest> manifests,
             MarketCoverageByStation marketCoverageByStation,
@@ -96,16 +99,16 @@ namespace Services.Broadcast.Entities.Campaign
             foreach (var manifest in manifests)
             {
                 var coverage = marketCoverageByStation.Markets.Single(x => x.MarketCode == manifest.Station.MarketCode);
-                
+
                 foreach (var manifestDaypart in manifest.ManifestDayparts)
                 {
                     var daypart = manifestDaypart.Daypart;
-                    var hasInventorySpotsAllocated = allocatedSpots.Any(x => 
-                        x.StationInventoryManifestId == manifest.Id && 
+                    var queryAllocatedSpots = allocatedSpots.Where(x =>
+                        x.StationInventoryManifestId == manifest.Id &&
                         x.Daypart.Id == daypart.Id &&
                         x.Spots > 0);
 
-                    if (!hasInventorySpotsAllocated)
+                    if (!queryAllocatedSpots.Any())
                         continue;
 
                     var row = new DetailedViewRowData
@@ -114,9 +117,10 @@ namespace Services.Broadcast.Entities.Campaign
                         MarketGeographyName = coverage.MarketName,
                         StationLegacyCallLetters = manifest.Station.LegacyCallLetters,
                         StationAffiliation = manifest.Station.Affiliation,
-                        Daypart = daypart
+                        Daypart = daypart,
+                        TotalSpotsImpressions = queryAllocatedSpots.Sum(x => x.Impressions * x.Spots)
                     };
-                    
+
                     if (primaryProgramsByManifestDaypartIds.TryGetValue(manifestDaypart.Id.Value, out var primaryProgram))
                     {
                         var genre = primaryProgram.Genre;
@@ -134,12 +138,32 @@ namespace Services.Broadcast.Entities.Campaign
                         row.Genre = string.Empty;
                         row.DaypartCode = string.Empty;
                     }
-                    
+
                     dataRows.Add(row);
                 }
             }
 
-            DetailedViewRows = _MapToDetailedViewRows(dataRows);
+            return dataRows;
+        }
+
+        private List<DefaultViewRowDisplay> _MapToDefaultViewRows(List<DetailedViewRowData> dataRows, double planImpressions)
+        {
+            return dataRows
+                .GroupBy(x => x.ProgramName)
+               .Select(x =>
+               {
+                   var items = x.ToList();
+                   return new DefaultViewRowDisplay
+                   {
+                       Program = x.Key.ToUpper(),
+                       Weight = items.Sum(y => y.TotalSpotsImpressions) / planImpressions,
+                       Genre = items.First().Genre.ToUpper(),
+                       NoOfMarkets = items.Select(y => y.MarketGeographyName).Distinct().Count(),
+                       NoOfStations = items.Select(y => y.StationAffiliation).Distinct().Count()
+                   };
+               })
+               .OrderByDescending(x => x.Weight)
+               .ToList();
         }
 
         private List<DetailedViewRowDisplay> _MapToDetailedViewRows(List<DetailedViewRowData> dataRows)
@@ -159,8 +183,7 @@ namespace Services.Broadcast.Entities.Campaign
                     Program = x.ProgramName.ToUpper(),
                     Genre = x.Genre.ToUpper(),
                     Daypart = x.DaypartCode.ToUpper()
-                })
-                // Group by all fields to remove duplicates
+                })// Group by all fields to remove duplicates
                 .GroupBy(x => new
                 {
                     x.Rank,
@@ -199,6 +222,15 @@ namespace Services.Broadcast.Entities.Campaign
             public string Daypart { get; set; }
         }
 
+        public class DefaultViewRowDisplay
+        {
+            public string Program { get; set; }
+            public double Weight { get; set; }
+            public string Genre { get; set; }
+            public int NoOfStations { get; set; }
+            public int NoOfMarkets { get; set; }
+        }
+
         public class DetailedViewRowData
         {
             public int Rank { get; set; }
@@ -209,6 +241,7 @@ namespace Services.Broadcast.Entities.Campaign
             public string ProgramName { get; set; }
             public string Genre { get; set; }
             public string DaypartCode { get; set; }
+            public double TotalSpotsImpressions { get; set; }
         }
     }
 }

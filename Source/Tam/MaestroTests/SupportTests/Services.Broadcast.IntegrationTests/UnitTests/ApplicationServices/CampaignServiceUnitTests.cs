@@ -502,8 +502,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new DateRange(new DateTime(2019, 1, 1), null),
                 new DateRange(new DateTime(2019, 2, 1), new DateTime(2019, 9, 1))
             };
-            
             _CampaignRepositoryMock.Setup(x => x.GetCampaignsDateRanges(null)).Returns(getCampaignsDateRangesReturn);
+            
 
             _QuarterCalculationEngineMock
                 .Setup(x => x.GetQuartersForDateRanges(It.IsAny<List<DateRange>>()))
@@ -838,7 +838,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        public void ThrowsException_OnProgramLinupReportGeneration_WhenNoPlansSelected()
+        public void ThrowsException_OnProgramLineupReportGeneration_WhenNoPlansSelected()
         {
             // Arrange
             var expectedMessage = $"Choose at least one plan";
@@ -857,7 +857,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        public void ThrowsException_OnProgramLinupReportGeneration_WhenNoPricingRunsDone()
+        public void ThrowsException_OnProgramLineupReportGeneration_WhenNoPricingRunsDone()
         {
             // Arrange
             const string expectedMessage = "There are no completed pricing runs for the chosen plan. Please run pricing";
@@ -883,7 +883,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         [TestCase(BackgroundJobProcessingStatus.Failed, "The latest pricing run was failed. Please run pricing again or contact the support")]
         [TestCase(BackgroundJobProcessingStatus.Queued, "There is a pricing run in progress right now. Please wait until it is completed")]
         [TestCase(BackgroundJobProcessingStatus.Processing, "There is a pricing run in progress right now. Please wait until it is completed")]
-        public void ThrowsException_OnProgramLinupReportGeneration_WhenPricingJobStatusIsNotAcceptable(
+        public void ThrowsException_OnProgramLineupReportGeneration_WhenPricingJobStatusIsNotAcceptable(
             BackgroundJobProcessingStatus jobStatus,
             string expectedMessage)
         {
@@ -914,7 +914,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void ReturnsData_ForProgramLinupReport_45spot_notEquivalized()
+        public void ReturnsData_ForProgramLineupReport_45spot_notEquivalized()
         {
             // Arrange
             const int firstPlanId = 1;
@@ -941,7 +941,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     FlightEndDate = new DateTime(2020, 03, 14),
                     SpotLengthId = spotLengthId,
                     Equivalized = false,
-                    PostingType = PostingTypeEnum.NTI
+                    PostingType = PostingTypeEnum.NTI,
+                    TargetImpressions = 250
                 });
 
             _CampaignRepositoryMock
@@ -985,7 +986,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void ReturnsData_ForProgramLinupReport_45spot_Equivalized()
+        public void ReturnsData_ForProgramLineupReport_45spot_Equivalized()
         {
             // Arrange
             const int firstPlanId = 1;
@@ -1012,7 +1013,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     FlightEndDate = new DateTime(2020, 03, 14),
                     SpotLengthId = spotLengthId,
                     Equivalized = true,
-                    PostingType = PostingTypeEnum.NTI
+                    PostingType = PostingTypeEnum.NTI,
+                    TargetImpressions = 250
                 });
 
             _CampaignRepositoryMock
@@ -1056,7 +1058,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void ReturnsData_ForProgramLinupReport_30spot_Equivalized()
+        public void ReturnsData_ForProgramLineupReport_30spot_Equivalized()
         {
             // Arrange
             const int firstPlanId = 1;
@@ -1083,7 +1085,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     FlightEndDate = new DateTime(2020, 03, 14),
                     SpotLengthId = spotLengthId,
                     Equivalized = true,
-                    PostingType = PostingTypeEnum.NTI
+                    PostingType = PostingTypeEnum.NTI,
+                    TargetImpressions = 250
                 });
 
             _CampaignRepositoryMock
@@ -1256,7 +1259,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         Id = 10001
                     },
-                    Spots = 1
+                    Spots = 1,
+                    Impressions = 10
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -1265,7 +1269,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         Id = 20001
                     },
-                    Spots = 1
+                    Spots = 1,
+                    Impressions = 20
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -1274,7 +1279,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         Id = 30002
                     },
-                    Spots = 1
+                    Spots = 2,
+                    Impressions = 10
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -1283,7 +1289,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         Id = 40001
                     },
-                    Spots = 1
+                    Spots = 1,
+                    Impressions = 10
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -1292,7 +1299,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         Id = 50001
                     },
-                    Spots = 1
+                    Spots = 5,
+                    Impressions = 10
                 }
             };
         }

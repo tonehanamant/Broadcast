@@ -167,7 +167,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             const string expectedMessage = "The chosen campaign has been locked by IntegrationUser";
 
-            using (new TransactionScopeWrapper(System.Transactions.IsolationLevel.ReadUncommitted))
+            using (new TransactionScopeWrapper(System.Transactions.IsolationLevel.ReadCommitted))
             {
                 var lockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
                 lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
@@ -962,8 +962,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.AreEqual(reportOutput.Stream.Length,
                     File.ReadAllBytes(@".\Files\Campaign export\CampaignExport_PlansWith13And14Weeks.xlsx").LongLength);
             }
-
-
         }
 
         private JsonSerializerSettings _GetJsonSettingsForCampaignExport()
@@ -981,7 +979,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore] //write excel file to file system(this is used for manual testing only)
+        [UseReporter(typeof(DiffReporter))]
         public void ProgramLineupExport()
         {
             const int planId = 1197;
@@ -1018,9 +1016,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4));
-
                 _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id);
-
 
                 var reportData = _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest
                 {
@@ -1028,15 +1024,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }, now);
 
                 var reportOutput = new ProgramLineupReportGenerator(@".\Files\Excel templates").Generate(reportData);
+                reportOutput.Filename = "ProgramLineupExport.xlsx";
+                _WriteFileToLocalFileSystem(reportOutput);
 
-                using (var destinationFileStream = new FileStream($@"D:\Users\achyzh\results\{reportOutput.Filename}", FileMode.OpenOrCreate))
-                {
-                    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
-                    {
-                        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
-                    }
-                }
+                Assert.AreEqual(reportData.ReportGeneratedDate, now.ToString("M/d/yy"));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForProgramLineupExport()));
+                Assert.AreEqual(reportOutput.Stream.Length,
+                    File.ReadAllBytes(@".\Files\Program lineup\ProgramLineupExport.xlsx").LongLength);
             }
+        }
+
+        private JsonSerializerSettings _GetJsonSettingsForProgramLineupExport()
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+
+            jsonResolver.Ignore(typeof(ProgramLineupReportData), "ReportGeneratedDate");
+            jsonResolver.Ignore(typeof(SharedFolderFile), "Id");
+
+            return new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
         }
 
         private static void _WriteFileToLocalFileSystem(ReportOutput reportOutput)

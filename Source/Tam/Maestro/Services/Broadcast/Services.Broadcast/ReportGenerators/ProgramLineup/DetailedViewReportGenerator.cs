@@ -21,8 +21,8 @@ namespace Services.Broadcast.ReportGenerators.ProgramLineup
         private readonly string ACCOUNT_EXECUTIVE_CELL = "J6";
         private readonly string CLIENT_CONTRACT_CELL = "K6";
 
-        private Cell TableTopLeftCell = new Cell { Row = 9, Column = 2 };
-        private Cell TableTopRightCell = new Cell { Row = 9, Column = 10 };
+        private (int Row, int Column) TableTopLeftCell = (Row : 9, Column : 3 );
+        private (int Row, int Column) TableTopRightCell = (Row: 9, Column: 11);
         #endregion
 
         internal void PopulateTab(ExcelWorksheet worksheet, ProgramLineupReportData reportData)
@@ -51,11 +51,11 @@ namespace Services.Broadcast.ReportGenerators.ProgramLineup
 
         private void _PopulateTable(ExcelWorksheet worksheet, ProgramLineupReportData reportData)
         {
-            var tableBottomRightCell = new Cell
-            {
-                Row = TableTopLeftCell.Row + reportData.DetailedViewRows.Count - 1,
-                Column = TableTopRightCell.Column
-            };
+            (int Row, int Column) tableBottomRightCell = 
+            (
+                Row: TableTopLeftCell.Row + reportData.DetailedViewRows.Count - 1
+                , TableTopRightCell.Column
+            );
 
             ExportSharedLogic.ExtendTable(
                 worksheet,

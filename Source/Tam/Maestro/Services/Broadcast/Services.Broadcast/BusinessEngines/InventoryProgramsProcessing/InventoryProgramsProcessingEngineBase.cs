@@ -181,7 +181,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                     .programId;
             }
 
-            _InventoryRepository.UpdatePrimaryProrgamsForManifestDayparts(manifestDayparts);
+            _InventoryRepository.UpdatePrimaryProgramsForManifestDayparts(manifestDayparts);
         }
 
         private int _CalculateTotalTime(

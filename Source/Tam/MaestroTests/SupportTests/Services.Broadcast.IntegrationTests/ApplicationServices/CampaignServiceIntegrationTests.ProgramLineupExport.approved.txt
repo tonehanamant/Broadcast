@@ -1,0 +1,131 @@
+﻿{
+  "AccountExecutive": "",
+  "AccuracyEstimateDate": "3/5/20",
+  "Agency": "Stub Agency",
+  "Client": "Stub Advertiser",
+  "ClientContact": "",
+  "DefaultViewRows": [
+    {
+      "Genre": "CHILDREN",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "EARLY NEWS",
+      "Weight": 11.8575
+    },
+    {
+      "Genre": "COMEDY",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "LATE NEWS",
+      "Weight": 0.085
+    }
+  ],
+  "DetailedViewRows": [
+    {
+      "Daypart": "LF",
+      "Days": "M-F",
+      "DMA": "NEW YORK",
+      "Genre": "CHILDREN",
+      "NetworkAffiliation": "CW",
+      "Program": "EARLY NEWS",
+      "Rank": 1,
+      "Station": "WPIX",
+      "TimePeriods": "12AM-12:30AM"
+    },
+    {
+      "Daypart": "LF",
+      "Days": "M-F",
+      "DMA": "NEW YORK",
+      "Genre": "CHILDREN",
+      "NetworkAffiliation": "CW",
+      "Program": "EARLY NEWS",
+      "Rank": 1,
+      "Station": "WPIX",
+      "TimePeriods": "12:30AM-1AM"
+    },
+    {
+      "Daypart": "LF",
+      "Days": "SA",
+      "DMA": "NEW YORK",
+      "Genre": "CHILDREN",
+      "NetworkAffiliation": "CW",
+      "Program": "EARLY NEWS",
+      "Rank": 1,
+      "Station": "WPIX",
+      "TimePeriods": "12AM-12:30AM"
+    },
+    {
+      "Daypart": "LF",
+      "Days": "SA",
+      "DMA": "NEW YORK",
+      "Genre": "CHILDREN",
+      "NetworkAffiliation": "CW",
+      "Program": "EARLY NEWS",
+      "Rank": 1,
+      "Station": "WPIX",
+      "TimePeriods": "12:30AM-1AM"
+    },
+    {
+      "Daypart": "LF",
+      "Days": "SU",
+      "DMA": "NEW YORK",
+      "Genre": "CHILDREN",
+      "NetworkAffiliation": "CW",
+      "Program": "EARLY NEWS",
+      "Rank": 1,
+      "Station": "WPIX",
+      "TimePeriods": "12AM-1AM"
+    },
+    {
+      "Daypart": "LF",
+      "Days": "M-F",
+      "DMA": "PORTLAND-AUBURN",
+      "Genre": "COMEDY",
+      "NetworkAffiliation": "FOX",
+      "Program": "LATE NEWS",
+      "Rank": 79,
+      "Station": "WPFO",
+      "TimePeriods": "12AM-12:30AM"
+    },
+    {
+      "Daypart": "LF",
+      "Days": "SA",
+      "DMA": "PORTLAND-AUBURN",
+      "Genre": "COMEDY",
+      "NetworkAffiliation": "FOX",
+      "Program": "LATE NEWS",
+      "Rank": 79,
+      "Station": "WPFO",
+      "TimePeriods": "12AM-1AM"
+    },
+    {
+      "Daypart": "LF",
+      "Days": "SU",
+      "DMA": "PORTLAND-AUBURN",
+      "Genre": "COMEDY",
+      "NetworkAffiliation": "FOX",
+      "Program": "LATE NEWS",
+      "Rank": 79,
+      "Station": "WPFO",
+      "TimePeriods": "12AM-1AM"
+    },
+    {
+      "Daypart": "LF",
+      "Days": "M-F",
+      "DMA": "PORTLAND-AUBURN",
+      "Genre": "COMEDY",
+      "NetworkAffiliation": "FOX",
+      "Program": "LATE NEWS",
+      "Rank": 79,
+      "Station": "WPFO",
+      "TimePeriods": "12:30AM-1AM"
+    }
+  ],
+  "ExportFileName": "Program_Lineup_Report_Plan Pricing 2_04042020.xlsx",
+  "FlightEndDate": "10/31/18",
+  "FlightStartDate": "10/01/18",
+  "GuaranteedDemo": "HH",
+  "PlanHeaderName": "Plan Pricing 2 | Program Lineup*",
+  "PostingType": "NTI",
+  "SpotLength": ":60 eq."
+}

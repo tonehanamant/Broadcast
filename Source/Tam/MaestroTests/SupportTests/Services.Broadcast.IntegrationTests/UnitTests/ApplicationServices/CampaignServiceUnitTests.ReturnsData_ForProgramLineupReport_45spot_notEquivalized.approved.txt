@@ -1,0 +1,73 @@
+﻿{
+  "AccountExecutive": "",
+  "AccuracyEstimateDate": "2/12/20",
+  "Agency": "1st Image Marketing",
+  "Client": "PetMed Express, Inc",
+  "ClientContact": "",
+  "DefaultViewRows": [
+    {
+      "Genre": "NEWS",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "LATE NEWS",
+      "Weight": 0.08
+    },
+    {
+      "Genre": "",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "THE SHAWSHANK REDEMPTION",
+      "Weight": 0.08
+    },
+    {
+      "Genre": "MOVIE",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "JOKER",
+      "Weight": 0.04
+    }
+  ],
+  "DetailedViewRows": [
+    {
+      "Daypart": "EMN",
+      "Days": "W-TH",
+      "DMA": "NEW YORK",
+      "Genre": "NEWS",
+      "NetworkAffiliation": "CBS",
+      "Program": "LATE NEWS",
+      "Rank": 1,
+      "Station": "WTTV",
+      "TimePeriods": "12:03AM-12:05AM"
+    },
+    {
+      "Daypart": "EMN",
+      "Days": "M-TU",
+      "DMA": "BINGHAMTON",
+      "Genre": "MOVIE",
+      "NetworkAffiliation": "ABC",
+      "Program": "JOKER",
+      "Rank": 2,
+      "Station": "KSTP",
+      "TimePeriods": "12:01AM-12:03AM"
+    },
+    {
+      "Daypart": "",
+      "Days": "F,SU",
+      "DMA": "MACON",
+      "Genre": "",
+      "NetworkAffiliation": "CBS",
+      "Program": "THE SHAWSHANK REDEMPTION",
+      "Rank": 3,
+      "Station": "KELO",
+      "TimePeriods": "12:05AM-12:06AM"
+    }
+  ],
+  "ExportFileName": "Program_Lineup_Report_Brave Plan_10172017.xlsx",
+  "FlightEndDate": "03/14/20",
+  "FlightStartDate": "03/01/20",
+  "GuaranteedDemo": "A18-20",
+  "PlanHeaderName": "Brave Plan | Program Lineup*",
+  "PostingType": "NTI",
+  "ReportGeneratedDate": "10/17/17",
+  "SpotLength": ":45"
+}
