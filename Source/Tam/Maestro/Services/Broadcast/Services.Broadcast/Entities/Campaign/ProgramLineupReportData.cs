@@ -160,6 +160,20 @@ namespace Services.Broadcast.Entities.Campaign
                     Genre = x.Genre.ToUpper(),
                     Daypart = x.DaypartCode.ToUpper()
                 })
+                // Group by all fields to remove duplicates
+                .GroupBy(x => new
+                {
+                    x.Rank,
+                    x.DMA,
+                    x.Station,
+                    x.NetworkAffiliation,
+                    x.Days,
+                    x.TimePeriods,
+                    x.Program,
+                    x.Genre,
+                    x.Daypart
+                })
+                .Select(x => x.First())
                 .ToList();
         }
 
