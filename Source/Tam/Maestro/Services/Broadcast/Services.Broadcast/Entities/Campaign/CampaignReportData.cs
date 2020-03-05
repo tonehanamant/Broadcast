@@ -97,6 +97,7 @@ namespace Services.Broadcast.Entities.Campaign
 
         private void _PopulateFlightHiatuses(List<DateTime> plansHiatuses)
         {
+            plansHiatuses.Sort();
             foreach (var group in plansHiatuses.GroupConnectedItems((a, b) => (b - a).Days > 1))
             {
                 if (group.Count() == 1)
