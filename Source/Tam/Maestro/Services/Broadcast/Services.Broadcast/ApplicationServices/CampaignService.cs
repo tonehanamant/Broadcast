@@ -685,7 +685,7 @@ namespace Services.Broadcast.ApplicationServices
             var guaranteedDemo = _AudienceService.GetAudienceById(plan.AudienceId);
             var spotLengths = _SpotLengthService.GetAllSpotLengths();
             var allocatedSpots = _PlanRepository.GetPlanPricingAllocatedSpots(planId);
-            var manifestIds = allocatedSpots.Select(x => x.StationInventoryManifestId);
+            var manifestIds = allocatedSpots.Select(x => x.StationInventoryManifestId).Distinct();
             var manifests = _InventoryRepository.GetStationInventoryManifestsByIds(manifestIds)
                 .Where(x => x.Station != null && x.Station.MarketCode.HasValue)
                 .ToList();
