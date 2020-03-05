@@ -10,16 +10,16 @@ namespace Services.Broadcast.ReportGenerators.ProgramLineup
     public class DetailedViewReportGenerator
     {
         #region Cells addresses
-        private readonly string PLAN_HEADER_NAME_CELL = "D2";
-        private readonly string REPORT_GENERATED_AND_ACCURACY_ESTIMATE_DATES_CELL = "I2";
-        private readonly string AGENCY_CELL = "B6";
-        private readonly string CLIENT_CELL = "D6";
-        private readonly string FLIGHT_CELL = "E6";
-        private readonly string GUARANTEED_DEMO_CELL = "G6";
-        private readonly string SPOT_LENGTH_CELL = "H6";
-        private readonly string POSTING_TYPE_CELL = "I6";
-        private readonly string ACCOUNT_EXECUTIVE_CELL = "J6";
-        private readonly string CLIENT_CONTRACT_CELL = "K6";
+        private readonly string PLAN_HEADER_NAME_CELL = "E2";
+        private readonly string REPORT_GENERATED_AND_ACCURACY_ESTIMATE_DATES_CELL = "J2";
+        private readonly string AGENCY_CELL = "C6";
+        private readonly string CLIENT_CELL = "E6";
+        private readonly string FLIGHT_CELL = "F6";
+        private readonly string GUARANTEED_DEMO_CELL = "H6";
+        private readonly string SPOT_LENGTH_CELL = "I6";
+        private readonly string POSTING_TYPE_CELL = "J6";
+        private readonly string ACCOUNT_EXECUTIVE_CELL = "K6";
+        private readonly string CLIENT_CONTRACT_CELL = "L6";
 
         private (int Row, int Column) TableTopLeftCell = (Row : 9, Column : 3 );
         private (int Row, int Column) TableTopRightCell = (Row: 9, Column: 11);
