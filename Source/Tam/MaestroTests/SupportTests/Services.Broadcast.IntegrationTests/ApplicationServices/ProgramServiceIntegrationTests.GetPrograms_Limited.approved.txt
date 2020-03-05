@@ -1,16 +1,9 @@
 ﻿[
   {
-    "ContentRating": "PG-13",
+    "ContentRating": "R",
     "Genre": {
-      "Display": "Action/Adventure"
+      "Display": "Crime"
     },
-    "Name": "Batman: Asalto en Arkham"
-  },
-  {
-    "ContentRating": "",
-    "Genre": {
-      "Display": "Action/Adventure"
-    },
-    "Name": "Batman: The Animated Series"
+    "Name": "Joker"
   }
 ]

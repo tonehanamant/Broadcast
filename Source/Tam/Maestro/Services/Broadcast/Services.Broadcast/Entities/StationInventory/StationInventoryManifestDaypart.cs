@@ -11,5 +11,6 @@ namespace Services.Broadcast.Entities.StationInventory
         public string ProgramName { get; set; }
         public DaypartDefaultDto DaypartDefault { get; set; }
         public List<LookupDto> Genres { get; set; } = new List<LookupDto>();
+        public int? PrimaryProgramId { get; set; }
     }
 }

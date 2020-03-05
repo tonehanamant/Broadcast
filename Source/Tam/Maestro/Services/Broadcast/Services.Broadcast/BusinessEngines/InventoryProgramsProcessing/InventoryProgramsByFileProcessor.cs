@@ -1,5 +1,6 @@
 ﻿using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.ProgramGuide;
@@ -20,10 +21,12 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         public InventoryProgramsByFileProcessor(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IProgramGuideApiClient programGuideApiClient,
-            IStationMappingService stationMappingService)
+            IStationMappingService stationMappingService,
+            IGenreCache genreCache)
             : base(broadcastDataRepositoryFactory,
                 programGuideApiClient,
-                stationMappingService)
+                stationMappingService,
+                genreCache)
         {
             _InventoryFileRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _InventoryProgramsByFileJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProgramsByFileJobsRepository>();
@@ -146,8 +149,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         protected override List<StationInventoryManifestDaypartProgram> _GetProgramsFromResponse(
             GuideResponseElementDto currentResponse,
             GuideRequestResponseMapping currentMapping,
-            InventoryProgramsRequestPackage requestPackage,
-            List<LookupDto> genres
+            InventoryProgramsRequestPackage requestPackage
             )
         {
             var programs = new List<StationInventoryManifestDaypartProgram>();
@@ -157,7 +159,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 .Select(d => d.Id.Value)
                 .ForEach(daypartId => 
                     currentResponse.Programs.Select(p => 
-                        _MapProgramDto(p, daypartId, requestPackage, genres))
+                        _MapProgramDto(p, daypartId, requestPackage))
                         .ForEach(a => programs.Add(a)));
             return programs;
         }

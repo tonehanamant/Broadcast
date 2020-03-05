@@ -52,6 +52,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "House"
       }
     ],
@@ -134,6 +135,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "Modern Family Weekend"
       }
     ],
@@ -216,6 +218,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "Page Six"
       }
     ],
@@ -298,6 +301,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "True Crime Files"
       }
     ],
@@ -380,6 +384,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "Wendy Williams"
       }
     ],
@@ -462,6 +467,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "Cleveland/King of the Hill Combo"
       }
     ],

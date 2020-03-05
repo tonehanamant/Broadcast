@@ -151,6 +151,7 @@ namespace Services.Broadcast.Repositories
                         Markets = lastMarketCoverageFile.market_coverages.Select(x => new MarketCoverageByStation.Market
                         {
                             MarketCode = x.market_code,
+                            MarketName = x.market.geography_name,
                             Rank = x.rank,
                             Coverage = x.percentage_of_us,
                             Stations = x.market.stations.Select(s => new MarketCoverageByStation.Market.Station

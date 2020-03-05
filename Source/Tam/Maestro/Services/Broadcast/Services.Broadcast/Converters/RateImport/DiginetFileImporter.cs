@@ -426,7 +426,7 @@ namespace Services.Broadcast.Converters.RateImport
             var fileHeader = proprietaryFile.Header;
             var ntiToNsiIncreaseInDecimals = (double)(fileHeader.NtiToNsiIncrease.Value / 100);
             var defaultSpotLengthId = SpotLengthEngine.GetSpotLengthIdByValue(defaultSpotLength);
-            var allDaypartCodes = _DaypartDefaultRepository.GetAllActiveDaypartDefaults();
+            var allDaypartCodes = _DaypartDefaultRepository.GetAllDaypartDefaults();
 
             proprietaryFile.InventoryManifests = proprietaryFile.DataLines.Select(x =>
                 new StationInventoryManifest

@@ -306,7 +306,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             {
                                 new PlanPricingInventoryProgram.ManifestDaypart.Program
                                 {
-                                    MaestroGenre = inventoryGenre
+                                    Genre = inventoryGenre
                                 }
                             }
                         }
@@ -527,7 +527,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 {
                                     ShowType = "Mini-Movie",
                                     Name = "Early news",
-                                    MaestroGenre = "Comedy"
+                                    Genre = "Comedy"
                                 }
                             }
                         }

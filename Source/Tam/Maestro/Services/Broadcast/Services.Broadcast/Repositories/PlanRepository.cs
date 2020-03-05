@@ -18,6 +18,9 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Services.Broadcast.Entities;
+using static Services.Broadcast.Entities.Campaign.ProgramLineupReportData;
+using Tam.Maestro.Data.Entities;
+using Common.Services;
 
 namespace Services.Broadcast.Repositories
 {
@@ -125,6 +128,8 @@ namespace Services.Broadcast.Repositories
         PlanPricingParametersDto GetLatestParametersForPlanPricingJob(int jobId);
 
         void SavePlanPricingEstimates(int jobId, List<PricingEstimate> estimates);
+
+        List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpots(int planId);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -1456,6 +1461,37 @@ namespace Services.Broadcast.Repositories
                     .ToList();
 
                 BulkInsert(context, itemsToInsert, propertiesToIgnore);
+            });
+        }
+
+        public List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpots(int planId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var plan = context.plans.Single(x => x.id == planId);
+                var planVersionId = plan.latest_version_id;
+                var apiResult = context.plan_version_pricing_api_results
+                    .Include(x => x.plan_version_pricing_api_result_spots)
+                    .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.media_weeks))
+                    .Single(p => p.plan_version_id == planVersionId);
+
+                return apiResult.plan_version_pricing_api_result_spots.Select(x => new PlanPricingAllocatedSpot
+                {
+                    Id = x.id,
+                    StationInventoryManifestId = x.station_inventory_manifest_id,
+                    Impressions = x.impressions,
+                    Cost = x.cost,
+                    Spots = x.spots,
+                    MediaWeek = new MediaWeek
+                    {
+                        Id = x.media_weeks.id,
+                        MediaMonthId = x.media_weeks.media_month_id,
+                        WeekNumber = x.media_weeks.week_number,
+                        StartDate = x.media_weeks.start_date,
+                        EndDate = x.media_weeks.end_date
+                    },
+                    Daypart = DaypartCache.Instance.GetDisplayDaypart(x.daypart_id)
+                }).ToList();
             });
         }
     }

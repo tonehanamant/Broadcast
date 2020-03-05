@@ -1,11 +1,13 @@
 ﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.ProgramGuide;
 using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Concurrent;
@@ -15,6 +17,7 @@ using System.Threading.Tasks;
 using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 {
@@ -26,21 +29,22 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
     public abstract class InventoryProgramsProcessingEngineBase : IInventoryProgramsProcessingEngine
     {
         private const int SAVE_CHUNK_SIZE = 1000;
-
-        private readonly IGenreRepository _GenreRepository;
+        
         protected readonly IInventoryRepository _InventoryRepository;
-
         private readonly IProgramGuideApiClient _ProgramGuideApiClient;
         private readonly IStationMappingService _StationMappingService;
+        private readonly IGenreCache _GenreCache;
 
-        protected InventoryProgramsProcessingEngineBase(IDataRepositoryFactory broadcastDataRepositoryFactory,
+        protected InventoryProgramsProcessingEngineBase(
+            IDataRepositoryFactory broadcastDataRepositoryFactory,
             IProgramGuideApiClient programGuideApiClient,
-            IStationMappingService stationMappingService)
+            IStationMappingService stationMappingService,
+            IGenreCache genreCache)
         {
             _ProgramGuideApiClient = programGuideApiClient;
             _StationMappingService = stationMappingService;
+            _GenreCache = genreCache;
 
-            _GenreRepository = broadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         }
 
@@ -56,7 +60,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             InventorySource inventorySource, InventoryProgramsProcessingJobDiagnostics processDiagnostics, int jobId);
 
         protected abstract List<StationInventoryManifestDaypartProgram> _GetProgramsFromResponse(GuideResponseElementDto currentResponse,
-            GuideRequestResponseMapping currentMapping, InventoryProgramsRequestPackage requestPackage, List<LookupDto> genres);
+            GuideRequestResponseMapping currentMapping, InventoryProgramsRequestPackage requestPackage);
 
         internal void OnDiagnosticMessageUpdate(int jobId, string message)
         {
@@ -95,6 +99,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
                 var requestsPackage = _BuildRequestPackage(manifests, inventorySource, processDiagnostics, jobId);
                 _ProcessInventory(jobId, requestsPackage, processDiagnostics);
+
+                _SetProgramData(manifests, (message) => jobsRepo.UpdateJobNotes(jobId, message));
             }
             catch (Exception ex)
             {
@@ -111,6 +117,104 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             return processDiagnostics;
         }
 
+        private void _SetProgramData(List<StationInventoryManifest> manifests, Action<string> logger)
+        {
+            logger($"Aggregating program data has started, manifests count: {manifests.Count}");
+
+            _SetPrimaryProgramForManifestDayparts(manifests, logger);
+
+            logger($"Aggregating program data has finished, manifests count: {manifests.Count}");
+        }
+
+        private void _SetPrimaryProgramForManifestDayparts(List<StationInventoryManifest> manifests, Action<string> logger)
+        {
+            var manifestDayparts = manifests.SelectMany(x => x.ManifestDayparts);
+            var manifestDaypartsCount = manifestDayparts.Count();
+            var chunks = manifestDayparts.Select((item, index) => new { Index = index, Value = item })
+                            .GroupBy(x => x.Index / SAVE_CHUNK_SIZE)
+                            .Select(x => x.Select(v => v.Value).ToList())
+                            .ToList();
+
+            logger($"Setting primary programs. Total manifest dayparts: {manifestDaypartsCount}");
+
+            for (var i = 0; i < chunks.Count; i++)
+            {
+                var chunk = chunks[i];
+
+                logger($"Setting primary programs for chunk #{i + 1} / {chunks.Count}, items: {chunk.Count}");
+
+                _SetPrimaryProgramForManifestDayparts(chunk);
+            }
+
+            logger($"Finished setting primary programs. Total manifest dayparts: {manifestDaypartsCount}");
+        }
+
+        private void _SetPrimaryProgramForManifestDayparts(List<StationInventoryManifestDaypart> manifestDayparts)
+        {
+            var manifestDaypartIds = manifestDayparts.Select(x => x.Id.Value).ToList();
+            var allManifestDaypartPrograms = _InventoryRepository.GetDaypartProgramsForInventoryDayparts(manifestDaypartIds);
+
+            foreach (var manifestDaypart in manifestDayparts)
+            {
+                var manifestDaypartPrograms = allManifestDaypartPrograms.Where(x => x.StationInventoryManifestDaypartId == manifestDaypart.Id);
+
+                if (!manifestDaypartPrograms.Any())
+                    continue;
+
+                manifestDaypart.PrimaryProgramId = manifestDaypartPrograms
+                    .GroupBy(x => x.ProgramName)
+                    .Select(x =>
+                    {
+                        var programs = x.ToList();
+                        var totalTime = _CalculateTotalTime(programs, manifestDaypart.Daypart);
+
+                        return new
+                        {
+                            // programs are grouped by name
+                            // so that we can just choose any of them and treat as primary for a manifest daypart
+                            programId = programs.First().Id,
+                            totalTime
+                        };
+                    })
+                    .OrderByDescending(x => x.totalTime)
+                    .First()
+                    .programId;
+            }
+
+            _InventoryRepository.UpdatePrimaryProrgamsForManifestDayparts(manifestDayparts);
+        }
+
+        private int _CalculateTotalTime(
+            List<StationInventoryManifestDaypartProgram> programs,
+            DisplayDaypart daypart)
+        {
+            var totalTime = 0;
+            var timeRange = new TimeRange
+            {
+                StartTime = daypart.StartTime,
+                EndTime = daypart.EndTime
+            };
+
+            foreach (var program in programs)
+            {
+                var programTimeRange = new TimeRange
+                {
+                    StartTime = program.StartTime,
+                    EndTime = program.EndTime
+                };
+                var programTimePerDay = DaypartTimeHelper.GetIntersectingTotalTime(timeRange, programTimeRange);
+
+                // programs are stored weekly
+                // this is a total time for a week
+                var programTotalTime = daypart.ActiveDays * programTimePerDay;
+
+                // add up time from each week
+                totalTime += programTotalTime;
+            }
+
+            return totalTime;
+        }
+
         private void _ProcessInventory(int jobId, InventoryProgramsRequestPackage requestPackage, 
             InventoryProgramsProcessingJobDiagnostics processDiagnostics)
         {
@@ -120,10 +224,6 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             var requestElementMaxCount = _GetRequestElementMaxCount();
             var parallelEnabled = _GetParallelApiCallsEnabled();
             var maxDop = _GetMaxDegreesOfParallelism();
-
-            var genreSourceId = (int)requestPackage.GenreSource;
-            var genres = _GenreRepository.GetGenresBySourceId(genreSourceId);
-            jobsRepository.UpdateJobNotes(jobId, $"Found {genres.Count} genre records for source {requestPackage.GenreSource} records.");
 
             var requestChunks = requestPackage.RequestElements.Select((x, i) => new { Index = i, Value = x })
                 .GroupBy(x => x.Index / requestElementMaxCount)
@@ -173,7 +273,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
                         foreach (var responseEntry in mappedResponses)
                         {
-                            var entryPrograms = _GetProgramsFromResponse(responseEntry, mapping, requestPackage, genres);
+                            var entryPrograms = _GetProgramsFromResponse(responseEntry, mapping, requestPackage);
                             programs.AddRange(entryPrograms);
                         }
                     }
@@ -251,27 +351,22 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             return mappedStationInfo;
         }
 
-        private int _GetGenreId(List<LookupDto> genres, string candidate)
-        {
-            var found = genres.FirstOrDefault(g => g.Display.Equals(candidate, StringComparison.OrdinalIgnoreCase));
-            if (found == null)
-            {
-                throw new InvalidOperationException($"Genre '{candidate}' not found.");
-            }
-            return found.Id;
-        }
-
         protected StationInventoryManifestDaypartProgram _MapProgramDto(GuideResponseProgramDto guideProgram, int manifestDaypartId, 
-            InventoryProgramsRequestPackage requestPackage, List<LookupDto> genres)
+            InventoryProgramsRequestPackage requestPackage)
         {
+            const GenreSourceEnum GENRE_SOURCE = GenreSourceEnum.Dativa;
+
+            var sourceGenre = _GenreCache.GetSourceGenreByName(guideProgram.SourceGenre, GENRE_SOURCE);
+            var maestroGenre = _GenreCache.GetMaestroGenreBySourceGenre(sourceGenre, GENRE_SOURCE);
+
             var program = new StationInventoryManifestDaypartProgram
             {
                 StationInventoryManifestDaypartId = manifestDaypartId,
                 ProgramName = guideProgram.ProgramName,
                 ShowType = guideProgram.ShowType,
-                Genre = guideProgram.SourceGenre,
-                GenreSourceId = (short) requestPackage.GenreSource,
-                GenreId = _GetGenreId(genres, guideProgram.SourceGenre),
+                SourceGenreId = sourceGenre.Id,
+                GenreSourceId = (int)GENRE_SOURCE,
+                MaestroGenreId = maestroGenre.Id,
                 StartDate = guideProgram.StartDate,
                 EndDate = guideProgram.EndDate,
                 StartTime = guideProgram.StartTime,

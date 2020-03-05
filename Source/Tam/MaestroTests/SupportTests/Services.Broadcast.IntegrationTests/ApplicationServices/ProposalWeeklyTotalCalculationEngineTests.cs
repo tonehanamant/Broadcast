@@ -84,7 +84,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                                 Margin = 20
                             }, new List<ProposalDetailSingleWeekTotalsDto>());
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJsonMoreRounding(result));
             }
         }
     }

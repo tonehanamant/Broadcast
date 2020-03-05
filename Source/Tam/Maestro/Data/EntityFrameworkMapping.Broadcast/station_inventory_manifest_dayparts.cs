@@ -25,6 +25,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int id { get; set; }
         public string program_name { get; set; }
         public Nullable<int> daypart_default_id { get; set; }
+        public Nullable<int> primary_program_id { get; set; }
     
         public virtual daypart daypart { get; set; }
         public virtual station_inventory_manifest station_inventory_manifest { get; set; }

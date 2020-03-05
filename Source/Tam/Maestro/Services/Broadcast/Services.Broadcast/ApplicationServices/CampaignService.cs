@@ -11,7 +11,6 @@ using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
-using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.ReportGenerators.CampaignExport;
 using Services.Broadcast.ReportGenerators.ProgramLineup;
 using Services.Broadcast.Repositories;
@@ -145,6 +144,10 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ISpotLengthService _SpotLengthService;
         private readonly IDaypartDefaultService _DaypartDefaultService;
         private readonly ISharedFolderService _SharedFolderService;
+        private readonly IInventoryRepository _InventoryRepository;
+        private readonly IMarketCoverageRepository _MarketCoverageRepository;
+        private readonly IStationProgramRepository _StationProgramRepository;
+        private readonly IStandartDaypartEngine _StandartDaypartEngine;
 
         public CampaignService(
             IDataRepositoryFactory dataRepositoryFactory,
@@ -158,7 +161,8 @@ namespace Services.Broadcast.ApplicationServices
             IAudienceService audienceService,
             ISpotLengthService spotLengthService,
             IDaypartDefaultService daypartDefaultService,
-            ISharedFolderService sharedFolderService)
+            ISharedFolderService sharedFolderService,
+            IStandartDaypartEngine standartDaypartEngine)
         {
             _CampaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _CampaignValidator = campaignValidator;
@@ -174,6 +178,10 @@ namespace Services.Broadcast.ApplicationServices
             _SpotLengthService = spotLengthService;
             _DaypartDefaultService = daypartDefaultService;
             _SharedFolderService = sharedFolderService;
+            _InventoryRepository = dataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+            _MarketCoverageRepository = dataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
+            _StationProgramRepository = dataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
+            _StandartDaypartEngine = standartDaypartEngine;
         }
 
         /// <inheritdoc />
@@ -665,7 +673,7 @@ namespace Services.Broadcast.ApplicationServices
         public ProgramLineupReportData GetProgramLineupReportData(ProgramLineupReportRequest request, DateTime currentDate)
         {
             if (request.SelectedPlans.IsEmpty())
-                throw new Exception("Choose at least one plan");
+                throw new ApplicationException("Choose at least one plan");
 
             // for now we generate reports only for one plan
             var planId = request.SelectedPlans.First();
@@ -676,8 +684,28 @@ namespace Services.Broadcast.ApplicationServices
             var advertiser = _TrafficApiCache.GetAdvertiser(campaign.AdvertiserId);
             var guaranteedDemo = _AudienceService.GetAudienceById(plan.AudienceId);
             var spotLengths = _SpotLengthService.GetAllSpotLengths();
-
-            return new ProgramLineupReportData(plan, pricingJob, agency, advertiser, guaranteedDemo, spotLengths, currentDate);
+            var allocatedSpots = _PlanRepository.GetPlanPricingAllocatedSpots(planId);
+            var manifestIds = allocatedSpots.Select(x => x.StationInventoryManifestId);
+            var manifests = _InventoryRepository.GetStationInventoryManifestsByIds(manifestIds)
+                .Where(x => x.Station != null && x.Station.MarketCode.HasValue)
+                .ToList();
+            var marketCoverages = _MarketCoverageRepository.GetLatestMarketCoveragesWithStations();
+            var manifestDaypartIds = manifests.SelectMany(x => x.ManifestDayparts).Select(x => x.Id.Value);
+            var primaryProgramsByManifestDaypartIds = _StationProgramRepository.GetPrimaryProgramsForManifestDayparts(manifestDaypartIds);
+            
+            return new ProgramLineupReportData(
+                plan, 
+                pricingJob, 
+                agency, 
+                advertiser, 
+                guaranteedDemo, 
+                spotLengths, 
+                currentDate,
+                allocatedSpots,
+                manifests,
+                marketCoverages,
+                primaryProgramsByManifestDaypartIds,
+                _StandartDaypartEngine);
         }
 
         private PlanPricingJob _GetLatestPricingJob(int planId)
@@ -685,13 +713,13 @@ namespace Services.Broadcast.ApplicationServices
             var job = _PlanRepository.GetLatestPricingJob(planId);
 
             if (job == null)
-                throw new Exception("There are no completed pricing runs for the chosen plan. Please run pricing");
+                throw new ApplicationException("There are no completed pricing runs for the chosen plan. Please run pricing");
 
             if (job.Status == BackgroundJobProcessingStatus.Failed)
-                throw new Exception("The latest pricing run was failed. Please run pricing again or contact the support");
+                throw new ApplicationException("The latest pricing run was failed. Please run pricing again or contact the support");
 
             if (job.Status == BackgroundJobProcessingStatus.Queued || job.Status == BackgroundJobProcessingStatus.Processing)
-                throw new Exception("There is a pricing run in progress right now. Please wait until it is completed");
+                throw new ApplicationException("There is a pricing run in progress right now. Please wait until it is completed");
 
             return job;
         }

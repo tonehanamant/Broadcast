@@ -1,5 +1,6 @@
 ﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
 using System;
@@ -21,6 +22,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         private static readonly Color fontColor = ColorTranslator.FromHtml(FONT_COLOR);
         public static readonly string NO_VALUE_CELL = "-";
         public static readonly string EMPTY_CELL = null;
+        public static readonly Color EvenRowColor = Color.FromArgb(245, 248, 248);
 
         /// <summary>
         /// Gets a worksheet by name.
@@ -58,6 +60,58 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             {
                 worksheet.Cells[firstRowIndex, FIRST_COLUMNS_INDEX, firstRowIndex + rowsToCopy, END_COLUMN_INDEX]
                     .Copy(worksheet.Cells[firstRowIndex + (i * rowsToCopy) + i, FIRST_COLUMNS_INDEX]);
+            }
+        }
+
+        public static void ExtendTable(
+            ExcelWorksheet worksheet,
+            Cell fromSourceCell,
+            Cell toSourceCell,
+            int rowsToCopy)
+        {
+            var rowsBatchSize = toSourceCell.Row - fromSourceCell.Row + 1;
+            var rowsBatchToCopy = worksheet.Cells[
+                fromSourceCell.Row, fromSourceCell.Column,
+                toSourceCell.Row, toSourceCell.Column];
+
+            var firstRow = fromSourceCell.Row + 1;
+            var lastRow = fromSourceCell.Row + rowsToCopy * rowsBatchSize;
+
+            for (var i = firstRow; i <= lastRow; i += rowsBatchSize)
+            {
+                var destinationCell = worksheet.Cells[i, fromSourceCell.Column];
+
+                rowsBatchToCopy.Copy(destinationCell);
+            }
+        }
+
+        public static void FormatTableRows(
+            ExcelWorksheet worksheet,
+            Cell topLeftCell,
+            Cell bottomRightCell)
+        {
+            // remove bottom borders from all rows except the last one
+            worksheet.Cells[
+                topLeftCell.Row, topLeftCell.Column,
+                bottomRightCell.Row - 1, bottomRightCell.Column].Style.Border.Bottom.Style = ExcelBorderStyle.None;
+
+            // remove top borders from all rows except the first one
+            worksheet.Cells[
+                topLeftCell.Row + 1, topLeftCell.Column,
+                bottomRightCell.Row, bottomRightCell.Column].Style.Border.Top.Style = ExcelBorderStyle.None;
+
+            for (int row = topLeftCell.Row, count = 1; row <= bottomRightCell.Row; row++, count++)
+            {
+                worksheet.Row(row).Height = ROW_HEIGHT;
+
+                if (count % 2 == 0)
+                {
+                    var rowCells = worksheet.Cells[
+                        row, topLeftCell.Column,
+                        row, bottomRightCell.Column];
+
+                    rowCells.Style.Fill.BackgroundColor.SetColor(EvenRowColor);
+                }
             }
         }
 

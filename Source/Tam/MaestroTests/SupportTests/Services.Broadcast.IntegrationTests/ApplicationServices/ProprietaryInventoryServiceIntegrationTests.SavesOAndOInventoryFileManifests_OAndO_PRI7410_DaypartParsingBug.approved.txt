@@ -39,6 +39,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],

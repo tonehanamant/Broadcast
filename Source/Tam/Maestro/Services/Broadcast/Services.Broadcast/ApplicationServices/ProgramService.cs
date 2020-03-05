@@ -3,6 +3,7 @@ using ConfigurationService.Client;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.DTO.Program;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Exceptions;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -50,7 +51,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 try
                 {
-                    var programGenre = _GenreCache.GetMaestroGenreFromDativaGenre(externalApiProgram.Genre);
+                    var programGenre = _GenreCache.GetMaestroGenreBySourceGenreName(externalApiProgram.Genre, GenreSourceEnum.Dativa);
 
                     result.Add(new ProgramDto
                     {

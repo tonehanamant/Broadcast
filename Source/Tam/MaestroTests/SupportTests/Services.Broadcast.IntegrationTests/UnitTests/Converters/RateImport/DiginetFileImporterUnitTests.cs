@@ -217,7 +217,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
                 .Returns(3);
 
             var daypartDefaults = _GetDaypartDefaults();
-            _DaypartDefaultRepository.Setup(s => s.GetAllActiveDaypartDefaults())
+            _DaypartDefaultRepository.Setup(s => s.GetAllDaypartDefaults())
                 .Returns(daypartDefaults);
 
             _ImpressionAdjustmentEngine.Setup(s =>
@@ -273,7 +273,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
                 .Returns(3);
 
             var daypartDefaults = _GetDaypartDefaults();
-            _DaypartDefaultRepository.Setup(s => s.GetAllActiveDaypartDefaults())
+            _DaypartDefaultRepository.Setup(s => s.GetAllDaypartDefaults())
                 .Returns(daypartDefaults);
 
             _ImpressionAdjustmentEngine.Setup(s =>

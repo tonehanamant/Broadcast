@@ -845,7 +845,7 @@ namespace Services.Broadcast.ApplicationServices
                 var program = new PlanPricingProgram
                 {
                     ProgramName = inventoryByProgramName.Key,
-                    Genre = inventoryByProgramName.First().ManifestDaypart.PrimaryProgram.MaestroGenre,
+                    Genre = inventoryByProgramName.First().ManifestDaypart.PrimaryProgram.Genre, // we assume all programs with the same name have the same genre
                     AvgImpressions = ProposalMath.CalculateAvgImpressions(programImpressions, programSpots),
                     AvgCpm = ProposalMath.CalculateCpm(programCost, programImpressions),
                     TotalImpressions = programImpressions,

@@ -1,6 +1,7 @@
 ﻿using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.InventoryProgramsProcessing
@@ -9,9 +10,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
     {
         public InventoryProgramsByFileProcessorTestClass(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IProgramGuideApiClient programGuideApiClient,
-            IStationMappingService stationMappingService)
-            : base(broadcastDataRepositoryFactory, programGuideApiClient, 
-                stationMappingService)
+            IStationMappingService stationMappingService,
+            IGenreCache genreCache)
+            : base(
+                  broadcastDataRepositoryFactory, 
+                  programGuideApiClient, 
+                  stationMappingService, 
+                  genreCache)
         {
         }
 

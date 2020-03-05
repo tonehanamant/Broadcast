@@ -4,17 +4,26 @@ using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.DTO.Program;
+using Services.Broadcast.IntegrationTests.Stubs;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Microsoft.Practices.Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
     public class ProgramServiceIntegrationTests
     {
-        private readonly IProgramService _ProgramService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProgramService>();
+        private readonly IProgramService _ProgramService;
+
+        public ProgramServiceIntegrationTests()
+        {
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IProgramsSearchApiClient, ProgramsSearchApiClientStub>();
+            _ProgramService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProgramService>();
+        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -22,7 +31,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var searchRequest = new SearchRequestProgramDto
             {
-                ProgramName = "batman"
+                ProgramName = "jo"
             };
 
             var programs = _ProgramService.GetPrograms(searchRequest, "IntegrationTestsUser");
@@ -36,25 +45,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var searchRequest = new SearchRequestProgramDto
             {
-                ProgramName = "batman",
-                Start = 1,
-                Limit = 2
-            };
-
-            var programs = _ProgramService.GetPrograms(searchRequest, "IntegrationTestsUser");
-
-            _VerifyPrograms(programs);
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void GetPrograms_StartAt2ndIndex()
-        {
-            var searchRequest = new SearchRequestProgramDto
-            {
-                ProgramName = "batman",
+                ProgramName = "jo",
                 Start = 2,
-                Limit = 2
+                Limit = 1
             };
 
             var programs = _ProgramService.GetPrograms(searchRequest, "IntegrationTestsUser");
@@ -68,10 +61,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var searchRequest = new SearchRequestProgramDto
             {
-                ProgramName = "batman",
+                ProgramName = "jo",
                 IgnorePrograms = new List<string>
                 {
-                    "Batman: Asalto en Arkham"
+                    "Joker"
                 }
             };
 

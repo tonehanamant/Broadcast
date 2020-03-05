@@ -55,9 +55,8 @@
         },
         "Id": 358772,
         "PrimaryProgram": {
-          "DativaGenre": "Family",
           "EndTime": 7200,
-          "MaestroGenre": "Children",
+          "Genre": "Children",
           "Name": "Early news",
           "ShowType": "Mini-Movie",
           "StartTime": 3600
@@ -65,9 +64,8 @@
         "ProgramName": "FRIENDS",
         "Programs": [
           {
-            "DativaGenre": "Family",
             "EndTime": 7200,
-            "MaestroGenre": "Children",
+            "Genre": "Children",
             "Name": "Early news",
             "ShowType": "Mini-Movie",
             "StartTime": 3600
@@ -176,9 +174,8 @@
         },
         "Id": 358773,
         "PrimaryProgram": {
-          "DativaGenre": "Family",
           "EndTime": 7200,
-          "MaestroGenre": "Children",
+          "Genre": "Children",
           "Name": "Early news",
           "ShowType": "Mini-Movie",
           "StartTime": 3600
@@ -186,9 +183,8 @@
         "ProgramName": "TWO & A HALF MEN",
         "Programs": [
           {
-            "DativaGenre": "Family",
             "EndTime": 7200,
-            "MaestroGenre": "Children",
+            "Genre": "Children",
             "Name": "Early news",
             "ShowType": "Mini-Movie",
             "StartTime": 3600
@@ -297,9 +293,8 @@
         },
         "Id": 358776,
         "PrimaryProgram": {
-          "DativaGenre": "Family",
           "EndTime": 7200,
-          "MaestroGenre": "Children",
+          "Genre": "Children",
           "Name": "Early news",
           "ShowType": "Mini-Movie",
           "StartTime": 3600
@@ -307,9 +302,8 @@
         "ProgramName": "FRIENDS",
         "Programs": [
           {
-            "DativaGenre": "Family",
             "EndTime": 7200,
-            "MaestroGenre": "Children",
+            "Genre": "Children",
             "Name": "Early news",
             "ShowType": "Mini-Movie",
             "StartTime": 3600
@@ -418,9 +412,8 @@
         },
         "Id": 358777,
         "PrimaryProgram": {
-          "DativaGenre": "Family",
           "EndTime": 7200,
-          "MaestroGenre": "Children",
+          "Genre": "Children",
           "Name": "Early news",
           "ShowType": "Mini-Movie",
           "StartTime": 3600
@@ -428,9 +421,8 @@
         "ProgramName": "FRIENDS",
         "Programs": [
           {
-            "DativaGenre": "Family",
             "EndTime": 7200,
-            "MaestroGenre": "Children",
+            "Genre": "Children",
             "Name": "Early news",
             "ShowType": "Mini-Movie",
             "StartTime": 3600
@@ -539,9 +531,8 @@
         },
         "Id": 358780,
         "PrimaryProgram": {
-          "DativaGenre": "Family",
           "EndTime": 7200,
-          "MaestroGenre": "Children",
+          "Genre": "Children",
           "Name": "Early news",
           "ShowType": "Mini-Movie",
           "StartTime": 3600
@@ -549,9 +540,8 @@
         "ProgramName": "FRIENDS 2X",
         "Programs": [
           {
-            "DativaGenre": "Family",
             "EndTime": 7200,
-            "MaestroGenre": "Children",
+            "Genre": "Children",
             "Name": "Early news",
             "ShowType": "Mini-Movie",
             "StartTime": 3600
@@ -660,9 +650,8 @@
         },
         "Id": 360318,
         "PrimaryProgram": {
-          "DativaGenre": "Comedy",
           "EndTime": 7200,
-          "MaestroGenre": "Comedy",
+          "Genre": "Comedy",
           "Name": "Late news",
           "ShowType": "Sports",
           "StartTime": 3600
@@ -670,9 +659,8 @@
         "ProgramName": "TWO & HALF MEN",
         "Programs": [
           {
-            "DativaGenre": "Comedy",
             "EndTime": 7200,
-            "MaestroGenre": "Comedy",
+            "Genre": "Comedy",
             "Name": "Late news",
             "ShowType": "Sports",
             "StartTime": 3600
@@ -781,9 +769,8 @@
         },
         "Id": 360319,
         "PrimaryProgram": {
-          "DativaGenre": "Comedy",
           "EndTime": 7200,
-          "MaestroGenre": "Comedy",
+          "Genre": "Comedy",
           "Name": "Late news",
           "ShowType": "Sports",
           "StartTime": 3600
@@ -791,9 +778,8 @@
         "ProgramName": "2.5 MEN X2",
         "Programs": [
           {
-            "DativaGenre": "Comedy",
             "EndTime": 7200,
-            "MaestroGenre": "Comedy",
+            "Genre": "Comedy",
             "Name": "Late news",
             "ShowType": "Sports",
             "StartTime": 3600
@@ -902,9 +888,8 @@
         },
         "Id": 360320,
         "PrimaryProgram": {
-          "DativaGenre": "Comedy",
           "EndTime": 7200,
-          "MaestroGenre": "Comedy",
+          "Genre": "Comedy",
           "Name": "Late news",
           "ShowType": "Sports",
           "StartTime": 3600
@@ -912,9 +897,8 @@
         "ProgramName": "SEINFELD X2",
         "Programs": [
           {
-            "DativaGenre": "Comedy",
             "EndTime": 7200,
-            "MaestroGenre": "Comedy",
+            "Genre": "Comedy",
             "Name": "Late news",
             "ShowType": "Sports",
             "StartTime": 3600
@@ -1023,9 +1007,8 @@
         },
         "Id": 360321,
         "PrimaryProgram": {
-          "DativaGenre": "Comedy",
           "EndTime": 7200,
-          "MaestroGenre": "Comedy",
+          "Genre": "Comedy",
           "Name": "Late news",
           "ShowType": "Sports",
           "StartTime": 3600
@@ -1033,9 +1016,8 @@
         "ProgramName": "2 BROKE GIRLS",
         "Programs": [
           {
-            "DativaGenre": "Comedy",
             "EndTime": 7200,
-            "MaestroGenre": "Comedy",
+            "Genre": "Comedy",
             "Name": "Late news",
             "ShowType": "Sports",
             "StartTime": 3600

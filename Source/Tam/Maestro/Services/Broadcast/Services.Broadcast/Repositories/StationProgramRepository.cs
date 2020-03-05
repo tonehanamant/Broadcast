@@ -14,6 +14,7 @@ using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
+using Common.Services.Extensions;
 
 namespace Services.Broadcast.Repositories
 {
@@ -31,6 +32,8 @@ namespace Services.Broadcast.Repositories
             int spotLengthId,
             IEnumerable<int> inventorySourceIds,
             List<int> stationIds);
+
+        Dictionary<int, PlanPricingInventoryProgram.ManifestDaypart.Program> GetPrimaryProgramsForManifestDayparts(IEnumerable<int> manifestDaypartIds);
     }
 
     public class StationProgramRepository : BroadcastRepositoryBase, IStationProgramRepository
@@ -183,19 +186,26 @@ namespace Services.Broadcast.Repositories
                                 IsActive = x.inventory_sources.is_active,
                                 Name = x.inventory_sources.name
                             },
-                            ManifestDayparts = x.station_inventory_manifest_dayparts.Select(d => new PlanPricingInventoryProgram.ManifestDaypart
+                            ManifestDayparts = x.station_inventory_manifest_dayparts.Select(d =>
                             {
-                                Id = d.id,
-                                Daypart = DaypartCache.Instance.GetDisplayDaypart(d.daypart_id),
-                                ProgramName = d.program_name,
-                                Programs = d.station_inventory_manifest_daypart_programs.Select(p => new PlanPricingInventoryProgram.ManifestDaypart.Program
+                                var item = new PlanPricingInventoryProgram.ManifestDaypart
                                 {
-                                    Name = p.name,
-                                    ShowType = p.show_type,
-                                    DativaGenre = p.genre.name,
-                                    StartTime = p.start_time,
-                                    EndTime = p.end_time
-                                }).ToList()
+                                    Id = d.id,
+                                    Daypart = DaypartCache.Instance.GetDisplayDaypart(d.daypart_id),
+                                    ProgramName = d.program_name,
+                                    Programs = d.station_inventory_manifest_daypart_programs.Select(_MapToPlanPricingInventoryProgram).ToList()
+                                };
+
+                                if (d.primary_program_id.HasValue)
+                                {
+                                    var program = d.station_inventory_manifest_daypart_programs.Single(
+                                        p => p.id == d.primary_program_id.Value, 
+                                        $"Can not find primary program {d.primary_program_id.Value} for manifest daypart {d.id}");
+
+                                    item.PrimaryProgram = _MapToPlanPricingInventoryProgram(program);
+                                }
+
+                                return item;
                             }).ToList(),
                             ManifestAudiences = x.station_inventory_manifest_audiences.Select(a => new PlanPricingInventoryProgram.ManifestAudience
                             {
@@ -205,6 +215,43 @@ namespace Services.Broadcast.Repositories
                             }).ToList()
                         }).ToList();
                     });
+        }
+
+        public Dictionary<int, PlanPricingInventoryProgram.ManifestDaypart.Program> GetPrimaryProgramsForManifestDayparts(IEnumerable<int> manifestDaypartIds)
+        {
+            return _InReadUncommitedTransaction(
+                    context =>
+                    {
+                        var manifestDayparts = context.station_inventory_manifest_dayparts
+                            .Include(x => x.station_inventory_manifest_daypart_programs)
+                            .Where(x => manifestDaypartIds.Contains(x.id) && x.primary_program_id != null)
+                            .ToList();
+
+                        var result = manifestDayparts.ToDictionary(
+                            x => x.id,
+                            x =>
+                            {
+                                var program = x.station_inventory_manifest_daypart_programs.Single(
+                                        p => p.id == x.primary_program_id.Value,
+                                        $"Can not find primary program {x.primary_program_id.Value} for manifest daypart {x.id}");
+
+                                return _MapToPlanPricingInventoryProgram(program);
+                            });
+
+                        return result;
+                    });
+        }
+
+        private PlanPricingInventoryProgram.ManifestDaypart.Program _MapToPlanPricingInventoryProgram(station_inventory_manifest_daypart_programs program)
+        {
+            return new PlanPricingInventoryProgram.ManifestDaypart.Program
+            {
+                Name = program.name,
+                ShowType = program.show_type,
+                Genre = program.maestro_genre.name,
+                StartTime = program.start_time,
+                EndTime = program.end_time
+            };
         }
 
         public List<ProposalProgramDto> GetStationPrograms(List<int> manifestIds)

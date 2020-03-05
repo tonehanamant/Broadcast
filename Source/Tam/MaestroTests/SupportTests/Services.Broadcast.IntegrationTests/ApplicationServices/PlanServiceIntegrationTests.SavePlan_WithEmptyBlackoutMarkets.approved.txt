@@ -30,6 +30,57 @@
   "Currency": 1,
   "Dayparts": [
     {
+      "DaypartCodeId": 2,
+      "DaypartTypeId": 2,
+      "EndTimeSeconds": 2000,
+      "IsEndTimeModified": true,
+      "IsStartTimeModified": true,
+      "Restrictions": {
+        "AffiliateRestrictions": {
+          "Affiliates": [
+            {
+              "Display": "FOX",
+              "Id": 20
+            }
+          ],
+          "ContainType": 2
+        },
+        "GenreRestrictions": {
+          "ContainType": 1,
+          "Genres": [
+            {
+              "Display": "Horror",
+              "Id": 25
+            }
+          ]
+        },
+        "ProgramRestrictions": {
+          "ContainType": 1,
+          "Programs": [
+            {
+              "ContentRating": "PG-13",
+              "Genre": {
+                "Display": "Horror",
+                "Id": 25
+              },
+              "Name": "Young Sheldon"
+            }
+          ]
+        },
+        "ShowTypeRestrictions": {
+          "ContainType": 2,
+          "ShowTypes": [
+            {
+              "Display": "Mini-Movie",
+              "Id": 1
+            }
+          ]
+        }
+      },
+      "StartTimeSeconds": 0,
+      "WeightingGoalPercent": 28.0
+    },
+    {
       "DaypartCodeId": 3,
       "DaypartTypeId": 3,
       "EndTimeSeconds": 68400,
@@ -82,57 +133,6 @@
       },
       "StartTimeSeconds": 57600,
       "WeightingGoalPercent": 25.0
-    },
-    {
-      "DaypartCodeId": 2,
-      "DaypartTypeId": 2,
-      "EndTimeSeconds": 2000,
-      "IsEndTimeModified": true,
-      "IsStartTimeModified": true,
-      "Restrictions": {
-        "AffiliateRestrictions": {
-          "Affiliates": [
-            {
-              "Display": "FOX",
-              "Id": 20
-            }
-          ],
-          "ContainType": 2
-        },
-        "GenreRestrictions": {
-          "ContainType": 1,
-          "Genres": [
-            {
-              "Display": "Horror",
-              "Id": 25
-            }
-          ]
-        },
-        "ProgramRestrictions": {
-          "ContainType": 1,
-          "Programs": [
-            {
-              "ContentRating": "PG-13",
-              "Genre": {
-                "Display": "Horror",
-                "Id": 25
-              },
-              "Name": "Young Sheldon"
-            }
-          ]
-        },
-        "ShowTypeRestrictions": {
-          "ContainType": 2,
-          "ShowTypes": [
-            {
-              "Display": "Mini-Movie",
-              "Id": 1
-            }
-          ]
-        }
-      },
-      "StartTimeSeconds": 0,
-      "WeightingGoalPercent": 28.0
     },
     {
       "DaypartCodeId": 11,

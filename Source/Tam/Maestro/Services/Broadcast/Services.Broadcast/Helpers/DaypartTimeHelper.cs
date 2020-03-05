@@ -3,6 +3,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Plan;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace Services.Broadcast.Helpers
 {
@@ -71,6 +72,182 @@ namespace Services.Broadcast.Helpers
         {
             DateTime.TryParseExact(formattedTime, "hh:mmtt", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime effectiveDate);
             return Convert.ToInt32(effectiveDate.TimeOfDay.TotalSeconds);
+        }
+
+        public static int GetIntersectingTotalTime(TimeRange firstDaypart, TimeRange secondDaypart)
+        {
+            _AdjustTimeRange(firstDaypart);
+            _AdjustTimeRange(secondDaypart);
+
+            var ranges = GetIntersectingTimeRanges(firstDaypart, secondDaypart);
+
+            return ranges.Sum(GetTotalTimeInclusive);
+        }
+
+        private static void _AdjustTimeRange(TimeRange range)
+        {
+            range.StartTime = _AdjustTime(range.StartTime);
+            range.EndTime = _AdjustTime(range.EndTime);
+        }
+
+        /// <summary>
+        /// Adjust time so that it becomes a value between 0 and OneDayInSeconds - 1 = 86399
+        /// </summary>
+        private static int _AdjustTime(int time)
+        {
+            if (time >= 0 && time <= BroadcastConstants.OneDayInSeconds - 1)
+                return time;
+
+            var absoluteValue = Math.Abs(time);
+
+            if (time > 0)
+            {
+                var multiplierToAdjust = absoluteValue / BroadcastConstants.OneDayInSeconds;
+                var result = time - (multiplierToAdjust * BroadcastConstants.OneDayInSeconds);
+                return result;
+            }
+            else
+            {
+                if (absoluteValue % BroadcastConstants.OneDayInSeconds == 0)
+                    return 0;
+
+                var multiplierToAdjust = absoluteValue / BroadcastConstants.OneDayInSeconds + 1;
+                var result = time + (multiplierToAdjust * BroadcastConstants.OneDayInSeconds);
+                return result;
+            }
+        }
+
+        public static List<TimeRange> GetIntersectingTimeRanges(TimeRange firstDaypart, TimeRange secondDaypart)
+        {
+            var firstDaypartTimeRange = new TimeRange();
+            var secondDaypartTimeRange = new TimeRange();
+
+            // let`s make the first daypart start time always start first. This simplifies the logic
+            if (firstDaypart.StartTime < secondDaypart.StartTime)
+            {
+                firstDaypartTimeRange.StartTime = firstDaypart.StartTime;
+                firstDaypartTimeRange.EndTime = firstDaypart.EndTime;
+                secondDaypartTimeRange.StartTime = secondDaypart.StartTime;
+                secondDaypartTimeRange.EndTime = secondDaypart.EndTime;
+            }
+            else
+            {
+                firstDaypartTimeRange.StartTime = secondDaypart.StartTime;
+                firstDaypartTimeRange.EndTime = secondDaypart.EndTime;
+                secondDaypartTimeRange.StartTime = firstDaypart.StartTime;
+                secondDaypartTimeRange.EndTime = firstDaypart.EndTime;
+            }
+
+            return _GetIntersectingTimeRanges_WhenFirstDaypartGoesFirst(firstDaypartTimeRange, secondDaypartTimeRange);
+        }
+        
+        private static List<TimeRange> _GetIntersectingTimeRanges_WhenFirstDaypartGoesFirst(
+            TimeRange firstDaypart,
+            TimeRange secondDaypart)
+        {
+            // at this point we know firstDaypart.StartTime starts earlier than secondDaypart.StartTime
+
+            var result = new List<TimeRange>();
+            var firstDaypartHasOvernight = HasOvernight(firstDaypart);
+            var secondDaypartHasOvernight = HasOvernight(secondDaypart);
+
+            // no overnights
+            if (!firstDaypartHasOvernight && !secondDaypartHasOvernight)
+            {
+                if (secondDaypart.StartTime <= firstDaypart.EndTime)
+                {
+                    result.Add(new TimeRange
+                    {
+                        StartTime = secondDaypart.StartTime,
+                        EndTime = Math.Min(firstDaypart.EndTime, secondDaypart.EndTime)
+                    });
+                }
+            }
+
+            // first daypart has overnight
+            if (firstDaypartHasOvernight && !secondDaypartHasOvernight)
+            {
+                result.Add(new TimeRange
+                {
+                    StartTime = secondDaypart.StartTime,
+                    EndTime = secondDaypart.EndTime
+                });
+            }
+
+            // second daypart has overnight
+            if (!firstDaypartHasOvernight && secondDaypartHasOvernight)
+            {
+                // secondDaypart intersects with right and left parts of firstDaypart
+                if (secondDaypart.StartTime <= firstDaypart.EndTime &&
+                    secondDaypart.EndTime >= firstDaypart.StartTime)
+                {
+                    // right part
+                    result.Add(new TimeRange
+                    {
+                        StartTime = secondDaypart.StartTime,
+                        EndTime = firstDaypart.EndTime
+                    });
+
+                    // left part
+                    result.Add(new TimeRange
+                    {
+                        StartTime = firstDaypart.StartTime,
+                        EndTime = Math.Min(firstDaypart.EndTime, secondDaypart.EndTime)
+                    });
+                }
+                // secondDaypart intersects only with the right part of firstDaypart
+                else if (secondDaypart.StartTime <= firstDaypart.EndTime)
+                {
+                    result.Add(new TimeRange
+                    {
+                        StartTime = secondDaypart.StartTime,
+                        EndTime = firstDaypart.EndTime
+                    });
+                }
+                // secondDaypart intersects only with the left part of firstDaypart
+                else if (secondDaypart.EndTime >= firstDaypart.StartTime)
+                {
+                    result.Add(new TimeRange
+                    {
+                        StartTime = firstDaypart.StartTime,
+                        EndTime = Math.Min(firstDaypart.EndTime, secondDaypart.EndTime)
+                    });
+                }
+            }
+
+            // both dayparts have overnight
+            if (firstDaypartHasOvernight && secondDaypartHasOvernight)
+            {
+                result.Add(new TimeRange
+                {
+                    StartTime = secondDaypart.StartTime,
+                    EndTime = Math.Min(firstDaypart.EndTime, secondDaypart.EndTime)
+                });
+            }
+
+            return result;
+        }
+
+        public static bool HasOvernight(TimeRange timeRange)
+        {
+            return timeRange.EndTime < timeRange.StartTime;
+        }
+
+        public static int GetTotalTimeInclusive(TimeRange timeRange)
+        {
+            var result = -1;
+
+            if (timeRange.StartTime <= timeRange.EndTime)
+            {
+                result = timeRange.EndTime - timeRange.StartTime;
+            }
+            else
+            {
+                result = BroadcastConstants.OneDayInSeconds - timeRange.StartTime + timeRange.EndTime;
+            }
+
+            // to make the count inclusive
+            return result + 1;
         }
     }
 }

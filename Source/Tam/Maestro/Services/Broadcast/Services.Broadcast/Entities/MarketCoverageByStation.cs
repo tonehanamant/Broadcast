@@ -10,6 +10,7 @@ namespace Services.Broadcast.Entities
         public class Market
         {
             public int MarketCode { get; set; }
+            public string MarketName { get; set; }
             public double Coverage { get; set; }
             public int Rank { get; set; }
             public List<Station> Stations { get; set; }

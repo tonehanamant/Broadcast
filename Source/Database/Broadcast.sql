@@ -201,6 +201,60 @@ END
 
 /*************************************** END - PRI-20833 PART 2 ****************************************************/
 
+/*************************************** START PRI-20083 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = N'primary_program_id' AND OBJECT_ID = OBJECT_ID(N'station_inventory_manifest_dayparts'))
+BEGIN
+    ALTER TABLE station_inventory_manifest_dayparts ADD primary_program_id int NULL
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'genre_id' AND OBJECT_ID = OBJECT_ID(N'station_inventory_manifest_daypart_programs'))
+BEGIN
+    EXEC sp_rename 'dbo.station_inventory_manifest_daypart_programs.genre_id', 'source_genre_id', 'COLUMN';
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = N'genre_source_id' AND OBJECT_ID = OBJECT_ID(N'station_inventory_manifest_daypart_programs'))
+BEGIN
+	-- add a nullable column
+    ALTER TABLE station_inventory_manifest_daypart_programs ADD genre_source_id int NULL
+
+	-- add a FK constraint
+	ALTER TABLE station_inventory_manifest_daypart_programs WITH CHECK ADD CONSTRAINT FK_station_inventory_manifest_daypart_programs_genre_sources
+	FOREIGN KEY(genre_source_id)
+	REFERENCES genre_sources(id)
+	ALTER TABLE station_inventory_manifest_daypart_programs CHECK CONSTRAINT FK_station_inventory_manifest_daypart_programs_genre_sources
+
+	-- set Dativa genre source id to all records
+	EXEC('update station_inventory_manifest_daypart_programs set genre_source_id = 2')
+
+	-- update the column to be not nullable
+	ALTER TABLE station_inventory_manifest_daypart_programs ALTER COLUMN genre_source_id int NOT NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = N'maestro_genre_id' AND OBJECT_ID = OBJECT_ID(N'station_inventory_manifest_daypart_programs'))
+BEGIN
+	-- add a nullable column
+    ALTER TABLE station_inventory_manifest_daypart_programs ADD maestro_genre_id int NULL
+
+	-- add a FK constraint
+	ALTER TABLE station_inventory_manifest_daypart_programs WITH CHECK ADD CONSTRAINT FK_station_inventory_manifest_daypart_programs_genres_maestro
+	FOREIGN KEY(maestro_genre_id)
+	REFERENCES genres(id)
+	ALTER TABLE station_inventory_manifest_daypart_programs CHECK CONSTRAINT FK_station_inventory_manifest_daypart_programs_genres_maestro
+
+	-- set values based on the source_genre_id
+	EXEC('
+	update station_inventory_manifest_daypart_programs
+	set maestro_genre_id = (select top 1 gm.maestro_genre_id
+							from genres as g
+							join genre_mappings as gm on g.id = gm.mapped_genre_id
+							where g.source_id = 2 and gm.mapped_genre_id = source_genre_id)
+	')
+
+	-- update the column to be not nullable
+	ALTER TABLE station_inventory_manifest_daypart_programs ALTER COLUMN maestro_genre_id int NOT NULL
+END
+/*************************************** END PRI-20083 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -140,9 +140,8 @@
         },
         "Id": 633846,
         "PrimaryProgram": {
-          "DativaGenre": null,
           "EndTime": 0,
-          "MaestroGenre": "",
+          "Genre": "",
           "Name": "Eyewitness News at 430a",
           "ShowType": "",
           "StartTime": 0

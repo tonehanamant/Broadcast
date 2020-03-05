@@ -1,6 +1,7 @@
 ﻿using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
@@ -10,9 +11,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         public InventoryProgramsBySourceProcessorTestClass(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IProgramGuideApiClient programGuideApiClient,
             IStationMappingService stationMappingService,
-            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
-            : base(broadcastDataRepositoryFactory, programGuideApiClient, 
-                stationMappingService, mediaMonthAndWeekAggregateCache)
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+            IGenreCache genreCache)
+            : base(
+                  broadcastDataRepositoryFactory, 
+                  programGuideApiClient, 
+                  stationMappingService, 
+                  mediaMonthAndWeekAggregateCache,
+                  genreCache)
         {
         }
 

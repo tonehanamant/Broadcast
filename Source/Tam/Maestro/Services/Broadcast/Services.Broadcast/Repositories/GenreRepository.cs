@@ -21,7 +21,7 @@ namespace Services.Broadcast.Repositories
 
         List<LookupDto> GetGenresBySourceId(int sourceId);
 
-        List<GenreMapping> GetGenreMappingsBySourceId(int sourceId);
+        List<GenreMapping> GetGenreMappings();
     }
 
     public class GenreRepository : BroadcastRepositoryBase, IGenreRepository
@@ -62,16 +62,23 @@ namespace Services.Broadcast.Repositories
                 );
         }
 
-        public List<GenreMapping> GetGenreMappingsBySourceId(int sourceId)
+        public List<GenreMapping> GetGenreMappings()
         {
             return _InReadUncommitedTransaction(context =>
             {
                 var query = from genre_mapping in context.genre_mappings
                             join genre in context.genres on genre_mapping.mapped_genre_id equals genre.id
-                            where genre.source_id == sourceId
-                            select genre_mapping;
+                            select new { genre_mapping, genre.source_id };
 
-                return query.ToList().Select(_MapToGenreMapping).ToList();
+                return query
+                    .ToList()
+                    .Select(x => new GenreMapping
+                    {
+                        SourceGenreId = x.genre_mapping.mapped_genre_id,
+                        SourceId = x.source_id,
+                        MaestroGenreId = x.genre_mapping.maestro_genre_id
+                    })
+                    .ToList();
             });
         }
 
@@ -91,15 +98,6 @@ namespace Services.Broadcast.Repositories
                 Id = genre.id,
                 Name = genre.name,
                 SourceId = genre.source_id
-            };
-        }
-
-        private GenreMapping _MapToGenreMapping(genre_mappings genre_mapping)
-        {
-            return new GenreMapping
-            {
-                GenreIdToMap = genre_mapping.mapped_genre_id,
-                MaestroGenreId = genre_mapping.maestro_genre_id
             };
         }
     }

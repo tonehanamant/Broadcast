@@ -417,6 +417,10 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_job" Width="1.5" PointX="14.875" PointY="0.75" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_job_inventory_source_estimates_plan_version_pricing_job" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_job_plan_versions" />
+        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_daypart_programs" Width="1.5" PointX="31.5" PointY="42.25" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_daypart_programs_genre_sources" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_daypart_programs_genres_maestro" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_daypart_programs_station_inventory_manifest_dayparts" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -326,7 +326,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private void _CalculateDaypartOverrides(List<PlanDaypartDto> planDayparts)
         {
-            var daypartDefaults = _DaypartDefaultRepository.GetAllActiveDaypartDefaultsWithAllData();
+            var daypartDefaults = _DaypartDefaultRepository.GetAllDaypartDefaultsWithAllData();
 
             foreach (var planDaypart in planDayparts)
             {

@@ -17,11 +17,13 @@ namespace EntityFrameworkMapping.Broadcast
         public genre_sources()
         {
             this.genres = new HashSet<genre>();
+            this.station_inventory_manifest_daypart_programs = new HashSet<station_inventory_manifest_daypart_programs>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
     
         public virtual ICollection<genre> genres { get; set; }
+        public virtual ICollection<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs { get; set; }
     }
 }

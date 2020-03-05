@@ -58,9 +58,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 
                 public string ShowType { get; set; }
 
-                public string DativaGenre { get; set; }
-
-                public string MaestroGenre { get; set; }
+                public string Genre { get; set; }
 
                 public int StartTime { get; set; }
 

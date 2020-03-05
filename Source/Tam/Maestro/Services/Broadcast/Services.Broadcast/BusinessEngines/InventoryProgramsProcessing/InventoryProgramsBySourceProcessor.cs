@@ -1,5 +1,6 @@
 ﻿using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.ProgramGuide;
@@ -20,10 +21,12 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         public InventoryProgramsBySourceProcessor(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IProgramGuideApiClient programGuideApiClient,
             IStationMappingService stationMappingService,
-            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+            IGenreCache genreCache)
             : base(broadcastDataRepositoryFactory,
                 programGuideApiClient,
-                stationMappingService)
+                stationMappingService,
+                genreCache)
         {
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _InventoryProgramsBySourceJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProgramsBySourceJobsRepository>();
@@ -138,13 +141,12 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         protected override List<StationInventoryManifestDaypartProgram> _GetProgramsFromResponse(
             GuideResponseElementDto currentResponse,
             GuideRequestResponseMapping currentMapping,
-            InventoryProgramsRequestPackage requestPackage,
-            List<LookupDto> genres
+            InventoryProgramsRequestPackage requestPackage
         )
         {
             var programs = new List<StationInventoryManifestDaypartProgram>();
             currentResponse.Programs.Select(p =>
-                _MapProgramDto(p, currentMapping.ManifestDaypartId, requestPackage, genres))
+                _MapProgramDto(p, currentMapping.ManifestDaypartId, requestPackage))
                 .ForEach(a => programs.Add(a));
 
             return programs;

@@ -39,6 +39,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News at 430a"
       }
     ],
@@ -113,6 +114,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
@@ -211,6 +213,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
@@ -297,6 +300,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News at Noon"
       }
     ],
@@ -371,6 +375,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News at 4p"
       }
     ],
@@ -481,6 +486,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News at 5p"
       }
     ],
@@ -579,6 +585,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News at 11p"
       }
     ],
@@ -689,6 +696,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "Eyewitness 11p News Encore"
       }
     ],
@@ -799,6 +807,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News at 430a"
       }
     ],
@@ -873,6 +882,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
@@ -971,6 +981,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
@@ -1057,6 +1068,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],

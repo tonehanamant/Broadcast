@@ -36,6 +36,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private const string IntegrationTestUser = "IntegrationTestUser";
         private readonly DateTime CreatedDate = new DateTime(2019, 5, 14);
         private readonly ICampaignService _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+        private readonly IPlanPricingService _PlanPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
         private readonly ICampaignSummaryRepository _CampaignSummaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
         private readonly IPlanRepository _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
         private static readonly bool WRITE_FILE_TO_DISK = false;
@@ -166,7 +167,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             const string expectedMessage = "The chosen campaign has been locked by IntegrationUser";
 
-            using (new TransactionScopeWrapper(System.Transactions.IsolationLevel.ReadCommitted))
+            using (new TransactionScopeWrapper(System.Transactions.IsolationLevel.ReadUncommitted))
             {
                 var lockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
                 lockingManagerApplicationServiceMock.Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
@@ -187,8 +188,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IAudienceService>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ISpotLengthService>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IDaypartDefaultService>(),
-                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ISharedFolderService>()
-                    );
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ISharedFolderService>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IStandartDaypartEngine>());
 
                 var campaign = _GetValidCampaignForSave();
                 campaign.Id = 1;
@@ -682,8 +683,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IAudienceService>(),
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ISpotLengthService>(),
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IDaypartDefaultService>(),
-                sharedFolderService
-                );
+                sharedFolderService,
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<IStandartDaypartEngine>());
 
             return campaignService;
         }
@@ -980,129 +981,46 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void ProgramLineupExport_GetProgramLineupReportData()
-        {
-            const int planId = 1850;
-            var now = new DateTime(2020, 2, 4);
-
-            using (new TransactionScopeWrapper())
-            {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-                _AddPricingJob(planId, new DateTime(2019, 12, 05), BackgroundJobProcessingStatus.Succeeded);
-
-                var reportData = _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest
-                {
-                    SelectedPlans = new List<int> { planId }
-                }, now);
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData));
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void ProgramLineupExport_GetProgramLineupReportData_Equivalized()
-        {
-            const int planId = 1852;
-            var now = new DateTime(2020, 2, 4);
-
-            using (new TransactionScopeWrapper())
-            {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-                _AddPricingJob(planId, new DateTime(2019, 12, 05), BackgroundJobProcessingStatus.Succeeded);
-
-                var reportData = _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest
-                {
-                    SelectedPlans = new List<int> { planId }
-                }, now);
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData));
-            }
-        }
-
-        [Test]
-        public void ProgramLineupExport_GetProgramLineupReportData_NoPlansSelected()
-        {
-            const string expectedMessage = "Choose at least one plan";
-
-            var now = new DateTime(2020, 2, 4);
-
-            using (new TransactionScopeWrapper())
-            {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
-                var exception = Assert.Throws<Exception>(() => _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest
-                {
-                    SelectedPlans = new List<int>()
-                }, now));
-
-                Assert.AreEqual(expectedMessage, exception.Message);
-            }
-        }
-
-        [Test]
-        public void ProgramLineupExport_GetProgramLineupReportData_NoPricingRuns()
-        {
-            const string expectedMessage = "There are no completed pricing runs for the chosen plan. Please run pricing";
-            const int planId = 1852;
-
-            var now = new DateTime(2020, 2, 4);
-
-            using (new TransactionScopeWrapper())
-            {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
-                var exception = Assert.Throws<Exception>(() => _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest
-                {
-                    SelectedPlans = new List<int> { planId }
-                }, now));
-
-                Assert.AreEqual(expectedMessage, exception.Message);
-            }
-        }
-
-        [Test]
-        [TestCase(BackgroundJobProcessingStatus.Failed, "The latest pricing run was failed. Please run pricing again or contact the support")]
-        [TestCase(BackgroundJobProcessingStatus.Queued, "There is a pricing run in progress right now. Please wait until it is completed")]
-        [TestCase(BackgroundJobProcessingStatus.Processing, "There is a pricing run in progress right now. Please wait until it is completed")]
-        public void ProgramLineupExport_GetProgramLineupReportData_LatestPricingRunWasFailed(BackgroundJobProcessingStatus jobStatus, string expectedMessage)
-        {
-            const int planId = 1852;
-
-            var now = new DateTime(2020, 2, 4);
-
-            using (new TransactionScopeWrapper())
-            {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-                _AddPricingJob(planId, new DateTime(2019, 12, 05), jobStatus);
-
-                var exception = Assert.Throws<Exception>(() => _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest
-                {
-                    SelectedPlans = new List<int> { planId }
-                }, now));
-
-                Assert.AreEqual(expectedMessage, exception.Message);
-            }
-        }
-
-        [Test]
         [Ignore] //write excel file to file system(this is used for manual testing only)
         public void ProgramLineupExport()
         {
-            const int planId = 1852;
+            const int planId = 1197;
             var now = new DateTime(2020, 4, 4);
 
             using (new TransactionScopeWrapper())
             {
                 IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
                 var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-                _AddPricingJob(planId, new DateTime(2019, 12, 05), BackgroundJobProcessingStatus.Succeeded);
+
+                var planPricingRequestDto = new PlanPricingParametersDto
+                {
+                    PlanId = planId,
+                    MaxCpm = 100m,
+                    MinCpm = 1m,
+                    Budget = 1000,
+                    CompetitionFactor = 0.1,
+                    CPM = 5m,
+                    DeliveryImpressions = 50000,
+                    InflationFactor = 0.5,
+                    ProprietaryBlend = 0.2,
+                    UnitCaps = 10,
+                    UnitCapsType = UnitCapEnum.PerDay,
+                    InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                    {
+                        new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
+                        new PlanPricingInventorySourceDto{Id = 5, Percentage = 13},
+                        new PlanPricingInventorySourceDto{Id = 6, Percentage = 14},
+                        new PlanPricingInventorySourceDto{Id = 7, Percentage = 15},
+                        new PlanPricingInventorySourceDto{Id = 10, Percentage = 16},
+                        new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
+                        new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
+                    }
+                };
+
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4));
+
+                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id);
+
 
                 var reportData = _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest
                 {
@@ -1111,7 +1029,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var reportOutput = new ProgramLineupReportGenerator(@".\Files\Excel templates").Generate(reportData);
 
-                using (var destinationFileStream = new FileStream($@"C:\Users\sroibu\Downloads\integration_tests_exports\{reportOutput.Filename}", FileMode.OpenOrCreate))
+                using (var destinationFileStream = new FileStream($@"D:\Users\achyzh\results\{reportOutput.Filename}", FileMode.OpenOrCreate))
                 {
                     while (reportOutput.Stream.Position < reportOutput.Stream.Length)
                     {
@@ -1119,19 +1037,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 }
             }
-        }
-
-        private void _AddPricingJob(int planId, DateTime currentDate, BackgroundJobProcessingStatus status)
-        {
-            var plan = _PlanRepository.GetPlan(planId);
-
-            _PlanRepository.AddPlanPricingJob(new PlanPricingJob
-            {
-                PlanVersionId = plan.VersionId,
-                Status = status,
-                Queued = currentDate.AddSeconds(4),
-                Completed = currentDate.AddSeconds(5)
-            });
         }
 
         private static void _WriteFileToLocalFileSystem(ReportOutput reportOutput)

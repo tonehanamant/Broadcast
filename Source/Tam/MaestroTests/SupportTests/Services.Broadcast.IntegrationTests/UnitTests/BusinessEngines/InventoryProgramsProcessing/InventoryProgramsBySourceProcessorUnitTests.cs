@@ -2,6 +2,7 @@
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
@@ -13,6 +14,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.InventoryProgramsProcessing
@@ -20,13 +22,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
     [TestFixture]
     public class InventoryProgramsProcessingEngineUnitTests
     {
-        private Mock<IGenreRepository> _GenreRepo = new Mock<IGenreRepository>();
         private Mock<IInventoryRepository> _InventoryRepo = new Mock<IInventoryRepository>();
         private Mock<IInventoryProgramsBySourceJobsRepository> _InventoryProgramsBySourceJobsRepo = new Mock<IInventoryProgramsBySourceJobsRepository>();
         private Mock<IMediaMonthAndWeekAggregateCache> _MediaWeekCache = new Mock<IMediaMonthAndWeekAggregateCache>();
         private Mock<IProgramGuideApiClient> _ProgramGuidClient = new Mock<IProgramGuideApiClient>();
         private Mock<IStationMappingService> _StationMappingService = new Mock<IStationMappingService>();
-        
+        private Mock<IGenreCache> _GenreCacheMock = new Mock<IGenreCache>();
+
         /// <summary>
         /// Exercises the ability to call in parallel.
         /// We expect 1 call Per entry.
@@ -54,7 +56,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 new DisplayMediaWeek {Id = 3}
             };
             var manifests = InventoryProgramsProcessingTestHelper.GetManifests(2);
-            var genres = InventoryProgramsProcessingTestHelper.GetGenres();
             var guideResponse = _GetGuideResponse();
 
             var GetInventoryBySourceForProgramsProcessingCalled = 0;
@@ -92,11 +93,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             _MediaWeekCache.Setup(c => c.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback(() => getDisplayMediaWeekByFlightCalled++)
                 .Returns(mediaWeeks);
-
-            var getGenresBySourceIdCalled = 0;
-            _GenreRepo.Setup(r => r.GetGenresBySourceId(It.IsAny<int>()))
-                .Callback(() => getGenresBySourceIdCalled++)
-                .Returns(genres);
 
             var setJobCompleteSuccessCalled = 0;
             _InventoryProgramsBySourceJobsRepo.Setup(r => r.SetJobCompleteSuccess(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()))
@@ -139,7 +135,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.NotNull(results);
             Assert.IsTrue(inventoryProgramsBySourceJobsRepoCalls > 0);
             Assert.AreEqual(1, getInventorySourceCalled);
-            Assert.AreEqual(1, getGenresBySourceIdCalled);
             Assert.AreEqual(1, getDisplayMediaWeekByFlightCalled);
             Assert.AreEqual(1, GetInventoryBySourceForProgramsProcessingCalled);
             Assert.AreEqual(1, setJobCompleteSuccessCalled);
@@ -190,7 +185,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 new DisplayMediaWeek {Id = 3}
             };
             var manifests = InventoryProgramsProcessingTestHelper.GetManifests(2);
-            var genres = InventoryProgramsProcessingTestHelper.GetGenres();
             var guideResponse = _GetGuideResponse();
 
             var GetInventoryBySourceForProgramsProcessingCalled = 0;
@@ -228,11 +222,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             _MediaWeekCache.Setup(c => c.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback(() => getDisplayMediaWeekByFlightCalled++)
                 .Returns(mediaWeeks);
-
-            var getGenresBySourceIdCalled = 0;
-            _GenreRepo.Setup(r => r.GetGenresBySourceId(It.IsAny<int>()))
-                .Callback(() => getGenresBySourceIdCalled++)
-                .Returns(genres);
 
             var setJobCompleteSuccessCalled = 0;
             _InventoryProgramsBySourceJobsRepo.Setup(r => r.SetJobCompleteSuccess(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()))
@@ -314,7 +303,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 new DisplayMediaWeek {Id = 3}
             };
             var manifests = InventoryProgramsProcessingTestHelper.GetManifests(2);
-            var genres = InventoryProgramsProcessingTestHelper.GetGenres();
             var guideResponse = _GetGuideResponse();
 
             var GetInventoryBySourceForProgramsProcessingCalled = 0;
@@ -352,11 +340,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             _MediaWeekCache.Setup(c => c.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback(() => getDisplayMediaWeekByFlightCalled++)
                 .Returns(mediaWeeks);
-
-            var getGenresBySourceIdCalled = 0;
-            _GenreRepo.Setup(r => r.GetGenresBySourceId(It.IsAny<int>()))
-                .Callback(() => getGenresBySourceIdCalled++)
-                .Returns(genres);
 
             var setJobCompleteSuccessCalled = 0;
             _InventoryProgramsBySourceJobsRepo.Setup(r => r.SetJobCompleteSuccess(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()))
@@ -601,7 +584,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 new DisplayMediaWeek {Id = 3}
             };
             var manifests = InventoryProgramsProcessingTestHelper.GetManifests(2);
-            var genres = InventoryProgramsProcessingTestHelper.GetGenres();
             var guideResponse = _GetGuideResponse();
 
             var GetInventoryBySourceForProgramsProcessingCalled = 0;
@@ -642,11 +624,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             _MediaWeekCache.Setup(c => c.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback(() => getDisplayMediaWeekByFlightCalled++)
                 .Returns(mediaWeeks);
-
-            var getGenresBySourceIdCalled = 0;
-            _GenreRepo.Setup(r => r.GetGenresBySourceId(It.IsAny<int>()))
-                .Callback(() => getGenresBySourceIdCalled++)
-                .Returns(genres);
 
             var setJobCompleteSuccessCalled = 0;
             _InventoryProgramsBySourceJobsRepo.Setup(r => r.SetJobCompleteSuccess(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()))
@@ -690,7 +667,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.AreEqual(1, getDisplayMediaWeekByFlightCalled);
             Assert.IsTrue(inventoryProgramsBySourceJobsRepoCalls > 0);
             Assert.AreEqual(1, GetInventoryBySourceForProgramsProcessingCalled);
-            Assert.AreEqual(1, getGenresBySourceIdCalled);
 
             Assert.AreEqual(1, setJobCompleteSuccessCalled);
             Assert.AreEqual(0, setJobCompleteWarningCalled);
@@ -773,6 +749,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.IsTrue(updateProgramsCalls[0].Item1.Select(s => s.StationInventoryManifestDaypartId).Contains(2)); // second
             Assert.IsTrue(updateProgramsCalls[0].Item1.Select(s => s.StationInventoryManifestDaypartId).Contains(3)); // third
             Assert.IsTrue(updateProgramsCalls[0].Item1.Select(s => s.StationInventoryManifestDaypartId).Contains(4));
+
+            // Verify that the program with the most time is chosen
+            _InventoryRepo.Verify(x => x.UpdatePrimaryProrgamsForManifestDayparts(It.Is<List<StationInventoryManifestDaypart>>(list =>
+                list.Single(d => d.Id == 1).PrimaryProgramId == 2)));
         }
 
         [Test]
@@ -797,7 +777,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 new DisplayMediaWeek {Id = 3}
             };
             var manifests = InventoryProgramsProcessingTestHelper.GetManifests(2);
-            var genres = InventoryProgramsProcessingTestHelper.GetGenres();
             var guideResponse = new List<GuideResponseElementDto>();
 
             var GetInventoryBySourceForProgramsProcessingCalled = 0;
@@ -835,11 +814,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             _MediaWeekCache.Setup(c => c.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback(() => getDisplayMediaWeekByFlightCalled++)
                 .Returns(mediaWeeks);
-
-            var getGenresBySourceIdCalled = 0;
-            _GenreRepo.Setup(r => r.GetGenresBySourceId(It.IsAny<int>()))
-                .Callback(() => getGenresBySourceIdCalled++)
-                .Returns(genres);
 
             var setJobCompleteSuccessCalled = 0;
             _InventoryProgramsBySourceJobsRepo.Setup(r => r.SetJobCompleteSuccess(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>())).Callback(() => setJobCompleteSuccessCalled++);
@@ -964,8 +938,45 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
         {
             _InventoryProgramsBySourceJobsRepo.Setup(r => r.UpdateJobStatus(It.IsAny<int>(), It.IsAny<InventoryProgramsJobStatus>(), It.IsAny<string>()));
 
+            _InventoryRepo
+                .Setup(x => x.GetDaypartProgramsForInventoryDayparts(It.IsAny<List<int>>()))
+                .Returns<List<int>>(x =>
+                {
+                    var result = new List<StationInventoryManifestDaypartProgram>();
+
+                    foreach (var item in x)
+                    {
+                        result.Add(new StationInventoryManifestDaypartProgram
+                        {
+                            Id = 1,
+                            StationInventoryManifestDaypartId = item,
+                            ProgramName = "ProgramName",
+                            ShowType = "ShowType",
+                            SourceGenreId = 1,
+                            GenreSourceId = 2,
+                            MaestroGenreId = 2,
+                            StartTime = 7200,
+                            EndTime = 7300
+                        });
+
+                        result.Add(new StationInventoryManifestDaypartProgram
+                        {
+                            Id = 2,
+                            StationInventoryManifestDaypartId = item,
+                            ProgramName = "ProgramName1",
+                            ShowType = "ShowType",
+                            SourceGenreId = 1,
+                            GenreSourceId = 2,
+                            MaestroGenreId = 2,
+                            StartTime = 10800,
+                            EndTime = 14400
+                        });
+                    }
+
+                    return result;
+                });
+
             var dataRepoFactory = new Mock<IDataRepositoryFactory>();
-            dataRepoFactory.Setup(s => s.GetDataRepository<IGenreRepository>()).Returns(_GenreRepo.Object);
             dataRepoFactory.Setup(s => s.GetDataRepository<IInventoryRepository>()).Returns(_InventoryRepo.Object);
             dataRepoFactory.Setup(s => s.GetDataRepository<IInventoryProgramsBySourceJobsRepository>()).Returns(_InventoryProgramsBySourceJobsRepo.Object);
 
@@ -975,9 +986,30 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
         private InventoryProgramsBySourceProcessorTestClass _GetInventoryProgramsProcessingEngine()
         {
             var dataRepoFactory = _GetDataRepositoryFactory();
+            
+            _GenreCacheMock
+                .Setup(x => x.GetSourceGenreByName(It.IsAny<string>(), It.IsAny<GenreSourceEnum>()))
+                .Returns<string, GenreSourceEnum>((p1, p2) => new LookupDto
+                {
+                    Id = 1,
+                    Display = $"{p2.ToString()} Genre"
+                });
+
+            _GenreCacheMock
+                .Setup(x => x.GetMaestroGenreBySourceGenre(It.IsAny<LookupDto>(), It.IsAny<GenreSourceEnum>()))
+                .Returns(new LookupDto
+                {
+                    Id = 2,
+                    Display = "Maestro Genre"
+                });
+
             var engine = new InventoryProgramsBySourceProcessorTestClass(
-                dataRepoFactory.Object, _ProgramGuidClient.Object,
-                _StationMappingService.Object, _MediaWeekCache.Object);
+                dataRepoFactory.Object, 
+                _ProgramGuidClient.Object,
+                _StationMappingService.Object, 
+                _MediaWeekCache.Object,
+                _GenreCacheMock.Object);
+
             return engine;
         }
     }

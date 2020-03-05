@@ -241,13 +241,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 new Program
                                 {
                                     Name = "seinfeld",
-                                    MaestroGenre = "News"
+                                    Genre = "News"
                                 }
                             },
                             PrimaryProgram = new Program
                             {
                                 Name = "seinfeld",
-                                MaestroGenre = "News"
+                                Genre = "News"
                             }
                         }
                     },
@@ -288,13 +288,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 new Program
                                 {
                                     Name = "seinfeld",
-                                    MaestroGenre = "News"
+                                    Genre = "News"
                                 }
                             },
                             PrimaryProgram = new Program
                             {
                                 Name = "seinfeld",
-                                MaestroGenre = "News"
+                                Genre = "News"
                             }
                         }
                     },
@@ -334,13 +334,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 new Program
                                 {
                                     Name = "seinfeld",
-                                    MaestroGenre = "News"
+                                    Genre = "News"
                                 }
                             },
                             PrimaryProgram = new Program
                             {
                                 Name = "seinfeld",
-                                MaestroGenre = "News"
+                                Genre = "News"
                             }
                         }
                     },
@@ -380,13 +380,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 new Program
                                 {
                                     Name = "seinfeld",
-                                    MaestroGenre = "News"
+                                    Genre = "News"
                                 }
                             },
                             PrimaryProgram = new Program
                             {
                                 Name = "seinfeld",
-                                MaestroGenre = "News"
+                                Genre = "News"
                             }
                         }
                     },
@@ -426,13 +426,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 new Program
                                 {
                                     Name = "Good morning america",
-                                    MaestroGenre = "Early News"
+                                    Genre = "Early News"
                                 }
                             },
                             PrimaryProgram = new Program
                             {
                                 Name = "Good morning america",
-                                MaestroGenre = "Early News"
+                                Genre = "Early News"
                             }
                         }
                     },
@@ -472,13 +472,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 new Program
                                 {
                                     Name = "Good morning america",
-                                    MaestroGenre = "Early News"
+                                    Genre = "Early News"
                                 }
                             },
                             PrimaryProgram = new Program
                             {
                                 Name = "Good morning america",
-                                MaestroGenre = "Early News"
+                                Genre = "Early News"
                             }
                         }
                     },
@@ -518,13 +518,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 new Program
                                 {
                                     Name = "Good morning america",
-                                    MaestroGenre = "Early News"
+                                    Genre = "Early News"
                                 }
                             },
                             PrimaryProgram = new Program
                             {
                                 Name = "Good morning america",
-                                MaestroGenre = "Early News"
+                                Genre = "Early News"
                             }
                         }
                     },
@@ -1067,13 +1067,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 new Program
                                 {
                                     Name = "seinfeld",
-                                    MaestroGenre = "News"
+                                    Genre = "News"
                                 }
                             },
                             PrimaryProgram = new Program
                             {
                                 Name = "seinfeld",
-                                MaestroGenre = "News"
+                                Genre = "News"
                             }
                         }
                     },
@@ -1120,13 +1120,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 new Program
                                 {
                                     Name = "seinfeld",
-                                    MaestroGenre = "News"
+                                    Genre = "News"
                                 }
                             },
                             PrimaryProgram = new Program
                             {
                                 Name = "seinfeld",
-                                MaestroGenre = "News"
+                                Genre = "News"
                             }
                         }
                     },
@@ -1168,13 +1168,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 new Program
                                 {
                                     Name = "seinfeld",
-                                    MaestroGenre = "News"
+                                    Genre = "News"
                                 }
                             },
                             PrimaryProgram = new Program
                             {
                                 Name = "seinfeld",
-                                MaestroGenre = "News"
+                                Genre = "News"
                             }
                         }
                     },
@@ -1216,13 +1216,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 new Program
                                 {
                                     Name = "seinfeld",
-                                    MaestroGenre = "News"
+                                    Genre = "News"
                                 }
                             },
                             PrimaryProgram = new Program
                             {
                                 Name = "seinfeld",
-                                MaestroGenre = "News"
+                                Genre = "News"
                             }
                         }
                     },
@@ -1261,13 +1261,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 new Program
                                 {
                                     Name = "Good morning america",
-                                    MaestroGenre = "Early News"
+                                    Genre = "Early News"
                                 }
                             },
                             PrimaryProgram = new Program
                             {
                                 Name = "Good morning america",
-                                MaestroGenre = "Early News"
+                                Genre = "Early News"
                             }
                         }
                     },
@@ -1299,13 +1299,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 new Program
                                 {
                                     Name = "Good morning america",
-                                    MaestroGenre = "Early News"
+                                    Genre = "Early News"
                                 }
                             },
                             PrimaryProgram = new Program
                             {
                                 Name = "Good morning america",
-                                MaestroGenre = "Early News"
+                                Genre = "Early News"
                             }
                         }
                     },
@@ -1340,13 +1340,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 new Program
                                 {
                                     Name = "Good morning america",
-                                    MaestroGenre = "Early News"
+                                    Genre = "Early News"
                                 }
                             },
                             PrimaryProgram = new Program
                             {
                                 Name = "Good morning america",
-                                MaestroGenre = "Early News"
+                                Genre = "Early News"
                             }
                         }
                     },
@@ -1393,13 +1393,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 new Program
                                 {
                                     Name = "Good morning america",
-                                    MaestroGenre = "Early News"
+                                    Genre = "Early News"
                                 }
                             },
                             PrimaryProgram = new Program
                             {
                                 Name = "Good morning america",
-                                MaestroGenre = "Early News"
+                                Genre = "Early News"
                             }
                         }
                     },
@@ -1441,13 +1441,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 new Program
                                 {
                                     Name = "Good morning america",
-                                    MaestroGenre = "Early News"
+                                    Genre = "Early News"
                                 }
                             },
                             PrimaryProgram = new Program
                             {
                                 Name = "Good morning america",
-                                MaestroGenre = "Early News"
+                                Genre = "Early News"
                             }
                         }
                     },

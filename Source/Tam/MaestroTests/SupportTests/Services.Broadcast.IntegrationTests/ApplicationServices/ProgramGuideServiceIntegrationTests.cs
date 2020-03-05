@@ -7,6 +7,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.ProgramGuide;
+using Services.Broadcast.IntegrationTests.Stubs;
 using System;
 using System.Collections.Generic;
 
@@ -20,7 +21,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [TestFixtureSetUp]
         public void SetUp()
         {
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IProgramGuideApiClient, ProgramGuideApiClient>();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IProgramGuideApiClient, ProgramGuideApiClientStub>();
             _ProgramGuideService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProgramGuideService>();
         }
 

@@ -3,6 +3,9 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System;
 using System.IO;
+using Microsoft.Practices.Unity;
+using Services.Broadcast.Clients;
+using Services.Broadcast.IntegrationTests.Stubs;
 
 namespace Services.Broadcast.IntegrationTests.Helpers
 {
@@ -17,6 +20,7 @@ namespace Services.Broadcast.IntegrationTests.Helpers
 
         public InventoryFileTestHelper()
         {
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IProgramGuideApiClient, ProgramGuideApiClientStub>();
             _InventoryRatingsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
             _InventoryFileRatingsJobsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRatingsJobsRepository>();
             _InventoryProgramsByFileJobsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryProgramsByFileJobsRepository>();

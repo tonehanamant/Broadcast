@@ -29,13 +29,13 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<DaypartDefaultDto> GetAllDaypartDefaults()
         {
-            return _DaypartDefaultRepository.GetAllActiveDaypartDefaults();
+            return _DaypartDefaultRepository.GetAllDaypartDefaults();
         }
 
         ///<inheritdoc/>
         public List<DaypartDefaultFullDto> GetAllDaypartDefaultsWithAllData()
         {
-            var defaultDaypartDtos = _DaypartDefaultRepository.GetAllActiveDaypartDefaultsWithAllData();
+            var defaultDaypartDtos = _DaypartDefaultRepository.GetAllDaypartDefaultsWithAllData();
             DaypartTimeHelper.AddOneSecondToEndTime(defaultDaypartDtos);
             return defaultDaypartDtos;
         }

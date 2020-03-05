@@ -16,8 +16,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             IImpressionsCalculationEngine impressionsCalculationEngine,
             IGenreCache genreCache,
             IPlanPricingInventoryQuarterCalculatorEngine planPricingInventoryQuarterCalculatorEngine)
-            : base(broadcastDataRepositoryFactory, impressionsCalculationEngine, genreCache,
-                planPricingInventoryQuarterCalculatorEngine)
+            : base(
+                  broadcastDataRepositoryFactory, 
+                  impressionsCalculationEngine, 
+                  genreCache,
+                  planPricingInventoryQuarterCalculatorEngine)
         {
         }
 

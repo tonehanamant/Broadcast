@@ -12,6 +12,7 @@ using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
@@ -100,7 +101,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Callback(() => saveNewPlanCalls.Add(DateTime.Now));
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IPlanRepository>())
                 .Returns(planRepository.Object);
-            daypartCodeRepository.Setup(s => s.GetAllActiveDaypartDefaultsWithAllData()).Returns(_GetDaypartCodeDefaults());
+            daypartCodeRepository.Setup(s => s.GetAllDaypartDefaultsWithAllData()).Returns(_GetDaypartCodeDefaults());
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
                 .Returns(daypartCodeRepository.Object);
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDayRepository>())
@@ -134,6 +135,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Success = true,
                 LockedUserName = "IntegrationUser"
             });
+            var planPricingServiceMock = new Mock<IPlanPricingService>();
+            planPricingServiceMock
+                .Setup(x => x.GetPlanPricingDefaults())
+                .Returns(new PlanPricingDefaults
+                {
+                    UnitCaps = 1,
+                    UnitCapType = UnitCapEnum.Per30Min,
+                    InventorySourcePercentages = new List<PlanPricingInventorySourceDto>(),
+                    InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>()
+                });
 
             var tc = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
@@ -212,7 +223,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId, s, DateTime.Now)));
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IPlanSummaryRepository>())
                 .Returns(planSummaryRepo.Object);
-            daypartCodeRepository.Setup(s => s.GetAllActiveDaypartDefaultsWithAllData()).Returns(_GetDaypartCodeDefaults());
+            daypartCodeRepository.Setup(s => s.GetAllDaypartDefaultsWithAllData()).Returns(_GetDaypartCodeDefaults());
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
                 .Returns(daypartCodeRepository.Object);
             var planAggregator = new Mock<IPlanAggregator>();
@@ -239,6 +250,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Success = false,
                 LockedUserName = "IntegrationUser"
             });
+            var planPricingServiceMock = new Mock<IPlanPricingService>();
+            planPricingServiceMock
+                .Setup(x => x.GetPlanPricingDefaults())
+                .Returns(new PlanPricingDefaults
+                {
+                    UnitCaps = 1,
+                    UnitCapType = UnitCapEnum.Per30Min,
+                    InventorySourcePercentages = new List<PlanPricingInventorySourceDto>(),
+                    InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>()
+                });
 
             var tc = new PlanService(broadcastDataRepositoryFactory.Object, planValidator.Object,
                 planBudgetDeliveryCalculator.Object, mediaMonthAndWeekAggregateCache.Object, planAggregator.Object,
@@ -303,7 +324,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Callback(() => saveNewPlanCalls.Add(DateTime.Now));
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IPlanRepository>())
                 .Returns(planRepository.Object);
-            daypartCodeRepository.Setup(s => s.GetAllActiveDaypartDefaultsWithAllData()).Returns(_GetDaypartCodeDefaults());
+            daypartCodeRepository.Setup(s => s.GetAllDaypartDefaultsWithAllData()).Returns(_GetDaypartCodeDefaults());
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
                 .Returns(daypartCodeRepository.Object);
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDayRepository>())
@@ -490,7 +511,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new PlanDaypartDto{ DaypartCodeId = 2, StartTimeSeconds = 0, EndTimeSeconds = 2000, WeightingGoalPercent = 28.0 },
                     new PlanDaypartDto{ DaypartCodeId = 11, StartTimeSeconds = 1500, EndTimeSeconds = 2788, WeightingGoalPercent = 33.2 }
                 },
-                Vpvh = 0.234543
+                Vpvh = 0.234543,
+                TargetRatingPoints = 50,
+                TargetCPP = 50
             };
         }
 

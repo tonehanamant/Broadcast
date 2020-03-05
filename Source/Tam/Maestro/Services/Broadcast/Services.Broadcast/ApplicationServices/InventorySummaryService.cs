@@ -227,7 +227,7 @@ namespace Services.Broadcast.ApplicationServices
                 return result;
             }
             
-            var daypartDefaultsAndIds = _DaypartDefaultRepository.GetAllActiveDaypartDefaults();
+            var daypartDefaultsAndIds = _DaypartDefaultRepository.GetAllDaypartDefaults();
             foreach (var quarterDetail in allQuartersBetweenDates)
             {
                 InventoryQuarterSummary summaryData;

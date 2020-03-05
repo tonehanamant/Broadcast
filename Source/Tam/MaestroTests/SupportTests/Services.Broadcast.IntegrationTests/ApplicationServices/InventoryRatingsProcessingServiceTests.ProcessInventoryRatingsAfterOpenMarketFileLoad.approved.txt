@@ -314,6 +314,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "News 10 @ Noon"
       }
     ],
@@ -752,6 +753,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "News 10 @ Noon"
       }
     ],

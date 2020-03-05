@@ -76,7 +76,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Assert.IsTrue(newPlanId > 0);
                 var planVersion = _PlanService.GetPlan(newPlanId);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(planVersion, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(planVersion), _GetJsonSettings()));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planVersion = _PlanService.GetPlan(newPlanId);
 
                 Assert.IsTrue(newPlanId > 0);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(planVersion, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(planVersion), _GetJsonSettings()));
             }
         }
 
@@ -223,7 +223,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(newPlanId);
 
                 Assert.AreEqual(PlanStatusEnum.Canceled, finalPlan.Status);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -314,7 +314,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //get the plan
                 PlanDto plan = _PlanService.GetPlan(newPlanId);
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(plan, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(plan), _GetJsonSettings()));
             }
         }
 
@@ -342,7 +342,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 plan = _PlanService.GetPlan(newPlanId);
 
                 Assert.AreEqual(222, plan.PricingParameters.Budget);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(plan, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(plan), _GetJsonSettings()));
             }
         }
 
@@ -371,7 +371,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //get the plan again
                 plan = _PlanService.GetPlan(newPlanId);
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(plan, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(plan), _GetJsonSettings()));
             }
         }
 
@@ -487,7 +487,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(newPlanId);
 
                 Assert.AreEqual(PlanStatusEnum.Rejected, finalPlan.Status);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -562,7 +562,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 PlanDto testPlan = _PlanService.GetPlan(newPlanId);
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(testPlan, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(testPlan), _GetJsonSettings()));
             }
         }
 
@@ -595,7 +595,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Assert.IsTrue(modifedPlanId > 0);
                 Assert.AreEqual(newPlanId, modifedPlanId);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -620,7 +620,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Assert.IsTrue(modifedPlanId > 0);
                 Assert.AreEqual(newPlanId, modifedPlanId);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -649,7 +649,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Assert.IsTrue(modifedPlanId > 0);
                 Assert.AreEqual(newPlanId, modifedPlanId);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -712,7 +712,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -730,7 +730,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -748,8 +748,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
+        }
+
+        private PlanDto _OrderPlanData(PlanDto plan)
+        {
+            // just any ordering that makes sure data is the same for different test runs
+            plan.Dayparts = plan.Dayparts
+                .OrderBy(x => x.DaypartCodeId)
+                .ThenBy(x => x.Restrictions.AffiliateRestrictions.Affiliates.Count)
+                .ThenBy(x => x.Restrictions.GenreRestrictions.Genres.Count)
+                .ThenBy(x => x.Restrictions.ShowTypeRestrictions.ShowTypes.Count)
+                .ToList();
+
+            return plan;
         }
 
         [Test]
@@ -766,7 +779,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -784,7 +797,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -802,7 +815,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -843,7 +856,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(modifiedPlanId);
 
                 Assert.AreEqual(4, finalPlan.Dayparts.Count);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -856,7 +869,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 15));
                 _ForceCompletePlanPricingJob(planId);
-                PlanDto modifiedPlan = _PlanService.GetPlan(planId);
+                PlanDto modifiedPlan = _OrderPlanData(_PlanService.GetPlan(planId));
                 modifiedPlan.Dayparts.RemoveAt(modifiedPlan.Dayparts.Count - 1);
 
 
@@ -864,7 +877,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(modifiedPlanId);
 
                 Assert.AreEqual(2, finalPlan.Dayparts.Count);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -909,7 +922,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
                 Assert.IsTrue(planId > 0);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_PlanService.GetPlan(planId), _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(_PlanService.GetPlan(planId)), _GetJsonSettings()));
             }
         }
 
@@ -1394,7 +1407,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Assert.IsTrue(modifedPlanId > 0);
                 Assert.AreEqual(newPlanId, modifedPlanId);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(finalPlan, _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 

@@ -8,17 +8,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using System;
 using System.Data.Entity;
 
 namespace Services.Broadcast.Repositories
 {
     public interface IDaypartDefaultRepository : IDataRepository
     {
-        bool ActiveDaypartDefaultExists(string daypartCode);
+        bool DaypartDefaultExists(string daypartCode);
         DaypartDefaultDto GetDaypartDefaultByCode(string daypartCode);
         List<DaypartDefaultDto> GetDaypartDefaultsByInventorySource(int inventorySourceId);
-        List<DaypartDefaultDto> GetAllActiveDaypartDefaults();
+        List<DaypartDefaultDto> GetAllDaypartDefaults();
         DaypartDefaultDto GetDaypartDefaultById(int daypartDefaultId);
 
         /// <summary>
@@ -32,7 +31,7 @@ namespace Services.Broadcast.Repositories
         /// Gets the daypart defaults.
         /// </summary>
         /// <returns>List of <see cref="DaypartDefaultFullDto"/></returns>
-        List<DaypartDefaultFullDto> GetAllActiveDaypartDefaultsWithAllData();
+        List<DaypartDefaultFullDto> GetAllDaypartDefaultsWithAllData();
     }
 
     public class DaypartDefaultRepository : BroadcastRepositoryBase, IDaypartDefaultRepository
@@ -43,7 +42,7 @@ namespace Services.Broadcast.Repositories
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
-        public bool ActiveDaypartDefaultExists(string daypartCode)
+        public bool DaypartDefaultExists(string daypartCode)
         {
             return _InReadUncommitedTransaction(context => context.daypart_defaults.Any(x => x.code == daypartCode));
         }
@@ -85,7 +84,7 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context => _MapToDaypartDefaultFullDto(context.daypart_defaults.Include(d => d.daypart).Include(d => d.daypart.timespan).Single(x => x.id == daypartDefaultId, DaypartDefaultNotFoundMessage)));
         }
 
-        public List<DaypartDefaultDto> GetAllActiveDaypartDefaults()
+        public List<DaypartDefaultDto> GetAllDaypartDefaults()
         {
             return _InReadUncommitedTransaction(context => {
                 return context.daypart_defaults
@@ -96,7 +95,7 @@ namespace Services.Broadcast.Repositories
         }
 
         ///<inheritdoc/>
-        public List<DaypartDefaultFullDto> GetAllActiveDaypartDefaultsWithAllData()
+        public List<DaypartDefaultFullDto> GetAllDaypartDefaultsWithAllData()
         {
             return _InReadUncommitedTransaction(context =>
             {

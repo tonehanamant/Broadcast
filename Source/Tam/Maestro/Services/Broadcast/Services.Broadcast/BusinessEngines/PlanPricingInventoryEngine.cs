@@ -212,38 +212,13 @@ namespace Services.Broadcast.BusinessEngines
                 return first;
             }).ToList();
 
-            _SetMaestroGenresFromDativaGenres(programs);
             _SetPrimaryProgramForManifestDayparts(programs);
 
             return programs;
         }
 
-        private void _SetMaestroGenresFromDativaGenres(List<PlanPricingInventoryProgram> programs)
-        {
-            var daypartPrograms = programs.SelectMany(x => x.ManifestDayparts).SelectMany(x => x.Programs);
-
-            foreach (var daypartProgram in daypartPrograms)
-            {
-                daypartProgram.MaestroGenre = _GenreCache.GetMaestroGenreFromDativaGenre(daypartProgram.DativaGenre).Display;
-            }
-        }
-
         private void _SetPrimaryProgramForManifestDayparts(List<PlanPricingInventoryProgram> manifests)
         {
-            var manifestDayparts = manifests.SelectMany(x => x.ManifestDayparts).Where(x => x.Programs.Any());
-
-            foreach (var manifestDaypart in manifestDayparts)
-            {
-                var programs = manifestDaypart.Programs.Select(x => new
-                {
-                    program = x,
-                    totalTimeInSeconds = _GetTotalTimeInSeconds(x.StartTime, x.EndTime)
-                });
-
-                // PrimaryProgram is the one that has the most time
-                manifestDaypart.PrimaryProgram = programs.OrderByDescending(x => x.totalTimeInSeconds).First().program;
-            }
-
             // If no information from Dativa is available, set up the primary program using the program name from daypart.
             var daypartsWithoutPrimaryPrograms = manifests.SelectMany(x => x.ManifestDayparts).Where(x => x.PrimaryProgram == null);
 
@@ -252,19 +227,10 @@ namespace Services.Broadcast.BusinessEngines
                 manifestDaypart.PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
                 {
                     Name = manifestDaypart.ProgramName,
-                    MaestroGenre = string.Empty,
+                    Genre = string.Empty,
                     ShowType = string.Empty
                 };
             }
-
-        }
-
-        private int _GetTotalTimeInSeconds(int startTime, int endTime)
-        {
-            if (startTime <= endTime)
-                return endTime - startTime;
-
-            return BroadcastConstants.OneDayInSeconds - startTime + endTime;
         }
 
         private List<DateRange> _GetPlanDateRanges(PlanDto plan)
@@ -436,7 +402,7 @@ namespace Services.Broadcast.BusinessEngines
                 return true;
 
             var genres = genreRestrictions.Genres.Select(x => x.Display);
-            var manifestDaypartGenres = programInventoryDaypart.ManifestDaypart.Programs.Select(x => x.MaestroGenre);
+            var manifestDaypartGenres = programInventoryDaypart.ManifestDaypart.Programs.Select(x => x.Genre);
             var hasIntersections = manifestDaypartGenres.ContainsAny(genres);
 
             return genreRestrictions.ContainType == ContainTypeEnum.Include ?

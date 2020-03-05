@@ -140,9 +140,8 @@
         },
         "Id": 576683,
         "PrimaryProgram": {
-          "DativaGenre": null,
           "EndTime": 0,
-          "MaestroGenre": "",
+          "Genre": "",
           "Name": "News 10 @ Noon",
           "ShowType": "",
           "StartTime": 0
@@ -317,9 +316,8 @@
         },
         "Id": 576685,
         "PrimaryProgram": {
-          "DativaGenre": null,
           "EndTime": 0,
-          "MaestroGenre": "",
+          "Genre": "",
           "Name": "News 10 @ Noon",
           "ShowType": "",
           "StartTime": 0

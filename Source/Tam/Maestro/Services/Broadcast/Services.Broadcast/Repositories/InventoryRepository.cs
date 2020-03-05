@@ -148,6 +148,8 @@ namespace Services.Broadcast.Repositories
         /// The data is limited by what the process uses.
         /// </remarks>
         List<StationInventoryManifest> GetInventoryBySourceForProgramsProcessing(int sourceId, List<int> mediaWeekIds);
+
+        void UpdatePrimaryProrgamsForManifestDayparts(IEnumerable<StationInventoryManifestDaypart> manifestDayparts);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -1465,17 +1467,16 @@ namespace Services.Broadcast.Repositories
 
         public List<StationInventoryManifestDaypartProgram> GetDaypartProgramsForInventoryDayparts(List<int> stationInventoryManifestDaypartIds)
         {
-            var result = new List<StationInventoryManifestDaypartProgram>();
-            _InReadUncommitedTransaction(
+            return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var items = context.station_inventory_manifest_daypart_programs.Where(p =>
+                    var query = context.station_inventory_manifest_daypart_programs.Where(p =>
                         stationInventoryManifestDaypartIds.Contains(p.station_inventory_manifest_daypart_id));
 
-                    result = items.Select(_MapToInventoryManifestDaypartProgram).ToList();
+                    var result = query.Select(_MapToInventoryManifestDaypartProgram).ToList();
 
+                    return result;
                 });
-            return result;
         }
 
         private StationInventoryManifestDaypartProgram _MapToInventoryManifestDaypartProgram(
@@ -1483,10 +1484,13 @@ namespace Services.Broadcast.Repositories
         {
             var dto = new StationInventoryManifestDaypartProgram
             {
+                Id = item.id,
                 StationInventoryManifestDaypartId = item.station_inventory_manifest_daypart_id,
                 ProgramName = item.name,
                 ShowType = item.show_type,
-                GenreId = item.genre_id,
+                SourceGenreId = item.source_genre_id,
+                GenreSourceId = item.genre_source_id,
+                MaestroGenreId = item.maestro_genre_id,
                 StartDate = item.start_date,
                 EndDate = item.end_date,
                 StartTime = item.start_time,
@@ -1526,13 +1530,33 @@ namespace Services.Broadcast.Repositories
                             station_inventory_manifest_daypart_id = p.StationInventoryManifestDaypartId,
                             name = p.ProgramName,
                             show_type = p.ShowType,
-                            genre_id = p.GenreId,
+                            source_genre_id = p.SourceGenreId,
+                            genre_source_id = p.GenreSourceId,
+                            maestro_genre_id = p.MaestroGenreId,
                             start_date = p.StartDate,
                             end_date = p.EndDate,
                             start_time = p.StartTime,
                             end_time = p.EndTime,
                             created_date = createdAt
                         }));
+
+                    context.SaveChanges();
+                });
+        }
+
+        public void UpdatePrimaryProrgamsForManifestDayparts(IEnumerable<StationInventoryManifestDaypart> manifestDayparts)
+        {
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    var ids = manifestDayparts.Select(x => x.Id);
+                    var itemsToUpdate = context.station_inventory_manifest_dayparts.Where(x => ids.Contains(x.id));
+
+                    foreach (var itemToUpdate in itemsToUpdate)
+                    {
+                        var manifestDaypart = manifestDayparts.Single(x => x.Id == itemToUpdate.id);
+                        itemToUpdate.primary_program_id = manifestDaypart.PrimaryProgramId;
+                    }
 
                     context.SaveChanges();
                 });

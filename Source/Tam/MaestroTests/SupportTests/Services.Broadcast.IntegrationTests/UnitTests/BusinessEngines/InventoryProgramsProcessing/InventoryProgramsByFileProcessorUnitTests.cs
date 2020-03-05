@@ -2,6 +2,7 @@
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
@@ -11,13 +12,13 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.InventoryProgramsProcessing
 {
     [TestFixture]
     public class InventoryProgramsByFileProcessorUnitTests
     {
-        private Mock<IGenreRepository> _GenreRepo = new Mock<IGenreRepository>();
         private Mock<IInventoryRepository> _InventoryRepo = new Mock<IInventoryRepository>();
         private Mock<IInventoryFileRepository> _InventoryFileRepo = new Mock<IInventoryFileRepository>();
         private Mock<IInventoryProgramsByFileJobsRepository> _InventoryProgramsByFileJobsRepo = new Mock<IInventoryProgramsByFileJobsRepository>();
@@ -25,6 +26,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
         private Mock<IMediaMonthAndWeekAggregateCache> _MediaWeekCache = new Mock<IMediaMonthAndWeekAggregateCache>();
         private Mock<IProgramGuideApiClient> _ProgramGuidClient = new Mock<IProgramGuideApiClient>();
         private Mock<IStationMappingService> _StationMappingService = new Mock<IStationMappingService>();
+        private Mock<IGenreCache> _GenreCacheMock = new Mock<IGenreCache>();
 
         [Test]
         public void ByFileJob()
@@ -40,7 +42,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 InventoryType = InventorySourceTypeEnum.OpenMarket
             };
             var manifests = InventoryProgramsProcessingTestHelper.GetManifests(2);
-            var genres = InventoryProgramsProcessingTestHelper.GetGenres();
             var guideResponse = _GetGuideResponse();
 
             var getStationInventoryByFileIdForProgramsProcessingCalled = 0;
@@ -73,11 +74,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                     QueuedAt = DateTime.Now,
                     QueuedBy = "TestUser"
                 });
-
-            var getGenresBySourceIdCalled = 0;
-            _GenreRepo.Setup(r => r.GetGenresBySourceId(It.IsAny<int>()))
-                .Callback(() => getGenresBySourceIdCalled++)
-                .Returns(genres);
 
             var setJobCompleteSuccessCalled = 0;
             _InventoryProgramsByFileJobsRepo.Setup(r => r.SetJobCompleteSuccess(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>())).Callback(() => setJobCompleteSuccessCalled++);
@@ -115,7 +111,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.NotNull(results);
             Assert.IsTrue(inventoryProgramsByFileJobsRepoCalls > 1);
             Assert.AreEqual(1, getStationInventoryByFileIdForProgramsProcessingCalled);
-            Assert.AreEqual(1, getGenresBySourceIdCalled);
 
             Assert.AreEqual(1, setJobCompleteSuccessCalled);
             Assert.AreEqual(0, setJobCompleteWarningCalled);
@@ -189,8 +184,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             manifests[0].ManifestDayparts[0].Daypart.EndTime = (3600 * 3) - 1;
             manifests[0].ManifestDayparts[1].Daypart.StartTime = (24 * 3600) - (60 * 3);
             manifests[0].ManifestDayparts[1].Daypart.EndTime = (3600 * 5) - 1;
-
-            var genres = InventoryProgramsProcessingTestHelper.GetGenres();
+            
             var guideResponse = _GetGuideResponse();
 
             var getStationInventoryByFileIdForProgramsProcessingCalled = 0;
@@ -223,11 +217,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                     QueuedAt = DateTime.Now,
                     QueuedBy = "TestUser"
                 });
-
-            var getGenresBySourceIdCalled = 0;
-            _GenreRepo.Setup(r => r.GetGenresBySourceId(It.IsAny<int>()))
-                .Callback(() => getGenresBySourceIdCalled++)
-                .Returns(genres);
 
             var setJobCompleteSuccessCalled = 0;
             _InventoryProgramsByFileJobsRepo.Setup(r => r.SetJobCompleteSuccess(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>())).Callback(() => setJobCompleteSuccessCalled++);
@@ -265,7 +254,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.NotNull(results);
             Assert.IsTrue(inventoryProgramsByFileJobsRepoCalls > 1);
             Assert.AreEqual(1, getStationInventoryByFileIdForProgramsProcessingCalled);
-            Assert.AreEqual(1, getGenresBySourceIdCalled);
 
             Assert.AreEqual(1, setJobCompleteSuccessCalled);
             Assert.AreEqual(0, setJobCompleteWarningCalled);
@@ -447,7 +435,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 InventoryType = InventorySourceTypeEnum.OpenMarket
             };
             var manifests = InventoryProgramsProcessingTestHelper.GetManifests(2);
-            var genres = InventoryProgramsProcessingTestHelper.GetGenres();
             var guideResponse = _GetGuideResponse();
 
             var getStationInventoryByFileIdForProgramsProcessingCalled = 0;
@@ -478,11 +465,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                     QueuedAt = DateTime.Now,
                     QueuedBy = "TestUser"
                 });
-
-            var getGenresBySourceIdCalled = 0;
-            _GenreRepo.Setup(r => r.GetGenresBySourceId(It.IsAny<int>()))
-                .Callback(() => getGenresBySourceIdCalled++)
-                .Returns(genres);
 
             var setJobCompleteSuccessCalled = 0;
             _InventoryProgramsByFileJobsRepo.Setup(r => r.SetJobCompleteSuccess(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>())).Callback(() => setJobCompleteSuccessCalled++);
@@ -526,7 +508,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 InventoryType = InventorySourceTypeEnum.OpenMarket
             };
             var manifests = InventoryProgramsProcessingTestHelper.GetManifests(2);
-            var genres = InventoryProgramsProcessingTestHelper.GetGenres();
             var guideResponse = _GetGuideResponse();
 
             var getStationInventoryByFileIdForProgramsProcessingCalled = 0;
@@ -557,11 +538,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                     QueuedAt = DateTime.Now,
                     QueuedBy = "TestUser"
                 });
-
-            var getGenresBySourceIdCalled = 0;
-            _GenreRepo.Setup(r => r.GetGenresBySourceId(It.IsAny<int>()))
-                .Callback(() => getGenresBySourceIdCalled++)
-                .Returns(genres);
 
             var setJobCompleteSuccessCalled = 0;
             _InventoryProgramsByFileJobsRepo.Setup(r => r.SetJobCompleteSuccess(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>())).Callback(() => setJobCompleteSuccessCalled++);
@@ -611,7 +587,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 InventoryType = InventorySourceTypeEnum.OpenMarket
             };
             var manifests = InventoryProgramsProcessingTestHelper.GetManifests(2);
-            var genres = InventoryProgramsProcessingTestHelper.GetGenres();
             var guideResponse = new List<GuideResponseElementDto>
             {
                 new GuideResponseElementDto
@@ -667,11 +642,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                     QueuedAt = DateTime.Now,
                     QueuedBy = "TestUser"
                 });
-
-            var getGenresBySourceIdCalled = 0;
-            _GenreRepo.Setup(r => r.GetGenresBySourceId(It.IsAny<int>()))
-                .Callback(() => getGenresBySourceIdCalled++)
-                .Returns(genres);
 
             var setJobCompleteSuccessCalled = 0;
             _InventoryProgramsByFileJobsRepo.Setup(r => r.SetJobCompleteSuccess(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>())).Callback(() => setJobCompleteSuccessCalled++);
@@ -771,8 +741,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
         {
             _InventoryProgramsByFileJobsRepo.Setup(r => r.UpdateJobStatus(It.IsAny<int>(), It.IsAny<InventoryProgramsJobStatus>(), It.IsAny<string>()));
 
+            _InventoryRepo
+                .Setup(x => x.GetDaypartProgramsForInventoryDayparts(It.IsAny<List<int>>()))
+                .Returns<List<int>>(x => x.Select(mdId => new StationInventoryManifestDaypartProgram
+                {
+                    Id = 1,
+                    StationInventoryManifestDaypartId = mdId,
+                    ProgramName = "ProgramName",
+                    ShowType = "ShowType",
+                    SourceGenreId = 1,
+                    GenreSourceId = 2,
+                    MaestroGenreId = 2,
+                    StartTime = 100,
+                    EndTime = 200
+                }).ToList());
+                
             var dataRepoFactory = new Mock<IDataRepositoryFactory>();
-            dataRepoFactory.Setup(s => s.GetDataRepository<IGenreRepository>()).Returns(_GenreRepo.Object);
             dataRepoFactory.Setup(s => s.GetDataRepository<IInventoryRepository>()).Returns(_InventoryRepo.Object);
             dataRepoFactory.Setup(s => s.GetDataRepository<IInventoryFileRepository>()).Returns(_InventoryFileRepo.Object);
             dataRepoFactory.Setup(s => s.GetDataRepository<IInventoryProgramsByFileJobsRepository>()).Returns(_InventoryProgramsByFileJobsRepo.Object);
@@ -783,9 +767,28 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
         private InventoryProgramsByFileProcessorTestClass _GetInventoryProgramsProcessingEngine()
         {
             var dataRepoFactory = _GetDataRepositoryFactory();
+
+            _GenreCacheMock
+                .Setup(x => x.GetSourceGenreByName(It.IsAny<string>(), It.IsAny<GenreSourceEnum>()))
+                .Returns<string, GenreSourceEnum>((p1, p2) => new LookupDto
+                {
+                    Id = 1,
+                    Display = $"{p2.ToString()} Genre"
+                });
+
+            _GenreCacheMock
+                .Setup(x => x.GetMaestroGenreBySourceGenre(It.IsAny<LookupDto>(), It.IsAny<GenreSourceEnum>()))
+                .Returns(new LookupDto
+                {
+                    Id = 2,
+                    Display = "Maestro Genre"
+                });
+
             var engine = new InventoryProgramsByFileProcessorTestClass(
-                dataRepoFactory.Object, _ProgramGuidClient.Object,
-                _StationMappingService.Object);
+                dataRepoFactory.Object, 
+                _ProgramGuidClient.Object,
+                _StationMappingService.Object,
+                _GenreCacheMock.Object);
             return engine;
         }
     }

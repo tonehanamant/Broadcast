@@ -39,6 +39,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
@@ -137,6 +138,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
@@ -223,6 +225,7 @@
         },
         "DaypartDefault": null,
         "Genres": [],
+        "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News/GMA Weekend"
       }
     ],
