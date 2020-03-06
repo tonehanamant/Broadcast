@@ -133,6 +133,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Ignore] // Does not apply after PRI-22785
         public void Barter_SavesManifests_WhenStationIsUnknown()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat_UnknownStation.xlsx";

@@ -299,7 +299,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -595,7 +595,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -891,7 +891,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -1187,7 +1187,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -1483,7 +1483,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -1779,7 +1779,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -2075,7 +2075,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -2371,7 +2371,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -2667,7 +2667,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -2963,7 +2963,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -3259,7 +3259,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -3555,7 +3555,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -3851,7 +3851,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -4147,7 +4147,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -4443,7 +4443,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -4739,7 +4739,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -5035,7 +5035,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -5331,7 +5331,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -5627,7 +5627,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -5923,7 +5923,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -6219,7 +6219,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -6515,7 +6515,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -6811,7 +6811,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -7107,7 +7107,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -7403,7 +7403,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -7699,7 +7699,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -7995,7 +7995,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -8291,7 +8291,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -8587,7 +8587,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -8883,7 +8883,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -9179,7 +9179,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -9475,7 +9475,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -9771,7 +9771,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -10067,7 +10067,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -10363,7 +10363,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -10659,7 +10659,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -10955,7 +10955,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -11251,7 +11251,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -11547,7 +11547,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -11843,7 +11843,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -12139,7 +12139,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     },
@@ -12435,7 +12435,7 @@
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
         "ModifiedDate": "2019-02-06T12:29:32.2666667",
-        "OriginMarket": null,
+        "OriginMarket": "Fresno-Visalia",
         "RateDataThrough": null
       }
     }

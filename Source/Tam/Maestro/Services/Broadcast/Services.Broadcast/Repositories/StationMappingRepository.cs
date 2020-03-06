@@ -165,7 +165,7 @@ namespace Services.Broadcast.Repositories
             return stationMappingsList;
         }
 
-        private DisplayBroadcastStation _MapToStationDto(station entity)
+        private DisplayBroadcastStation _MapToDisplayBroadcastStationDto(station entity)
         {
             return new DisplayBroadcastStation
             {
@@ -174,6 +174,7 @@ namespace Services.Broadcast.Repositories
                 CallLetters = entity.station_call_letters,
                 Affiliation = entity.affiliation,
                 MarketCode = entity.market_code,
+                OriginMarket = entity.market == null ? null : entity.market.geography_name,
                 LegacyCallLetters = entity.legacy_call_letters,
                 ModifiedDate = entity.modified_date
             };
@@ -238,21 +239,13 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                return context.stations
+                var entity = context.stations
                     .Include(x => x.station_mappings)
+                    .Include(x => x.market)
                     .Where(station =>
                         station.station_mappings.Any(mapping => mapping.mapped_call_letters == callLetters))
-                        .Select(s => new DisplayBroadcastStation
-                        {
-                            Id = s.id,
-                            Code = s.station_code,
-                            Affiliation = s.affiliation,
-                            CallLetters = s.station_call_letters,
-                            LegacyCallLetters = s.legacy_call_letters,
-                            ModifiedDate = s.modified_date,
-                            MarketCode = s.market_code
-                        })
                     .FirstOrDefault();
+                return entity == null ? null : _MapToDisplayBroadcastStationDto(entity);
             });
         }
 
@@ -261,21 +254,13 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                return context.stations
+                var entity = context.stations
                     .Include(x => x.station_mappings)
+                    .Include(x => x.market)
                     .Where(station =>
                         station.station_mappings.Any(mapping => mapping.mapped_call_letters.StartsWith(callLetters)))
-                        .Select(s => new DisplayBroadcastStation
-                        {
-                            Id = s.id,
-                            Code = s.station_code,
-                            Affiliation = s.affiliation,
-                            CallLetters = s.station_call_letters,
-                            LegacyCallLetters = s.legacy_call_letters,
-                            ModifiedDate = s.modified_date,
-                            MarketCode = s.market_code
-                        })
                     .Single($"No single station found for call letters {callLetters}");
+                return _MapToDisplayBroadcastStationDto(entity);
             });
         }
     }

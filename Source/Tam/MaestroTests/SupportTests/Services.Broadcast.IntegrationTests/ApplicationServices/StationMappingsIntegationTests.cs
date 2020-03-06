@@ -239,7 +239,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 // Use an existing station
-                var result = _StationMappingService.GetStationByCallLetters("KOCO-TV 5.2");
+                var result = _StationMappingService.GetStationByCallLetters("OOCO");
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");

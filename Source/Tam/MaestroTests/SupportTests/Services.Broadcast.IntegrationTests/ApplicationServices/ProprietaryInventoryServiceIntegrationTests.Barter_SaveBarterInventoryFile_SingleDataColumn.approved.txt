@@ -496,9 +496,21 @@
           "OriginMarket": null,
           "RateDataThrough": null
         }
-      },
+      }
+    ],
+    "Name": "AM 1",
+    "SlotNumber": 1
+  },
+  {
+    "InventorySource": {
+      "Id": 4,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "TTWN"
+    },
+    "Manifests": [
       {
-        "Comment": "Comment 5",
+        "Comment": "Comment 1",
         "DaypartCode": "EMN",
         "InventorySourceId": 4,
         "ManifestAudiences": [],
@@ -521,19 +533,19 @@
           {
             "Daypart": {
               "_Code": "CUS",
-              "_EndTime": 14399,
+              "_EndTime": 35999,
               "_Friday": true,
-              "_Id": 31117,
+              "_Id": 6724,
               "_Is24Hour": false,
               "_LastEndTime": 0,
               "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "BRDCST DP362",
+              "_Monday": true,
+              "_Name": "Custom",
               "_Saturday": false,
-              "_StartTime": 10800,
+              "_StartTime": 32400,
               "_Sunday": false,
               "_Thursday": true,
-              "_Tuesday": false,
+              "_Tuesday": true,
               "_Wednesday": true
             },
             "DaypartDefault": null,
@@ -597,12 +609,391 @@
         "SpotsPerDay": null,
         "SpotsPerWeek": null,
         "Station": {
-          "Affiliation": "MET",
-          "CallLetters": "WESH 2.2",
-          "Code": 4530,
-          "LegacyCallLetters": "EESH",
+          "Affiliation": "ION",
+          "CallLetters": "WRBU 46.1",
+          "Code": 6007,
+          "LegacyCallLetters": "WRBU",
           "ManifestMaxEndDate": null,
-          "MarketCode": 134,
+          "MarketCode": 209,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "RateDataThrough": null
+        }
+      },
+      {
+        "Comment": "Comment 2",
+        "DaypartCode": "EMN",
+        "InventorySourceId": 4,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Women 25-34",
+              "Id": 348
+            },
+            "CPM": 99.8800,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 81299,
+              "_Friday": true,
+              "_Id": 63004,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 79200,
+              "_Sunday": true,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2019-12-15T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2019-12-15T00:00:00",
+              "_MediaMonthId": 459,
+              "_StartDate": "2019-12-09T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 2,
+            "StartDate": "2019-12-10T00:00:00"
+          },
+          {
+            "EndDate": "2019-12-22T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2019-12-22T00:00:00",
+              "_MediaMonthId": 459,
+              "_StartDate": "2019-12-16T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 2,
+            "StartDate": "2019-12-16T00:00:00"
+          },
+          {
+            "EndDate": "2019-12-29T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2019-12-29T00:00:00",
+              "_MediaMonthId": 459,
+              "_StartDate": "2019-12-23T00:00:00",
+              "_WeekNumber": 5,
+              "IsDirty": true
+            },
+            "Spots": 2,
+            "StartDate": "2019-12-23T00:00:00"
+          },
+          {
+            "EndDate": "2019-12-30T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2020-01-05T00:00:00",
+              "_MediaMonthId": 460,
+              "_StartDate": "2019-12-30T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 2,
+            "StartDate": "2019-12-30T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "CBS",
+          "CallLetters": "KOLN+",
+          "Code": 136,
+          "LegacyCallLetters": "KOLN",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 322,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "RateDataThrough": null
+        }
+      },
+      {
+        "Comment": "Comment 3",
+        "DaypartCode": "EMN",
+        "InventorySourceId": 4,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Women 25-34",
+              "Id": 348
+            },
+            "CPM": 99.8800,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 86399,
+              "_Friday": true,
+              "_Id": 91,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2019-12-15T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2019-12-15T00:00:00",
+              "_MediaMonthId": 459,
+              "_StartDate": "2019-12-09T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 3,
+            "StartDate": "2019-12-10T00:00:00"
+          },
+          {
+            "EndDate": "2019-12-22T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2019-12-22T00:00:00",
+              "_MediaMonthId": 459,
+              "_StartDate": "2019-12-16T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 3,
+            "StartDate": "2019-12-16T00:00:00"
+          },
+          {
+            "EndDate": "2019-12-29T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2019-12-29T00:00:00",
+              "_MediaMonthId": 459,
+              "_StartDate": "2019-12-23T00:00:00",
+              "_WeekNumber": 5,
+              "IsDirty": true
+            },
+            "Spots": 3,
+            "StartDate": "2019-12-23T00:00:00"
+          },
+          {
+            "EndDate": "2019-12-30T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2020-01-05T00:00:00",
+              "_MediaMonthId": 460,
+              "_StartDate": "2019-12-30T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 3,
+            "StartDate": "2019-12-30T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "ION",
+          "CallLetters": "WRBU 46.1",
+          "Code": 6007,
+          "LegacyCallLetters": "WRBU",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 209,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "RateDataThrough": null
+        }
+      },
+      {
+        "Comment": "Comment 4",
+        "DaypartCode": "EMN",
+        "InventorySourceId": 4,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Women 25-34",
+              "Id": 348
+            },
+            "CPM": 99.8800,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 68399,
+              "_Friday": true,
+              "_Id": 34021,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 61200,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": null
+          },
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 66599,
+              "_Friday": false,
+              "_Id": 35436,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 64800,
+              "_Sunday": false,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": null
+          },
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 68399,
+              "_Friday": false,
+              "_Id": 14750,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 64800,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": null
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2019-12-15T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2019-12-15T00:00:00",
+              "_MediaMonthId": 459,
+              "_StartDate": "2019-12-09T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 2,
+            "StartDate": "2019-12-10T00:00:00"
+          },
+          {
+            "EndDate": "2019-12-22T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2019-12-22T00:00:00",
+              "_MediaMonthId": 459,
+              "_StartDate": "2019-12-16T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 2,
+            "StartDate": "2019-12-16T00:00:00"
+          },
+          {
+            "EndDate": "2019-12-29T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2019-12-29T00:00:00",
+              "_MediaMonthId": 459,
+              "_StartDate": "2019-12-23T00:00:00",
+              "_WeekNumber": 5,
+              "IsDirty": true
+            },
+            "Spots": 2,
+            "StartDate": "2019-12-23T00:00:00"
+          },
+          {
+            "EndDate": "2019-12-30T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2020-01-05T00:00:00",
+              "_MediaMonthId": 460,
+              "_StartDate": "2019-12-30T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 2,
+            "StartDate": "2019-12-30T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "PBS",
+          "CallLetters": "KUON-TV 12.1",
+          "Code": 399,
+          "LegacyCallLetters": "KUON",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 322,
           "ModifiedDate": null,
           "OriginMarket": null,
           "RateDataThrough": null
@@ -1109,117 +1500,6 @@
           "OriginMarket": null,
           "RateDataThrough": null
         }
-      },
-      {
-        "Comment": "Comment 5",
-        "DaypartCode": "EMN",
-        "InventorySourceId": 4,
-        "ManifestAudiences": [],
-        "ManifestAudiencesReferences": [
-          {
-            "Audience": {
-              "AudienceString": "Women 25-34",
-              "Id": 348
-            },
-            "CPM": 99.8800,
-            "HutPlaybackType": null,
-            "Impressions": null,
-            "IsReference": true,
-            "Rating": null,
-            "SharePlaybackType": null,
-            "Vpvh": null
-          }
-        ],
-        "ManifestDayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 14399,
-              "_Friday": true,
-              "_Id": 31117,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "BRDCST DP362",
-              "_Saturday": false,
-              "_StartTime": 10800,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": false,
-              "_Wednesday": true
-            },
-            "DaypartDefault": null,
-            "Genres": [],
-            "PrimaryProgramId": null,
-            "ProgramName": null
-          }
-        ],
-        "ManifestRates": [],
-        "ManifestWeeks": [
-          {
-            "EndDate": "2019-12-15T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-15T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-09T00:00:00",
-              "_WeekNumber": 3,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-10T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-22T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-22T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-16T00:00:00",
-              "_WeekNumber": 4,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-16T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-29T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-29T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-23T00:00:00",
-              "_WeekNumber": 5,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-23T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-30T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2020-01-05T00:00:00",
-              "_MediaMonthId": 460,
-              "_StartDate": "2019-12-30T00:00:00",
-              "_WeekNumber": 1,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-30T00:00:00"
-          }
-        ],
-        "SpotLengthId": 1,
-        "SpotsPerDay": null,
-        "SpotsPerWeek": null,
-        "Station": {
-          "Affiliation": "MET",
-          "CallLetters": "WESH 2.2",
-          "Code": 4530,
-          "LegacyCallLetters": "EESH",
-          "ManifestMaxEndDate": null,
-          "MarketCode": 134,
-          "ModifiedDate": null,
-          "OriginMarket": null,
-          "RateDataThrough": null
-        }
       }
     ],
     "Name": "AM 1",
@@ -1718,1343 +1998,6 @@
           "LegacyCallLetters": "KUON",
           "ManifestMaxEndDate": null,
           "MarketCode": 322,
-          "ModifiedDate": null,
-          "OriginMarket": null,
-          "RateDataThrough": null
-        }
-      },
-      {
-        "Comment": "Comment 5",
-        "DaypartCode": "EMN",
-        "InventorySourceId": 4,
-        "ManifestAudiences": [],
-        "ManifestAudiencesReferences": [
-          {
-            "Audience": {
-              "AudienceString": "Women 25-34",
-              "Id": 348
-            },
-            "CPM": 99.8800,
-            "HutPlaybackType": null,
-            "Impressions": null,
-            "IsReference": true,
-            "Rating": null,
-            "SharePlaybackType": null,
-            "Vpvh": null
-          }
-        ],
-        "ManifestDayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 14399,
-              "_Friday": true,
-              "_Id": 31117,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "BRDCST DP362",
-              "_Saturday": false,
-              "_StartTime": 10800,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": false,
-              "_Wednesday": true
-            },
-            "DaypartDefault": null,
-            "Genres": [],
-            "PrimaryProgramId": null,
-            "ProgramName": null
-          }
-        ],
-        "ManifestRates": [],
-        "ManifestWeeks": [
-          {
-            "EndDate": "2019-12-15T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-15T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-09T00:00:00",
-              "_WeekNumber": 3,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-10T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-22T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-22T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-16T00:00:00",
-              "_WeekNumber": 4,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-16T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-29T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-29T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-23T00:00:00",
-              "_WeekNumber": 5,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-23T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-30T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2020-01-05T00:00:00",
-              "_MediaMonthId": 460,
-              "_StartDate": "2019-12-30T00:00:00",
-              "_WeekNumber": 1,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-30T00:00:00"
-          }
-        ],
-        "SpotLengthId": 1,
-        "SpotsPerDay": null,
-        "SpotsPerWeek": null,
-        "Station": {
-          "Affiliation": "MET",
-          "CallLetters": "WESH 2.2",
-          "Code": 4530,
-          "LegacyCallLetters": "EESH",
-          "ManifestMaxEndDate": null,
-          "MarketCode": 134,
-          "ModifiedDate": null,
-          "OriginMarket": null,
-          "RateDataThrough": null
-        }
-      }
-    ],
-    "Name": "AM 1",
-    "SlotNumber": 1
-  },
-  {
-    "InventorySource": {
-      "Id": 4,
-      "InventoryType": 2,
-      "IsActive": true,
-      "Name": "TTWN"
-    },
-    "Manifests": [
-      {
-        "Comment": "Comment 1",
-        "DaypartCode": "EMN",
-        "InventorySourceId": 4,
-        "ManifestAudiences": [],
-        "ManifestAudiencesReferences": [
-          {
-            "Audience": {
-              "AudienceString": "Women 25-34",
-              "Id": 348
-            },
-            "CPM": 99.8800,
-            "HutPlaybackType": null,
-            "Impressions": null,
-            "IsReference": true,
-            "Rating": null,
-            "SharePlaybackType": null,
-            "Vpvh": null
-          }
-        ],
-        "ManifestDayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 35999,
-              "_Friday": true,
-              "_Id": 6724,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "Custom",
-              "_Saturday": false,
-              "_StartTime": 32400,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "DaypartDefault": null,
-            "Genres": [],
-            "PrimaryProgramId": null,
-            "ProgramName": null
-          }
-        ],
-        "ManifestRates": [],
-        "ManifestWeeks": [
-          {
-            "EndDate": "2019-12-15T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-15T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-09T00:00:00",
-              "_WeekNumber": 3,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-10T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-22T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-22T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-16T00:00:00",
-              "_WeekNumber": 4,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-16T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-29T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-29T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-23T00:00:00",
-              "_WeekNumber": 5,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-23T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-30T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2020-01-05T00:00:00",
-              "_MediaMonthId": 460,
-              "_StartDate": "2019-12-30T00:00:00",
-              "_WeekNumber": 1,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-30T00:00:00"
-          }
-        ],
-        "SpotLengthId": 1,
-        "SpotsPerDay": null,
-        "SpotsPerWeek": null,
-        "Station": {
-          "Affiliation": "ION",
-          "CallLetters": "WRBU 46.1",
-          "Code": 6007,
-          "LegacyCallLetters": "WRBU",
-          "ManifestMaxEndDate": null,
-          "MarketCode": 209,
-          "ModifiedDate": null,
-          "OriginMarket": null,
-          "RateDataThrough": null
-        }
-      },
-      {
-        "Comment": "Comment 2",
-        "DaypartCode": "EMN",
-        "InventorySourceId": 4,
-        "ManifestAudiences": [],
-        "ManifestAudiencesReferences": [
-          {
-            "Audience": {
-              "AudienceString": "Women 25-34",
-              "Id": 348
-            },
-            "CPM": 99.8800,
-            "HutPlaybackType": null,
-            "Impressions": null,
-            "IsReference": true,
-            "Rating": null,
-            "SharePlaybackType": null,
-            "Vpvh": null
-          }
-        ],
-        "ManifestDayparts": [
-          {
-            "Daypart": {
-              "_Code": "",
-              "_EndTime": 81299,
-              "_Friday": true,
-              "_Id": 63004,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "",
-              "_Saturday": false,
-              "_StartTime": 79200,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "DaypartDefault": null,
-            "Genres": [],
-            "PrimaryProgramId": null,
-            "ProgramName": null
-          }
-        ],
-        "ManifestRates": [],
-        "ManifestWeeks": [
-          {
-            "EndDate": "2019-12-15T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-15T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-09T00:00:00",
-              "_WeekNumber": 3,
-              "IsDirty": true
-            },
-            "Spots": 2,
-            "StartDate": "2019-12-10T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-22T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-22T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-16T00:00:00",
-              "_WeekNumber": 4,
-              "IsDirty": true
-            },
-            "Spots": 2,
-            "StartDate": "2019-12-16T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-29T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-29T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-23T00:00:00",
-              "_WeekNumber": 5,
-              "IsDirty": true
-            },
-            "Spots": 2,
-            "StartDate": "2019-12-23T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-30T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2020-01-05T00:00:00",
-              "_MediaMonthId": 460,
-              "_StartDate": "2019-12-30T00:00:00",
-              "_WeekNumber": 1,
-              "IsDirty": true
-            },
-            "Spots": 2,
-            "StartDate": "2019-12-30T00:00:00"
-          }
-        ],
-        "SpotLengthId": 1,
-        "SpotsPerDay": null,
-        "SpotsPerWeek": null,
-        "Station": {
-          "Affiliation": "CBS",
-          "CallLetters": "KOLN+",
-          "Code": 136,
-          "LegacyCallLetters": "KOLN",
-          "ManifestMaxEndDate": null,
-          "MarketCode": 322,
-          "ModifiedDate": null,
-          "OriginMarket": null,
-          "RateDataThrough": null
-        }
-      },
-      {
-        "Comment": "Comment 3",
-        "DaypartCode": "EMN",
-        "InventorySourceId": 4,
-        "ManifestAudiences": [],
-        "ManifestAudiencesReferences": [
-          {
-            "Audience": {
-              "AudienceString": "Women 25-34",
-              "Id": 348
-            },
-            "CPM": 99.8800,
-            "HutPlaybackType": null,
-            "Impressions": null,
-            "IsReference": true,
-            "Rating": null,
-            "SharePlaybackType": null,
-            "Vpvh": null
-          }
-        ],
-        "ManifestDayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 86399,
-              "_Friday": true,
-              "_Id": 91,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "Custom",
-              "_Saturday": false,
-              "_StartTime": 32400,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "DaypartDefault": null,
-            "Genres": [],
-            "PrimaryProgramId": null,
-            "ProgramName": null
-          }
-        ],
-        "ManifestRates": [],
-        "ManifestWeeks": [
-          {
-            "EndDate": "2019-12-15T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-15T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-09T00:00:00",
-              "_WeekNumber": 3,
-              "IsDirty": true
-            },
-            "Spots": 3,
-            "StartDate": "2019-12-10T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-22T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-22T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-16T00:00:00",
-              "_WeekNumber": 4,
-              "IsDirty": true
-            },
-            "Spots": 3,
-            "StartDate": "2019-12-16T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-29T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-29T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-23T00:00:00",
-              "_WeekNumber": 5,
-              "IsDirty": true
-            },
-            "Spots": 3,
-            "StartDate": "2019-12-23T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-30T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2020-01-05T00:00:00",
-              "_MediaMonthId": 460,
-              "_StartDate": "2019-12-30T00:00:00",
-              "_WeekNumber": 1,
-              "IsDirty": true
-            },
-            "Spots": 3,
-            "StartDate": "2019-12-30T00:00:00"
-          }
-        ],
-        "SpotLengthId": 1,
-        "SpotsPerDay": null,
-        "SpotsPerWeek": null,
-        "Station": {
-          "Affiliation": "ION",
-          "CallLetters": "WRBU 46.1",
-          "Code": 6007,
-          "LegacyCallLetters": "WRBU",
-          "ManifestMaxEndDate": null,
-          "MarketCode": 209,
-          "ModifiedDate": null,
-          "OriginMarket": null,
-          "RateDataThrough": null
-        }
-      },
-      {
-        "Comment": "Comment 4",
-        "DaypartCode": "EMN",
-        "InventorySourceId": 4,
-        "ManifestAudiences": [],
-        "ManifestAudiencesReferences": [
-          {
-            "Audience": {
-              "AudienceString": "Women 25-34",
-              "Id": 348
-            },
-            "CPM": 99.8800,
-            "HutPlaybackType": null,
-            "Impressions": null,
-            "IsReference": true,
-            "Rating": null,
-            "SharePlaybackType": null,
-            "Vpvh": null
-          }
-        ],
-        "ManifestDayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 68399,
-              "_Friday": true,
-              "_Id": 34021,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": false,
-              "_StartTime": 61200,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "DaypartDefault": null,
-            "Genres": [],
-            "PrimaryProgramId": null,
-            "ProgramName": null
-          },
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 66599,
-              "_Friday": false,
-              "_Id": 35436,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "BRDCST DP362",
-              "_Saturday": true,
-              "_StartTime": 64800,
-              "_Sunday": false,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            },
-            "DaypartDefault": null,
-            "Genres": [],
-            "PrimaryProgramId": null,
-            "ProgramName": null
-          },
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 68399,
-              "_Friday": false,
-              "_Id": 14750,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "Custom",
-              "_Saturday": false,
-              "_StartTime": 64800,
-              "_Sunday": true,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            },
-            "DaypartDefault": null,
-            "Genres": [],
-            "PrimaryProgramId": null,
-            "ProgramName": null
-          }
-        ],
-        "ManifestRates": [],
-        "ManifestWeeks": [
-          {
-            "EndDate": "2019-12-15T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-15T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-09T00:00:00",
-              "_WeekNumber": 3,
-              "IsDirty": true
-            },
-            "Spots": 2,
-            "StartDate": "2019-12-10T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-22T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-22T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-16T00:00:00",
-              "_WeekNumber": 4,
-              "IsDirty": true
-            },
-            "Spots": 2,
-            "StartDate": "2019-12-16T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-29T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-29T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-23T00:00:00",
-              "_WeekNumber": 5,
-              "IsDirty": true
-            },
-            "Spots": 2,
-            "StartDate": "2019-12-23T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-30T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2020-01-05T00:00:00",
-              "_MediaMonthId": 460,
-              "_StartDate": "2019-12-30T00:00:00",
-              "_WeekNumber": 1,
-              "IsDirty": true
-            },
-            "Spots": 2,
-            "StartDate": "2019-12-30T00:00:00"
-          }
-        ],
-        "SpotLengthId": 1,
-        "SpotsPerDay": null,
-        "SpotsPerWeek": null,
-        "Station": {
-          "Affiliation": "PBS",
-          "CallLetters": "KUON-TV 12.1",
-          "Code": 399,
-          "LegacyCallLetters": "KUON",
-          "ManifestMaxEndDate": null,
-          "MarketCode": 322,
-          "ModifiedDate": null,
-          "OriginMarket": null,
-          "RateDataThrough": null
-        }
-      },
-      {
-        "Comment": "Comment 5",
-        "DaypartCode": "EMN",
-        "InventorySourceId": 4,
-        "ManifestAudiences": [],
-        "ManifestAudiencesReferences": [
-          {
-            "Audience": {
-              "AudienceString": "Women 25-34",
-              "Id": 348
-            },
-            "CPM": 99.8800,
-            "HutPlaybackType": null,
-            "Impressions": null,
-            "IsReference": true,
-            "Rating": null,
-            "SharePlaybackType": null,
-            "Vpvh": null
-          }
-        ],
-        "ManifestDayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 14399,
-              "_Friday": true,
-              "_Id": 31117,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "BRDCST DP362",
-              "_Saturday": false,
-              "_StartTime": 10800,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": false,
-              "_Wednesday": true
-            },
-            "DaypartDefault": null,
-            "Genres": [],
-            "PrimaryProgramId": null,
-            "ProgramName": null
-          }
-        ],
-        "ManifestRates": [],
-        "ManifestWeeks": [
-          {
-            "EndDate": "2019-12-15T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-15T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-09T00:00:00",
-              "_WeekNumber": 3,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-10T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-22T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-22T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-16T00:00:00",
-              "_WeekNumber": 4,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-16T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-29T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-29T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-23T00:00:00",
-              "_WeekNumber": 5,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-23T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-30T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2020-01-05T00:00:00",
-              "_MediaMonthId": 460,
-              "_StartDate": "2019-12-30T00:00:00",
-              "_WeekNumber": 1,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-30T00:00:00"
-          }
-        ],
-        "SpotLengthId": 1,
-        "SpotsPerDay": null,
-        "SpotsPerWeek": null,
-        "Station": {
-          "Affiliation": "MET",
-          "CallLetters": "WESH 2.2",
-          "Code": 4530,
-          "LegacyCallLetters": "EESH",
-          "ManifestMaxEndDate": null,
-          "MarketCode": 134,
-          "ModifiedDate": null,
-          "OriginMarket": null,
-          "RateDataThrough": null
-        }
-      }
-    ],
-    "Name": "AM 1",
-    "SlotNumber": 1
-  },
-  {
-    "InventorySource": {
-      "Id": 4,
-      "InventoryType": 2,
-      "IsActive": true,
-      "Name": "TTWN"
-    },
-    "Manifests": [
-      {
-        "Comment": "Comment 1",
-        "DaypartCode": "EMN",
-        "InventorySourceId": 4,
-        "ManifestAudiences": [],
-        "ManifestAudiencesReferences": [
-          {
-            "Audience": {
-              "AudienceString": "Women 25-34",
-              "Id": 348
-            },
-            "CPM": 99.8800,
-            "HutPlaybackType": null,
-            "Impressions": null,
-            "IsReference": true,
-            "Rating": null,
-            "SharePlaybackType": null,
-            "Vpvh": null
-          }
-        ],
-        "ManifestDayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 35999,
-              "_Friday": true,
-              "_Id": 6724,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "Custom",
-              "_Saturday": false,
-              "_StartTime": 32400,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "DaypartDefault": null,
-            "Genres": [],
-            "PrimaryProgramId": null,
-            "ProgramName": null
-          }
-        ],
-        "ManifestRates": [],
-        "ManifestWeeks": [
-          {
-            "EndDate": "2019-12-15T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-15T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-09T00:00:00",
-              "_WeekNumber": 3,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-10T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-22T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-22T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-16T00:00:00",
-              "_WeekNumber": 4,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-16T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-29T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-29T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-23T00:00:00",
-              "_WeekNumber": 5,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-23T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-30T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2020-01-05T00:00:00",
-              "_MediaMonthId": 460,
-              "_StartDate": "2019-12-30T00:00:00",
-              "_WeekNumber": 1,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-30T00:00:00"
-          }
-        ],
-        "SpotLengthId": 1,
-        "SpotsPerDay": null,
-        "SpotsPerWeek": null,
-        "Station": {
-          "Affiliation": "ION",
-          "CallLetters": "WRBU 46.1",
-          "Code": 6007,
-          "LegacyCallLetters": "WRBU",
-          "ManifestMaxEndDate": null,
-          "MarketCode": 209,
-          "ModifiedDate": null,
-          "OriginMarket": null,
-          "RateDataThrough": null
-        }
-      },
-      {
-        "Comment": "Comment 2",
-        "DaypartCode": "EMN",
-        "InventorySourceId": 4,
-        "ManifestAudiences": [],
-        "ManifestAudiencesReferences": [
-          {
-            "Audience": {
-              "AudienceString": "Women 25-34",
-              "Id": 348
-            },
-            "CPM": 99.8800,
-            "HutPlaybackType": null,
-            "Impressions": null,
-            "IsReference": true,
-            "Rating": null,
-            "SharePlaybackType": null,
-            "Vpvh": null
-          }
-        ],
-        "ManifestDayparts": [
-          {
-            "Daypart": {
-              "_Code": "",
-              "_EndTime": 81299,
-              "_Friday": true,
-              "_Id": 63004,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "",
-              "_Saturday": false,
-              "_StartTime": 79200,
-              "_Sunday": true,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "DaypartDefault": null,
-            "Genres": [],
-            "PrimaryProgramId": null,
-            "ProgramName": null
-          }
-        ],
-        "ManifestRates": [],
-        "ManifestWeeks": [
-          {
-            "EndDate": "2019-12-15T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-15T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-09T00:00:00",
-              "_WeekNumber": 3,
-              "IsDirty": true
-            },
-            "Spots": 2,
-            "StartDate": "2019-12-10T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-22T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-22T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-16T00:00:00",
-              "_WeekNumber": 4,
-              "IsDirty": true
-            },
-            "Spots": 2,
-            "StartDate": "2019-12-16T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-29T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-29T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-23T00:00:00",
-              "_WeekNumber": 5,
-              "IsDirty": true
-            },
-            "Spots": 2,
-            "StartDate": "2019-12-23T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-30T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2020-01-05T00:00:00",
-              "_MediaMonthId": 460,
-              "_StartDate": "2019-12-30T00:00:00",
-              "_WeekNumber": 1,
-              "IsDirty": true
-            },
-            "Spots": 2,
-            "StartDate": "2019-12-30T00:00:00"
-          }
-        ],
-        "SpotLengthId": 1,
-        "SpotsPerDay": null,
-        "SpotsPerWeek": null,
-        "Station": {
-          "Affiliation": "CBS",
-          "CallLetters": "KOLN+",
-          "Code": 136,
-          "LegacyCallLetters": "KOLN",
-          "ManifestMaxEndDate": null,
-          "MarketCode": 322,
-          "ModifiedDate": null,
-          "OriginMarket": null,
-          "RateDataThrough": null
-        }
-      },
-      {
-        "Comment": "Comment 3",
-        "DaypartCode": "EMN",
-        "InventorySourceId": 4,
-        "ManifestAudiences": [],
-        "ManifestAudiencesReferences": [
-          {
-            "Audience": {
-              "AudienceString": "Women 25-34",
-              "Id": 348
-            },
-            "CPM": 99.8800,
-            "HutPlaybackType": null,
-            "Impressions": null,
-            "IsReference": true,
-            "Rating": null,
-            "SharePlaybackType": null,
-            "Vpvh": null
-          }
-        ],
-        "ManifestDayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 86399,
-              "_Friday": true,
-              "_Id": 91,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "Custom",
-              "_Saturday": false,
-              "_StartTime": 32400,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "DaypartDefault": null,
-            "Genres": [],
-            "PrimaryProgramId": null,
-            "ProgramName": null
-          }
-        ],
-        "ManifestRates": [],
-        "ManifestWeeks": [
-          {
-            "EndDate": "2019-12-15T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-15T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-09T00:00:00",
-              "_WeekNumber": 3,
-              "IsDirty": true
-            },
-            "Spots": 3,
-            "StartDate": "2019-12-10T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-22T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-22T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-16T00:00:00",
-              "_WeekNumber": 4,
-              "IsDirty": true
-            },
-            "Spots": 3,
-            "StartDate": "2019-12-16T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-29T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-29T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-23T00:00:00",
-              "_WeekNumber": 5,
-              "IsDirty": true
-            },
-            "Spots": 3,
-            "StartDate": "2019-12-23T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-30T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2020-01-05T00:00:00",
-              "_MediaMonthId": 460,
-              "_StartDate": "2019-12-30T00:00:00",
-              "_WeekNumber": 1,
-              "IsDirty": true
-            },
-            "Spots": 3,
-            "StartDate": "2019-12-30T00:00:00"
-          }
-        ],
-        "SpotLengthId": 1,
-        "SpotsPerDay": null,
-        "SpotsPerWeek": null,
-        "Station": {
-          "Affiliation": "ION",
-          "CallLetters": "WRBU 46.1",
-          "Code": 6007,
-          "LegacyCallLetters": "WRBU",
-          "ManifestMaxEndDate": null,
-          "MarketCode": 209,
-          "ModifiedDate": null,
-          "OriginMarket": null,
-          "RateDataThrough": null
-        }
-      },
-      {
-        "Comment": "Comment 4",
-        "DaypartCode": "EMN",
-        "InventorySourceId": 4,
-        "ManifestAudiences": [],
-        "ManifestAudiencesReferences": [
-          {
-            "Audience": {
-              "AudienceString": "Women 25-34",
-              "Id": 348
-            },
-            "CPM": 99.8800,
-            "HutPlaybackType": null,
-            "Impressions": null,
-            "IsReference": true,
-            "Rating": null,
-            "SharePlaybackType": null,
-            "Vpvh": null
-          }
-        ],
-        "ManifestDayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 68399,
-              "_Friday": true,
-              "_Id": 34021,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": false,
-              "_StartTime": 61200,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "DaypartDefault": null,
-            "Genres": [],
-            "PrimaryProgramId": null,
-            "ProgramName": null
-          },
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 66599,
-              "_Friday": false,
-              "_Id": 35436,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "BRDCST DP362",
-              "_Saturday": true,
-              "_StartTime": 64800,
-              "_Sunday": false,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            },
-            "DaypartDefault": null,
-            "Genres": [],
-            "PrimaryProgramId": null,
-            "ProgramName": null
-          },
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 68399,
-              "_Friday": false,
-              "_Id": 14750,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "Custom",
-              "_Saturday": false,
-              "_StartTime": 64800,
-              "_Sunday": true,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            },
-            "DaypartDefault": null,
-            "Genres": [],
-            "PrimaryProgramId": null,
-            "ProgramName": null
-          }
-        ],
-        "ManifestRates": [],
-        "ManifestWeeks": [
-          {
-            "EndDate": "2019-12-15T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-15T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-09T00:00:00",
-              "_WeekNumber": 3,
-              "IsDirty": true
-            },
-            "Spots": 2,
-            "StartDate": "2019-12-10T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-22T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-22T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-16T00:00:00",
-              "_WeekNumber": 4,
-              "IsDirty": true
-            },
-            "Spots": 2,
-            "StartDate": "2019-12-16T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-29T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-29T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-23T00:00:00",
-              "_WeekNumber": 5,
-              "IsDirty": true
-            },
-            "Spots": 2,
-            "StartDate": "2019-12-23T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-30T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2020-01-05T00:00:00",
-              "_MediaMonthId": 460,
-              "_StartDate": "2019-12-30T00:00:00",
-              "_WeekNumber": 1,
-              "IsDirty": true
-            },
-            "Spots": 2,
-            "StartDate": "2019-12-30T00:00:00"
-          }
-        ],
-        "SpotLengthId": 1,
-        "SpotsPerDay": null,
-        "SpotsPerWeek": null,
-        "Station": {
-          "Affiliation": "PBS",
-          "CallLetters": "KUON-TV 12.1",
-          "Code": 399,
-          "LegacyCallLetters": "KUON",
-          "ManifestMaxEndDate": null,
-          "MarketCode": 322,
-          "ModifiedDate": null,
-          "OriginMarket": null,
-          "RateDataThrough": null
-        }
-      },
-      {
-        "Comment": "Comment 5",
-        "DaypartCode": "EMN",
-        "InventorySourceId": 4,
-        "ManifestAudiences": [],
-        "ManifestAudiencesReferences": [
-          {
-            "Audience": {
-              "AudienceString": "Women 25-34",
-              "Id": 348
-            },
-            "CPM": 99.8800,
-            "HutPlaybackType": null,
-            "Impressions": null,
-            "IsReference": true,
-            "Rating": null,
-            "SharePlaybackType": null,
-            "Vpvh": null
-          }
-        ],
-        "ManifestDayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 14399,
-              "_Friday": true,
-              "_Id": 31117,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "BRDCST DP362",
-              "_Saturday": false,
-              "_StartTime": 10800,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": false,
-              "_Wednesday": true
-            },
-            "DaypartDefault": null,
-            "Genres": [],
-            "PrimaryProgramId": null,
-            "ProgramName": null
-          }
-        ],
-        "ManifestRates": [],
-        "ManifestWeeks": [
-          {
-            "EndDate": "2019-12-15T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-15T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-09T00:00:00",
-              "_WeekNumber": 3,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-10T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-22T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-22T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-16T00:00:00",
-              "_WeekNumber": 4,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-16T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-29T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-12-29T00:00:00",
-              "_MediaMonthId": 459,
-              "_StartDate": "2019-12-23T00:00:00",
-              "_WeekNumber": 5,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-23T00:00:00"
-          },
-          {
-            "EndDate": "2019-12-30T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2020-01-05T00:00:00",
-              "_MediaMonthId": 460,
-              "_StartDate": "2019-12-30T00:00:00",
-              "_WeekNumber": 1,
-              "IsDirty": true
-            },
-            "Spots": 1,
-            "StartDate": "2019-12-30T00:00:00"
-          }
-        ],
-        "SpotLengthId": 1,
-        "SpotsPerDay": null,
-        "SpotsPerWeek": null,
-        "Station": {
-          "Affiliation": "MET",
-          "CallLetters": "WESH 2.2",
-          "Code": 4530,
-          "LegacyCallLetters": "EESH",
-          "ManifestMaxEndDate": null,
-          "MarketCode": 134,
           "ModifiedDate": null,
           "OriginMarket": null,
           "RateDataThrough": null

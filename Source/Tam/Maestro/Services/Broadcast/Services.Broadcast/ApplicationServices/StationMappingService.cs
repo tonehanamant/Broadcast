@@ -200,8 +200,8 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc />
         public DisplayBroadcastStation GetStationByCallLetters(string stationCallLetters)
         {
-            // Check station(Cadent Call Letters)
-            var station = _StationRepository.GetBroadcastStationByCallLetters(stationCallLetters);
+            // Check station (Cadent Call Letters, a.k.a. legacy call letters)
+            var station = _StationRepository.GetBroadcastStationByLegacyCallLetters(stationCallLetters);
 
             // If not found, check exact match in mappings
             if (station == null)
