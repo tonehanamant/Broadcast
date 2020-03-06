@@ -64,7 +64,8 @@ namespace Services.Broadcast.Entities.Campaign
             _PopulateHeaderData(exportType, campaign, plans, agency, advertiser
                 , guaranteedDemos, spotLenghts, orderedAudiences, quarterCalculationEngine);
 
-            List<DateTime> hiatusDays = plans.SelectMany(x => x.FlightHiatusDays).Distinct().ToList();
+            List<DateTime> hiatusDays = plans.SelectMany(x => x.FlightHiatusDays).ToList();
+            hiatusDays = hiatusDays.Distinct().ToList();
 
             //proposal tab
             _PopulateProposalQuarterTableData(projectedPlans, orderedAudiences);
@@ -666,7 +667,7 @@ namespace Services.Broadcast.Entities.Campaign
                                                 {
                                                     var itemsThisWeek = x.ToList();
                                                     List<DateTime> hiatusDaysThisWeek = itemsThisWeek.SelectMany(y => y.HiatusDays).ToList();
-
+                                                    hiatusDaysThisWeek = hiatusDaysThisWeek.Distinct().ToList();
                                                     newTable.WeeksStartDate.Add(x.Key.Value);
 
                                                     //the distribution percentage is the percent of all the impressions from this week 

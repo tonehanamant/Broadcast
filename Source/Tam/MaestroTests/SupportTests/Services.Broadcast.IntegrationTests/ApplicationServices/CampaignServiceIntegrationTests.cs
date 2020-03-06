@@ -937,6 +937,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     File.ReadAllBytes(@".\Files\Campaign export\CampaignExport_SecondaryAudiences_MultiplePlans.xlsx").LongLength);
             }
         }
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CampaignExport_PlansWith13And14Weeks()
@@ -961,6 +962,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
                 Assert.AreEqual(reportOutput.Stream.Length,
                     File.ReadAllBytes(@".\Files\Campaign export\CampaignExport_PlansWith13And14Weeks.xlsx").LongLength);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CampaignExport_DuplicateHiatusDaysOnFlowChart()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+
+                var reportData = _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
+                {
+                    CampaignId = 652,
+                    ExportType = CampaignExportTypeEnum.Proposal,
+                    SelectedPlans = new List<int> { 2541, 2579 }
+                });
+                                
+                Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
             }
         }
 
