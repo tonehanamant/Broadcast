@@ -461,7 +461,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _PlanRepository.GetPricingApiResults(planPricingRequestDto.PlanId);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(PlanPricingApiResultSpotDto), "id");
+                jsonResolver.Ignore(typeof(PlanPricingAllocatedSpot), "Id");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

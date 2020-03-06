@@ -118,8 +118,8 @@ namespace Services.Broadcast.Repositories
         void UpdatePlanPricingJob(PlanPricingJob planPricingJob);
         PlanPricingJob GetLatestPricingJob(int planId);
         void SavePlanPricingParameters(PlanPricingParametersDto planPricingRequestDto);
-        void SavePricingApiResults(int planId, PlanPricingApiResponseDto result);
-        PlanPricingApiResponseDto GetPricingApiResults(int planId);
+        void SavePricingApiResults(int planId, PlanPricingAllocationResult result);
+        PlanPricingAllocationResult GetPricingApiResults(int planId);
         void SavePricingAggregateResults(int planId, PlanPricingResultDto result);
         PlanPricingResultDto GetPricingResults(int planId);
 
@@ -1277,7 +1277,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public void SavePricingApiResults(int planId, PlanPricingApiResponseDto result)
+        public void SavePricingApiResults(int planId, PlanPricingAllocationResult result)
         {
             _InReadUncommitedTransaction(context =>
             {
@@ -1294,7 +1294,7 @@ namespace Services.Broadcast.Repositories
                 var planPricingApiResult = new plan_version_pricing_api_results
                 {
                     plan_version_id = planVersionId,
-                    optimal_cpm = result.Results?.OptimalCpm ?? 0
+                    optimal_cpm = result.OptimalCpm
                 };
 
                 context.plan_version_pricing_api_results.Add(planPricingApiResult);
@@ -1303,15 +1303,16 @@ namespace Services.Broadcast.Repositories
 
                 var planPricingApiResultSpots = new List<plan_version_pricing_api_result_spots>();
 
-                foreach (var spot in result.Results?.Spots)
+                foreach (var spot in result.Spots)
                 {
                     var planPricingApiResultSpot = new plan_version_pricing_api_result_spots
                     {
                         plan_version_pricing_api_results_id = planPricingApiResult.id,
                         station_inventory_manifest_id = spot.Id,
-                        media_week_id = spot.MediaWeekId,
+                        contract_media_week_id = spot.ContractMediaWeek.Id,
+                        inventory_media_week_id = spot.InventoryMediaWeek.Id,
                         impressions = spot.Impressions,
-                        daypart_id = spot.DaypartId,
+                        daypart_id = spot.Daypart.Id,
                         cost = spot.Cost,
                         spots = spot.Spots
                     };
@@ -1323,7 +1324,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PlanPricingApiResponseDto GetPricingApiResults(int planId)
+        public PlanPricingAllocationResult GetPricingApiResults(int planId)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -1333,21 +1334,34 @@ namespace Services.Broadcast.Repositories
                     .Include(x => x.plan_version_pricing_api_result_spots)
                     .Single(p => p.plan_version_id == planVersionId);
 
-                return new PlanPricingApiResponseDto
+                return new PlanPricingAllocationResult
                 {
-                    Results = new PlanPricingApiResultDto
+                    OptimalCpm = apiResult.optimal_cpm,
+                    Spots = apiResult.plan_version_pricing_api_result_spots.Select(x => new PlanPricingAllocatedSpot
                     {
-                        OptimalCpm = apiResult.optimal_cpm,
-                        Spots = apiResult.plan_version_pricing_api_result_spots.Select(r => new PlanPricingApiResultSpotDto
+                        Id = x.id,
+                        StationInventoryManifestId = x.station_inventory_manifest_id,
+                        Impressions = x.impressions,
+                        Cost = x.cost,
+                        Spots = x.spots,
+                        InventoryMediaWeek = new MediaWeek
                         {
-                            Id = r.id,
-                            MediaWeekId = r.media_week_id,
-                            DaypartId = r.daypart_id,
-                            Impressions = r.impressions,
-                            Cost = r.cost,
-                            Spots = r.spots
-                        }).ToList()
-                    }
+                            Id = x.inventory_media_week.id,
+                            MediaMonthId = x.inventory_media_week.media_month_id,
+                            WeekNumber = x.inventory_media_week.week_number,
+                            StartDate = x.inventory_media_week.start_date,
+                            EndDate = x.inventory_media_week.end_date
+                        },
+                        ContractMediaWeek = new MediaWeek
+                        {
+                            Id = x.contract_media_week.id,
+                            MediaMonthId = x.contract_media_week.media_month_id,
+                            WeekNumber = x.contract_media_week.week_number,
+                            StartDate = x.contract_media_week.start_date,
+                            EndDate = x.contract_media_week.end_date
+                        },
+                        Daypart = DaypartCache.Instance.GetDisplayDaypart(x.daypart_id)
+                    }).ToList()
                 };
             });
         }
@@ -1472,7 +1486,7 @@ namespace Services.Broadcast.Repositories
                 var planVersionId = plan.latest_version_id;
                 var apiResult = context.plan_version_pricing_api_results
                     .Include(x => x.plan_version_pricing_api_result_spots)
-                    .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.media_weeks))
+                    .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.inventory_media_week))
                     .Single(p => p.plan_version_id == planVersionId);
 
                 return apiResult.plan_version_pricing_api_result_spots.Select(x => new PlanPricingAllocatedSpot
@@ -1482,13 +1496,21 @@ namespace Services.Broadcast.Repositories
                     Impressions = x.impressions,
                     Cost = x.cost,
                     Spots = x.spots,
-                    MediaWeek = new MediaWeek
+                    InventoryMediaWeek = new MediaWeek
                     {
-                        Id = x.media_weeks.id,
-                        MediaMonthId = x.media_weeks.media_month_id,
-                        WeekNumber = x.media_weeks.week_number,
-                        StartDate = x.media_weeks.start_date,
-                        EndDate = x.media_weeks.end_date
+                        Id = x.inventory_media_week.id,
+                        MediaMonthId = x.inventory_media_week.media_month_id,
+                        WeekNumber = x.inventory_media_week.week_number,
+                        StartDate = x.inventory_media_week.start_date,
+                        EndDate = x.inventory_media_week.end_date
+                    },
+                    ContractMediaWeek = new MediaWeek
+                    {
+                        Id = x.contract_media_week.id,
+                        MediaMonthId = x.contract_media_week.media_month_id,
+                        WeekNumber = x.contract_media_week.week_number,
+                        StartDate = x.contract_media_week.start_date,
+                        EndDate = x.contract_media_week.end_date
                     },
                     Daypart = DaypartCache.Instance.GetDisplayDaypart(x.daypart_id)
                 }).ToList();

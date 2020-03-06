@@ -414,6 +414,7 @@
     <Compile Include="Entities\Plan\PlanAudienceDisplay.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuying.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingAllocatedSpot.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingAllocationResult.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiCpmResponseDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiSpotsResponseDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingManifestWithManifestDaypart.cs" />

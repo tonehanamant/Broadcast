@@ -164,7 +164,7 @@ namespace Services.Broadcast.Repositories
                                 .Select(w => new PlanPricingInventoryProgram.ManifestWeek
                                 {
                                     Id = w.id,
-                                    MediaWeekId = w.media_week_id,
+                                    InventoryMediaWeekId = w.media_week_id,
                                     Spots = w.spots
                                 })
                                 .ToList(),

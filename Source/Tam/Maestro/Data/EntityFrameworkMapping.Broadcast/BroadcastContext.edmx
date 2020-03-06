@@ -847,11 +847,12 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="plan_version_pricing_api_results_id" Type="int" Nullable="false" />
           <Property Name="station_inventory_manifest_id" Type="int" Nullable="false" />
-          <Property Name="media_week_id" Type="int" Nullable="false" />
+          <Property Name="inventory_media_week_id" Type="int" Nullable="false" />
           <Property Name="impressions" Type="float" Nullable="false" />
           <Property Name="cost" Type="money" Nullable="false" />
           <Property Name="spots" Type="int" Nullable="false" />
           <Property Name="daypart_id" Type="int" Nullable="false" />
+          <Property Name="contract_media_week_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_api_results">
           <Key>
@@ -3231,7 +3232,19 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="plan_version_pricing_api_result_spots">
-              <PropertyRef Name="media_week_id" />
+              <PropertyRef Name="inventory_media_week_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_pricing_api_result_spots_media_weeks1">
+          <End Role="media_weeks" Type="Self.media_weeks" Multiplicity="1" />
+          <End Role="plan_version_pricing_api_result_spots" Type="Self.plan_version_pricing_api_result_spots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_weeks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_pricing_api_result_spots">
+              <PropertyRef Name="contract_media_week_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5880,6 +5893,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="media_weeks" EntitySet="media_weeks" />
             <End Role="plan_version_pricing_api_result_spots" EntitySet="plan_version_pricing_api_result_spots" />
           </AssociationSet>
+          <AssociationSet Name="FK_plan_version_pricing_api_result_spots_media_weeks1" Association="Self.FK_plan_version_pricing_api_result_spots_media_weeks1">
+            <End Role="media_weeks" EntitySet="media_weeks" />
+            <End Role="plan_version_pricing_api_result_spots" EntitySet="plan_version_pricing_api_result_spots" />
+          </AssociationSet>
           <AssociationSet Name="FK_plan_version_pricing_api_result_spots_plan_version_pricing_api_results" Association="Self.FK_plan_version_pricing_api_result_spots_plan_version_pricing_api_results">
             <End Role="plan_version_pricing_api_results" EntitySet="plan_version_pricing_api_results" />
             <End Role="plan_version_pricing_api_result_spots" EntitySet="plan_version_pricing_api_result_spots" />
@@ -7699,6 +7716,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="genre" EntitySet="genres" />
             <End Role="station_inventory_manifest_daypart_programs" EntitySet="station_inventory_manifest_daypart_programs" />
           </AssociationSet>
+          <AssociationSet Name="FK_plan_version_pricing_api_result_spots_media_weeks1" Association="BroadcastModel.FK_plan_version_pricing_api_result_spots_media_weeks1">
+            <End Role="media_weeks" EntitySet="media_weeks" />
+            <End Role="plan_version_pricing_api_result_spots" EntitySet="plan_version_pricing_api_result_spots" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -7836,6 +7857,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_pricing_api_result_spots" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_media_weeks" FromRole="media_weeks" ToRole="plan_version_pricing_api_result_spots" />
           <NavigationProperty Name="plan_version_weeks" Relationship="BroadcastModel.FK_plan_weeks_media_weeks" FromRole="media_weeks" ToRole="plan_version_weeks" />
           <NavigationProperty Name="plan_version_pricing_job_inventory_source_estimates" Relationship="BroadcastModel.FK_plan_version_pricing_job_inventory_source_estimates_media_weeks" FromRole="media_weeks" ToRole="plan_version_pricing_job_inventory_source_estimates" />
+          <NavigationProperty Name="plan_version_pricing_api_result_spots1" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_media_weeks1" FromRole="media_weeks" ToRole="plan_version_pricing_api_result_spots" />
         </EntityType>
         <EntityType Name="post_file_demos">
           <Key>
@@ -12019,79 +12041,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="plan_version_pricing_api_result_spots">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="plan_version_pricing_api_results_id" Type="Int32" Nullable="false" />
-          <Property Name="station_inventory_manifest_id" Type="Int32" Nullable="false" />
-          <Property Name="media_week_id" Type="Int32" Nullable="false" />
-          <Property Name="impressions" Type="Double" Nullable="false" />
-          <Property Name="cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="spots" Type="Int32" Nullable="false" />
-          <Property Name="daypart_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_dayparts" FromRole="plan_version_pricing_api_result_spots" ToRole="daypart" />
-          <NavigationProperty Name="media_weeks" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_media_weeks" FromRole="plan_version_pricing_api_result_spots" ToRole="media_weeks" />
-          <NavigationProperty Name="plan_version_pricing_api_results" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_plan_version_pricing_api_results" FromRole="plan_version_pricing_api_result_spots" ToRole="plan_version_pricing_api_results" />
-          <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_station_inventory_manifest" FromRole="plan_version_pricing_api_result_spots" ToRole="station_inventory_manifest" />
-        </EntityType>
-        <Association Name="FK_plan_version_pricing_api_result_spots_dayparts">
-          <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.plan_version_pricing_api_result_spots" Role="plan_version_pricing_api_result_spots" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="daypart">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_pricing_api_result_spots">
-              <PropertyRef Name="daypart_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plan_version_pricing_api_result_spots_media_weeks">
-          <End Type="BroadcastModel.media_weeks" Role="media_weeks" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.plan_version_pricing_api_result_spots" Role="plan_version_pricing_api_result_spots" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="media_weeks">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_pricing_api_result_spots">
-              <PropertyRef Name="media_week_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plan_version_pricing_api_result_spots_plan_version_pricing_api_results">
-          <End Type="BroadcastModel.plan_version_pricing_api_results" Role="plan_version_pricing_api_results" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.plan_version_pricing_api_result_spots" Role="plan_version_pricing_api_result_spots" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan_version_pricing_api_results">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_pricing_api_result_spots">
-              <PropertyRef Name="plan_version_pricing_api_results_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plan_version_pricing_api_result_spots_station_inventory_manifest">
-          <End Type="BroadcastModel.station_inventory_manifest" Role="station_inventory_manifest" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.plan_version_pricing_api_result_spots" Role="plan_version_pricing_api_result_spots" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="station_inventory_manifest">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_pricing_api_result_spots">
-              <PropertyRef Name="station_inventory_manifest_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="inventory_file_proprietary_header">
           <Key>
             <PropertyRef Name="id" />
@@ -13459,6 +13408,93 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="station_inventory_manifest_daypart_programs">
               <PropertyRef Name="station_inventory_manifest_daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="plan_version_pricing_api_result_spots">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_pricing_api_results_id" Type="Int32" Nullable="false" />
+          <Property Name="station_inventory_manifest_id" Type="Int32" Nullable="false" />
+          <Property Name="inventory_media_week_id" Type="Int32" Nullable="false" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
+          <Property Name="cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="spots" Type="Int32" Nullable="false" />
+          <Property Name="daypart_id" Type="Int32" Nullable="false" />
+          <Property Name="contract_media_week_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_dayparts" FromRole="plan_version_pricing_api_result_spots" ToRole="daypart" />
+          <NavigationProperty Name="inventory_media_week" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_media_weeks" FromRole="plan_version_pricing_api_result_spots" ToRole="media_weeks" />
+          <NavigationProperty Name="contract_media_week" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_media_weeks1" FromRole="plan_version_pricing_api_result_spots" ToRole="media_weeks" />
+          <NavigationProperty Name="plan_version_pricing_api_results" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_plan_version_pricing_api_results" FromRole="plan_version_pricing_api_result_spots" ToRole="plan_version_pricing_api_results" />
+          <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_station_inventory_manifest" FromRole="plan_version_pricing_api_result_spots" ToRole="station_inventory_manifest" />
+        </EntityType>
+        <Association Name="FK_plan_version_pricing_api_result_spots_dayparts">
+          <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_pricing_api_result_spots" Role="plan_version_pricing_api_result_spots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_pricing_api_result_spots">
+              <PropertyRef Name="daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_pricing_api_result_spots_media_weeks">
+          <End Type="BroadcastModel.media_weeks" Role="media_weeks" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_pricing_api_result_spots" Role="plan_version_pricing_api_result_spots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_weeks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_pricing_api_result_spots">
+              <PropertyRef Name="inventory_media_week_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_pricing_api_result_spots_media_weeks1">
+          <End Type="BroadcastModel.media_weeks" Role="media_weeks" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_pricing_api_result_spots" Role="plan_version_pricing_api_result_spots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_weeks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_pricing_api_result_spots">
+              <PropertyRef Name="contract_media_week_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_pricing_api_result_spots_plan_version_pricing_api_results">
+          <End Type="BroadcastModel.plan_version_pricing_api_results" Role="plan_version_pricing_api_results" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_pricing_api_result_spots" Role="plan_version_pricing_api_result_spots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_pricing_api_results">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_pricing_api_result_spots">
+              <PropertyRef Name="plan_version_pricing_api_results_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_pricing_api_result_spots_station_inventory_manifest">
+          <End Type="BroadcastModel.station_inventory_manifest" Role="station_inventory_manifest" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_pricing_api_result_spots" Role="plan_version_pricing_api_result_spots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station_inventory_manifest">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_pricing_api_result_spots">
+              <PropertyRef Name="station_inventory_manifest_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -15192,20 +15228,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="plan_version_pricing_api_result_spots">
-            <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_api_result_spots">
-              <MappingFragment StoreEntitySet="plan_version_pricing_api_result_spots">
-                <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
-                <ScalarProperty Name="spots" ColumnName="spots" />
-                <ScalarProperty Name="cost" ColumnName="cost" />
-                <ScalarProperty Name="impressions" ColumnName="impressions" />
-                <ScalarProperty Name="media_week_id" ColumnName="media_week_id" />
-                <ScalarProperty Name="station_inventory_manifest_id" ColumnName="station_inventory_manifest_id" />
-                <ScalarProperty Name="plan_version_pricing_api_results_id" ColumnName="plan_version_pricing_api_results_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="plan_version_pricing_api_results">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_api_results">
               <MappingFragment StoreEntitySet="plan_version_pricing_api_results">
@@ -15721,6 +15743,21 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="show_type" ColumnName="show_type" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="station_inventory_manifest_daypart_id" ColumnName="station_inventory_manifest_daypart_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_pricing_api_result_spots">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_api_result_spots">
+              <MappingFragment StoreEntitySet="plan_version_pricing_api_result_spots">
+                <ScalarProperty Name="contract_media_week_id" ColumnName="contract_media_week_id" />
+                <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
+                <ScalarProperty Name="spots" ColumnName="spots" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="inventory_media_week_id" ColumnName="inventory_media_week_id" />
+                <ScalarProperty Name="station_inventory_manifest_id" ColumnName="station_inventory_manifest_id" />
+                <ScalarProperty Name="plan_version_pricing_api_results_id" ColumnName="plan_version_pricing_api_results_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

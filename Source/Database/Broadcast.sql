@@ -255,6 +255,33 @@ BEGIN
 END
 /*************************************** END PRI-20083 *****************************************************/
 
+/*************************************** START PRI-23440 *****************************************************/
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'media_week_id' AND OBJECT_ID = OBJECT_ID(N'plan_version_pricing_api_result_spots'))
+BEGIN
+    EXEC sp_rename 'dbo.plan_version_pricing_api_result_spots.media_week_id', 'inventory_media_week_id', 'COLUMN';
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = N'contract_media_week_id' AND OBJECT_ID = OBJECT_ID(N'plan_version_pricing_api_result_spots'))
+BEGIN
+    EXEC('ALTER TABLE plan_version_pricing_api_result_spots ADD contract_media_week_id int NULL')
+
+	EXEC('UPDATE plan_version_pricing_api_result_spots SET contract_media_week_id = inventory_media_week_id')
+
+	EXEC('ALTER TABLE plan_version_pricing_api_result_spots ALTER COLUMN contract_media_week_id INT NOT NULL')
+
+	EXEC('
+	ALTER TABLE plan_version_pricing_api_result_spots
+	WITH CHECK ADD CONSTRAINT [FK_plan_version_pricing_api_result_spots_media_weeks1] 
+	FOREIGN KEY([contract_media_week_id])
+	REFERENCES media_weeks ([id])')
+
+	EXEC('
+	ALTER TABLE plan_version_pricing_api_result_spots CHECK CONSTRAINT [FK_plan_version_pricing_api_result_spots_media_weeks1]')
+END
+
+/*************************************** END PRI-23440 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -35,7 +35,15 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         {
             public int Id { get; set; }
 
-            public int MediaWeekId { get; set; }
+            /// <summary>
+            /// Indicates inventory week
+            /// </summary>
+            public int InventoryMediaWeekId { get; set; }
+
+            /// <summary>
+            /// Indicates what plan flight week inventory week should be associated with
+            /// </summary>
+            public int ContractMediaWeekId { get; set; }
 
             public int Spots { get; set; }
         }

@@ -37,6 +37,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private readonly Mock<IInventoryRepository> _InventoryRepositoryMock;
         private readonly Mock<IDaypartCache> _DaypartCacheMock;
         private readonly Mock<IMarketCoverageRepository> _MarketCoverageRepositoryMock;
+        private readonly Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCacheMock;
 
         public PlanPricingServiceUnitTests()
         {
@@ -50,6 +51,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _InventoryRepositoryMock = new Mock<IInventoryRepository>();
             _DaypartCacheMock = new Mock<IDaypartCache>();
             _MarketCoverageRepositoryMock = new Mock<IMarketCoverageRepository>();
+            _MediaMonthAndWeekAggregateCacheMock = new Mock<IMediaMonthAndWeekAggregateCache>();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IPlanRepository>())
@@ -70,69 +72,66 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             var inventory = _GetPlanPricingInventoryPrograms();
 
-            var apiResponse = new PlanPricingApiResponseDto
+            var apiResponse = new PlanPricingAllocationResult
             {
-                Results = new PlanPricingApiResultDto
+                OptimalCpm = 5.78m,
+                Spots = new List<PlanPricingAllocatedSpot>
                 {
-                    OptimalCpm = 5.78m,
-                    Spots = new List<PlanPricingApiResultSpotDto>
+                    new PlanPricingAllocatedSpot
                     {
-                        new PlanPricingApiResultSpotDto
-                        {
-                            Id = 1,
-                            DaypartId = 1,
-                            Spots = 2,
-                            Cost = 200,
-                            Impressions = 10000,
-                        },
-                        new PlanPricingApiResultSpotDto
-                        {
-                            Id = 2,
-                            DaypartId = 2,
-                            Spots = 4,
-                            Cost = 300,
-                            Impressions = 50000,
-                        },
-                        new PlanPricingApiResultSpotDto
-                        {
-                            Id = 3,
-                            DaypartId = 3,
-                            Spots = 3,
-                            Cost = 500,
-                            Impressions = 20000,
-                        },
-                        new PlanPricingApiResultSpotDto
-                        {
-                            Id = 4,
-                            DaypartId = 4,
-                            Spots = 1,
-                            Cost = 100,
-                            Impressions = 30000,
-                        },
-                        new PlanPricingApiResultSpotDto
-                        {
-                            Id = 5,
-                            DaypartId = 5,
-                            Spots = 3,
-                            Cost = 300,
-                            Impressions = 10000,
-                        },
-                        new PlanPricingApiResultSpotDto
-                        {
-                            Id = 6,
-                            DaypartId = 6,
-                            Spots = 2,
-                            Cost = 400,
-                            Impressions = 50000,
-                        },
-                        new PlanPricingApiResultSpotDto
-                        {
-                            Id = 7,
-                            DaypartId = 7,
-                            Spots = 1,
-                            Cost = 250,
-                            Impressions = 20000,
-                        }
+                        Id = 1,
+                        Daypart = new DisplayDaypart { Id = 1 },
+                        Spots = 2,
+                        Cost = 200,
+                        Impressions = 10000,
+                    },
+                    new PlanPricingAllocatedSpot
+                    {
+                        Id = 2,
+                        Daypart = new DisplayDaypart { Id = 2 },
+                        Spots = 4,
+                        Cost = 300,
+                        Impressions = 50000,
+                    },
+                    new PlanPricingAllocatedSpot
+                    {
+                        Id = 3,
+                        Daypart = new DisplayDaypart { Id = 3 },
+                        Spots = 3,
+                        Cost = 500,
+                        Impressions = 20000,
+                    },
+                    new PlanPricingAllocatedSpot
+                    {
+                        Id = 4,
+                        Daypart = new DisplayDaypart { Id = 4 },
+                        Spots = 1,
+                        Cost = 100,
+                        Impressions = 30000,
+                    },
+                    new PlanPricingAllocatedSpot
+                    {
+                        Id = 5,
+                        Daypart = new DisplayDaypart { Id = 5 },
+                        Spots = 3,
+                        Cost = 300,
+                        Impressions = 10000,
+                    },
+                    new PlanPricingAllocatedSpot
+                    {
+                        Id = 6,
+                        Daypart = new DisplayDaypart { Id = 6 },
+                        Spots = 2,
+                        Cost = 400,
+                        Impressions = 50000,
+                    },
+                    new PlanPricingAllocatedSpot
+                    {
+                        Id = 7,
+                        Daypart = new DisplayDaypart { Id = 7 },
+                        Spots = 1,
+                        Cost = 250,
+                        Impressions = 20000,
                     }
                 }
             };
@@ -253,8 +252,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     ManifestWeeks = new List<ManifestWeek>
                     {
-                        new ManifestWeek { MediaWeekId = 1 },
-                        new ManifestWeek { MediaWeekId = 2 }
+                        new ManifestWeek { ContractMediaWeekId = 1 },
+                        new ManifestWeek { ContractMediaWeekId = 2 }
                     }
                 },
                 // should keep.  All good.
@@ -300,8 +299,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     ManifestWeeks = new List<ManifestWeek>
                     {
-                        new ManifestWeek { MediaWeekId = 1 },
-                        new ManifestWeek { MediaWeekId = 2 }
+                        new ManifestWeek { ContractMediaWeekId = 1 },
+                        new ManifestWeek { ContractMediaWeekId = 2 }
                     }
                 },
                 // should keep.  ProvidedImpressions = null but ProjectedImpressions > 0
@@ -346,8 +345,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     ManifestWeeks = new List<ManifestWeek>
                     {
-                        new ManifestWeek { MediaWeekId = 1 },
-                        new ManifestWeek { MediaWeekId = 2 }
+                        new ManifestWeek { ContractMediaWeekId = 1 },
+                        new ManifestWeek { ContractMediaWeekId = 2 }
                     }
                 },
                 // should filter due to ProvidedImpressions = null && ProjectedImpressions = 0
@@ -392,8 +391,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     ManifestWeeks = new List<ManifestWeek>
                     {
-                        new ManifestWeek { MediaWeekId = 1 },
-                        new ManifestWeek { MediaWeekId = 2 }
+                        new ManifestWeek { ContractMediaWeekId = 1 },
+                        new ManifestWeek { ContractMediaWeekId = 2 }
                     }
                 },
                 // should filter due to ProvidedImpressions = 0
@@ -438,8 +437,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     ManifestWeeks = new List<ManifestWeek>
                     {
-                        new ManifestWeek { MediaWeekId = 1 },
-                        new ManifestWeek { MediaWeekId = 2 }
+                        new ManifestWeek { ContractMediaWeekId = 1 },
+                        new ManifestWeek { ContractMediaWeekId = 2 }
                     }
                 },
                 // should filter due to ProvidedImpressions = null and ProjectedImpressions = 0
@@ -484,8 +483,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     ManifestWeeks = new List<ManifestWeek>
                     {
-                        new ManifestWeek { MediaWeekId = 1 },
-                        new ManifestWeek { MediaWeekId = 2 }
+                        new ManifestWeek { ContractMediaWeekId = 1 },
+                        new ManifestWeek { ContractMediaWeekId = 2 }
                     }
                 },
                 // should filter due to SpotCost = 0
@@ -530,8 +529,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     ManifestWeeks = new List<ManifestWeek>
                     {
-                        new ManifestWeek { MediaWeekId = 1 },
-                        new ManifestWeek { MediaWeekId = 2 }
+                        new ManifestWeek { ContractMediaWeekId = 1 },
+                        new ManifestWeek { ContractMediaWeekId = 2 }
                     }
                 }
             };
@@ -797,7 +796,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _BackgroundJobClientMock.Object,
                 _PlanPricingInventoryEngineMock.Object,
                 _BroadcastLockingManagerApplicationServiceMock.Object,
-                _DaypartCacheMock.Object);
+                _DaypartCacheMock.Object,
+                _MediaMonthAndWeekAggregateCacheMock.Object);
 
             return service;
         }
@@ -1082,12 +1082,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new ManifestWeek
                         {
                             Spots = 2,
-                            MediaWeekId = 100,
+                            ContractMediaWeekId = 100,
                         },
                         new ManifestWeek
                         {
                             Spots = 3,
-                            MediaWeekId = 101,
+                            ContractMediaWeekId = 101,
                         }
                     }
                 },
@@ -1135,7 +1135,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new ManifestWeek
                         {
                             Spots = 5,
-                            MediaWeekId = 100
+                            ContractMediaWeekId = 100
                         }
                     }
                 },
@@ -1183,7 +1183,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new ManifestWeek
                         {
                             Spots = 1,
-                            MediaWeekId = 100
+                            ContractMediaWeekId = 100
                         }
                     }
                 },
@@ -1231,7 +1231,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new ManifestWeek
                         {
                             Spots = 2,
-                            MediaWeekId = 100
+                            ContractMediaWeekId = 100
                         }
                     }
                 },
@@ -1355,12 +1355,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new ManifestWeek
                         {
                             Spots = 6,
-                            MediaWeekId = 100,
+                            ContractMediaWeekId = 100,
                         },
                         new ManifestWeek
                         {
                             Spots = 7,
-                            MediaWeekId = 101,
+                            ContractMediaWeekId = 101,
                         }
                     }
                 },
@@ -1408,7 +1408,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new ManifestWeek
                         {
                             Spots = 1,
-                            MediaWeekId = 100,
+                            ContractMediaWeekId = 100,
                         },
                     }
                 },
@@ -1456,7 +1456,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new ManifestWeek
                         {
                             Spots = 1,
-                            MediaWeekId = 100,
+                            ContractMediaWeekId = 100,
                         }
                     }
                 }

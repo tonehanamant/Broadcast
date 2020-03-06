@@ -61,6 +61,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IBroadcastLockingManagerApplicationService _LockingManagerApplicationService;
         private readonly IMarketCoverageRepository _MarketCoverageRepository;
         private readonly IDaypartCache _DaypartCache;
+        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -68,7 +69,8 @@ namespace Services.Broadcast.ApplicationServices
                                   IBackgroundJobClient backgroundJobClient,
                                   IPlanPricingInventoryEngine planPricingInventoryEngine,
                                   IBroadcastLockingManagerApplicationService lockingManagerApplicationService,
-                                  IDaypartCache daypartCache)
+                                  IDaypartCache daypartCache,
+                                  IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
@@ -80,6 +82,7 @@ namespace Services.Broadcast.ApplicationServices
             _LockingManagerApplicationService = lockingManagerApplicationService;
             _MarketCoverageRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
             _DaypartCache = daypartCache;
+            _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
         }
 
         public PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate)
@@ -308,7 +311,7 @@ namespace Services.Broadcast.ApplicationServices
                     var spots = program.ManifestWeeks.Select(manifestWeek => new PlanPricingApiRequestSpotsDto
                     {
                         Id = program.ManifestId,
-                        MediaWeekId = manifestWeek.MediaWeekId,
+                        MediaWeekId = manifestWeek.ContractMediaWeekId,
                         DaypartId = daypart.Daypart.Id,
                         Impressions = impressions,
                         Cost = program.SpotCost,
@@ -512,15 +515,12 @@ namespace Services.Broadcast.ApplicationServices
 
                 var apiCpmResult = _PricingApiClient.GetPricingCalculationResult(pricingApiRequest);
                 var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
-                var spots = _MapToResultSpots(apiAllocationResult, pricingApiRequest);
-                var combinedApiResponse = new PlanPricingApiResponseDto
+                var spots = _MapToResultSpots(apiAllocationResult, pricingApiRequest, inventory);
+                var combinedApiResponse = new PlanPricingAllocationResult
                 {
                     RequestId = apiAllocationResult.RequestId,
-                    Results = new PlanPricingApiResultDto
-                    {
-                        OptimalCpm = apiCpmResult.Results.MinimumCost,
-                        Spots = spots
-                    }
+                    OptimalCpm = apiCpmResult.Results.MinimumCost,
+                    Spots = spots
                 };
 
                 _ValidateApiResponse(combinedApiResponse);
@@ -662,7 +662,7 @@ namespace Services.Broadcast.ApplicationServices
                     ManifestWeek = w
                 }))
                 .Where(x => x.ManifestWeek.Spots > 0)
-                .GroupBy(x => x.ManifestWeek.MediaWeekId)
+                .GroupBy(x => x.ManifestWeek.ContractMediaWeekId)
                 .Select(programsByMediaWeekGrouping =>
                 {
                     _CalculateImpressionsAndCost(
@@ -737,47 +737,54 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private List<PlanPricingApiResultSpotDto> _MapToResultSpots(PlanPricingApiSpotsResponseDto apiSpotsResults, PlanPricingApiRequestDto pricingApiRequest)
+        private List<PlanPricingAllocatedSpot> _MapToResultSpots(
+            PlanPricingApiSpotsResponseDto apiSpotsResults, 
+            PlanPricingApiRequestDto pricingApiRequest,
+            List<PlanPricingInventoryProgram> inventoryPrograms)
         {
-            var results = new List<PlanPricingApiResultSpotDto>();
+            var results = new List<PlanPricingAllocatedSpot>();
 
             foreach (var weeklyAllocation in apiSpotsResults.Results)
             {
                 foreach (var manifestId in weeklyAllocation.AllocatedManifestIds)
                 {
-                    var originalSpot = pricingApiRequest.Spots
-                                        .FirstOrDefault(x => x.MediaWeekId == weeklyAllocation.MediaWeekId &&
-                                                             manifestId == x.Id);
+                    // one manifest and week combination can have several dayparts
+                    // they are sent as separate items to DS
+                    // and we should get all them back
+                    var originalSpots = pricingApiRequest.Spots.Where(x => 
+                        x.Id == manifestId &&
+                        x.MediaWeekId == weeklyAllocation.MediaWeekId);
 
-                    if (originalSpot == null)
+                    if (!originalSpots.Any())
                         throw new Exception("Response from API contains manifest id not found in sent data");
-
-                    var spotResult = new PlanPricingApiResultSpotDto
+                    
+                    foreach (var originalSpot in originalSpots)
                     {
-                        Id = originalSpot.Id,
-                        Cost = originalSpot.Cost,
-                        DaypartId = originalSpot.DaypartId,
-                        Impressions = originalSpot.Impressions,
-                        MediaWeekId = originalSpot.MediaWeekId,
-                        Spots = 1
-                    };
+                        var program = inventoryPrograms.Single(x => x.ManifestId == manifestId);
+                        var inventoryWeek = program.ManifestWeeks.Single(x => x.ContractMediaWeekId == originalSpot.MediaWeekId);
 
-                    results.Add(spotResult);
+                        var spotResult = new PlanPricingAllocatedSpot
+                        {
+                            Id = originalSpot.Id,
+                            Cost = originalSpot.Cost,
+                            Daypart = _DaypartCache.GetDisplayDaypart(originalSpot.DaypartId),
+                            Impressions = originalSpot.Impressions,
+                            ContractMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.ContractMediaWeekId),
+                            InventoryMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.InventoryMediaWeekId),
+                            Spots = 1
+                        };
+
+                        results.Add(spotResult);
+                    }
                 }
             }
 
             return results;
         }
 
-        public void _ValidateApiResponse(PlanPricingApiResponseDto apiResponse)
+        public void _ValidateApiResponse(PlanPricingAllocationResult apiResponse)
         {
-            if (apiResponse.Results == null)
-            {
-                var msg = $"The api returned no results for request '{apiResponse.RequestId}'.";
-                throw new Exception(msg);
-            }
-
-            if (!apiResponse.Results.Spots.Any())
+            if (!apiResponse.Spots.Any())
             {
                 var msg = $"The api returned no spots for request '{apiResponse.RequestId}'.";
                 throw new Exception(msg);
@@ -786,7 +793,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public PlanPricingResultDto AggregateResults(
             List<PlanPricingInventoryProgram> inventory,
-            PlanPricingApiResponseDto apiResponse)
+            PlanPricingAllocationResult apiResponse)
         {
             var result = new PlanPricingResultDto();
             var programs = _GetPrograms(inventory, apiResponse);
@@ -813,14 +820,14 @@ namespace Services.Broadcast.ApplicationServices
                 AvgCpm = ProposalMath.CalculateCpm(totalCostForAllPrograms, totalImpressionsForAllProgams)
             };
 
-            result.OptimalCpm = apiResponse.Results.OptimalCpm;
+            result.OptimalCpm = apiResponse.OptimalCpm;
 
             return result;
         }
 
         private List<PlanPricingProgram> _GetPrograms(
             List<PlanPricingInventoryProgram> inventory,
-            PlanPricingApiResponseDto apiResponse)
+            PlanPricingAllocationResult apiResponse)
         {
             var result = new List<PlanPricingProgram>();
             var inventoryGroupedByProgramName = inventory
@@ -861,13 +868,13 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
-        private List<PlanPricingApiResultSpotDto> _GetAllocatedProgramSpots(PlanPricingApiResponseDto apiResponse, List<PlanPricingManifestWithManifestDaypart> programInventory)
+        private List<PlanPricingAllocatedSpot> _GetAllocatedProgramSpots(PlanPricingAllocationResult apiResponse, List<PlanPricingManifestWithManifestDaypart> programInventory)
         {
-            var result = new List<PlanPricingApiResultSpotDto>();
+            var result = new List<PlanPricingAllocatedSpot>();
 
-            foreach (var spot in apiResponse.Results.Spots)
+            foreach (var spot in apiResponse.Spots)
             {
-                if (programInventory.Any(x => x.Manifest.ManifestId == spot.Id && x.ManifestDaypart.Daypart.Id == spot.DaypartId))
+                if (programInventory.Any(x => x.Manifest.ManifestId == spot.Id && x.ManifestDaypart.Daypart.Id == spot.Daypart.Id))
                 {
                     result.Add(spot);
                 }
@@ -877,7 +884,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         private void _CalculateProgramTotals(
-            IEnumerable<PlanPricingApiResultSpotDto> allocatedProgramSpots,
+            IEnumerable<PlanPricingAllocatedSpot> allocatedProgramSpots,
             out decimal totalProgramCost,
             out double totalProgramImpressions,
             out int totalProgramSpots)

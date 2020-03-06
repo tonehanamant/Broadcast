@@ -1,0 +1,188 @@
+﻿[
+  {
+    "InventoryPricingQuarterType": "Plan",
+    "InventorySource": null,
+    "ManifestAudiences": null,
+    "ManifestDayparts": null,
+    "ManifestId": 0,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 826,
+        "Id": 0,
+        "InventoryMediaWeekId": 826,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": null,
+    "SpotCost": 0.0,
+    "Station": {
+      "Affiliation": null,
+      "CallLetters": null,
+      "Code": null,
+      "Id": 0,
+      "LegacyCallLetters": "ST01",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
+    "Unit": null
+  },
+  {
+    "InventoryPricingQuarterType": "Plan",
+    "InventorySource": null,
+    "ManifestAudiences": null,
+    "ManifestDayparts": null,
+    "ManifestId": 0,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 826,
+        "Id": 0,
+        "InventoryMediaWeekId": 826,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": null,
+    "SpotCost": 0.0,
+    "Station": {
+      "Affiliation": null,
+      "CallLetters": null,
+      "Code": null,
+      "Id": 0,
+      "LegacyCallLetters": "ST02",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
+    "Unit": null
+  },
+  {
+    "InventoryPricingQuarterType": "Plan",
+    "InventorySource": null,
+    "ManifestAudiences": null,
+    "ManifestDayparts": null,
+    "ManifestId": 0,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 826,
+        "Id": 0,
+        "InventoryMediaWeekId": 826,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": null,
+    "SpotCost": 0.0,
+    "Station": {
+      "Affiliation": null,
+      "CallLetters": null,
+      "Code": null,
+      "Id": 0,
+      "LegacyCallLetters": "ST03",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
+    "Unit": null
+  },
+  {
+    "InventoryPricingQuarterType": "Fallback",
+    "InventorySource": null,
+    "ManifestAudiences": null,
+    "ManifestDayparts": null,
+    "ManifestId": 0,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 877,
+        "Id": 0,
+        "InventoryMediaWeekId": 826,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": null,
+    "SpotCost": 0.0,
+    "Station": {
+      "Affiliation": null,
+      "CallLetters": null,
+      "Code": null,
+      "Id": 0,
+      "LegacyCallLetters": "ST04",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
+    "Unit": null
+  },
+  {
+    "InventoryPricingQuarterType": "Fallback",
+    "InventorySource": null,
+    "ManifestAudiences": null,
+    "ManifestDayparts": null,
+    "ManifestId": 0,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 877,
+        "Id": 0,
+        "InventoryMediaWeekId": 826,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": null,
+    "SpotCost": 0.0,
+    "Station": {
+      "Affiliation": null,
+      "CallLetters": null,
+      "Code": null,
+      "Id": 0,
+      "LegacyCallLetters": "ST05",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
+    "Unit": null
+  },
+  {
+    "InventoryPricingQuarterType": "Fallback",
+    "InventorySource": null,
+    "ManifestAudiences": null,
+    "ManifestDayparts": null,
+    "ManifestId": 0,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 877,
+        "Id": 0,
+        "InventoryMediaWeekId": 826,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": null,
+    "SpotCost": 0.0,
+    "Station": {
+      "Affiliation": null,
+      "CallLetters": null,
+      "Code": null,
+      "Id": 0,
+      "LegacyCallLetters": "ST06",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
+    "Unit": null
+  }
+]

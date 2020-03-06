@@ -75,28 +75,33 @@
     ],
     "ManifestWeeks": [
       {
+        "ContractMediaWeekId": 771,
         "Id": 1697537,
-        "MediaWeekId": 771,
+        "InventoryMediaWeekId": 771,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 772,
         "Id": 1704819,
-        "MediaWeekId": 772,
+        "InventoryMediaWeekId": 772,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 773,
         "Id": 1712148,
-        "MediaWeekId": 773,
+        "InventoryMediaWeekId": 773,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 774,
         "Id": 1719502,
-        "MediaWeekId": 774,
+        "InventoryMediaWeekId": 774,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 775,
         "Id": 1727234,
-        "MediaWeekId": 775,
+        "InventoryMediaWeekId": 775,
         "Spots": 0
       }
     ],
@@ -193,28 +198,33 @@
     ],
     "ManifestWeeks": [
       {
+        "ContractMediaWeekId": 771,
         "Id": 1697538,
-        "MediaWeekId": 771,
+        "InventoryMediaWeekId": 771,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 772,
         "Id": 1704820,
-        "MediaWeekId": 772,
+        "InventoryMediaWeekId": 772,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 773,
         "Id": 1712149,
-        "MediaWeekId": 773,
+        "InventoryMediaWeekId": 773,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 774,
         "Id": 1719503,
-        "MediaWeekId": 774,
+        "InventoryMediaWeekId": 774,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 775,
         "Id": 1727235,
-        "MediaWeekId": 775,
+        "InventoryMediaWeekId": 775,
         "Spots": 0
       }
     ],
@@ -311,28 +321,33 @@
     ],
     "ManifestWeeks": [
       {
+        "ContractMediaWeekId": 771,
         "Id": 1697541,
-        "MediaWeekId": 771,
+        "InventoryMediaWeekId": 771,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 772,
         "Id": 1704823,
-        "MediaWeekId": 772,
+        "InventoryMediaWeekId": 772,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 773,
         "Id": 1712152,
-        "MediaWeekId": 773,
+        "InventoryMediaWeekId": 773,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 774,
         "Id": 1719506,
-        "MediaWeekId": 774,
+        "InventoryMediaWeekId": 774,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 775,
         "Id": 1727238,
-        "MediaWeekId": 775,
+        "InventoryMediaWeekId": 775,
         "Spots": 0
       }
     ],
@@ -429,28 +444,33 @@
     ],
     "ManifestWeeks": [
       {
+        "ContractMediaWeekId": 771,
         "Id": 1697542,
-        "MediaWeekId": 771,
+        "InventoryMediaWeekId": 771,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 772,
         "Id": 1704824,
-        "MediaWeekId": 772,
+        "InventoryMediaWeekId": 772,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 773,
         "Id": 1712153,
-        "MediaWeekId": 773,
+        "InventoryMediaWeekId": 773,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 774,
         "Id": 1719507,
-        "MediaWeekId": 774,
+        "InventoryMediaWeekId": 774,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 775,
         "Id": 1727239,
-        "MediaWeekId": 775,
+        "InventoryMediaWeekId": 775,
         "Spots": 0
       }
     ],
@@ -547,28 +567,33 @@
     ],
     "ManifestWeeks": [
       {
+        "ContractMediaWeekId": 771,
         "Id": 1697545,
-        "MediaWeekId": 771,
+        "InventoryMediaWeekId": 771,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 772,
         "Id": 1704827,
-        "MediaWeekId": 772,
+        "InventoryMediaWeekId": 772,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 773,
         "Id": 1712156,
-        "MediaWeekId": 773,
+        "InventoryMediaWeekId": 773,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 774,
         "Id": 1719510,
-        "MediaWeekId": 774,
+        "InventoryMediaWeekId": 774,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 775,
         "Id": 1727242,
-        "MediaWeekId": 775,
+        "InventoryMediaWeekId": 775,
         "Spots": 0
       }
     ],
@@ -665,28 +690,33 @@
     ],
     "ManifestWeeks": [
       {
+        "ContractMediaWeekId": 771,
         "Id": 1698584,
-        "MediaWeekId": 771,
+        "InventoryMediaWeekId": 771,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 772,
         "Id": 1705866,
-        "MediaWeekId": 772,
+        "InventoryMediaWeekId": 772,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 773,
         "Id": 1713195,
-        "MediaWeekId": 773,
+        "InventoryMediaWeekId": 773,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 774,
         "Id": 1720549,
-        "MediaWeekId": 774,
+        "InventoryMediaWeekId": 774,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 775,
         "Id": 1728281,
-        "MediaWeekId": 775,
+        "InventoryMediaWeekId": 775,
         "Spots": 0
       }
     ],
@@ -783,28 +813,33 @@
     ],
     "ManifestWeeks": [
       {
+        "ContractMediaWeekId": 771,
         "Id": 1698585,
-        "MediaWeekId": 771,
+        "InventoryMediaWeekId": 771,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 772,
         "Id": 1705867,
-        "MediaWeekId": 772,
+        "InventoryMediaWeekId": 772,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 773,
         "Id": 1713196,
-        "MediaWeekId": 773,
+        "InventoryMediaWeekId": 773,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 774,
         "Id": 1720550,
-        "MediaWeekId": 774,
+        "InventoryMediaWeekId": 774,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 775,
         "Id": 1728282,
-        "MediaWeekId": 775,
+        "InventoryMediaWeekId": 775,
         "Spots": 0
       }
     ],
@@ -901,28 +936,33 @@
     ],
     "ManifestWeeks": [
       {
+        "ContractMediaWeekId": 771,
         "Id": 1698586,
-        "MediaWeekId": 771,
+        "InventoryMediaWeekId": 771,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 772,
         "Id": 1705868,
-        "MediaWeekId": 772,
+        "InventoryMediaWeekId": 772,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 773,
         "Id": 1713197,
-        "MediaWeekId": 773,
+        "InventoryMediaWeekId": 773,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 774,
         "Id": 1720551,
-        "MediaWeekId": 774,
+        "InventoryMediaWeekId": 774,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 775,
         "Id": 1728283,
-        "MediaWeekId": 775,
+        "InventoryMediaWeekId": 775,
         "Spots": 0
       }
     ],
@@ -1019,28 +1059,33 @@
     ],
     "ManifestWeeks": [
       {
+        "ContractMediaWeekId": 771,
         "Id": 1698587,
-        "MediaWeekId": 771,
+        "InventoryMediaWeekId": 771,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 772,
         "Id": 1705869,
-        "MediaWeekId": 772,
+        "InventoryMediaWeekId": 772,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 773,
         "Id": 1713198,
-        "MediaWeekId": 773,
+        "InventoryMediaWeekId": 773,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 774,
         "Id": 1720552,
-        "MediaWeekId": 774,
+        "InventoryMediaWeekId": 774,
         "Spots": 0
       },
       {
+        "ContractMediaWeekId": 775,
         "Id": 1728284,
-        "MediaWeekId": 775,
+        "InventoryMediaWeekId": 775,
         "Spots": 0
       }
     ],
@@ -1214,13 +1259,15 @@
     ],
     "ManifestWeeks": [
       {
+        "ContractMediaWeekId": 772,
         "Id": 3682431,
-        "MediaWeekId": 772,
+        "InventoryMediaWeekId": 772,
         "Spots": 2
       },
       {
+        "ContractMediaWeekId": 773,
         "Id": 3682432,
-        "MediaWeekId": 773,
+        "InventoryMediaWeekId": 773,
         "Spots": 2
       }
     ],
@@ -1394,13 +1441,15 @@
     ],
     "ManifestWeeks": [
       {
+        "ContractMediaWeekId": 772,
         "Id": 3682435,
-        "MediaWeekId": 772,
+        "InventoryMediaWeekId": 772,
         "Spots": 1
       },
       {
+        "ContractMediaWeekId": 773,
         "Id": 3682436,
-        "MediaWeekId": 773,
+        "InventoryMediaWeekId": 773,
         "Spots": 1
       }
     ],
@@ -1574,23 +1623,27 @@
     ],
     "ManifestWeeks": [
       {
+        "ContractMediaWeekId": 772,
         "Id": 3682441,
-        "MediaWeekId": 772,
+        "InventoryMediaWeekId": 772,
         "Spots": 2
       },
       {
+        "ContractMediaWeekId": 773,
         "Id": 3682442,
-        "MediaWeekId": 773,
+        "InventoryMediaWeekId": 773,
         "Spots": 1
       },
       {
+        "ContractMediaWeekId": 774,
         "Id": 3682443,
-        "MediaWeekId": 774,
+        "InventoryMediaWeekId": 774,
         "Spots": 3
       },
       {
+        "ContractMediaWeekId": 775,
         "Id": 3682444,
-        "MediaWeekId": 775,
+        "InventoryMediaWeekId": 775,
         "Spots": 4
       }
     ],

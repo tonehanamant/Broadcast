@@ -76,8 +76,9 @@
     "ManifestId": 287146,
     "ManifestWeeks": [
       {
+        "ContractMediaWeekId": 771,
         "Id": 1697537,
-        "MediaWeekId": 771,
+        "InventoryMediaWeekId": 771,
         "Spots": 0
       }
     ],
@@ -175,8 +176,9 @@
     "ManifestId": 287147,
     "ManifestWeeks": [
       {
+        "ContractMediaWeekId": 771,
         "Id": 1697538,
-        "MediaWeekId": 771,
+        "InventoryMediaWeekId": 771,
         "Spots": 0
       }
     ],
@@ -274,8 +276,9 @@
     "ManifestId": 288692,
     "ManifestWeeks": [
       {
+        "ContractMediaWeekId": 771,
         "Id": 1698584,
-        "MediaWeekId": 771,
+        "InventoryMediaWeekId": 771,
         "Spots": 0
       }
     ],
@@ -373,8 +376,9 @@
     "ManifestId": 288695,
     "ManifestWeeks": [
       {
+        "ContractMediaWeekId": 771,
         "Id": 1698587,
-        "MediaWeekId": 771,
+        "InventoryMediaWeekId": 771,
         "Spots": 0
       }
     ],

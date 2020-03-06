@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.Utilities.Logging;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.BusinessEngines.PlanPricingInventoryEngine;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
@@ -36,16 +35,19 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IDayRepository _DayRepository;
         private readonly IStationRepository _StationRepository;
         private readonly IPlanPricingInventoryQuarterCalculatorEngine _PlanPricingInventoryQuarterCalculatorEngine;
+        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
 
         public PlanPricingInventoryEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                           IImpressionsCalculationEngine impressionsCalculationEngine,
                                           IGenreCache genreCache,
-                                          IPlanPricingInventoryQuarterCalculatorEngine planPricingInventoryQuarterCalculatorEngine)
+                                          IPlanPricingInventoryQuarterCalculatorEngine planPricingInventoryQuarterCalculatorEngine,
+                                          IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
         {
             _StationProgramRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
             _ImpressionsCalculationEngine = impressionsCalculationEngine;
             _GenreCache = genreCache;
             _PlanPricingInventoryQuarterCalculatorEngine = planPricingInventoryQuarterCalculatorEngine;
+            _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
 
             _NtiToNsiConversionRepository = broadcastDataRepositoryFactory.GetDataRepository<INtiToNsiConversionRepository>();
             _DayRepository = broadcastDataRepositoryFactory.GetDataRepository<IDayRepository>();
@@ -143,8 +145,8 @@ namespace Services.Broadcast.BusinessEngines
             IEnumerable<int> inventorySourceIds, List<short> availableMarkets, QuarterDetailDto planQuarter)
         {
             var totalInventory = new List<PlanPricingInventoryProgram>();
-            var fallbackQuarter = _PlanPricingInventoryQuarterCalculatorEngine.GetInventoryFallbackQuarter();
-
+            var fallbackQuarter = _PlanPricingInventoryQuarterCalculatorEngine.GetInventoryFallbackQuarter();  
+            
             var availableStations = _StationRepository.GetBroadcastStationsByMarketCodes(availableMarkets);
 
             foreach (var dateRange in dateRanges)
@@ -187,7 +189,63 @@ namespace Services.Broadcast.BusinessEngines
                 }
             }
 
+            _SetContractWeekForInventory(totalInventory, planQuarter, fallbackQuarter);
+
             return totalInventory;
+        }
+
+        /// <summary>
+        /// This method assumes plan has only one quarter 
+        /// that is why it associates fallback weeks only with weeks of the first plan quarter
+        /// </summary>
+        private void _SetContractWeekForInventory(
+            List<PlanPricingInventoryProgram> programs,
+            QuarterDetailDto planQuarter,
+            QuarterDetailDto fallbackQuarter)
+        {
+            var orderedPlanMediaWeeks = _MediaMonthAndWeekAggregateCache
+                .GetMediaWeeksIntersecting(planQuarter.StartDate, planQuarter.EndDate)
+                .OrderBy(x => x.StartDate);
+
+            var orderedFallbackMediaWeeks = _MediaMonthAndWeekAggregateCache
+                .GetMediaWeeksIntersecting(fallbackQuarter.StartDate, fallbackQuarter.EndDate)
+                .OrderBy(x => x.StartDate);
+
+            var lastPlanMediaWeek = orderedPlanMediaWeeks.Last();
+
+            var planMediaWeekIdsByOrder = orderedPlanMediaWeeks
+                .Select((item, index) => new { item, index })
+                .ToDictionary(x => x.index, x => x.item.Id);
+
+            var fallbackMediaWeekOrderByMediaWeekId = orderedFallbackMediaWeeks
+                .Select((item, index) => new { item, index })
+                .ToDictionary(x => x.item.Id, x => x.index);
+
+            foreach (var program in programs)
+            {
+                if (program.InventoryPricingQuarterType == InventoryPricingQuarterType.Fallback)
+                {
+                    foreach (var week in program.ManifestWeeks)
+                    {
+                        if (fallbackMediaWeekOrderByMediaWeekId.TryGetValue(week.InventoryMediaWeekId, out var fallbackMediaWeekOrder) &&
+                            planMediaWeekIdsByOrder.TryGetValue(fallbackMediaWeekOrder, out var planMediaWeekId))
+                        {
+                            week.ContractMediaWeekId = planMediaWeekId;
+                        }
+                        else
+                        {
+                            // if fallback quarter has more weeks than plan quarter
+                            // we associate such out of range weeks with the last plan week
+                            week.ContractMediaWeekId = lastPlanMediaWeek.Id;
+                        }
+                    }
+                }
+                else
+                {
+                    // for the plan quarter ContractMediaWeekId is the same as InventoryMediaWeekId
+                    program.ManifestWeeks.ForEach(x => x.ContractMediaWeekId = x.InventoryMediaWeekId);
+                }
+            }
         }
 
         private List<PlanPricingInventoryProgram> _GetPrograms(PlanDto plan, List<DateRange> planFlightDateRanges, IEnumerable<int> inventorySourceIds)

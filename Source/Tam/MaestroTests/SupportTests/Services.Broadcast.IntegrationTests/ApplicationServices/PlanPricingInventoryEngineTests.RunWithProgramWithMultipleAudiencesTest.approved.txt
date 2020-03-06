@@ -153,8 +153,9 @@
     "ManifestId": 469330,
     "ManifestWeeks": [
       {
+        "ContractMediaWeekId": 744,
         "Id": 2668533,
-        "MediaWeekId": 744,
+        "InventoryMediaWeekId": 744,
         "Spots": 0
       }
     ],
@@ -329,8 +330,9 @@
     "ManifestId": 469332,
     "ManifestWeeks": [
       {
+        "ContractMediaWeekId": 744,
         "Id": 2668539,
-        "MediaWeekId": 744,
+        "InventoryMediaWeekId": 744,
         "Spots": 0
       }
     ],

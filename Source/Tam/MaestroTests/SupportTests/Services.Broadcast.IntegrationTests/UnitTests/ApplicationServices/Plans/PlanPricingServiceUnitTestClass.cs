@@ -19,7 +19,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             IBackgroundJobClient backgroundJobClient,
             IPlanPricingInventoryEngine planPricingInventoryEngine,
             IBroadcastLockingManagerApplicationService lockingManagerApplicationService,
-            IDaypartCache daypartCache)
+            IDaypartCache daypartCache,
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
             : base(
                   broadcastDataRepositoryFactory, 
                   spotLengthEngine, 
@@ -27,9 +28,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                   backgroundJobClient,
                   planPricingInventoryEngine, 
                   lockingManagerApplicationService,
-                  daypartCache)
+                  daypartCache,
+                  mediaMonthAndWeekAggregateCache)
         {
-
         }
 
         public List<PlanPricingApiRequestSpotsDto> UT_GetPricingModelSpots(List<PlanPricingInventoryProgram> programs)

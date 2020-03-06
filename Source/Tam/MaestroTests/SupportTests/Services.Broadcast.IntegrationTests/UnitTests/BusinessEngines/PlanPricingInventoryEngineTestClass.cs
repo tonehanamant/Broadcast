@@ -15,12 +15,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IImpressionsCalculationEngine impressionsCalculationEngine,
             IGenreCache genreCache,
-            IPlanPricingInventoryQuarterCalculatorEngine planPricingInventoryQuarterCalculatorEngine)
+            IPlanPricingInventoryQuarterCalculatorEngine planPricingInventoryQuarterCalculatorEngine,
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
             : base(
                   broadcastDataRepositoryFactory, 
                   impressionsCalculationEngine, 
                   genreCache,
-                  planPricingInventoryQuarterCalculatorEngine)
+                  planPricingInventoryQuarterCalculatorEngine,
+                  mediaMonthAndWeekAggregateCache)
         {
         }
 

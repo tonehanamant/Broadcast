@@ -14,6 +14,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using Microsoft.Practices.Unity;
+using ApprovalTests.Reporters;
+using ApprovalTests;
+using IntegrationTests.Common;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 {
@@ -26,6 +30,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         private readonly Mock<IDayRepository> _DayRepositoryMock;
         private readonly Mock<INtiToNsiConversionRepository> _NtiToNsiConversionRepositoryMock;
         private readonly Mock<IPlanPricingInventoryQuarterCalculatorEngine> _PlanPricingInventoryQuarterCalculatorEngine;
+        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
 
         private readonly Mock<IInventoryRepository> _InventoryRepository;
         private readonly Mock<IStationProgramRepository> _StationProgramRepository;
@@ -39,6 +44,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _DayRepositoryMock = new Mock<IDayRepository>();
             _NtiToNsiConversionRepositoryMock = new Mock<INtiToNsiConversionRepository>();
             _PlanPricingInventoryQuarterCalculatorEngine = new Mock<IPlanPricingInventoryQuarterCalculatorEngine>();
+            _MediaMonthAndWeekAggregateCache = IntegrationTestApplicationServiceFactory.Instance.Resolve<IMediaMonthAndWeekAggregateCache>();
 
             _InventoryRepository = new Mock<IInventoryRepository>();
             _StationProgramRepository = new Mock<IStationProgramRepository>();
@@ -76,7 +82,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 _DataRepositoryFactoryMock.Object,
                 _ImpressionsCalculationEngineMock.Object,
                 _GenreCacheMock.Object,
-                _PlanPricingInventoryQuarterCalculatorEngine.Object);
+                _PlanPricingInventoryQuarterCalculatorEngine.Object,
+                _MediaMonthAndWeekAggregateCache);
         }
 
         [Test]
@@ -108,7 +115,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 Sunday = false,
                             }
                         }
-                    }
+                    },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
                 }
             };
 
@@ -146,7 +154,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 Sunday = true,
                             }
                         }
-                    }
+                    },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
                 }
             };
 
@@ -184,7 +193,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 Sunday = true,
                             }
                         }
-                    }
+                    },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
                 }
             };
 
@@ -247,7 +257,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 }
                             }
                         }
-                    }
+                    },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
                 }
             };
 
@@ -310,7 +321,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 }
                             }
                         }
-                    }
+                    },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
                 }
             };
 
@@ -373,7 +385,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 }
                             }
                         }
-                    }
+                    },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
                 }
             };
 
@@ -443,7 +456,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 }
                             }
                         }
-                    }
+                    },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
                 }
             };
 
@@ -531,7 +545,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 }
                             }
                         }
-                    }
+                    },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
                 }
             };
 
@@ -757,7 +772,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 EndTime = 37799 // 10:30am
                             }
                         }
-                    }
+                    },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
                 }
             };
 
@@ -806,7 +822,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var availableStations = _GetAvailableStations(marketCount, stationPerMarketCount);
 
             var inventory = availableStations.Select(s =>
-                   new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = s.LegacyCallLetters } })
+                   new PlanPricingInventoryProgram
+                   {
+                       Station = new DisplayBroadcastStation { LegacyCallLetters = s.LegacyCallLetters },
+                       ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
+                   })
                 .ToList();
 
             _StationRepository.Setup(s => s.GetBroadcastStationsByMarketCodes(It.IsAny<List<short>>()))
@@ -847,6 +867,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         ///     - 3 stations found in the Fallback Quarter
         /// </remarks>
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetFullProgramsWhenSomeStationsFallback()
         {
             /*** Arrange ***/
@@ -870,8 +891,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             {
                 Quarter = 4,
                 Year = 2019,
-                StartDate = new DateTime(2020, 09, 25),
-                EndDate = new DateTime(2020, 12, 27)
+                StartDate = new DateTime(2019, 10, 1),
+                EndDate = new DateTime(2019, 12, 31)
             };
             var fallbackDateRanges = new List<DateRange>() { flightDateRanges[0] };
 
@@ -880,15 +901,75 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             var inventoryOne = new List<PlanPricingInventoryProgram>
             {
-                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[0].LegacyCallLetters } },
-                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[1].LegacyCallLetters } },
-                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[2].LegacyCallLetters } },
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[0].LegacyCallLetters },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
+                    {
+                        new PlanPricingInventoryProgram.ManifestWeek
+                        {
+                            InventoryMediaWeekId = 826
+                        }
+                    }
+                },
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[1].LegacyCallLetters },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
+                    {
+                        new PlanPricingInventoryProgram.ManifestWeek
+                        {
+                            InventoryMediaWeekId = 826
+                        }
+                    }
+                },
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[2].LegacyCallLetters },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
+                    {
+                        new PlanPricingInventoryProgram.ManifestWeek
+                        {
+                            InventoryMediaWeekId = 826
+                        }
+                    }
+                },
             };
             var inventoryTwo = new List<PlanPricingInventoryProgram>
             {
-                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[3].LegacyCallLetters } },
-                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[4].LegacyCallLetters } },
-                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[5].LegacyCallLetters } },
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[3].LegacyCallLetters },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
+                    {
+                        new PlanPricingInventoryProgram.ManifestWeek
+                        {
+                            InventoryMediaWeekId = 826
+                        }
+                    }
+                },
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[4].LegacyCallLetters },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
+                    {
+                        new PlanPricingInventoryProgram.ManifestWeek
+                        {
+                            InventoryMediaWeekId = 826
+                        }
+                    }
+                },
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[5].LegacyCallLetters },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
+                    {
+                        new PlanPricingInventoryProgram.ManifestWeek
+                        {
+                            InventoryMediaWeekId = 826
+                        }
+                    }
+                },
             };
 
             _StationRepository.Setup(s => s.GetBroadcastStationsByMarketCodes(It.IsAny<List<short>>()))
@@ -913,11 +994,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 availableMarkets, planQuarter);
 
             /*** Assert ***/
-            Assert.AreEqual(6, result.Count);
-            foreach (var station in availableStations)
-            {
-                Assert.AreEqual(1, result.Count(i => i.Station.LegacyCallLetters == station.LegacyCallLetters));
-            }
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         /// <summary>
@@ -964,14 +1041,34 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             var inventoryOne = new List<PlanPricingInventoryProgram>
             {
-                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[0].LegacyCallLetters } },
-                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[1].LegacyCallLetters } },
-                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[2].LegacyCallLetters } }
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[0].LegacyCallLetters },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
+                },
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[1].LegacyCallLetters },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
+                },
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[2].LegacyCallLetters },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
+                }
             };
             var inventoryTwo = new List<PlanPricingInventoryProgram>
             {
-                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[3].LegacyCallLetters } },
-                new PlanPricingInventoryProgram { Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[4].LegacyCallLetters } }
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[3].LegacyCallLetters },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
+                },
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[4].LegacyCallLetters },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
+                }
             };
 
             _StationRepository.Setup(s => s.GetBroadcastStationsByMarketCodes(It.IsAny<List<short>>()))
