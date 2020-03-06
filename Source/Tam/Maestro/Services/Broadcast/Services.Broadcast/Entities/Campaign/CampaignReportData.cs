@@ -548,7 +548,8 @@ namespace Services.Broadcast.Entities.Campaign
                 tableData.CostValues.Add(cost);
                 tableData.CPMValues.Add(_CalculateCost(impressions, cost));
 
-                var hiatusDaysThisWeek = tablesInQuarterDaypart.SelectMany(x => x.HiatusDays[i]).Distinct().ToList();
+                var hiatusDaysThisWeek = tablesInQuarterDaypart.SelectMany(x => x.HiatusDays[i]).ToList();
+                hiatusDaysThisWeek = hiatusDaysThisWeek.Distinct().ToList();
                 tableData.HiatusDays.Add(hiatusDaysThisWeek);
                 tableData.HiatusDaysFormattedValues.Add(_GetHiatusDaysFormattedForWeek(hiatusDaysThisWeek));
 
@@ -601,7 +602,9 @@ namespace Services.Broadcast.Entities.Campaign
                     tableData.CostValues.Add(EMPTY_CELL);
                     tableData.CPMValues.Add(EMPTY_CELL);
                 }
-                var hiatusDaysThisWeek = tables.SelectMany(x => x.HiatusDays[i]).Distinct().ToList();
+                var hiatusDaysThisWeek = tables.SelectMany(x => x.HiatusDays[i]).ToList();
+                hiatusDaysThisWeek = hiatusDaysThisWeek.Distinct().ToList();
+                
                 tableData.HiatusDays.Add(hiatusDaysThisWeek);
                 tableData.HiatusDaysFormattedValues
                 .Add(_GetHiatusDaysFormattedForWeek(hiatusDaysThisWeek));
