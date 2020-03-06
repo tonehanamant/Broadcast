@@ -39,7 +39,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IPlanPricingService _PlanPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
         private readonly ICampaignSummaryRepository _CampaignSummaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
         private readonly IPlanRepository _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
-        private static readonly bool WRITE_FILE_TO_DISK = true;
+        private static readonly bool WRITE_FILE_TO_DISK = false;
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -1039,6 +1039,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var jsonResolver = new IgnorableSerializerContractResolver();
 
             jsonResolver.Ignore(typeof(ProgramLineupReportData), "ReportGeneratedDate");
+            jsonResolver.Ignore(typeof(ProgramLineupReportData), "AccuracyEstimateDate");
             jsonResolver.Ignore(typeof(SharedFolderFile), "Id");
 
             return new JsonSerializerSettings

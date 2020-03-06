@@ -68,6 +68,11 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             (int Row, int Column) toSourceCell,
             int rowsToCopy)
         {
+            if(rowsToCopy == 0)
+            {
+                return;
+            }
+
             var rowsBatchSize = toSourceCell.Row - fromSourceCell.Row + 1;
             var rowsBatchToCopy = worksheet
                 .Cells[fromSourceCell.Row, fromSourceCell.Column, toSourceCell.Row, toSourceCell.Column];
@@ -88,6 +93,12 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             (int Row, int Column) topLeftCell,
             (int Row, int Column) bottomRightCell)
         {
+            //if there is only 1 row in the table we do nothing
+            if(topLeftCell.Row == bottomRightCell.Row)
+            {
+                return;
+            }
+
             // remove bottom borders from all rows except the last one
             worksheet.Cells[
                 topLeftCell.Row, topLeftCell.Column,

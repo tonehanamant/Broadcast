@@ -2,31 +2,12 @@
   "AccountExecutive": "",
   "AccuracyEstimateDate": "2/12/20",
   "Agency": "1st Image Marketing",
+  "AllocationByDaypartViewRows": null,
+  "AllocationByDMAViewRows": null,
+  "AllocationByGenreViewRows": null,
   "Client": "PetMed Express, Inc",
   "ClientContact": "",
-  "DefaultViewRows": [
-    {
-      "Genre": "NEWS",
-      "NoOfMarkets": 1,
-      "NoOfStations": 1,
-      "Program": "LATE NEWS",
-      "Weight": 0.08
-    },
-    {
-      "Genre": "",
-      "NoOfMarkets": 1,
-      "NoOfStations": 1,
-      "Program": "THE SHAWSHANK REDEMPTION",
-      "Weight": 0.08
-    },
-    {
-      "Genre": "MOVIE",
-      "NoOfMarkets": 1,
-      "NoOfStations": 1,
-      "Program": "JOKER",
-      "Weight": 0.04
-    }
-  ],
+  "DefaultViewRows": null,
   "DetailedViewRows": [
     {
       "Daypart": "EMN",

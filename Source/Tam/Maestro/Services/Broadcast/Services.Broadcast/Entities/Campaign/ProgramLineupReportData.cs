@@ -30,7 +30,10 @@ namespace Services.Broadcast.Entities.Campaign
         public string ClientContact { get; set; }
         public List<DetailedViewRowDisplay> DetailedViewRows { get; set; }
         public List<DefaultViewRowDisplay> DefaultViewRows { get; set; }
-        
+        public List<AllocationViewRowDisplay> AllocationByDaypartViewRows { get; set; }
+        public List<AllocationViewRowDisplay> AllocationByGenreViewRows { get; set; }
+        public List<AllocationViewRowDisplay> AllocationByDMAViewRows { get; set; }
+
         private const string FILENAME_FORMAT = "Program_Lineup_Report_{0}_{1}.xlsx";
         private const string PLAN_HEADER_NAME_FORMAT = "{0} | Program Lineup*";
         private const string DATE_FORMAT_FILENAME = "MMddyyyy";
@@ -56,13 +59,24 @@ namespace Services.Broadcast.Entities.Campaign
             ExportFileName = string.Format(FILENAME_FORMAT, plan.Name, currentDate.ToString(DATE_FORMAT_FILENAME));
 
             _PopulateHeaderData(plan, planPricingJob, agency, advertiser, guaranteedDemo, spotLenghts, currentDate);
-            List<DetailedViewRowData> detailedRowsData = _PopulateDetailedViewRows(
+            IEnumerable<DetailedViewRowData> detailedRowsData = _GetDetailedViewRowData(
                 allocatedSpots,
                 manifests,
                 marketCoverageByStation,
                 primaryProgramsByManifestDaypartIds);
             DetailedViewRows = _MapToDetailedViewRows(detailedRowsData);
-            DefaultViewRows = _MapToDefaultViewRows(detailedRowsData, plan.TargetImpressions.Value);
+
+            //This code remains commented out until pushed to 20.05 BCOP
+            //DefaultViewRows = _MapToDefaultViewRows(detailedRowsData, plan.TargetImpressions.Value);
+            //AllocationByDaypartViewRows = _MapToAllocationViewRows(detailedRowsData, plan.TargetImpressions.Value
+            //    , x => x.Daypart.Code
+            //    , false);
+            //AllocationByGenreViewRows = _MapToAllocationViewRows(detailedRowsData, plan.TargetImpressions.Value
+            //    , x => x.Genre
+            //    , true);
+            //AllocationByDMAViewRows = _MapToAllocationViewRows(detailedRowsData, plan.TargetImpressions.Value
+            //    , x => x.MarketGeographyName
+            //    , true);
         }
 
         private void _PopulateHeaderData(
@@ -88,7 +102,7 @@ namespace Services.Broadcast.Entities.Campaign
             ClientContact = string.Empty;
         }
 
-        private List<DetailedViewRowData> _PopulateDetailedViewRows(
+        private IEnumerable<DetailedViewRowData> _GetDetailedViewRowData(
             List<PlanPricingAllocatedSpot> allocatedSpots,
             List<StationInventoryManifest> manifests,
             MarketCoverageByStation marketCoverageByStation,
@@ -143,30 +157,10 @@ namespace Services.Broadcast.Entities.Campaign
                 }
             }
 
-            return dataRows;
+            return dataRows.Distinct(new DetailedViewRowDataComparer());
         }
-
-        private List<DefaultViewRowDisplay> _MapToDefaultViewRows(List<DetailedViewRowData> dataRows, double planImpressions)
-        {
-            return dataRows
-                .GroupBy(x => x.ProgramName)
-               .Select(x =>
-               {
-                   var items = x.ToList();
-                   return new DefaultViewRowDisplay
-                   {
-                       Program = x.Key.ToUpper(),
-                       Weight = items.Sum(y => y.TotalSpotsImpressions) / planImpressions,
-                       Genre = items.First().Genre.ToUpper(),
-                       NoOfMarkets = items.Select(y => y.MarketGeographyName).Distinct().Count(),
-                       NoOfStations = items.Select(y => y.StationAffiliation).Distinct().Count()
-                   };
-               })
-               .OrderByDescending(x => x.Weight)
-               .ToList();
-        }
-
-        private List<DetailedViewRowDisplay> _MapToDetailedViewRows(List<DetailedViewRowData> dataRows)
+        
+        private List<DetailedViewRowDisplay> _MapToDetailedViewRows(IEnumerable<DetailedViewRowData> dataRows)
         {
             return dataRows
                 .OrderBy(x => x.Rank)
@@ -183,21 +177,49 @@ namespace Services.Broadcast.Entities.Campaign
                     Program = x.ProgramName.ToUpper(),
                     Genre = x.Genre.ToUpper(),
                     Daypart = x.DaypartCode.ToUpper()
-                })// Group by all fields to remove duplicates
-                .GroupBy(x => new
-                {
-                    x.Rank,
-                    x.DMA,
-                    x.Station,
-                    x.NetworkAffiliation,
-                    x.Days,
-                    x.TimePeriods,
-                    x.Program,
-                    x.Genre,
-                    x.Daypart
                 })
-                .Select(x => x.First())
                 .ToList();
+        }
+
+        private List<DefaultViewRowDisplay> _MapToDefaultViewRows(IEnumerable<DetailedViewRowData> dataRows, double planImpressions)
+        {
+            return dataRows
+                .GroupBy(x => x.ProgramName)
+               .Select(x =>
+               {
+                   var items = x.ToList();
+                   return new DefaultViewRowDisplay
+                   {
+                       Program = x.Key.ToUpper(),
+                       Weight = _CalculateWeight(items.Sum(y => y.TotalSpotsImpressions), planImpressions),
+                       Genre = items.First().Genre.ToUpper(),
+                       NoOfMarkets = items.Select(y => y.MarketGeographyName).Distinct().Count(),
+                       NoOfStations = items.Select(y => y.StationAffiliation).Distinct().Count()
+                   };
+               })
+               .OrderByDescending(x => x.Weight)
+               .ToList();
+        }
+
+        private List<AllocationViewRowDisplay> _MapToAllocationViewRows(
+            IEnumerable<DetailedViewRowData> dataRows
+            , double planImpressions
+            , Func<DetailedViewRowData, string> groupFunction
+            , bool toUpper)
+        {
+            return dataRows
+                .GroupBy(groupFunction)
+               .Select(x =>
+               {
+                   var items = x.ToList();
+                   return new AllocationViewRowDisplay
+                   {
+                       FilterLabel = toUpper ? x.Key.ToUpper() : x.Key,
+                       Weight = _CalculateWeight(items.Sum(y => y.TotalSpotsImpressions), planImpressions)
+                   };
+               })
+               .OrderByDescending(x => x.Weight)
+               .ToList();
         }
 
         private string _GetSpotLength(PlanDto plan, List<LookupDto> spotLenghts)
@@ -207,6 +229,13 @@ namespace Services.Broadcast.Entities.Campaign
             spotLenghtDisplay = ":" + spotLenghtDisplay;
 
             return spotLenghtDisplay;
+        }
+
+        private double _CalculateWeight(double impressions, double planImpressions)
+        {
+            return planImpressions == 0
+                ? 0
+                : impressions / planImpressions;
         }
 
         public class DetailedViewRowDisplay
@@ -231,6 +260,12 @@ namespace Services.Broadcast.Entities.Campaign
             public int NoOfMarkets { get; set; }
         }
 
+        public class AllocationViewRowDisplay
+        {
+            public string FilterLabel { get; set; }
+            public double Weight { get; set; }
+        }
+
         public class DetailedViewRowData
         {
             public int Rank { get; set; }
@@ -242,6 +277,29 @@ namespace Services.Broadcast.Entities.Campaign
             public string Genre { get; set; }
             public string DaypartCode { get; set; }
             public double TotalSpotsImpressions { get; set; }
+        }
+
+        private class DetailedViewRowDataComparer : IEqualityComparer<DetailedViewRowData>
+        {
+            public bool Equals(DetailedViewRowData x, DetailedViewRowData y)
+            {
+                return x.Rank == y.Rank
+                    && x.MarketGeographyName.Equals(y.MarketGeographyName)
+                    && x.StationLegacyCallLetters.Equals(y.StationLegacyCallLetters)
+                    && x.StationAffiliation.Equals(y.StationAffiliation)
+                    && x.Daypart.ToDayString().Equals(y.Daypart.ToDayString())
+                    && x.Daypart.ToTimeString().Equals(y.Daypart.ToTimeString())
+                    && x.ProgramName.Equals(y.ProgramName)
+                    && x.Genre.Equals(y.Genre)
+                    && x.DaypartCode.Equals(y.DaypartCode);
+            }
+
+            public int GetHashCode(DetailedViewRowData obj)
+            {
+                return $@"{obj.Rank}{obj.MarketGeographyName}{obj.StationLegacyCallLetters}{obj.StationAffiliation}
+                            {obj.Daypart.ToDayString()}{obj.Daypart.ToTimeString()}{obj.ProgramName}
+                            {obj.Genre}{obj.DaypartCode}".GetHashCode();
+            }
         }
     }
 }

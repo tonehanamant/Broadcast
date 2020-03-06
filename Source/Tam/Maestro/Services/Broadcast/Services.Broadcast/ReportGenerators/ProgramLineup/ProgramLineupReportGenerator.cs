@@ -43,8 +43,12 @@ namespace Services.Broadcast.ReportGenerators.ProgramLineup
             ExcelWorksheet detailedViewTab = ExportSharedLogic.GetWorksheet(templateFilePath, package, DETAILED_VIEW_WORKSHEET_NAME);
             new DetailedViewReportGenerator().PopulateTab(detailedViewTab, programLineupReportData);
 
-            ExcelWorksheet defaultViewTab = ExportSharedLogic.GetWorksheet(templateFilePath, package, DEFAULT_VIEW_WORKSHEET_NAME);
-            new DefaultViewReportGenerator().PopulateTab(defaultViewTab, programLineupReportData.DefaultViewRows);
+            //This code remains commented out until pushed to 20.05 BCOP
+            //ExcelWorksheet defaultViewTab = ExportSharedLogic.GetWorksheet(templateFilePath, package, DEFAULT_VIEW_WORKSHEET_NAME);
+            //new DefaultViewReportGenerator().PopulateTab(defaultViewTab, programLineupReportData.DefaultViewRows);
+
+            //ExcelWorksheet allocationsTab = ExportSharedLogic.GetWorksheet(templateFilePath, package, ALLOCATIONS_WORKSHEET_NAME);
+            //new AllocationsReportGenerator().PopulateTab(allocationsTab, programLineupReportData);
 
             //set the first tab as the active tab in the file
             package.Workbook.Worksheets.First().Select();

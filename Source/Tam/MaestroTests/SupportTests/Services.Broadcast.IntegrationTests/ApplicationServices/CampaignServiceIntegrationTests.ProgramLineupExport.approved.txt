@@ -1,25 +1,12 @@
 ﻿{
   "AccountExecutive": "",
-  "AccuracyEstimateDate": "3/5/20",
   "Agency": "Stub Agency",
+  "AllocationByDaypartViewRows": null,
+  "AllocationByDMAViewRows": null,
+  "AllocationByGenreViewRows": null,
   "Client": "Stub Advertiser",
   "ClientContact": "",
-  "DefaultViewRows": [
-    {
-      "Genre": "CHILDREN",
-      "NoOfMarkets": 1,
-      "NoOfStations": 1,
-      "Program": "EARLY NEWS",
-      "Weight": 11.8575
-    },
-    {
-      "Genre": "COMEDY",
-      "NoOfMarkets": 1,
-      "NoOfStations": 1,
-      "Program": "LATE NEWS",
-      "Weight": 0.085
-    }
-  ],
+  "DefaultViewRows": null,
   "DetailedViewRows": [
     {
       "Daypart": "LF",
