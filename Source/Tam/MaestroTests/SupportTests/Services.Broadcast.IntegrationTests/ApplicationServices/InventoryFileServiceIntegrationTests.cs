@@ -1613,6 +1613,31 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void CanImportDiginetFileThatContainsUnmappedStations()
+        {
+            var inventorySourceId = 20; // COZI
+
+            using (new TransactionScopeWrapper())
+            {
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("Diginet_ValidFile_WithUnmappedStations.xlsx", processInventoryRatings: true);
+
+                var result = _InventoryService.GetInventoryUploadHistory(inventorySourceId, null, null);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventoryUploadHistoryDto), "FileId");
+
+                var serializer = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, serializer));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void CanGetUploadHistoryQuartersOpenMarket()
         {
             // Open Market.

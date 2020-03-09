@@ -173,6 +173,20 @@ namespace Services.Broadcast.Converters.RateImport
             return result;
         }
 
+        public virtual List<DisplayBroadcastStation> GetFileStations(ProprietaryInventoryFile proprietaryFile)
+        {
+            var allStationNames = proprietaryFile.DataLines.Select(x => x.Station).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct();
+            var stationsList = new List<DisplayBroadcastStation>();
+
+            foreach (var stationName in allStationNames)
+            {
+                var station = _StationMappingService.GetStationByCallLetters(stationName);
+                stationsList.Add(station);
+            }
+
+            return stationsList;
+        }
+
         protected List<StationInventoryManifestWeek> GetManifestWeeksInRange(DateTime startDate, DateTime endDate, int spots)
         {
             var mediaWeeks = MediaMonthAndWeekAggregateCache.GetMediaWeeksIntersecting(startDate, endDate);

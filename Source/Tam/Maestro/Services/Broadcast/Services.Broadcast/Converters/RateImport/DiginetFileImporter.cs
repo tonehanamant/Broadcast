@@ -294,6 +294,23 @@ namespace Services.Broadcast.Converters.RateImport
             }
         }
 
+        public override List<DisplayBroadcastStation> GetFileStations(ProprietaryInventoryFile proprietaryFile)
+        {
+            var allStationNames = proprietaryFile.DataLines.Select(x => x.Station).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct();
+            var stationsList = new List<DisplayBroadcastStation>();
+
+            foreach (var stationName in allStationNames)
+            {
+                var station = _StationMappingService.GetStationByCallLetters(stationName, throwIfNotFound: false);
+                if (station != null)
+                {
+                    stationsList.Add(station);
+                }
+            }
+
+            return stationsList;
+        }
+
         private ProprietaryInventoryDataLine _ReadAndValidateDataLine(
             ExcelWorksheet worksheet
             , int rowIndex
@@ -457,9 +474,9 @@ namespace Services.Broadcast.Converters.RateImport
                             SpotCost = x.SpotCost.Value
                         }
                     },
-                    Station = _StationMappingService.GetStationByCallLetters(x.Station)
+                    Station = _StationMappingService.GetStationByCallLetters(x.Station, throwIfNotFound: false)
                 }
-            ).ToList();
+            ).Where(manifest => manifest.Station != null).ToList();
         }
 
         private DaypartDefaultDto _MapToDaypartCode(DisplayDaypart displayDaypart, List<DaypartDefaultDto> allDaypartDefaults)

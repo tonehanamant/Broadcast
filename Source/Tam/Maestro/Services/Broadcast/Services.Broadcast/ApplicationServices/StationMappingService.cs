@@ -58,8 +58,9 @@ namespace Services.Broadcast.ApplicationServices
         /// Gets the station by call letters.
         /// </summary>
         /// <param name="stationCallLetters">The station call letters.</param>
+        /// <param name="throwIfNotFound">Boolean value. When set to true exception is thrown if station not found</param>
         /// <returns></returns>
-        DisplayBroadcastStation GetStationByCallLetters(string stationCallLetters);
+        DisplayBroadcastStation GetStationByCallLetters(string stationCallLetters, bool throwIfNotFound = true);
     }
 
     public class StationMappingService : IStationMappingService
@@ -198,7 +199,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <inheritdoc />
-        public DisplayBroadcastStation GetStationByCallLetters(string stationCallLetters)
+        public DisplayBroadcastStation GetStationByCallLetters(string stationCallLetters, bool throwIfNotFound = true)
         {
             // Check station (Cadent Call Letters, a.k.a. legacy call letters)
             var station = _StationRepository.GetBroadcastStationByLegacyCallLetters(stationCallLetters);
@@ -213,7 +214,7 @@ namespace Services.Broadcast.ApplicationServices
             // If not found or multiple stations found, throw an error
             if (station == null)
             {
-                station = _StationMappingRepository.GetBroadcastStationStartingWithCallLetters(stationCallLetters);
+                station = _StationMappingRepository.GetBroadcastStationStartingWithCallLetters(stationCallLetters, throwIfNotFound);
             }
 
             return station;

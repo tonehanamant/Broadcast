@@ -152,7 +152,7 @@ namespace Services.Broadcast.ApplicationServices
                     using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                     {
                         var header = proprietaryFile.Header;
-                        var stations = _GetFileStations(proprietaryFile);
+                        var stations = fileImporter.GetFileStations(proprietaryFile);
                         var stationsDict = stations.ToDictionary(x => x.Id, x => x.LegacyCallLetters);
                         
                         fileImporter.PopulateManifests(proprietaryFile, stations);
@@ -296,20 +296,6 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return inventorySource;
-        }
-
-        private List<DisplayBroadcastStation> _GetFileStations(ProprietaryInventoryFile proprietaryFile)
-        {
-            var allStationNames = proprietaryFile.DataLines.Select(x => x.Station).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct();            
-            var stationsList = new List<DisplayBroadcastStation>();
-
-            foreach (var stationName in allStationNames)
-            {
-                var station = _IStationMappingService.GetStationByCallLetters(stationName);
-                stationsList.Add(station);
-            }
-
-            return stationsList;
         }
                 
         private void WriteErrorFileToDisk(Stream stream, int fileId, string fileName)

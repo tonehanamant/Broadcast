@@ -63,8 +63,9 @@ namespace Services.Broadcast.Repositories
         /// Gets the broadcast station starting with call letters.
         /// </summary>
         /// <param name="callLetters">The call letters.</param>
+        /// <param name="throwIfNotFound">Boolean value. When set to true exception is thrown if station not found</param>
         /// <returns></returns>
-        DisplayBroadcastStation GetBroadcastStationStartingWithCallLetters(string callLetters);
+        DisplayBroadcastStation GetBroadcastStationStartingWithCallLetters(string callLetters, bool throwIfNotFound = true);
     }
 
     public class StationMappingRepository : BroadcastRepositoryBase, IStationMappingRepository
@@ -167,7 +168,7 @@ namespace Services.Broadcast.Repositories
 
         private DisplayBroadcastStation _MapToDisplayBroadcastStationDto(station entity)
         {
-            return new DisplayBroadcastStation
+            return entity == null ? null : new DisplayBroadcastStation
             {
                 Id = entity.id,
                 Code = entity.station_code,
@@ -245,22 +246,31 @@ namespace Services.Broadcast.Repositories
                     .Where(station =>
                         station.station_mappings.Any(mapping => mapping.mapped_call_letters == callLetters))
                     .FirstOrDefault();
-                return entity == null ? null : _MapToDisplayBroadcastStationDto(entity);
+                return _MapToDisplayBroadcastStationDto(entity);
             });
         }
 
         /// <inheritdoc />
-        public DisplayBroadcastStation GetBroadcastStationStartingWithCallLetters(string callLetters)
+        public DisplayBroadcastStation GetBroadcastStationStartingWithCallLetters(string callLetters, bool throwIfNotFound = true)
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var entity = context.stations
+                var query = context.stations
                     .Include(x => x.station_mappings)
                     .Include(x => x.market)
                     .Where(station =>
-                        station.station_mappings.Any(mapping => mapping.mapped_call_letters.StartsWith(callLetters)))
-                    .Single($"No single station found for call letters {callLetters}");
-                return _MapToDisplayBroadcastStationDto(entity);
+                        station.station_mappings.Any(mapping => mapping.mapped_call_letters.StartsWith(callLetters)));
+                
+                if (throwIfNotFound)
+                {
+                    return _MapToDisplayBroadcastStationDto(
+                        query.Single($"No single station found for call letters {callLetters}"));
+                }
+                else
+                {
+                    return _MapToDisplayBroadcastStationDto(
+                        query.SingleOrDefault($"Multiple stations found for call letters {callLetters}"));
+                }
             });
         }
     }

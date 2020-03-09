@@ -229,8 +229,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
                 .Returns(new List<MediaWeek> {new MediaWeek(), new MediaWeek()});
 
             var getMappedCallLettersCalls = new List<string>();
-            _StationMappingService.Setup(s => s.GetStationByCallLetters(It.IsAny<string>()))
-                .Callback<string>((mappedCallsign) => getMappedCallLettersCalls.Add(mappedCallsign))
+            _StationMappingService.Setup(s => s.GetStationByCallLetters(It.IsAny<string>(), It.IsAny<bool>()))
+                .Callback<string, bool>((mappedCallsign, throwsIfNotFound) => getMappedCallLettersCalls.Add(mappedCallsign))
                 .Returns(new DisplayBroadcastStation { LegacyCallLetters = "CadentStationCallsign" });
 
             var importer = _GetDiginetFileImporter();
@@ -285,8 +285,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
                 .Returns(new List<MediaWeek> { new MediaWeek(), new MediaWeek() });
 
             var getMappedCallLettersCalls = new List<string>();
-            _StationMappingService.Setup(s => s.GetStationByCallLetters(It.IsAny<string>()))
-                .Callback<string>((mappedCallsign) => getMappedCallLettersCalls.Add(mappedCallsign))
+            _StationMappingService.Setup(s => s.GetStationByCallLetters(It.IsAny<string>(), It.IsAny<bool>()))
+                .Callback<string, bool>((mappedCallsign, throwsIfNotFound) => getMappedCallLettersCalls.Add(mappedCallsign))
                 .Throws(new Exception("Station not found test message."));
 
             var importer = _GetDiginetFileImporter();
