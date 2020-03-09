@@ -13,8 +13,7 @@ namespace Services.Broadcast.Repositories
 {
     public interface IInventoryProgramsBySourceJobsRepository : IDataRepository, IInventoryProgramsJobsRepository
     {
-        int QueueJob(int sourceId, DateTime startDate, DateTime endDate, string queuedBy,
-            DateTime queuedAt, Guid? jobGroupId);
+        int SaveEnqueuedJob(InventoryProgramsBySourceJob job);
 
         InventoryProgramsBySourceJob GetJob(int jobId);
     }
@@ -25,20 +24,19 @@ namespace Services.Broadcast.Repositories
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
-        public int QueueJob(int sourceId, DateTime startDate, DateTime endDate, string queuedBy,
-            DateTime queuedAt, Guid? jobGroupId)
+        public int SaveEnqueuedJob(InventoryProgramsBySourceJob job)
         {
             return _InReadUncommitedTransaction(context =>
             {
                 var fileJob = new inventory_programs_by_source_jobs
                 {
-                    job_group_id = jobGroupId,
-                    inventory_source_id = sourceId,
-                    start_date = startDate,
-                    end_date = endDate,
+                    job_group_id = job.JobGroupId,
+                    inventory_source_id = job.InventorySourceId,
+                    start_date = job.StartDate,
+                    end_date = job.EndDate,
                     status = (int)InventoryProgramsJobStatus.Queued,
-                    queued_by = queuedBy,
-                    queued_at = queuedAt,
+                    queued_by = job.QueuedBy,
+                    queued_at = job.QueuedAt,
                     completed_at = null
                 };
 

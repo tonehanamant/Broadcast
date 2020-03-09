@@ -322,6 +322,7 @@
     <Compile Include="BusinessEngines\GeneralMath.cs" />
     <Compile Include="BusinessEngines\ImpressionsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsByFileProcessor.cs" />
+    <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsBySourceUnprocessedProcessor.cs" />
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsBySourceProcessor.cs" />
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsProcessingBySourceDiagnostics.cs" />
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsProcessingByFileDiagnostics.cs" />
@@ -443,6 +444,7 @@
     <Compile Include="Entities\Plan\VPVHForAudience.cs" />
     <Compile Include="Entities\PricingEstimate.cs" />
     <Compile Include="Entities\PricingInventoryGetRequestParametersDto.cs" />
+    <Compile Include="Entities\ProgramGuide\GuideInterfaceExportElement.cs" />
     <Compile Include="Entities\ProgramGuide\GuideResponseProgramDto.cs" />
     <Compile Include="Entities\ProgramGuide\GuideResponseElementDto.cs" />
     <Compile Include="Entities\ProgramGuide\GuideRequestDaypartDto.cs" />

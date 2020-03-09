@@ -42,6 +42,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             UT_EnqueueProcessInventoryProgramsBySourceJobIds.Add(jobId);
         }
 
+        public List<int> UT_DoEnqueueProcessInventoryProgramsBySourceJobUnprocessedIds { get; set; } = new List<int>();
+
+        protected override void _DoEnqueueProcessInventoryProgramsBySourceJobUnprocessed(int jobId)
+        {
+            UT_DoEnqueueProcessInventoryProgramsBySourceJobUnprocessedIds.Add(jobId);
+        }
+
         public string[] UT_GetToEmails { get; set; } = new string[]{ "DefaultConfiguredToEmail" };
 
         protected override string[] _GetProcessingBySourceResultReportToEmails()

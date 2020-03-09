@@ -1,8 +1,10 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services;
+using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
+using System;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 {
@@ -12,13 +14,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             IProgramGuideApiClient programGuideApiClient,
             IStationMappingService stationMappingService,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-            IGenreCache genreCache)
+            IGenreCache genreCache,
+            IFileService fileService,
+            IEmailerService emailerService
+        )
             : base(
-                  broadcastDataRepositoryFactory, 
-                  programGuideApiClient, 
-                  stationMappingService, 
-                  mediaMonthAndWeekAggregateCache,
-                  genreCache)
+                broadcastDataRepositoryFactory,
+                programGuideApiClient,
+                stationMappingService,
+                mediaMonthAndWeekAggregateCache,
+                genreCache,
+                fileService,
+                emailerService)
         {
         }
 
@@ -48,6 +55,25 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         protected override int _GetParallelApiCallsBatchSize()
         {
             return UT_ParallelApiCallsBatchSize;
+        }
+
+        protected override string _GetBroadcastSharedDirectoryPath()
+        {
+            return "testSettingBroadcastSharedDirectoryPath";
+        }
+
+        protected override string[] _GetProcessingBySourceResultReportToEmails()
+        {
+            return new[] { "ToEmail1", "ToEmail2" };
+        }
+
+        public DateTime? UT_CurrentDateTime { get; set; }
+
+        protected override DateTime _GetCurrentDateTime()
+        {
+            return UT_CurrentDateTime.HasValue
+                ? UT_CurrentDateTime.Value
+                : base._GetCurrentDateTime();
         }
     }
 }

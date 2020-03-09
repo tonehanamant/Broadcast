@@ -13,7 +13,6 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.UI;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Security;
 
@@ -105,6 +104,36 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
+        [Route("ImportInventoryProgramsResults")]
+        public ActionResult ImportInventoryProgramsResults(HttpPostedFileBase file)
+        {
+            if (file != null && file.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                if (!fileName.EndsWith(".csv"))
+                {
+                    ViewBag.Message = "Only CSV (.csv) files supported";
+                }
+                else
+                {
+                    try
+                    {
+                        var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
+                        var result = service.ImportInventoryProgramsResults(file.InputStream, fileName);
+                        ViewBag.Message = result;
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Message = ex.Message;
+                    }
+                }
+            }
+
+            return View("Index");
+        }
+
+
+        [HttpPost]
         public ActionResult ClearMediaMonthCrunchCache()
         {
             var service = _ApplicationServiceFactory.GetApplicationService<IRatingForecastService>();
@@ -162,6 +191,24 @@ namespace BroadcastComposerWeb.Controllers
             {
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
                 var result = service.QueueProcessInventoryProgramsByFileJob(fileId, _GetCurrentUserFullName());
+
+                ViewBag.Message = $"Job queued as Job {result.Job.Id}. \r\n{result}";
+            }
+            catch (Exception e)
+            {
+                ViewBag.Message = "Error Processing Job: " + e.Message;
+            }
+
+            return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult QueInventoryProgramsJobByFileName(string fileName)
+        {
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
+                var result = service.QueueProcessInventoryProgramsByFileJobByFileName(fileName, _GetCurrentUserFullName());
 
                 ViewBag.Message = $"Job queued as Job {result.Job.Id}. \r\n{result}";
             }
@@ -250,6 +297,27 @@ namespace BroadcastComposerWeb.Controllers
                 var result = service.ReQueueProcessInventoryProgramsBySourceJob(jobId, _GetCurrentUserFullName());
 
                 ViewBag.Message = $"Job '{jobId}' requeued as new Job {result.Jobs.First().Id}.";
+            }
+            catch (Exception e)
+            {
+                ViewBag.Message = "Error Processing Job: " + e.Message;
+            }
+
+            return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult QueueProcessInventoryProgramsBySourceJobUnprocessedBetweenDates(int inventorySourceId, string startDateString, string endDateString)
+        {
+            try
+            {
+                var startDate = ParseDateTimeString(startDateString, "StartDate");
+                var endDate = ParseDateTimeString(endDateString, "EndDate");
+
+                var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
+                var result = service.QueueProcessInventoryProgramsBySourceJobUnprocessed(inventorySourceId, startDate, endDate, _GetCurrentUserFullName());
+
+                ViewBag.Message = $"Job queued as Job {result.Jobs.First().Id}. \r\n{result}";
             }
             catch (Exception e)
             {

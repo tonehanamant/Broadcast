@@ -13,7 +13,7 @@ namespace Services.Broadcast.Repositories
 {
     public interface IInventoryProgramsByFileJobsRepository : IDataRepository, IInventoryProgramsJobsRepository
     {
-        int QueueJob(int fileId, string queuedBy, DateTime queuedAt);
+        int SaveEnqueuedJob(InventoryProgramsByFileJob job);
 
         InventoryProgramsByFileJob GetJob(int jobId);
 
@@ -26,16 +26,16 @@ namespace Services.Broadcast.Repositories
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
-        public int QueueJob(int fileId, string queuedBy, DateTime queuedAt)
+        public int SaveEnqueuedJob(InventoryProgramsByFileJob job)
         {
             return _InReadUncommitedTransaction(context =>
                 {
                     var fileJob = new inventory_programs_by_file_jobs
                     {
-                        inventory_file_id = fileId,
+                        inventory_file_id = job.InventoryFileId,
                         status = (int)InventoryProgramsJobStatus.Queued,
-                        queued_by = queuedBy,
-                        queued_at = queuedAt,
+                        queued_by = job.QueuedBy,
+                        queued_at = job.QueuedAt,
                         completed_at = null
                     };
 

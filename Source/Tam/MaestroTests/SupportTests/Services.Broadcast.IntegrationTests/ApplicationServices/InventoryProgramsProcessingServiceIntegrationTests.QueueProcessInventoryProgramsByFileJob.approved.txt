@@ -8,10 +8,11 @@
   },
   "RequestChunkSize": 10,
   "SaveChunkSize": 1000,
-  "TotalApiCallCount": 1,
+  "TotalApiCallCount": 0,
+  "TotalExportLinesCount": 14,
   "TotalManifestCount": 2,
-  "TotalProgramsSaved": 2,
-  "TotalRequestCount": 2,
-  "TotalResponseCount": 2,
-  "TotalSavesCount": 1
+  "TotalProgramsSaved": 0,
+  "TotalRequestCount": 0,
+  "TotalResponseCount": 0,
+  "TotalSavesCount": 0
 }

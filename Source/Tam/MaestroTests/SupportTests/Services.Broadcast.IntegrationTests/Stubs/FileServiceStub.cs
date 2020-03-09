@@ -11,6 +11,24 @@ namespace Services.Broadcast.IntegrationTests
 {
     public class FileServiceStub : IFileService
     {
+        /// <summary>
+        /// Gets the inputs from the CreateTextFile call.
+        ///     Item1 = filePath
+        ///     Item2 = lines
+        /// </summary>
+        public List<Tuple<string, List<string>>> CreatedTextFiles { get; } = new List<Tuple<string, List<string>>>();
+
+        /// <summary>
+        /// Gets the list of CreateDirectory calls
+        ///     string = filePath
+        /// </summary>
+        public List<string> CreatedDirectories { get; } = new List<string>();
+
+        /// <summary>
+        /// If exists then when CreateTextFile is called this will be thrown.
+        /// </summary>
+        public static Exception ThrownOnCreateTextFile { get; set; }
+
         public virtual List<string> GetFiles(string path)
         {
             return new List<string>();
@@ -52,7 +70,7 @@ namespace Services.Broadcast.IntegrationTests
 
         public void CreateDirectory(string filePath)
         {
-            throw new NotImplementedException();
+            CreatedDirectories.Add(filePath);
         }
 
         public virtual Stream CreateZipArchive(IDictionary<string, string> filePaths)
@@ -62,7 +80,11 @@ namespace Services.Broadcast.IntegrationTests
 
         public virtual void CreateTextFile(string filePath, List<string> lines)
         {
-            throw new NotImplementedException();
+            if (ThrownOnCreateTextFile != null)
+            {
+                throw ThrownOnCreateTextFile;
+            }
+            CreatedTextFiles.Add(new Tuple<string, List<string>>(filePath, lines));
         }
         public virtual Stream GetFileStream(string filePath)
         {

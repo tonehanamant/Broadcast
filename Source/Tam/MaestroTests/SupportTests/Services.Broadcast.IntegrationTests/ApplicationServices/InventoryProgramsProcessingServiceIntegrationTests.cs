@@ -27,7 +27,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IProgramGuideApiClient, ProgramGuideApiClientStub>();
-            
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceStub>();
+
             _InventoryProgramsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
         }
 
@@ -56,6 +57,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var queueResult = _InventoryProgramsProcessingService.QueueProcessInventoryProgramsByFileJob(fileId, TEST_USERNAME);
                 var result = _InventoryProgramsProcessingService.ProcessInventoryProgramsByFileJob(queueResult.Job.Id);
+
+                // PRI-23390 : no longer calls ProgramGuide API or saves results to db.  Exports a file instead.
+                Assert.IsTrue(result.ExportFileName.Contains("ProgramGuideInventoryExportFile_"));
+                Assert.IsTrue(result.ExportFileName.EndsWith(".csv"));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
             }
         }
@@ -72,6 +77,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var queueResult = _InventoryProgramsProcessingService.QueueProcessInventoryProgramsBySourceJob(sourceId, startDate, endDate, TEST_USERNAME);
                 var result = _InventoryProgramsProcessingService.ProcessInventoryProgramsBySourceJob(queueResult.Jobs.First().Id);
+                Assert.IsTrue(result.ExportFileName.Contains("ProgramGuideInventoryExportFile_"));
+                Assert.IsTrue(result.ExportFileName.EndsWith(".csv"));
+                // PRI-23390 : no longer calls ProgramGuide API or saves results to db.  Exports a file instead.
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
             }
         }
@@ -94,7 +102,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _InventoryProgramsProcessingService.ProcessInventoryProgramsBySourceJob(jobId);
 
                 var lastMessageSent = EmailerServiceStub.LastMailMessageGenerated;
-                Assert.IsNull(lastMessageSent);
+
+                Assert.IsNotNull(lastMessageSent);
+                Assert.IsTrue(lastMessageSent.Body.Contains("A ProgramGuide Interface file has been exported."));
+                Assert.IsTrue(lastMessageSent.Body.Contains("JobGroupID : af26f2db-3078-4659-9025-7362e14bbd02"));
+                Assert.IsTrue(lastMessageSent.Body.Contains("Inventory Source : Open Market"));
+                Assert.IsTrue(lastMessageSent.Body.Contains("Range Start Date : 2018-09-20"));
+                Assert.IsTrue(lastMessageSent.Body.Contains("Range End Date : 2018-09-26"));
+                // PRI-23390 : no longer calls ProgramGuide API or saves results to db.  Exports a file instead.
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
             }
         }
@@ -115,17 +130,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var queueResult = _InventoryProgramsProcessingService.QueueProcessInventoryProgramsBySourceJob(sourceId, startDate, endDate, TEST_USERNAME, jobGroupId);
                 jobId = queueResult.Jobs.First().Id;
 
-                ProgramGuideApiClientStub.ThrownOnPostAndGet = new Exception("Test error message"); // set it on the shared resource.
+                FileServiceStub.ThrownOnCreateTextFile = new Exception("Test error message"); // set it on the shared resource.
                 EmailerServiceStub.LastMailMessageGenerated = null;  // set it on the shared resource.
 
                 var caught = Assert.Throws<Exception>(() =>
                     _InventoryProgramsProcessingService.ProcessInventoryProgramsBySourceJob(jobId));
 
                 var lastMessageSent = EmailerServiceStub.LastMailMessageGenerated;
-                ProgramGuideApiClientStub.ThrownOnPostAndGet = null;  // cleanup after ourselves.
+                FileServiceStub.ThrownOnCreateTextFile = null;  // cleanup after ourselves.
                 EmailerServiceStub.LastMailMessageGenerated = null;  // cleanup after ourselves.
 
                 Assert.AreEqual("Test error message", caught.Message);
+                // PRI-23390 : no longer calls ProgramGuide API or saves results to db.  Exports a file instead.
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(lastMessageSent));
             }
         }
@@ -136,6 +152,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             jsonResolver.Ignore(typeof(InventoryProgramsProcessingJobDiagnostics), "JobId");
             jsonResolver.Ignore(typeof(InventoryProgramsProcessingJobDiagnostics), "StopWatchDict");
+            jsonResolver.Ignore(typeof(InventoryProgramsProcessingJobDiagnostics), "ExportFileName");
 
             return new JsonSerializerSettings
             {

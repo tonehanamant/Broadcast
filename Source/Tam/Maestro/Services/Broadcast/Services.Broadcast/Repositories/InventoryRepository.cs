@@ -149,6 +149,13 @@ namespace Services.Broadcast.Repositories
         /// </remarks>
         List<StationInventoryManifest> GetInventoryBySourceForProgramsProcessing(int sourceId, List<int> mediaWeekIds);
 
+        /// <summary>
+        /// Gets the inventory by source within the date range that is unprocessed.
+        /// </summary>
+        /// <param name="sourceId">The source identifier.</param>
+        /// <param name="mediaWeekIds">The media week ids.</param>
+        List<StationInventoryManifest> GetInventoryBySourceWithUnprocessedPrograms(int sourceId, List<int> mediaWeekIds);
+
         void UpdatePrimaryProgramsForManifestDayparts(IEnumerable<StationInventoryManifestDaypart> manifestDayparts);
     }
 
@@ -1636,6 +1643,31 @@ namespace Services.Broadcast.Repositories
                                   m.station.affiliation != null &&
                                   m.station_inventory_manifest_weeks.Any(w => mediaWeekIds.Contains(w.media_week_id)) &&
                                   m.station_inventory_manifest_dayparts.Any()
+                            select m).ToList();
+
+                    var manifestDtos = manifests.Select(x => _MapToInventoryManifest(_PruneManifestWeeks(x, mediaWeekIds))).ToList();
+                    return manifestDtos;
+                });
+        }
+
+        ///<inheritdoc/>
+        public List<StationInventoryManifest> GetInventoryBySourceWithUnprocessedPrograms(int sourceId, List<int> mediaWeekIds)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var manifests =
+                        (from m in
+                                context.station_inventory_manifest
+                                    .Include(x => x.station_inventory_manifest_weeks)
+                                    .Include(x => x.station_inventory_manifest_dayparts)
+                                    .Include(s => s.station)
+                            where m.inventory_source_id == sourceId &&
+                                  m.station != null &&
+                                  m.station.affiliation != null &&
+                                  m.station_inventory_manifest_weeks.Any(w => mediaWeekIds.Contains(w.media_week_id)) &&
+                                  m.station_inventory_manifest_dayparts.Any() &&
+                                  m.station_inventory_manifest_dayparts.Any(d => d.station_inventory_manifest_daypart_programs.Any()) == false
                             select m).ToList();
 
                     var manifestDtos = manifests.Select(x => _MapToInventoryManifest(_PruneManifestWeeks(x, mediaWeekIds))).ToList();

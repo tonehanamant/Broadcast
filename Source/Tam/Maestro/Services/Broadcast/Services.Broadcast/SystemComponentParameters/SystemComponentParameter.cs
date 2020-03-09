@@ -59,8 +59,11 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	 
 		public static string BroadcastSharedFolder  
 		{
-            get { return SystemComponentParameterHelper.GetPropertyValue<string>
-					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.BroadcastSharedFolder); }
+            get
+            {
+                return SystemComponentParameterHelper.GetPropertyValue<string>
+                  (BroadcastServiceSystemParameterNames.ComponentID, BroadcastServiceSystemParameterNames.BroadcastSharedFolder);
+            }
         }
 	 
 		public static string CampaignExportReportsFolder  

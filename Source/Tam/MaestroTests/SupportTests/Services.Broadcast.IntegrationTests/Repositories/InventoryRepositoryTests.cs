@@ -7,6 +7,7 @@ using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using Services.Broadcast.Entities.Plan;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.Repositories
@@ -125,6 +126,76 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, _GetJsonSettings()));
             }
+        }
+
+        [Test]
+        public void GetInventoryBySourceWithUnprocessedPrograms()
+        {
+            const int inventorySourceId = 1;
+            var weekIds = new List<int> { 768, 769, 770 };
+            
+            const int expectedRecordCountTotal = 8;
+            const int expectedRecordCountWithoutPrograms = 3;
+
+            var startDate = new DateTime(2019, 02, 01);
+            var endDate = new DateTime(2019, 02, 12);
+            var createdAtDate = new DateTime(2019, 01, 25);
+            var stationInventoryManifestDaypartIdsToAddProgramsTo = new List<int>
+            {
+                353961,
+                353961,
+                353961,
+                353962,
+                353962,
+                353962,
+                353963,
+                353963,
+                353963,
+                358289,
+                358289,
+                358289,
+                358290,
+                358290
+            };
+
+            var newPrograms = new List<StationInventoryManifestDaypartProgram>();
+            foreach (var daypartId in stationInventoryManifestDaypartIdsToAddProgramsTo)
+            {
+                var newProgram = new StationInventoryManifestDaypartProgram
+                {
+                    StationInventoryManifestDaypartId = daypartId,
+                    ProgramName = $"Program For {daypartId}",
+                    ShowType = "movie",
+                    SourceGenreId = 57,
+                    GenreSourceId = 2,
+                    MaestroGenreId = 39,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    StartTime = 3600,
+                    EndTime = 5400
+                };
+                newPrograms.Add(newProgram);
+            }
+            
+            var repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+
+            int totalCount;
+            int withoutProgramsCount;
+
+            using (new TransactionScopeWrapper())
+            {
+                // create the programs for our test.
+                repo.UpdateInventoryPrograms(newPrograms, createdAtDate);
+                
+                var totalInventory = repo.GetInventoryBySourceForProgramsProcessing(inventorySourceId, weekIds);
+                var withoutPrograms = repo.GetInventoryBySourceWithUnprocessedPrograms(inventorySourceId, weekIds);
+
+                totalCount = totalInventory.Count;
+                withoutProgramsCount = withoutPrograms.Count;
+            }
+
+            Assert.AreEqual(expectedRecordCountTotal, totalCount);
+            Assert.AreEqual(expectedRecordCountWithoutPrograms, withoutProgramsCount);
         }
 
         private JsonSerializerSettings _GetJsonSettings()

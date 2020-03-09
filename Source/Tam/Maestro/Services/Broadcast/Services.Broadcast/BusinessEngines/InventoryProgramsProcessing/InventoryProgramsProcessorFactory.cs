@@ -1,10 +1,10 @@
-﻿using Common.Services.ApplicationServices;
+﻿using Common.Services;
+using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Repositories;
 using System;
 
 namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
@@ -29,19 +29,25 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         private readonly IProgramGuideApiClient _ProgramGuideApiClient;
         private readonly IStationMappingService _StationMappingService;
         private readonly IGenreCache _GenreCache;
+        private readonly IFileService _FileService;
+        private readonly IEmailerService _EmailerService;
 
         public InventoryProgramsProcessorFactory(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IProgramGuideApiClient programGuideApiClient,
             IStationMappingService stationMappingService,
-            IGenreCache genreCache)
+            IGenreCache genreCache,
+            IFileService fileService,
+            IEmailerService emailerService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _ProgramGuideApiClient = programGuideApiClient;
             _StationMappingService = stationMappingService;
             _GenreCache = genreCache;
+            _FileService = fileService;
+            _EmailerService = emailerService;
         }
 
         public IInventoryProgramsProcessingEngine GetInventoryProgramsProcessingEngine(InventoryProgramsProcessorType jobType)
@@ -53,7 +59,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                         _BroadcastDataRepositoryFactory,
                         _ProgramGuideApiClient,
                         _StationMappingService,
-                        _GenreCache
+                        _GenreCache,
+                        _FileService,
+                        _EmailerService
                     );
                 case InventoryProgramsProcessorType.BySource:
                     return new InventoryProgramsBySourceProcessor(
@@ -61,8 +69,20 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                         _ProgramGuideApiClient,
                         _StationMappingService,
                         _MediaWeekCache,
-                        _GenreCache
+                        _GenreCache,
+                        _FileService,
+                        _EmailerService
                         );
+                case InventoryProgramsProcessorType.BySourceUnprocessed:
+                    return new InventoryProgramsBySourceUnprocessedProcessor(
+                        _BroadcastDataRepositoryFactory,
+                        _ProgramGuideApiClient,
+                        _StationMappingService,
+                        _MediaWeekCache,
+                        _GenreCache,
+                        _FileService,
+                        _EmailerService
+                    );
                 default:
                     throw new NotImplementedException("Unsupported job type.");
             }

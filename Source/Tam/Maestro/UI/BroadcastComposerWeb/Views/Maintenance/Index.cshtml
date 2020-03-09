@@ -105,54 +105,6 @@
         </div>
 
         <div>
-            <h4>QueueInventoryProgramsFileJob</h4>
-            @using (Html.BeginForm("QueueInventoryProgramsFileJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <td>FileId : <input type="text" name="fileId" /></td><br />
-                <input type="submit" value="QueueInventoryProgramsFileJob" id="submit" />
-            }
-        </div>
-
-        <div>
-            <h4>RequeueInventoryProgramsByFileJob</h4>
-            @using (Html.BeginForm("RequeueInventoryProgramsByFileJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <td>JobId : <input type="text" name="jobId" /></td><br />
-                <input type="submit" value="RequeueInventoryProgramsByFileJob" id="submit" />
-            }
-        </div>
-
-        <div>
-            <h4>QueueInventoryProgramsSourceJob</h4>
-            @using (Html.BeginForm("QueueInventoryProgramsSourceJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <td>Inventory Source Id : <input type="text" name="inventorySourceId" /></td><br />
-                <td>StartDate (yyyy-MM-dd) : <input type="text" name="startDateString" /></td><br />
-                <td>EndDate (yyyy-MM-dd) : <input type="text" name="endDateString" /></td><br />
-                <input type="submit" value="QueueInventoryProgramsSourceJob" id="submit" />
-            }
-            <br />
-        </div>
-
-        <div>
-            <h4>RequeueInventoryProgramsSourceJob</h4>
-            @using (Html.BeginForm("RequeueInventoryProgramsSourceJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <td>JobId : <input type="text" name="jobId" /></td><br />
-                <input type="submit" value="RequeueInventoryProgramsSourceJob" id="submit" />
-            }
-        </div>
-
-        <div>
-            <h4>QueueProcessInventoryProgramsBySourceForWeeks</h4>
-            @using (Html.BeginForm("QueueProcessInventoryProgramsBySourceForWeeks", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <td>OrientByDate (yyyy-MM-dd)  : <input type="text" name="orientByDateString" /></td><br />
-                <input type="submit" value="QueueProcessInventoryProgramsBySourceForWeeks" id="submit" />
-            }
-        </div>
-
-        <div>
             <h4>RerunPlanPricingJob</h4>
             @using (Html.BeginForm("RerunPlanPricingJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
@@ -243,6 +195,98 @@
             <input type="submit" value="Submit" id="txtImportStationMappings" />
             <textarea rows="20" style="width: 600px;" id="divJSON">@ViewBag.Message</textarea>
         }
+    </div>
+
+    <div>
+        <h1>Inventory Programs Processing</h1>
+        <div>
+            <h2>By File</h2>
+            
+            <div>
+                <h4>QueInventoryProgramsJobByFileName - By File Name</h4>
+                @using (Html.BeginForm("QueInventoryProgramsJobByFileName", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <td>FileName : <input type="text" name="fileName" /></td><br />
+                    <input type="submit" value="QueInventoryProgramsJobByFileName" id="submit" />
+                }
+            </div>
+
+            <div>
+                <h4>QueueInventoryProgramsFileJob - By File Id</h4>
+                @using (Html.BeginForm("QueueInventoryProgramsFileJob", "Maintenance", FormMethod.Post, new {enctype = "multipart/form-data"}))
+                {
+                    <td>FileId : <input type="text" name="fileId"/></td><br/>
+                    <input type="submit" value="QueueInventoryProgramsFileJob" id="submit"/>
+                }
+            </div>
+
+            <div>
+                <h4>RequeueInventoryProgramsByFileJob - By Job Id</h4>
+                @using (Html.BeginForm("RequeueInventoryProgramsByFileJob", "Maintenance", FormMethod.Post, new {enctype = "multipart/form-data"}))
+                {
+                    <td>JobId : <input type="text" name="jobId"/></td><br/>
+                    <input type="submit" value="RequeueInventoryProgramsByFileJob" id="submit"/>
+                }
+            </div>
+        </div>
+        <div>
+            <h2>By Source</h2>
+            <div>
+                <h4>QueueInventoryProgramsSourceJob - By Source and Date Range</h4>
+                @using (Html.BeginForm("QueueInventoryProgramsSourceJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <td>Inventory Source Id : <input type="text" name="inventorySourceId" /></td><br />
+                    <td>StartDate (yyyy-MM-dd) : <input type="text" name="startDateString" /></td><br />
+                    <td>EndDate (yyyy-MM-dd) : <input type="text" name="endDateString" /></td><br />
+                    <input type="submit" value="QueueInventoryProgramsSourceJob" id="submit" />
+                }
+                <br />
+            </div>
+
+            <div>
+                <h4>RequeueInventoryProgramsSourceJob - By Job Id</h4>
+                @using (Html.BeginForm("RequeueInventoryProgramsSourceJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <td>JobId : <input type="text" name="jobId" /></td><br />
+                    <input type="submit" value="RequeueInventoryProgramsSourceJob" id="submit" />
+                }
+            </div>
+
+            <div>
+                <h4>QueueInventoryProgramsBySourceForWeeks - 2 weeks back and 3 weeks forward from the OrientByDate</h4>
+                @using (Html.BeginForm("QueueProcessInventoryProgramsBySourceForWeeks", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <td>OrientByDate (yyyy-MM-dd)  : <input type="text" name="orientByDateString" /></td><br />
+                    <input type="submit" value="QueueInventoryProgramsBySourceForWeeks" id="submit" />
+                }
+            </div>
+
+            <div>
+                <h4>QueueInventoryProgramsBySourceJobUnprocessedBetweenDates - By Source and Date Range where the inventory is not yet processed.</h4>
+                @using (Html.BeginForm("QueueProcessInventoryProgramsBySourceJobUnprocessedBetweenDates", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <td>Inventory Source Id : <input type="text" name="inventorySourceId" /></td><br />
+                    <td>StartDate (yyyy-MM-dd) : <input type="text" name="startDateString" /></td><br />
+                    <td>EndDate (yyyy-MM-dd) : <input type="text" name="endDateString" /></td><br />
+                    <input type="submit" value="QueueInventoryProgramsBySourceJobUnprocessedBetweenDates" id="submit" />
+                }
+                <br />
+            </div>
+        </div>
+        
+        <div>
+            <h2>Import Inventory Programs Results File</h2>
+            @using (Html.BeginForm("ImportInventoryProgramsResults", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <label for="file">Filename:</label>
+                <br />
+                <input type="file" name="file" id="file" />
+                <br />
+
+                <input type="submit" value="Submit" id="txtInventoryProgramsResults" />
+                <textarea rows="20" style="width: 600px;" id="divJSON">@ViewBag.Message</textarea>
+            }
+        </div>
     </div>
 </body>
 </html>

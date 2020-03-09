@@ -8,6 +8,9 @@ using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using Common.Services;
+using Services.Broadcast.Entities.Enums;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
@@ -15,18 +18,22 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 {
     public class InventoryProgramsBySourceProcessor : InventoryProgramsProcessingEngineBase
     {
-        private readonly IInventoryProgramsBySourceJobsRepository _InventoryProgramsBySourceJobsRepository;
-        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
+        protected readonly IInventoryProgramsBySourceJobsRepository _InventoryProgramsBySourceJobsRepository;
+        protected readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
 
         public InventoryProgramsBySourceProcessor(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IProgramGuideApiClient programGuideApiClient,
             IStationMappingService stationMappingService,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-            IGenreCache genreCache)
+            IGenreCache genreCache,
+            IFileService fileService,
+            IEmailerService emailerService)
             : base(broadcastDataRepositoryFactory,
                 programGuideApiClient,
                 stationMappingService,
-                genreCache)
+                genreCache,
+                fileService,
+                emailerService)
         {
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _InventoryProgramsBySourceJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProgramsBySourceJobsRepository>();
@@ -150,6 +157,28 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 .ForEach(a => programs.Add(a));
 
             return programs;
+        }
+
+        protected override string _GetExportedFileReadyNotificationEmailBody(int jobId, string filePath)
+        {
+            var job = _InventoryProgramsBySourceJobsRepository.GetJob(jobId);
+            var source = _GetInventorySource(jobId);
+
+            var body = new StringBuilder();
+            body.AppendLine("Hello,");
+            body.AppendLine();
+            body.AppendLine($"A ProgramGuide Interface file has been exported.");
+            body.AppendLine();
+            body.AppendLine($"\tJobGroupID : {job.JobGroupId}");
+            body.AppendLine($"\tInventory Source : {source.Name}");
+            body.AppendLine($"\tRange Start Date : {job.StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}");
+            body.AppendLine($"\tRange End Date : {job.EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}");
+            body.AppendLine();
+            body.AppendLine($"File Path :");
+            body.AppendLine($"\t{filePath}");
+            body.AppendLine();
+            body.AppendLine($"Have a nice day.");
+            return body.ToString();
         }
     }
 }

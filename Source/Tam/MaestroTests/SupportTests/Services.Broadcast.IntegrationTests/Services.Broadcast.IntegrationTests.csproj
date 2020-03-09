@@ -313,6 +313,7 @@
     <Compile Include="Helpers\InventoryFileTestHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="MediaMonthCrunchCacheTest.cs" />
+    <Compile Include="Repositories\InventoryFileRepositoryTests.cs" />
     <Compile Include="Repositories\InventoryRepositoryTests.cs" />
     <Compile Include="Repositories\PlanSummaryRepositoryTests.cs" />
     <Compile Include="Repositories\RatingForcastRepositoryTests.cs" />
@@ -344,6 +345,9 @@
     <Compile Include="UnitTests\ApplicationServices\Plans\PlanPricingServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\SharedFolderServiceUnitTests.cs" />
+    <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsBySourceUnprocessedProcessorTestClass.cs" />
+    <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsBySourceUnprocessedProcessorUnitTests.cs" />
+    <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsResultImportUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsBySourceProcessorUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsBySourceProcessorTestClass.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsByFileProcessorTestClass.cs" />
@@ -467,6 +471,12 @@
     </None>
     <None Include="Files\InventoryDaypartParsing\CNN_dayparts_invalid.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\InventoryProgramsResultsImport\INVALID_Results_ProgramGuideInventoryExportFile.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\InventoryProgramsResultsImport\Results_ProgramGuideInventoryExportFile_20200307_172832.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\LoadUniversesTest.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

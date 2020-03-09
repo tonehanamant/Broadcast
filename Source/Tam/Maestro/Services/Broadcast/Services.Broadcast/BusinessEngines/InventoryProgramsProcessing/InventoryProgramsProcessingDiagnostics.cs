@@ -1,5 +1,5 @@
-﻿using System;
-using Services.Broadcast.Entities;
+﻿using Services.Broadcast.Entities;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -30,6 +30,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         public int TotalResponseCount { get; set; }
         public int TotalProgramsSaved { get; set; }
         public int TotalSavesCount { get; set; }
+        public int TotalExportLinesCount { get; set; } = 0;
+        public string ExportFileName { get; set; }
 
         private const string SW_KEY_TOTAL_DURATION = "TotalDuration";
         private const string SW_KEY_TOTAL_DURATION_GATHER_INVENTORY = "TotalDurationGatherInventory";
@@ -37,6 +39,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         private const string SW_KEY_TOTAL_DURATION_CALL_TO_API = "TotalDurationCallToApi";
         private const string SW_KEY_TOTAL_DURATION_APPLY_API_RESPONSE = "TotalDurationApplyApiResponse";
         private const string SW_KEY_TOTAL_DURATION_SAVE_PROGRAMS = "TotalDurationSavePrograms";
+        private const string SW_KEY_TOTAL_DURATION_EXPORT_GUIDE_INTERFACE = "TotalDurationExportProgramGuideInterface";
 
         private const string SW_KEY_ITERATION_TRANSFORM_TO_INPUT = "IterationTransformToInput";
         private const string SW_KEY_ITERATION_CALL_TO_API = "IterationCallToApi";
@@ -148,6 +151,28 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             _ReportToConsoleAndJobNotes(GetDurationString(SW_KEY_ITERATION_SAVE_PROGRAMS));
         }
 
+        public void RecordExportManifestsStart(int manifestCount)
+        {
+            _ReportToConsoleAndJobNotes($"Beginning export to file process for {manifestCount} manifest records.");
+
+            TotalManifestCount += manifestCount;
+            _StartTimer(SW_KEY_TOTAL_DURATION_EXPORT_GUIDE_INTERFACE);
+        }
+
+        public void RecordExportManifestsDetails(int exportLinesCount, string fileName)
+        {
+            TotalExportLinesCount += exportLinesCount;
+            ExportFileName = fileName;
+
+            _ReportToConsoleAndJobNotes($"Exporting {exportLinesCount} lines to file {fileName}");
+        }
+
+        public void RecordExportManifestStop()
+        {
+            _StopTimer(SW_KEY_TOTAL_DURATION_EXPORT_GUIDE_INTERFACE);
+            _ReportToConsoleAndJobNotes(GetDurationString(SW_KEY_TOTAL_DURATION_EXPORT_GUIDE_INTERFACE));
+        }
+
         public void RecordStop()
         {
             _StopTimer(SW_KEY_TOTAL_DURATION);
@@ -181,6 +206,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             sb.AppendLine($"Total Response Count : {TotalResponseCount}");
             sb.AppendLine($"Total Programs Count : {TotalProgramsSaved}");
             sb.AppendLine($"Total SaveCalls Count : {TotalSavesCount}");
+            sb.AppendLine();
+            sb.AppendLine($"Export File Name : {ExportFileName}");
+            sb.AppendLine($"Total ExportLines Count : {TotalExportLinesCount}");
             sb.AppendLine();
             sb.AppendLine(GetDurationString(SW_KEY_TOTAL_DURATION));
             sb.AppendLine(GetDurationString(SW_KEY_TOTAL_DURATION_GATHER_INVENTORY));

@@ -1,8 +1,10 @@
-﻿using Common.Services.Extensions;
+﻿using Common.Services;
+using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
+using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.ProgramGuide;
@@ -12,10 +14,12 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 using Tam.Maestro.Common.Utilities.Logging;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
@@ -24,26 +28,34 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
     public interface IInventoryProgramsProcessingEngine
     {
         InventoryProgramsProcessingJobDiagnostics ProcessInventoryJob(int jobId);
+
+        string ImportInventoryProgramResults(Stream fileStream, string fileName);
     }
 
     public abstract class InventoryProgramsProcessingEngineBase : IInventoryProgramsProcessingEngine
     {
         private const int SAVE_CHUNK_SIZE = 1000;
-        
+
         protected readonly IInventoryRepository _InventoryRepository;
         private readonly IProgramGuideApiClient _ProgramGuideApiClient;
         private readonly IStationMappingService _StationMappingService;
         private readonly IGenreCache _GenreCache;
+        private readonly IFileService _FileService;
+        private readonly IEmailerService _EmailerService;
 
         protected InventoryProgramsProcessingEngineBase(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IProgramGuideApiClient programGuideApiClient,
             IStationMappingService stationMappingService,
-            IGenreCache genreCache)
+            IGenreCache genreCache,
+            IFileService fileService,
+            IEmailerService emailerService)
         {
             _ProgramGuideApiClient = programGuideApiClient;
             _StationMappingService = stationMappingService;
             _GenreCache = genreCache;
+            _FileService = fileService;
+            _EmailerService = emailerService;
 
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         }
@@ -62,9 +74,142 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         protected abstract List<StationInventoryManifestDaypartProgram> _GetProgramsFromResponse(GuideResponseElementDto currentResponse,
             GuideRequestResponseMapping currentMapping, InventoryProgramsRequestPackage requestPackage);
 
+        protected abstract string _GetExportedFileReadyNotificationEmailBody(int jobId, string filePath);
+
         internal void OnDiagnosticMessageUpdate(int jobId, string message)
         {
             _GetJobsRepository().UpdateJobNotes(jobId, message);
+        }
+
+        public string ImportInventoryProgramResults(Stream fileStream, string fileName)
+        {
+            var processingLog = new StringBuilder();
+            processingLog.AppendLine($"Processing {fileName}");
+
+            var success = true;
+
+            try
+            {
+                var parseResult = _ParseLinesFromFile(fileStream);
+                if (parseResult.Success == false)
+                {
+                    success = false;
+                    processingLog.AppendLine($"Parsing attempt failed with {parseResult.Messages.Count} messages : ");
+                    parseResult.Messages.ForEach(m => processingLog.AppendLine(m));
+                    return processingLog.ToString();
+                }
+
+                var lineItems = parseResult.LineItems;
+
+                processingLog.AppendLine($"Exported {lineItems.Count} lines from the file.");
+
+                var processingBatches = lineItems.Select((x, i) => new {Index = i, Value = x})
+                    .GroupBy(x => x.Index / SAVE_CHUNK_SIZE)
+                    .Select(x => x.Select(v => v.Value).ToList())
+                    .ToList();
+
+                var totalProgramsExtracted = 0;
+
+                foreach (var batch in processingBatches)
+                {
+                    // transform to the programs
+                    var programs = batch.Select(_MapExportedProgram).ToList();
+                    totalProgramsExtracted += programs.Count;
+
+                    // setup first to minimize the transaction scope.
+
+                    // prep the saves
+                    var programSaveChunks = programs.Select((x, i) => new { Index = i, Value = x })
+                        .GroupBy(x => x.Index / SAVE_CHUNK_SIZE)
+                        .Select(x => x.Select(v => v.Value).ToList())
+                        .ToList();
+
+                    // prep the deletes.
+                    var dateRangeManifests = batch.Select(d => new
+                        {
+                            StartDate = d.start_date,
+                            EndDate = d.end_date
+                        })
+                        .Distinct()
+                        .Select(dr =>
+                            new
+                            {
+                                DateRange = dr,
+                                ManifestIds = batch.Where(i => i.start_date == dr.StartDate && i.end_date == dr.EndDate)
+                                    .Select((i => i.inventory_id))
+                                    .Distinct()
+                                    .ToList()
+                            })
+                        .ToList();
+
+                    const int dbOperationTimeoutMinutes = 20;
+                    // take action
+                    using (var scope = TransactionScopeHelper.CreateTransactionScope(TimeSpan.FromMinutes(dbOperationTimeoutMinutes)))
+                    {
+                        // always delete
+                        foreach (var group in dateRangeManifests)
+                        {
+                            _InventoryRepository.DeleteInventoryPrograms(group.ManifestIds, group.DateRange.StartDate, group.DateRange.EndDate);
+                        }
+
+                        if (programs.Any())
+                        {
+                            programSaveChunks.ForEach(chunk => _InventoryRepository.UpdateInventoryPrograms(chunk, _GetCurrentDateTime()));
+                        }
+                        scope.Complete();
+                    }
+
+                    // adjust the primary program for the dayparts.
+                    var manifestIds = lineItems.Select(s => s.inventory_id).Distinct().ToList();
+                    var manifests = _InventoryRepository.GetStationInventoryManifestsByIds(manifestIds);
+                    _SetProgramData(manifests, (message) => processingLog.AppendLine(message));
+                }
+
+                processingLog.AppendLine($"Extracted and saved {totalProgramsExtracted} program records.");
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Logger.Error($"Error caught ingesting results file '{fileName}'.", ex);
+                processingLog.AppendLine($"Error caught : {ex.Message}");
+                success = false;
+            }
+            finally
+            {
+                _CreateDirectoriesIfNotExist();
+
+                // Save the file
+                var directoryName = success
+                    ? _GetProgramGuideInterfaceCompletedDirectoryPath()
+                    : _GetProgramGuideInterfaceFailedDirectoryPath();
+                var filePath = Path.Combine(directoryName, fileName);
+                _FileService.Create(filePath, fileStream);
+
+                processingLog.AppendLine($"File archived to '{filePath}'.");
+            }
+
+            return processingLog.ToString();
+        }
+
+        private StationInventoryManifestDaypartProgram _MapExportedProgram(GuideInterfaceExportElement exported)
+        {
+            const GenreSourceEnum GENRE_SOURCE = GenreSourceEnum.Dativa;
+            var sourceGenre = _GenreCache.GetSourceGenreByName(exported.genre, GENRE_SOURCE);
+            var maestroGenre = _GenreCache.GetMaestroGenreBySourceGenre(sourceGenre, GENRE_SOURCE);
+
+            var program = new StationInventoryManifestDaypartProgram
+            {
+                StationInventoryManifestDaypartId =  exported.inventory_daypart_id,
+                ProgramName = exported.program_name,
+                ShowType = exported.show_type,
+                GenreSourceId = (int)GENRE_SOURCE,
+                SourceGenreId = sourceGenre.Id,
+                MaestroGenreId = maestroGenre.Id,
+                StartDate = exported.program_start_date.Value,
+                EndDate = exported.program_end_date.Value,
+                StartTime = exported.program_start_time.Value,
+                EndTime = exported.program_end_time.Value
+            };
+            return program;
         }
 
         public InventoryProgramsProcessingJobDiagnostics ProcessInventoryJob(int jobId)
@@ -97,10 +242,10 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                     return processDiagnostics;
                 }
 
-                var requestsPackage = _BuildRequestPackage(manifests, inventorySource, processDiagnostics, jobId);
-                _ProcessInventory(jobId, requestsPackage, processDiagnostics);
-
-                _SetProgramData(manifests, (message) => jobsRepo.UpdateJobNotes(jobId, message));
+                // Disabling calling ProgramGuide with PRI-23390
+                //var requestsPackage = _BuildRequestPackage(manifests, inventorySource, processDiagnostics, jobId);
+                //_ProcessInventory(jobId, requestsPackage, processDiagnostics);
+                _ExportInventoryForProgramGuide(jobId, manifests, inventorySource, processDiagnostics);
             }
             catch (Exception ex)
             {
@@ -115,6 +260,125 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 processDiagnostics.RecordStop();
             }
             return processDiagnostics;
+        }
+
+        private void _ExportInventoryForProgramGuide(int jobId, List<StationInventoryManifest> manifests, InventorySource inventorySource, 
+            InventoryProgramsProcessingJobDiagnostics processingDiags)
+        {
+            var jobsRepository = _GetJobsRepository();
+
+            processingDiags.RecordExportManifestsStart(manifests.Count);
+
+            // transform
+            var transformWarnings = new List<string>();
+            var exportFileLines = manifests.SelectMany(m => _MapToExport(m, inventorySource, transformWarnings)).ToList();
+            transformWarnings.ForEach(w => jobsRepository.UpdateJobNotes(jobId, w));
+
+            // export to file
+            const string fileSuffixPattern = "yyyyMMdd_HHmmss";
+            var fileName = $"ProgramGuideInventoryExportFile_{_GetCurrentDateTime().ToString(fileSuffixPattern)}.csv";
+            var filePath = Path.Combine(_GetProgramGuideInterfaceExportDirectoryPath(), fileName);
+            var headerLine = _GetProgramsExportFileHeaderLine();
+
+            processingDiags.RecordExportManifestsDetails(exportFileLines.Count, fileName);
+
+            var fileLines = new List<string>();
+            fileLines.Add(headerLine);
+            foreach (var lineItem in exportFileLines)
+            {
+                fileLines.Add(_GetProgramsExportFileItemLine(lineItem));
+            }
+
+            _CreateDirectoriesIfNotExist();
+            _FileService.CreateTextFile(filePath, fileLines);
+
+            processingDiags.RecordExportManifestStop();
+
+            // notify complete
+            jobsRepository.UpdateJobNotes(jobId, $"Notifying export completed.");
+            _ReportExportFileCompleted(jobId, filePath);
+
+            if (transformWarnings.Any())
+            {
+                jobsRepository.SetJobCompleteWarning(jobId, null, null);
+            }
+            else
+            {
+                jobsRepository.SetJobCompleteSuccess(jobId, null, null);
+            }
+        }
+
+        private void _CreateDirectoriesIfNotExist()
+        {
+            _FileService.CreateDirectory(_GetProgramGuideInterfaceExportDirectoryPath());
+            _FileService.CreateDirectory(_GetProgramGuideInterfaceCompletedDirectoryPath());
+            _FileService.CreateDirectory(_GetProgramGuideInterfaceFailedDirectoryPath());
+        }
+
+        private void _ReportExportFileCompleted(int jobId, string filePath)
+        {
+            var priority = MailPriority.Normal;
+            var subject = "Broadcast Inventory Programs - ProgramGuide Interface Export file available";
+            var body = _GetExportedFileReadyNotificationEmailBody(jobId, filePath);
+
+            var toEmails = _GetProcessingBySourceResultReportToEmails();
+            if (toEmails?.Any() != true)
+            {
+                throw new InvalidOperationException($"Failed to send notification email.  Email addresses are not configured correctly.");
+            }
+
+            _EmailerService.QuickSend(false, body, subject, priority, toEmails);
+        }
+
+        private List<GuideInterfaceExportElement> _MapToExport(StationInventoryManifest manifest, InventorySource inventorySource, List<string> transformWarnings)
+        {
+            var toExport = new List<GuideInterfaceExportElement>();
+
+            if (string.IsNullOrWhiteSpace(manifest.Station.Affiliation))
+            {
+                return toExport;
+            }
+
+            string mappedStationCallLetters;
+
+            try
+            {
+                mappedStationCallLetters = _GetManifestStationCallLetters(manifest, inventorySource);
+            }
+            catch (Exception ex)
+            {
+                transformWarnings.Add(ex.Message);
+                return toExport;
+            }
+
+            foreach (var week in manifest.ManifestWeeks)
+            {
+                foreach (var daypart in manifest.ManifestDayparts)
+                {
+                    var exportItem = new GuideInterfaceExportElement
+                    {
+                        inventory_id = manifest.Id.Value,
+                        inventory_week_id = week.Id,
+                        inventory_daypart_id = daypart.Id.Value,
+                        station_call_letters = mappedStationCallLetters,
+                        affiliation = manifest.Station.Affiliation,
+                        start_date = week.StartDate,
+                        end_date = week.EndDate,
+                        daypart_text = daypart.Daypart.Preview,
+                        mon = daypart.Daypart.Monday,
+                        tue = daypart.Daypart.Tuesday,
+                        wed = daypart.Daypart.Wednesday,
+                        thu = daypart.Daypart.Thursday,
+                        fri = daypart.Daypart.Friday,
+                        sat = daypart.Daypart.Saturday,
+                        sun = daypart.Daypart.Sunday,
+                        daypart_start_time = daypart.Daypart.StartTime,
+                        daypart_end_time = daypart.Daypart.EndTime
+                    };
+                    toExport.Add(exportItem);
+                }
+            }
+            return toExport;
         }
 
         private void _SetProgramData(List<StationInventoryManifest> manifests, Action<string> logger)
@@ -215,12 +479,12 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             return totalTime;
         }
 
-        private void _ProcessInventory(int jobId, InventoryProgramsRequestPackage requestPackage, 
+        private void _ProcessInventory(int jobId, InventoryProgramsRequestPackage requestPackage,
             InventoryProgramsProcessingJobDiagnostics processDiagnostics)
         {
             var result = InventoryProgramsJobStatus.Completed;
             var jobsRepository = _GetJobsRepository();
-            
+
             var requestElementMaxCount = _GetRequestElementMaxCount();
             var parallelEnabled = _GetParallelApiCallsEnabled();
             var maxDop = _GetMaxDegreesOfParallelism();
@@ -240,6 +504,10 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
                 currentRequestChunkIndex++;
                 processDiagnostics.RecordIterationStartCallToApi(currentRequestChunkIndex, requestChunks.Count);
+
+
+                // All of this is just "Import now...
+
 
                 // the api call
                 var programGuideResponse = parallelEnabled
@@ -293,7 +561,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                     .ToList();
 
                 jobsRepository.UpdateJobNotes(jobId, $"Removing programs from {requestPackage.RequestMappings.Count} manifests split into {deleteProgramsChunks.Count} chunks.");
-                deleteProgramsChunks.ForEach(chunk => 
+                deleteProgramsChunks.ForEach(chunk =>
                     _InventoryRepository.DeleteInventoryPrograms(chunk.Select(c => c).ToList(),
                         requestPackage.StartDateRange, requestPackage.EndDateRange));
 
@@ -351,7 +619,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             return mappedStationInfo;
         }
 
-        protected StationInventoryManifestDaypartProgram _MapProgramDto(GuideResponseProgramDto guideProgram, int manifestDaypartId, 
+        protected StationInventoryManifestDaypartProgram _MapProgramDto(GuideResponseProgramDto guideProgram, int manifestDaypartId,
             InventoryProgramsRequestPackage requestPackage)
         {
             const GenreSourceEnum GENRE_SOURCE = GenreSourceEnum.Dativa;
@@ -412,6 +680,161 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             return responses.ToList();
         }
 
+        private class ProgramsFileParseResult
+        {
+            public bool Success { get; set; }
+            public List<string> Messages { get; } = new List<string>();
+            public List<GuideInterfaceExportElement> LineItems { get; set; } = new List<GuideInterfaceExportElement>();
+        }
+
+        private ProgramsFileParseResult _ParseLinesFromFile(Stream fileStream)
+        {
+            var result = new ProgramsFileParseResult();
+            var headerFields = _GetProgramsImportFileHeaderFields();
+
+            var reader = new CsvFileReader(headerFields);
+
+            try
+            {
+                using (reader.Initialize(fileStream))
+                {
+                    while (reader.IsEOF() == false)
+                    {
+                        reader.NextRow();
+
+                        if (reader.IsEmptyRow())
+                        {
+                            break;
+                        }
+
+                        var lineItem = new GuideInterfaceExportElement
+                        {
+                            inventory_id = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.inventory_id))),
+                            inventory_week_id = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.inventory_week_id))),
+                            inventory_daypart_id = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.inventory_daypart_id))),
+                            station_call_letters = reader.GetCellValue(nameof(GuideInterfaceExportElement.station_call_letters)),
+                            affiliation = reader.GetCellValue(nameof(GuideInterfaceExportElement.affiliation)),
+                            start_date = DateTime.Parse(reader.GetCellValue(nameof(GuideInterfaceExportElement.start_date))),
+                            end_date = DateTime.Parse(reader.GetCellValue(nameof(GuideInterfaceExportElement.end_date))),
+                            daypart_text = reader.GetCellValue(nameof(GuideInterfaceExportElement.daypart_text)),
+                            mon = reader.GetCellValue(nameof(GuideInterfaceExportElement.mon)) == "1",
+                            tue = reader.GetCellValue(nameof(GuideInterfaceExportElement.tue)) == "1",
+                            wed = reader.GetCellValue(nameof(GuideInterfaceExportElement.wed)) == "1",
+                            thu = reader.GetCellValue(nameof(GuideInterfaceExportElement.thu)) == "1",
+                            fri = reader.GetCellValue(nameof(GuideInterfaceExportElement.fri)) == "1",
+                            sat = reader.GetCellValue(nameof(GuideInterfaceExportElement.sat)) == "1",
+                            sun = reader.GetCellValue(nameof(GuideInterfaceExportElement.sun)) == "1",
+                            daypart_start_time = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.daypart_start_time))),
+                            daypart_end_time = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.daypart_end_time))),
+                            program_name = reader.GetCellValue(nameof(GuideInterfaceExportElement.program_name)),
+                            show_type = reader.GetCellValue(nameof(GuideInterfaceExportElement.show_type)),
+                            genre = reader.GetCellValue(nameof(GuideInterfaceExportElement.genre)),
+                            program_start_time = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.program_start_time))),
+                            program_end_time = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.program_end_time))),
+                            program_start_date = DateTime.Parse(reader.GetCellValue(nameof(GuideInterfaceExportElement.program_start_date))),
+                            program_end_date = DateTime.Parse(reader.GetCellValue(nameof(GuideInterfaceExportElement.program_end_date)))
+                        };
+                        result.LineItems.Add(lineItem);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                result.Success = false;
+                result.Messages.Add(e.Message);
+                return result;
+            }
+
+            result.Success = true;
+            return result;
+        }
+
+        private static List<string> _GetProgramsImportFileHeaderFields()
+        {
+            return new List<string>
+            {
+                nameof(GuideInterfaceExportElement.inventory_id),
+                nameof(GuideInterfaceExportElement.inventory_week_id),
+                nameof(GuideInterfaceExportElement.inventory_daypart_id),
+                nameof(GuideInterfaceExportElement.station_call_letters),
+                nameof(GuideInterfaceExportElement.affiliation),
+                nameof(GuideInterfaceExportElement.start_date),
+                nameof(GuideInterfaceExportElement.end_date),
+                nameof(GuideInterfaceExportElement.daypart_text),
+                nameof(GuideInterfaceExportElement.mon),
+                nameof(GuideInterfaceExportElement.tue),
+                nameof(GuideInterfaceExportElement.wed),
+                nameof(GuideInterfaceExportElement.thu),
+                nameof(GuideInterfaceExportElement.fri),
+                nameof(GuideInterfaceExportElement.sat),
+                nameof(GuideInterfaceExportElement.sun),
+                nameof(GuideInterfaceExportElement.daypart_start_time),
+                nameof(GuideInterfaceExportElement.daypart_end_time),
+                nameof(GuideInterfaceExportElement.program_name),
+                nameof(GuideInterfaceExportElement.show_type),
+                nameof(GuideInterfaceExportElement.genre),
+                nameof(GuideInterfaceExportElement.program_start_time),
+                nameof(GuideInterfaceExportElement.program_end_time),
+                nameof(GuideInterfaceExportElement.program_start_date),
+                nameof(GuideInterfaceExportElement.program_end_date),
+            };
+        }
+
+        private static string _GetProgramsExportFileHeaderLine()
+        {
+            return _GetCsvLine(_GetProgramsImportFileHeaderFields());
+        }
+
+        private static string _GetProgramsExportFileItemLine(GuideInterfaceExportElement item)
+        {
+            var itemType = typeof(GuideInterfaceExportElement);
+            var lineCsv = new StringBuilder();
+            foreach (var fieldName in _GetProgramsImportFileHeaderFields())
+            {
+                if (lineCsv.Length > 0)
+                {
+                    lineCsv.Append($",");
+                }
+
+                var property = itemType.GetProperty(fieldName);
+                if (property == null)
+                {
+                    continue;
+                }
+
+                string fieldValue;
+                if (property.PropertyType == typeof(DateTime))
+                {
+                    fieldValue = ((DateTime)property.GetValue(item)).ToString(BroadcastConstants.DATE_FORMAT_STANDARD);
+                }
+                else if (property.PropertyType == typeof(bool))
+                {
+                    fieldValue = ((bool)property.GetValue(item)) ? "1" : "0";
+                }
+                else
+                {
+                    fieldValue = property.GetValue(item)?.ToString() ?? "";
+                }
+                lineCsv.Append($"{fieldValue}");
+            }
+
+            return lineCsv.ToString();
+        }
+
+        private static string _GetCsvLine(List<string> lineFields)
+        {
+            var line = new StringBuilder();
+            foreach (var field in lineFields)
+            {
+                if (line.Length > 0)
+                {
+                    line.Append(",");
+                }
+                line.Append(field);
+            }
+            return line.ToString();
+        }
+
         protected virtual int _GetRequestElementMaxCount()
         {
             return ProgramGuideApiClient.RequestElementMaxCount;
@@ -430,6 +853,47 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         protected virtual int _GetMaxDegreesOfParallelism()
         {
             return BroadcastServiceSystemParameter.InventoryProgramsEngineMaxDop;
+        }
+
+        protected string _GetProgramGuideInterfaceExportDirectoryPath()
+        {
+            const string dirName = "Export";
+            return Path.Combine(_GetProgramGuideInterfacePath(), dirName);
+        }
+
+        protected string _GetProgramGuideInterfaceCompletedDirectoryPath()
+        {
+            const string dirName = "Completed";
+            return Path.Combine(_GetProgramGuideInterfacePath(), dirName);
+        }
+
+        protected string _GetProgramGuideInterfaceFailedDirectoryPath()
+        {
+            const string dirName = "Failed";
+            return Path.Combine(_GetProgramGuideInterfacePath(), dirName);
+        }
+
+        protected string _GetProgramGuideInterfacePath()
+        {
+            const string dirName = "ProgramGuideInterfaceDirectory";
+            return Path.Combine(_GetBroadcastSharedDirectoryPath(), dirName);
+        }
+
+        protected virtual string _GetBroadcastSharedDirectoryPath()
+        {
+            return BroadcastServiceSystemParameter.BroadcastSharedFolder;
+        }
+
+        protected virtual string[] _GetProcessingBySourceResultReportToEmails()
+        {
+            var raw = BroadcastServiceSystemParameter.InventoryProcessingNotificationEmails;
+            var split = raw.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            return split;
+        }
+
+        protected virtual DateTime _GetCurrentDateTime()
+        {
+            return DateTime.Now;
         }
     }
 }

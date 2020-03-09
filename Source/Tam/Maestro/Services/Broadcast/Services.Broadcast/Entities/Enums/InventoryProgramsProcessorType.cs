@@ -13,6 +13,11 @@
         /// <summary>
         /// Processing is scoped by the source.
         /// </summary>
-        BySource
+        BySource,
+
+        /// <summary>
+        /// Processing is scoped by the source for the inventory not yet processed.
+        /// </summary>
+        BySourceUnprocessed
     }
 }

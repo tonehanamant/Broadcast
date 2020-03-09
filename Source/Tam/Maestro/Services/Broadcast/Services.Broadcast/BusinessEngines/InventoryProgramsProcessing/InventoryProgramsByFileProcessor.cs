@@ -1,4 +1,5 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services;
+using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
@@ -9,8 +10,8 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Tam.Maestro.Common;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 {
@@ -22,11 +23,15 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         public InventoryProgramsByFileProcessor(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IProgramGuideApiClient programGuideApiClient,
             IStationMappingService stationMappingService,
-            IGenreCache genreCache)
+            IGenreCache genreCache,
+            IFileService fileService,
+            IEmailerService emailerService)
             : base(broadcastDataRepositoryFactory,
                 programGuideApiClient,
                 stationMappingService,
-                genreCache)
+                genreCache,
+                fileService,
+                emailerService)
         {
             _InventoryFileRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _InventoryProgramsByFileJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProgramsByFileJobsRepository>();
@@ -36,7 +41,6 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         {
             return _InventoryProgramsByFileJobsRepository;
         }
-
 
         protected override InventoryProgramsProcessingJobDiagnostics _GetNewDiagnostics()
         {
@@ -162,6 +166,28 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                         _MapProgramDto(p, daypartId, requestPackage))
                         .ForEach(a => programs.Add(a)));
             return programs;
+        }
+
+
+        protected override string _GetExportedFileReadyNotificationEmailBody(int jobId, string filePath)
+        {
+            var job = _InventoryProgramsByFileJobsRepository.GetJob(jobId);
+            var inventoryFile = _InventoryFileRepository.GetInventoryFileById(job.InventoryFileId);
+
+            var body = new StringBuilder();
+            body.AppendLine("Hello,");
+            body.AppendLine();
+            body.AppendLine($"A ProgramGuide Interface file has been exported.");
+            body.AppendLine();
+            body.AppendLine($"\tInventory File Id : {inventoryFile.Id}");
+            body.AppendLine($"\tInventory File Name : {inventoryFile.FileName}");
+            body.AppendLine($"\tInventory Source : {inventoryFile.InventorySource.Name}");
+            body.AppendLine();
+            body.AppendLine($"File Path :");
+            body.AppendLine($"\t{filePath}");
+            body.AppendLine();
+            body.AppendLine($"Have a nice day.");
+            return body.ToString();
         }
 
         private DateTime _GetEntryStartDate(StationInventoryManifestDaypart daypart, DateTime rangeStartDate)

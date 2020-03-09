@@ -1,14 +1,13 @@
 ﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
+using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using System;
 using System.Linq;
-using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.Repositories
 {
@@ -20,6 +19,9 @@ namespace Services.Broadcast.Repositories
         void DeleteInventoryFileById(int inventoryFileId);
         void UpdateInventoryFileStatus(int fileId, FileStatusEnum status);
         InventoryFile GetInventoryFileById(int fileId);
+
+        int GetLatestInventoryFileIdByName(string fileName);
+
         string GetDbInfo();
     }
 
@@ -58,6 +60,22 @@ namespace Services.Broadcast.Repositories
                 return result;
             });
         }
+
+        public int GetLatestInventoryFileIdByName(string fileName)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var latestId = context.inventory_files
+                    .Where(s => s.name.Equals(fileName, StringComparison.OrdinalIgnoreCase) &&
+                                s.status == (short)FileStatusEnum.Loaded)
+                    .Select(s => s.id)
+                    .OrderByDescending(s => s)
+                    .FirstOrDefault();
+
+                return latestId;
+            });
+        }
+
 
         public int GetInventoryFileIdByHash(string hash)
         {

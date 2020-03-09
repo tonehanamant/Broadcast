@@ -34,12 +34,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         {
             const int testFileId = 1;
             const int testJobId = 1;
-            var job = new InventoryProgramsByFileJob
-            {
-                Id = testJobId,
-                InventoryFileId = testFileId,
-                QueuedBy = TEST_USERNAME
-            };
 
             var getInventoryFileByIdCalled = 0;
             _InventoryFileRepository.Setup(s => s.GetInventoryFileById(It.IsAny<int>()))
@@ -48,14 +42,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             var queueJobCalled = 0;
             _InventoryProgramsByFileJobsRepository
-                .Setup(s => s.QueueJob(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Setup(s => s.SaveEnqueuedJob(It.IsAny<InventoryProgramsByFileJob>()))
                 .Callback(() => queueJobCalled++)
-                .Returns(job.Id);
-            var getJobCalled = 0;
-            _InventoryProgramsByFileJobsRepository
-                .Setup(s => s.GetJob(It.IsAny<int>()))
-                .Callback(() => getJobCalled++)
-                .Returns(job);
+                .Returns(testJobId);
 
             var service = _GetService();
 
@@ -67,7 +56,109 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(1, getInventoryFileByIdCalled);
             Assert.AreEqual(1, service.UT_EnqueueProcessInventoryProgramsByFileJobIds.Count);
             Assert.AreEqual(1, queueJobCalled);
-            Assert.AreEqual(1, getJobCalled);
+        }
+
+        [Test]
+        public void QueueProcessInventoryProgramsByFileJobByName()
+        {
+            const string testFileName = "TestFileOne.txt";
+            const int testFileId = 1;
+            const int testJobId = 1;
+
+            var getLatestInventoryFileIdByName = 0;
+            _InventoryFileRepository.Setup(s => s.GetLatestInventoryFileIdByName(It.IsAny<string>()))
+                .Callback(() => getLatestInventoryFileIdByName++)
+                .Returns(testFileId);
+
+            var getInventoryFileByIdCalled = 0;
+            _InventoryFileRepository.Setup(s => s.GetInventoryFileById(It.IsAny<int>()))
+                .Callback(() => getInventoryFileByIdCalled++)
+                .Returns(new InventoryFile { Id = 1 });
+
+            var queueJobCalled = 0;
+            _InventoryProgramsByFileJobsRepository
+                .Setup(s => s.SaveEnqueuedJob(It.IsAny<InventoryProgramsByFileJob>()))
+                .Callback(() => queueJobCalled++)
+                .Returns(testJobId);
+
+            var service = _GetService();
+
+            var result = service.QueueProcessInventoryProgramsByFileJobByFileName(testFileName, TEST_USERNAME);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(testFileId, result.Job.InventoryFileId);
+            Assert.AreEqual(testJobId, result.Job.Id);
+            Assert.AreEqual(1, getLatestInventoryFileIdByName);
+            Assert.AreEqual(1, getInventoryFileByIdCalled);
+            Assert.AreEqual(1, service.UT_EnqueueProcessInventoryProgramsByFileJobIds.Count);
+            Assert.AreEqual(1, queueJobCalled);
+        }
+
+        [Test]
+        public void QueueProcessInventoryProgramsByFileJobByName_EmptyFileNAme()
+        {
+            const string testFileName = "";
+            const int testFileId = 1;
+            const int testJobId = 1;
+
+            var getLatestInventoryFileIdByName = 0;
+            _InventoryFileRepository.Setup(s => s.GetLatestInventoryFileIdByName(It.IsAny<string>()))
+                .Callback(() => getLatestInventoryFileIdByName++)
+                .Returns(testFileId);
+
+            var getInventoryFileByIdCalled = 0;
+            _InventoryFileRepository.Setup(s => s.GetInventoryFileById(It.IsAny<int>()))
+                .Callback(() => getInventoryFileByIdCalled++)
+                .Returns(new InventoryFile { Id = 1 });
+
+            var queueJobCalled = 0;
+            _InventoryProgramsByFileJobsRepository
+                .Setup(s => s.SaveEnqueuedJob(It.IsAny<InventoryProgramsByFileJob>()))
+                .Callback(() => queueJobCalled++)
+                .Returns(testJobId);
+
+            var service = _GetService();
+
+            var caught = Assert.Throws<InvalidOperationException>(() =>
+                service.QueueProcessInventoryProgramsByFileJobByFileName(testFileName, TEST_USERNAME));
+
+            Assert.IsTrue(caught.Message.Contains("A filename is required."));
+            Assert.AreEqual(0, getLatestInventoryFileIdByName);
+            Assert.AreEqual(0, getInventoryFileByIdCalled);
+            Assert.AreEqual(0, service.UT_EnqueueProcessInventoryProgramsByFileJobIds.Count);
+            Assert.AreEqual(0, queueJobCalled);
+        }
+
+        [Test]
+        public void QueueProcessInventoryProgramsByFileJobByName_FileNameNotFound()
+        {
+            const string testFileName = "NameNotFound";
+            const int testFileIdIndicatesNotFound = 0;
+           
+            var getLatestInventoryFileIdByName = 0;
+            _InventoryFileRepository.Setup(s => s.GetLatestInventoryFileIdByName(It.IsAny<string>()))
+                .Callback(() => getLatestInventoryFileIdByName++)
+                .Returns(testFileIdIndicatesNotFound);
+
+            var getInventoryFileByIdCalled = 0;
+            _InventoryFileRepository.Setup(s => s.GetInventoryFileById(It.IsAny<int>()))
+                .Callback(() => getInventoryFileByIdCalled++);
+
+            var queueJobCalled = 0;
+            _InventoryProgramsByFileJobsRepository
+                .Setup(s => s.SaveEnqueuedJob(It.IsAny<InventoryProgramsByFileJob>()))
+                .Callback(() => queueJobCalled++);
+
+            var service = _GetService();
+
+            var caught = Assert.Throws<InvalidOperationException>(() =>
+                service.QueueProcessInventoryProgramsByFileJobByFileName(testFileName, TEST_USERNAME));
+
+            Assert.IsTrue(caught.Message.Contains("File 'NameNotFound' not found."));
+            Assert.AreEqual(1, getLatestInventoryFileIdByName);
+            Assert.AreEqual(0, getInventoryFileByIdCalled);
+            Assert.AreEqual(0, service.UT_EnqueueProcessInventoryProgramsByFileJobIds.Count);
+            Assert.AreEqual(0, queueJobCalled);
         }
 
         [Test]
@@ -82,28 +173,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 QueuedBy = TEST_USERNAME
             };
             const int newJobId = 2;
-            var newJob = new InventoryProgramsByFileJob
-            {
-                Id = newJobId,
-                InventoryFileId = testFileId,
-                QueuedBy = TEST_USERNAME
-            };
 
             var getJobCalled = 0;
             _InventoryProgramsByFileJobsRepository
                 .Setup(s => s.GetJob(oldJobId))
                 .Callback(() => getJobCalled++)
                 .Returns(oldJob);
-            _InventoryProgramsByFileJobsRepository
-                .Setup(s => s.GetJob(newJobId))
-                .Callback(() => getJobCalled++)
-                .Returns(newJob);
 
-            var queueJobs = new List<int>();
+            var queueJobs = new List<InventoryProgramsByFileJob>();
             _InventoryProgramsByFileJobsRepository
-                .Setup(s => s.QueueJob(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<DateTime>()))
-                .Callback<int, string, DateTime>((fileId, u, q) => queueJobs.Add(fileId))
-                .Returns(newJob.Id);
+                .Setup(s => s.SaveEnqueuedJob(It.IsAny<InventoryProgramsByFileJob>()))
+                .Callback<InventoryProgramsByFileJob>((job) => queueJobs.Add(job))
+                .Returns(newJobId);
 
             var service = _GetService();
 
@@ -114,7 +195,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             Assert.AreEqual(1, service.UT_EnqueueProcessInventoryProgramsByFileJobIds.Count);
             Assert.AreEqual(1, queueJobs.Count);
-            Assert.AreEqual(2, getJobCalled);
+            Assert.AreEqual(1, getJobCalled);
         }
 
         [Test]
@@ -144,26 +225,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var endDate = new DateTime(2020, 01, 07);
 
             const int testJobId = 1;
-            var job = new InventoryProgramsBySourceJob()
-            {
-                Id = testJobId,
-                InventorySourceId = testSourceId,
-                StartDate = startDate,
-                EndDate = endDate,
-                QueuedBy = TEST_USERNAME
-            };
 
             var queueJobCalled = 0;
-            _InventoryProgramsBySourceJobsRepository.Setup(s => s.QueueJob(It.IsAny<int>(),  
-                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<DateTime>(),
-                    It.IsAny<Guid?>()))
+            _InventoryProgramsBySourceJobsRepository.Setup(s => s.SaveEnqueuedJob(It.IsAny<InventoryProgramsBySourceJob>()))
                 .Callback(() => queueJobCalled++)
-                .Returns(job.Id);
-            var getJobCalled = 0;
-            _InventoryProgramsBySourceJobsRepository
-                .Setup(s => s.GetJob(It.IsAny<int>()))
-                .Callback(() => getJobCalled++)
-                .Returns(job);
+                .Returns(testJobId);
 
             var service = _GetService();
 
@@ -177,7 +243,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(endDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD), result.Jobs.First().EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
             Assert.AreEqual(1, service.UT_EnqueueProcessInventoryProgramsBySourceJobIds.Count);
             Assert.AreEqual(1, queueJobCalled);
-            Assert.AreEqual(1, getJobCalled);
         }
 
         [Test]
@@ -198,31 +263,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
 
             const int newJobId = 2;
-            var newJob = new InventoryProgramsBySourceJob()
-            {
-                Id = newJobId,
-                InventorySourceId = testSourceId,
-                StartDate = startDate,
-                EndDate = endDate,
-                QueuedBy = TEST_USERNAME
-            };
 
             var queueJobCalled = 0;
-            _InventoryProgramsBySourceJobsRepository.Setup(s => s.QueueJob(It.IsAny<int>(),
-                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<DateTime>(),
-                    It.IsAny<Guid?>()))
+            _InventoryProgramsBySourceJobsRepository.Setup(s => s.SaveEnqueuedJob(It.IsAny<InventoryProgramsBySourceJob>()))
                 .Callback(() => queueJobCalled++)
-                .Returns(newJob.Id);
+                .Returns(newJobId);
             var getJobCalled = 0;
 
             _InventoryProgramsBySourceJobsRepository
-                .Setup(s => s.GetJob(oldJobId))
+                .Setup(s => s.GetJob(It.IsAny<int>()))
                 .Callback(() => getJobCalled++)
                 .Returns(oldJob);
-            _InventoryProgramsBySourceJobsRepository
-                .Setup(s => s.GetJob(newJobId))
-                .Callback(() => getJobCalled++)
-                .Returns(newJob);
 
             var service = _GetService();
 
@@ -236,7 +287,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(endDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD), result.Jobs.First().EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
             Assert.AreEqual(1, service.UT_EnqueueProcessInventoryProgramsBySourceJobIds.Count);
             Assert.AreEqual(1, queueJobCalled);
-            Assert.AreEqual(2, getJobCalled);
+            Assert.AreEqual(1, getJobCalled);
         }
 
         [Test]
@@ -414,19 +465,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
 
             var queuedJobs = new List<InventoryProgramsBySourceJob>();
-            _InventoryProgramsBySourceJobsRepository.Setup(s => s.QueueJob(It.IsAny<int>(),
-                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<string>(), It.IsAny<DateTime>(),
-                    It.IsAny<Guid?>()))
-                .Callback<int, DateTime, DateTime, string, DateTime, Guid?>((sourceId, start, end, user, queuedAt, jogGroupId) => queuedJobs.Add(
-                    new InventoryProgramsBySourceJob
-                    {
-                        JobGroupId = jogGroupId,
-                        InventorySourceId = sourceId,
-                        StartDate = start,
-                        EndDate = end,
-                        QueuedBy = user,
-                        QueuedAt = queuedAt
-                    }))
+            _InventoryProgramsBySourceJobsRepository.Setup(s => s.SaveEnqueuedJob(It.IsAny<InventoryProgramsBySourceJob>()))
+                .Callback<InventoryProgramsBySourceJob>((job=> queuedJobs.Add(job)))
                 .Returns(-1);
 
             _InventoryProgramsBySourceJobsRepository.Setup(s => s.GetJob(It.IsAny<int>()))
@@ -452,6 +492,53 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // all have same start \ End dates
             queuedJobs.ForEach(j => Assert.AreEqual(expectedStartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD), j.StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)));
             queuedJobs.ForEach(j => Assert.AreEqual(expectedEndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD), j.EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)));
+        }
+
+        [Test]
+        public void QueueProcessInventoryProgramsBySourceJobUnprocessed()
+        {
+            const int testSourceId = 12;
+            var startDate = new DateTime(2020, 01, 01);
+            var endDate = new DateTime(2020, 01, 07);
+
+            const int testJobId = 1;
+
+            var queueJobCalled = 0;
+            _InventoryProgramsBySourceJobsRepository.Setup(s => s.SaveEnqueuedJob(It.IsAny<InventoryProgramsBySourceJob>()))
+                .Callback(() => queueJobCalled++)
+                .Returns(testJobId);
+
+            var service = _GetService();
+
+            var result = service.QueueProcessInventoryProgramsBySourceJobUnprocessed(testSourceId, startDate, endDate, TEST_USERNAME);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Jobs.Count);
+            Assert.AreEqual(testJobId, result.Jobs.First().Id);
+            Assert.AreEqual(testSourceId, result.Jobs.First().InventorySourceId);
+            Assert.AreEqual(startDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD), result.Jobs.First().StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual(endDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD), result.Jobs.First().EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual(1, service.UT_DoEnqueueProcessInventoryProgramsBySourceJobUnprocessedIds.Count);
+            Assert.AreEqual(1, queueJobCalled);
+        }
+
+        [Test]
+        public void ProcessInventoryProgramsBySourceJobUnprocessed()
+        {
+            const int jobId = 14;
+            
+            var processInventoryProgramsBySourceJobCalled = new List<int>();
+            _InventoryProgramsProcessingEngine.Setup(s => s.ProcessInventoryJob(It.IsAny<int>()))
+                .Callback<int>((j) => processInventoryProgramsBySourceJobCalled.Add(j))
+                .Returns(new InventoryProgramsProcessingJobBySourceDiagnostics(null));
+
+            var service = _GetService();
+
+            var result = service.ProcessInventoryProgramsBySourceJobUnprocessed(jobId);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, processInventoryProgramsBySourceJobCalled.Count);
+            Assert.AreEqual(jobId, processInventoryProgramsBySourceJobCalled.First());
         }
 
         private class MonitorEmailProperties

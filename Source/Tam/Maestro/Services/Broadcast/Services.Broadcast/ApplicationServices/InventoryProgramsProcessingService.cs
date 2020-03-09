@@ -8,6 +8,7 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -19,6 +20,8 @@ namespace Services.Broadcast.ApplicationServices
     public interface IInventoryProgramsProcessingService : IApplicationService
     {
         InventoryProgramsByFileJobEnqueueResultDto QueueProcessInventoryProgramsByFileJob(int fileId, string username);
+
+        InventoryProgramsByFileJobEnqueueResultDto QueueProcessInventoryProgramsByFileJobByFileName(string fileName, string username);
 
         InventoryProgramsByFileJobEnqueueResultDto ReQueueProcessInventoryProgramsByFileJob(int jobId, string username);
 
@@ -40,6 +43,15 @@ namespace Services.Broadcast.ApplicationServices
         [Queue("inventoryprogramsprocessing")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         InventoryProgramsBySourceJobEnqueueResultDto QueueProcessInventoryProgramsBySourceForWeeksFromNow(string username);
+
+        string ImportInventoryProgramsResults(Stream fileStream, string fileName);
+
+        InventoryProgramsBySourceJobEnqueueResultDto QueueProcessInventoryProgramsBySourceJobUnprocessed(int sourceId, DateTime startDate, DateTime endDate,
+            string username);
+
+        [Queue("inventoryprogramsprocessing")]
+        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
+        InventoryProgramsProcessingJobDiagnostics ProcessInventoryProgramsBySourceJobUnprocessed(int jobId);
     }
 
     public class InventoryProgramsProcessingService : IInventoryProgramsProcessingService
@@ -73,8 +85,10 @@ namespace Services.Broadcast.ApplicationServices
         {
             // validate file exists.  Will throw.
             _InventoryFileRepository.GetInventoryFileById(fileId);
-            var jobId = _InventoryProgramsByFileJobsRepository.QueueJob(fileId, username, _GetDateTimeNow());
-            var job = _InventoryProgramsByFileJobsRepository.GetJob(jobId);
+
+            var job = new InventoryProgramsByFileJob { InventoryFileId = fileId, QueuedBy = username, QueuedAt = _GetDateTimeNow() };
+            var jobId = _InventoryProgramsByFileJobsRepository.SaveEnqueuedJob(job);
+            job.Id = jobId;
 
             _DoEnqueueProcessInventoryProgramsByFileJob(job.Id);
 
@@ -82,11 +96,31 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
+        public InventoryProgramsByFileJobEnqueueResultDto QueueProcessInventoryProgramsByFileJobByFileName(string fileName,
+            string username)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                throw new InvalidOperationException("A filename is required.");
+            }
+
+            var trimmedFileName = fileName.Trim();
+            var latestFileId = _InventoryFileRepository.GetLatestInventoryFileIdByName(trimmedFileName);
+
+            if (latestFileId == 0)
+            {
+                throw new InvalidOperationException($"File '{trimmedFileName}' not found.");
+            }
+
+            return QueueProcessInventoryProgramsByFileJob(latestFileId, username);
+        }
+
         public InventoryProgramsByFileJobEnqueueResultDto ReQueueProcessInventoryProgramsByFileJob(int jobId, string username)
         {
             var oldJob = _InventoryProgramsByFileJobsRepository.GetJob(jobId);
-            var newJobId = _InventoryProgramsByFileJobsRepository.QueueJob(oldJob.InventoryFileId, username, _GetDateTimeNow());
-            var newJob = _InventoryProgramsByFileJobsRepository.GetJob(newJobId);
+            var newJob = new InventoryProgramsByFileJob { InventoryFileId = oldJob.InventoryFileId, QueuedBy = username, QueuedAt = _GetDateTimeNow() };
+            var newJobId = _InventoryProgramsByFileJobsRepository.SaveEnqueuedJob(newJob);
+            newJob.Id = newJobId;
 
             _DoEnqueueProcessInventoryProgramsByFileJob(newJob.Id);
 
@@ -104,8 +138,18 @@ namespace Services.Broadcast.ApplicationServices
         public InventoryProgramsBySourceJobEnqueueResultDto QueueProcessInventoryProgramsBySourceJob(int sourceId, DateTime startDate, DateTime endDate,
             string username, Guid? jobGroupId = null)
         {
-            var jobId = _InventoryProgramsBySourceJobsRepository.QueueJob(sourceId, startDate, endDate, username, _GetDateTimeNow(), jobGroupId);
-            var job = _InventoryProgramsBySourceJobsRepository.GetJob(jobId);
+            var job = new InventoryProgramsBySourceJob
+            {
+                InventorySourceId = sourceId,
+                StartDate =  startDate,
+                EndDate = endDate,
+                QueuedBy = username,
+                QueuedAt = _GetDateTimeNow(),
+                JobGroupId = jobGroupId
+            };
+
+            var jobId = _InventoryProgramsBySourceJobsRepository.SaveEnqueuedJob(job);
+            job.Id = jobId;
 
             _DoEnqueueProcessInventoryProgramsBySourceJob(job.Id);
 
@@ -117,9 +161,18 @@ namespace Services.Broadcast.ApplicationServices
             string username)
         {
             var oldJob = _InventoryProgramsBySourceJobsRepository.GetJob(jobId);
-            var newJobId = _InventoryProgramsBySourceJobsRepository.QueueJob(oldJob.InventorySourceId, oldJob.StartDate,
-                oldJob.EndDate, username, _GetDateTimeNow(), oldJob.JobGroupId);
-            var newJob = _InventoryProgramsBySourceJobsRepository.GetJob(newJobId);
+            var newJob = new InventoryProgramsBySourceJob
+            {
+                InventorySourceId = oldJob.InventorySourceId,
+                StartDate = oldJob.StartDate,
+                EndDate = oldJob.EndDate,
+                QueuedBy = username,
+                QueuedAt = _GetDateTimeNow(),
+                JobGroupId = oldJob.JobGroupId
+            };
+
+            var newJobId = _InventoryProgramsBySourceJobsRepository.SaveEnqueuedJob(newJob);
+            newJob.Id = newJobId;
 
             _DoEnqueueProcessInventoryProgramsBySourceJob(newJob.Id);
 
@@ -171,6 +224,44 @@ namespace Services.Broadcast.ApplicationServices
                                     + $"for '{inventorySources.Count}' sources with start date '{startDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}' "
                                     + $"and end date '{endDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}'.");
 
+            return result;
+        }
+
+        public InventoryProgramsBySourceJobEnqueueResultDto QueueProcessInventoryProgramsBySourceJobUnprocessed(int sourceId,
+            DateTime startDate, DateTime endDate, string username)
+        {
+            var job = new InventoryProgramsBySourceJob
+            {
+                InventorySourceId = sourceId,
+                StartDate = startDate,
+                EndDate = endDate,
+                QueuedBy = username,
+                QueuedAt = _GetDateTimeNow(),
+                JobGroupId = null
+            };
+            var jobId = _InventoryProgramsBySourceJobsRepository.SaveEnqueuedJob(job);
+            job.Id = jobId;
+
+            _DoEnqueueProcessInventoryProgramsBySourceJobUnprocessed(job.Id);
+
+            var result = new InventoryProgramsBySourceJobEnqueueResultDto { Jobs = new List<InventoryProgramsBySourceJob> { job } };
+            return result;
+        }
+
+        [Queue("inventoryprogramsprocessing")]
+        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
+        public InventoryProgramsProcessingJobDiagnostics ProcessInventoryProgramsBySourceJobUnprocessed(int jobId)
+        {
+            var engine = _InventoryProgramsProcessorFactory.GetInventoryProgramsProcessingEngine(InventoryProgramsProcessorType.BySourceUnprocessed);
+            var result = engine.ProcessInventoryJob(jobId);
+            return result;
+        }
+
+        public string ImportInventoryProgramsResults(Stream fileStream, string fileName)
+        {
+            // either processor type will work
+            var engine = _InventoryProgramsProcessorFactory.GetInventoryProgramsProcessingEngine(InventoryProgramsProcessorType.ByFile);
+            var result = engine.ImportInventoryProgramResults(fileStream, fileName);
             return result;
         }
 
@@ -257,6 +348,11 @@ namespace Services.Broadcast.ApplicationServices
         protected virtual void _DoEnqueueProcessInventoryProgramsBySourceJob(int jobId)
         {
             _BackgroundJobClient.Enqueue<IInventoryProgramsProcessingService>(x => x.ProcessInventoryProgramsBySourceJob(jobId));
+        }
+
+        protected virtual void _DoEnqueueProcessInventoryProgramsBySourceJobUnprocessed(int jobId)
+        {
+            _BackgroundJobClient.Enqueue<IInventoryProgramsProcessingService>(x => x.ProcessInventoryProgramsBySourceJobUnprocessed(jobId));
         }
 
         protected virtual string[] _GetProcessingBySourceResultReportToEmails()

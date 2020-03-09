@@ -1,29 +1,31 @@
-﻿using Common.Services;
+﻿using System;
+using Common.Services;
 using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
-using System;
 
-namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.InventoryProgramsProcessing
+namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 {
-    public class InventoryProgramsByFileProcessorTestClass : InventoryProgramsByFileProcessor
+    public class InventoryProgramsBySourceUnprocessedProcessorTestClass : InventoryProgramsBySourceUnprocessedProcessor
     {
-        public InventoryProgramsByFileProcessorTestClass(IDataRepositoryFactory broadcastDataRepositoryFactory,
+        public InventoryProgramsBySourceUnprocessedProcessorTestClass(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IProgramGuideApiClient programGuideApiClient,
             IStationMappingService stationMappingService,
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IGenreCache genreCache,
             IFileService fileService,
             IEmailerService emailerService
-            )
+        )
             : base(
-                  broadcastDataRepositoryFactory, 
-                  programGuideApiClient, 
-                  stationMappingService, 
-                  genreCache,
-                  fileService,
-                  emailerService)
+                broadcastDataRepositoryFactory,
+                programGuideApiClient,
+                stationMappingService,
+                mediaMonthAndWeekAggregateCache,
+                genreCache,
+                fileService,
+                emailerService)
         {
         }
 
