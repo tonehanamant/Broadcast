@@ -1,0 +1,5 @@
+inventory_id,inventory_week_id,inventory_daypart_id,station_call_letters,affiliation,start_date,end_date,daypart_text,mon,tue,wed,thu,fri,sat,sun,daypart_start_time,daypart_end_time,program_name,show_type,genre,program_start_time,program_end_time,program_start_date,program_end_date
+192899,1846809,194937,KONG-DT,IND,4/1/2019,4/7/2019,"M-F,SU 2AM-4AM",1,1,1,1,1,0,0,46800,50399,Big Bang Theory,Series,Comedy,43200,50399,3/6/2019,4/24/2019
+192898,1846796,194936,KING-DT,NBC,4/1/2019,4/7/2019,M-F 12PM-1PM,1,1,1,1,1,0,0,43200,46799,Tacoma FD,Series,Action,39600,46799,3/20/2019,4/20/2019
+192900,1846828,194938,KFSN-DT,ABC,5/13/2019,5/19/2019,M-F 12PM-1PM,1,1,1,1,1,0,0,43200,46799,Big Brother,Series,Reality,39600,48599,4/1/2019,6/18/2019
+192902,1846849,194940,KEYT-DT,ABC,4/8/2019,4/14/2019,M-F 5PM-6PM,1,1,1,1,1,0,0,61200,64799,Super Troopers,Movie,Comedy,50400,68399,4/1/2019,5/1/2019

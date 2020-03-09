@@ -815,6 +815,11 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 {
                     fieldValue = property.GetValue(item)?.ToString() ?? "";
                 }
+
+                if (fieldValue.Contains(","))
+                {
+                    fieldValue = $"\"{fieldValue}\"";
+                }
                 lineCsv.Append($"{fieldValue}");
             }
 

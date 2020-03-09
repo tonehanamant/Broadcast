@@ -130,6 +130,105 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
         }
 
         [Test]
+        public void ImportResultsFile_DaypartHasComma()
+        {
+            /*** Arrange ***/
+            const string fileName = @"Results_ProgramGuideInventoryExportFile_DaypartQuotes.csv";
+
+            const string filesDirectoryPath = @".\Files\InventoryProgramsResultsImport";
+            var filePath = Path.Combine(filesDirectoryPath, fileName);
+            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+
+            var deleteCalls = new List<Tuple<List<int>, DateTime, DateTime>>();
+            _InventoryRepo.Setup(s =>
+                    s.DeleteInventoryPrograms(It.IsAny<List<int>>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback<List<int>, DateTime, DateTime>((ids, s, e) => deleteCalls.Add(new Tuple<List<int>, DateTime, DateTime>(ids, s, e)));
+
+            var savedCalls = new List<List<StationInventoryManifestDaypartProgram>>();
+            _InventoryRepo.Setup(s =>
+                    s.UpdateInventoryPrograms(It.IsAny<List<StationInventoryManifestDaypartProgram>>(),
+                        It.IsAny<DateTime>()))
+                .Callback<List<StationInventoryManifestDaypartProgram>, DateTime>((s, d) => savedCalls.Add(s));
+
+            _InventoryRepo.Setup(s => s.GetStationInventoryManifestsByIds(It.IsAny<List<int>>()))
+                .Returns(new List<StationInventoryManifest>());
+
+            _FileService.Setup(s => s.CreateDirectory(It.IsAny<string>()));
+
+            var fileServiceCreateCalls = new List<string>();
+            _FileService.Setup(s => s.Create(It.IsAny<string>(), It.IsAny<Stream>()))
+                .Callback<string, Stream>((s, a) => fileServiceCreateCalls.Add(s));
+
+            var engine = _GetInventoryProgramsProcessingEngine();
+
+            /*** Act ***/
+            var result = engine.ImportInventoryProgramResults(fileStream, fileName);
+
+            /*** Assert ***/
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Contains("Exported 4 lines from the file."));
+            Assert.IsTrue(result.Contains("Extracted and saved 4 program records."));
+            Assert.IsTrue(result.Contains(@"File archived to 'testSettingBroadcastSharedDirectoryPath\ProgramGuideInterfaceDirectory\Completed\Results_ProgramGuideInventoryExportFile_DaypartQuotes.csv'."));
+
+            // validate we deleted
+            Assert.AreEqual(3, deleteCalls.Count);
+            Assert.AreEqual(2, deleteCalls[0].Item1.Count);
+            Assert.IsTrue(deleteCalls[0].Item1.Contains(192899));
+            Assert.IsTrue(deleteCalls[0].Item1.Contains(192898));
+            Assert.AreEqual(1, deleteCalls[1].Item1.Count);
+            Assert.IsTrue(deleteCalls[1].Item1.Contains(192900));
+            Assert.AreEqual(1, deleteCalls[2].Item1.Count);
+            Assert.IsTrue(deleteCalls[2].Item1.Contains(192902));
+
+            // validate we saved
+            Assert.AreEqual(1, savedCalls.Count);
+            Assert.AreEqual(4, savedCalls[0].Count);
+            Assert.AreEqual(194937, savedCalls[0][0].StationInventoryManifestDaypartId);
+            Assert.AreEqual("Big Bang Theory", savedCalls[0][0].ProgramName);
+            Assert.AreEqual("Series", savedCalls[0][0].ShowType);
+            Assert.AreEqual(2, savedCalls[0][0].GenreSourceId);
+            Assert.AreEqual(2, savedCalls[0][0].MaestroGenreId);
+            Assert.AreEqual("2019-03-06", savedCalls[0][0].StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual("2019-04-24", savedCalls[0][0].EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual(43200, savedCalls[0][0].StartTime);
+            Assert.AreEqual(50399, savedCalls[0][0].EndTime);
+
+            Assert.AreEqual(194936, savedCalls[0][1].StationInventoryManifestDaypartId);
+            Assert.AreEqual("Tacoma FD", savedCalls[0][1].ProgramName);
+            Assert.AreEqual("Series", savedCalls[0][1].ShowType);
+            Assert.AreEqual(2, savedCalls[0][1].GenreSourceId);
+            Assert.AreEqual(2, savedCalls[0][1].MaestroGenreId);
+            Assert.AreEqual("2019-03-20", savedCalls[0][1].StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual("2019-04-20", savedCalls[0][1].EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual(39600, savedCalls[0][1].StartTime);
+            Assert.AreEqual(46799, savedCalls[0][1].EndTime);
+
+            Assert.AreEqual(194938, savedCalls[0][2].StationInventoryManifestDaypartId);
+            Assert.AreEqual("Big Brother", savedCalls[0][2].ProgramName);
+            Assert.AreEqual("Series", savedCalls[0][2].ShowType);
+            Assert.AreEqual(2, savedCalls[0][2].GenreSourceId);
+            Assert.AreEqual(2, savedCalls[0][2].MaestroGenreId);
+            Assert.AreEqual("2019-04-01", savedCalls[0][2].StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual("2019-06-18", savedCalls[0][2].EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual(39600, savedCalls[0][2].StartTime);
+            Assert.AreEqual(48599, savedCalls[0][2].EndTime);
+
+            Assert.AreEqual(194940, savedCalls[0][3].StationInventoryManifestDaypartId);
+            Assert.AreEqual("Super Troopers", savedCalls[0][3].ProgramName);
+            Assert.AreEqual("Movie", savedCalls[0][3].ShowType);
+            Assert.AreEqual(2, savedCalls[0][3].GenreSourceId);
+            Assert.AreEqual(2, savedCalls[0][3].MaestroGenreId);
+            Assert.AreEqual("2019-04-01", savedCalls[0][3].StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual("2019-05-01", savedCalls[0][3].EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual(50400, savedCalls[0][3].StartTime);
+            Assert.AreEqual(68399, savedCalls[0][3].EndTime);
+
+            // validate we moved the file
+            Assert.AreEqual(1, fileServiceCreateCalls.Count);
+            Assert.IsTrue(fileServiceCreateCalls[0].Contains("Completed"));
+        }
+
+        [Test]
         public void ImportResultsFile_InvalidFile()
         {
             /*** Arrange ***/
@@ -188,53 +287,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             // validate we moved the file
             Assert.AreEqual(1, fileServiceCreateCalls.Count);
             Assert.IsTrue(fileServiceCreateCalls[0].Contains("Failed"));
-        }
-
-        private List<GuideResponseElementDto> _GetGuideResponse()
-        {
-            return new List<GuideResponseElementDto>
-            {
-                new GuideResponseElementDto
-                {
-                    RequestDaypartId = "R000001.M001.D1",
-                    Programs = new List<GuideResponseProgramDto>
-                    {
-                        new GuideResponseProgramDto
-                        {
-                            ProgramName = "ProgramOne",
-                            SourceGenre = "SourceGenreOne",
-                            ShowType = "ShowTypeOne",
-                            SyndicationType = "SyndicationTypeOne",
-                            Occurrences = 1,
-                            StartDate = new DateTime(2020, 01, 01),
-                            EndDate = new DateTime(2020, 02,12),
-                            StartTime = 3600 * 3,
-                            EndTime = (3600 * 3) + (60 * 30) - 1,
-                            Wednesday = true
-                        }
-                    }
-                },
-                new GuideResponseElementDto
-                {
-                    RequestDaypartId = "R000002.M002.D3",
-                    Programs = new List<GuideResponseProgramDto>
-                    {
-                        new GuideResponseProgramDto
-                        {
-                            ProgramName = "ProgramTwo",
-                            SourceGenre = "SourceGenreTwo",
-                            ShowType = "ShowTypeTwo",
-                            SyndicationType = "SyndicationTypeTwo",
-                            Occurrences = 1,
-                            StartDate = new DateTime(2020, 01, 01),
-                            EndDate = new DateTime(2020, 01, 01),
-                            StartTime = 3600 * 3,
-                            EndTime = (3600 * 3) + (60 * 30) - 1,
-                            Wednesday = true
-                        }
-                    }
-                }
-            };
         }
 
         /// <remarks>Do this after you've setup all your data repository returns</remarks>

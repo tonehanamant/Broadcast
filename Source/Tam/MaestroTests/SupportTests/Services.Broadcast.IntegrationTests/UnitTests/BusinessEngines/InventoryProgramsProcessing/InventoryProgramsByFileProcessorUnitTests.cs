@@ -184,6 +184,169 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.IsTrue(emailsSent[0].Item4.Any());
         }
 
+        [Test]
+        public void ByFileJob_DaypartHasComma()
+        {
+            /*** Arrange ***/
+            const int jobId = 13;
+            const int fileId = 12;
+            var inventorySource = new InventorySource
+            {
+                Id = 1,
+                Name = "NumberOneSource",
+                IsActive = true,
+                InventoryType = InventorySourceTypeEnum.OpenMarket
+            };
+            // set it up so there is a comma in there
+            var manifests = InventoryProgramsProcessingTestHelper.GetManifests(2);
+            manifests[0].ManifestDayparts[0].Daypart.Monday = true;
+            manifests[0].ManifestDayparts[0].Daypart.Tuesday = true;
+            manifests[0].ManifestDayparts[0].Daypart.Wednesday = true;
+            manifests[0].ManifestDayparts[0].Daypart.Thursday = true;
+            manifests[0].ManifestDayparts[0].Daypart.Friday = true;
+            manifests[0].ManifestDayparts[0].Daypart.Saturday = false;
+            manifests[0].ManifestDayparts[0].Daypart.Sunday = true;
+
+
+            var guideResponse = _GetGuideResponse();
+
+            var getStationInventoryByFileIdForProgramsProcessingCalled = 0;
+            _InventoryRepo.Setup(r => r.GetInventoryByFileIdForProgramsProcessing(It.IsAny<int>()))
+                .Callback(() => getStationInventoryByFileIdForProgramsProcessingCalled++)
+                .Returns(manifests);
+
+            var deleteProgramsCalls = new List<Tuple<List<int>, DateTime, DateTime>>();
+            _InventoryRepo.Setup(r => r.DeleteInventoryPrograms(It.IsAny<List<int>>(),
+                    It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback<List<int>, DateTime, DateTime>((a, b, c) => deleteProgramsCalls.Add(new Tuple<List<int>, DateTime, DateTime>(a, b, c)));
+
+            var updateProgramsCalls = new List<Tuple<List<StationInventoryManifestDaypartProgram>, DateTime>>();
+            _InventoryRepo.Setup(r => r.UpdateInventoryPrograms(
+                    It.IsAny<List<StationInventoryManifestDaypartProgram>>(), It.IsAny<DateTime>()))
+                .Callback<List<StationInventoryManifestDaypartProgram>, DateTime>((a, b) =>
+                    updateProgramsCalls.Add(new Tuple<List<StationInventoryManifestDaypartProgram>, DateTime>(a, b)));
+
+            _InventoryFileRepo.Setup(r => r.GetInventoryFileById(It.IsAny<int>()))
+                .Returns(new InventoryFile
+                {
+                    Id = 21,
+                    FileName = "TestInventoryFileName",
+                    InventorySource = inventorySource
+                });
+
+            var inventoryProgramsByFileJobsRepoCalls = 0;
+            _InventoryProgramsByFileJobsRepo.Setup(r => r.GetJob(It.IsAny<int>()))
+                .Callback(() => inventoryProgramsByFileJobsRepoCalls++)
+                .Returns<int>((id) => new InventoryProgramsByFileJob
+                {
+                    Id = id,
+                    InventoryFileId = fileId,
+                    Status = InventoryProgramsJobStatus.Queued,
+                    QueuedAt = DateTime.Now,
+                    QueuedBy = "TestUser"
+                });
+
+            var setJobCompleteSuccessCalled = 0;
+            _InventoryProgramsByFileJobsRepo.Setup(r => r.SetJobCompleteSuccess(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>())).Callback(() => setJobCompleteSuccessCalled++);
+            var setJobCompleteErrorCalled = 0;
+            _InventoryProgramsByFileJobsRepo.Setup(r => r.SetJobCompleteError(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>())).Callback(() => setJobCompleteErrorCalled++);
+            var setJobCompleteWarningCalled = 0;
+            _InventoryProgramsByFileJobsRepo.Setup(r => r.SetJobCompleteWarning(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>())).Callback(() => setJobCompleteWarningCalled++);
+
+            var getProgramsForGuideCallCount = 0;
+            var guideRequests = new List<GuideRequestElementDto>();
+            _ProgramGuidClient.Setup(s => s.GetProgramsForGuide(It.IsAny<List<GuideRequestElementDto>>()))
+                .Callback<List<GuideRequestElementDto>>((r) =>
+                {
+                    getProgramsForGuideCallCount++;
+                    guideRequests.AddRange(r);
+                })
+                .Returns(guideResponse);
+
+            var mappedStations = new List<StationMappingsDto>
+            {
+                new StationMappingsDto {StationId =  1, MapSet = StationMapSetNamesEnum.Sigma, MapValue = "SigmaMappedValue"},
+                new StationMappingsDto {StationId =  1, MapSet = StationMapSetNamesEnum.NSI, MapValue = "NSIMappedValue"},
+                new StationMappingsDto {StationId =  1, MapSet = StationMapSetNamesEnum.Extended, MapValue = "ExtendedMappedValue"},
+                new StationMappingsDto {StationId =  1, MapSet = StationMapSetNamesEnum.NSILegacy, MapValue = "NSILegacyMappedValue"}
+            };
+            _StationMappingService.Setup(s => s.GetStationMappingsByCadentCallLetter(It.IsAny<string>()))
+                .Returns(mappedStations);
+
+            var createdFiles = new List<Tuple<string, List<string>>>();
+            _FileService.Setup(s => s.CreateTextFile(It.IsAny<string>(), It.IsAny<List<string>>()))
+                .Callback<string, List<string>>((name, lines) => createdFiles.Add(new Tuple<string, List<string>>(name, lines)));
+            var expectedResultFileLines = new[]
+            {
+                "inventory_id,inventory_week_id,inventory_daypart_id,station_call_letters,affiliation,start_date,end_date,daypart_text,mon,tue,wed,thu,fri,sat,sun,daypart_start_time,daypart_end_time,program_name,show_type,genre,program_start_time,program_end_time,program_start_date,program_end_date",
+                "1,1,1,ExtendedMappedValue,ABC,2020-01-01,2020-01-07,\"M-F,SU 2AM-4AM\",1,1,1,1,1,0,1,7200,14399,,,,,,,",
+                "1,1,2,ExtendedMappedValue,ABC,2020-01-01,2020-01-07,F-SU 4AM-6AM,0,0,0,0,1,1,1,14400,21599,,,,,,,",
+                "1,2,1,ExtendedMappedValue,ABC,2020-01-08,2020-01-14,\"M-F,SU 2AM-4AM\",1,1,1,1,1,0,1,7200,14399,,,,,,,",
+                "1,2,2,ExtendedMappedValue,ABC,2020-01-08,2020-01-14,F-SU 4AM-6AM,0,0,0,0,1,1,1,14400,21599,,,,,,,",
+                "1,3,1,ExtendedMappedValue,ABC,2020-01-15,2020-01-21,\"M-F,SU 2AM-4AM\",1,1,1,1,1,0,1,7200,14399,,,,,,,",
+                "1,3,2,ExtendedMappedValue,ABC,2020-01-15,2020-01-21,F-SU 4AM-6AM,0,0,0,0,1,1,1,14400,21599,,,,,,,",
+                "2,4,3,ExtendedMappedValue,ABC,2020-01-01,2020-01-07,SA-SU 2AM-4AM,0,0,0,0,0,1,1,7200,14399,,,,,,,",
+                "2,4,4,ExtendedMappedValue,ABC,2020-01-01,2020-01-07,M-TH 4AM-6AM,1,1,1,1,0,0,0,14400,21599,,,,,,,",
+                "2,5,3,ExtendedMappedValue,ABC,2020-01-08,2020-01-14,SA-SU 2AM-4AM,0,0,0,0,0,1,1,7200,14399,,,,,,,",
+                "2,5,4,ExtendedMappedValue,ABC,2020-01-08,2020-01-14,M-TH 4AM-6AM,1,1,1,1,0,0,0,14400,21599,,,,,,,",
+                "2,6,3,ExtendedMappedValue,ABC,2020-01-15,2020-01-21,SA-SU 2AM-4AM,0,0,0,0,0,1,1,7200,14399,,,,,,,",
+                "2,6,4,ExtendedMappedValue,ABC,2020-01-15,2020-01-21,M-TH 4AM-6AM,1,1,1,1,0,0,0,14400,21599,,,,,,,"
+            };
+
+            var createdDirectories = new List<string>();
+            _FileService.Setup(s => s.CreateDirectory(It.IsAny<string>()))
+                .Callback<string>((s) => createdDirectories.Add(s));
+
+            // body, subject, priority, to_emails
+            var emailsSent = new List<Tuple<string, string, MailPriority, string[]>>();
+            _EmailerService.Setup(s => s.QuickSend(It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string>(),
+                    It.IsAny<MailPriority>(), It.IsAny<string[]>(),
+                    It.IsAny<List<string>>()))
+                .Callback<bool, string, string, MailPriority, string[], List<string>>((h, b, s, p, t, a) =>
+                    emailsSent.Add(new Tuple<string, string, MailPriority, string[]>(b, s, p, t)))
+                .Returns(true);
+
+            var engine = _GetInventoryProgramsProcessingEngine();
+            engine.UT_CurrentDateTime = new DateTime(2020, 03, 06, 14, 22, 35);
+
+            /*** Act ***/
+            var results = engine.ProcessInventoryJob(jobId);
+
+            /*** Assert ***/
+            Assert.NotNull(results);
+            Assert.IsTrue(inventoryProgramsByFileJobsRepoCalls > 1);
+            Assert.AreEqual(1, getStationInventoryByFileIdForProgramsProcessingCalled);
+
+            Assert.AreEqual(1, setJobCompleteSuccessCalled);
+            Assert.AreEqual(0, setJobCompleteWarningCalled);
+            Assert.AreEqual(0, setJobCompleteErrorCalled);
+
+            // verify directories created
+            Assert.AreEqual(3, createdDirectories.Count);
+
+            // verify the file was exported well
+            Assert.AreEqual(1, createdFiles.Count);
+            Assert.AreEqual(@"testSettingBroadcastSharedDirectoryPath\ProgramGuideInterfaceDirectory\Export\ProgramGuideInventoryExportFile_20200306_142235.csv", createdFiles[0].Item1);
+            Assert.AreEqual(13, createdFiles[0].Item2.Count);
+            for (var i = 0; i < 13; i++)
+            {
+                Assert.AreEqual(expectedResultFileLines[i], createdFiles[0].Item2[i]);
+            }
+
+            // verify that the email was sent
+            Assert.AreEqual(1, emailsSent.Count);
+            var body = emailsSent[0].Item1;
+            Assert.IsTrue(body.Contains("A ProgramGuide Interface file has been exported."));
+            Assert.IsTrue(body.Contains("Inventory File Id : 21"));
+            Assert.IsTrue(body.Contains("Inventory File Name : TestInventoryFileName"));
+            Assert.IsTrue(body.Contains("Inventory Source : NumberOneSource"));
+            Assert.IsTrue(body.Contains(@"testSettingBroadcastSharedDirectoryPath\ProgramGuideInterfaceDirectory\Export\ProgramGuideInventoryExportFile_20200306_142235.csv"));
+
+            Assert.AreEqual("Broadcast Inventory Programs - ProgramGuide Interface Export file available", emailsSent[0].Item2);
+            Assert.AreEqual(MailPriority.Normal, emailsSent[0].Item3);
+            Assert.IsTrue(emailsSent[0].Item4.Any());
+        }
+
         #region PRI-23390 : Commenting out.  We may want to bring this back later.
 
         /*
