@@ -7,39 +7,10 @@
   "AllocationByGenreViewRows": null,
   "Client": "PetMed Express, Inc",
   "ClientContact": "",
-  "DefaultViewRows": [
-    {
-      "Genre": "NEWS",
-      "NoOfMarkets": 1,
-      "NoOfStations": 1,
-      "Program": "MIDDAY NEWS",
-      "Weight": 0.16
-    },
-    {
-      "Genre": "NEWS",
-      "NoOfMarkets": 2,
-      "NoOfStations": 2,
-      "Program": "MORNING NEWS",
-      "Weight": 0.12
-    },
-    {
-      "Genre": "NEWS",
-      "NoOfMarkets": 1,
-      "NoOfStations": 1,
-      "Program": "EVENING NEWS",
-      "Weight": 0.08
-    },
-    {
-      "Genre": "NEWS",
-      "NoOfMarkets": 1,
-      "NoOfStations": 1,
-      "Program": "LATE NEWS",
-      "Weight": 0.04
-    }
-  ],
+  "DefaultViewRows": null,
   "DetailedViewRows": [
     {
-      "Daypart": "EMN",
+      "Daypart": "LN",
       "Days": "W-TH",
       "DMA": "NEW YORK",
       "Genre": "NEWS",
@@ -48,17 +19,6 @@
       "Rank": 1,
       "Station": "WTTV",
       "TimePeriods": "11AM-12:30PM"
-    },
-    {
-      "Daypart": "EMN",
-      "Days": "W-TH",
-      "DMA": "NEW YORK",
-      "Genre": "NEWS",
-      "NetworkAffiliation": "CBS",
-      "Program": "KPLR 2002 MIDDAY NEWS",
-      "Rank": 1,
-      "Station": "WTTV",
-      "TimePeriods": "11:06AM-11:23AM"
     },
     {
       "Daypart": "EMN",
@@ -72,18 +32,7 @@
       "TimePeriods": "4AM-4:01AM"
     },
     {
-      "Daypart": "EMN",
-      "Days": "M-TU",
-      "DMA": "BINGHAMTON",
-      "Genre": "NEWS",
-      "NetworkAffiliation": "ABC",
-      "Program": "KPLR 1002 MORNING NEWS",
-      "Rank": 2,
-      "Station": "KSTP",
-      "TimePeriods": "4:05AM-4:10AM"
-    },
-    {
-      "Daypart": "EMN",
+      "Daypart": "EM",
       "Days": "F,SU",
       "DMA": "MACON",
       "Genre": "NEWS",
@@ -94,18 +43,7 @@
       "TimePeriods": "4:01PM-6:53PM"
     },
     {
-      "Daypart": "EMN",
-      "Days": "F,SU",
-      "DMA": "MACON",
-      "Genre": "NEWS",
-      "NetworkAffiliation": "CBS",
-      "Program": "KPLR 3002 EVENING NEWS",
-      "Rank": 3,
-      "Station": "KELO",
-      "TimePeriods": "4:40PM-5:13PM"
-    },
-    {
-      "Daypart": "EMN",
+      "Daypart": "EM",
       "Days": "F,SU",
       "DMA": "MACON",
       "Genre": "NEWS",
@@ -114,17 +52,6 @@
       "Rank": 3,
       "Station": "KELOW",
       "TimePeriods": "8:16PM-12:05AM"
-    },
-    {
-      "Daypart": "EMN",
-      "Days": "F,SU",
-      "DMA": "MACON",
-      "Genre": "NEWS",
-      "NetworkAffiliation": "CBS",
-      "Program": "KPLR 4002 LATE NEWS",
-      "Rank": 3,
-      "Station": "KELOW",
-      "TimePeriods": "8:33PM-8:50PM"
     }
   ],
   "ExportFileName": "Program_Lineup_Report_Brave Plan_10172017.xlsx",

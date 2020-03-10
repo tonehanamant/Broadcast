@@ -1191,7 +1191,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestIds))),
                 Times.Once);
 
-            var passedManifestDaypartIds = new List<int> { 1001, 1002, 2001, 2002, 3001, 3002, 4001, 4002 };
+            var passedManifestDaypartIds = new List<int> { 1001, 2001, 3001, 4001 };
             _StationProgramRepositoryMock.Verify(x => x.GetPrimaryProgramsForManifestDayparts(
                 It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestDaypartIds))),
                 Times.Once);
@@ -1319,16 +1319,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         }
                     },
                 });
-
-            _StandartDaypartEngineMock
-                .Setup(x => x.GetDaypartCodeByGenreAndTimeRange(It.IsAny<string>(), It.IsAny<TimeRange>()))
-                .Returns(new DaypartDefaultFullDto
-                {
-                    DaypartType = DaypartTypeEnum.News,
-                    DefaultStartTimeSeconds = 80,
-                    DefaultEndTimeSeconds = 139,
-                    Code = "EMN"
-                });
         }
 
         private void _SetupBaseProgramLineupTestData()
@@ -1448,9 +1438,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 10,
-                    Daypart = new DisplayDaypart
+                    StandardDaypart = new DaypartDefaultDto
                     {
-                        Id = 10001
+                        Id = 10001,
+                        Code = "EMN"
                     },
                     Spots = 1,
                     Impressions = 10
@@ -1458,9 +1449,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 10,
-                    Daypart = new DisplayDaypart
+                    StandardDaypart = new DaypartDefaultDto
                     {
-                        Id = 10002
+                        Id = 10002,
+                        Code = "EM"
                     },
                     Spots = 1,
                     Impressions = 10
@@ -1468,9 +1460,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 20,
-                    Daypart = new DisplayDaypart
+                    StandardDaypart = new DaypartDefaultDto
                     {
-                        Id = 20001
+                        Id = 20001,
+                        Code = "LN"
                     },
                     Spots = 1,
                     Impressions = 20
@@ -1478,9 +1471,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 20,
-                    Daypart = new DisplayDaypart
+                    StandardDaypart = new DaypartDefaultDto
                     {
-                        Id = 20002
+                        Id = 20002,
+                        Code = "EM"
                     },
                     Spots = 1,
                     Impressions = 20
@@ -1488,9 +1482,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 30,
-                    Daypart = new DisplayDaypart
+                    StandardDaypart = new DaypartDefaultDto
                     {
-                        Id = 30001
+                        Id = 30001,
+                        Code = "EM"
                     },
                     Spots = 1,
                     Impressions = 10
@@ -1498,9 +1493,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 30,
-                    Daypart = new DisplayDaypart
+                    StandardDaypart = new DaypartDefaultDto
                     {
-                        Id = 30002
+                        Id = 30002,
+                        Code = "EM"
                     },
                     Spots = 1,
                     Impressions = 10
@@ -1508,18 +1504,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 40,
-                    Daypart = new DisplayDaypart
+                    StandardDaypart = new DaypartDefaultDto
                     {
-                        Id = 40001
+                        Id = 40001,
+                        Code = "EM"
                     },
                     Spots = 1,
                     Impressions = 10
                 },new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 40,
-                    Daypart = new DisplayDaypart
+                    StandardDaypart = new DaypartDefaultDto
                     {
-                        Id = 40002
+                        Id = 40002,
+                        Code = "EM"
                     },
                     Spots = 1,
                     Impressions = 10
@@ -1615,18 +1613,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                     Monday = true,
                                     Tuesday = true
                                 }
-                            },
-                            new StationInventoryManifestDaypart
-                            {
-                                Id = 1002,
-                                Daypart = new DisplayDaypart
-                                {
-                                    Id = 10002,
-                                    StartTime = 14700,
-                                    EndTime = 15000,
-                                    Monday = true,
-                                    Tuesday = true
-                                }
                             }
                         }
                     },
@@ -1652,18 +1638,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                     Wednesday = true,
                                     Thursday = true
                                 }
-                            },
-                            new StationInventoryManifestDaypart
-                            {
-                                Id = 2002,
-                                Daypart = new DisplayDaypart
-                                {
-                                    Id = 20002,
-                                    StartTime = 40000,
-                                    EndTime = 41000,
-                                    Wednesday = true,
-                                    Thursday = true
-                                }
                             }
                         }
                     },
@@ -1681,23 +1655,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                             new StationInventoryManifestDaypart
                             {
                                 Id = 3001,
+                                ProgramName = "The Shawshank Redemption",
                                 Daypart = new DisplayDaypart
                                 {
                                     Id = 30001,
                                     StartTime = 57700,
                                     EndTime = 68000,
-                                    Friday = true,
-                                    Sunday = true
-                                }
-                            },
-                            new StationInventoryManifestDaypart
-                            {
-                                Id = 3002,
-                                Daypart = new DisplayDaypart
-                                {
-                                    Id = 30002,
-                                    StartTime = 60000,
-                                    EndTime = 62000,
                                     Friday = true,
                                     Sunday = true
                                 }
@@ -1723,18 +1686,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                     Id = 40001,
                                     StartTime = 73000,
                                     EndTime = 300,
-                                    Friday = true,
-                                    Sunday = true
-                                }
-                            },
-                            new StationInventoryManifestDaypart
-                            {
-                                Id = 4002,
-                                Daypart = new DisplayDaypart
-                                {
-                                    Id = 40002,
-                                    StartTime = 74000,
-                                    EndTime = 75000,
                                     Friday = true,
                                     Sunday = true
                                 }
