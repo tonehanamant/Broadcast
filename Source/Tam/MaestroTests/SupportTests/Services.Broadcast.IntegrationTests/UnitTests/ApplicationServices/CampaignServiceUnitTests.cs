@@ -22,6 +22,7 @@ using Services.Broadcast.Entities.StationInventory;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using System.Linq;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram.ManifestDaypart;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -1128,6 +1129,210 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProgramLineupReport_RollupStationSpecificNewsPrograms()
+        {
+            // Arrange
+            const int firstPlanId = 1;
+            const int secondPlanId = 2;
+            const int campaignId = 3;
+            const int agencyId = 4;
+            const int advertiserId = 5;
+            const int audienceId = 6;
+            const int spotLengthId = 8;
+
+            var request = new ProgramLineupReportRequest
+            {
+                SelectedPlans = new List<int> { firstPlanId, secondPlanId }
+            };
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    CampaignId = campaignId,
+                    AudienceId = audienceId,
+                    Name = "Brave Plan",
+                    FlightStartDate = new DateTime(2020, 03, 1),
+                    FlightEndDate = new DateTime(2020, 03, 14),
+                    SpotLengthId = spotLengthId,
+                    Equivalized = true,
+                    PostingType = PostingTypeEnum.NTI,
+                    TargetImpressions = 250
+                });
+
+            _CampaignRepositoryMock
+                .Setup(x => x.GetCampaign(It.IsAny<int>()))
+                .Returns(new CampaignDto
+                {
+                    AgencyId = agencyId,
+                    AdvertiserId = advertiserId
+                });
+
+            _SetupBaseProgramLineupForRollupTestData();
+
+            var tc = _BuildCampaignService();
+
+            // Act
+            var result = tc.GetProgramLineupReportData(request, _CurrentDate);
+
+            // Assert
+            _PlanRepositoryMock.Verify(x => x.GetPlan(firstPlanId, null), Times.Once);
+            _CampaignRepositoryMock.Verify(x => x.GetCampaign(campaignId), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetLatestPricingJob(firstPlanId), Times.Once);
+            _TrafficApiCacheMock.Verify(x => x.GetAgency(agencyId), Times.Once);
+            _TrafficApiCacheMock.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
+            _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
+            _SpotLengthServiceMock.Verify(x => x.GetAllSpotLengths(), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpots(firstPlanId), Times.Once);
+            _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
+
+            var passedManifestIds = new List<int> { 10, 20, 30, 40 };
+            _InventoryRepositoryMock.Verify(x => x.GetStationInventoryManifestsByIds(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestIds))),
+                Times.Once);
+
+            var passedManifestDaypartIds = new List<int> { 1001, 1002, 2001, 2002, 3001, 3002, 4001, 4002 };
+            _StationProgramRepositoryMock.Verify(x => x.GetPrimaryProgramsForManifestDayparts(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestDaypartIds))),
+                Times.Once);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        private void _SetupBaseProgramLineupForRollupTestData()
+        {
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                    Completed = new DateTime(2020, 02, 12)
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingAllocatedSpots(It.IsAny<int>()))
+                .Returns(_GetPlanPricingAllocatedSpotsForRollup());
+
+            _InventoryRepositoryMock
+                .Setup(x => x.GetStationInventoryManifestsByIds(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetStationInventoryManifestsForRollup());
+
+            _TrafficApiCacheMock
+                .Setup(x => x.GetAgency(It.IsAny<int>()))
+                .Returns(new AgencyDto
+                {
+                    Name = "1st Image Marketing"
+                });
+
+            _TrafficApiCacheMock
+                .Setup(x => x.GetAdvertiser(It.IsAny<int>()))
+                .Returns(new AdvertiserDto
+                {
+                    Name = "PetMed Express, Inc"
+                });
+
+            _AudienceServiceMock
+                .Setup(x => x.GetAudienceById(It.IsAny<int>()))
+                .Returns(new PlanAudienceDisplay
+                {
+                    Code = "A18-20"
+                });
+
+            _SpotLengthServiceMock
+                .Setup(x => x.GetAllSpotLengths())
+                .Returns(new List<LookupDto>
+                {
+                    new LookupDto { Id = 7, Display = "45" },
+                    new LookupDto { Id = 8, Display = "30" }
+                });
+
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestMarketCoveragesWithStations())
+                .Returns(_GetMarketCoverages());
+
+            _StationProgramRepositoryMock
+                .Setup(x => x.GetPrimaryProgramsForManifestDayparts(It.IsAny<IEnumerable<int>>()))
+                .Returns(new Dictionary<int, Program>
+                {
+                    {
+                        1001,
+                        new Program
+                        {
+                            Genre = "News",
+                            Name = "KPLR 1001 Morning NEWS"
+                        }
+                    },
+                    {
+                        1002,
+                        new Program
+                        {
+                            Genre = "News",
+                            Name = "KPLR 1002 Morning NEWS"
+                        }
+                    },
+                    {
+                        2001,
+                        new Program
+                        {
+                            Genre = "News",
+                            Name = "KPLR 2001 Midday NEWS"
+                        }
+                    },
+                     {
+                        2002,
+                        new Program
+                        {
+                            Genre = "News",
+                            Name = "KPLR 2002 Midday NEWS"
+                        }
+                    },
+                     {
+                        3001,
+                        new Program
+                        {
+                            Genre = "News",
+                            Name = "KPLR 3001 Evening NEWS"
+                        }
+                    },
+                     {
+                        3002,
+                        new Program
+                        {
+                            Genre = "News",
+                            Name = "KPLR 3002 Evening NEWS"
+                        }
+                    },
+                     {
+                        4001,
+                        new Program
+                        {
+                            Genre = "News",
+                            Name = "KPLR 4001 Late NEWS"
+                        }
+                    },
+                     {
+                        4002,
+                        new Program
+                        {
+                            Genre = "News",
+                            Name = "KPLR 4002 Late NEWS"
+                        }
+                    },
+                });
+
+            _StandartDaypartEngineMock
+                .Setup(x => x.GetDaypartCodeByGenreAndTimeRange(It.IsAny<string>(), It.IsAny<TimeRange>()))
+                .Returns(new DaypartDefaultFullDto
+                {
+                    DaypartType = DaypartTypeEnum.News,
+                    DefaultStartTimeSeconds = 80,
+                    DefaultEndTimeSeconds = 139,
+                    Code = "EMN"
+                });
+        }
+
         private void _SetupBaseProgramLineupTestData()
         {
             _PlanRepositoryMock
@@ -1181,11 +1386,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             _StationProgramRepositoryMock
                 .Setup(x => x.GetPrimaryProgramsForManifestDayparts(It.IsAny<IEnumerable<int>>()))
-                .Returns(new Dictionary<int, PlanPricingInventoryProgram.ManifestDaypart.Program>
+                .Returns(new Dictionary<int, Program>
                 {
                     {
                         1001,
-                        new PlanPricingInventoryProgram.ManifestDaypart.Program
+                        new Program
                         {
                             Genre = "Movie",
                             Name = "Joker"
@@ -1193,7 +1398,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                     {
                         2001,
-                        new PlanPricingInventoryProgram.ManifestDaypart.Program
+                        new Program
                         {
                             Genre = "News",
                             Name = "Late News"
@@ -1201,7 +1406,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                     {
                         3001,
-                        new PlanPricingInventoryProgram.ManifestDaypart.Program
+                        new Program
                         {
                             Genre = "Movie",
                             Name = "1917"
@@ -1244,6 +1449,92 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Rank = 3,
                         MarketName = "Macon"
                     }
+                }
+            };
+        }
+
+        private List<PlanPricingAllocatedSpot> _GetPlanPricingAllocatedSpotsForRollup()
+        {
+            return new List<PlanPricingAllocatedSpot>
+            {
+                new PlanPricingAllocatedSpot
+                {
+                    StationInventoryManifestId = 10,
+                    Daypart = new DisplayDaypart
+                    {
+                        Id = 10001
+                    },
+                    Spots = 1,
+                    Impressions = 10
+                },
+                new PlanPricingAllocatedSpot
+                {
+                    StationInventoryManifestId = 10,
+                    Daypart = new DisplayDaypart
+                    {
+                        Id = 10002
+                    },
+                    Spots = 1,
+                    Impressions = 10
+                },
+                new PlanPricingAllocatedSpot
+                {
+                    StationInventoryManifestId = 20,
+                    Daypart = new DisplayDaypart
+                    {
+                        Id = 20001
+                    },
+                    Spots = 1,
+                    Impressions = 20
+                },
+                new PlanPricingAllocatedSpot
+                {
+                    StationInventoryManifestId = 20,
+                    Daypart = new DisplayDaypart
+                    {
+                        Id = 20002
+                    },
+                    Spots = 1,
+                    Impressions = 20
+                },
+                new PlanPricingAllocatedSpot
+                {
+                    StationInventoryManifestId = 30,
+                    Daypart = new DisplayDaypart
+                    {
+                        Id = 30001
+                    },
+                    Spots = 1,
+                    Impressions = 10
+                },
+                new PlanPricingAllocatedSpot
+                {
+                    StationInventoryManifestId = 30,
+                    Daypart = new DisplayDaypart
+                    {
+                        Id = 30002
+                    },
+                    Spots = 1,
+                    Impressions = 10
+                },
+                new PlanPricingAllocatedSpot
+                {
+                    StationInventoryManifestId = 40,
+                    Daypart = new DisplayDaypart
+                    {
+                        Id = 40001
+                    },
+                    Spots = 1,
+                    Impressions = 10
+                },new PlanPricingAllocatedSpot
+                {
+                    StationInventoryManifestId = 40,
+                    Daypart = new DisplayDaypart
+                    {
+                        Id = 40002
+                    },
+                    Spots = 1,
+                    Impressions = 10
                 }
             };
         }
@@ -1303,6 +1594,161 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Impressions = 10
                 }
             };
+        }
+
+        private List<StationInventoryManifest> _GetStationInventoryManifestsForRollup()
+        {
+            return new List<StationInventoryManifest>
+                {
+                    new StationInventoryManifest
+                    {
+                        Id = 10,
+                        Station = new DisplayBroadcastStation
+                        {
+                            MarketCode = 100,
+                            LegacyCallLetters = "KSTP",
+                            Affiliation = "ABC"
+                        },
+                        ManifestDayparts = new List<StationInventoryManifestDaypart>
+                        {
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 1001,
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 10001,
+                                    StartTime = 14401,
+                                    EndTime = 14500,
+                                    Monday = true,
+                                    Tuesday = true
+                                }
+                            },
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 1002,
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 10002,
+                                    StartTime = 14700,
+                                    EndTime = 15000,
+                                    Monday = true,
+                                    Tuesday = true
+                                }
+                            }
+                        }
+                    },
+                    new StationInventoryManifest
+                    {
+                        Id = 20,
+                        Station = new DisplayBroadcastStation
+                        {
+                            MarketCode = 200,
+                            LegacyCallLetters = "WTTV",
+                            Affiliation = "CBS"
+                        },
+                        ManifestDayparts = new List<StationInventoryManifestDaypart>
+                        {
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 2001,
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 20001,
+                                    StartTime = 39601,
+                                    EndTime = 45000,
+                                    Wednesday = true,
+                                    Thursday = true
+                                }
+                            },
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 2002,
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 20002,
+                                    StartTime = 40000,
+                                    EndTime = 41000,
+                                    Wednesday = true,
+                                    Thursday = true
+                                }
+                            }
+                        }
+                    },
+                    new StationInventoryManifest
+                    {
+                        Id = 30,
+                        Station = new DisplayBroadcastStation
+                        {
+                            MarketCode = 300,
+                            LegacyCallLetters = "KELO",
+                            Affiliation = "CBS"
+                        },
+                        ManifestDayparts = new List<StationInventoryManifestDaypart>
+                        {
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 3001,
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 30001,
+                                    StartTime = 57700,
+                                    EndTime = 68000,
+                                    Friday = true,
+                                    Sunday = true
+                                }
+                            },
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 3002,
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 30002,
+                                    StartTime = 60000,
+                                    EndTime = 62000,
+                                    Friday = true,
+                                    Sunday = true
+                                }
+                            }
+                        }
+                    },
+                    new StationInventoryManifest
+                    {
+                        Id = 40,
+                        Station = new DisplayBroadcastStation
+                        {
+                            MarketCode = 300,
+                            LegacyCallLetters = "KELOW",
+                            Affiliation = "CBS"
+                        },
+                        ManifestDayparts = new List<StationInventoryManifestDaypart>
+                        {
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 4001,
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 40001,
+                                    StartTime = 73000,
+                                    EndTime = 300,
+                                    Friday = true,
+                                    Sunday = true
+                                }
+                            },
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 4002,
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 40002,
+                                    StartTime = 74000,
+                                    EndTime = 75000,
+                                    Friday = true,
+                                    Sunday = true
+                                }
+                            }
+                        }
+                    },
+                };
         }
 
         private List<StationInventoryManifest> _GetStationInventoryManifests()

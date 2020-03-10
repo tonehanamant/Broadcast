@@ -652,7 +652,8 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
         
-        public Guid GenerateProgramLineupReport(ProgramLineupReportRequest request, string userName, DateTime currentDate, string templatesFilePath)
+        public Guid GenerateProgramLineupReport(ProgramLineupReportRequest request, string userName, 
+            DateTime currentDate, string templatesFilePath)
         {
             var programLineupReportData = GetProgramLineupReportData(request, currentDate);
             var reportGenerator = new ProgramLineupReportGenerator(templatesFilePath);

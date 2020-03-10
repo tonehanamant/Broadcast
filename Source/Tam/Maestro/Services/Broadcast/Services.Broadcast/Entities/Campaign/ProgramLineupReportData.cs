@@ -159,7 +159,7 @@ namespace Services.Broadcast.Entities.Campaign
 
             return dataRows.Distinct(new DetailedViewRowDataComparer());
         }
-        
+
         private List<DetailedViewRowDisplay> _MapToDetailedViewRows(IEnumerable<DetailedViewRowData> dataRows)
         {
             return dataRows
@@ -183,6 +183,8 @@ namespace Services.Broadcast.Entities.Campaign
 
         private List<DefaultViewRowDisplay> _MapToDefaultViewRows(IEnumerable<DetailedViewRowData> dataRows, double planImpressions)
         {
+            _RollupStationSpecificNewsPrograms(dataRows);
+
             return dataRows
                 .GroupBy(x => x.ProgramName)
                .Select(x =>
@@ -199,6 +201,46 @@ namespace Services.Broadcast.Entities.Campaign
                })
                .OrderByDescending(x => x.Weight)
                .ToList();
+        }
+
+        private static void _RollupStationSpecificNewsPrograms(IEnumerable<DetailedViewRowData> dataRows)
+        {
+            //we extract 1 second from the endtime of the daypart
+            const int AM12_05 = 299;
+            const int AM4 = 14400;
+            const int AM10 = 35999;
+            const int AM11 = 39600;
+            const int PM1 = 46799;
+            const int PM4 = 57600;
+            const int PM7 = 68399;
+            const int PM8 = 72000;
+            const string MORNING_NEWS = "Morning News";
+            const string MIDDAY_NEWS = "Midday News";
+            const string EVENING_NEWS = "Evening News";
+            const string LATE_NEWS = "Late News";
+
+            foreach (var row in dataRows.Where(x => x.Genre.Equals("News")))
+            {
+                if (row.Daypart.StartTime >= AM4 && (row.Daypart.EndTime > AM4 || row.Daypart.EndTime <= AM10))
+                {
+                    row.ProgramName = MORNING_NEWS;
+                }
+                else
+                    if (row.Daypart.StartTime >= AM11 && (row.Daypart.EndTime > AM11 || row.Daypart.EndTime <= PM1))
+                    {
+                        row.ProgramName = MIDDAY_NEWS;
+                    }
+                else
+                    if (row.Daypart.StartTime >= PM4 && (row.Daypart.EndTime > PM4 || row.Daypart.EndTime <= PM7))
+                    {
+                        row.ProgramName = EVENING_NEWS;
+                    }
+                else
+                    if (row.Daypart.StartTime >= PM8 && (row.Daypart.EndTime > PM8 || row.Daypart.EndTime <= AM12_05))
+                    {
+                        row.ProgramName = LATE_NEWS;
+                    }
+            }
         }
 
         private List<AllocationViewRowDisplay> _MapToAllocationViewRows(
