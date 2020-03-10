@@ -57,5 +57,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             return _IsSpotCostValidForPricingModelInput(impressions);
         }
+
+        public decimal UT_CalculatePricingCpm(List<PlanPricingAllocatedSpot> spots, List<PricingEstimate> proprietaryEstimates, double margin)
+        {
+            return _CalculatePricingCpm(spots, proprietaryEstimates, margin);
+        }
     }
 }

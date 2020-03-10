@@ -7,7 +7,7 @@
     "Status": 3
   },
   "Result": {
-    "OptimalCpm": 13.3000,
+    "OptimalCpm": 15.5094,
     "Programs": [
       {
         "AvgCpm": 15.2562,

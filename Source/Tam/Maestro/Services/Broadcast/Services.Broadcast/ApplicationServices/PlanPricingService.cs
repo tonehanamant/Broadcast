@@ -512,14 +512,14 @@ namespace Services.Broadcast.ApplicationServices
                 _PlanRepository.SavePricingRequest(parameters);
 
                 planPricingJobDiagnostic.RecordApiCallStart();
-
-                var apiCpmResult = _PricingApiClient.GetPricingCalculationResult(pricingApiRequest);
+                
                 var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
                 var spots = _MapToResultSpots(apiAllocationResult, pricingApiRequest, inventory);
+                var pricingCpm = _CalculatePricingCpm(spots, proprietaryEstimates, parameters.Margin);
                 var combinedApiResponse = new PlanPricingAllocationResult
                 {
                     RequestId = apiAllocationResult.RequestId,
-                    OptimalCpm = apiCpmResult.Results.MinimumCost,
+                    PricingCpm = pricingCpm,
                     Spots = spots
                 };
 
@@ -558,6 +558,23 @@ namespace Services.Broadcast.ApplicationServices
 
                 LogHelper.Logger.Error($"Error attempting to run the pricing model : {exception.Message}", exception);
             }
+        }
+
+        protected decimal _CalculatePricingCpm(List<PlanPricingAllocatedSpot> spots, List<PricingEstimate> proprietaryEstimates, double margin)
+        {
+            var allocatedTotalCost = spots.Sum(x => x.Cost);
+            var allocatedTotalImpressions = spots.Sum(x => x.Impressions);
+            var marginAdjustedAllocatedTotalCost = allocatedTotalCost / (decimal)(1.0 - (margin / 100.0));
+
+            var totalCostForProprietary = proprietaryEstimates.Sum(x => x.Cost);
+            var totalImpressionsForProprietary = proprietaryEstimates.Sum(x => x.Impressions);
+
+            var totalCost = marginAdjustedAllocatedTotalCost + totalCostForProprietary;
+            var totalImpressions = allocatedTotalImpressions + totalImpressionsForProprietary;
+
+            var cpm = ProposalMath.CalculateCpm(totalCost, totalImpressions);
+
+            return cpm;
         }
 
         private List<PricingEstimate> _CalculateProprietaryInventorySourceEstimates(
@@ -820,7 +837,7 @@ namespace Services.Broadcast.ApplicationServices
                 AvgCpm = ProposalMath.CalculateCpm(totalCostForAllPrograms, totalImpressionsForAllProgams)
             };
 
-            result.OptimalCpm = apiResponse.OptimalCpm;
+            result.OptimalCpm = apiResponse.PricingCpm;
 
             return result;
         }

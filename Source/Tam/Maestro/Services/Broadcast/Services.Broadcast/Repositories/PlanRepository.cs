@@ -1193,6 +1193,7 @@ namespace Services.Broadcast.Repositories
                 Currency = (PlanCurrenciesEnum)entity.currency,
                 CPP = entity.cpp,
                 DeliveryRatingPoints = entity.rating_points,
+                Margin = entity.margin,
                 InventorySourcePercentages = entity.plan_version_pricing_parameters_inventory_source_percentages.Select(_MapPlanPricingInventorySourceDto).ToList(),
                 InventorySourceTypePercentages = entity.plan_version_pricing_parameters_inventory_source_type_percentages.Select(_MapPlanPricingInventorySourceTypeDto).ToList()
             };
@@ -1294,7 +1295,7 @@ namespace Services.Broadcast.Repositories
                 var planPricingApiResult = new plan_version_pricing_api_results
                 {
                     plan_version_id = planVersionId,
-                    optimal_cpm = result.OptimalCpm
+                    optimal_cpm = result.PricingCpm
                 };
 
                 context.plan_version_pricing_api_results.Add(planPricingApiResult);
@@ -1336,7 +1337,7 @@ namespace Services.Broadcast.Repositories
 
                 return new PlanPricingAllocationResult
                 {
-                    OptimalCpm = apiResult.optimal_cpm,
+                    PricingCpm = apiResult.optimal_cpm,
                     Spots = apiResult.plan_version_pricing_api_result_spots.Select(x => new PlanPricingAllocatedSpot
                     {
                         Id = x.id,

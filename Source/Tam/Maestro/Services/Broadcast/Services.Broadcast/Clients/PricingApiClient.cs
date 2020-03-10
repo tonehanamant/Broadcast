@@ -9,26 +9,17 @@ namespace Services.Broadcast.Clients
 {
     public interface IPricingApiClient
     {
-        PlanPricingApiCpmResponseDto GetPricingCalculationResult(PlanPricingApiRequestDto request);
         PlanPricingApiSpotsResponseDto GetPricingSpotsResult(PlanPricingApiRequestDto request);
     }
 
     public class PricingApiClient : IPricingApiClient
     {
-        private readonly string _FloorPricingUrl;
         private readonly string _OpenMarketSpotsAllocationUrl;
 
         public PricingApiClient()
         {
-            _FloorPricingUrl = BroadcastServiceSystemParameter.PlanPricingFloorPricingUrl;
             _OpenMarketSpotsAllocationUrl = BroadcastServiceSystemParameter.PlanPricingAllocationsUrl;
         }          
-
-        public PlanPricingApiCpmResponseDto GetPricingCalculationResult(PlanPricingApiRequestDto request)
-        {
-            var url = $"{_FloorPricingUrl}";
-            return _Post<PlanPricingApiCpmResponseDto>(url, request);
-        }
 
         public PlanPricingApiSpotsResponseDto GetPricingSpotsResult(PlanPricingApiRequestDto request)
         {
@@ -64,19 +55,6 @@ namespace Services.Broadcast.Clients
 
     public class PricingApiMockClient : IPricingApiClient
     {
-        public PlanPricingApiCpmResponseDto GetPricingCalculationResult(PlanPricingApiRequestDto request)
-        {
-            return new PlanPricingApiCpmResponseDto
-            {
-                RequestId = "dwq2994mfm2m3m3,amd",
-                Results = new PlanPricingApiCpmResultDto
-                {
-                    // Mocked.
-                    MinimumCost = 13.3m
-                }
-            };
-        }
-
         public PlanPricingApiSpotsResponseDto GetPricingSpotsResult(PlanPricingApiRequestDto request)
         {
             var results = new List<PlanPricingApiSpotsResultDto>();

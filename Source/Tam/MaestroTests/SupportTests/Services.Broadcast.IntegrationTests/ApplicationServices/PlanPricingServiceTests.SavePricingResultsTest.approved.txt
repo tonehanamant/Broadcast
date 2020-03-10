@@ -1,5 +1,5 @@
 ﻿{
-  "OptimalCpm": 13.3000,
+  "PricingCpm": 15.5094,
   "RequestId": null,
   "Spots": [
     {

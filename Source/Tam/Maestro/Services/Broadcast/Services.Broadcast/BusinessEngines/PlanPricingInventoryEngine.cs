@@ -64,7 +64,6 @@ namespace Services.Broadcast.BusinessEngines
             var programs = _GetPrograms(plan, planFlightDateRanges, inventorySourceIds);
 
             programs = FilterProgramsByDayparts(plan, programs, planDisplayDaypartDays);
-
             
             ApplyInflationFactorToSpotCost(programs, parameters?.InflationFactor);
             // Set the plan flight days to programs so impressions are calculated for those days.
