@@ -200,7 +200,7 @@ namespace Services.Broadcast.ApplicationServices
                         msd.manifest.ProjectedStationImpressions.Add(
                             new StationImpressions
                             {
-                                Impressions = impressions.Sum(i => i.Impressions),
+                                Impressions = impressions?.Sum(i => i.Impressions) ?? 0,
                                 LegacyCallLetters = impressions.Select(i => i.LegacyCallLetters).FirstOrDefault()
                             });
                     }
@@ -315,23 +315,10 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var component in components)
             {
                 var resultImpressions = stationImpressions.FirstOrDefault(s => s.AudienceId == component.Id);
-                if (resultImpressions == null)
-                {
-                    var hutValueString = hutBook.HasValue ? $"'{hutBook.Value}'" : "null";
-                    var playbackTypeString = playbackType.HasValue ? $"'{playbackType.Value}'" : "null";
-                    var msg =
-                        $"Audience '{component.Name} (ID={component.Id})' did not return an impressions result."
-                        + $" HutBook={hutValueString}; ShareBook='{shareBook}';)"
-                        + $" PlaybackType={playbackTypeString}; MarketCode='{marketCode}';"
-                        + $" StationDaypart='{stationDetail}'";
-                    LogHelper.Logger.Error(msg);
-                    throw new InvalidOperationException(msg);
-                }
-
                 result.Add(new StationInventoryManifestAudience
                 {
                     Audience = new DisplayAudience { Id = component.Id },
-                    Impressions = resultImpressions.Impressions,
+                    Impressions = resultImpressions?.Impressions ?? 0,
                     IsReference = false,
                     SharePlaybackType = usedSharePlaybackType,
                     HutPlaybackType = usedHutPlaybackType

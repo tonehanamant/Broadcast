@@ -103,6 +103,7 @@ namespace BroadcastComposerWeb.Controllers
             var service = _ApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
             return _ConvertToBaseResponse(() => service.GetInventorySummariesWithCache(inventorySourceCardFilter, DateTime.Now));
         }
+
         /// <summary>
         /// Get number of items in inventory cache. Optionally reset the cache.
         /// </summary>

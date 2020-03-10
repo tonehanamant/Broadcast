@@ -21,16 +21,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory
             .BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
 
-        // This is correct if null value records should NOT exists
         [Test]
-        public void AddProjectedImpressionsForComponentsToManifests_AudienceHasNoReturn_NoRecordsCreated()
+        [UseReporter(typeof(DiffReporter))]
+        public void AddProjectedImpressionsForComponentsToManifests_AudienceHasNoReturn()
         {
             const int testFileId = 233551;
             const int nonExistingHutBookId = -1;
             const int nonExistingShareBookId = -2;
             var manifests = _InventoryRepository.GetStationInventoryManifestsByFileId(testFileId);
-            
-            Assert.Throws<InvalidOperationException>(() => _ImpressionsService.AddProjectedImpressionsForComponentsToManifests(manifests, ProposalEnums.ProposalPlaybackType.LivePlus3, nonExistingHutBookId, nonExistingShareBookId));
+
+            _ImpressionsService.AddProjectedImpressionsForComponentsToManifests(manifests, ProposalEnums.ProposalPlaybackType.LivePlus3, nonExistingHutBookId, nonExistingShareBookId);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(manifests));
         }
 
         [Test]
