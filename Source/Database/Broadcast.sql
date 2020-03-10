@@ -314,6 +314,21 @@ END
 
 /*************************************** END PRI-23251 *****************************************************/
 
+/*************************************** START PRI-23934 *****************************************************/
+BEGIN
+    EXEC('
+		DELETE FROM station_mappings
+		WHERE station_id IN (
+		  SELECT s.id FROM stations AS s WHERE s.legacy_call_letters IN (''KWAB'', ''KCWQ'', ''KFPH'', ''KFT'',
+		   ''KFTU'', ''KFVE'', ''KNEP'', ''NNEP'', ''KAME'', ''OAME'', ''QOLO'', ''KALS'', ''KUV'', ''MWES'', ''NWES'', ''KWYB'', ''NBYW'', ''NFXF'',
+		   ''WMYO'', ''EBND'', ''DBRC'', ''EBRC'', ''WYCN'', ''ECSC'', ''CW4'', ''EDFX'', ''GDJT'', ''HDJT'', ''KJWP'', ''EETM'', ''HETM'', ''HGBX'', ''WGX2'',
+		   ''DHAM'', ''EHBQ'', ''GHLT'', ''GIAT'', ''EIS'', ''GIS'', ''HIS'', ''DLBT'', ''GLBT'', ''EMEB'', ''IMEB'', ''DMEU'', ''DPGA'', ''EPGA'', ''EPGX'',
+		   ''DPGX'', ''QPNE'', ''GSAV'', ''GSBT'', ''WGSA'', ''HSCG'', ''ETHR'', ''GTHR'', ''DTOC'', ''ETOC'', ''ETVQ'', ''GTVQ'', ''WTW2'', ''WLHG'')
+		  )
+	')
+END
+/*************************************** END PRI-23934 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
