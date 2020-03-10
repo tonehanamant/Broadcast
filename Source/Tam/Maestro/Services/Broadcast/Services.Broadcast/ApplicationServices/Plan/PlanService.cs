@@ -893,7 +893,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var totalActiveWeeks = activeWeeks.Count();
 
             var roundedImpressions = Math.Floor(request.TotalImpressions / totalActiveWeeks);
-            var roundedImpressionsPercentage = Math.Floor(100 * roundedImpressions / request.TotalImpressions);
+            var roundedImpressionsPercentage = Math.Round(100 * roundedImpressions / request.TotalImpressions);
             var roundedRatingPoints = ProposalMath.RoundDownWithDecimals(request.TotalRatings * roundedImpressions/request.TotalImpressions, 1);
             foreach (var week in activeWeeks)
             {               
@@ -922,12 +922,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var firstWeek = weeks.First();
 
             var roundedImpressionsDifference = request.TotalImpressions - totalImpressionsRounded;
-            var roundedPercentageDifference = 100 - totalImpressionsPercentageRounded;
-            var roundedRatingPointsDifference = request.TotalRatings - totalRatingPointsRounded;
 
             firstWeek.WeeklyImpressions = Math.Floor(firstWeek.WeeklyImpressions + roundedImpressionsDifference);
-            firstWeek.WeeklyImpressionsPercentage = Math.Floor(firstWeek.WeeklyImpressionsPercentage + roundedPercentageDifference);
-            firstWeek.WeeklyRatings = Math.Round(firstWeek.WeeklyRatings + roundedRatingPointsDifference, 1);
+            firstWeek.WeeklyImpressionsPercentage = Math.Round(100 * firstWeek.WeeklyImpressions / request.TotalImpressions);
+            firstWeek.WeeklyRatings = ProposalMath.RoundDownWithDecimals(request.TotalRatings * firstWeek.WeeklyImpressions / request.TotalImpressions, 1);
 
             _CalculateWeeklyBudget(request, firstWeek);
 
