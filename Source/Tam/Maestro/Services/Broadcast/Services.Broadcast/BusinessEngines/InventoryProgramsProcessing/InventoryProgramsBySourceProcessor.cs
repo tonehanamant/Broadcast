@@ -180,5 +180,24 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             body.AppendLine($"Have a nice day.");
             return body.ToString();
         }
+
+        protected override string _GetExportedFileFailedNotificationEmailBody(int jobId)
+        {
+            var job = _InventoryProgramsBySourceJobsRepository.GetJob(jobId);
+            var source = _GetInventorySource(jobId);
+
+            var body = new StringBuilder();
+            body.AppendLine("Hello,");
+            body.AppendLine();
+            body.AppendLine($"A ProgramGuide Interface file has failed to be exported.");
+            body.AppendLine();
+            body.AppendLine($"\tJobGroupID : {job.JobGroupId}");
+            body.AppendLine($"\tInventory Source : {source.Name}");
+            body.AppendLine($"\tRange Start Date : {job.StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}");
+            body.AppendLine($"\tRange End Date : {job.EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}");
+            body.AppendLine();
+            body.AppendLine($"Have a nice day.");
+            return body.ToString();
+        }
     }
 }

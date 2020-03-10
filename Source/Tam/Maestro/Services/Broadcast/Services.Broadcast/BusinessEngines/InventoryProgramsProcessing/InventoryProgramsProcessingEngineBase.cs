@@ -76,6 +76,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         protected abstract string _GetExportedFileReadyNotificationEmailBody(int jobId, string filePath);
 
+        protected abstract string _GetExportedFileFailedNotificationEmailBody(int jobId);
+
         internal void OnDiagnosticMessageUpdate(int jobId, string message)
         {
             _GetJobsRepository().UpdateJobNotes(jobId, message);
@@ -253,6 +255,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                     $"Error caught processing for program names.  JobId = '{jobId}'", ex);
                 jobsRepo.SetJobCompleteError(jobId, ex.Message, $"Error caught : {ex.Message} ; {ex.StackTrace}");
 
+                _ReportExportFileFailed(jobId);
+
                 throw;
             }
             finally
@@ -320,6 +324,21 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             var priority = MailPriority.Normal;
             var subject = "Broadcast Inventory Programs - ProgramGuide Interface Export file available";
             var body = _GetExportedFileReadyNotificationEmailBody(jobId, filePath);
+
+            var toEmails = _GetProcessingBySourceResultReportToEmails();
+            if (toEmails?.Any() != true)
+            {
+                throw new InvalidOperationException($"Failed to send notification email.  Email addresses are not configured correctly.");
+            }
+
+            _EmailerService.QuickSend(false, body, subject, priority, toEmails);
+        }
+
+        private void _ReportExportFileFailed(int jobId)
+        {
+            var priority = MailPriority.High;
+            var subject = "Broadcast Inventory Programs - ProgramGuide Interface Export file failed";
+            var body = _GetExportedFileFailedNotificationEmailBody(jobId);
 
             var toEmails = _GetProcessingBySourceResultReportToEmails();
             if (toEmails?.Any() != true)
