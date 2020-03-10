@@ -62,6 +62,8 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IMarketCoverageRepository _MarketCoverageRepository;
         private readonly IDaypartCache _DaypartCache;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
+        private readonly IPlanDaypartEngine _PlanDaypartEngine;
+        private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -70,7 +72,8 @@ namespace Services.Broadcast.ApplicationServices
                                   IPlanPricingInventoryEngine planPricingInventoryEngine,
                                   IBroadcastLockingManagerApplicationService lockingManagerApplicationService,
                                   IDaypartCache daypartCache,
-                                  IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+                                  IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+                                  IPlanDaypartEngine planDaypartEngine)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
@@ -83,6 +86,8 @@ namespace Services.Broadcast.ApplicationServices
             _MarketCoverageRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
             _DaypartCache = daypartCache;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
+            _PlanDaypartEngine = planDaypartEngine;
+            _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
         }
 
         public PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate)
@@ -289,30 +294,45 @@ namespace Services.Broadcast.ApplicationServices
             return pricingPrograms;
         }
 
-        protected List<PlanPricingApiRequestSpotsDto> _GetPricingModelSpots(List<PlanPricingInventoryProgram> programs)
+        protected List<PlanPricingApiRequestSpotsDto> _GetPricingModelSpots(
+            PlanDto plan,
+            List<PlanPricingInventoryProgram> programs)
         {
             var marketCoveragesByMarketCode = _MarketCoverageRepository.GetLatestMarketCoverages().MarketCoveragesByMarketCode;
             var pricingModelSpots = new List<PlanPricingApiRequestSpotsDto>();
+            var planDayparts = plan.Dayparts;
 
             foreach (var program in programs)
             {
                 foreach (var daypart in program.ManifestDayparts)
                 {
                     var impressions = program.ProvidedImpressions ?? program.ProjectedImpressions;
-                    if (_IsSpotCostValidForPricingModelInput(impressions) == false)
-                    {
+
+                    if (!_IsSpotCostValidForPricingModelInput(impressions))
                         continue;
-                    }
-                    if (_AreImpressionsValidForPricingModelInput(program.SpotCost) == false)
-                    {
+
+                    if (!_AreImpressionsValidForPricingModelInput(program.SpotCost))
                         continue;
-                    }
+
+                    var daypartTimeRange = new TimeRange
+                    {
+                        StartTime = daypart.Daypart.StartTime,
+                        EndTime = daypart.Daypart.EndTime
+                    };
+
+                    var matchingPlanDaypart = _PlanDaypartEngine.FindPlanDaypartWithMostIntersectingTime(
+                            planDayparts,
+                            daypart.PrimaryProgram.Genre,
+                            daypartTimeRange);
+
+                    if (matchingPlanDaypart == null)
+                        continue;
 
                     var spots = program.ManifestWeeks.Select(manifestWeek => new PlanPricingApiRequestSpotsDto
                     {
                         Id = program.ManifestId,
                         MediaWeekId = manifestWeek.ContractMediaWeekId,
-                        DaypartId = daypart.Daypart.Id,
+                        DaypartId = matchingPlanDaypart.DaypartCodeId,
                         Impressions = impressions,
                         Cost = program.SpotCost,
                         StationId = program.Station.Id,
@@ -395,7 +415,7 @@ namespace Services.Broadcast.ApplicationServices
                     }).ToList(),
                     DaypartWeighting = daypartsWithWeighting.Select(x => new DaypartWeighting
                     {
-                        DaypartId = _GetDaypartId(plan, x),
+                        DaypartId = x.DaypartCodeId,
                         DaypartGoal = GeneralMath.ConvertPercentageToFraction(x.WeightingGoalPercent.Value)
                     }).ToList()
                 };
@@ -404,15 +424,6 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return pricingModelWeeks;
-        }
-
-        private int _GetDaypartId(PlanDto plan, PlanDaypartDto planDaypartDto)
-        {
-            var daypart = DaypartHelper.ConvertDaypartDaysToDaypart(plan.FlightDays);
-            daypart.StartTime = planDaypartDto.StartTimeSeconds;
-            daypart.EndTime = planDaypartDto.EndTimeSeconds;
-
-            return _DaypartCache.GetIdByDaypart(daypart);
         }
 
         private (double capTime, string capType) _GetFrequencyCapTimeAndCapTypeString(UnitCapEnum unitCap)
@@ -506,7 +517,7 @@ namespace Services.Broadcast.ApplicationServices
                 var pricingApiRequest = new PlanPricingApiRequestDto
                 {
                     Weeks = _GetPricingModelWeeks(plan, proprietaryEstimates),
-                    Spots = _GetPricingModelSpots(inventory)
+                    Spots = _GetPricingModelSpots(plan, inventory)
                 };
 
                 _PlanRepository.SavePricingRequest(parameters);
@@ -760,6 +771,9 @@ namespace Services.Broadcast.ApplicationServices
             List<PlanPricingInventoryProgram> inventoryPrograms)
         {
             var results = new List<PlanPricingAllocatedSpot>();
+            var daypartDefaultsById = _DaypartDefaultRepository
+                .GetAllDaypartDefaults()
+                .ToDictionary(x => x.Id, x => x);
 
             foreach (var weeklyAllocation in apiSpotsResults.Results)
             {
@@ -784,7 +798,7 @@ namespace Services.Broadcast.ApplicationServices
                         {
                             Id = originalSpot.Id,
                             Cost = originalSpot.Cost,
-                            Daypart = _DaypartCache.GetDisplayDaypart(originalSpot.DaypartId),
+                            StandardDaypart = daypartDefaultsById[originalSpot.DaypartId],
                             Impressions = originalSpot.Impressions,
                             ContractMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.ContractMediaWeekId),
                             InventoryMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.InventoryMediaWeekId),
@@ -853,7 +867,6 @@ namespace Services.Broadcast.ApplicationServices
                     Manifest = x,
                     ManifestDaypart = d
                 }))
-                .Where(x => x.ManifestDaypart.PrimaryProgram != null)
                 .GroupBy(x => x.ManifestDaypart.PrimaryProgram.Name);
 
             foreach (var inventoryByProgramName in inventoryGroupedByProgramName)
@@ -891,7 +904,11 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var spot in apiResponse.Spots)
             {
-                if (programInventory.Any(x => x.Manifest.ManifestId == spot.Id && x.ManifestDaypart.Daypart.Id == spot.Daypart.Id))
+                // until we use only OpenMarket inventory it`s fine
+                // this needs to be updated when we start using inventory that can have more than one daypart
+                // we should match spots by some unique value which represents a combination of a manifest week and a manifest daypart
+                // and not by manifest id as it is done now
+                if (programInventory.Any(x => x.Manifest.ManifestId == spot.Id))
                 {
                     result.Add(spot);
                 }
@@ -944,7 +961,7 @@ namespace Services.Broadcast.ApplicationServices
             var pricingApiRequest = new PlanPricingApiRequestDto
             {
                 Weeks = _GetPricingModelWeeks(plan, proprietaryEstimates),
-                Spots = _GetPricingModelSpots(inventory)
+                Spots = _GetPricingModelSpots(plan, inventory)
             };
 
             return pricingApiRequest;

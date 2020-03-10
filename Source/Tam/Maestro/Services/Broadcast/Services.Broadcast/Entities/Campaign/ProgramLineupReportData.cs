@@ -13,8 +13,6 @@ namespace Services.Broadcast.Entities.Campaign
 {
     public class ProgramLineupReportData
     {
-        private readonly IStandartDaypartEngine _StandartDaypartEngine;
-
         public string ExportFileName { get; set; }
         public string PlanHeaderName { get; set; }
         public string ReportGeneratedDate { get; set; }
@@ -51,11 +49,8 @@ namespace Services.Broadcast.Entities.Campaign
             List<PlanPricingAllocatedSpot> allocatedSpots,
             List<StationInventoryManifest> manifests,
             MarketCoverageByStation marketCoverageByStation,
-            Dictionary<int, Program> primaryProgramsByManifestDaypartIds,
-            IStandartDaypartEngine standartDaypartEngine)
+            Dictionary<int, Program> primaryProgramsByManifestDaypartIds)
         {
-            _StandartDaypartEngine = standartDaypartEngine;
-
             ExportFileName = string.Format(FILENAME_FORMAT, plan.Name, currentDate.ToString(DATE_FORMAT_FILENAME));
 
             _PopulateHeaderData(plan, planPricingJob, agency, advertiser, guaranteedDemo, spotLenghts, currentDate);
@@ -114,47 +109,45 @@ namespace Services.Broadcast.Entities.Campaign
             {
                 var coverage = marketCoverageByStation.Markets.Single(x => x.MarketCode == manifest.Station.MarketCode);
 
-                foreach (var manifestDaypart in manifest.ManifestDayparts)
+                // OpenMarket manifest has only one daypart
+                // This needs to be updated when we start passing other sources to pricing
+                var manifestDaypart = manifest.ManifestDayparts.Single();
+                
+                // we expect all records belong to the same daypart because it`s OpenMarket
+                var allocatedSpotsForManifest = allocatedSpots.Where(x => 
+                    x.StationInventoryManifestId == manifest.Id && 
+                    x.Spots > 0);
+
+                if (!allocatedSpotsForManifest.Any())
+                    continue;
+
+                var row = new DetailedViewRowData
                 {
-                    var daypart = manifestDaypart.Daypart;
-                    var queryAllocatedSpots = allocatedSpots.Where(x =>
-                        x.StationInventoryManifestId == manifest.Id &&
-                        x.Daypart.Id == daypart.Id &&
-                        x.Spots > 0);
+                    Rank = coverage.Rank,
+                    MarketGeographyName = coverage.MarketName,
+                    StationLegacyCallLetters = manifest.Station.LegacyCallLetters,
+                    StationAffiliation = manifest.Station.Affiliation,
+                    Daypart = manifestDaypart.Daypart,
+                    TotalSpotsImpressions = allocatedSpotsForManifest.Sum(x => x.Impressions * x.Spots)
+                };
 
-                    if (!queryAllocatedSpots.Any())
-                        continue;
+                if (primaryProgramsByManifestDaypartIds.TryGetValue(manifestDaypart.Id.Value, out var primaryProgram))
+                {
+                    row.ProgramName = primaryProgram.Name;
+                    row.Genre = primaryProgram.Genre;
 
-                    var row = new DetailedViewRowData
-                    {
-                        Rank = coverage.Rank,
-                        MarketGeographyName = coverage.MarketName,
-                        StationLegacyCallLetters = manifest.Station.LegacyCallLetters,
-                        StationAffiliation = manifest.Station.Affiliation,
-                        Daypart = daypart,
-                        TotalSpotsImpressions = queryAllocatedSpots.Sum(x => x.Impressions * x.Spots)
-                    };
-
-                    if (primaryProgramsByManifestDaypartIds.TryGetValue(manifestDaypart.Id.Value, out var primaryProgram))
-                    {
-                        var genre = primaryProgram.Genre;
-                        var timeRange = new TimeRange { StartTime = daypart.StartTime, EndTime = daypart.EndTime };
-                        var daypartCode = _StandartDaypartEngine.GetDaypartCodeByGenreAndTimeRange(genre, timeRange).Code;
-
-                        row.ProgramName = primaryProgram.Name;
-                        row.Genre = genre;
-                        row.DaypartCode = daypartCode;
-                    }
-                    else
-                    {
-                        // If no information from Dativa is available, use the program name from the inventory file
-                        row.ProgramName = manifestDaypart.ProgramName ?? string.Empty;
-                        row.Genre = string.Empty;
-                        row.DaypartCode = string.Empty;
-                    }
-
-                    dataRows.Add(row);
+                    // they all should have the same code because only weeks differ. Appies only for OpenMarket
+                    row.DaypartCode = allocatedSpotsForManifest.First().StandardDaypart.Code;
                 }
+                else
+                {
+                    // If no information from Dativa is available, use the program name from the inventory file
+                    row.ProgramName = manifestDaypart.ProgramName ?? string.Empty;
+                    row.Genre = string.Empty;
+                    row.DaypartCode = string.Empty;
+                }
+
+                dataRows.Add(row);
             }
 
             return dataRows.Distinct(new DetailedViewRowDataComparer());

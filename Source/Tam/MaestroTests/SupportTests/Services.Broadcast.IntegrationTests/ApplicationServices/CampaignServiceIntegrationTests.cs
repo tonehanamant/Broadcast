@@ -188,8 +188,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IAudienceService>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ISpotLengthService>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IDaypartDefaultService>(),
-                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ISharedFolderService>(),
-                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IStandartDaypartEngine>());
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ISharedFolderService>());
 
                 var campaign = _GetValidCampaignForSave();
                 campaign.Id = 1;
@@ -683,8 +682,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IAudienceService>(),
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ISpotLengthService>(),
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IDaypartDefaultService>(),
-                sharedFolderService,
-                IntegrationTestApplicationServiceFactory.Instance.Resolve<IStandartDaypartEngine>());
+                sharedFolderService);
 
             return campaignService;
         }

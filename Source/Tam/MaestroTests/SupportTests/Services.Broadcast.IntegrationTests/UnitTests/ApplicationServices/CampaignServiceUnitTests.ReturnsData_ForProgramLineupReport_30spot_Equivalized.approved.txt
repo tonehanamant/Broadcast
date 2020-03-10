@@ -10,7 +10,7 @@
   "DefaultViewRows": null,
   "DetailedViewRows": [
     {
-      "Daypart": "EMN",
+      "Daypart": "LN",
       "Days": "W-TH",
       "DMA": "NEW YORK",
       "Genre": "NEWS",
@@ -32,12 +32,12 @@
       "TimePeriods": "12:01AM-12:03AM"
     },
     {
-      "Daypart": "",
+      "Daypart": "EM",
       "Days": "F,SU",
       "DMA": "MACON",
-      "Genre": "",
+      "Genre": "MOVIE",
       "NetworkAffiliation": "CBS",
-      "Program": "THE SHAWSHANK REDEMPTION",
+      "Program": "1917",
       "Rank": 3,
       "Station": "KELO",
       "TimePeriods": "12:05AM-12:06AM"

@@ -1,5 +1,4 @@
 ﻿using Tam.Maestro.Data.Entities;
-using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.Entities.Plan.Pricing
 {
@@ -12,6 +11,6 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public double Impressions { get; set; }
         public decimal Cost { get; set; }
         public int Spots { get; set; }
-        public DisplayDaypart Daypart { get; set; }
+        public DaypartDefaultDto StandardDaypart { get; set; }
     }
 }

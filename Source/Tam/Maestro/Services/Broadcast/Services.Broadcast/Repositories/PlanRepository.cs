@@ -1313,7 +1313,7 @@ namespace Services.Broadcast.Repositories
                         contract_media_week_id = spot.ContractMediaWeek.Id,
                         inventory_media_week_id = spot.InventoryMediaWeek.Id,
                         impressions = spot.Impressions,
-                        daypart_id = spot.Daypart.Id,
+                        standard_daypart_id = spot.StandardDaypart.Id,
                         cost = spot.Cost,
                         spots = spot.Spots
                     };
@@ -1361,10 +1361,23 @@ namespace Services.Broadcast.Repositories
                             StartDate = x.contract_media_week.start_date,
                             EndDate = x.contract_media_week.end_date
                         },
-                        Daypart = DaypartCache.Instance.GetDisplayDaypart(x.daypart_id)
+                        StandardDaypart = _MapToDaypartDefaultDto(x.daypart_defaults)
                     }).ToList()
                 };
             });
+        }
+
+        private DaypartDefaultDto _MapToDaypartDefaultDto(daypart_defaults daypartDefault)
+        {
+            if (daypartDefault == null)
+                return null;
+
+            return new DaypartDefaultDto
+            {
+                Id = daypartDefault.id,
+                Code = daypartDefault.code,
+                FullName = daypartDefault.name
+            };
         }
 
         public void SavePricingAggregateResults(int planId, PlanPricingResultDto pricingResult)
@@ -1513,7 +1526,7 @@ namespace Services.Broadcast.Repositories
                         StartDate = x.contract_media_week.start_date,
                         EndDate = x.contract_media_week.end_date
                     },
-                    Daypart = DaypartCache.Instance.GetDisplayDaypart(x.daypart_id)
+                    StandardDaypart = _MapToDaypartDefaultDto(x.daypart_defaults)
                 }).ToList();
             });
         }

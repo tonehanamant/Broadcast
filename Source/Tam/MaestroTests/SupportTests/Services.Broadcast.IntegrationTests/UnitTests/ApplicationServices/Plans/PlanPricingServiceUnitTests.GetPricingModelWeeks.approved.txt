@@ -1,69 +1,31 @@
-﻿{
-  "usedDayparts": [
-    {
-      "_Code": "",
-      "_EndTime": 199,
-      "_Friday": false,
-      "_Id": -1,
-      "_Is24Hour": false,
-      "_LastEndTime": 0,
-      "_LastStartTime": 0,
-      "_Monday": true,
-      "_Name": "",
-      "_Saturday": true,
-      "_StartTime": 100,
-      "_Sunday": false,
-      "_Thursday": true,
-      "_Tuesday": true,
-      "_Wednesday": true
-    },
-    {
-      "_Code": "",
-      "_EndTime": 299,
-      "_Friday": false,
-      "_Id": -1,
-      "_Is24Hour": false,
-      "_LastEndTime": 0,
-      "_LastStartTime": 0,
-      "_Monday": true,
-      "_Name": "",
-      "_Saturday": true,
-      "_StartTime": 100,
-      "_Sunday": false,
-      "_Thursday": true,
-      "_Tuesday": true,
-      "_Wednesday": true
-    }
-  ],
-  "weeks": [
-    {
-      "cpm_goal": 124750.00,
-      "daypart_weighting": [
-        {
-          "daypart_goal": 0.17,
-          "daypart_id": 299
-        },
-        {
-          "daypart_goal": 0.19,
-          "daypart_id": 399
-        }
-      ],
-      "frequency_cap_spots": 2,
-      "frequency_cap_time": 0.5,
-      "frequency_cap_unit": "hour",
-      "impression_goal": 1600.0,
-      "market_coverage_goal": 0.8,
-      "share_of_voice": [
-        {
-          "market_code": 101,
-          "market_goal": 0.11
-        },
-        {
-          "market_code": 103,
-          "market_goal": 0.55
-        }
-      ],
-      "week_id": 2
-    }
-  ]
-}
+﻿[
+  {
+    "cpm_goal": 124750.00,
+    "daypart_weighting": [
+      {
+        "daypart_goal": 0.17,
+        "daypart_id": 1
+      },
+      {
+        "daypart_goal": 0.19,
+        "daypart_id": 2
+      }
+    ],
+    "frequency_cap_spots": 2,
+    "frequency_cap_time": 0.5,
+    "frequency_cap_unit": "hour",
+    "impression_goal": 1600.0,
+    "market_coverage_goal": 0.8,
+    "share_of_voice": [
+      {
+        "market_code": 101,
+        "market_goal": 0.11
+      },
+      {
+        "market_code": 103,
+        "market_goal": 0.55
+      }
+    ],
+    "week_id": 2
+  }
+]

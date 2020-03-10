@@ -282,6 +282,38 @@ END
 
 /*************************************** END PRI-23440 *****************************************************/
 
+/*************************************** START PRI-23251 *****************************************************/
+
+IF EXISTS (SELECT * FROM sys.foreign_keys WHERE 
+	object_id = OBJECT_ID(N'dbo.FK_plan_version_pricing_api_result_spots_dayparts') AND 
+	parent_object_id = OBJECT_ID(N'dbo.plan_version_pricing_api_result_spots')
+)
+BEGIN
+  ALTER TABLE dbo.plan_version_pricing_api_result_spots DROP CONSTRAINT FK_plan_version_pricing_api_result_spots_dayparts
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE Name = N'daypart_id' AND Object_ID = Object_ID(N'plan_version_pricing_api_result_spots')) 
+BEGIN 
+	ALTER TABLE plan_version_pricing_api_result_spots DROP COLUMN daypart_id
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE Name = N'standard_daypart_id' AND Object_ID = Object_ID(N'plan_version_pricing_api_result_spots')) 
+BEGIN 
+	ALTER TABLE plan_version_pricing_api_result_spots ADD standard_daypart_id int NULL
+
+	ALTER TABLE plan_version_pricing_api_result_spots WITH CHECK ADD CONSTRAINT FK_plan_version_pricing_api_result_spots_daypart_defaults
+	FOREIGN KEY(standard_daypart_id)
+	REFERENCES daypart_defaults(id)
+	ALTER TABLE plan_version_pricing_api_result_spots CHECK CONSTRAINT FK_plan_version_pricing_api_result_spots_daypart_defaults
+
+	-- set any id since this data is not really used at the moment and pricing can be rerun
+	EXEC('UPDATE plan_version_pricing_api_result_spots SET standard_daypart_id = (SELECT TOP 1 id FROM daypart_defaults)')
+
+	ALTER TABLE plan_version_pricing_api_result_spots ALTER COLUMN standard_daypart_id int NOT NULL
+END
+
+/*************************************** END PRI-23251 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -359,7 +359,7 @@
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryQuarterCalculatorEngineTestClass.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryQuarterCalculatorEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventorySourceSortEngineUnitTests.cs" />
-    <Compile Include="UnitTests\BusinessEngines\StandartDaypartEngineUnitTests.cs" />
+    <Compile Include="UnitTests\BusinessEngines\PlanDaypartEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\TrackingEngineUnitTests.cs" />
     <Compile Include="UnitTests\Converters\RateImport\DiginetFileImporterUnitTests.cs" />
     <Compile Include="UnitTests\DaytimeCleanupServiceTests.cs" />

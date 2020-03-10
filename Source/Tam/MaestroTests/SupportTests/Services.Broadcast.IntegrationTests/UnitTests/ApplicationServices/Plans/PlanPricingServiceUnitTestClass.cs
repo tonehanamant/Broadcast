@@ -20,7 +20,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             IPlanPricingInventoryEngine planPricingInventoryEngine,
             IBroadcastLockingManagerApplicationService lockingManagerApplicationService,
             IDaypartCache daypartCache,
-            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+            IPlanDaypartEngine planDaypartEngine)
             : base(
                   broadcastDataRepositoryFactory, 
                   spotLengthEngine, 
@@ -29,13 +30,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                   planPricingInventoryEngine, 
                   lockingManagerApplicationService,
                   daypartCache,
-                  mediaMonthAndWeekAggregateCache)
+                  mediaMonthAndWeekAggregateCache,
+                  planDaypartEngine)
         {
         }
 
-        public List<PlanPricingApiRequestSpotsDto> UT_GetPricingModelSpots(List<PlanPricingInventoryProgram> programs)
+        public List<PlanPricingApiRequestSpotsDto> UT_GetPricingModelSpots(PlanDto plan, List<PlanPricingInventoryProgram> programs)
         {
-            return _GetPricingModelSpots(programs);
+            return _GetPricingModelSpots(plan, programs);
         }
 
         public bool UT_AreImpressionsValidForPricingModelInput(decimal? impressions)

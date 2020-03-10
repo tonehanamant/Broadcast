@@ -12,23 +12,6 @@
         "IsDirty": true
       },
       "Cost": 753.7500,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 1799,
-        "_Friday": true,
-        "_Id": 32941,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": true,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 0,
-        "_Sunday": false,
-        "_Thursday": true,
-        "_Tuesday": true,
-        "_Wednesday": true
-      },
       "Impressions": 58650.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
@@ -39,6 +22,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287146
     },
     {
@@ -51,23 +39,6 @@
         "IsDirty": true
       },
       "Cost": 703.5000,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": true,
-        "_Id": 32055,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": true,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 1800,
-        "_Sunday": false,
-        "_Thursday": true,
-        "_Tuesday": true,
-        "_Wednesday": true
-      },
       "Impressions": 50320.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
@@ -78,6 +49,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287147
     },
     {
@@ -90,23 +66,6 @@
         "IsDirty": true
       },
       "Cost": 804.0000,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 1799,
-        "_Friday": false,
-        "_Id": 32943,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": true,
-        "_StartTime": 0,
-        "_Sunday": false,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 51340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
@@ -117,6 +76,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287150
     },
     {
@@ -129,23 +93,6 @@
         "IsDirty": true
       },
       "Cost": 753.7500,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": false,
-        "_Id": 32072,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": true,
-        "_StartTime": 1800,
-        "_Sunday": false,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 37060.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
@@ -156,6 +103,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287151
     },
     {
@@ -168,23 +120,6 @@
         "IsDirty": true
       },
       "Cost": 603.0000,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": false,
-        "_Id": 29548,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 0,
-        "_Sunday": true,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 39780.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
@@ -195,6 +130,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287154
     },
     {
@@ -207,23 +147,6 @@
         "IsDirty": true
       },
       "Cost": 50.2500,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 1799,
-        "_Friday": true,
-        "_Id": 32941,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": true,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 0,
-        "_Sunday": false,
-        "_Thursday": true,
-        "_Tuesday": true,
-        "_Wednesday": true
-      },
       "Impressions": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
@@ -234,6 +157,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 288692
     },
     {
@@ -246,23 +174,6 @@
         "IsDirty": true
       },
       "Cost": 12.0600,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": false,
-        "_Id": 29555,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": true,
-        "_StartTime": 0,
-        "_Sunday": false,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
@@ -273,6 +184,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 288693
     },
     {
@@ -285,23 +201,6 @@
         "IsDirty": true
       },
       "Cost": 12.0600,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": false,
-        "_Id": 29548,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 0,
-        "_Sunday": true,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
@@ -312,6 +211,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 288694
     },
     {
@@ -324,23 +228,6 @@
         "IsDirty": true
       },
       "Cost": 12.0600,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": true,
-        "_Id": 32055,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": true,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 1800,
-        "_Sunday": false,
-        "_Thursday": true,
-        "_Tuesday": true,
-        "_Wednesday": true
-      },
       "Impressions": 340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
@@ -351,6 +238,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 288695
     },
     {
@@ -363,23 +255,6 @@
         "IsDirty": true
       },
       "Cost": 753.7500,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 1799,
-        "_Friday": true,
-        "_Id": 32941,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": true,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 0,
-        "_Sunday": false,
-        "_Thursday": true,
-        "_Tuesday": true,
-        "_Wednesday": true
-      },
       "Impressions": 58650.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
@@ -390,6 +265,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287146
     },
     {
@@ -402,23 +282,6 @@
         "IsDirty": true
       },
       "Cost": 703.5000,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": true,
-        "_Id": 32055,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": true,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 1800,
-        "_Sunday": false,
-        "_Thursday": true,
-        "_Tuesday": true,
-        "_Wednesday": true
-      },
       "Impressions": 50320.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
@@ -429,6 +292,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287147
     },
     {
@@ -441,23 +309,6 @@
         "IsDirty": true
       },
       "Cost": 804.0000,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 1799,
-        "_Friday": false,
-        "_Id": 32943,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": true,
-        "_StartTime": 0,
-        "_Sunday": false,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 51340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
@@ -468,6 +319,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287150
     },
     {
@@ -480,23 +336,6 @@
         "IsDirty": true
       },
       "Cost": 753.7500,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": false,
-        "_Id": 32072,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": true,
-        "_StartTime": 1800,
-        "_Sunday": false,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 37060.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
@@ -507,6 +346,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287151
     },
     {
@@ -519,23 +363,6 @@
         "IsDirty": true
       },
       "Cost": 603.0000,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": false,
-        "_Id": 29548,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 0,
-        "_Sunday": true,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 39780.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
@@ -546,6 +373,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287154
     },
     {
@@ -558,23 +390,6 @@
         "IsDirty": true
       },
       "Cost": 50.2500,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 1799,
-        "_Friday": true,
-        "_Id": 32941,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": true,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 0,
-        "_Sunday": false,
-        "_Thursday": true,
-        "_Tuesday": true,
-        "_Wednesday": true
-      },
       "Impressions": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
@@ -585,6 +400,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 288692
     },
     {
@@ -597,23 +417,6 @@
         "IsDirty": true
       },
       "Cost": 12.0600,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": false,
-        "_Id": 29555,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": true,
-        "_StartTime": 0,
-        "_Sunday": false,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
@@ -624,6 +427,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 288693
     },
     {
@@ -636,23 +444,6 @@
         "IsDirty": true
       },
       "Cost": 12.0600,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": false,
-        "_Id": 29548,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 0,
-        "_Sunday": true,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
@@ -663,6 +454,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 288694
     },
     {
@@ -675,23 +471,6 @@
         "IsDirty": true
       },
       "Cost": 12.0600,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": true,
-        "_Id": 32055,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": true,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 1800,
-        "_Sunday": false,
-        "_Thursday": true,
-        "_Tuesday": true,
-        "_Wednesday": true
-      },
       "Impressions": 340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
@@ -702,6 +481,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 288695
     },
     {
@@ -714,23 +498,6 @@
         "IsDirty": true
       },
       "Cost": 753.7500,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 1799,
-        "_Friday": true,
-        "_Id": 32941,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": true,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 0,
-        "_Sunday": false,
-        "_Thursday": true,
-        "_Tuesday": true,
-        "_Wednesday": true
-      },
       "Impressions": 58650.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
@@ -741,6 +508,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287146
     },
     {
@@ -753,23 +525,6 @@
         "IsDirty": true
       },
       "Cost": 703.5000,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": true,
-        "_Id": 32055,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": true,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 1800,
-        "_Sunday": false,
-        "_Thursday": true,
-        "_Tuesday": true,
-        "_Wednesday": true
-      },
       "Impressions": 50320.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
@@ -780,6 +535,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287147
     },
     {
@@ -792,23 +552,6 @@
         "IsDirty": true
       },
       "Cost": 804.0000,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 1799,
-        "_Friday": false,
-        "_Id": 32943,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": true,
-        "_StartTime": 0,
-        "_Sunday": false,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 51340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
@@ -819,6 +562,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287150
     },
     {
@@ -831,23 +579,6 @@
         "IsDirty": true
       },
       "Cost": 753.7500,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": false,
-        "_Id": 32072,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": true,
-        "_StartTime": 1800,
-        "_Sunday": false,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 37060.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
@@ -858,6 +589,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287151
     },
     {
@@ -870,23 +606,6 @@
         "IsDirty": true
       },
       "Cost": 603.0000,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": false,
-        "_Id": 29548,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 0,
-        "_Sunday": true,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 39780.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
@@ -897,6 +616,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287154
     },
     {
@@ -909,23 +633,6 @@
         "IsDirty": true
       },
       "Cost": 50.2500,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 1799,
-        "_Friday": true,
-        "_Id": 32941,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": true,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 0,
-        "_Sunday": false,
-        "_Thursday": true,
-        "_Tuesday": true,
-        "_Wednesday": true
-      },
       "Impressions": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
@@ -936,6 +643,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 288692
     },
     {
@@ -948,23 +660,6 @@
         "IsDirty": true
       },
       "Cost": 12.0600,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": false,
-        "_Id": 29555,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": true,
-        "_StartTime": 0,
-        "_Sunday": false,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
@@ -975,6 +670,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 288693
     },
     {
@@ -987,23 +687,6 @@
         "IsDirty": true
       },
       "Cost": 12.0600,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": false,
-        "_Id": 29548,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 0,
-        "_Sunday": true,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
@@ -1014,6 +697,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 288694
     },
     {
@@ -1026,23 +714,6 @@
         "IsDirty": true
       },
       "Cost": 12.0600,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": true,
-        "_Id": 32055,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": true,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 1800,
-        "_Sunday": false,
-        "_Thursday": true,
-        "_Tuesday": true,
-        "_Wednesday": true
-      },
       "Impressions": 340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
@@ -1053,6 +724,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 288695
     },
     {
@@ -1065,23 +741,6 @@
         "IsDirty": true
       },
       "Cost": 753.7500,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 1799,
-        "_Friday": true,
-        "_Id": 32941,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": true,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 0,
-        "_Sunday": false,
-        "_Thursday": true,
-        "_Tuesday": true,
-        "_Wednesday": true
-      },
       "Impressions": 58650.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
@@ -1092,6 +751,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287146
     },
     {
@@ -1104,23 +768,6 @@
         "IsDirty": true
       },
       "Cost": 703.5000,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": true,
-        "_Id": 32055,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": true,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 1800,
-        "_Sunday": false,
-        "_Thursday": true,
-        "_Tuesday": true,
-        "_Wednesday": true
-      },
       "Impressions": 50320.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
@@ -1131,6 +778,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287147
     },
     {
@@ -1143,23 +795,6 @@
         "IsDirty": true
       },
       "Cost": 804.0000,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 1799,
-        "_Friday": false,
-        "_Id": 32943,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": true,
-        "_StartTime": 0,
-        "_Sunday": false,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 51340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
@@ -1170,6 +805,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287150
     },
     {
@@ -1182,23 +822,6 @@
         "IsDirty": true
       },
       "Cost": 753.7500,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": false,
-        "_Id": 32072,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": true,
-        "_StartTime": 1800,
-        "_Sunday": false,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 37060.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
@@ -1209,6 +832,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287151
     },
     {
@@ -1221,23 +849,6 @@
         "IsDirty": true
       },
       "Cost": 603.0000,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": false,
-        "_Id": 29548,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 0,
-        "_Sunday": true,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 39780.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
@@ -1248,6 +859,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287154
     },
     {
@@ -1260,23 +876,6 @@
         "IsDirty": true
       },
       "Cost": 50.2500,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 1799,
-        "_Friday": true,
-        "_Id": 32941,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": true,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 0,
-        "_Sunday": false,
-        "_Thursday": true,
-        "_Tuesday": true,
-        "_Wednesday": true
-      },
       "Impressions": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
@@ -1287,6 +886,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 288692
     },
     {
@@ -1299,23 +903,6 @@
         "IsDirty": true
       },
       "Cost": 12.0600,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": false,
-        "_Id": 29555,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": true,
-        "_StartTime": 0,
-        "_Sunday": false,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
@@ -1326,6 +913,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 288693
     },
     {
@@ -1338,23 +930,6 @@
         "IsDirty": true
       },
       "Cost": 12.0600,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": false,
-        "_Id": 29548,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 0,
-        "_Sunday": true,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
@@ -1365,6 +940,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 288694
     },
     {
@@ -1377,23 +957,6 @@
         "IsDirty": true
       },
       "Cost": 12.0600,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": true,
-        "_Id": 32055,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": true,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 1800,
-        "_Sunday": false,
-        "_Thursday": true,
-        "_Tuesday": true,
-        "_Wednesday": true
-      },
       "Impressions": 340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
@@ -1404,6 +967,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 288695
     },
     {
@@ -1416,23 +984,6 @@
         "IsDirty": true
       },
       "Cost": 753.7500,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 1799,
-        "_Friday": true,
-        "_Id": 32941,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": true,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 0,
-        "_Sunday": false,
-        "_Thursday": true,
-        "_Tuesday": true,
-        "_Wednesday": true
-      },
       "Impressions": 58650.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
@@ -1443,6 +994,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287146
     },
     {
@@ -1455,23 +1011,6 @@
         "IsDirty": true
       },
       "Cost": 703.5000,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": true,
-        "_Id": 32055,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": true,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 1800,
-        "_Sunday": false,
-        "_Thursday": true,
-        "_Tuesday": true,
-        "_Wednesday": true
-      },
       "Impressions": 50320.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
@@ -1482,6 +1021,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287147
     },
     {
@@ -1494,23 +1038,6 @@
         "IsDirty": true
       },
       "Cost": 804.0000,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 1799,
-        "_Friday": false,
-        "_Id": 32943,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": true,
-        "_StartTime": 0,
-        "_Sunday": false,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 51340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
@@ -1521,6 +1048,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287150
     },
     {
@@ -1533,23 +1065,6 @@
         "IsDirty": true
       },
       "Cost": 753.7500,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": false,
-        "_Id": 32072,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": true,
-        "_StartTime": 1800,
-        "_Sunday": false,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 37060.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
@@ -1560,6 +1075,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287151
     },
     {
@@ -1572,23 +1092,6 @@
         "IsDirty": true
       },
       "Cost": 603.0000,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": false,
-        "_Id": 29548,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 0,
-        "_Sunday": true,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 39780.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
@@ -1599,6 +1102,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 287154
     },
     {
@@ -1611,23 +1119,6 @@
         "IsDirty": true
       },
       "Cost": 50.2500,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 1799,
-        "_Friday": true,
-        "_Id": 32941,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": true,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 0,
-        "_Sunday": false,
-        "_Thursday": true,
-        "_Tuesday": true,
-        "_Wednesday": true
-      },
       "Impressions": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
@@ -1638,6 +1129,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 288692
     },
     {
@@ -1650,23 +1146,6 @@
         "IsDirty": true
       },
       "Cost": 12.0600,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": false,
-        "_Id": 29555,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": true,
-        "_StartTime": 0,
-        "_Sunday": false,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
@@ -1677,6 +1156,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 288693
     },
     {
@@ -1689,23 +1173,6 @@
         "IsDirty": true
       },
       "Cost": 12.0600,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": false,
-        "_Id": 29548,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 0,
-        "_Sunday": true,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
       "Impressions": 340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
@@ -1716,6 +1183,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 288694
     },
     {
@@ -1728,23 +1200,6 @@
         "IsDirty": true
       },
       "Cost": 12.0600,
-      "Daypart": {
-        "_Code": "CUS",
-        "_EndTime": 3599,
-        "_Friday": true,
-        "_Id": 32055,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": true,
-        "_Name": "BRDCST DP362",
-        "_Saturday": false,
-        "_StartTime": 1800,
-        "_Sunday": false,
-        "_Thursday": true,
-        "_Tuesday": true,
-        "_Wednesday": true
-      },
       "Impressions": 340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
@@ -1755,6 +1210,11 @@
         "IsDirty": true
       },
       "Spots": 1,
+      "StandardDaypart": {
+        "Code": "MDN",
+        "FullName": "Midday News",
+        "Id": 2
+      },
       "StationInventoryManifestId": 288695
     }
   ]

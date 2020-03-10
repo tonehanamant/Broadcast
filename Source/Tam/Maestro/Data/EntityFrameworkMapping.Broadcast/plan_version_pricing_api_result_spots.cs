@@ -21,12 +21,12 @@ namespace EntityFrameworkMapping.Broadcast
         public double impressions { get; set; }
         public decimal cost { get; set; }
         public int spots { get; set; }
-        public int daypart_id { get; set; }
+        public int standard_daypart_id { get; set; }
         public int contract_media_week_id { get; set; }
     
-        public virtual daypart daypart { get; set; }
         public virtual media_weeks inventory_media_week { get; set; }
         public virtual media_weeks contract_media_week { get; set; }
+        public virtual daypart_defaults daypart_defaults { get; set; }
         public virtual plan_version_pricing_api_results plan_version_pricing_api_results { get; set; }
         public virtual station_inventory_manifest station_inventory_manifest { get; set; }
     }

@@ -82,38 +82,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RunTest_DoesNotShowOpenMarketInventory_WhenItIsNotPassed()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                _InventoryFileTestHelper.UploadProprietaryInventoryFile(
-                        "PricingModel_OAndO.xlsx",
-                        processInventoryRatings: true,
-                        processInventoryProgramsJob: false);
-
-                var inventorySources = _GetAvailableInventorySources().Except(new List<int> { 1 });
-                var plan = _PlanRepository.GetPlan(1198);
-                var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
-                    plan,
-                    new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
-                    inventorySources);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(PlanPricingInventoryProgram), "ManifestId");
-                jsonResolver.Ignore(typeof(ManifestDaypartDto), "Id");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                var json = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
-
-                Approvals.Verify(json);
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void RunWithHiatusDayTest()
         {
             using (new TransactionScopeWrapper())

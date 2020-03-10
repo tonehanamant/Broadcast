@@ -23,6 +23,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.scx_generation_jobs = new HashSet<scx_generation_jobs>();
             this.station_inventory_manifest_dayparts = new HashSet<station_inventory_manifest_dayparts>();
             this.nti_to_nsi_conversion_rates = new HashSet<nti_to_nsi_conversion_rates>();
+            this.plan_version_pricing_api_result_spots = new HashSet<plan_version_pricing_api_result_spots>();
         }
     
         public int id { get; set; }
@@ -39,5 +40,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<scx_generation_jobs> scx_generation_jobs { get; set; }
         public virtual ICollection<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
         public virtual ICollection<nti_to_nsi_conversion_rates> nti_to_nsi_conversion_rates { get; set; }
+        public virtual ICollection<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
     }
 }

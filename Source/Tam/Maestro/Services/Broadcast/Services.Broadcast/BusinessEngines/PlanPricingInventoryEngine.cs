@@ -1,4 +1,5 @@
-﻿using Common.Services.ApplicationServices;
+﻿using Common.Services;
+using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
@@ -75,6 +76,19 @@ namespace Services.Broadcast.BusinessEngines
             programs = FilterProgramsByMinAndMaxCPM(programs, parameters?.MinCPM, parameters?.MaxCPM);
 
             return programs;
+        }
+
+        private void _SetProgramDayparts(List<PlanPricingInventoryProgram> programs)
+        {
+            var daypartCache = DaypartCache.Instance;
+
+            foreach(var program in programs)
+            {
+                foreach(var programDaypart in program.ManifestDayparts)
+                {
+                    programDaypart.Daypart = daypartCache.GetDisplayDaypart(programDaypart.Daypart.Id);
+                }
+            }
         }
 
         private void _SetProgramsFlightDays(List<PlanPricingInventoryProgram> programs, PlanDto plan)
@@ -269,27 +283,34 @@ namespace Services.Broadcast.BusinessEngines
                 return first;
             }).ToList();
 
-            _SetPrimaryProgramForManifestDayparts(programs);
+            _SetPrimaryProgramFallbackForManifestDayparts(programs);
+            _SetProgramDayparts(programs);
 
             return programs;
         }
-
-        private void _SetPrimaryProgramForManifestDayparts(List<PlanPricingInventoryProgram> manifests)
+        private void _SetPrimaryProgramFallbackForManifestDayparts(List<PlanPricingInventoryProgram> manifests)
         {
             // If no information from Dativa is available, set up the primary program using the program name from daypart.
             var daypartsWithoutPrimaryPrograms = manifests.SelectMany(x => x.ManifestDayparts).Where(x => x.PrimaryProgram == null);
 
             foreach (var manifestDaypart in daypartsWithoutPrimaryPrograms)
             {
+                var programName = manifestDaypart.ProgramName ?? string.Empty;
+                var fallbackGenre = string.Empty;
+                
+                if (programName.Contains("news", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    fallbackGenre = "news";
+                }
+
                 manifestDaypart.PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
                 {
-                    Name = manifestDaypart.ProgramName,
-                    Genre = string.Empty,
-                    ShowType = string.Empty
+                    Name = programName,
+                    Genre = fallbackGenre,
+                    ShowType = string.Empty,
                 };
             }
         }
-
         private List<DateRange> _GetPlanDateRanges(PlanDto plan)
         {
             var planStartDate = plan.FlightStartDate.Value;

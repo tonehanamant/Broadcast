@@ -38,6 +38,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private readonly Mock<IDaypartCache> _DaypartCacheMock;
         private readonly Mock<IMarketCoverageRepository> _MarketCoverageRepositoryMock;
         private readonly Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCacheMock;
+        private readonly Mock<IPlanDaypartEngine> _PlanDaypartEngineMock;
 
         public PlanPricingServiceUnitTests()
         {
@@ -52,6 +53,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DaypartCacheMock = new Mock<IDaypartCache>();
             _MarketCoverageRepositoryMock = new Mock<IMarketCoverageRepository>();
             _MediaMonthAndWeekAggregateCacheMock = new Mock<IMediaMonthAndWeekAggregateCache>();
+            _PlanDaypartEngineMock = new Mock<IPlanDaypartEngine>();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IPlanRepository>())
@@ -80,7 +82,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new PlanPricingAllocatedSpot
                     {
                         Id = 1,
-                        Daypart = new DisplayDaypart { Id = 1 },
+                        StandardDaypart = new DaypartDefaultDto { Id = 1 },
                         Spots = 2,
                         Cost = 200,
                         Impressions = 10000,
@@ -88,7 +90,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new PlanPricingAllocatedSpot
                     {
                         Id = 2,
-                        Daypart = new DisplayDaypart { Id = 2 },
+                        StandardDaypart = new DaypartDefaultDto { Id = 2 },
                         Spots = 4,
                         Cost = 300,
                         Impressions = 50000,
@@ -96,7 +98,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new PlanPricingAllocatedSpot
                     {
                         Id = 3,
-                        Daypart = new DisplayDaypart { Id = 3 },
+                        StandardDaypart = new DaypartDefaultDto { Id = 3 },
                         Spots = 3,
                         Cost = 500,
                         Impressions = 20000,
@@ -104,7 +106,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new PlanPricingAllocatedSpot
                     {
                         Id = 4,
-                        Daypart = new DisplayDaypart { Id = 4 },
+                        StandardDaypart = new DaypartDefaultDto { Id = 4 },
                         Spots = 1,
                         Cost = 100,
                         Impressions = 30000,
@@ -112,7 +114,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new PlanPricingAllocatedSpot
                     {
                         Id = 5,
-                        Daypart = new DisplayDaypart { Id = 5 },
+                        StandardDaypart = new DaypartDefaultDto { Id = 5 },
                         Spots = 3,
                         Cost = 300,
                         Impressions = 10000,
@@ -120,7 +122,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new PlanPricingAllocatedSpot
                     {
                         Id = 6,
-                        Daypart = new DisplayDaypart { Id = 6 },
+                        StandardDaypart = new DaypartDefaultDto { Id = 6 },
                         Spots = 2,
                         Cost = 400,
                         Impressions = 50000,
@@ -128,7 +130,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new PlanPricingAllocatedSpot
                     {
                         Id = 7,
-                        Daypart = new DisplayDaypart { Id = 7 },
+                        StandardDaypart = new DaypartDefaultDto { Id = 7 },
                         Spots = 1,
                         Cost = 250,
                         Impressions = 20000,
@@ -257,15 +259,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             // Arrange
             var inventory = _GetInventory();
+            var plan = _GetPlan();
 
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestMarketCoverages(null))
                 .Returns(_GetLatestMarketCoverages());
 
+            _PlanDaypartEngineMock
+                .Setup(x => x.FindPlanDaypartWithMostIntersectingTime(
+                    It.IsAny<List<PlanDaypartDto>>(),
+                    It.IsAny<string>(),
+                    It.IsAny<TimeRange>()))
+                .Returns(plan.Dayparts.First());
+
             var service = _GetService();
             
             // Act
-            var result = service.UT_GetPricingModelSpots(inventory);
+            var result = service.UT_GetPricingModelSpots(plan, inventory);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -699,24 +709,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var proprietaryEstimates = _GetProprietaryEstimates();
             var plan = _GetPlan();
 
-            _DaypartCacheMock
-                .Setup(x => x.GetIdByDaypart(It.IsAny<DisplayDaypart>()))
-                .Returns<DisplayDaypart>(x => x.StartTime + x.EndTime)
-                .Callback<DisplayDaypart>(x => usedDayparts.Add(x));
-
             var service = _GetService();
 
             // Act
             var weeks = service.UT_GetPricingModelWeeks(plan, proprietaryEstimates);
 
             // Assert
-            var result = new
-            {
-                weeks,
-                usedDayparts
-            };
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(weeks));
         }
 
         [Test]
@@ -820,13 +819,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         WeightingGoalPercent = 17,
                         StartTimeSeconds = 100,
-                        EndTimeSeconds = 199
+                        EndTimeSeconds = 199,
+                        DaypartCodeId = 1
                     },
                     new PlanDaypartDto
                     {
                         WeightingGoalPercent = 19,
                         StartTimeSeconds = 100,
-                        EndTimeSeconds = 299
+                        EndTimeSeconds = 299,
+                        DaypartCodeId = 2
                     }
                 },
                 PricingParameters = new PlanPricingParametersDto
@@ -876,7 +877,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _PlanPricingInventoryEngineMock.Object,
                 _BroadcastLockingManagerApplicationServiceMock.Object,
                 _DaypartCacheMock.Object,
-                _MediaMonthAndWeekAggregateCacheMock.Object);
+                _MediaMonthAndWeekAggregateCacheMock.Object,
+                _PlanDaypartEngineMock.Object);
 
             return service;
         }

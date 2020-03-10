@@ -147,7 +147,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IMarketCoverageRepository _MarketCoverageRepository;
         private readonly IStationProgramRepository _StationProgramRepository;
-        private readonly IStandartDaypartEngine _StandartDaypartEngine;
 
         public CampaignService(
             IDataRepositoryFactory dataRepositoryFactory,
@@ -161,8 +160,7 @@ namespace Services.Broadcast.ApplicationServices
             IAudienceService audienceService,
             ISpotLengthService spotLengthService,
             IDaypartDefaultService daypartDefaultService,
-            ISharedFolderService sharedFolderService,
-            IStandartDaypartEngine standartDaypartEngine)
+            ISharedFolderService sharedFolderService)
         {
             _CampaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _CampaignValidator = campaignValidator;
@@ -181,7 +179,6 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryRepository = dataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _MarketCoverageRepository = dataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
             _StationProgramRepository = dataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
-            _StandartDaypartEngine = standartDaypartEngine;
         }
 
         /// <inheritdoc />
@@ -705,8 +702,7 @@ namespace Services.Broadcast.ApplicationServices
                 allocatedSpots,
                 manifests,
                 marketCoverages,
-                primaryProgramsByManifestDaypartIds,
-                _StandartDaypartEngine);
+                primaryProgramsByManifestDaypartIds);
         }
 
         private PlanPricingJob _GetLatestPricingJob(int planId)

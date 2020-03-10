@@ -141,13 +141,13 @@
         "Id": 576683,
         "PrimaryProgram": {
           "EndTime": 0,
-          "Genre": "",
+          "Genre": "news",
           "Name": "News 10 @ Noon",
           "ShowType": "",
           "StartTime": 0
         },
         "ProgramName": "News 10 @ Noon",
-        "Programs": []
+        "Programs": null
       }
     ],
     "ManifestId": 469330,
@@ -318,13 +318,13 @@
         "Id": 576685,
         "PrimaryProgram": {
           "EndTime": 0,
-          "Genre": "",
+          "Genre": "news",
           "Name": "News 10 @ Noon",
           "ShowType": "",
           "StartTime": 0
         },
         "ProgramName": "News 10 @ Noon",
-        "Programs": []
+        "Programs": null
       }
     ],
     "ManifestId": 469332,

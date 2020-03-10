@@ -50,7 +50,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IInventoryRepository> _InventoryRepositoryMock;
         private Mock<IMarketCoverageRepository> _MarketCoverageRepositoryMock;
         private Mock<IStationProgramRepository> _StationProgramRepositoryMock;
-        private Mock<IStandartDaypartEngine> _StandartDaypartEngineMock;
 
         [SetUp]
         public void SetUp()
@@ -74,7 +73,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _MarketCoverageRepositoryMock = new Mock<IMarketCoverageRepository>();
             _InventoryRepositoryMock = new Mock<IInventoryRepository>();
             _StationProgramRepositoryMock = new Mock<IStationProgramRepository>();
-            _StandartDaypartEngineMock = new Mock<IStandartDaypartEngine>();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IStationProgramRepository>())
@@ -977,7 +975,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestIds))), 
                 Times.Once);
             
-            var passedManifestDaypartIds = new List<int> { 1001, 2001, 3001, 3002 };
+            var passedManifestDaypartIds = new List<int> { 1001, 2001, 3001 };
             _StationProgramRepositoryMock.Verify(x => x.GetPrimaryProgramsForManifestDayparts(
                 It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestDaypartIds))),
                 Times.Once);
@@ -1049,7 +1047,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestIds))),
                 Times.Once);
 
-            var passedManifestDaypartIds = new List<int> { 1001, 2001, 3001, 3002 };
+            var passedManifestDaypartIds = new List<int> { 1001, 2001, 3001 };
             _StationProgramRepositoryMock.Verify(x => x.GetPrimaryProgramsForManifestDayparts(
                 It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestDaypartIds))),
                 Times.Once);
@@ -1121,7 +1119,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestIds))),
                 Times.Once);
 
-            var passedManifestDaypartIds = new List<int> { 1001, 2001, 3001, 3002 };
+            var passedManifestDaypartIds = new List<int> { 1001, 2001, 3001 };
             _StationProgramRepositoryMock.Verify(x => x.GetPrimaryProgramsForManifestDayparts(
                 It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestDaypartIds))),
                 Times.Once);
@@ -1413,16 +1411,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         }
                     }
                 });
-
-            _StandartDaypartEngineMock
-                .Setup(x => x.GetDaypartCodeByGenreAndTimeRange(It.IsAny<string>(), It.IsAny<TimeRange>()))
-                .Returns(new DaypartDefaultFullDto
-                {
-                    DaypartType = DaypartTypeEnum.News,
-                    DefaultStartTimeSeconds = 80,
-                    DefaultEndTimeSeconds = 139,
-                    Code = "EMN"
-                });
         }
 
         private MarketCoverageByStation _GetMarketCoverages()
@@ -1546,9 +1534,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 10,
-                    Daypart = new DisplayDaypart
+                    StandardDaypart = new DaypartDefaultDto
                     {
-                        Id = 10001
+                        Id = 10001,
+                        Code = "EMN"
                     },
                     Spots = 1,
                     Impressions = 10
@@ -1556,9 +1545,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 20,
-                    Daypart = new DisplayDaypart
+                    StandardDaypart = new DaypartDefaultDto
                     {
-                        Id = 20001
+                        Id = 20001,
+                        Code = "LN"
                     },
                     Spots = 1,
                     Impressions = 20
@@ -1566,9 +1556,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 30,
-                    Daypart = new DisplayDaypart
+                    StandardDaypart = new DaypartDefaultDto
                     {
-                        Id = 30002
+                        Id = 30002,
+                        Code = "EM"
                     },
                     Spots = 2,
                     Impressions = 10
@@ -1576,9 +1567,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 40,
-                    Daypart = new DisplayDaypart
+                    StandardDaypart = new DaypartDefaultDto
                     {
-                        Id = 40001
+                        Id = 40001,
+                        Code = "EM"
                     },
                     Spots = 1,
                     Impressions = 10
@@ -1586,9 +1578,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 50,
-                    Daypart = new DisplayDaypart
+                    StandardDaypart = new DaypartDefaultDto
                     {
-                        Id = 50001
+                        Id = 50001,
+                        Code = "LN"
                     },
                     Spots = 5,
                     Impressions = 10
@@ -1819,22 +1812,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                             new StationInventoryManifestDaypart
                             {
                                 Id = 3001,
-                                Daypart = new DisplayDaypart
-                                {
-                                    Id = 30001,
-                                    StartTime = 300,
-                                    EndTime = 399,
-                                    Friday = true,
-                                    Sunday = true
-                                }
-                            },
-                            new StationInventoryManifestDaypart
-                            {
-                                Id = 3002,
                                 ProgramName = "The Shawshank Redemption",
                                 Daypart = new DisplayDaypart
                                 {
-                                    Id = 30002,
+                                    Id = 30001,
                                     StartTime = 300,
                                     EndTime = 399,
                                     Friday = true,
@@ -1873,8 +1854,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _AudienceServiceMock.Object,
                 _SpotLengthServiceMock.Object,
                 _DaypartDefaultServiceMock.Object,
-                _SharedFolderServiceMock.Object,
-                _StandartDaypartEngineMock.Object);
+                _SharedFolderServiceMock.Object);
         }
     }
 }
