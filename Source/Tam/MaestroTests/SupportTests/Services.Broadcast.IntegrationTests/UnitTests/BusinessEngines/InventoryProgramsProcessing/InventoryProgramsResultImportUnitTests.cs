@@ -84,25 +84,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             // validate we saved
             Assert.AreEqual(1, savedCalls.Count);
             Assert.AreEqual(4, savedCalls[0].Count);
-            Assert.AreEqual(194937, savedCalls[0][0].StationInventoryManifestDaypartId);
-            Assert.AreEqual("Big Bang Theory", savedCalls[0][0].ProgramName);
+
+            Assert.AreEqual(194936, savedCalls[0][0].StationInventoryManifestDaypartId);
+            Assert.AreEqual("Tacoma FD", savedCalls[0][0].ProgramName);
             Assert.AreEqual("Series", savedCalls[0][0].ShowType);
             Assert.AreEqual(2, savedCalls[0][0].GenreSourceId);
             Assert.AreEqual(2, savedCalls[0][0].MaestroGenreId);
-            Assert.AreEqual("2019-03-06", savedCalls[0][0].StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
-            Assert.AreEqual("2019-04-24", savedCalls[0][0].EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
-            Assert.AreEqual(43200, savedCalls[0][0].StartTime);
-            Assert.AreEqual(50399, savedCalls[0][0].EndTime);
-
-            Assert.AreEqual(194936, savedCalls[0][1].StationInventoryManifestDaypartId);
-            Assert.AreEqual("Tacoma FD", savedCalls[0][1].ProgramName);
+            Assert.AreEqual("2019-03-20", savedCalls[0][0].StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual("2019-04-20", savedCalls[0][0].EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual(39600, savedCalls[0][0].StartTime);
+            Assert.AreEqual(46799, savedCalls[0][0].EndTime);
+            
+            Assert.AreEqual(194937, savedCalls[0][1].StationInventoryManifestDaypartId);
+            Assert.AreEqual("Big Bang Theory", savedCalls[0][1].ProgramName);
             Assert.AreEqual("Series", savedCalls[0][1].ShowType);
             Assert.AreEqual(2, savedCalls[0][1].GenreSourceId);
             Assert.AreEqual(2, savedCalls[0][1].MaestroGenreId);
-            Assert.AreEqual("2019-03-20", savedCalls[0][1].StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
-            Assert.AreEqual("2019-04-20", savedCalls[0][1].EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
-            Assert.AreEqual(39600, savedCalls[0][1].StartTime);
-            Assert.AreEqual(46799, savedCalls[0][1].EndTime);
+            Assert.AreEqual("2019-03-06", savedCalls[0][1].StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual("2019-04-24", savedCalls[0][1].EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual(43200, savedCalls[0][1].StartTime);
+            Assert.AreEqual(50399, savedCalls[0][1].EndTime);
 
             Assert.AreEqual(194938, savedCalls[0][2].StationInventoryManifestDaypartId);
             Assert.AreEqual("Big Brother", savedCalls[0][2].ProgramName);
@@ -183,25 +184,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             // validate we saved
             Assert.AreEqual(1, savedCalls.Count);
             Assert.AreEqual(4, savedCalls[0].Count);
-            Assert.AreEqual(194937, savedCalls[0][0].StationInventoryManifestDaypartId);
-            Assert.AreEqual("Big Bang Theory", savedCalls[0][0].ProgramName);
+
+            Assert.AreEqual(194936, savedCalls[0][0].StationInventoryManifestDaypartId);
+            Assert.AreEqual("Tacoma FD", savedCalls[0][0].ProgramName);
             Assert.AreEqual("Series", savedCalls[0][0].ShowType);
             Assert.AreEqual(2, savedCalls[0][0].GenreSourceId);
             Assert.AreEqual(2, savedCalls[0][0].MaestroGenreId);
-            Assert.AreEqual("2019-03-06", savedCalls[0][0].StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
-            Assert.AreEqual("2019-04-24", savedCalls[0][0].EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
-            Assert.AreEqual(43200, savedCalls[0][0].StartTime);
-            Assert.AreEqual(50399, savedCalls[0][0].EndTime);
+            Assert.AreEqual("2019-03-20", savedCalls[0][0].StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual("2019-04-20", savedCalls[0][0].EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual(39600, savedCalls[0][0].StartTime);
+            Assert.AreEqual(46799, savedCalls[0][0].EndTime);
 
-            Assert.AreEqual(194936, savedCalls[0][1].StationInventoryManifestDaypartId);
-            Assert.AreEqual("Tacoma FD", savedCalls[0][1].ProgramName);
+            Assert.AreEqual(194937, savedCalls[0][1].StationInventoryManifestDaypartId);
+            Assert.AreEqual("Big Bang Theory", savedCalls[0][1].ProgramName);
             Assert.AreEqual("Series", savedCalls[0][1].ShowType);
             Assert.AreEqual(2, savedCalls[0][1].GenreSourceId);
             Assert.AreEqual(2, savedCalls[0][1].MaestroGenreId);
-            Assert.AreEqual("2019-03-20", savedCalls[0][1].StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
-            Assert.AreEqual("2019-04-20", savedCalls[0][1].EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
-            Assert.AreEqual(39600, savedCalls[0][1].StartTime);
-            Assert.AreEqual(46799, savedCalls[0][1].EndTime);
+            Assert.AreEqual("2019-03-06", savedCalls[0][1].StartDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual("2019-04-24", savedCalls[0][1].EndDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual(43200, savedCalls[0][1].StartTime);
+            Assert.AreEqual(50399, savedCalls[0][1].EndTime);
 
             Assert.AreEqual(194938, savedCalls[0][2].StationInventoryManifestDaypartId);
             Assert.AreEqual("Big Brother", savedCalls[0][2].ProgramName);

@@ -709,7 +709,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
 
             // verify the file was exported well
             Assert.AreEqual(1, createdFiles.Count);
-            Assert.AreEqual(@"testSettingBroadcastSharedDirectoryPath\ProgramGuideInterfaceDirectory\Export\ProgramGuideInventoryExportFile_20200306_142235.csv", createdFiles[0].Item1);
+            Assert.AreEqual(@"testSettingBroadcastSharedDirectoryPath\ProgramGuideInterfaceDirectory\Export\ProgramGuideExport_SOURCE_Numbe_20200101_20200121_20200306_142235.csv", createdFiles[0].Item1);
             Assert.AreEqual(13, createdFiles[0].Item2.Count);
             for (var i = 0; i < 13; i++)
             {
@@ -724,7 +724,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.IsTrue(body.Contains("Inventory Source : NumberOneSource"));
             Assert.IsTrue(body.Contains("Range Start Date : 2020-01-01"));
             Assert.IsTrue(body.Contains("Range End Date : 2020-01-21"));
-            Assert.IsTrue(body.Contains(@"testSettingBroadcastSharedDirectoryPath\ProgramGuideInterfaceDirectory\Export\ProgramGuideInventoryExportFile_20200306_142235.csv"));
+            Assert.IsTrue(body.Contains(@"testSettingBroadcastSharedDirectoryPath\ProgramGuideInterfaceDirectory\Export\ProgramGuideExport_SOURCE_Numbe_20200101_20200121_20200306_142235.csv"));
 
             Assert.AreEqual("Broadcast Inventory Programs - ProgramGuide Interface Export file available", emailsSent[0].Item2);
             Assert.AreEqual(MailPriority.Normal, emailsSent[0].Item3);

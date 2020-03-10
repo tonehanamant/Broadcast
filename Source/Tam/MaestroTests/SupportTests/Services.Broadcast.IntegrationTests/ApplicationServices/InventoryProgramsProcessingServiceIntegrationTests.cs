@@ -59,7 +59,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _InventoryProgramsProcessingService.ProcessInventoryProgramsByFileJob(queueResult.Job.Id);
 
                 // PRI-23390 : no longer calls ProgramGuide API or saves results to db.  Exports a file instead.
-                Assert.IsTrue(result.ExportFileName.Contains("ProgramGuideInventoryExportFile_"));
+                Assert.IsTrue(result.ExportFileName.Contains("ProgramGuideExport_"));
                 Assert.IsTrue(result.ExportFileName.EndsWith(".csv"));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
             }
@@ -77,7 +77,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var queueResult = _InventoryProgramsProcessingService.QueueProcessInventoryProgramsBySourceJob(sourceId, startDate, endDate, TEST_USERNAME);
                 var result = _InventoryProgramsProcessingService.ProcessInventoryProgramsBySourceJob(queueResult.Jobs.First().Id);
-                Assert.IsTrue(result.ExportFileName.Contains("ProgramGuideInventoryExportFile_"));
+                Assert.IsTrue(result.ExportFileName.Contains("ProgramGuideExport_"));
                 Assert.IsTrue(result.ExportFileName.EndsWith(".csv"));
                 // PRI-23390 : no longer calls ProgramGuide API or saves results to db.  Exports a file instead.
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));

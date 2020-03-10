@@ -199,5 +199,20 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             body.AppendLine($"Have a nice day.");
             return body.ToString();
         }
+
+        protected override string _GetExportFileName(int jobId)
+        {
+            const int sourceNameTruncationLimit = 5;
+            var job = _InventoryProgramsBySourceJobsRepository.GetJob(jobId);
+            var sourceName = _GetInventorySource(jobId).Name
+                .Replace(" ", "")
+                .Substring(0, sourceNameTruncationLimit);
+
+            return $"{EXPORT_FILE_NAME_SEED}" +
+                   $"_SOURCE_{sourceName}" +
+                   $"_{job.StartDate.ToString(EXPORT_FILE_NAME_DATE_FORMAT)}" +
+                   $"_{job.EndDate.ToString(EXPORT_FILE_NAME_DATE_FORMAT)}" +
+                   $"_{_GetCurrentDateTime().ToString(EXPORT_FILE_SUFFIX_TIMESTAMP_FORMAT)}.csv";
+        }
     }
 }

@@ -208,6 +208,14 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             return body.ToString();
         }
 
+        protected override string _GetExportFileName(int jobId)
+        {
+            var job = _InventoryProgramsByFileJobsRepository.GetJob(jobId);
+            return $"{EXPORT_FILE_NAME_SEED}" +
+                   $"_FILE_{job.InventoryFileId}" +
+                   $"_{_GetCurrentDateTime().ToString(EXPORT_FILE_SUFFIX_TIMESTAMP_FORMAT)}.csv";
+        }
+
         private DateTime _GetEntryStartDate(StationInventoryManifestDaypart daypart, DateTime rangeStartDate)
         {
             const int oneDay = 1;

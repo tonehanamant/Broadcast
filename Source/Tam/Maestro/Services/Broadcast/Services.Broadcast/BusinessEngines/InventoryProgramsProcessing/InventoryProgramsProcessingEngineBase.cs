@@ -14,6 +14,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -35,6 +36,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
     public abstract class InventoryProgramsProcessingEngineBase : IInventoryProgramsProcessingEngine
     {
         private const int SAVE_CHUNK_SIZE = 1000;
+        protected const string EXPORT_FILE_NAME_SEED = "ProgramGuideExport";
+        protected const string EXPORT_FILE_SUFFIX_TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss";
+        protected const string EXPORT_FILE_NAME_DATE_FORMAT = "yyyyMMdd";
 
         protected readonly IInventoryRepository _InventoryRepository;
         private readonly IProgramGuideApiClient _ProgramGuideApiClient;
@@ -78,17 +82,46 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         protected abstract string _GetExportedFileFailedNotificationEmailBody(int jobId);
 
+        protected abstract string _GetExportFileName(int jobId);
+
         internal void OnDiagnosticMessageUpdate(int jobId, string message)
         {
             _GetJobsRepository().UpdateJobNotes(jobId, message);
         }
 
+        private List<List<GuideInterfaceExportElement>> _GetImportFileProcessingChunks(List<GuideInterfaceExportElement> lineItems)
+        {
+            var processingBatches = lineItems.OrderBy(x => x.inventory_id)
+                .Select((x, i) => new { Index = i, Value = x })
+                .GroupBy(x => x.Index / SAVE_CHUNK_SIZE)
+                .Select(x => x.Select(v => v.Value).ToList())
+                .ToList();
+
+            // make sure the inventory ids don't span multiple batches
+            // don't need to check the last batch
+            var maxBatchIndex = processingBatches.Count - 1;
+            for (var i = 0; i < maxBatchIndex; i++)
+            {
+                var lastId = processingBatches[i].Last().inventory_id;
+                var spansNextBatch = processingBatches[i + 1].Where(s => s.inventory_id == lastId).ToList();
+                if (spansNextBatch.Any())
+                {
+                    processingBatches[i].AddRange(spansNextBatch);
+                    processingBatches[i + 1].RemoveRange(0, spansNextBatch.Count);
+                }
+            }
+            return processingBatches;
+        }
+
         public string ImportInventoryProgramResults(Stream fileStream, string fileName)
         {
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
+
             var processingLog = new StringBuilder();
             processingLog.AppendLine($"Processing {fileName}");
 
-            var success = true;
+            var success = false;
 
             try
             {
@@ -98,18 +131,25 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                     success = false;
                     processingLog.AppendLine($"Parsing attempt failed with {parseResult.Messages.Count} messages : ");
                     parseResult.Messages.ForEach(m => processingLog.AppendLine(m));
+                    _ArchiveImportFile(success, fileName, fileStream, processingLog);
+
+                    stopWatch.Stop();
+                    processingLog.AppendLine($"Processing took {stopWatch.Elapsed.TotalSeconds} seconds.");
+
                     return processingLog.ToString();
+                }
+
+                if (parseResult.Warning)
+                {
+                    processingLog.AppendLine($"Parsing attempt yielded {parseResult.Messages.Count} warnings : ");
+                    parseResult.Messages.ForEach(m => processingLog.AppendLine(m));
                 }
 
                 var lineItems = parseResult.LineItems;
 
                 processingLog.AppendLine($"Exported {lineItems.Count} lines from the file.");
 
-                var processingBatches = lineItems.Select((x, i) => new {Index = i, Value = x})
-                    .GroupBy(x => x.Index / SAVE_CHUNK_SIZE)
-                    .Select(x => x.Select(v => v.Value).ToList())
-                    .ToList();
-
+                var processingBatches = _GetImportFileProcessingChunks(lineItems);
                 var totalProgramsExtracted = 0;
 
                 foreach (var batch in processingBatches)
@@ -121,7 +161,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                     // setup first to minimize the transaction scope.
 
                     // prep the saves
-                    var programSaveChunks = programs.Select((x, i) => new { Index = i, Value = x })
+                    var programSaveChunks = programs.Select((x, i) => new {Index = i, Value = x})
                         .GroupBy(x => x.Index / SAVE_CHUNK_SIZE)
                         .Select(x => x.Select(v => v.Value).ToList())
                         .ToList();
@@ -146,18 +186,22 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
                     const int dbOperationTimeoutMinutes = 20;
                     // take action
-                    using (var scope = TransactionScopeHelper.CreateTransactionScope(TimeSpan.FromMinutes(dbOperationTimeoutMinutes)))
+                    using (var scope =
+                        TransactionScopeHelper.CreateTransactionScope(TimeSpan.FromMinutes(dbOperationTimeoutMinutes)))
                     {
                         // always delete
                         foreach (var group in dateRangeManifests)
                         {
-                            _InventoryRepository.DeleteInventoryPrograms(group.ManifestIds, group.DateRange.StartDate, group.DateRange.EndDate);
+                            _InventoryRepository.DeleteInventoryPrograms(group.ManifestIds, group.DateRange.StartDate,
+                                group.DateRange.EndDate);
                         }
 
                         if (programs.Any())
                         {
-                            programSaveChunks.ForEach(chunk => _InventoryRepository.UpdateInventoryPrograms(chunk, _GetCurrentDateTime()));
+                            programSaveChunks.ForEach(chunk =>
+                                _InventoryRepository.UpdateInventoryPrograms(chunk, _GetCurrentDateTime()));
                         }
+
                         scope.Complete();
                     }
 
@@ -167,15 +211,31 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                     _SetProgramData(manifests, (message) => processingLog.AppendLine(message));
                 }
 
+                success = true;
                 processingLog.AppendLine($"Extracted and saved {totalProgramsExtracted} program records.");
+                _ArchiveImportFile(success, fileName, fileStream, processingLog);
+                stopWatch.Stop();
+                processingLog.AppendLine($"Processing took {stopWatch.Elapsed.TotalSeconds} seconds.");
             }
             catch (Exception ex)
             {
+                success = false;
+
                 LogHelper.Logger.Error($"Error caught ingesting results file '{fileName}'.", ex);
                 processingLog.AppendLine($"Error caught : {ex.Message}");
-                success = false;
+                
+                _ArchiveImportFile(success, fileName, fileStream, processingLog);
+
+                stopWatch.Stop();
+                processingLog.AppendLine($"Processing took {stopWatch.Elapsed.TotalSeconds} seconds.");
             }
-            finally
+
+            return processingLog.ToString();
+        }
+
+        private void _ArchiveImportFile(bool success, string fileName, Stream fileStream, StringBuilder processingLog)
+        {
+            try
             {
                 _CreateDirectoriesIfNotExist();
 
@@ -188,8 +248,10 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
                 processingLog.AppendLine($"File archived to '{filePath}'.");
             }
-
-            return processingLog.ToString();
+            catch (Exception e)
+            {
+                processingLog.AppendLine($"Error caught attempting to archive the file : {e.Message}");
+            }
         }
 
         private StationInventoryManifestDaypartProgram _MapExportedProgram(GuideInterfaceExportElement exported)
@@ -266,6 +328,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             return processDiagnostics;
         }
 
+        
+
         private void _ExportInventoryForProgramGuide(int jobId, List<StationInventoryManifest> manifests, InventorySource inventorySource, 
             InventoryProgramsProcessingJobDiagnostics processingDiags)
         {
@@ -279,8 +343,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             transformWarnings.ForEach(w => jobsRepository.UpdateJobNotes(jobId, w));
 
             // export to file
-            const string fileSuffixPattern = "yyyyMMdd_HHmmss";
-            var fileName = $"ProgramGuideInventoryExportFile_{_GetCurrentDateTime().ToString(fileSuffixPattern)}.csv";
+            var fileName = _GetExportFileName(jobId);
+
             var filePath = Path.Combine(_GetProgramGuideInterfaceExportDirectoryPath(), fileName);
             var headerLine = _GetProgramsExportFileHeaderLine();
 
@@ -702,6 +766,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         private class ProgramsFileParseResult
         {
             public bool Success { get; set; }
+            public bool Warning { get; set; }
             public List<string> Messages { get; } = new List<string>();
             public List<GuideInterfaceExportElement> LineItems { get; set; } = new List<GuideInterfaceExportElement>();
         }
@@ -713,6 +778,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
             var reader = new CsvFileReader(headerFields);
 
+            var currentRowNumber = 1; // header is row 1 so start at one and increment below.
+
             try
             {
                 using (reader.Initialize(fileStream))
@@ -720,47 +787,56 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                     while (reader.IsEOF() == false)
                     {
                         reader.NextRow();
+                        currentRowNumber++;
 
                         if (reader.IsEmptyRow())
                         {
                             break;
                         }
 
-                        var lineItem = new GuideInterfaceExportElement
+                        try
                         {
-                            inventory_id = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.inventory_id))),
-                            inventory_week_id = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.inventory_week_id))),
-                            inventory_daypart_id = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.inventory_daypart_id))),
-                            station_call_letters = reader.GetCellValue(nameof(GuideInterfaceExportElement.station_call_letters)),
-                            affiliation = reader.GetCellValue(nameof(GuideInterfaceExportElement.affiliation)),
-                            start_date = DateTime.Parse(reader.GetCellValue(nameof(GuideInterfaceExportElement.start_date))),
-                            end_date = DateTime.Parse(reader.GetCellValue(nameof(GuideInterfaceExportElement.end_date))),
-                            daypart_text = reader.GetCellValue(nameof(GuideInterfaceExportElement.daypart_text)),
-                            mon = reader.GetCellValue(nameof(GuideInterfaceExportElement.mon)) == "1",
-                            tue = reader.GetCellValue(nameof(GuideInterfaceExportElement.tue)) == "1",
-                            wed = reader.GetCellValue(nameof(GuideInterfaceExportElement.wed)) == "1",
-                            thu = reader.GetCellValue(nameof(GuideInterfaceExportElement.thu)) == "1",
-                            fri = reader.GetCellValue(nameof(GuideInterfaceExportElement.fri)) == "1",
-                            sat = reader.GetCellValue(nameof(GuideInterfaceExportElement.sat)) == "1",
-                            sun = reader.GetCellValue(nameof(GuideInterfaceExportElement.sun)) == "1",
-                            daypart_start_time = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.daypart_start_time))),
-                            daypart_end_time = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.daypart_end_time))),
-                            program_name = reader.GetCellValue(nameof(GuideInterfaceExportElement.program_name)),
-                            show_type = reader.GetCellValue(nameof(GuideInterfaceExportElement.show_type)),
-                            genre = reader.GetCellValue(nameof(GuideInterfaceExportElement.genre)),
-                            program_start_time = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.program_start_time))),
-                            program_end_time = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.program_end_time))),
-                            program_start_date = DateTime.Parse(reader.GetCellValue(nameof(GuideInterfaceExportElement.program_start_date))),
-                            program_end_date = DateTime.Parse(reader.GetCellValue(nameof(GuideInterfaceExportElement.program_end_date)))
-                        };
-                        result.LineItems.Add(lineItem);
+                            var lineItem = new GuideInterfaceExportElement
+                            {
+                                inventory_id = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.inventory_id))),
+                                inventory_week_id = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.inventory_week_id))),
+                                inventory_daypart_id = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.inventory_daypart_id))),
+                                station_call_letters = reader.GetCellValue(nameof(GuideInterfaceExportElement.station_call_letters)),
+                                affiliation = reader.GetCellValue(nameof(GuideInterfaceExportElement.affiliation)),
+                                start_date = DateTime.Parse(reader.GetCellValue(nameof(GuideInterfaceExportElement.start_date))),
+                                end_date = DateTime.Parse(reader.GetCellValue(nameof(GuideInterfaceExportElement.end_date))),
+                                daypart_text = reader.GetCellValue(nameof(GuideInterfaceExportElement.daypart_text)),
+                                mon = reader.GetCellValue(nameof(GuideInterfaceExportElement.mon)) == "1",
+                                tue = reader.GetCellValue(nameof(GuideInterfaceExportElement.tue)) == "1",
+                                wed = reader.GetCellValue(nameof(GuideInterfaceExportElement.wed)) == "1",
+                                thu = reader.GetCellValue(nameof(GuideInterfaceExportElement.thu)) == "1",
+                                fri = reader.GetCellValue(nameof(GuideInterfaceExportElement.fri)) == "1",
+                                sat = reader.GetCellValue(nameof(GuideInterfaceExportElement.sat)) == "1",
+                                sun = reader.GetCellValue(nameof(GuideInterfaceExportElement.sun)) == "1",
+                                daypart_start_time = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.daypart_start_time))),
+                                daypart_end_time = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.daypart_end_time))),
+                                program_name = reader.GetCellValue(nameof(GuideInterfaceExportElement.program_name)),
+                                show_type = reader.GetCellValue(nameof(GuideInterfaceExportElement.show_type)),
+                                genre = reader.GetCellValue(nameof(GuideInterfaceExportElement.genre)),
+                                program_start_time = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.program_start_time))),
+                                program_end_time = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.program_end_time))),
+                                program_start_date = DateTime.Parse(reader.GetCellValue(nameof(GuideInterfaceExportElement.program_start_date))),
+                                program_end_date = DateTime.Parse(reader.GetCellValue(nameof(GuideInterfaceExportElement.program_end_date)))
+                            };
+                            result.LineItems.Add(lineItem);
+                        }
+                        catch (Exception e)
+                        {
+                            result.Warning = true;
+                            result.Messages.Add($"Error caught parsing row {currentRowNumber}. Continuing with rest of file.  Error : {e.Message}");
+                        }
                     }
                 }
             }
             catch (Exception e)
             {
                 result.Success = false;
-                result.Messages.Add(e.Message);
+                result.Messages.Add($"Error caught parsing row {currentRowNumber} : {e.Message}");
                 return result;
             }
 
