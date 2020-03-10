@@ -315,8 +315,8 @@ namespace Services.Broadcast.Entities.Campaign
                             continue;
                         }
 
-                        //weekly factor
-                        double weeklyFactor = planWeek.WeeklyImpressionsPercentage / 100;
+                        //weekly factor: the percentage of this week impressions in the total guaranteed plan impressions
+                        double weeklyFactor = planWeek.WeeklyImpressions / plan.TargetImpressions.Value;
 
                         //dayparts that don't have set a value for weighting goal will get an even part from the remaining goal
                         //calculate remaining goal by substracting the user set goal from 100
