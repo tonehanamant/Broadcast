@@ -202,17 +202,23 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         protected override string _GetExportFileName(int jobId)
         {
-            const int sourceNameTruncationLimit = 5;
             var job = _InventoryProgramsBySourceJobsRepository.GetJob(jobId);
-            var sourceName = _GetInventorySource(jobId).Name
-                .Replace(" ", "")
-                .Substring(0, sourceNameTruncationLimit);
+            var sourceName = _GetShortenedInventorySourceName(_GetInventorySource(jobId).Name);
 
             return $"{EXPORT_FILE_NAME_SEED}" +
                    $"_SOURCE_{sourceName}" +
                    $"_{job.StartDate.ToString(EXPORT_FILE_NAME_DATE_FORMAT)}" +
                    $"_{job.EndDate.ToString(EXPORT_FILE_NAME_DATE_FORMAT)}" +
                    $"_{_GetCurrentDateTime().ToString(EXPORT_FILE_SUFFIX_TIMESTAMP_FORMAT)}.csv";
+        }
+
+        protected string _GetShortenedInventorySourceName(string sourceName)
+        {
+            const int sourceNameTruncationLimit = 5;
+            var withoutSpaces = sourceName.Replace(" ", "");
+            return withoutSpaces.Length <= sourceNameTruncationLimit
+                ? withoutSpaces
+                : withoutSpaces.Substring(0, sourceNameTruncationLimit);
         }
     }
 }

@@ -731,6 +731,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.IsTrue(emailsSent[0].Item4.Any());
         }
 
+        [Test]
+        [TestCase("Number One Inventory Source", "Numbe")]
+        [TestCase("A Source", "ASour")]
+        [TestCase("A S A", "ASA")]
+        [TestCase("Aba", "Aba")]
+        public void GetShortenedInventorySourceName(string testInventorySourceName, string expectedName)
+        {
+            var engine = _GetInventoryProgramsProcessingEngine();
+
+            var result = engine.UT_GetShortenedInventorySourceName(testInventorySourceName);
+
+            Assert.AreEqual(expectedName, result);
+        }
+
         // PRI-23390 : Disabling, but may bring it back.
         //[Test]
         //public void BySourceJob_EmptyResponse()

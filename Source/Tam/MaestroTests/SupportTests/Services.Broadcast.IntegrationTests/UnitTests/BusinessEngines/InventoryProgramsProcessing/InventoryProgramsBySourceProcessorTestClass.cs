@@ -75,5 +75,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 ? UT_CurrentDateTime.Value
                 : base._GetCurrentDateTime();
         }
+
+        public string UT_GetShortenedInventorySourceName(string sourceName)
+        {
+            return _GetShortenedInventorySourceName(sourceName);
+        }
     }
 }
