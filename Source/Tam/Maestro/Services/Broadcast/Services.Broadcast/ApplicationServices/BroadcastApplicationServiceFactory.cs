@@ -235,7 +235,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProgramService, ProgramService>();
 
             unityContainer.RegisterType<IPlanPricingService, PlanPricingService>();
-            unityContainer.RegisterType<IPricingApiClient, PricingApiMockClient>();
+            unityContainer.RegisterType<IPricingApiClient, PricingApiClient>();
             unityContainer.RegisterType<IImpressionsCalculationEngine, ImpressionsCalculationEngine>();
 
             unityContainer.RegisterType<IPlanPricingInventoryEngine, PlanPricingInventoryEngine>();
