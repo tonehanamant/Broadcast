@@ -68,7 +68,7 @@ namespace Services.Broadcast.Repositories
         /// Update the rates and adds the audiences for all the manifests in the list
         /// </summary>        
         /// <param name="manifests">List of manifests to process</param>
-        void UpdateInventoryManifests(List<StationInventoryManifest> manifests);
+        void UpdateInventoryManifests(IEnumerable<StationInventoryManifest> manifests);
 
         /// <summary>
         /// Gets the inventory SCX data for barter.
@@ -1103,7 +1103,7 @@ namespace Services.Broadcast.Repositories
         }
 
         ///<inheritdoc/>
-        public void UpdateInventoryManifests(List<StationInventoryManifest> manifests)
+        public void UpdateInventoryManifests(IEnumerable<StationInventoryManifest> manifests)
         {
             _InReadUncommitedTransaction(
                context =>
@@ -1294,17 +1294,7 @@ namespace Services.Broadcast.Repositories
         ///<inheritdoc/>
         public List<StationInventoryManifest> GetStationInventoryManifestsByIds(IEnumerable<int> manifestIds)
         {
-            const int maxChunkSize = 1000;
-            var endIndex = manifestIds.Count() / maxChunkSize;
-            var chunks = new List<IEnumerable<int>>();
-
-            for (var i = 0; i <= endIndex; i++)
-            {
-                var manifestsNumberToSkip = maxChunkSize * i;
-                var manifestsNumberToTake = Math.Min(maxChunkSize, manifestIds.Count() - manifestsNumberToSkip);
-                var manifestsToTake = manifestIds.Skip(manifestsNumberToSkip).Take(manifestsNumberToTake);
-                chunks.Add(manifestsToTake);
-            }
+            var chunks = manifestIds.GetChunks(BroadcastConstants.DefaultDatabaseQueryChunkSize);
 
             var result = chunks
                 .AsParallel()

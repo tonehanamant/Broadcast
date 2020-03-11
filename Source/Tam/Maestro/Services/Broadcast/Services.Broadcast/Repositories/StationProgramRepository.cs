@@ -17,6 +17,7 @@ using Tam.Maestro.Data.EntityFrameworkMapping;
 using Common.Services.Extensions;
 using System.Diagnostics;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using Services.Broadcast.Extensions;
 
 namespace Services.Broadcast.Repositories
 {
@@ -218,35 +219,42 @@ namespace Services.Broadcast.Repositories
 
         public Dictionary<int, PlanPricingInventoryProgram.ManifestDaypart.Program> GetPrimaryProgramsForManifestDayparts(IEnumerable<int> manifestDaypartIds)
         {
-            return _InReadUncommitedTransaction(
-                    context =>
-                    {
-                        var manifestDayparts = context.station_inventory_manifest_dayparts
-                            .Include(x => x.station_inventory_manifest_daypart_programs)
-                            .Where(x => manifestDaypartIds.Contains(x.id) && x.primary_program_id != null)
-                            .ToList();
+            var chunks = manifestDaypartIds.GetChunks(BroadcastConstants.DefaultDatabaseQueryChunkSize);
 
-                        var result = manifestDayparts.ToDictionary(
-                            x => x.id,
-                            x =>
-                            {
-                                var program = x.station_inventory_manifest_daypart_programs.Single(
-                                        p => p.id == x.primary_program_id.Value,
-                                        $"Can not find primary program {x.primary_program_id.Value} for manifest daypart {x.id}");
+            var primaryPrograms = chunks
+                .AsParallel()
+                .SelectMany(chunk =>
+                {
+                    return _InReadUncommitedTransaction(
+                        context =>
+                        {
+                            return context.station_inventory_manifest_dayparts
+                                .Where(x => chunk.Contains(x.id) && x.primary_program_id != null)
+                                .Include(x => x.station_inventory_manifest_daypart_programs)
+                                .Include(x => x.station_inventory_manifest_daypart_programs.Select(p => p.maestro_genre))
+                                .Select(x => x.station_inventory_manifest_daypart_programs.FirstOrDefault(p => p.id == x.primary_program_id.Value))
+                                .ToList()
+                                .Select(x => new
+                                {
+                                    x.station_inventory_manifest_daypart_id,
+                                    program = _MapToPlanPricingInventoryProgram(x)
+                                })
+                                .ToList();
+                        });
+                })
+                .ToList();
 
-                                return _MapToPlanPricingInventoryProgram(program);
-                            });
+            var result = primaryPrograms.Where(x => x != null).ToDictionary(
+                x => x.station_inventory_manifest_daypart_id,
+                x => x.program);
 
-                        return result;
-                    });
+            return result;
         }
 
         private PlanPricingInventoryProgram.ManifestDaypart.Program _MapToPlanPricingInventoryProgram(station_inventory_manifest_daypart_programs program)
         {
-            if(program == null)
-            {
+            if (program == null)
                 return null;
-            }
 
             return new PlanPricingInventoryProgram.ManifestDaypart.Program
             {

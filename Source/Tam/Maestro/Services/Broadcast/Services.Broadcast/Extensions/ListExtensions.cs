@@ -60,12 +60,17 @@ namespace Services.Broadcast.Extensions
             }
         }
 
-        public static IEnumerable<List<T>> GetChunks<T>(this List<T> items, int chunkSize)
+        public static List<List<T>> GetChunks<T>(this IEnumerable<T> items, int chunkSize)
         {
-            for (int i = 0; i < items.Count; i += chunkSize)
+            var chunks = new List<List<T>>();
+
+            for (int i = 0; i < items.Count(); i += chunkSize)
             {
-                yield return items.GetRange(i, Math.Min(chunkSize, items.Count - i));
+                var chunk = items.Skip(i).Take(Math.Min(chunkSize, items.Count() - i)).ToList();
+                chunks.Add(chunk);
             }
+
+            return chunks;
         }
 
         public static double DoubleSumOrDefault(this IEnumerable<object> enumerable)

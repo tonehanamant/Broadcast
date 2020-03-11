@@ -104,20 +104,23 @@ namespace Services.Broadcast.Entities.Campaign
         {
             var dataRows = new List<DetailedViewRowData>();
 
+            // we expect all records belong to the same daypart because it`s OpenMarket
+            // So we can just group by StationInventoryManifestId for now
+            var spotsByManifest = allocatedSpots
+                .GroupBy(x => x.StationInventoryManifestId)
+                .ToDictionary(x => x.Key, x => x.ToList());
+
+            var marketCoverageByMarketCode = marketCoverageByStation.Markets.ToDictionary(x => x.MarketCode, x => x);
+
             foreach (var manifest in manifests)
             {
-                var coverage = marketCoverageByStation.Markets.Single(x => x.MarketCode == manifest.Station.MarketCode);
+                var coverage = marketCoverageByMarketCode[manifest.Station.MarketCode.Value];
 
                 // OpenMarket manifest has only one daypart
                 // This needs to be updated when we start passing other sources to pricing
                 var manifestDaypart = manifest.ManifestDayparts.Single();
-                
-                // we expect all records belong to the same daypart because it`s OpenMarket
-                var allocatedSpotsForManifest = allocatedSpots.Where(x => 
-                    x.StationInventoryManifestId == manifest.Id && 
-                    x.Spots > 0);
 
-                if (!allocatedSpotsForManifest.Any())
+                if (!spotsByManifest.TryGetValue(manifest.Id.Value, out var allocatedSpotsForManifest))
                     continue;
 
                 var row = new DetailedViewRowData
