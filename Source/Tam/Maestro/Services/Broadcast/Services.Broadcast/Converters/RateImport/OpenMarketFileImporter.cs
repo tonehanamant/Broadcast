@@ -596,7 +596,7 @@ namespace Services.Broadcast.Converters.RateImport
             {
                 taskList.Add(Task.Run(() =>
                 {
-                    var proposalStation = proposalStations.SingleOrDefault(ps => ps.LegacyCallLetters == station.callLetters);
+                    var proposalStation = _StationMappingService.GetStationByCallLetters(station.callLetters);
                     var stationContact = new StationContact
                     {
                         Company = message.Proposal.Seller.companyName,
@@ -614,29 +614,20 @@ namespace Services.Broadcast.Converters.RateImport
                             .Select(p => p.Value)
                             .FirstOrDefault() : null
                     };
+                    
+                    stationContact.StationId = proposalStation.Id;
 
-                    if (proposalStation == null)
+                    if (proposalStations.Any(x => x.LegacyCallLetters.Equals(stationContact.Company.Trim(), StringComparison.OrdinalIgnoreCase)))
                     {
-                        // station should be created next
-                        stationContact.StationCallLetters = station.callLetters;
                         stationContact.Type = StationContact.StationContactType.Station;
+                    }
+                    else if (_IsContactARep(repTeamNames, stationContact))
+                    {
+                        stationContact.Type = StationContact.StationContactType.Rep;
                     }
                     else
                     {
-                        stationContact.StationId = proposalStation.Id;
-
-                        if (proposalStations.Any(x => x.LegacyCallLetters.Equals(stationContact.Company.Trim(), StringComparison.OrdinalIgnoreCase)))
-                        {
-                            stationContact.Type = StationContact.StationContactType.Station;
-                        }
-                        else if (_IsContactARep(repTeamNames, stationContact))
-                        {
-                            stationContact.Type = StationContact.StationContactType.Rep;
-                        }
-                        else
-                        {
-                            stationContact.Type = StationContact.StationContactType.Traffic;
-                        }
+                        stationContact.Type = StationContact.StationContactType.Traffic;
                     }
                     return stationContact;
                 }));

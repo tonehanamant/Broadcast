@@ -221,8 +221,6 @@ namespace Services.Broadcast.ApplicationServices
                         return _SetInventoryFileSaveResult(inventoryFile);
                     }
 
-                    _CreateUnknownStationsAndPopulate(inventoryFile, userName);
-
                     _OpenMarketFileImporter.FileProblems.AddRange(_InventoryFileValidator.ValidateInventoryFile(inventoryFile));
 
                     if (_OpenMarketFileImporter.FileProblems.Any())
@@ -333,35 +331,6 @@ namespace Services.Broadcast.ApplicationServices
                     , x.ProblemDescription))
                 .OrderBy(x => x)
                 .ToArray();
-        }
-
-        private void _CreateUnknownStationsAndPopulate(InventoryFile inventoryFile, string userName)
-        {
-            var now = DateTime.Now;
-            var manifestsWithUnknownStations = inventoryFile.GetAllManifests().Where(x => x.Station?.Id == 0);
-            var contactsWithUnknownStations = inventoryFile.StationContacts.Where(x => x.StationId == 0);
-            var unknownStations = manifestsWithUnknownStations
-                .Select(x => x.Station.CallLetters)
-                .Union(contactsWithUnknownStations.Select(x => x.StationCallLetters))
-                .Distinct(StringComparer.CurrentCultureIgnoreCase);
-            var stationsToCreate = unknownStations.Select(stationName => new DisplayBroadcastStation
-            {
-                CallLetters = stationName,
-                LegacyCallLetters = _StationProcessingEngine.StripStationSuffix(stationName),
-                ModifiedDate = now
-            });
-            var newStations = _StationRepository.CreateStations(stationsToCreate, userName);
-            var stationsDict = newStations.ToDictionary(x => x.CallLetters, x => x);
-
-            foreach (var manifest in manifestsWithUnknownStations)
-            {
-                manifest.Station = stationsDict[manifest.Station.CallLetters];
-            }
-
-            foreach (var contact in contactsWithUnknownStations)
-            {
-                contact.StationId = stationsDict[contact.StationCallLetters].Id;
-            }
         }
 
         private void _AddRequestAudienceInfo(InventoryFileSaveRequest request, InventoryFile inventoryFile)
