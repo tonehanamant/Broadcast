@@ -4,12 +4,15 @@ using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.IntegrationTests.Helpers;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
+using static Services.Broadcast.Entities.Plan.PlanDaypartDto;
 using static Services.Broadcast.Entities.ProposalProgramDto;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -19,12 +22,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     {
         private readonly IPlanPricingInventoryEngine _PlanPricingInventoryEngine;
         private readonly IPlanRepository _PlanRepository;
+        private readonly IStationRepository _StationRepository;
         private readonly InventoryFileTestHelper _InventoryFileTestHelper;
 
         public PlanPricingInventoryEngineTests()
         {
             _PlanPricingInventoryEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingInventoryEngine>();
             _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
+            _StationRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
             _InventoryFileTestHelper = new InventoryFileTestHelper();
         }
 
@@ -105,6 +110,63 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var plan = _PlanRepository.GetPlan(1197);
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan, 
+                    new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    _GetAvailableInventorySources());
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void RunAffilitateContentRestrictionTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var plan = _PlanRepository.GetPlan(1197);
+                plan.Dayparts[0].Restrictions.AffiliateRestrictions = new RestrictionsDto.AffiliateRestrictionsDto
+                {
+                    Affiliates = new List<LookupDto>()
+                };
+                plan.Dayparts[0].Restrictions.AffiliateRestrictions.Affiliates.Add(new LookupDto(8, "CW"));
+                plan.Dayparts[0].Restrictions.AffiliateRestrictions.ContainType = ContainTypeEnum.Exclude;
+                _PlanRepository.SavePlan(plan, "IntegrationTestUser", new System.DateTime(2020, 11, 3));
+                // Result has affiliates CW and FOX.
+                var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
+                    plan,
+                    new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    _GetAvailableInventorySources());
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void RunAffilitateContentRestrictionUpdateMonthDetailsTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var plan = _PlanRepository.GetPlan(1197);
+                _StationRepository.SaveStationMonthDetails(new Entities.StationMonthDetailDto
+                {
+                    Affiliation = "CW2",
+                    MediaMonthId = 500,
+                    DistributorCode = 39,
+                    MarketCode = 101,
+                    StationId = 575
+                });
+                // Since affiliate has been updated, it shouldn't be filtered by inventory gathering.
+                plan.Dayparts[0].Restrictions.AffiliateRestrictions = new RestrictionsDto.AffiliateRestrictionsDto
+                {
+                    Affiliates = new List<LookupDto>()
+                };
+                plan.Dayparts[0].Restrictions.AffiliateRestrictions.Affiliates.Add(new LookupDto(8, "CW"));
+                plan.Dayparts[0].Restrictions.AffiliateRestrictions.ContainType = ContainTypeEnum.Exclude;
+                _PlanRepository.SavePlan(plan, "IntegrationTestUser", new System.DateTime(2020, 11, 3));
+                // Result has affiliates CW and FOX.
+                var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
+                    plan,
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources());
 

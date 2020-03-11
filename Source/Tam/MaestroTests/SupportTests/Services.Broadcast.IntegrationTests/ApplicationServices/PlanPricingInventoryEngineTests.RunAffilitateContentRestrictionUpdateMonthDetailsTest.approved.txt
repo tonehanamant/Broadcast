@@ -1,0 +1,582 @@
+﻿[
+  {
+    "InventoryPricingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 34500.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 22700.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 26200.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 20000.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 27900.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": true,
+          "_Id": 32941,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Id": 358772,
+        "PrimaryProgram": {
+          "EndTime": 0,
+          "Genre": "",
+          "Name": "FRIENDS",
+          "ShowType": "",
+          "StartTime": 0
+        },
+        "ProgramName": "FRIENDS",
+        "Programs": null
+      }
+    ],
+    "ManifestId": 287146,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 771,
+        "Id": 1697537,
+        "InventoryMediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 772,
+        "Id": 1704819,
+        "InventoryMediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 773,
+        "Id": 1712148,
+        "InventoryMediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 774,
+        "Id": 1719502,
+        "InventoryMediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 775,
+        "Id": 1727234,
+        "InventoryMediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 66863.3375,
+    "ProvidedImpressions": 58650.0,
+    "SpotCost": 750.0000,
+    "Station": {
+      "Affiliation": "CW2",
+      "CallLetters": "WPIX 11.1",
+      "Code": 5014,
+      "Id": 575,
+      "LegacyCallLetters": "WPIX",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
+    "Unit": null
+  },
+  {
+    "InventoryPricingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 29600.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 18000.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 18000.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 13700.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 21900.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": true,
+          "_Id": 32055,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 1800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Id": 358773,
+        "PrimaryProgram": {
+          "EndTime": 0,
+          "Genre": "",
+          "Name": "TWO & A HALF MEN",
+          "ShowType": "",
+          "StartTime": 0
+        },
+        "ProgramName": "TWO & A HALF MEN",
+        "Programs": null
+      }
+    ],
+    "ManifestId": 287147,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 771,
+        "Id": 1697538,
+        "InventoryMediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 772,
+        "Id": 1704820,
+        "InventoryMediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 773,
+        "Id": 1712149,
+        "InventoryMediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 774,
+        "Id": 1719503,
+        "InventoryMediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 775,
+        "Id": 1727235,
+        "InventoryMediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 57145.9675,
+    "ProvidedImpressions": 50320.0,
+    "SpotCost": 700.0000,
+    "Station": {
+      "Affiliation": "CW2",
+      "CallLetters": "WPIX 11.1",
+      "Code": 5014,
+      "Id": 575,
+      "LegacyCallLetters": "WPIX",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
+    "Unit": null
+  },
+  {
+    "InventoryPricingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 30200.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 11300.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 11800.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 12100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 21300.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": false,
+          "_Id": 32943,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "BRDCST DP362",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 358776,
+        "PrimaryProgram": {
+          "EndTime": 0,
+          "Genre": "",
+          "Name": "FRIENDS",
+          "ShowType": "",
+          "StartTime": 0
+        },
+        "ProgramName": "FRIENDS",
+        "Programs": null
+      }
+    ],
+    "ManifestId": 287150,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 771,
+        "Id": 1697541,
+        "InventoryMediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 772,
+        "Id": 1704823,
+        "InventoryMediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 773,
+        "Id": 1712152,
+        "InventoryMediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 774,
+        "Id": 1719506,
+        "InventoryMediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 775,
+        "Id": 1727238,
+        "InventoryMediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 76497.025,
+    "ProvidedImpressions": 51340.0,
+    "SpotCost": 800.0000,
+    "Station": {
+      "Affiliation": "CW2",
+      "CallLetters": "WPIX 11.1",
+      "Code": 5014,
+      "Id": 575,
+      "LegacyCallLetters": "WPIX",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
+    "Unit": null
+  },
+  {
+    "InventoryPricingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 21800.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 14100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 13600.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 12900.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 16900.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": false,
+          "_Id": 32072,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "BRDCST DP362",
+          "_Saturday": true,
+          "_StartTime": 1800,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 358777,
+        "PrimaryProgram": {
+          "EndTime": 0,
+          "Genre": "",
+          "Name": "FRIENDS",
+          "ShowType": "",
+          "StartTime": 0
+        },
+        "ProgramName": "FRIENDS",
+        "Programs": null
+      }
+    ],
+    "ManifestId": 287151,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 771,
+        "Id": 1697542,
+        "InventoryMediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 772,
+        "Id": 1704824,
+        "InventoryMediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 773,
+        "Id": 1712153,
+        "InventoryMediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 774,
+        "Id": 1719507,
+        "InventoryMediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 775,
+        "Id": 1727239,
+        "InventoryMediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 52161.1,
+    "ProvidedImpressions": 37060.0,
+    "SpotCost": 750.0000,
+    "Station": {
+      "Affiliation": "CW2",
+      "CallLetters": "WPIX 11.1",
+      "Code": 5014,
+      "Id": 575,
+      "LegacyCallLetters": "WPIX",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
+    "Unit": null
+  },
+  {
+    "InventoryPricingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 23400.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 11800.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 13300.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 12100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 16900.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": false,
+          "_Id": 29548,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 358780,
+        "PrimaryProgram": {
+          "EndTime": 0,
+          "Genre": "",
+          "Name": "FRIENDS 2X",
+          "ShowType": "",
+          "StartTime": 0
+        },
+        "ProgramName": "FRIENDS 2X",
+        "Programs": null
+      }
+    ],
+    "ManifestId": 287154,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 771,
+        "Id": 1697545,
+        "InventoryMediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 772,
+        "Id": 1704827,
+        "InventoryMediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 773,
+        "Id": 1712156,
+        "InventoryMediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 774,
+        "Id": 1719510,
+        "InventoryMediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 775,
+        "Id": 1727242,
+        "InventoryMediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 68058.96875,
+    "ProvidedImpressions": 39780.0,
+    "SpotCost": 600.0000,
+    "Station": {
+      "Affiliation": "CW2",
+      "CallLetters": "WPIX 11.1",
+      "Code": 5014,
+      "Id": 575,
+      "LegacyCallLetters": "WPIX",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
+    "Unit": null
+  }
+]

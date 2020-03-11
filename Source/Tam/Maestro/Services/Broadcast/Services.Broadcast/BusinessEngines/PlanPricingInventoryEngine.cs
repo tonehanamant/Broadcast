@@ -160,7 +160,7 @@ namespace Services.Broadcast.BusinessEngines
             var totalInventory = new List<PlanPricingInventoryProgram>();
             var fallbackQuarter = _PlanPricingInventoryQuarterCalculatorEngine.GetInventoryFallbackQuarter();  
             
-            var availableStations = _StationRepository.GetBroadcastStationsByMarketCodes(availableMarkets);
+            var availableStations = _StationRepository.GetBroadcastStationsWithLatestDetailsByMarketCodes(availableMarkets);
 
             foreach (var dateRange in dateRanges)
             {
@@ -285,9 +285,28 @@ namespace Services.Broadcast.BusinessEngines
 
             _SetPrimaryProgramFallbackForManifestDayparts(programs);
             _SetProgramDayparts(programs);
+            _SetProgramStationLatestMonthDetails(programs);
 
             return programs;
         }
+
+        private void _SetProgramStationLatestMonthDetails(List<PlanPricingInventoryProgram> programs)
+        {
+            var distinctIds = programs.Select(x => x.Station.Id).Distinct().ToList();
+            var latestStationMonthDetails = _StationRepository.GetLatestStationMonthDetailsForStations(distinctIds);
+
+            foreach (var latestMonthDetail in latestStationMonthDetails)
+            {
+                var stationsToUpdate = programs.Select(x => x.Station).Where(x => x.Id == latestMonthDetail.StationId).ToList();
+
+                foreach(var station in stationsToUpdate)
+                {
+                    station.Affiliation = latestMonthDetail.Affiliation;
+                    station.MarketCode = latestMonthDetail.MarketCode;
+                }
+            }
+        }
+
         private void _SetPrimaryProgramFallbackForManifestDayparts(List<PlanPricingInventoryProgram> manifests)
         {
             // If no information from Dativa is available, set up the primary program using the program name from daypart.
@@ -371,7 +390,7 @@ namespace Services.Broadcast.BusinessEngines
             {
                 var inventoryDayparts = _GetInventoryDaypartsThatMatchProgram(plan.Dayparts, planDisplayDaypartDays, program);
 
-                if (inventoryDayparts.Any() && _IsProgramAllowedByRestrictions(inventoryDayparts))
+                if (inventoryDayparts.Any() && _IsProgramAllowedByRestrictions(inventoryDayparts, program))
                 {
                     result.Add(program);
                 }
@@ -439,7 +458,7 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
-        private bool _IsProgramAllowedByRestrictions(List<ProgramInventoryDaypart> programInventoryDayparts)
+        private bool _IsProgramAllowedByRestrictions(List<ProgramInventoryDaypart> programInventoryDayparts, PlanPricingInventoryProgram program)
         {
             foreach (var inventoryDaypart in programInventoryDayparts)
             {
@@ -451,9 +470,27 @@ namespace Services.Broadcast.BusinessEngines
 
                 if (!_IsProgramAllowedByShowTypeRestrictions(inventoryDaypart))
                     return false;
+
+                if (!_IsProgramAllowedByAffiliateRestrictions(inventoryDaypart, program))
+                    return false;
             }
 
             return true;
+        }
+
+        private bool _IsProgramAllowedByAffiliateRestrictions(ProgramInventoryDaypart programInventoryDaypart, PlanPricingInventoryProgram program)
+        {
+            var affiliateRestrictions = programInventoryDaypart.PlanDaypart.Restrictions.AffiliateRestrictions;
+
+            if (affiliateRestrictions == null || affiliateRestrictions.Affiliates.IsEmpty())
+                return true;
+
+            var affiliates = affiliateRestrictions.Affiliates.Select(x => x.Display);
+            var hasIntersections = affiliates.Contains(program.Station.Affiliation);
+
+            return affiliateRestrictions.ContainType == ContainTypeEnum.Include ?
+                 hasIntersections :
+                !hasIntersections;
         }
 
         private bool _IsProgramAllowedByProgramRestrictions(ProgramInventoryDaypart programInventoryDaypart)

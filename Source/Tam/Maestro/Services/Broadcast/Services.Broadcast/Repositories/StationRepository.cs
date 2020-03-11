@@ -81,6 +81,18 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="stationId">The station identifier.</param>
         List<StationMonthDetailDto> GetStationMonthDetailsForStation(int stationId);
+
+        /// <summary>
+        /// Gets the latests month details for stations
+        /// </summary>
+        /// <param name="stationsId">The station ids to get the month details</param>
+        List<StationMonthDetailDto> GetLatestStationMonthDetailsForStations(List<int> stationsId);
+
+        /// <summary>
+        /// Gets the stations with the latest month details
+        /// </summary>
+        /// <param name="marketCodes">Market codes to the filter the stations</param>
+        List<DisplayBroadcastStation> GetBroadcastStationsWithLatestDetailsByMarketCodes(List<short> marketCodes);
     }
 
     public class StationRepository : BroadcastRepositoryBase, IStationRepository
@@ -204,6 +216,44 @@ namespace Services.Broadcast.Repositories
                             MarketCode = s.market_code,
                             ModifiedDate = s.modified_date
                         }).ToList();
+                });
+        }
+
+        public List<DisplayBroadcastStation> GetBroadcastStationsWithLatestDetailsByMarketCodes(List<short> marketCodes)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var latestMediaMonth = (from s in context.station_month_details
+                                            orderby s.media_month_id descending
+                                            select (int?)s.media_month_id).FirstOrDefault();
+
+                    return (from s in context.stations
+                            from sd in s.station_month_details.DefaultIfEmpty()
+                            where 
+                                // Station has month details.
+                                (sd != null &&
+                                latestMediaMonth != null &&
+                                sd.media_month_id == latestMediaMonth &&
+                                sd.market_code != null &&
+                                marketCodes.Contains(sd.market_code.Value)) ||
+                                // Station doesn't have month details.
+                                (sd == null && 
+                                s.market_code != null &&
+                                marketCodes.Contains(s.market_code.Value))
+                            select new DisplayBroadcastStation
+                            {
+                                Id = s.id,
+                                Code = s.station_code,
+                                Affiliation = sd != null ? sd.affiliation : s.affiliation,
+                                CallLetters = s.station_call_letters,
+                                LegacyCallLetters = s.legacy_call_letters,
+                                OriginMarket = sd != null ? 
+                                    sd.market == null ? null : sd.market.geography_name :
+                                    s.market == null ? null : s.market.geography_name,
+                                MarketCode = sd != null ? sd.market_code : s.market_code,
+                                ModifiedDate = s.modified_date
+                            }).ToList();
                 });
         }
 
@@ -456,6 +506,34 @@ namespace Services.Broadcast.Repositories
                 {
                     var montDetails = context.station_month_details
                         .Where(m => m.station_id == stationId)
+                        .Select(m => new StationMonthDetailDto
+                        {
+                            StationId = m.station_id,
+                            MediaMonthId = m.media_month_id,
+                            Affiliation = m.affiliation,
+                            MarketCode = m.market_code,
+                            DistributorCode = m.distributor_code
+                        })
+                        .ToList();
+
+                    return montDetails;
+                });
+        }
+
+        public List<StationMonthDetailDto> GetLatestStationMonthDetailsForStations(List<int> stationsId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var latestMediaMonth = (from s in context.station_month_details
+                                            orderby s.media_month_id descending
+                                            select (int?)s.media_month_id).FirstOrDefault();
+
+                    if (latestMediaMonth == null)
+                        return new List<StationMonthDetailDto>();
+
+                    var montDetails = context.station_month_details
+                        .Where(m => stationsId.Contains(m.station_id) && m.media_month_id == latestMediaMonth)
                         .Select(m => new StationMonthDetailDto
                         {
                             StationId = m.station_id,

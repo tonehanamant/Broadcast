@@ -1,0 +1,466 @@
+﻿[
+  {
+    "InventoryPricingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 300.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 300.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": true,
+          "_Id": 32941,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Id": 360318,
+        "PrimaryProgram": {
+          "EndTime": 0,
+          "Genre": "",
+          "Name": "TWO & HALF MEN",
+          "ShowType": "",
+          "StartTime": 0
+        },
+        "ProgramName": "TWO & HALF MEN",
+        "Programs": null
+      }
+    ],
+    "ManifestId": 288692,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 771,
+        "Id": 1698584,
+        "InventoryMediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 772,
+        "Id": 1705866,
+        "InventoryMediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 773,
+        "Id": 1713195,
+        "InventoryMediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 774,
+        "Id": 1720549,
+        "InventoryMediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 775,
+        "Id": 1728281,
+        "InventoryMediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 149.09,
+    "ProvidedImpressions": 510.0,
+    "SpotCost": 50.0000,
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "Code": 8346,
+      "Id": 2106,
+      "LegacyCallLetters": "WPFO",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 100,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
+    "Unit": null
+  },
+  {
+    "InventoryPricingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 300.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 300.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 300.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 400.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": false,
+          "_Id": 29555,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "BRDCST DP362",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 360319,
+        "PrimaryProgram": {
+          "EndTime": 0,
+          "Genre": "",
+          "Name": "2.5 MEN X2",
+          "ShowType": "",
+          "StartTime": 0
+        },
+        "ProgramName": "2.5 MEN X2",
+        "Programs": null
+      }
+    ],
+    "ManifestId": 288693,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 771,
+        "Id": 1698585,
+        "InventoryMediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 772,
+        "Id": 1705867,
+        "InventoryMediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 773,
+        "Id": 1713196,
+        "InventoryMediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 774,
+        "Id": 1720550,
+        "InventoryMediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 775,
+        "Id": 1728282,
+        "InventoryMediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 369.43125,
+    "ProvidedImpressions": 510.0,
+    "SpotCost": 12.0000,
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "Code": 8346,
+      "Id": 2106,
+      "LegacyCallLetters": "WPFO",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 100,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
+    "Unit": null
+  },
+  {
+    "InventoryPricingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 200.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 200.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": false,
+          "_Id": 29548,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 360320,
+        "PrimaryProgram": {
+          "EndTime": 0,
+          "Genre": "",
+          "Name": "SEINFELD X2",
+          "ShowType": "",
+          "StartTime": 0
+        },
+        "ProgramName": "SEINFELD X2",
+        "Programs": null
+      }
+    ],
+    "ManifestId": 288694,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 771,
+        "Id": 1698586,
+        "InventoryMediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 772,
+        "Id": 1705868,
+        "InventoryMediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 773,
+        "Id": 1713197,
+        "InventoryMediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 774,
+        "Id": 1720551,
+        "InventoryMediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 775,
+        "Id": 1728283,
+        "InventoryMediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 493.0,
+    "ProvidedImpressions": 340.0,
+    "SpotCost": 12.0000,
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "Code": 8346,
+      "Id": 2106,
+      "LegacyCallLetters": "WPFO",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 100,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
+    "Unit": null
+  },
+  {
+    "InventoryPricingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 200.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 100.0,
+        "IsReference": true
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 200.0,
+        "IsReference": true
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": true,
+          "_Id": 32055,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 1800,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Id": 360321,
+        "PrimaryProgram": {
+          "EndTime": 0,
+          "Genre": "",
+          "Name": "2 BROKE GIRLS",
+          "ShowType": "",
+          "StartTime": 0
+        },
+        "ProgramName": "2 BROKE GIRLS",
+        "Programs": null
+      }
+    ],
+    "ManifestId": 288695,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 771,
+        "Id": 1698587,
+        "InventoryMediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 772,
+        "Id": 1705869,
+        "InventoryMediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 773,
+        "Id": 1713198,
+        "InventoryMediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 774,
+        "Id": 1720552,
+        "InventoryMediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 775,
+        "Id": 1728284,
+        "InventoryMediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 99.79,
+    "ProvidedImpressions": 340.0,
+    "SpotCost": 12.0000,
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "Code": 8346,
+      "Id": 2106,
+      "LegacyCallLetters": "WPFO",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 100,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "RateDataThrough": null
+    },
+    "Unit": null
+  }
+]
