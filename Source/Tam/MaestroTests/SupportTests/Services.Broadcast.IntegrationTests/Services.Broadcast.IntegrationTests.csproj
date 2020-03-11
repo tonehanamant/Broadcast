@@ -490,6 +490,9 @@
     <None Include="Files\Program lineup\ProgramLineupExport.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ProprietaryDataFiles\Barter -Extended Call letters.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ProprietaryDataFiles\Barter_A25-54_Q1 CNN.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -672,6 +675,9 @@
     </None>
     <None Include="Files\ProprietaryDataFiles\O&amp;O ABC O&amp;O 3Q2021.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ProprietaryDataFiles\OAndO - Extended call letters.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\ProprietaryDataFiles\OAndO_2021_Q1.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

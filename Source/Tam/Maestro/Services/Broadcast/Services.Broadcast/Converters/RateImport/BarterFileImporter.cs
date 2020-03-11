@@ -435,7 +435,6 @@ namespace Services.Broadcast.Converters.RateImport
         private List<StationInventoryGroup> _GetStationInventoryGroups(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations)
         {
             var fileHeader = proprietaryFile.Header;
-            var stationsDict = stations.ToDictionary(x => x.LegacyCallLetters, x => x, StringComparer.OrdinalIgnoreCase);
             return proprietaryFile.DataLines
                 .SelectMany(x => x.Units, (dataLine, unit) => new
                 {
@@ -468,7 +467,7 @@ namespace Services.Broadcast.Converters.RateImport
                         {
                             InventorySourceId = proprietaryFile.InventorySource.Id,
                             InventoryFileId = proprietaryFile.Id,
-                            Station = stationsDict[StationProcessingEngine.StripStationSuffix(manifest.Station)],
+                            Station = _StationMappingService.GetStationByCallLetters(manifest.Station),
                             SpotLengthId = SpotLengthEngine.GetSpotLengthIdByValue(manifestGroup.SpotLength),
                             Comment = manifest.Comment,
                             ManifestWeeks = GetManifestWeeksInRange(fileHeader.EffectiveDate, fileHeader.EndDate, manifest.Spots.Value),

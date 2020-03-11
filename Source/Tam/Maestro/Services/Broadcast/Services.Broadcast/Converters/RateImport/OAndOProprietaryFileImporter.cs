@@ -621,14 +621,13 @@ namespace Services.Broadcast.Converters.RateImport
         private List<StationInventoryManifest> _GetStationInventoryManifests(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations)
         {
             var fileHeader = proprietaryFile.Header;
-            var stationsDict = stations.ToDictionary(x => x.LegacyCallLetters, x => x, StringComparer.OrdinalIgnoreCase);
 
             return proprietaryFile.DataLines
                 .Select(x => new StationInventoryManifest
                 {
                     InventorySourceId = proprietaryFile.InventorySource.Id,
                     InventoryFileId = proprietaryFile.Id,
-                    Station = stationsDict[StationProcessingEngine.StripStationSuffix(x.Station)],
+                    Station = _StationMappingService.GetStationByCallLetters(x.Station),
                     SpotLengthId = fileHeader.SpotLengthId.Value,
                     DaypartCode = fileHeader.DaypartCode,
                     ManifestAudiences = new List<StationInventoryManifestAudience>
