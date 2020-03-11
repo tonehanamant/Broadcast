@@ -16,7 +16,7 @@
       "WeeklyBudget": 5000.0,
       "WeeklyImpressions": 250.0,
       "WeeklyImpressionsPercentage": 25.0,
-      "WeeklyRatings": 0.1,
+      "WeeklyRatings": 0.0,
       "WeekNumber": 1
     },
     {

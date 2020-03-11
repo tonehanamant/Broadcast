@@ -415,12 +415,7 @@ namespace Services.Broadcast.Validators
             {
                 throw new Exception(INVALID_IMPRESSIONS_COUNT);
             }
-
-            var roundedWeeklyImpressionsPercentageSum = Math.Floor(plan.WeeklyBreakdownWeeks.Select(x => x.WeeklyImpressionsPercentage).Sum());
-            if ((100d).Equals(roundedWeeklyImpressionsPercentageSum) == false)
-            {
-                throw new Exception(INVALID_SOV_COUNT);
-            }
+            //We do not validate percentages or rating points since those are all derived from the impressions
         }
 
         private void _ValidateProduct(PlanDto plan)

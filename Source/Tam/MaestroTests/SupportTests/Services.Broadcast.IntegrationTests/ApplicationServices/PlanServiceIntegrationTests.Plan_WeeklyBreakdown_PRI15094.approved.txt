@@ -15,8 +15,8 @@
       "WeeklyAdu": 0,
       "WeeklyBudget": 0.0,
       "WeeklyImpressions": 6698386134.0,
-      "WeeklyImpressionsPercentage": 34.0,
-      "WeeklyRatings": 298697.1,
+      "WeeklyImpressionsPercentage": 33.0,
+      "WeeklyRatings": 298696.8,
       "WeekNumber": 1
     },
     {

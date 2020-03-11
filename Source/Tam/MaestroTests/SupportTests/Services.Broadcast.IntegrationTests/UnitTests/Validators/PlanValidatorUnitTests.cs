@@ -948,7 +948,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
             {
                 new WeeklyBreakdownWeek {WeeklyImpressions = 50, WeeklyImpressionsPercentage=50, WeeklyBudget = 50},
-                new WeeklyBreakdownWeek {WeeklyImpressions = 49.999999, WeeklyImpressionsPercentage = 50, WeeklyBudget = 50}
+                new WeeklyBreakdownWeek {WeeklyImpressions = 50.05, WeeklyImpressionsPercentage = 50, WeeklyBudget = 50}
             };
 
             Assert.DoesNotThrow(() => _planValidator.ValidatePlan(plan));
@@ -968,22 +968,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             };
 
             Assert.DoesNotThrow(() => _planValidator.ValidatePlan(plan));
-        }
-
-        [Test]
-        public void ValidatePlan_SumOfShareOfVoiceDifferentFrom100()
-        {
-            _ConfigureMocksToReturnTrue();
-
-            var plan = _GetPlan();
-            plan.TargetImpressions = 50;
-            plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
-            {
-                new WeeklyBreakdownWeek {WeeklyImpressions = 20, WeeklyImpressionsPercentage = 20},
-                new WeeklyBreakdownWeek {WeeklyImpressions = 30, WeeklyImpressionsPercentage = 20}
-            };
-
-            Assert.That(() => _planValidator.ValidatePlan(plan), Throws.TypeOf<Exception>().With.Message.EqualTo("The share of voice count is not equal to 100%"));
         }
 
         [Test]
@@ -1054,7 +1038,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
         [Test]
         [TestCase(12.121212121212123, 6.060606060606061, 6.060606060606061, false)]
-        [TestCase(12.5, 6.060606060606061, 6.060606060606061, true)]
+        [TestCase(13.5, 6.060606060606061, 6.060606060606061, true)]
         public void ValidateWeeklyBreakdownWeeks_ImpressionTotal(double targetImpressions, double weeklyImpressionsOne, double weeklyImpressionsTwo, bool shouldThrow)
         {
             var plan = new PlanDto
@@ -1068,26 +1052,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             };
 
             _ValidateWeeklyBreakdownWeeks(plan, shouldThrow, PlanValidator.INVALID_IMPRESSIONS_COUNT);
-        }
-
-        [Test]
-        [TestCase(50, 50, false)]
-        [TestCase(25, 50, true)]
-        [TestCase(50.5, 49.5, false)]
-        [TestCase(25.5, 49.7, true)]
-        public void ValidateWeeklyBreakdownWeeks_SOVTotal(double weeklyImpressionsOne, double weeklyImpressionsTwo, bool shouldThrow)
-        {
-            var plan = new PlanDto
-            {
-                TargetImpressions = 12,
-                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
-                {
-                    new WeeklyBreakdownWeek { WeeklyImpressions = 6, WeeklyImpressionsPercentage = weeklyImpressionsOne },
-                    new WeeklyBreakdownWeek { WeeklyImpressions = 6, WeeklyImpressionsPercentage = weeklyImpressionsTwo }
-                }
-            };
-
-            _ValidateWeeklyBreakdownWeeks(plan, shouldThrow, PlanValidator.INVALID_SOV_COUNT);
         }
 
         private void _ValidateWeeklyBreakdownWeeks(PlanDto plan, bool shouldThrow = false, string errorMessageIfShouldThrow = null)
