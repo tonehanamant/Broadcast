@@ -1,5 +1,4 @@
-﻿using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Entities.Plan;
+﻿using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.StationInventory;
 using System;
@@ -128,23 +127,22 @@ namespace Services.Broadcast.Entities.Campaign
                     StationLegacyCallLetters = manifest.Station.LegacyCallLetters,
                     StationAffiliation = manifest.Station.Affiliation,
                     Daypart = manifestDaypart.Daypart,
-                    TotalSpotsImpressions = allocatedSpotsForManifest.Sum(x => x.Impressions * x.Spots)
+                    TotalSpotsImpressions = allocatedSpotsForManifest.Sum(x => x.Impressions * x.Spots),
+
+                    // they all should have the same code because only weeks differ. Appies only for OpenMarket
+                    DaypartCode = allocatedSpotsForManifest.First().StandardDaypart.Code
                 };
 
                 if (primaryProgramsByManifestDaypartIds.TryGetValue(manifestDaypart.Id.Value, out var primaryProgram))
                 {
                     row.ProgramName = primaryProgram.Name;
                     row.Genre = primaryProgram.Genre;
-
-                    // they all should have the same code because only weeks differ. Appies only for OpenMarket
-                    row.DaypartCode = allocatedSpotsForManifest.First().StandardDaypart.Code;
                 }
                 else
                 {
                     // If no information from Dativa is available, use the program name from the inventory file
                     row.ProgramName = manifestDaypart.ProgramName ?? string.Empty;
                     row.Genre = string.Empty;
-                    row.DaypartCode = string.Empty;
                 }
 
                 dataRows.Add(row);
