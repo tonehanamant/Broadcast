@@ -84,7 +84,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Id = 1,
                         StandardDaypart = new DaypartDefaultDto { Id = 1 },
                         Spots = 2,
-                        Cost = 200,
+                        SpotCost = 200,
                         Impressions = 10000,
                     },
                     new PlanPricingAllocatedSpot
@@ -92,7 +92,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Id = 2,
                         StandardDaypart = new DaypartDefaultDto { Id = 2 },
                         Spots = 4,
-                        Cost = 300,
+                        SpotCost = 300,
                         Impressions = 50000,
                     },
                     new PlanPricingAllocatedSpot
@@ -100,7 +100,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Id = 3,
                         StandardDaypart = new DaypartDefaultDto { Id = 3 },
                         Spots = 3,
-                        Cost = 500,
+                        SpotCost = 500,
                         Impressions = 20000,
                     },
                     new PlanPricingAllocatedSpot
@@ -108,7 +108,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Id = 4,
                         StandardDaypart = new DaypartDefaultDto { Id = 4 },
                         Spots = 1,
-                        Cost = 100,
+                        SpotCost = 100,
                         Impressions = 30000,
                     },
                     new PlanPricingAllocatedSpot
@@ -116,7 +116,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Id = 5,
                         StandardDaypart = new DaypartDefaultDto { Id = 5 },
                         Spots = 3,
-                        Cost = 300,
+                        SpotCost = 300,
                         Impressions = 10000,
                     },
                     new PlanPricingAllocatedSpot
@@ -124,7 +124,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Id = 6,
                         StandardDaypart = new DaypartDefaultDto { Id = 6 },
                         Spots = 2,
-                        Cost = 400,
+                        SpotCost = 400,
                         Impressions = 50000,
                     },
                     new PlanPricingAllocatedSpot
@@ -132,7 +132,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Id = 7,
                         StandardDaypart = new DaypartDefaultDto { Id = 7 },
                         Spots = 1,
-                        Cost = 250,
+                        SpotCost = 250,
                         Impressions = 20000,
                     }
                 }
@@ -157,49 +157,49 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         Id = 1,
                         Spots = 2,
-                        Cost = 200,
+                        SpotCost = 200,
                         Impressions = 10000,
                     },
                     new PlanPricingAllocatedSpot
                     {
                         Id = 2,
                         Spots = 4,
-                        Cost = 300,
+                        SpotCost = 300,
                         Impressions = 50000,
                     },
                     new PlanPricingAllocatedSpot
                     {
                         Id = 3,
                         Spots = 3,
-                        Cost = 500,
+                        SpotCost = 500,
                         Impressions = 20000,
                     },
                     new PlanPricingAllocatedSpot
                     {
                         Id = 4,
                         Spots = 1,
-                        Cost = 100,
+                        SpotCost = 100,
                         Impressions = 30000,
                     },
                     new PlanPricingAllocatedSpot
                     {
                         Id = 5,
                         Spots = 3,
-                        Cost = 300,
+                        SpotCost = 300,
                         Impressions = 10000,
                     },
                     new PlanPricingAllocatedSpot
                     {
                         Id = 6,
                         Spots = 2,
-                        Cost = 400,
+                        SpotCost = 400,
                         Impressions = 50000,
                     },
                     new PlanPricingAllocatedSpot
                     {
                         Id = 7,
                         Spots = 1,
-                        Cost = 250,
+                        SpotCost = 250,
                         Impressions = 20000,
                     }
                 }                
@@ -220,6 +220,47 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             var result = service.UT_CalculatePricingCpm(allocationResult.Spots, estimates, 20);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CalculatePricingCpmTestMultipleSpots()
+        {
+            var allocationResult = new PlanPricingAllocationResult
+            {
+                Spots = new List<PlanPricingAllocatedSpot>
+                {
+                    new PlanPricingAllocatedSpot
+                    {
+                        Id = 1,
+                        Spots = 10,
+                        SpotCost = 200,                        
+                        // Total cost = 2000
+                        Impressions = 10000,
+                        // Total impressions = 100000
+                    },
+                }
+            };
+
+            var estimates = new List<PricingEstimate>
+            {
+                new PricingEstimate
+                {
+                    InventorySourceId = 3,
+                    InventorySourceType = InventorySourceTypeEnum.Barter,
+                    Cost = 5000,
+                    Impressions = 10000,
+                    MediaWeekId  = 4
+                }
+            };
+
+            // CPM = (2000 + 5000 /  10000 + 100000)  * 1000 = 63.636363...
+
+            var service = _GetService();
+
+            var result = service.UT_CalculatePricingCpm(allocationResult.Spots, estimates, 0);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }

@@ -24,14 +24,13 @@ namespace Services.Broadcast.IntegrationTests.Stubs
         {
             var results = new List<PlanPricingApiSpotsResultDto>();
 
-            var spotsGroupedByWeekId = request.Spots.GroupBy(x => x.MediaWeekId);
-
-            foreach (var spot in spotsGroupedByWeekId)
+            foreach (var spot in request.Spots)
             {
                 var result = new PlanPricingApiSpotsResultDto
                 {
-                    MediaWeekId = spot.Key,
-                    AllocatedManifestIds = spot.Select(y => y.Id).ToList()
+                    ManifestId = spot.Id,
+                    MediaWeekId = spot.MediaWeekId,
+                    Frequency = 1
                 };
 
                 results.Add(result);

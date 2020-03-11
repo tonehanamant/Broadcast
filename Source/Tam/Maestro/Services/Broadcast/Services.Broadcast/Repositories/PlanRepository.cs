@@ -1314,7 +1314,7 @@ namespace Services.Broadcast.Repositories
                         inventory_media_week_id = spot.InventoryMediaWeek.Id,
                         impressions = spot.Impressions,
                         standard_daypart_id = spot.StandardDaypart.Id,
-                        cost = spot.Cost,
+                        cost = spot.SpotCost,
                         spots = spot.Spots
                     };
 
@@ -1343,7 +1343,7 @@ namespace Services.Broadcast.Repositories
                         Id = x.id,
                         StationInventoryManifestId = x.station_inventory_manifest_id,
                         Impressions = x.impressions,
-                        Cost = x.cost,
+                        SpotCost = x.cost,
                         Spots = x.spots,
                         InventoryMediaWeek = new MediaWeek
                         {
@@ -1508,7 +1508,7 @@ namespace Services.Broadcast.Repositories
                     Id = x.id,
                     StationInventoryManifestId = x.station_inventory_manifest_id,
                     Impressions = x.impressions,
-                    Cost = x.cost,
+                    SpotCost = x.cost,
                     Spots = x.spots,
                     InventoryMediaWeek = new MediaWeek
                     {

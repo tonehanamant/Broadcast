@@ -9,8 +9,24 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public MediaWeek InventoryMediaWeek { get; set; }
         public MediaWeek ContractMediaWeek { get; set; }
         public double Impressions { get; set; }
-        public decimal Cost { get; set; }
+        public decimal SpotCost { get; set; }
         public int Spots { get; set; }
         public DaypartDefaultDto StandardDaypart { get; set; }
+
+        public decimal TotalCost
+        {
+            get
+            {
+                return SpotCost * Spots;
+            }
+        }
+
+        public double TotalImpressions
+        {
+            get
+            {
+                return Impressions * Spots;
+            }
+        }
     }
 }
