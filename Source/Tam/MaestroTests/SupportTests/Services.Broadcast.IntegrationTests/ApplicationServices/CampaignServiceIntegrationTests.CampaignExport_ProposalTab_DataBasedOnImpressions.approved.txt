@@ -1,0 +1,466 @@
+﻿{
+  "AgencyName": "Stub Agency",
+  "CampaignEndQuarter": "Q1'20",
+  "CampaignExportFileName": "Stub Advertiser EF Q1'20 Plan Rev - 12-16.xlsx",
+  "CampaignFlightEndDate": "03/29/20",
+  "CampaignFlightStartDate": "03/09/20",
+  "CampaignName": "Campaign with all types of plans",
+  "CampaignStartQuarter": "Q1'20",
+  "ClientName": "Stub Advertiser",
+  "ContractQuarterTables": [],
+  "ContractTotals": [],
+  "DaypartsData": [
+    {
+      "DaypartCode": "EF",
+      "DaypartCodeId": 6,
+      "DaysLabel": null,
+      "EndTime": "06:00pm",
+      "FlightDays": "M-SU",
+      "GenreRestrictions": [],
+      "ProgramRestrictions": [],
+      "StartTime": "03:00pm"
+    }
+  ],
+  "FlightHiatuses": [],
+  "FlowChartQuarterTables": [
+    {
+      "CostValues": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        74066.9986419194100000000,
+        73966.5006790401840000000,
+        73966.5006790401840000000,
+        221999.9999999997780000000
+      ],
+      "CPMValues": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        100.49796287913081411126187246,
+        100.49796287913068478260869565,
+        100.49796287913068478260869565,
+        100.49796287913072793119058397
+      ],
+      "DaypartCode": "EF",
+      "DistributionPercentages": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.33363513,
+        0.33318244,
+        0.33318244,
+        1.0
+      ],
+      "HiatusDays": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "HiatusDaysFormattedValues": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        null
+      ],
+      "ImpressionsValues": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        737.0,
+        736.0,
+        736.0,
+        2209.0
+      ],
+      "Months": [
+        {
+          "Item1": "January",
+          "Item2": 4
+        },
+        {
+          "Item1": "February",
+          "Item2": 4
+        },
+        {
+          "Item1": "March",
+          "Item2": 5
+        }
+      ],
+      "QuarterLabel": "1Q '20",
+      "TableTitle": "1Q '20 EF :30s",
+      "TotalWeeksInQuarter": 13,
+      "UnitsValues": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "WeeksStartDate": [
+        "2019-12-30T00:00:00",
+        "2020-01-06T00:00:00",
+        "2020-01-13T00:00:00",
+        "2020-01-20T00:00:00",
+        "2020-01-27T00:00:00",
+        "2020-02-03T00:00:00",
+        "2020-02-10T00:00:00",
+        "2020-02-17T00:00:00",
+        "2020-02-24T00:00:00",
+        "2020-03-02T00:00:00",
+        "2020-03-09T00:00:00",
+        "2020-03-16T00:00:00",
+        "2020-03-23T00:00:00"
+      ]
+    },
+    {
+      "CostValues": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        74066.9986419194100000000,
+        73966.5006790401840000000,
+        73966.5006790401840000000,
+        221999.9999999997780000000
+      ],
+      "CPMValues": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        100.49796287913081411126187246,
+        100.49796287913068478260869565,
+        100.49796287913068478260869565,
+        100.49796287913072793119058397
+      ],
+      "DaypartCode": null,
+      "DistributionPercentages": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.33363513,
+        0.33318244,
+        0.33318244,
+        1.0
+      ],
+      "HiatusDays": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "HiatusDaysFormattedValues": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        null
+      ],
+      "ImpressionsValues": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        737.0,
+        736.0,
+        736.0,
+        2209.0
+      ],
+      "Months": [
+        {
+          "Item1": "January",
+          "Item2": 4
+        },
+        {
+          "Item1": "February",
+          "Item2": 4
+        },
+        {
+          "Item1": "March",
+          "Item2": 5
+        }
+      ],
+      "QuarterLabel": null,
+      "TableTitle": "1Q '20 EF Total",
+      "TotalWeeksInQuarter": 13,
+      "UnitsValues": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "WeeksStartDate": [
+        "2019-12-30T00:00:00",
+        "2020-01-06T00:00:00",
+        "2020-01-13T00:00:00",
+        "2020-01-20T00:00:00",
+        "2020-01-27T00:00:00",
+        "2020-02-03T00:00:00",
+        "2020-02-10T00:00:00",
+        "2020-02-17T00:00:00",
+        "2020-02-24T00:00:00",
+        "2020-03-02T00:00:00",
+        "2020-03-09T00:00:00",
+        "2020-03-16T00:00:00",
+        "2020-03-23T00:00:00"
+      ]
+    }
+  ],
+  "GuaranteedDemo": [
+    "HH"
+  ],
+  "HasSecondaryAudiences": false,
+  "MarketCoverageData": {
+    "BlackoutMarketsName": [],
+    "CoveragePercentage": 80.0,
+    "PreferentialMarketsName": []
+  },
+  "Notes": "All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.",
+  "PostingType": "NTI",
+  "ProposalCampaignTotalsTable": {
+    "HasSecondaryAudiences": false,
+    "QuarterLabel": "Campaign Totals",
+    "Rows": [
+      {
+        "DaypartCode": "EF",
+        "GuaranteedData": {
+          "CPM": 100.49796287913082842915346311,
+          "CPP": 123333.33333333333333333333333,
+          "DaypartCode": null,
+          "Impressions": 0.0,
+          "RatingPoints": 0.0,
+          "SpotLengthLabel": null,
+          "TotalImpressions": 2209.0,
+          "TotalRatingPoints": 1.8,
+          "VPVH": 1.0
+        },
+        "HHData": {
+          "CPM": 100.49796287913082842915346311,
+          "CPP": 123333.33333333333333333333333,
+          "DaypartCode": null,
+          "Impressions": 0.0,
+          "RatingPoints": 0.0,
+          "SpotLengthLabel": null,
+          "TotalImpressions": 2209.0,
+          "TotalRatingPoints": 1.8,
+          "VPVH": 0.0
+        },
+        "SpotLengthLabel": "30",
+        "TotalCost": 222000.0000,
+        "Units": 0,
+        "UnitsCost": 0.0
+      }
+    ],
+    "SecondaryAudiencesTables": [],
+    "TotalRow": {
+      "DaypartCode": null,
+      "GuaranteedData": {
+        "CPM": 100.49796287913082842915346311,
+        "CPP": 123333.33333333333333333333333,
+        "DaypartCode": null,
+        "Impressions": 0.0,
+        "RatingPoints": 0.0,
+        "SpotLengthLabel": null,
+        "TotalImpressions": 2209.0,
+        "TotalRatingPoints": 1.8,
+        "VPVH": 0.0
+      },
+      "HHData": {
+        "CPM": 100.49796287913082842915346311,
+        "CPP": 123333.33333333333333333333333,
+        "DaypartCode": null,
+        "Impressions": 0.0,
+        "RatingPoints": 0.0,
+        "SpotLengthLabel": null,
+        "TotalImpressions": 2209.0,
+        "TotalRatingPoints": 1.8,
+        "VPVH": 0.0
+      },
+      "SpotLengthLabel": null,
+      "TotalCost": 222000.0000,
+      "Units": 0,
+      "UnitsCost": 0.0
+    }
+  },
+  "ProposalQuarterTables": [
+    {
+      "HasSecondaryAudiences": false,
+      "QuarterLabel": "Q1 2020",
+      "Rows": [
+        {
+          "DaypartCode": "EF",
+          "GuaranteedData": {
+            "CPM": 100.49796287913082842915346311,
+            "CPP": 123333.33333333333333333333333,
+            "DaypartCode": null,
+            "Impressions": 0.0,
+            "RatingPoints": 0.0,
+            "SpotLengthLabel": null,
+            "TotalImpressions": 2209.0,
+            "TotalRatingPoints": 1.8,
+            "VPVH": 1.0
+          },
+          "HHData": {
+            "CPM": 100.49796287913082842915346311,
+            "CPP": 123333.33333333333333333333333,
+            "DaypartCode": null,
+            "Impressions": 0.0,
+            "RatingPoints": 0.0,
+            "SpotLengthLabel": null,
+            "TotalImpressions": 2209.0,
+            "TotalRatingPoints": 1.8,
+            "VPVH": 0.0
+          },
+          "SpotLengthLabel": "30",
+          "TotalCost": 222000.0000,
+          "Units": 0,
+          "UnitsCost": 0.0
+        }
+      ],
+      "SecondaryAudiencesTables": [],
+      "TotalRow": {
+        "DaypartCode": null,
+        "GuaranteedData": {
+          "CPM": 100.49796287913082842915346311,
+          "CPP": 123333.33333333333333333333333,
+          "DaypartCode": null,
+          "Impressions": 0.0,
+          "RatingPoints": 0.0,
+          "SpotLengthLabel": null,
+          "TotalImpressions": 2209.0,
+          "TotalRatingPoints": 1.8,
+          "VPVH": 0.0
+        },
+        "HHData": {
+          "CPM": 100.49796287913082842915346311,
+          "CPP": 123333.33333333333333333333333,
+          "DaypartCode": null,
+          "Impressions": 0.0,
+          "RatingPoints": 0.0,
+          "SpotLengthLabel": null,
+          "TotalImpressions": 2209.0,
+          "TotalRatingPoints": 1.8,
+          "VPVH": 0.0
+        },
+        "SpotLengthLabel": null,
+        "TotalCost": 222000.0000,
+        "Units": 0,
+        "UnitsCost": 0.0
+      }
+    }
+  ],
+  "SpotLengths": [
+    ":30"
+  ],
+  "Status": "Proposal"
+}

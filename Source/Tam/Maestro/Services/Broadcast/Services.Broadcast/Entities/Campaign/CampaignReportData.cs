@@ -200,11 +200,11 @@ namespace Services.Broadcast.Entities.Campaign
                     //store the week ids from the current quarter in a list
                     List<int> quarterTotalWeeksIdList = mediaMonthAndWeekAggregateCache.GetMediaWeeksByFlight(quarter.StartDate, quarter.EndDate).Select(x => x.Id).ToList();
                     //count all the plan weeks in current quarter
-                    double quarterPlanWeeksImpressionsPrecentage = plan.WeeklyBreakdownWeeks
+                    double quarterPlanWeeksImpressions = plan.WeeklyBreakdownWeeks
                                                                 .Where(x => quarterTotalWeeksIdList.Contains(x.MediaWeekId))
-                                                                .Sum(x => x.WeeklyImpressionsPercentage);
+                                                                .Sum(x => x.WeeklyImpressions);
                     //calculate quarter factor
-                    double quarterFactor = quarterPlanWeeksImpressionsPrecentage / 100;
+                    double quarterFactor = quarterPlanWeeksImpressions / plan.TargetImpressions.Value;
 
                     //dayparts that don't have set a value for weighting goal will get an even part from the remaining goal
                     //calculate remaining goal by substracting the user set goal from 100
