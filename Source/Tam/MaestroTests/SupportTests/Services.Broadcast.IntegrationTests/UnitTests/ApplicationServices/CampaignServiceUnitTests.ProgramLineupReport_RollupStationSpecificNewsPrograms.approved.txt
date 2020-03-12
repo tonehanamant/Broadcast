@@ -2,12 +2,43 @@
   "AccountExecutive": "",
   "AccuracyEstimateDate": "2/12/20",
   "Agency": "1st Image Marketing",
-  "AllocationByDaypartViewRows": null,
-  "AllocationByDMAViewRows": null,
-  "AllocationByGenreViewRows": null,
+  "AllocationByDaypartViewRows": [
+    {
+      "FilterLabel": "",
+      "Weight": 0.4
+    }
+  ],
+  "AllocationByDMAViewRows": [
+    {
+      "FilterLabel": "NEW YORK",
+      "Weight": 0.16
+    },
+    {
+      "FilterLabel": "MACON",
+      "Weight": 0.16
+    },
+    {
+      "FilterLabel": "BINGHAMTON",
+      "Weight": 0.08
+    }
+  ],
+  "AllocationByGenreViewRows": [
+    {
+      "FilterLabel": "NEWS",
+      "Weight": 0.4
+    }
+  ],
   "Client": "PetMed Express, Inc",
   "ClientContact": "",
-  "DefaultViewRows": null,
+  "DefaultViewRows": [
+    {
+      "Genre": "NEWS",
+      "NoOfMarkets": 3,
+      "NoOfStations": 2,
+      "Program": "MORNING NEWS",
+      "Weight": 0.4
+    }
+  ],
   "DetailedViewRows": [
     {
       "Daypart": "LN",

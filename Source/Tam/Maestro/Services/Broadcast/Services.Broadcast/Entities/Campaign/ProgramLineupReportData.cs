@@ -59,18 +59,17 @@ namespace Services.Broadcast.Entities.Campaign
                 marketCoverageByStation,
                 primaryProgramsByManifestDaypartIds);
             DetailedViewRows = _MapToDetailedViewRows(detailedRowsData);
-
-            //This code remains commented out until pushed to 20.05 BCOP
-            //DefaultViewRows = _MapToDefaultViewRows(detailedRowsData, plan.TargetImpressions.Value);
-            //AllocationByDaypartViewRows = _MapToAllocationViewRows(detailedRowsData, plan.TargetImpressions.Value
-            //    , x => x.Daypart.Code
-            //    , false);
-            //AllocationByGenreViewRows = _MapToAllocationViewRows(detailedRowsData, plan.TargetImpressions.Value
-            //    , x => x.Genre
-            //    , true);
-            //AllocationByDMAViewRows = _MapToAllocationViewRows(detailedRowsData, plan.TargetImpressions.Value
-            //    , x => x.MarketGeographyName
-            //    , true);
+            
+            DefaultViewRows = _MapToDefaultViewRows(detailedRowsData, plan.TargetImpressions.Value);
+            AllocationByDaypartViewRows = _MapToAllocationViewRows(detailedRowsData, plan.TargetImpressions.Value
+                , x => x.Daypart.Code
+                , false);
+            AllocationByGenreViewRows = _MapToAllocationViewRows(detailedRowsData, plan.TargetImpressions.Value
+                , x => x.Genre
+                , true);
+            AllocationByDMAViewRows = _MapToAllocationViewRows(detailedRowsData, plan.TargetImpressions.Value
+                , x => x.MarketGeographyName
+                , true);
         }
 
         private void _PopulateHeaderData(

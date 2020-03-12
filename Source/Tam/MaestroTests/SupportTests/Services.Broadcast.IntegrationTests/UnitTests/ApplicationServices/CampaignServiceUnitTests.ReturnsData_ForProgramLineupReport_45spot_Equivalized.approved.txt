@@ -2,12 +2,72 @@
   "AccountExecutive": "",
   "AccuracyEstimateDate": "2/12/20",
   "Agency": "1st Image Marketing",
-  "AllocationByDaypartViewRows": null,
-  "AllocationByDMAViewRows": null,
-  "AllocationByGenreViewRows": null,
+  "AllocationByDaypartViewRows": [
+    {
+      "FilterLabel": "",
+      "Weight": 0.4
+    }
+  ],
+  "AllocationByDMAViewRows": [
+    {
+      "FilterLabel": "NEW YORK",
+      "Weight": 0.28
+    },
+    {
+      "FilterLabel": "MACON",
+      "Weight": 0.08
+    },
+    {
+      "FilterLabel": "BINGHAMTON",
+      "Weight": 0.04
+    }
+  ],
+  "AllocationByGenreViewRows": [
+    {
+      "FilterLabel": "",
+      "Weight": 0.2
+    },
+    {
+      "FilterLabel": "MOVIE",
+      "Weight": 0.12
+    },
+    {
+      "FilterLabel": "NEWS",
+      "Weight": 0.08
+    }
+  ],
   "Client": "PetMed Express, Inc",
   "ClientContact": "",
-  "DefaultViewRows": null,
+  "DefaultViewRows": [
+    {
+      "Genre": "",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "FALLBACK PROGRAM",
+      "Weight": 0.2
+    },
+    {
+      "Genre": "NEWS",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "LATE NEWS",
+      "Weight": 0.08
+    },
+    {
+      "Genre": "MOVIE",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "1917",
+      "Weight": 0.08
+    },
+    {
+      "Genre": "MOVIE",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "JOKER",
+      "Weight": 0.04
+    }
+  ],
   "DetailedViewRows": [
     {
       "Daypart": "LN",

@@ -671,6 +671,139 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
+        public void CanNotGenerateProgramLineup_WhenCampaignIsLocked()
+        {
+            // Arrange
+            const int campaignId = 6;
+            const int planId = 1197;
+            const string lockedUserName = "UnitTestsUser2";
+            var expectedMessage = $"Campaign with id {campaignId} has been locked by {lockedUserName}";
+
+            var request = new ProgramLineupReportRequest
+            {
+                SelectedPlans = new List<int> { planId }
+            };
+
+            _CampaignRepositoryMock
+               .Setup(x => x.GetCampaign(campaignId))
+               .Returns(new CampaignDto
+               {
+                   Id = campaignId,
+                   Plans = new List<PlanSummaryDto>
+                   {
+                        new PlanSummaryDto
+                        {
+                            PlanId = planId,
+                            PostingType = PostingTypeEnum.NSI,
+                            Status = PlanStatusEnum.Complete
+                        }
+                   }
+               });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Returns(new PlanPricingJob
+                {
+                    Status  = BackgroundJobProcessingStatus.Succeeded
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), null))
+                .Returns(_GetPlan(planId, campaignId));
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetPlanLockingKey(planId)))
+                .Returns(new LockResponse
+                {
+                    Success = true,
+                    LockedUserName = lockedUserName
+                });
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetCampaignLockingKey(campaignId)))
+                .Returns(new LockResponse
+                {
+                    Success = false,
+                    LockedUserName = lockedUserName
+                });
+
+            var tc = _BuildCampaignService();
+
+            // Act
+            var caught = Assert.Throws<ApplicationException>(() => tc.GetProgramLineupReportData(request, DateTime.Now));
+
+            // Assert
+            Assert.AreEqual(expectedMessage, caught.Message);
+        }
+
+        [Test]
+        public void CanNotGenerateProgramLineup_WhenPlanIsLocked()
+        {
+            // Arrange
+            const int campaignId = 6;
+            const int planId = 1197;
+            const string lockedUserName = "UnitTestsUser2";
+            var expectedMessage = $"Plan with id {planId} has been locked by {lockedUserName}";
+
+            var request = new ProgramLineupReportRequest
+            {
+                SelectedPlans = new List<int> { planId }
+            };
+
+            _CampaignRepositoryMock
+               .Setup(x => x.GetCampaign(campaignId))
+               .Returns(new CampaignDto
+               {
+                   Id = campaignId,
+                   Plans = new List<PlanSummaryDto>
+                   {
+                        new PlanSummaryDto
+                        {
+                            PlanId = planId,
+                            PostingType = PostingTypeEnum.NSI,
+                            Status = PlanStatusEnum.Complete
+                        }
+                   }
+               });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), null))
+                .Returns(_GetPlan(planId, campaignId));
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetPlanLockingKey(planId)))
+                .Returns(new LockResponse
+                {
+                    Success = false,
+                    LockedUserName = lockedUserName
+                });
+
+            var tc = _BuildCampaignService();
+
+            // Act
+            var caught = Assert.Throws<ApplicationException>(() => tc.GetProgramLineupReportData(request, DateTime.Now));
+
+            // Assert
+            Assert.AreEqual(expectedMessage, caught.Message);
+        }
+
+        private PlanDto _GetPlan(int planId, int campaignId)
+        {
+            return new PlanDto
+            {
+                Id = planId,
+                CampaignId = campaignId
+            };
+        }
+
+        [Test]
         public void CanNotGenerateReport_WhenPlanIsLocked()
         {
             // Arrange
@@ -868,7 +1001,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _PlanRepositoryMock
                 .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(new PlanDto());
-            
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetPlanLockingKey(1)))
+                .Returns(new LockResponse
+                {
+                    Success = true,
+                    LockedUserName = "Integration Test"
+                });
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetCampaignLockingKey(1)))
+                .Returns(new LockResponse
+                {
+                    Success = true,
+                    LockedUserName = "Integration Test"
+                });
+
             var tc = _BuildCampaignService();
 
             // Act
@@ -902,6 +1051,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Status = jobStatus
                 });
 
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetPlanLockingKey(1)))
+                .Returns(new LockResponse
+                {
+                    Success = true,
+                    LockedUserName = "Integration Test"
+                });
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetCampaignLockingKey(1)))
+                .Returns(new LockResponse
+                {
+                    Success = true,
+                    LockedUserName = "Integration Test"
+                });
+
             var tc = _BuildCampaignService();
 
             // Act
@@ -923,6 +1088,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             const int advertiserId = 5;
             const int audienceId = 6;
             const int spotLengthId = 7;
+            const string lockedUserName = "UnitTestsUser2";
 
             var request = new ProgramLineupReportRequest
             {
@@ -950,6 +1116,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 {
                     AgencyId = agencyId,
                     AdvertiserId = advertiserId
+                });
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetPlanLockingKey(firstPlanId)))
+                .Returns(new LockResponse
+                {
+                    Success = true,
+                    LockedUserName = lockedUserName
+                });
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetCampaignLockingKey(campaignId)))
+                .Returns(new LockResponse
+                {
+                    Success = true,
+                    LockedUserName = lockedUserName
                 });
 
             _SetupBaseProgramLineupTestData();
@@ -995,6 +1177,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             const int advertiserId = 5;
             const int audienceId = 6;
             const int spotLengthId = 7;
+            const string lockedUserName = "UnitTestsUser2";
 
             var request = new ProgramLineupReportRequest
             {
@@ -1022,6 +1205,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 {
                     AgencyId = agencyId,
                     AdvertiserId = advertiserId
+                });
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetPlanLockingKey(firstPlanId)))
+                .Returns(new LockResponse
+                {
+                    Success = true,
+                    LockedUserName = lockedUserName
+                });
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetCampaignLockingKey(campaignId)))
+                .Returns(new LockResponse
+                {
+                    Success = true,
+                    LockedUserName = lockedUserName
                 });
 
             _SetupBaseProgramLineupTestData();
@@ -1067,6 +1266,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             const int advertiserId = 5;
             const int audienceId = 6;
             const int spotLengthId = 8;
+            const string lockedUserName = "UnitTestsUser2";
 
             var request = new ProgramLineupReportRequest
             {
@@ -1094,6 +1294,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 {
                     AgencyId = agencyId,
                     AdvertiserId = advertiserId
+                });
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetPlanLockingKey(firstPlanId)))
+                .Returns(new LockResponse
+                {
+                    Success = true,
+                    LockedUserName = lockedUserName
+                });
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetCampaignLockingKey(campaignId)))
+                .Returns(new LockResponse
+                {
+                    Success = true,
+                    LockedUserName = lockedUserName
                 });
 
             _SetupBaseProgramLineupTestData();
@@ -1139,6 +1355,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             const int advertiserId = 5;
             const int audienceId = 6;
             const int spotLengthId = 8;
+            const string lockedUserName = "UnitTestsUser2";
 
             var request = new ProgramLineupReportRequest
             {
@@ -1166,6 +1383,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 {
                     AgencyId = agencyId,
                     AdvertiserId = advertiserId
+                });
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetPlanLockingKey(firstPlanId)))
+                .Returns(new LockResponse
+                {
+                    Success = true,
+                    LockedUserName = lockedUserName
+                });
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(KeyHelper.GetCampaignLockingKey(campaignId)))
+                .Returns(new LockResponse
+                {
+                    Success = true,
+                    LockedUserName = lockedUserName
                 });
 
             _SetupBaseProgramLineupForRollupTestData();
