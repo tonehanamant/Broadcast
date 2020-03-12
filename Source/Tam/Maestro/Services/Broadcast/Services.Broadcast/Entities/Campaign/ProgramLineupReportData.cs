@@ -62,7 +62,7 @@ namespace Services.Broadcast.Entities.Campaign
             
             DefaultViewRows = _MapToDefaultViewRows(detailedRowsData, plan.TargetImpressions.Value);
             AllocationByDaypartViewRows = _MapToAllocationViewRows(detailedRowsData, plan.TargetImpressions.Value
-                , x => x.Daypart.Code
+                , x => x.DaypartCode
                 , false);
             AllocationByGenreViewRows = _MapToAllocationViewRows(detailedRowsData, plan.TargetImpressions.Value
                 , x => x.Genre

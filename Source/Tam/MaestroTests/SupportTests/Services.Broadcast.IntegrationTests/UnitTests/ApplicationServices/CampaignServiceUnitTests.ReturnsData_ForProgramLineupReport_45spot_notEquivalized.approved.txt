@@ -4,8 +4,16 @@
   "Agency": "1st Image Marketing",
   "AllocationByDaypartViewRows": [
     {
-      "FilterLabel": "",
-      "Weight": 0.4
+      "FilterLabel": "LN",
+      "Weight": 0.28
+    },
+    {
+      "FilterLabel": "EM",
+      "Weight": 0.08
+    },
+    {
+      "FilterLabel": "EMN",
+      "Weight": 0.04
     }
   ],
   "AllocationByDMAViewRows": [
