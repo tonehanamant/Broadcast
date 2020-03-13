@@ -796,32 +796,59 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
                         try
                         {
+                            // this bloat makes it easier when debugging the parsing.
+                            // And the exception stack trace calls out the failing line number.
+                            var inventory_id = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.inventory_id)));
+                            var inventory_week_id = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.inventory_week_id)));
+                            var inventory_daypart_id = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.inventory_daypart_id)));
+                            var station_call_letters = reader.GetCellValue(nameof(GuideInterfaceExportElement.station_call_letters));
+                            var affiliation = reader.GetCellValue(nameof(GuideInterfaceExportElement.affiliation));
+                            var start_date = DateTime.Parse(reader.GetCellValue(nameof(GuideInterfaceExportElement.start_date)));
+                            var end_date = DateTime.Parse(reader.GetCellValue(nameof(GuideInterfaceExportElement.end_date)));
+                            var daypart_text = reader.GetCellValue(nameof(GuideInterfaceExportElement.daypart_text));
+                            var mon = reader.GetCellValue(nameof(GuideInterfaceExportElement.mon)) == "1";
+                            var tue = reader.GetCellValue(nameof(GuideInterfaceExportElement.tue)) == "1";
+                            var wed = reader.GetCellValue(nameof(GuideInterfaceExportElement.wed)) == "1";
+                            var thu = reader.GetCellValue(nameof(GuideInterfaceExportElement.thu)) == "1";
+                            var fri = reader.GetCellValue(nameof(GuideInterfaceExportElement.fri)) == "1";
+                            var sat = reader.GetCellValue(nameof(GuideInterfaceExportElement.sat)) == "1";
+                            var sun = reader.GetCellValue(nameof(GuideInterfaceExportElement.sun)) == "1";
+                            var daypart_start_time = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.daypart_start_time)));
+                            var daypart_end_time = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.daypart_end_time)));
+                            var program_name = reader.GetCellValue(nameof(GuideInterfaceExportElement.program_name));
+                            var show_type = reader.GetCellValue(nameof(GuideInterfaceExportElement.show_type));
+                            var genre = reader.GetCellValue(nameof(GuideInterfaceExportElement.genre));
+                            var program_start_time = Convert.ToInt32(Convert.ToDouble(reader.GetCellValue(nameof(GuideInterfaceExportElement.program_start_time))));
+                            var program_end_time = Convert.ToInt32(Convert.ToDouble(reader.GetCellValue(nameof(GuideInterfaceExportElement.program_end_time))));
+                            var program_start_date = DateTime.Parse(reader.GetCellValue(nameof(GuideInterfaceExportElement.program_start_date)));
+                            var program_end_date = DateTime.Parse(reader.GetCellValue(nameof(GuideInterfaceExportElement.program_end_date)));
+
                             var lineItem = new GuideInterfaceExportElement
                             {
-                                inventory_id = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.inventory_id))),
-                                inventory_week_id = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.inventory_week_id))),
-                                inventory_daypart_id = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.inventory_daypart_id))),
-                                station_call_letters = reader.GetCellValue(nameof(GuideInterfaceExportElement.station_call_letters)),
-                                affiliation = reader.GetCellValue(nameof(GuideInterfaceExportElement.affiliation)),
-                                start_date = DateTime.Parse(reader.GetCellValue(nameof(GuideInterfaceExportElement.start_date))),
-                                end_date = DateTime.Parse(reader.GetCellValue(nameof(GuideInterfaceExportElement.end_date))),
-                                daypart_text = reader.GetCellValue(nameof(GuideInterfaceExportElement.daypart_text)),
-                                mon = reader.GetCellValue(nameof(GuideInterfaceExportElement.mon)) == "1",
-                                tue = reader.GetCellValue(nameof(GuideInterfaceExportElement.tue)) == "1",
-                                wed = reader.GetCellValue(nameof(GuideInterfaceExportElement.wed)) == "1",
-                                thu = reader.GetCellValue(nameof(GuideInterfaceExportElement.thu)) == "1",
-                                fri = reader.GetCellValue(nameof(GuideInterfaceExportElement.fri)) == "1",
-                                sat = reader.GetCellValue(nameof(GuideInterfaceExportElement.sat)) == "1",
-                                sun = reader.GetCellValue(nameof(GuideInterfaceExportElement.sun)) == "1",
-                                daypart_start_time = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.daypart_start_time))),
-                                daypart_end_time = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.daypart_end_time))),
-                                program_name = reader.GetCellValue(nameof(GuideInterfaceExportElement.program_name)),
-                                show_type = reader.GetCellValue(nameof(GuideInterfaceExportElement.show_type)),
-                                genre = reader.GetCellValue(nameof(GuideInterfaceExportElement.genre)),
-                                program_start_time = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.program_start_time))),
-                                program_end_time = Convert.ToInt32(reader.GetCellValue(nameof(GuideInterfaceExportElement.program_end_time))),
-                                program_start_date = DateTime.Parse(reader.GetCellValue(nameof(GuideInterfaceExportElement.program_start_date))),
-                                program_end_date = DateTime.Parse(reader.GetCellValue(nameof(GuideInterfaceExportElement.program_end_date)))
+                                inventory_id = inventory_id,
+                                inventory_week_id = inventory_week_id,
+                                inventory_daypart_id = inventory_daypart_id,
+                                station_call_letters = station_call_letters,
+                                affiliation = affiliation,
+                                start_date = start_date,
+                                end_date = end_date,
+                                daypart_text = daypart_text,
+                                mon = mon,
+                                tue = tue,
+                                wed = wed,
+                                thu = thu,
+                                fri = fri,
+                                sat = sat,
+                                sun = sun,
+                                daypart_start_time = daypart_start_time,
+                                daypart_end_time = daypart_end_time,
+                                program_name = program_name,
+                                show_type = show_type,
+                                genre = genre,
+                                program_start_time = program_start_time,
+                                program_end_time = program_end_time,
+                                program_start_date = program_start_date,
+                                program_end_date = program_end_date
                             };
                             result.LineItems.Add(lineItem);
                         }
