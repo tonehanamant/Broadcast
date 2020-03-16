@@ -35,7 +35,6 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
     public abstract class InventoryProgramsProcessingEngineBase : IInventoryProgramsProcessingEngine
     {
-        private const int SAVE_CHUNK_SIZE = 1000;
         protected const string EXPORT_FILE_NAME_SEED = "ProgramGuideExport";
         protected const string EXPORT_FILE_SUFFIX_TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss";
         protected const string EXPORT_FILE_NAME_DATE_FORMAT = "yyyyMMdd";
@@ -91,9 +90,10 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         private List<List<GuideInterfaceExportElement>> _GetImportFileProcessingChunks(List<GuideInterfaceExportElement> lineItems)
         {
+            var batchSize = _GetSaveBatchSize();
             var processingBatches = lineItems.OrderBy(x => x.inventory_id)
                 .Select((x, i) => new { Index = i, Value = x })
-                .GroupBy(x => x.Index / SAVE_CHUNK_SIZE)
+                .GroupBy(x => x.Index / batchSize)
                 .Select(x => x.Select(v => v.Value).ToList())
                 .ToList();
 
@@ -102,7 +102,14 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             var maxBatchIndex = processingBatches.Count - 1;
             for (var i = 0; i < maxBatchIndex; i++)
             {
+                // below we move them around, so perhaps we don't have any!
+                if (processingBatches[i].Any() == false)
+                {
+                    continue;
+                }
+
                 var lastId = processingBatches[i].Last().inventory_id;
+                // since we're not checking the last batch, [i+1] won't go 'out of index'.
                 var spansNextBatch = processingBatches[i + 1].Where(s => s.inventory_id == lastId).ToList();
                 if (spansNextBatch.Any())
                 {
@@ -125,12 +132,18 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
             try
             {
+                var fileParseSw = new Stopwatch();
+                fileParseSw.Start();
                 var parseResult = _ParseLinesFromFile(fileStream);
+                fileParseSw.Stop();
+                processingLog.AppendLine($"File parse took {fileParseSw.Elapsed.TotalSeconds} seconds.");
+
                 if (parseResult.Success == false)
                 {
                     success = false;
-                    processingLog.AppendLine($"Parsing attempt failed with {parseResult.Messages.Count} messages : ");
-                    parseResult.Messages.ForEach(m => processingLog.AppendLine(m));
+                    processingLog.AppendLine($"Parsing attempt failed on {parseResult.Messages.Count} lines.");
+                    // Don't log them... that took a long time.
+                    //parseResult.Messages.ForEach(m => processingLog.AppendLine(m));
                     _ArchiveImportFile(success, fileName, fileStream, processingLog);
 
                     stopWatch.Stop();
@@ -141,8 +154,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
                 if (parseResult.Warning)
                 {
-                    processingLog.AppendLine($"Parsing attempt yielded {parseResult.Messages.Count} warnings : ");
-                    parseResult.Messages.ForEach(m => processingLog.AppendLine(m));
+                    processingLog.AppendLine($"Parsing attempt yielded {parseResult.Messages.Count} warnings.");
+                    // Don't log them... that took a long time.
+                    //parseResult.Messages.ForEach(m => processingLog.AppendLine(m));
                 }
 
                 var lineItems = parseResult.LineItems;
@@ -152,19 +166,45 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 var processingBatches = _GetImportFileProcessingChunks(lineItems);
                 var totalProgramsExtracted = 0;
 
+                processingLog.AppendLine($"Transformed to {processingBatches.Count} processing batches.");
+
+                var batchindex = 0;
                 foreach (var batch in processingBatches)
                 {
+                    batchindex++;
+                    processingLog.AppendLine($"Starting batch {batchindex} of {processingBatches.Count}.");
+
+                    processingLog.AppendLine($"Transforming to programs for batch of {batch.Count}");
                     // transform to the programs
-                    var programs = batch.Select(_MapExportedProgram).ToList();
+                    var programs = new List<StationInventoryManifestDaypartProgram>();
+                    foreach (var batchItem in batch)
+                    {
+                        try
+                        {
+                            var program = _MapExportedProgram(batchItem);
+                            programs.Add(program);
+                        }
+                        catch (Exception e)
+                        {
+                            processingLog.AppendLine($"Error transforming from batch item to program : {e.Message} : {e.StackTrace}");
+                            processingLog.AppendLine($"Error stack trace : {e.StackTrace}");
+                        }
+                    }
+
                     totalProgramsExtracted += programs.Count;
+
+                    processingLog.AppendLine($"Transforming to {programs.Count} programs making {totalProgramsExtracted} total programs.");
 
                     // setup first to minimize the transaction scope.
 
                     // prep the saves
+                    var batchSize = _GetSaveBatchSize();
                     var programSaveChunks = programs.Select((x, i) => new {Index = i, Value = x})
-                        .GroupBy(x => x.Index / SAVE_CHUNK_SIZE)
+                        .GroupBy(x => x.Index / batchSize)
                         .Select(x => x.Select(v => v.Value).ToList())
                         .ToList();
+
+                    processingLog.AppendLine($"Transformed to {programSaveChunks.Count} save chunks.");
 
                     // prep the deletes.
                     var dateRangeManifests = batch.Select(d => new
@@ -184,11 +224,14 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                             })
                         .ToList();
 
+                    processingLog.AppendLine($"Transformed deletes to {dateRangeManifests.Count} dateRangeManifests.");
+
                     const int dbOperationTimeoutMinutes = 20;
                     // take action
                     using (var scope =
                         TransactionScopeHelper.CreateTransactionScope(TimeSpan.FromMinutes(dbOperationTimeoutMinutes)))
                     {
+                        processingLog.AppendLine($"Performing deletes...");
                         // always delete
                         foreach (var group in dateRangeManifests)
                         {
@@ -196,6 +239,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                                 group.DateRange.EndDate);
                         }
 
+                        processingLog.AppendLine($"Performing saves...");
                         if (programs.Any())
                         {
                             programSaveChunks.ForEach(chunk =>
@@ -204,12 +248,12 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
                         scope.Complete();
                     }
-
-                    // adjust the primary program for the dayparts.
-                    var manifestIds = lineItems.Select(s => s.inventory_id).Distinct().ToList();
-                    var manifests = _InventoryRepository.GetStationInventoryManifestsByIds(manifestIds);
-                    _SetProgramData(manifests, (message) => processingLog.AppendLine(message));
                 }
+
+                // adjust the primary program for the dayparts.
+                var manifestIds = lineItems.Select(s => s.inventory_id).Distinct().ToList();
+                var manifests = _InventoryRepository.GetStationInventoryManifestsByIds(manifestIds);
+                _SetProgramData(manifests, (message) => processingLog.AppendLine(message));
 
                 success = true;
                 processingLog.AppendLine($"Extracted and saved {totalProgramsExtracted} program records.");
@@ -223,7 +267,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
                 LogHelper.Logger.Error($"Error caught ingesting results file '{fileName}'.", ex);
                 processingLog.AppendLine($"Error caught : {ex.Message}");
-                
+                processingLog.AppendLine($"Error stack trace : {ex.StackTrace}");
+
                 _ArchiveImportFile(success, fileName, fileStream, processingLog);
 
                 stopWatch.Stop();
@@ -280,7 +325,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         {
             var processDiagnostics = _GetNewDiagnostics();
             processDiagnostics.JobId = jobId;
-            processDiagnostics.SaveChunkSize = SAVE_CHUNK_SIZE;
+            processDiagnostics.SaveChunkSize = _GetSaveBatchSize();
             processDiagnostics.RequestChunkSize = _GetRequestElementMaxCount();
 
             var jobsRepo = _GetJobsRepository();
@@ -340,7 +385,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             // transform
             var transformWarnings = new List<string>();
             var exportFileLines = manifests.SelectMany(m => _MapToExport(m, inventorySource, transformWarnings)).ToList();
-            transformWarnings.ForEach(w => jobsRepository.UpdateJobNotes(jobId, w));
+            // consolidate the warnings
+            transformWarnings.Distinct().ToList().ForEach(w => jobsRepository.UpdateJobNotes(jobId, w));
 
             // export to file
             var fileName = _GetExportFileName(jobId);
@@ -475,10 +521,11 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         private void _SetPrimaryProgramForManifestDayparts(List<StationInventoryManifest> manifests, Action<string> logger)
         {
+            var batchSize = _GetSaveBatchSize();
             var manifestDayparts = manifests.SelectMany(x => x.ManifestDayparts);
             var manifestDaypartsCount = manifestDayparts.Count();
             var chunks = manifestDayparts.Select((item, index) => new { Index = index, Value = item })
-                            .GroupBy(x => x.Index / SAVE_CHUNK_SIZE)
+                            .GroupBy(x => x.Index / batchSize)
                             .Select(x => x.Select(v => v.Value).ToList())
                             .ToList();
 
@@ -632,14 +679,17 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 processDiagnostics.RecordIterationStopApplyApiResponse(programs.Count);
 
                 /*** Save the programs ***/
+                var batchSize = _GetSaveBatchSize();
+
                 jobsRepository.UpdateJobStatus(jobId, InventoryProgramsJobStatus.SavePrograms);
                 processDiagnostics.RecordIterationStartSavePrograms();
                 var programSaveChunksCount = 0;
 
                 // clear out the old programs first.
+                
                 var deletePrograms = requestPackage.RequestMappings.Select(m => m.ManifestId).Distinct().ToList();
                 var deleteProgramsChunks = deletePrograms.Select((x, i) => new { Index = i, Value = x })
-                    .GroupBy(x => x.Index / SAVE_CHUNK_SIZE)
+                    .GroupBy(x => x.Index / batchSize)
                     .Select(x => x.Select(v => v.Value).ToList())
                     .ToList();
 
@@ -651,7 +701,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 if (programs.Any())
                 {
                     var programSaveChunks = programs.Select((x, i) => new { Index = i, Value = x })
-                        .GroupBy(x => x.Index / SAVE_CHUNK_SIZE)
+                        .GroupBy(x => x.Index / batchSize)
                         .Select(x => x.Select(v => v.Value).ToList())
                         .ToList();
                     programSaveChunksCount = programSaveChunks.Count;
@@ -960,6 +1010,12 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 line.Append(field);
             }
             return line.ToString();
+        }
+
+        protected virtual int _GetSaveBatchSize()
+        {
+            // TODO: Change this to be it's own setting
+            return ProgramGuideApiClient.RequestElementMaxCount;
         }
 
         protected virtual int _GetRequestElementMaxCount()

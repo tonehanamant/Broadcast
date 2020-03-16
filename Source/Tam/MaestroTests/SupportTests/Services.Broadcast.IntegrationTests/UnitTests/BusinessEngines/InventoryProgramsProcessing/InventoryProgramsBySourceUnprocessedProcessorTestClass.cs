@@ -75,5 +75,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 ? UT_CurrentDateTime.Value
                 : base._GetCurrentDateTime();
         }
+
+        protected override int _GetSaveBatchSize()
+        {
+            return 1000;
+        }
     }
 }

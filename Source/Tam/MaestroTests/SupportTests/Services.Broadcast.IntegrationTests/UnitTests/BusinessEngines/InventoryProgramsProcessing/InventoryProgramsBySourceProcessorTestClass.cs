@@ -80,5 +80,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         {
             return _GetShortenedInventorySourceName(sourceName);
         }
+
+        protected override int _GetSaveBatchSize()
+        {
+            return 1000;
+        }
     }
 }

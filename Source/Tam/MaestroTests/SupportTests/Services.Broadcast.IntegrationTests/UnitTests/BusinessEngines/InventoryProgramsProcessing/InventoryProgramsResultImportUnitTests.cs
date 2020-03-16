@@ -252,8 +252,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
 
             /*** Assert ***/
             Assert.IsTrue(result.Contains("Parsing attempt failed"));
-            Assert.IsTrue(result.Contains("Could not find required column inventory_id"));
-            Assert.IsTrue(result.Contains("Could not find required column inventory_week_id"));
+            //Assert.IsTrue(result.Contains("Could not find required column inventory_id"));
+            //Assert.IsTrue(result.Contains("Could not find required column inventory_week_id"));
 
             // validate we moved the file
             Assert.AreEqual(1, fileServiceCreateCalls.Count);

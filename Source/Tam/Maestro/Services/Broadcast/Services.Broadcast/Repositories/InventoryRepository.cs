@@ -1521,22 +1521,31 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    context.station_inventory_manifest_daypart_programs.AddRange(
-                        newPrograms.Select(p => new station_inventory_manifest_daypart_programs
-                        {
-                            station_inventory_manifest_daypart_id = p.StationInventoryManifestDaypartId,
-                            name = p.ProgramName,
-                            show_type = p.ShowType,
-                            source_genre_id = p.SourceGenreId,
-                            genre_source_id = p.GenreSourceId,
-                            maestro_genre_id = p.MaestroGenreId,
-                            start_date = p.StartDate,
-                            end_date = p.EndDate,
-                            start_time = p.StartTime,
-                            end_time = p.EndTime,
-                            created_date = createdAt
-                        }));
+                    // get the current id to use below.
+                    var currentId = (context.station_inventory_manifest_daypart_programs.Select(p => (int?)p.id).Max() ?? 0) + 1;
 
+                    // transform up front
+                    var entities = newPrograms.Select(p => new station_inventory_manifest_daypart_programs
+                    {
+                        id = currentId++, 
+                        station_inventory_manifest_daypart_id = p.StationInventoryManifestDaypartId,
+                        name = p.ProgramName,
+                        show_type = p.ShowType,
+                        source_genre_id = p.SourceGenreId,
+                        genre_source_id = p.GenreSourceId,
+                        maestro_genre_id = p.MaestroGenreId,
+                        start_date = p.StartDate,
+                        end_date = p.EndDate,
+                        start_time = p.StartTime,
+                        end_time = p.EndTime,
+                        created_date = createdAt
+                    }).ToList();
+
+                    // then figure out their ids
+                    // then bulk insert.
+                    BulkInsert(context, entities);
+
+                    // I think I still hvae to do this.
                     context.SaveChanges();
                 });
         }
