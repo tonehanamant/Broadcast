@@ -80,5 +80,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         {
             return 1000;
         }
+
+        protected override int _GetDeleteBatchSize()
+        {
+            return 1000;
+        }
     }
 }

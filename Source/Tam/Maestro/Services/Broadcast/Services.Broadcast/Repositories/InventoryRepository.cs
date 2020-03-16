@@ -1500,19 +1500,17 @@ namespace Services.Broadcast.Repositories
 
         public void DeleteInventoryPrograms(List<int> manifestIds, DateTime startDate, DateTime endDate)
         {
+            var manifestIdsCsv = string.Join(",", manifestIds);
+            var sql = $"DELETE p FROM station_inventory_manifest_daypart_programs p " +
+                      $"INNER JOIN station_inventory_manifest_dayparts d ON p.station_inventory_manifest_daypart_id = d.id " +
+                      $"WHERE d.station_inventory_manifest_id in ({manifestIdsCsv}) " +
+                      $"AND p.start_date <= '{endDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)} 23:59:59' " +
+                      $"AND p.end_date >= '{startDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)} 00:00:00' ";
+
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    var toRemove = context.station_inventory_manifest_daypart_programs.Where(p =>
-                        manifestIds.Contains(p.station_inventory_manifest_dayparts.station_inventory_manifest_id) 
-                        && p.start_date <= endDate && p.end_date >= startDate);
-
-                    if (toRemove.Any() == false)
-                    {
-                        return;
-                    }
-                    context.station_inventory_manifest_daypart_programs.RemoveRange(toRemove);
-                    context.SaveChanges();
+                    context.Database.ExecuteSqlCommand(sql);
                 });
         }
 

@@ -59,11 +59,8 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	 
 		public static string BroadcastSharedFolder  
 		{
-            get
-            {
-                return SystemComponentParameterHelper.GetPropertyValue<string>
-                  (BroadcastServiceSystemParameterNames.ComponentID, BroadcastServiceSystemParameterNames.BroadcastSharedFolder);
-            }
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.BroadcastSharedFolder); }
         }
 	 
 		public static string CampaignExportReportsFolder  
@@ -198,6 +195,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.InventoryProcessingNotificationEmails); }
         }
 	 
+		public static int InventoryProgramsEngineDeleteBatchSize  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<int>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.InventoryProgramsEngineDeleteBatchSize); }
+        }
+	 
 		public static int InventoryProgramsEngineMaxDop  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<int>
@@ -214,6 +217,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<bool>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.InventoryProgramsEngineParallelEnabled); }
+        }
+	 
+		public static int InventoryProgramsEngineSaveBatchSize  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<int>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.InventoryProgramsEngineSaveBatchSize); }
         }
 	 
 		public static int InventoryRatingsJobIntervalSeconds  

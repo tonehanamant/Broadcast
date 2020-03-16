@@ -302,6 +302,12 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 case "InventoryProgramsEngineParallelBatchSize":
                     result = "10";
                     break;
+                case "InventoryProgramsEngineSaveBatchSize":
+                    result = "1000";
+                    break;
+                case "InventoryProgramsEngineDeleteBatchSize":
+                    result = "1000";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }
