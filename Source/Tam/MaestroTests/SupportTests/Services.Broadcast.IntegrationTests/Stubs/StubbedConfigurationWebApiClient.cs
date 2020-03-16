@@ -249,7 +249,7 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                     result = "True";
                     break;
                 case "ProgramsSearchUrl":
-                    result = @"https://h0ix5d7yhb.execute-api.us-east-1.amazonaws.com/staging/v1/programs/search/";
+                    result = @"https://pemonp3we9.execute-api.us-east-1.amazonaws.com/staging/v1/programs/search/";
                     break;
                 case "ProgramsSearchTokenUrl":
                     result = @"https://dev-cmw.auth.us-east-1.amazoncognito.com/oauth2/token";
