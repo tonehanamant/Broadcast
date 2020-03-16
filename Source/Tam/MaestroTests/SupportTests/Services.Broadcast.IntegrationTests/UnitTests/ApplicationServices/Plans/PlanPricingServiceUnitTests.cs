@@ -749,11 +749,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var usedDayparts = new List<DisplayDaypart>();
             var proprietaryEstimates = _GetProprietaryEstimates();
             var plan = _GetPlan();
+            var parameters = new ProgramInventoryOptionalParametersDto();
 
             var service = _GetService();
 
             // Act
-            var weeks = service.UT_GetPricingModelWeeks(plan, proprietaryEstimates);
+            var weeks = service.UT_GetPricingModelWeeks(plan, proprietaryEstimates, parameters);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(weeks));
@@ -773,6 +774,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var usedDayparts = new List<DisplayDaypart>();
             var proprietaryEstimates = _GetProprietaryEstimates();
             var plan = _GetPlan();
+            var parameters = new ProgramInventoryOptionalParametersDto();
 
             plan.PricingParameters.UnitCapsType = unitCapType;
 
@@ -784,7 +786,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            var weeks = service.UT_GetPricingModelWeeks(plan, proprietaryEstimates);
+            var weeks = service.UT_GetPricingModelWeeks(plan, proprietaryEstimates, parameters);
 
             // Assert
             var firstWeek = weeks.First();
@@ -802,16 +804,39 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var proprietaryEstimates = _GetProprietaryEstimates();
             var plan = _GetPlan();
+            var parameters = new ProgramInventoryOptionalParametersDto();
 
             plan.PricingParameters.UnitCapsType = UnitCapEnum.PerMonth;
 
             var service = _GetService();
 
             // Act
-            var exception = Assert.Throws<ApplicationException>(() => service.UT_GetPricingModelWeeks(plan, proprietaryEstimates));
+            var exception = Assert.Throws<ApplicationException>(() => service.UT_GetPricingModelWeeks(plan, proprietaryEstimates, parameters));
 
             // Assert
             Assert.AreEqual(expectedMessage, exception.Message);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingWeeksWithMargin()
+        {
+            // Arrange
+            var usedDayparts = new List<DisplayDaypart>();
+            var proprietaryEstimates = _GetProprietaryEstimates();
+            var plan = _GetPlan();
+            var parameters = new ProgramInventoryOptionalParametersDto
+            {
+                Margin = 20
+            };
+
+            var service = _GetService();
+
+            // Act
+            var weeks = service.UT_GetPricingModelWeeks(plan, proprietaryEstimates, parameters);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(weeks));
         }
 
         private PlanDto _GetPlan()

@@ -50,9 +50,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             return _IsSpotCostValidForPricingModelInput(spotCost);
         }
 
-        public List<PlanPricingApiRequestWeekDto> UT_GetPricingModelWeeks(PlanDto plan, List<PricingEstimate> proprietaryEstimates)
+        public List<PlanPricingApiRequestWeekDto> UT_GetPricingModelWeeks(PlanDto plan, List<PricingEstimate> proprietaryEstimates, PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto programInventoryOptionalParametersDto)
         {
-            return _GetPricingModelWeeks(plan, proprietaryEstimates);
+            return _GetPricingModelWeeks(plan, proprietaryEstimates, programInventoryOptionalParametersDto);
         }
 
         public bool UT_AreWeeklyImpressionsValidForPricingModelInput(double? impressions)

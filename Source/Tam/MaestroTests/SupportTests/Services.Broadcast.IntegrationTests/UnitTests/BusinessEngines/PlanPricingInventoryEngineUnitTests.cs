@@ -829,7 +829,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                    })
                 .ToList();
 
-            _StationRepository.Setup(s => s.GetBroadcastStationsByMarketCodes(It.IsAny<List<short>>()))
+            _StationRepository.Setup(s => s.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
                 .Returns(availableStations);
 
             _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetPlanQuarter(It.IsAny<PlanDto>()))
@@ -972,7 +972,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 },
             };
 
-            _StationRepository.Setup(s => s.GetBroadcastStationsByMarketCodes(It.IsAny<List<short>>()))
+            _StationRepository.Setup(s => s.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
                 .Returns(availableStations);
 
             _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetPlanQuarter(It.IsAny<PlanDto>()))
@@ -1071,7 +1071,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            _StationRepository.Setup(s => s.GetBroadcastStationsByMarketCodes(It.IsAny<List<short>>()))
+            _StationRepository.Setup(s => s.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
                 .Returns(availableStations);
 
             _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetPlanQuarter(It.IsAny<PlanDto>()))

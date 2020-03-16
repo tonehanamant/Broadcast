@@ -658,6 +658,8 @@ namespace Services.Broadcast.BusinessEngines
             public decimal? MaxCPM { get; set; }
 
             public double? InflationFactor { get; set; }
+
+            public double Margin { get; set; }
         }
     }
 }

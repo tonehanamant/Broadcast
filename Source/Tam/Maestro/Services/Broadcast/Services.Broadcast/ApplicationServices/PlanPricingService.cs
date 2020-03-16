@@ -374,7 +374,8 @@ namespace Services.Broadcast.ApplicationServices
 
         protected List<PlanPricingApiRequestWeekDto> _GetPricingModelWeeks(
             PlanDto plan, 
-            List<PricingEstimate> proprietaryEstimates)
+            List<PricingEstimate> proprietaryEstimates,
+            ProgramInventoryOptionalParametersDto parameters)
         {
             var pricingModelWeeks = new List<PlanPricingApiRequestWeekDto>();
             var marketCoverageGoal = GeneralMath.ConvertPercentageToFraction(plan.CoverageGoalPercent.Value);
@@ -396,6 +397,12 @@ namespace Services.Broadcast.ApplicationServices
 
                 var impressionGoal = week.WeeklyImpressions > estimatedImpressions ? week.WeeklyImpressions - estimatedImpressions : 0;
                 var weeklyBudget = week.WeeklyBudget > estimatedCost ? week.WeeklyBudget - estimatedCost : 0;
+                
+                if (parameters.Margin > 0)
+                {
+                    weeklyBudget = weeklyBudget * (decimal)(1.0 - (parameters.Margin / 100.0));
+                }
+
                 var cpmGoal = ProposalMath.CalculateCpm(weeklyBudget, impressionGoal);
                 (double capTime, string capType) = _GetFrequencyCapTimeAndCapTypeString(planPricingParameters.UnitCapsType);
 
@@ -486,7 +493,8 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     MinCPM = planPricingParametersDto.MinCpm,
                     MaxCPM = planPricingParametersDto.MaxCpm,
-                    InflationFactor = planPricingParametersDto.InflationFactor
+                    InflationFactor = planPricingParametersDto.InflationFactor, 
+                    Margin = planPricingParametersDto.Margin
                 };
 
                 planPricingJobDiagnostic.RecordInventorySourceEstimatesCalculationStart();
@@ -516,7 +524,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 var pricingApiRequest = new PlanPricingApiRequestDto
                 {
-                    Weeks = _GetPricingModelWeeks(plan, proprietaryEstimates),
+                    Weeks = _GetPricingModelWeeks(plan, proprietaryEstimates, programInventoryParameters),
                     Spots = _GetPricingModelSpots(plan, inventory)
                 };
 
@@ -945,7 +953,8 @@ namespace Services.Broadcast.ApplicationServices
             {
                 MinCPM = requestParameters.MinCpm,
                 MaxCPM = requestParameters.MaxCpm,
-                InflationFactor = requestParameters.InflationFactor
+                InflationFactor = requestParameters.InflationFactor,
+                Margin = requestParameters.Margin
             };
 
             var plan = _PlanRepository.GetPlan(planId);
@@ -958,7 +967,7 @@ namespace Services.Broadcast.ApplicationServices
 
             var pricingApiRequest = new PlanPricingApiRequestDto
             {
-                Weeks = _GetPricingModelWeeks(plan, proprietaryEstimates),
+                Weeks = _GetPricingModelWeeks(plan, proprietaryEstimates, pricingParams),
                 Spots = _GetPricingModelSpots(plan, inventory)
             };
 
