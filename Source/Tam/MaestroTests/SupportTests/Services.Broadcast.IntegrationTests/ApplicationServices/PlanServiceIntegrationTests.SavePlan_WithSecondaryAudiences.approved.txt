@@ -215,7 +215,7 @@
   "FlightStartDate": "2019-01-01T00:00:00",
   "GoalBreakdownType": 1,
   "HHCPM": 0.0120,
-  "HHCPP": 14.4840,
+  "HHCPP": 14.4927,
   "HHImpressions": 8333333.0,
   "HHRatingPoints": 6.9,
   "HHUniverse": 120700000.0,
@@ -297,7 +297,7 @@
     {
       "AudienceId": 7,
       "CPM": 0.0275,
-      "CPP": 2.17931094601681,
+      "CPP": 2.17864923747277,
       "Impressions": 3624.999,
       "RatingPoints": 45.9,
       "Type": 1,
@@ -307,7 +307,7 @@
     {
       "AudienceId": 6,
       "CPM": 0.0188,
-      "CPP": 1.18110251100504,
+      "CPP": 1.18063754427391,
       "Impressions": 5291.666,
       "RatingPoints": 84.7,
       "Type": 1,

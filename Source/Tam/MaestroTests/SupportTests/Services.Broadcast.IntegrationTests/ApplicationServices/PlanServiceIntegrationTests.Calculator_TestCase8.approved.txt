@@ -2,7 +2,7 @@
   "AudienceId": 31,
   "Budget": 180.98320,
   "CPM": 13.45,
-  "CPP": 16220.69999999999903563020214,
+  "CPP": 0.0,
   "Impressions": 13.0,
   "MediaMonthId": 450,
   "RatingPoints": 0.0,

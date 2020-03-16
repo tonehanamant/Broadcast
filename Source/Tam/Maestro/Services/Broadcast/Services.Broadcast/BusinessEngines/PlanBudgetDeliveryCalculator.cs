@@ -51,7 +51,7 @@ namespace Services.Broadcast.BusinessEngines
             {
                 result.CPM = _CalculateCPM(input.Budget, input.Impressions);
                 var ratingPoints = _CalculateDeliveryRatingPoints(input.Impressions, input.Universe.Value);
-                result.RatingPoints = Math.Round(ratingPoints, 1);
+                result.RatingPoints = ratingPoints;
                 result.CPP = _CalculateCPP(input.Budget, ratingPoints);
                 return result;
             }
@@ -60,23 +60,23 @@ namespace Services.Broadcast.BusinessEngines
             {
                 result.Budget = _CalculateBudgetByCPM(input.Impressions, input.CPM);
                 var ratingPoints = _CalculateDeliveryRatingPoints(input.Impressions, input.Universe.Value);
-                result.RatingPoints = Math.Round(ratingPoints, 1);
+                result.RatingPoints = ratingPoints;
                 result.CPP = _CalculateCPP(input.Budget, ratingPoints);
                 return result;
             }
 
             if (input.Budget.HasValue && input.CPM.HasValue)
             {
-                result.Impressions = Math.Floor(_CalculateDeliveryImpressionsByCPM(input.Budget, input.CPM) ?? 0);
+                result.Impressions = _CalculateDeliveryImpressionsByCPM(input.Budget, input.CPM);
                 var ratingPoints = _CalculateDeliveryRatingPoints(result.Impressions, input.Universe.Value);
-                result.RatingPoints = Math.Round(ratingPoints, 1);
+                result.RatingPoints = ratingPoints;
                 result.CPP = _CalculateCPP(input.Budget, ratingPoints);
                 return result;
             }
 
             if (input.RatingPoints.HasValue && input.Budget.HasValue)
             {
-                result.Impressions = Math.Floor(_CalculateDeliveryImpressionsByUniverse(input.RatingPoints, input.Universe.Value) ?? 0);
+                result.Impressions = _CalculateDeliveryImpressionsByUniverse(input.RatingPoints, input.Universe.Value);
                 result.CPM = _CalculateCPM(input.Budget, result.Impressions);
                 result.CPP = _CalculateCPP(input.Budget, input.RatingPoints);
                 return result;
@@ -85,7 +85,7 @@ namespace Services.Broadcast.BusinessEngines
             if (input.RatingPoints.HasValue && input.CPP.HasValue)
             {
                 result.Budget = _CalculateBudgetByCPP(input.RatingPoints, input.CPP);
-                result.Impressions = Math.Floor(_CalculateDeliveryImpressionsByUniverse(input.RatingPoints, input.Universe.Value) ?? 0);
+                result.Impressions = _CalculateDeliveryImpressionsByUniverse(input.RatingPoints, input.Universe.Value);
                 result.CPM = _CalculateCPM(result.Budget, result.Impressions);
                 return result;
             }
@@ -93,8 +93,8 @@ namespace Services.Broadcast.BusinessEngines
             if (input.Budget.HasValue && input.CPP.HasValue)
             {
                 var ratingPoints = _CalculateDeliveryRatingPointsByCPP(input.Budget, input.CPP);
-                result.RatingPoints = Math.Round(ratingPoints, 1);
-                result.Impressions = Math.Floor(_CalculateDeliveryImpressionsByUniverse(ratingPoints, input.Universe.Value) ?? 0);
+                result.RatingPoints = ratingPoints;
+                result.Impressions = _CalculateDeliveryImpressionsByUniverse(ratingPoints, input.Universe.Value);
                 result.CPM = _CalculateCPM(input.Budget, result.Impressions);
                 return result;
             }
@@ -104,12 +104,10 @@ namespace Services.Broadcast.BusinessEngines
         private static double _CalculateDeliveryRatingPoints(double? deliveryImpressions, double universe)
         {
             if (!deliveryImpressions.HasValue)
-            {
                 return 0;
-            }
-            var result = (deliveryImpressions.Value / universe) * 100;
 
-            return result; 
+            var result = (deliveryImpressions.Value / universe) * 100;
+            return Math.Round(result, 1);
         }
 
         private static decimal _CalculateBudgetByCPP(double? deliveryRatingPoints, decimal? CPP)
@@ -127,14 +125,15 @@ namespace Services.Broadcast.BusinessEngines
             return deliveryRatingPoints.Value == 0 ? 0 : budget.Value / (decimal)deliveryRatingPoints.Value;
         }
 
-        private double? _CalculateDeliveryImpressionsByCPM(decimal? budget, decimal? CPM)
+        private double _CalculateDeliveryImpressionsByCPM(decimal? budget, decimal? CPM)
         {
-            return CPM.Value == 0 ? 0 : (double)(budget.Value * 1000 / CPM.Value);
+            return CPM.Value == 0 ? 0 : Math.Floor((double)(budget.Value * 1000 / CPM.Value));
         }
 
-        private static double? _CalculateDeliveryImpressionsByUniverse(double? deliveryRatingPoints, double universe)
+        private static double _CalculateDeliveryImpressionsByUniverse(double? deliveryRatingPoints, double universe)
         {
-            return (deliveryRatingPoints * universe) / 100;
+            var deliveryImpressions = (deliveryRatingPoints * universe) / 100;
+            return Math.Floor(deliveryImpressions.GetValueOrDefault());
         }
 
         private static decimal _CalculateCPM(decimal? budget, double? deliveryImpressions)
@@ -144,7 +143,7 @@ namespace Services.Broadcast.BusinessEngines
 
         private static double _CalculateDeliveryRatingPointsByCPP(decimal? budget, decimal? cpp)
         {
-            return cpp == 0 ? 0 : (double)(budget.Value / cpp.Value);
+            return cpp == 0 ? 0 : Math.Round((double)(budget.Value / cpp.Value), 1);
         }
     }
 }
