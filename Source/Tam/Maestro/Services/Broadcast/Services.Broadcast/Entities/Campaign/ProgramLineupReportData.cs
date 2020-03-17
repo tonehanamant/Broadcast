@@ -189,7 +189,7 @@ namespace Services.Broadcast.Entities.Campaign
                        Weight = _CalculateWeight(items.Sum(y => y.TotalSpotsImpressions), planImpressions),
                        Genre = items.First().Genre.ToUpper(),
                        NoOfMarkets = items.Select(y => y.MarketGeographyName).Distinct().Count(),
-                       NoOfStations = items.Select(y => y.StationAffiliation).Distinct().Count()
+                       NoOfStations = items.Select(y => y.StationLegacyCallLetters).Distinct().Count()
                    };
                })
                .OrderByDescending(x => x.Weight)

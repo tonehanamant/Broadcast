@@ -42,7 +42,7 @@
     {
       "Genre": "NEWS",
       "NoOfMarkets": 3,
-      "NoOfStations": 2,
+      "NoOfStations": 4,
       "Program": "MORNING NEWS",
       "Weight": 0.4
     }
