@@ -327,7 +327,121 @@ BEGIN
 		  )
 	')
 END
+
+GO
+
 /*************************************** END PRI-23934 *****************************************************/
+
+/*************************************** START PRI-23136 *****************************************************/
+
+IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'IX_station_inventory_manifest_file_id' AND object_id = OBJECT_ID('[dbo].[station_inventory_manifest]'))
+BEGIN
+      CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_file_id] ON [dbo].[station_inventory_manifest]
+	  (
+		[file_id] ASC
+      )
+	  INCLUDE ([spot_length_id], [spots_per_week], [inventory_source_id], [station_inventory_group_id], [spots_per_day], [station_id], [comment]) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]  
+END
+
+GO
+
+IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'IX_station_inventory_manifest_weeks_media_week_id' AND object_id = OBJECT_ID('[dbo].[station_inventory_manifest_weeks]'))
+BEGIN
+	CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_weeks_media_week_id] ON [dbo].[station_inventory_manifest_weeks]
+	(
+		[media_week_id] ASC
+	) 
+	INCLUDE ([station_inventory_manifest_id], [spots], [start_date], [end_date], [sys_start_date], [sys_end_date])WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
+GO
+
+IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'IX_station_mappings_station_id' AND object_id = OBJECT_ID('[dbo].[station_mappings]'))
+BEGIN
+	CREATE NONCLUSTERED INDEX [IX_station_mappings_station_id] ON [dbo].[station_mappings]
+	(
+		[station_id] ASC
+	) 
+	INCLUDE ([mapped_call_letters], [map_set], [created_date], [created_by])WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
+GO
+
+IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'IX_dayparts_timespan_id' AND object_id = OBJECT_ID('[dbo].[dayparts]'))
+BEGIN
+	CREATE NONCLUSTERED INDEX [IX_dayparts_timespan_id] ON [dbo].[dayparts]
+	(
+		[timespan_id] ASC
+	) 
+	INCLUDE ([code], [name], [tier], [daypart_text], [total_hours])WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
+GO
+
+IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'IX_stations_market_code' AND object_id = OBJECT_ID('[dbo].[stations]'))
+BEGIN
+	CREATE NONCLUSTERED INDEX [IX_stations_market_code] ON [dbo].[stations]
+	(
+		[market_code] ASC
+	) 
+	INCLUDE ([station_code], [station_call_letters], [affiliation], [legacy_call_letters], [modified_date])WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
+GO
+
+IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'IX_station_inventory_manifest_weeks_start_date1' AND object_id = OBJECT_ID('[dbo].[station_inventory_manifest_weeks]'))
+BEGIN
+	CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_weeks_start_date1] ON [dbo].[station_inventory_manifest_weeks]
+	(
+		[start_date] ASC, [end_date]ASC
+	)
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
+GO
+
+IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'IX_station_inventory_manifest_weeks_start_date2' AND object_id = OBJECT_ID('[dbo].[station_inventory_manifest_weeks]'))
+BEGIN
+	CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_weeks_start_date2] ON [dbo].[station_inventory_manifest_weeks] ([start_date],[end_date])
+	INCLUDE ([station_inventory_manifest_id])
+END
+
+GO
+
+IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'IX_station_inventory_manifest_audiences_audience_id_ALL' AND object_id = OBJECT_ID('[dbo].[station_inventory_manifest_audiences]'))
+BEGIN
+	CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_audiences_audience_id_ALL] ON [dbo].[station_inventory_manifest_audiences]
+	(
+		[station_inventory_manifest_id],[audience_id],[impressions],[cpm],[is_reference],[rating],[vpvh],[share_playback_type],[hut_playback_type] ASC
+	)
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
+GO
+
+IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'IX_station_inventory_manifest_weeks_start_date3' AND object_id = OBJECT_ID('[dbo].[station_inventory_manifest_weeks]'))
+BEGIN
+	CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_weeks_start_date3] ON [dbo].[station_inventory_manifest_weeks]
+	( 
+		[station_inventory_manifest_id] ASC, [start_date] ASC, [end_date] ASC
+	)
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
+GO
+
+IF NOT EXISTS(SELECT * FROM sys.indexes WHERE name = 'IX_station_inventory_manifest_rates_station_inventory_manifest_id1' AND object_id = OBJECT_ID('[dbo].[station_inventory_manifest_rates]'))
+BEGIN
+	CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_rates_station_inventory_manifest_id1] ON [dbo].[station_inventory_manifest_rates]
+	(
+		[station_inventory_manifest_id] ASC, [spot_length_id] ASC, [spot_cost]
+	)
+	INCLUDE (id) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+END
+
+GO
+
+/*************************************** END PRI-23136 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
