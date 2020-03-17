@@ -4,6 +4,7 @@ using System.Text;
 using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services.Repositories;
+using IntegrationTests.Common;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -85,7 +86,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             var result = planService.CalculatePlanWeeklyGoalBreakdown(request);
 
             //Assert
-            Approvals.VerifyJson(ToJson(result));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
         
         [Test]
@@ -106,7 +107,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             var result = planService.CalculatePlanWeeklyGoalBreakdown(request);
 
             //Assert
-            Approvals.VerifyJson(ToJson(result));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         [Test]
@@ -118,6 +119,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 @", {""WeekNumber"":3,""MediaWeekId"":846,""StartDate"":""2020-03-09T00:00:00"",""EndDate"":""2020-03-15T00:00:00"",""NumberOfActiveDays"":7,""ActiveDays"":""M-Su"",""WeeklyImpressions"":6000,""WeeklyImpressionsPercentage"":10,""WeeklyRatings"":5.608234009172268,""WeeklyBudget"":60000,""WeeklyAdu"":0}], ""WeeklyBreakdownCalculationFrom"": 3, ""UpdatedWeek"": 3, ""DeliveryType"":2";
 
             var request = GetWeeklyBreakDownRequest(updatedData);
+            
             var mockedListMediaWeeksByFlight = GetDisplayMediaWeeks();
 
             _MediaMonthAndWeekAggregateCacheMock.Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
@@ -127,7 +129,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             var result = planService.CalculatePlanWeeklyGoalBreakdown(request);
 
             //Assert
-            Approvals.VerifyJson(ToJson(result));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         [Test]
@@ -147,7 +149,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             var result = planService.CalculatePlanWeeklyGoalBreakdown(request);
 
             //Assert
-            Approvals.VerifyJson(ToJson(result));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         private WeeklyBreakdownRequest GetWeeklyBreakDownRequest(
@@ -177,7 +179,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             data.Append($"{updatedData}");
             data.Append("}");
 
-            return FromJson<WeeklyBreakdownRequest>(data.ToString());
+            var request = FromJson<WeeklyBreakdownRequest>(data.ToString());
+            request.FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            return request;
         }
 
         private WeeklyBreakdownRequest GetWeeklyBreakDownEvenRequest()
@@ -189,7 +193,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             //data.Append($"{updatedData}");
             //data.Append("}");
 
-            return FromJson<WeeklyBreakdownRequest>(data.ToString());
+            var request = FromJson<WeeklyBreakdownRequest>(data.ToString());
+            request.FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            return request;
         }
 
         private List<DisplayMediaWeek> GetDisplayMediaWeeks()
@@ -210,13 +216,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
         //TODO: DELETE this, Move it to common library and Consume it.
         private T FromJson<T>(string data)
-        {
+        {            
             return JsonConvert.DeserializeObject<T>(data);
-        }
-
-        private string ToJson(object data)
-        {
-            return JsonConvert.SerializeObject(data);
         }
     }
 }

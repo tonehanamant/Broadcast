@@ -56,12 +56,16 @@ namespace Services.Broadcast.Entities.Plan.Pricing
             
             public Program PrimaryProgram { get; set; }
 
+            public int? PrimaryProgramId { get; set; }
+
             public List<Program> Programs { get; set; }
 
             public string ProgramName { get; set; }
 
             public class Program
             {
+                public int Id { get; set; }
+
                 public string Name { get; set; }
 
                 public string ShowType { get; set; }

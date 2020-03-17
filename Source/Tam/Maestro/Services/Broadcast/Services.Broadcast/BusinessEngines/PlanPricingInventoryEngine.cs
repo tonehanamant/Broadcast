@@ -65,7 +65,7 @@ namespace Services.Broadcast.BusinessEngines
             var programs = _GetPrograms(plan, planFlightDateRanges, inventorySourceIds);
 
             programs = FilterProgramsByDayparts(plan, programs, planDisplayDaypartDays);
-            
+
             ApplyInflationFactorToSpotCost(programs, parameters?.InflationFactor);
             // Set the plan flight days to programs so impressions are calculated for those days.
             _SetProgramsFlightDays(programs, plan);
@@ -82,9 +82,9 @@ namespace Services.Broadcast.BusinessEngines
         {
             var daypartCache = DaypartCache.Instance;
 
-            foreach(var program in programs)
+            foreach (var program in programs)
             {
-                foreach(var programDaypart in program.ManifestDayparts)
+                foreach (var programDaypart in program.ManifestDayparts)
                 {
                     programDaypart.Daypart = daypartCache.GetDisplayDaypart(programDaypart.Daypart.Id);
                 }
@@ -101,27 +101,27 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach (var program in programs)
             {
-                foreach(var manifestDaypart in program.ManifestDayparts)
+                foreach (var manifestDaypart in program.ManifestDayparts)
                 {
-                    manifestDaypart.Daypart.Sunday = 
+                    manifestDaypart.Daypart.Sunday =
                         manifestDaypart.Daypart.Sunday && flightDaysSet.Contains("Sunday");
 
-                    manifestDaypart.Daypart.Monday = 
+                    manifestDaypart.Daypart.Monday =
                         manifestDaypart.Daypart.Monday && flightDaysSet.Contains("Monday");
 
-                    manifestDaypart.Daypart.Tuesday = 
+                    manifestDaypart.Daypart.Tuesday =
                         manifestDaypart.Daypart.Tuesday && flightDaysSet.Contains("Tuesday");
 
-                    manifestDaypart.Daypart.Wednesday = 
+                    manifestDaypart.Daypart.Wednesday =
                         manifestDaypart.Daypart.Wednesday && flightDaysSet.Contains("Wednesday");
 
-                    manifestDaypart.Daypart.Thursday = 
+                    manifestDaypart.Daypart.Thursday =
                         manifestDaypart.Daypart.Thursday && flightDaysSet.Contains("Thursday");
 
-                    manifestDaypart.Daypart.Friday = 
+                    manifestDaypart.Daypart.Friday =
                         manifestDaypart.Daypart.Friday && flightDaysSet.Contains("Friday");
 
-                    manifestDaypart.Daypart.Saturday = 
+                    manifestDaypart.Daypart.Saturday =
                         manifestDaypart.Daypart.Saturday && flightDaysSet.Contains("Saturday");
                 }
             }
@@ -158,8 +158,8 @@ namespace Services.Broadcast.BusinessEngines
             IEnumerable<int> inventorySourceIds, List<short> availableMarkets, QuarterDetailDto planQuarter)
         {
             var totalInventory = new List<PlanPricingInventoryProgram>();
-            var fallbackQuarter = _PlanPricingInventoryQuarterCalculatorEngine.GetInventoryFallbackQuarter();  
-            
+            var fallbackQuarter = _PlanPricingInventoryQuarterCalculatorEngine.GetInventoryFallbackQuarter();
+
             var availableStations = _StationRepository.GetBroadcastStationsWithLatestDetailsByMarketCodes(availableMarkets);
 
             foreach (var dateRange in dateRanges)
@@ -169,7 +169,6 @@ namespace Services.Broadcast.BusinessEngines
                 var inventoryForDateRange = _StationProgramRepository.GetProgramsForPricingModel(
                     dateRange.Start.Value, dateRange.End.Value, spotLengthId, inventorySourceIds,
                     ungatheredStationIds);
-
                 inventoryForDateRange.ForEach(p => p.InventoryPricingQuarterType = InventoryPricingQuarterType.Plan);
                 totalInventory.AddRange(inventoryForDateRange);
 
@@ -186,7 +185,6 @@ namespace Services.Broadcast.BusinessEngines
                         var fallbackInventory = _StationProgramRepository.GetProgramsForPricingModel(
                             fallbackDateRange.Start.Value, fallbackDateRange.End.Value, spotLengthId, inventorySourceIds,
                             fallbackStationIds);
-
                         fallbackInventory.ForEach(p => p.InventoryPricingQuarterType = InventoryPricingQuarterType.Fallback);
                         totalInventory.AddRange(fallbackInventory);
                     }
@@ -283,6 +281,7 @@ namespace Services.Broadcast.BusinessEngines
                 return first;
             }).ToList();
 
+            _SetPrimaryProgramForDayparts(programs);
             _SetPrimaryProgramFallbackForManifestDayparts(programs);
             _SetProgramDayparts(programs);
             _SetProgramStationLatestMonthDetails(programs);
@@ -299,10 +298,33 @@ namespace Services.Broadcast.BusinessEngines
             {
                 var stationsToUpdate = programs.Select(x => x.Station).Where(x => x.Id == latestMonthDetail.StationId).ToList();
 
-                foreach(var station in stationsToUpdate)
+                foreach (var station in stationsToUpdate)
                 {
                     station.Affiliation = latestMonthDetail.Affiliation;
                     station.MarketCode = latestMonthDetail.MarketCode;
+                }
+            }
+        }
+
+        private void _SetPrimaryProgramForDayparts(List<PlanPricingInventoryProgram> manifests)
+        {
+            var daypartsWithoutPrimaryPrograms = manifests.SelectMany(x => x.ManifestDayparts)
+                .Where(x => x.PrimaryProgramId != null);
+
+            foreach (var manifestDaypart in daypartsWithoutPrimaryPrograms)
+            {
+                var firstProgram = manifestDaypart.Programs.FirstOrDefault(x => x.Id == manifestDaypart.PrimaryProgramId);
+                if (firstProgram != null)
+                {
+                    manifestDaypart.PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
+                    {
+                        Id = firstProgram.Id,
+                        Name = firstProgram.Name,
+                        Genre = firstProgram.Genre,
+                        ShowType = firstProgram.ShowType,
+                        StartTime = firstProgram.StartTime,
+                        EndTime = firstProgram.EndTime
+                    };
                 }
             }
         }
@@ -316,7 +338,7 @@ namespace Services.Broadcast.BusinessEngines
             {
                 var programName = manifestDaypart.ProgramName ?? string.Empty;
                 var fallbackGenre = string.Empty;
-                
+
                 if (programName.Contains("news", StringComparison.InvariantCultureIgnoreCase))
                 {
                     fallbackGenre = "news";
@@ -327,9 +349,11 @@ namespace Services.Broadcast.BusinessEngines
                     Name = programName,
                     Genre = fallbackGenre,
                     ShowType = string.Empty,
+
                 };
             }
         }
+
         private List<DateRange> _GetPlanDateRanges(PlanDto plan)
         {
             var planStartDate = plan.FlightStartDate.Value;

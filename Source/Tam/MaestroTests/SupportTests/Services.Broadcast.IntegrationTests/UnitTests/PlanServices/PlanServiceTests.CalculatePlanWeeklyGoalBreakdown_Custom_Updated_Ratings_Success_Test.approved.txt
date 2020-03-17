@@ -1,0 +1,75 @@
+﻿{
+  "TotalActiveDays": 35,
+  "TotalBudget": 278599.999999999800000,
+  "TotalImpressions": 27860.0,
+  "TotalImpressionsPercentage": 93.0,
+  "TotalRatingPoints": 26.0,
+  "TotalShareOfVoice": 93.0,
+  "Weeks": [
+    {
+      "ActiveDays": "M-Su",
+      "EndDate": "2020-03-01T00:00:00",
+      "MediaWeekId": 844,
+      "NumberOfActiveDays": 7,
+      "StartDate": "2020-02-24T00:00:00",
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 60000.0,
+      "WeeklyImpressions": 6000.0,
+      "WeeklyImpressionsPercentage": 20.0,
+      "WeeklyRatings": 5.60823401,
+      "WeekNumber": 1
+    },
+    {
+      "ActiveDays": "M-Su",
+      "EndDate": "2020-03-08T00:00:00",
+      "MediaWeekId": 845,
+      "NumberOfActiveDays": 7,
+      "StartDate": "2020-03-02T00:00:00",
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 60000.0,
+      "WeeklyImpressions": 6000.0,
+      "WeeklyImpressionsPercentage": 20.0,
+      "WeeklyRatings": 5.60823401,
+      "WeekNumber": 2
+    },
+    {
+      "ActiveDays": "M-Su",
+      "EndDate": "2020-03-15T00:00:00",
+      "MediaWeekId": 846,
+      "NumberOfActiveDays": 7,
+      "StartDate": "2020-03-09T00:00:00",
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 38600.0,
+      "WeeklyImpressions": 3860.0,
+      "WeeklyImpressionsPercentage": 13.0,
+      "WeeklyRatings": 3.6,
+      "WeekNumber": 3
+    },
+    {
+      "ActiveDays": "M-Su",
+      "EndDate": "2020-03-22T00:00:00",
+      "MediaWeekId": 847,
+      "NumberOfActiveDays": 7,
+      "StartDate": "2020-03-16T00:00:00",
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 60000.0,
+      "WeeklyImpressions": 6000.0,
+      "WeeklyImpressionsPercentage": 20.0,
+      "WeeklyRatings": 5.60823401,
+      "WeekNumber": 4
+    },
+    {
+      "ActiveDays": "M-Su",
+      "EndDate": "2020-03-29T00:00:00",
+      "MediaWeekId": 848,
+      "NumberOfActiveDays": 7,
+      "StartDate": "2020-03-23T00:00:00",
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 60000.0,
+      "WeeklyImpressions": 6000.0,
+      "WeeklyImpressionsPercentage": 20.0,
+      "WeeklyRatings": 5.60823401,
+      "WeekNumber": 5
+    }
+  ]
+}

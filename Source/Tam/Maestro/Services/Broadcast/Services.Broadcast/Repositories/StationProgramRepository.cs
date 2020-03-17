@@ -28,9 +28,9 @@ namespace Services.Broadcast.Repositories
             int spotLength, int rateSource, List<int> proposalMarketIds);
 
         List<ProposalProgramDto> GetStationPrograms(List<int> manifestIds);
-        
+
         List<PlanPricingInventoryProgram> GetProgramsForPricingModel(
-            DateTime startDate, 
+            DateTime startDate,
             DateTime endDate,
             int spotLengthId,
             IEnumerable<int> inventorySourceIds,
@@ -121,13 +121,13 @@ namespace Services.Broadcast.Repositories
         }
 
         public List<PlanPricingInventoryProgram> GetProgramsForPricingModel(
-            DateTime startDate, 
-            DateTime endDate, 
+            DateTime startDate,
+            DateTime endDate,
             int spotLengthId,
             IEnumerable<int> inventorySourceIds,
             List<int> stationIds)
         {
-            return _InReadUncommitedTransaction(context => 
+            return _InReadUncommitedTransaction(context =>
             {
                 var inventoryFileIds = (from file in context.inventory_files
                                         join ratingJob in context.inventory_file_ratings_jobs on file.id equals ratingJob.inventory_file_id
@@ -194,16 +194,22 @@ namespace Services.Broadcast.Repositories
                             .Select(d => new PlanPricingInventoryProgram.ManifestDaypart
                             {
                                 Id = d.id,
-                                //Daypart = DaypartCache.Instance.GetDisplayDaypart(d.daypart_id),
                                 Daypart = new DisplayDaypart
                                 {
                                     Id = d.daypart_id
                                 },
                                 ProgramName = d.program_name,
-                                //PrimaryProgram = _MapToPlanPricingInventoryProgram(
-                                //        d.station_inventory_manifest_daypart_programs.FirstOrDefault(
-                                //            p => p.id == d.primary_program_id)),
-                                //Programs = d.station_inventory_manifest_daypart_programs.Select(_MapToPlanPricingInventoryProgram).ToList()
+                                PrimaryProgramId = d.primary_program_id,
+                                Programs = d.station_inventory_manifest_daypart_programs.Select(
+                                    z => new PlanPricingInventoryProgram.ManifestDaypart.Program
+                                    {
+                                        Id = z.id,
+                                        Name = z.name,
+                                        ShowType = z.show_type,
+                                        Genre = z.maestro_genre.name,
+                                        StartTime = z.start_time,
+                                        EndTime = z.end_time
+                                    }).ToList()
                             }).ToList(),
                         ManifestAudiences = x.station_inventory_manifest_audiences.Select(a => new PlanPricingInventoryProgram.ManifestAudience
                         {
@@ -212,7 +218,6 @@ namespace Services.Broadcast.Repositories
                             IsReference = a.is_reference
                         }).ToList()
                     })
-                    .Where(x => x.ManifestDayparts.Any())
                     .ToList();
             });
         }
