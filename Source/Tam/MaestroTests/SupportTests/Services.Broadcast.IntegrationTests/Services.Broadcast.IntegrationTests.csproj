@@ -679,12 +679,6 @@
     <None Include="Files\ProprietaryDataFiles\OAndO - Extended call letters.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Files\ProprietaryDataFiles\OAndO_2021_Q1.xlsx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Files\ProprietaryDataFiles\OAndO_2022_Q2.xlsx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Files\ProprietaryDataFiles\OAndO_InvalidFile5.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

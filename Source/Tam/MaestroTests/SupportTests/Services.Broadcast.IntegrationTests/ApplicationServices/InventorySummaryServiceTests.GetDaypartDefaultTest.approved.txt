@@ -2,5 +2,9 @@
   {
     "Code": "EMN",
     "FullName": "Early Morning News"
+  },
+  {
+    "Code": "OVN",
+    "FullName": "Overnights"
   }
 ]

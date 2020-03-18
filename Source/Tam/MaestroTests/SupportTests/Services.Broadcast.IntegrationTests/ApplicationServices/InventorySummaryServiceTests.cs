@@ -326,9 +326,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                _InventoryFileTestHelper.UploadProprietaryInventoryFile("OAndO_2021_Q1.xlsx");
-                _InventoryFileTestHelper.UploadProprietaryInventoryFile("OAndO_2022_Q2.xlsx");
-
                 var daypartCodeId = _DaypartDefaultRepository.GetDaypartDefaultByCode("OVN").Id;
 
                 var quarters = _InventorySummaryService.GetInventoryQuarters(nbcOAndO_InventorySourceId, daypartCodeId);
