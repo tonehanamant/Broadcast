@@ -9,8 +9,15 @@ namespace Services.Broadcast.Extensions
 {
     public static class PlanDaypartExtensions
     {
-        public static List<PlanDaypartDto> OrderDayparts(this List<PlanDaypartDto> planDaypartList, List<DaypartDefaultDto> daypartDefaults)
+        public static List<PlanDaypartDto> OrderDayparts(this List<PlanDaypart> planDaypartList, List<DaypartDefaultDto> daypartDefaults)
         {
+            const int MONDAY = 1;
+            const int TUESDAY = 2;
+            const int WEDNESDAY = 3;
+            const int THURSDAY = 4;
+            const int FRIDAY = 5;
+            const int SATURDAY = 6;
+
             // join the plans dayparts with daypart defaults, so that later we can order them
             var mappedPlanDaypartList = planDaypartList.Join(
                 daypartDefaults,
@@ -27,12 +34,19 @@ namespace Services.Broadcast.Extensions
                     planDaypart.IsEndTimeModified,
                     planDaypart.IsStartTimeModified,
                     planDaypart.Restrictions,
-                    planDaypart.WeightingGoalPercent
+                    planDaypart.WeightingGoalPercent,
+                    planDaypart.FlightDays
                 }).ToList();
 
             // return the ordered list
             return mappedPlanDaypartList
                 .OrderBy(planDaypart => planDaypart.Code)
+                .ThenByDescending(planDaypart => planDaypart.FlightDays.Contains(MONDAY))
+                .ThenByDescending(planDaypart => planDaypart.FlightDays.Contains(TUESDAY))
+                .ThenByDescending(planDaypart => planDaypart.FlightDays.Contains(WEDNESDAY))
+                .ThenByDescending(planDaypart => planDaypart.FlightDays.Contains(THURSDAY))
+                .ThenByDescending(planDaypart => planDaypart.FlightDays.Contains(FRIDAY))
+                .ThenByDescending(planDaypart => planDaypart.FlightDays.Contains(SATURDAY))
                 .ThenBy(planDaypart => planDaypart.StartTimeSeconds)
                 .ThenBy(planDaypart => planDaypart.EndTimeSeconds)
                 .Select(item => new PlanDaypartDto

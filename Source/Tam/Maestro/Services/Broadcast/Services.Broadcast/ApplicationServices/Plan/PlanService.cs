@@ -374,7 +374,21 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private void _SortPlanDayparts(PlanDto plan)
         {
             var daypartDefaults = _DaypartDefaultService.GetAllDaypartDefaults();
-            plan.Dayparts = plan.Dayparts.OrderDayparts(daypartDefaults);
+
+            var planDayparts = plan.Dayparts.Select(x => new PlanDaypart
+            {
+                DaypartCodeId = x.DaypartCodeId,
+                DaypartTypeId = x.DaypartTypeId,
+                StartTimeSeconds = x.StartTimeSeconds,
+                EndTimeSeconds = x.EndTimeSeconds,
+                IsEndTimeModified = x.IsEndTimeModified,
+                IsStartTimeModified = x.IsStartTimeModified,
+                Restrictions = x.Restrictions,
+                WeightingGoalPercent = x.WeightingGoalPercent,
+                FlightDays = plan.FlightDays.ToList()
+            }).ToList();
+            
+            plan.Dayparts = planDayparts.OrderDayparts(daypartDefaults);
         }
 
         private void _SortProgramRestrictions(PlanDto plan)

@@ -47,21 +47,6 @@
   {
     "DaypartCodeId": 4,
     "DaypartTypeId": 0,
-    "EndTimeSeconds": 2788,
-    "IsEndTimeModified": false,
-    "IsStartTimeModified": false,
-    "Restrictions": {
-      "AffiliateRestrictions": null,
-      "GenreRestrictions": null,
-      "ProgramRestrictions": null,
-      "ShowTypeRestrictions": null
-    },
-    "StartTimeSeconds": 1500,
-    "WeightingGoalPercent": null
-  },
-  {
-    "DaypartCodeId": 4,
-    "DaypartTypeId": 0,
     "EndTimeSeconds": 3500,
     "IsEndTimeModified": false,
     "IsStartTimeModified": false,
@@ -87,6 +72,36 @@
       "ShowTypeRestrictions": null
     },
     "StartTimeSeconds": 3500,
+    "WeightingGoalPercent": null
+  },
+  {
+    "DaypartCodeId": 4,
+    "DaypartTypeId": 0,
+    "EndTimeSeconds": 2788,
+    "IsEndTimeModified": false,
+    "IsStartTimeModified": false,
+    "Restrictions": {
+      "AffiliateRestrictions": null,
+      "GenreRestrictions": null,
+      "ProgramRestrictions": null,
+      "ShowTypeRestrictions": null
+    },
+    "StartTimeSeconds": 1500,
+    "WeightingGoalPercent": null
+  },
+  {
+    "DaypartCodeId": 4,
+    "DaypartTypeId": 0,
+    "EndTimeSeconds": 2788,
+    "IsEndTimeModified": false,
+    "IsStartTimeModified": false,
+    "Restrictions": {
+      "AffiliateRestrictions": null,
+      "GenreRestrictions": null,
+      "ProgramRestrictions": null,
+      "ShowTypeRestrictions": null
+    },
+    "StartTimeSeconds": 1499,
     "WeightingGoalPercent": null
   }
 ]

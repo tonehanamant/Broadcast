@@ -1,4 +1,5 @@
 ﻿using ApprovalTests;
+using ApprovalTests.Reporters;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using IntegrationTests.Common;
@@ -442,16 +443,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void OrderPlanDaypartsCorrectly()
         {
-            var planDayparts = new List<PlanDaypartDto>
+            var planDayparts = new List<PlanDaypart>
             {
-                new PlanDaypartDto{ DaypartCodeId = 1, StartTimeSeconds = 0, EndTimeSeconds = 2000 },
-                new PlanDaypartDto{ DaypartCodeId = 2, StartTimeSeconds = 1500, EndTimeSeconds = 2788 },
-                new PlanDaypartDto{ DaypartCodeId = 3, StartTimeSeconds = 2788, EndTimeSeconds = 3500 },
-                new PlanDaypartDto{ DaypartCodeId = 4, StartTimeSeconds = 3500, EndTimeSeconds = 3600 },
-                new PlanDaypartDto{ DaypartCodeId = 4, StartTimeSeconds = 1500, EndTimeSeconds = 3500 },
-                new PlanDaypartDto{ DaypartCodeId = 4, StartTimeSeconds = 1500, EndTimeSeconds = 2788 },
+                new PlanDaypart { DaypartCodeId = 1, StartTimeSeconds = 0, EndTimeSeconds = 2000, FlightDays = new List<int> { 1 } },
+                new PlanDaypart { DaypartCodeId = 2, StartTimeSeconds = 1500, EndTimeSeconds = 2788, FlightDays = new List<int> { 1 } },
+                new PlanDaypart { DaypartCodeId = 3, StartTimeSeconds = 2788, EndTimeSeconds = 3500, FlightDays = new List<int> { 1 } },
+                new PlanDaypart { DaypartCodeId = 4, StartTimeSeconds = 3500, EndTimeSeconds = 3600, FlightDays = new List<int> { 1 } },
+                new PlanDaypart { DaypartCodeId = 4, StartTimeSeconds = 1500, EndTimeSeconds = 3500, FlightDays = new List<int> { 1 } },
+                new PlanDaypart { DaypartCodeId = 4, StartTimeSeconds = 1499, EndTimeSeconds = 2788, FlightDays = new List<int> { 3 } },
+                new PlanDaypart { DaypartCodeId = 4, StartTimeSeconds = 1500, EndTimeSeconds = 2788, FlightDays = new List<int> { 2 } }
             };
 
             var daypartDefaults = new List<DaypartDefaultDto>

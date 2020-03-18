@@ -113,4 +113,14 @@ namespace Services.Broadcast.Entities.Plan
             }
         }
     }
+
+    public class PlanDaypart : PlanDaypartDto
+    {
+        /// <summary>
+        /// The same days as on a plan at the moment
+        /// There are some plans to extend dayparts functionality
+        /// This property is needed to be able to implement sorting by days
+        /// </summary>
+        public List<int> FlightDays { get; set; }
+    }
 }
