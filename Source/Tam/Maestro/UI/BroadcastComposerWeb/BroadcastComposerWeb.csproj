@@ -638,6 +638,10 @@
     <Content Include="Views\Maintenance\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BroadcastJobScheduler\BroadcastJobScheduler.csproj">
+      <Project>{5aa3c8d6-975a-4b60-9d7b-f30c6ac118d4}</Project>
+      <Name>BroadcastJobScheduler</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common.Clients\Common.Clients.csproj">
       <Project>{b984aaac-0379-4ddc-9a55-ef7f047d2103}</Project>
       <Name>Common.Clients</Name>

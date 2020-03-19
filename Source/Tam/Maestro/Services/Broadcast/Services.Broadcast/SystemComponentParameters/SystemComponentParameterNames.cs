@@ -297,6 +297,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "RelativePathToMarketCoveragesFile"; }
         }
 	 
+		public static string RunLongRunningJobsInWebServiceEnabled  
+		{
+            get { return "RunLongRunningJobsInWebServiceEnabled"; }
+        }
+	 
 		public static string ScxGenerationFolder  
 		{
             get { return "ScxGenerationFolder"; }

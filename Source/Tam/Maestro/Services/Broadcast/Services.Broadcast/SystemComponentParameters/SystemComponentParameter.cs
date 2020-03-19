@@ -345,6 +345,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.RelativePathToMarketCoveragesFile); }
         }
 	 
+		public static bool RunLongRunningJobsInWebServiceEnabled  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.RunLongRunningJobsInWebServiceEnabled); }
+        }
+	 
 		public static string ScxGenerationFolder  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>

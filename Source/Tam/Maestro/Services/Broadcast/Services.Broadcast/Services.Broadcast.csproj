@@ -313,7 +313,6 @@
     <Compile Include="ApplicationServices\Plan\PlanBuyingService.cs" />
     <Compile Include="ApplicationServices\ProgramGuideService.cs" />
     <Compile Include="ApplicationServices\ProgramService.cs" />
-    <Compile Include="ApplicationServices\RecurringJobsFactory.cs" />
     <Compile Include="ApplicationServices\Security\UserService.cs" />
     <Compile Include="ApplicationServices\SharedFolderService.cs" />
     <Compile Include="ApplicationServices\ShowTypeService.cs" />
