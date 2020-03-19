@@ -208,6 +208,24 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             return body.ToString();
         }
 
+        protected override string _GetNoInventoryToProcessNotificationEmailBody(int jobId)
+        {
+            var job = _InventoryProgramsByFileJobsRepository.GetJob(jobId);
+            var inventoryFile = _InventoryFileRepository.GetInventoryFileById(job.InventoryFileId);
+
+            var body = new StringBuilder();
+            body.AppendLine("Hello,");
+            body.AppendLine();
+            body.AppendLine($"A ProgramGuide Interface file was not exported because not inventory was found to process.");
+            body.AppendLine();
+            body.AppendLine($"\tInventory File Id : {inventoryFile.Id}");
+            body.AppendLine($"\tInventory File Name : {inventoryFile.FileName}");
+            body.AppendLine($"\tInventory Source : {inventoryFile.InventorySource.Name}");
+            body.AppendLine();
+            body.AppendLine($"Have a nice day.");
+            return body.ToString();
+        }
+
         protected override string _GetExportFileName(int jobId)
         {
             var job = _InventoryProgramsByFileJobsRepository.GetJob(jobId);

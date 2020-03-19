@@ -81,6 +81,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         protected abstract string _GetExportedFileFailedNotificationEmailBody(int jobId);
 
+        protected abstract string _GetNoInventoryToProcessNotificationEmailBody(int jobId);
+
+
         protected abstract string _GetExportFileName(int jobId);
 
         internal void OnDiagnosticMessageUpdate(int jobId, string message)
@@ -357,6 +360,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 {
                     var message = "Job ending because no manifest records found to process.";
                     jobsRepo.SetJobCompleteWarning(jobId, message, message);
+                    _ReportNoInventoryToProcess(jobId);
                     return processDiagnostics;
                 }
 
@@ -441,6 +445,21 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             var priority = MailPriority.Normal;
             var subject = "Broadcast Inventory Programs - ProgramGuide Interface Export file available";
             var body = _GetExportedFileReadyNotificationEmailBody(jobId, filePath);
+
+            var toEmails = _GetProcessingBySourceResultReportToEmails();
+            if (toEmails?.Any() != true)
+            {
+                throw new InvalidOperationException($"Failed to send notification email.  Email addresses are not configured correctly.");
+            }
+
+            _EmailerService.QuickSend(false, body, subject, priority, toEmails);
+        }
+
+        private void _ReportNoInventoryToProcess(int jobId)
+        {
+            var priority = MailPriority.Normal;
+            var subject = "Broadcast Inventory Programs - No inventory to process.";
+            var body = _GetNoInventoryToProcessNotificationEmailBody(jobId);
 
             var toEmails = _GetProcessingBySourceResultReportToEmails();
             if (toEmails?.Any() != true)
