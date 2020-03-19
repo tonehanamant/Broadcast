@@ -200,7 +200,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             _ConvertImpressionsToRawFormat(plan);
 
-            plan.TargetUniverse = _NsiUniverseService.GetAudienceUniverseForMediaMonth(plan.ShareBookId, plan.AudienceId);
             _CalculateHouseholdDeliveryData(plan);
             _CalculateSecondaryAudiencesDeliveryData(plan);
             _SetPlanVersionNumber(plan);

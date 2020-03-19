@@ -2184,6 +2184,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 TargetCPM = 12m,
                 TargetImpressions = 100d,
                 TargetCPP = 12m,
+                TargetUniverse = 111222d,
                 Currency = PlanCurrenciesEnum.Impressions,
                 TargetRatingPoints = 100d,
                 CoverageGoalPercent = 80.5,
