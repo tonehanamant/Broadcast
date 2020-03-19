@@ -73,7 +73,7 @@ namespace Common.Services
                             lMessage.Subject);
 
                         lMessage.To.Clear();
-                        string[] lTos = whiteList.Split(new char[] { ';' });
+                        string[] lTos = whiteList.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
                         foreach (string lTo in lTos)
                             lMessage.To.Add(new MailAddress(lTo));
 
