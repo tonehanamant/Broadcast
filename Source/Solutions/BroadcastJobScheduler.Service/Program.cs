@@ -17,12 +17,11 @@ namespace BroadcastJobScheduler.Service
         {
             log4net.Config.XmlConfigurator.Configure();
 
-            LogHelper.Logger.Info("Broadcast background job scheduler starting.");
+            LogHelper.Logger.Info("Broadcast background job scheduler starting."); 
 
             // Initialize BroadcastApplicationServiceFactory UnityContainer instance so it's available
             // on method OnActionExecuting for the ViewControllerBase.
             var instance = BroadcastApplicationServiceFactory.Instance;
-
 #if DEBUG
             var s = new JobSchedulerService();
             s.Startup();
