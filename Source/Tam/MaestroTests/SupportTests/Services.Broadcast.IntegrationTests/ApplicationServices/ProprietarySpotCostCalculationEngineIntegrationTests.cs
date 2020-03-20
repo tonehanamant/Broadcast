@@ -13,6 +13,7 @@ using static Services.Broadcast.Entities.Enums.ProposalEnums;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Category("short_running")]
     public class ProprietarySpotCostCalculationEngineIntegrationTests
     {
         private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietarySpotCostCalculationEngine>();

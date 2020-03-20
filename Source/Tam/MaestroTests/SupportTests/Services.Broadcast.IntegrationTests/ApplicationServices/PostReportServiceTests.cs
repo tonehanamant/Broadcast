@@ -17,7 +17,7 @@ using Tam.Maestro.Common.DataLayer;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
-    [UseReporter(typeof(DiffReporter))]
+    [Category("long_running")] // marking as a long-running because we are currently not working in this area
     public class PostReportServiceTests
     {
         private readonly IPostReportService _PostReportService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostReportService>();

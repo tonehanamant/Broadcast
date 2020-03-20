@@ -17,6 +17,7 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
 {
     [TestFixture]
+    [Category("short_running")]
     public class PlanAggregatorUnitTests
     {
         [Test]

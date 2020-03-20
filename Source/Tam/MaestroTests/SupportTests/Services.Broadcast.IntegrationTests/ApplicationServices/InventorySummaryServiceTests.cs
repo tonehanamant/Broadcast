@@ -52,6 +52,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventorySummaries_CNN_WithLogo()
         {
             const string fileName = @"CNN.jpg";
@@ -80,6 +81,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventorySummaries_OpenMarket()
         {
             using (new TransactionScopeWrapper())
@@ -111,6 +113,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void SavesDiginetInventoryFileManifests_WithDaypartCodes_WithoutFullHours()
         {
             using (new TransactionScopeWrapper())
@@ -134,6 +137,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventorySummaries_Diginet()
         {
             using (new TransactionScopeWrapper())
@@ -157,6 +161,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventorySummaries_ProprietaryOAndO()
         {
             var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
@@ -169,6 +174,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void GetInventorySummaries_ProprietaryOAndO_WithCache()
         {
             const int inventorySourceId = 10;
@@ -197,6 +203,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void AggregateInventorySummaryData_Syndication()
         {
             const int inventorySourceId = 13;
@@ -227,6 +234,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventorySummaryDetailsTest()
         {
             using (new TransactionScopeWrapper())
@@ -250,6 +258,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventoryUnitsTest()
         {
             var inventorySourceId = 4; // TTWN
@@ -264,6 +273,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ReturnsUnits_WhenRatingsAreProcessed()
         {
             using (new TransactionScopeWrapper())
@@ -283,6 +293,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void DoesNotReturnUnits_WhenRatingsAreNotProcessed()
         {
             using (new TransactionScopeWrapper())
@@ -302,6 +313,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void DoesNotReturnUnits_WhenTwoFilesAreUploaded_ButLastOneWithoutRatingsProcessed()
         {
             using (new TransactionScopeWrapper())
@@ -322,6 +334,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventoryQuartersBySourceAndDaypartCodeTest()
         {
             using (new TransactionScopeWrapper())
@@ -336,6 +349,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetDaypartDefaultTest()
         {
             var daypartCodes = _InventorySummaryService.GetDaypartDefaults(nbcOAndO_InventorySourceId);
@@ -353,6 +367,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventorySourcesTest()
         {
             var inventoryCards = _InventorySummaryService.GetInventorySources();
@@ -362,6 +377,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventoryQuartersTest()
         {
             var inventoryCards = _InventorySummaryService.GetInventoryQuarters(new DateTime(2019, 04, 01));
@@ -371,6 +387,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventorySummariesInventorySourceTest()
         {
             var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
@@ -383,6 +400,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventorySummariesInventorySourceNoDataTest()
         {
             var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
@@ -395,6 +413,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventorySummariesQuarterTest()
         {
             var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
@@ -411,6 +430,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventorySummariesWithOpenMarketTest()
         {
             var request = new InventorySummaryFilterDto
@@ -430,6 +450,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventorySummaryOpenMarketTest()
         {
             var request = new InventorySummaryFilterDto
@@ -450,6 +471,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventorySummariesWithSyndicationTest()
         {
             var request = new InventorySummaryFilterDto
@@ -472,6 +494,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [TestCase("NBCU Syn")]
         [TestCase("WB Syn")]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventorySummary_Syndication(string inventorySourceName)
         {
             using (ApprovalResults.ForScenario(inventorySourceName))
@@ -496,6 +519,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventorySummaryFilterByDaypartCodeIdTest()
         {
             var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
@@ -513,6 +537,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventorySummarySourceTypes()
         {
             var sourceTypes = _InventorySummaryService.GetInventorySourceTypes();
@@ -527,6 +552,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [TestCase(InventorySourceTypeEnum.ProprietaryOAndO, 1, 2019)]
         [TestCase(InventorySourceTypeEnum.Syndication, 1, 2018)]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventorySummariesFilterBySourceTypeTest(InventorySourceTypeEnum inventorySourceType, int quarterNumber, int quarterYear)
         {
             using (ApprovalResults.ForScenario(inventorySourceType, quarterNumber, quarterYear))
@@ -547,6 +573,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ProprietaryOAndO_CanAggregateData_HutIsNull()
         {
             using (var trx = new TransactionScopeWrapper())

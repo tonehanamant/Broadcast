@@ -8,6 +8,7 @@ using Tam.Maestro.Common.DataLayer;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Category("short_running")]
     public class DaypartTypeServiceTests
     {
         private readonly IDaypartTypeService _DaypartTypeService = IntegrationTestApplicationServiceFactory.GetApplicationService<IDaypartTypeService>();

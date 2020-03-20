@@ -9,6 +9,7 @@ using Services.Broadcast.Repositories;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Category("short_running")]
     public class ImpressionAdjustmentEngineIntegrationTests
     {
         [Test]

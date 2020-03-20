@@ -9,6 +9,7 @@ using Tam.Maestro.Common.DataLayer;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Category("short_running")]
     public class GenreServiceIntegrationTests
     {
         private const int MAESTRO_ID = (int)GenreSourceEnum.Maestro;

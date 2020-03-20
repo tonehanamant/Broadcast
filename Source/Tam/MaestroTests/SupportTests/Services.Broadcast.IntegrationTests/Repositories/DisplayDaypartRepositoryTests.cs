@@ -10,6 +10,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 namespace Services.Broadcast.IntegrationTests.Repositories
 {
     [TestFixture]
+    [Category("short_running")]
     public class DisplayDaypartRepositoryTests
     {
         [Test]

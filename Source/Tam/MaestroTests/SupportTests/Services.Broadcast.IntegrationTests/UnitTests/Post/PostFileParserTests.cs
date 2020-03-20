@@ -10,6 +10,7 @@ using System.Linq;
 namespace Services.Broadcast.IntegrationTests.UnitTests.Post
 {
     [TestFixture]
+    [Category("short_running")]
     public class PostFileParserTests
     {
         private PostFileRow _ValidRow;

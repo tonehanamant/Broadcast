@@ -13,6 +13,7 @@ using Common.Services.Extensions;
 namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 {
     [TestFixture]
+    [Category("short_running")]
     public class CampaignValidatorUnitTests
     {
         [Test]

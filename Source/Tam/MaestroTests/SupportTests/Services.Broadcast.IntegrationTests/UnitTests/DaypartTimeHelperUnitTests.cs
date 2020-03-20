@@ -10,6 +10,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 namespace Services.Broadcast.IntegrationTests.UnitTests
 {
     [TestFixture]
+    [Category("short_running")]
     public class DaypartTimeHelperUnitTests
     {
         [Test]

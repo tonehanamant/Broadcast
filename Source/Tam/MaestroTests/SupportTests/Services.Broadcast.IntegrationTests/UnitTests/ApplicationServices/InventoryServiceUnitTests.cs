@@ -19,6 +19,7 @@ using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
+    [Category("short_running")]
     public class InventoryServiceUnitTests
     {
         private readonly Mock<IDataRepositoryFactory> _BroadcastDataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();

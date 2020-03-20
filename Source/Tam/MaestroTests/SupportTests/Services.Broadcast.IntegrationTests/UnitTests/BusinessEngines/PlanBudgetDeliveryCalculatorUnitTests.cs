@@ -12,6 +12,7 @@ using System;
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 {
     [TestFixture]
+    [Category("short_running")]
     public class PlanBudgetDeliveryCalculatorUnitTests
     {
         private PlanBudgetDeliveryCalculator _PlanBudgetDeliveryCalculator;

@@ -12,6 +12,7 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 namespace Services.Broadcast.IntegrationTests.UnitTests
 {
     [TestFixture]
+    [Category("short_running")]
     public class ProgramScrubbingEngineTests
     {
         private readonly IProgramScrubbingEngine _ScrubbingEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IProgramScrubbingEngine>();

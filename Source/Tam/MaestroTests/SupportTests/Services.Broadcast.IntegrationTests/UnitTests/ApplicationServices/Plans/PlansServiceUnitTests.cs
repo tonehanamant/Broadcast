@@ -26,6 +26,7 @@ using Tam.Maestro.Services.ContractInterfaces;
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {
     [TestFixture]
+    [Category("short_running")]
     public class PlansServiceUnitTests
     {
         private PlanService _PlanService;

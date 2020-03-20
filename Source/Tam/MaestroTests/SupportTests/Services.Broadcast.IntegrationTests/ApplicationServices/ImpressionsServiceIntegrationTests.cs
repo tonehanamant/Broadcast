@@ -23,6 +23,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void AddProjectedImpressionsForComponentsToManifests_AudienceHasNoReturn()
         {
             const int testFileId = 233551;
@@ -37,6 +38,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void AddProjectedImpressionsForComponentsToManifests_AudienceHasReturn()
         {
             const int testFileId = 233551;
@@ -54,6 +56,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void AddProjectedImpressionsUsingTwoBooksForComponentsToManifests_CrossingMidnight()
         {
             const int testFileId = 233551;
@@ -78,6 +81,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void AddProjectedImpressionsUsingSingleBookForComponentsToManifests_CrossingMidnight()
         {
             const int testFileId = 233551;

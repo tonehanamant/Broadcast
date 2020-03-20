@@ -12,6 +12,7 @@ using Services.Broadcast.Repositories;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 {
+    [Category("short_running")]
     public class TrackingEngineUnitTests
     {
         private TrackingEngine _TrackingEngine;

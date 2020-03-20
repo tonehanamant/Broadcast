@@ -196,7 +196,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void OpenMarketPricingGuide()
         {
             using (new TransactionScopeWrapper())
@@ -214,7 +213,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void OpenMarketPricingGuide_HasMarketsNotSelected()
         {
             using (new TransactionScopeWrapper())
@@ -231,7 +229,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void CanGetOpenMarketPricingGuideWithProgramsGroupedByDaypart()
         {
             using (new TransactionScopeWrapper())
@@ -249,7 +246,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void CanGetOpenMarketPricingGuideWithIncludeGenreCriteria()
         {
             using (new TransactionScopeWrapper())
@@ -267,7 +263,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void CanGetOpenMarketPricingGuideWithExcludeGenreCriteria()
         {
             using (new TransactionScopeWrapper())
@@ -285,7 +280,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void CanGetOpenMarketPricingGuideWithMultipleIncludeGenreCriteria()
         {
             using (new TransactionScopeWrapper())
@@ -303,7 +297,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void CanGetOpenMarketPricingGuideWithAllocationGoals()
         {
             using (new TransactionScopeWrapper())
@@ -323,7 +316,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void CanGetOpenMarketPricingGuideWithAllocationGoalsMultiplePrograms()
         {
             using (new TransactionScopeWrapper())
@@ -524,7 +516,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Category("Impressions")]
         public void TotalsAreUpdatedWhenApplyingFilter()
         {
             var request = new PricingGuideOpenMarketInventoryRequestDto
@@ -871,7 +862,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void SavePricingGuideAllocations()
         {
             const int proposalDetailId = 9978;
@@ -930,7 +920,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void GetPricingGuideWithIncludedMarket()
         {
             using (new TransactionScopeWrapper())
@@ -952,7 +941,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void SetsTotalsForPricingGrid()
         {
             var request = new PricingGuideOpenMarketInventoryRequestDto
@@ -973,7 +961,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void GetPricingGuideWithExcludedMarkets()
         {
             using (new TransactionScopeWrapper())
@@ -1023,7 +1010,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void GetPricingGuideMultipleIncludeMarkets()
         {
             using (new TransactionScopeWrapper())
@@ -1066,7 +1052,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void GetPricingGuideMultipleIncludeMarketsNoRemaningCoverage()
         {
             using (new TransactionScopeWrapper())
@@ -1109,7 +1094,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void GetPricingGuideFilterCpmShouldReachGoal()
         {
             using (new TransactionScopeWrapper())
@@ -1166,8 +1150,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
-        [Category("2book")]
         public void UpdatesOpenMarketPricingGuideMarkets()
         {
             var request = new PricingGuideOpenMarketInventoryRequestDto
@@ -1188,8 +1170,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
-        [Category("2book")]
         public void SavesAllocatedSpots_ForPricingMarkets()
         {
             var request = new PricingGuideOpenMarketInventoryRequestDto
@@ -1216,7 +1196,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void GetPricingGuideAllocateCoverageWithGoals()
         {
             using (new TransactionScopeWrapper())
@@ -1248,7 +1227,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void GetPricingGuideWithBudgetGoalAndOpenMarketShare()
         {
             using (new TransactionScopeWrapper())
@@ -1278,7 +1256,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void GetPricingGuideWithImpressionGoalAndOpenMarketShare()
         {
             using (new TransactionScopeWrapper())
@@ -1308,7 +1285,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void GetPricingGuideWithBothGoalAndOpenMarketShare()
         {
             using (new TransactionScopeWrapper())
@@ -1339,7 +1315,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void UpdatesTotalsWithPassedProprietaryCpms()
         {
             var request = new PricingGuideOpenMarketInventoryRequestDto

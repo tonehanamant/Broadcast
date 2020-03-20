@@ -11,6 +11,7 @@ using Tam.Maestro.Common.DataLayer;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Category("short_running")]
     public class PlanBuyingServiceIntegrationTests
     {
         private readonly IPlanBuyingService _PlanBuyingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanBuyingService>();

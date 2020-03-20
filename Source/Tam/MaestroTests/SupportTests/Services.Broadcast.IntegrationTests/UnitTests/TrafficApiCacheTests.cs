@@ -11,6 +11,7 @@ using Services.Broadcast.Clients;
 namespace Services.Broadcast.IntegrationTests.UnitTests
 {
     [TestFixture]
+    [Category("short_running")]
     public class TrafficApiCacheTests
     {
         [Test]

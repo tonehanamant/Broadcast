@@ -10,6 +10,7 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Category("short_running")]
     public class PostingTypesServiceIntegrationTests
     {
         private readonly IPostingTypeService _PostingTypeService;

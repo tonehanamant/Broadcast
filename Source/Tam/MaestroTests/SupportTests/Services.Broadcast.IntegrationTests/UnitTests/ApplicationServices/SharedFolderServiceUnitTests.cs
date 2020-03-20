@@ -15,6 +15,7 @@ using System.IO;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
+    [Category("short_running")]
     public class SharedFolderServiceUnitTests
     {
         private readonly ISharedFolderService _SharedFolderService;

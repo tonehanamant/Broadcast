@@ -33,6 +33,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void QueueInventoryScheduleMergeJob_FileNotExist()
         {
             const int invalidFileId = -27;
@@ -41,6 +42,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void ProcessInventoryProgramsJob_JobNotExist()
         {
             const int invalidJobId = -27;
@@ -50,6 +52,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void QueueProcessInventoryProgramsByFileJob()
         {
             var fileId = 233317;
@@ -67,6 +70,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void QueueProcessInventoryProgramsBySourceJob()
         {
             var sourceId = 1;
@@ -86,6 +90,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void QueueProcessInventoryProgramsBySourceJob_AsGroupWithSuccess()
         {
             var sourceId = 1;
@@ -116,6 +121,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void QueueProcessInventoryProgramsBySourceJob_AsGroupWithError()
         {
             var sourceId = 1;

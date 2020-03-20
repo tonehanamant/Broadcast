@@ -36,6 +36,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void QueuePricingJobTest()
         {
             using (new TransactionScopeWrapper())
@@ -60,6 +61,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetCurrentPricingExecutionNoJobQueuedTest()
         {
             using (new TransactionScopeWrapper())
@@ -80,6 +82,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetCurrentPricingExecutionTest()
         {
             using (new TransactionScopeWrapper())
@@ -105,6 +108,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetCurrentPricingExecutionFailedTest()
         {
             using (new TransactionScopeWrapper())
@@ -134,6 +138,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetCurrentProcessingPricingExecution_WithCompletedJobs()
         {
             var currentDate = new DateTime(2019, 11, 4);
@@ -167,6 +172,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetCurrentQueuedPricingExecution_WithCompletedJobs()
         {
             var currentDate = new DateTime(2019, 11, 4);
@@ -227,6 +233,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetPlanPricingRunsTest()
         {
             using (new TransactionScopeWrapper())
@@ -239,6 +246,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void RunPricingJobTest()
         {
             using (new TransactionScopeWrapper())
@@ -296,6 +304,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void RunPricingJobTest_CalculateAdjustedBudgetAndCPM()
         {
             using (new TransactionScopeWrapper())
@@ -354,6 +363,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetUnitCaps()
         {
             var unitCaps = _PlanPricingService.GetUnitCaps();
@@ -362,6 +372,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetPlanPricingDefaults()
         {
             var ppDefaults = _PlanPricingService.GetPlanPricingDefaults();
@@ -370,6 +381,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void GetPricingInventoryTest()
         {
             var result = _PlanPricingService.GetPricingInventory(1197, new PricingInventoryGetRequestParametersDto());
@@ -378,6 +390,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetPlanPricingParametersTest()
         {
             using (new TransactionScopeWrapper())
@@ -420,6 +433,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavePricingResultsTest()
         {
             using (new TransactionScopeWrapper())
@@ -474,6 +488,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void GetPricingAggregatedResultsTest()
         {
             using (new TransactionScopeWrapper())
@@ -532,6 +547,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void GetPricingAggregatedResultsCalculatePricingCpmTest()
         {
             using (new TransactionScopeWrapper())
@@ -591,6 +607,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavePricingRequestTest()
         {
             using (new TransactionScopeWrapper())

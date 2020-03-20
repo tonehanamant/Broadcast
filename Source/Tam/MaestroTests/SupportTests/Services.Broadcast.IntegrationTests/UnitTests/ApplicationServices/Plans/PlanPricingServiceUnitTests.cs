@@ -25,6 +25,7 @@ using Common.Services;
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {
     [TestFixture]
+    [Category("short_running")]
     public class PlanPricingServiceUnitTests
     {
         private readonly Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;

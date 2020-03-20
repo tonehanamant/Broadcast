@@ -18,6 +18,7 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.InventoryProgramsProcessing
 {
     [TestFixture]
+    [Category("short_running")]
     public class InventoryProgramsResultImportUnitTests
     {
         private Mock<IInventoryRepository> _InventoryRepo = new Mock<IInventoryRepository>();

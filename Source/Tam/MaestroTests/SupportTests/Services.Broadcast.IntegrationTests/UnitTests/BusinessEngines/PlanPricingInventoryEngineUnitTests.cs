@@ -21,6 +21,7 @@ using IntegrationTests.Common;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 {
+    [Category("short_running")]
     public class PlanPricingInventoryEngineUnitTests
     {
         private readonly PlanPricingInventoryEngineTestClass _PlanPricingInventoryEngine;

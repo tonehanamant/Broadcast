@@ -4,6 +4,7 @@ using Services.Broadcast.ApplicationServices;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
+    [Category("short_running")]
     public class ProjectionBooksService
     {
         private readonly IProjectionBooksService _projectionBooksService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProjectionBooksService>();

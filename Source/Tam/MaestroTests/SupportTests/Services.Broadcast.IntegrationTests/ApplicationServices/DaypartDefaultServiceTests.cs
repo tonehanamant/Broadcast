@@ -9,6 +9,7 @@ using Services.Broadcast.Entities;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Category("short_running")]
     public class DaypartDefaultServiceTests
     {
         private readonly IDaypartDefaultService _DaypartDefaultService = IntegrationTestApplicationServiceFactory.GetApplicationService<IDaypartDefaultService>();

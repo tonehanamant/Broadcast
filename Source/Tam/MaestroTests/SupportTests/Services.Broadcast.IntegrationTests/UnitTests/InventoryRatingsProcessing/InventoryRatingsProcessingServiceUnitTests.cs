@@ -20,6 +20,7 @@ using Services.Broadcast.Repositories;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.InventoryRatingsProcessing
 {
+    [Category("short_running")]
     public class InventoryRatingsProcessingServiceUnitTests
     {
         #region Ensure ProcessInventoryRatingsJob Enqueued

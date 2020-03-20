@@ -5,6 +5,7 @@ using Services.Broadcast.BusinessEngines;
 namespace Services.Broadcast.IntegrationTests.UnitTests
 {
     [TestFixture]
+    [Category("short_running")]
     public class ProposalMathTests
     {
         [TestCase(.5, .5, 1000)]

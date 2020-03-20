@@ -54,6 +54,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void InventoryFileLoad_OpenMarket_NegativeDemoValue()
         {
             const string fileName = "Open Market negative demo value.xml";
@@ -82,6 +83,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void InventoryFileLoad_OpenMarket_Extended_CallLetters()
         {
             const string fileName = "Open Market- Extended Call letter.xml";
@@ -110,6 +112,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void InventoryFileLoad_OpenMarket()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -149,6 +152,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void InventoryFileLoad_IsProprietaryFIle()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -163,6 +167,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void CanLoadOpenMarketInventoryFileWithAvailLineWithPeriods()
         {
             using (new TransactionScopeWrapper())
@@ -194,6 +199,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void CanLoadOpenMarketInventoryFile_WithDayDetailedPeriodAttribute()
         {
             using (new TransactionScopeWrapper())
@@ -224,6 +230,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void CanLoadOpenMarketInventoryFile_WithProgramNameLengthLongerThan63Symbols()
         {
             using (new TransactionScopeWrapper())
@@ -286,6 +293,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         [ExpectedException(typeof(BroadcastDuplicateInventoryFileException), ExpectedMessage = "The selected rate file has already been loaded or is already loading", MatchType = MessageMatch.Contains)]
         public void ThrowsExceptionWhenLoadingSameInventoryFileAgain()
         {
@@ -297,6 +305,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void CanLoadGenres()
         {
             using (new TransactionScopeWrapper())
@@ -308,6 +317,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void FindContacts()
         {
             var contactQueryString = "rogelio";
@@ -328,6 +338,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void ImportNewStationContact()
         {
             using (new TransactionScopeWrapper())
@@ -392,6 +403,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void LoadsInventoryFileWithUnknownSpotLength()
         {
             using (new TransactionScopeWrapper())
@@ -416,6 +428,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void OpenMarket_InvalidFile()
         {
             using (new TransactionScopeWrapper())
@@ -438,6 +451,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void CanLoadProgramInventoryFileWithSimplePeriods() //XML structure that is not using DetailedPeriod
         {
             using (new TransactionScopeWrapper())
@@ -459,6 +473,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void CannotLoadProgramWhenTheSameAlreadyExists()
         {
             //Should report no errors anymore since we are skipping existing records. 
@@ -487,6 +502,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void LoadInventoryFileWithOverlapingFlightWeeks()
         {
             var service = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
@@ -511,6 +527,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void CanLoadOpenMarketInventoryFileWithDifferentSpotLengths()
         {
             using (new TransactionScopeWrapper())
@@ -535,6 +552,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void CanLoadOpenMarketInventoryFile_WhenStationHasNoAudiences()
         {
             using (new TransactionScopeWrapper())
@@ -1020,6 +1038,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CanLoadInitialRatesData()
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
@@ -1233,6 +1252,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void CanConvert30sRateTo15sRate()
         {
             var result = _InventoryService.ConvertRateForSpotLength(10, 15);
@@ -1240,6 +1260,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void StationConflictsUpdateConflictTest()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -1260,6 +1281,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void HasSpotsAllocatedTest()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -1333,6 +1355,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("long_running")]
         public void CanLoadHudsonOpenMarketInventoryFile()
         {
             using (new TransactionScopeWrapper())
@@ -1355,6 +1378,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void CanLoadOpenMarketInventoryFileWithoutDuplicatingStationContacts()
         {
             using (new TransactionScopeWrapper())
@@ -1383,6 +1407,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void CanLoadInventoryFileAndFillAllSpotLegnthsWhenSpotLengthIs30()
         {
             using (new TransactionScopeWrapper())
@@ -1416,6 +1441,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void CanLoadInventoryFileAndFillOnlyOneSpotLegnth()
         {
             using (new TransactionScopeWrapper())
@@ -1489,6 +1515,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CanGetOpenMarketUploadHistory()
         {
             var inventorySourceId = 1; //OpenMarket
@@ -1514,6 +1541,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SuccessfullyLoadsOpenMarketFile_MultithreadingTesting()
         {
             using (new TransactionScopeWrapper())
@@ -1541,6 +1569,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CanGetOpenMarketUploadHistoryWithQuarterFilter()
         {
             var inventorySourceId = 1; //OpenMarket
@@ -1566,6 +1595,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CanGetProprietaryUploadHistory()
         {
             var inventorySourceId = 4; // TTWN
@@ -1591,6 +1621,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CanGetProprietaryUploadHistoryWithQuarterFIlter()
         {
             var inventorySourceId = 4; // TTWN
@@ -1616,6 +1647,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CanGetDiginetUploadHistory()
         {
             var inventorySourceId = 20; // COZI
@@ -1641,6 +1673,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CanImportDiginetFileThatContainsUnmappedStations()
         {
             var inventorySourceId = 20; // COZI
@@ -1666,6 +1699,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CanGetUploadHistoryQuartersOpenMarket()
         {
             // Open Market.
@@ -1683,6 +1717,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CanGetUploadHistoryQuartersProprietary()
         {
             // TTWN.
@@ -1722,6 +1757,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("long_running")]
         public void OpenMarket_SaveErrorFileToDisk()
         {
             const string fileName = @"WilkesBarre_4Q18_InvalidFile.xml";
@@ -1745,6 +1781,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void OpenMarket_ExtractData_RowsProcessed()
         {
             const string fileName = @"Fresno_4Q18_ValidFile.xml";
@@ -1781,6 +1818,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void OpenMarket_SaveLargeFile()
         {
             const string fileName = @"Cadent Q2 News.xml";

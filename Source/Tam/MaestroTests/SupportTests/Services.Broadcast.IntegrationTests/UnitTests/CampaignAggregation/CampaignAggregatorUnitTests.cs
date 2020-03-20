@@ -15,6 +15,7 @@ using System.Linq;
 namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
 {
     [TestFixture]
+    [Category("short_running")]
     public class CampaignAggregatorUnitTests
     {
         [Test]

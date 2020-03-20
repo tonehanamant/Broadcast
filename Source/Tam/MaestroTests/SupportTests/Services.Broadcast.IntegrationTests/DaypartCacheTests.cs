@@ -12,6 +12,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 namespace Services.Broadcast.IntegrationTests
 {
     [TestFixture]
+    [Category("short_running")]
     public class DaypartCacheTests
     {
         [Test]

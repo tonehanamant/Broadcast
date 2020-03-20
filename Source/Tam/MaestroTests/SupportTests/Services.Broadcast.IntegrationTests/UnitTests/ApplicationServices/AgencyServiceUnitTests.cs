@@ -11,6 +11,7 @@ using ApprovalTests;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
+    [Category("short_running")]
     public class AgencyServiceUnitTests
     {
         [Test]

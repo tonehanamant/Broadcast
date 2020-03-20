@@ -13,6 +13,7 @@ using Tam.Maestro.Common.DataLayer;
 namespace Services.Broadcast.IntegrationTests.Repositories
 {
     [TestFixture]
+    [Category("short_running")]
     public class PlanSummaryRepositoryTests
     {
         private readonly IPlanRepository _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();

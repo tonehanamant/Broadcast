@@ -46,6 +46,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavesBarterInventoryFile()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat.xlsx";
@@ -109,6 +110,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Barter_ValidFormat_SpotLengthWithColon()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat_SpotLengthWithColon.xlsx";
@@ -117,6 +119,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Barter_SavesManifests_SingleBook()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat_SingleBook.xlsx";
@@ -125,6 +128,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Barter_SavesManifests_TwoBooks()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat_TwoBooks.xlsx";
@@ -142,6 +146,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Barter_ValidationErrors()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_DataLines file with missed values.xlsx";
@@ -150,6 +155,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Barter_InvalidFileFormat()
         {
             const string fileName = @"1Chicago WLS Syn 4Q16 UNKNOWN.xml";
@@ -170,6 +176,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("long_running")]
         public void Barter_ExtractData_PRI5390()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_BadFormats_PRI5390.xlsx";
@@ -196,6 +203,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Barter_SaveBarterInventoryFile_PRI5667()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_BadFormats_PRI5667.xlsx";
@@ -204,6 +212,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Barter_SaveBarterInventoryFile_InvalidDaypart()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_DataLines file with invalid daypart.xlsx";
@@ -212,6 +221,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Barter_SaveBarterInventoryFile_SingleDataColumn()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_SingleDataColumn.xlsx";
@@ -220,6 +230,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Barter_SaveBarterInventoryFile_DateRangeIntersecting()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_DateRangeIntersecting.xlsx";
@@ -228,6 +239,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void OAndO_NotValidFile1()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_InvalidFile1.xlsx";
@@ -254,6 +266,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void OAndO_NotValidFile2()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_InvalidFile2.xlsx";
@@ -262,6 +275,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void OAndO_NotValidFile3()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_InvalidFile3.xlsx";
@@ -270,6 +284,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void OAndO_NotValidFile4()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_InvalidFile4.xlsx";
@@ -278,6 +293,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void OAndO_WeekIsOutOfValidDateInterval()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_WeekIsOutOfValidDateInterval.xlsx";
@@ -286,6 +302,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void OAndO_WeekIsSpecifiedSeveralTimes()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_WeekIsSpecifiedSeveralTimes.xlsx";
@@ -294,6 +311,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavesOAndOInventoryFile()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_ValidFile1.xlsx";
@@ -302,6 +320,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavesOAndOInventoryFileManifests()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_ValidFile1.xlsx";
@@ -310,6 +329,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavesOAndOInventoryFileManifests_EmptyAndSummaryRows()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_ValidFile2.xlsx";
@@ -318,6 +338,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavesOAndOInventoryFileManifests_NoHut()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_ValidFile3_NoHut.xlsx";
@@ -326,6 +347,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavesOAndOInventoryFileManifests_OAndO_PRI7393_DaypartParsingBug()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_PRI7393.xlsx";
@@ -334,6 +356,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavesOAndOInventoryFileManifests_OAndO_PRI7410_DaypartParsingBug()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_PRI7410.xlsx";
@@ -342,6 +365,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void OAndO_NoStationHeaderCell()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_NoStationHeaderCell.xlsx";
@@ -350,6 +374,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void OAndO_No_HH_HeaderCell()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_No_HH_HeaderCell.xlsx";
@@ -358,6 +383,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void OAndO_UnknownAudience()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_UnknownAudience.xlsx";
@@ -366,6 +392,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void OAndO_WeekIsMissing()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_WeekIsMissing.xlsx";
@@ -374,6 +401,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void OAndO_NotValidWeek()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_NotValidWeek.xlsx";
@@ -382,6 +410,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void OAndO_NoMediaWeekFound()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_NoMediaWeekFound.xlsx";
@@ -390,6 +419,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void OAndO_MissingData1()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_MissingData1.xlsx";
@@ -398,6 +428,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void OAndO_NoWeeksStartHeaderCell()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_NoWeeksStartHeaderCell.xlsx";
@@ -406,6 +437,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Barter_SendFileToDataLake()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat.xlsx";
@@ -437,6 +469,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SaveBarterInventoryFile_DuplicateDataError_ForecastDb_TwoBooks()
         {
             const string fileName = @"ProprietaryDataFiles\DuplicateData_ForecastDB_TwoBooks.xlsx";
@@ -445,6 +478,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SaveBarterInventoryFile_DuplicateDataError_ForecastDb_SingleBook()
         {
             const string fileName = @"ProprietaryDataFiles\DuplicateData_ForecastDB_SingleBook.xlsx";
@@ -453,6 +487,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Syndication_ValidFile()
         {
             const string fileName = @"ProprietaryDataFiles\Syndication_ValidFile1.xlsx";
@@ -461,6 +496,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Syndication_ValidFile2()
         {
             const string fileName = @"ProprietaryDataFiles\Syndication_ValidFile2.xlsx";
@@ -469,6 +505,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Syndication_ValidFile3()
         {
             const string fileName = @"ProprietaryDataFiles\Syndication_ValidFile3.xlsx";
@@ -477,6 +514,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Syndication_ValidFile4_HasDemoColumns()
         {
             const string fileName = @"ProprietaryDataFiles\Syndication_ValidFile4.xlsx";
@@ -485,6 +523,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Syndication_ValidFile5_HasDemoColumnsBeforeAudience()
         {
             const string fileName = @"ProprietaryDataFiles\Syndication_ValidFile5.xlsx";
@@ -493,6 +532,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Syndication_InvalidFile1()
         {
             const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile1.xlsx";
@@ -501,6 +541,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Syndication_InvalidFile2()
         {
             const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile2.xlsx";
@@ -509,6 +550,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Syndication_InvalidFile3()
         {
             const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile3.xlsx";
@@ -517,6 +559,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Syndication_InvalidFile4()
         {
             const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile4.xlsx";
@@ -525,6 +568,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Syndication_InvalidFile5()
         {
             const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile5.xlsx";
@@ -533,6 +577,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Syndication_InvalidFile6()
         {
             const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile6.xlsx";
@@ -541,6 +586,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Syndication_InvalidFile7()
         {
             const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile7.xlsx";
@@ -549,6 +595,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Syndication_InvalidFile8_DuplicateLines()
         {
             const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile8.xlsx";
@@ -557,6 +604,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Syndication_InvalidFile10_DuplicateAudiences()
         {
             const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile10.xlsx";
@@ -565,6 +613,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavesDiginetInventoryFile()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile1.xlsx";
@@ -601,6 +650,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavesDiginetInventoryFileManifests_WithSpacesInAudience()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile3.xlsx";
@@ -623,6 +673,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavesManifests_WhenAudienceThatCanBeMappedIsSpecified()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile4.xlsx";
@@ -631,6 +682,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavesManifests_ButSkipsDefaultDemoAudiences()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile5.xlsx";
@@ -639,6 +691,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavesManifests_ButSkipsEmptyDemoAudiences()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_PRI8905_ValidFile.xlsx";
@@ -647,6 +700,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Diginet_PRI8905_InvalidFile()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_PRI8905_InvalidFile.xlsx";
@@ -655,6 +709,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Diginet_InvalidFile1()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile1.xlsx";
@@ -663,6 +718,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Diginet_InvalidFile2()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile2.xlsx";
@@ -671,6 +727,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Diginet_InvalidFile3()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile3.xlsx";
@@ -679,6 +736,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Diginet_InvalidFile4()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile4.xlsx";
@@ -687,6 +745,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Diginet_InvalidFile5()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile5.xlsx";
@@ -695,6 +754,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Diginet_InvalidFile6()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile6.xlsx";
@@ -703,6 +763,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Diginet_InvalidFile7()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile7.xlsx";
@@ -711,6 +772,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Diginet_InvalidFile8()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile8.xlsx";
@@ -719,6 +781,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Diginet_InvalidFile9()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile9.xlsx";
@@ -727,6 +790,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Diginet_InvalidFile10()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile10.xlsx";
@@ -735,6 +799,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Diginet_InvalidFile11()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_InvalidFile11.xlsx";
@@ -742,6 +807,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("long_running")]
         public void Barter_SaveErrorFileToDisk()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_BadFormats.xlsx";
@@ -908,6 +974,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void DownloadErrorFiles()
         {
             const string fileName = @"Diginet_InvalidFile1.xlsx";

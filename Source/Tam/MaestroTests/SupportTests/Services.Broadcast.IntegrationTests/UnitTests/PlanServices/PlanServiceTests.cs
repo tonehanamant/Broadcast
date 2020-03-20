@@ -20,7 +20,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 {
     [TestFixture]
-    [UseReporter(typeof(DiffReporter))]
+    [Category("short_running")]
     public class PlanServiceTests
     {
         private readonly IPlanService planService;

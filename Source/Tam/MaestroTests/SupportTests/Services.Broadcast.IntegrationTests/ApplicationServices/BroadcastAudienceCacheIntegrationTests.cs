@@ -7,6 +7,7 @@ using Services.Broadcast.Cache;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Category("short_running")]
     public class BroadcastAudienceCacheIntegrationTests
     {
         private IBroadcastAudiencesCache _BroadcastAudiencesCache = IntegrationTestApplicationServiceFactory.GetApplicationService<IBroadcastAudiencesCache>();

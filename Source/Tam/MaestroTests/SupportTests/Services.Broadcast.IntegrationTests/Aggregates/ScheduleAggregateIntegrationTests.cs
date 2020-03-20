@@ -9,6 +9,7 @@ using System;
 namespace Services.Broadcast.IntegrationTests.Aggregates
 {
     [TestFixture]
+    [Category("short_running")]
     public class ScheduleAggregateIntegrationTests
     {
         private readonly IScheduleAggregateFactoryService _ScheduleAggregateFactoryService = 

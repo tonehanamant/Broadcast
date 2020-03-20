@@ -11,6 +11,7 @@ using System.Net.Mail;
 namespace Services.Broadcast.IntegrationTests
 {
     [TestFixture]
+    [Category("short_running")]
     public class EmailerServiceTests
     {
         [Test]

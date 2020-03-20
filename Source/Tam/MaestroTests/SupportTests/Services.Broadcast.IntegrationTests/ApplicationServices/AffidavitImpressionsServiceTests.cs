@@ -16,6 +16,7 @@ using Tam.Maestro.Common.DataLayer;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Category("long_running")] // marking as a long-running because we are currently not working in this area
     public class AffidavitImpressionsServiceTests
     {
         private readonly IImpressionsService _AffidavitImpressionsService;
@@ -27,7 +28,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void RecalculateAffidavitImpressionsForProposalDetailTest()
         {
             var proposalRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
@@ -49,7 +49,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("Impressions")]
         public void CalculateAffidavitImpressionsForAffidavitFile()
         {
             var affidavitRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory

@@ -8,6 +8,7 @@ using Services.Broadcast.Repositories;
 namespace Services.Broadcast.IntegrationTests.Repositories
 {
     [TestFixture]
+    [Category("short_running")]
     public class ScheduleRepositoryTests
     {
         private IScheduleRepository _ScheduleRepository =

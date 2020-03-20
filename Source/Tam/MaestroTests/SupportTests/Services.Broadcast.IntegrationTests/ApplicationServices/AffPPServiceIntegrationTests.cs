@@ -24,6 +24,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     /// AffidavitPostProcessingServiceIntegrationTests
     /// </summary>
     [TestFixture]
+    [Category("long_running")] // marking as a long-running because we are currently not working in this area
     public class AffPPServiceIntegrationTests
     {
         private readonly IAffidavitPostProcessingService _AffidavitPostProcessingService;
@@ -59,7 +60,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Category("Impressions")]
         [UseReporter(typeof(DiffReporter))]
         public void AffPP_ValidFileContent_WithNullColumns()
         {

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 {
+    [Category("short_running")]
     public class PlanPricingInventorySourceSortEngineUnitTests
     {
         [Test]

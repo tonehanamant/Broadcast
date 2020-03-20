@@ -12,6 +12,7 @@ using Services.Broadcast.IntegrationTests.Stubs;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
+    [Category("short_running")]
     public class AdvertiserServiceUnitTests
     {
         [Test]

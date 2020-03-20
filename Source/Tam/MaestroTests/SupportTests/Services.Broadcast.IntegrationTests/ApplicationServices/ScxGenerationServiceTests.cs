@@ -50,6 +50,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void ScxGenerationQueueJobTest()
         {
             using (new TransactionScopeWrapper())
@@ -73,6 +74,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ScxGenerationProcessJobTest()
         {
             using (new TransactionScopeWrapper())
@@ -100,6 +102,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ScxGenerationProcessJobFileResultTest()
         {
             using (new TransactionScopeWrapper())
@@ -131,6 +134,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void ScxGenerationGetQueuedJobsTest()
         {
             using (new TransactionScopeWrapper())
@@ -154,6 +158,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ScxGenerationGetHistoryTest()
         {
             const int inventorySourceId = 5;
@@ -193,6 +198,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ScxGenerationGetHistoryTestWithFailedFileGeneration()
         {
             const int inventorySourceId = 5;
@@ -244,6 +250,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ScxGenerationDownloadFileTest()
         {
             const int inventorySourceId = 5;
@@ -286,6 +293,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void ScxGenerationGetHistoryWithQueuedJobsTest()
         {
             const int inventorySourceId = 7;

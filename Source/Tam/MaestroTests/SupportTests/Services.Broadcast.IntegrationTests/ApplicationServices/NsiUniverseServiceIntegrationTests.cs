@@ -6,6 +6,7 @@ using Services.Broadcast.ApplicationServices;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Category("short_running")]
     public class NsiUniverseServiceIntegrationTests
     {
         private readonly INsiUniverseService _NsiUniverseService = IntegrationTestApplicationServiceFactory.GetApplicationService<INsiUniverseService>();

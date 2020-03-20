@@ -5,6 +5,7 @@ using System;
 namespace Services.Broadcast.IntegrationTests
 {
     [TestFixture]
+    [Category("short_running")]
     public class MediaMonthAndWeekAggregateTests
     {
         private MediaMonthAndWeekAggregate _MediaMonthAndWeekAggregate;

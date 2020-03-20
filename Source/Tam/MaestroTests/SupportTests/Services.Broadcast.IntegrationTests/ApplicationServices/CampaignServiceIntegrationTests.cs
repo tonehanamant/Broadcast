@@ -44,6 +44,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetCampaignsTest()
         {
             using (new TransactionScopeWrapper())
@@ -66,6 +67,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetCampaignsFilteredByStatusTest()
         {
             using (new TransactionScopeWrapper())
@@ -82,6 +84,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void GetCampaignsFilteredByStatusWorking()
         {
             using (new TransactionScopeWrapper())
@@ -124,6 +127,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetCampaignById()
         {
             // Data already exists for campaign id 2 : campaign, summary, plan
@@ -138,6 +142,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetCampaignById_WithoutPlans()
         {
             // Data already exists for campaign id 5 : campaign
@@ -152,6 +157,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void CreateCampaignValidCampaignTest()
         {
             using (new TransactionScopeWrapper())
@@ -164,6 +170,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void CanNotUpdateLockedCampaign()
         {
             const string expectedMessage = "The chosen campaign has been locked by IntegrationUser";
@@ -202,6 +209,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void CreateCampaignNameMaxLengthTest()
         {
             const int maxNameLength = 255;
@@ -217,6 +225,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void CreateCampaignNotesMaxLengthTest()
         {
             const int maxNotesLength = 1024;
@@ -232,6 +241,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void UpdateCampaignTest()
         {
             using (new TransactionScopeWrapper())
@@ -292,6 +302,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void CreateCampaignInvalidAdvertiserIdTest()
         {
             using (new TransactionScopeWrapper())
@@ -309,6 +320,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetQuartersTest()
         {
             using (new TransactionScopeWrapper())
@@ -320,6 +332,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetQuartersWithPlanStatusTest()
         {
             using (new TransactionScopeWrapper())
@@ -334,6 +347,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [TestCase("      ")]
         [TestCase("\t")]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void CreateCampaignInvalidCampaignNameTest(string campaignName)
         {
             using (new TransactionScopeWrapper())
@@ -350,6 +364,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetCampaignsWithFilters()
         {
             using (new TransactionScopeWrapper())
@@ -375,6 +390,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetStatuses()
         {
             using (new TransactionScopeWrapper())
@@ -386,6 +402,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetStatuses_CampaignWithoutSummary()
         {
             using (new TransactionScopeWrapper())
@@ -400,6 +417,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetStatuses_WithoutParams()
         {
             using (new TransactionScopeWrapper())
@@ -411,6 +429,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetStatuses_WithCampaignStatusNull()
         {
             using (new TransactionScopeWrapper())
@@ -430,6 +449,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void TriggerCampaignAggregation()
         {
             // Data already exists for campaign id 2 : campaign, summary, plan
@@ -445,6 +465,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void ProcessCampaignAggregation()
         {
             // Data already exists for campaign id 2 : campaign, summary, plan
@@ -460,6 +481,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void ProcessCampaignAggregation_WithoutPlans()
         {
             // Data already exists for campaign id 2 : campaign, summary
@@ -476,6 +498,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void ProcessAggregation_WithError()
         {
             // this ID should have no backing data.
@@ -574,6 +597,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CampaignExport_ContractOnlyPlans()
         {
             using (new TransactionScopeWrapper())
@@ -597,6 +621,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CampaignExport_ContractOnlyPlansWithDaypartsSorting()
         {
             using (new TransactionScopeWrapper())
@@ -620,6 +645,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CampaignExport_GenerateCampaignReport()
         {
             var now = new DateTime(2020, 1, 1);
@@ -680,6 +706,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void CampaignExport_ReservedPlanWithConstraints()
         {
             using (new TransactionScopeWrapper())
@@ -703,6 +730,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void CampaignExport_ContractTypeWithRestrictions()
         {
             using (new TransactionScopeWrapper())
@@ -725,6 +753,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void CampaignExport_ValidateExportType_Contracted()
         {
             using (new TransactionScopeWrapper())
@@ -744,6 +773,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void CampaignExport_ValidateGuaranteedAudience()
         {
             using (new TransactionScopeWrapper())
@@ -763,6 +793,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void CampaignExport_ValidateSecondaryAudiences()
         {
             using (new TransactionScopeWrapper())
@@ -782,6 +813,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void CampaignExport_ValidateExportType_ContractedWithProposal()
         {
             using (new TransactionScopeWrapper())
@@ -801,6 +833,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void CampaignExport_ValidateExportType_ContractedWithOther()
         {
             using (new TransactionScopeWrapper())
@@ -820,6 +853,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void CampaignExport_ValidateExportType_ProposalOrOther()
         {
             using (new TransactionScopeWrapper())
@@ -839,6 +873,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void CampaignExport_ValidateExportType_Other()
         {
             using (new TransactionScopeWrapper())
@@ -859,6 +894,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void CampaignExport_SecondaryAudiences_SinglePlan()
         {
             using (new TransactionScopeWrapper())
@@ -882,6 +918,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void CampaignExport_SecondaryAudiences_MultiplePlans()
         {
             using (new TransactionScopeWrapper())
@@ -905,6 +942,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void CampaignExport_PlansWith13And14Weeks()
         {
             using (new TransactionScopeWrapper())
@@ -927,6 +965,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void CampaignExport_DuplicateHiatusDaysOnFlowChart()
         {
             using (new TransactionScopeWrapper())
@@ -948,6 +987,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void CampaignExport_ProposalTab_DataBasedOnImpressions()
         {
             using (new TransactionScopeWrapper())
@@ -983,6 +1023,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ProgramLineupExport()
         {
             const int planId = 1197;

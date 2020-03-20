@@ -24,6 +24,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void LoadUniversesTest()
         {
             using (new TransactionScopeWrapper())
@@ -41,6 +42,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void GetNtiUniverse()
         {
             var ntiUniverse = _NtiUniverseService.GetLatestNtiUniverseByYear(AUDIENCE_ID, 2019);
@@ -49,6 +51,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void GetNtiUniverse_UsePreviousYear()
         {
             var ntiUniverse = _NtiUniverseService.GetLatestNtiUniverseByYear(AUDIENCE_ID, 2020);
@@ -57,6 +60,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void GetNtiUniverse_DoesntHaveNtiData()
         {
             Assert.That(() => _NtiUniverseService.GetLatestNtiUniverseByYear(AUDIENCE_ID, 2004), Throws.TypeOf<Exception>().With.Message.EqualTo("NTI universe not found."));

@@ -35,6 +35,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void RunNoDataTest()
         {
             using (new TransactionScopeWrapper())
@@ -51,6 +52,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void RunTest()
         {
             using (new TransactionScopeWrapper())
@@ -87,6 +89,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void RunWithHiatusDayTest()
         {
             using (new TransactionScopeWrapper())
@@ -103,6 +106,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void RunSpotLengthTest()
         {
             using (new TransactionScopeWrapper())
@@ -119,6 +123,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void RunAffilitateContentRestrictionTest()
         {
             using (new TransactionScopeWrapper())
@@ -143,6 +148,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void RunAffilitateContentRestrictionUpdateMonthDetailsTest()
         {
             using (new TransactionScopeWrapper())
@@ -176,6 +182,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void GetInventoryForPlanFlightDaysTest()
         {
             using (new TransactionScopeWrapper())
@@ -196,6 +203,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void RunWithProgramWithMultipleAudiencesTest()
         {
             using (new TransactionScopeWrapper())

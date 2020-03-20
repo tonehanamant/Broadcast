@@ -7,6 +7,7 @@ using System;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
+    [Category("short_running")]
     public class PostingBookServiceIntegrationTests
     {
         private readonly IPostingBookService _PostingBookService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostingBookService>();

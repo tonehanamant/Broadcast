@@ -7,6 +7,7 @@ using System.Linq;
 namespace Services.Broadcast.IntegrationTests.UnitTests.Post
 {
     [TestFixture]
+    [Category("short_running")]
     public class PostFileParserFactoryTests
     {
         private readonly IPostFileParserFactory _PostFileParserFactory =

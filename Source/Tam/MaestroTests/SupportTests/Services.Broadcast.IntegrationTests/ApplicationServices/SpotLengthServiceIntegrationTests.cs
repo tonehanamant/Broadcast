@@ -13,6 +13,7 @@ using System;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Category("short_running")]
     public class SpotLengthServiceIntegrationTests
     {
         private readonly ISpotLengthService _SpotLengthService;

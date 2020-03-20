@@ -9,6 +9,7 @@ using System.Collections.Generic;
 namespace Services.Broadcast.IntegrationTests.UnitTests
 {
     [TestFixture]
+    [Category("short_running")]
     public class DaytimeCleanupServiceTests
     {
         private DaypartCleanupService _daypartCleanupService;

@@ -6,6 +6,7 @@ using System;
 namespace Services.Broadcast.IntegrationTests.UnitTests
 {
     [TestFixture]
+    [Category("short_running")]
     public class EnumHelperUnitTests
     {
         #region GetEnum

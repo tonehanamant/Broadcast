@@ -31,6 +31,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Barter_GetPendingBarterInventoryFile()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_GetPendingBarterInventoryFile.xlsx";
@@ -56,6 +57,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Barter_ExtractData_BadFormats()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_BadFormats.xlsx";
@@ -79,6 +81,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Barter_ExtractData_PRI5379()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_BadFormats_PRI5379.xlsx";
@@ -102,6 +105,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Barter_ExtractData_MoreBadFormats()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_BadFormats2.xlsx";
@@ -125,6 +129,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Barter_ExtractData_BadFormatsAgain()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_BadFormats3.xlsx";
@@ -148,6 +153,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Parses_DataLines()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Barter_DataLines file with valid data.xlsx";
@@ -165,6 +171,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Barter_MissingUnit()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Barter_DataLines file with invalid unit.xlsx";
@@ -181,6 +188,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Barter_MissingSpotLength()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Barter_DataLines file with invalid spot length.xlsx";
@@ -197,6 +205,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Barter_InvalidUnit()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Barter_DataLines file with invalid unit PRI-5676.xlsx";
@@ -213,6 +222,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Barter_Invalid6_PRI10292()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Barter_invalid6.xlsx";
@@ -230,6 +240,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Barter_InvalidSpotLength()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Barter_DataLines file with invalid spot length PRI-5676.xlsx";
@@ -246,6 +257,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Barter_ReturnsFileProblems_WhenFileHasMissedValues()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Barter_DataLines file with missed values.xlsx";
@@ -262,6 +274,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [ExpectedException(typeof(Exception), ExpectedMessage = "Couldn't find last unit column")]
+        [Category("long_running")]
         public void Barter_DoesNotHaveValidUnitsEndColumn()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Barter_WrongCommentsColumn.xlsx";
@@ -276,6 +289,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Barter_ExtractData_PRI5667()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_BadFormats_PRI5667.xlsx";
@@ -299,6 +313,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void Barter_ExtractData_PRI5980()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_BadFormats_PRI5980.xlsx";
@@ -339,6 +354,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Barter_SaveErrorsToFile()
         {
             var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
@@ -370,6 +386,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Diginet_SaveErrorsToFile()
         {
             var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Diginet };
@@ -401,6 +418,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Diginet_ExtractData_Bounce_Audience()
         {
             var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Diginet };
@@ -432,6 +450,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void OAndO_SaveErrorsToFile()
         {
             var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.ProprietaryOAndO };
@@ -463,6 +482,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Syndicator_SaveErrorsToFile()
         {
             var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Syndication };
@@ -494,6 +514,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Barter_AudienceMap()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Barter_Valid_AudienceMap1.xlsx";
@@ -503,6 +524,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Syndication_AudienceMap()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Syndicator_Valid_AudienceMap1.xlsx";
@@ -512,6 +534,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Diginet_AudienceMap()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Diginet_Valid_AudienceMap1.xlsx";
@@ -521,6 +544,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Diginet_AudienceMap_PRI11102()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Diginet_Bounce_M18+_7.1.19 .xlsx";
@@ -530,6 +554,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Syndicator_AudienceMap_PRI11102()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Syndicator NBCUSyn M35+ 07-01-2019 .xlsx";

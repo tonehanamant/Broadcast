@@ -15,6 +15,7 @@ using Microsoft.Practices.Unity;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Category("short_running")]
     public class ProgramServiceIntegrationTests
     {
         private readonly IProgramService _ProgramService;

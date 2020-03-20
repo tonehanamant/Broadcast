@@ -26,6 +26,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
     /// Test the functionality of the <see cref="DiginetFileImporter"/>
     /// </summary>
     [TestFixture]
+    [Category("short_running")]
     public class DiginetFileImporterUnitTests
     {
         // worksheets are 1-indexed

@@ -10,6 +10,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 {
+    [Category("short_running")]
     public class PlanPricingInventoryQuarterCalculatorEngineUnitTests
     {
         Mock<IQuarterCalculationEngine> _QuarterCalculationEngine = new Mock<IQuarterCalculationEngine>();

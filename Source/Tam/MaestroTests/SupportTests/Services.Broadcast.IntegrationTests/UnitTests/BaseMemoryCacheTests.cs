@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace Services.Broadcast.IntegrationTests.UnitTests
 {
     [TestFixture]
+    [Category("short_running")]
     public class BaseMemoryCacheTests
     {
         private BaseMemoryCache<TestModel> _Sut;

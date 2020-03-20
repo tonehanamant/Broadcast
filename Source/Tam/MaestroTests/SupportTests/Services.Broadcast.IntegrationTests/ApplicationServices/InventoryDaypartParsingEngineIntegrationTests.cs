@@ -17,6 +17,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void ParseSpecificCases()
         {
             var daypartStrings = new List<string>
@@ -31,6 +32,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CanParseCNNDayparts()
         {
             const string fileName = @".\Files\InventoryDaypartParsing\CNN_dayparts.xlsx";
@@ -43,6 +45,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CanParseCNNDayparts_2()
         {
             const string fileName = @".\Files\InventoryDaypartParsing\CNN_dayparts_2.xlsx";
@@ -55,6 +58,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void DoesNotReturnDaypartsWhenDaypartIsInvalid()
         {
             const string fileName = @".\Files\InventoryDaypartParsing\CNN_dayparts_invalid.xlsx";
@@ -67,6 +71,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void DaypartIsValid()
         {
             const string fileName = @".\Files\InventoryDaypartParsing\CNN_dayparts_valid.xlsx";

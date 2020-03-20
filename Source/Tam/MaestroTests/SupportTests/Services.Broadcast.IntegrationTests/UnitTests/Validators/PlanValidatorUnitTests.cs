@@ -17,6 +17,7 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 {
     [TestFixture]
+    [Category("short_running")]
     public class PlanValidatorUnitTest
     {
         private PlanValidatorUnitTestClass _planValidator;

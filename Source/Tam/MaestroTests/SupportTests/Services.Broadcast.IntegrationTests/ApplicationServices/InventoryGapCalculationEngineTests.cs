@@ -11,6 +11,7 @@ using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
+    [Category("short_running")]
     public class InventoryGapCalculationEngineTests
     {
         private readonly IInventoryGapCalculationEngine _InventoryGapCalculationEngine;

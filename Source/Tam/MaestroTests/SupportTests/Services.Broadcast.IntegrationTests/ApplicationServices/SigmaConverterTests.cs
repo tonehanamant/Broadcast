@@ -12,6 +12,7 @@ using Tam.Maestro.Common.DataLayer;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Category("long_running")] // marking as a long-running because we are currently not working in this area
     public class SigmaConverterTests
     {
         private readonly ISigmaConverter _ISigmaConverter;

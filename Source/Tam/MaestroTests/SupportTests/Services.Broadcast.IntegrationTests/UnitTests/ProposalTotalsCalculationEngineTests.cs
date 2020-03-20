@@ -4,6 +4,7 @@ using Services.Broadcast.Entities.DTO;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests
 {
+    [Category("short_running")]
     public class ProposalTotalsCalculationEngineTests
     {
         [Test]

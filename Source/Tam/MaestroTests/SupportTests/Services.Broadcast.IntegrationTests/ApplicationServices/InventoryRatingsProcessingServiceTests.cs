@@ -47,6 +47,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ProcessInventoryRatingsAfterOpenMarketFileLoad()
         {
             const string fileName = @"ImportingRateData\Open Market projected imps.xml";
@@ -70,6 +71,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ProcessInventoryRatingsAfterProprietaryFileLoad()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat_SingleBook.xlsx";
@@ -93,6 +95,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ProcessInventoryRatingsForFileWithExtendedCallLetters()
         {
             const string fileName = @"ProprietaryDataFiles\Barter -Extended Call letters.xlsx";
@@ -116,6 +119,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ProcessInventoryRatingsAfterProprietaryFileLoad_TwoBooks()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat_TwoBooks.xlsx";
@@ -139,6 +143,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ProcessInventoryRatingsAfterProprietaryFileLoad_HH()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat_SingleBook_HH.xlsx";
@@ -162,6 +167,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void ProcessOAndOInventoryWithExtendedCallLetters()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO - Extended call letters.xlsx";
@@ -185,6 +191,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ProcessInventoryRatingsAfterProprietaryFileLoad_OAndO()
         {
             const string fileName = @"ProprietaryDataFiles\OAndO_ValidFile1.xlsx";

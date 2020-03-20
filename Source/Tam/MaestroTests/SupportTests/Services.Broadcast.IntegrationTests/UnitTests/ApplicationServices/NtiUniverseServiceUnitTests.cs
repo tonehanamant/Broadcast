@@ -13,6 +13,7 @@ using System.IO;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
+    [Category("short_running")]
     public class NtiUniverseServiceUnitTests
     {
         private NtiUniverseService _ntiUniverseService;

@@ -20,6 +20,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IRatingForecastService _Sut = IntegrationTestApplicationServiceFactory.GetApplicationService<IRatingForecastService>();
 
         [Test]
+        [Category("long_running")]
         public void GetRatingsCrunchStatus_Works()
         {
             var x = _Sut.GetMediaMonthCrunchStatuses();

@@ -37,6 +37,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void InventoryScxDataPrep()
         {
             using (new TransactionScopeWrapper())
@@ -81,6 +82,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void DoesNotReturnData_ForInventoryWithoutRatings()
         {
             using (new TransactionScopeWrapper())
@@ -122,6 +124,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void InventoryScxFile_ValidateSingleUnitScxObject()
         {
             using (new TransactionScopeWrapper())
@@ -198,6 +201,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void GetInventoryScxDataNbcOAndOTest()
         {
             using (new TransactionScopeWrapper())
@@ -239,6 +243,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void GetInventoryScxDataNbcOAndOTest_Scx()
         {
             using (new TransactionScopeWrapper())

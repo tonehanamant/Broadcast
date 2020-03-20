@@ -15,6 +15,7 @@ using System.Net.Mail;
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
     [TestFixture]
+    [Category("short_running")]
     public class InventoryProgramsProcessingServiceUnitTests
     {
         private const string TEST_USERNAME = "TestUser";

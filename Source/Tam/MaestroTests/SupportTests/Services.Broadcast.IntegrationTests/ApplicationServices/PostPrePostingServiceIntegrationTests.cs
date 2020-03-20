@@ -7,7 +7,7 @@ using Services.Broadcast.ApplicationServices;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
-    [UseReporter(typeof(DiffReporter))]
+    [Category("long_running")] // marking as a long-running because we are currently not working in this area
     public class PostPrePostingServiceIntegrationTests
     {
         [Ignore]

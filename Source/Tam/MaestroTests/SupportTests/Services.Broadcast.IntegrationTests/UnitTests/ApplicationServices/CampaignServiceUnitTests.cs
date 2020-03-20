@@ -26,6 +26,7 @@ using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgra
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
+    [Category("short_running")]
     public class CampaignServiceUnitTests
     {
         private const string _User = "UnitTest_User";

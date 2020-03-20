@@ -22,6 +22,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void MarketService_CanUploadNewCoverageFile()
         {
             using (new TransactionScopeWrapper())
@@ -40,6 +41,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [ExpectedException(typeof(Exception), ExpectedMessage = "Market coverage file already uploaded to the system")]
+        [Category("short_running")]
         public void MarketService_ThrowsException_IfUploadingFileAlreadyUploaded()
         {
             using (new TransactionScopeWrapper())
@@ -58,6 +60,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [ExpectedException(typeof(Exception), ExpectedMessage = "Markets which were not found: Fargo, Cheyenne-Scottsbluff.")]
+        [Category("short_running")]
         public void MarketService_ThrowsException_IfLoadingFileWithNotExistingMarkets()
         {
             const string filename = @".\Files\Market_Coverages_With_Not_Existing_Markets.xlsx";
@@ -67,6 +70,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [ExpectedException(typeof(FileNotFoundException))]
+        [Category("short_running")]
         public void MarketService_ThrowsException_IfCanNotLoadFile()
         {
             const string wrongFileName = @".\Files\WrongFile.xlsx";
@@ -76,6 +80,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void MarketService_GetMarketsWithLatestCoverage()
         {
             var coverages = _MarketService.GetMarketsWithLatestCoverage();

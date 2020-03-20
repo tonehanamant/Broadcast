@@ -10,6 +10,7 @@ using Tam.Maestro.Common.DataLayer;
 namespace Services.Broadcast.IntegrationTests.Repositories
 {
     [TestFixture]
+    [Category("short_running")]
     public class PostRepositoryTests
     {
         IPostRepository _Repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPostRepository>();

@@ -5,6 +5,7 @@ using Tam.Maestro.Common.DataLayer;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Category("short_running")]
     public class StationServiceIntegrationTests
     {
         private readonly IStationService _StationService;

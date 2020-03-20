@@ -14,6 +14,7 @@ using System.Collections.Generic;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [Category("short_running")]
     public class ProgramGuideServiceIntegrationTests
     {
         private IProgramGuideService _ProgramGuideService;

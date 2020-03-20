@@ -22,6 +22,7 @@ using Services.Broadcast.Repositories;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
 {
+    [Category("short_running")]
     public class ScxGenerationServiceUnitTests
     {
         #region Constructor

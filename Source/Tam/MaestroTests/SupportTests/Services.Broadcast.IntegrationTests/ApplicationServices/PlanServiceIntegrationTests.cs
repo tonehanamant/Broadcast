@@ -43,6 +43,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetPlanStatuses()
         {
             var statuses = _PlanService.GetPlanStatuses();
@@ -51,6 +52,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("long_running")]
         public void CreateNewPlan()
         {
             using (new TransactionScopeWrapper())
@@ -65,6 +67,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CreateNewPlan_WithAduDisabled()
         {
             using (new TransactionScopeWrapper())
@@ -82,6 +85,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CreateNewPlan_NullHutBook()
         {
             using (new TransactionScopeWrapper())
@@ -98,6 +102,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("long_running")]
         public void CreateNewDraft()
         {
             using (new TransactionScopeWrapper())
@@ -116,6 +121,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("long_running")]
         public void SavePlan_InvalidMarketCoverage_PRI17598()
         {
             using (new TransactionScopeWrapper())
@@ -138,6 +144,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void SavePlan_InvalidDayparts_DuplicateDayparts()
         {
             using (new TransactionScopeWrapper())
@@ -155,6 +162,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("long_running")]
         public void DeleteDraft()
         {
             using (new TransactionScopeWrapper())
@@ -183,6 +191,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void DeleteDraft_InvalidDraft()
         {
             using (new TransactionScopeWrapper())
@@ -196,6 +205,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetPlanVersion()
         {
             using (new TransactionScopeWrapper())
@@ -210,6 +220,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CanCreateNewPlanWithCanceledStatus()
         {
             using (new TransactionScopeWrapper())
@@ -229,6 +240,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void GetPlanHistory()
         {
             using (new TransactionScopeWrapper())
@@ -266,6 +278,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void GetPlanHistory_WithDraft()
         {
             using (new TransactionScopeWrapper())
@@ -302,6 +315,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CreatingPlanSetsVersionNumber()
         {
             using (new TransactionScopeWrapper())
@@ -320,6 +334,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CreatingNewVersionForPlanSetsVersionNumber()
         {
             using (new TransactionScopeWrapper())
@@ -348,6 +363,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CreatingDraftForPlanDoesntUpdateVersionNumber()
         {
             using (new TransactionScopeWrapper())
@@ -376,6 +392,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("long_running")]
         public void CreatingPlansCheckCampaignAggregation()
         {
             using (new TransactionScopeWrapper())
@@ -408,6 +425,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("long_running")]
         public void CreatingASingleCanceledPlanFiltersCampaignsCorrectly()
         {
             using (new TransactionScopeWrapper())
@@ -444,6 +462,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("long_running")]
         public void CreatingDraftPlanPopulatesGetCampaignFlagsCorrectly()
         {
             using (new TransactionScopeWrapper())
@@ -474,6 +493,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CanCreateNewPlanWithRejectedStatus()
         {
             using (new TransactionScopeWrapper())
@@ -492,6 +512,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void CreatePlan_InvalidSpotLengthId()
         {
             using (new TransactionScopeWrapper())
@@ -506,6 +527,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("long_running")]
         public void CreatePlan_NotExistingProduct()
         {
             const int notExistingProductId = 666;
@@ -523,6 +545,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void CreatePlan_InvalidName()
         {
             using (new TransactionScopeWrapper())
@@ -538,6 +561,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void GetPlan()
         {
             using (new TransactionScopeWrapper())
@@ -568,6 +592,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavePlan()
         {
             using (new TransactionScopeWrapper())
@@ -601,6 +626,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavePlan_WithAduDisabled()
         {
             using (new TransactionScopeWrapper())
@@ -626,6 +652,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavePlanAndRemoveHiatusDays()
         {
             using (new TransactionScopeWrapper())
@@ -654,6 +681,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void SavePlan_WithoutFlightInfo()
         {
             using (new TransactionScopeWrapper())
@@ -670,6 +698,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void SavePlan_WithInvalidFlightDays()
         {
             using (new TransactionScopeWrapper())
@@ -684,6 +713,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void SavePlan_WithInvalidHiatusDays()
         {
             using (new TransactionScopeWrapper())
@@ -702,6 +732,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavePlanWithDayparts()
         {
             using (new TransactionScopeWrapper())
@@ -718,6 +749,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavePlanWithDayparts_WithoutRestrictions()
         {
             using (new TransactionScopeWrapper())
@@ -736,6 +768,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavePlanWithDayparts_WithoutShowTypeRestrictions()
         {
             using (new TransactionScopeWrapper())
@@ -767,6 +800,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavePlanWithDayparts_WithoutGenreRestrictions()
         {
             using (new TransactionScopeWrapper())
@@ -785,6 +819,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavePlanWithDayparts_WithoutProgramRestrictions()
         {
             using (new TransactionScopeWrapper())
@@ -803,6 +838,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavePlanWithDayparts_WithoutAffiliateRestrictions()
         {
             using (new TransactionScopeWrapper())
@@ -820,6 +856,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("long_running")]
         [UseReporter(typeof(DiffReporter))]
         public void SavePlanAddDaypart()
         {
@@ -862,6 +899,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavePlanRemoveDaypart()
         {
             using (new TransactionScopeWrapper())
@@ -882,6 +920,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void SavePlan_WithInvalidWeightingGoalTooLittle()
         {
             using (new TransactionScopeWrapper())
@@ -895,6 +934,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void SavePlan_WithInvalidWeightingGoalTooHigh()
         {
             using (new TransactionScopeWrapper())
@@ -908,6 +948,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("long_running")]
         [UseReporter(typeof(DiffReporter))]
         public void SavePlan_WithSecondaryAudiences()
         {
@@ -927,6 +968,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void SavePlan_WithInvalidSecondaryAudience()
         {
             using (new TransactionScopeWrapper())
@@ -943,6 +985,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void SavePlan_WithInvalidSecondaryAudienceDuplicate()
         {
             using (new TransactionScopeWrapper())
@@ -959,6 +1002,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void SavePlan_WithInvalidFlightNotes()
         {
             using (new TransactionScopeWrapper())
@@ -972,6 +1016,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("long_running")]
         public void SavePlan_NullFlightDays()
         {
             using (new TransactionScopeWrapper())
@@ -989,6 +1034,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavePlan_EmptyFlightDays()
         {
             using (new TransactionScopeWrapper())
@@ -1005,6 +1051,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("long_running")]
         public void PlanAutomaticStatusTransition_ContractedToLive()
         {
             using (new TransactionScopeWrapper())
@@ -1028,6 +1075,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("long_running")]
         public void PlanAutomaticStatusTransition_LiveToComplete()
         {
             using (new TransactionScopeWrapper())
@@ -1052,6 +1100,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetPlanCurrencies()
         {
             var currencies = _PlanService.GetPlanCurrencies();
@@ -1061,6 +1110,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetPlanDeliveryTypes()
         {
             var deliveryTypes = _PlanService.PlanGoalBreakdownTypes();
@@ -1070,6 +1120,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Calculator_TestCase1()
         {
             var result = _PlanService.Calculate(new PlanDeliveryBudget
@@ -1084,6 +1135,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Calculator_TestCase2()
         {
             var result = _PlanService.Calculate(new PlanDeliveryBudget
@@ -1098,6 +1150,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Calculator_TestCase3()
         {
             var result = _PlanService.Calculate(new PlanDeliveryBudget
@@ -1112,6 +1165,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Calculator_TestCase4()
         {
             var result = _PlanService.Calculate(new PlanDeliveryBudget
@@ -1126,6 +1180,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Calculator_TestCase5()
         {
             var result = _PlanService.Calculate(new PlanDeliveryBudget
@@ -1140,6 +1195,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Calculator_TestCase6()
         {
             var result = _PlanService.Calculate(new PlanDeliveryBudget
@@ -1154,6 +1210,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Calculator_TestCase7()
         {
             var result = _PlanService.Calculate(new PlanDeliveryBudget
@@ -1169,6 +1226,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Calculator_TestCase8()
         {
             var result = _PlanService.Calculate(new PlanDeliveryBudget
@@ -1183,6 +1241,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Calculator_TestCase9()
         {
             var result = _PlanService.Calculate(new PlanDeliveryBudget
@@ -1197,6 +1256,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Calculator_TestCase10()
         {
             var result = _PlanService.Calculate(new PlanDeliveryBudget
@@ -1211,6 +1271,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Calculator_TestCase11()
         {
             var result = _PlanService.Calculate(new PlanDeliveryBudget
@@ -1224,6 +1285,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void Calculator_WithoutMediaMonthId()
         {
             using (new TransactionScopeWrapper())
@@ -1239,6 +1301,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void Calculator_WithoutAudienceId()
         {
             using (new TransactionScopeWrapper())
@@ -1254,6 +1317,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void Calculator_InvalidObject()
         {
             using (new TransactionScopeWrapper())
@@ -1270,6 +1334,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void Calculator_InvalidObject2()
         {
             using (new TransactionScopeWrapper())
@@ -1285,6 +1350,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void Calculator_InvalidObject_NegativeValues()
         {
             using (new TransactionScopeWrapper())
@@ -1299,6 +1365,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void SavePlan_WithInvalidStartTime_TooLittle()
         {
             using (new TransactionScopeWrapper())
@@ -1312,6 +1379,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void SavePlan_WithInvalidStartTime_TooMuch()
         {
             using (new TransactionScopeWrapper())
@@ -1325,6 +1393,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void SavePlan_WithInvalidEndTime_TooLittle()
         {
             using (new TransactionScopeWrapper())
@@ -1339,6 +1408,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void SavePlan_WithEmptyCoverageGoal()
         {
             using (new TransactionScopeWrapper())
@@ -1353,6 +1423,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void SavePlan_WithInvalidCoverageGoalTooSmall()
         {
             using (new TransactionScopeWrapper())
@@ -1366,6 +1437,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void SavePlan_WithInvalidCoverageGoalTooBig()
         {
             using (new TransactionScopeWrapper())
@@ -1380,6 +1452,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void SavePlan_WithEmptyBlackoutMarkets()
         {
             using (new TransactionScopeWrapper())
@@ -1412,6 +1485,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void SavePlan_WithEmptyAvailableMarkets()
         {
             using (new TransactionScopeWrapper())
@@ -1426,6 +1500,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void SavePlan_WithInvalidAvailableMarketShareOfVoiceTooSmall()
         {
             using (new TransactionScopeWrapper())
@@ -1439,6 +1514,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void SavePlan_WithInvalidAvailableMarketShareOfVoiceTooBig()
         {
             using (new TransactionScopeWrapper())
@@ -1452,6 +1528,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void SavePlan_WithInvalidEndTime_TooMuch()
         {
             using (new TransactionScopeWrapper())
@@ -1465,6 +1542,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_InvalidRequest()
         {
             using (new TransactionScopeWrapper())
@@ -1474,6 +1552,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_InvalidFlight()
         {
             using (new TransactionScopeWrapper())
@@ -1487,6 +1566,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_InvalidFlightStartDate()
         {
             using (new TransactionScopeWrapper())
@@ -1501,6 +1581,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_CustomDelivery_InitialRequest()
         {
             using (new TransactionScopeWrapper())
@@ -1522,6 +1603,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_OneHiatusDay()
         {
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
@@ -1541,6 +1623,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_WithFlightDays()
         {
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
@@ -1560,6 +1643,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_RoundShareOfVoiceTotal()
         {
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
@@ -1579,6 +1663,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_PRI15094()
         {
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
@@ -1598,6 +1683,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_OneWeekHiatus()
         {
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
@@ -1618,6 +1704,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_CustomDelivery()
         {
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
@@ -1648,6 +1735,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_CustomDelivery_ChangeRatings()
         {
             var request = _GetBaseRequestForCustomWeeklyBreakdown();
@@ -1661,6 +1749,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_CustomDelivery_ChangeImpression()
         {
             var request = _GetBaseRequestForCustomWeeklyBreakdown();
@@ -1673,6 +1762,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_CustomDelivery_ChangePercentage()
         {
             var request = _GetBaseRequestForCustomWeeklyBreakdown();
@@ -1686,6 +1776,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_UpdateHiatusDaysInCustomDelivery()
         {
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
@@ -1729,6 +1820,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_EvenDelivery()
         {
             var request = new WeeklyBreakdownRequest
@@ -1750,6 +1842,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void PlanServiceGetPlanDefaultsTest()
         {
             var defaults = _PlanService.GetPlanDefaults();
@@ -1766,6 +1859,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [TestCase("12/14/2019", "12/16/2019 00:00:00")]
         [TestCase("12/15/2019", "12/16/2019 00:00:00")]
         [TestCase("12/16/2019", "12/23/2019 00:00:00")]
+        [Category("short_running")]
         public void GetCurrentQuarters_VerifyStartDate(string currentDateTimeString, string expectedStartDateTimeString)
         {
             var currentDateTime = DateTime.Parse(currentDateTimeString);
@@ -1779,6 +1873,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetCurrentQuarters()
         {
             // this is a Thursday
@@ -1791,6 +1886,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_OneImpressionPerWeek()
         {
             var request = new WeeklyBreakdownRequest
@@ -1813,6 +1909,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_LessImpressionThenWeeks()
         {
             var request = new WeeklyBreakdownRequest
@@ -1903,6 +2000,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_EvenDelivery_WithADU()
         {
             var request = new WeeklyBreakdownRequest
@@ -1999,6 +2097,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_CustomDelivery_WithADU()
         {
             var request = new WeeklyBreakdownRequest
@@ -2095,6 +2194,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_EvenDelivery_EmptyWeeks()
         {
             var request = new WeeklyBreakdownRequest
@@ -2118,6 +2218,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void Plan_WeeklyBreakdown_CustomDelivery_EmptyWeeks()
         {
             var request = new WeeklyBreakdownRequest

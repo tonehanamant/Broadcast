@@ -48,6 +48,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void ExpiresInventory_OneContractedDaypart_1()
         {
             var effectiveDate = new DateTime(2019, 2, 5);
@@ -57,6 +58,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void ExpiresInventory_OneContractedDaypart_2()
         {
             var effectiveDate = new DateTime(2019, 2, 5);
@@ -66,6 +68,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void ExpiresInventory_OneContractedDaypart_3()
         {
             var effectiveDate = new DateTime(2019, 2, 5);
@@ -75,6 +78,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void ExpiresInventory_OneContractedDaypart_4()
         {
             var effectiveDate = new DateTime(2019, 2, 13);
@@ -84,6 +88,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void ExpiresInventory_OneContractedDaypart_5()
         {
             var effectiveDate = new DateTime(2019, 2, 15);
@@ -93,6 +98,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void ExpiresInventory_OneContractedDaypart_6()
         {
             var effectiveDate = new DateTime(2019, 2, 20);
@@ -102,6 +108,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ExpiresInventory_SeveralContractedDayparts_1()
         {
             var effectiveDate = new DateTime(2018, 10, 5);
@@ -111,6 +118,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ExpiresInventory_SeveralContractedDayparts_2()
         {
             var effectiveDate = new DateTime(2018, 10, 5);
@@ -120,6 +128,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ExpiresInventory_SeveralContractedDayparts_3()
         {
             var effectiveDate = new DateTime(2018, 10, 5);
@@ -129,6 +138,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ExpiresInventory_SeveralContractedDayparts_4()
         {
             var effectiveDate = new DateTime(2018, 10, 13);
@@ -138,6 +148,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ExpiresInventory_SeveralContractedDayparts_5()
         {
             var effectiveDate = new DateTime(2018, 10, 15);
@@ -147,6 +158,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ExpiresInventory_SeveralContractedDayparts_6()
         {
             var effectiveDate = new DateTime(2018, 10, 20);
@@ -156,6 +168,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void ExpiresInventory_WhenAllContractedDaypartsMatchInventory()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile2.xlsx";
@@ -169,6 +182,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void DoesNotExpireInventory_WhenOnlyOneContractedDaypartMatchInventory()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile2.xlsx";
@@ -182,6 +196,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void DoesNotExpireInventory_WhenAdditionalContractedDaypartSpecified()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile2.xlsx";
@@ -195,6 +210,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void StoresHistory_WhenExpiresInventory()
         {
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile2.xlsx";

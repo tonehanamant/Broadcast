@@ -12,6 +12,7 @@ using Services.Broadcast.Cache;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
+    [Category("short_running")]
     public class ProductServiceUnitTests
     {
         [Test]

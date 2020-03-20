@@ -7,6 +7,7 @@ using System;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
 {
+    [Category("short_running")]
     public class CampaignAggregationJobTriggerUnitTests
     {
         [Test]

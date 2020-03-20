@@ -20,6 +20,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.InventoryProgramsProcessing
 {
     [TestFixture]
+    [Category("short_running")]
     public class InventoryProgramsBySourceProcessorUnitTests
     {
         private Mock<IInventoryRepository> _InventoryRepo = new Mock<IInventoryRepository>();

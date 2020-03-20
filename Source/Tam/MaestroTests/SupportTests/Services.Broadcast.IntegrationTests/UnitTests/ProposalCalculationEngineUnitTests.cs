@@ -9,6 +9,7 @@ using Services.Broadcast.Entities.DTO;
 namespace Services.Broadcast.IntegrationTests.UnitTests
 {
     [TestFixture]
+    [Category("short_running")]
     public class ProposalCalculationEngineUnitTests
     {
         private readonly IProposalService _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();

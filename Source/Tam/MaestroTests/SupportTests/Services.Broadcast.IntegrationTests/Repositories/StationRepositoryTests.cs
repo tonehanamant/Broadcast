@@ -11,6 +11,7 @@ using Tam.Maestro.Common.DataLayer;
 namespace Services.Broadcast.IntegrationTests.Repositories
 {
     [TestFixture]
+    [Category("short_running")]
     public class StationRepositoryTests
     {
         /// <summary>
