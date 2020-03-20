@@ -9,6 +9,9 @@ using System;
 using System.Collections.Generic;
 using Services.Broadcast.Entities.Plan;
 using Tam.Maestro.Common.DataLayer;
+using System.Threading.Tasks;
+using System.Linq;
+using Services.Broadcast.Entities;
 
 namespace Services.Broadcast.IntegrationTests.Repositories
 {
@@ -197,6 +200,50 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
             Assert.AreEqual(expectedRecordCountTotal, totalCount);
             Assert.AreEqual(expectedRecordCountWithoutPrograms, withoutProgramsCount);
+        }
+
+        [Test]
+        [Category("long_running")]
+        public void AddNewInventoryGroups_ConcurrentCallsTest()
+        {
+            const int fileId = 236561;
+
+            var repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+            
+            using (new TransactionScopeWrapper())
+            {
+                var groups = repo.GetStationInventoryGroupsByFileId(fileId);
+                var manifestsCountBefore = groups.SelectMany(x => x.Manifests).Count();
+                groups.ForEach(x =>
+                {
+                    x.Id = null;
+                    x.Manifests.ForEach(m => m.Id = null);
+                });
+
+                var file = new InventoryFileBase
+                {
+                    InventoryGroups = groups,
+                    InventorySource = new InventorySource { Id = 1 },
+                    Id = fileId
+                };
+
+                var task1 = Task.Run(() =>
+                {
+                    repo.AddNewInventoryGroups(file);
+                });
+
+                var task2 = Task.Run(() =>
+                {
+                    repo.AddNewInventoryGroups(file);
+                });
+
+                Task.WaitAll(task1, task2);
+                
+                var manifestsCountAfter = repo.GetStationInventoryGroupsByFileId(fileId).SelectMany(x => x.Manifests).Count();
+
+                // we expect the initial number of manifests to be added twice
+                Assert.AreEqual(manifestsCountBefore * 3, manifestsCountAfter);
+            }
         }
 
         private JsonSerializerSettings _GetJsonSettings()
