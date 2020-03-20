@@ -160,7 +160,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.AreEqual(0, setJobCompleteErrorCalled);
 
             // verify directories created
-            Assert.AreEqual(3, createdDirectories.Count);
+            Assert.AreEqual(4, createdDirectories.Count);
 
             // verify the file was exported well
             Assert.AreEqual(1, createdFiles.Count);
@@ -323,7 +323,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.AreEqual(0, setJobCompleteErrorCalled);
 
             // verify directories created
-            Assert.AreEqual(3, createdDirectories.Count);
+            Assert.AreEqual(4, createdDirectories.Count);
 
             // verify the file was exported well
             Assert.AreEqual(1, createdFiles.Count);
@@ -735,7 +735,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.AreEqual(0, setJobCompleteErrorCalled);
 
             // verify directories created
-            Assert.AreEqual(3, createdDirectories.Count);
+            Assert.AreEqual(4, createdDirectories.Count);
 
             // verify the file was exported well
             Assert.AreEqual(1, createdFiles.Count);
@@ -890,7 +890,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.AreEqual(0, setJobCompleteErrorCalled);
 
             // verify directories created
-            Assert.AreEqual(3, createdDirectories.Count);
+            Assert.AreEqual(4, createdDirectories.Count);
 
             // verify the file was exported well
             Assert.AreEqual(1, createdFiles.Count);

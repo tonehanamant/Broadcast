@@ -125,18 +125,21 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         public string ImportInventoryProgramResults(Stream fileStream, string fileName)
         {
+            var success = false;
             var stopWatch = new Stopwatch();
             stopWatch.Start();
 
             var processingLog = new StringBuilder();
             processingLog.AppendLine($"Processing {fileName}");
 
-            var success = false;
-            var deleteBatchSize = _GetDeleteBatchSize();
-            var saveBatchSize = _GetSaveBatchSize();
-
             try
             {
+                var deleteBatchSize = _GetDeleteBatchSize();
+                var saveBatchSize = _GetSaveBatchSize();
+
+                _CreateDirectoriesIfNotExist();
+                _WriteImportFileToInProgressDirectory(fileName, fileStream, processingLog);
+
                 var fileParseSw = new Stopwatch();
                 fileParseSw.Start();
                 var parseResult = _ParseLinesFromFile(fileStream);
@@ -150,7 +153,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                     // Don't log them... it clouds the waters and takes a long time.
                     // maybe aggregate them and report that.
                     //parseResult.Messages.ForEach(m => processingLog.AppendLine(m));
-                    _ArchiveImportFile(success, fileName, fileStream, processingLog);
+
+                    _MoveImportFileFromInProgressToFailedDirectory(fileName, processingLog);
 
                     stopWatch.Stop();
                     processingLog.AppendLine($"Processing took {stopWatch.Elapsed.TotalSeconds} seconds.");
@@ -267,10 +271,11 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 var manifestIds = lineItems.Select(s => s.inventory_id).Distinct().ToList();
                 var manifests = _InventoryRepository.GetStationInventoryManifestsByIds(manifestIds);
                 _SetProgramData(manifests, (message) => processingLog.AppendLine(message));
-
-                success = true;
+                
                 processingLog.AppendLine($"Extracted and saved {totalProgramsExtracted} program records.");
-                _ArchiveImportFile(success, fileName, fileStream, processingLog);
+                success = true;
+                _MoveImportFileFromInProgressToCompletedDirectory(fileName, processingLog);
+
                 stopWatch.Stop();
                 processingLog.AppendLine($"Processing took {stopWatch.Elapsed.TotalSeconds} seconds.");
             }
@@ -280,8 +285,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
                 LogHelper.Logger.Error($"Error caught ingesting results file '{fileName}'.", ex);
                 processingLog.AppendLine($"Error caught : {ex.Message}");
-
-                _ArchiveImportFile(success, fileName, fileStream, processingLog);
+                _MoveImportFileFromInProgressToFailedDirectory(fileName, processingLog);
 
                 stopWatch.Stop();
                 processingLog.AppendLine($"Processing took {stopWatch.Elapsed.TotalSeconds} seconds.");
@@ -290,24 +294,55 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             return processingLog.ToString();
         }
 
-        private void _ArchiveImportFile(bool success, string fileName, Stream fileStream, StringBuilder processingLog)
+        private void _WriteImportFileToInProgressDirectory(string fileName, Stream fileStream, StringBuilder processingLog)
         {
             try
             {
-                _CreateDirectoriesIfNotExist();
-
-                // Save the file
-                var directoryName = success
-                    ? _GetProgramGuideInterfaceCompletedDirectoryPath()
-                    : _GetProgramGuideInterfaceFailedDirectoryPath();
+                var directoryName = _GetProgramGuideInterfaceInProgressDirectoryPath();
                 var filePath = Path.Combine(directoryName, fileName);
                 _FileService.Create(filePath, fileStream);
 
-                processingLog.AppendLine($"File archived to '{filePath}'.");
+                processingLog.AppendLine($"File '{fileName}' saved to '{directoryName}'.");
             }
             catch (Exception e)
             {
-                processingLog.AppendLine($"Error caught attempting to archive the file : {e.Message}");
+                throw new InvalidOperationException($"Error attempting to save file '{fileName}' in failed folder. Message : {e.Message}", e);
+            }
+        }
+
+        private void _MoveImportFileFromInProgressToCompletedDirectory(string fileName, StringBuilder processingLog)
+        {
+            var fromDirectory = _GetProgramGuideInterfaceInProgressDirectoryPath();
+            var fromFilePath = Path.Combine(fromDirectory, fileName);
+            var toDirectory = _GetProgramGuideInterfaceCompletedDirectoryPath();
+
+            try
+            {
+                _FileService.Move(fromFilePath, toDirectory);
+
+                processingLog.AppendLine($"File '{fileName}' moved from to '{toDirectory}'.");
+            }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException($"Error attempting to move file '{fileName}' from to '{fromDirectory}' to '{toDirectory}'. Message : {e.Message}");
+            }
+        }
+
+        private void _MoveImportFileFromInProgressToFailedDirectory(string fileName, StringBuilder processingLog)
+        {
+            var fromDirectory = _GetProgramGuideInterfaceInProgressDirectoryPath();
+            var fromFilePath = Path.Combine(fromDirectory, fileName);
+            var toDirectory = _GetProgramGuideInterfaceFailedDirectoryPath();
+
+            try
+            {
+                _FileService.Move(fromFilePath, toDirectory);
+
+                processingLog.AppendLine($"File '{fileName}' moved from to '{toDirectory}'.");
+            }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException($"Error attempting to move file '{fileName}' from to '{fromDirectory}' to '{toDirectory}'. Message : {e.Message}");
             }
         }
 
@@ -436,6 +471,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         private void _CreateDirectoriesIfNotExist()
         {
             _FileService.CreateDirectory(_GetProgramGuideInterfaceExportDirectoryPath());
+            _FileService.CreateDirectory(_GetProgramGuideInterfaceInProgressDirectoryPath());
             _FileService.CreateDirectory(_GetProgramGuideInterfaceCompletedDirectoryPath());
             _FileService.CreateDirectory(_GetProgramGuideInterfaceFailedDirectoryPath());
         }
@@ -851,6 +887,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         private ProgramsFileParseResult _ParseLinesFromFile(Stream fileStream)
         {
             var result = new ProgramsFileParseResult();
+
+            // reset the file for parsing.
+            fileStream.Position = 0;
             var headerFields = _GetProgramsImportFileHeaderFields();
 
             var reader = new CsvFileReader(headerFields);
@@ -1072,6 +1111,12 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         protected string _GetProgramGuideInterfaceExportDirectoryPath()
         {
             const string dirName = "Export";
+            return Path.Combine(_GetProgramGuideInterfacePath(), dirName);
+        }
+
+        protected string _GetProgramGuideInterfaceInProgressDirectoryPath()
+        {
+            const string dirName = "InProgress";
             return Path.Combine(_GetProgramGuideInterfacePath(), dirName);
         }
 

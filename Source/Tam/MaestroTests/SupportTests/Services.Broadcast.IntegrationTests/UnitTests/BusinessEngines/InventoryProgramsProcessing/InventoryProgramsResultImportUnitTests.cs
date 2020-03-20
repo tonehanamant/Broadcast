@@ -6,7 +6,6 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Entities.ProgramGuide;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
 using System;
@@ -57,9 +56,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
 
             _FileService.Setup(s => s.CreateDirectory(It.IsAny<string>()));
 
-            var fileServiceCreateCalls = new List<string>();
+            var fileServiceCreateCalls = new List<Tuple<string, Stream, long, long>>();
             _FileService.Setup(s => s.Create(It.IsAny<string>(), It.IsAny<Stream>()))
-                .Callback<string, Stream>((s,a) => fileServiceCreateCalls.Add(s));
+                .Callback<string, Stream>((s,a) => fileServiceCreateCalls.Add(new Tuple<string,Stream, long, long>(s,a, a.Length, a.Position)));
+
+            var fileServiceMoveCalls = new List<Tuple<string, string>>();
+            _FileService.Setup(s => s.Move(It.IsAny<string>(), It.IsAny<string>()))
+                .Callback<string, string>((f,t) => fileServiceMoveCalls.Add(new Tuple<string, string>(f,t)))
+                .Returns("moved");
 
             var engine = _GetInventoryProgramsProcessingEngine();
 
@@ -70,7 +74,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Contains("Exported 4 lines from the file."));
             Assert.IsTrue(result.Contains("Extracted and saved 4 program records."));
-            Assert.IsTrue(result.Contains(@"File archived to 'testSettingBroadcastSharedDirectoryPath\ProgramGuideInterfaceDirectory\Completed\Results_ProgramGuideInventoryExportFile_20200307_172832.csv'."));
+            Assert.IsTrue(result.Contains(@"File 'Results_ProgramGuideInventoryExportFile_20200307_172832.csv' moved from to 'testSettingBroadcastSharedDirectoryPath\ProgramGuideInterfaceDirectory\Completed'."));
 
             // validate we deleted
             Assert.AreEqual(3, deleteCalls.Count);
@@ -127,8 +131,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.AreEqual(68399, savedCalls[0][3].EndTime);
 
             // validate we moved the file
+            // created in progress
             Assert.AreEqual(1, fileServiceCreateCalls.Count);
-            Assert.IsTrue(fileServiceCreateCalls[0].Contains("Completed"));
+            Assert.IsTrue(fileServiceCreateCalls[0].Item1.Contains("InProgress"));
+            // length > 0 means there is content to save.
+            Assert.IsTrue(fileServiceCreateCalls[0].Item3 > 0);
+            // position 0 means we are at beginning of the content to save
+            Assert.AreEqual(0, fileServiceCreateCalls[0].Item4);
+            // moved to Completed
+            Assert.AreEqual(1, fileServiceMoveCalls.Count);
+            Assert.IsTrue(fileServiceMoveCalls[0].Item1.Contains("InProgress"));
+            Assert.IsTrue(fileServiceMoveCalls[0].Item2.Contains("Completed"));
         }
 
         [Test]
@@ -157,9 +170,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
 
             _FileService.Setup(s => s.CreateDirectory(It.IsAny<string>()));
 
-            var fileServiceCreateCalls = new List<string>();
+            var fileServiceCreateCalls = new List<Tuple<string, Stream, long, long>>();
             _FileService.Setup(s => s.Create(It.IsAny<string>(), It.IsAny<Stream>()))
-                .Callback<string, Stream>((s, a) => fileServiceCreateCalls.Add(s));
+                .Callback<string, Stream>((s, a) => fileServiceCreateCalls.Add(new Tuple<string, Stream, long, long>(s, a, a.Length, a.Position)));
+
+            var fileServiceMoveCalls = new List<Tuple<string, string>>();
+            _FileService.Setup(s => s.Move(It.IsAny<string>(), It.IsAny<string>()))
+                .Callback<string, string>((f, t) => fileServiceMoveCalls.Add(new Tuple<string, string>(f, t)))
+                .Returns("Completed.");
 
             var engine = _GetInventoryProgramsProcessingEngine();
 
@@ -170,7 +188,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Contains("Exported 4 lines from the file."));
             Assert.IsTrue(result.Contains("Extracted and saved 4 program records."));
-            Assert.IsTrue(result.Contains(@"File archived to 'testSettingBroadcastSharedDirectoryPath\ProgramGuideInterfaceDirectory\Completed\Results_ProgramGuideInventoryExportFile_DaypartQuotes.csv'."));
+            Assert.IsTrue(result.Contains(@"File 'Results_ProgramGuideInventoryExportFile_DaypartQuotes.csv' moved from to 'testSettingBroadcastSharedDirectoryPath\ProgramGuideInterfaceDirectory\Completed'."));
 
             // validate we deleted
             Assert.AreEqual(3, deleteCalls.Count);
@@ -227,8 +245,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.AreEqual(68399, savedCalls[0][3].EndTime);
 
             // validate we moved the file
+            // created in in progress
             Assert.AreEqual(1, fileServiceCreateCalls.Count);
-            Assert.IsTrue(fileServiceCreateCalls[0].Contains("Completed"));
+            Assert.IsTrue(fileServiceCreateCalls[0].Item1.Contains("InProgress"));
+            // length > 0 means there is content to save.
+            Assert.IsTrue(fileServiceCreateCalls[0].Item3 > 0);
+            // position 0 means we are at beginning of the content to save
+            Assert.AreEqual(0, fileServiceCreateCalls[0].Item4);
+            // moved to Completed
+            Assert.AreEqual(1, fileServiceMoveCalls.Count);
+            Assert.IsTrue(fileServiceMoveCalls[0].Item1.Contains("InProgress"));
+            Assert.IsTrue(fileServiceMoveCalls[0].Item2.Contains("Completed"));
         }
 
         [Test]
@@ -242,9 +269,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
 
             _FileService.Setup(s => s.CreateDirectory(It.IsAny<string>()));
-            var fileServiceCreateCalls = new List<string>();
+            var fileServiceCreateCalls = new List<Tuple<string, Stream, long, long>>();
             _FileService.Setup(s => s.Create(It.IsAny<string>(), It.IsAny<Stream>()))
-                .Callback<string, Stream>((s, a) => fileServiceCreateCalls.Add(s));
+                .Callback<string, Stream>((s, a) => fileServiceCreateCalls.Add(new Tuple<string, Stream, long, long>(s, a, a.Length, a.Position)));
+
+            var fileServiceMoveCalls = new List<Tuple<string, string>>();
+            _FileService.Setup(s => s.Move(It.IsAny<string>(), It.IsAny<string>()))
+                .Callback<string, string>((f, t) => fileServiceMoveCalls.Add(new Tuple<string, string>(f, t)))
+                .Returns("Completed.");
 
             var engine = _GetInventoryProgramsProcessingEngine();
 
@@ -256,9 +288,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             //Assert.IsTrue(result.Contains("Could not find required column inventory_id"));
             //Assert.IsTrue(result.Contains("Could not find required column inventory_week_id"));
 
-            // validate we moved the file
+            // validate we saved the failed file in correct place
+            // created in in progress
             Assert.AreEqual(1, fileServiceCreateCalls.Count);
-            Assert.IsTrue(fileServiceCreateCalls[0].Contains("Failed"));
+            Assert.IsTrue(fileServiceCreateCalls[0].Item1.Contains("InProgress"));
+            // length > 0 means there is content to save.
+            Assert.IsTrue(fileServiceCreateCalls[0].Item3 > 0);
+            // position 0 means we are at beginning of the content to save
+            Assert.AreEqual(0, fileServiceCreateCalls[0].Item4);
+            // moved to failed
+            Assert.AreEqual(1, fileServiceMoveCalls.Count);
+            Assert.IsTrue(fileServiceMoveCalls[0].Item1.Contains("InProgress"));
+            Assert.IsTrue(fileServiceMoveCalls[0].Item2.Contains("Failed"));
         }
 
         [Test]
@@ -276,9 +317,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 .Throws(new Exception("TestException from Delete"));
 
             _FileService.Setup(s => s.CreateDirectory(It.IsAny<string>()));
-            var fileServiceCreateCalls = new List<string>();
+            var fileServiceCreateCalls = new List<Tuple<string, Stream, long, long>>();
             _FileService.Setup(s => s.Create(It.IsAny<string>(), It.IsAny<Stream>()))
-                .Callback<string, Stream>((s, a) => fileServiceCreateCalls.Add(s));
+                .Callback<string, Stream>((s, a) => fileServiceCreateCalls.Add(new Tuple<string, Stream, long, long>(s, a, a.Length, a.Position)));
+
+            var fileServiceMoveCalls = new List<Tuple<string, string>>();
+            _FileService.Setup(s => s.Move(It.IsAny<string>(), It.IsAny<string>()))
+                .Callback<string, string>((f, t) => fileServiceMoveCalls.Add(new Tuple<string, string>(f, t)))
+                .Returns("Completed.");
 
             var engine = _GetInventoryProgramsProcessingEngine();
 
@@ -287,9 +333,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
 
             /*** Assert ***/
             Assert.IsTrue(result.Contains("Error caught :"));
-            // validate we moved the file
+            // validate we saved the failed file in correct place
+            // created in In Progress
             Assert.AreEqual(1, fileServiceCreateCalls.Count);
-            Assert.IsTrue(fileServiceCreateCalls[0].Contains("Failed"));
+            Assert.IsTrue(fileServiceCreateCalls[0].Item1.Contains("InProgress"));
+            // length > 0 means there is content to save.
+            Assert.IsTrue(fileServiceCreateCalls[0].Item3 > 0);
+            // position 0 means we are at beginning of the content to save
+            Assert.AreEqual(0, fileServiceCreateCalls[0].Item4);
+            // moved to failed
+            Assert.AreEqual(1, fileServiceMoveCalls.Count);
+            Assert.IsTrue(fileServiceMoveCalls[0].Item1.Contains("InProgress"));
+            Assert.IsTrue(fileServiceMoveCalls[0].Item2.Contains("Failed"));
         }
 
         /// <remarks>Do this after you've setup all your data repository returns</remarks>

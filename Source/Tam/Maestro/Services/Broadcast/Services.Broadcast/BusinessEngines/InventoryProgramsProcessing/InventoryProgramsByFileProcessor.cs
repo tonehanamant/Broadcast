@@ -216,7 +216,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             var body = new StringBuilder();
             body.AppendLine("Hello,");
             body.AppendLine();
-            body.AppendLine($"A ProgramGuide Interface file was not exported because not inventory was found to process.");
+            body.AppendLine($"A ProgramGuide Interface file was not exported because no inventory was found to process.");
             body.AppendLine();
             body.AppendLine($"\tInventory File Id : {inventoryFile.Id}");
             body.AppendLine($"\tInventory File Name : {inventoryFile.FileName}");
