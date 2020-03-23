@@ -40,6 +40,7 @@ namespace BroadcastJobScheduler.JobQueueMonitors
                 "planpricing",
                 "inventoryprogramsprocessing",
                 "scxfilegeneration",
+                "stationsupdate",
                 "default"
             };
         }
