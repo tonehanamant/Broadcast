@@ -247,8 +247,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         private const int oneDay = 1;
         private const int fiveMinutesAsSeconds = 300;
-        private const int twentyFourHoursInSeconds = 86400;
-        private const int fiveMinutesToMidnightAsSeconds = twentyFourHoursInSeconds - fiveMinutesAsSeconds;
+        private const int fiveMinutesToMidnightAsSeconds = BroadcastConstants.OneDayInSeconds - fiveMinutesAsSeconds;
 
         private DateTime _GetEntryEndDate(StationInventoryManifestDaypart daypart, DateTime rangeStartDate)
         {
@@ -263,10 +262,12 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         private int _GetEndTimeInSeconds(int entryDaypartStartTimeAsSeconds)
         {
             var result = entryDaypartStartTimeAsSeconds + fiveMinutesAsSeconds;
-            if (result >= twentyFourHoursInSeconds)
+
+            if (result >= BroadcastConstants.OneDayInSeconds)
             {
-                result = result - twentyFourHoursInSeconds;
+                result = result - BroadcastConstants.OneDayInSeconds;
             }
+
             return result;
         }
     }

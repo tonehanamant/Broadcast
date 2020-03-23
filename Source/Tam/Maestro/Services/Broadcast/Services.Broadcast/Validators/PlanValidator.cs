@@ -269,7 +269,7 @@ namespace Services.Broadcast.Validators
         private void _ValidateDayparts(PlanDto plan)
         {
             const int daySecondsMin = 0;
-            const int daySecondsMax = 86400;
+            const int daySecondsMax = BroadcastConstants.OneDayInSeconds - 1;
             if (plan.Dayparts?.Any() != true)
             {
                 throw new Exception(INVALID_DAYPART_NUMBER);

@@ -1,6 +1,7 @@
 ﻿using Common.Services;
 using Common.Services.ApplicationServices;
 using Services.Broadcast.Extensions;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -210,15 +211,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryDaypartParsing
 
                 #endregion
 
-                if (lDisplayDaypart.StartTime == 86400)
-                {
-                    lDisplayDaypart.StartTime = 0;
-                }
-
-                if (lDisplayDaypart.EndTime == -1)
-                {
-                    lDisplayDaypart.EndTime = 86399;
-                }
+                lDisplayDaypart.StartTime = DaypartTimeHelper.AdjustBoundaryValue(lDisplayDaypart.StartTime);
+                lDisplayDaypart.EndTime = DaypartTimeHelper.AdjustBoundaryValue(lDisplayDaypart.EndTime);
 
                 result = lDisplayDaypart;
             }

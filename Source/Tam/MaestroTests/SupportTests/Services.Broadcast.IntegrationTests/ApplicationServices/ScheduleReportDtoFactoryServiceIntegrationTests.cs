@@ -310,7 +310,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             schedule.DaypartRestriction = new DaypartDto()
             {
                 startTime = 0,
-                endTime = 86400 - 1,
+                endTime = BroadcastConstants.OneDayInSeconds - 1,
                 mon = true,
                 tue = true,
                 wed = true,
@@ -350,7 +350,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             schedule.DaypartRestriction = new DaypartDto()
             {
                 startTime = 0,
-                endTime = 86400 - 1,
+                endTime = BroadcastConstants.OneDayInSeconds - 1,
                 mon = true,
                 tue = true,
                 wed = true,
@@ -389,7 +389,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             schedule.DaypartRestriction = new DaypartDto()
             {
                 startTime = 0,
-                endTime = 86400 - 1,
+                endTime = BroadcastConstants.OneDayInSeconds - 1,
                 mon = true,
                 tue = true,
                 wed = true,
@@ -449,7 +449,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
             schedule.DaypartRestriction = new DaypartDto()
             {
-                startTime = 0,endTime = 86400 - 1,mon = true,tue = true,wed = true,thu = true,fri = true,sat = true,sun = true
+                startTime = 0,endTime = BroadcastConstants.OneDayInSeconds - 1,mon = true,tue = true,wed = true,thu = true,fri = true,sat = true,sun = true
             };
             if (daypartRestrictions != null)
             {
@@ -493,7 +493,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             schedule.DaypartRestriction = new DaypartDto()
             {
                 startTime = 0,
-                endTime = 86400 - 1,
+                endTime = BroadcastConstants.OneDayInSeconds - 1,
                 mon = true,
                 tue = true,
                 wed = true,
@@ -617,7 +617,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     DaypartRestriction = new DaypartDto()
                     {
                         startTime = 0,
-                        endTime = 86400 - 1,
+                        endTime = BroadcastConstants.OneDayInSeconds - 1,
                         mon = true,
                         tue = true,
                         wed = true,
@@ -702,7 +702,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.MarketRestrictions = new List<int>();
                 schedule.DaypartRestriction = new DaypartDto()
                 {
-                    startTime = 0,endTime = 86400 - 1,mon = true,tue = true,wed = true,thu = true,fri = true,sat = true,
+                    startTime = 0,endTime = BroadcastConstants.OneDayInSeconds - 1,mon = true,tue = true,wed = true,thu = true,fri = true,sat = true,
                     sun = true
                 };
                 schedule.Equivalized = true;

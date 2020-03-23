@@ -27,8 +27,8 @@ namespace Services.Broadcast.BusinessEngines
 
             var actualStartTime = affidavitDetail.LeadInEndTime;
             var actualEndTime = affidavitDetail.LeadOutStartTime;
-            var adjustedStartTime = actualStartTime + _BroadcastMatchingBuffer >= 86400 ? actualStartTime + _BroadcastMatchingBuffer - 86400 : actualStartTime + _BroadcastMatchingBuffer;
-            var adjustedEndTime = actualEndTime - _BroadcastMatchingBuffer < 0  ? actualEndTime - _BroadcastMatchingBuffer + 86400 : actualEndTime - _BroadcastMatchingBuffer;
+            var adjustedStartTime = actualStartTime + _BroadcastMatchingBuffer >= BroadcastConstants.OneDayInSeconds ? actualStartTime + _BroadcastMatchingBuffer - BroadcastConstants.OneDayInSeconds : actualStartTime + _BroadcastMatchingBuffer;
+            var adjustedEndTime = actualEndTime - _BroadcastMatchingBuffer < 0  ? actualEndTime - _BroadcastMatchingBuffer + BroadcastConstants.OneDayInSeconds : actualEndTime - _BroadcastMatchingBuffer;
 
             var isLeadIn = adjustedStartTime > actualStartTime &&
                 affidavitDetail.AirTime >= actualStartTime &&

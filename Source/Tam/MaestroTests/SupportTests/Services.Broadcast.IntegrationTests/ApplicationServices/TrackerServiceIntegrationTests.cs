@@ -554,7 +554,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     DaypartRestriction = new DaypartDto
                     {
                         startTime = 0,
-                        endTime = 86400 - 1,
+                        endTime = BroadcastConstants.OneDayInSeconds - 1,
                         mon = true,
                         tue = true,
                         wed = true,
@@ -992,7 +992,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.DaypartRestriction = new DaypartDto
                 {
                     startTime = 0,
-                    endTime = 86400 - 1,
+                    endTime = BroadcastConstants.OneDayInSeconds - 1,
                     mon = true,
                     tue = true,
                     wed = true,
@@ -1111,7 +1111,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         DaypartRestriction = new DaypartDto
                         {
                             startTime = 0,
-                            endTime = 86400 - 1,
+                            endTime = BroadcastConstants.OneDayInSeconds - 1,
                             mon = true,
                             tue = true,
                             wed = true,
@@ -1254,7 +1254,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.DaypartRestriction = new DaypartDto
                 {
                     startTime = 0,
-                    endTime = 86400 - 1,
+                    endTime = BroadcastConstants.OneDayInSeconds - 1,
                     mon = true,
                     tue = true,
                     wed = true,
@@ -1304,7 +1304,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.DaypartRestriction = new DaypartDto
                 {
                     startTime = 0,
-                    endTime = 86400 - 1,
+                    endTime = BroadcastConstants.OneDayInSeconds - 1,
                     mon = true,
                     tue = true,
                     wed = true,
@@ -1480,7 +1480,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             schedule.DaypartRestriction = new DaypartDto
             {
                 startTime = 0,
-                endTime = 86400 - 1,
+                endTime = BroadcastConstants.OneDayInSeconds - 1,
                 mon = true,
                 tue = true,
                 wed = true,
@@ -1558,7 +1558,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             schedule.DaypartRestriction = new DaypartDto
             {
                 startTime = 0,
-                endTime = 86400 - 1,
+                endTime = BroadcastConstants.OneDayInSeconds - 1,
                 mon = true,
                 tue = true,
                 wed = true,
@@ -1634,7 +1634,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                             DaypartRestriction = new DaypartDto
                             {
                                 startTime = 0,
-                                endTime = 86400 - 1,
+                                endTime = BroadcastConstants.OneDayInSeconds - 1,
                                 mon = false,
                                 tue = true,
                                 wed = true,
@@ -1767,7 +1767,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             schedule.DaypartRestriction = new DaypartDto
             {
                 startTime = 0,
-                endTime = 86400 - 1,
+                endTime = BroadcastConstants.OneDayInSeconds - 1,
                 mon = true,
                 tue = true,
                 wed = true,
@@ -2045,7 +2045,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 schedule.DaypartRestriction = new DaypartDto()
                 {
                     startTime = 0,
-                    endTime = 86400 - 1,
+                    endTime = BroadcastConstants.OneDayInSeconds - 1,
                     mon = true,
                     tue = true,
                     wed = true,

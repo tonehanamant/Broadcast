@@ -139,10 +139,10 @@ namespace Services.Broadcast.BusinessEngines
             {
                 var bufferInSeconds = _BroadcastMatchingBuffer;
                 var displayDaypart = dayparts[proposalDetail.First().ProposalVersionDetailDaypartId];
-                var actualStartTime = displayDaypart.StartTime < 0 ? 86400 - Math.Abs(displayDaypart.StartTime) : displayDaypart.StartTime;
+                var actualStartTime = displayDaypart.StartTime < 0 ? BroadcastConstants.OneDayInSeconds - Math.Abs(displayDaypart.StartTime) : displayDaypart.StartTime;
                 //add 1 second to include the daypart endTime as valid time
-                var actualEndTime = displayDaypart.EndTime + 1 < 0 ? Math.Abs(86400 - displayDaypart.EndTime + 1) : displayDaypart.EndTime + 1;
-                var adjustedStartTime = displayDaypart.StartTime - bufferInSeconds < 0 ? 86400 - Math.Abs(displayDaypart.StartTime - bufferInSeconds) : displayDaypart.StartTime - bufferInSeconds;
+                var actualEndTime = displayDaypart.EndTime + 1 < 0 ? Math.Abs(BroadcastConstants.OneDayInSeconds - displayDaypart.EndTime + 1) : displayDaypart.EndTime + 1;
+                var adjustedStartTime = displayDaypart.StartTime - bufferInSeconds < 0 ? BroadcastConstants.OneDayInSeconds - Math.Abs(displayDaypart.StartTime - bufferInSeconds) : displayDaypart.StartTime - bufferInSeconds;
                 var isOvernight = (actualEndTime < actualStartTime && actualEndTime < adjustedStartTime);
 
                 if (isOvernight)

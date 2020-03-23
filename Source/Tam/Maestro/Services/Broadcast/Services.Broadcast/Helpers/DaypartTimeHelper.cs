@@ -14,8 +14,8 @@ namespace Services.Broadcast.Helpers
     {
         private static readonly Dictionary<Type,string> _RegisteredTypesAndProperties = new Dictionary<Type, string>
         {
-            {typeof(DaypartDefaultFullDto), nameof(DaypartDefaultFullDto.DefaultEndTimeSeconds)},
-            {typeof(PlanDaypartDto), nameof(PlanDaypartDto.EndTimeSeconds)}
+            { typeof(DaypartDefaultFullDto), nameof(DaypartDefaultFullDto.DefaultEndTimeSeconds) },
+            { typeof(PlanDaypartDto), nameof(PlanDaypartDto.EndTimeSeconds) }
         };
 
         /// <summary>
@@ -25,13 +25,21 @@ namespace Services.Broadcast.Helpers
         public static void AddOneSecondToEndTime<T>(List<T> candidates)
         {
             var incomingType = typeof(T);
+
             if (_RegisteredTypesAndProperties.ContainsKey(incomingType) == false)
             {
                 throw new InvalidOperationException("Invalid type provided in list.");
             }
 
-            var pi = incomingType.GetProperty(_RegisteredTypesAndProperties[incomingType]);
-            candidates.ForEach(c => pi.SetValue(c, (int)pi.GetValue(c) + 1));
+            var propertyInfo = incomingType.GetProperty(_RegisteredTypesAndProperties[incomingType]);
+
+            foreach (var candidate in candidates)
+            {
+                var value = (int)propertyInfo.GetValue(candidate);
+                var valueToSet = AdjustBoundaryValue(value + 1);
+
+                propertyInfo.SetValue(candidate, valueToSet);
+            }
         }
 
         /// <summary>
@@ -43,13 +51,36 @@ namespace Services.Broadcast.Helpers
         public static void SubtractOneSecondToEndTime<T>(List<T> candidates)
         {
             var incomingType = typeof(T);
+
             if (_RegisteredTypesAndProperties.ContainsKey(incomingType) == false)
             {
                 throw new InvalidOperationException("Invalid type provided in list.");
             }
 
-            var pi = incomingType.GetProperty(_RegisteredTypesAndProperties[incomingType]);
-            candidates.ForEach(c => pi.SetValue(c, (int)pi.GetValue(c) - 1));
+            var propertyInfo = incomingType.GetProperty(_RegisteredTypesAndProperties[incomingType]);
+
+            foreach (var candidate in candidates)
+            {
+                var value = (int)propertyInfo.GetValue(candidate);
+                var valueToSet = AdjustBoundaryValue(value - 1);
+
+                propertyInfo.SetValue(candidate, valueToSet);
+            }
+        }
+
+        public static int AdjustBoundaryValue(int value)
+        {
+            switch (value)
+            {
+                case BroadcastConstants.OneDayInSeconds:
+                    return 0;
+
+                case -1:
+                    return BroadcastConstants.OneDayInSeconds - 1;
+
+                default:
+                    return value;
+            }
         }
 
         /// <summary>
