@@ -1059,7 +1059,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4));
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
                 _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id);
 
                 var reportData = _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest

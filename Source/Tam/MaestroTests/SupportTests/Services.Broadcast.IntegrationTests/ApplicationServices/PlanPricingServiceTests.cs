@@ -45,7 +45,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     PlanId = 1196,
                     Margin = 20
-                }, new DateTime(2019, 11, 4));
+                }, new DateTime(2019, 11, 4)
+                , "test user");
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
@@ -90,7 +91,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _PlanPricingService.QueuePricingJob(new PlanPricingParametersDto
                 {
                     PlanId = 1196
-                }, new DateTime(2019, 11, 4));
+                }, new DateTime(2019, 11, 4)
+                , "test user");
 
                 var result = _PlanPricingService.GetCurrentPricingExecution(1196);
 
@@ -116,7 +118,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _PlanPricingService.QueuePricingJob(new PlanPricingParametersDto
                 {
                     PlanId = 1196
-                }, new DateTime(2020, 3, 3));
+                }, new DateTime(2020, 3, 3)
+                , "test user");
 
                 _PlanPricingService.ForceCompletePlanPricingJob(result.Id, "Test User");
 
@@ -281,7 +284,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4));
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id);
 
@@ -340,7 +343,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4));
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id);
 
@@ -423,7 +426,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4));
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 var result = _PlanService.GetPlan(1197);
 
@@ -468,7 +471,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4));
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id);
 
@@ -523,7 +526,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4));
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id);
 
@@ -583,7 +586,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4));
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id);
 
@@ -642,7 +645,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4));
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id);
 

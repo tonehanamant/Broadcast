@@ -10,66 +10,21 @@
     "OptimalCpm": 15.5094,
     "Programs": [
       {
-        "AvgCpm": 15.7191,
-        "AvgImpressions": 49016.66666667,
-        "Genre": "",
+        "AvgCpm": 15.2562,
+        "AvgImpressions": 47430.0,
+        "Genre": "Children",
         "MarketCount": 1,
-        "PercentageOfBuy": 61.5658363,
-        "ProgramName": "FRIENDS",
+        "PercentageOfBuy": 99.28825623,
+        "ProgramName": "Early news",
         "StationCount": 1
       },
       {
-        "AvgCpm": 13.9805,
-        "AvgImpressions": 50320.0,
-        "Genre": "",
+        "AvgCpm": 50.8412,
+        "AvgImpressions": 425.0,
+        "Genre": "Comedy",
         "MarketCount": 1,
-        "PercentageOfBuy": 21.06761566,
-        "ProgramName": "TWO & A HALF MEN",
-        "StationCount": 1
-      },
-      {
-        "AvgCpm": 15.1584,
-        "AvgImpressions": 39780.0,
-        "Genre": "",
-        "MarketCount": 1,
-        "PercentageOfBuy": 16.65480427,
-        "ProgramName": "FRIENDS 2X",
-        "StationCount": 1
-      },
-      {
-        "AvgCpm": 98.5294,
-        "AvgImpressions": 510.0,
-        "Genre": "",
-        "MarketCount": 1,
-        "PercentageOfBuy": 0.21352313,
-        "ProgramName": "TWO & HALF MEN",
-        "StationCount": 1
-      },
-      {
-        "AvgCpm": 23.6471,
-        "AvgImpressions": 510.0,
-        "Genre": "",
-        "MarketCount": 1,
-        "PercentageOfBuy": 0.21352313,
-        "ProgramName": "2.5 MEN X2",
-        "StationCount": 1
-      },
-      {
-        "AvgCpm": 35.4706,
-        "AvgImpressions": 340.0,
-        "Genre": "",
-        "MarketCount": 1,
-        "PercentageOfBuy": 0.14234875,
-        "ProgramName": "2 BROKE GIRLS",
-        "StationCount": 1
-      },
-      {
-        "AvgCpm": 35.4706,
-        "AvgImpressions": 340.0,
-        "Genre": "",
-        "MarketCount": 1,
-        "PercentageOfBuy": 0.14234875,
-        "ProgramName": "SEINFELD X2",
+        "PercentageOfBuy": 0.71174377,
+        "ProgramName": "Late news",
         "StationCount": 1
       }
     ],

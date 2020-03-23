@@ -289,8 +289,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             var exception = Assert.Throws<Exception>(() => service.QueuePricingJob(
-                planPricingParametersDto: new PlanPricingParametersDto(), 
-                currentDate: new DateTime(2019, 10, 23)));
+                new PlanPricingParametersDto() 
+                , new DateTime(2019, 10, 23)
+                , "test user"));
 
             Assert.AreEqual(expectedMessage, exception.Message);
         }

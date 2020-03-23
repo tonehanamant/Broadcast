@@ -59,9 +59,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 PlanDto newPlan = _GetNewPlan();
 
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
-
+                DateTime nowDate = new DateTime(2019, 01, 01);
+                string username = "integration_test";
+                var newPlanId = _PlanService.SavePlan(newPlan, username, nowDate);
+                var campaign = _CampaignService.GetCampaignById(newPlan.CampaignId);
                 Assert.IsTrue(newPlanId > 0);
+                Assert.AreEqual(username, campaign.ModifiedBy);
+                Assert.AreEqual(nowDate, campaign.ModifiedDate);
             }
         }
 
@@ -393,6 +397,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Category("long_running")]
+        [UseReporter(typeof(DiffReporter))]
         public void CreatingPlansCheckCampaignAggregation()
         {
             using (new TransactionScopeWrapper())

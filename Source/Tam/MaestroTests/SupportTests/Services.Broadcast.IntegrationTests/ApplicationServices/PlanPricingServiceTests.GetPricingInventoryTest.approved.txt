@@ -55,14 +55,25 @@
         },
         "Id": 358772,
         "PrimaryProgram": {
-          "EndTime": 0,
-          "Genre": "",
-          "Name": "FRIENDS",
-          "ShowType": "",
-          "StartTime": 0
+          "EndTime": 7200,
+          "Genre": "Children",
+          "Id": 11245,
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
         },
+        "PrimaryProgramId": 11245,
         "ProgramName": "FRIENDS",
-        "Programs": null
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Children",
+            "Id": 11245,
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 287146,
@@ -171,14 +182,25 @@
         },
         "Id": 358773,
         "PrimaryProgram": {
-          "EndTime": 0,
-          "Genre": "",
-          "Name": "TWO & A HALF MEN",
-          "ShowType": "",
-          "StartTime": 0
+          "EndTime": 7200,
+          "Genre": "Children",
+          "Id": 11246,
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
         },
+        "PrimaryProgramId": 11246,
         "ProgramName": "TWO & A HALF MEN",
-        "Programs": null
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Children",
+            "Id": 11246,
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 287147,
@@ -287,14 +309,25 @@
         },
         "Id": 358776,
         "PrimaryProgram": {
-          "EndTime": 0,
-          "Genre": "",
-          "Name": "FRIENDS",
-          "ShowType": "",
-          "StartTime": 0
+          "EndTime": 7200,
+          "Genre": "Children",
+          "Id": 11247,
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
         },
+        "PrimaryProgramId": 11247,
         "ProgramName": "FRIENDS",
-        "Programs": null
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Children",
+            "Id": 11247,
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 287150,
@@ -403,14 +436,25 @@
         },
         "Id": 358777,
         "PrimaryProgram": {
-          "EndTime": 0,
-          "Genre": "",
-          "Name": "FRIENDS",
-          "ShowType": "",
-          "StartTime": 0
+          "EndTime": 7200,
+          "Genre": "Children",
+          "Id": 11248,
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
         },
+        "PrimaryProgramId": 11248,
         "ProgramName": "FRIENDS",
-        "Programs": null
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Children",
+            "Id": 11248,
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 287151,
@@ -519,14 +563,25 @@
         },
         "Id": 358780,
         "PrimaryProgram": {
-          "EndTime": 0,
-          "Genre": "",
-          "Name": "FRIENDS 2X",
-          "ShowType": "",
-          "StartTime": 0
+          "EndTime": 7200,
+          "Genre": "Children",
+          "Id": 11249,
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
         },
+        "PrimaryProgramId": 11249,
         "ProgramName": "FRIENDS 2X",
-        "Programs": null
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Children",
+            "Id": 11249,
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 287154,
@@ -635,14 +690,25 @@
         },
         "Id": 360318,
         "PrimaryProgram": {
-          "EndTime": 0,
-          "Genre": "",
-          "Name": "TWO & HALF MEN",
-          "ShowType": "",
-          "StartTime": 0
+          "EndTime": 7200,
+          "Genre": "Comedy",
+          "Id": 11250,
+          "Name": "Late news",
+          "ShowType": "Sports",
+          "StartTime": 3600
         },
+        "PrimaryProgramId": 11250,
         "ProgramName": "TWO & HALF MEN",
-        "Programs": null
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Comedy",
+            "Id": 11250,
+            "Name": "Late news",
+            "ShowType": "Sports",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 288692,
@@ -751,14 +817,25 @@
         },
         "Id": 360319,
         "PrimaryProgram": {
-          "EndTime": 0,
-          "Genre": "",
-          "Name": "2.5 MEN X2",
-          "ShowType": "",
-          "StartTime": 0
+          "EndTime": 7200,
+          "Genre": "Comedy",
+          "Id": 11251,
+          "Name": "Late news",
+          "ShowType": "Sports",
+          "StartTime": 3600
         },
+        "PrimaryProgramId": 11251,
         "ProgramName": "2.5 MEN X2",
-        "Programs": null
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Comedy",
+            "Id": 11251,
+            "Name": "Late news",
+            "ShowType": "Sports",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 288693,
@@ -867,14 +944,25 @@
         },
         "Id": 360320,
         "PrimaryProgram": {
-          "EndTime": 0,
-          "Genre": "",
-          "Name": "SEINFELD X2",
-          "ShowType": "",
-          "StartTime": 0
+          "EndTime": 7200,
+          "Genre": "Comedy",
+          "Id": 11252,
+          "Name": "Late news",
+          "ShowType": "Sports",
+          "StartTime": 3600
         },
+        "PrimaryProgramId": 11252,
         "ProgramName": "SEINFELD X2",
-        "Programs": null
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Comedy",
+            "Id": 11252,
+            "Name": "Late news",
+            "ShowType": "Sports",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 288694,
@@ -983,14 +1071,25 @@
         },
         "Id": 360321,
         "PrimaryProgram": {
-          "EndTime": 0,
-          "Genre": "",
-          "Name": "2 BROKE GIRLS",
-          "ShowType": "",
-          "StartTime": 0
+          "EndTime": 7200,
+          "Genre": "Comedy",
+          "Id": 11253,
+          "Name": "Late news",
+          "ShowType": "Sports",
+          "StartTime": 3600
         },
+        "PrimaryProgramId": 11253,
         "ProgramName": "2 BROKE GIRLS",
-        "Programs": null
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Comedy",
+            "Id": 11253,
+            "Name": "Late news",
+            "ShowType": "Sports",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 288695,

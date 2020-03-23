@@ -140,6 +140,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IPlanAggregator _PlanAggregator;
         private readonly IPlanSummaryRepository _PlanSummaryRepository;
         private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
+        private readonly ICampaignRepository _CampaignRepository;
         private readonly ICampaignAggregationJobTrigger _CampaignAggregationJobTrigger;
         private readonly INsiUniverseService _NsiUniverseService;
         private readonly IBroadcastAudiencesCache _BroadcastAudiencesCache;
@@ -171,6 +172,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _BudgetCalculator = planBudgetDeliveryCalculator;
 
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
+            _CampaignRepository = broadcastDataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _PlanSummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanSummaryRepository>();
             _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
             _DayRepository = broadcastDataRepositoryFactory.GetDataRepository<IDayRepository>();
@@ -237,6 +239,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     throw new Exception($"The chosen plan has been locked by {lockingResult.LockedUserName}");
                 }
             }
+            _UpdateCampaignLastModified(plan.CampaignId, createdDate, createdBy);
 
             // We only aggregate data and run pricing for versions, not drafts.
             if (!plan.IsDraft)
@@ -251,6 +254,21 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             return plan.Id;
+        }
+
+        private void _UpdateCampaignLastModified(int campaignId, DateTime modifiedDate, string modifiedBy)
+        {
+            var key = KeyHelper.GetCampaignLockingKey(campaignId);
+            var lockingResult = _LockingManagerApplicationService.GetLockObject(key);
+
+            if (lockingResult.Success)
+            {
+                _CampaignRepository.UpdateCampaignLastModified(campaignId, modifiedDate, modifiedBy);
+            }
+            else
+            {
+                throw new Exception($"The chosen campaign has been locked by {lockingResult.LockedUserName}");
+            }
         }
 
         private void _SetPlanPricingParameters(PlanDto plan)

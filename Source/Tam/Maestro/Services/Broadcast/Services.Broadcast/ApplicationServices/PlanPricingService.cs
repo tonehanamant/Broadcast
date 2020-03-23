@@ -25,7 +25,7 @@ namespace Services.Broadcast.ApplicationServices
 {
     public interface IPlanPricingService : IApplicationService
     {
-        PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate);
+        PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate, string username);
         PlanPricingResponseDto GetCurrentPricingExecution(int planId);
         [Queue("planpricing")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
@@ -57,6 +57,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ISpotLengthRepository _SpotLengthRepository;
         private readonly IPricingApiClient _PricingApiClient;
         private readonly IInventoryRepository _InventoryRepository;
+        private readonly ICampaignRepository _CampaignRepository;
         private readonly IBackgroundJobClient _BackgroundJobClient;
         private readonly IBroadcastLockingManagerApplicationService _LockingManagerApplicationService;
         private readonly IMarketCoverageRepository _MarketCoverageRepository;
@@ -78,6 +79,7 @@ namespace Services.Broadcast.ApplicationServices
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+            _CampaignRepository = broadcastDataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _SpotLengthEngine = spotLengthEngine;
             _PricingApiClient = pricingApiClient;
             _BackgroundJobClient = backgroundJobClient;
@@ -90,7 +92,8 @@ namespace Services.Broadcast.ApplicationServices
             _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
         }
 
-        public PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate)
+        public PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto
+            , DateTime currentDate, string username)
         {
             // lock the plan so that two requests for the same plan can not get in this area concurrently
             var key = KeyHelper.GetPlanLockingKey(planPricingParametersDto.PlanId);
@@ -111,9 +114,12 @@ namespace Services.Broadcast.ApplicationServices
                     Status = BackgroundJobProcessingStatus.Queued,
                     Queued = currentDate
                 };
-
-                _SavePricingJobAndParameters(job, planPricingParametersDto);
-
+                using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
+                {
+                    _SavePricingJobAndParameters(job, planPricingParametersDto);
+                    _CampaignRepository.UpdateCampaignLastModified(plan.CampaignId, currentDate, username);
+                    transaction.Complete();
+                }
                 _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.RunPricingJob(planPricingParametersDto, job.Id));
 
                 return job;
@@ -121,16 +127,12 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         private int _SavePricingJobAndParameters(PlanPricingJob job, PlanPricingParametersDto planPricingParametersDto)
-        {
-            using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
-            {
-                var jobId = _PlanRepository.AddPlanPricingJob(job);
-                job.Id = jobId;
-                _PlanRepository.SavePlanPricingParameters(planPricingParametersDto);
+        {            
+            var jobId = _PlanRepository.AddPlanPricingJob(job);
+            job.Id = jobId;
+            _PlanRepository.SavePlanPricingParameters(planPricingParametersDto);
 
-                transaction.Complete();
-                return jobId;
-            }
+            return jobId;
         }
 
         public List<LookupDto> GetUnitCaps()

@@ -67,6 +67,14 @@ namespace Services.Broadcast.Repositories
         /// <param name="endDate">The end  date to filter the statuses by</param>
         /// <returns></returns>
         List<PlanStatusEnum> GetCampaignsStatuses(DateTime? startDate, DateTime? endDate);
+
+        /// <summary>
+        /// Updates the campaign last modified date.
+        /// </summary>
+        /// <param name="campaignId">The campaign identifier.</param>
+        /// <param name="modifiedDate">The modified date.</param>
+        /// <param name="modifiedBy">The modified by.</param>
+        void UpdateCampaignLastModified(int campaignId, DateTime modifiedDate, string modifiedBy);
     }
 
     /// <summary>
@@ -129,6 +137,21 @@ namespace Services.Broadcast.Repositories
                    context.SaveChanges();
 
                    return existingCampaign.id;
+               });
+        }
+
+        /// <inheritdoc />
+        public void UpdateCampaignLastModified(int campaignId, DateTime modifiedDate, string modifiedBy)
+        {
+            _InReadUncommitedTransaction(
+               context =>
+               {
+                   var existingCampaign = context.campaigns.Single(x => x.id == campaignId, "Invalid campaign id");
+
+                   existingCampaign.modified_by = modifiedBy;
+                   existingCampaign.modified_date = modifiedDate;
+
+                   context.SaveChanges();
                });
         }
 
