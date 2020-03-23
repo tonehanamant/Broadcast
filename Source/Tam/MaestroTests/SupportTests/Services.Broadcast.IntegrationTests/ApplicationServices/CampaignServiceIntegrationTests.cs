@@ -1061,7 +1061,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                var job = planPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4));
+                var job = planPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "integration test");
                 planPricingService.RunPricingJob(planPricingRequestDto, job.Id);
 
                 var reportData = _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest
