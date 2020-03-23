@@ -48,16 +48,6 @@ namespace BroadcastJobScheduler.Service
         /// <exception cref="InvalidOperationException"></exception>
         public void Startup()
         {
-            // if this is true then the services are being run by the web service.
-            // in that case we shouldn't be running...
-            if (_GetRunLongRunningJobsInWebServiceEnabled())
-            {
-                var errorMessage = "Windows Service background jobs are running in the Web Service per the feature toggle.";
-                LogHelper.Logger.Error(errorMessage);
-                // we want this to be unhandled so it tears down the service.
-                throw new InvalidOperationException(errorMessage);
-            }
-
             LogHelper.Logger.Info("Broadcast JobScheduler Service started");
             try
             {
@@ -79,11 +69,6 @@ namespace BroadcastJobScheduler.Service
             {
                 LogHelper.Logger.Error("An error occurred in Broadcast JobScheduler Service", e);
             }
-        }
-
-        private bool _GetRunLongRunningJobsInWebServiceEnabled()
-        {
-            return BroadcastServiceSystemParameter.RunLongRunningJobsInWebServiceEnabled;
         }
     }
 }
