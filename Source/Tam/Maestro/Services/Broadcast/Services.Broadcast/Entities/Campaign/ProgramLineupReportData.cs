@@ -59,7 +59,7 @@ namespace Services.Broadcast.Entities.Campaign
                 marketCoverageByStation,
                 primaryProgramsByManifestDaypartIds);
             DetailedViewRows = _MapToDetailedViewRows(detailedRowsData);
-            
+
             DefaultViewRows = _MapToDefaultViewRows(detailedRowsData, plan.TargetImpressions.Value);
             AllocationByDaypartViewRows = _MapToAllocationViewRows(detailedRowsData, plan.TargetImpressions.Value
                 , x => x.DaypartCode
@@ -214,26 +214,55 @@ namespace Services.Broadcast.Entities.Campaign
 
             foreach (var row in dataRows.Where(x => x.Genre.Equals("News")))
             {
-                if (row.Daypart.StartTime >= AM4 && (row.Daypart.EndTime > AM4 || row.Daypart.EndTime <= AM10))
+                //we do the checking in reverse order because we don't want earlier news be labeled wrong
+                if (_CheckDaypartForRollup(row.Daypart, PM8, AM12_05))
+                {
+                    row.ProgramName = LATE_NEWS;
+                    continue;
+                }
+
+                if (_CheckDaypartForRollup(row.Daypart, PM4, PM7))
+                {
+                    row.ProgramName = EVENING_NEWS;
+                    continue;
+                }
+                if (_CheckDaypartForRollup(row.Daypart, AM11, PM1))
+                {
+                    row.ProgramName = MIDDAY_NEWS;
+                    continue;
+                }
+                if (_CheckDaypartForRollup(row.Daypart, AM4, AM10))
                 {
                     row.ProgramName = MORNING_NEWS;
+                    continue;
                 }
-                else
-                    if (row.Daypart.StartTime >= AM11 && (row.Daypart.EndTime > AM11 || row.Daypart.EndTime <= PM1))
-                    {
-                        row.ProgramName = MIDDAY_NEWS;
-                    }
-                else
-                    if (row.Daypart.StartTime >= PM4 && (row.Daypart.EndTime > PM4 || row.Daypart.EndTime <= PM7))
-                    {
-                        row.ProgramName = EVENING_NEWS;
-                    }
-                else
-                    if (row.Daypart.StartTime >= PM8 && (row.Daypart.EndTime > PM8 || row.Daypart.EndTime <= AM12_05))
-                    {
-                        row.ProgramName = LATE_NEWS;
-                    }
             }
+        }
+
+        private static bool _CheckDaypartForRollup(DisplayDaypart daypart, int startTimeSeconds, int endTimeSeconds)
+        {
+            if (startTimeSeconds <= endTimeSeconds)
+            {
+                if (daypart.StartTime >= startTimeSeconds
+                && daypart.StartTime <= endTimeSeconds
+                && daypart.EndTime >= startTimeSeconds
+                && daypart.EndTime <= endTimeSeconds)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if (daypart.StartTime >= startTimeSeconds
+                   && daypart.StartTime < BroadcastConstants.OneDayInSeconds
+                   && daypart.EndTime <= endTimeSeconds
+                   && daypart.EndTime >= 0)
+                {
+                    return true;
+                }
+
+            }
+            return false;
         }
 
         private List<AllocationViewRowDisplay> _MapToAllocationViewRows(

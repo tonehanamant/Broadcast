@@ -41,10 +41,31 @@
   "DefaultViewRows": [
     {
       "Genre": "NEWS",
-      "NoOfMarkets": 3,
-      "NoOfStations": 4,
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "MIDDAY NEWS",
+      "Weight": 0.16
+    },
+    {
+      "Genre": "NEWS",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
       "Program": "MORNING NEWS",
-      "Weight": 0.4
+      "Weight": 0.08
+    },
+    {
+      "Genre": "NEWS",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "EVENING NEWS",
+      "Weight": 0.08
+    },
+    {
+      "Genre": "NEWS",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "LATE NEWS",
+      "Weight": 0.08
     }
   ],
   "DetailedViewRows": [
@@ -57,7 +78,7 @@
       "Program": "KPLR 2001 MIDDAY NEWS",
       "Rank": 1,
       "Station": "WTTV",
-      "TimePeriods": "11AM-12:30PM"
+      "TimePeriods": "11AM-1PM"
     },
     {
       "Daypart": "EMN",
@@ -68,7 +89,7 @@
       "Program": "KPLR 1001 MORNING NEWS",
       "Rank": 2,
       "Station": "KSTP",
-      "TimePeriods": "4AM-4:01AM"
+      "TimePeriods": "4AM-10AM"
     },
     {
       "Daypart": "EM",
@@ -79,7 +100,7 @@
       "Program": "KPLR 3001 EVENING NEWS",
       "Rank": 3,
       "Station": "KELO",
-      "TimePeriods": "4:01PM-6:53PM"
+      "TimePeriods": "4PM-7PM"
     },
     {
       "Daypart": "EM",
@@ -90,7 +111,7 @@
       "Program": "KPLR 4001 LATE NEWS",
       "Rank": 3,
       "Station": "KELOW",
-      "TimePeriods": "8:16PM-12:05AM"
+      "TimePeriods": "8PM-12:05AM"
     }
   ],
   "ExportFileName": "Program_Lineup_Report_Brave Plan_10172017.xlsx",

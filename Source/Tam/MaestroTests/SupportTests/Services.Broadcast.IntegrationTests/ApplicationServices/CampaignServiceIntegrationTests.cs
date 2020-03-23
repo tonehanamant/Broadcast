@@ -28,6 +28,7 @@ using Services.Broadcast.ReportGenerators.ProgramLineup;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.ReportGenerators.CampaignExport;
 using Services.Broadcast.ReportGenerators;
+using Services.Broadcast.Clients;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -1028,7 +1029,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             const int planId = 1197;
             var now = new DateTime(2020, 4, 4);
-
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPricingApiClient, PricingApiClientStub>();
+            var planPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
             using (new TransactionScopeWrapper())
             {
                 IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
@@ -1059,8 +1061,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
-                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id);
+                var job = planPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4));
+                planPricingService.RunPricingJob(planPricingRequestDto, job.Id);
 
                 var reportData = _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest
                 {

@@ -1853,8 +1853,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Daypart = new DisplayDaypart
                                 {
                                     Id = 10001,
-                                    StartTime = 14401,
-                                    EndTime = 14500,
+                                    StartTime = 14400,
+                                    EndTime = 35999,
                                     Monday = true,
                                     Tuesday = true
                                 }
@@ -1878,8 +1878,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Daypart = new DisplayDaypart
                                 {
                                     Id = 20001,
-                                    StartTime = 39601,
-                                    EndTime = 45000,
+                                    StartTime = 39600,
+                                    EndTime = 46799,
                                     Wednesday = true,
                                     Thursday = true
                                 }
@@ -1904,8 +1904,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Daypart = new DisplayDaypart
                                 {
                                     Id = 30001,
-                                    StartTime = 57700,
-                                    EndTime = 68000,
+                                    StartTime = 57600,
+                                    EndTime = 68399,
                                     Friday = true,
                                     Sunday = true
                                 }
@@ -1929,8 +1929,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                 Daypart = new DisplayDaypart
                                 {
                                     Id = 40001,
-                                    StartTime = 73000,
-                                    EndTime = 300,
+                                    StartTime = 72000,
+                                    EndTime = 299,
                                     Friday = true,
                                     Sunday = true
                                 }

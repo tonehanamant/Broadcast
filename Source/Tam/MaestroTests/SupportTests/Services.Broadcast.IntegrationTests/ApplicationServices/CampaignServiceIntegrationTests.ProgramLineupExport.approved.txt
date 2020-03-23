@@ -1,12 +1,50 @@
 ﻿{
   "AccountExecutive": "",
   "Agency": "Stub Agency",
-  "AllocationByDaypartViewRows": null,
-  "AllocationByDMAViewRows": null,
-  "AllocationByGenreViewRows": null,
+  "AllocationByDaypartViewRows": [
+    {
+      "FilterLabel": "MDN",
+      "Weight": 11.9425
+    }
+  ],
+  "AllocationByDMAViewRows": [
+    {
+      "FilterLabel": "NEW YORK",
+      "Weight": 11.8575
+    },
+    {
+      "FilterLabel": "PORTLAND-AUBURN",
+      "Weight": 0.085
+    }
+  ],
+  "AllocationByGenreViewRows": [
+    {
+      "FilterLabel": "CHILDREN",
+      "Weight": 11.8575
+    },
+    {
+      "FilterLabel": "COMEDY",
+      "Weight": 0.085
+    }
+  ],
   "Client": "Stub Advertiser",
   "ClientContact": "",
-  "DefaultViewRows": null,
+  "DefaultViewRows": [
+    {
+      "Genre": "CHILDREN",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "EARLY NEWS",
+      "Weight": 11.8575
+    },
+    {
+      "Genre": "COMEDY",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "LATE NEWS",
+      "Weight": 0.085
+    }
+  ],
   "DetailedViewRows": [
     {
       "Daypart": "MDN",

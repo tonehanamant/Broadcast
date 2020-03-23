@@ -51,6 +51,16 @@ GO
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
 
+/*************************************** START PRI-24475 *****************************************************/
+IF EXISTS(SELECT 1 FROM plan_versions WHERE target_audience_id = 31 AND target_universe <> hh_universe)
+BEGIN
+	UPDATE t1
+	SET t1.target_universe = t2.universe
+	FROM plan_versions as t1
+	INNER JOIN nti_universes as t2 ON t1.target_audience_id = t2.audience_id
+END
+/*************************************** END PRI-24475 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
