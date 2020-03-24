@@ -19,18 +19,18 @@ namespace Services.Broadcast.Clients
 
     public class TrafficApiClient : ITrafficApiClient
     {
-        private readonly string _BaseTrafficCompanyURL;
+        private readonly string _AgencyAdvertiserBrandApiUrl;
         private readonly HttpClient _HttpClient;
 
         public TrafficApiClient()
         {
-            _BaseTrafficCompanyURL = $"{TrafficComposerWebSystemParameter.BaseTrafficURL}/api/company";
+            _AgencyAdvertiserBrandApiUrl = $"{BroadcastServiceSystemParameter.AgencyAdvertiserBrandApiUrl}";
             _HttpClient = new HttpClient();
         }
 
         public List<AgencyDto> GetFilteredAgencies(string filter)
         {
-            var url = $"{_BaseTrafficCompanyURL}/agency?filter={Uri.EscapeDataString(filter)}";
+            var url = $"{_AgencyAdvertiserBrandApiUrl}/agency?filter={Uri.EscapeDataString(filter)}";
 
             try
             {
@@ -44,7 +44,7 @@ namespace Services.Broadcast.Clients
 
         public List<AdvertiserDto> GetAdvertisersByAgencyId(int agencyId)
         {
-            var url = $"{_BaseTrafficCompanyURL}/agency/{agencyId}/advertisers";
+            var url = $"{_AgencyAdvertiserBrandApiUrl}/agency/{agencyId}/advertisers";
 
             try
             {
@@ -60,7 +60,7 @@ namespace Services.Broadcast.Clients
 
         public List<ProductDto> GetProductsByAdvertiserId(int advertiserId)
         {
-            var url = $"{_BaseTrafficCompanyURL}/advertiser/{advertiserId}/products";
+            var url = $"{_AgencyAdvertiserBrandApiUrl}/advertiser/{advertiserId}/products";
 
             try
             {
@@ -76,7 +76,7 @@ namespace Services.Broadcast.Clients
 
         public ProductDto GetProduct(int productId)
         {
-            var url = $"{_BaseTrafficCompanyURL}/product/{productId}";
+            var url = $"{_AgencyAdvertiserBrandApiUrl}/product/{productId}";
 
             try
             {
@@ -92,7 +92,7 @@ namespace Services.Broadcast.Clients
 
         public AdvertiserDto GetAdvertiser(int advertiserId)
         {
-            var url = $"{_BaseTrafficCompanyURL}/advertiser/{advertiserId}";
+            var url = $"{_AgencyAdvertiserBrandApiUrl}/advertiser/{advertiserId}";
 
             try
             {

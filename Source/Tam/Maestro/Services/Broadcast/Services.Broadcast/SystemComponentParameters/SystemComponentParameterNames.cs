@@ -37,6 +37,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "AffidavitUploadUrl"; }
         }
 	 
+		public static string AgencyAdvertiserBrandApiUrl  
+		{
+            get { return "AgencyAdvertiserBrandApiUrl"; }
+        }
+	 
 		public static string BroadcastDayStart  
 		{
             get { return "BroadcastDayStart"; }

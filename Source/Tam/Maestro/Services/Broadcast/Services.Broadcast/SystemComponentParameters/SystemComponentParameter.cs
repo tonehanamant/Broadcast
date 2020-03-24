@@ -33,6 +33,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.AffidavitUploadUrl); }
         }
 	 
+		public static string AgencyAdvertiserBrandApiUrl  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.AgencyAdvertiserBrandApiUrl); }
+        }
+	 
 		public static string BroadcastDayStart  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
