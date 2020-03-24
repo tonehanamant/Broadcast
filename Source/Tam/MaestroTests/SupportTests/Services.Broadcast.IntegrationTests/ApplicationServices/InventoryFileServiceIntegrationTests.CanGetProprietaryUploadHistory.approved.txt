@@ -14,7 +14,7 @@
       "Month": 2,
       "Year": 2018
     },
-    "Status": "Processing",
+    "Status": "Succeeded",
     "UploadDateTime": "2019-07-20T00:00:00",
     "Username": "IntegrationTestUser"
   },
@@ -33,7 +33,7 @@
       "Month": 2,
       "Year": 2017
     },
-    "Status": "Processing",
+    "Status": "Succeeded",
     "UploadDateTime": "2019-04-12T15:55:59.753",
     "Username": "sroibu"
   },
@@ -59,7 +59,7 @@
       "Month": 2,
       "Year": 2018
     },
-    "Status": "Processing",
+    "Status": "Succeeded",
     "UploadDateTime": "2019-02-02T00:00:00",
     "Username": "IntegrationTestUser"
   }

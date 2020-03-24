@@ -1368,7 +1368,6 @@ namespace Services.Broadcast.Repositories
                     files = files
                              .Include(x => x.inventory_sources)
                              .Include(x => x.inventory_file_ratings_jobs)
-                             .Include(x => x.inventory_programs_by_file_jobs)
                              .Where(x => x.inventory_source_id == inventorySourceId);
 
                     if (startDate.HasValue && endDate.HasValue)
@@ -1431,12 +1430,6 @@ namespace Services.Broadcast.Repositories
                         {
                             var ratingProcessingJob = file.inventory_file_ratings_jobs.OrderBy(j => j.id).Last();
                             fileHistory.RatingProcessingJobStatus = (BackgroundJobProcessingStatus)ratingProcessingJob.status;
-                        }
-
-                        if (file.inventory_programs_by_file_jobs.Any())
-                        {
-                            var programsJob = file.inventory_programs_by_file_jobs.OrderBy(x => x.id).Last();
-                            fileHistory.ProgramsJobStatus = (InventoryProgramsJobStatus)programsJob.status;
                         }
 
                         result.Add(fileHistory);

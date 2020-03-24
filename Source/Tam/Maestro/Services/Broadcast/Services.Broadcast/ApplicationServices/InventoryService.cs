@@ -743,15 +743,12 @@ namespace Services.Broadcast.ApplicationServices
                 return "Validation Error";
             }
 
-            if (inventoryUploadHistory.RatingProcessingJobStatus == BackgroundJobProcessingStatus.Failed ||
-                inventoryUploadHistory.ProgramsJobStatus == InventoryProgramsJobStatus.Error)
+            if (inventoryUploadHistory.RatingProcessingJobStatus == BackgroundJobProcessingStatus.Failed)
             {
                 return "Processing Error";
             }
 
-            if (inventoryUploadHistory.RatingProcessingJobStatus == BackgroundJobProcessingStatus.Succeeded &&
-                (inventoryUploadHistory.ProgramsJobStatus == InventoryProgramsJobStatus.Completed || 
-                 inventoryUploadHistory.ProgramsJobStatus == InventoryProgramsJobStatus.Warning))
+            if (inventoryUploadHistory.RatingProcessingJobStatus == BackgroundJobProcessingStatus.Succeeded)
             {
                 return "Succeeded";
             }

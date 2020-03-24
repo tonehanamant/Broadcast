@@ -215,23 +215,23 @@ namespace Services.Broadcast.Entities.Campaign
             foreach (var row in dataRows.Where(x => x.Genre.Equals("News")))
             {
                 //we do the checking in reverse order because we don't want earlier news be labeled wrong
-                if (_CheckDaypartForRollup(row.Daypart, PM8, AM12_05))
+                if (CheckDaypartForRollup(row.Daypart, PM8, AM12_05))
                 {
                     row.ProgramName = LATE_NEWS;
                     continue;
                 }
 
-                if (_CheckDaypartForRollup(row.Daypart, PM4, PM7))
+                if (CheckDaypartForRollup(row.Daypart, PM4, PM7))
                 {
                     row.ProgramName = EVENING_NEWS;
                     continue;
                 }
-                if (_CheckDaypartForRollup(row.Daypart, AM11, PM1))
+                if (CheckDaypartForRollup(row.Daypart, AM11, PM1))
                 {
                     row.ProgramName = MIDDAY_NEWS;
                     continue;
                 }
-                if (_CheckDaypartForRollup(row.Daypart, AM4, AM10))
+                if (CheckDaypartForRollup(row.Daypart, AM4, AM10))
                 {
                     row.ProgramName = MORNING_NEWS;
                     continue;
@@ -239,24 +239,24 @@ namespace Services.Broadcast.Entities.Campaign
             }
         }
 
-        private static bool _CheckDaypartForRollup(DisplayDaypart daypart, int startTimeSeconds, int endTimeSeconds)
+        internal static bool CheckDaypartForRollup(DisplayDaypart daypart, int startTimeSeconds, int endTimeSeconds)
         {
             if (startTimeSeconds <= endTimeSeconds)
             {
                 if (daypart.StartTime >= startTimeSeconds
                 && daypart.StartTime <= endTimeSeconds
                 && daypart.EndTime >= startTimeSeconds
-                && daypart.EndTime <= endTimeSeconds)
+                && daypart.EndTime <= endTimeSeconds
+                && daypart.EndTime > daypart.StartTime)
                 {
                     return true;
                 }
             }
             else
             {
-                if (daypart.StartTime >= startTimeSeconds
-                   && daypart.StartTime < BroadcastConstants.OneDayInSeconds
-                   && daypart.EndTime <= endTimeSeconds
-                   && daypart.EndTime >= 0)
+                if ((daypart.StartTime >=startTimeSeconds && daypart.EndTime < BroadcastConstants.OneDayInSeconds && daypart.StartTime <= daypart.EndTime)
+                    || (daypart.StartTime >=startTimeSeconds && daypart.EndTime > 0 && daypart.EndTime <= endTimeSeconds)
+                    || (daypart.StartTime >= 0 && daypart.StartTime <= endTimeSeconds && daypart.StartTime <= daypart.EndTime && daypart.EndTime <=endTimeSeconds))
                 {
                     return true;
                 }

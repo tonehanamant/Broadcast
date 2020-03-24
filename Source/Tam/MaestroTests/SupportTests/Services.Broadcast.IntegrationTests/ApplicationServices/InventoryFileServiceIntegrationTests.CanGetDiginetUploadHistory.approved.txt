@@ -18,7 +18,7 @@
     ],
     "Rows": 52,
     "ShareBook": null,
-    "Status": "Processing",
+    "Status": "Succeeded",
     "UploadDateTime": "2019-02-02T00:00:00",
     "Username": "IntegrationTestUser"
   }

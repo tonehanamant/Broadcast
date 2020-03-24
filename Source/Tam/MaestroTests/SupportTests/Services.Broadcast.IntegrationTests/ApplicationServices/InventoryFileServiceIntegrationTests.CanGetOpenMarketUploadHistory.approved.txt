@@ -8,7 +8,7 @@
     "Quarters": null,
     "Rows": 2,
     "ShareBook": null,
-    "Status": "Processing",
+    "Status": "Succeeded",
     "UploadDateTime": "2019-07-20T00:00:00",
     "Username": "IntegrationTestUser"
   },
@@ -1841,7 +1841,7 @@
     "Quarters": null,
     "Rows": 0,
     "ShareBook": null,
-    "Status": "Processing",
+    "Status": "Succeeded",
     "UploadDateTime": "2019-02-06T12:30:43.067",
     "Username": "IntegrationTestUser"
   },
@@ -2049,7 +2049,7 @@
     "Quarters": null,
     "Rows": 0,
     "ShareBook": null,
-    "Status": "Processing",
+    "Status": "Succeeded",
     "UploadDateTime": "2019-02-06T12:30:38.4",
     "Username": "IntegrationTestUser"
   },
@@ -3063,7 +3063,7 @@
     "Quarters": null,
     "Rows": 0,
     "ShareBook": null,
-    "Status": "Processing",
+    "Status": "Succeeded",
     "UploadDateTime": "2019-02-06T12:30:17.267",
     "Username": "IntegrationTestUser"
   },
@@ -4519,7 +4519,7 @@
     "Quarters": null,
     "Rows": 0,
     "ShareBook": null,
-    "Status": "Processing",
+    "Status": "Succeeded",
     "UploadDateTime": "2019-02-06T12:29:48.147",
     "Username": "IntegrationTestUser"
   },
@@ -4532,7 +4532,7 @@
     "Quarters": null,
     "Rows": 0,
     "ShareBook": null,
-    "Status": "Processing",
+    "Status": "Succeeded",
     "UploadDateTime": "2019-02-06T12:29:47.827",
     "Username": "IntegrationTestUser"
   },
@@ -6365,7 +6365,7 @@
     "Quarters": null,
     "Rows": 0,
     "ShareBook": null,
-    "Status": "Processing",
+    "Status": "Succeeded",
     "UploadDateTime": "2019-02-06T12:29:03.71",
     "Username": "IntegrationTestUser"
   },
@@ -7457,7 +7457,7 @@
     ],
     "Rows": 1,
     "ShareBook": null,
-    "Status": "Processing",
+    "Status": "Succeeded",
     "UploadDateTime": "2019-02-02T00:00:00",
     "Username": "IntegrationTestUser"
   },
