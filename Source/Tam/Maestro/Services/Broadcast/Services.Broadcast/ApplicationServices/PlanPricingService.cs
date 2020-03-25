@@ -521,11 +521,9 @@ namespace Services.Broadcast.ApplicationServices
 
             planPricingJobDiagnostic.RecordStart();
 
-            _PlanRepository.UpdatePlanPricingJob(new PlanPricingJob
-            {
-                Id = jobId,
-                Status = BackgroundJobProcessingStatus.Processing,
-            });
+            var planPricingJob = _PlanRepository.GetPlanPricingJob(jobId);
+            planPricingJob.Status = BackgroundJobProcessingStatus.Processing;
+            _PlanRepository.UpdatePlanPricingJob(planPricingJob);
 
             try
             {
@@ -542,15 +540,17 @@ namespace Services.Broadcast.ApplicationServices
                     Margin = planPricingParametersDto.Margin
                 };
 
+                token.ThrowIfCancellationRequested();
                 planPricingJobDiagnostic.RecordInventorySourceEstimatesCalculationStart();
 
                 var proprietaryEstimates = _CalculateProprietaryInventorySourceEstimates(plan, programInventoryParameters);
+                token.ThrowIfCancellationRequested();
                 _PlanRepository.SavePlanPricingEstimates(jobId, proprietaryEstimates);
 
                 planPricingJobDiagnostic.RecordInventorySourceEstimatesCalculationEnd();
 
+                token.ThrowIfCancellationRequested();
                 planPricingJobDiagnostic.RecordGatherInventoryStart();
-
                 var inventorySourceIds = _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes());
                 var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan,
@@ -562,7 +562,7 @@ namespace Services.Broadcast.ApplicationServices
                     parameters.BudgetGoal = parameters.BudgetGoal * (decimal)(1.0 - (parameters.Margin / 100.0));
                     parameters.CpmGoal = parameters.BudgetGoal / Convert.ToDecimal(parameters.ImpressionsGoal);
                 }
-
+                token.ThrowIfCancellationRequested();
                 planPricingJobDiagnostic.RecordGatherInventoryEnd();
 
                 _ValidateInventory(inventory);
@@ -573,11 +573,13 @@ namespace Services.Broadcast.ApplicationServices
                     Spots = _GetPricingModelSpots(plan, inventory)
                 };
 
+                token.ThrowIfCancellationRequested();
                 _PlanRepository.SavePricingRequest(parameters);
 
                 planPricingJobDiagnostic.RecordApiCallStart();
-
+                token.ThrowIfCancellationRequested();
                 var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
+                token.ThrowIfCancellationRequested();
 
                 if (apiAllocationResult.Error != null)
                 {
@@ -600,47 +602,48 @@ namespace Services.Broadcast.ApplicationServices
 
                 planPricingJobDiagnostic.RecordEnd();
 
+                token.ThrowIfCancellationRequested();
+
                 var aggregatedResults = AggregateResults(inventory, allocationResult);
 
                 using (var transaction = new TransactionScopeWrapper())
                 {
                     _PlanRepository.SavePricingApiResults(plan.Id, allocationResult);
                     _PlanRepository.SavePricingAggregateResults(plan.Id, aggregatedResults);
-                    _PlanRepository.UpdatePlanPricingJob(new PlanPricingJob
-                    {
-                        Id = jobId,
-                        Status = BackgroundJobProcessingStatus.Succeeded,
-                        Completed = DateTime.Now,
-                        DiagnosticResult = planPricingJobDiagnostic.ToString()
-                    });
+                    var pricingJob = _PlanRepository.GetPlanPricingJob(jobId);
+                    pricingJob.Status = BackgroundJobProcessingStatus.Succeeded;
+                    pricingJob.Completed = DateTime.Now;
+                    pricingJob.DiagnosticResult = planPricingJobDiagnostic.ToString();
+                    _PlanRepository.UpdatePlanPricingJob(pricingJob);
 
                     transaction.Complete();
                 }
             }
-            catch (OperationCanceledException exception)
+            catch (Exception exception) when (exception is ObjectDisposedException || exception is OperationCanceledException)
             {
-                _PlanRepository.UpdatePlanPricingJob(new PlanPricingJob
-                {
-                    Id = jobId,
-                    Status = BackgroundJobProcessingStatus.Canceled,
-                    ErrorMessage = exception.ToString(),
-                    Completed = DateTime.Now
-                });
-
-                LogHelper.Logger.Error($"Running the pricing model was canceled : {exception.Message}", exception);
+                _HandlePricingJobException(jobId, BackgroundJobProcessingStatus.Canceled, exception, "Running the pricing model was canceled");
             }
             catch (Exception exception)
             {
-                _PlanRepository.UpdatePlanPricingJob(new PlanPricingJob
-                {
-                    Id = jobId,
-                    Status = BackgroundJobProcessingStatus.Failed,
-                    ErrorMessage = exception.ToString(),
-                    Completed = DateTime.Now
-                });
-
-                LogHelper.Logger.Error($"Error attempting to run the pricing model : {exception.Message}", exception);
+                _HandlePricingJobException(jobId, BackgroundJobProcessingStatus.Failed, exception, "Error attempting to run the pricing model");
             }
+        }
+
+        private void _HandlePricingJobException(
+            int jobId,
+            BackgroundJobProcessingStatus status,
+            Exception exception,
+            string logMessage)
+        {
+            _PlanRepository.UpdatePlanPricingJob(new PlanPricingJob
+            {
+                Id = jobId,
+                Status = BackgroundJobProcessingStatus.Canceled,
+                ErrorMessage = exception.ToString(),
+                Completed = DateTime.Now
+            });
+
+            LogHelper.Logger.Error($"{logMessage} : {exception.Message}", exception);
         }
 
         protected decimal _CalculatePricingCpm(List<PlanPricingAllocatedSpot> spots, List<PricingEstimate> proprietaryEstimates, double margin)
