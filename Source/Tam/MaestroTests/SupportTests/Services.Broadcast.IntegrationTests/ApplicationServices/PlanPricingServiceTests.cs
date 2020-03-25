@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using Services.Broadcast.Entities;
 using Tam.Maestro.Common.DataLayer;
+using System.Threading;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -50,6 +51,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingJob), "HangfireJobId");
                 var jsonSettings = new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -71,6 +73,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingJob), "HangfireJobId");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -98,6 +101,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingJob), "HangfireJobId");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -286,7 +290,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id);
+                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 var result = _PlanPricingService.GetCurrentPricingExecution(1197);
 
@@ -345,7 +349,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id);
+                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 var result = _PlanPricingService.GetCurrentPricingExecution(1197);
 
@@ -473,7 +477,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id);
+                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 var result = _PlanRepository.GetPricingApiResults(planPricingRequestDto.PlanId);
 
@@ -528,7 +532,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id);
+                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 var result = _PlanPricingService.GetCurrentPricingExecution(planPricingRequestDto.PlanId);
 
@@ -588,7 +592,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id);
+                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 var result = _PlanPricingService.GetCurrentPricingExecution(planPricingRequestDto.PlanId);
 
@@ -647,7 +651,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id);
+                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 var result = _PlanRepository.GetPlanPricingRuns(planPricingRequestDto.PlanId);
 

@@ -153,7 +153,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_pricing_api_results> plan_version_pricing_api_results { get; set; }
         public virtual DbSet<affiliate> affiliates { get; set; }
         public virtual DbSet<plan_version_daypart_affiliate_restrictions> plan_version_daypart_affiliate_restrictions { get; set; }
-        public virtual DbSet<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
         public virtual DbSet<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
         public virtual DbSet<inventory_summary_quarter_details> inventory_summary_quarter_details { get; set; }
         public virtual DbSet<plan_version_dayparts> plan_version_dayparts { get; set; }
@@ -190,5 +189,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station_month_details> station_month_details { get; set; }
         public virtual DbSet<plan_version_pricing_job_inventory_source_estimates> plan_version_pricing_job_inventory_source_estimates { get; set; }
         public virtual DbSet<plan_version_pricing_job> plan_version_pricing_job { get; set; }
+        public virtual DbSet<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
     }
 }

@@ -81,7 +81,8 @@ namespace BroadcastJobScheduler.JobQueueMonitors
             {
                 ServerName = serverName,
                 Queues = queuesToManage.ToArray(),
-                WorkerCount = workerCount
+                WorkerCount = workerCount,
+                CancellationCheckInterval = TimeSpan.FromSeconds(ConfigurationSettingHelper.GetConfigSetting("HangfireCancellationCheckIntervalSeconds", 1.0))
             };
 
             LogHelper.Logger.Debug($"Worker options: {options.ToJson()}");

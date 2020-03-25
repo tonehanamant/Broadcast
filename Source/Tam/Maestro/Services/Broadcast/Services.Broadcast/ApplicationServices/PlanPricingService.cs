@@ -15,6 +15,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -27,9 +28,16 @@ namespace Services.Broadcast.ApplicationServices
     {
         PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate, string username);
         PlanPricingResponseDto GetCurrentPricingExecution(int planId);
+
+        /// <summary>
+        /// Cancels the current pricing execution.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <returns>The PlanPricingResponseDto object</returns>
+        PlanPricingResponseDto CancelCurrentPricingExecution(int planId);
         [Queue("planpricing")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void RunPricingJob(PlanPricingParametersDto planPricingParametersDto, int jobId);
+        void RunPricingJob(PlanPricingParametersDto planPricingParametersDto, int jobId, CancellationToken token);
         List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId);
         PlanPricingApiRequestDto GetPricingApiRequestPrograms(int planId, PricingInventoryGetRequestParametersDto requestParameters);
         List<PlanPricingInventoryProgram> GetPricingInventory(int planId, PricingInventoryGetRequestParametersDto requestParameters);
@@ -120,7 +128,10 @@ namespace Services.Broadcast.ApplicationServices
                     _CampaignRepository.UpdateCampaignLastModified(plan.CampaignId, currentDate, username);
                     transaction.Complete();
                 }
-                _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.RunPricingJob(planPricingParametersDto, job.Id));
+
+                job.HangfireJobId = _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.RunPricingJob(planPricingParametersDto, job.Id, CancellationToken.None));
+
+                _PlanRepository.UpdatePlanPricingJob(job);
 
                 return job;
             }
@@ -185,6 +196,36 @@ namespace Services.Broadcast.ApplicationServices
                 Job = job,
                 Result = pricingExecutionResult ?? new PlanPricingResultDto(),
                 IsPricingModelRunning = IsPricingModelRunning(job)
+            };
+        }
+
+        /// <inheritdoc />
+        public PlanPricingResponseDto CancelCurrentPricingExecution(int planId)
+        {
+            var job = _PlanRepository.GetLatestPricingJob(planId);
+            PlanPricingResultDto pricingExecutionResult = null;
+
+            if (job != null && job.Status == BackgroundJobProcessingStatus.Failed)
+            {
+                throw new Exception("Error encountered while running Pricing Model, please contact a system administrator for help");
+            }
+
+            if (!IsPricingModelRunning(job))
+            {
+                throw new Exception("Error encountered while canceling Pricing Model, process is not running");
+            }
+
+            _BackgroundJobClient.Delete(job.HangfireJobId);
+            job.Status = BackgroundJobProcessingStatus.Canceled;
+
+            _PlanRepository.UpdatePlanPricingJob(job);
+
+            //pricingExecutionResult might be null when there is no pricing run for the latest version            
+            return new PlanPricingResponseDto
+            {
+                Job = job,
+                Result = pricingExecutionResult ?? new PlanPricingResultDto(),
+                IsPricingModelRunning = false
             };
         }
 
@@ -469,12 +510,12 @@ namespace Services.Broadcast.ApplicationServices
             var newJobId = _SavePricingJobAndParameters(newJob, jobParams);
             
             // call the job directly
-            RunPricingJob(jobParams, newJobId);
+            RunPricingJob(jobParams, newJobId, CancellationToken.None);
 
             return newJobId;
         }
 
-        public void RunPricingJob(PlanPricingParametersDto planPricingParametersDto, int jobId)
+        public void RunPricingJob(PlanPricingParametersDto planPricingParametersDto, int jobId, CancellationToken token)
         {
             var planPricingJobDiagnostic = new PlanPricingJobDiagnostic { JobId = jobId };
 
@@ -488,6 +529,8 @@ namespace Services.Broadcast.ApplicationServices
 
             try
             {
+                token.ThrowIfCancellationRequested();
+
                 var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId);
                 var pricingMarkets = _MapToPlanPricingPrograms(plan);
                 var parameters = _GetPricingApiRequestParameters(planPricingParametersDto, plan, pricingMarkets);
@@ -495,7 +538,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     MinCPM = planPricingParametersDto.MinCpm,
                     MaxCPM = planPricingParametersDto.MaxCpm,
-                    InflationFactor = planPricingParametersDto.InflationFactor, 
+                    InflationFactor = planPricingParametersDto.InflationFactor,
                     Margin = planPricingParametersDto.Margin
                 };
 
@@ -519,7 +562,7 @@ namespace Services.Broadcast.ApplicationServices
                     parameters.BudgetGoal = parameters.BudgetGoal * (decimal)(1.0 - (parameters.Margin / 100.0));
                     parameters.CpmGoal = parameters.BudgetGoal / Convert.ToDecimal(parameters.ImpressionsGoal);
                 }
-                
+
                 planPricingJobDiagnostic.RecordGatherInventoryEnd();
 
                 _ValidateInventory(inventory);
@@ -533,7 +576,7 @@ namespace Services.Broadcast.ApplicationServices
                 _PlanRepository.SavePricingRequest(parameters);
 
                 planPricingJobDiagnostic.RecordApiCallStart();
-                
+
                 var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
 
                 if (apiAllocationResult.Error != null)
@@ -573,6 +616,18 @@ namespace Services.Broadcast.ApplicationServices
 
                     transaction.Complete();
                 }
+            }
+            catch (OperationCanceledException exception)
+            {
+                _PlanRepository.UpdatePlanPricingJob(new PlanPricingJob
+                {
+                    Id = jobId,
+                    Status = BackgroundJobProcessingStatus.Canceled,
+                    ErrorMessage = exception.ToString(),
+                    Completed = DateTime.Now
+                });
+
+                LogHelper.Logger.Error($"Running the pricing model was canceled : {exception.Message}", exception);
             }
             catch (Exception exception)
             {

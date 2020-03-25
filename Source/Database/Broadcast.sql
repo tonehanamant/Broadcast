@@ -50,6 +50,12 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START PRI-20829 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'hangfire_job_id' AND OBJECT_ID = OBJECT_ID('plan_version_pricing_job'))
+BEGIN
+	EXEC('ALTER TABLE [plan_version_pricing_job] ADD [hangfire_job_id] VARCHAR(16) NULL')
+END
+/*************************************** END PRI-20829 *****************************************************/
 
 /*************************************** START PRI-24475 *****************************************************/
 IF EXISTS(SELECT 1 FROM plan_versions WHERE target_audience_id = 31 AND target_universe <> hh_universe)

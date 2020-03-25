@@ -35,6 +35,13 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetCurrentPricingExecution(planId));
         }
 
+        [HttpPost]
+        [Route("CancelExecution")]
+        public BaseResponse<PlanPricingResponseDto> CancelCurrentPricingExecution(int planId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().CancelCurrentPricingExecution(planId));
+        }
+
         /// <summary>
         /// Allows checking that correct inventory is used for pricing
         /// </summary>

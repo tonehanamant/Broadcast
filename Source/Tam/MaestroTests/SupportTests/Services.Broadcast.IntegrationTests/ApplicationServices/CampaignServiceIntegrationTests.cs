@@ -29,6 +29,7 @@ using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.ReportGenerators.CampaignExport;
 using Services.Broadcast.ReportGenerators;
 using Services.Broadcast.Clients;
+using System.Threading;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -1062,7 +1063,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var job = planPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "integration test");
-                planPricingService.RunPricingJob(planPricingRequestDto, job.Id);
+                planPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 var reportData = _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest
                 {

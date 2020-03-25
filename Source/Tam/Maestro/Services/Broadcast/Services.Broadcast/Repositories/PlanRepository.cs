@@ -1091,6 +1091,7 @@ namespace Services.Broadcast.Repositories
             {
                 var job = context.plan_version_pricing_job.Single(x => x.id == planPricingJob.Id);
 
+                job.hangfire_job_id = planPricingJob.HangfireJobId;
                 job.status = (int)planPricingJob.Status;
                 job.completed_at = planPricingJob.Completed;
                 job.error_message = planPricingJob.ErrorMessage;
@@ -1119,6 +1120,7 @@ namespace Services.Broadcast.Repositories
                 return new PlanPricingJob
                 {
                     Id = latestJob.id,
+                    HangfireJobId = latestJob.hangfire_job_id,
                     PlanVersionId = latestJob.plan_version_id,
                     Status = (BackgroundJobProcessingStatus)latestJob.status,
                     Queued = latestJob.queued_at,
@@ -1139,6 +1141,7 @@ namespace Services.Broadcast.Repositories
                 return new PlanPricingJob
                 {
                     Id = job.id,
+                    HangfireJobId = job.hangfire_job_id,
                     PlanVersionId = job.plan_version_id,
                     Status = (BackgroundJobProcessingStatus)job.status,
                     Queued = job.queued_at,

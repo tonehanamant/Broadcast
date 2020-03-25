@@ -21,6 +21,7 @@ using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgra
 using Services.Broadcast.Entities;
 using static Services.Broadcast.BusinessEngines.PlanPricingInventoryEngine;
 using Common.Services;
+using System.Threading;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {
@@ -984,7 +985,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            service.RunPricingJob(parameters, jobId);
+            service.RunPricingJob(parameters, jobId, CancellationToken.None);
 
             // Assert
             _PlanPricingInventoryEngineMock

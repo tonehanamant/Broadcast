@@ -851,8 +851,8 @@
           <Property Name="impressions" Type="float" Nullable="false" />
           <Property Name="cost" Type="money" Nullable="false" />
           <Property Name="spots" Type="int" Nullable="false" />
-          <Property Name="standard_daypart_id" Type="int" Nullable="false" />
           <Property Name="contract_media_week_id" Type="int" Nullable="false" />
+          <Property Name="standard_daypart_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_api_results">
           <Key>
@@ -919,6 +919,7 @@
           <Property Name="completed_at" Type="datetime" />
           <Property Name="error_message" Type="nvarchar(max)" />
           <Property Name="diagnostic_result" Type="nvarchar" MaxLength="2000" />
+          <Property Name="hangfire_job_id" Type="varchar" MaxLength="16" />
         </EntityType>
         <EntityType Name="plan_version_pricing_job_inventory_source_estimates">
           <Key>
@@ -13313,6 +13314,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="diagnostic_result" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="plan_version_pricing_job_inventory_source_estimates" Relationship="BroadcastModel.FK_plan_version_pricing_job_inventory_source_estimates_plan_version_pricing_job" FromRole="plan_version_pricing_job" ToRole="plan_version_pricing_job_inventory_source_estimates" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_pricing_job_plan_versions" FromRole="plan_version_pricing_job" ToRole="plan_versions" />
+          <Property Name="hangfire_job_id" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_plan_version_pricing_job_inventory_source_estimates_plan_version_pricing_job">
           <End Type="BroadcastModel.plan_version_pricing_job" Role="plan_version_pricing_job" Multiplicity="1" />
@@ -15702,6 +15704,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_pricing_job">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_job">
               <MappingFragment StoreEntitySet="plan_version_pricing_job">
+                <ScalarProperty Name="hangfire_job_id" ColumnName="hangfire_job_id" />
                 <ScalarProperty Name="diagnostic_result" ColumnName="diagnostic_result" />
                 <ScalarProperty Name="error_message" ColumnName="error_message" />
                 <ScalarProperty Name="completed_at" ColumnName="completed_at" />

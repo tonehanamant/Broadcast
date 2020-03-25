@@ -2,6 +2,7 @@
   "IsPricingModelRunning": false,
   "Job": {
     "ErrorMessage": null,
+    "HangfireJobId": null,
     "PlanVersionId": 47,
     "Queued": "2019-11-04T00:00:00",
     "Status": 3
