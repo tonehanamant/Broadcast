@@ -113,6 +113,35 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
+        public void InventoryFileLoad_UnmappedStation()
+        {
+            const string fileName = "Unmapped Station.xml";
+
+            using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
+            {
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\ImportingRateData\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = fileName
+                };
+
+                var result = _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void InventoryFileLoad_OpenMarket()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))

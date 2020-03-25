@@ -48,7 +48,7 @@ namespace Services.Broadcast.Converters.RateImport
         public List<InventoryFileProblem> FileProblems { get; set; } = new List<InventoryFileProblem>();
         private InventoryFileSaveRequest _Request { get; set; }
         private string _FileHash { get; set; }
-       
+
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IDaypartCache _DaypartCache;
@@ -125,7 +125,7 @@ namespace Services.Broadcast.Converters.RateImport
 
             rowsProcessed = _PopulateStationProgramList(message.Proposal, inventoryFile);
 
-            if (inventoryFile.ValidationProblems.Any()) return;
+            if (inventoryFile.ValidationProblems.Any() || FileProblems.Any()) return;
 
             inventoryFile.StationContacts = _ExtractContactData(message);
             PopulateInventoryFileDateRange(inventoryFile);
@@ -255,7 +255,8 @@ namespace Services.Broadcast.Converters.RateImport
                         .Select(a => a.callLetters)
                         .First();
 
-                    var station = _StationMappingService.GetStationByCallLetters(callLetters); ;
+                    var station = _StationMappingService.GetStationByCallLetters(callLetters);
+
                     var spotLength = availLine.SpotLength.Minute * SecondsPerMinute + availLine.SpotLength.Second;
                     var spotLengthProblem = _CheckSpotLength(spotLength, callLetters, programName);
 
@@ -300,7 +301,7 @@ namespace Services.Broadcast.Converters.RateImport
 
                         if (weeksGroupedByQuarter.Any())
                             rowsProcessed++;
-                    }                    
+                    }
                 }
                 catch (Exception e)
                 {
@@ -392,14 +393,14 @@ namespace Services.Broadcast.Converters.RateImport
                 FileName = _Request.FileName ?? "unknown",
                 FileStatus = FileStatusEnum.Pending,
                 Hash = _FileHash,
-                InventorySource =  InventorySource,
+                InventorySource = InventorySource,
                 CreatedBy = userName,
                 CreatedDate = nowDate
             };
         }
-        
+
         protected virtual DisplayBroadcastStation ParseStationCallLetters(string stationName)
-        {            
+        {
             stationName = _StationEngine.StripStationSuffix(stationName).Trim();
             if (_AvailableStations.Any(x => x.LegacyCallLetters.Equals(stationName)))
             {
@@ -436,7 +437,7 @@ namespace Services.Broadcast.Converters.RateImport
 
             return foundStations.ToDictionary(kvp => kvp.Key, kvp => kvp.Value, StringComparer.OrdinalIgnoreCase);
         }
-        
+
         private Dictionary<int, double> _GetSpotLengthAndMultipliers()
         {
             // load spot lenght ids and multipliers
@@ -592,11 +593,24 @@ namespace Services.Broadcast.Converters.RateImport
 
             var taskList = new List<Task<StationContact>>();
 
+            var problems = new ConcurrentBag<InventoryFileProblem>();
+
             foreach (var station in message.Proposal.Outlets)
             {
                 taskList.Add(Task.Run(() =>
                 {
-                    var proposalStation = _StationMappingService.GetStationByCallLetters(station.callLetters);
+                    DisplayBroadcastStation proposalStation = null;
+
+                    try
+                    {
+                        proposalStation = _StationMappingService.GetStationByCallLetters(station.callLetters);
+                    }
+                    catch(Exception e)
+                    {
+                        problems.Add(new InventoryFileProblem(e.Message));
+                        return null;
+                    }
+
                     var stationContact = new StationContact
                     {
                         Company = message.Proposal.Seller.companyName,
@@ -614,7 +628,7 @@ namespace Services.Broadcast.Converters.RateImport
                             .Select(p => p.Value)
                             .FirstOrDefault() : null
                     };
-                    
+
                     stationContact.StationId = proposalStation.Id;
 
                     if (proposalStations.Any(x => x.LegacyCallLetters.Equals(stationContact.Company.Trim(), StringComparison.OrdinalIgnoreCase)))
@@ -634,7 +648,9 @@ namespace Services.Broadcast.Converters.RateImport
             }
 
             List<StationContact> contacts = Task.WhenAll(taskList).Result.ToList();
-            
+
+            FileProblems.AddRange(problems.ToList());
+
             return contacts;
         }
 
@@ -660,7 +676,7 @@ namespace Services.Broadcast.Converters.RateImport
                 OutletReference = _Map(model.OutletReference),
                 Periods = _Map(model.Periods),
                 DayTimes = _Map(model.DayTimes)
-            };            
+            };
         }
 
         private AvailLineWithPeriodsDayTimes _Map(AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsDayTimes model)
@@ -785,7 +801,7 @@ namespace Services.Broadcast.Converters.RateImport
                 OutletReference = _Map(model.OutletReference),
                 Periods = model.Periods == null ? new List<Period>() : model.Periods.Select(x => _Map(x, model.Rate, model.DemoValues)).ToList(),
                 DayTimes = _Map(model.DayTimes)
-            };            
+            };
         }
 
         private Period _Map(AAAAMessageProposalAvailListAvailLineWithPeriodsPeriod model, string rate, AAAAMessageProposalAvailListAvailLineWithPeriodsDemoValue[] demoValues)
