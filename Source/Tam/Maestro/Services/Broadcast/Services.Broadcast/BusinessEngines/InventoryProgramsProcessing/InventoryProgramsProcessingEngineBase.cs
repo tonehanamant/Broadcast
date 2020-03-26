@@ -125,6 +125,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         public string ImportInventoryProgramResults(Stream fileStream, string fileName)
         {
+            const GenreSourceEnum GENRE_SOURCE = GenreSourceEnum.Dativa;
             var success = false;
             var stopWatch = new Stopwatch();
             stopWatch.Start();
@@ -185,14 +186,47 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                     batchindex++;
                     processingLog.AppendLine($"Starting batch {batchindex} of {processingBatches.Count}.");
 
-                    processingLog.AppendLine($"Transforming to programs for batch of {batch.Count}");
-                    // transform to the programs
+                    processingLog.AppendLine($"Compressing dates for batch of {batch.Count}");
+                    var programGroups = batch.GroupBy(b => new
+                        {
+                            b.inventory_daypart_id,
+                            b.program_name,
+                            b.show_type,
+                            b.genre,
+                            b.program_start_time,
+                            b.program_end_time
+                        })
+                        .ToList();
+
+                    processingLog.AppendLine($"Grouped batch of {batch.Count} to {programGroups.Count} program groups.");
+                    processingLog.AppendLine($"Transforming to programs for {programGroups.Count} groups.");
+                    
                     var programs = new List<StationInventoryManifestDaypartProgram>();
-                    foreach (var batchItem in batch)
+                    foreach (var programGroup in programGroups)
                     {
+                        var exported = programGroup.Key;
+                        var startDate = programGroup.Min(p => p.program_start_date.Value);
+                        var endDate = programGroup.Max(p => p.program_end_date.Value);
+
                         try
                         {
-                            var program = _MapExportedProgram(batchItem);
+                            var sourceGenre = _GenreCache.GetSourceGenreByName(exported.genre, GENRE_SOURCE);
+                            var maestroGenre = _GenreCache.GetMaestroGenreBySourceGenre(sourceGenre, GENRE_SOURCE);
+
+                            var program = new StationInventoryManifestDaypartProgram
+                            {
+                                StationInventoryManifestDaypartId = exported.inventory_daypart_id,
+                                ProgramName = exported.program_name,
+                                ShowType = exported.show_type,
+                                GenreSourceId = (int)GENRE_SOURCE,
+                                SourceGenreId = sourceGenre.Id,
+                                MaestroGenreId = maestroGenre.Id,
+                                StartDate = startDate,
+                                EndDate = endDate,
+                                StartTime = exported.program_start_time.Value,
+                                EndTime = exported.program_end_time.Value
+                            };
+
                             programs.Add(program);
                         }
                         catch (Exception e)
@@ -200,7 +234,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                             processingLog.AppendLine($"Error transforming from batch item to program : {e.Message}");
                         }
                     }
-
+                    
                     totalProgramsExtracted += programs.Count;
 
                     processingLog.AppendLine($"Transforming to {programs.Count} programs making {totalProgramsExtracted} total programs.");
@@ -344,28 +378,6 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             {
                 throw new InvalidOperationException($"Error attempting to move file '{fileName}' from to '{fromDirectory}' to '{toDirectory}'. Message : {e.Message}");
             }
-        }
-
-        private StationInventoryManifestDaypartProgram _MapExportedProgram(GuideInterfaceExportElement exported)
-        {
-            const GenreSourceEnum GENRE_SOURCE = GenreSourceEnum.Dativa;
-            var sourceGenre = _GenreCache.GetSourceGenreByName(exported.genre, GENRE_SOURCE);
-            var maestroGenre = _GenreCache.GetMaestroGenreBySourceGenre(sourceGenre, GENRE_SOURCE);
-
-            var program = new StationInventoryManifestDaypartProgram
-            {
-                StationInventoryManifestDaypartId =  exported.inventory_daypart_id,
-                ProgramName = exported.program_name,
-                ShowType = exported.show_type,
-                GenreSourceId = (int)GENRE_SOURCE,
-                SourceGenreId = sourceGenre.Id,
-                MaestroGenreId = maestroGenre.Id,
-                StartDate = exported.program_start_date.Value,
-                EndDate = exported.program_end_date.Value,
-                StartTime = exported.program_start_time.Value,
-                EndTime = exported.program_end_time.Value
-            };
-            return program;
         }
 
         public InventoryProgramsProcessingJobDiagnostics ProcessInventoryJob(int jobId)

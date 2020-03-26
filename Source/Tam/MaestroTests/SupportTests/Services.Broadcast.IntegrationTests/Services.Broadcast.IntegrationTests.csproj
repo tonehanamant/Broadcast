@@ -481,6 +481,9 @@
     <None Include="Files\InventoryProgramsResultsImport\Results_ProgramGuideInventoryExportFile_DaypartQuotes.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\InventoryProgramsResultsImport\Results_ProgramGuideInventory_CompressDateRangeTest.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\LoadUniversesTest.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
