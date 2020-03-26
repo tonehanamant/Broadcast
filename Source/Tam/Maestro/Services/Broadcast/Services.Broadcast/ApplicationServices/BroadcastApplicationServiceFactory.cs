@@ -143,7 +143,6 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProprietaryFileImporterFactory, ProprietaryFileImporterFactory>();
             unityContainer.RegisterType<ICNNStationInventoryGroupService, CNNStationInventoryGroupService>();
             unityContainer.RegisterType<IStationInventoryManifestService, StationInventoryManifestService>();
-            unityContainer.RegisterType<IPlanDaypartEngine, PlanDaypartEngine>();
             
             unityContainer.RegisterType<IPostLogService, PostLogService>();
             unityContainer.RegisterType<IAffidavitService, AffidavitService>();

@@ -330,7 +330,6 @@
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsRequestPackage.cs" />
     <Compile Include="BusinessEngines\PlanPricingInventoryEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricingInventorySourceSortEngine.cs" />
-    <Compile Include="BusinessEngines\PlanDaypartEngine.cs" />
     <Compile Include="Clients\PricingApiClient.cs" />
     <Compile Include="Cache\GenreCache.cs" />
     <Compile Include="Clients\ProgramGuideApiClient.cs" />

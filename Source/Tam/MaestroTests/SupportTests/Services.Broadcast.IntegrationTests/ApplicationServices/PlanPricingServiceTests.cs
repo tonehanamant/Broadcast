@@ -296,6 +296,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingJob), "HangfireJobId");
                 jsonResolver.Ignore(typeof(PlanPricingProgramDto), "Id");
                 jsonResolver.Ignore(typeof(PlanPricingJob), "Completed");
                 jsonResolver.Ignore(typeof(PlanPricingJob), "DiagnosticResult");
@@ -540,6 +541,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(PlanPricingApiResultSpotDto), "id");
                 jsonResolver.Ignore(typeof(PlanPricingProgramDto), "Id");
                 jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingJob), "HangfireJobId");
                 jsonResolver.Ignore(typeof(PlanPricingJob), "Completed");
                 jsonResolver.Ignore(typeof(PlanPricingJob), "DiagnosticResult");
                 var jsonSettings = new JsonSerializerSettings()
@@ -600,6 +602,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(PlanPricingApiResultSpotDto), "id");
                 jsonResolver.Ignore(typeof(PlanPricingProgramDto), "Id");
                 jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingJob), "HangfireJobId");
                 jsonResolver.Ignore(typeof(PlanPricingJob), "Completed");
                 jsonResolver.Ignore(typeof(PlanPricingJob), "DiagnosticResult");
                 var jsonSettings = new JsonSerializerSettings()

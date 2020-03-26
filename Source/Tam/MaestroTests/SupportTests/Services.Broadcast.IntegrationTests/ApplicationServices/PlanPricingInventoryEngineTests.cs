@@ -13,6 +13,7 @@ using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using static Services.Broadcast.Entities.Plan.PlanDaypartDto;
+using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram;
 using static Services.Broadcast.Entities.ProposalProgramDto;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -75,7 +76,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingInventoryProgram), "ManifestId");
-                jsonResolver.Ignore(typeof(ManifestDaypartDto), "Id");
+                jsonResolver.Ignore(typeof(ManifestDaypart), "Id");
+                jsonResolver.Ignore(typeof(ManifestWeek), "Id");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

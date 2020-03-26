@@ -16,6 +16,7 @@
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotCost": 0.0,
+    "StandardDaypartId": 0,
     "Station": {
       "Affiliation": null,
       "CallLetters": null,
@@ -47,6 +48,7 @@
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotCost": 0.0,
+    "StandardDaypartId": 0,
     "Station": {
       "Affiliation": null,
       "CallLetters": null,
@@ -78,6 +80,7 @@
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotCost": 0.0,
+    "StandardDaypartId": 0,
     "Station": {
       "Affiliation": null,
       "CallLetters": null,
@@ -109,6 +112,7 @@
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotCost": 0.0,
+    "StandardDaypartId": 0,
     "Station": {
       "Affiliation": null,
       "CallLetters": null,
@@ -140,6 +144,7 @@
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotCost": 0.0,
+    "StandardDaypartId": 0,
     "Station": {
       "Affiliation": null,
       "CallLetters": null,
@@ -171,6 +176,7 @@
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
     "SpotCost": 0.0,
+    "StandardDaypartId": 0,
     "Station": {
       "Affiliation": null,
       "CallLetters": null,

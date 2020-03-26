@@ -26,12 +26,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         {
         }
 
-        public List<PlanPricingInventoryProgram> UT_FilterProgramsByDayparts(
+        public List<PlanPricingInventoryProgram> UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(
             PlanDto plan,
             List<PlanPricingInventoryProgram> programs,
             DisplayDaypart planDisplayDaypartDays)
         {
-            return FilterProgramsByDayparts(plan, programs, planDisplayDaypartDays);
+            return FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan, programs, planDisplayDaypartDays);
         }
 
         public List<PlanPricingInventoryProgram> UT_FilterProgramsByMinAndMaxCPM(

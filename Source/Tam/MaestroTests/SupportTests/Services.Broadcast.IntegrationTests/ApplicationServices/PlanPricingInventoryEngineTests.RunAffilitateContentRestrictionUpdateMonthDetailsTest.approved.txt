@@ -55,14 +55,25 @@
         },
         "Id": 358772,
         "PrimaryProgram": {
-          "EndTime": 0,
-          "Genre": "",
-          "Name": "FRIENDS",
-          "ShowType": "",
-          "StartTime": 0
+          "EndTime": 7200,
+          "Genre": "Children",
+          "Id": 11245,
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
         },
+        "PrimaryProgramId": 11245,
         "ProgramName": "FRIENDS",
-        "Programs": null
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Children",
+            "Id": 11245,
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 287146,
@@ -101,6 +112,7 @@
     "ProjectedImpressions": 66863.3375,
     "ProvidedImpressions": 58650.0,
     "SpotCost": 750.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "CW2",
       "CallLetters": "WPIX 11.1",
@@ -171,14 +183,25 @@
         },
         "Id": 358773,
         "PrimaryProgram": {
-          "EndTime": 0,
-          "Genre": "",
-          "Name": "TWO & A HALF MEN",
-          "ShowType": "",
-          "StartTime": 0
+          "EndTime": 7200,
+          "Genre": "Children",
+          "Id": 11246,
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
         },
+        "PrimaryProgramId": 11246,
         "ProgramName": "TWO & A HALF MEN",
-        "Programs": null
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Children",
+            "Id": 11246,
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 287147,
@@ -217,6 +240,7 @@
     "ProjectedImpressions": 57145.9675,
     "ProvidedImpressions": 50320.0,
     "SpotCost": 700.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "CW2",
       "CallLetters": "WPIX 11.1",
@@ -287,14 +311,25 @@
         },
         "Id": 358776,
         "PrimaryProgram": {
-          "EndTime": 0,
-          "Genre": "",
-          "Name": "FRIENDS",
-          "ShowType": "",
-          "StartTime": 0
+          "EndTime": 7200,
+          "Genre": "Children",
+          "Id": 11247,
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
         },
+        "PrimaryProgramId": 11247,
         "ProgramName": "FRIENDS",
-        "Programs": null
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Children",
+            "Id": 11247,
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 287150,
@@ -333,6 +368,7 @@
     "ProjectedImpressions": 76497.025,
     "ProvidedImpressions": 51340.0,
     "SpotCost": 800.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "CW2",
       "CallLetters": "WPIX 11.1",
@@ -403,14 +439,25 @@
         },
         "Id": 358777,
         "PrimaryProgram": {
-          "EndTime": 0,
-          "Genre": "",
-          "Name": "FRIENDS",
-          "ShowType": "",
-          "StartTime": 0
+          "EndTime": 7200,
+          "Genre": "Children",
+          "Id": 11248,
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
         },
+        "PrimaryProgramId": 11248,
         "ProgramName": "FRIENDS",
-        "Programs": null
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Children",
+            "Id": 11248,
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 287151,
@@ -449,6 +496,7 @@
     "ProjectedImpressions": 52161.1,
     "ProvidedImpressions": 37060.0,
     "SpotCost": 750.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "CW2",
       "CallLetters": "WPIX 11.1",
@@ -519,14 +567,25 @@
         },
         "Id": 358780,
         "PrimaryProgram": {
-          "EndTime": 0,
-          "Genre": "",
-          "Name": "FRIENDS 2X",
-          "ShowType": "",
-          "StartTime": 0
+          "EndTime": 7200,
+          "Genre": "Children",
+          "Id": 11249,
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
         },
+        "PrimaryProgramId": 11249,
         "ProgramName": "FRIENDS 2X",
-        "Programs": null
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Children",
+            "Id": 11249,
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 287154,
@@ -565,6 +624,7 @@
     "ProjectedImpressions": 68058.96875,
     "ProvidedImpressions": 39780.0,
     "SpotCost": 600.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "CW2",
       "CallLetters": "WPIX 11.1",

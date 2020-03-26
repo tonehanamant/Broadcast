@@ -2,7 +2,6 @@
   "IsPricingModelRunning": false,
   "Job": {
     "ErrorMessage": null,
-    "HangfireJobId": null,
     "PlanVersionId": 47,
     "Queued": "2019-11-04T00:00:00",
     "Status": 3
@@ -12,7 +11,7 @@
     "Programs": [
       {
         "AvgCpm": 15.2562,
-        "AvgImpressions": 47430.0,
+        "AvgImpressions": 47.43,
         "Genre": "Children",
         "MarketCount": 1,
         "PercentageOfBuy": 99.28825623,
@@ -21,7 +20,7 @@
       },
       {
         "AvgCpm": 50.8412,
-        "AvgImpressions": 425.0,
+        "AvgImpressions": 0.425,
         "Genre": "Comedy",
         "MarketCount": 1,
         "PercentageOfBuy": 0.71174377,
@@ -31,7 +30,7 @@
     ],
     "Totals": {
       "AvgCpm": 15.5094,
-      "AvgImpressions": 26538.88888889,
+      "AvgImpressions": 26.53888889,
       "MarketCount": 2,
       "StationCount": 2
     }

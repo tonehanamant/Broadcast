@@ -55,14 +55,25 @@
         },
         "Id": 360318,
         "PrimaryProgram": {
-          "EndTime": 0,
-          "Genre": "",
-          "Name": "TWO & HALF MEN",
-          "ShowType": "",
-          "StartTime": 0
+          "EndTime": 7200,
+          "Genre": "Comedy",
+          "Id": 11250,
+          "Name": "Late news",
+          "ShowType": "Sports",
+          "StartTime": 3600
         },
+        "PrimaryProgramId": 11250,
         "ProgramName": "TWO & HALF MEN",
-        "Programs": null
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Comedy",
+            "Id": 11250,
+            "Name": "Late news",
+            "ShowType": "Sports",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 288692,
@@ -101,6 +112,7 @@
     "ProjectedImpressions": 149.09,
     "ProvidedImpressions": 510.0,
     "SpotCost": 50.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "FOX",
       "CallLetters": "WPFO 23.1",
@@ -171,14 +183,25 @@
         },
         "Id": 360319,
         "PrimaryProgram": {
-          "EndTime": 0,
-          "Genre": "",
-          "Name": "2.5 MEN X2",
-          "ShowType": "",
-          "StartTime": 0
+          "EndTime": 7200,
+          "Genre": "Comedy",
+          "Id": 11251,
+          "Name": "Late news",
+          "ShowType": "Sports",
+          "StartTime": 3600
         },
+        "PrimaryProgramId": 11251,
         "ProgramName": "2.5 MEN X2",
-        "Programs": null
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Comedy",
+            "Id": 11251,
+            "Name": "Late news",
+            "ShowType": "Sports",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 288693,
@@ -217,6 +240,7 @@
     "ProjectedImpressions": 369.43125,
     "ProvidedImpressions": 510.0,
     "SpotCost": 12.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "FOX",
       "CallLetters": "WPFO 23.1",
@@ -287,14 +311,25 @@
         },
         "Id": 360320,
         "PrimaryProgram": {
-          "EndTime": 0,
-          "Genre": "",
-          "Name": "SEINFELD X2",
-          "ShowType": "",
-          "StartTime": 0
+          "EndTime": 7200,
+          "Genre": "Comedy",
+          "Id": 11252,
+          "Name": "Late news",
+          "ShowType": "Sports",
+          "StartTime": 3600
         },
+        "PrimaryProgramId": 11252,
         "ProgramName": "SEINFELD X2",
-        "Programs": null
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Comedy",
+            "Id": 11252,
+            "Name": "Late news",
+            "ShowType": "Sports",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 288694,
@@ -333,6 +368,7 @@
     "ProjectedImpressions": 493.0,
     "ProvidedImpressions": 340.0,
     "SpotCost": 12.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "FOX",
       "CallLetters": "WPFO 23.1",
@@ -403,14 +439,25 @@
         },
         "Id": 360321,
         "PrimaryProgram": {
-          "EndTime": 0,
-          "Genre": "",
-          "Name": "2 BROKE GIRLS",
-          "ShowType": "",
-          "StartTime": 0
+          "EndTime": 7200,
+          "Genre": "Comedy",
+          "Id": 11253,
+          "Name": "Late news",
+          "ShowType": "Sports",
+          "StartTime": 3600
         },
+        "PrimaryProgramId": 11253,
         "ProgramName": "2 BROKE GIRLS",
-        "Programs": null
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Comedy",
+            "Id": 11253,
+            "Name": "Late news",
+            "ShowType": "Sports",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 288695,
@@ -449,6 +496,7 @@
     "ProjectedImpressions": 99.79,
     "ProvidedImpressions": 340.0,
     "SpotCost": 12.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "FOX",
       "CallLetters": "WPFO 23.1",

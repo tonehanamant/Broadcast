@@ -20,8 +20,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             IPlanPricingInventoryEngine planPricingInventoryEngine,
             IBroadcastLockingManagerApplicationService lockingManagerApplicationService,
             IDaypartCache daypartCache,
-            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-            IPlanDaypartEngine planDaypartEngine)
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
             : base(
                   broadcastDataRepositoryFactory, 
                   spotLengthEngine, 
@@ -30,8 +29,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                   planPricingInventoryEngine, 
                   lockingManagerApplicationService,
                   daypartCache,
-                  mediaMonthAndWeekAggregateCache,
-                  planDaypartEngine)
+                  mediaMonthAndWeekAggregateCache)
         {
         }
 

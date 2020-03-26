@@ -16,7 +16,6 @@ using Services.Broadcast.Entities;
 namespace Services.Broadcast.IntegrationTests.Repositories
 {
     [TestFixture]
-    [Category("short_running")]
     public class InventoryRepositoryTests
     {
         /// <summary>
@@ -26,6 +25,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         /// </summary>
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void StationInventoryManifestDaypartProgramsUpdate()
         {
             const int expectedBeforeProgramCount = 9;
@@ -102,6 +102,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventoryByFileIdForProgramsProcessing()
         {
             const int testFileId = 251392;
@@ -117,6 +118,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetInventoryBySourceForProgramsProcessing()
         {
             const int inventorySourceId = 1;
@@ -133,6 +135,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         }
 
         [Test]
+        [Category("short_running")]
         public void GetInventoryBySourceWithUnprocessedPrograms()
         {
             const int inventorySourceId = 1;

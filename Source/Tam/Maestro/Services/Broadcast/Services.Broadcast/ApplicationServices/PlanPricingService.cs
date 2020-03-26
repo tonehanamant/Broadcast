@@ -71,7 +71,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IMarketCoverageRepository _MarketCoverageRepository;
         private readonly IDaypartCache _DaypartCache;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
-        private readonly IPlanDaypartEngine _PlanDaypartEngine;
         private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -81,8 +80,7 @@ namespace Services.Broadcast.ApplicationServices
                                   IPlanPricingInventoryEngine planPricingInventoryEngine,
                                   IBroadcastLockingManagerApplicationService lockingManagerApplicationService,
                                   IDaypartCache daypartCache,
-                                  IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-                                  IPlanDaypartEngine planDaypartEngine)
+                                  IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
@@ -96,7 +94,6 @@ namespace Services.Broadcast.ApplicationServices
             _MarketCoverageRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
             _DaypartCache = daypartCache;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
-            _PlanDaypartEngine = planDaypartEngine;
             _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
         }
 
@@ -187,7 +184,8 @@ namespace Services.Broadcast.ApplicationServices
 
             if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
             {
-                pricingExecutionResult = _PlanRepository.GetPricingResults(planId); 
+                pricingExecutionResult = _PlanRepository.GetPricingResults(planId);
+                _ConvertImpressionsToUserFormat(pricingExecutionResult);
             } 
 
             //pricingExecutionResult might be null when there is no pricing run for the latest version            
@@ -197,6 +195,19 @@ namespace Services.Broadcast.ApplicationServices
                 Result = pricingExecutionResult ?? new PlanPricingResultDto(),
                 IsPricingModelRunning = IsPricingModelRunning(job)
             };
+        }
+
+        private void _ConvertImpressionsToUserFormat(PlanPricingResultDto planPricingResult)
+        {
+            if (planPricingResult == null)
+                return;
+
+            planPricingResult.Totals.AvgImpressions /= 1000;
+
+            foreach (var program in planPricingResult.Programs)
+            {
+                program.AvgImpressions /= 1000; 
+            }
         }
 
         /// <inheritdoc />
@@ -343,7 +354,6 @@ namespace Services.Broadcast.ApplicationServices
         {
             var marketCoveragesByMarketCode = _MarketCoverageRepository.GetLatestMarketCoverages().MarketCoveragesByMarketCode;
             var pricingModelSpots = new List<PlanPricingApiRequestSpotsDto>();
-            var planDayparts = plan.Dayparts;
 
             foreach (var program in programs)
             {
@@ -357,25 +367,11 @@ namespace Services.Broadcast.ApplicationServices
                     if (!_AreImpressionsValidForPricingModelInput(program.SpotCost))
                         continue;
 
-                    var daypartTimeRange = new TimeRange
-                    {
-                        StartTime = daypart.Daypart.StartTime,
-                        EndTime = daypart.Daypart.EndTime
-                    };
-
-                    var matchingPlanDaypart = _PlanDaypartEngine.FindPlanDaypartWithMostIntersectingTime(
-                            planDayparts,
-                            daypart.PrimaryProgram.Genre,
-                            daypartTimeRange);
-
-                    if (matchingPlanDaypart == null)
-                        continue;
-
                     var spots = program.ManifestWeeks.Select(manifestWeek => new PlanPricingApiRequestSpotsDto
                     {
                         Id = program.ManifestId,
                         MediaWeekId = manifestWeek.ContractMediaWeekId,
-                        DaypartId = matchingPlanDaypart.DaypartCodeId,
+                        DaypartId = program.StandardDaypartId,
                         Impressions = impressions,
                         Cost = program.SpotCost,
                         StationId = program.Station.Id,

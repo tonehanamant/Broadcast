@@ -140,14 +140,25 @@
         },
         "Id": 576683,
         "PrimaryProgram": {
-          "EndTime": 0,
-          "Genre": "news",
-          "Name": "News 10 @ Noon",
-          "ShowType": "",
-          "StartTime": 0
+          "EndTime": 7200,
+          "Genre": "Children",
+          "Id": 14753,
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
         },
+        "PrimaryProgramId": 14753,
         "ProgramName": "News 10 @ Noon",
-        "Programs": null
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Children",
+            "Id": 14753,
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 469330,
@@ -162,6 +173,7 @@
     "ProjectedImpressions": 18139.87125,
     "ProvidedImpressions": null,
     "SpotCost": 75.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "ABC",
       "CallLetters": "WTEN 10.1",
@@ -317,14 +329,25 @@
         },
         "Id": 576685,
         "PrimaryProgram": {
-          "EndTime": 0,
-          "Genre": "news",
-          "Name": "News 10 @ Noon",
-          "ShowType": "",
-          "StartTime": 0
+          "EndTime": 7200,
+          "Genre": "Children",
+          "Id": 14754,
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
         },
+        "PrimaryProgramId": 14754,
         "ProgramName": "News 10 @ Noon",
-        "Programs": null
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Children",
+            "Id": 14754,
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestId": 469332,
@@ -339,6 +362,7 @@
     "ProjectedImpressions": 18139.87125,
     "ProvidedImpressions": 850.0,
     "SpotCost": 75.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "ABC",
       "CallLetters": "WTEN 10.1",

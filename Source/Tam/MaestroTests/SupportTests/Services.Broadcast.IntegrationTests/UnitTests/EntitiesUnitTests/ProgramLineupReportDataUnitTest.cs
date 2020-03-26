@@ -5,6 +5,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
 {
     [TestFixture]
+    [Category("short_running")]
     public class ProgramLineupReportDataUnitTest
     {
         const int AM12_05 = 299;

@@ -25,6 +25,8 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         [JsonConverter(typeof(StringEnumConverter))]
         public InventoryPricingQuarterType InventoryPricingQuarterType { get; set; }
 
+        public int StandardDaypartId { get; set; }
+
         public List<ManifestDaypart> ManifestDayparts { get; set; }
 
         public List<ManifestAudience> ManifestAudiences { get; set; }

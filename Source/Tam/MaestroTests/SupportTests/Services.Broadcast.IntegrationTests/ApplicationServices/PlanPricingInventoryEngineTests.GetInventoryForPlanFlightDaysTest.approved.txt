@@ -112,6 +112,7 @@
     "ProjectedImpressions": 70841.65625,
     "ProvidedImpressions": 58650.0,
     "SpotCost": 750.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "CW",
       "CallLetters": "WPIX 11.1",
@@ -239,6 +240,7 @@
     "ProjectedImpressions": 59912.78125,
     "ProvidedImpressions": 50320.0,
     "SpotCost": 700.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "CW",
       "CallLetters": "WPIX 11.1",
@@ -366,6 +368,7 @@
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": 510.0,
     "SpotCost": 50.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "FOX",
       "CallLetters": "WPFO 23.1",
@@ -493,6 +496,7 @@
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": 340.0,
     "SpotCost": 12.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "FOX",
       "CallLetters": "WPFO 23.1",

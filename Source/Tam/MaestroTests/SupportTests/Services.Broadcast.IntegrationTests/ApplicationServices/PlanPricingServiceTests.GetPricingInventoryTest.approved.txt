@@ -112,6 +112,7 @@
     "ProjectedImpressions": 66863.3375,
     "ProvidedImpressions": 58650.0,
     "SpotCost": 750.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "CW",
       "CallLetters": "WPIX 11.1",
@@ -239,6 +240,7 @@
     "ProjectedImpressions": 57145.9675,
     "ProvidedImpressions": 50320.0,
     "SpotCost": 700.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "CW",
       "CallLetters": "WPIX 11.1",
@@ -366,6 +368,7 @@
     "ProjectedImpressions": 76497.025,
     "ProvidedImpressions": 51340.0,
     "SpotCost": 800.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "CW",
       "CallLetters": "WPIX 11.1",
@@ -493,6 +496,7 @@
     "ProjectedImpressions": 52161.1,
     "ProvidedImpressions": 37060.0,
     "SpotCost": 750.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "CW",
       "CallLetters": "WPIX 11.1",
@@ -620,6 +624,7 @@
     "ProjectedImpressions": 68058.96875,
     "ProvidedImpressions": 39780.0,
     "SpotCost": 600.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "CW",
       "CallLetters": "WPIX 11.1",
@@ -747,6 +752,7 @@
     "ProjectedImpressions": 149.09,
     "ProvidedImpressions": 510.0,
     "SpotCost": 50.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "FOX",
       "CallLetters": "WPFO 23.1",
@@ -874,6 +880,7 @@
     "ProjectedImpressions": 369.43125,
     "ProvidedImpressions": 510.0,
     "SpotCost": 12.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "FOX",
       "CallLetters": "WPFO 23.1",
@@ -1001,6 +1008,7 @@
     "ProjectedImpressions": 493.0,
     "ProvidedImpressions": 340.0,
     "SpotCost": 12.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "FOX",
       "CallLetters": "WPFO 23.1",
@@ -1128,6 +1136,7 @@
     "ProjectedImpressions": 99.79,
     "ProvidedImpressions": 340.0,
     "SpotCost": 12.0000,
+    "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "FOX",
       "CallLetters": "WPFO 23.1",

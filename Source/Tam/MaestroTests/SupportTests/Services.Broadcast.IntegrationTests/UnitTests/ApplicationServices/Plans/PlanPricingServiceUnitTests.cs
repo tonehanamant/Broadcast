@@ -40,7 +40,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private readonly Mock<IDaypartCache> _DaypartCacheMock;
         private readonly Mock<IMarketCoverageRepository> _MarketCoverageRepositoryMock;
         private readonly Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCacheMock;
-        private readonly Mock<IPlanDaypartEngine> _PlanDaypartEngineMock;
 
         public PlanPricingServiceUnitTests()
         {
@@ -55,7 +54,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DaypartCacheMock = new Mock<IDaypartCache>();
             _MarketCoverageRepositoryMock = new Mock<IMarketCoverageRepository>();
             _MediaMonthAndWeekAggregateCacheMock = new Mock<IMediaMonthAndWeekAggregateCache>();
-            _PlanDaypartEngineMock = new Mock<IPlanDaypartEngine>();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IPlanRepository>())
@@ -309,13 +307,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetLatestMarketCoverages(null))
                 .Returns(_GetLatestMarketCoverages());
 
-            _PlanDaypartEngineMock
-                .Setup(x => x.FindPlanDaypartWithMostIntersectingTime(
-                    It.IsAny<List<PlanDaypartDto>>(),
-                    It.IsAny<string>(),
-                    It.IsAny<TimeRange>()))
-                .Returns(plan.Dayparts.First());
-
             var service = _GetService();
             
             // Act
@@ -356,6 +347,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     ProvidedImpressions = 12,
                     ProjectedImpressions = 13,
                     SpotCost = 1,
+                    StandardDaypartId = 1,
                     ManifestDayparts = new List<ManifestDaypart>
                     {
                         new ManifestDaypart
@@ -402,6 +394,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     ProvidedImpressions = 12,
                     ProjectedImpressions = 13,
                     SpotCost = 1,
+                    StandardDaypartId = 1,
                     ManifestDayparts = new List<ManifestDaypart>
                     {
                         new ManifestDaypart
@@ -449,6 +442,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     ProvidedImpressions = null,
                     ProjectedImpressions = 13,
                     SpotCost = 1,
+                    StandardDaypartId = 1,
                     ManifestDayparts = new List<ManifestDaypart>
                     {
                         new ManifestDaypart
@@ -495,6 +489,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     ProvidedImpressions = null,
                     ProjectedImpressions = 0,
                     SpotCost = 1,
+                    StandardDaypartId = 1,
                     ManifestDayparts = new List<ManifestDaypart>
                     {
                         new ManifestDaypart
@@ -541,6 +536,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     ProvidedImpressions = 0,
                     ProjectedImpressions = 13,
                     SpotCost = 1,
+                    StandardDaypartId = 1,
                     ManifestDayparts = new List<ManifestDaypart>
                     {
                         new ManifestDaypart
@@ -587,6 +583,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     ProvidedImpressions = null,
                     ProjectedImpressions = 0,
                     SpotCost = 1,
+                    StandardDaypartId = 1,
                     ManifestDayparts = new List<ManifestDaypart>
                     {
                         new ManifestDaypart
@@ -633,6 +630,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     ProvidedImpressions = 12,
                     ProjectedImpressions = 13,
                     SpotCost = 0,
+                    StandardDaypartId = 1,
                     ManifestDayparts = new List<ManifestDaypart>
                     {
                         new ManifestDaypart
@@ -946,8 +944,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _PlanPricingInventoryEngineMock.Object,
                 _BroadcastLockingManagerApplicationServiceMock.Object,
                 _DaypartCacheMock.Object,
-                _MediaMonthAndWeekAggregateCacheMock.Object,
-                _PlanDaypartEngineMock.Object);
+                _MediaMonthAndWeekAggregateCacheMock.Object);
 
             return service;
         }
