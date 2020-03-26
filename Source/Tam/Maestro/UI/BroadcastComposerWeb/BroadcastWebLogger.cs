@@ -14,7 +14,7 @@ namespace BroadcastComposerWeb
         ///<inheritdoc cref = "IWebLogger" />
         public BroadcastWebLogger(IConfiguration config)
         {
-            _config = config;
+            _config = config;  
         }
 
         ///<inheritdoc cref = "IWebLogger.LogEventInformation" />event
