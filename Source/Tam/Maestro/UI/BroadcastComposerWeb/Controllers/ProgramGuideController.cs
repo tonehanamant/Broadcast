@@ -11,8 +11,8 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/v1/ProgramGuideTest")]
     public class ProgramGuideController : BroadcastControllerBase
     {
-        public ProgramGuideController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) :
-            base(logger, new ControllerNameRetriever(typeof(ProgramGuideController).Name), applicationServiceFactory)
+        public ProgramGuideController(BroadcastApplicationServiceFactory applicationServiceFactory) :
+            base(new ControllerNameRetriever(typeof(ProgramGuideController).Name), applicationServiceFactory)
         {
         }
 

@@ -7,7 +7,6 @@ using Services.Broadcast.Entities.Enums;
 using System;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 
 namespace Services.Broadcast.Repositories
@@ -206,7 +205,7 @@ namespace Services.Broadcast.Repositories
                             Summary.QueuedAt : {summary.QueuedAt};
                             Summary.QueuedBy : {summary.QueuedBy};";
 
-            LogHelper.Logger.Warn(message);
+            _LogWarning(message);
         }
         
         private void _HydrateFromDto(campaign_summaries entity, CampaignSummaryDto dto)

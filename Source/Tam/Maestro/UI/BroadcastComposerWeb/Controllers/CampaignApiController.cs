@@ -22,8 +22,8 @@ namespace BroadcastComposerWeb.Controllers
     {
         private readonly string AppDataPath;
 
-        public CampaignApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) : 
-            base(logger, new ControllerNameRetriever(typeof(CampaignApiController).Name), applicationServiceFactory)
+        public CampaignApiController(BroadcastApplicationServiceFactory applicationServiceFactory) : 
+            base(new ControllerNameRetriever(typeof(CampaignApiController).Name), applicationServiceFactory)
         {
             AppDataPath = HttpContext.Current.Server.MapPath("~/App_Data");
         }

@@ -21,9 +21,8 @@ namespace BroadcastComposerWeb.Controllers
         /// <param name="logger">The logger.</param>
         /// <param name="applicationServiceFactory">The application service factory.</param>
         public DaypartTypeApiController(
-            IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(DaypartTypeApiController).Name), applicationServiceFactory)
+            : base(new ControllerNameRetriever(typeof(DaypartTypeApiController).Name), applicationServiceFactory)
         {
         }
 

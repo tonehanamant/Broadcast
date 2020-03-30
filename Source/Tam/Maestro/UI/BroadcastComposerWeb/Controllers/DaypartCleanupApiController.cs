@@ -12,8 +12,8 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/v1/DaypartCleanup")]
     public class DaypartCleanupApiController : BroadcastControllerBase
     {
-        public DaypartCleanupApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) :
-            base(logger, new ControllerNameRetriever(typeof(DaypartCleanupApiController).Name), applicationServiceFactory)
+        public DaypartCleanupApiController(BroadcastApplicationServiceFactory applicationServiceFactory) :
+            base(new ControllerNameRetriever(typeof(DaypartCleanupApiController).Name), applicationServiceFactory)
         {
         }
 

@@ -11,8 +11,8 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/v1/Agencies")]
     public class AgencyApiController : BroadcastControllerBase
     {
-        public AgencyApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) :
-            base(logger, new ControllerNameRetriever(typeof(AgencyApiController).Name), applicationServiceFactory)
+        public AgencyApiController(BroadcastApplicationServiceFactory applicationServiceFactory) :
+            base(new ControllerNameRetriever(typeof(AgencyApiController).Name), applicationServiceFactory)
         {
         }
 

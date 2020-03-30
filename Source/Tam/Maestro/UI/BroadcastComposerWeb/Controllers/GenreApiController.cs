@@ -1,5 +1,4 @@
-﻿using Common.Services.WebComponents;
-using Services.Broadcast.ApplicationServices;
+﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities.Enums;
 using System.Collections.Generic;
 using System.Web.Http;
@@ -12,8 +11,8 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/v1/Genres")]
     public class GenreApiController : BroadcastControllerBase
     {
-        public GenreApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) :
-            base(logger, new ControllerNameRetriever(typeof(GenreApiController).Name), applicationServiceFactory)
+        public GenreApiController(BroadcastApplicationServiceFactory applicationServiceFactory) :
+            base(new ControllerNameRetriever(typeof(GenreApiController).Name), applicationServiceFactory)
         {
         }
 

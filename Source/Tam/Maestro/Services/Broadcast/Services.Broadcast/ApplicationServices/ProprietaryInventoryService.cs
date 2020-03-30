@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
@@ -49,7 +48,7 @@ namespace Services.Broadcast.ApplicationServices
         List<InventoryScxFile> GenerateScxFiles(InventoryScxDownloadRequest request);
     }
 
-    public class ProprietaryInventoryService : IProprietaryInventoryService
+    public class ProprietaryInventoryService : BroadcastBaseClass, IProprietaryInventoryService
     {
         private const string INVENTORY_SOURCE_CELL = "B3";
 
@@ -194,7 +193,7 @@ namespace Services.Broadcast.ApplicationServices
                 catch (Exception ex)
                 {
                     var msg = "Unable to send file to Data Lake shared folder and e-mail reporting the error.";
-                    LogHelper.Logger.Error(msg, ex);
+                    _LogError(msg, ex);
                 }
             }            
 

@@ -16,9 +16,8 @@ namespace BroadcastComposerWeb.Controllers
     public class MarketsApiController : BroadcastControllerBase
     {
         public MarketsApiController(
-            IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(MarketsApiController).Name), applicationServiceFactory)
+            : base(new ControllerNameRetriever(typeof(MarketsApiController).Name), applicationServiceFactory)
         {
         }
 

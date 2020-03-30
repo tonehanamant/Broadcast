@@ -17,7 +17,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using static Services.Broadcast.BusinessEngines.PlanPricingInventoryEngine;
@@ -57,7 +56,7 @@ namespace Services.Broadcast.ApplicationServices
         int ReRunPricingJob(int jobId);
     }
 
-    public class PlanPricingService : IPlanPricingService
+    public class PlanPricingService : BroadcastBaseClass, IPlanPricingService
     {
         private readonly IPlanRepository _PlanRepository;
         private readonly IPlanPricingInventoryEngine _PlanPricingInventoryEngine;
@@ -673,7 +672,7 @@ namespace Services.Broadcast.ApplicationServices
                 Completed = DateTime.Now
             });
 
-            LogHelper.Logger.Error($"{logMessage} : {exception.Message}", exception);
+                _LogError($"{logMessage} : {exception.Message}", exception);
         }
 
         protected decimal _CalculatePricingCpm(List<PlanPricingAllocatedSpot> spots, List<PricingEstimate> proprietaryEstimates, double margin)

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tam.Maestro.Common.Utilities.Logging;
 
 namespace BroadcastJobScheduler.JobQueueMonitors
 {
@@ -25,8 +24,8 @@ namespace BroadcastJobScheduler.JobQueueMonitors
     /// <summary>
     /// Provides base support to job queue monitor service classes.
     /// </summary>
-    /// <seealso cref="BroadcastJobScheduler.IJobQueueMonitorService" />
-    public abstract class JobQueueMonitorServiceBase : IJobQueueMonitorService
+    /// <seealso cref="IJobQueueMonitorService" />
+    public abstract class JobQueueMonitorServiceBase : BroadcastJobSchedulerBaseClass, IJobQueueMonitorService
     {
         private readonly List<BackgroundJobServer> _hangfireBackgroundJobServers = new List<BackgroundJobServer>();
 
@@ -85,7 +84,7 @@ namespace BroadcastJobScheduler.JobQueueMonitors
                 CancellationCheckInterval = TimeSpan.FromSeconds(ConfigurationSettingHelper.GetConfigSetting("HangfireCancellationCheckIntervalSeconds", 1.0))
             };
 
-            LogHelper.Logger.Debug($"Worker options: {options.ToJson()}");
+            _LogInfo($"Worker options: {options.ToJson()}");
 
             _hangfireBackgroundJobServers.Add(new BackgroundJobServer(options));
         }

@@ -16,9 +16,8 @@ namespace BroadcastComposerWeb.Controllers
     public class FileApiController : BroadcastControllerBase
     {
         public FileApiController(
-            IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory) :
-            base(logger, new ControllerNameRetriever(typeof(ContainTypeApiController).Name), applicationServiceFactory)
+            base(new ControllerNameRetriever(typeof(ContainTypeApiController).Name), applicationServiceFactory)
         {
         }
 

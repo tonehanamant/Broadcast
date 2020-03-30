@@ -1,13 +1,16 @@
-﻿using System;
+﻿using BroadcastLogging;
+using ConfigurationService.Client;
+using EntityFrameworkMapping.Broadcast;
+using log4net;
+using Services.Broadcast;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
-using ConfigurationService.Client;
-using EntityFrameworkMapping.Broadcast;
-using Services.Broadcast;
+using System.Runtime.CompilerServices;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 
@@ -15,9 +18,12 @@ namespace Common.Services.Repositories
 {
     public class BroadcastRepositoryBase : CoreRepositoryBase<QueryHintBroadcastContext>
     {
+        private readonly ILog _Log;
+
         public BroadcastRepositoryBase(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, ITransactionHelper pTransactionHelper, IConfigurationWebApiClient configurationWebApiClient)
             : base(configurationWebApiClient, pBroadcastContextFactory, pTransactionHelper, TAMResource.BroadcastConnectionString.ToString())
         {
+            _Log = LogManager.GetLogger(GetType());
         }
 
         public string GetDbInfo()
@@ -73,6 +79,30 @@ namespace Common.Services.Repositories
                 }
                 sqlBulkCopy.WriteToServer(table);
             }
+        }
+
+        protected virtual void _LogInfo(string message, string username = null, [CallerMemberName]string memberName = "")
+        {
+            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName, username);
+            _Log.Info(logMessage.ToJson());
+        }
+
+        protected virtual void _LogWarning(string message, [CallerMemberName]string memberName = "")
+        {
+            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
+            _Log.Info(logMessage.ToJson());
+        }
+
+        protected virtual void _LogError(string message, Exception ex = null, [CallerMemberName]string memberName = "")
+        {
+            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
+            _Log.Error(logMessage.ToJson(), ex);
+        }
+
+        protected virtual void _LogDebug(string message, [CallerMemberName]string memberName = "")
+        {
+            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
+            _Log.Debug(logMessage.ToJson());
         }
     }
 }

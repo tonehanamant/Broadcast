@@ -1,22 +1,25 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Diagnostics.Tracing;
-using System.Reflection;
-using System.ServiceModel;
+﻿using BroadcastLogging;
+using log4net;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Sinks;
-using Tam.Maestro.Common.Utilities.Logging;
+using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.ServiceModel;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.Services
 {
-    public abstract class WindowsServiceBase
+    public abstract class WindowsServiceBase : BroadcastBaseClass
     {
+        private readonly ILog _Log;
 
         protected WindowsServiceBase()
         {
+            _Log = LogManager.GetLogger(GetType());
         }
         public abstract string ServiceName { get; }
         public bool IsConsole { get; set; }
@@ -29,16 +32,14 @@ namespace Services.Broadcast.Services
         protected void TimeResultsNoReturn(String methodName, Action func)
         {
             var userName = _GetWindowsUserName();
-            var environment = TamEnvironment;
 
-            LogHelper.Log.ServiceCallStart(ServiceName, methodName, userName, environment);
+            _LogInfo("Service call starting.", userName, methodName);
+
             var stopWatch = Stopwatch.StartNew();
             func();
             stopWatch.Stop();
 
-            
-            LogHelper.Log.ServiceCallStop(ServiceName, methodName, userName, environment);
-            LogHelper.Log.ServiceCallTotalTime(ServiceName, methodName, stopWatch.Elapsed.TotalSeconds, userName, environment);
+            _LogInfo($"Service call stopping.  Duration (total seconds) : {stopWatch.Elapsed.TotalSeconds}", userName, methodName);
         }
 
 
@@ -47,15 +48,14 @@ namespace Services.Broadcast.Services
             var userName = _GetWindowsUserName();
             var environment = TamEnvironment;
 
-            LogHelper.Log.ServiceCallStart(ServiceName, methodName, userName, environment);
+            _LogInfo("Service call starting.", userName, methodName);
 
             var stopWatch = Stopwatch.StartNew();
             var results = func();
             stopWatch.Stop();
 
-            LogHelper.Log.ServiceCallStop(ServiceName, methodName, userName, environment);
-            LogHelper.Log.ServiceCallTotalTime(ServiceName, methodName, stopWatch.Elapsed.TotalSeconds, userName, environment);
-            
+            _LogInfo($"Service call stopping.  Duration (total seconds) : {stopWatch.Elapsed.TotalSeconds}", userName, methodName);
+
             return results;
         }
 
@@ -66,53 +66,7 @@ namespace Services.Broadcast.Services
                 message = string.Format("Service Error {0} :: {1}\\n{2}", ServiceName, message,exception);
                 Console.WriteLine(message);
             }
-            LogServiceError(ServiceName,message,exception);
-        }
-
-        public static void LogServiceError(string serviceName, string message, Exception exception)
-        {
-            var userName = String.Empty;
-            var environment = String.Empty;
-            try
-            {
-                userName = _GetWindowsUserName();
-                environment = TamEnvironment;
-            }
-            catch
-            {
-            }
-
-            string expMessage = "";
-            if (exception != null)
-                expMessage = exception.ToString();
-
-            LogHelper.Log.ServiceError(serviceName, message, expMessage, userName, environment);
-        }
-
-        public void LogServiceErrorNoCallStack(string message)
-        {
-            if (IsConsole)
-            {
-                message = string.Format("Service NoCallStack {0} :: {1}", ServiceName, message);
-                Console.WriteLine(message);
-            }
-            LogServiceErrorNoCallStack(ServiceName,message);
-        }
-
-        public static void LogServiceErrorNoCallStack(string serviceName, string message)
-        {
-            var userName = String.Empty;
-            var environment = String.Empty;
-            try
-            {
-                userName = _GetWindowsUserName();
-                environment = TamEnvironment;
-            }
-            catch
-            {
-            }
-
-            LogHelper.Log.ServiceErrorNoCallStack(serviceName, message, userName, environment);
+            _LogError(message, exception, ServiceName);
         }
 
         public void LogServiceEvent(string message)
@@ -122,31 +76,21 @@ namespace Services.Broadcast.Services
                 message = string.Format("Service Event {0} :: {1}", ServiceName, message);
                 Console.WriteLine(message);
             }
-            LogServiceEvent(ServiceName,message);
-        }
-
-        public static void LogServiceEvent(string serviceName, string message)
-        {
-            var userName = String.Empty;
-            var environment = String.Empty;
-            try
-            {
-                userName = _GetWindowsUserName();
-                environment = TamEnvironment;
-            }
-            catch
-            {
-            }
-
-            LogHelper.Log.ServiceEvent(serviceName, message, userName, environment);
+            _LogError(message, null, ServiceName);
         }
 
         private static string _GetWindowsUserName()
         {
             var userName = String.Empty;
-            if (ServiceSecurityContext.Current != null)
+            try
             {
-                userName = ServiceSecurityContext.Current.WindowsIdentity.Name;
+                if (ServiceSecurityContext.Current != null)
+                {
+                    userName = ServiceSecurityContext.Current.WindowsIdentity.Name;
+                }
+            }
+            catch
+            {
             }
             return userName;
         }
@@ -171,14 +115,5 @@ namespace Services.Broadcast.Services
             }
             return en.ToString();
         }
-
-        public static ObservableEventListener GetNewErrorListener()
-        {
-            var listener = new ObservableEventListener();
-            listener.LogToRollingFlatFile("error_log.txt", 42342343, "yyyy-MM-dd", RollFileExistsBehavior.Increment, RollInterval.Day);
-            //Not required because removed Common Lib Logging dependency. listener.EnableEvents(TamMaestroEventSource.Log, EventLevel.Error,Keywords.All);
-            return listener;
-        }
-
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Hangfire;
-using Tam.Maestro.Common.Utilities.Logging;
 
 namespace BroadcastJobScheduler
 {
@@ -22,11 +21,12 @@ namespace BroadcastJobScheduler
     /// <summary>
     /// A host for background job services.
     /// </summary>
-    public abstract class JobsServiceHostBase : IJobsServiceHost
+    public abstract class JobsServiceHostBase : BroadcastJobSchedulerBaseClass, IJobsServiceHost
     {
         protected const string RECURRING_JOBS_USERNAME = "RecurringJobsUser";
 
         protected  readonly IRecurringJobManager _RecurringJobManager;
+        
 
         protected JobsServiceHostBase(IRecurringJobManager recurringJobManager)
         {
@@ -39,14 +39,14 @@ namespace BroadcastJobScheduler
         /// <inheritdoc />
         public void Start()
         {
-            LogHelper.Logger.Info("JobsServiceHost is starting.");
+            _LogInfo("JobsServiceHost is starting.");
 
             OnStart();
         }
 
         public void Stop()
         {
-            LogHelper.Logger.Info("JobsServiceHost is Stopping.");
+            _LogInfo("JobsServiceHost is Stopping.");
             OnStop();
         }
     }

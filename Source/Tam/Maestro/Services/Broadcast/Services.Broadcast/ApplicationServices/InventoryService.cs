@@ -21,7 +21,6 @@ using System.Linq;
 using System.Web;
 using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
@@ -72,7 +71,7 @@ namespace Services.Broadcast.ApplicationServices
         Tuple<string, Stream> DownloadErrorFiles(List<int> fileIds);
     }
 
-    public class InventoryService : IInventoryService
+    public class InventoryService : BroadcastBaseClass, IInventoryService
     {
         private readonly IStationRepository _StationRepository;
         private readonly IDataRepositoryFactory _broadcastDataRepositoryFactory;
@@ -286,7 +285,7 @@ namespace Services.Broadcast.ApplicationServices
                 catch (Exception ex)
                 {
                     var msg = "Unable to send file to Data Lake shared folder and e-mail reporting the error.";
-                    LogHelper.Logger.Error(msg, ex);
+                    _LogError(msg, ex);
                 }
             }
 
@@ -792,7 +791,7 @@ namespace Services.Broadcast.ApplicationServices
             catch (Exception ex)
             {
                 var message = $"File record for id '{fileId}' not found.";
-                LogHelper.Logger.Error(message, ex);
+                _LogError(message, ex);
                 throw new InvalidOperationException(message, ex);
             }
 
@@ -807,7 +806,7 @@ namespace Services.Broadcast.ApplicationServices
             if (_FileService.Exists(filePath) == false)
             {
                 var message = $"File '{fileDetails.FileName}' with id '{fileId}' not found.";
-                LogHelper.Logger.Error(message);
+                _LogError(message);
                 throw new FileNotFoundException(message, fileDetails.FileName);
             }
 

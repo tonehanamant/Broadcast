@@ -1,5 +1,4 @@
-﻿using Common.Services.WebComponents;
-using Services.Broadcast.ApplicationServices;
+﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Security;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -22,8 +21,8 @@ namespace BroadcastComposerWeb.Controllers
     {
         protected readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
 
-        public BroadcastControllerBase(IWebLogger logger, ControllerNameRetriever controllerNameRetriever, BroadcastApplicationServiceFactory applicationServiceFactory) 
-            : base(logger, controllerNameRetriever)
+        public BroadcastControllerBase(ControllerNameRetriever controllerNameRetriever, BroadcastApplicationServiceFactory applicationServiceFactory) 
+            : base(controllerNameRetriever)
         {
             _ApplicationServiceFactory = applicationServiceFactory;
         }
