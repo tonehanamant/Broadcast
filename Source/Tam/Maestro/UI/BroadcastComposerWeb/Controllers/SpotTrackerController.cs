@@ -18,8 +18,9 @@ namespace BroadcastComposerWeb.Controllers
     public class SpotTrackerController : BroadcastControllerBase
     {
         public SpotTrackerController(
+           IWebLogger logger,
            BroadcastApplicationServiceFactory applicationServiceFactory)
-           : base(new ControllerNameRetriever(typeof(SpotTrackerController).Name), applicationServiceFactory)
+           : base(logger, new ControllerNameRetriever(typeof(SpotTrackerController).Name), applicationServiceFactory)
         {
         }
         

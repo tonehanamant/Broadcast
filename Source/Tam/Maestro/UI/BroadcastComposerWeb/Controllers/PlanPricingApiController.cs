@@ -14,8 +14,8 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/v1/PricingService")]
     public class PlanPricingApiController : BroadcastControllerBase
     {
-        public PlanPricingApiController(BroadcastApplicationServiceFactory applicationServiceFactory) : 
-            base(new ControllerNameRetriever(typeof(PlanPricingApiController).Name), applicationServiceFactory)
+        public PlanPricingApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) : 
+            base(logger, new ControllerNameRetriever(typeof(PlanPricingApiController).Name), applicationServiceFactory)
         {
         }
 

@@ -1,13 +1,13 @@
 ﻿using Common.Services.ApplicationServices;
 using ConfigurationService.Client;
 using Services.Broadcast;
-using Services.Broadcast.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
 using System.ServiceModel;
 using Tam.Maestro.Common;
+using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Common.Services
@@ -18,10 +18,10 @@ namespace Common.Services
         bool QuickSend(bool pIsHtmlBody, string pBody, string pSubject, MailPriority pPriority, List<MailAddress> pTos, List<string> attachFileNames = null);
     }
 
-    public class EmailerService : BroadcastBaseClass, IEmailerService
+
+    public class EmailerService : IEmailerService
     {
         private IConfigurationWebApiClient _configurationWebApiClient;
-
         public EmailerService(IConfigurationWebApiClient configurationWebApiClient)
         {
             _configurationWebApiClient = configurationWebApiClient;
@@ -43,7 +43,8 @@ namespace Common.Services
             if (!BroadcastServiceSystemParameter.EmailNotificationsEnabled)
                 return false;
 
-            _LogInfo("Attempting to send email.");
+            LogHelper.Log.ServiceEvent("Broadcast EmailerService", ",sg test", "user test",
+                _configurationWebApiClient.TAMEnvironment.ToString());
 
             try
             {
@@ -81,9 +82,10 @@ namespace Common.Services
                 }
                 return true;
             }
-            catch (Exception exc)
+            catch (System.Exception exc)
             {
-                _LogError("Exception caught sending email.", exc);
+                LogHelper.Log.ServiceError("Broadcast EmailerService", exc.Message, exc.ToString(),
+                    GetWindowsUserName(), _configurationWebApiClient.TAMEnvironment.ToString());
                 throw;
             }
         }
@@ -144,5 +146,6 @@ namespace Common.Services
 
             return new NetworkCredential(usr, pwd);
         }
+
     }
 }

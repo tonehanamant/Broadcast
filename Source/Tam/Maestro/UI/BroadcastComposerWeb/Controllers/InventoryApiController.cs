@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Unity;
+﻿using Common.Services.WebComponents;
+using Microsoft.Practices.Unity;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
@@ -12,9 +13,12 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using Services.Broadcast.Entities.ProgramGuide;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Web.Common;
+using Services.Broadcast.ApplicationServices.Security;
+using Tam.Maestro.Common.Utilities.Logging;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -22,8 +26,9 @@ namespace BroadcastComposerWeb.Controllers
     public class InventoryApiController : BroadcastControllerBase
     {
         public InventoryApiController(
+            IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(new ControllerNameRetriever(typeof(InventoryApiController).Name), applicationServiceFactory)
+            : base(logger, new ControllerNameRetriever(typeof(InventoryApiController).Name), applicationServiceFactory)
         {
         }
 
@@ -257,8 +262,7 @@ namespace BroadcastComposerWeb.Controllers
             catch (Exception ex)
             {
                 var message = $"Exception caught attempting to download error files with ids '{string.Join(",", fileIds)}'.";
-                _LogError(message, ex);
-
+                LogHelper.Logger.Error(message, ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, message, ex);
             }
         }
@@ -285,8 +289,7 @@ namespace BroadcastComposerWeb.Controllers
             catch (Exception ex)
             {
                 var message = $"Exception caught attempting to download error files with ids '{fileId}'.";
-                _LogError(message, ex);
-
+                LogHelper.Logger.Error(message, ex);
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, message, ex);
             }
         }

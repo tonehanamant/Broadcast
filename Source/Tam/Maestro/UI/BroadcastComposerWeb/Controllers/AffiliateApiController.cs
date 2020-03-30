@@ -11,8 +11,8 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/v1/Affiliates")]
     public class AffiliateApiController : BroadcastControllerBase
     {
-        public AffiliateApiController(BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(new ControllerNameRetriever(typeof(AffiliateApiController).Name), applicationServiceFactory)
+        public AffiliateApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory)
+            : base(logger, new ControllerNameRetriever(typeof(AffiliateApiController).Name), applicationServiceFactory)
         {
         }
 

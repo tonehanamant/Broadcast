@@ -113,9 +113,6 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CadentLoggingStdCommon, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Cadent.Library.Logging.Standard.Common.0.0.1\lib\netstandard2.0\CadentLoggingStdCommon.dll</HintPath>
-    </Reference>
     <Reference Include="ConfigurationService.Client, Version=1.0.0.40, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\ConfigurationService.Client.1.0.0.41\lib\net45\ConfigurationService.Client.dll</HintPath>
     </Reference>
@@ -159,7 +156,7 @@
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Extensions.Configuration.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Extensions.Configuration.Binder.2.2.4\lib\netstandard2.0\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Extensions.Configuration.Binder.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Extensions.DependencyInjection.2.2.0\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
@@ -172,9 +169,6 @@
     </Reference>
     <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Extensions.Logging.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore, Version=3.1.0.0, Culture=neutral, PublicKeyToken=5d1104efbd0e675d, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Extensions.Logging.Log4Net.AspNetCore.3.1.0\lib\netstandard2.0\Microsoft.Extensions.Logging.Log4Net.AspNetCore.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Options, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Microsoft.Extensions.Options.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
@@ -298,16 +292,6 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.XPath, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\System.Xml.XPath.4.3.0\lib\net46\System.Xml.XPath.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Xml.XPath.XDocument, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\System.Xml.XPath.XDocument.4.3.0\lib\net46\System.Xml.XPath.XDocument.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Tam.Maestro.Common.Systems, Version=18.4.1.16, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Tam.Maestro.Common.Systems.18.4.1.16\lib\net45\Tam.Maestro.Common.Systems.dll</HintPath>
     </Reference>
@@ -333,7 +317,6 @@
     <Compile Include="ApplicationServices\SharedFolderService.cs" />
     <Compile Include="ApplicationServices\ShowTypeService.cs" />
     <Compile Include="ApplicationServices\StationService.cs" />
-    <Compile Include="BroadcastBaseClass.cs" />
     <Compile Include="BusinessEngines\DetectionPostingEngine.cs" />
     <Compile Include="BusinessEngines\GeneralMath.cs" />
     <Compile Include="BusinessEngines\ImpressionsCalculationEngine.cs" />
@@ -1047,10 +1030,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BroadcastLogging\BroadcastLogging.csproj">
-      <Project>{0C5E321F-B0A7-4A91-8E01-174386AF40A3}</Project>
-      <Name>BroadcastLogging</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Common.Clients\Common.Clients.csproj">
       <Project>{b984aaac-0379-4ddc-9a55-ef7f047d2103}</Project>
       <Name>Common.Clients</Name>

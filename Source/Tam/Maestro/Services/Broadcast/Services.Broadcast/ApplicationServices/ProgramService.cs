@@ -8,6 +8,7 @@ using Services.Broadcast.Exceptions;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Tam.Maestro.Common.Utilities.Logging;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -16,7 +17,7 @@ namespace Services.Broadcast.ApplicationServices
         List<ProgramDto> GetPrograms(SearchRequestProgramDto searchRequest, string userName);
     }
 
-    public class ProgramService : BroadcastBaseClass, IProgramService
+    public class ProgramService : IProgramService
     {
         private IGenreCache _GenreCache;
         private IConfigurationWebApiClient _ConfigurationWebApiClient;
@@ -61,7 +62,12 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 catch (UnknownGenreException ex)
                 {
-                    _LogError("Exception caught resolving program genre.", ex);
+                    LogHelper.Log.ServiceError(
+                        "Broadcast ProgramGuideService",
+                        ex.Message,
+                        ex.ToString(),
+                        userName,
+                        _ConfigurationWebApiClient.TAMEnvironment.ToString());
                 }
             }
 
@@ -69,7 +75,7 @@ namespace Services.Broadcast.ApplicationServices
 
             durationSw.Stop();
 
-            _LogInfo($"Method {nameof(GetPrograms)} completed having received {sortedResults.Count} programs in {durationSw.ElapsedMilliseconds}ms from search parameters : " +
+            LogHelper.Logger.Info($"Method {nameof(GetPrograms)} completed having received {sortedResults.Count} programs in {durationSw.ElapsedMilliseconds}ms from search parameters : " +
                                   $"ProgramName = '{searchRequest.ProgramName}'; Start = '{searchRequest.Start}'; Limit = '{searchRequest.Limit}';");
 
             return sortedResults;

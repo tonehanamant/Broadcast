@@ -15,10 +15,14 @@ namespace BroadcastComposerWeb.Controllers
     [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
     public class TrafficApiController : BroadcastControllerBase
     {
+        private readonly IWebLogger _Logger;
+
         public TrafficApiController(
+            IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(new ControllerNameRetriever(typeof (TrafficApiController).Name), applicationServiceFactory)
+            : base(logger, new ControllerNameRetriever(typeof (TrafficApiController).Name), applicationServiceFactory)
         {
+            _Logger = logger;
         }
 
         [HttpGet]

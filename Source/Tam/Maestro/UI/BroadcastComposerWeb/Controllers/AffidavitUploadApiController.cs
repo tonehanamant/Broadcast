@@ -11,9 +11,14 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/AffidavitUpload")]
     public class AffidavitUploadApiController : BroadcastControllerBase
     {
+        private readonly IWebLogger _Logger;
+
         public AffidavitUploadApiController(
-            BroadcastApplicationServiceFactory applicationServiceFactory) : base(new ControllerNameRetriever(typeof(AffidavitUploadApiController).Name), applicationServiceFactory)
+            IWebLogger logger,
+            BroadcastApplicationServiceFactory applicationServiceFactory) : base(logger,
+            new ControllerNameRetriever(typeof(AffidavitUploadApiController).Name), applicationServiceFactory)
         {
+            _Logger = logger;
         }
 
         [HttpPost]

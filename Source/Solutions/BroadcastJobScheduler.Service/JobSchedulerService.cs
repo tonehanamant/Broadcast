@@ -1,12 +1,11 @@
 ﻿using BroadcastJobScheduler.JobQueueMonitors;
-using BroadcastLogging;
 using Hangfire;
-using log4net;
 using Microsoft.Practices.Unity;
 using Services.Broadcast.ApplicationServices;
 using System;
-using System.Runtime.CompilerServices;
 using System.ServiceProcess;
+using Tam.Maestro.Common.Utilities.Logging;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace BroadcastJobScheduler.Service
 {
@@ -16,7 +15,6 @@ namespace BroadcastJobScheduler.Service
     public partial class JobSchedulerService : ServiceBase
     {
         private IJobsServiceHost _JobsServiceHost;
-        private readonly ILog _Log;
 
         /// <summary>
         /// Ctor
@@ -24,7 +22,6 @@ namespace BroadcastJobScheduler.Service
         public JobSchedulerService()
         {
             InitializeComponent();
-            _Log = LogManager.GetLogger(GetType());
         }
 
         /// <summary>
@@ -42,7 +39,7 @@ namespace BroadcastJobScheduler.Service
         protected override void OnStop()
         {
             _JobsServiceHost.Stop();
-            _LogInfo("Broadcast JobScheduler Service stopped");
+            LogHelper.Logger.Info("Broadcast JobScheduler Service stopped");
         }
 
         /// <summary>
@@ -51,7 +48,7 @@ namespace BroadcastJobScheduler.Service
         /// <exception cref="InvalidOperationException"></exception>
         public void Startup()
         {
-            _LogInfo("Broadcast JobScheduler Service started");
+            LogHelper.Logger.Info("Broadcast JobScheduler Service started");
             try
             {
                 BroadcastApplicationServiceFactory.Instance.RegisterType<IRecurringJobManager, RecurringJobManager>();
@@ -60,9 +57,8 @@ namespace BroadcastJobScheduler.Service
                 BroadcastApplicationServiceFactory.Instance.RegisterType<IInventoryAggregationQueueMonitor, InventoryAggregationQueueMonitor>();
                 BroadcastApplicationServiceFactory.Instance.RegisterType<IWebServiceJobsServicesHost, WebServiceJobsServicesHost>();
                 BroadcastApplicationServiceFactory.Instance.RegisterType<IWindowsServiceJobsServiceHost, WindowsServiceJobsServiceHost>();
-                BroadcastApplicationServiceFactory.Instance.RegisterType<IJobServiceHostsGlobalConfigurator, JobServiceHostsGlobalConfigurator>();
 
-                var jobServiceHostsGlobalConfigurator = BroadcastApplicationServiceFactory.Instance.Resolve<IJobServiceHostsGlobalConfigurator>();
+                var jobServiceHostsGlobalConfigurator = new JobServiceHostsGlobalConfigurator();
                 var applicationName = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
                 jobServiceHostsGlobalConfigurator.Configure(applicationName, BroadcastApplicationServiceFactory.Instance);
 
@@ -71,20 +67,8 @@ namespace BroadcastJobScheduler.Service
             }
             catch (Exception e)
             {
-                _LogError("An error occurred in Broadcast JobScheduler Service", e);
+                LogHelper.Logger.Error("An error occurred in Broadcast JobScheduler Service", e);
             }
-        }
-
-        private void _LogInfo(string message, [CallerMemberName]string memberName = "")
-        {
-            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
-            _Log.Info(logMessage.ToJson());
-        }
-
-        private void _LogError(string message, Exception ex = null, [CallerMemberName]string memberName = "")
-        {
-            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
-            _Log.Error(logMessage.ToJson(), ex);
         }
     }
 }

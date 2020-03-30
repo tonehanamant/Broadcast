@@ -1,7 +1,6 @@
 ﻿using Common.Services;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
-using log4net;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
@@ -21,6 +20,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
@@ -33,7 +33,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         string ImportInventoryProgramResults(Stream fileStream, string fileName);
     }
 
-    public abstract class InventoryProgramsProcessingEngineBase : BroadcastBaseClass, IInventoryProgramsProcessingEngine
+    public abstract class InventoryProgramsProcessingEngineBase : IInventoryProgramsProcessingEngine
     {
         protected const string EXPORT_FILE_NAME_SEED = "ProgramGuideExport";
         protected const string EXPORT_FILE_SUFFIX_TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss";
@@ -45,8 +45,6 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         private readonly IGenreCache _GenreCache;
         private readonly IFileService _FileService;
         private readonly IEmailerService _EmailerService;
-
-        private readonly ILog _Log;
 
         protected InventoryProgramsProcessingEngineBase(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -63,8 +61,6 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             _EmailerService = emailerService;
 
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-
-            _Log = LogManager.GetLogger(GetType());
         }
 
         protected abstract IInventoryProgramsJobsRepository _GetJobsRepository();
@@ -321,7 +317,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             {
                 success = false;
 
-                _LogError($"Error caught ingesting results file '{fileName}'.", ex);
+                LogHelper.Logger.Error($"Error caught ingesting results file '{fileName}'.", ex);
                 processingLog.AppendLine($"Error caught : {ex.Message}");
                 _MoveImportFileFromInProgressToFailedDirectory(fileName, processingLog);
 
@@ -422,7 +418,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             }
             catch (Exception ex)
             {
-                _LogError($"Error caught processing for program names.  JobId = '{jobId}'", ex);
+                LogHelper.Logger.Error(
+                    $"Error caught processing for program names.  JobId = '{jobId}'", ex);
                 jobsRepo.SetJobCompleteError(jobId, ex.Message, $"Error caught : {ex.Message}");
 
                 _ReportExportFileFailed(jobId);

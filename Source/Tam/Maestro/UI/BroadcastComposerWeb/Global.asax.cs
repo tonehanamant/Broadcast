@@ -1,15 +1,17 @@
-﻿using BroadcastLogging;
-using log4net;
+﻿using Common.Services;
+using Common.Services.WebComponents;
+using Microsoft.Practices.EnterpriseLibrary.SemanticLogging;
 using Microsoft.Practices.Unity;
 using Services.Broadcast.ApplicationServices;
 using System;
-using System.Runtime.CompilerServices;
+using System.Configuration;
 using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Tam.Maestro.Services.Cable;
 using Tam.Maestro.Web.Common.AppStart;
 
 namespace BroadcastComposerWeb
@@ -17,16 +19,19 @@ namespace BroadcastComposerWeb
     public class MvcApplication : System.Web.HttpApplication
     {
         private UnityContainer _container;
-        private ILog _Log;
+        private IWebLogger _logger;
+        private ObservableEventListener _logListener;
 
         protected void Application_Start()
         {
+            log4net.Config.XmlConfigurator.Configure();
+
             _container = new UnityContainer();
             UnityConfig.RegisterTypes(_container);
+            _container.RegisterType<IWebLogger, BroadcastWebLogger>();
 
-            /*** Setup logging ***/
-            SetupLogging();
-            LogInfo("Initializing Broadcast Web Application.");
+            _logger = _container.Resolve<IWebLogger>();
+            _logger.LogEventInformation("Initializing Broadcast Web Application.", "BroadcastController");
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityWebApiResolver(_container);
             DependencyResolver.SetResolver(new UnityWebMvcResolver(_container));
@@ -53,39 +58,27 @@ namespace BroadcastComposerWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            SetupWebRequestResponseLogging();
+            var config = _container.Resolve<IConfiguration>();
 
-            LogInfo("Broadcast Web Application Initialized.");
-            LogInfo($"DisableSecurity: {WebConfigurationManager.AppSettings["DisableSecurity"]}");
-        }
-
-        private void SetupLogging()
-        {
-            log4net.Config.XmlConfigurator.Configure();
-            _container.RegisterInstance<IBroadcastLoggingConfiguration>(new BroadcastComposerWebLogConfig());
-            BroadcastLogMessageHelper.Configuration = _container.Resolve<IBroadcastLoggingConfiguration>();
-            _Log = LogManager.GetLogger(typeof(MvcApplication));
-        }
-
-        private void SetupWebRequestResponseLogging()
-        {
             string _logRequests = WebConfigurationManager.AppSettings["logRequests"];
             bool logRequests;
             if (!Boolean.TryParse(_logRequests, out logRequests))
-            {
                 logRequests = false; //By default, do not log requests if unable to parse the config
-            }
-
             if (logRequests)
-            {
-                GlobalConfiguration.Configuration.MessageHandlers.Add(new BroadcastWebLogMessageHandler(_Log));
-            }
-        }
+                GlobalConfiguration.Configuration.MessageHandlers.Add(new MessageHandler.MessageLoggingHandler(_logger));
 
-        private void LogInfo(string message, [CallerMemberName]string memberName = "")
-        {
-            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
-            _Log.Info(logMessage.ToJson());
+            _logListener = new ObservableEventListener();
+            _logListener.LogToConsole();
+            var disableSlabInProcess = (ConfigurationManager.AppSettings["DisableSlabInProcess"] == "true");
+            if (!disableSlabInProcess)
+            {
+                _logListener.LogToRollingFlatFile(config.LogFilePath, 102400, "yyyyMMdd",
+                    Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Sinks.RollFileExistsBehavior.Increment,
+                    Microsoft.Practices.EnterpriseLibrary.SemanticLogging.Sinks.RollInterval.Day);
+            }
+
+            _logger.LogEventInformation("Broadcast Web Application Initialized.", "BroadcastController");
+            _logger.LogEventInformation($"DisableSecurity: {ConfigurationManager.AppSettings["DisableSecurity"]}", "BroadcastController");
         }
     }
 }

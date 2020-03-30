@@ -1,7 +1,6 @@
 ﻿using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
-using log4net;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
@@ -14,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common;
+using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.BusinessEngines.PlanPricingInventoryEngine;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
@@ -29,7 +29,7 @@ namespace Services.Broadcast.BusinessEngines
             PlanPricingJobDiagnostic diagnostic);
     }
 
-    public class PlanPricingInventoryEngine : BroadcastBaseClass, IPlanPricingInventoryEngine
+    public class PlanPricingInventoryEngine : IPlanPricingInventoryEngine
     {
         private readonly IStationProgramRepository _StationProgramRepository;
         private readonly IImpressionsCalculationEngine _ImpressionsCalculationEngine;
@@ -39,8 +39,6 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IStationRepository _StationRepository;
         private readonly IPlanPricingInventoryQuarterCalculatorEngine _PlanPricingInventoryQuarterCalculatorEngine;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
-
-        private readonly ILog _Log;
 
         public PlanPricingInventoryEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                           IImpressionsCalculationEngine impressionsCalculationEngine,
@@ -57,8 +55,6 @@ namespace Services.Broadcast.BusinessEngines
             _NtiToNsiConversionRepository = broadcastDataRepositoryFactory.GetDataRepository<INtiToNsiConversionRepository>();
             _DayRepository = broadcastDataRepositoryFactory.GetDataRepository<IDayRepository>();
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
-
-            _Log = LogManager.GetLogger(GetType());
         }
 
         public List<PlanPricingInventoryProgram> GetInventoryForPlan(
@@ -223,7 +219,7 @@ namespace Services.Broadcast.BusinessEngines
 
                     if (stationsWithoutInventory.Any())
                     {
-                        _LogWarning($"Unable to gather inventory for DateRange {dateRange.Start.Value.ToString("yyyy-MM-dd")}"
+                        LogHelper.Logger.Warn($"Unable to gather inventory for DateRange {dateRange.Start.Value.ToString("yyyy-MM-dd")}"
                                               + $" to {dateRange.End.Value.ToString("yyyy-MM-dd")} for {stationsWithoutInventory.Count} stations.");
                     }
                 }

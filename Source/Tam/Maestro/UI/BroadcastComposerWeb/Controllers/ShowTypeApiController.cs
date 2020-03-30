@@ -14,8 +14,8 @@ namespace BroadcastComposerWeb.Controllers
     [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
     public class ShowTypeApiController : BroadcastControllerBase
     {
-        public ShowTypeApiController(BroadcastApplicationServiceFactory applicationServiceFactory) :
-            base(new ControllerNameRetriever(typeof(ShowTypeApiController).Name), applicationServiceFactory)
+        public ShowTypeApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) :
+            base(logger, new ControllerNameRetriever(typeof(ShowTypeApiController).Name), applicationServiceFactory)
         {
         }
 

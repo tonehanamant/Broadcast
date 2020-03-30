@@ -20,9 +20,9 @@ namespace BroadcastComposerWeb.Controllers
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
 
-        public EnvironmentController(
+        public EnvironmentController(IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(new ControllerNameRetriever(typeof(EnvironmentController).Name))
+            : base(logger, new ControllerNameRetriever(typeof(EnvironmentController).Name))
         {
             _ApplicationServiceFactory = applicationServiceFactory;
         }

@@ -1,4 +1,6 @@
-﻿using Services.Broadcast.ApplicationServices;
+﻿using Common.Services.WebComponents;
+using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 using System;
@@ -15,8 +17,8 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/Post")]
     public class PostApiController : BroadcastControllerBase
     {
-        public PostApiController(BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(new ControllerNameRetriever(typeof(PostApiController).Name), applicationServiceFactory)
+        public PostApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory)
+            : base(logger, new ControllerNameRetriever(typeof(PostApiController).Name), applicationServiceFactory)
         {
         }
 

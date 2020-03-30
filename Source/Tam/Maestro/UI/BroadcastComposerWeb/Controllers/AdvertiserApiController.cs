@@ -11,8 +11,8 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/v1/Advertisers")]
     public class AdvertiserApiController : BroadcastControllerBase
     {
-        public AdvertiserApiController(BroadcastApplicationServiceFactory applicationServiceFactory) :
-            base(new ControllerNameRetriever(typeof(AdvertiserApiController).Name), applicationServiceFactory)
+        public AdvertiserApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) :
+            base(logger, new ControllerNameRetriever(typeof(AdvertiserApiController).Name), applicationServiceFactory)
         {
         }
 

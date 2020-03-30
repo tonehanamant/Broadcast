@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
+using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
@@ -53,7 +54,7 @@ namespace Services.Broadcast.ApplicationServices
         InventoryProgramsProcessingJobDiagnostics ProcessInventoryProgramsBySourceJobUnprocessed(int jobId);
     }
 
-    public class InventoryProgramsProcessingService : BroadcastBaseClass,  IInventoryProgramsProcessingService
+    public class InventoryProgramsProcessingService : IInventoryProgramsProcessingService
     {
         private readonly IBackgroundJobClient _BackgroundJobClient;
         private readonly IInventoryRepository _InventoryRepository;
@@ -63,6 +64,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IEmailerService _EmailerService;
 
         private readonly IInventoryProgramsProcessorFactory _InventoryProgramsProcessorFactory;
+
 
         public InventoryProgramsProcessingService(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -218,7 +220,7 @@ namespace Services.Broadcast.ApplicationServices
                 result.Jobs.AddRange(sourceEnqueueResult.Jobs);
             }
 
-            _LogInfo($"{nameof(QueueProcessInventoryProgramsBySourceForWeeksFromDate)} : kicked off Job Group Id '{jobGroupId}' " 
+            LogHelper.Logger.Info($"{nameof(QueueProcessInventoryProgramsBySourceForWeeksFromDate)} : kicked off Job Group Id '{jobGroupId}' " 
                                     + $"for '{inventorySources.Count}' sources with start date '{startDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}' "
                                     + $"and end date '{endDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)}'.");
 

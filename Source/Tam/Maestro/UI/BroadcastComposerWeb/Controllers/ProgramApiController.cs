@@ -12,8 +12,8 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/v1/Programs")]
     public class ProgramApiController : BroadcastControllerBase
     {
-        public ProgramApiController(BroadcastApplicationServiceFactory applicationServiceFactory) :
-            base(new ControllerNameRetriever(typeof(ProgramApiController).Name), applicationServiceFactory)
+        public ProgramApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) :
+            base(logger, new ControllerNameRetriever(typeof(ProgramApiController).Name), applicationServiceFactory)
         {
         }
 

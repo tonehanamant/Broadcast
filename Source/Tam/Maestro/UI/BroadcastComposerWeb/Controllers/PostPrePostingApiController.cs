@@ -20,8 +20,8 @@ namespace BroadcastComposerWeb.Controllers
     [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
     public class PostPrePostingApiController : BroadcastControllerBase
     {
-        public PostPrePostingApiController(BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(new ControllerNameRetriever(typeof(PostPrePostingApiController).Name), applicationServiceFactory)
+        public PostPrePostingApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory)
+            : base(logger, new ControllerNameRetriever(typeof(PostPrePostingApiController).Name), applicationServiceFactory)
         {
         }
 

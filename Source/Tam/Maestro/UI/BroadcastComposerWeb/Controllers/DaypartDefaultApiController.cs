@@ -11,8 +11,8 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/v1/DaypartDefaults")]
     public class DaypartDefaultApiController : BroadcastControllerBase
     {
-        public DaypartDefaultApiController(BroadcastApplicationServiceFactory applicationServiceFactory) :
-            base(new ControllerNameRetriever(typeof(DaypartDefaultApiController).Name), applicationServiceFactory)
+        public DaypartDefaultApiController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory) :
+            base(logger, new ControllerNameRetriever(typeof(DaypartDefaultApiController).Name), applicationServiceFactory)
         {
         }
 

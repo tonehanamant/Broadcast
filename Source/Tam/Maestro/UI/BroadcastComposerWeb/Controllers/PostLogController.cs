@@ -15,10 +15,14 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/PostLog")]
     public class PostLogController : BroadcastControllerBase
     {
+        private readonly IWebLogger _Logger;
+
         public PostLogController(
+            IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(new ControllerNameRetriever(typeof(PostLogController).Name), applicationServiceFactory)
+            : base(logger, new ControllerNameRetriever(typeof(PostLogController).Name), applicationServiceFactory)
         {
+            _Logger = logger;
         }
 
         [Route("")]

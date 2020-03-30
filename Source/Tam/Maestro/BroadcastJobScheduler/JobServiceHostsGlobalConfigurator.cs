@@ -4,6 +4,7 @@ using Microsoft.Practices.Unity;
 using Services.Broadcast;
 using System;
 using Tam.Maestro.Common;
+using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Services.Clients;
 
 namespace BroadcastJobScheduler
@@ -21,11 +22,11 @@ namespace BroadcastJobScheduler
     /// Globally configures the environment for the hosted job services.
     /// Run this once before starting any queue monitors or services.
     /// </summary>
-    public class JobServiceHostsGlobalConfigurator : BroadcastJobSchedulerBaseClass, IJobServiceHostsGlobalConfigurator
+    public class JobServiceHostsGlobalConfigurator : IJobServiceHostsGlobalConfigurator
     {
         public void Configure(string applicationName, UnityContainer container)
         {
-            _LogInfo("Configuring the Hangfire global settings.");
+            LogHelper.Logger.Info("Configuring the Hangfire global settings.");
             var pollingIntervalMilliseconds = _GetQueuePollingIntervalMilliseconds();
             var defaultRetryCount = _GetDefaultRetryCount();
 
@@ -33,7 +34,7 @@ namespace BroadcastJobScheduler
             var connectionString = GetConnectionString(applicationName);
             var sqlStorageOptions = GetSqlServerStorageOptions(pollingIntervalMilliseconds);
 
-            _LogDebug($"Sql-storage-options: {sqlStorageOptions.ToJson()}");
+            LogHelper.Logger.Debug($"Sql-storage-options: {sqlStorageOptions.ToJson()}");
 
             GlobalConfiguration.Configuration.UseSqlServerStorage(connectionString, sqlStorageOptions);
 

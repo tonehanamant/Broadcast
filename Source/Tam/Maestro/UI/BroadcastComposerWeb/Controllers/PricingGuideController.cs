@@ -11,10 +11,14 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/PricingGuide")]
     public class PricingGuideController : BroadcastControllerBase
     {
+        private readonly IWebLogger _Logger;
+
         public PricingGuideController(
+            IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(new ControllerNameRetriever(typeof(PricingGuideController).Name), applicationServiceFactory)
+            : base(logger, new ControllerNameRetriever(typeof(PricingGuideController).Name), applicationServiceFactory)
         {
+            _Logger = logger;
         }
 
         [HttpGet]

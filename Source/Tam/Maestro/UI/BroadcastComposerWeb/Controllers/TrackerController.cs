@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Common.Services.WebComponents;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using System;
@@ -21,11 +23,14 @@ namespace BroadcastComposerWeb.Controllers
     [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
     public class TrackerController : BroadcastControllerBase
     {
+        private readonly IWebLogger _Logger;
 
         public TrackerController(
+            IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(new ControllerNameRetriever(typeof(TrackerController).Name), applicationServiceFactory)
+            : base(logger, new ControllerNameRetriever(typeof(TrackerController).Name), applicationServiceFactory)
         {
+            _Logger = logger;
         }
 
         // POST api/Tracker/UploadSchedules

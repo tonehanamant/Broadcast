@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Mail;
 using System.Text;
+using Tam.Maestro.Common.Utilities.Logging;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -25,7 +26,7 @@ namespace Services.Broadcast.ApplicationServices
         void Save(FileRequest fileRequest);
     }
 
-    public class DataLakeFileService : BroadcastBaseClass, IDataLakeFileService
+    public class DataLakeFileService : IDataLakeFileService
     {
         private readonly IDataLakeSystemParameters _DataLakeSystemParameter;
         private readonly IEmailerService _EmailerService;
@@ -118,7 +119,7 @@ namespace Services.Broadcast.ApplicationServices
             catch (Exception ex)
             {
                 var msg = $"Exception attempting to send email about an error communicating with the DataLake Files : File Path ='{filePath}'; ErrorMessage = '{errorMessage}';";
-                _LogError(msg, ex);
+                LogHelper.Logger.Error(msg, ex);
             }
         }
 

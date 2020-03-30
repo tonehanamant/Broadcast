@@ -21,8 +21,9 @@ namespace BroadcastComposerWeb.Controllers
     public class RatesApiController : BroadcastControllerBase
     {
         public RatesApiController(
+            IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(new ControllerNameRetriever(typeof(RatesApiController).Name), applicationServiceFactory)
+            : base(logger, new ControllerNameRetriever(typeof(RatesApiController).Name), applicationServiceFactory)
         {
         }
 
