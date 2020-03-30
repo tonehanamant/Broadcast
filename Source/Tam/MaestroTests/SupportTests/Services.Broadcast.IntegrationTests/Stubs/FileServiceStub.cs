@@ -93,7 +93,6 @@ namespace Services.Broadcast.IntegrationTests
 
         public virtual void Create(string path, Stream stream)
         {
-            throw new NotImplementedException();
         }
 
         public Stream GetFileStream(string folderPath, string fileName)

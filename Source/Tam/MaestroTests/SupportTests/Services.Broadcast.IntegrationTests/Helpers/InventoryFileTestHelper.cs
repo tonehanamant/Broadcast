@@ -6,6 +6,10 @@ using System.IO;
 using Microsoft.Practices.Unity;
 using Services.Broadcast.Clients;
 using Services.Broadcast.IntegrationTests.Stubs;
+using System.Text;
+using Common.Services;
+using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.IntegrationTests.Helpers
 {
@@ -17,9 +21,11 @@ namespace Services.Broadcast.IntegrationTests.Helpers
         private readonly IInventoryService _InventoryService;
         private readonly IInventoryProgramsByFileJobsRepository _InventoryProgramsByFileJobsRepository;
         private readonly IInventoryProgramsProcessingService _InventoryProgramsProcessingService;
+        private IInventoryRepository _InventoryRepository;
 
         public InventoryFileTestHelper()
         {
+            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IFileService, FileServiceStub>();
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IProgramGuideApiClient, ProgramGuideApiClientStub>();
             _InventoryRatingsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
             _InventoryFileRatingsJobsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRatingsJobsRepository>();
@@ -27,6 +33,7 @@ namespace Services.Broadcast.IntegrationTests.Helpers
             _ProprietaryInventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryInventoryService>();
             _InventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
             _InventoryProgramsProcessingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
+            _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         }
 
         public void UploadProprietaryInventoryFile(
@@ -57,7 +64,7 @@ namespace Services.Broadcast.IntegrationTests.Helpers
             }
         }
 
-        public void UploadOpenMarketInventoryFile(string fileName, DateTime? date = null)
+        public int UploadOpenMarketInventoryFile(string fileName, DateTime? date = null, bool enhanceFilePrograms = false)
         {
             var request = new InventoryFileSaveRequest
             {
@@ -71,6 +78,57 @@ namespace Services.Broadcast.IntegrationTests.Helpers
 
             var job = _InventoryFileRatingsJobsRepository.GetLatestJob();
             var source = _InventoryRatingsProcessingService.ProcessInventoryRatingsJob(job.Id);
+
+            return result.FileId;
+        }
+
+        public void EnhanceProgramsForFileId(int fileId, List<string> enhancements)
+        {
+            var csvFileContents = new StringBuilder();
+            var headerFields = InventoryProgramsProcessingEngineBase.GetProgramsImportFileHeaderFields();
+            csvFileContents.AppendLine(string.Join(",", headerFields));
+            var programs = _InventoryRepository.GetInventoryByFileIdForProgramsProcessing(fileId);
+
+            foreach (var program in programs)
+            {
+                foreach (var week in program.ManifestWeeks)
+                {
+                    foreach (var daypart in program.ManifestDayparts)
+                    {
+                        csvFileContents.AppendLine($"{program.Id}, " +
+                            $"{week.Id}, " +
+                            $"{daypart.Id}, " +
+                            $"{program.Station.CallLetters}, " +
+                            $"{program.Station.Affiliation}, " +
+                            $"{week.StartDate}, " +
+                            $"{week.EndDate}, " +
+                            $"{daypart.Daypart.ToString()}," +
+                            $"{daypart.Daypart.Monday}," +
+                            $"{daypart.Daypart.Tuesday}," +
+                            $"{daypart.Daypart.Wednesday}," +
+                            $"{daypart.Daypart.Thursday}," +
+                            $"{daypart.Daypart.Friday}," +
+                            $"{daypart.Daypart.Saturday}," +
+                            $"{daypart.Daypart.Sunday}," +
+                            $"{daypart.Daypart.StartTime}," +
+                            $"{daypart.Daypart.EndTime}," +
+                            $"{daypart.ProgramName}," +
+                            $"{enhancements[0]}," +
+                            $"{enhancements[1]}," +
+                            $"{enhancements[2]}," +
+                            $"{enhancements[3]}," +
+                            $"{enhancements[4]}," +
+                            $"{enhancements[5]}");
+                    }
+                }
+            }
+
+            var memoryStream = new MemoryStream();
+            var streamWriter = new StreamWriter(memoryStream);
+
+            streamWriter.Write(csvFileContents.ToString());
+
+            _InventoryProgramsProcessingService.ImportInventoryProgramsResults(memoryStream, "OpenMarket.csv");
         }
     }
 }

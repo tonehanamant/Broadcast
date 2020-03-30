@@ -999,7 +999,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             return result;
         }
 
-        private static List<string> _GetProgramsImportFileHeaderFields()
+        public static List<string> GetProgramsImportFileHeaderFields()
         {
             return new List<string>
             {
@@ -1032,14 +1032,14 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         private static string _GetProgramsExportFileHeaderLine()
         {
-            return _GetCsvLine(_GetProgramsImportFileHeaderFields());
+            return _GetCsvLine(GetProgramsImportFileHeaderFields());
         }
 
         private static string _GetProgramsExportFileItemLine(GuideInterfaceExportElement item)
         {
             var itemType = typeof(GuideInterfaceExportElement);
             var lineCsv = new StringBuilder();
-            foreach (var fieldName in _GetProgramsImportFileHeaderFields())
+            foreach (var fieldName in GetProgramsImportFileHeaderFields())
             {
                 if (lineCsv.Length > 0)
                 {

@@ -1238,6 +1238,9 @@
     <Content Include="Files\ImportingRateData\Open Market negative demo value.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\ImportingRateData\Open Market Pricing Programs.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\ImportingRateData\Open Market projected imps.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

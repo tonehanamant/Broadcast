@@ -348,7 +348,7 @@ namespace Services.Broadcast.ApplicationServices
                             new List<ManifestDetailDaypart> { splitDaypart.Item2 },
                             playbackType);
 
-                return impressionsBeforeMidnight.AddImpressions(impressionsAfterMidnight);
+                return impressionsBeforeMidnight.MergeImpressions(impressionsAfterMidnight, splitDaypart.Item1, splitDaypart.Item2);
 
             }
             else
@@ -381,9 +381,7 @@ namespace Services.Broadcast.ApplicationServices
                         new List<ManifestDetailDaypart> { splitDaypart.Item2 },
                         playbackType);
 
-                return impressionsBeforeMidnight.AddImpressions(impressionsAfterMidnight);
-
-
+                return impressionsBeforeMidnight.MergeImpressions(impressionsAfterMidnight, splitDaypart.Item1, splitDaypart.Item2);
             }
             else
             {
@@ -397,13 +395,13 @@ namespace Services.Broadcast.ApplicationServices
 
         private Tuple<ManifestDetailDaypart, ManifestDetailDaypart> _SplitStationDaypartByMidnight(ManifestDetailDaypart stationDaypart)
         {
-            if(stationDaypart.DisplayDaypart.StartTime < stationDaypart.DisplayDaypart.EndTime)
+            if (stationDaypart.DisplayDaypart.StartTime < stationDaypart.DisplayDaypart.EndTime)
             {
                 throw new ApplicationException("Can't split by midnight if not crossing midnight");
             }
 
-            var daypartBeforeMidnight = (DisplayDaypart) stationDaypart.DisplayDaypart.Clone();
-            daypartBeforeMidnight.EndTime = 24 * 60 * 60; //24hours in seconds
+            var daypartBeforeMidnight = (DisplayDaypart)stationDaypart.DisplayDaypart.Clone();
+            daypartBeforeMidnight.EndTime = BroadcastConstants.OneDayInSeconds - 1;
 
             var daypartAfterMidnight = (DisplayDaypart)stationDaypart.DisplayDaypart.Clone();
             daypartAfterMidnight.StartTime = 0;
@@ -423,7 +421,6 @@ namespace Services.Broadcast.ApplicationServices
             };
 
             return new Tuple<ManifestDetailDaypart, ManifestDetailDaypart>(stationDayaprtBeforeMidnight, stationDayaprtAfterMidnight);
-
         }
     }
 }

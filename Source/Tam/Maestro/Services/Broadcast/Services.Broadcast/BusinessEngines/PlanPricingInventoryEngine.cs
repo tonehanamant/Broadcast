@@ -317,7 +317,6 @@ namespace Services.Broadcast.BusinessEngines
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SETTING_PRIMARY_PROGRAM);
             _SetPrimaryProgramForDayparts(programs);
-            _SetPrimaryProgramFallbackForManifestDayparts(programs);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SETTING_PRIMARY_PROGRAM);
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SETTING_INVENTORY_DAYPARTS);
@@ -366,30 +365,6 @@ namespace Services.Broadcast.BusinessEngines
                     ShowType = primaryProgram.ShowType,
                     StartTime = primaryProgram.StartTime,
                     EndTime = primaryProgram.EndTime
-                };
-            }
-        }
-
-        private void _SetPrimaryProgramFallbackForManifestDayparts(List<PlanPricingInventoryProgram> manifests)
-        {
-            // If no information from Dativa is available, set up the primary program using the program name from daypart.
-            var daypartsWithoutPrimaryPrograms = manifests.SelectMany(x => x.ManifestDayparts).Where(x => x.PrimaryProgram == null);
-
-            foreach (var manifestDaypart in daypartsWithoutPrimaryPrograms)
-            {
-                var programName = manifestDaypart.ProgramName ?? string.Empty;
-                var fallbackGenre = string.Empty;
-
-                if (programName.Contains("news", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    fallbackGenre = "News";
-                }
-
-                manifestDaypart.PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
-                {
-                    Name = programName,
-                    Genre = fallbackGenre,
-                    ShowType = string.Empty
                 };
             }
         }

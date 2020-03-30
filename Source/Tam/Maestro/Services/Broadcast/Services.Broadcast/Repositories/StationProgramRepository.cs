@@ -143,7 +143,8 @@ namespace Services.Broadcast.Repositories
                              where inventoryFileIds.Contains(manifest.file_id.Value) &&
                                    stationIds.Contains(manifest.station.id) &&
                                    manifestWeek.start_date <= endDate && manifestWeek.end_date >= startDate &&
-                                   manifestRate.spot_length_id == spotLengthId
+                                   manifestRate.spot_length_id == spotLengthId &&
+                                   manifest.station_inventory_manifest_dayparts.Any(m => m.primary_program_id != null)
                              group manifest by manifest.id into manifestGroup
                              select manifestGroup.FirstOrDefault());
 
@@ -190,7 +191,7 @@ namespace Services.Broadcast.Repositories
                             Name = x.inventory_sources.name
                         },
                         ManifestDayparts = x.station_inventory_manifest_dayparts
-                            //.Where(d => d.primary_program_id.HasValue) //TODO: do not filter until program guide integration is working
+                            .Where(d => d.primary_program_id.HasValue)
                             .Select(d => new PlanPricingInventoryProgram.ManifestDaypart
                             {
                                 Id = d.id,

@@ -266,19 +266,25 @@ namespace Services.Broadcast.Helpers
 
         public static int GetTotalTimeInclusive(TimeRange timeRange)
         {
-            var result = -1;
+            return GetTotalTimeInclusive(timeRange.StartTime, timeRange.EndTime);
+        }
 
-            if (timeRange.StartTime <= timeRange.EndTime)
+        public static int GetTotalTimeInclusive(int startTime, int endTime)
+        {
+            var duration = 0;
+
+            if (startTime < endTime)
             {
-                result = timeRange.EndTime - timeRange.StartTime;
+                duration = endTime - startTime;
             }
-            else
+            else if (startTime > endTime)
             {
-                result = BroadcastConstants.OneDayInSeconds - timeRange.StartTime + timeRange.EndTime;
+                duration = BroadcastConstants.OneDayInSeconds - startTime + endTime;
             }
 
-            // to make the count inclusive
-            return result + 1;
+            // to include last second, e.g.
+            // startTime = 4, EndTime = 6. Seconds 4,5,6 should be counted. 6 - 4 + 1 = 3
+            return duration + 1;
         }
     }
 }

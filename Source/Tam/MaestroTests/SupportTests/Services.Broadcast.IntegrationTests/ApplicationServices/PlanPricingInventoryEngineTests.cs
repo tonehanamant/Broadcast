@@ -115,7 +115,60 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void GetInnventoryforPlanTestOnlyEnhancedPrograms()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var diagnostic = new PlanPricingJobDiagnostic();
+                var fileId = _InventoryFileTestHelper.UploadOpenMarketInventoryFile("Open Market Pricing Programs.xml", null, true);
+                var enhancements = new List<string>() { "SER", "Entertainment", "84900", "2100", "2020-01-04", "2020-01-05" };
+                _InventoryFileTestHelper.EnhanceProgramsForFileId(fileId, enhancements);
+                var plan = _PlanRepository.GetPlan(1197);
+                var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
+                    plan,
+                    new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    _GetAvailableInventorySources(),
+                    diagnostic);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingInventoryProgram), "ManifestId");
+                jsonResolver.Ignore(typeof(ManifestWeek), "Id");
+                jsonResolver.Ignore(typeof(ManifestDaypart), "Id");
+                jsonResolver.Ignore(typeof(ManifestDaypart), "PrimaryProgramId");
+                jsonResolver.Ignore(typeof(ManifestDaypart.Program), "Id");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInnventoryforPlanTestNewProgramsWithoutEnhancementAreNotSelected()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var diagnostic = new PlanPricingJobDiagnostic();
+                _InventoryFileTestHelper.UploadOpenMarketInventoryFile("Open Market Pricing Programs.xml", null, false);
+                var plan = _PlanRepository.GetPlan(1197);
+                var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
+                    plan,
+                    new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    _GetAvailableInventorySources(),
+                    diagnostic);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
+        [Test]
         [Category("long_running")]
+        [UseReporter(typeof(DiffReporter))]
         public void RunSpotLengthTest()
         {
             using (new TransactionScopeWrapper())
