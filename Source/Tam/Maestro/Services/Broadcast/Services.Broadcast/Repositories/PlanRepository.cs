@@ -116,6 +116,13 @@ namespace Services.Broadcast.Repositories
 
         int AddPlanPricingJob(PlanPricingJob planPricingJob);
         void UpdatePlanPricingJob(PlanPricingJob planPricingJob);
+        
+        /// <summary>
+        /// Updates the plan pricing job with hangfire job identifier.
+        /// </summary>
+        /// <param name="jobId">The pricing job identifier.</param>
+        /// <param name="hangfireJobId">The hangfire job identifier.</param>
+        void UpdateJobHangfireId(int jobId, string hangfireJobId);
         PlanPricingJob GetLatestPricingJob(int planId);
         void SavePlanPricingParameters(PlanPricingParametersDto planPricingRequestDto);
         void SavePricingApiResults(int planId, PlanPricingAllocationResult result);
@@ -1090,12 +1097,24 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(context =>
             {
                 var job = context.plan_version_pricing_job.Single(x => x.id == planPricingJob.Id);
-
-                job.hangfire_job_id = planPricingJob.HangfireJobId;
+                
                 job.status = (int)planPricingJob.Status;
                 job.completed_at = planPricingJob.Completed;
                 job.error_message = planPricingJob.ErrorMessage;
                 job.diagnostic_result = planPricingJob.DiagnosticResult;
+
+                context.SaveChanges();
+            });
+        }
+
+        /// <inheritdoc/>
+        public void UpdateJobHangfireId(int jobId, string hangfireJobId)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var job = context.plan_version_pricing_job.Single(x => x.id == jobId);
+                
+                job.hangfire_job_id = hangfireJobId;
 
                 context.SaveChanges();
             });

@@ -128,7 +128,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 job.HangfireJobId = _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.RunPricingJob(planPricingParametersDto, job.Id, CancellationToken.None));
 
-                _PlanRepository.UpdatePlanPricingJob(job);
+                _PlanRepository.UpdateJobHangfireId(job.Id, job.HangfireJobId);
 
                 return job;
             }
