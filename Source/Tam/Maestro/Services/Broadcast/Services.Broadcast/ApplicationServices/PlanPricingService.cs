@@ -513,18 +513,20 @@ namespace Services.Broadcast.ApplicationServices
 
         public void RunPricingJob(PlanPricingParametersDto planPricingParametersDto, int jobId, CancellationToken token)
         {
-            var planPricingJobDiagnostic = new PlanPricingJobDiagnostic { JobId = jobId };
+            var diagnostic = new PlanPricingJobDiagnostic();
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_TOTAL_DURATION);
 
-            planPricingJobDiagnostic.RecordStart();
-
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_PROCESSING);
             var planPricingJob = _PlanRepository.GetPlanPricingJob(jobId);
             planPricingJob.Status = BackgroundJobProcessingStatus.Processing;
             _PlanRepository.UpdatePlanPricingJob(planPricingJob);
+            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_PROCESSING);
 
             try
             {
                 token.ThrowIfCancellationRequested();
 
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FETCHING_PLAN_AND_PARAMETERS);
                 var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId);
                 var pricingMarkets = _MapToPlanPricingPrograms(plan);
                 var parameters = _GetPricingApiRequestParameters(planPricingParametersDto, plan, pricingMarkets);
@@ -535,32 +537,35 @@ namespace Services.Broadcast.ApplicationServices
                     InflationFactor = planPricingParametersDto.InflationFactor,
                     Margin = planPricingParametersDto.Margin
                 };
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FETCHING_PLAN_AND_PARAMETERS);
 
                 token.ThrowIfCancellationRequested();
-                planPricingJobDiagnostic.RecordInventorySourceEstimatesCalculationStart();
 
-                var proprietaryEstimates = _CalculateProprietaryInventorySourceEstimates(plan, programInventoryParameters);
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_INVENTORY_SOURCE_ESTIMATES);
+                var proprietaryEstimates = _CalculateProprietaryInventorySourceEstimates(plan, programInventoryParameters, diagnostic);
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_INVENTORY_SOURCE_ESTIMATES);
+
                 token.ThrowIfCancellationRequested();
+
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_INVENTORY_SOURCE_ESTIMATES);
                 _PlanRepository.SavePlanPricingEstimates(jobId, proprietaryEstimates);
-
-                planPricingJobDiagnostic.RecordInventorySourceEstimatesCalculationEnd();
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_INVENTORY_SOURCE_ESTIMATES);
 
                 token.ThrowIfCancellationRequested();
-                planPricingJobDiagnostic.RecordGatherInventoryStart();
+
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_GATHERING_INVENTORY);
                 var inventorySourceIds = _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes());
                 var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan,
                     programInventoryParameters,
-                    inventorySourceIds);
-
-                if (parameters.Margin > 0)
-                {
-                    parameters.BudgetGoal = parameters.BudgetGoal * (decimal)(1.0 - (parameters.Margin / 100.0));
-                    parameters.CpmGoal = parameters.BudgetGoal / Convert.ToDecimal(parameters.ImpressionsGoal);
-                }
+                    inventorySourceIds,
+                    diagnostic);
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_GATHERING_INVENTORY);
+                
                 token.ThrowIfCancellationRequested();
-                planPricingJobDiagnostic.RecordGatherInventoryEnd();
 
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
+                _ApplyMargin(parameters);
                 _ValidateInventory(inventory);
 
                 var pricingApiRequest = new PlanPricingApiRequestDto
@@ -568,21 +573,29 @@ namespace Services.Broadcast.ApplicationServices
                     Weeks = _GetPricingModelWeeks(plan, proprietaryEstimates, programInventoryParameters),
                     Spots = _GetPricingModelSpots(plan, inventory)
                 };
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
 
                 token.ThrowIfCancellationRequested();
+
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_PARAMETERS);
                 _PlanRepository.SavePricingRequest(parameters);
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_PARAMETERS);
 
-                planPricingJobDiagnostic.RecordApiCallStart();
                 token.ThrowIfCancellationRequested();
+
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
                 var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
+
                 token.ThrowIfCancellationRequested();
 
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_VALIDATING_AND_MAPPING_API_RESPONSE);
                 if (apiAllocationResult.Error != null)
                 {
                     var errorMessage = string.Join(",", apiAllocationResult.Error.Messages).Trim(',');
                     throw new Exception($"Pricing API returned the following error: {apiAllocationResult.Error.Name} -  {errorMessage}");
                 }
-
+                
                 var spots = _MapToResultSpots(apiAllocationResult, pricingApiRequest, inventory);
                 var pricingCpm = _CalculatePricingCpm(spots, proprietaryEstimates, parameters.Margin);
                 var allocationResult = new PlanPricingAllocationResult
@@ -593,23 +606,35 @@ namespace Services.Broadcast.ApplicationServices
                 };
 
                 _ValidateAllocationResult(allocationResult);
-
-                planPricingJobDiagnostic.RecordApiCallEnd();
-
-                planPricingJobDiagnostic.RecordEnd();
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_VALIDATING_AND_MAPPING_API_RESPONSE);
 
                 token.ThrowIfCancellationRequested();
 
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
                 var aggregatedResults = AggregateResults(inventory, allocationResult);
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
+
+                token.ThrowIfCancellationRequested();
 
                 using (var transaction = new TransactionScopeWrapper())
                 {
+                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
                     _PlanRepository.SavePricingApiResults(plan.Id, allocationResult);
+                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
+
+                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
                     _PlanRepository.SavePricingAggregateResults(plan.Id, aggregatedResults);
+                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
+
+                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
                     var pricingJob = _PlanRepository.GetPlanPricingJob(jobId);
                     pricingJob.Status = BackgroundJobProcessingStatus.Succeeded;
                     pricingJob.Completed = DateTime.Now;
-                    pricingJob.DiagnosticResult = planPricingJobDiagnostic.ToString();
+                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
+
+                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_TOTAL_DURATION);
+                    pricingJob.DiagnosticResult = diagnostic.ToString();
+
                     _PlanRepository.UpdatePlanPricingJob(pricingJob);
 
                     transaction.Complete();
@@ -622,6 +647,15 @@ namespace Services.Broadcast.ApplicationServices
             catch (Exception exception)
             {
                 _HandlePricingJobException(jobId, BackgroundJobProcessingStatus.Failed, exception, "Error attempting to run the pricing model");
+            }
+        }
+
+        private void _ApplyMargin(PlanPricingApiRequestParametersDto parameters)
+        {
+            if (parameters.Margin > 0)
+            {
+                parameters.BudgetGoal = parameters.BudgetGoal * (decimal)(1.0 - (parameters.Margin / 100.0));
+                parameters.CpmGoal = parameters.BudgetGoal / Convert.ToDecimal(parameters.ImpressionsGoal);
             }
         }
 
@@ -661,19 +695,21 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<PricingEstimate> _CalculateProprietaryInventorySourceEstimates(
             PlanDto plan,
-            ProgramInventoryOptionalParametersDto parameters)
+            ProgramInventoryOptionalParametersDto parameters,
+            PlanPricingJobDiagnostic diagnostic)
         {
             var result = new List<PricingEstimate>();
 
-            result.AddRange(_GetPricingEstimatesBasedOnInventorySourcePreferences(plan, parameters));
-            result.AddRange(_GetPricingEstimatesBasedOnInventorySourceTypePreferences(plan, parameters));
+            result.AddRange(_GetPricingEstimatesBasedOnInventorySourcePreferences(plan, parameters, diagnostic));
+            result.AddRange(_GetPricingEstimatesBasedOnInventorySourceTypePreferences(plan, parameters, diagnostic));
 
             return result;
         }
 
         private List<PricingEstimate> _GetPricingEstimatesBasedOnInventorySourcePreferences(
             PlanDto plan,
-            ProgramInventoryOptionalParametersDto parameters)
+            ProgramInventoryOptionalParametersDto parameters,
+            PlanPricingJobDiagnostic diagnostic)
         {
             var result = new List<PricingEstimate>();
 
@@ -690,7 +726,8 @@ namespace Services.Broadcast.ApplicationServices
             var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan,
                     parameters,
-                    inventorySourcePreferences.Select(x => x.Id));
+                    inventorySourcePreferences.Select(x => x.Id),
+                    diagnostic);
 
             foreach (var preference in inventorySourcePreferences)
             {
@@ -711,7 +748,8 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<PricingEstimate> _GetPricingEstimatesBasedOnInventorySourceTypePreferences(
             PlanDto plan,
-            ProgramInventoryOptionalParametersDto parameters)
+            ProgramInventoryOptionalParametersDto parameters,
+            PlanPricingJobDiagnostic diagnostic)
         {
             var result = new List<PricingEstimate>();
 
@@ -729,7 +767,8 @@ namespace Services.Broadcast.ApplicationServices
             var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan,
                     parameters,
-                    inventorySourceIds);
+                    inventorySourceIds,
+                    diagnostic);
 
             foreach (var preference in inventorySourceTypePreferences)
             {
@@ -1005,6 +1044,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public PlanPricingApiRequestDto GetPricingApiRequestPrograms(int planId, PricingInventoryGetRequestParametersDto requestParameters)
         {
+            var diagnostic = new PlanPricingJobDiagnostic();
             var pricingParams = new ProgramInventoryOptionalParametersDto
             {
                 MinCPM = requestParameters.MinCpm,
@@ -1018,8 +1058,8 @@ namespace Services.Broadcast.ApplicationServices
                 _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes()) :
                 requestParameters.InventorySourceIds;
 
-            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, pricingParams, inventorySourceIds);
-            var proprietaryEstimates = _CalculateProprietaryInventorySourceEstimates(plan, pricingParams);
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, pricingParams, inventorySourceIds, diagnostic);
+            var proprietaryEstimates = _CalculateProprietaryInventorySourceEstimates(plan, pricingParams, diagnostic);
 
             var pricingApiRequest = new PlanPricingApiRequestDto
             {
@@ -1032,6 +1072,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<PlanPricingInventoryProgram> GetPricingInventory(int planId, PricingInventoryGetRequestParametersDto requestParameters)
         {
+            var diagnostic = new PlanPricingJobDiagnostic();
             var plan = _PlanRepository.GetPlan(planId);
             var pricingParams = new ProgramInventoryOptionalParametersDto
             {
@@ -1043,7 +1084,7 @@ namespace Services.Broadcast.ApplicationServices
                 _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes()) :
                 requestParameters.InventorySourceIds;
 
-            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, pricingParams, inventorySourceIds);
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, pricingParams, inventorySourceIds, diagnostic);
             return inventory;
         }
 

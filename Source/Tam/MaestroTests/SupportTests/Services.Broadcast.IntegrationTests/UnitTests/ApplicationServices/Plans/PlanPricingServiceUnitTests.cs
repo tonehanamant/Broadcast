@@ -971,13 +971,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetInventorySources());
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
                 .Returns(_GetPlanPricingInventoryPrograms());
 
             List<PricingEstimate> passedParameters = null;
             _PlanRepositoryMock
                 .Setup(x => x.SavePlanPricingEstimates(It.IsAny<int>(), It.IsAny<List<PricingEstimate>>()))
                 .Callback<int, List<PricingEstimate>>((p, p1) => { passedParameters = p1; });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(It.IsAny<int>()))
+                .Returns(new PlanPricingJob());
 
             var service = _GetService();
 
@@ -989,13 +993,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Verify(x => x.GetInventoryForPlan(
                     It.IsAny<PlanDto>(),
                     It.IsAny<ProgramInventoryOptionalParametersDto>(),
-                    It.Is<IEnumerable<int>>(list => list.SequenceEqual(new List<int> { 3, 5, 7, 10, 11, 12 }))), Times.Once);
+                    It.Is<IEnumerable<int>>(list => list.SequenceEqual(new List<int> { 3, 5, 7, 10, 11, 12 })),
+                    It.IsAny<PlanPricingJobDiagnostic>()), Times.Once);
 
             _PlanPricingInventoryEngineMock
                 .Verify(x => x.GetInventoryForPlan(
                     It.IsAny<PlanDto>(),
                     It.IsAny<ProgramInventoryOptionalParametersDto>(),
-                    It.Is<IEnumerable<int>>(list => list.SequenceEqual(new List<int> { 17, 18, 19, 20, 21, 22, 23, 24, 25 }))), Times.Once);
+                    It.Is<IEnumerable<int>>(list => list.SequenceEqual(new List<int> { 17, 18, 19, 20, 21, 22, 23, 24, 25 })),
+                    It.IsAny<PlanPricingJobDiagnostic>()), Times.Once);
 
             _PlanRepositoryMock
                 .Verify(x => x.SavePlanPricingEstimates(jobId, It.IsAny<List<PricingEstimate>>()), Times.Once);

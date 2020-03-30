@@ -25,7 +25,8 @@ namespace Services.Broadcast.BusinessEngines
         List<PlanPricingInventoryProgram> GetInventoryForPlan(
             PlanDto plan,
             ProgramInventoryOptionalParametersDto parameters,
-            IEnumerable<int> inventorySourceIds);
+            IEnumerable<int> inventorySourceIds,
+            PlanPricingJobDiagnostic diagnostic);
     }
 
     public class PlanPricingInventoryEngine : IPlanPricingInventoryEngine
@@ -59,22 +60,46 @@ namespace Services.Broadcast.BusinessEngines
         public List<PlanPricingInventoryProgram> GetInventoryForPlan(
             PlanDto plan,
             ProgramInventoryOptionalParametersDto parameters,
-            IEnumerable<int> inventorySourceIds)
+            IEnumerable<int> inventorySourceIds,
+            PlanPricingJobDiagnostic diagnostic)
         {
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_FLIGHT_DATE_RANGES_AND_FLIGHT_DAYS);
             var planFlightDateRanges = _GetPlanDateRanges(plan);
             var planDisplayDaypartDays = GetPlanDaypartDaysFromPlanFlight(plan, planFlightDateRanges);
-            var programs = _GetPrograms(plan, planFlightDateRanges, inventorySourceIds);
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_FLIGHT_DATE_RANGES_AND_FLIGHT_DAYS);
 
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FETCHING_INVENTORY_FROM_DB);
+            var programs = _GetPrograms(plan, planFlightDateRanges, inventorySourceIds, diagnostic);
+            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FETCHING_INVENTORY_FROM_DB);
+
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_DAYPARTS_AND_ASSOCIATING_WITH_STANDARD_DAYPART);
             programs = FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan, programs, planDisplayDaypartDays);
+            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_DAYPARTS_AND_ASSOCIATING_WITH_STANDARD_DAYPART);
 
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_APPLYING_INFLATION_FACTOR);
             ApplyInflationFactorToSpotCost(programs, parameters?.InflationFactor);
+            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_APPLYING_INFLATION_FACTOR);
+
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SETTING_INVENTORY_DAYS_BASED_ON_PLAN_DAYS);
             // Set the plan flight days to programs so impressions are calculated for those days.
             _SetProgramsFlightDays(programs, plan);
-            _ApplyProjectedImpressions(programs, plan);
-            _ApplyProvidedImpressions(programs, plan);
-            ApplyNTIConversionToNSI(plan, programs, planDisplayDaypartDays);
+            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SETTING_INVENTORY_DAYS_BASED_ON_PLAN_DAYS);
 
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_APPLYING_PROJECTED_IMPRESSIONS);
+            _ApplyProjectedImpressions(programs, plan);
+            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_APPLYING_PROJECTED_IMPRESSIONS);
+
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_APPLYING_PROVIDED_IMPRESSIONS);
+            _ApplyProvidedImpressions(programs, plan);
+            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_APPLYING_PROVIDED_IMPRESSIONS);
+
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_APPLYING_NTI_CONVERSION_TO_NSI);
+            ApplyNTIConversionToNSI(plan, programs, planDisplayDaypartDays);
+            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_APPLYING_NTI_CONVERSION_TO_NSI);
+
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM);
             programs = FilterProgramsByMinAndMaxCPM(programs, parameters?.MinCPM, parameters?.MaxCPM);
+            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM);
 
             return programs;
         }
@@ -156,11 +181,9 @@ namespace Services.Broadcast.BusinessEngines
         /// This does not  address if a plan's flight extends beyond a single quarter.
         /// </remarks>
         protected List<PlanPricingInventoryProgram> _GetFullPrograms(List<DateRange> dateRanges, int spotLengthId,
-            IEnumerable<int> inventorySourceIds, List<short> availableMarkets, QuarterDetailDto planQuarter)
+            IEnumerable<int> inventorySourceIds, List<short> availableMarkets, QuarterDetailDto planQuarter, QuarterDetailDto fallbackQuarter)
         {
             var totalInventory = new List<PlanPricingInventoryProgram>();
-            var fallbackQuarter = _PlanPricingInventoryQuarterCalculatorEngine.GetInventoryFallbackQuarter();
-
             var availableStations = _StationRepository.GetBroadcastStationsWithLatestDetailsByMarketCodes(availableMarkets);
 
             foreach (var dateRange in dateRanges)
@@ -181,6 +204,7 @@ namespace Services.Broadcast.BusinessEngines
                 {
                     // multiple DateRanges can be returned if the PlanQuarter has more weeks than the FallbackQuarter
                     var fallbackDateRanges = _PlanPricingInventoryQuarterCalculatorEngine.GetFallbackDateRanges(dateRange, planQuarter, fallbackQuarter);
+
                     foreach (var fallbackDateRange in fallbackDateRanges)
                     {
                         var fallbackInventory = _StationProgramRepository.GetProgramsForPricingModel(
@@ -200,8 +224,6 @@ namespace Services.Broadcast.BusinessEngines
                     }
                 }
             }
-
-            _SetContractWeekForInventory(totalInventory, planQuarter, fallbackQuarter);
 
             return totalInventory;
         }
@@ -260,12 +282,18 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        private List<PlanPricingInventoryProgram> _GetPrograms(PlanDto plan, List<DateRange> planFlightDateRanges, IEnumerable<int> inventorySourceIds)
+        private List<PlanPricingInventoryProgram> _GetPrograms(
+            PlanDto plan, 
+            List<DateRange> planFlightDateRanges, 
+            IEnumerable<int> inventorySourceIds,
+            PlanPricingJobDiagnostic diagnostic)
         {
             var marketCodes = plan.AvailableMarkets.Select(m => m.MarketCode).ToList();
             var planQuarter = _PlanPricingInventoryQuarterCalculatorEngine.GetPlanQuarter(plan);
+            var fallbackQuarter = _PlanPricingInventoryQuarterCalculatorEngine.GetInventoryFallbackQuarter();
 
-            var programs = _GetFullPrograms(planFlightDateRanges, plan.SpotLengthId, inventorySourceIds, marketCodes, planQuarter);
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FETCHING_NOT_POPULATED_INVENTORY);
+            var programs = _GetFullPrograms(planFlightDateRanges, plan.SpotLengthId, inventorySourceIds, marketCodes, planQuarter, fallbackQuarter);
 
             // so that programs are not repeated
             programs = programs.GroupBy(x => x.ManifestId).Select(x =>
@@ -281,11 +309,24 @@ namespace Services.Broadcast.BusinessEngines
 
                 return first;
             }).ToList();
+            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FETCHING_NOT_POPULATED_INVENTORY);
 
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_MATCHING_INVENTORY_WEEKS_WITH_PLAN_WEEKS);
+            _SetContractWeekForInventory(programs, planQuarter, fallbackQuarter);
+            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_MATCHING_INVENTORY_WEEKS_WITH_PLAN_WEEKS);
+
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SETTING_PRIMARY_PROGRAM);
             _SetPrimaryProgramForDayparts(programs);
             _SetPrimaryProgramFallbackForManifestDayparts(programs);
+            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SETTING_PRIMARY_PROGRAM);
+
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SETTING_INVENTORY_DAYPARTS);
             _SetProgramDayparts(programs);
+            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SETTING_INVENTORY_DAYPARTS);
+
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SETTING_LATEST_STATION_DETAILS);
             _SetProgramStationLatestMonthDetails(programs);
+            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SETTING_LATEST_STATION_DETAILS);
 
             return programs;
         }

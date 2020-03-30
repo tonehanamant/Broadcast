@@ -61,9 +61,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         }
 
         public List<PlanPricingInventoryProgram> UT_GetFullPrograms(List<DateRange> dateRanges, int spotLengthId,
-            List<int> supportedInventorySourceTypes, List<short> availableMarkets, QuarterDetailDto planQuarter)
+            List<int> supportedInventorySourceTypes, List<short> availableMarkets, QuarterDetailDto planQuarter, QuarterDetailDto fallbackQuarter)
         {
-            return _GetFullPrograms(dateRanges, spotLengthId, supportedInventorySourceTypes, availableMarkets, planQuarter);
+            return _GetFullPrograms(dateRanges, spotLengthId, supportedInventorySourceTypes, availableMarkets, planQuarter, fallbackQuarter);
         }
     }
 }

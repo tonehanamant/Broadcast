@@ -6,57 +6,51 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 {
     public class PlanPricingJobDiagnostic
     {
-        public int JobId { get; set; }
         private Dictionary<string, Stopwatch> StopWatchDict { get; } = new Dictionary<string, Stopwatch>();
         private StringBuilder DiagnosticMessage { get; set; } = new StringBuilder();
-        private const string SW_KEY_TOTAL_DURATION = "TotalDuration";
-        private const string SW_KEY_TOTAL_DURATION_GATHER_INVENTORY = "TotalDurationGatherInventory";
-        private const string SW_KEY_TOTAL_DURATION_CALL_TO_API = "TotalDurationCallToApi";
-        private const string SW_KEY_TOTAL_DURATION_INVENTORY_SOURCE_ESTIMATES_CALCULATION = "TotalDurationInventorySourceEstimatesCalculation";
 
-        public void RecordStart()
+        public static string SW_KEY_TOTAL_DURATION = "Total duration";
+        public static string SW_KEY_SETTING_JOB_STATUS_TO_PROCESSING = "Setting job status to Processing";
+        public static string SW_KEY_FETCHING_PLAN_AND_PARAMETERS = "Fetching plan and parameters";
+        public static string SW_KEY_CALCULATING_INVENTORY_SOURCE_ESTIMATES = "Calculating inventory source estimates";
+        public static string SW_KEY_SAVING_INVENTORY_SOURCE_ESTIMATES = "Saving inventory source estimates";
+
+        public static string SW_KEY_GATHERING_INVENTORY = "Gathering inventory";
+        public static string SW_KEY_CALCULATING_FLIGHT_DATE_RANGES_AND_FLIGHT_DAYS = "Gathering inventory -> Calculating flight date ranges and flight days";
+
+        public static string SW_KEY_FETCHING_INVENTORY_FROM_DB = "Gathering inventory -> Fetching inventory from DB";
+        public static string SW_KEY_FETCHING_NOT_POPULATED_INVENTORY = "Gathering inventory -> Fetching inventory from DB -> Fetching not populated inventory";
+        public static string SW_KEY_MATCHING_INVENTORY_WEEKS_WITH_PLAN_WEEKS = "Gathering inventory -> Fetching inventory from DB -> Matching inventory weeks with plan weeks";
+        public static string SW_KEY_SETTING_PRIMARY_PROGRAM = "Gathering inventory -> Fetching inventory from DB -> Setting primary program";
+        public static string SW_KEY_SETTING_INVENTORY_DAYPARTS = "Gathering inventory -> Fetching inventory from DB -> Setting inventory dayparts";
+        public static string SW_KEY_SETTING_LATEST_STATION_DETAILS = "Gathering inventory -> Fetching inventory from DB -> Setting latest station details";
+
+        public static string SW_KEY_FILTERING_OUT_INVENTORY_BY_DAYPARTS_AND_ASSOCIATING_WITH_STANDARD_DAYPART = "Gathering inventory -> Filtering out inventory by dayparts and associating with standard daypart";
+        public static string SW_KEY_APPLYING_INFLATION_FACTOR = "Gathering inventory -> Applying inflation factor";
+        public static string SW_KEY_SETTING_INVENTORY_DAYS_BASED_ON_PLAN_DAYS = "Gathering inventory -> Setting inventory days based on plan days";
+        public static string SW_KEY_APPLYING_PROJECTED_IMPRESSIONS = "Gathering inventory -> Applying projected impressions";
+        public static string SW_KEY_APPLYING_PROVIDED_IMPRESSIONS = "Gathering inventory -> Applying provided impressions";
+        public static string SW_KEY_APPLYING_NTI_CONVERSION_TO_NSI = "Gathering inventory -> Applying NTI conversion to NSI";
+        public static string SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM = "Gathering inventory -> Filtering out inventory by min and max CPM";
+        
+        public static string SW_KEY_PREPARING_API_REQUEST = "Preparing API request";
+        public static string SW_KEY_SAVING_PRICING_PARAMETERS = "Saving pricing parameters";
+        public static string SW_KEY_CALLING_API = "Calling API";
+        public static string SW_KEY_VALIDATING_AND_MAPPING_API_RESPONSE = "Validating and mapping API response";
+        public static string SW_KEY_AGGREGATING_ALLOCATION_RESULTS = "Aggregating allocation results";
+        public static string SW_KEY_SAVING_ALLOCATION_RESULTS = "Saving allocation results";
+        public static string SW_KEY_SAVING_AGGREGATION_RESULTS = "Saving aggregation results";
+        public static string SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED = "Setting job status to Succeeded";
+
+        public void Start(string key)
         {
-            DiagnosticMessage.AppendLine($"Starting job with id {JobId}.");
-            _StartTimer(SW_KEY_TOTAL_DURATION);
+            _StartTimer(key);
         }
-
-        public void RecordEnd()
+        
+        public void End(string key)
         {
-            _StopTimer(SW_KEY_TOTAL_DURATION);
-            DiagnosticMessage.AppendLine(_GetDurationString(SW_KEY_TOTAL_DURATION));
-        }
-
-        public void RecordInventorySourceEstimatesCalculationStart()
-        {
-            _StartTimer(SW_KEY_TOTAL_DURATION_INVENTORY_SOURCE_ESTIMATES_CALCULATION);
-        }
-
-        public void RecordInventorySourceEstimatesCalculationEnd()
-        {
-            _StopTimer(SW_KEY_TOTAL_DURATION_INVENTORY_SOURCE_ESTIMATES_CALCULATION);
-            DiagnosticMessage.AppendLine(_GetDurationString(SW_KEY_TOTAL_DURATION_INVENTORY_SOURCE_ESTIMATES_CALCULATION));
-        }
-
-        public void RecordGatherInventoryStart()
-        {
-            _StartTimer(SW_KEY_TOTAL_DURATION_GATHER_INVENTORY);
-        }
-
-        public void RecordGatherInventoryEnd()
-        {
-            _StopTimer(SW_KEY_TOTAL_DURATION_GATHER_INVENTORY);
-            DiagnosticMessage.AppendLine(_GetDurationString(SW_KEY_TOTAL_DURATION_GATHER_INVENTORY));
-        }
-
-        public void RecordApiCallStart()
-        {
-            _StartTimer(SW_KEY_TOTAL_DURATION_CALL_TO_API);
-        }
-
-        public void RecordApiCallEnd()
-        {
-            _StopTimer(SW_KEY_TOTAL_DURATION_CALL_TO_API);
-            DiagnosticMessage.AppendLine(_GetDurationString(SW_KEY_TOTAL_DURATION_CALL_TO_API));
+            _StopTimer(key);
+            DiagnosticMessage.AppendLine(_GetDurationString(key));
         }
 
         private void _StartTimer(string timerKey)
@@ -75,6 +69,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
             {
                 StopWatchDict[timerKey] = new Stopwatch();
             }
+
             StopWatchDict[timerKey].Stop();
         }
 
@@ -84,8 +79,10 @@ namespace Services.Broadcast.Entities.Plan.Pricing
             {
                 StopWatchDict[key] = new Stopwatch();
             }
+
             var sw = StopWatchDict[key];
-            return $"{key} = {sw.Elapsed.Hours}:{sw.Elapsed.Minutes}:{sw.Elapsed.Seconds}.{sw.Elapsed.Milliseconds}";
+
+            return $"{key} = {sw.Elapsed.Hours}h {sw.Elapsed.Minutes}m {sw.Elapsed.Seconds}s {sw.Elapsed.Milliseconds}ms";
         }
 
         public override string ToString()

@@ -87,6 +87,13 @@ BEGIN
 END
 /*************************************** END PRI-24475 *****************************************************/
 
+/*************************************** START PRI-19661 *****************************************************/
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'diagnostic_result' AND OBJECT_ID = OBJECT_ID('plan_version_pricing_job'))
+BEGIN
+	ALTER TABLE [plan_version_pricing_job] ALTER COLUMN [diagnostic_result] nvarchar(max) NULL
+END
+/*************************************** END PRI-19661 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

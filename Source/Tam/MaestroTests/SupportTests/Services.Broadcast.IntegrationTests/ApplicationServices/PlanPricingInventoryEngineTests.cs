@@ -41,11 +41,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
+                var diagnostic = new PlanPricingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1196);
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan, 
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
-                    _GetAvailableInventorySources());
+                    _GetAvailableInventorySources(),
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -58,6 +60,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
+                var diagnostic = new PlanPricingJobDiagnostic();
+
                 _InventoryFileTestHelper.UploadProprietaryInventoryFile(
                     "PricingModel_Barter.xlsx", 
                     processInventoryRatings: true, 
@@ -72,7 +76,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan, 
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
-                    _GetAvailableInventorySources());
+                    _GetAvailableInventorySources(),
+                    diagnostic);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingInventoryProgram), "ManifestId");
@@ -96,11 +101,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
+                var diagnostic = new PlanPricingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1199);
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan, 
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
-                    _GetAvailableInventorySources());
+                    _GetAvailableInventorySources(),
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -113,11 +120,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
+                var diagnostic = new PlanPricingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1197);
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan, 
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
-                    _GetAvailableInventorySources());
+                    _GetAvailableInventorySources(),
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -130,6 +139,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
+                var diagnostic = new PlanPricingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1197);
                 plan.Dayparts[0].Restrictions.AffiliateRestrictions = new RestrictionsDto.AffiliateRestrictionsDto
                 {
@@ -142,7 +152,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan,
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
-                    _GetAvailableInventorySources());
+                    _GetAvailableInventorySources(),
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -155,6 +166,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
+                var diagnostic = new PlanPricingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1197);
                 _StationRepository.SaveStationMonthDetails(new Entities.StationMonthDetailDto
                 {
@@ -176,7 +188,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan,
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
-                    _GetAvailableInventorySources());
+                    _GetAvailableInventorySources(),
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -189,6 +202,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
+                var diagnostic = new PlanPricingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1197);
                 plan.FlightDays.Clear();
                 plan.FlightDays.Add(1);
@@ -197,7 +211,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan,
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
-                    _GetAvailableInventorySources());
+                    _GetAvailableInventorySources(),
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -210,11 +225,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
+                var diagnostic = new PlanPricingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1200);
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan, 
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
-                    _GetAvailableInventorySources());
+                    _GetAvailableInventorySources(),
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
