@@ -902,7 +902,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
             // reset the file for parsing.
             fileStream.Position = 0;
-            var headerFields = _GetProgramsImportFileHeaderFields();
+            var headerFields = GetProgramsImportFileHeaderFields();
 
             var reader = new CsvFileReader(headerFields);
 
