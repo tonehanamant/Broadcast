@@ -71,7 +71,10 @@ namespace Services.Broadcast.ApplicationServices
                 }
             }
 
-            var sortedResults = result.OrderBy(x => x.Name).ToList();
+            var sortedResults = result
+                .Distinct(new ProgramEqualityComparer())
+                .OrderBy(x => x.Name)
+                .ToList();
 
             durationSw.Stop();
 

@@ -79,6 +79,26 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 ShowType = "Movie",
                 MpaaRating = "R",
                 SyndicationType = "Public broadcasting syndication"
+            },
+            new SearchProgramDativaResponseDto
+            {
+                ProgramId = "7",
+                ProgramName = "black-ish",
+                GenreId = "8",
+                Genre = "comedy",
+                ShowType = "Series",
+                MpaaRating = "",
+                SyndicationType = "Public broadcasting syndication"
+            },
+            new SearchProgramDativaResponseDto
+            {
+                ProgramId = "8",
+                ProgramName = "black-ish",
+                GenreId = "8",
+                Genre = "comedy",
+                ShowType = "Series",
+                MpaaRating = "",
+                SyndicationType = "Non-Public broadcasting syndication"
             }
         };
     }

@@ -87,6 +87,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Assert.IsFalse(programs.Any());
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPrograms_DeDup()
+        {
+            var searchRequest = new SearchRequestProgramDto
+            {
+                ProgramName = "black-"
+            };
+
+            var programs = _ProgramService.GetPrograms(searchRequest, "IntegrationTestsUser");
+
+            _VerifyPrograms(programs);
+        }
+
         private static void _VerifyPrograms(List<ProgramDto> programs)
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
