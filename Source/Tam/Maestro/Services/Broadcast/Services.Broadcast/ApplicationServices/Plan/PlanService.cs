@@ -331,9 +331,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 plan.TargetImpressions = plan.TargetImpressions.Value / 1000;
             }
+            plan.HHImpressions = plan.HHImpressions / 1000;
             foreach (var audience in plan.SecondaryAudiences)
             {
-                audience.Impressions = audience.Impressions.Value / 1000;
+                if (audience.Impressions.HasValue)
+                {
+                    audience.Impressions = audience.Impressions.Value / 1000;
+                }
             }
             foreach (var week in plan.WeeklyBreakdownWeeks)
             {
@@ -378,14 +382,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private void _SetWeeklyBreakdownTotals(PlanDto plan)
         {
             plan.WeeklyBreakdownTotals.TotalActiveDays = plan.WeeklyBreakdownWeeks.Sum(w => w.NumberOfActiveDays);
-            plan.WeeklyBreakdownTotals.TotalImpressions = Math.Floor(plan.WeeklyBreakdownWeeks.Sum(w => w.WeeklyImpressions)/1000);
-            var impressionsTotalsRatio = plan.TargetImpressions.HasValue && plan.TargetImpressions.Value > 0 
+            plan.WeeklyBreakdownTotals.TotalImpressions = Math.Floor(plan.WeeklyBreakdownWeeks.Sum(w => w.WeeklyImpressions) / 1000);
+            var impressionsTotalsRatio = plan.TargetImpressions.HasValue && plan.TargetImpressions.Value > 0
                 ? plan.WeeklyBreakdownTotals.TotalImpressions * 1000 //because weekly breakdown is already in thousands
                 / plan.TargetImpressions.Value : 0;
 
             plan.WeeklyBreakdownTotals.TotalRatingPoints = Math.Round(plan.TargetRatingPoints ?? 0 * impressionsTotalsRatio, 1);
             plan.WeeklyBreakdownTotals.TotalImpressionsPercentage = Math.Round(100 * impressionsTotalsRatio, 0);
-            plan.WeeklyBreakdownTotals.TotalBudget = plan.Budget.Value * (decimal) impressionsTotalsRatio;
+            plan.WeeklyBreakdownTotals.TotalBudget = plan.Budget.Value * (decimal)impressionsTotalsRatio;
         }
 
         private void _SortPlanDayparts(PlanDto plan)
@@ -404,7 +408,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 WeightingGoalPercent = x.WeightingGoalPercent,
                 FlightDays = plan.FlightDays.ToList()
             }).ToList();
-            
+
             plan.Dayparts = planDayparts.OrderDayparts(daypartDefaults);
         }
 
@@ -801,7 +805,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             // If Updated Week present compute only for the updated week, else do it for all the weeks.
             bool redistributeCustom = false;
             double oldImpressionTotals = 0;
-            if(request.UpdatedWeek <= 0)
+            if (request.UpdatedWeek <= 0)
             {
                 weeksToUpdate = request.Weeks.ToList();
                 //if recalculating the whole week, always calculate from impressions
@@ -829,20 +833,21 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 switch (request.WeeklyBreakdownCalculationFrom)
                 {
                     case WeeklyBreakdownCalculationFrom.Ratings:
-                        week.WeeklyImpressions = request.TotalRatings <= 0 ? 0 : Math.Floor((week.WeeklyRatings / request.TotalRatings) * request.TotalImpressions);                   
+                        week.WeeklyImpressions = request.TotalRatings <= 0 ? 0 : Math.Floor((week.WeeklyRatings / request.TotalRatings) * request.TotalImpressions);
                         break;
                     case WeeklyBreakdownCalculationFrom.Percentage:
                         week.WeeklyImpressions = Math.Floor((week.WeeklyImpressionsPercentage / 100) * request.TotalImpressions);
                         break;
                     default:
-                        if (redistributeCustom && oldImpressionTotals > 0) {
+                        if (redistributeCustom && oldImpressionTotals > 0)
+                        {
                             week.WeeklyImpressions = Math.Floor(request.TotalImpressions * week.WeeklyImpressions / oldImpressionTotals);
                         }
                         else
                         {
                             week.WeeklyImpressions = Math.Floor(week.WeeklyImpressions);
                         }
-                        
+
                         break;
                 }
                 var weeklyRatio = request.TotalImpressions <= 0 ? 0 : week.WeeklyImpressions / request.TotalImpressions;
@@ -898,7 +903,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             weeklyBreakdown.TotalImpressionsPercentage = weeklyBreakdown.TotalShareOfVoice;
 
             weeklyBreakdown.TotalRatingPoints = Math.Round(goalRatingPoints * impressionsTotalRatio, 1);
-            weeklyBreakdown.TotalBudget = goalBudget * (decimal) impressionsTotalRatio;
+            weeklyBreakdown.TotalBudget = goalBudget * (decimal)impressionsTotalRatio;
 
         }
 
@@ -925,9 +930,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             var roundedImpressions = Math.Floor(request.TotalImpressions / totalActiveWeeks);
             var roundedImpressionsPercentage = Math.Round(100 * roundedImpressions / request.TotalImpressions);
-            var roundedRatingPoints = ProposalMath.RoundDownWithDecimals(request.TotalRatings * roundedImpressions/request.TotalImpressions, 1);
+            var roundedRatingPoints = ProposalMath.RoundDownWithDecimals(request.TotalRatings * roundedImpressions / request.TotalImpressions, 1);
             foreach (var week in activeWeeks)
-            {               
+            {
                 week.WeeklyImpressions = roundedImpressions;
 
                 week.WeeklyImpressionsPercentage = roundedImpressionsPercentage;
@@ -964,7 +969,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private void _CalculateWeeklyBudget(WeeklyBreakdownRequest request, WeeklyBreakdownWeek week)
         {
-            if(request.TotalImpressions <= 0 )
+            if (request.TotalImpressions <= 0)
             {
                 week.WeeklyBudget = 0;
             }
@@ -979,7 +984,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var days = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
             var daysToRemove = days.Except(flightDays);
 
-            foreach(var day in daysToRemove)
+            foreach (var day in daysToRemove)
             {
                 daysOfWeek[day - 1] = null;
             }

@@ -119,7 +119,7 @@
   "GoalBreakdownType": 1,
   "HHCPM": 10.0000,
   "HHCPP": 5.0000,
-  "HHImpressions": 10000.0,
+  "HHImpressions": 10.0,
   "HHRatingPoints": 2.0,
   "HHUniverse": 10000.0,
   "HUTBookId": 428,
