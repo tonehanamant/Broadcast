@@ -140,7 +140,7 @@
   "TargetCPP": 200951583.9999,
   "TargetImpressions": 0.1,
   "TargetRatingPoints": 6.0,
-  "TargetUniverse": 1000000.0,
+  "TargetUniverse": 120600000.0,
   "TotalActiveDays": 0,
   "TotalHiatusDays": 2,
   "TotalShareOfVoice": 0.0,

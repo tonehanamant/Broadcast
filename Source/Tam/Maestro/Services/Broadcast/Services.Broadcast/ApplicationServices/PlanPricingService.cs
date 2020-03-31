@@ -348,9 +348,9 @@ namespace Services.Broadcast.ApplicationServices
             return pricingPrograms;
         }
 
-        protected List<PlanPricingApiRequestSpotsDto> _GetPricingModelSpots(
-            PlanDto plan,
-            List<PlanPricingInventoryProgram> programs)
+        internal List<PlanPricingApiRequestSpotsDto> _GetPricingModelSpots(
+            List<PlanPricingInventoryProgram> programs
+            , List<int> skippedWeeksIds)
         {
             var marketCoveragesByMarketCode = _MarketCoverageRepository.GetLatestMarketCoverages().MarketCoveragesByMarketCode;
             var pricingModelSpots = new List<PlanPricingApiRequestSpotsDto>();
@@ -367,7 +367,10 @@ namespace Services.Broadcast.ApplicationServices
                     if (!_AreImpressionsValidForPricingModelInput(program.SpotCost))
                         continue;
 
-                    var spots = program.ManifestWeeks.Select(manifestWeek => new PlanPricingApiRequestSpotsDto
+                    //filter out skipped weeks
+                    var spots = program.ManifestWeeks
+                        .Where(x=>!skippedWeeksIds.Contains(x.ContractMediaWeekId))
+                        .Select(manifestWeek => new PlanPricingApiRequestSpotsDto
                     {
                         Id = program.ManifestId,
                         MediaWeekId = manifestWeek.ContractMediaWeekId,
@@ -393,29 +396,31 @@ namespace Services.Broadcast.ApplicationServices
             return pricingModelSpots;
         }
         
-        protected bool _AreImpressionsValidForPricingModelInput(decimal? impressions)
+        internal bool _AreImpressionsValidForPricingModelInput(decimal? impressions)
         {
             var result = impressions > 0;
             return result;
         }
 
-        protected bool _IsSpotCostValidForPricingModelInput(double? spotCost)
+        internal bool _IsSpotCostValidForPricingModelInput(double? spotCost)
         {
             var result = spotCost > 0;
             return result;
         }
 
-        protected bool _AreWeeklyImpressionsValidForPricingModelInput(double? impressions)
+        internal bool _AreWeeklyImpressionsValidForPricingModelInput(double? impressions)
         {
             var result = impressions > 0;
             return result;
         }
 
-        protected List<PlanPricingApiRequestWeekDto> _GetPricingModelWeeks(
+        internal List<PlanPricingApiRequestWeekDto> _GetPricingModelWeeks(
             PlanDto plan, 
             List<PricingEstimate> proprietaryEstimates,
-            ProgramInventoryOptionalParametersDto parameters)
+            ProgramInventoryOptionalParametersDto parameters,
+            out List<int> SkippedWeeksIds)
         {
+            SkippedWeeksIds = new List<int>();
             var pricingModelWeeks = new List<PlanPricingApiRequestWeekDto>();
             var marketCoverageGoal = GeneralMath.ConvertPercentageToFraction(plan.CoverageGoalPercent.Value);
             var marketsWithSov = plan.AvailableMarkets.Where(x => x.ShareOfVoicePercent.HasValue);
@@ -426,6 +431,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 if (_AreWeeklyImpressionsValidForPricingModelInput(week.WeeklyImpressions) == false)
                 {
+                    SkippedWeeksIds.Add(week.MediaWeekId);
                     continue;
                 }
 
@@ -435,8 +441,19 @@ namespace Services.Broadcast.ApplicationServices
                 var estimatedCost = estimatesForWeek.Sum(x => x.Cost);
 
                 var impressionGoal = week.WeeklyImpressions > estimatedImpressions ? week.WeeklyImpressions - estimatedImpressions : 0;
+                if(impressionGoal == 0)
+                {   //proprietary fulfills this week goal so we're not sending the week
+                    SkippedWeeksIds.Add(week.MediaWeekId);
+                    continue;
+                }
+
                 var weeklyBudget = week.WeeklyBudget > estimatedCost ? week.WeeklyBudget - estimatedCost : 0;
-                
+                if (weeklyBudget == 0)
+                {   //proprietary fulfills this week goal so we're not sending the week
+                    SkippedWeeksIds.Add(week.MediaWeekId);
+                    continue;
+                }
+
                 if (parameters.Margin > 0)
                 {
                     weeklyBudget = weeklyBudget * (decimal)(1.0 - (parameters.Margin / 100.0));
@@ -570,8 +587,8 @@ namespace Services.Broadcast.ApplicationServices
 
                 var pricingApiRequest = new PlanPricingApiRequestDto
                 {
-                    Weeks = _GetPricingModelWeeks(plan, proprietaryEstimates, programInventoryParameters),
-                    Spots = _GetPricingModelSpots(plan, inventory)
+                    Weeks = _GetPricingModelWeeks(plan, proprietaryEstimates, programInventoryParameters, out List<int> skippedWeeksIds),
+                    Spots = _GetPricingModelSpots(inventory, skippedWeeksIds)
                 };
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
 
@@ -676,7 +693,8 @@ namespace Services.Broadcast.ApplicationServices
             LogHelper.Logger.Error($"{logMessage} : {exception.Message}", exception);
         }
 
-        protected decimal _CalculatePricingCpm(List<PlanPricingAllocatedSpot> spots, List<PricingEstimate> proprietaryEstimates, double margin)
+        internal decimal _CalculatePricingCpm(List<PlanPricingAllocatedSpot> spots, List<PricingEstimate> proprietaryEstimates
+            , double margin)
         {
             var allocatedTotalCost = spots.Sum(x => x.TotalCost);
             var allocatedTotalImpressions = spots.Sum(x => x.TotalImpressions);
@@ -1063,8 +1081,8 @@ namespace Services.Broadcast.ApplicationServices
 
             var pricingApiRequest = new PlanPricingApiRequestDto
             {
-                Weeks = _GetPricingModelWeeks(plan, proprietaryEstimates, pricingParams),
-                Spots = _GetPricingModelSpots(plan, inventory)
+                Weeks = _GetPricingModelWeeks(plan, proprietaryEstimates, pricingParams, out List<int> skippedWeeksIds),
+                Spots = _GetPricingModelSpots(inventory, skippedWeeksIds)
             };
 
             return pricingApiRequest;

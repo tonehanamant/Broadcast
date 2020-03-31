@@ -114,6 +114,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("long_running")]
         [UseReporter(typeof(DiffReporter))]
         public void GetInnventoryforPlanTestOnlyEnhancedPrograms()
         {
@@ -167,7 +168,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Category("long_running")]
         [UseReporter(typeof(DiffReporter))]
         public void RunSpotLengthTest()
         {

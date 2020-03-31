@@ -7,19 +7,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -28,6 +15,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -116,19 +116,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -137,6 +124,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -225,19 +225,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -246,6 +233,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -334,19 +334,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -355,6 +342,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -443,19 +443,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -464,6 +451,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -552,19 +552,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -573,6 +560,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -661,19 +661,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -682,6 +669,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -770,19 +770,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -791,6 +778,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -879,19 +879,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -900,6 +887,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -988,19 +988,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -1009,6 +996,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -1097,19 +1097,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -1118,6 +1105,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -1206,19 +1206,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -1227,6 +1214,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -1315,19 +1315,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -1336,6 +1323,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -1424,19 +1424,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -1445,6 +1432,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -1533,19 +1533,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -1554,6 +1541,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -1642,19 +1642,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -1663,6 +1650,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -1751,19 +1751,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -1772,6 +1759,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -1860,19 +1860,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -1881,6 +1868,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -1969,19 +1969,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -1990,6 +1977,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -2078,19 +2078,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -2099,6 +2086,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -2187,19 +2187,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -2208,6 +2195,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -2296,19 +2296,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -2317,6 +2304,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -2405,19 +2405,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -2426,6 +2413,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -2514,19 +2514,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -2535,6 +2522,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -2623,19 +2623,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -2644,6 +2631,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -2732,19 +2732,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 12500.0,
-        "IsReference": true,
-        "Rating": 11.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -2753,6 +2740,19 @@
         "Impressions": 17500.0,
         "IsReference": true,
         "Rating": 13.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 12500.0,
+        "IsReference": true,
+        "Rating": 11.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -2841,19 +2841,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -2862,6 +2849,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -2976,19 +2976,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -2997,6 +2984,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -3111,19 +3111,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -3132,6 +3119,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -3246,19 +3246,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -3267,6 +3254,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -3381,19 +3381,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -3402,6 +3389,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -3516,19 +3516,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -3537,6 +3524,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -3651,19 +3651,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -3672,6 +3659,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -3786,19 +3786,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -3807,6 +3794,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -3921,19 +3921,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -3942,6 +3929,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -4056,19 +4056,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -4077,6 +4064,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -4191,19 +4191,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -4212,6 +4199,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -4326,19 +4326,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -4347,6 +4334,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -4461,19 +4461,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -4482,6 +4469,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -4596,19 +4596,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -4617,6 +4604,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -4731,19 +4731,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -4752,6 +4739,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -4866,19 +4866,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -4887,6 +4874,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -5001,19 +5001,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -5022,6 +5009,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -5136,19 +5136,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -5157,6 +5144,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -5271,19 +5271,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -5292,6 +5279,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -5406,19 +5406,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -5427,6 +5414,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -5541,19 +5541,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -5562,6 +5549,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -5676,19 +5676,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -5697,6 +5684,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -5811,19 +5811,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -5832,6 +5819,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -5946,19 +5946,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -5967,6 +5954,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -6081,19 +6081,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -6102,6 +6089,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }
@@ -6216,19 +6216,6 @@
     "ManifestAudiencesReferences": [
       {
         "Audience": {
-          "AudienceString": "Households",
-          "Id": 31
-        },
-        "CPM": null,
-        "HutPlaybackType": null,
-        "Impressions": 21250.0,
-        "IsReference": true,
-        "Rating": 16.0,
-        "SharePlaybackType": null,
-        "Vpvh": null
-      },
-      {
-        "Audience": {
           "AudienceString": "Men 18-20",
           "Id": 21
         },
@@ -6237,6 +6224,19 @@
         "Impressions": 23750.0,
         "IsReference": true,
         "Rating": 18.0,
+        "SharePlaybackType": null,
+        "Vpvh": null
+      },
+      {
+        "Audience": {
+          "AudienceString": "Households",
+          "Id": 31
+        },
+        "CPM": null,
+        "HutPlaybackType": null,
+        "Impressions": 21250.0,
+        "IsReference": true,
+        "Rating": 16.0,
         "SharePlaybackType": null,
         "Vpvh": null
       }

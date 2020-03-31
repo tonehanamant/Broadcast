@@ -219,7 +219,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var service = _GetService();
 
-            var result = service.UT_CalculatePricingCpm(allocationResult.Spots, estimates, 20);
+            var result = service._CalculatePricingCpm(allocationResult.Spots, estimates, 20);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -260,7 +260,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var service = _GetService();
 
-            var result = service.UT_CalculatePricingCpm(allocationResult.Spots, estimates, 0);
+            var result = service._CalculatePricingCpm(allocationResult.Spots, estimates, 0);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -310,7 +310,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
             
             // Act
-            var result = service.UT_GetPricingModelSpots(plan, inventory);
+            var result = service._GetPricingModelSpots(inventory, new List<int>());
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -677,7 +677,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             var service = _GetService();
 
-            var result = service.UT_AreImpressionsValidForPricingModelInput(spotCost);
+            var result = service._AreImpressionsValidForPricingModelInput(spotCost);
 
             Assert.AreEqual(expectedResult, result);
         }
@@ -687,7 +687,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             var service = _GetService();
 
-            var result = service.UT_AreImpressionsValidForPricingModelInput((decimal?) null);
+            var result = service._AreImpressionsValidForPricingModelInput((decimal?) null);
 
             Assert.IsFalse(result);
         }
@@ -702,7 +702,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             var service = _GetService();
 
-            var result = service.UT_IsSpotCostValidForPricingModelInput(impressions);
+            var result = service._IsSpotCostValidForPricingModelInput(impressions);
 
             Assert.AreEqual(expectedResult, result);
         }
@@ -712,7 +712,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             var service = _GetService();
 
-            var result = service.UT_IsSpotCostValidForPricingModelInput((double?) null);
+            var result = service._IsSpotCostValidForPricingModelInput((double?) null);
 
             Assert.IsFalse(result);
         }
@@ -727,7 +727,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             var service = _GetService();
 
-            var result = service.UT_AreWeeklyImpressionsValidForPricingModelInput(impressions);
+            var result = service._AreWeeklyImpressionsValidForPricingModelInput(impressions);
 
             Assert.AreEqual(expectedResult, result);
         }
@@ -737,7 +737,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             var service = _GetService();
 
-            var result = service.UT_AreWeeklyImpressionsValidForPricingModelInput((double?)null);
+            var result = service._AreWeeklyImpressionsValidForPricingModelInput(null);
 
             Assert.IsFalse(result);
         }
@@ -755,12 +755,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            var weeks = service.UT_GetPricingModelWeeks(plan, proprietaryEstimates, parameters);
+            var weeks = service._GetPricingModelWeeks(plan, proprietaryEstimates, parameters, out List<int> skippedWeeksIds);
 
             // Assert
+            Assert.AreEqual(3, skippedWeeksIds.Count());
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(weeks));
         }
-
+        
         [Test]
         [TestCase(UnitCapEnum.Per30Min, "hour", 0.5)]
         [TestCase(UnitCapEnum.PerHour, "hour", 1)]
@@ -787,7 +788,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            var weeks = service.UT_GetPricingModelWeeks(plan, proprietaryEstimates, parameters);
+            var weeks = service._GetPricingModelWeeks(plan, proprietaryEstimates, parameters, out List<int> skippedWeeksIds);
 
             // Assert
             var firstWeek = weeks.First();
@@ -812,7 +813,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            var exception = Assert.Throws<ApplicationException>(() => service.UT_GetPricingModelWeeks(plan, proprietaryEstimates, parameters));
+            var exception = Assert.Throws<ApplicationException>(() => 
+                service._GetPricingModelWeeks(plan, proprietaryEstimates, parameters, out List<int> skippedWeeksIds));
 
             // Assert
             Assert.AreEqual(expectedMessage, exception.Message);
@@ -834,7 +836,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            var weeks = service.UT_GetPricingModelWeeks(plan, proprietaryEstimates, parameters);
+            var weeks = service._GetPricingModelWeeks(plan, proprietaryEstimates, parameters, out List<int> skippedWeeksIds);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(weeks));
@@ -853,6 +855,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         MediaWeekId = 1,
                         WeeklyImpressions = 0,
                         WeeklyBudget = 200000
+                    },
+                    // should be filtered out because there is proprietary inventory to cover all these impressions
+                    new WeeklyBreakdownWeek
+                    {
+                        MediaWeekId = 3,
+                        WeeklyImpressions = 300,
+                        WeeklyBudget = 999
+                    },
+                    // should be filtered out because there is proprietary inventory to cover the cost
+                    new WeeklyBreakdownWeek
+                    {
+                        MediaWeekId = 4,
+                        WeeklyImpressions = 300,
+                        WeeklyBudget = 999
                     },
                     // should stay
                     new WeeklyBreakdownWeek
@@ -926,6 +942,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 },
                 new PricingEstimate
                 {
+                    InventorySourceId = 6,
+                    MediaWeekId = 4,
+                    Impressions = 400,
+                    Cost = 999
+                },
+                new PricingEstimate
+                {
                     InventorySourceId = 7,
                     MediaWeekId = 3,
                     Impressions = 300,
@@ -934,9 +957,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             };
         }
 
-        private PlanPricingServiceUnitTestClass _GetService()
+        protected PlanPricingService _GetService()
         {
-            var service = new PlanPricingServiceUnitTestClass(
+            return new PlanPricingService(
                 _DataRepositoryFactoryMock.Object,
                 _SpotLengthEngineMock.Object,
                 _PricingApiClientMock.Object,
@@ -945,8 +968,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _BroadcastLockingManagerApplicationServiceMock.Object,
                 _DaypartCacheMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object);
-
-            return service;
         }
 
         [Test]
