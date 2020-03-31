@@ -1,7 +1,7 @@
-﻿using System;
+﻿using BroadcastJobScheduler.JobQueueMonitors;
 using Hangfire;
 using Services.Broadcast.ApplicationServices;
-using BroadcastJobScheduler.JobQueueMonitors;
+using System;
 
 namespace BroadcastJobScheduler
 {

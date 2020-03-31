@@ -1,18 +1,11 @@
-﻿using Common.Services.WebComponents;
-using Services.Broadcast.ApplicationServices;
+﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
-using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Plan;
-using Services.Broadcast.Helpers;
-using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
-using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Web.Common;
-using Services.Broadcast.ApplicationServices.Security;
-using Services.Broadcast.Entities;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -20,9 +13,8 @@ namespace BroadcastComposerWeb.Controllers
     public class PlanBuyingApiController : BroadcastControllerBase
     {
         public PlanBuyingApiController(
-            IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(PlanBuyingApiController).Name), applicationServiceFactory)
+            : base( new ControllerNameRetriever(typeof(PlanBuyingApiController).Name), applicationServiceFactory)
         {
         }
 

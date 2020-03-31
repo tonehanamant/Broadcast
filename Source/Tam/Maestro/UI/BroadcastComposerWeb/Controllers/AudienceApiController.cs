@@ -12,9 +12,8 @@ namespace BroadcastComposerWeb.Controllers
     public class AudienceApiController : BroadcastControllerBase
     {
         public AudienceApiController(
-            IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(AudienceApiController).Name), applicationServiceFactory)
+            : base(new ControllerNameRetriever(typeof(AudienceApiController).Name), applicationServiceFactory)
         {
         }
 

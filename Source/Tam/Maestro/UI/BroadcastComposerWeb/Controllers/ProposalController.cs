@@ -25,14 +25,10 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/Proposals")]
     public class ProposalController : BroadcastControllerBase
     {
-        private readonly IWebLogger _Logger;
-
         public ProposalController(
-            IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(ProposalController).Name), applicationServiceFactory)
+            : base(new ControllerNameRetriever(typeof(ProposalController).Name), applicationServiceFactory)
         {
-            _Logger = logger;
         }
 
         [HttpGet]

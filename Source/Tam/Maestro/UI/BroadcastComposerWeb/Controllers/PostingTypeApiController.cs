@@ -12,9 +12,8 @@ namespace BroadcastComposerWeb.Controllers
     public class PostingTypeApiController : BroadcastControllerBase
     {
         public PostingTypeApiController(
-            IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(PostingTypeApiController).Name), applicationServiceFactory)
+            : base(new ControllerNameRetriever(typeof(PostingTypeApiController).Name), applicationServiceFactory)
         {
         }
 

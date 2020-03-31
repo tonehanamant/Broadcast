@@ -19,8 +19,8 @@ namespace BroadcastComposerWeb.Controllers
     [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
     public class ProposalInventoryController : BroadcastControllerBase
     {
-        public ProposalInventoryController(IWebLogger logger, BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(ProposalInventoryController).Name), applicationServiceFactory)
+        public ProposalInventoryController(BroadcastApplicationServiceFactory applicationServiceFactory)
+            : base(new ControllerNameRetriever(typeof(ProposalInventoryController).Name), applicationServiceFactory)
         {
         }
 

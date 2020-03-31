@@ -1,7 +1,10 @@
-﻿using System.ServiceProcess;
+﻿using System.Runtime.CompilerServices;
+using System.ServiceProcess;
 using System.Threading;
+using BroadcastLogging;
+using log4net;
 using Services.Broadcast.ApplicationServices;
-using Tam.Maestro.Common.Utilities.Logging;
+using Microsoft.Practices.Unity;
 
 namespace BroadcastJobScheduler.Service
 {
@@ -15,14 +18,9 @@ namespace BroadcastJobScheduler.Service
         /// </summary>
         static void Main()
         {
-            log4net.Config.XmlConfigurator.Configure();
-
-            LogHelper.Logger.Info("Broadcast background job scheduler starting.");
-
             // Initialize BroadcastApplicationServiceFactory UnityContainer instance so it's available
-            // on method OnActionExecuting for the ViewControllerBase.
             var instance = BroadcastApplicationServiceFactory.Instance;
-
+            SetupLogging();
 #if DEBUG
             var s = new JobSchedulerService();
             s.Startup();
@@ -34,6 +32,13 @@ namespace BroadcastJobScheduler.Service
             };
             ServiceBase.Run(servicesToRun);
 #endif
+        }
+
+        private static void SetupLogging()
+        {
+            log4net.Config.XmlConfigurator.Configure();
+            BroadcastApplicationServiceFactory.Instance.RegisterInstance<IBroadcastLoggingConfiguration>(new BroadcastJobSchedulerServiceLogConfig());
+            BroadcastLogMessageHelper.Configuration = BroadcastApplicationServiceFactory.Instance.Resolve<IBroadcastLoggingConfiguration>();
         }
     }
 }

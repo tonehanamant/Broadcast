@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Configuration;
 using System.Linq;
-using Tam.Maestro.Common.Utilities.Logging;
 
 namespace BroadcastJobScheduler
 {
@@ -10,6 +9,13 @@ namespace BroadcastJobScheduler
     /// </summary>
     public static class ConfigurationSettingHelper
     {
+        /// <summary>
+        /// Gets the configuration setting.  Falls back to the given default value.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="appSettingsKey">The application settings key.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns></returns>
         public static T GetConfigSetting<T>(string appSettingsKey, T defaultValue = default(T))
         {
             var result = defaultValue;
@@ -23,7 +29,7 @@ namespace BroadcastJobScheduler
             }
             catch
             {
-                LogHelper.Logger.Warn($"AppSettingsKey not found or invalid value: {appSettingsKey}. Using Default value of the type: {result}");
+                // falls back to the default.
             }
 
             return result;

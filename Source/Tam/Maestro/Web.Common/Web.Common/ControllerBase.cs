@@ -1,5 +1,7 @@
-﻿using Common.Services.WebComponents;
+﻿using BroadcastLogging;
+using log4net;
 using System;
+using System.Runtime.CompilerServices;
 using System.Web;
 using System.Web.Http;
 using Tam.Maestro.Services.Cable.Entities;
@@ -23,12 +25,12 @@ namespace Tam.Maestro.Web.Common
 
     public class ControllerBase : ApiController
     {
-        protected readonly IWebLogger _Logger;
+        protected readonly ILog _Log;
         private readonly ControllerNameRetriever _ControllerNameRetriever;
 
-        public ControllerBase(IWebLogger logger, ControllerNameRetriever controllerNameRetriever)
+        public ControllerBase(ControllerNameRetriever controllerNameRetriever)
         {
-            _Logger = logger;
+            _Log = LogManager.GetLogger(typeof(ControllerBase));
             _ControllerNameRetriever = controllerNameRetriever;
         }
 
@@ -55,7 +57,7 @@ namespace Tam.Maestro.Web.Common
             }
             catch (Exception e)
             {
-                _Logger.LogExceptionWithServiceName(e, _ControllerNameRetriever._GetControllerName(), HttpContext.Current.Request.RawUrl);
+                _LogError($"Exception from url '{HttpContext.Current.Request.RawUrl}'", e, _ControllerNameRetriever._GetControllerName());
 
                 return (new BaseResponse<T>
                 {
@@ -81,7 +83,7 @@ namespace Tam.Maestro.Web.Common
             }
             catch (Exception e)
             {
-                _Logger.LogExceptionWithServiceName(e, _ControllerNameRetriever._GetControllerName());
+                _LogError($"Exception caught.", e, _ControllerNameRetriever._GetControllerName());
 
                 return new BaseResponseWithStackTrace<T>
                 {
@@ -108,7 +110,7 @@ namespace Tam.Maestro.Web.Common
             }
             catch (Exception e)
             {
-                _Logger.LogExceptionWithServiceName(e, _ControllerNameRetriever._GetControllerName());
+                _LogError($"Exception caught.", e, _ControllerNameRetriever._GetControllerName());
 
                 return (new BaseResponse<T>
                 {
@@ -117,6 +119,12 @@ namespace Tam.Maestro.Web.Common
                     Data = default(T)
                 });
             }
+        }
+
+        protected void _LogError(string message, Exception ex, [CallerMemberName] string memberName = "")
+        {
+            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
+            _Log.Error(logMessage.ToJson());
         }
     }
 }

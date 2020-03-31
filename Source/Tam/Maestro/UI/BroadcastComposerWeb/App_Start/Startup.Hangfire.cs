@@ -1,11 +1,12 @@
-﻿using BroadcastComposerWeb.Filters;
+﻿using System.Linq;
+using System.Web.Configuration;
+using BroadcastComposerWeb.Filters;
 using BroadcastJobScheduler;
 using BroadcastJobScheduler.JobQueueMonitors;
 using Hangfire;
 using Microsoft.Practices.Unity;
 using Owin;
 using Services.Broadcast.ApplicationServices;
-using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace BroadcastComposerWeb
@@ -28,9 +29,10 @@ namespace BroadcastComposerWeb
             BroadcastApplicationServiceFactory.Instance.RegisterType<IInventoryAggregationQueueMonitor, InventoryAggregationQueueMonitor>();
             BroadcastApplicationServiceFactory.Instance.RegisterType<IWebServiceJobsServicesHost, WebServiceJobsServicesHost>();
             BroadcastApplicationServiceFactory.Instance.RegisterType<IWindowsServiceJobsServiceHost, WindowsServiceJobsServiceHost>();
+            BroadcastApplicationServiceFactory.Instance.RegisterType<IJobServiceHostsGlobalConfigurator, JobServiceHostsGlobalConfigurator>();
 
             // setup the client to accept background tasks and the services to use the same db as the client
-            var jobServiceHostsGlobalConfigurator = new JobServiceHostsGlobalConfigurator();
+            var jobServiceHostsGlobalConfigurator = BroadcastApplicationServiceFactory.Instance.Resolve<IJobServiceHostsGlobalConfigurator>();
             var applicationName = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
             jobServiceHostsGlobalConfigurator.Configure(applicationName, BroadcastApplicationServiceFactory.Instance);
 
@@ -38,7 +40,7 @@ namespace BroadcastComposerWeb
             var disabledForDev = _AreHangfireServicesEnabled() == false;
             if (disabledForDev)
             {
-                LogHelper.Logger.Warn("Background services are disabled for dev.");
+                _LogWarning("Background services are disabled for dev.");
                 return;
             }
 
@@ -47,7 +49,7 @@ namespace BroadcastComposerWeb
 
             if (_GetRunLongRunningJobsInWebServiceEnabled())
             {
-                LogHelper.Logger.Warn("Windows Service background jobs are running in the Web Service per the feature toggle.");
+                _LogWarning("Windows Service background jobs are running in the Web Service per the feature toggle.");
                 var windowsServiceJobHost = BroadcastApplicationServiceFactory.Instance.Resolve<IWindowsServiceJobsServiceHost>();
                 windowsServiceJobHost.Start();
             }
@@ -69,7 +71,13 @@ namespace BroadcastComposerWeb
         /// <returns></returns>
         private bool _AreHangfireServicesEnabled()
         {
-            return ConfigurationSettingHelper.GetConfigSetting("HangfireServicesEnabled", true);
+            const string key = "HangfireServicesEnabled";
+            if (WebConfigurationManager.AppSettings.AllKeys.Contains(key) &&
+                bool.TryParse(WebConfigurationManager.AppSettings[key], out var result))
+            {
+                return result;
+            }
+            return true;
         }
 
         private bool _GetRunLongRunningJobsInWebServiceEnabled()

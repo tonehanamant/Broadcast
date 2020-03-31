@@ -1,7 +1,5 @@
-﻿using Common.Services.WebComponents;
-using Services.Broadcast;
+﻿using Services.Broadcast;
 using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
 using System;
 using System.IO;
@@ -18,14 +16,10 @@ namespace BroadcastComposerWeb.Controllers
     [RoutePrefix("api/Images")]
     public class ImageApiController : BroadcastControllerBase
     {
-        private readonly IWebLogger _Logger;
-
         public ImageApiController(
-            IWebLogger logger,
             BroadcastApplicationServiceFactory applicationServiceFactory)
-            : base(logger, new ControllerNameRetriever(typeof(ImageApiController).Name), applicationServiceFactory)
+            : base(new ControllerNameRetriever(typeof(ImageApiController).Name), applicationServiceFactory)
         {
-            _Logger = logger;
         }
 
         [HttpGet]

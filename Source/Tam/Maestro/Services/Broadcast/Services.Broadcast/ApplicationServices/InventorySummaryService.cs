@@ -13,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Tam.Maestro.Common.Utilities.Logging;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices
@@ -40,7 +39,7 @@ namespace Services.Broadcast.ApplicationServices
         void QueueAggregateInventorySummaryDataJob(int inventorySourceId);
     }
 
-    public class InventorySummaryService : IInventorySummaryService
+    public class InventorySummaryService : BroadcastBaseClass, IInventorySummaryService
     {
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly IBroadcastAudiencesCache _AudiencesCache;
@@ -223,7 +222,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var msg = $"Inventory not found for source '{inventorySource.Name}'.";
                 Debug.WriteLine(msg);
-                LogHelper.Logger.Error(msg, e);
+                _LogError(msg, e);
                 return result;
             }
             
