@@ -28,14 +28,5 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(shareBooks));
         }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void GetMonthlyBooks()
-        {
-            var books = _PostingBookService.GetMonthlyBooks(437);
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(books));
-        }
     }
 }

@@ -378,7 +378,7 @@ namespace Services.Broadcast.ApplicationServices
                         Cost = program.SpotCost,
                         StationId = program.Station.Id,
                         MarketCode = program.Station.MarketCode.Value,
-                        PercentageOfUs = marketCoveragesByMarketCode[program.Station.MarketCode.Value],
+                        PercentageOfUs = GeneralMath.ConvertPercentageToFraction(marketCoveragesByMarketCode[program.Station.MarketCode.Value]),
                         SpotDays = daypart.Daypart.ActiveDays,
                         SpotHours = daypart.Daypart.GetDurationPerDayInHours()
 
@@ -394,7 +394,7 @@ namespace Services.Broadcast.ApplicationServices
 
             return pricingModelSpots;
         }
-        
+
         internal bool _AreImpressionsValidForPricingModelInput(decimal? impressions)
         {
             var result = impressions > 0;

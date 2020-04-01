@@ -180,6 +180,50 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
+        public void GetPricingRequestTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planPricingRequestDto = new PlanPricingParametersDto
+                {
+                    PlanId = 1197,
+                    MaxCpm = 100m,
+                    MinCpm = 1m,
+                    Budget = 1000,
+                    CompetitionFactor = 0.1,
+                    CPM = 5m,
+                    DeliveryImpressions = 50000,
+                    InflationFactor = 0.5,
+                    ProprietaryBlend = 0.2,
+                    UnitCaps = 10,
+                    UnitCapsType = UnitCapEnum.PerDay,
+                    InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                    {
+                        new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
+                        new PlanPricingInventorySourceDto{Id = 5, Percentage = 13},
+                        new PlanPricingInventorySourceDto{Id = 6, Percentage = 14},
+                        new PlanPricingInventorySourceDto{Id = 7, Percentage = 15},
+                        new PlanPricingInventorySourceDto{Id = 10, Percentage = 16},
+                        new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
+                        new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
+                    },
+                    InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                    {
+                        new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
+                        new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
+                    }
+                };
+
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "integration test user");
+
+                var result = _PlanPricingService.GetPricingApiRequestPrograms(1197, new PricingInventoryGetRequestParametersDto());
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetCurrentQueuedPricingExecution_WithCompletedJobs()
         {
             var currentDate = new DateTime(2019, 11, 4);

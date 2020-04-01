@@ -42,7 +42,7 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
-        /// Gets the hut books avaible based on share book id.
+        /// Gets the hut books available based on share book id.
         /// </summary>
         /// <param name="shareBookId">Id of selected share book</param>
         /// <returns>List of LookupDto objects</returns>
@@ -50,7 +50,8 @@ namespace BroadcastComposerWeb.Controllers
         [Route("HUT")]
         public BaseResponse<List<LookupDto>> GetHutBooks(int shareBookId)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPostingBookService>().GetMonthlyBooks(shareBookId));
+            return _ConvertToBaseResponse(() =>
+                _ApplicationServiceFactory.GetApplicationService<IPostingBookService>().GetHUTBooks(shareBookId));
         }
     }
 }

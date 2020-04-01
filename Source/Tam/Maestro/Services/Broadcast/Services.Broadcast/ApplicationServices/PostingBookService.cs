@@ -34,13 +34,6 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="shareBookId">The share book id.</param>
         /// <returns>List of LookupDto objects</returns>
         List<LookupDto> GetHUTBooks(int shareBookId);
-
-        /// <summary>
-        /// Gets the monthly and sweep books available based on the selected share book.
-        /// </summary>
-        /// <param name="shareBookId">The share book id.</param>
-        /// <returns>List of LookupDto objects</returns>
-        List<LookupDto> GetMonthlyBooks(int shareBookId);
     }
 
     public class PostingBookService : IPostingBookService
@@ -80,25 +73,18 @@ namespace Services.Broadcast.ApplicationServices
             _ToLookupDto(_MediaMonths);
 
         ///<inheritdoc/>
-        public List<LookupDto> GetHUTBooks(int shareBookId) =>
-            _GetBooks(shareBookId);
-
-        /// <inheritdoc/>
-        public List<LookupDto> GetMonthlyBooks(int shareBookId) =>
-            _GetBooks(shareBookId);
-
-        private List<LookupDto> _GetBooks(int shareBookId)
+        public List<LookupDto> GetHUTBooks(int shareBookId)
         {
             var shareBookDate = _MediaMonths.Single(b => b.Id == shareBookId).StartDate;
 
             var currentQuarter = _QuartersEngine.GetQuarterRangeByDate(shareBookDate);
             var lastYearQuarter = _QuartersEngine.GetQuarterDetail(currentQuarter.Quarter, shareBookDate.Year - 1);
 
-            var books = _MediaMonths
-                .Where(x => x.EndDate <= lastYearQuarter.EndDate);
-            return _ToLookupDto(books);
+            var defaultHUTBook = _MediaMonths
+                .Where(x => x.EndDate <= lastYearQuarter.EndDate).First();
+            return _ToLookupDto(_MediaMonths.OrderByDescending(x=>x.Id == defaultHUTBook.Id));
         }
-
+        
         ///<inheritdoc/>
         public int GetDefaultShareBookId(DateTime startDate) =>
            _GetSweepBooks()
