@@ -1,0 +1,22 @@
+﻿{
+  "IsPricingModelRunning": false,
+  "Job": {
+    "Completed": "2019-11-04T00:00:05",
+    "DiagnosticResult": null,
+    "ErrorMessage": null,
+    "HangfireJobId": null,
+    "PlanVersionId": 46,
+    "Queued": "2019-11-04T00:00:04",
+    "Status": 3
+  },
+  "Result": {
+    "OptimalCpm": 0.0,
+    "Programs": [],
+    "Totals": {
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "MarketCount": 0,
+      "StationCount": 0
+    }
+  }
+}

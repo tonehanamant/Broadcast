@@ -1127,9 +1127,11 @@ namespace Services.Broadcast.Repositories
                 var latestJob = (from pvpj in context.plan_version_pricing_job
                                  where pvpj.plan_versions.plan_id == planId && pvpj.plan_version_id == pvpj.plan_versions.plan.latest_version_id
                                  select pvpj)
+                                 // ignore canceled runs
+                                .Where(x => x.status != (int)BackgroundJobProcessingStatus.Canceled)
                                 // take jobs with status Queued or Processing first
                                 .OrderByDescending(x => x.status == (int)BackgroundJobProcessingStatus.Queued || x.status == (int)BackgroundJobProcessingStatus.Processing)
-                                //then take latest completed
+                                // then take latest completed
                                 .ThenByDescending(x => x.completed_at)
                                 .FirstOrDefault();
 

@@ -224,6 +224,40 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void GetLatestProcessingPricingExecution_WithCanceledJobs()
+        {
+            var currentDate = new DateTime(2019, 11, 4);
+
+            using (new TransactionScopeWrapper())
+            {
+                var plan = _PlanRepository.GetPlan(1196);
+
+                _PopulateSomePricingJobs(plan, currentDate);
+
+                _PlanRepository.AddPlanPricingJob(new PlanPricingJob
+                {
+                    PlanVersionId = plan.VersionId,
+                    Status = BackgroundJobProcessingStatus.Canceled,
+                    Queued = currentDate.AddSeconds(6),
+                });
+
+                var result = _PlanPricingService.GetCurrentPricingExecution(1196);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetCurrentQueuedPricingExecution_WithCompletedJobs()
         {
             var currentDate = new DateTime(2019, 11, 4);
