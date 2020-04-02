@@ -102,7 +102,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     CPP = 37381.32000000000388347057216M,
                     Impressions = 3000.0,
                     RatingPoints = 0.0026751329273551603,
-                    MediaMonthId = 437,
                     Universe = 112143960.0
                 });
             planRepository.Setup(s => s.SaveNewPlan(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
@@ -217,7 +216,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     CPP = 37381.32000000000388347057216M,
                     Impressions = 3000.0,
                     RatingPoints = 0.0026751329273551603,
-                    MediaMonthId = 437,
                     Universe = 112143960.0
                 });
             planRepository.Setup(s => s.SaveNewPlan(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
@@ -331,7 +329,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     CPP = 37381.32000000000388347057216M,
                     Impressions = 3000.0,
                     RatingPoints = 0.0026751329273551603,
-                    MediaMonthId = 437,
                     Universe = 112143960.0
                 });
             planRepository.Setup(s => s.SaveNewPlan(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))

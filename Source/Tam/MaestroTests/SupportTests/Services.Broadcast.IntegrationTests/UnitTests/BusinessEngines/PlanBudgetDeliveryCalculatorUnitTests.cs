@@ -17,7 +17,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
     {
         private PlanBudgetDeliveryCalculator _PlanBudgetDeliveryCalculator;
         private Mock<INtiUniverseService> _NtiUniverseServiceMock;
-        private Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCacheMock;
         private JsonSerializerSettings _JsonSettings;
 
         private const decimal BUDGET = 10000;
@@ -37,18 +36,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             };
 
             _NtiUniverseServiceMock = new Mock<INtiUniverseService>();
-            _NtiUniverseServiceMock.Setup(n => n.GetLatestNtiUniverseByYear(It.IsAny<int>(), It.IsAny<int>())).Returns(100000);
+            _NtiUniverseServiceMock.Setup(n => n.GetLatestNtiUniverse(It.IsAny<int>())).Returns(100000);
 
-            _MediaMonthAndWeekAggregateCacheMock = new Mock<IMediaMonthAndWeekAggregateCache>();
-            _MediaMonthAndWeekAggregateCacheMock.Setup(m => m.GetMediaMonthById(It.IsAny<int>())).Returns(new Tam.Maestro.Data.Entities.MediaMonth { Year = 2019 });
-
-            _PlanBudgetDeliveryCalculator = new PlanBudgetDeliveryCalculator(_NtiUniverseServiceMock.Object, _MediaMonthAndWeekAggregateCacheMock.Object);
+            _PlanBudgetDeliveryCalculator = new PlanBudgetDeliveryCalculator(_NtiUniverseServiceMock.Object);
         }
 
         [Test]
         public void CalculateBudget_InvalidImpressions()
         {
-            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudienceAndMediaMonth();
+            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudience();
             planDeliveryBudget.Impressions = -10;
 
             Assert.That(() => _PlanBudgetDeliveryCalculator.CalculateBudget(planDeliveryBudget),
@@ -59,7 +55,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [Test]
         public void CalculateBudget_InvalidRatingPoints()
         {
-            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudienceAndMediaMonth();
+            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudience();
             planDeliveryBudget.RatingPoints = -10;
 
             Assert.That(() => _PlanBudgetDeliveryCalculator.CalculateBudget(planDeliveryBudget),
@@ -70,7 +66,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [Test]
         public void CalculateBudget_InvalidCpp()
         {
-            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudienceAndMediaMonth();
+            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudience();
             planDeliveryBudget.CPP = -10;
 
             Assert.That(() => _PlanBudgetDeliveryCalculator.CalculateBudget(planDeliveryBudget),
@@ -81,7 +77,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [Test]
         public void CalculateBudget_InvalidCpm()
         {
-            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudienceAndMediaMonth();
+            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudience();
             planDeliveryBudget.CPM = -10;
 
             Assert.That(() => _PlanBudgetDeliveryCalculator.CalculateBudget(planDeliveryBudget),
@@ -92,7 +88,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [Test]
         public void CalculateBudget_InvalidBudget()
         {
-            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudienceAndMediaMonth();
+            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudience();
             planDeliveryBudget.CPM = -10;
 
             Assert.That(() => _PlanBudgetDeliveryCalculator.CalculateBudget(planDeliveryBudget),
@@ -101,31 +97,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         }
 
         [Test]
-        public void CalculateBudget_InvalidMediaMonthId()
-        {
-            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudienceAndMediaMonth();
-            planDeliveryBudget.MediaMonthId = -10;
-
-            Assert.That(() => _PlanBudgetDeliveryCalculator.CalculateBudget(planDeliveryBudget),
-                Throws.TypeOf<Exception>().With.Message
-                    .EqualTo("Cannot calculate goal without media month and audience"));
-        }
-
-        [Test]
         public void CalculateBudget_InvalidAudienceId()
         {
-            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudienceAndMediaMonth();
+            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudience();
             planDeliveryBudget.AudienceId = -10;
 
             Assert.That(() => _PlanBudgetDeliveryCalculator.CalculateBudget(planDeliveryBudget),
                 Throws.TypeOf<Exception>().With.Message
-                    .EqualTo("Cannot calculate goal without media month and audience"));
+                    .EqualTo("Cannot calculate goal without an audience"));
         }
 
         [Test]
         public void CalculateBudget_InvalidParametersCombination_CppAndCpm()
         {
-            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudienceAndMediaMonth();
+            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudience();
             planDeliveryBudget.CPP = CPP;
             planDeliveryBudget.CPP = CPM;
 
@@ -137,7 +122,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [Test]
         public void CalculateBudget_InvalidParametersCombination_RattingPointsAndCpm()
         {
-            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudienceAndMediaMonth();
+            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudience();
             planDeliveryBudget.RatingPoints = RATING_POINTS;
             planDeliveryBudget.CPM = CPM;
 
@@ -149,7 +134,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [Test]
         public void CalculateBudget_InvalidParametersCombination_RattingPointsAndImpressions()
         {
-            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudienceAndMediaMonth();
+            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudience();
             planDeliveryBudget.RatingPoints = RATING_POINTS;
             planDeliveryBudget.Impressions = IMPRESSIONS;
 
@@ -161,7 +146,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [Test]
         public void CalculateBudget_InvalidParametersCombination_CppAndImpressions()
         {
-            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudienceAndMediaMonth();
+            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudience();
             planDeliveryBudget.CPP = CPP;
             planDeliveryBudget.Impressions = IMPRESSIONS;
 
@@ -236,18 +221,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(response, _JsonSettings));
         }
 
-        private PlanDeliveryBudget _GetPlanDeliveryBudgetWithAudienceAndMediaMonth()
+        private PlanDeliveryBudget _GetPlanDeliveryBudgetWithAudience()
         {
             return new PlanDeliveryBudget
             {
                 AudienceId = 31,
-                MediaMonthId = 30,
             };
         }
 
         private PlanDeliveryBudget _GetPlanDeliveryBudgetWithImpressionsAndBudget()
         {
-            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudienceAndMediaMonth();
+            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudience();
             planDeliveryBudget.Budget = BUDGET;
             planDeliveryBudget.Impressions = IMPRESSIONS;
             return planDeliveryBudget;
@@ -255,7 +239,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
         private PlanDeliveryBudget _GetPlanDeliveryBudgetWithImpressionsAndCPM()
         {
-            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudienceAndMediaMonth();
+            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudience();
             planDeliveryBudget.CPM = CPM;
             planDeliveryBudget.Impressions = IMPRESSIONS;
             return planDeliveryBudget;
@@ -263,7 +247,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
         private PlanDeliveryBudget _GetPlanDeliveryBudgetWithBudgetAndCPM()
         {
-            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudienceAndMediaMonth();
+            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudience();
             planDeliveryBudget.CPM = CPM;
             planDeliveryBudget.Budget = BUDGET;
             return planDeliveryBudget;
@@ -271,7 +255,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
         private PlanDeliveryBudget _GetPlanDeliveryBudgetWithBudgetAndRatingPoints()
         {
-            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudienceAndMediaMonth();
+            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudience();
             planDeliveryBudget.Budget = BUDGET;
             planDeliveryBudget.RatingPoints = RATING_POINTS;
             return planDeliveryBudget;
@@ -279,7 +263,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
         private PlanDeliveryBudget _GetPlanDeliveryBudgetWithCPPAndRatingPoints()
         {
-            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudienceAndMediaMonth();
+            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudience();
             planDeliveryBudget.CPP = CPP;
             planDeliveryBudget.RatingPoints = RATING_POINTS;
             return planDeliveryBudget;
@@ -287,7 +271,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
         private PlanDeliveryBudget _GetPlanDeliveryBudgetWithCPPAndBudget()
         {
-            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudienceAndMediaMonth();
+            var planDeliveryBudget = _GetPlanDeliveryBudgetWithAudience();
             planDeliveryBudget.CPP = CPP;
             planDeliveryBudget.Budget = BUDGET;
             return planDeliveryBudget;

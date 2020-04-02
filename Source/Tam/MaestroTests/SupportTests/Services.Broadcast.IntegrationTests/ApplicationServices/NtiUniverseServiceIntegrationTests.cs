@@ -1,6 +1,8 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
+using Common.Services.Repositories;
 using IntegrationTests.Common;
+using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -45,25 +47,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("short_running")]
         public void GetNtiUniverse()
         {
-            var ntiUniverse = _NtiUniverseService.GetLatestNtiUniverseByYear(AUDIENCE_ID, 2019);
+            var ntiUniverse = _NtiUniverseService.GetLatestNtiUniverse(AUDIENCE_ID);
 
             Assert.AreEqual(120600000, ntiUniverse);
         }
-
-        [Test]
-        [Category("short_running")]
-        public void GetNtiUniverse_UsePreviousYear()
-        {
-            var ntiUniverse = _NtiUniverseService.GetLatestNtiUniverseByYear(AUDIENCE_ID, 2020);
-
-            Assert.AreEqual(120600000, ntiUniverse);
-        }
-
+        
         [Test]
         [Category("short_running")]
         public void GetNtiUniverse_DoesntHaveNtiData()
         {
-            Assert.That(() => _NtiUniverseService.GetLatestNtiUniverseByYear(AUDIENCE_ID, 2004), Throws.TypeOf<Exception>().With.Message.EqualTo("NTI universe not found."));
+            Assert.That(() => _NtiUniverseService.GetLatestNtiUniverse(-10)
+                , Throws.TypeOf<ApplicationException>().With.Message.EqualTo("NTI universe not found."));
         }
 
         private JsonSerializerSettings _GetJsonSerializerSettingsForNTIUniverses()

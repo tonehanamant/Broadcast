@@ -28,9 +28,8 @@ namespace Services.Broadcast.ApplicationServices
         /// Get the NTI universe from an audience and year
         /// </summary>
         /// <param name="audienceId">Audience id</param>
-        /// <param name="year">Year</param>
         /// <returns>Universe</returns>
-        double GetLatestNtiUniverseByYear(int audienceId, int year);
+        double GetLatestNtiUniverse(int audienceId);
     }
 
     public class NtiUniverseService : INtiUniverseService
@@ -66,19 +65,19 @@ namespace Services.Broadcast.ApplicationServices
             _NtiUniverseRepository.SaveNtiUniverses(header);
         }
 
-        public double GetLatestNtiUniverseByYear(int audienceId, int year)
+        /// <inheritdoc/>
+        public double GetLatestNtiUniverse(int audienceId)
         {
-            var universe = _NtiUniverseRepository.GetLatestNtiUniverseByYear(audienceId, year);
+            var universe = _NtiUniverseRepository.GetLatestNtiUniverse(audienceId);
 
-            if (universe.HasValue)
-                return universe.Value;
-           
-            universe = _NtiUniverseRepository.GetLatestNtiUniverseByYear(audienceId, year - 1);
-
-            if (!universe.HasValue)
-                throw new Exception(NTI_UNIVERSE_NOT_FOUND);
-
-            return universe.Value;
+            if (universe > 0)
+            {
+                return universe;
+            }
+            else
+            {
+                throw new ApplicationException(NTI_UNIVERSE_NOT_FOUND);
+            }
         }
 
 

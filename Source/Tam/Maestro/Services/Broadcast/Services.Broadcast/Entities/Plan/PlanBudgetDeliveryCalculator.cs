@@ -11,6 +11,5 @@ namespace Services.Broadcast.Entities.Plan
         public decimal? CPP { get; set; }
         public double? Universe { get; set; }
         public int AudienceId { get; set; }
-        public int MediaMonthId { get; set; }
     }
 }

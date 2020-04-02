@@ -22,7 +22,7 @@ namespace Services.Broadcast.Repositories
 
         NtiUniverseHeader GetLatestLoadedNsiUniverses();
 
-        double? GetLatestNtiUniverseByYear(int audienceId, int year);
+        double GetLatestNtiUniverse(int audienceId);
     }
 
     public class NtiUniverseRepository : BroadcastRepositoryBase, INtiUniverseRepository
@@ -84,24 +84,15 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public double? GetLatestNtiUniverseByYear(int audienceId, int year)
+        public double GetLatestNtiUniverse(int audienceId)
         {
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, System.Transactions.IsolationLevel.ReadUncommitted))
+            return _InReadUncommitedTransaction(context =>
             {
-                var sql = @"SELECT universe
-                            FROM nti_universes
-                            WHERE audience_id = @audienceId 
-	                            AND nti_universe_header_id = (SELECT TOP 1 id FROM nti_universe_headers
-			                                                  WHERE year = @year ORDER BY month DESC)";
-
-                return _InReadUncommitedTransaction(context =>
-                {
-                    var mediaMonthParam = new System.Data.SqlClient.SqlParameter("year", SqlDbType.Int) { Value = year };
-                    var audienceParam = new System.Data.SqlClient.SqlParameter("audienceId", SqlDbType.Int) { Value = audienceId };
-
-                    return context.Database.SqlQuery<double?>(sql, mediaMonthParam, audienceParam).SingleOrDefault();
-                });
-            }
+                return (from nti_universes in context.nti_universes
+                        where nti_universes.audience_id == audienceId
+                        orderby nti_universes.nti_universe_header_id descending
+                        select nti_universes.universe).FirstOrDefault();
+            });
         }
 
         public void SaveNtiUniverses(NtiUniverseHeader header)

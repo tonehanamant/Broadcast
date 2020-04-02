@@ -179,7 +179,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Category("short_running")]
         public void GetPricingRequestTest()
         {
             using (new TransactionScopeWrapper())

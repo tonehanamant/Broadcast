@@ -16,13 +16,11 @@ namespace Services.Broadcast.BusinessEngines
 
     public class PlanBudgetDeliveryCalculator : IPlanBudgetDeliveryCalculator
     {
-        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly INtiUniverseService _NtiUniverseService;
 
-        public PlanBudgetDeliveryCalculator(INtiUniverseService ntiUniverseService, IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+        public PlanBudgetDeliveryCalculator(INtiUniverseService ntiUniverseService)
         {
             _NtiUniverseService = ntiUniverseService;
-            _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
         }
 
         ///<inheritdoc/>
@@ -37,13 +35,12 @@ namespace Services.Broadcast.BusinessEngines
                 throw new Exception("Invalid budget values passed");
             }
 
-            if (input.MediaMonthId <= 0 || input.AudienceId <= 0)
+            if (input.AudienceId <= 0)
             {
-                throw new Exception("Cannot calculate goal without media month and audience");
+                throw new Exception("Cannot calculate goal without an audience");
             }
 
-            var mediaMonth = _MediaMonthAndWeekAggregateCache.GetMediaMonthById(input.MediaMonthId);
-            input.Universe = _NtiUniverseService.GetLatestNtiUniverseByYear(input.AudienceId, mediaMonth.Year);
+            input.Universe = _NtiUniverseService.GetLatestNtiUniverse(input.AudienceId);
 
             var result = input;
 

@@ -1090,7 +1090,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 Impressions = Math.Floor(plan.TargetImpressions.Value / plan.Vpvh),
                 AudienceId = _BroadcastAudiencesCache.GetDefaultAudience().Id,
-                MediaMonthId = plan.ShareBookId,
                 Budget = plan.Budget
             });
 
@@ -1109,7 +1108,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 {
                     Impressions = Math.Floor(plan.HHImpressions * planAudience.Vpvh),
                     AudienceId = planAudience.AudienceId,
-                    MediaMonthId = plan.ShareBookId,
                     Budget = plan.Budget
                 });
 
