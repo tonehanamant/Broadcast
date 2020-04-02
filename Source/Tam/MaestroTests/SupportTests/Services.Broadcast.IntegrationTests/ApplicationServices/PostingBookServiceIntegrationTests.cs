@@ -24,9 +24,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void GetHUTBooks()
         {
-            var shareBooks = _PostingBookService.GetHUTBooks(437);
+            var hutBooks = _PostingBookService.GetHUTBooks(422);
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(shareBooks));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(hutBooks));
         }
     }
 }

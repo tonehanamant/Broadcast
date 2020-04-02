@@ -82,7 +82,8 @@ namespace Services.Broadcast.ApplicationServices
 
             var defaultHUTBook = _MediaMonths
                 .Where(x => x.EndDate <= lastYearQuarter.EndDate).First();
-            return _ToLookupDto(_MediaMonths.OrderByDescending(x=>x.Id == defaultHUTBook.Id));
+            return _ToLookupDto(_MediaMonths.Where(x=>x.StartDate < shareBookDate)
+                .OrderByDescending(x=>x.Id == defaultHUTBook.Id));
         }
         
         ///<inheritdoc/>
