@@ -45,6 +45,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         private readonly IGenreCache _GenreCache;
         private readonly IFileService _FileService;
         private readonly IEmailerService _EmailerService;
+        private readonly IEnvironmentService _EnvironmentService;
 
         private readonly ILog _Log;
 
@@ -54,13 +55,15 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             IStationMappingService stationMappingService,
             IGenreCache genreCache,
             IFileService fileService,
-            IEmailerService emailerService)
+            IEmailerService emailerService,
+            IEnvironmentService environmentService)
         {
             _ProgramGuideApiClient = programGuideApiClient;
             _StationMappingService = stationMappingService;
             _GenreCache = genreCache;
             _FileService = fileService;
             _EmailerService = emailerService;
+            _EnvironmentService = environmentService;
 
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
 
@@ -485,7 +488,11 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         private void _CreateDirectoriesIfNotExist()
         {
+            // Program Guide interface directories with DataEngineering.
             _FileService.CreateDirectory(_GetProgramGuideInterfaceExportDirectoryPath());
+            _FileService.CreateDirectory(_GetProgramGuideInterfaceProcessedDirectoryPath());
+
+            // Working directories for the results import
             _FileService.CreateDirectory(_GetProgramGuideInterfaceInProgressDirectoryPath());
             _FileService.CreateDirectory(_GetProgramGuideInterfaceCompletedDirectoryPath());
             _FileService.CreateDirectory(_GetProgramGuideInterfaceFailedDirectoryPath());
@@ -503,7 +510,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 throw new InvalidOperationException($"Failed to send notification email.  Email addresses are not configured correctly.");
             }
 
-            _EmailerService.QuickSend(false, body, subject, priority, toEmails);
+            // PRI-25264 : disabling sending the email
+            // _EmailerService.QuickSend(false, body, subject, priority, toEmails);
         }
 
         private void _ReportNoInventoryToProcess(int jobId)
@@ -518,7 +526,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 throw new InvalidOperationException($"Failed to send notification email.  Email addresses are not configured correctly.");
             }
 
-            _EmailerService.QuickSend(false, body, subject, priority, toEmails);
+            // PRI-25264 : disabling sending the email
+            //_EmailerService.QuickSend(false, body, subject, priority, toEmails);
         }
 
         private void _ReportExportFileFailed(int jobId)
@@ -1126,31 +1135,67 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         protected string _GetProgramGuideInterfaceExportDirectoryPath()
         {
             const string dirName = "Export";
-            return Path.Combine(_GetProgramGuideInterfacePath(), dirName);
+            return Path.Combine(_GetProgramGuideExportWorkingDirectoryPath(), dirName);
+        }
+
+        protected string _GetProgramGuideInterfaceProcessedDirectoryPath()
+        {
+            const string dirName = "Processed";
+            return Path.Combine(_GetProgramGuideExportWorkingDirectoryPath(), dirName);
+        }
+
+        protected string _GetProgramGuideExportWorkingDirectoryPath()
+        {
+            const string dirName = "ExportsToProcess";
+            return Path.Combine(
+                _GetProgramGuideInterfacePath(),
+                dirName,
+                _GetDateDirName(_GetCurrentDateTime()),
+                _GetEnvironmentName());
         }
 
         protected string _GetProgramGuideInterfaceInProgressDirectoryPath()
         {
             const string dirName = "InProgress";
-            return Path.Combine(_GetProgramGuideInterfacePath(), dirName);
+            return Path.Combine(_GetResultsImportWorkingDirectory(), dirName);
         }
 
         protected string _GetProgramGuideInterfaceCompletedDirectoryPath()
         {
             const string dirName = "Completed";
-            return Path.Combine(_GetProgramGuideInterfacePath(), dirName);
+            return Path.Combine(_GetResultsImportWorkingDirectory(), dirName);
         }
 
         protected string _GetProgramGuideInterfaceFailedDirectoryPath()
         {
             const string dirName = "Failed";
-            return Path.Combine(_GetProgramGuideInterfacePath(), dirName);
+            return Path.Combine(_GetResultsImportWorkingDirectory(), dirName);
+        }
+
+        protected string _GetResultsImportWorkingDirectory()
+        {
+            const string dirName = "ResultProcessing";
+            return Path.Combine(
+                _GetProgramGuideInterfacePath(), 
+                dirName, 
+                _GetEnvironmentName());
         }
 
         protected string _GetProgramGuideInterfacePath()
         {
-            const string dirName = "ProgramGuideInterfaceDirectory";
+            const string dirName = "ProgramGuide";
             return Path.Combine(_GetBroadcastSharedDirectoryPath(), dirName);
+        }
+
+        private string _GetDateDirName(DateTime dateForName)
+        {
+            return dateForName.ToString("yyyyMMdd");
+        }
+
+        protected string _GetEnvironmentName()
+        {
+            var dto = _EnvironmentService.GetEnvironmentInfo();
+            return dto.Environment;
         }
 
         protected virtual string _GetBroadcastSharedDirectoryPath()

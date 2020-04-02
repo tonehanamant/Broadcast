@@ -404,10 +404,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(1, processInventoryProgramsBySourceJobCalled.Count);
             Assert.AreEqual(jobId, processInventoryProgramsBySourceJobCalled.First());
             Assert.AreEqual(1, getJobCalled);
-            Assert.AreEqual(1, emailQuickSendCalled.Count);
-            Assert.AreEqual(MailPriority.Normal, emailQuickSendCalled[0].pPriority);
-            Assert.IsTrue(emailQuickSendCalled[0].pSubject.Contains("with Warnings"));
-            Assert.IsTrue(emailQuickSendCalled[0].pBody.Contains("TestWarningMessage"));
+            // email disabled PRI-25264
+            Assert.AreEqual(0, emailQuickSendCalled.Count);  
+            //Assert.AreEqual(MailPriority.Normal, emailQuickSendCalled[0].pPriority);
+            //Assert.IsTrue(emailQuickSendCalled[0].pSubject.Contains("with Warnings"));
+            //Assert.IsTrue(emailQuickSendCalled[0].pBody.Contains("TestWarningMessage"));
         }
 
         [Test]

@@ -12,8 +12,10 @@ using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
@@ -32,6 +34,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
 
         private Mock<IFileService> _FileService = new Mock<IFileService>();
         private Mock<IEmailerService> _EmailerService = new Mock<IEmailerService>();
+        private Mock<IEnvironmentService> _EnvironmentService = new Mock<IEnvironmentService>();
 
         // PRI-23390 : Disabling, but may bring it back.
         ///// <summary>
@@ -710,26 +713,27 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
 
             // verify the file was exported well
             Assert.AreEqual(1, createdFiles.Count);
-            Assert.AreEqual(@"testSettingBroadcastSharedDirectoryPath\ProgramGuideInterfaceDirectory\Export\ProgramGuideExport_SOURCE_Numbe_20200101_20200121_20200306_142235.csv", createdFiles[0].Item1);
+            Assert.AreEqual("ProgramGuideExport_SOURCE_Numbe_20200101_20200121_20200306_142235.csv", Path.GetFileName(createdFiles[0].Item1));
             Assert.AreEqual(13, createdFiles[0].Item2.Count);
             for (var i = 0; i < 13; i++)
             {
                 Assert.AreEqual(expectedResultFileLines[i], createdFiles[0].Item2[i]);
             }
 
+            // email disabled PRI-25264
             // verify that the email was sent
-            Assert.AreEqual(1, emailsSent.Count);
-            var body = emailsSent[0].Item1;
-            Assert.IsTrue(body.Contains("A ProgramGuide Interface file has been exported."));
-            Assert.IsTrue(body.Contains("JobGroupID : 33a4940e-e0e7-4ccd-9dda-de0063b3ab40"));
-            Assert.IsTrue(body.Contains("Inventory Source : NumberOneSource"));
-            Assert.IsTrue(body.Contains("Range Start Date : 2020-01-01"));
-            Assert.IsTrue(body.Contains("Range End Date : 2020-01-21"));
-            Assert.IsTrue(body.Contains(@"testSettingBroadcastSharedDirectoryPath\ProgramGuideInterfaceDirectory\Export\ProgramGuideExport_SOURCE_Numbe_20200101_20200121_20200306_142235.csv"));
+            Assert.AreEqual(0, emailsSent.Count);
+            //var body = emailsSent[0].Item1;
+            //Assert.IsTrue(body.Contains("A ProgramGuide Interface file has been exported."));
+            //Assert.IsTrue(body.Contains("JobGroupID : 33a4940e-e0e7-4ccd-9dda-de0063b3ab40"));
+            //Assert.IsTrue(body.Contains("Inventory Source : NumberOneSource"));
+            //Assert.IsTrue(body.Contains("Range Start Date : 2020-01-01"));
+            //Assert.IsTrue(body.Contains("Range End Date : 2020-01-21"));
+            //Assert.IsTrue(body.Contains(@"testSettingBroadcastSharedDirectoryPath\ProgramGuideInterfaceDirectory\Export\ProgramGuideExport_SOURCE_Numbe_20200101_20200121_20200306_142235.csv"));
 
-            Assert.AreEqual("Broadcast Inventory Programs - ProgramGuide Interface Export file available", emailsSent[0].Item2);
-            Assert.AreEqual(MailPriority.Normal, emailsSent[0].Item3);
-            Assert.IsTrue(emailsSent[0].Item4.Any());
+            //Assert.AreEqual("Broadcast Inventory Programs - ProgramGuide Interface Export file available", emailsSent[0].Item2);
+            //Assert.AreEqual(MailPriority.Normal, emailsSent[0].Item3);
+            //Assert.IsTrue(emailsSent[0].Item4.Any());
         }
 
         [Test]
@@ -877,17 +881,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             // verify no file was exported
             Assert.AreEqual(0, createdFiles.Count);
 
+            // emails disabled PRI-25264
             // verify that the email was sent
-            Assert.AreEqual(1, emailsSent.Count);
-            var body = emailsSent[0].Item1;
-            Assert.IsTrue(body.Contains("A ProgramGuide Interface file was not exported because no inventory was found to process."));
-            Assert.IsTrue(body.Contains("Inventory Source : NumberOneSource"));
-            Assert.IsTrue(body.Contains("Range Start Date : 2020-01-01"));
-            Assert.IsTrue(body.Contains("Range End Date : 2020-01-21"));
+            Assert.AreEqual(0, emailsSent.Count);
+            //var body = emailsSent[0].Item1;
+            //Assert.IsTrue(body.Contains("A ProgramGuide Interface file was not exported because no inventory was found to process."));
+            //Assert.IsTrue(body.Contains("Inventory Source : NumberOneSource"));
+            //Assert.IsTrue(body.Contains("Range Start Date : 2020-01-01"));
+            //Assert.IsTrue(body.Contains("Range End Date : 2020-01-21"));
 
-            Assert.AreEqual("Broadcast Inventory Programs - No inventory to process.", emailsSent[0].Item2);
-            Assert.AreEqual(MailPriority.Normal, emailsSent[0].Item3);
-            Assert.IsTrue(emailsSent[0].Item4.Any());
+            //Assert.AreEqual("Broadcast Inventory Programs - No inventory to process.", emailsSent[0].Item2);
+            //Assert.AreEqual(MailPriority.Normal, emailsSent[0].Item3);
+            //Assert.IsTrue(emailsSent[0].Item4.Any());
         }
 
         [Test]
@@ -1153,6 +1158,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                     Display = "Maestro Genre"
                 });
 
+            _EnvironmentService.Setup(s => s.GetEnvironmentInfo())
+                .Returns(new EnvironmentDto
+                {
+                    DisplayBuyingLink = true,
+                    DisplayCampaignLink = true,
+                    Environment = "DEV"
+                });
+
             var engine = new InventoryProgramsBySourceProcessorTestClass(
                 dataRepoFactory.Object, 
                 _ProgramGuidClient.Object,
@@ -1160,7 +1173,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 _MediaWeekCache.Object,
                 _GenreCacheMock.Object,
                 _FileService.Object,
-                _EmailerService.Object);
+                _EmailerService.Object,
+                _EnvironmentService.Object);
 
             return engine;
         }

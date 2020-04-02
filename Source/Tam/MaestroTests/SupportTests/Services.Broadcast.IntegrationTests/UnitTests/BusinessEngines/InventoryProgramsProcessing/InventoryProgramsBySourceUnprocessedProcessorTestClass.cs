@@ -16,7 +16,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IGenreCache genreCache,
             IFileService fileService,
-            IEmailerService emailerService
+            IEmailerService emailerService,
+            IEnvironmentService environmentService
         )
             : base(
                 broadcastDataRepositoryFactory,
@@ -25,7 +26,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 mediaMonthAndWeekAggregateCache,
                 genreCache,
                 fileService,
-                emailerService)
+                emailerService,
+                environmentService)
         {
         }
 

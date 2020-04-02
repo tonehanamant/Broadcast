@@ -308,6 +308,12 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 case "InventoryProgramsEngineDeleteBatchSize":
                     result = "1000";
                     break;
+                case "DisplayCampaignLink":
+                    result = "True";
+                    break;
+                case "DisplayBuyingLink":
+                    result = "True";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }

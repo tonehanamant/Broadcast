@@ -108,14 +108,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var lastMessageSent = EmailerServiceStub.LastMailMessageGenerated;
 
-                Assert.IsNotNull(lastMessageSent);
-                Assert.IsTrue(lastMessageSent.Body.Contains("A ProgramGuide Interface file has been exported."));
-                Assert.IsTrue(lastMessageSent.Body.Contains("JobGroupID : af26f2db-3078-4659-9025-7362e14bbd02"));
-                Assert.IsTrue(lastMessageSent.Body.Contains("Inventory Source : Open Market"));
-                Assert.IsTrue(lastMessageSent.Body.Contains("Range Start Date : 2018-09-20"));
-                Assert.IsTrue(lastMessageSent.Body.Contains("Range End Date : 2018-09-26"));
-                // PRI-23390 : no longer calls ProgramGuide API or saves results to db.  Exports a file instead.
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
+                // email disabled PRI-25264
+                Assert.IsNull(lastMessageSent);
+                //Assert.IsTrue(lastMessageSent.Body.Contains("A ProgramGuide Interface file has been exported."));
+                //Assert.IsTrue(lastMessageSent.Body.Contains("JobGroupID : af26f2db-3078-4659-9025-7362e14bbd02"));
+                //Assert.IsTrue(lastMessageSent.Body.Contains("Inventory Source : Open Market"));
+                //Assert.IsTrue(lastMessageSent.Body.Contains("Range Start Date : 2018-09-20"));
+                //Assert.IsTrue(lastMessageSent.Body.Contains("Range End Date : 2018-09-26"));
+                //// PRI-23390 : no longer calls ProgramGuide API or saves results to db.  Exports a file instead.
+                //Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
             }
         }
 

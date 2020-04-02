@@ -15,7 +15,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             IStationMappingService stationMappingService,
             IGenreCache genreCache,
             IFileService fileService,
-            IEmailerService emailerService
+            IEmailerService emailerService,
+            IEnvironmentService environmentService
             )
             : base(
                   broadcastDataRepositoryFactory, 
@@ -23,7 +24,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                   stationMappingService, 
                   genreCache,
                   fileService,
-                  emailerService)
+                  emailerService,
+                  environmentService)
         {
         }
 

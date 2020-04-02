@@ -31,6 +31,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         private readonly IGenreCache _GenreCache;
         private readonly IFileService _FileService;
         private readonly IEmailerService _EmailerService;
+        private readonly IEnvironmentService _EnvironmentService;
 
         public InventoryProgramsProcessorFactory(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -39,7 +40,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             IStationMappingService stationMappingService,
             IGenreCache genreCache,
             IFileService fileService,
-            IEmailerService emailerService)
+            IEmailerService emailerService,
+            IEnvironmentService environmentService)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
@@ -48,6 +50,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             _GenreCache = genreCache;
             _FileService = fileService;
             _EmailerService = emailerService;
+            _EnvironmentService = environmentService;
         }
 
         public IInventoryProgramsProcessingEngine GetInventoryProgramsProcessingEngine(InventoryProgramsProcessorType jobType)
@@ -61,7 +64,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                         _StationMappingService,
                         _GenreCache,
                         _FileService,
-                        _EmailerService
+                        _EmailerService,
+                        _EnvironmentService
                     );
                 case InventoryProgramsProcessorType.BySource:
                     return new InventoryProgramsBySourceProcessor(
@@ -71,7 +75,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                         _MediaWeekCache,
                         _GenreCache,
                         _FileService,
-                        _EmailerService
+                        _EmailerService,
+                        _EnvironmentService
                         );
                 case InventoryProgramsProcessorType.BySourceUnprocessed:
                     return new InventoryProgramsBySourceUnprocessedProcessor(
@@ -81,7 +86,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                         _MediaWeekCache,
                         _GenreCache,
                         _FileService,
-                        _EmailerService
+                        _EmailerService,
+                        _EnvironmentService
                     );
                 default:
                     throw new NotImplementedException("Unsupported job type.");

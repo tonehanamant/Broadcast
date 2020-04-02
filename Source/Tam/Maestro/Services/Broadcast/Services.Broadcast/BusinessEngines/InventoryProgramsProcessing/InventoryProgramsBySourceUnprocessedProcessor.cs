@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Common.Services;
+﻿using Common.Services;
 using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.StationInventory;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 {
@@ -21,14 +21,16 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IGenreCache genreCache,
             IFileService fileService,
-            IEmailerService emailerService)
+            IEmailerService emailerService,
+            IEnvironmentService environmentService)
             : base(broadcastDataRepositoryFactory,
                 programGuideApiClient,
                 stationMappingService,
                 mediaMonthAndWeekAggregateCache,
                 genreCache,
                 fileService,
-                emailerService)
+                emailerService,
+                environmentService)
         {
         }
 

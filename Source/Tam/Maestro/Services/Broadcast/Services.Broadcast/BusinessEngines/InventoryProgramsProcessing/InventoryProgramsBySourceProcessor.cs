@@ -1,4 +1,5 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services;
+using Common.Services.Repositories;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
@@ -9,10 +10,7 @@ using Services.Broadcast.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Common.Services;
-using Services.Broadcast.Entities.Enums;
 using Tam.Maestro.Common;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 {
@@ -27,13 +25,15 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IGenreCache genreCache,
             IFileService fileService,
-            IEmailerService emailerService)
+            IEmailerService emailerService,
+            IEnvironmentService environmentService)
             : base(broadcastDataRepositoryFactory,
                 programGuideApiClient,
                 stationMappingService,
                 genreCache,
                 fileService,
-                emailerService)
+                emailerService,
+                environmentService)
         {
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _InventoryProgramsBySourceJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProgramsBySourceJobsRepository>();

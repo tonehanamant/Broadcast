@@ -25,13 +25,15 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             IStationMappingService stationMappingService,
             IGenreCache genreCache,
             IFileService fileService,
-            IEmailerService emailerService)
+            IEmailerService emailerService,
+            IEnvironmentService environmentService)
             : base(broadcastDataRepositoryFactory,
                 programGuideApiClient,
                 stationMappingService,
                 genreCache,
                 fileService,
-                emailerService)
+                emailerService,
+                environmentService)
         {
             _InventoryFileRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _InventoryProgramsByFileJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProgramsByFileJobsRepository>();

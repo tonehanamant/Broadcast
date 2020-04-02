@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.InventoryProgramsProcessing
@@ -29,6 +30,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
 
         private Mock<IFileService> _FileService = new Mock<IFileService>();
         private Mock<IEmailerService> _EmailerService = new Mock<IEmailerService>();
+        private Mock<IEnvironmentService> _EnvironmentService = new Mock<IEnvironmentService>();
 
         [Test]
         public void ImportResultsFile()
@@ -74,7 +76,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Contains("Exported 4 lines from the file."));
             Assert.IsTrue(result.Contains("Extracted and saved 4 program records."));
-            Assert.IsTrue(result.Contains(@"File 'Results_ProgramGuideInventoryExportFile_20200307_172832.csv' moved from to 'testSettingBroadcastSharedDirectoryPath\ProgramGuideInterfaceDirectory\Completed'."));
+            Assert.IsTrue(result.Contains(@"File 'Results_ProgramGuideInventoryExportFile_20200307_172832.csv' moved from to 'testSettingBroadcastSharedDirectoryPath\ProgramGuide\ResultProcessing\DEV\Completed'."));
 
             // validate we deleted
             Assert.AreEqual(3, deleteCalls.Count);
@@ -303,7 +305,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Contains("Exported 4 lines from the file."));
             Assert.IsTrue(result.Contains("Extracted and saved 4 program records."));
-            Assert.IsTrue(result.Contains(@"File 'Results_ProgramGuideInventoryExportFile_DaypartQuotes.csv' moved from to 'testSettingBroadcastSharedDirectoryPath\ProgramGuideInterfaceDirectory\Completed'."));
+            Assert.IsTrue(result.Contains(@"File 'Results_ProgramGuideInventoryExportFile_DaypartQuotes.csv' moved from to 'testSettingBroadcastSharedDirectoryPath\ProgramGuide\ResultProcessing\DEV\Completed'."));
 
             // validate we deleted
             Assert.AreEqual(3, deleteCalls.Count);
@@ -513,13 +515,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                     Display = "Maestro Genre"
                 });
 
+            _EnvironmentService.Setup(s => s.GetEnvironmentInfo())
+                .Returns(new EnvironmentDto
+                {
+                    DisplayBuyingLink = true,
+                    DisplayCampaignLink = true,
+                    Environment = "DEV"
+                });
+
             var engine = new InventoryProgramsByFileProcessorTestClass(
                 dataRepoFactory.Object,
                 _ProgramGuidClient.Object,
                 _StationMappingService.Object,
                 _GenreCacheMock.Object,
                 _FileService.Object,
-                _EmailerService.Object);
+                _EmailerService.Object,
+                _EnvironmentService.Object);
             return engine;
         }
     }
