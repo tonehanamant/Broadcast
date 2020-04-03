@@ -35,7 +35,19 @@ namespace BroadcastComposerWeb.Controllers
         // GET
         public ActionResult Index()
         {
-            ViewBag.Message = "Choose File from above and hit submit";
+            if (TempData["Message"] != null) {
+                ViewBag.Message = TempData["Message"];
+            }
+            if (TempData["TabId"] != null) {
+                ViewBag.TabId = TempData["TabId"];
+            }
+
+            if (TempData["Id"] != null) {
+                ViewBag.Id = TempData["Id"];
+            }
+            if (TempData["TextareaMessage "] != null) {
+                ViewBag.TextareaMessage = TempData["TextareaMessage"];
+            }
             return View("Index");
         }
 
@@ -45,8 +57,9 @@ namespace BroadcastComposerWeb.Controllers
             var quickEmailer = _ApplicationServiceFactory.GetApplicationService<IEmailerService>();
             quickEmailer.QuickSend(true, "<b>test</b><br/> This is only a test", "Test Email from Broadcast",
                 MailPriority.Normal, new string[] {"test_email@test.com"});
-            ViewBag.Message = "Test email sent.";
-           return View("Index");
+            TempData["Message"] = "Test email sent.";
+            TempData["TabId"] = "settings";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -57,7 +70,7 @@ namespace BroadcastComposerWeb.Controllers
                 var fileName = Path.GetFileName(file.FileName);
                 if (!fileName.EndsWith(".csv"))
                 {
-                    ViewBag.Message = "Only CSV files supported";
+                    TempData["Message"] = "Only CSV files supported";
                 }
                 else
                 {
@@ -65,13 +78,14 @@ namespace BroadcastComposerWeb.Controllers
                     InboundFileSaveRequest request = new InboundFileSaveRequest();
                     var json = service.JSONifyFile(file.InputStream, fileName,out request);
 
-                    ViewBag.Id = service.SaveAffidavit(request, "uma", DateTime.Now);
-                    ViewBag.Message = json;
+                    TempData["Id"] = service.SaveAffidavit(request, "uma", DateTime.Now);
+                    TempData["TextareaMessage"] = json;
 
                 }
             }
 
-            return View();
+            TempData["TabId"] = "posting";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -83,7 +97,7 @@ namespace BroadcastComposerWeb.Controllers
                 var fileName = Path.GetFileName(file.FileName);
                 if (!fileName.EndsWith(".xlsx"))
                 {
-                    ViewBag.Message = "Only Excel (.xlsx) files supported";
+                    TempData["Message"] = "Only Excel (.xlsx) files supported";
                 }
                 else
                 {
@@ -91,16 +105,17 @@ namespace BroadcastComposerWeb.Controllers
                     {
                         var service = _ApplicationServiceFactory.GetApplicationService<IStationMappingService>();
                         service.LoadStationMappings(file.InputStream, fileName, "maintenance controller", DateTime.Now);
-                        ViewBag.Message = "Station mappings file uploaded and processed successfully !";
+                        TempData["Message"] = "Station mappings file uploaded and processed successfully !";
                     }
                     catch (Exception ex)
                     {
-                        ViewBag.Message = ex.Message;
+                        TempData["Message"] = ex.Message;
                     }
                 }
             }
 
-            return View("Index");
+            TempData["TabId"] = "reference_data";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -112,7 +127,7 @@ namespace BroadcastComposerWeb.Controllers
                 var fileName = Path.GetFileName(file.FileName);
                 if (!fileName.EndsWith(".csv"))
                 {
-                    ViewBag.Message = "Only CSV (.csv) files supported";
+                    TempData["Message"] = "Only CSV (.csv) files supported";
                 }
                 else
                 {
@@ -120,16 +135,17 @@ namespace BroadcastComposerWeb.Controllers
                     {
                         var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
                         var result = service.ImportInventoryProgramsResults(file.InputStream, fileName);
-                        ViewBag.Message = result;
+                        TempData["TextareaMessage"] = result;
                     }
                     catch (Exception ex)
                     {
-                        ViewBag.Message = ex.Message;
+                        TempData["Message"] = ex.Message;
                     }
                 }
             }
 
-            return View("Index");
+            TempData["TabId"] = "reference_data";
+            return RedirectToAction("Index");
         }
 
 
@@ -139,8 +155,9 @@ namespace BroadcastComposerWeb.Controllers
             var service = _ApplicationServiceFactory.GetApplicationService<IRatingForecastService>();
             service.ClearMediaMonthCrunchCache();
 
-            ViewBag.Message = "Media Month Crunch Cache cleared, good luck!";
-            return View("Index");
+            TempData["Message"] = "Media Month Crunch Cache cleared, good luck!";
+            TempData["TabId"] = "settings";
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -152,8 +169,9 @@ namespace BroadcastComposerWeb.Controllers
             var site = "ftp://" + helper.Host;
             var list = srv.GetFileList(creds, site);
         
-            ViewBag.Message = "Get file worked w/o error!\r\n";
-            return View("Index");
+            TempData["Message"] = "Get file worked w/o error!\r\n";
+            TempData["TabId"] = "settings";
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -163,8 +181,9 @@ namespace BroadcastComposerWeb.Controllers
 
             var result = proposalService.AlignProposalDaypartsToZeroSeconds();
 
-            ViewBag.Message = result;
-            return View("Index");
+            TempData["Message"] = result;
+            TempData["TabId"] = "inventory";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -174,14 +193,14 @@ namespace BroadcastComposerWeb.Controllers
             {
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
                 service.RequeueInventoryFileRatingsJob(jobId);
-                ViewBag.Message = $"Job '{jobId}' queued.";
+                TempData["Message"] = $"Job '{jobId}' queued.";
             }
             catch (Exception e)
             {
-                ViewBag.Message = "Error Processing Job: " + e.Message;
+                TempData["Message"] = "Error Processing Job: " + e.Message;
             }
-
-            return View("Index");
+            TempData["TabId"] = "inventory";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -192,14 +211,15 @@ namespace BroadcastComposerWeb.Controllers
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
                 var result = service.QueueProcessInventoryProgramsByFileJob(fileId, _GetCurrentUserFullName());
 
-                ViewBag.Message = $"Job queued as Job {result.Job.Id}. \r\n{result}";
+                TempData["Message"] = $"Job queued as Job {result.Job.Id}. \r\n{result}";
             }
             catch (Exception e)
             {
-                ViewBag.Message = "Error Processing Job: " + e.Message;
+                TempData["Message"] = "Error Processing Job: " + e.Message;
             }
 
-            return View("Index");
+            TempData["TabId"] = "program_guide";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -210,14 +230,15 @@ namespace BroadcastComposerWeb.Controllers
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
                 var result = service.QueueProcessInventoryProgramsByFileJobByFileName(fileName, _GetCurrentUserFullName());
 
-                ViewBag.Message = $"Job queued as Job {result.Job.Id}. \r\n{result}";
+                TempData["Message"] = $"Job queued as Job {result.Job.Id}. \r\n{result}";
             }
             catch (Exception e)
             {
-                ViewBag.Message = "Error Processing Job: " + e.Message;
+                TempData["Message"] = "Error Processing Job: " + e.Message;
             }
 
-            return View("Index");
+            TempData["TabId"] = "program_guide";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -228,14 +249,14 @@ namespace BroadcastComposerWeb.Controllers
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
                 var result = service.ReQueueProcessInventoryProgramsByFileJob(jobId, _GetCurrentUserFullName());
 
-                ViewBag.Message = $"Job '{jobId}' requeued as new Job {result.Job.Id}. \r\n{result}";
+                TempData["Message"] = $"Job '{jobId}' requeued as new Job {result.Job.Id}. \r\n{result}";
             }
             catch (Exception e)
             {
-                ViewBag.Message = "Error Processing Job: " + e.Message;
+                TempData["Message"] = "Error Processing Job: " + e.Message;
             }
-
-            return View("Index");
+            TempData["TabId"] = "program_guide";
+            return RedirectToAction("Index");
         }
 
         public DateTime ParseDateTimeString(string dateTimeString, string fieldName)
@@ -258,14 +279,15 @@ namespace BroadcastComposerWeb.Controllers
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
                 var result = service.QueueProcessInventoryProgramsBySourceJob(inventorySourceId, startDate, endDate,_GetCurrentUserFullName());
 
-                ViewBag.Message = $"Job queued as Job {result.Jobs.First().Id}. \r\n{result}";
+                TempData["Message"] = $"Job queued as Job {result.Jobs.First().Id}. \r\n{result}";
             }
             catch (Exception e)
             {
-                ViewBag.Message = "Error Processing Job: " + e.Message;
+                TempData["Message"] = "Error Processing Job: " + e.Message;
             }
 
-            return View("Index");
+            TempData["TabId"] = "program_guide";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -278,14 +300,15 @@ namespace BroadcastComposerWeb.Controllers
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
                 var result = service.QueueProcessInventoryProgramsBySourceForWeeksFromDate(orientByDate, _GetCurrentUserFullName());
 
-                ViewBag.Message = $"Job queued as Job {result.Jobs.First().Id}. \r\n{result}";
+                TempData["Message"] = $"Job queued as Job {result.Jobs.First().Id}. \r\n{result}";
             }
             catch (Exception e)
             {
-                ViewBag.Message = "Error Processing Job: " + e.Message;
+                TempData["Message"] = "Error Processing Job: " + e.Message;
             }
 
-            return View("Index");
+            TempData["TabId"] = "program_guide";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -296,14 +319,15 @@ namespace BroadcastComposerWeb.Controllers
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
                 var result = service.ReQueueProcessInventoryProgramsBySourceJob(jobId, _GetCurrentUserFullName());
 
-                ViewBag.Message = $"Job '{jobId}' requeued as new Job {result.Jobs.First().Id}.";
+                TempData["Message"] = $"Job '{jobId}' requeued as new Job {result.Jobs.First().Id}.";
             }
             catch (Exception e)
             {
-                ViewBag.Message = "Error Processing Job: " + e.Message;
+                TempData["Message"] = "Error Processing Job: " + e.Message;
             }
 
-            return View("Index");
+            TempData["TabId"] = "program_guide";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -317,14 +341,15 @@ namespace BroadcastComposerWeb.Controllers
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
                 var result = service.QueueProcessInventoryProgramsBySourceJobUnprocessed(inventorySourceId, startDate, endDate, _GetCurrentUserFullName());
 
-                ViewBag.Message = $"Job queued as Job {result.Jobs.First().Id}. \r\n{result}";
+                TempData["Message"] = $"Job queued as Job {result.Jobs.First().Id}. \r\n{result}";
             }
             catch (Exception e)
             {
-                ViewBag.Message = "Error Processing Job: " + e.Message;
+                TempData["Message"] = "Error Processing Job: " + e.Message;
             }
 
-            return View("Index");
+            TempData["TabId"] = "program_guide";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -334,14 +359,15 @@ namespace BroadcastComposerWeb.Controllers
             {
                 var service = _ApplicationServiceFactory.GetApplicationService<IScxGenerationService>();
                 service.RequeueScxGenerationJob(jobId);
-                ViewBag.Message = $"Job '{jobId}' queued.";
+                TempData["Message"] = $"Job '{jobId}' queued.";
             }
             catch (Exception e)
             {
-                ViewBag.Message = "Error Processing Job: " + e.Message;
+                TempData["Message"] = "Error Processing Job: " + e.Message;
             }
 
-            return View("Index");
+            TempData["TabId"] = "inventory";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -351,14 +377,15 @@ namespace BroadcastComposerWeb.Controllers
             {
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryRatingsProcessingService>();
                 service.ResetJobStatusToQueued(jobId);
-                ViewBag.Message = "Job Status Set to Queued";
+                TempData["Message"] = "Job Status Set to Queued";
             }
             catch (Exception e)
             {
-                ViewBag.Message = "Error Resetting Job Status: " + e.Message;
+                TempData["Message"] = "Error Resetting Job Status: " + e.Message;
             }
 
-            return View("Index");
+            TempData["TabId"] = "inventory";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -368,14 +395,15 @@ namespace BroadcastComposerWeb.Controllers
             {
                 var service = _ApplicationServiceFactory.GetApplicationService<IScxGenerationService>();
                 service.ResetJobStatusToQueued(jobId);
-                ViewBag.Message = "Job Status Set to Queued";
+                TempData["Message"] = "Job Status Set to Queued";
             }
             catch (Exception e)
             {
-                ViewBag.Message = "Error Resetting Job Status: " + e.Message;
+                TempData["Message"] = "Error Resetting Job Status: " + e.Message;
             }
 
-            return View("Index");
+            TempData["TabId"] = "inventory";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -386,14 +414,16 @@ namespace BroadcastComposerWeb.Controllers
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
                 service.QueueAggregateInventorySummaryDataJob(inventorySourceId);
 
-                ViewBag.Message = $"Job queued for inventory source '{inventorySourceId}'.";
+                TempData["Message"] = $"Job queued for inventory source '{inventorySourceId}'.";
             }
             catch (Exception e)
             {
-                ViewBag.Message = "Error Processing Job: " + e.Message;
+                TempData["Message"] = "Error Processing Job: " + e.Message;
             }
 
-            return View("Index");
+
+            TempData["TabId"] = "inventory";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -406,22 +436,24 @@ namespace BroadcastComposerWeb.Controllers
                 var service = _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
                 var result = service.ForceCompletePlanPricingJob(jobId, userName);
 
-                ViewBag.Message = result;
+                TempData["Message"] = result;
             }
             catch (Exception e)
             {
-                ViewBag.Message = "Error Processing Job: " + e.Message;
+                TempData["Message"] = "Error Processing Job: " + e.Message;
             }
 
-            return View("Index");
+            TempData["TabId"] = "planning";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public ActionResult SwitchProcessRatingsAutomatically()
         {
             TemporalApplicationSettings.ProcessRatingsAutomatically = !TemporalApplicationSettings.ProcessRatingsAutomatically;
-            ViewBag.Message = $"ProcessRatingsAutomatically is set to {TemporalApplicationSettings.ProcessRatingsAutomatically}";
-            return View("Index");
+            TempData["Message"] = $"ProcessRatingsAutomatically is set to {TemporalApplicationSettings.ProcessRatingsAutomatically}";
+            TempData["TabId"] = "settings";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -433,7 +465,7 @@ namespace BroadcastComposerWeb.Controllers
                 var fileName = Path.GetFileName(file.FileName);
                 if (!fileName.EndsWith(".xlsx"))
                 {
-                    ViewBag.Message = "Only Excel (.xlsx) files supported";
+                    TempData["Message"] = "Only Excel (.xlsx) files supported";
                 }
                 else
                 {
@@ -441,16 +473,17 @@ namespace BroadcastComposerWeb.Controllers
                     {
                         var service = _ApplicationServiceFactory.GetApplicationService<IMarketService>();
                         service.LoadCoverages(file.InputStream, fileName, "maintenance controller", DateTime.Now);
-                        ViewBag.Message = "Market coverages file uploaded and processed successfully !";
+                        TempData["Message"] = "Market coverages file uploaded and processed successfully !";
                     }
                     catch(Exception ex)
                     {
-                        ViewBag.Message = ex.Message;
+                        TempData["Message"] = ex.Message;
                     }                                      
                 }
             }
 
-            return View("Index");
+            TempData["TabId"] = "reference_data";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -461,7 +494,7 @@ namespace BroadcastComposerWeb.Controllers
             {
                 if (!Path.GetFileName(file.FileName).EndsWith(".xlsx"))
                 {
-                    ViewBag.Message = "Only Excel (.xlsx) files supported";
+                    TempData["Message"] = "Only Excel (.xlsx) files supported";
                 }
                 else
                 {
@@ -475,16 +508,17 @@ namespace BroadcastComposerWeb.Controllers
                             .GetApplicationService<INtiUniverseService>()
                             .LoadUniverses(file.InputStream, userName, DateTime.Now);
 
-                        ViewBag.Message = "NTI universes file uploaded and processed successfully !";
+                        TempData["Message"] = "NTI universes file uploaded and processed successfully !";
                     }
                     catch (Exception ex)
                     {
-                        ViewBag.Message = ex.Message;
+                        TempData["Message"] = ex.Message;
                     }
                 }
             }
 
-            return View("Index");
+            TempData["TabId"] = "reference_data";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -492,8 +526,9 @@ namespace BroadcastComposerWeb.Controllers
         {
             var service = _ApplicationServiceFactory.GetApplicationService<IDaypartCleanupService>();
             var results = service.FilterErroneousDayparts();
-            ViewBag.DaypartCleanupMessage = JsonConvert.SerializeObject(results, Formatting.Indented);
-            return View("Index");
+            TempData["TextareaMessage"] = JsonConvert.SerializeObject(results, Formatting.Indented);
+            TempData["TabId"] = "reference_data";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -501,8 +536,9 @@ namespace BroadcastComposerWeb.Controllers
         {
             var service = _ApplicationServiceFactory.GetApplicationService<IDaypartCleanupService>();
             var results = service.RepairErroneousDayparts();
-            ViewBag.DaypartCleanupMessage = JsonConvert.SerializeObject(results, Formatting.Indented);
-            return View("Index");
+            TempData["TextareaMessage"] = JsonConvert.SerializeObject(results, Formatting.Indented);
+            TempData["TabId"] = "reference_data";
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -510,8 +546,9 @@ namespace BroadcastComposerWeb.Controllers
         {
             var service = _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
             var results = service.ReRunPricingJob(jobId);
-            ViewBag.Message = $"Reprocessed job {jobId} as job {results}";
-            return View("Index");
+            TempData["Message"] = $"Reprocessed job {jobId} as job {results}";
+            TempData["TabId"] = "planning";
+            return RedirectToAction("Index");
         }
     }
 }

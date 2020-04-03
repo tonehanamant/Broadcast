@@ -9,50 +9,22 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>View</title>
-    <script>
-        function copyToClip() {
-            var copyText = document.getElementById("divJSON");
-            /* Select the text field */
-            copyText.select();
-            /* Copy the text inside the text field */
-            document.execCommand("Copy");
 
-        };
-        var openTab = function (evt, tabId) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            };
-            tabEl = document.getElementById(tabId);
-            tabEl.style.display = "block";
-            tabEl.className += " active";
-            evt.currentTarget.className += " active";
-        }
-        var clickFirsLink = function () {
-            tablinks = document.getElementsByClassName("tablinks");
-            firstLink = tablinks[0]
-            if (firstLink) {
-                firstLink.click()
-            }
-        }
-        document.addEventListener("DOMContentLoaded", clickFirsLink);
-    </script>
     <style>
         body {
             font-family: Arial;
-            padding: 20px 0
+            padding: 0;
+            margin: 0;
         }
-
         /* Style the tab */
         .tab {
+            position: fixed;
             overflow: hidden;
             border: 1px solid #ccc;
-            background-color: #f1f1f1;
+            background-color: #eceeef;
+            width: 100%;
+            z-index: 100;
+            top: 0;
         }
 
             /* Style the buttons inside the tab */
@@ -82,8 +54,7 @@
         .tabcontent {
             display: none;
             padding: 6px 12px;
-            border: 1px solid #b3c0cb;
-            border-top: none;
+            margin-top: 75px;
         }
 
         .input-container {
@@ -115,7 +86,7 @@
             border: 0;
             font-weight: 500;
             font-size: 14px;
-            font-family: "MuseoSans";
+            font-family: Arial;
             line-height: 24px;
             color: #41515f;
             background: #fff;
@@ -135,7 +106,7 @@
             display: inline-block;
             font-weight: 600;
             font-size: 16px;
-            font-family: "MuseoSans";
+            font-family: Arial;
             line-height: 24px;
             color: #688197;
             margin-bottom: 4px;
@@ -154,7 +125,7 @@
             color: #fff;
             font-weight: 500;
             font-size: 14px;
-            font-family: "MuseoSans";
+            font-family: Arial;
             line-height: 24px;
             max-width: 800px;
         }
@@ -187,352 +158,416 @@
         .heading {
             font-weight: 600;
             font-size: 24px;
-            font-family: "MuseoSans";
+            font-family: Arial;
             color: #41515f;
         }
 
         .heading2 {
             font-weight: 600;
             font-size: 18px;
-            font-family: "MuseoSans";
+            font-family: Arial;
             color: #41515f;
         }
 
         .heading4 {
             font-weight: 600;
             font-size: 16px;
-            font-family: "MuseoSans";
+            font-family: Arial;
+            color: #41515f;
+        }
+        .message {
+            font-weight: 600;
+            font-size: 16px;
+            font-family: Arial;
+            color: #41515f;
+        }
+        .text-bar {
+            position: fixed;
+            background-color: #eceeef;
+            display: flex;
+            padding: 8px 16px;
+            width: 100%;
+            border: 1px solid transparent;
+            border-color: #41515f;
+            top: 50px;
+            font-weight: 500;
+            font-size: 16px;
+            font-family: Arial;
             color: #41515f;
         }
     </style>
 </head>
 <body>
+
     <div class="tab">
-        <button class="tablinks" name="inventory" onclick="openTab(event, 'inventory')">Inventory</button>
-        <button class="tablinks" name="program_guide" onclick="openTab(event, 'program_guide')">Program Guide</button>
-        <button class="tablinks" name="planning" onclick="openTab(event, 'planning')">Plannning</button>
-        <button class="tablinks" name="posting" onclick="openTab(event, 'posting')">Posting</button>
-        <button class="tablinks" name="reference_data" onclick="openTab(event, 'reference_data')">Reference Data</button>
-        <button class="tablinks" name="settings" onclick="openTab(event, 'settings')">Status & Configuration</button>
+        <button class="tablinks" id="inventory-tab" onclick="openTab('inventory')">Inventory</button>
+        <button class="tablinks" id="program_guide-tab" onclick="openTab('program_guide')">Program Guide</button>
+        <button class="tablinks" id="planning-tab" onclick="openTab('planning')">Plannning</button>
+        <button class="tablinks" id="posting-tab" onclick="openTab('posting')">Posting</button>
+        <button class="tablinks" id="reference_data-tab" onclick="openTab('reference_data')">Reference Data</button>
+        <button class="tablinks" id="settings-tab" onclick="openTab('settings')">Status & Configuration</button>
     </div>
-    <div id="inventory" class="tabcontent">
-        <div class="form">
-            <h1 class="heading">Jobs</h1>
-            @using (Html.BeginForm("RequeueInventoryRatingsJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="input-container-row">
-                    <input class="input" type="text" name="jobId" />
-                    <input class="button" type="submit" value="Requeue Ratings Job" id="submit" />
-                </div>
-            }
-            @using (Html.BeginForm("ResetRatingsJobStatus", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="input-container-row">
-                    <input class="input" type="text" name="jobId" />
-                    <input class="button" type="submit" value="Reset Ratings Job Status" id="submit" />
-                </div>
-
-            }
-            @using (Html.BeginForm("QueueInventorySourceAggregation", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="input-container-row">
-                    <input class="input" type="text" name="inventorySourceId" />
-                    <input class="button" type="submit" value="Queue Inventory Source Aggregation" id="submit" />
-                </div>
-
-            }
-            @using (Html.BeginForm("RequeueScxGenerationJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="input-container-row">
-                    <input class="input" type="text" name="jobId" />
-                    <input class="button" type="submit" value="Requeue SCX Generation Job" id="submit" />
-                </div>
-
-            }
-
-            @using (Html.BeginForm("ResetScxGenerationJobStatus", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="input-container-row">
-                    <input class="input" type="text" name="jobId" />
-                    <input class="button" type="submit" value="Reset SCX Generation Job Status" id="submit" />
-                </div>
-
-            }
+    @if (@ViewBag.Message != null)
+    {
+        <div id="text-bar" class="text-bar">
+            @ViewBag.Message
         </div>
-    </div>
-    <div id="program_guide" class="tabcontent">
-        <div class="form">
-            <h1 class="heading">Inventory Programs Processing</h1>
-            <div class="inner-form">
-                <h2 class="heading2">By File</h2>
-                @using (Html.BeginForm("QueInventoryProgramsJobByFileName", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    }
+    <content>
+        <div id="inventory" class="tabcontent">
+            <div class="form">
+                <h1 class="heading">Jobs</h1>
+                @using (Html.BeginForm("RequeueInventoryRatingsJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
-                    <div class="inner-form">
-                        <h4 class="heading4">Que Inventory Programs Job By File Name - By File Name</h4>
-                        <div class="input-container">
-                            <label class="label" for="fileName">FileName:</label>
-                            <input class="input" type="text" name="fileName" />
-                        </div>
-                        <input class="button" type="submit" value="Que Inventory Programs Job By File Name" id="submit" />
+                    <div class="input-container-row">
+                        <input class="input" type="text" name="jobId" />
+                        <input class="button" type="submit" value="Requeue Ratings Job" id="submit" />
                     </div>
                 }
-                @using (Html.BeginForm("QueueInventoryProgramsFileJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("ResetRatingsJobStatus", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
-                    <div class="inner-form">
-                        <h4 class="heading4">Queue Inventory Programs File Job - By File Id</h4>
-                        <div class="input-container">
-                            <label class="label" for="fileId">FileId:</label>
-                            <input class="input" type="text" name="fileId" />
-                        </div>
-                        <input class="button" type="submit" value="Queue Inventory Programs File Job" id="submit" />
+                    <div class="input-container-row">
+                        <input class="input" type="text" name="jobId" />
+                        <input class="button" type="submit" value="Reset Ratings Job Status" id="submit" />
                     </div>
+
                 }
-                @using (Html.BeginForm("RequeueInventoryProgramsByFileJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("QueueInventorySourceAggregation", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
-                    <div class="inner-form">
-                        <h4 class="heading4">Requeue Inventory Programs By File Job - By Job Id</h4>
-                        <div class="input-container">
-                            <label class="label" for="jobId">JobId:</label>
-                            <input class="input" type="text" name="jobId" />
-                        </div>
-                        <input class="button" type="submit" value="Requeue Inventory Programs By File Job" id="submit" />
+                    <div class="input-container-row">
+                        <input class="input" type="text" name="inventorySourceId" />
+                        <input class="button" type="submit" value="Queue Inventory Source Aggregation" id="submit" />
                     </div>
+
+                }
+                @using (Html.BeginForm("RequeueScxGenerationJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="input-container-row">
+                        <input class="input" type="text" name="jobId" />
+                        <input class="button" type="submit" value="Requeue SCX Generation Job" id="submit" />
+                    </div>
+
                 }
 
-            </div>
-            <div class="inner-form">
-                <h2 class="heading2">By Source</h2>
-                @using (Html.BeginForm("QueueInventoryProgramsSourceJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("ResetScxGenerationJobStatus", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
-                    <div class="inner-form">
-                        <h4 class="heading4">Queue Inventory Programs Source Job - By Source and Date Range</h4>
-                        <div class="input-container">
-                            <label class="label" for="inventorySourceId">Inventory Source Id:</label>
-                            <input class="input" type="text" name="inventorySourceId" />
-                        </div>
-                        <div class="input-container">
-                            <label class="label" for="startDateString">StartDate (yyyy-MM-dd):</label>
-                            <input class="input" type="text" name="startDateString" />
-                        </div>
-                        <div class="input-container">
-                            <label class="label" for="endDateString">EndDate (yyyy-MM-dd):</label>
-                            <input class="input" type="text" name="endDateString" />
-                        </div>
-                        <input class="button" type="submit" value="Queue Inventory Programs Source Job" id="submit" />
+                    <div class="input-container-row">
+                        <input class="input" type="text" name="jobId" />
+                        <input class="button" type="submit" value="Reset SCX Generation Job Status" id="submit" />
                     </div>
-                }
-                @using (Html.BeginForm("RequeueInventoryProgramsSourceJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    <div class="inner-form">
-                        <h4 class="heading4">Requeue Inventory Programs Source Job - By Job Id</h4>
-                        <div class="input-container">
-                            <label class="label" for="jobId">JobId:</label>
-                            <input class="input" type="text" name="jobId" />
-                        </div>
-                        <input class="button" type="submit" value="Requeue Inventory Programs Source Job" id="submit" />
-                    </div>
-                }
-                @using (Html.BeginForm("QueueProcessInventoryProgramsBySourceForWeeks", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    <div class="inner-form">
-                        <h4 class="heading4">Queue Inventory Programs By Source For Weeks - 2 weeks back and 3 weeks forward from the OrientByDate</h4>
-                        <div class="input-container">
-                            <label class="label" for="orientByDateString">OrientByDate (yyyy-MM-dd):</label>
-                            <input class="input" type="text" name="orientByDateString" />
-                        </div>
-                        <input class="button" type="submit" value="Queue Inventory Programs By Source For Weeks" id="submit" />
-                    </div>
-                }
 
-                @using (Html.BeginForm("QueueProcessInventoryProgramsBySourceJobUnprocessedBetweenDates", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    <div class="inner-form">
-                        <h4 class="heading4">Queue Inventory Programs By Source Job Unprocessed Between Dates - By Source and Date Range where the inventory is not yet processed.</h4>
-                        <div class="input-container">
-                            <label class="label" for="inventorySourceId">Inventory Source Id :</label>
-                            <input class="input" type="text" name="inventorySourceId" />
-                        </div>
-                        <div class="input-container">
-                            <label class="label" for="startDateString">StartDate (yyyy-MM-dd):</label>
-                            <input class="input" type="text" name="startDateString" />
-                        </div>
-                        <div class="input-container">
-                            <label class="label" for="endDateString">EndDate (yyyy-MM-dd):</label>
-                            <input class="input" type="text" name="endDateString" />
-                        </div>
-                        <input class="button" type="submit" value="Queue Inventory Programs By Source Job Unprocessed Between Dates" id="submit" />
-                    </div>
                 }
-
             </div>
         </div>
-    </div>
-    <div id="planning" class="tabcontent">
-        @using (Html.BeginForm("RerunPlanPricingJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
+        <div id="program_guide" class="tabcontent">
             <div class="form">
-                <h4 class="heading">Rerun Plan Pricing Job</h4>
-                <div class="input-container-row">
-                    <input class="input" type="text" name="jobId" />
-                    <input class="button" type="submit" value="Rerun Plan Pricing Job" id="submit" />
+                <h1 class="heading">Inventory Programs Processing</h1>
+                <div class="inner-form">
+                    <h2 class="heading2">By File</h2>
+                    @using (Html.BeginForm("QueInventoryProgramsJobByFileName", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="inner-form">
+                            <h4 class="heading4">Que Inventory Programs Job By File Name - By File Name</h4>
+                            <div class="input-container">
+                                <label class="label" for="fileName">FileName:</label>
+                                <input class="input" type="text" name="fileName" />
+                            </div>
+                            <input class="button" type="submit" value="Que Inventory Programs Job By File Name" id="submit" />
+                        </div>
+                    }
+                    @using (Html.BeginForm("QueueInventoryProgramsFileJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="inner-form">
+                            <h4 class="heading4">Queue Inventory Programs File Job - By File Id</h4>
+                            <div class="input-container">
+                                <label class="label" for="fileId">FileId:</label>
+                                <input class="input" type="text" name="fileId" />
+                            </div>
+                            <input class="button" type="submit" value="Queue Inventory Programs File Job" id="submit" />
+                        </div>
+                    }
+                    @using (Html.BeginForm("RequeueInventoryProgramsByFileJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="inner-form">
+                            <h4 class="heading4">Requeue Inventory Programs By File Job - By Job Id</h4>
+                            <div class="input-container">
+                                <label class="label" for="jobId">JobId:</label>
+                                <input class="input" type="text" name="jobId" />
+                            </div>
+                            <input class="button" type="submit" value="Requeue Inventory Programs By File Job" id="submit" />
+                        </div>
+                    }
+
+                </div>
+                <div class="inner-form">
+                    <h2 class="heading2">By Source</h2>
+                    @using (Html.BeginForm("QueueInventoryProgramsSourceJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="inner-form">
+                            <h4 class="heading4">Queue Inventory Programs Source Job - By Source and Date Range</h4>
+                            <div class="input-container">
+                                <label class="label" for="inventorySourceId">Inventory Source Id:</label>
+                                <input class="input" type="text" name="inventorySourceId" />
+                            </div>
+                            <div class="input-container">
+                                <label class="label" for="startDateString">StartDate (yyyy-MM-dd):</label>
+                                <input class="input" type="text" name="startDateString" />
+                            </div>
+                            <div class="input-container">
+                                <label class="label" for="endDateString">EndDate (yyyy-MM-dd):</label>
+                                <input class="input" type="text" name="endDateString" />
+                            </div>
+                            <input class="button" type="submit" value="Queue Inventory Programs Source Job" id="submit" />
+                        </div>
+                    }
+                    @using (Html.BeginForm("RequeueInventoryProgramsSourceJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="inner-form">
+                            <h4 class="heading4">Requeue Inventory Programs Source Job - By Job Id</h4>
+                            <div class="input-container">
+                                <label class="label" for="jobId">JobId:</label>
+                                <input class="input" type="text" name="jobId" />
+                            </div>
+                            <input class="button" type="submit" value="Requeue Inventory Programs Source Job" id="submit" />
+                        </div>
+                    }
+                    @using (Html.BeginForm("QueueProcessInventoryProgramsBySourceForWeeks", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="inner-form">
+                            <h4 class="heading4">Queue Inventory Programs By Source For Weeks - 2 weeks back and 3 weeks forward from the OrientByDate</h4>
+                            <div class="input-container">
+                                <label class="label" for="orientByDateString">OrientByDate (yyyy-MM-dd):</label>
+                                <input class="input" type="text" name="orientByDateString" />
+                            </div>
+                            <input class="button" type="submit" value="Queue Inventory Programs By Source For Weeks" id="submit" />
+                        </div>
+                    }
+
+                    @using (Html.BeginForm("QueueProcessInventoryProgramsBySourceJobUnprocessedBetweenDates", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="inner-form">
+                            <h4 class="heading4">Queue Inventory Programs By Source Job Unprocessed Between Dates - By Source and Date Range where the inventory is not yet processed.</h4>
+                            <div class="input-container">
+                                <label class="label" for="inventorySourceId">Inventory Source Id :</label>
+                                <input class="input" type="text" name="inventorySourceId" />
+                            </div>
+                            <div class="input-container">
+                                <label class="label" for="startDateString">StartDate (yyyy-MM-dd):</label>
+                                <input class="input" type="text" name="startDateString" />
+                            </div>
+                            <div class="input-container">
+                                <label class="label" for="endDateString">EndDate (yyyy-MM-dd):</label>
+                                <input class="input" type="text" name="endDateString" />
+                            </div>
+                            <input class="button" type="submit" value="Queue Inventory Programs By Source Job Unprocessed Between Dates" id="submit" />
+                        </div>
+                    }
+
                 </div>
             </div>
-        }
-
-        @using (Html.BeginForm("ForceCompletePlanPricingJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            <div class="form">
-                <h4 class="heading">Force Complete Plan Pricing Job</h4>
-                <div class="input-container-row">
-                    <input class="input" type="text" name="jobId" />
-                    <input class="button" type="submit" value="Force complete a Plan Pricing Job" id="submit" />
+        </div>
+        <div id="planning" class="tabcontent">
+            @using (Html.BeginForm("RerunPlanPricingJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h4 class="heading">Rerun Plan Pricing Job</h4>
+                    <div class="input-container-row">
+                        <input class="input" type="text" name="jobId" />
+                        <input class="button" type="submit" value="Rerun Plan Pricing Job" id="submit" />
+                    </div>
                 </div>
-            </div>
-        }
-    </div>
-
-    <div id="posting" class="tabcontent">
-        <form class="form" action="" method="post" enctype="multipart/form-data">
-            <h1 class="heading">Processing affidavit files</h1>
-            <div class="input-container">
-                <label class="label" for="file">Filename:</label>
-                <input class="input" type="file" name="file" id="file" />
-            </div>
-            <input class="button" type="submit" text="generate JSON" />
-            <a href="javascript:copyToClip();">Copy to Clipboard</a>
-            @{
-                var IdValue = "";
-                if (ViewBag.Id != null)
-                {
-                    IdValue = "Uploaded AffidavidID = " + ViewBag.Id + "";
-                }
             }
-            @IdValue
-            <div class="input-container">
-                <div class="label">Results:</div>
-                <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>
-            </div>
-        </form>
-    </div>
-    <div id="reference_data" class="tabcontent">
-        @using (Html.BeginForm("UploadNTIUniversesFile", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            <div class="form">
-                <h1 class="heading">Upload NTI Universes</h1>
+
+            @using (Html.BeginForm("ForceCompletePlanPricingJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h4 class="heading">Force Complete Plan Pricing Job</h4>
+                    <div class="input-container-row">
+                        <input class="input" type="text" name="jobId" />
+                        <input class="button" type="submit" value="Force complete a Plan Pricing Job" id="submit" />
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div id="posting" class="tabcontent">
+            <form class="form" action="" method="post" enctype="multipart/form-data">
+                <h1 class="heading">Processing affidavit files</h1>
                 <div class="input-container">
                     <label class="label" for="file">Filename:</label>
                     <input class="input" type="file" name="file" id="file" />
                 </div>
-                <input class="button" type="submit" text="Upload NTI Universes" />
-                <div>
-                    <span class="label">Result:</span>
-                    <label class="label" id="result_nti_universes">@ViewBag.Message</label>
-                </div>
-            </div>
-        }
-        @using (Html.BeginForm("UploadMarketCoverageFile", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            <div class="form">
-                <h1 class="heading">Upload Market Coverages</h1>
+                <input class="button" type="submit" text="generate JSON" />
+                <a href="javascript:copyToClip();">Copy to Clipboard</a>
+                @{
+                    var IdValue = "";
+                    if (ViewBag.Id != null)
+                    {
+                        IdValue = "Uploaded AffidavidID = " + ViewBag.Id + "";
+                    }
+                }
+                @IdValue
                 <div class="input-container">
-                    <label class="label" for="file">Filename:</label>
-                    <input class="input" type="file" name="file" id="file" />
+                    <div class="label">Results:</div>
+                    <textarea class="input" rows="5" id="divJSON">@ViewBag.TextareaMessage</textarea>
                 </div>
-                <input class="button" type="submit" text="Upload Market Coverages" />
-                <div>
-                    <span class="label">Result:</span>
-                    <label class="label" id="result_market_coverages">@ViewBag.Message</label>
-                </div>
-            </div>
-
-        }
-
-        @using (Html.BeginForm("ImportStationMappings", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            <div class="form">
-                <h1 class="heading">Import station mappings</h1>
-                <div class="input-container">
-                    <label class="label" for="file">Filename:</label>
-                    <input class="input" type="file" name="file" id="file" />
-                </div>
-                <input class="button" type="submit" value="Submit" id="txt Import Station Mappings" />
-                <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>
-            </div>
-        }
-        <div class="form">
-            <h1 class="heading">Cleanup Dayparts</h1>
-            @using (Html.BeginForm("CleanupDaypartsFilterErroneousDayparts", "Maintenance", FormMethod.Post))
-            {
-                <div class="input-container">
-                    <input class="button" type="submit" value="Show erroneous dayparts" id="submit" />
-                </div>
-            }
-            @using (Html.BeginForm("CleanupDaypartsRepairErroneousDayparts", "Maintenance", FormMethod.Post))
-            {
-                <div class="input-container">
-                    <input class="button" type="submit" value="Repair erroneous dayparts" id="submit" />
-                </div>
-            }
-            <div class="input-container">
-                <span class="label">Results:</span>
-                <textarea class="input" rows="5" id="divCleanupJSON">@ViewBag.DaypartCleanupMessage</textarea>
-            </div>
+            </form>
         </div>
+        <div id="reference_data" class="tabcontent">
+            @using (Html.BeginForm("UploadNTIUniversesFile", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h1 class="heading">Upload NTI Universes</h1>
+                    <div class="input-container">
+                        <label class="label" for="file">Filename:</label>
+                        <input class="input" type="file" name="file" id="file" />
+                    </div>
+                    <input class="button" type="submit" text="Upload NTI Universes" />
+                    <div>
+                        <span class="label">Result:</span>
+                        <label class="label" id="result_nti_universes">@ViewBag.Message</label>
+                    </div>
+                </div>
+            }
+            @using (Html.BeginForm("UploadMarketCoverageFile", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h1 class="heading">Upload Market Coverages</h1>
+                    <div class="input-container">
+                        <label class="label" for="file">Filename:</label>
+                        <input class="input" type="file" name="file" id="file" />
+                    </div>
+                    <input class="button" type="submit" text="Upload Market Coverages" />
+                    <div>
+                        <span class="label">Result:</span>
+                        <label class="label" id="result_market_coverages">@ViewBag.Message</label>
+                    </div>
+                </div>
 
-        @using (Html.BeginForm("ImportInventoryProgramsResults", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            <div class="form">
-                <h2 class="heading">Import Inventory Programs Results File</h2>
-                <div class="input-container">
-                    <label class="label" for="file">Filename:</label>
-                    <input class="input" type="file" name="file" id="file" />
-                </div>
-                <input class="button" type="submit" value="Submit" id="txt Inventory Programs Results" />
-                <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>
-            </div>
-        }
-    </div>
-    <div id="settings" class="tabcontent">
-        <div class="form">
-            <h1 class="heading">Testing Services</h1>
-            @using (Html.BeginForm("TestFtpAccess", "Maintenance", FormMethod.Get))
-            {
-                <div class="input-container">
-                    <input class="button" type="submit" value="Test FTP" id="txtTestFtpAccess" />
-                </div>
-            }
-            @using (Html.BeginForm("TestEmail", "Maintenance", FormMethod.Post))
-            {
-                <div class="input-container">
-                    <input class="button" type="submit" value="Test Email" id="test_email" />
-                </div>
-            }
-        </div>
-        @using (Html.BeginForm("SwitchProcessRatingsAutomatically", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            <div class="form">
-                <h1 class="heading">Temporal Application Settings</h1>
-                <input class="button" type="submit" value="Switch Process Ratings Automatically flag" id="submit" />
-            </div>
-        }
-        <div class="form">
-            <h1 class="heading">Cache Management</h1>
-            @using (Html.BeginForm("ClearCache", "Maintenance", FormMethod.Post))
-            {
-                <div class="input-container">
-                    <input class="button" type="submit" value="Clear System Param Cache" id="txtClearCache" />
-                </div>
             }
 
-            @using (Html.BeginForm("ClearMediaMonthCrunchCache", "Maintenance", FormMethod.Post))
+            @using (Html.BeginForm("ImportStationMappings", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
+                <div class="form">
+                    <h1 class="heading">Import station mappings</h1>
+                    <div class="input-container">
+                        <label class="label" for="file">Filename:</label>
+                        <input class="input" type="file" name="file" id="file" />
+                    </div>
+                    <input class="button" type="submit" value="Submit" id="txt Import Station Mappings" />
+                    <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>
+                </div>
+            }
+            <div class="form">
+                <h1 class="heading">Cleanup Dayparts</h1>
+                @using (Html.BeginForm("CleanupDaypartsFilterErroneousDayparts", "Maintenance", FormMethod.Post))
+                {
+                    <div class="input-container">
+                        <input class="button" type="submit" value="Show erroneous dayparts" id="submit" />
+                    </div>
+                }
+                @using (Html.BeginForm("CleanupDaypartsRepairErroneousDayparts", "Maintenance", FormMethod.Post))
+                {
+                    <div class="input-container">
+                        <input class="button" type="submit" value="Repair erroneous dayparts" id="submit" />
+                    </div>
+                }
                 <div class="input-container">
-                    <input class="button" type="submit" value="Clear Media Month Crunch Cache" id="txtClearMediaMonthCrunchCache" />
+                    <span class="label">Results:</span>
+                    <textarea class="input" rows="5" id="divCleanupJSON">@ViewBag.TextareaMessage</textarea>
+                </div>
+            </div>
+
+            @using (Html.BeginForm("ImportInventoryProgramsResults", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h2 class="heading">Import Inventory Programs Results File</h2>
+                    <div class="input-container">
+                        <label class="label" for="file">Filename:</label>
+                        <input class="input" type="file" name="file" id="file" />
+                    </div>
+                    <input class="button" type="submit" value="Submit" id="txt Inventory Programs Results" />
+                    <textarea class="input" rows="5" id="divJSON">@ViewBag.TextareaMessage</textarea>
                 </div>
             }
         </div>
-    </div>
+        <div id="settings" class="tabcontent">
+            <div class="form">
+                <h1 class="heading">Testing Services</h1>
+                @using (Html.BeginForm("TestFtpAccess", "Maintenance", FormMethod.Get))
+                {
+                    <div class="input-container">
+                        <input class="button" type="submit" value="Test FTP" id="txtTestFtpAccess" />
+                    </div>
+                }
+                @using (Html.BeginForm("TestEmail", "Maintenance", FormMethod.Post))
+                {
+                    <div class="input-container">
+                        <input class="button" type="submit" value="Test Email" id="test_email" />
+                    </div>
+                }
+            </div>
+            @using (Html.BeginForm("SwitchProcessRatingsAutomatically", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h1 class="heading">Temporal Application Settings</h1>
+                    <input class="button" type="submit" value="Switch Process Ratings Automatically flag" id="submit" />
+                </div>
+            }
+            <div class="form">
+                <h1 class="heading">Cache Management</h1>
+                @using (Html.BeginForm("ClearCache", "Maintenance", FormMethod.Post))
+                {
+                    <div class="input-container">
+                        <input class="button" type="submit" value="Clear System Param Cache" id="txtClearCache" />
+                    </div>
+                }
 
+                @using (Html.BeginForm("ClearMediaMonthCrunchCache", "Maintenance", FormMethod.Post))
+                {
+                    <div class="input-container">
+                        <input class="button" type="submit" value="Clear Media Month Crunch Cache" id="txtClearMediaMonthCrunchCache" />
+                    </div>
+                }
+            </div>
+        </div>
+    </content>
+    <script>
+        function copyToClip() {
+            var copyText = document.getElementById("divJSON");
+            /* Select the text field */
+            copyText.select();
+            /* Copy the text inside the text field */
+            document.execCommand("Copy");
+
+        };
+        var openTab = function (tabId) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            };
+            tabEl = document.getElementById(tabId);
+            tabEl.style.display = "block";
+            tabEl.className += " active";
+            tabLink = document.getElementById(tabId + "-tab");
+            tabLink.className += " active";
+        }
+        var clickLink = function () {
+            var tab = "@ViewBag.TabId"
+            if (tab) {
+                openTab(tab)
+            } else {
+                openTab('inventory')
+            }
+
+        }
+        document.addEventListener("DOMContentLoaded", clickLink);
+    </script>
 
 </body>
 </html>
