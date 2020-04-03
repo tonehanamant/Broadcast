@@ -448,10 +448,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(1, processInventoryProgramsBySourceJobCalled.Count);
             Assert.AreEqual(jobId, processInventoryProgramsBySourceJobCalled.First());
             Assert.AreEqual(1, getJobCalled);
-            Assert.AreEqual(1, emailQuickSendCalled.Count);
-            Assert.AreEqual(MailPriority.High, emailQuickSendCalled[0].pPriority);
-            Assert.IsTrue(emailQuickSendCalled[0].pSubject.Contains("with Errors"));
-            Assert.IsTrue(emailQuickSendCalled[0].pBody.Contains("TestErrorMessage"));
+            // PRI-25264 : disabling sending the email
+            Assert.AreEqual(0, emailQuickSendCalled.Count);
+            //Assert.AreEqual(MailPriority.High, emailQuickSendCalled[0].pPriority);
+            //Assert.IsTrue(emailQuickSendCalled[0].pSubject.Contains("with Errors"));
+            //Assert.IsTrue(emailQuickSendCalled[0].pBody.Contains("TestErrorMessage"));
         }
 
         [Test]

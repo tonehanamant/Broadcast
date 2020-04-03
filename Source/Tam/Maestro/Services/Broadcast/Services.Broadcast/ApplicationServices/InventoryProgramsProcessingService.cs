@@ -330,11 +330,9 @@ namespace Services.Broadcast.ApplicationServices
                 throw new InvalidOperationException($"Failed to send notification email.  Email addresses are not configured correctly.");
             }
 
-            // PRI-25264 : disabling sending the email, except for error.
-            if (job.Status == InventoryProgramsJobStatus.Error)
-            {
-                _EmailerService.QuickSend(false, body.ToString(), subject, priority, toEmails);
-            }
+            // PRI-25264 : disabling sending the email
+            // the engine will send on error
+            //_EmailerService.QuickSend(false, body.ToString(), subject, priority, toEmails);
         }
 
         protected virtual DateTime _GetDateTimeNow()

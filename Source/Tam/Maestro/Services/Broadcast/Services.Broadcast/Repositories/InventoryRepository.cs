@@ -530,20 +530,6 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        private station_inventory_manifest _PruneManifestWeeks(station_inventory_manifest manifest, List<int> keepWeekIds)
-        {
-            var weeksToKeep = new List<station_inventory_manifest_weeks>();
-            foreach (var week in manifest.station_inventory_manifest_weeks)
-            {
-                if (keepWeekIds.Contains(week.media_week_id))
-                {
-                    weeksToKeep.Add(week);
-                }
-            }
-            manifest.station_inventory_manifest_weeks = weeksToKeep;
-            return manifest;
-        }
-
         private StationInventoryGroup _MapToInventoryGroup(station_inventory_group stationInventoryGroup)
         {
             var headerDaypartCode = stationInventoryGroup.station_inventory_manifest.FirstOrDefault().inventory_files.inventory_file_proprietary_header.FirstOrDefault().daypart_defaults.code;
@@ -631,6 +617,53 @@ namespace Services.Broadcast.Repositories
                                     SpotLengthId = r.spot_length_id
                                 }).ToList(),
                 ManifestWeeks = manifest.station_inventory_manifest_weeks
+                                .Select(_MapToInventoryManifestWeek)
+                                .OrderBy(x => x.Id)
+                                .ToList()
+            };
+
+            if (manifest.station != null)
+            {
+                result.Station = new DisplayBroadcastStation()
+                {
+                    Id = manifest.station.id,
+                    Affiliation = manifest.station.affiliation,
+                    Code = manifest.station.station_code,
+                    CallLetters = manifest.station.station_call_letters,
+                    LegacyCallLetters = manifest.station.legacy_call_letters,
+                    MarketCode = manifest.station.market_code
+                };
+            }
+
+            return result;
+        }
+
+        private StationInventoryManifest _MapToInventoryManifestForProgramsProcessing(station_inventory_manifest manifest, List<int> mediaWeekIds)
+        {
+            var result = new StationInventoryManifest()
+            {
+                Id = manifest.id,
+                InventorySourceId = manifest.inventory_source_id,
+                DaypartCode = null,
+                SpotLengthId = manifest.spot_length_id,
+                SpotsPerWeek = manifest.spots_per_week,
+                SpotsPerDay = manifest.spots_per_day,
+                Comment = manifest.comment,
+                InventoryFileId = manifest.file_id,
+                ManifestDayparts = manifest.station_inventory_manifest_dayparts.Select(md => new StationInventoryManifestDaypart()
+                {
+                    Id = md.id,
+                    Daypart = DaypartCache.Instance.GetDisplayDaypart(md.daypart_id),
+                    ProgramName = md.program_name,
+                    DaypartDefault = md.daypart_defaults == null ? null : new DaypartDefaultDto
+                    {
+                        Id = md.daypart_defaults.id,
+                        Code = md.daypart_defaults.code,
+                        FullName = md.daypart_defaults.name
+                    }
+                }).ToList(),
+                ManifestWeeks = manifest.station_inventory_manifest_weeks
+                                .Where(w => mediaWeekIds.Contains(w.media_week_id))
                                 .Select(_MapToInventoryManifestWeek)
                                 .OrderBy(x => x.Id)
                                 .ToList()
@@ -1640,7 +1673,8 @@ namespace Services.Broadcast.Repositories
                                m.station_inventory_manifest_dayparts.Any()
                          select m).ToList();
 
-                    var manifestDtos = manifests.Select(x => _MapToInventoryManifest(_PruneManifestWeeks(x, mediaWeekIds))).ToList();
+                    var manifestDtos = manifests.Select(x => _MapToInventoryManifestForProgramsProcessing(x, mediaWeekIds)).ToList();
+
                     return manifestDtos;
                 });
         }
@@ -1665,7 +1699,7 @@ namespace Services.Broadcast.Repositories
                                m.station_inventory_manifest_dayparts.Any(d => d.station_inventory_manifest_daypart_programs.Any()) == false
                          select m).ToList();
 
-                    var manifestDtos = manifests.Select(x => _MapToInventoryManifest(_PruneManifestWeeks(x, mediaWeekIds))).ToList();
+                    var manifestDtos = manifests.Select(x => _MapToInventoryManifestForProgramsProcessing(x, mediaWeekIds)).ToList();
                     return manifestDtos;
                 });
         }

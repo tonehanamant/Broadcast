@@ -526,8 +526,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 throw new InvalidOperationException($"Failed to send notification email.  Email addresses are not configured correctly.");
             }
 
-            // PRI-25264 : disabling sending the email
-            //_EmailerService.QuickSend(false, body, subject, priority, toEmails);
+            _EmailerService.QuickSend(false, body, subject, priority, toEmails);
         }
 
         private void _ReportExportFileFailed(int jobId)

@@ -881,18 +881,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             // verify no file was exported
             Assert.AreEqual(0, createdFiles.Count);
 
-            // emails disabled PRI-25264
             // verify that the email was sent
-            Assert.AreEqual(0, emailsSent.Count);
-            //var body = emailsSent[0].Item1;
-            //Assert.IsTrue(body.Contains("A ProgramGuide Interface file was not exported because no inventory was found to process."));
-            //Assert.IsTrue(body.Contains("Inventory Source : NumberOneSource"));
-            //Assert.IsTrue(body.Contains("Range Start Date : 2020-01-01"));
-            //Assert.IsTrue(body.Contains("Range End Date : 2020-01-21"));
+            Assert.AreEqual(1, emailsSent.Count);
+            var body = emailsSent[0].Item1;
+            Assert.IsTrue(body.Contains("A ProgramGuide Interface file was not exported because no inventory was found to process."));
+            Assert.IsTrue(body.Contains("Inventory Source : NumberOneSource"));
+            Assert.IsTrue(body.Contains("Range Start Date : 2020-01-01"));
+            Assert.IsTrue(body.Contains("Range End Date : 2020-01-21"));
 
-            //Assert.AreEqual("Broadcast Inventory Programs - No inventory to process.", emailsSent[0].Item2);
-            //Assert.AreEqual(MailPriority.Normal, emailsSent[0].Item3);
-            //Assert.IsTrue(emailsSent[0].Item4.Any());
+            Assert.AreEqual("Broadcast Inventory Programs - No inventory to process.", emailsSent[0].Item2);
+            Assert.AreEqual(MailPriority.Normal, emailsSent[0].Item3);
+            Assert.IsTrue(emailsSent[0].Item4.Any());
         }
 
         [Test]
