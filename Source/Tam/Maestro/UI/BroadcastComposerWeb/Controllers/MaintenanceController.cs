@@ -144,7 +144,7 @@ namespace BroadcastComposerWeb.Controllers
                 }
             }
 
-            TempData["TabId"] = "reference_data";
+            TempData["TabId"] = "program_guide";
             return RedirectToAction("Index");
         }
 

@@ -363,9 +363,21 @@
                         </div>
                     }
 
+                    @using (Html.BeginForm("ImportInventoryProgramsResults", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="inner-form">
+                            <h2 class="heading">Import Inventory Programs Results File</h2>
+                            <div class="input-container">
+                                <label class="label" for="file">Filename:</label>
+                                <input class="input" type="file" name="file" id="file" />
+                            </div>
+                            <input class="button" type="submit" value="Submit" id="txt Inventory Programs Results" />
+                            <textarea class="input" rows="5" id="divJSON">@ViewBag.TextareaMessage</textarea>
+                        </div>
+                    }
                 </div>
             </div>
-        </div>
+       </div>
         <div id="planning" class="tabcontent">
             @using (Html.BeginForm("RerunPlanPricingJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
@@ -478,18 +490,6 @@
                 </div>
             </div>
 
-            @using (Html.BeginForm("ImportInventoryProgramsResults", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="form">
-                    <h2 class="heading">Import Inventory Programs Results File</h2>
-                    <div class="input-container">
-                        <label class="label" for="file">Filename:</label>
-                        <input class="input" type="file" name="file" id="file" />
-                    </div>
-                    <input class="button" type="submit" value="Submit" id="txt Inventory Programs Results" />
-                    <textarea class="input" rows="5" id="divJSON">@ViewBag.TextareaMessage</textarea>
-                </div>
-            }
         </div>
         <div id="settings" class="tabcontent">
             <div class="form">
