@@ -5,7 +5,7 @@
   "AllocationByDaypartViewRows": [
     {
       "FilterLabel": "LN",
-      "Weight": 0.28
+      "Weight": 0.48
     },
     {
       "FilterLabel": "EM",
@@ -19,7 +19,7 @@
   "AllocationByDMAViewRows": [
     {
       "FilterLabel": "NEW YORK",
-      "Weight": 0.28
+      "Weight": 0.48
     },
     {
       "FilterLabel": "MACON",
@@ -33,7 +33,7 @@
   "AllocationByGenreViewRows": [
     {
       "FilterLabel": "",
-      "Weight": 0.2
+      "Weight": 0.4
     },
     {
       "FilterLabel": "MOVIE",
@@ -52,7 +52,7 @@
       "NoOfMarkets": 1,
       "NoOfStations": 1,
       "Program": "FALLBACK PROGRAM",
-      "Weight": 0.2
+      "Weight": 0.4
     },
     {
       "Genre": "NEWS",

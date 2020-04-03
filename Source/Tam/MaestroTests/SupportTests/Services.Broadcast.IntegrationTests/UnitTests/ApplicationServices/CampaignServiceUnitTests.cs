@@ -1153,7 +1153,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpots(firstPlanId), Times.Once);
             _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
 
-            var passedManifestIds = new List<int> { 10, 20, 30, 40, 50, 60 };
+            var passedManifestIds = new List<int> { 10, 20, 30, 40, 50, 60, 70 };
             _InventoryRepositoryMock.Verify(x => x.GetStationInventoryManifestsByIds(
                 It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestIds))), 
                 Times.Once);
@@ -1242,7 +1242,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpots(firstPlanId), Times.Once);
             _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
 
-            var passedManifestIds = new List<int> { 10, 20, 30, 40, 50, 60 };
+            var passedManifestIds = new List<int> { 10, 20, 30, 40, 50, 60, 70 };
             _InventoryRepositoryMock.Verify(x => x.GetStationInventoryManifestsByIds(
                 It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestIds))),
                 Times.Once);
@@ -1331,7 +1331,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpots(firstPlanId), Times.Once);
             _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
 
-            var passedManifestIds = new List<int> { 10, 20, 30, 40, 50, 60 };
+            var passedManifestIds = new List<int> { 10, 20, 30, 40, 50, 60, 70 };
             _InventoryRepositoryMock.Verify(x => x.GetStationInventoryManifestsByIds(
                 It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestIds))),
                 Times.Once);
@@ -1828,6 +1828,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                     Spots = 5,
                     Impressions = 10
+                },
+                new PlanPricingAllocatedSpot
+                {
+                    StationInventoryManifestId = 70,
+                    StandardDaypart = new DaypartDefaultDto
+                    {
+                        Id = 60001,
+                        Code = "LN"
+                    },
+                    Spots = 5,
+                    Impressions = 10
                 }
             };
         }
@@ -2036,6 +2047,32 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     new StationInventoryManifest
                     {
                         Id = 60,
+                        Station = new DisplayBroadcastStation
+                        {
+                            MarketCode = 200,
+                            LegacyCallLetters = "WTTV",
+                            Affiliation = "CBS"
+                        },
+                        ManifestDayparts = new List<StationInventoryManifestDaypart>
+                        {
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 6001,
+                                ProgramName = "Fallback program",
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 60001,
+                                    StartTime = 200,
+                                    EndTime = 299,
+                                    Wednesday = true,
+                                    Thursday = true
+                                }
+                            }
+                        }
+                    },
+                    new StationInventoryManifest
+                    {
+                        Id = 70,
                         Station = new DisplayBroadcastStation
                         {
                             MarketCode = 200,

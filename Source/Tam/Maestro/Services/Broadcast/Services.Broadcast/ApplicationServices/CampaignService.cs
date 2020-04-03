@@ -690,7 +690,7 @@ namespace Services.Broadcast.ApplicationServices
                 .Where(x => x.Station != null && x.Station.MarketCode.HasValue)
                 .ToList();
             var marketCoverages = _MarketCoverageRepository.GetLatestMarketCoveragesWithStations();
-            var manifestDaypartIds = manifests.SelectMany(x => x.ManifestDayparts).Select(x => x.Id.Value);
+            var manifestDaypartIds = manifests.SelectMany(x => x.ManifestDayparts).Select(x => x.Id.Value).Distinct();
             var primaryProgramsByManifestDaypartIds = _StationProgramRepository.GetPrimaryProgramsForManifestDayparts(manifestDaypartIds);
             
             return new ProgramLineupReportData(

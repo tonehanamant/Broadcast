@@ -150,7 +150,30 @@ namespace Services.Broadcast.Entities.Campaign
                 dataRows.Add(row);
             }
 
-            return dataRows.Distinct(new DetailedViewRowDataComparer());
+            // Handles the case when two manifests have the same station, market, etc but different weeks 
+            // and we have spots allocated to both of them
+            var result = dataRows
+                .GroupBy(x => new
+                {
+                    x.Rank,
+                    x.MarketGeographyName,
+                    x.StationLegacyCallLetters,
+                    x.StationAffiliation,
+                    Day = x.Daypart.ToDayString(),
+                    Time = x.Daypart.ToTimeString(),
+                    x.ProgramName,
+                    x.Genre,
+                    x.DaypartCode
+                })
+                .Select(grouping =>
+                {
+                    var first = grouping.First();
+                    first.TotalSpotsImpressions = grouping.Sum(x => x.TotalSpotsImpressions);
+                    return first;
+                })
+                .ToList();
+
+            return result;
         }
 
         private List<DetailedViewRowDisplay> _MapToDetailedViewRows(IEnumerable<DetailedViewRowData> dataRows)
@@ -341,29 +364,6 @@ namespace Services.Broadcast.Entities.Campaign
             public string Genre { get; set; }
             public string DaypartCode { get; set; }
             public double TotalSpotsImpressions { get; set; }
-        }
-
-        private class DetailedViewRowDataComparer : IEqualityComparer<DetailedViewRowData>
-        {
-            public bool Equals(DetailedViewRowData x, DetailedViewRowData y)
-            {
-                return x.Rank == y.Rank
-                    && x.MarketGeographyName.Equals(y.MarketGeographyName)
-                    && x.StationLegacyCallLetters.Equals(y.StationLegacyCallLetters)
-                    && x.StationAffiliation.Equals(y.StationAffiliation)
-                    && x.Daypart.ToDayString().Equals(y.Daypart.ToDayString())
-                    && x.Daypart.ToTimeString().Equals(y.Daypart.ToTimeString())
-                    && x.ProgramName.Equals(y.ProgramName)
-                    && x.Genre.Equals(y.Genre)
-                    && x.DaypartCode.Equals(y.DaypartCode);
-            }
-
-            public int GetHashCode(DetailedViewRowData obj)
-            {
-                return $@"{obj.Rank}{obj.MarketGeographyName}{obj.StationLegacyCallLetters}{obj.StationAffiliation}
-                            {obj.Daypart.ToDayString()}{obj.Daypart.ToTimeString()}{obj.ProgramName}
-                            {obj.Genre}{obj.DaypartCode}".GetHashCode();
-            }
         }
     }
 }
