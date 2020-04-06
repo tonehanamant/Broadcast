@@ -98,13 +98,6 @@
     "FullName": "Prime"
   },
   {
-    "Code": "ROSN",
-    "DaypartType": 1,
-    "DefaultEndTimeSeconds": 300,
-    "DefaultStartTimeSeconds": 14400,
-    "FullName": "ROS News"
-  },
-  {
     "Code": "ROSP",
     "DaypartType": 2,
     "DefaultEndTimeSeconds": 7500,

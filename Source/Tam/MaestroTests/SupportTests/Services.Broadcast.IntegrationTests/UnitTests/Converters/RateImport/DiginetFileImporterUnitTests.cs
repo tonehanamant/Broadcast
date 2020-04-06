@@ -351,7 +351,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
                 new DaypartDefaultDto { Id = 15, Code = "AMN", FullName = "AM News"},
                 new DaypartDefaultDto { Id = 16, Code = "PMN", FullName = "PM News"},
                 new DaypartDefaultDto { Id = 17, Code = "TDN", FullName = "Total Day News"},
-                new DaypartDefaultDto { Id = 18, Code = "ROSN", FullName = "ROS News"},
                 new DaypartDefaultDto { Id = 19, Code = "ROSS", FullName = "ROS Syndication"},
                 new DaypartDefaultDto { Id = 20, Code = "SPORTS", FullName = "ROS Sports"},
                 new DaypartDefaultDto { Id = 21, Code = "ROSP", FullName = "ROS Programming"},

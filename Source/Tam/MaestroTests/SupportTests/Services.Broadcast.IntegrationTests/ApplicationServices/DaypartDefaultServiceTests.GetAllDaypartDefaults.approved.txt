@@ -56,10 +56,6 @@
     "FullName": "Prime"
   },
   {
-    "Code": "ROSN",
-    "FullName": "ROS News"
-  },
-  {
     "Code": "ROSP",
     "FullName": "ROS Programming"
   },
