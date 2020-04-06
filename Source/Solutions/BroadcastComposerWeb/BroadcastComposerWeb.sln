@@ -69,6 +69,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BroadcastJobScheduler", "..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BroadcastLogging", "..\..\Tam\Maestro\BroadcastLogging\BroadcastLogging.csproj", "{0C5E321F-B0A7-4A91-8E01-174386AF40A3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Powershell", "Powershell", "{B7BD734A-111A-486E-B613-7EBE65A8DE1F}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Powershell\Broadcast.ps1 = ..\..\Powershell\Broadcast.ps1
+		..\..\Powershell\ChopCsvFiles.ps1 = ..\..\Powershell\ChopCsvFiles.ps1
+		..\..\Powershell\CombineCsvFiles.ps1 = ..\..\Powershell\CombineCsvFiles.ps1
+		..\..\Powershell\Copy-AppSettings.ps1 = ..\..\Powershell\Copy-AppSettings.ps1
+		..\..\Powershell\Shutdown-Maestro.ps1 = ..\..\Powershell\Shutdown-Maestro.ps1
+		..\..\Powershell\Start-MaestroServices.ps1 = ..\..\Powershell\Start-MaestroServices.ps1
+		..\..\Powershell\Start-MaestroServicesOnDeck.ps1 = ..\..\Powershell\Start-MaestroServicesOnDeck.ps1
+		..\..\Powershell\Update-AssemblyInfoVersionFiles.ps1 = ..\..\Powershell\Update-AssemblyInfoVersionFiles.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		BroadcastComposerWeb|Any CPU = BroadcastComposerWeb|Any CPU
