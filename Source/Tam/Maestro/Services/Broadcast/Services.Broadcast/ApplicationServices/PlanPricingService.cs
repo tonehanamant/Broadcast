@@ -11,6 +11,7 @@ using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.PlanPricing;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
+using Services.Broadcast.ReportGenerators.PricingResults;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,15 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="jobId">The id of the job to rerun.</param>
         /// <returns>The new JobId</returns>
         int ReRunPricingJob(int jobId);
+
+        /// <summary>
+        /// Generate a pricing results report for the chosen plan and version
+        /// </summary>
+        /// <param name="planId">The plan id</param>
+        /// <param name="planVersionNumber">The plan version number</param>
+        /// <param name="templatesFilePath">Base path of the file templates</param>
+        /// <returns>ReportOutput which contains filename and MemoryStream which actually contains report data</returns>
+        ReportOutput GeneratePricingResultsReport(int planId, int? planVersionNumber, string templatesFilePath);
     }
 
     public class PlanPricingService : BroadcastBaseClass, IPlanPricingService
@@ -71,6 +81,8 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IDaypartCache _DaypartCache;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
+        private readonly IStationProgramRepository _StationProgramRepository;
+        private readonly IMarketRepository _MarketRepository;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -94,6 +106,40 @@ namespace Services.Broadcast.ApplicationServices
             _DaypartCache = daypartCache;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
+            _StationProgramRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
+            _MarketRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>();
+        }
+
+        public ReportOutput GeneratePricingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)
+        {
+            var reportData = GetPricingResultsReportData(planId, planVersionNumber);
+            var reportGenerator = new PricingResultsReportGenerator(templatesFilePath);
+            var report = reportGenerator.Generate(reportData);
+
+            return report;
+        }
+
+        public PricingResultsReportData GetPricingResultsReportData(int planId, int? planVersionNumber)
+        {
+            // use passed version or the current version by default
+            var planVersionId = planVersionNumber.HasValue ? 
+                _PlanRepository.GetPlanVersionIdByVersionNumber(planId, planVersionNumber.Value) :
+                (int?)null;
+            
+            var plan = _PlanRepository.GetPlan(planId, planVersionId);
+            var allocatedSpots = _PlanRepository.GetPlanPricingAllocatedSpotsByPlanVersionId(plan.VersionId);
+            var manifestIds = allocatedSpots.Select(x => x.StationInventoryManifestId).Distinct();
+            var manifests = _InventoryRepository.GetStationInventoryManifestsByIds(manifestIds);
+            var manifestDaypartIds = manifests.SelectMany(x => x.ManifestDayparts).Select(x => x.Id.Value);
+            var primaryProgramsByManifestDaypartIds = _StationProgramRepository.GetPrimaryProgramsForManifestDayparts(manifestDaypartIds);
+            var markets = _MarketRepository.GetMarketDtos();
+
+            return new PricingResultsReportData(
+                plan,
+                allocatedSpots,
+                manifests,
+                primaryProgramsByManifestDaypartIds,
+                markets);
         }
 
         public PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto
@@ -304,47 +350,6 @@ namespace Services.Broadcast.ApplicationServices
         public List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId)
         {
             return _PlanRepository.GetPlanPricingRuns(planId);
-        }
-
-        private List<PlanPricingInventoryProgramDto> _MapToPlanPricingPrograms(List<ProposalProgramDto> programs, PlanDto plan)
-        {
-            var pricingPrograms = new List<PlanPricingInventoryProgramDto>();
-            var spotLength = _SpotLengthEngine.GetSpotLengthValueById(plan.SpotLengthId);
-            var spotLengthsMultipliers = _SpotLengthRepository.GetSpotLengthMultipliers();
-            var deliveryMultiplier = spotLengthsMultipliers.Single(s => s.Key == spotLength);
-
-            foreach (var program in programs)
-            {
-                var programNames = program.ManifestDayparts.Select(d => d.ProgramName);
-                var planMarket = plan.AvailableMarkets.FirstOrDefault(m => m.Id == program.Market.Id);
-                var marketShareOfVoice = 0d;
-
-                if (planMarket != null)
-                    marketShareOfVoice = planMarket.ShareOfVoicePercent ?? 0;
-
-                var pricingProgram = new PlanPricingInventoryProgramDto
-                {
-                    ProgramNames = new List<string>(programNames),
-                    SpotLength = spotLength,
-                    DeliveryMultiplier = deliveryMultiplier.Value,
-                    Station = program.Station,
-                    Rate = program.SpotCost,
-                    PlanPricingMarket = new PlanPricingMarketDto
-                    {
-                        MarketId = program.Market.Id,
-                        MarketName = program.Market.Display,
-                        MarketShareOfVoice = marketShareOfVoice,
-                        // Random value for now.
-                        MarketSegment = program.ManifestId % 4 + 1
-                    },
-                    GuaranteedImpressions = program.ProvidedUnitImpressions ?? 0,
-                    ProjectedImpressions = program.UnitImpressions,
-                };
-
-                pricingPrograms.Add(pricingProgram);
-            }
-
-            return pricingPrograms;
         }
 
         internal List<PlanPricingApiRequestSpotsDto> _GetPricingModelSpots(

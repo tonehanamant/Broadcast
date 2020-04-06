@@ -455,6 +455,7 @@
     <Compile Include="Entities\Plan\PlanLockResponse.cs" />
     <Compile Include="Entities\Campaign\ProgramLineupReportData.cs" />
     <Compile Include="Entities\Campaign\ProgramLineupReportRequest.cs" />
+    <Compile Include="Entities\Plan\Pricing\PricingResultsReportData.cs" />
     <Compile Include="Entities\Plan\VPVHRequest.cs" />
     <Compile Include="Entities\Plan\VPVHForAudience.cs" />
     <Compile Include="Entities\PricingEstimate.cs" />
@@ -532,6 +533,8 @@
     <Compile Include="ReportGenerators\CampaignExport\ProposalReportGenerator.cs" />
     <Compile Include="ReportGenerators\CampaignExport\CampaignReportGenerator.cs" />
     <Compile Include="ReportGenerators\DetectionExcelReportGenerator.cs" />
+    <Compile Include="ReportGenerators\PricingResults\PricingResultsReportGenerator.cs" />
+    <Compile Include="ReportGenerators\PricingResults\PricingSpotAllocationViewReportGenerator.cs" />
     <Compile Include="ReportGenerators\ProgramLineup\ProgramLineupReportGenerator.cs" />
     <Compile Include="ReportGenerators\ProgramLineup\AllocationsReportGenerator.cs" />
     <Compile Include="ReportGenerators\ProgramLineup\DefaultViewReportGenerator.cs" />

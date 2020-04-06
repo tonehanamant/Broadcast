@@ -136,7 +136,11 @@ namespace Services.Broadcast.Repositories
 
         void SavePlanPricingEstimates(int jobId, List<PricingEstimate> estimates);
 
-        List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpots(int planId);
+        List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanId(int planId);
+
+        List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanVersionId(int planVersionId);
+
+        int GetPlanVersionIdByVersionNumber(int planId, int versionNumber);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -146,6 +150,21 @@ namespace Services.Broadcast.Repositories
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient)
         {
+        }
+
+        public int GetPlanVersionIdByVersionNumber(int planId, int versionNumber)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var planVersion = context.plan_versions
+                    .Where(x => x.plan_id == planId && x.version_number == versionNumber)
+                    .SingleOrDefault();
+
+                if (planVersion == null)
+                    throw new ApplicationException($"Can not find version {versionNumber} for plan {planId}");
+
+                return planVersion.id;
+            });
         }
 
         /// <inheritdoc/>
@@ -1516,7 +1535,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpots(int planId)
+        public List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanId(int planId)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -1525,34 +1544,52 @@ namespace Services.Broadcast.Repositories
                 var apiResult = context.plan_version_pricing_api_results
                     .Include(x => x.plan_version_pricing_api_result_spots)
                     .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.inventory_media_week))
-                    .Single(p => p.plan_version_id == planVersionId);
+                    .Single(p => p.plan_version_id == planVersionId, $"No prcing runs were found for the version {planVersionId}");
 
-                return apiResult.plan_version_pricing_api_result_spots.Select(x => new PlanPricingAllocatedSpot
-                {
-                    Id = x.id,
-                    StationInventoryManifestId = x.station_inventory_manifest_id,
-                    Impressions = x.impressions,
-                    SpotCost = x.cost,
-                    Spots = x.spots,
-                    InventoryMediaWeek = new MediaWeek
-                    {
-                        Id = x.inventory_media_week.id,
-                        MediaMonthId = x.inventory_media_week.media_month_id,
-                        WeekNumber = x.inventory_media_week.week_number,
-                        StartDate = x.inventory_media_week.start_date,
-                        EndDate = x.inventory_media_week.end_date
-                    },
-                    ContractMediaWeek = new MediaWeek
-                    {
-                        Id = x.contract_media_week.id,
-                        MediaMonthId = x.contract_media_week.media_month_id,
-                        WeekNumber = x.contract_media_week.week_number,
-                        StartDate = x.contract_media_week.start_date,
-                        EndDate = x.contract_media_week.end_date
-                    },
-                    StandardDaypart = _MapToDaypartDefaultDto(x.daypart_defaults)
-                }).ToList();
+                return apiResult.plan_version_pricing_api_result_spots.Select(_MapToPlanPricingAllocatedSpot).ToList();
             });
+        }
+
+        public List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanVersionId(int planVersionId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var apiResult = context.plan_version_pricing_api_results
+                    .Include(x => x.plan_version_pricing_api_result_spots)
+                    .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.inventory_media_week))
+                    .Single(p => p.plan_version_id == planVersionId, $"No prcing runs were found for the version {planVersionId}");
+
+                return apiResult.plan_version_pricing_api_result_spots.Select(_MapToPlanPricingAllocatedSpot).ToList();
+            });
+        }
+
+        private PlanPricingAllocatedSpot _MapToPlanPricingAllocatedSpot(plan_version_pricing_api_result_spots spot)
+        {
+            return new PlanPricingAllocatedSpot
+            {
+                Id = spot.id,
+                StationInventoryManifestId = spot.station_inventory_manifest_id,
+                Impressions = spot.impressions,
+                SpotCost = spot.cost,
+                Spots = spot.spots,
+                InventoryMediaWeek = new MediaWeek
+                {
+                    Id = spot.inventory_media_week.id,
+                    MediaMonthId = spot.inventory_media_week.media_month_id,
+                    WeekNumber = spot.inventory_media_week.week_number,
+                    StartDate = spot.inventory_media_week.start_date,
+                    EndDate = spot.inventory_media_week.end_date
+                },
+                ContractMediaWeek = new MediaWeek
+                {
+                    Id = spot.contract_media_week.id,
+                    MediaMonthId = spot.contract_media_week.media_month_id,
+                    WeekNumber = spot.contract_media_week.week_number,
+                    StartDate = spot.contract_media_week.start_date,
+                    EndDate = spot.contract_media_week.end_date
+                },
+                StandardDaypart = _MapToDaypartDefaultDto(spot.daypart_defaults)
+            };
         }
     }
 }

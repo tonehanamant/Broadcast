@@ -390,17 +390,33 @@
                 </div>
             }
 
-            @using (Html.BeginForm("ForceCompletePlanPricingJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="form">
-                    <h4 class="heading">Force Complete Plan Pricing Job</h4>
-                    <div class="input-container-row">
-                        <input class="input" type="text" name="jobId" />
-                        <input class="button" type="submit" value="Force complete a Plan Pricing Job" id="submit" />
-                    </div>
+        @using (Html.BeginForm("ForceCompletePlanPricingJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="form">
+                <h4 class="heading">Force Complete Plan Pricing Job</h4>
+                <div class="input-container-row">
+                    <input class="input" type="text" name="jobId" />
+                    <input class="button" type="submit" value="Force complete a Plan Pricing Job" id="submit" />
                 </div>
-            }
-        </div>
+            </div>
+        }
+
+        @using (Html.BeginForm("GeneratePricingResultsReport", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="form">
+                <h4 class="heading">Generate Pricing Results Report</h4>
+                <div class="input-container">
+                    <label class="label" for="planId">Plan Id</label>
+                    <input class="input" type="text" name="planId" placeholder="e.g. '17'" />
+                </div>
+                <div class="input-container">
+                    <label class="label" for="planVersionNumber">Plan Version Number (optional)</label>
+                    <input class="input" type="text" name="planVersionNumber" placeholder="e.g. '3'" />
+                </div>
+                <input class="button" type="submit" value="Generate" id="submit" />
+            </div>
+        }
+    </div>
 
         <div id="posting" class="tabcontent">
             <form class="form" action="" method="post" enctype="multipart/form-data">

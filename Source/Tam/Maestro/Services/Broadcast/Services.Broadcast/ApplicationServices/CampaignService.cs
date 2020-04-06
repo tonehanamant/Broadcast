@@ -684,7 +684,7 @@ namespace Services.Broadcast.ApplicationServices
             var advertiser = _TrafficApiCache.GetAdvertiser(campaign.AdvertiserId);
             var guaranteedDemo = _AudienceService.GetAudienceById(plan.AudienceId);
             var spotLengths = _SpotLengthService.GetAllSpotLengths();
-            var allocatedSpots = _PlanRepository.GetPlanPricingAllocatedSpots(planId);
+            var allocatedSpots = _PlanRepository.GetPlanPricingAllocatedSpotsByPlanId(planId);
             var manifestIds = allocatedSpots.Select(x => x.StationInventoryManifestId).Distinct();
             var manifests = _InventoryRepository.GetStationInventoryManifestsByIds(manifestIds)
                 .Where(x => x.Station != null && x.Station.MarketCode.HasValue)

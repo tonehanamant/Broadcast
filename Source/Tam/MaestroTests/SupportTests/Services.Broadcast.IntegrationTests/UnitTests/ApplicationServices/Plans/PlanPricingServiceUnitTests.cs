@@ -22,6 +22,9 @@ using Services.Broadcast.Entities;
 using static Services.Broadcast.BusinessEngines.PlanPricingInventoryEngine;
 using Common.Services;
 using System.Threading;
+using Services.Broadcast.Entities.StationInventory;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {
@@ -29,19 +32,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
     [Category("short_running")]
     public class PlanPricingServiceUnitTests
     {
-        private readonly Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
-        private readonly Mock<ISpotLengthEngine> _SpotLengthEngineMock;
-        private readonly Mock<IPricingApiClient> _PricingApiClientMock;
-        private readonly Mock<IBackgroundJobClient> _BackgroundJobClientMock;
-        private readonly Mock<IPlanPricingInventoryEngine> _PlanPricingInventoryEngineMock;
-        private readonly Mock<IBroadcastLockingManagerApplicationService> _BroadcastLockingManagerApplicationServiceMock;
-        private readonly Mock<IPlanRepository> _PlanRepositoryMock;
-        private readonly Mock<IInventoryRepository> _InventoryRepositoryMock;
-        private readonly Mock<IDaypartCache> _DaypartCacheMock;
-        private readonly Mock<IMarketCoverageRepository> _MarketCoverageRepositoryMock;
-        private readonly Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCacheMock;
+        private Mock<ISpotLengthEngine> _SpotLengthEngineMock;
+        private Mock<IPricingApiClient> _PricingApiClientMock;
+        private Mock<IBackgroundJobClient> _BackgroundJobClientMock;
+        private Mock<IPlanPricingInventoryEngine> _PlanPricingInventoryEngineMock;
+        private Mock<IBroadcastLockingManagerApplicationService> _BroadcastLockingManagerApplicationServiceMock;       
+        private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
+        private Mock<IPlanRepository> _PlanRepositoryMock;
+        private Mock<IInventoryRepository> _InventoryRepositoryMock;
+        private Mock<IDaypartCache> _DaypartCacheMock;
+        private Mock<IMarketCoverageRepository> _MarketCoverageRepositoryMock;
+        private Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCacheMock;
+        private Mock<IStationProgramRepository> _StationProgramRepositoryMock;
+        private Mock<IMarketRepository> _MarketRepositoryMock;
 
-        public PlanPricingServiceUnitTests()
+        [SetUp]
+        public void SetUp()
         {
             _DataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
             _SpotLengthEngineMock = new Mock<ISpotLengthEngine>();
@@ -54,6 +60,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DaypartCacheMock = new Mock<IDaypartCache>();
             _MarketCoverageRepositoryMock = new Mock<IMarketCoverageRepository>();
             _MediaMonthAndWeekAggregateCacheMock = new Mock<IMediaMonthAndWeekAggregateCache>();
+            _StationProgramRepositoryMock = new Mock<IStationProgramRepository>();
+            _MarketRepositoryMock = new Mock<IMarketRepository>();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IPlanRepository>())
@@ -66,6 +74,365 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IMarketCoverageRepository>())
                 .Returns(_MarketCoverageRepositoryMock.Object);
+
+            _DataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<IStationProgramRepository>())
+                .Returns(_StationProgramRepositoryMock.Object);
+
+            _DataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<IMarketRepository>())
+                .Returns(_MarketRepositoryMock.Object);
+        }
+
+        [Test]
+        public void UsesCurrentPlanVersion_WhenVersionIsNotSpecified_OnPricingResultsReportGeneration()
+        {
+            // Arrange
+            const int planId = 1;
+            var planVersionNumber = (int?)null;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    VersionNumber = 3,
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>()
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingAllocatedSpotsByPlanVersionId(It.IsAny<int>()))
+                .Returns(new List<PlanPricingAllocatedSpot>());
+
+            _InventoryRepositoryMock
+                .Setup(x => x.GetStationInventoryManifestsByIds(It.IsAny<IEnumerable<int>>()))
+                .Returns(new List<StationInventoryManifest>());
+
+            _StationProgramRepositoryMock
+                .Setup(x => x.GetPrimaryProgramsForManifestDayparts(It.IsAny<IEnumerable<int>>()))
+                .Returns(new Dictionary<int, Program>());
+
+            _MarketRepositoryMock
+                .Setup(x => x.GetMarketDtos())
+                .Returns(new List<LookupDto>());
+
+            var service = _GetService();
+            
+            // Act
+            service.GetPricingResultsReportData(planId, planVersionNumber);
+            
+            // Assert
+            _PlanRepositoryMock.Verify(x => x.GetPlanVersionIdByVersionNumber(It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+            _PlanRepositoryMock.Verify(x => x.GetPlan(planId, null), Times.Once);
+        }
+
+        [Test]
+        public void UsesPassedPlanVersion_WhenVersionIsSpecified_OnPricingResultsReportGeneration()
+        {
+            // Arrange
+            const int planId = 1;
+            var planVersionNumber = 2;
+            var planVersionId = 5;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanVersionIdByVersionNumber(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(planVersionId);
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    VersionId = planVersionId,
+                    VersionNumber = planVersionNumber,
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>()
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingAllocatedSpotsByPlanVersionId(It.IsAny<int>()))
+                .Returns(new List<PlanPricingAllocatedSpot>());
+
+            _InventoryRepositoryMock
+                .Setup(x => x.GetStationInventoryManifestsByIds(It.IsAny<IEnumerable<int>>()))
+                .Returns(new List<StationInventoryManifest>());
+
+            _StationProgramRepositoryMock
+                .Setup(x => x.GetPrimaryProgramsForManifestDayparts(It.IsAny<IEnumerable<int>>()))
+                .Returns(new Dictionary<int, Program>());
+
+            _MarketRepositoryMock
+                .Setup(x => x.GetMarketDtos())
+                .Returns(new List<LookupDto>());
+
+            var service = _GetService();
+
+            // Act
+            service.GetPricingResultsReportData(planId, planVersionNumber);
+
+            // Assert
+            _PlanRepositoryMock.Verify(x => x.GetPlanVersionIdByVersionNumber(planId, planVersionNumber), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetPlan(planId, planVersionId), Times.Once);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void PricingResultsReportGeneration()
+        {
+            // Arrange
+            const int planId = 1;
+            var planVersionNumber = 2;
+            var planVersionId = 5;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanVersionIdByVersionNumber(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(planVersionId);
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    Id = planId,
+                    VersionId = planVersionId,
+                    VersionNumber = planVersionNumber,
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+                        new WeeklyBreakdownWeek
+                        {
+                            MediaWeekId = 7
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            MediaWeekId = 9
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            MediaWeekId = 8,
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            MediaWeekId = 10
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            MediaWeekId = 11
+                        }
+                    }
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingAllocatedSpotsByPlanVersionId(It.IsAny<int>()))
+                .Returns(new List<PlanPricingAllocatedSpot>
+                {
+                    new PlanPricingAllocatedSpot
+                    {
+                        Impressions = 1000,
+                        SpotCost = 10,
+                        Spots = 1,
+                        StationInventoryManifestId = 1,
+                        StandardDaypart = new DaypartDefaultDto
+                        {
+                            Code = "EF"
+                        },
+                        ContractMediaWeek = new MediaWeek
+                        {
+                            Id = 7
+                        },
+                        InventoryMediaWeek = new MediaWeek
+                        {
+                            StartDate = new DateTime(2020, 4, 6),
+                            EndDate = new DateTime(2020, 4, 12)
+                        }
+                    },
+                    new PlanPricingAllocatedSpot
+                    {
+                        Impressions = 800,
+                        SpotCost = 8,
+                        Spots = 2,
+                        StationInventoryManifestId = 1,
+                        StandardDaypart = new DaypartDefaultDto
+                        {
+                            Code = "EF"
+                        },
+                        ContractMediaWeek = new MediaWeek
+                        {
+                            Id = 8
+                        },
+                        InventoryMediaWeek = new MediaWeek
+                        {
+                            StartDate = new DateTime(2020, 4, 13),
+                            EndDate = new DateTime(2020, 4, 19)
+                        }
+                    },
+                    new PlanPricingAllocatedSpot
+                    {
+                        Impressions = 500,
+                        SpotCost = 5,
+                        Spots = 3,
+                        StationInventoryManifestId = 2,
+                        StandardDaypart = new DaypartDefaultDto
+                        {
+                            Code = "PA"
+                        },
+                        ContractMediaWeek = new MediaWeek
+                        {
+                            Id = 9
+                        },
+                        InventoryMediaWeek = new MediaWeek
+                        {
+                            StartDate = new DateTime(2020, 4, 20),
+                            EndDate = new DateTime(2020, 4, 26)
+                        }
+                    },
+                    new PlanPricingAllocatedSpot
+                    {
+                        Impressions = 400,
+                        SpotCost = 3,
+                        Spots = 4,
+                        StationInventoryManifestId = 3,
+                        StandardDaypart = new DaypartDefaultDto
+                        {
+                            Code = "PT"
+                        },
+                        ContractMediaWeek = new MediaWeek
+                        {
+                            Id = 11
+                        },
+                        InventoryMediaWeek = new MediaWeek
+                        {
+                            StartDate = new DateTime(2020, 4, 27),
+                            EndDate = new DateTime(2020, 5, 3)
+                        }
+                    }
+                });
+
+            _InventoryRepositoryMock
+                .Setup(x => x.GetStationInventoryManifestsByIds(It.IsAny<IEnumerable<int>>()))
+                .Returns(new List<StationInventoryManifest>
+                {
+                    new StationInventoryManifest
+                    {
+                        Id = 1,
+                        Station = new DisplayBroadcastStation
+                        {
+                            LegacyCallLetters = "WCSH",
+                            MarketCode = 100
+                        },
+                        ManifestDayparts = new List<StationInventoryManifestDaypart>
+                        {
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 4,
+                                Daypart = new DisplayDaypart
+                                {
+                                    StartTime = 54000,
+                                    EndTime = 64799
+                                }
+                            }
+                        }
+                    },
+                    new StationInventoryManifest
+                    {
+                        Id = 2,
+                        Station = new DisplayBroadcastStation
+                        {
+                            LegacyCallLetters = "WFUT",
+                            MarketCode = 101
+                        },
+                        ManifestDayparts = new List<StationInventoryManifestDaypart>
+                        {
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 5,
+                                Daypart = new DisplayDaypart
+                                {
+                                    StartTime = 64800,
+                                    EndTime = 71999
+                                }
+                            }
+                        }
+                    },
+                    new StationInventoryManifest
+                    {
+                        Id = 3,
+                        Station = new DisplayBroadcastStation
+                        {
+                            LegacyCallLetters = "EBNG",
+                            MarketCode = 102
+                        },
+                        ManifestDayparts = new List<StationInventoryManifestDaypart>
+                        {
+                            new StationInventoryManifestDaypart
+                            {
+                                Id = 6,
+                                Daypart = new DisplayDaypart
+                                {
+                                    StartTime = 72000,
+                                    EndTime = 82799
+                                }
+                            }
+                        }
+                    }
+                });
+
+            _StationProgramRepositoryMock
+                .Setup(x => x.GetPrimaryProgramsForManifestDayparts(It.IsAny<IEnumerable<int>>()))
+                .Returns(new Dictionary<int, Program>
+                {
+                    {
+                        4,
+                        new Program
+                        {
+                            Name = "Parasite",
+                            Genre = "Comedy",
+                            ShowType = "Movie"
+                        }
+                    },
+                    {
+                        5,
+                        new Program
+                        {
+                            Name = "Jojo Rabbit",
+                            Genre = "Comedy",
+                            ShowType = "Movie"
+                        }
+                    },
+                    {
+                        6,
+                        new Program
+                        {
+                            Name = "Joker",
+                            Genre = "Crime",
+                            ShowType = "Movie"
+                        }
+                    }
+                });
+
+            _MarketRepositoryMock
+                .Setup(x => x.GetMarketDtos())
+                .Returns(new List<LookupDto>
+                {
+                    new LookupDto
+                    {
+                        Id = 100,
+                        Display = "Portland-Auburn"
+                    },
+                    new LookupDto
+                    {
+                        Id = 101,
+                        Display = "New York"
+                    },
+                    new LookupDto
+                    {
+                        Id = 102,
+                        Display = "Binghamton"
+                    }
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPricingResultsReportData(planId, planVersionNumber);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         [Test]
@@ -271,15 +638,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void CanNotQueuePricingJobWhenThereIsOneActive(BackgroundJobProcessingStatus status)
         {
             const string expectedMessage = "The pricing model is already running for the plan";
-
-            var planRepositoryMock = new Mock<IPlanRepository>();
-            planRepositoryMock
+            
+            _PlanRepositoryMock
                 .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
                 .Returns(new PlanPricingJob { Status = status });
-
-            _DataRepositoryFactoryMock
-                .Setup(x => x.GetDataRepository<IPlanRepository>())
-                .Returns(planRepositoryMock.Object);
 
             _BroadcastLockingManagerApplicationServiceMock
                 .Setup(x => x.GetNotUserBasedLockObjectForKey(It.IsAny<string>()))

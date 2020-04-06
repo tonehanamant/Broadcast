@@ -84,14 +84,17 @@ namespace Services.Broadcast.Helpers
         }
 
         /// <summary>
-        /// Gets the time format as "hh:mm:ss tt" from seconds.
+        /// Converts seconds to a string with the given format
         /// </summary>
-        /// <param name="seconds">The seconds to format as time</param>
-        /// <returns>String containing the time format</returns>
-        public static string ConvertSecondsToFormattedTime(int seconds)
+        /// <param name="seconds">Seconds to format as time</param>
+        /// <param name="format">Time format</param>
+        /// <returns>Seconds converted to the time format</returns>
+        public static string ConvertSecondsToFormattedTime(int seconds, string format)
         {
-            return DateTime.Today.Add(TimeSpan.FromSeconds(seconds))
-                .ToString("hh:mmtt", new DateTimeFormatInfo { AMDesignator = "am", PMDesignator = "pm"});
+            var time = DateTime.Today.Add(TimeSpan.FromSeconds(seconds));
+            var result = time.ToString(format, new DateTimeFormatInfo { AMDesignator = "am", PMDesignator = "pm" });
+
+            return result;
         }
 
         /// <summary>

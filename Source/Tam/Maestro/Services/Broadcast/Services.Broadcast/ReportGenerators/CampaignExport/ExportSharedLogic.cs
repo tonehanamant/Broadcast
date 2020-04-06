@@ -68,7 +68,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             (int Row, int Column) toSourceCell,
             int rowsToCopy)
         {
-            if(rowsToCopy == 0)
+            if (rowsToCopy == 0)
             {
                 return;
             }
@@ -94,7 +94,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             (int Row, int Column) bottomRightCell)
         {
             //if there is only 1 row in the table we do nothing
-            if(topLeftCell.Row == bottomRightCell.Row)
+            if (topLeftCell.Row == bottomRightCell.Row)
             {
                 return;
             }

@@ -550,5 +550,23 @@ namespace BroadcastComposerWeb.Controllers
             TempData["TabId"] = "planning";
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public ActionResult GeneratePricingResultsReport(int planId, int? planVersionNumber = null)
+        {
+            try
+            {
+                var appDataPath = HttpContext.Server.MapPath("~/App_Data");
+                var service = _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
+                var result = service.GeneratePricingResultsReport(planId, planVersionNumber, appDataPath);
+
+                return File(result.Stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", result.Filename);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return View("Index");
+            }
+        }
     }
 }

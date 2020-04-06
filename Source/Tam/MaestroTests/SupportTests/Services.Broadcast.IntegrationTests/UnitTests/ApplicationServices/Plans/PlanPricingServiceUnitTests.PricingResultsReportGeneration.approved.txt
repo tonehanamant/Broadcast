@@ -1,0 +1,81 @@
+﻿{
+  "ExportFileName": "Pricing_Results_Report_Plan_1_Version_2.xlsx",
+  "PlanId": "1",
+  "PlanVersion": "Version 2",
+  "SpotAllocations": [
+    {
+      "CPM": 10.00,
+      "DaypartCode": "EF",
+      "EndDate": "2020-04-12T00:00:00",
+      "EndTime": "18:00:00",
+      "Genre": "Comedy",
+      "Market": "Portland-Auburn",
+      "PlanWeekNumber": 1,
+      "ProgramName": "Parasite",
+      "ShowType": "Movie",
+      "Spots": 1,
+      "StartDate": "2020-04-06T00:00:00",
+      "StartTime": "15:00:00",
+      "Station": "WCSH",
+      "TotalCost": 10.0,
+      "TotalImpressions": 1000.0
+    },
+    {
+      "CPM": 10.00,
+      "DaypartCode": "EF",
+      "EndDate": "2020-04-19T00:00:00",
+      "EndTime": "18:00:00",
+      "Genre": "Comedy",
+      "Market": "Portland-Auburn",
+      "PlanWeekNumber": 2,
+      "ProgramName": "Parasite",
+      "ShowType": "Movie",
+      "Spots": 2,
+      "StartDate": "2020-04-13T00:00:00",
+      "StartTime": "15:00:00",
+      "Station": "WCSH",
+      "TotalCost": 16.0,
+      "TotalImpressions": 1600.0
+    },
+    {
+      "CPM": 10.00,
+      "DaypartCode": "PA",
+      "EndDate": "2020-04-26T00:00:00",
+      "EndTime": "20:00:00",
+      "Genre": "Comedy",
+      "Market": "New York",
+      "PlanWeekNumber": 3,
+      "ProgramName": "Jojo Rabbit",
+      "ShowType": "Movie",
+      "Spots": 3,
+      "StartDate": "2020-04-20T00:00:00",
+      "StartTime": "18:00:00",
+      "Station": "WFUT",
+      "TotalCost": 15.0,
+      "TotalImpressions": 1500.0
+    },
+    {
+      "CPM": 7.5000,
+      "DaypartCode": "PT",
+      "EndDate": "2020-05-03T00:00:00",
+      "EndTime": "23:00:00",
+      "Genre": "Crime",
+      "Market": "Binghamton",
+      "PlanWeekNumber": 5,
+      "ProgramName": "Joker",
+      "ShowType": "Movie",
+      "Spots": 4,
+      "StartDate": "2020-04-27T00:00:00",
+      "StartTime": "20:00:00",
+      "Station": "EBNG",
+      "TotalCost": 12.0,
+      "TotalImpressions": 1600.0
+    }
+  ],
+  "SpotAllocationTotals": {
+    "Cost": 53.0,
+    "CPM": 9.298245614035087719298245600,
+    "Impressions": 5700.0,
+    "Spots": 10
+  }
+}
