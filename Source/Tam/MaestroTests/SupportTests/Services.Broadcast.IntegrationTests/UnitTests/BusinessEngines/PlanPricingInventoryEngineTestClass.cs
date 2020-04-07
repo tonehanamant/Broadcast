@@ -1,4 +1,5 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services;
+using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
@@ -16,13 +17,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             IImpressionsCalculationEngine impressionsCalculationEngine,
             IGenreCache genreCache,
             IPlanPricingInventoryQuarterCalculatorEngine planPricingInventoryQuarterCalculatorEngine,
-            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+            IDaypartCache daypartCache)
             : base(
                   broadcastDataRepositoryFactory, 
                   impressionsCalculationEngine, 
                   genreCache,
                   planPricingInventoryQuarterCalculatorEngine,
-                  mediaMonthAndWeekAggregateCache)
+                  mediaMonthAndWeekAggregateCache,
+                  daypartCache)
         {
         }
 

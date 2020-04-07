@@ -39,6 +39,7 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IStationRepository _StationRepository;
         private readonly IPlanPricingInventoryQuarterCalculatorEngine _PlanPricingInventoryQuarterCalculatorEngine;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
+        private readonly IDaypartCache _DaypartCache;
 
         private readonly ILog _Log;
 
@@ -46,7 +47,8 @@ namespace Services.Broadcast.BusinessEngines
                                           IImpressionsCalculationEngine impressionsCalculationEngine,
                                           IGenreCache genreCache,
                                           IPlanPricingInventoryQuarterCalculatorEngine planPricingInventoryQuarterCalculatorEngine,
-                                          IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+                                          IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+                                          IDaypartCache daypartCache)
         {
             _StationProgramRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
             _ImpressionsCalculationEngine = impressionsCalculationEngine;
@@ -57,6 +59,7 @@ namespace Services.Broadcast.BusinessEngines
             _NtiToNsiConversionRepository = broadcastDataRepositoryFactory.GetDataRepository<INtiToNsiConversionRepository>();
             _DayRepository = broadcastDataRepositoryFactory.GetDataRepository<IDayRepository>();
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
+            _DaypartCache = daypartCache;
 
             _Log = LogManager.GetLogger(GetType());
         }
@@ -110,13 +113,11 @@ namespace Services.Broadcast.BusinessEngines
 
         private void _SetProgramDayparts(List<PlanPricingInventoryProgram> programs)
         {
-            var daypartCache = DaypartCache.Instance;
-
             foreach (var program in programs)
             {
                 foreach (var programDaypart in program.ManifestDayparts)
                 {
-                    programDaypart.Daypart = daypartCache.GetDisplayDaypart(programDaypart.Daypart.Id);
+                    programDaypart.Daypart = _DaypartCache.GetDisplayDaypart(programDaypart.Daypart.Id);
                 }
             }
         }

@@ -1,10 +1,8 @@
-﻿using Common.Services;
-using Common.Services.ApplicationServices;
+﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,28 +17,16 @@ namespace Services.Broadcast.BusinessEngines
 
     public class ImpressionsCalculationEngine : IImpressionsCalculationEngine
     {
-        private const string MissingBooksErrorMessage = "Impressions request must have both Share and Hut Book or Sweeps Book defined.";
-
-        private readonly IDaypartCache _DaypartCache;
-        private readonly IProposalMarketsCalculationEngine _ProposalMarketsCalculationEngine;
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
-        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
-        private readonly IProposalTotalsCalculationEngine _ProposalTotalsCalculationEngine;
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
         private readonly IRatingForecastRepository _RatingForecastRepository;
 
-        public ImpressionsCalculationEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
-            IDaypartCache daypartCache, IProposalMarketsCalculationEngine proposalMarketsCalculationEngine,
-            IProposalTotalsCalculationEngine proposalTotalsCalculationEngine,
-            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+        public ImpressionsCalculationEngine(
+            IDataRepositoryFactory broadcastDataRepositoryFactory,
             IImpressionAdjustmentEngine impressionAdjustmentEngine,
             ISpotLengthEngine spotLengthEngine)
         {
-            _DaypartCache = daypartCache;
-            _ProposalMarketsCalculationEngine = proposalMarketsCalculationEngine;
-            _ProposalTotalsCalculationEngine = proposalTotalsCalculationEngine;
-            _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
             _SpotLengthEngine = spotLengthEngine;
             _BroadcastAudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
@@ -119,7 +105,7 @@ namespace Services.Broadcast.BusinessEngines
             List<StationImpressionsWithAudience> impressions = null;
             var spotLength = _SpotLengthEngine.GetSpotLengthValueById(impressionsRequest.SpotLengthId);
 
-            if (impressionsRequest.ShareProjectionBookId.HasValue && impressionsRequest.HutProjectionBookId.HasValue)
+            if (impressionsRequest.HutProjectionBookId.HasValue)
             {
                 impressions = _RatingForecastRepository.GetImpressionsDaypart(
                     (short)impressionsRequest.HutProjectionBookId.Value,
@@ -128,35 +114,20 @@ namespace Services.Broadcast.BusinessEngines
                     impressionRequests,
                     impressionsRequest.PlaybackType).Impressions;
             }
-            else if (impressionsRequest.SingleProjectionBookId.HasValue)
+            else
             {
                 impressions = _RatingForecastRepository.GetImpressionsDaypart(
-                    impressionsRequest.SingleProjectionBookId.Value,
+                    impressionsRequest.ShareProjectionBookId.Value,
                     ratingAudiences,
                     impressionRequests,
                     impressionsRequest.PlaybackType).Impressions;
             }
 
-            if (impressions != null)
-            {
-                var ratingAdjustmentMonth = GetRatingAdjustmentMonth(impressionsRequest);
+            var ratingAdjustmentMonth = impressionsRequest.HutProjectionBookId ?? impressionsRequest.ShareProjectionBookId.Value;
 
-                impressions.ForEach(i => i.Impressions = _ImpressionAdjustmentEngine.AdjustImpression(i.Impressions, impressionsRequest.Equivalized, spotLength, impressionsRequest.PostType, ratingAdjustmentMonth, false));
+            impressions.ForEach(i => i.Impressions = _ImpressionAdjustmentEngine.AdjustImpression(i.Impressions, impressionsRequest.Equivalized, spotLength, impressionsRequest.PostType, ratingAdjustmentMonth, false));
 
-                return impressions;
-            }
-
-            throw new ApplicationException(MissingBooksErrorMessage);
-        }
-
-        private int GetRatingAdjustmentMonth(ImpressionsRequestDto impressionsRequest)
-        {
-            int ratingAdjustmentMonth;
-            if (impressionsRequest.HutProjectionBookId.HasValue && impressionsRequest.ShareProjectionBookId.HasValue)
-                ratingAdjustmentMonth = impressionsRequest.HutProjectionBookId.Value;
-            else
-                ratingAdjustmentMonth = impressionsRequest.SingleProjectionBookId.Value;
-            return ratingAdjustmentMonth;
+            return impressions;
         }
     }
 }

@@ -18,38 +18,44 @@ using Microsoft.Practices.Unity;
 using ApprovalTests.Reporters;
 using ApprovalTests;
 using IntegrationTests.Common;
+using static Services.Broadcast.BusinessEngines.PlanPricingInventoryEngine;
+using Common.Services;
+using Newtonsoft.Json;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 {
     [Category("short_running")]
     public class PlanPricingInventoryEngineUnitTests
     {
-        private readonly PlanPricingInventoryEngineTestClass _PlanPricingInventoryEngine;
-        private readonly Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
-        private readonly Mock<IImpressionsCalculationEngine> _ImpressionsCalculationEngineMock;
-        private readonly Mock<IGenreCache> _GenreCacheMock;
-        private readonly Mock<IDayRepository> _DayRepositoryMock;
-        private readonly Mock<INtiToNsiConversionRepository> _NtiToNsiConversionRepositoryMock;
-        private readonly Mock<IPlanPricingInventoryQuarterCalculatorEngine> _PlanPricingInventoryQuarterCalculatorEngine;
-        private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
+        private PlanPricingInventoryEngineTestClass _PlanPricingInventoryEngine;
+        private IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
 
-        private readonly Mock<IInventoryRepository> _InventoryRepository;
-        private readonly Mock<IStationProgramRepository> _StationProgramRepository;
-        private readonly Mock<IStationRepository> _StationRepository;
+        private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
+        private Mock<IImpressionsCalculationEngine> _ImpressionsCalculationEngineMock;
+        private Mock<IGenreCache> _GenreCacheMock;
+        private Mock<IDayRepository> _DayRepositoryMock;
+        private Mock<INtiToNsiConversionRepository> _NtiToNsiConversionRepositoryMock;
+        private Mock<IPlanPricingInventoryQuarterCalculatorEngine> _PlanPricingInventoryQuarterCalculatorEngineMock;
+        private Mock<IInventoryRepository> _InventoryRepositoryMock;
+        private Mock<IStationProgramRepository> _StationProgramRepositoryMock;
+        private Mock<IStationRepository> _StationRepositoryMock;
+        private Mock<IDaypartCache> _DaypartCacheMock;
 
-        public PlanPricingInventoryEngineUnitTests()
+        [SetUp]
+        public void SetUp()
         {
             _DataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
             _ImpressionsCalculationEngineMock = new Mock<IImpressionsCalculationEngine>();
             _GenreCacheMock = new Mock<IGenreCache>();
             _DayRepositoryMock = new Mock<IDayRepository>();
             _NtiToNsiConversionRepositoryMock = new Mock<INtiToNsiConversionRepository>();
-            _PlanPricingInventoryQuarterCalculatorEngine = new Mock<IPlanPricingInventoryQuarterCalculatorEngine>();
+            _PlanPricingInventoryQuarterCalculatorEngineMock = new Mock<IPlanPricingInventoryQuarterCalculatorEngine>();
             _MediaMonthAndWeekAggregateCache = IntegrationTestApplicationServiceFactory.Instance.Resolve<IMediaMonthAndWeekAggregateCache>();
 
-            _InventoryRepository = new Mock<IInventoryRepository>();
-            _StationProgramRepository = new Mock<IStationProgramRepository>();
-            _StationRepository = new Mock<IStationRepository>();
+            _InventoryRepositoryMock = new Mock<IInventoryRepository>();
+            _StationProgramRepositoryMock = new Mock<IStationProgramRepository>();
+            _StationRepositoryMock = new Mock<IStationRepository>();
+            _DaypartCacheMock = new Mock<IDaypartCache>();
 
             _DayRepositoryMock
                 .Setup(x => x.GetDays())
@@ -69,22 +75,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IInventoryRepository>())
-                .Returns(_InventoryRepository.Object);
+                .Returns(_InventoryRepositoryMock.Object);
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IStationProgramRepository>())
-                .Returns(_StationProgramRepository.Object);
+                .Returns(_StationProgramRepositoryMock.Object);
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IStationRepository>())
-                .Returns(_StationRepository.Object);
+                .Returns(_StationRepositoryMock.Object);
 
             _PlanPricingInventoryEngine = new PlanPricingInventoryEngineTestClass(
                 _DataRepositoryFactoryMock.Object,
                 _ImpressionsCalculationEngineMock.Object,
                 _GenreCacheMock.Object,
-                _PlanPricingInventoryQuarterCalculatorEngine.Object,
-                _MediaMonthAndWeekAggregateCache);
+                _PlanPricingInventoryQuarterCalculatorEngineMock.Object,
+                _MediaMonthAndWeekAggregateCache,
+                _DaypartCacheMock.Object);
         }
 
         [Test]
@@ -999,14 +1006,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                    })
                 .ToList();
 
-            _StationRepository.Setup(s => s.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
+            _StationRepositoryMock.Setup(s => s.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
                 .Returns(availableStations);
 
-            _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetFallbackDateRanges(It.IsAny<DateRange>(),
+            _PlanPricingInventoryQuarterCalculatorEngineMock.Setup(s => s.GetFallbackDateRanges(It.IsAny<DateRange>(),
                     It.IsAny<QuarterDetailDto>(), It.IsAny<QuarterDetailDto>()))
                 .Returns(fallbackDateRanges);
 
-            _StationProgramRepository.Setup(s => s.GetProgramsForPricingModel(
+            _StationProgramRepositoryMock.Setup(s => s.GetProgramsForPricingModel(
                     It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<int>(),
                     It.IsAny<List<int>>(), It.IsAny<List<int>>()))
                 .Returns(inventory);
@@ -1138,14 +1145,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 },
             };
 
-            _StationRepository.Setup(s => s.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
+            _StationRepositoryMock.Setup(s => s.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
                 .Returns(availableStations);
 
-            _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetFallbackDateRanges(It.IsAny<DateRange>(),
+            _PlanPricingInventoryQuarterCalculatorEngineMock.Setup(s => s.GetFallbackDateRanges(It.IsAny<DateRange>(),
                     It.IsAny<QuarterDetailDto>(), It.IsAny<QuarterDetailDto>()))
                 .Returns(fallbackDateRanges);
 
-            _StationProgramRepository.SetupSequence(s => s.GetProgramsForPricingModel(
+            _StationProgramRepositoryMock.SetupSequence(s => s.GetProgramsForPricingModel(
                     It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<int>(),
                     It.IsAny<List<int>>(), It.IsAny<List<int>>()))
                 .Returns(inventoryOne)
@@ -1233,14 +1240,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            _StationRepository.Setup(s => s.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
+            _StationRepositoryMock.Setup(s => s.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
                 .Returns(availableStations);
 
-            _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetFallbackDateRanges(It.IsAny<DateRange>(),
+            _PlanPricingInventoryQuarterCalculatorEngineMock.Setup(s => s.GetFallbackDateRanges(It.IsAny<DateRange>(),
                     It.IsAny<QuarterDetailDto>(), It.IsAny<QuarterDetailDto>()))
                 .Returns(fallbackDateRanges);
 
-            _StationProgramRepository.SetupSequence(s => s.GetProgramsForPricingModel(
+            _StationProgramRepositoryMock.SetupSequence(s => s.GetProgramsForPricingModel(
                     It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<int>(),
                     It.IsAny<List<int>>(), It.IsAny<List<int>>()))
                 .Returns(inventoryOne)
@@ -1280,6 +1287,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         {
             return new PlanDto
             {
+                FlightStartDate = new DateTime(2020, 1, 1),
+                FlightEndDate = new DateTime(2020, 2, 1),
+                FlightHiatusDays = new List<DateTime>(),
+                FlightDays = new List<int> { 1, 2, 3, 4, 5 },
+                AvailableMarkets = new List<PlanAvailableMarketDto>(),
                 Dayparts = new List<PlanDaypartDto>
                 {
                     new PlanDaypartDto
@@ -1369,6 +1381,256 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     ConversionRate = 0.85
                 }
             };
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void UsesSingleBook_ToProjectImpressions_WhenGatheringInventory_ForPricing()
+        {
+            // Arrange
+            var parameters = new ProgramInventoryOptionalParametersDto();
+            var inventorySourceIds = new List<int>();
+            var diagnostic = new PlanPricingJobDiagnostic();
+
+            var plan = _GetPlan();
+            plan.Equivalized = true;
+            plan.HUTBookId = null;
+            plan.PostingType = PostingTypeEnum.NTI;
+            plan.ShareBookId = 201;
+            plan.SpotLengthId = 5;
+            plan.AudienceId = 25;
+
+            _StationRepositoryMock
+                .Setup(x => x.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
+                .Returns(new List<DisplayBroadcastStation>());
+
+            _StationProgramRepositoryMock
+                .Setup(x => x.GetProgramsForPricingModel(
+                    It.IsAny<DateTime>(), 
+                    It.IsAny<DateTime>(), 
+                    It.IsAny<int>(),
+                    It.IsAny<List<int>>(), 
+                    It.IsAny<List<int>>()))
+                .Returns(new List<PlanPricingInventoryProgram>
+                {
+                    new PlanPricingInventoryProgram
+                    {
+                        Station = new DisplayBroadcastStation
+                        {
+                            LegacyCallLetters = "KOB"
+                        },
+                        ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
+                        {
+                            new PlanPricingInventoryProgram.ManifestWeek
+                            {
+                                Id = 2
+                            }
+                        },
+                        ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
+                        {
+                            new PlanPricingInventoryProgram.ManifestDaypart
+                            {
+                                Id = 5,
+                                Daypart = new DisplayDaypart()
+                            }
+                        }
+                    }
+                });
+
+            _PlanPricingInventoryQuarterCalculatorEngineMock
+                .Setup(x => x.GetFallbackDateRanges(
+                    It.IsAny<DateRange>(),
+                    It.IsAny<QuarterDetailDto>(), 
+                    It.IsAny<QuarterDetailDto>()))
+                .Returns(new List<DateRange>());
+
+            _PlanPricingInventoryQuarterCalculatorEngineMock
+                .Setup(x => x.GetPlanQuarter(It.IsAny<PlanDto>()))
+                .Returns(new QuarterDetailDto
+                {
+                    StartDate = new DateTime(2020, 1, 1),
+                    EndDate = new DateTime(2020, 3, 31)
+                });
+
+            _PlanPricingInventoryQuarterCalculatorEngineMock
+                .Setup(x => x.GetInventoryFallbackQuarter())
+                .Returns(new QuarterDetailDto
+                {
+                    StartDate = new DateTime(2020, 4, 1),
+                    EndDate = new DateTime(2020, 6, 30)
+                });
+
+            _StationRepositoryMock
+                .Setup(x => x.GetLatestStationMonthDetailsForStations(It.IsAny<List<int>>()))
+                .Returns(new List<StationMonthDetailDto>());
+            
+            _DaypartCacheMock
+                .Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                .Returns(new DisplayDaypart
+                {
+                    Monday = true,
+                    StartTime = 36000, // 10am
+                    EndTime = 39599 // 11am
+                });
+
+            object passedParameters = null;
+            _ImpressionsCalculationEngineMock
+                .Setup(x => x.ApplyProjectedImpressions(
+                    It.IsAny<IEnumerable<PlanPricingInventoryProgram>>(),
+                    It.IsAny<ImpressionsRequestDto>(),
+                    It.IsAny<int>()))
+                .Callback<IEnumerable<PlanPricingInventoryProgram>, ImpressionsRequestDto, int>((programs, request, audienceId) =>
+                {
+                    // deep copy
+                    passedParameters = JsonConvert.DeserializeObject((JsonConvert.SerializeObject(new
+                    {
+                        programs,
+                        request,
+                        audienceId
+                    })));
+
+                    foreach (var program in programs)
+                    {
+                        program.ProjectedImpressions = 1500;
+                    }
+                });
+
+            // Act
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
+
+            // Assert
+            var resultJson = IntegrationTestHelper.ConvertToJson(new
+            {
+                passedParameters,
+                inventory
+            });
+
+            Approvals.Verify(resultJson);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void UsesTwoBooks_ToProjectImpressions_WhenGatheringInventory_ForPricing()
+        {
+            // Arrange
+            var parameters = new ProgramInventoryOptionalParametersDto();
+            var inventorySourceIds = new List<int>();
+            var diagnostic = new PlanPricingJobDiagnostic();
+
+            var plan = _GetPlan();
+            plan.Equivalized = true;
+            plan.HUTBookId = 202;
+            plan.PostingType = PostingTypeEnum.NSI;
+            plan.ShareBookId = 201;
+            plan.SpotLengthId = 5;
+            plan.AudienceId = 25;
+
+            _StationRepositoryMock
+                .Setup(x => x.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
+                .Returns(new List<DisplayBroadcastStation>());
+
+            _StationProgramRepositoryMock
+                .Setup(x => x.GetProgramsForPricingModel(
+                    It.IsAny<DateTime>(),
+                    It.IsAny<DateTime>(),
+                    It.IsAny<int>(),
+                    It.IsAny<List<int>>(),
+                    It.IsAny<List<int>>()))
+                .Returns(new List<PlanPricingInventoryProgram>
+                {
+                    new PlanPricingInventoryProgram
+                    {
+                        Station = new DisplayBroadcastStation
+                        {
+                            LegacyCallLetters = "KOB"
+                        },
+                        ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
+                        {
+                            new PlanPricingInventoryProgram.ManifestWeek
+                            {
+                                Id = 2
+                            }
+                        },
+                        ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
+                        {
+                            new PlanPricingInventoryProgram.ManifestDaypart
+                            {
+                                Id = 5,
+                                Daypart = new DisplayDaypart()
+                            }
+                        }
+                    }
+                });
+
+            _PlanPricingInventoryQuarterCalculatorEngineMock
+                .Setup(x => x.GetFallbackDateRanges(
+                    It.IsAny<DateRange>(),
+                    It.IsAny<QuarterDetailDto>(),
+                    It.IsAny<QuarterDetailDto>()))
+                .Returns(new List<DateRange>());
+
+            _PlanPricingInventoryQuarterCalculatorEngineMock
+                .Setup(x => x.GetPlanQuarter(It.IsAny<PlanDto>()))
+                .Returns(new QuarterDetailDto
+                {
+                    StartDate = new DateTime(2020, 1, 1),
+                    EndDate = new DateTime(2020, 3, 31)
+                });
+
+            _PlanPricingInventoryQuarterCalculatorEngineMock
+                .Setup(x => x.GetInventoryFallbackQuarter())
+                .Returns(new QuarterDetailDto
+                {
+                    StartDate = new DateTime(2020, 4, 1),
+                    EndDate = new DateTime(2020, 6, 30)
+                });
+
+            _StationRepositoryMock
+                .Setup(x => x.GetLatestStationMonthDetailsForStations(It.IsAny<List<int>>()))
+                .Returns(new List<StationMonthDetailDto>());
+
+            _DaypartCacheMock
+                .Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                .Returns(new DisplayDaypart
+                {
+                    Monday = true,
+                    StartTime = 36000, // 10am
+                    EndTime = 39599 // 11am
+                });
+
+            object passedParameters = null;
+            _ImpressionsCalculationEngineMock
+                .Setup(x => x.ApplyProjectedImpressions(
+                    It.IsAny<IEnumerable<PlanPricingInventoryProgram>>(),
+                    It.IsAny<ImpressionsRequestDto>(),
+                    It.IsAny<int>()))
+                .Callback<IEnumerable<PlanPricingInventoryProgram>, ImpressionsRequestDto, int>((programs, request, audienceId) =>
+                {
+                    // deep copy
+                    passedParameters = JsonConvert.DeserializeObject((JsonConvert.SerializeObject(new
+                    {
+                        programs,
+                        request,
+                        audienceId
+                    })));
+
+                    foreach (var program in programs)
+                    {
+                        program.ProjectedImpressions = 1500;
+                    }
+                });
+
+            // Act
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
+
+            // Assert
+            var resultJson = IntegrationTestHelper.ConvertToJson(new
+            {
+                passedParameters,
+                inventory
+            });
+
+            Approvals.Verify(resultJson);
         }
     }
 }
