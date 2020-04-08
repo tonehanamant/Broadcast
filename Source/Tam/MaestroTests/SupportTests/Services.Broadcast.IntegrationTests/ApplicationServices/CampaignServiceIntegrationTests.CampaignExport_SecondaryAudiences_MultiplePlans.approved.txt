@@ -1,7 +1,6 @@
 ﻿{
   "AgencyName": "Stub Agency",
   "CampaignEndQuarter": "Q1'20",
-  "CampaignExportFileName": "Stub Advertiser DAY EMN PT Q4'19-Q1'20 Plan Rev - 12-16.xlsx",
   "CampaignFlightEndDate": "01/05/20",
   "CampaignFlightStartDate": "12/23/19",
   "CampaignName": "Campaign with all types of plans",

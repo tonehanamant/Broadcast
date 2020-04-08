@@ -9,6 +9,7 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.PlanPricing;
+using Services.Broadcast.Exceptions;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.ReportGenerators.PricingResults;
@@ -122,10 +123,10 @@ namespace Services.Broadcast.ApplicationServices
         public PricingResultsReportData GetPricingResultsReportData(int planId, int? planVersionNumber)
         {
             // use passed version or the current version by default
-            var planVersionId = planVersionNumber.HasValue ? 
+            var planVersionId = planVersionNumber.HasValue ?
                 _PlanRepository.GetPlanVersionIdByVersionNumber(planId, planVersionNumber.Value) :
                 (int?)null;
-            
+
             var plan = _PlanRepository.GetPlan(planId, planVersionId);
             var allocatedSpots = _PlanRepository.GetPlanPricingAllocatedSpotsByPlanVersionId(plan.VersionId);
             var manifestIds = allocatedSpots.Select(x => x.StationInventoryManifestId).Distinct();
@@ -180,7 +181,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         private int _SavePricingJobAndParameters(PlanPricingJob job, PlanPricingParametersDto planPricingParametersDto)
-        {            
+        {
             var jobId = _PlanRepository.AddPlanPricingJob(job);
             job.Id = jobId;
             _PlanRepository.SavePlanPricingParameters(planPricingParametersDto);
@@ -222,16 +223,25 @@ namespace Services.Broadcast.ApplicationServices
             var job = _PlanRepository.GetLatestPricingJob(planId);
             GetPlanPricingResultDto pricingExecutionResult = null;
 
-            if(job != null && job.Status == BackgroundJobProcessingStatus.Failed)
+            if (job != null && job.Status == BackgroundJobProcessingStatus.Failed)
             {
-                throw new Exception("Error encountered while running Pricing Model, please contact a system administrator for help");
+                //in case the error is comming from the Pricing Run model, the error message field will have better
+                //message then the generic we construct here
+                if (string.IsNullOrWhiteSpace(job.DiagnosticResult))
+                {
+                    throw new Exception(job.ErrorMessage);
+                }
+                else
+                {
+                    throw new Exception("Error encountered while running Pricing Model, please contact a system administrator for help");
+                }
             }
 
             if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
             {
                 pricingExecutionResult = _MapToGetPlanPricingResult(_PlanRepository.GetPricingResults(planId));
                 _ConvertImpressionsToUserFormat(pricingExecutionResult);
-            } 
+            }
 
             //pricingExecutionResult might be null when there is no pricing run for the latest version            
             return new PlanPricingResponseDto
@@ -263,7 +273,7 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var program in planPricingResult.Programs)
             {
-                program.AvgImpressions /= 1000; 
+                program.AvgImpressions /= 1000;
             }
         }
 
@@ -385,25 +395,25 @@ namespace Services.Broadcast.ApplicationServices
 
                     //filter out skipped weeks
                     var spots = program.ManifestWeeks
-                        .Where(x=>!skippedWeeksIds.Contains(x.ContractMediaWeekId))
+                        .Where(x => !skippedWeeksIds.Contains(x.ContractMediaWeekId))
                         .Select(manifestWeek => new PlanPricingApiRequestSpotsDto
-                    {
-                        Id = program.ManifestId,
-                        MediaWeekId = manifestWeek.ContractMediaWeekId,
-                        DaypartId = program.StandardDaypartId,
-                        Impressions = impressions,
-                        Cost = program.SpotCost,
-                        StationId = program.Station.Id,
-                        MarketCode = program.Station.MarketCode.Value,
-                        PercentageOfUs = GeneralMath.ConvertPercentageToFraction(marketCoveragesByMarketCode[program.Station.MarketCode.Value]),
-                        SpotDays = daypart.Daypart.ActiveDays,
-                        SpotHours = daypart.Daypart.GetDurationPerDayInHours()
+                        {
+                            Id = program.ManifestId,
+                            MediaWeekId = manifestWeek.ContractMediaWeekId,
+                            DaypartId = program.StandardDaypartId,
+                            Impressions = impressions,
+                            Cost = program.SpotCost,
+                            StationId = program.Station.Id,
+                            MarketCode = program.Station.MarketCode.Value,
+                            PercentageOfUs = GeneralMath.ConvertPercentageToFraction(marketCoveragesByMarketCode[program.Station.MarketCode.Value]),
+                            SpotDays = daypart.Daypart.ActiveDays,
+                            SpotHours = daypart.Daypart.GetDurationPerDayInHours()
 
-                        // Data Science API does not yet handle these fields.
-                        //Unit = program.Unit,
-                        //InventorySource = program.InventorySource,
-                        //InventorySourceType = program.InventorySourceType
-                    });
+                            // Data Science API does not yet handle these fields.
+                            //Unit = program.Unit,
+                            //InventorySource = program.InventorySource,
+                            //InventorySourceType = program.InventorySourceType
+                        });
 
                     pricingModelSpots.AddRange(spots);
                 }
@@ -431,7 +441,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         internal List<PlanPricingApiRequestWeekDto> _GetPricingModelWeeks(
-            PlanDto plan, 
+            PlanDto plan,
             List<PricingEstimate> proprietaryEstimates,
             ProgramInventoryOptionalParametersDto parameters,
             out List<int> SkippedWeeksIds)
@@ -457,7 +467,7 @@ namespace Services.Broadcast.ApplicationServices
                 var estimatedCost = estimatesForWeek.Sum(x => x.Cost);
 
                 var impressionGoal = week.WeeklyImpressions > estimatedImpressions ? week.WeeklyImpressions - estimatedImpressions : 0;
-                if(impressionGoal == 0)
+                if (impressionGoal == 0)
                 {   //proprietary fulfills this week goal so we're not sending the week
                     SkippedWeeksIds.Add(week.MediaWeekId);
                     continue;
@@ -518,7 +528,7 @@ namespace Services.Broadcast.ApplicationServices
 
             if (unitCap == UnitCapEnum.PerWeek)
                 return (capTime: 1d, "week");
-            
+
             throw new ApplicationException("Unsupported unit cap type was discovered");
         }
 
@@ -537,7 +547,7 @@ namespace Services.Broadcast.ApplicationServices
                 Queued = DateTime.Now
             };
             var newJobId = _SavePricingJobAndParameters(newJob, jobParams);
-            
+
             // call the job directly
             RunPricingJob(jobParams, newJobId, CancellationToken.None);
 
@@ -595,7 +605,7 @@ namespace Services.Broadcast.ApplicationServices
                     inventorySourceIds,
                     diagnostic);
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_GATHERING_INVENTORY);
-                
+
                 token.ThrowIfCancellationRequested();
 
                 diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
@@ -629,16 +639,16 @@ namespace Services.Broadcast.ApplicationServices
 
                     token.ThrowIfCancellationRequested();
 
-                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_VALIDATING_AND_MAPPING_API_RESPONSE);
                     if (apiAllocationResult.Error != null)
                     {
-                        var errorMessage = string.Join(",", apiAllocationResult.Error.Messages).Trim(',');
-                        throw new Exception($"Pricing API returned the following error: {apiAllocationResult.Error.Name} -  {errorMessage}");
+                        string errorMessage = $@"Pricing Model returned the following error: {apiAllocationResult.Error.Name} 
+                                -  {string.Join(",", apiAllocationResult.Error.Messages).Trim(',')}";
+                        throw new PricingModelException(errorMessage);
                     }
 
+                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_VALIDATING_AND_MAPPING_API_RESPONSE);
                     spots = _MapToResultSpots(apiAllocationResult, pricingApiRequest, inventory);
                 }
-
                 allocationResult.PricingCpm = _CalculatePricingCpm(spots, proprietaryEstimates, parameters.Margin);
                 allocationResult.Spots = spots;
 
@@ -677,6 +687,10 @@ namespace Services.Broadcast.ApplicationServices
                     transaction.Complete();
                 }
             }
+            catch (PricingModelException exception)
+            {
+                _HandlePricingJobError(jobId, BackgroundJobProcessingStatus.Failed, exception.Message);
+            }
             catch (Exception exception) when (exception is ObjectDisposedException || exception is OperationCanceledException)
             {
                 _HandlePricingJobException(jobId, BackgroundJobProcessingStatus.Canceled, exception, "Running the pricing model was canceled");
@@ -705,12 +719,29 @@ namespace Services.Broadcast.ApplicationServices
             _PlanRepository.UpdatePlanPricingJob(new PlanPricingJob
             {
                 Id = jobId,
-                Status = BackgroundJobProcessingStatus.Canceled,
-                ErrorMessage = exception.ToString(),
+                Status = status,
+                DiagnosticResult = exception.ToString(),
+                ErrorMessage = logMessage,
                 Completed = DateTime.Now
             });
 
             _LogError($"Error attempting to run the pricing model : {exception.Message}", exception);
+        }
+
+        private void _HandlePricingJobError(
+            int jobId,
+            BackgroundJobProcessingStatus status,
+            string errorMessages)
+        {
+            _PlanRepository.UpdatePlanPricingJob(new PlanPricingJob
+            {
+                Id = jobId,
+                Status = status,
+                ErrorMessage = errorMessages,
+                Completed = DateTime.Now
+            });
+
+            _LogError($"Pricing model run ended with errors : {errorMessages}");
         }
 
         internal decimal _CalculatePricingCpm(List<PlanPricingAllocatedSpot> spots, List<PricingEstimate> proprietaryEstimates
@@ -829,7 +860,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         private IEnumerable<PricingEstimate> _GetPricingEstimates(
-            IEnumerable<PlanPricingInventoryProgram> programs, 
+            IEnumerable<PlanPricingInventoryProgram> programs,
             int percentage,
             int? inventorySourceId,
             InventorySourceTypeEnum? inventorySourceType)
@@ -864,7 +895,7 @@ namespace Services.Broadcast.ApplicationServices
         private void _CalculateImpressionsAndCost(
             IEnumerable<ProgramWithManifestWeek> programsWithManifestWeeks,
             int percentageToUse,
-            out double totalWeekImpressions, 
+            out double totalWeekImpressions,
             out decimal totalWeekCost)
         {
             totalWeekImpressions = 0;
@@ -917,7 +948,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         private List<PlanPricingAllocatedSpot> _MapToResultSpots(
-            PlanPricingApiSpotsResponseDto apiSpotsResults, 
+            PlanPricingApiSpotsResponseDto apiSpotsResults,
             PlanPricingApiRequestDto pricingApiRequest,
             List<PlanPricingInventoryProgram> inventoryPrograms)
         {
@@ -928,13 +959,13 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var allocation in apiSpotsResults.Results)
             {
-                var originalSpot = pricingApiRequest.Spots.FirstOrDefault(x => 
+                var originalSpot = pricingApiRequest.Spots.FirstOrDefault(x =>
                     x.Id == allocation.ManifestId &&
                     x.MediaWeekId == allocation.MediaWeekId);
 
                 if (originalSpot == null)
                     throw new Exception("Response from API contains manifest id not found in sent data");
-                
+
                 var program = inventoryPrograms.Single(x => x.ManifestId == allocation.ManifestId);
                 var inventoryWeek = program.ManifestWeeks.Single(x => x.ContractMediaWeekId == originalSpot.MediaWeekId);
 

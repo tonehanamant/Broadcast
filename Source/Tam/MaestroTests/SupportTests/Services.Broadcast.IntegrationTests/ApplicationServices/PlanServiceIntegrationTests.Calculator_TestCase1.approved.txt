@@ -4,7 +4,6 @@
   "CPM": 0.0333333333333333333333333000,
   "CPP": 40.0,
   "Impressions": 3000.0,
-  "MediaMonthId": 450,
   "RatingPoints": 2.5,
-  "Universe": 120600000.0
+  "Universe": 120700000.0
 }

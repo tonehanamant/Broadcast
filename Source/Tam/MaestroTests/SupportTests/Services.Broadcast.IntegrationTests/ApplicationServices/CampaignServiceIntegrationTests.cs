@@ -1015,6 +1015,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             jsonResolver.Ignore(typeof(CampaignReportData), "CreatedDate");
             jsonResolver.Ignore(typeof(SharedFolderFile), "Id");
+            jsonResolver.Ignore(typeof(CampaignReportData), "CampaignExportFileName");
 
             return new JsonSerializerSettings
             {

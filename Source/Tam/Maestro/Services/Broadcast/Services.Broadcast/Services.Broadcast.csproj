@@ -515,6 +515,7 @@
     <Compile Include="Entities\StationMappingsFileRequestDto.cs" />
     <Compile Include="Entities\StationMonthDetailDto.cs" />
     <Compile Include="Entities\TimeRange.cs" />
+    <Compile Include="Exceptions\PricingModelException.cs" />
     <Compile Include="Exceptions\UnknownGenreException.cs" />
     <Compile Include="Extensions\DetectionExtensions.cs" />
     <Compile Include="Extensions\HttpExtensions.cs" />

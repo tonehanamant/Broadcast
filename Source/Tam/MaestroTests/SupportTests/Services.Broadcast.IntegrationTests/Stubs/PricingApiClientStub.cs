@@ -43,4 +43,21 @@ namespace Services.Broadcast.IntegrationTests.Stubs
             };
         }
     }
+
+    public class PricingApiClientWithErrorsStub : IPricingApiClient
+    {
+        public PlanPricingApiSpotsResponseDto GetPricingSpotsResult(PlanPricingApiRequestDto request)
+        {
+            return new PlanPricingApiSpotsResponseDto
+            {
+                RequestId = "djj4j4399fmmf1m212",
+                Results = new List<PlanPricingApiSpotsResultDto>(),
+                Error = new PlanPricingApiSpotsErrorDto
+                {
+                    Messages = new List<string> { "Error #1", "Error #2", "Error #3"},
+                    Name = "Name of the errors"
+                }
+            };
+        }
+    }
 }

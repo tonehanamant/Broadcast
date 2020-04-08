@@ -67,82 +67,12 @@ BEGIN
 END
 /*************************************** END PRI-24475 *****************************************************/
 
-/*************************************** START PRI-24475 *****************************************************/
-IF EXISTS(SELECT 1 FROM plan_versions WHERE target_audience_id = 31 AND target_universe <> hh_universe)
-BEGIN
-	UPDATE t1
-	SET t1.target_universe = t2.universe
-	FROM plan_versions as t1
-	INNER JOIN nti_universes as t2 ON t1.target_audience_id = t2.audience_id
-END
-/*************************************** END PRI-24475 *****************************************************/
-
-/*************************************** START PRI-24475 *****************************************************/
-IF EXISTS(SELECT 1 FROM plan_versions WHERE target_audience_id = 31 AND target_universe <> hh_universe)
-BEGIN
-	UPDATE t1
-	SET t1.target_universe = t2.universe
-	FROM plan_versions as t1
-	INNER JOIN nti_universes as t2 ON t1.target_audience_id = t2.audience_id
-END
-/*************************************** END PRI-24475 *****************************************************/
-
 /*************************************** START PRI-19661 *****************************************************/
 IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'diagnostic_result' AND OBJECT_ID = OBJECT_ID('plan_version_pricing_job'))
 BEGIN
 	ALTER TABLE [plan_version_pricing_job] ALTER COLUMN [diagnostic_result] nvarchar(max) NULL
 END
 /*************************************** END PRI-19661 *****************************************************/
-
-/*************************************** START PRI-24475 *****************************************************/
-IF EXISTS(SELECT 1 FROM plan_versions WHERE target_audience_id = 31 AND target_universe <> hh_universe)
-BEGIN
-	UPDATE t1
-	SET t1.target_universe = t2.universe
-	FROM plan_versions as t1
-	INNER JOIN nti_universes as t2 ON t1.target_audience_id = t2.audience_id
-END
-/*************************************** END PRI-24475 *****************************************************/
-
-/*************************************** START PRI-24475 *****************************************************/
-IF EXISTS(SELECT 1 FROM plan_versions WHERE target_audience_id = 31 AND target_universe <> hh_universe)
-BEGIN
-	UPDATE t1
-	SET t1.target_universe = t2.universe
-	FROM plan_versions as t1
-	INNER JOIN nti_universes as t2 ON t1.target_audience_id = t2.audience_id
-END
-/*************************************** END PRI-24475 *****************************************************/
-
-/*************************************** START PRI-24475 *****************************************************/
-IF EXISTS(SELECT 1 FROM plan_versions WHERE target_audience_id = 31 AND target_universe <> hh_universe)
-BEGIN
-	UPDATE t1
-	SET t1.target_universe = t2.universe
-	FROM plan_versions as t1
-	INNER JOIN nti_universes as t2 ON t1.target_audience_id = t2.audience_id
-END
-/*************************************** END PRI-24475 *****************************************************/
-
-/*************************************** START PRI-24475 *****************************************************/
-IF EXISTS(SELECT 1 FROM plan_versions WHERE target_audience_id = 31 AND target_universe <> hh_universe)
-BEGIN
-	UPDATE t1
-	SET t1.target_universe = t2.universe
-	FROM plan_versions as t1
-	INNER JOIN nti_universes as t2 ON t1.target_audience_id = t2.audience_id
-END
-/*************************************** END PRI-24475 *****************************************************/
-
-/*************************************** START PRI-24475 *****************************************************/
-IF EXISTS(SELECT 1 FROM plan_versions WHERE target_audience_id = 31 AND target_universe <> hh_universe)
-BEGIN
-	UPDATE t1
-	SET t1.target_universe = t2.universe
-	FROM plan_versions as t1
-	INNER JOIN nti_universes as t2 ON t1.target_audience_id = t2.audience_id
-END
-/*************************************** END PRI-24475 *****************************************************/
 
 /*************************************** START PRI-25505 *****************************************************/
 
@@ -233,6 +163,15 @@ END
 GO
 
 /*************************************** END PRI-25505 *******************************************************/
+
+/*************************************** START PRI-24300 *******************************************************/
+IF EXISTS(SELECT 1 FROM plan_version_pricing_parameters_inventory_source_type_percentages
+				WHERE inventory_source_type NOT IN (1,2,3,4,5))
+BEGIN
+	DELETE FROM plan_version_pricing_parameters_inventory_source_type_percentages
+	WHERE inventory_source_type NOT IN (1,2,3,4,5)
+END
+/*************************************** END PRI-24300 *******************************************************/
 
 /*************************************** START PRI-25196 *****************************************************/
 IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'goal_fulfilled_by_proprietary' AND OBJECT_ID = OBJECT_ID('plan_version_pricing_results'))
