@@ -220,7 +220,7 @@ namespace Services.Broadcast.ApplicationServices
         public PlanPricingResponseDto GetCurrentPricingExecution(int planId)
         {
             var job = _PlanRepository.GetLatestPricingJob(planId);
-            PlanPricingResultDto pricingExecutionResult = null;
+            GetPlanPricingResultDto pricingExecutionResult = null;
 
             if(job != null && job.Status == BackgroundJobProcessingStatus.Failed)
             {
@@ -229,7 +229,7 @@ namespace Services.Broadcast.ApplicationServices
 
             if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
             {
-                pricingExecutionResult = _PlanRepository.GetPricingResults(planId);
+                pricingExecutionResult = _MapToGetPlanPricingResult(_PlanRepository.GetPricingResults(planId));
                 _ConvertImpressionsToUserFormat(pricingExecutionResult);
             } 
 
@@ -237,12 +237,24 @@ namespace Services.Broadcast.ApplicationServices
             return new PlanPricingResponseDto
             {
                 Job = job,
-                Result = pricingExecutionResult ?? new PlanPricingResultDto(),
+                Result = pricingExecutionResult ?? new GetPlanPricingResultDto(),
                 IsPricingModelRunning = IsPricingModelRunning(job)
             };
         }
 
-        private void _ConvertImpressionsToUserFormat(PlanPricingResultDto planPricingResult)
+        private GetPlanPricingResultDto _MapToGetPlanPricingResult(PlanPricingResultBaseDto planPricingResult)
+        {
+            return planPricingResult != null ? new GetPlanPricingResultDto
+            {
+                Programs = planPricingResult.Programs,
+                Totals = planPricingResult.Totals,
+                OptimalCpm = planPricingResult.OptimalCpm,
+                GoalFulfilledByProprietary = planPricingResult.GoalFulfilledByProprietary,
+                Notes = planPricingResult.GoalFulfilledByProprietary ? "Proprietary goals meet plan goals" : string.Empty
+            } : null;
+        }
+
+        private void _ConvertImpressionsToUserFormat(GetPlanPricingResultDto planPricingResult)
         {
             if (planPricingResult == null)
                 return;
@@ -259,7 +271,7 @@ namespace Services.Broadcast.ApplicationServices
         public PlanPricingResponseDto CancelCurrentPricingExecution(int planId)
         {
             var job = _PlanRepository.GetLatestPricingJob(planId);
-            PlanPricingResultDto pricingExecutionResult = null;
+            GetPlanPricingResultDto pricingExecutionResult = null;
 
             if (job != null && job.Status == BackgroundJobProcessingStatus.Failed)
             {
@@ -280,7 +292,7 @@ namespace Services.Broadcast.ApplicationServices
             return new PlanPricingResponseDto
             {
                 Job = job,
-                Result = pricingExecutionResult ?? new PlanPricingResultDto(),
+                Result = pricingExecutionResult ?? new GetPlanPricingResultDto(),
                 IsPricingModelRunning = false
             };
         }
@@ -548,6 +560,7 @@ namespace Services.Broadcast.ApplicationServices
                 token.ThrowIfCancellationRequested();
 
                 diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FETCHING_PLAN_AND_PARAMETERS);
+                var goalsFulfilledByProprietaryInventory = true;
                 var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId);
                 var pricingMarkets = _MapToPlanPricingPrograms(plan);
                 var parameters = _GetPricingApiRequestParameters(planPricingParametersDto, plan, pricingMarkets);
@@ -589,42 +602,45 @@ namespace Services.Broadcast.ApplicationServices
                 _ApplyMargin(parameters);
                 _ValidateInventory(inventory);
 
-                var pricingApiRequest = new PlanPricingApiRequestDto
+                var pricingModelWeeks = _GetPricingModelWeeks(plan, proprietaryEstimates, programInventoryParameters, out List<int> skippedWeeksIds);
+                var spots = new List<PlanPricingAllocatedSpot>();
+                var allocationResult = new PlanPricingAllocationResult();
+                if (pricingModelWeeks != null && pricingModelWeeks.Any())
                 {
-                    Weeks = _GetPricingModelWeeks(plan, proprietaryEstimates, programInventoryParameters, out List<int> skippedWeeksIds),
-                    Spots = _GetPricingModelSpots(inventory, skippedWeeksIds)
-                };
-                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
+                    goalsFulfilledByProprietaryInventory = false;
+                    var pricingApiRequest = new PlanPricingApiRequestDto
+                    {
+                        Weeks = pricingModelWeeks,
+                        Spots = _GetPricingModelSpots(inventory, skippedWeeksIds)
+                    };
+                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
 
-                token.ThrowIfCancellationRequested();
+                    token.ThrowIfCancellationRequested();
 
-                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_PARAMETERS);
-                _PlanRepository.SavePricingRequest(parameters);
-                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_PARAMETERS);
+                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_PARAMETERS);
+                    _PlanRepository.SavePricingRequest(parameters);
+                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_PARAMETERS);
 
-                token.ThrowIfCancellationRequested();
+                    token.ThrowIfCancellationRequested();
 
-                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
-                var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
-                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
+                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
+                    var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
+                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
 
-                token.ThrowIfCancellationRequested();
+                    token.ThrowIfCancellationRequested();
 
-                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_VALIDATING_AND_MAPPING_API_RESPONSE);
-                if (apiAllocationResult.Error != null)
-                {
-                    var errorMessage = string.Join(",", apiAllocationResult.Error.Messages).Trim(',');
-                    throw new Exception($"Pricing API returned the following error: {apiAllocationResult.Error.Name} -  {errorMessage}");
+                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_VALIDATING_AND_MAPPING_API_RESPONSE);
+                    if (apiAllocationResult.Error != null)
+                    {
+                        var errorMessage = string.Join(",", apiAllocationResult.Error.Messages).Trim(',');
+                        throw new Exception($"Pricing API returned the following error: {apiAllocationResult.Error.Name} -  {errorMessage}");
+                    }
+
+                    spots = _MapToResultSpots(apiAllocationResult, pricingApiRequest, inventory);
                 }
-                
-                var spots = _MapToResultSpots(apiAllocationResult, pricingApiRequest, inventory);
-                var pricingCpm = _CalculatePricingCpm(spots, proprietaryEstimates, parameters.Margin);
-                var allocationResult = new PlanPricingAllocationResult
-                {
-                    RequestId = apiAllocationResult.RequestId,
-                    PricingCpm = pricingCpm,
-                    Spots = spots
-                };
+
+                allocationResult.PricingCpm = _CalculatePricingCpm(spots, proprietaryEstimates, parameters.Margin);
+                allocationResult.Spots = spots;
 
                 _ValidateAllocationResult(allocationResult);
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_VALIDATING_AND_MAPPING_API_RESPONSE);
@@ -632,7 +648,7 @@ namespace Services.Broadcast.ApplicationServices
                 token.ThrowIfCancellationRequested();
 
                 diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
-                var aggregatedResults = AggregateResults(inventory, allocationResult);
+                var aggregatedResults = AggregateResults(inventory, allocationResult, goalsFulfilledByProprietaryInventory);
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
 
                 token.ThrowIfCancellationRequested();
@@ -700,15 +716,18 @@ namespace Services.Broadcast.ApplicationServices
         internal decimal _CalculatePricingCpm(List<PlanPricingAllocatedSpot> spots, List<PricingEstimate> proprietaryEstimates
             , double margin)
         {
-            var allocatedTotalCost = spots.Sum(x => x.TotalCost);
-            var allocatedTotalImpressions = spots.Sum(x => x.TotalImpressions);
-            var marginAdjustedAllocatedTotalCost = allocatedTotalCost / (decimal)(1.0 - (margin / 100.0));
+            var totalCost = proprietaryEstimates.Sum(x => x.Cost);
+            var totalImpressions = proprietaryEstimates.Sum(x => x.Impressions);
 
-            var totalCostForProprietary = proprietaryEstimates.Sum(x => x.Cost);
-            var totalImpressionsForProprietary = proprietaryEstimates.Sum(x => x.Impressions);
+            if (spots.Any())
+            {
+                var allocatedTotalCost = spots.Sum(x => x.TotalCost);
+                var allocatedTotalImpressions = spots.Sum(x => x.TotalImpressions);
+                var marginAdjustedAllocatedTotalCost = allocatedTotalCost / (decimal)(1.0 - (margin / 100.0));
 
-            var totalCost = marginAdjustedAllocatedTotalCost + totalCostForProprietary;
-            var totalImpressions = allocatedTotalImpressions + totalImpressionsForProprietary;
+                totalCost = marginAdjustedAllocatedTotalCost + totalCost;
+                totalImpressions = allocatedTotalImpressions + totalImpressions;
+            }
 
             var cpm = ProposalMath.CalculateCpm(totalCost, totalImpressions);
 
@@ -938,18 +957,19 @@ namespace Services.Broadcast.ApplicationServices
 
         public void _ValidateAllocationResult(PlanPricingAllocationResult apiResponse)
         {
-            if (!apiResponse.Spots.Any())
+            if (!string.IsNullOrEmpty(apiResponse.RequestId) && !apiResponse.Spots.Any())
             {
                 var msg = $"The api returned no spots for request '{apiResponse.RequestId}'.";
                 throw new Exception(msg);
             }
         }
 
-        public PlanPricingResultDto AggregateResults(
+        public PlanPricingResultBaseDto AggregateResults(
             List<PlanPricingInventoryProgram> inventory,
-            PlanPricingAllocationResult apiResponse)
+            PlanPricingAllocationResult apiResponse,
+            bool goalsFulfilledByProprietaryInventory = false)
         {
-            var result = new PlanPricingResultDto();
+            var result = new PlanPricingResultBaseDto();
             var programs = _GetPrograms(inventory, apiResponse);
             var totalCostForAllPrograms = programs.Sum(x => x.TotalCost);
             var totalImpressionsForAllProgams = programs.Sum(x => x.TotalImpressions);
@@ -974,6 +994,7 @@ namespace Services.Broadcast.ApplicationServices
                 AvgCpm = ProposalMath.CalculateCpm(totalCostForAllPrograms, totalImpressionsForAllProgams)
             };
 
+            result.GoalFulfilledByProprietary = goalsFulfilledByProprietaryInventory;
             result.OptimalCpm = apiResponse.PricingCpm;
 
             return result;

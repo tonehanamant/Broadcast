@@ -7,6 +7,8 @@
     "Status": 3
   },
   "Result": {
+    "GoalFulfilledByProprietary": false,
+    "Notes": "",
     "OptimalCpm": 19.3868,
     "Programs": [
       {

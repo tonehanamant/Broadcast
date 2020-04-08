@@ -26,6 +26,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int total_station_count { get; set; }
         public decimal total_avg_cpm { get; set; }
         public double total_avg_impressions { get; set; }
+        public bool goal_fulfilled_by_proprietary { get; set; }
     
         public virtual ICollection<plan_version_pricing_result_spots> plan_version_pricing_result_spots { get; set; }
         public virtual plan_versions plan_versions { get; set; }

@@ -234,6 +234,19 @@ GO
 
 /*************************************** END PRI-25505 *******************************************************/
 
+/*************************************** START PRI-25196 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'goal_fulfilled_by_proprietary' AND OBJECT_ID = OBJECT_ID('plan_version_pricing_results'))
+BEGIN
+	ALTER TABLE [plan_version_pricing_results] ADD [goal_fulfilled_by_proprietary] [BIT] NULL
+	
+	EXEC('UPDATE [plan_version_pricing_results]
+		  SET [goal_fulfilled_by_proprietary] = 0')
+		  
+    ALTER TABLE [plan_version_pricing_results]
+	ALTER COLUMN [goal_fulfilled_by_proprietary] [BIT] NOT NULL
+END
+/*************************************** END PRI-25196 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -998,6 +998,7 @@
           <Property Name="total_station_count" Type="int" Nullable="false" />
           <Property Name="total_avg_cpm" Type="money" Nullable="false" />
           <Property Name="total_avg_impressions" Type="float" Nullable="false" />
+          <Property Name="goal_fulfilled_by_proprietary" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_secondary_audiences">
           <Key>
@@ -12876,6 +12877,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="total_avg_impressions" Type="Double" Nullable="false" />
           <NavigationProperty Name="plan_version_pricing_result_spots" Relationship="BroadcastModel.FK_plan_version_pricing_result_spots_plan_version_pricing_results" FromRole="plan_version_pricing_results" ToRole="plan_version_pricing_result_spots" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_pricing_results_plan_versions" FromRole="plan_version_pricing_results" ToRole="plan_versions" />
+          <Property Name="goal_fulfilled_by_proprietary" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_plan_version_pricing_result_spots_plan_version_pricing_results">
           <End Type="BroadcastModel.plan_version_pricing_results" Role="plan_version_pricing_results" Multiplicity="1">
@@ -15274,6 +15276,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_pricing_results">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_results">
               <MappingFragment StoreEntitySet="plan_version_pricing_results">
+                <ScalarProperty Name="goal_fulfilled_by_proprietary" ColumnName="goal_fulfilled_by_proprietary" />
                 <ScalarProperty Name="total_avg_impressions" ColumnName="total_avg_impressions" />
                 <ScalarProperty Name="total_avg_cpm" ColumnName="total_avg_cpm" />
                 <ScalarProperty Name="total_station_count" ColumnName="total_station_count" />

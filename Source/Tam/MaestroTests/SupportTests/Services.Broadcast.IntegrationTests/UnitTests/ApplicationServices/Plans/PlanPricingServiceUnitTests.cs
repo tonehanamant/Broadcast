@@ -514,6 +514,25 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void AggregateResultsWhenProprietaryGoalsMeetPlanGoalsTest()
+        {
+            var inventory = _GetPlanPricingInventoryPrograms();
+
+            var apiResponse = new PlanPricingAllocationResult
+            {
+                PricingCpm = 5.78m,
+                Spots = new List<PlanPricingAllocatedSpot>()
+            };
+
+            var service = _GetService();
+
+            var result = service.AggregateResults(inventory, apiResponse, goalsFulfilledByProprietaryInventory: true);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void CalculatePricingCpmTest()
         {
             var allocationResult = new PlanPricingAllocationResult
@@ -628,6 +647,29 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             var result = service._CalculatePricingCpm(allocationResult.Spots, estimates, 0);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CalculatePricingCpmWithNoSpots()
+        {
+            var estimates = new List<PricingEstimate>
+            {
+                new PricingEstimate
+                {
+                    InventorySourceId = 3,
+                    InventorySourceType = InventorySourceTypeEnum.Barter,
+                    Cost = 5000,
+                    Impressions = 10000,
+                    MediaWeekId  = 4
+                }
+            };
+
+            var service = _GetService();
+
+            var result = service._CalculatePricingCpm(new List<PlanPricingAllocatedSpot>(), estimates, 0);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }

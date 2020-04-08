@@ -127,8 +127,8 @@ namespace Services.Broadcast.Repositories
         void SavePlanPricingParameters(PlanPricingParametersDto planPricingRequestDto);
         void SavePricingApiResults(int planId, PlanPricingAllocationResult result);
         PlanPricingAllocationResult GetPricingApiResults(int planId);
-        void SavePricingAggregateResults(int planId, PlanPricingResultDto result);
-        PlanPricingResultDto GetPricingResults(int planId);
+        void SavePricingAggregateResults(int planId, PlanPricingResultBaseDto result);
+        PlanPricingResultBaseDto GetPricingResults(int planId);
 
         PlanPricingJob GetPlanPricingJob(int jobId);
 
@@ -1423,7 +1423,7 @@ namespace Services.Broadcast.Repositories
             };
         }
 
-        public void SavePricingAggregateResults(int planId, PlanPricingResultDto pricingResult)
+        public void SavePricingAggregateResults(int planId, PlanPricingResultBaseDto pricingResult)
         {
             _InReadUncommitedTransaction(context =>
             {
@@ -1444,7 +1444,8 @@ namespace Services.Broadcast.Repositories
                     total_market_count = pricingResult.Totals.MarketCount,
                     total_station_count = pricingResult.Totals.StationCount,
                     total_avg_cpm = pricingResult.Totals.AvgCpm,
-                    total_avg_impressions = pricingResult.Totals.AvgImpressions
+                    total_avg_impressions = pricingResult.Totals.AvgImpressions,
+                    goal_fulfilled_by_proprietary = pricingResult.GoalFulfilledByProprietary
                 };
 
                 context.plan_version_pricing_results.Add(planPricingResult);
@@ -1477,7 +1478,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PlanPricingResultDto GetPricingResults(int planId)
+        public PlanPricingResultBaseDto GetPricingResults(int planId)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -1486,9 +1487,10 @@ namespace Services.Broadcast.Repositories
                 var result = context.plan_version_pricing_results.SingleOrDefault(p => p.plan_version_id == planVersionId);
                 if (result == null)
                     return null;
-                return new PlanPricingResultDto
+                return new PlanPricingResultBaseDto
                 {
                     OptimalCpm = result.optimal_cpm,
+                    GoalFulfilledByProprietary = result.goal_fulfilled_by_proprietary,
                     Totals = new PlanPricingTotalsDto
                     {
                         MarketCount = result.total_market_count,

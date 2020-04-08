@@ -10,6 +10,8 @@
     "Status": 3
   },
   "Result": {
+    "GoalFulfilledByProprietary": false,
+    "Notes": null,
     "OptimalCpm": 0.0,
     "Programs": [],
     "Totals": {

@@ -2,11 +2,17 @@
 
 namespace Services.Broadcast.Entities.Plan.Pricing
 {
-    public class PlanPricingResultDto
+    public class PlanPricingResultBaseDto
     {
         public PlanPricingTotalsDto Totals { get; set; } = new PlanPricingTotalsDto();
         public List<PlanPricingProgramDto> Programs { get; set; } = new List<PlanPricingProgramDto>();
         public decimal OptimalCpm { get; set; }
+        public bool GoalFulfilledByProprietary { get; set; }
+    }
+
+    public class GetPlanPricingResultDto : PlanPricingResultBaseDto
+    {
+        public string Notes { get; set; }
     }
 
     public class PlanPricingProgramDto
