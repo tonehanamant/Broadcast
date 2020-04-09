@@ -150,6 +150,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void GetInnventoryforPlanTestNewProgramsWithoutEnhancementAreNotSelected()
         {
             using (new TransactionScopeWrapper())
@@ -169,6 +170,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void RunSpotLengthTest()
         {
             using (new TransactionScopeWrapper())

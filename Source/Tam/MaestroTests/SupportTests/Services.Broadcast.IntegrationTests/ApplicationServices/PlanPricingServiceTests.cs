@@ -179,6 +179,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void GetPricingRequestTest()
         {
             using (new TransactionScopeWrapper())
@@ -223,6 +224,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetLatestProcessingPricingExecution_WithCanceledJobs()
         {
             var currentDate = new DateTime(2019, 11, 4);

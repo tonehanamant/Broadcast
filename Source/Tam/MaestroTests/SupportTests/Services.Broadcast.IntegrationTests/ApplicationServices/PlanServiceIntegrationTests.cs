@@ -26,13 +26,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class PlanServiceIntegrationTests
     {
-        private readonly IPlanService _PlanService;
-        private readonly ICampaignService _CampaignService;
-        private readonly IPlanPricingService _PlanPricingService;
+        private IPlanService _PlanService;
+        private ICampaignService _CampaignService;
+        private IPlanPricingService _PlanPricingService;
         
         private const int AUDIENCE_ID = 31;
 
-        public PlanServiceIntegrationTests()
+        [SetUp]
+        public void SetUp()
         {
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPricingApiClient, PricingApiClientStub>();
             _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
@@ -538,12 +539,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiClient>(new TrafficApiClientStub());
+                var stubTrafficClient = new TrafficApiClientStub();
+                var actualTrafficCache = new TrafficApiCache(stubTrafficClient);
+
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(actualTrafficCache);
+                var planService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
 
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.ProductId = notExistingProductId;
 
-                Assert.That(() => _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01)),
+                Assert.That(() => planService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01)),
                     Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid product"));
             }
         }
@@ -1279,37 +1284,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Category("short_running")]
-        public void Calculator_WithoutMediaMonthId()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                Assert.That(() => _PlanService.Calculate(new PlanDeliveryBudget
-                {
-                    Budget = null,
-                    CPM = null,
-                    Impressions = null,
-                    AudienceId = 5
-                }), Throws.TypeOf<Exception>().With.Message.EqualTo("Cannot calculate goal without media month and audience"));
-            }
-        }
-
-        [Test]
-        [Category("short_running")]
-        public void Calculator_WithoutAudienceId()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                Assert.That(() => _PlanService.Calculate(new PlanDeliveryBudget
-                {
-                    Budget = null,
-                    CPM = null,
-                    Impressions = null,
-                }), Throws.TypeOf<Exception>().With.Message.EqualTo("Cannot calculate goal without media month and audience"));
-            }
-        }
-
-        [Test]
-        [Category("short_running")]
         public void Calculator_InvalidObject()
         {
             using (new TransactionScopeWrapper())
@@ -1326,7 +1300,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Category("short_running")]
-        public void Calculator_InvalidObject2()
+        public void Calculator_WithoutAudienceId()
         {
             using (new TransactionScopeWrapper())
             {
@@ -1336,7 +1310,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     CPM = 1,
                     Impressions = 1,
                     AudienceId = 0
-                }), Throws.TypeOf<Exception>().With.Message.EqualTo("Cannot calculate goal without media month and audience"));
+                }), Throws.TypeOf<Exception>().With.Message.EqualTo("Cannot calculate goal without an audience"));
             }
         }
 

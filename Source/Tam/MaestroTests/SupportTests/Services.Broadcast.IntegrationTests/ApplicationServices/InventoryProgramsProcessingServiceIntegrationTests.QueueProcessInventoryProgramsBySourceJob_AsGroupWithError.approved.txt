@@ -2,7 +2,7 @@
   "AlternateViews": [],
   "Attachments": [],
   "Bcc": [],
-  "Body": "Hello,\r\n\r\nBroadcast Job 'InventoryProgramsBySourceGroupJob' completed.\r\n\r\n\tJobGroupID : af26f2db-3078-4659-9025-7362e14bbd02\r\n\tInventory Source : Open Market\r\n\r\nError : \r\n\tTest error message\r\n\r\nHave a nice day.\r\n",
+  "Body": "Hello,\r\n\r\nA ProgramGuide Interface file has failed to be exported.\r\n\r\n\tJobGroupID : af26f2db-3078-4659-9025-7362e14bbd02\r\n\tInventory Source : Open Market\r\n\tRange Start Date : 2018-09-20\r\n\tRange End Date : 2018-09-26\r\n\r\nHave a nice day.\r\n",
   "BodyEncoding": {
     "BodyName": "us-ascii",
     "CodePage": 20127,
@@ -41,7 +41,7 @@
   "ReplyTo": null,
   "ReplyToList": [],
   "Sender": null,
-  "Subject": "Broadcast Process Inventory Programs job completed with Errors : Source 'Open Market' - Group 'af26f2db-3078-4659-9025-7362e14bbd02'",
+  "Subject": "Broadcast Inventory Programs - ProgramGuide Interface Export file failed",
   "SubjectEncoding": null,
   "To": [
     {
