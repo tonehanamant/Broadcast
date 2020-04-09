@@ -186,6 +186,99 @@ BEGIN
 END
 /*************************************** END PRI-25196 *****************************************************/
 
+/*************************************** START ADDING Persons 2+ *******************************************************/
+IF NOT EXISTS(SELECT 1 FROM audiences WHERE code = 'P2+')
+BEGIN
+	SET NOCOUNT ON
+
+	BEGIN TRANSACTION
+	insert into audiences(category_code, sub_category_code, range_start, range_end, custom, code, name)
+	values(0, 'P', 2, 99, 1, 'P2+', 'Persons 2+')
+
+	declare @audienceId int = SCOPE_IDENTITY()
+
+	insert into audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id)
+	values(2, @audienceId, (select top 1 id from audiences where code = 'C2-5'))
+
+	insert into audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id)
+	values(2, @audienceId, (select top 1 id from audiences where code = 'C6-11'))
+
+	insert into audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id)
+	values(2, @audienceId, (select top 1 id from audiences where code = 'W12-14'))
+
+	insert into audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id)
+	values(2, @audienceId, (select top 1 id from audiences where code = 'M12-14'))
+
+	insert into audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id)
+	values(2, @audienceId, (select top 1 id from audiences where code = 'W15-17'))
+
+	insert into audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id)
+	values(2, @audienceId, (select top 1 id from audiences where code = 'M15-17'))
+
+	insert into audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id)
+	values(2, @audienceId, (select top 1 id from audiences where code = 'W18-20'))
+
+	insert into audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id)
+	values(2, @audienceId, (select top 1 id from audiences where code = 'M18-20'))
+
+	insert into audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id)
+	values(2, @audienceId, (select top 1 id from audiences where code = 'W21-24'))
+
+	insert into audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id)
+	values(2, @audienceId, (select top 1 id from audiences where code = 'M21-24'))
+
+	insert into audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id)
+	values(2, @audienceId, (select top 1 id from audiences where code = 'W25-34'))
+
+	insert into audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id)
+	values(2, @audienceId, (select top 1 id from audiences where code = 'M25-34'))
+
+	insert into audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id)
+	values(2, @audienceId, (select top 1 id from audiences where code = 'W35-49'))
+
+	insert into audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id)
+	values(2, @audienceId, (select top 1 id from audiences where code = 'M35-49'))
+
+	insert into audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id)
+	values(2, @audienceId, (select top 1 id from audiences where code = 'W50-54'))
+
+	insert into audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id)
+	values(2, @audienceId, (select top 1 id from audiences where code = 'M50-54'))
+
+	insert into audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id)
+	values(2, @audienceId, (select top 1 id from audiences where code = 'W55-64'))
+
+	insert into audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id)
+	values(2, @audienceId, (select top 1 id from audiences where code = 'M55-64'))
+
+	insert into audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id)
+	values(2, @audienceId, (select top 1 id from audiences where code = 'W65+'))
+
+	insert into audience_audiences(rating_category_group_id, custom_audience_id, rating_audience_id)
+	values(2, @audienceId, (select top 1 id from audiences where code = 'M65+'))
+
+	-- DATA VERIFICATION STEPS
+	DECLARE @error BIT = 0
+
+	IF (SELECT COUNT(1) FROM audiences WHERE category_code=0 AND sub_category_code='P' AND range_start=2 AND range_end=99 AND custom=1 AND code='P2+' AND name='Persons 2+')<>1
+	BEGIN
+		PRINT 'Invalid count of demo Persons 2+';
+		SET @error = 1;
+	END
+
+	IF (SELECT COUNT(1) FROM audience_audiences WHERE custom_audience_id in (SELECT id FROM audiences WHERE code='P2+'))<>20
+	BEGIN
+		PRINT 'Invalid count of demo Persons 2+ components';
+		SET @error = 1;
+	END
+
+	IF @error = 1
+		ROLLBACK
+	ELSE
+		COMMIT
+END
+/*************************************** END ADDING Persons 2+ *******************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
