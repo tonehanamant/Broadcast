@@ -9,6 +9,7 @@ namespace BroadcastComposerWeb.Controllers
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             ViewBag.DisplayCampaignLink = BroadcastServiceSystemParameter.DisplayCampaignLink;
+            ViewBag.DisplayBuyingLink = BroadcastServiceSystemParameter.DisplayBuyingLink;
 
             base.OnActionExecuting(filterContext);
         }
