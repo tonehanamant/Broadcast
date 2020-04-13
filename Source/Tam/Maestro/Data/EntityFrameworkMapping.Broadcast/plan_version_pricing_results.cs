@@ -27,8 +27,12 @@ namespace EntityFrameworkMapping.Broadcast
         public decimal total_avg_cpm { get; set; }
         public double total_avg_impressions { get; set; }
         public bool goal_fulfilled_by_proprietary { get; set; }
+        public double total_impressions { get; set; }
+        public decimal total_budget { get; set; }
+        public Nullable<int> plan_version_pricing_job_id { get; set; }
     
         public virtual ICollection<plan_version_pricing_result_spots> plan_version_pricing_result_spots { get; set; }
         public virtual plan_versions plan_versions { get; set; }
+        public virtual plan_version_pricing_job plan_version_pricing_job { get; set; }
     }
 }

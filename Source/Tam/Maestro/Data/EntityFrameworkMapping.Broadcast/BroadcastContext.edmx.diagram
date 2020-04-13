@@ -377,9 +377,6 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_weeks_media_weeks" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_weeks_plan_versions" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_result_spots" Width="1.5" PointX="16.75" PointY="74.75" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_results" Width="1.5" PointX="14.5" PointY="74.75" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_result_spots_plan_version_pricing_results" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_results_plan_versions" />
         <EntityTypeShape EntityType="BroadcastModel.shared_folder_files" Width="1.5" PointX="31.375" PointY="10.75" />
         <EntityTypeShape EntityType="BroadcastModel.nti_universe_audience_mappings" Width="1.5" PointX="5" PointY="52" />
         <EntityTypeShape EntityType="BroadcastModel.nti_universe_details" Width="1.5" PointX="8" PointY="70.875" />
@@ -422,6 +419,17 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_api_result_spots" Width="1.5" PointX="20.25" PointY="48.75" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_result_spots_daypart_defaults" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_result_spots_media_weeks1" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_results_plan_version_pricing_job" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_executions_plan_version_pricing_job" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_parameters_plan_version_pricing_job" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_results" Width="1.5" PointX="22.125" PointY="0.75" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_results_plan_version_pricing_job" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_result_spots_plan_version_pricing_results" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_results_plan_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_results_plan_version_pricing_job" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_executions_plan_version_pricing_job" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_parameters_plan_version_pricing_job" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_results_plan_version_pricing_job" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

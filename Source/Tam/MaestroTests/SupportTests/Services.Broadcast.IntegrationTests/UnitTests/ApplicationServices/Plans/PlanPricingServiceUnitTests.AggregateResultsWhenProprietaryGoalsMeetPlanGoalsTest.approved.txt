@@ -1,10 +1,14 @@
 ﻿{
   "GoalFulfilledByProprietary": true,
+  "JobId": null,
   "OptimalCpm": 5.78,
+  "PlanVersionId": 0,
   "Programs": [],
   "Totals": {
     "AvgCpm": 0.0,
     "AvgImpressions": 0.0,
+    "Budget": 0.0,
+    "Impressions": 0.0,
     "MarketCount": 0,
     "StationCount": 0
   }

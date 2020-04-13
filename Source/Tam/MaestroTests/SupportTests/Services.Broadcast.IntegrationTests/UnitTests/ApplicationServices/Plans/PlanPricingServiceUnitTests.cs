@@ -444,6 +444,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var apiResponse = new PlanPricingAllocationResult
             {
                 PricingCpm = 5.78m,
+                JobId = null,
+                PlanVersionId = 50,
                 Spots = new List<PlanPricingAllocatedSpot>
                 {
                     new PlanPricingAllocatedSpot

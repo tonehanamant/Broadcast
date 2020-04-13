@@ -167,6 +167,7 @@ namespace Services.Broadcast.ApplicationServices
                 };
                 using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                 {
+                    planPricingParametersDto.PlanVersionId = plan.VersionId;
                     _SavePricingJobAndParameters(job, planPricingParametersDto);
                     _CampaignRepository.UpdateCampaignLastModified(plan.CampaignId, currentDate, username);
                     transaction.Complete();
@@ -184,6 +185,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var jobId = _PlanRepository.AddPlanPricingJob(job);
             job.Id = jobId;
+            planPricingParametersDto.JobId = jobId;
             _PlanRepository.SavePlanPricingParameters(planPricingParametersDto);
 
             return jobId;
@@ -260,7 +262,9 @@ namespace Services.Broadcast.ApplicationServices
                 Totals = planPricingResult.Totals,
                 OptimalCpm = planPricingResult.OptimalCpm,
                 GoalFulfilledByProprietary = planPricingResult.GoalFulfilledByProprietary,
-                Notes = planPricingResult.GoalFulfilledByProprietary ? "Proprietary goals meet plan goals" : string.Empty
+                Notes = planPricingResult.GoalFulfilledByProprietary ? "Proprietary goals meet plan goals" : string.Empty,
+                PlanVersionId = planPricingResult.PlanVersionId,
+                JobId = planPricingResult.JobId
             } : null;
         }
 
@@ -324,7 +328,7 @@ namespace Services.Broadcast.ApplicationServices
 
             parameters.Markets = pricingMarkets;
             parameters.CoverageGoalPercent = plan.CoverageGoalPercent ?? 0;
-
+            parameters.JobId = planPricingParametersDto.JobId;
 
             return parameters;
         }
@@ -651,6 +655,8 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 allocationResult.PricingCpm = _CalculatePricingCpm(spots, proprietaryEstimates, parameters.Margin);
                 allocationResult.Spots = spots;
+                allocationResult.JobId = jobId;
+                allocationResult.PlanVersionId = plan.VersionId;
 
                 _ValidateAllocationResult(allocationResult);
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_VALIDATING_AND_MAPPING_API_RESPONSE);
@@ -666,11 +672,11 @@ namespace Services.Broadcast.ApplicationServices
                 using (var transaction = new TransactionScopeWrapper())
                 {
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
-                    _PlanRepository.SavePricingApiResults(plan.Id, allocationResult);
+                    _PlanRepository.SavePricingApiResults(allocationResult);
                     diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
 
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
-                    _PlanRepository.SavePricingAggregateResults(plan.Id, aggregatedResults);
+                    _PlanRepository.SavePricingAggregateResults(aggregatedResults);
                     diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
 
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
@@ -1003,7 +1009,7 @@ namespace Services.Broadcast.ApplicationServices
             var result = new PlanPricingResultBaseDto();
             var programs = _GetPrograms(inventory, apiResponse);
             var totalCostForAllPrograms = programs.Sum(x => x.TotalCost);
-            var totalImpressionsForAllProgams = programs.Sum(x => x.TotalImpressions);
+            var totalImpressionsForAllPrograms = programs.Sum(x => x.TotalImpressions);
             var totalSpotsForAllPrograms = programs.Sum(x => x.TotalSpots);
 
             result.Programs.AddRange(programs.Select(x => new PlanPricingProgramDto
@@ -1014,19 +1020,23 @@ namespace Services.Broadcast.ApplicationServices
                 MarketCount = x.MarketCodes.Count,
                 AvgImpressions = x.AvgImpressions,
                 AvgCpm = x.AvgCpm,
-                PercentageOfBuy = ProposalMath.CalculateImpressionsPercentage(x.TotalImpressions, totalImpressionsForAllProgams)
+                PercentageOfBuy = ProposalMath.CalculateImpressionsPercentage(x.TotalImpressions, totalImpressionsForAllPrograms)
             }));
 
             result.Totals = new PlanPricingTotalsDto
             {
                 MarketCount = programs.SelectMany(x => x.MarketCodes).Distinct().Count(),
                 StationCount = programs.SelectMany(x => x.Stations).Distinct().Count(),
-                AvgImpressions = ProposalMath.CalculateAvgImpressions(totalImpressionsForAllProgams, totalSpotsForAllPrograms),
-                AvgCpm = ProposalMath.CalculateCpm(totalCostForAllPrograms, totalImpressionsForAllProgams)
+                AvgImpressions = ProposalMath.CalculateAvgImpressions(totalImpressionsForAllPrograms, totalSpotsForAllPrograms),
+                AvgCpm = ProposalMath.CalculateCpm(totalCostForAllPrograms, totalImpressionsForAllPrograms),
+                Budget = totalCostForAllPrograms,
+                Impressions = totalImpressionsForAllPrograms
             };
 
             result.GoalFulfilledByProprietary = goalsFulfilledByProprietaryInventory;
             result.OptimalCpm = apiResponse.PricingCpm;
+            result.JobId = apiResponse.JobId;
+            result.PlanVersionId = apiResponse.PlanVersionId;
 
             return result;
         }

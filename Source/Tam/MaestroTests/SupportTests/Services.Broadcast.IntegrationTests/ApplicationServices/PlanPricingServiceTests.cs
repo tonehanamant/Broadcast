@@ -340,6 +340,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planPricingRequestDto = new PlanPricingParametersDto
                 {
                     PlanId = 1197,
+                    PlanVersionId = 47,
                     MaxCpm = 100m,
                     MinCpm = 1m,
                     Budget = 1000,
@@ -379,6 +380,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(PlanPricingProgramDto), "Id");
                 jsonResolver.Ignore(typeof(PlanPricingJob), "Completed");
                 jsonResolver.Ignore(typeof(PlanPricingJob), "DiagnosticResult");
+                jsonResolver.Ignore(typeof(PlanPricingResultBaseDto), "JobId");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -399,6 +401,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planPricingRequestDto = new PlanPricingParametersDto
                 {
                     PlanId = 1196,
+                    PlanVersionId = 46,
                     MaxCpm = 100m,
                     MinCpm = 1m,
                     Budget = 1000,
@@ -485,6 +488,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planPricingRequestDto = new PlanPricingParametersDto
                 {
                     PlanId = 1197,
+                    PlanVersionId = 47,
                     MaxCpm = 10m,
                     MinCpm = 1m,
                     Budget = 1000,
@@ -514,7 +518,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var result = _PlanService.GetPlan(1197);
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingParametersDto), "JobId");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
 
@@ -528,6 +539,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planPricingRequestDto = new PlanPricingParametersDto
                 {
                     PlanId = 1197,
+                    PlanVersionId = 47,
                     MaxCpm = 100m,
                     MinCpm = 1m,
                     Budget = 1000,
@@ -563,6 +575,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingAllocatedSpot), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingAllocationResult), "JobId");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -583,6 +596,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planPricingRequestDto = new PlanPricingParametersDto
                 {
                     PlanId = 1197,
+                    PlanVersionId = 47,
                     MaxCpm = 100m,
                     MinCpm = 1m,
                     Budget = 1000,
@@ -623,6 +637,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(PlanPricingJob), "HangfireJobId");
                 jsonResolver.Ignore(typeof(PlanPricingJob), "Completed");
                 jsonResolver.Ignore(typeof(PlanPricingJob), "DiagnosticResult");
+                jsonResolver.Ignore(typeof(PlanPricingResultBaseDto), "JobId");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -643,6 +658,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planPricingRequestDto = new PlanPricingParametersDto
                 {
                     PlanId = 1197,
+                    PlanVersionId = 47,
                     MaxCpm = 100m,
                     MinCpm = 1m,
                     Budget = 1000,
@@ -684,6 +700,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(PlanPricingJob), "HangfireJobId");
                 jsonResolver.Ignore(typeof(PlanPricingJob), "Completed");
                 jsonResolver.Ignore(typeof(PlanPricingJob), "DiagnosticResult");
+                jsonResolver.Ignore(typeof(PlanPricingResultBaseDto), "JobId");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -704,6 +721,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planPricingRequestDto = new PlanPricingParametersDto
                 {
                     PlanId = 1197,
+                    PlanVersionId = 47,
                     MaxCpm = 100m,
                     MinCpm = 1m,
                     Budget = 1000,
@@ -737,7 +755,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var result = _PlanRepository.GetPlanPricingRuns(planPricingRequestDto.PlanId);
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingApiRequestParametersDto), "JobId");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
 

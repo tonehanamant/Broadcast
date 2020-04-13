@@ -285,6 +285,7 @@
         "Percentage": 0
       }
     ],
+    "JobId": null,
     "Margin": 20.0,
     "MaxCpm": null,
     "MinCpm": null,

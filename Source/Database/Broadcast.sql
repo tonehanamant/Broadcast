@@ -279,6 +279,72 @@ BEGIN
 END
 /*************************************** END ADDING Persons 2+ *******************************************************/
 
+/*************************************** START PRI-20832 *****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'total_impressions' AND OBJECT_ID = OBJECT_ID('plan_version_pricing_results'))
+BEGIN
+	ALTER TABLE plan_version_pricing_results
+	ADD total_impressions FLOAT NULL
+
+	EXEC('UPDATE plan_version_pricing_results
+	SET total_impressions = 0
+	WHERE total_impressions IS NULL')
+
+	ALTER TABLE plan_version_pricing_results
+	ALTER COLUMN total_impressions FLOAT NOT NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'total_budget' AND OBJECT_ID = OBJECT_ID('plan_version_pricing_results'))
+BEGIN
+	ALTER TABLE plan_version_pricing_results
+	ADD total_budget MONEY NULL
+
+	EXEC('UPDATE plan_version_pricing_results
+	SET total_budget = 0
+	WHERE total_budget IS NULL')
+
+	ALTER TABLE plan_version_pricing_results
+	ALTER COLUMN total_budget MONEY NOT NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'plan_version_pricing_job_id' AND OBJECT_ID = OBJECT_ID('plan_version_pricing_parameters'))
+BEGIN
+	ALTER TABLE plan_version_pricing_parameters
+	ADD plan_version_pricing_job_id INT NULL
+	
+	ALTER TABLE plan_version_pricing_parameters
+	ADD CONSTRAINT FK_plan_version_pricing_parameters_plan_version_pricing_job FOREIGN KEY (plan_version_pricing_job_id) REFERENCES plan_version_pricing_job (id)
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'plan_version_pricing_job_id' AND OBJECT_ID = OBJECT_ID('plan_version_pricing_executions'))
+BEGIN
+	ALTER TABLE plan_version_pricing_executions
+	ADD plan_version_pricing_job_id INT NULL
+	
+	ALTER TABLE plan_version_pricing_executions
+	ADD CONSTRAINT FK_plan_version_pricing_executions_plan_version_pricing_job FOREIGN KEY (plan_version_pricing_job_id) REFERENCES plan_version_pricing_job (id)
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'plan_version_pricing_job_id' AND OBJECT_ID = OBJECT_ID('plan_version_pricing_api_results'))
+BEGIN
+	ALTER TABLE plan_version_pricing_api_results
+	ADD plan_version_pricing_job_id INT NULL
+	
+	ALTER TABLE plan_version_pricing_api_results
+	ADD CONSTRAINT FK_plan_version_pricing_api_results_plan_version_pricing_job FOREIGN KEY (plan_version_pricing_job_id) REFERENCES plan_version_pricing_job (id)
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'plan_version_pricing_job_id' AND OBJECT_ID = OBJECT_ID('plan_version_pricing_results'))
+BEGIN
+	ALTER TABLE plan_version_pricing_results
+	ADD plan_version_pricing_job_id INT NULL
+	
+	ALTER TABLE plan_version_pricing_results
+	ADD CONSTRAINT FK_plan_version_pricing_results_plan_version_pricing_job FOREIGN KEY (plan_version_pricing_job_id) REFERENCES plan_version_pricing_job (id)
+
+END
+/*************************************** END PRI-20832 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

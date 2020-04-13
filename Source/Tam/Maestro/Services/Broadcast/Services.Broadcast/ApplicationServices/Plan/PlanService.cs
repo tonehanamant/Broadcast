@@ -288,7 +288,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 UnitCapsType = pricingDefaults.UnitCapType,
                 InventorySourcePercentages = pricingDefaults.InventorySourcePercentages,
                 InventorySourceTypePercentages = pricingDefaults.InventorySourceTypePercentages,
-                Margin = pricingDefaults.Margin
+                Margin = pricingDefaults.Margin,
+                PlanVersionId = plan.VersionId
             };
         }
 

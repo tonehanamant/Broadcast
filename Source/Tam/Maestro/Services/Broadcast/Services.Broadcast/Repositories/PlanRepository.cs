@@ -125,9 +125,9 @@ namespace Services.Broadcast.Repositories
         void UpdateJobHangfireId(int jobId, string hangfireJobId);
         PlanPricingJob GetLatestPricingJob(int planId);
         void SavePlanPricingParameters(PlanPricingParametersDto planPricingRequestDto);
-        void SavePricingApiResults(int planId, PlanPricingAllocationResult result);
+        void SavePricingApiResults(PlanPricingAllocationResult result);
         PlanPricingAllocationResult GetPricingApiResults(int planId);
-        void SavePricingAggregateResults(int planId, PlanPricingResultBaseDto result);
+        void SavePricingAggregateResults(PlanPricingResultBaseDto result);
         PlanPricingResultBaseDto GetPricingResults(int planId);
 
         PlanPricingJob GetPlanPricingJob(int jobId);
@@ -561,7 +561,9 @@ namespace Services.Broadcast.Repositories
                 InventorySourceTypePercentages = sortedSourceTypePercents,
                 UnitCaps = arg.unit_caps,
                 UnitCapsType = (UnitCapEnum)arg.unit_caps_type,
-                Margin = arg.margin
+                Margin = arg.margin,
+                JobId = arg.plan_version_pricing_job_id,
+                PlanVersionId = arg.plan_version_id
             };
         }
 
@@ -1010,7 +1012,8 @@ namespace Services.Broadcast.Repositories
                         coverage_goal = planPricingRunModel.CoverageGoalPercent,
                         unit_caps_type = (int)planPricingRunModel.UnitCapType,
                         unit_caps = planPricingRunModel.UnitCaps,
-                        margin = planPricingRunModel.Margin
+                        margin = planPricingRunModel.Margin,
+                        plan_version_pricing_job_id = planPricingRunModel.JobId
                     };
 
                     foreach (var market in planPricingRunModel.Markets)
@@ -1086,7 +1089,9 @@ namespace Services.Broadcast.Repositories
                             Id = s.inventory_source_type,
                             Name = ((InventorySourceTypeEnum)s.inventory_source_type).GetDescriptionAttribute(),
                             Percentage = s.percentage
-                        }).ToList()
+                        }).ToList(),
+                    JobId = e.plan_version_pricing_job_id,
+                    Margin = e.margin
                 }).ToList();
             });
         }
@@ -1238,7 +1243,9 @@ namespace Services.Broadcast.Repositories
                 DeliveryRatingPoints = entity.rating_points,
                 Margin = entity.margin,
                 InventorySourcePercentages = entity.plan_version_pricing_parameters_inventory_source_percentages.Select(_MapPlanPricingInventorySourceDto).ToList(),
-                InventorySourceTypePercentages = entity.plan_version_pricing_parameters_inventory_source_type_percentages.Select(_MapPlanPricingInventorySourceTypeDto).ToList()
+                InventorySourceTypePercentages = entity.plan_version_pricing_parameters_inventory_source_type_percentages.Select(_MapPlanPricingInventorySourceTypeDto).ToList(),
+                JobId = entity.plan_version_pricing_job_id,
+                PlanVersionId = entity.plan_version_id
             };
             return dto;
         }
@@ -1273,18 +1280,9 @@ namespace Services.Broadcast.Repositories
         {
             _InReadUncommitedTransaction(context =>
             {
-                var plan = context.plans.Single(x => x.id == planPricingParametersDto.PlanId);
-                var planVersionId = plan.latest_version_id;
-                var previousParameters = context.plan_version_pricing_parameters.SingleOrDefault(x => x.plan_version_id == planVersionId);
-
-                if (previousParameters != null)
-                {
-                    context.plan_version_pricing_parameters.Remove(previousParameters);
-                }
-
                 var planPricingParameters = new plan_version_pricing_parameters
                 {
-                    plan_version_id = planVersionId,
+                    plan_version_id = planPricingParametersDto.PlanVersionId,
                     min_cpm = planPricingParametersDto.MinCpm,
                     max_cpm = planPricingParametersDto.MaxCpm,
                     impressions_goal = planPricingParametersDto.DeliveryImpressions,
@@ -1298,7 +1296,8 @@ namespace Services.Broadcast.Repositories
                     cpp = planPricingParametersDto.CPP,
                     currency = (int)planPricingParametersDto.Currency,
                     rating_points = planPricingParametersDto.DeliveryRatingPoints,
-                    margin = planPricingParametersDto.Margin
+                    margin = planPricingParametersDto.Margin,
+                    plan_version_pricing_job_id = planPricingParametersDto.JobId
                 };
 
                 planPricingParametersDto.InventorySourcePercentages.ForEach(s => planPricingParameters.plan_version_pricing_parameters_inventory_source_percentages.Add(
@@ -1321,24 +1320,16 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public void SavePricingApiResults(int planId, PlanPricingAllocationResult result)
+        public void SavePricingApiResults(PlanPricingAllocationResult result)
         {
             _InReadUncommitedTransaction(context =>
             {
                 var propertiesToIgnore = new List<string>() { "id" };
-                var plan = context.plans.Single(x => x.id == planId);
-                var planVersionId = plan.latest_version_id;
-                var previousResults = context.plan_version_pricing_api_results.Where(x => x.plan_version_id == planVersionId);
-
-                if (previousResults != null)
-                {
-                    context.plan_version_pricing_api_results.RemoveRange(previousResults);
-                }
-
                 var planPricingApiResult = new plan_version_pricing_api_results
                 {
-                    plan_version_id = planVersionId,
-                    optimal_cpm = result.PricingCpm
+                    plan_version_id = result.PlanVersionId,
+                    optimal_cpm = result.PricingCpm,
+                    plan_version_pricing_job_id = result.JobId
                 };
 
                 context.plan_version_pricing_api_results.Add(planPricingApiResult);
@@ -1381,6 +1372,8 @@ namespace Services.Broadcast.Repositories
                 return new PlanPricingAllocationResult
                 {
                     PricingCpm = apiResult.optimal_cpm,
+                    JobId = apiResult.plan_version_pricing_job_id,
+                    PlanVersionId = apiResult.plan_version_id,
                     Spots = apiResult.plan_version_pricing_api_result_spots.Select(x => new PlanPricingAllocatedSpot
                     {
                         Id = x.id,
@@ -1423,28 +1416,23 @@ namespace Services.Broadcast.Repositories
             };
         }
 
-        public void SavePricingAggregateResults(int planId, PlanPricingResultBaseDto pricingResult)
+        public void SavePricingAggregateResults(PlanPricingResultBaseDto pricingResult)
         {
             _InReadUncommitedTransaction(context =>
             {
                 var propertiesToIgnore = new List<string>() { "id" };
-                var plan = context.plans.Single(x => x.id == planId);
-                var planVersionId = plan.latest_version_id;
-                var previousResults = context.plan_version_pricing_results.Where(x => x.plan_version_id == planVersionId);
-
-                if (previousResults != null)
-                {
-                    context.plan_version_pricing_results.RemoveRange(previousResults);
-                }
 
                 var planPricingResult = new plan_version_pricing_results
                 {
-                    plan_version_id = planVersionId,
+                    plan_version_id = pricingResult.PlanVersionId,
                     optimal_cpm = pricingResult.OptimalCpm,
                     total_market_count = pricingResult.Totals.MarketCount,
                     total_station_count = pricingResult.Totals.StationCount,
                     total_avg_cpm = pricingResult.Totals.AvgCpm,
                     total_avg_impressions = pricingResult.Totals.AvgImpressions,
+                    total_budget = pricingResult.Totals.Budget,
+                    total_impressions = pricingResult.Totals.Impressions,
+                    plan_version_pricing_job_id = pricingResult.JobId,
                     goal_fulfilled_by_proprietary = pricingResult.GoalFulfilledByProprietary
                 };
 
@@ -1490,13 +1478,17 @@ namespace Services.Broadcast.Repositories
                 return new PlanPricingResultBaseDto
                 {
                     OptimalCpm = result.optimal_cpm,
+                    JobId = result.plan_version_pricing_job_id,
+                    PlanVersionId = result.plan_version_id,
                     GoalFulfilledByProprietary = result.goal_fulfilled_by_proprietary,
                     Totals = new PlanPricingTotalsDto
                     {
                         MarketCount = result.total_market_count,
                         StationCount = result.total_station_count,
                         AvgCpm = result.total_avg_cpm,
-                        AvgImpressions = result.total_avg_impressions
+                        AvgImpressions = result.total_avg_impressions,
+                        Budget = result.total_budget,
+                        Impressions = result.total_impressions
                     },
                     Programs = result.plan_version_pricing_result_spots.Select(r => new PlanPricingProgramDto
                     {

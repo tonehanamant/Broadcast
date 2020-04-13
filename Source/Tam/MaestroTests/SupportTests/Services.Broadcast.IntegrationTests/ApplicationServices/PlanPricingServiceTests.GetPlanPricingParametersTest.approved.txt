@@ -156,6 +156,7 @@
     "MaxCpm": 10.0000,
     "MinCpm": 1.0000,
     "PlanId": 1197,
+    "PlanVersionId": 47,
     "ProprietaryBlend": 0.2,
     "UnitCaps": 10,
     "UnitCapsType": 3

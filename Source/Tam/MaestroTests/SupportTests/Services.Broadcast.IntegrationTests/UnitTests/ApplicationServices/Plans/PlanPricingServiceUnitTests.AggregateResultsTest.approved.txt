@@ -1,6 +1,8 @@
 ﻿{
   "GoalFulfilledByProprietary": false,
+  "JobId": null,
   "OptimalCpm": 5.78,
+  "PlanVersionId": 50,
   "Programs": [
     {
       "AvgCpm": 10.322580645161290322580645200,
@@ -26,6 +28,8 @@
   "Totals": {
     "AvgCpm": 11.195652173913043478260869600,
     "AvgImpressions": 28750.0,
+    "Budget": 5150.0,
+    "Impressions": 460000.0,
     "MarketCount": 3,
     "StationCount": 4
   }

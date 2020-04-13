@@ -4,9 +4,17 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 {
     public class PlanPricingResultBaseDto
     {
+        public PlanPricingResultBaseDto()
+        {
+            Totals = new PlanPricingTotalsDto();
+            Programs = new List<PlanPricingProgramDto>();
+        }
+
         public PlanPricingTotalsDto Totals { get; set; } = new PlanPricingTotalsDto();
         public List<PlanPricingProgramDto> Programs { get; set; } = new List<PlanPricingProgramDto>();
         public decimal OptimalCpm { get; set; }
+        public int? JobId { get; set; }
+        public int PlanVersionId { get; set; }
         public bool GoalFulfilledByProprietary { get; set; }
     }
 
@@ -33,5 +41,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public int StationCount { get; set; }
         public decimal AvgCpm { get; set; }
         public double AvgImpressions { get; set; }
+        public double Impressions { get; set; }
+        public decimal Budget { get; set; }
     }
 }

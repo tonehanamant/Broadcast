@@ -10,6 +10,7 @@
     "GoalFulfilledByProprietary": false,
     "Notes": "",
     "OptimalCpm": 19.3868,
+    "PlanVersionId": 47,
     "Programs": [
       {
         "AvgCpm": 15.2562,
@@ -33,6 +34,8 @@
     "Totals": {
       "AvgCpm": 15.5094,
       "AvgImpressions": 26.53888889,
+      "Budget": 18522.1500,
+      "Impressions": 1194250.0,
       "MarketCount": 2,
       "StationCount": 2
     }
