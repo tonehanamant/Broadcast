@@ -398,6 +398,7 @@
     <Compile Include="UnitTests\ApplicationServices\InventoryServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\SharedFolderServiceUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\ImpressionsCalculationEngineUnitTests.cs" />
+    <Compile Include="UnitTests\ApplicationServices\StationServiceUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsBySourceUnprocessedProcessorTestClass.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsBySourceUnprocessedProcessorUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsResultImportUnitTests.cs" />

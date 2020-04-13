@@ -1,0 +1,11 @@
+﻿{
+  "Affiliation": "ABC",
+  "CallLetters": "HOTF",
+  "Code": 789,
+  "LegacyCallLetters": "HOTF",
+  "ManifestMaxEndDate": null,
+  "MarketCode": 123,
+  "ModifiedDate": "2020-04-11T01:34:26",
+  "OriginMarket": "Burlington-Plattsburgh",
+  "RateDataThrough": null
+}

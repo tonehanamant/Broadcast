@@ -1,13 +1,14 @@
-﻿using ApprovalTests;
+﻿using System;
 using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
+using ApprovalTests;
 using ApprovalTests.Reporters;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.Repositories
@@ -45,11 +46,47 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             Assert.IsTrue(distinctMarkets.Contains(202));
         }
 
+        /// <summary>
+        /// Test updating an unrated station to make it a rated station.
+        /// </summary>
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void MakeUnratedStationIntoARatedStation()
+        {
+            const string testUnratedStationLegacyCallsign = "HOTF";
+            const string testAffiliation = "ABC";
+            const short testMarketCode = 123;
+            const int testDistributorCode = 789;
+
+            const string testUser = "MakeUnratedStationIntoARatedStation_TestUser";
+            var testTime = new DateTime(2020, 04, 11, 1, 34, 26);
+
+            var repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
+
+            // get the station 
+            var testStation = repo.GetBroadcastStationByLegacyCallLetters(testUnratedStationLegacyCallsign);
+            // verify it is 'unrated'
+            Assert.IsNull(testStation.Affiliation);
+            // make it rated
+            testStation.Affiliation = testAffiliation;
+            testStation.MarketCode = testMarketCode;
+            testStation.Code = testDistributorCode;
+
+            DisplayBroadcastStation savedStation;
+
+            using (new TransactionScopeWrapper())
+            {
+                repo.UpdateStation(testStation, testUser, testTime);
+                savedStation = repo.GetBroadcastStationByLegacyCallLetters(testUnratedStationLegacyCallsign);
+            }
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedStation, _GetJsonSettings()));
+        }
+
         private JsonSerializerSettings _GetJsonSettings()
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
-            jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
             var jsonSettings = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

@@ -58,7 +58,6 @@ namespace Services.Broadcast.ApplicationServices
 
         public void ImportStationsFromForecastDatabase(string createdBy, DateTime createdDate)
         {
-
             var latestNsiStationListMediaMonthId = _NsiStationRepository.GetLatestMediaMonthIdFromStationList();
             var latestBroadcastStationListMediaMonthId = _StationRepository.GetLatestMediaMonthIdFromStationMonthDetailsList();
 
@@ -93,6 +92,15 @@ namespace Services.Broadcast.ApplicationServices
                         else
                         {
                             broadcastStation = _StationRepository.GetBroadcastStationByLegacyCallLetters(forecastStation.LegacyCallLetters);
+
+                            if (broadcastStation.Affiliation == null)
+                            {
+                                broadcastStation.Code = forecastStation.DistributorCode;
+                                broadcastStation.Affiliation = forecastStation.PrimaryAffiliation;
+                                broadcastStation.MarketCode = forecastStation.MarketCode;
+
+                                _StationRepository.UpdateStation(broadcastStation, createdBy, createdDate);
+                            }
                         }
 
                         if (!string.IsNullOrWhiteSpace(forecastStation.DistributorGroup))

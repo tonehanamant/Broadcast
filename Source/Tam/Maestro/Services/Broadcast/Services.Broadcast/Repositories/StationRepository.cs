@@ -37,6 +37,13 @@ namespace Services.Broadcast.Repositories
         int GetBroadcastStationCodeByContactId(int stationContactId);
         void UpdateStation(int code, string user, DateTime timeStamp, int inventorySourceId);
         void UpdateStationList(List<int> stationIds, string user, DateTime timeStamp, int inventorySourceId);
+
+        /// <summary>
+        /// Update the station info.
+        /// </summary>
+        void UpdateStation(DisplayBroadcastStation station, string user, DateTime updateDate);
+
+
         short? GetStationCode(string stationName);
         List<DisplayBroadcastStation> CreateStations(IEnumerable<DisplayBroadcastStation> stations, string user);
 
@@ -404,6 +411,27 @@ namespace Services.Broadcast.Repositories
                     context.SaveChanges();
 
                     return _MapToDto(newStation);
+                });
+        }
+
+        /// <inheritdoc/>
+        public void UpdateStation(DisplayBroadcastStation station, string user, DateTime updateDate)
+        {
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    var existingStation = context.stations
+                        .Where(s => s.legacy_call_letters.Equals(station.LegacyCallLetters))
+                        .Single($"No station found for station id '{station.Id}' with legacy call letters '{station.LegacyCallLetters}'.");
+
+                    existingStation.station_code = station.Code;
+                    existingStation.station_call_letters = station.CallLetters;
+                    existingStation.affiliation = station.Affiliation;
+                    existingStation.market_code = (short?)station.MarketCode;
+                    existingStation.modified_by = user;
+                    existingStation.modified_date = updateDate;
+
+                    context.SaveChanges();
                 });
         }
 
