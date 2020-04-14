@@ -1289,18 +1289,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 },
             };
 
-            _StationRepository.Setup(s => s.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
+            _StationRepositoryMock.Setup(s => s.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
                 .Returns(availableStations);
 
-            _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetPlanQuarter(It.IsAny<PlanDto>()))
+            _PlanPricingInventoryQuarterCalculatorEngineMock.Setup(s => s.GetPlanQuarter(It.IsAny<PlanDto>()))
                 .Returns(planQuarter);
-            _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetInventoryFallbackQuarter())
+            _PlanPricingInventoryQuarterCalculatorEngineMock.Setup(s => s.GetInventoryFallbackQuarter())
                 .Returns(fallbackQuarter);
-            _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetFallbackDateRanges(It.IsAny<DateRange>(),
+            _PlanPricingInventoryQuarterCalculatorEngineMock.Setup(s => s.GetFallbackDateRanges(It.IsAny<DateRange>(),
                     It.IsAny<QuarterDetailDto>(), It.IsAny<QuarterDetailDto>()))
                 .Returns(fallbackDateRanges);
 
-            _StationProgramRepository.SetupSequence(s => s.GetProgramsForPricingModel(
+            _StationProgramRepositoryMock.SetupSequence(s => s.GetProgramsForPricingModel(
                     It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<int>(),
                     It.IsAny<List<int>>(), It.IsAny<List<int>>()))
                 .Returns(inventoryOne)
@@ -1310,7 +1310,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             /*** Act ***/
             var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, spotLengthId, supportedInventorySourceTypes,
-                availableMarkets, planQuarter);
+                availableMarkets, planQuarter, fallbackQuarter);
 
             /*** Assert ***/
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
