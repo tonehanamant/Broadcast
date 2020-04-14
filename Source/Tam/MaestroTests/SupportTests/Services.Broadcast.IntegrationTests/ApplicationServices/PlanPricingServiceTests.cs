@@ -394,6 +394,74 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
+        public void RunPricingJobTwiceOnSamePlanTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planPricingRequestDto = new PlanPricingParametersDto
+                {
+                    PlanId = 1197,
+                    PlanVersionId = 47,
+                    MaxCpm = 100m,
+                    MinCpm = 1m,
+                    Budget = 1000,
+                    CompetitionFactor = 0.1,
+                    CPM = 5m,
+                    DeliveryImpressions = 50000,
+                    InflationFactor = 0.5,
+                    ProprietaryBlend = 0.2,
+                    UnitCaps = 10,
+                    UnitCapsType = UnitCapEnum.PerDay,
+                    InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                    {
+                        new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
+                        new PlanPricingInventorySourceDto{Id = 5, Percentage = 13},
+                        new PlanPricingInventorySourceDto{Id = 6, Percentage = 14},
+                        new PlanPricingInventorySourceDto{Id = 7, Percentage = 15},
+                        new PlanPricingInventorySourceDto{Id = 10, Percentage = 16},
+                        new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
+                        new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
+                    },
+                    InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                    {
+                        new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
+                        new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
+                    }
+                };
+
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+
+                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+
+                planPricingRequestDto.Budget = 1200;
+                planPricingRequestDto.UnitCapsType = UnitCapEnum.Per30Min;
+
+                var job2 = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+
+                _PlanPricingService.RunPricingJob(planPricingRequestDto, job2.Id, CancellationToken.None);
+
+                var result = _PlanPricingService.GetCurrentPricingExecution(1197);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingJob), "HangfireJobId");
+                jsonResolver.Ignore(typeof(PlanPricingProgramDto), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingJob), "Completed");
+                jsonResolver.Ignore(typeof(PlanPricingJob), "DiagnosticResult");
+                jsonResolver.Ignore(typeof(PlanPricingResultBaseDto), "JobId");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void RunPricingJobTest_CalculateAdjustedBudgetAndCPM()
         {
             using (new TransactionScopeWrapper())
@@ -515,6 +583,64 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+
+                var result = _PlanService.GetPlan(1197);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingParametersDto), "JobId");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetLastestPlanPricingParametersTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planPricingRequestDto = new PlanPricingParametersDto
+                {
+                    PlanId = 1197,
+                    PlanVersionId = 47,
+                    MaxCpm = 10m,
+                    MinCpm = 1m,
+                    Budget = 1000,
+                    CompetitionFactor = 0.1,
+                    CPM = 5m,
+                    DeliveryImpressions = 50000,
+                    InflationFactor = 0.5,
+                    ProprietaryBlend = 0.2,
+                    UnitCaps = 10,
+                    UnitCapsType = UnitCapEnum.PerDay,
+                    CPP = 1000,
+                    Currency = PlanCurrenciesEnum.GRP,
+                    DeliveryRatingPoints = 1234,
+                    InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                    {
+                        new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
+                        new PlanPricingInventorySourceDto{Id = 5, Percentage = 13},
+                        new PlanPricingInventorySourceDto{Id = 6, Percentage = 14},
+                        new PlanPricingInventorySourceDto{Id = 7, Percentage = 15},
+                        new PlanPricingInventorySourceDto{Id = 10, Percentage = 16},
+                        new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
+                        new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
+                    }
+                };
+
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+
+                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+
+                planPricingRequestDto.UnitCapsType = UnitCapEnum.PerWeek;
+                planPricingRequestDto.Budget = 1200;
+
+                _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 var result = _PlanService.GetPlan(1197);
 

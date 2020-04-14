@@ -619,6 +619,14 @@ EXEC('
 ------------------------------ END P2+ ------------------------------
 /*************************************** END PRI-25866 *****************************************************/
 
+/*************************************** START PRI-25894 *****************************************************/
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE CONSTRAINT_NAME = 'UQ_plan_version_id')
+BEGIN 
+	ALTER TABLE plan_version_pricing_parameters
+	DROP CONSTRAINT UQ_plan_version_id
+END
+/*************************************** END PRI-25894 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -116,7 +116,7 @@ namespace Services.Broadcast.Repositories
 
         int AddPlanPricingJob(PlanPricingJob planPricingJob);
         void UpdatePlanPricingJob(PlanPricingJob planPricingJob);
-        
+
         /// <summary>
         /// Updates the plan pricing job with hangfire job identifier.
         /// </summary>
@@ -304,10 +304,10 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_weeks))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_summaries))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_weeks.Select(y => y.media_weeks)))
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters))           
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(y=>y.plan_version_pricing_parameters_inventory_source_percentages)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(y => y.plan_version_pricing_parameters_inventory_source_percentages)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(y => y.plan_version_pricing_parameters_inventory_source_type_percentages)))
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(y => y.plan_version_pricing_parameters_inventory_source_percentages.Select(r=> r.inventory_sources))))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(y => y.plan_version_pricing_parameters_inventory_source_percentages.Select(r => r.inventory_sources))))
                         .Single(s => s.id == planId, "Invalid plan id.");
                     return _MapToDto(entity, markets, versionId);
                 });
@@ -511,7 +511,7 @@ namespace Services.Broadcast.Repositories
                 AvailableMarketsWithSovCount = planSummary?.available_market_with_sov_count ?? null,
                 BlackoutMarketCount = planSummary?.blackout_market_count ?? null,
                 BlackoutMarketTotalUsCoveragePercent = planSummary?.blackout_market_total_us_coverage_percent ?? null,
-                PricingParameters = _MapPricingParameters(latestPlanVersion.plan_version_pricing_parameters.SingleOrDefault()),
+                PricingParameters = _MapPricingParameters(latestPlanVersion.plan_version_pricing_parameters.OrderByDescending(p => p.id).FirstOrDefault()),
                 IsDraft = latestPlanVersion.is_draft,
                 VersionNumber = latestPlanVersion.version_number,
                 VersionId = latestPlanVersion.id,
@@ -542,7 +542,7 @@ namespace Services.Broadcast.Repositories
                     Name = ((InventorySourceTypeEnum)i.inventory_source_type).GetDescriptionAttribute(),
                     Percentage = i.percentage
                 }).ToList());
-            
+
             return new PlanPricingParametersDto
             {
                 PlanId = arg.plan_versions.plan_id,
@@ -1038,7 +1038,7 @@ namespace Services.Broadcast.Repositories
                             inventory_source_type = (byte)s.Id,
                             percentage = s.Percentage
                         }));
-                    
+
                     context.plan_version_pricing_executions.Add(planPricingExecution);
                     context.SaveChanges();
                 }
@@ -1121,7 +1121,7 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(context =>
             {
                 var job = context.plan_version_pricing_job.Single(x => x.id == planPricingJob.Id);
-                
+
                 job.status = (int)planPricingJob.Status;
                 job.completed_at = planPricingJob.Completed;
                 job.error_message = planPricingJob.ErrorMessage;
@@ -1137,7 +1137,7 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(context =>
             {
                 var job = context.plan_version_pricing_job.Single(x => x.id == jobId);
-                
+
                 job.hangfire_job_id = hangfireJobId;
 
                 context.SaveChanges();
@@ -1151,7 +1151,7 @@ namespace Services.Broadcast.Repositories
                 var latestJob = (from pvpj in context.plan_version_pricing_job
                                  where pvpj.plan_versions.plan_id == planId && pvpj.plan_version_id == pvpj.plan_versions.plan.latest_version_id
                                  select pvpj)
-                                 // ignore canceled runs
+                                // ignore canceled runs
                                 .Where(x => x.status != (int)BackgroundJobProcessingStatus.Canceled)
                                 // take jobs with status Queued or Processing first
                                 .OrderByDescending(x => x.status == (int)BackgroundJobProcessingStatus.Queued || x.status == (int)BackgroundJobProcessingStatus.Processing)
@@ -1215,7 +1215,11 @@ namespace Services.Broadcast.Repositories
                     .Include(x => x.plan_version_pricing_parameters_inventory_source_type_percentages)
                     .Include(x => x.plan_versions)
                     .Where(x => x.id == latestParametersId)
-                    .Single("Latest pricing job parameters not found.");
+                    .OrderByDescending(p => p.id)
+                    .FirstOrDefault();
+
+                if (latestParameters == null)
+                    throw new Exception("Latest pricing job parameters not found.");
 
                 var dto = _MapPlanPricingParameters(latestParameters);
 
@@ -1306,7 +1310,7 @@ namespace Services.Broadcast.Repositories
                         inventory_source_id = s.Id,
                         percentage = s.Percentage
                     }));
-                
+
                 planPricingParametersDto.InventorySourceTypePercentages.ForEach(s => planPricingParameters.plan_version_pricing_parameters_inventory_source_type_percentages.Add(
                     new plan_version_pricing_parameters_inventory_source_type_percentages
                     {
@@ -1367,7 +1371,12 @@ namespace Services.Broadcast.Repositories
                 var planVersionId = plan.latest_version_id;
                 var apiResult = context.plan_version_pricing_api_results
                     .Include(x => x.plan_version_pricing_api_result_spots)
-                    .Single(p => p.plan_version_id == planVersionId);
+                    .Where(p => p.plan_version_id == planVersionId)
+                    .OrderByDescending(p => p.id)
+                    .FirstOrDefault();
+
+                if (apiResult == null)
+                    return null;
 
                 return new PlanPricingAllocationResult
                 {
@@ -1472,7 +1481,7 @@ namespace Services.Broadcast.Repositories
             {
                 var plan = context.plans.Single(x => x.id == planId);
                 var planVersionId = plan.latest_version_id;
-                var result = context.plan_version_pricing_results.SingleOrDefault(p => p.plan_version_id == planVersionId);
+                var result = context.plan_version_pricing_results.Where(p => p.plan_version_id == planVersionId).OrderByDescending(p => p.id).FirstOrDefault();
                 if (result == null)
                     return null;
                 return new PlanPricingResultBaseDto
@@ -1538,7 +1547,12 @@ namespace Services.Broadcast.Repositories
                 var apiResult = context.plan_version_pricing_api_results
                     .Include(x => x.plan_version_pricing_api_result_spots)
                     .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.inventory_media_week))
-                    .Single(p => p.plan_version_id == planVersionId, $"No prcing runs were found for the version {planVersionId}");
+                    .Where(p => p.plan_version_id == planVersionId)
+                    .OrderByDescending(p => p.id)
+                    .FirstOrDefault();
+
+                if (apiResult == null)
+                    throw new Exception($"No pricing runs were found for the version {planVersionId}");
 
                 return apiResult.plan_version_pricing_api_result_spots.Select(_MapToPlanPricingAllocatedSpot).ToList();
             });
@@ -1551,7 +1565,12 @@ namespace Services.Broadcast.Repositories
                 var apiResult = context.plan_version_pricing_api_results
                     .Include(x => x.plan_version_pricing_api_result_spots)
                     .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.inventory_media_week))
-                    .Single(p => p.plan_version_id == planVersionId, $"No prcing runs were found for the version {planVersionId}");
+                    .Where(p => p.plan_version_id == planVersionId)
+                    .OrderByDescending(p => p.id)
+                    .FirstOrDefault();
+
+                if (apiResult == null)
+                    throw new Exception($"No pricing runs were found for the version {planVersionId}");
 
                 return apiResult.plan_version_pricing_api_result_spots.Select(_MapToPlanPricingAllocatedSpot).ToList();
             });
