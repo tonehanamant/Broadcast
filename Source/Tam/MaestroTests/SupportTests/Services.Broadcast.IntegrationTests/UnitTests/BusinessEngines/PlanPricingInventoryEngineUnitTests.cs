@@ -1048,6 +1048,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             const int stationPerMarketCount = 2;
             const int spotLengthId = 1;
             var supportedInventorySourceTypes = new List<int> { 1 };
+
             var flightDateRanges = new List<DateRange>
             {
                 new DateRange(new DateTime(2020, 12, 01),
@@ -1161,6 +1162,155 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             /*** Act ***/
             var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, spotLengthId, supportedInventorySourceTypes,
                 availableMarkets, planQuarter, fallbackQuarter);
+
+            /*** Assert ***/
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        /// <summary>
+        /// Test that the stations fallback if necessary.
+        /// </summary>
+        /// <remarks>
+        ///     Scenario : Some stations are found in the Plan Quarter and some in the Fallback Quarter over 2 date ranges.
+        ///     Expected :
+        ///     DateRange 1 : 
+        ///     - 3 stations found in the Plan Quarter
+        ///     - 3 stations found in the Fallback Quarter
+        ///     DateRange 2 : 
+        ///     - 3 stations found in the Plan Quarter
+        ///     - 3 stations found in the Fallback Quarter
+        /// </remarks>
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetFullProgramsWhenSomeStationsFallback_WithHiatus()
+        {
+            /*** Arrange ***/
+            const int marketCount = 3;
+            const int stationPerMarketCount = 2;
+            const int spotLengthId = 1;
+            var supportedInventorySourceTypes = new List<int> { 1 };
+
+            var flightDateRanges = new List<DateRange>
+            {
+                new DateRange(new DateTime(2020, 12, 01),
+                    new DateTime(2020, 12, 08)),
+                new DateRange(new DateTime(2020, 12, 12),
+                    new DateTime(2020, 12, 25)),
+            };
+            var planQuarter = new QuarterDetailDto
+            {
+                Quarter = 4,
+                Year = 2020,
+                StartDate = new DateTime(2020, 09, 25),
+                EndDate = new DateTime(2020, 12, 27)
+            };
+            var fallbackQuarter = new QuarterDetailDto
+            {
+                Quarter = 4,
+                Year = 2019,
+                StartDate = new DateTime(2019, 10, 1),
+                EndDate = new DateTime(2019, 12, 31)
+            };
+            var fallbackDateRanges = new List<DateRange>() { flightDateRanges[0] };
+
+            var availableMarkets = new List<short> { 1, 2, 3, 4, 5 };
+            var availableStations = _GetAvailableStations(marketCount, stationPerMarketCount);
+
+            var inventoryOne = new List<PlanPricingInventoryProgram>
+            {
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[0].LegacyCallLetters },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
+                    {
+                        new PlanPricingInventoryProgram.ManifestWeek
+                        {
+                            InventoryMediaWeekId = 826
+                        }
+                    }
+                },
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[1].LegacyCallLetters },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
+                    {
+                        new PlanPricingInventoryProgram.ManifestWeek
+                        {
+                            InventoryMediaWeekId = 826
+                        }
+                    }
+                },
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[2].LegacyCallLetters },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
+                    {
+                        new PlanPricingInventoryProgram.ManifestWeek
+                        {
+                            InventoryMediaWeekId = 826
+                        }
+                    }
+                },
+            };
+            var inventoryTwo = new List<PlanPricingInventoryProgram>
+            {
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[3].LegacyCallLetters },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
+                    {
+                        new PlanPricingInventoryProgram.ManifestWeek
+                        {
+                            InventoryMediaWeekId = 826
+                        }
+                    }
+                },
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[4].LegacyCallLetters },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
+                    {
+                        new PlanPricingInventoryProgram.ManifestWeek
+                        {
+                            InventoryMediaWeekId = 826
+                        }
+                    }
+                },
+                new PlanPricingInventoryProgram
+                {
+                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[5].LegacyCallLetters },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
+                    {
+                        new PlanPricingInventoryProgram.ManifestWeek
+                        {
+                            InventoryMediaWeekId = 826
+                        }
+                    }
+                },
+            };
+
+            _StationRepository.Setup(s => s.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
+                .Returns(availableStations);
+
+            _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetPlanQuarter(It.IsAny<PlanDto>()))
+                .Returns(planQuarter);
+            _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetInventoryFallbackQuarter())
+                .Returns(fallbackQuarter);
+            _PlanPricingInventoryQuarterCalculatorEngine.Setup(s => s.GetFallbackDateRanges(It.IsAny<DateRange>(),
+                    It.IsAny<QuarterDetailDto>(), It.IsAny<QuarterDetailDto>()))
+                .Returns(fallbackDateRanges);
+
+            _StationProgramRepository.SetupSequence(s => s.GetProgramsForPricingModel(
+                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<int>(),
+                    It.IsAny<List<int>>(), It.IsAny<List<int>>()))
+                .Returns(inventoryOne)
+                .Returns(inventoryTwo)
+                .Returns(inventoryOne)
+                .Returns(inventoryTwo);
+
+            /*** Act ***/
+            var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, spotLengthId, supportedInventorySourceTypes,
+                availableMarkets, planQuarter);
 
             /*** Assert ***/
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));

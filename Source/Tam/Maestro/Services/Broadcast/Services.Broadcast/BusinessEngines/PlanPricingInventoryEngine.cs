@@ -201,7 +201,7 @@ namespace Services.Broadcast.BusinessEngines
                 inventoryForDateRange.ForEach(p => p.InventoryPricingQuarterType = InventoryPricingQuarterType.Plan);
                 totalInventory.AddRange(inventoryForDateRange);
 
-                var gatheredStationCallsigns = totalInventory.Select(s => s.Station.LegacyCallLetters).Distinct().ToList();
+                var gatheredStationCallsigns = inventoryForDateRange.Select(s => s.Station.LegacyCallLetters).Distinct().ToList();
                 var fallbackStationIds = availableStations.Where(a => gatheredStationCallsigns.Contains(a.LegacyCallLetters) == false)
                     .Select(s => s.Id).ToList();
 
