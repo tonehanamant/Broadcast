@@ -1,6 +1,6 @@
 ﻿{
   "CreatedBy": "IntegrationTestUser",
-  "CreatedDate": "2019-05-14T00:00:00",
+  "CreatedDate": "2022-05-14T00:00:00",
   "Month": 12,
   "NtiUniverseDetails": [
     {
@@ -1139,6 +1139,20 @@
         "IsDirty": true
       },
       "Universe": 23940000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "P2+",
+        "_Custom": true,
+        "_Id": 419,
+        "_Name": "Persons 2+",
+        "_RangeEnd": 99,
+        "_RangeStart": 2,
+        "_SubCategoryCode": "P",
+        "IsDirty": true
+      },
+      "Universe": 307300000.0
     },
     {
       "Audience": {

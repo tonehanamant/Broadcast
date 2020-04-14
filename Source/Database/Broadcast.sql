@@ -345,6 +345,280 @@ BEGIN
 END
 /*************************************** END PRI-20832 *****************************************************/
 
+/*************************************** START PRI-25866 *****************************************************/
+------------------------------ START P2+ ------------------------------
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''F2-5'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''F6-8'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''F9-11'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''F12-14'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''F15-17'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''F18-20'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''F21-24'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''F25-29'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''F30-34'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''F35-39'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''F40-44'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''F45-49'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''F50-54'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''F55-64'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''F65+'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''M2-5'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''M6-8'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''M9-11'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''M12-14'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''M15-17'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''M18-20'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''M21-24'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''M25-29'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''M30-34'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''M35-39'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''M40-44'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''M45-49'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''M50-54'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''M55-64'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+
+EXEC('
+  declare @audience_id int = (SELECT TOP 1 id FROM audiences WHERE code = ''P2+'');
+  declare @nti_audience_code varchar(15) = ''M65+'';
+
+  IF NOT EXISTS(SELECT 1 FROM nti_universe_audience_mappings WHERE audience_id = @audience_id AND nti_audience_code = @nti_audience_code)
+  BEGIN
+      INSERT INTO nti_universe_audience_mappings(audience_id, nti_audience_code) values(@audience_id, @nti_audience_code)
+  END')
+------------------------------ END P2+ ------------------------------
+/*************************************** END PRI-25866 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

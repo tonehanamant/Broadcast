@@ -19,7 +19,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class NtiUniverseServiceIntegrationTests
     {
         private const string IntegrationTestUser = "IntegrationTestUser";
-        private readonly DateTime CreatedDate = new DateTime(2019, 5, 14);
+        private readonly DateTime CreatedDate = new DateTime(2022, 5, 14);
         private readonly INtiUniverseService _NtiUniverseService = IntegrationTestApplicationServiceFactory.GetApplicationService<INtiUniverseService>();
         private readonly INtiUniverseRepository _NtiUniverseRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<INtiUniverseRepository>();
         private const int AUDIENCE_ID = 31;
