@@ -1,6 +1,0 @@
-﻿{
-  "DiagnosticResult": null,
-  "ErrorMessage": "Pricing Model returned the following error: Name of the errors \r\n                                -  Error #1,Error #2,Error #3",
-  "PlanVersionId": 47,
-  "Status": 4
-}

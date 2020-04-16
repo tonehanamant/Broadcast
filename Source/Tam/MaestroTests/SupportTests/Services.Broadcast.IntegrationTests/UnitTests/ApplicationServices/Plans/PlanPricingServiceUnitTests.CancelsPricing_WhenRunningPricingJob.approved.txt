@@ -1,0 +1,20 @@
+﻿[
+  {
+    "Completed": null,
+    "ErrorMessage": null,
+    "HangfireJobId": null,
+    "Id": 0,
+    "PlanVersionId": 0,
+    "Queued": "0001-01-01T00:00:00",
+    "Status": 2
+  },
+  {
+    "Completed": "2020-02-04T15:31:27",
+    "ErrorMessage": "Running the pricing model was canceled",
+    "HangfireJobId": null,
+    "Id": 1,
+    "PlanVersionId": 0,
+    "Queued": "0001-01-01T00:00:00",
+    "Status": 5
+  }
+]

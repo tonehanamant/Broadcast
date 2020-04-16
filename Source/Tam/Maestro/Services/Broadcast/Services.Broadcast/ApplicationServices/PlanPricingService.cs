@@ -84,6 +84,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
         private readonly IStationProgramRepository _StationProgramRepository;
         private readonly IMarketRepository _MarketRepository;
+        private readonly IDateTimeEngine _DateTimeEngine;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -92,7 +93,8 @@ namespace Services.Broadcast.ApplicationServices
                                   IPlanPricingInventoryEngine planPricingInventoryEngine,
                                   IBroadcastLockingManagerApplicationService lockingManagerApplicationService,
                                   IDaypartCache daypartCache,
-                                  IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+                                  IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+                                  IDateTimeEngine dateTimeEngine)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
@@ -109,6 +111,7 @@ namespace Services.Broadcast.ApplicationServices
             _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
             _StationProgramRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
             _MarketRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>();
+            _DateTimeEngine = dateTimeEngine;
         }
 
         public ReportOutput GeneratePricingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)
@@ -378,7 +381,7 @@ namespace Services.Broadcast.ApplicationServices
             return _PlanRepository.GetPlanPricingRuns(planId);
         }
 
-        internal List<PlanPricingApiRequestSpotsDto> _GetPricingModelSpots(
+        private List<PlanPricingApiRequestSpotsDto> _GetPricingModelSpots(
             List<PlanPricingInventoryProgram> programs
             , List<int> skippedWeeksIds)
         {
@@ -391,12 +394,12 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     var impressions = program.ProvidedImpressions ?? program.ProjectedImpressions;
 
-                    if (!_IsSpotCostValidForPricingModelInput(impressions))
+                    if (impressions <= 0)
                         continue;
 
-                    if (!_AreImpressionsValidForPricingModelInput(program.SpotCost))
+                    if (program.SpotCost <= 0)
                         continue;
-
+                    
                     //filter out skipped weeks
                     var spots = program.ManifestWeeks
                         .Where(x => !skippedWeeksIds.Contains(x.ContractMediaWeekId))
@@ -426,25 +429,7 @@ namespace Services.Broadcast.ApplicationServices
             return pricingModelSpots;
         }
 
-        internal bool _AreImpressionsValidForPricingModelInput(decimal? impressions)
-        {
-            var result = impressions > 0;
-            return result;
-        }
-
-        internal bool _IsSpotCostValidForPricingModelInput(double? spotCost)
-        {
-            var result = spotCost > 0;
-            return result;
-        }
-
-        internal bool _AreWeeklyImpressionsValidForPricingModelInput(double? impressions)
-        {
-            var result = impressions > 0;
-            return result;
-        }
-
-        internal List<PlanPricingApiRequestWeekDto> _GetPricingModelWeeks(
+        private List<PlanPricingApiRequestWeekDto> _GetPricingModelWeeks(
             PlanDto plan,
             List<PricingEstimate> proprietaryEstimates,
             ProgramInventoryOptionalParametersDto parameters,
@@ -459,7 +444,7 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var week in plan.WeeklyBreakdownWeeks)
             {
-                if (_AreWeeklyImpressionsValidForPricingModelInput(week.WeeklyImpressions) == false)
+                if (week.WeeklyImpressions <= 0)
                 {
                     SkippedWeeksIds.Add(week.MediaWeekId);
                     continue;
@@ -490,7 +475,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
 
                 var cpmGoal = ProposalMath.CalculateCpm(weeklyBudget, impressionGoal);
-                (double capTime, string capType) = _GetFrequencyCapTimeAndCapTypeString(planPricingParameters.UnitCapsType);
+                (double capTime, string capType) = FrequencyCapHelper.GetFrequencyCapTimeAndCapTypeString(planPricingParameters.UnitCapsType);
 
                 var pricingWeek = new PlanPricingApiRequestWeekDto
                 {
@@ -519,23 +504,6 @@ namespace Services.Broadcast.ApplicationServices
             return pricingModelWeeks;
         }
 
-        private (double capTime, string capType) _GetFrequencyCapTimeAndCapTypeString(UnitCapEnum unitCap)
-        {
-            if (unitCap == UnitCapEnum.Per30Min)
-                return (capTime: 0.5d, "hour");
-
-            if (unitCap == UnitCapEnum.PerHour)
-                return (capTime: 1d, "hour");
-
-            if (unitCap == UnitCapEnum.PerDay)
-                return (capTime: 1d, "day");
-
-            if (unitCap == UnitCapEnum.PerWeek)
-                return (capTime: 1d, "week");
-
-            throw new ApplicationException("Unsupported unit cap type was discovered");
-        }
-
         /// <inheritdoc />
         public int ReRunPricingJob(int jobId)
         {
@@ -548,7 +516,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 PlanVersionId = originalJob.PlanVersionId,
                 Status = BackgroundJobProcessingStatus.Queued,
-                Queued = DateTime.Now
+                Queued = _DateTimeEngine.GetCurrentMoment()
             };
             var newJobId = _SavePricingJobAndParameters(newJob, jobParams);
 
@@ -617,8 +585,13 @@ namespace Services.Broadcast.ApplicationServices
                 _ValidateInventory(inventory);
 
                 var pricingModelWeeks = _GetPricingModelWeeks(plan, proprietaryEstimates, programInventoryParameters, out List<int> skippedWeeksIds);
-                var spots = new List<PlanPricingAllocatedSpot>();
-                var allocationResult = new PlanPricingAllocationResult();
+                var allocationResult = new PlanPricingAllocationResult
+                {
+                    Spots = new List<PlanPricingAllocatedSpot>(),
+                    JobId = jobId,
+                    PlanVersionId = plan.VersionId
+                };
+
                 if (pricingModelWeeks != null && pricingModelWeeks.Any())
                 {
                     goalsFulfilledByProprietaryInventory = false;
@@ -651,12 +624,12 @@ namespace Services.Broadcast.ApplicationServices
                     }
 
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_VALIDATING_AND_MAPPING_API_RESPONSE);
-                    spots = _MapToResultSpots(apiAllocationResult, pricingApiRequest, inventory);
+
+                    allocationResult.Spots = _MapToResultSpots(apiAllocationResult, pricingApiRequest, inventory);
+                    allocationResult.RequestId = apiAllocationResult.RequestId;
                 }
-                allocationResult.PricingCpm = _CalculatePricingCpm(spots, proprietaryEstimates, parameters.Margin);
-                allocationResult.Spots = spots;
-                allocationResult.JobId = jobId;
-                allocationResult.PlanVersionId = plan.VersionId;
+
+                allocationResult.PricingCpm = _CalculatePricingCpm(allocationResult.Spots, proprietaryEstimates, parameters.Margin);
 
                 _ValidateAllocationResult(allocationResult);
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_VALIDATING_AND_MAPPING_API_RESPONSE);
@@ -682,7 +655,7 @@ namespace Services.Broadcast.ApplicationServices
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
                     var pricingJob = _PlanRepository.GetPlanPricingJob(jobId);
                     pricingJob.Status = BackgroundJobProcessingStatus.Succeeded;
-                    pricingJob.Completed = DateTime.Now;
+                    pricingJob.Completed = _DateTimeEngine.GetCurrentMoment();
                     diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
 
                     diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_TOTAL_DURATION);
@@ -728,7 +701,7 @@ namespace Services.Broadcast.ApplicationServices
                 Status = status,
                 DiagnosticResult = exception.ToString(),
                 ErrorMessage = logMessage,
-                Completed = DateTime.Now
+                Completed = _DateTimeEngine.GetCurrentMoment()
             });
 
             _LogError($"Error attempting to run the pricing model : {exception.Message}", exception);
@@ -744,7 +717,7 @@ namespace Services.Broadcast.ApplicationServices
                 Id = jobId,
                 Status = status,
                 ErrorMessage = errorMessages,
-                Completed = DateTime.Now
+                Completed = _DateTimeEngine.GetCurrentMoment()
             });
 
             _LogError($"Pricing model run ended with errors : {errorMessages}");
@@ -1177,7 +1150,7 @@ namespace Services.Broadcast.ApplicationServices
             var job = _PlanRepository.GetPlanPricingJob(jobId);
             job.Status = BackgroundJobProcessingStatus.Failed;
             job.ErrorMessage = $"Job status set to error by user '{username}'.";
-            job.Completed = DateTime.Now;
+            job.Completed = _DateTimeEngine.GetCurrentMoment();
             _PlanRepository.UpdatePlanPricingJob(job);
 
             return $"Job Id '{jobId}' has been forced to complete.";

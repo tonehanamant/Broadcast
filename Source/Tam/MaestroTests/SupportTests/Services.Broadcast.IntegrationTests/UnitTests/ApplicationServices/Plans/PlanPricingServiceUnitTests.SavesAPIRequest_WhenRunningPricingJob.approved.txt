@@ -1,0 +1,75 @@
+﻿[
+  {
+    "BudgetGoal": 800.0,
+    "CompetitionFactor": 0.1,
+    "CoverageGoalPercent": 80.0,
+    "CpmGoal": 0.016,
+    "ImpressionsGoal": 50000.0,
+    "InflationFactor": 0.5,
+    "InventorySourcePercentages": [
+      {
+        "Id": 3,
+        "Name": null,
+        "Percentage": 12
+      },
+      {
+        "Id": 5,
+        "Name": null,
+        "Percentage": 13
+      },
+      {
+        "Id": 6,
+        "Name": null,
+        "Percentage": 14
+      },
+      {
+        "Id": 7,
+        "Name": null,
+        "Percentage": 15
+      },
+      {
+        "Id": 10,
+        "Name": null,
+        "Percentage": 16
+      },
+      {
+        "Id": 11,
+        "Name": null,
+        "Percentage": 17
+      },
+      {
+        "Id": 12,
+        "Name": null,
+        "Percentage": 8
+      }
+    ],
+    "InventorySourceTypePercentages": [
+      {
+        "Id": 5,
+        "Name": null,
+        "Percentage": 11
+      },
+      {
+        "Id": 4,
+        "Name": null,
+        "Percentage": 12
+      }
+    ],
+    "JobId": 1,
+    "Margin": 20.0,
+    "Markets": [
+      {
+        "MarketId": 5,
+        "MarketName": null,
+        "MarketSegment": 0,
+        "MarketShareOfVoice": 12.0
+      }
+    ],
+    "MaxCpm": 100.0,
+    "MinCpm": 1.0,
+    "PlanId": 1197,
+    "ProprietaryBlend": 0.2,
+    "UnitCaps": 10,
+    "UnitCapType": 3
+  }
+]

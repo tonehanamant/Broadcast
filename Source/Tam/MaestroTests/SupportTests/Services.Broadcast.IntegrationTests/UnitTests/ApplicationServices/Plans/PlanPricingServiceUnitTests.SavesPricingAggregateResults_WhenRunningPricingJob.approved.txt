@@ -1,0 +1,38 @@
+﻿[
+  {
+    "GoalFulfilledByProprietary": false,
+    "JobId": 1,
+    "OptimalCpm": 54.699248120300751879699248100,
+    "PlanVersionId": 77,
+    "Programs": [
+      {
+        "AvgCpm": 50.00,
+        "AvgImpressions": 1000.0,
+        "Genre": "Sport",
+        "Id": 0,
+        "MarketCount": 1,
+        "PercentageOfBuy": 40.0,
+        "ProgramName": "seinfeld_2",
+        "StationCount": 1
+      },
+      {
+        "AvgCpm": 40.00,
+        "AvgImpressions": 1500.0,
+        "Genre": "News",
+        "Id": 0,
+        "MarketCount": 2,
+        "PercentageOfBuy": 60.0,
+        "ProgramName": "seinfeld",
+        "StationCount": 2
+      }
+    ],
+    "Totals": {
+      "AvgCpm": 44.000,
+      "AvgImpressions": 1250.0,
+      "Budget": 330.0,
+      "Impressions": 7500.0,
+      "MarketCount": 2,
+      "StationCount": 2
+    }
+  }
+]

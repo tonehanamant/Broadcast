@@ -3,7 +3,7 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Helpers;
 using System;
 
-namespace Services.Broadcast.IntegrationTests.UnitTests
+namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
 {
     [TestFixture]
     [Category("short_running")]

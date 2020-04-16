@@ -1,0 +1,22 @@
+﻿[
+  {
+    "Completed": null,
+    "DiagnosticResult": null,
+    "ErrorMessage": null,
+    "HangfireJobId": null,
+    "Id": 0,
+    "PlanVersionId": 0,
+    "Queued": "0001-01-01T00:00:00",
+    "Status": 2
+  },
+  {
+    "Completed": "2020-02-04T15:31:27",
+    "DiagnosticResult": "System.Exception: The api returned no spots for request '#q1w2e3'.\r\n   at Services.Broadcast.Applica",
+    "ErrorMessage": "Error attempting to run the pricing model",
+    "HangfireJobId": null,
+    "Id": 1,
+    "PlanVersionId": 0,
+    "Queued": "0001-01-01T00:00:00",
+    "Status": 4
+  }
+]

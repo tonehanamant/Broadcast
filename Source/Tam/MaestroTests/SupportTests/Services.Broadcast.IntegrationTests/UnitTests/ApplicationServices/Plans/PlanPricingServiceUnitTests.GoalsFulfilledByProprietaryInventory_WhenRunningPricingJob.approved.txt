@@ -1,11 +1,8 @@
-﻿{
-  "IsPricingModelRunning": false,
-  "Job": null,
-  "Result": {
-    "GoalFulfilledByProprietary": false,
-    "JobId": null,
-    "Notes": null,
-    "OptimalCpm": 0.0,
+﻿[
+  {
+    "GoalFulfilledByProprietary": true,
+    "JobId": 1,
+    "OptimalCpm": 50.00,
     "PlanVersionId": 0,
     "Programs": [],
     "Totals": {
@@ -17,4 +14,4 @@
       "StationCount": 0
     }
   }
-}
+]

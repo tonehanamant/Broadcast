@@ -75,6 +75,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<ITransactionHelper, TransactionHelper>();
             unityContainer.RegisterType<ITrackerService, TrackerService>();
             unityContainer.RegisterType<IDetectionPostingEngine, DetectionPostingEngine>();
+            unityContainer.RegisterType<IDateTimeEngine, DateTimeEngine>();
             unityContainer.RegisterType<IDateAdjustmentEngine, DateAdjustmentEngine>();
             unityContainer.RegisterType<ITrackingEngine, TrackingEngine>();
             unityContainer.RegisterType<IScxScheduleConverter, ScxScheduleConverter>();

@@ -334,6 +334,7 @@
     <Compile Include="ApplicationServices\ShowTypeService.cs" />
     <Compile Include="ApplicationServices\StationService.cs" />
     <Compile Include="BroadcastBaseClass.cs" />
+    <Compile Include="BusinessEngines\DateTimeEngine.cs" />
     <Compile Include="BusinessEngines\DetectionPostingEngine.cs" />
     <Compile Include="BusinessEngines\GeneralMath.cs" />
     <Compile Include="BusinessEngines\ImpressionsCalculationEngine.cs" />
@@ -523,6 +524,7 @@
     <Compile Include="Extensions\QuarterDetailExtension.cs" />
     <Compile Include="Helpers\DaypartHelper.cs" />
     <Compile Include="Helpers\DaypartTimeHelper.cs" />
+    <Compile Include="Helpers\FrequencyCapHelper.cs" />
     <Compile Include="Helpers\GroupHelper.cs" />
     <Compile Include="Helpers\KeyHelper.cs" />
     <Compile Include="BusinessEngines\PlanPricingInventoryQuarterCalculatorEngine.cs" />

@@ -7,7 +7,7 @@ using Services.Broadcast.IntegrationTests.Helpers;
 using System;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
-namespace Services.Broadcast.IntegrationTests.UnitTests
+namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
 {
     [TestFixture]
     [Category("short_running")]

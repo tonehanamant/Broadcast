@@ -417,6 +417,7 @@
     <Compile Include="UnitTests\Converters\RateImport\DiginetFileImporterUnitTests.cs" />
     <Compile Include="UnitTests\DaytimeCleanupServiceTests.cs" />
     <Compile Include="UnitTests\EntitiesUnitTests\ProgramLineupReportDataUnitTest.cs" />
+    <Compile Include="UnitTests\Helpers\FrequencyCapHelperUnitTests.cs" />
     <Compile Include="UnitTests\PlanServices\PlanServiceTests.cs" />
     <Compile Include="UnitTests\TrafficApiCacheTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\AdvertiserServiceUnitTests.cs" />
@@ -432,8 +433,8 @@
     <Compile Include="UnitTests\ApplicationServices\Plans\PlansServiceUnitTests.cs" />
     <Compile Include="UnitTests\BaseMemoryCacheTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\CampaignServiceUnitTests.cs" />
-    <Compile Include="UnitTests\DaypartTimeHelperUnitTests.cs" />
-    <Compile Include="UnitTests\EnumHelperUnitTests.cs" />
+    <Compile Include="UnitTests\Helpers\DaypartTimeHelperUnitTests.cs" />
+    <Compile Include="UnitTests\Helpers\EnumHelperUnitTests.cs" />
     <Compile Include="UnitTests\FtpServiceTester.cs" />
     <Compile Include="UnitTests\PlanAggregation\PlanAggregatorUnitTestClass.cs" />
     <Compile Include="UnitTests\PlanAggregation\PlanAggregatorUnitTests.cs" />
