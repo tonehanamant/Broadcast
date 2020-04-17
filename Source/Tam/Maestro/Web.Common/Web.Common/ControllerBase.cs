@@ -124,7 +124,7 @@ namespace Tam.Maestro.Web.Common
         protected void _LogError(string message, Exception ex, [CallerMemberName] string memberName = "")
         {
             var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
-            _Log.Error(logMessage.ToJson());
+            _Log.Error(logMessage.ToJson(), ex);
         }
     }
 }

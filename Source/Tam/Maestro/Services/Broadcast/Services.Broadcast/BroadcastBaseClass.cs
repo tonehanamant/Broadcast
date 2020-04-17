@@ -23,7 +23,7 @@ namespace Services.Broadcast
         protected virtual void _LogWarning(string message, [CallerMemberName]string memberName = "")
         {
             var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
-            _Log.Info(logMessage.ToJson());
+            _Log.Warn(logMessage.ToJson());
         }
 
         protected virtual void _LogError(string message, Exception ex = null, [CallerMemberName]string memberName = "")
