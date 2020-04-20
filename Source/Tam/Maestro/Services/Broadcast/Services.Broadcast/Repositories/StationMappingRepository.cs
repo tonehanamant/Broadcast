@@ -260,17 +260,23 @@ namespace Services.Broadcast.Repositories
                     .Include(x => x.market)
                     .Where(station =>
                         station.station_mappings.Any(mapping => mapping.mapped_call_letters.StartsWith(callLetters)));
-                
-                if (throwIfNotFound)
+
+                try
                 {
-                    return _MapToDisplayBroadcastStationDto(
-                        query.Single($"No single station found for call letters {callLetters}"));
-                }
-                else
+                    if (throwIfNotFound) {
+                        return _MapToDisplayBroadcastStationDto(
+                        query.Single());
+                    }
+                    else
+                    {
+                        return _MapToDisplayBroadcastStationDto(
+                        query.SingleOrDefault());
+                    }
+                }catch(Exception e)
                 {
-                    return _MapToDisplayBroadcastStationDto(
-                        query.SingleOrDefault($"Multiple stations found for call letters {callLetters}"));
+                    throw new Exception($"Could not determine station for call letters {callLetters}");
                 }
+
             });
         }
     }
