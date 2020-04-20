@@ -1,5 +1,4 @@
-﻿using System;
-using ApprovalTests;
+﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
 using NUnit.Framework;
@@ -9,7 +8,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.Repositories
 {
-    [TestFixture]
+    [TestFixture]  
     [Category("short_running")]
     public class DisplayDaypartRepositoryTests
     {
