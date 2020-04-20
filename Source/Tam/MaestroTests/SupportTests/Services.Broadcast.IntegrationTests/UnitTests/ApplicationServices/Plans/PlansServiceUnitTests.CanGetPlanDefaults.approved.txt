@@ -1,0 +1,28 @@
+﻿{
+  "AffiliateContainType": 2,
+  "AudienceId": 1,
+  "AudienceType": 1,
+  "BlackoutMarkets": [],
+  "CoverageGoalPercent": 80.0,
+  "Currency": 1,
+  "Equivalized": true,
+  "FlightDays": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "FlightHiatusDays": [],
+  "GenreContainType": 2,
+  "GoalBreakdownType": 1,
+  "Name": "",
+  "PostingType": 2,
+  "ProgramContainType": 2,
+  "ShowTypeContainType": 2,
+  "SpotLengthId": 1,
+  "Status": 1,
+  "WeeklyBreakdownWeeks": []
+}

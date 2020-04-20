@@ -1,0 +1,9 @@
+﻿{
+  "Error": null,
+  "Key": "broadcast_plan : 1",
+  "LockedUserId": "IntegrationUserId",
+  "LockedUserName": "IntegrationUser",
+  "LockTimeoutInSeconds": 900,
+  "PlanName": "Test Plan",
+  "Success": true
+}

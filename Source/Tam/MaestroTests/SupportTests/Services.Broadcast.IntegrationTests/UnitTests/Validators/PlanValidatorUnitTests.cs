@@ -154,6 +154,39 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
+        public void ValidatePlan_WithPlanNameContainingTheStopWord()
+        {
+            _ConfigureMocksToReturnTrue();
+            var plan = _GetPlan();
+            plan.Name = $"Plan name eOm3wgvfm0dq4rI3srL2";
+
+            Assert.That(() => _planValidator.ValidatePlan(plan)
+                , Throws.TypeOf<Exception>().With.Message.EqualTo("Stop word detected in plan name"));
+        }
+
+        [Test]
+        public void ValidatePlan_WithNoFlightDays()
+        {
+            _ConfigureMocksToReturnTrue();
+            var plan = _GetPlan();
+            plan.FlightDays = null;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan)
+                , Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight days. The plan should have at least one flight day"));
+        }
+
+        [Test]
+        public void ValidatePlan_WithEmptyFlightDaysArray()
+        {
+            _ConfigureMocksToReturnTrue();
+            var plan = _GetPlan();
+            plan.FlightDays = new List<int>();
+
+            Assert.That(() => _planValidator.ValidatePlan(plan)
+                , Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight days. The plan should have at least one flight day"));
+        }
+
+        [Test]
         public void ValidatePlan_WithEmptyFlightEndDate()
         {
             _ConfigureMocksToReturnTrue();
@@ -1028,6 +1061,62 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 Throws.TypeOf<Exception>().With.Message
                     .EqualTo("Invalid flight dates.  The end date cannot be before the start date."));
         }
+
+        [Test]
+        public void ValidateWeeklyBreakdown_FlightDaysNotSet()
+        {
+            var request = new WeeklyBreakdownRequest
+            {
+                FlightStartDate = new DateTime(2019, 8, 1),
+                FlightEndDate = new DateTime(2019, 9, 1),
+                FlightDays = new List<int>()
+            };
+
+            Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request),
+                Throws.TypeOf<Exception>().With.Message
+                    .EqualTo("Invalid flight days. The plan should have at least one flight day"));
+        }
+
+        [Test]
+        public void ValidateWeeklyBreakdown_UpdatedWeekNotMatchWithWeeks()
+        {
+            var request = new WeeklyBreakdownRequest
+            {
+                FlightStartDate = new DateTime(2019, 8, 1),
+                FlightEndDate = new DateTime(2019, 9, 1),
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                Weeks = new List<WeeklyBreakdownWeek> {
+                    new WeeklyBreakdownWeek {
+                      ActiveDays= "",
+                      EndDate= new DateTime(2019,10,6),
+                      WeeklyImpressions= 500,
+                      MediaWeekId= 814,
+                      NumberOfActiveDays= 7,
+                      WeeklyImpressionsPercentage = 50,
+                      WeeklyRatings = 0.00045364591593469400,
+                      StartDate= new DateTime(2019,09,30),
+                      WeekNumber= 1
+                    },
+                    new WeeklyBreakdownWeek {
+                      ActiveDays= "",
+                      EndDate= new DateTime(2019,10,13),
+                      WeeklyImpressions= 500,
+                      MediaWeekId= 814,
+                      NumberOfActiveDays= 7,
+                      WeeklyImpressionsPercentage = 50,
+                      WeeklyRatings = 0.00045364591593469400,
+                      StartDate= new DateTime(2019,10,7),
+                      WeekNumber= 2
+                    },
+                },
+                UpdatedWeek = 3
+            };
+
+            Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request),
+                Throws.TypeOf<Exception>().With.Message
+                    .EqualTo("No updated week found or more than one found."));
+        }
+        
 
         [Test]
         public void ValidateWeeklyBreakdownWeeks_WithoutWeeklyBreakdown()

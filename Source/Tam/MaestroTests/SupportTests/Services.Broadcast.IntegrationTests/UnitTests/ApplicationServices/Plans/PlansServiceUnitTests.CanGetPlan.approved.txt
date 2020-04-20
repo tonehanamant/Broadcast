@@ -1,0 +1,108 @@
+﻿{
+  "AudienceId": 31,
+  "AudienceType": 1,
+  "AvailableMarkets": [
+    {
+      "Id": 0,
+      "Market": "Portland-Auburn",
+      "MarketCode": 100,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 20.0,
+      "Rank": 1,
+      "ShareOfVoicePercent": 22.2
+    },
+    {
+      "Id": 0,
+      "Market": "New York",
+      "MarketCode": 101,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 32.5,
+      "Rank": 2,
+      "ShareOfVoicePercent": 34.5
+    }
+  ],
+  "AvailableMarketsWithSovCount": null,
+  "BlackoutMarketCount": null,
+  "BlackoutMarkets": [
+    {
+      "Id": 0,
+      "Market": "Burlington-Plattsburgh",
+      "MarketCode": 123,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 5.5,
+      "Rank": 5
+    },
+    {
+      "Id": 0,
+      "Market": "Amarillo",
+      "MarketCode": 234,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 2.5,
+      "Rank": 8
+    }
+  ],
+  "BlackoutMarketTotalUsCoveragePercent": null,
+  "Budget": 100.0,
+  "CampaignId": 1,
+  "CampaignName": null,
+  "CoverageGoalPercent": 80.5,
+  "Currency": 0,
+  "Dayparts": [],
+  "Equivalized": true,
+  "FlightDays": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "FlightEndDate": "2019-07-31T00:00:00",
+  "FlightHiatusDays": [
+    "2019-01-20T00:00:00",
+    "2019-04-15T00:00:00"
+  ],
+  "FlightNotes": "Sample notes",
+  "FlightStartDate": "2019-01-01T00:00:00",
+  "GoalBreakdownType": 0,
+  "HHCPM": 0.0,
+  "HHCPP": 0.0,
+  "HHImpressions": 0.0,
+  "HHRatingPoints": 0.0,
+  "HHUniverse": 0.0,
+  "HUTBookId": 436,
+  "Id": 1,
+  "IsAduEnabled": false,
+  "IsDraft": false,
+  "IsPricingModelRunning": false,
+  "ModifiedBy": "Test User",
+  "ModifiedDate": "2019-01-12T12:30:29",
+  "Name": "New Plan",
+  "PostingType": 2,
+  "PricingParameters": null,
+  "ProductId": 1,
+  "SecondaryAudiences": [],
+  "ShareBookId": 437,
+  "SpotLengthId": 1,
+  "Status": 1,
+  "TargetCPM": 12.0,
+  "TargetCPP": 50.0,
+  "TargetImpressions": 0.1,
+  "TargetRatingPoints": 50.0,
+  "TargetUniverse": 0.0,
+  "TotalActiveDays": 0,
+  "TotalHiatusDays": 2,
+  "TotalShareOfVoice": 0.0,
+  "VersionId": 1,
+  "VersionNumber": null,
+  "Vpvh": 0.234543,
+  "WeeklyBreakdownTotals": {
+    "TotalActiveDays": 0,
+    "TotalBudget": 0.0,
+    "TotalImpressions": 0.0,
+    "TotalImpressionsPercentage": 0.0,
+    "TotalRatingPoints": 50.0
+  },
+  "WeeklyBreakdownWeeks": []
+}

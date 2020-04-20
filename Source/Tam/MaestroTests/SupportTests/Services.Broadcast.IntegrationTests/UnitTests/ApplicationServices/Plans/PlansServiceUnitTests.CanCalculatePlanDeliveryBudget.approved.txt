@@ -1,0 +1,9 @@
+﻿{
+  "AudienceId": 31,
+  "Budget": 10000.0,
+  "CPM": 100.0,
+  "CPP": null,
+  "Impressions": 1000000.0,
+  "RatingPoints": null,
+  "Universe": null
+}

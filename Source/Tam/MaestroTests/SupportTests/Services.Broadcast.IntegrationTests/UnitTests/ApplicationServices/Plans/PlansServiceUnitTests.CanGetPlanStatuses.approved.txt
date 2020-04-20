@@ -1,0 +1,38 @@
+﻿[
+  {
+    "Display": "Scenario",
+    "Id": 7
+  },
+  {
+    "Display": "Working",
+    "Id": 1
+  },
+  {
+    "Display": "Reserved",
+    "Id": 2
+  },
+  {
+    "Display": "Client Approval",
+    "Id": 3
+  },
+  {
+    "Display": "Contracted",
+    "Id": 4
+  },
+  {
+    "Display": "Live",
+    "Id": 5
+  },
+  {
+    "Display": "Complete",
+    "Id": 6
+  },
+  {
+    "Display": "Canceled",
+    "Id": 8
+  },
+  {
+    "Display": "Rejected",
+    "Id": 9
+  }
+]
