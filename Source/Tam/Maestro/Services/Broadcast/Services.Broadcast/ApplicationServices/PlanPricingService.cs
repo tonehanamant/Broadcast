@@ -28,6 +28,7 @@ namespace Services.Broadcast.ApplicationServices
     public interface IPlanPricingService : IApplicationService
     {
         PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate, string username);
+
         PlanPricingResponseDto GetCurrentPricingExecution(int planId);
 
         /// <summary>
@@ -36,20 +37,41 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="planId">The plan identifier.</param>
         /// <returns>The PlanPricingResponseDto object</returns>
         PlanPricingResponseDto CancelCurrentPricingExecution(int planId);
+
         [Queue("planpricing")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void RunPricingJob(PlanPricingParametersDto planPricingParametersDto, int jobId, CancellationToken token);
+
+        /// <summary>
+        /// For troubleshooting
+        /// </summary>
         List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId);
+
+        /// <summary>
+        /// For troubleshooting
+        /// </summary>
         PlanPricingApiRequestDto GetPricingApiRequestPrograms(int planId, PricingInventoryGetRequestParametersDto requestParameters);
+
+        /// <summary>
+        /// For troubleshooting
+        /// </summary>
         List<PlanPricingInventoryProgram> GetPricingInventory(int planId, PricingInventoryGetRequestParametersDto requestParameters);
+
         /// <summary>
         /// Gets the unit caps.
         /// </summary>
         /// <returns>List of LookupDto objects</returns>
         List<LookupDto> GetUnitCaps();
+
         PlanPricingDefaults GetPlanPricingDefaults();
+
         bool IsPricingModelRunningForPlan(int planId);
+
+        /// <summary>
+        /// For troubleshooting
+        /// </summary>
         string ForceCompletePlanPricingJob(int jobId, string username);
+
         /// <summary>
         /// For troubleshooting.  This will bypass the queue to allow rerunning directly.
         /// </summary>
@@ -58,7 +80,7 @@ namespace Services.Broadcast.ApplicationServices
         int ReRunPricingJob(int jobId);
 
         /// <summary>
-        /// Generate a pricing results report for the chosen plan and version
+        /// For troubleshooting.  Generate a pricing results report for the chosen plan and version
         /// </summary>
         /// <param name="planId">The plan id</param>
         /// <param name="planVersionNumber">The plan version number</param>
@@ -288,7 +310,6 @@ namespace Services.Broadcast.ApplicationServices
         public PlanPricingResponseDto CancelCurrentPricingExecution(int planId)
         {
             var job = _PlanRepository.GetLatestPricingJob(planId);
-            GetPlanPricingResultDto pricingExecutionResult = null;
 
             if (job != null && job.Status == BackgroundJobProcessingStatus.Failed)
             {
@@ -304,12 +325,11 @@ namespace Services.Broadcast.ApplicationServices
             job.Status = BackgroundJobProcessingStatus.Canceled;
 
             _PlanRepository.UpdatePlanPricingJob(job);
-
-            //pricingExecutionResult might be null when there is no pricing run for the latest version            
+       
             return new PlanPricingResponseDto
             {
                 Job = job,
-                Result = pricingExecutionResult ?? new GetPlanPricingResultDto(),
+                Result = new GetPlanPricingResultDto(),
                 IsPricingModelRunning = false
             };
         }
@@ -637,7 +657,7 @@ namespace Services.Broadcast.ApplicationServices
                 token.ThrowIfCancellationRequested();
 
                 diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
-                var aggregatedResults = AggregateResults(inventory, allocationResult, goalsFulfilledByProprietaryInventory);
+                var aggregatedResults = _AggregateResults(inventory, allocationResult, goalsFulfilledByProprietaryInventory);
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
 
                 token.ThrowIfCancellationRequested();
@@ -974,7 +994,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        public PlanPricingResultBaseDto AggregateResults(
+        private PlanPricingResultBaseDto _AggregateResults(
             List<PlanPricingInventoryProgram> inventory,
             PlanPricingAllocationResult apiResponse,
             bool goalsFulfilledByProprietaryInventory = false)

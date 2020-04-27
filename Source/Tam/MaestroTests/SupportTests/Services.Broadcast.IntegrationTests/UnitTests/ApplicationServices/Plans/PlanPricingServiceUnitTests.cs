@@ -29,6 +29,8 @@ using System.Threading.Tasks;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Newtonsoft.Json;
+using Hangfire.Common;
+using Hangfire.States;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {
@@ -51,6 +53,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IMarketRepository> _MarketRepositoryMock;
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
         private Mock<IDaypartDefaultRepository> _DaypartDefaultRepositoryMock;
+        private Mock<ICampaignRepository> _CampaignRepositoryMock;
 
         [SetUp]
         public void SetUp()
@@ -70,6 +73,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _MarketRepositoryMock = new Mock<IMarketRepository>();
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
             _DaypartDefaultRepositoryMock = new Mock<IDaypartDefaultRepository>();
+            _CampaignRepositoryMock = new Mock<ICampaignRepository>();
 
             _DateTimeEngineMock
                 .Setup(x => x.GetCurrentMoment())
@@ -82,6 +86,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _InventoryRepositoryMock
                 .Setup(x => x.GetInventorySources())
                 .Returns(_GetInventorySources());
+
+            _DataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<ICampaignRepository>())
+                .Returns(_CampaignRepositoryMock.Object);
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IPlanRepository>())
@@ -486,104 +494,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var result = service.GetPricingResultsReportData(planId, planVersionNumber);
 
             // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void AggregateResultsTest()
-        {
-            var inventory = _GetPlanPricingInventoryPrograms();
-
-            var apiResponse = new PlanPricingAllocationResult
-            {
-                PricingCpm = 5.78m,
-                JobId = null,
-                PlanVersionId = 50,
-                Spots = new List<PlanPricingAllocatedSpot>
-                {
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 1,
-                        StandardDaypart = new DaypartDefaultDto { Id = 1 },
-                        Spots = 2,
-                        SpotCost = 200,
-                        Impressions = 10000,
-                    },
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 2,
-                        StandardDaypart = new DaypartDefaultDto { Id = 2 },
-                        Spots = 4,
-                        SpotCost = 300,
-                        Impressions = 50000,
-                    },
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 3,
-                        StandardDaypart = new DaypartDefaultDto { Id = 3 },
-                        Spots = 3,
-                        SpotCost = 500,
-                        Impressions = 20000,
-                    },
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 4,
-                        StandardDaypart = new DaypartDefaultDto { Id = 4 },
-                        Spots = 1,
-                        SpotCost = 100,
-                        Impressions = 30000,
-                    },
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 5,
-                        StandardDaypart = new DaypartDefaultDto { Id = 5 },
-                        Spots = 3,
-                        SpotCost = 300,
-                        Impressions = 10000,
-                    },
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 6,
-                        StandardDaypart = new DaypartDefaultDto { Id = 6 },
-                        Spots = 2,
-                        SpotCost = 400,
-                        Impressions = 50000,
-                    },
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 7,
-                        StandardDaypart = new DaypartDefaultDto { Id = 7 },
-                        Spots = 1,
-                        SpotCost = 250,
-                        Impressions = 20000,
-                    }
-                }
-            };
-
-            var service = _GetService();
-
-            var result = service.AggregateResults(inventory, apiResponse);
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void AggregateResultsWhenProprietaryGoalsMeetPlanGoalsTest()
-        {
-            var inventory = _GetPlanPricingInventoryPrograms();
-
-            var apiResponse = new PlanPricingAllocationResult
-            {
-                PricingCpm = 5.78m,
-                Spots = new List<PlanPricingAllocatedSpot>()
-            };
-
-            var service = _GetService();
-
-            var result = service.AggregateResults(inventory, apiResponse, goalsFulfilledByProprietaryInventory: true);
-
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
@@ -1043,7 +953,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Verify(x => x.GetInventoryForPlan(
                     It.IsAny<PlanDto>(),
                     It.IsAny<ProgramInventoryOptionalParametersDto>(),
-                    It.Is<IEnumerable<int>>(list => list.SequenceEqual(new List<int> { 3, 5, 7, 10, 11, 12 })),
+                    It.Is<IEnumerable<int>>(list => list.SequenceEqual(new List<int> { 3, 5, 6, 7, 10, 11, 12 })),
                     It.IsAny<PlanPricingJobDiagnostic>()), Times.Once);
 
             _PlanPricingInventoryEngineMock
@@ -1119,6 +1029,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     Id = 5,
                     Name = "CNN",
                     InventoryType = InventorySourceTypeEnum.Barter
+                },
+                new InventorySource
+                {
+                    Id = 6,
+                    Name = "Sinclair",
+                    InventoryType = InventorySourceTypeEnum.ProprietaryOAndO
                 },
                 new InventorySource
                 {
@@ -5702,6 +5618,970 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
+        }
+
+        [Test]
+        public void IsPricingModelRunning_ReturnsFalse_WhenNoJobsFound()
+        {
+            // Arrange
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Returns((PlanPricingJob)null);
+
+            var service = _GetService();
+
+            // Act
+            var result = service.IsPricingModelRunningForPlan(planId: 5);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        [TestCase(BackgroundJobProcessingStatus.Queued, true)]
+        [TestCase(BackgroundJobProcessingStatus.Processing, true)]
+        [TestCase(BackgroundJobProcessingStatus.Succeeded, false)]
+        [TestCase(BackgroundJobProcessingStatus.Failed, false)]
+        [TestCase(BackgroundJobProcessingStatus.Canceled, false)]
+        public void IsPricingModelRunning_ChecksJobStatus(BackgroundJobProcessingStatus status, bool expectedResult)
+        {
+            // Arrange
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Returns(new PlanPricingJob
+                {
+                    Status = status
+                });
+
+            var service = _GetService();
+
+            // Act
+            var actualResult = service.IsPricingModelRunningForPlan(planId: 5);
+
+            // Assert
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPlanPricingDefaultsTest()
+        {
+            // Arrange
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPlanPricingDefaults();
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+        
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetUnitCapsTest()
+        {
+            // Arrange
+            var service = _GetService();
+
+            // Act
+            var unitCaps = service.GetUnitCaps();
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(unitCaps));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AddsNewPricingJob_WhenQueuesPricing()
+        {
+            // Arrange
+            const string user = "test user";
+            const int jobId = 5;
+
+            var now = new DateTime(2019, 10, 23);
+
+            var parameters = new PlanPricingParametersDto
+            {
+                PlanId = 222,
+                MaxCpm = 100m,
+                MinCpm = 1m,
+                Budget = 1000,
+                CompetitionFactor = 0.1,
+                CPM = 5m,
+                DeliveryImpressions = 50000,
+                InflationFactor = 0.5,
+                ProprietaryBlend = 0.2,
+                UnitCaps = 10,
+                UnitCapsType = UnitCapEnum.PerDay,
+                Currency = PlanCurrenciesEnum.Impressions,
+                CPP = 1.1m,
+                DeliveryRatingPoints = 1.3,
+                Margin = 14,
+                InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                {
+                    new PlanPricingInventorySourceDto{ Id = 3, Percentage = 12 },
+                    new PlanPricingInventorySourceDto{ Id = 5, Percentage = 13 },
+                    new PlanPricingInventorySourceDto{ Id = 6, Percentage = 14 },
+                    new PlanPricingInventorySourceDto{ Id = 7, Percentage = 15 },
+                    new PlanPricingInventorySourceDto{ Id = 10, Percentage = 16 },
+                    new PlanPricingInventorySourceDto{ Id = 11, Percentage = 17 },
+                    new PlanPricingInventorySourceDto{ Id = 12, Percentage = 8 },
+                },
+                InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                {
+                    new PlanPricingInventorySourceTypeDto { Id = 5, Percentage = 3 }
+                }
+            };
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    CampaignId = 17,
+                    VersionId = 77,
+                    CoverageGoalPercent = 80,
+                    AvailableMarkets = new List<PlanAvailableMarketDto>
+                    {
+                                    new PlanAvailableMarketDto
+                                    {
+                                        Id = 5,
+                                        MarketCode = 101,
+                                        ShareOfVoicePercent = 12
+                                    },
+                                    new PlanAvailableMarketDto
+                                    {
+                                        Id = 6,
+                                        MarketCode = 102,
+                                        ShareOfVoicePercent = 13
+                                    }
+                    },
+                    Dayparts = new List<PlanDaypartDto>
+                    {
+                                    new PlanDaypartDto
+                                    {
+                                        DaypartCodeId = 15,
+                                        WeightingGoalPercent = 60
+                                    },
+                                    new PlanDaypartDto
+                                    {
+                                        DaypartCodeId = 16,
+                                        WeightingGoalPercent = 40
+                                    }
+                    },
+                    PricingParameters = _GetPlanPricingParametersDto(),
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 150,
+                            WeeklyBudget = 15,
+                            MediaWeekId = 100
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 250,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 101
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 100,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 102
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 0,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 103
+                        }
+                    }
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Returns(new PlanPricingJob { Status = BackgroundJobProcessingStatus.Succeeded });
+
+            _BroadcastLockingManagerApplicationServiceMock
+                .Setup(x => x.GetNotUserBasedLockObjectForKey(It.IsAny<string>()))
+                .Returns(new object());
+
+            var passedParameters = new List<PlanPricingJob>();
+            _PlanRepositoryMock
+                .Setup(x => x.AddPlanPricingJob(It.IsAny<PlanPricingJob>()))
+                .Callback<PlanPricingJob>(p => passedParameters.Add(p))
+                .Returns(jobId);
+
+            var service = _GetService();
+
+            // Act
+            service.QueuePricingJob(parameters, now, user);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavesPricingParameters_WhenQueuesPricing()
+        {
+            // Arrange
+            const string user = "test user";
+            const int jobId = 5;
+
+            var now = new DateTime(2019, 10, 23);
+
+            var parameters = new PlanPricingParametersDto
+            {
+                PlanId = 222,
+                MaxCpm = 100m,
+                MinCpm = 1m,
+                Budget = 1000,
+                CompetitionFactor = 0.1,
+                CPM = 5m,
+                DeliveryImpressions = 50000,
+                InflationFactor = 0.5,
+                ProprietaryBlend = 0.2,
+                UnitCaps = 10,
+                UnitCapsType = UnitCapEnum.PerDay,
+                Currency = PlanCurrenciesEnum.Impressions,
+                CPP = 1.1m,
+                DeliveryRatingPoints = 1.3,
+                Margin = 14,
+                InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                {
+                    new PlanPricingInventorySourceDto{ Id = 3, Percentage = 12 },
+                    new PlanPricingInventorySourceDto{ Id = 5, Percentage = 13 },
+                    new PlanPricingInventorySourceDto{ Id = 6, Percentage = 14 },
+                    new PlanPricingInventorySourceDto{ Id = 7, Percentage = 15 },
+                    new PlanPricingInventorySourceDto{ Id = 10, Percentage = 16 },
+                    new PlanPricingInventorySourceDto{ Id = 11, Percentage = 17 },
+                    new PlanPricingInventorySourceDto{ Id = 12, Percentage = 8 },
+                },
+                InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                {
+                    new PlanPricingInventorySourceTypeDto { Id = 5, Percentage = 3 }
+                }
+            };
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    CampaignId = 17,
+                    VersionId = 77,
+                    CoverageGoalPercent = 80,
+                    AvailableMarkets = new List<PlanAvailableMarketDto>
+                    {
+                                    new PlanAvailableMarketDto
+                                    {
+                                        Id = 5,
+                                        MarketCode = 101,
+                                        ShareOfVoicePercent = 12
+                                    },
+                                    new PlanAvailableMarketDto
+                                    {
+                                        Id = 6,
+                                        MarketCode = 102,
+                                        ShareOfVoicePercent = 13
+                                    }
+                    },
+                    Dayparts = new List<PlanDaypartDto>
+                    {
+                                    new PlanDaypartDto
+                                    {
+                                        DaypartCodeId = 15,
+                                        WeightingGoalPercent = 60
+                                    },
+                                    new PlanDaypartDto
+                                    {
+                                        DaypartCodeId = 16,
+                                        WeightingGoalPercent = 40
+                                    }
+                    },
+                    PricingParameters = _GetPlanPricingParametersDto(),
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 150,
+                            WeeklyBudget = 15,
+                            MediaWeekId = 100
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 250,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 101
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 100,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 102
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 0,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 103
+                        }
+                    }
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Returns(new PlanPricingJob { Status = BackgroundJobProcessingStatus.Succeeded });
+
+            _BroadcastLockingManagerApplicationServiceMock
+                .Setup(x => x.GetNotUserBasedLockObjectForKey(It.IsAny<string>()))
+                .Returns(new object());
+
+            _PlanRepositoryMock
+                .Setup(x => x.AddPlanPricingJob(It.IsAny<PlanPricingJob>()))
+                .Returns(jobId);
+
+            var passedParameters = new List<PlanPricingParametersDto>();
+            _PlanRepositoryMock
+                .Setup(x => x.SavePlanPricingParameters(It.IsAny<PlanPricingParametersDto>()))
+                .Callback<PlanPricingParametersDto>(p => passedParameters.Add(p));
+
+            var service = _GetService();
+
+            // Act
+            service.QueuePricingJob(parameters, now, user);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void UpdatesCampaignLastModified_WhenQueuesPricing()
+        {
+            // Arrange
+            const string user = "test user";
+            const int jobId = 5;
+
+            var now = new DateTime(2019, 10, 23);
+
+            var parameters = new PlanPricingParametersDto
+            {
+                PlanId = 222,
+                MaxCpm = 100m,
+                MinCpm = 1m,
+                Budget = 1000,
+                CompetitionFactor = 0.1,
+                CPM = 5m,
+                DeliveryImpressions = 50000,
+                InflationFactor = 0.5,
+                ProprietaryBlend = 0.2,
+                UnitCaps = 10,
+                UnitCapsType = UnitCapEnum.PerDay,
+                Currency = PlanCurrenciesEnum.Impressions,
+                CPP = 1.1m,
+                DeliveryRatingPoints = 1.3,
+                Margin = 14,
+                InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                {
+                    new PlanPricingInventorySourceDto{ Id = 3, Percentage = 12 },
+                    new PlanPricingInventorySourceDto{ Id = 5, Percentage = 13 },
+                    new PlanPricingInventorySourceDto{ Id = 6, Percentage = 14 },
+                    new PlanPricingInventorySourceDto{ Id = 7, Percentage = 15 },
+                    new PlanPricingInventorySourceDto{ Id = 10, Percentage = 16 },
+                    new PlanPricingInventorySourceDto{ Id = 11, Percentage = 17 },
+                    new PlanPricingInventorySourceDto{ Id = 12, Percentage = 8 },
+                },
+                InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                {
+                    new PlanPricingInventorySourceTypeDto { Id = 5, Percentage = 3 }
+                }
+            };
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    CampaignId = 17,
+                    VersionId = 77,
+                    CoverageGoalPercent = 80,
+                    AvailableMarkets = new List<PlanAvailableMarketDto>
+                    {
+                                    new PlanAvailableMarketDto
+                                    {
+                                        Id = 5,
+                                        MarketCode = 101,
+                                        ShareOfVoicePercent = 12
+                                    },
+                                    new PlanAvailableMarketDto
+                                    {
+                                        Id = 6,
+                                        MarketCode = 102,
+                                        ShareOfVoicePercent = 13
+                                    }
+                    },
+                    Dayparts = new List<PlanDaypartDto>
+                    {
+                                    new PlanDaypartDto
+                                    {
+                                        DaypartCodeId = 15,
+                                        WeightingGoalPercent = 60
+                                    },
+                                    new PlanDaypartDto
+                                    {
+                                        DaypartCodeId = 16,
+                                        WeightingGoalPercent = 40
+                                    }
+                    },
+                    PricingParameters = _GetPlanPricingParametersDto(),
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 150,
+                            WeeklyBudget = 15,
+                            MediaWeekId = 100
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 250,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 101
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 100,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 102
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 0,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 103
+                        }
+                    }
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Returns(new PlanPricingJob { Status = BackgroundJobProcessingStatus.Succeeded });
+
+            _BroadcastLockingManagerApplicationServiceMock
+                .Setup(x => x.GetNotUserBasedLockObjectForKey(It.IsAny<string>()))
+                .Returns(new object());
+
+            _PlanRepositoryMock
+                .Setup(x => x.AddPlanPricingJob(It.IsAny<PlanPricingJob>()))
+                .Returns(jobId);
+
+            var passedParameters = new List<object>();
+            _CampaignRepositoryMock
+                .Setup(x => x.UpdateCampaignLastModified(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<string>()))
+                .Callback<int, DateTime, string>((campaignId, currentDate, currentUser) =>
+                {
+                    passedParameters.Add(new { campaignId, currentDate, currentUser });
+                });
+
+            var service = _GetService();
+
+            // Act
+            service.QueuePricingJob(parameters, now, user);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void QueuesHangfireJob_WhenQueuesPricing()
+        {
+            // Arrange
+            const string user = "test user";
+            const int jobId = 5;
+
+            var now = new DateTime(2019, 10, 23);
+
+            var parameters = new PlanPricingParametersDto
+            {
+                PlanId = 222,
+                MaxCpm = 100m,
+                MinCpm = 1m,
+                Budget = 1000,
+                CompetitionFactor = 0.1,
+                CPM = 5m,
+                DeliveryImpressions = 50000,
+                InflationFactor = 0.5,
+                ProprietaryBlend = 0.2,
+                UnitCaps = 10,
+                UnitCapsType = UnitCapEnum.PerDay,
+                Currency = PlanCurrenciesEnum.Impressions,
+                CPP = 1.1m,
+                DeliveryRatingPoints = 1.3,
+                Margin = 14,
+                InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                {
+                    new PlanPricingInventorySourceDto{ Id = 3, Percentage = 12 },
+                    new PlanPricingInventorySourceDto{ Id = 5, Percentage = 13 },
+                    new PlanPricingInventorySourceDto{ Id = 6, Percentage = 14 },
+                    new PlanPricingInventorySourceDto{ Id = 7, Percentage = 15 },
+                    new PlanPricingInventorySourceDto{ Id = 10, Percentage = 16 },
+                    new PlanPricingInventorySourceDto{ Id = 11, Percentage = 17 },
+                    new PlanPricingInventorySourceDto{ Id = 12, Percentage = 8 },
+                },
+                InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                {
+                    new PlanPricingInventorySourceTypeDto { Id = 5, Percentage = 3 }
+                }
+            };
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    CampaignId = 17,
+                    VersionId = 77,
+                    CoverageGoalPercent = 80,
+                    AvailableMarkets = new List<PlanAvailableMarketDto>
+                    {
+                                    new PlanAvailableMarketDto
+                                    {
+                                        Id = 5,
+                                        MarketCode = 101,
+                                        ShareOfVoicePercent = 12
+                                    },
+                                    new PlanAvailableMarketDto
+                                    {
+                                        Id = 6,
+                                        MarketCode = 102,
+                                        ShareOfVoicePercent = 13
+                                    }
+                    },
+                    Dayparts = new List<PlanDaypartDto>
+                    {
+                                    new PlanDaypartDto
+                                    {
+                                        DaypartCodeId = 15,
+                                        WeightingGoalPercent = 60
+                                    },
+                                    new PlanDaypartDto
+                                    {
+                                        DaypartCodeId = 16,
+                                        WeightingGoalPercent = 40
+                                    }
+                    },
+                    PricingParameters = _GetPlanPricingParametersDto(),
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 150,
+                            WeeklyBudget = 15,
+                            MediaWeekId = 100
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 250,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 101
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 100,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 102
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 0,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 103
+                        }
+                    }
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Returns(new PlanPricingJob { Status = BackgroundJobProcessingStatus.Succeeded });
+
+            _BroadcastLockingManagerApplicationServiceMock
+                .Setup(x => x.GetNotUserBasedLockObjectForKey(It.IsAny<string>()))
+                .Returns(new object());
+
+            _PlanRepositoryMock
+                .Setup(x => x.AddPlanPricingJob(It.IsAny<PlanPricingJob>()))
+                .Returns(jobId);
+            
+            var passedParameters = new List<object>();
+            _PlanRepositoryMock
+                .Setup(x => x.UpdateJobHangfireId(It.IsAny<int>(), It.IsAny<string>()))
+                .Callback<int, string>((pricingJobId, hangFireJobId) => passedParameters.Add(new { pricingJobId, hangFireJobId }));
+
+            _BackgroundJobClientMock
+                .Setup(x => x.Create(It.IsAny<Job>(), It.IsAny<IState>()))
+                .Callback<Job, IState>((job, state) => passedParameters.Add(new { job, state }))
+                .Returns("hangfire job 35");
+
+            var service = _GetService();
+
+            // Act
+            service.QueuePricingJob(parameters, now, user);
+
+            // Assert
+            var jsonResolver = new IgnorableSerializerContractResolver();
+
+            jsonResolver.Ignore(typeof(WaitHandle), "Handle");
+
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters, settings));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetCurrentPricingExecution_NoJobs()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns((PlanPricingJob)null);
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetCurrentPricingExecution(planId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetCurrentPricingExecution_ShowsPricingErrorMessage()
+        {
+            // Arrange
+            const int planId = 6;
+            const string expectedMessage = "SomeErrorMessage";
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Failed,
+                    DiagnosticResult = string.Empty,
+                    ErrorMessage = expectedMessage
+                });
+
+            var service = _GetService();
+
+            // Act
+            var exception = Assert.Throws<Exception>(() => service.GetCurrentPricingExecution(planId));
+            
+            // Assert
+            Assert.AreEqual(expectedMessage, exception.Message);
+        }
+
+        [Test]
+        public void GetCurrentPricingExecution_ShowsGenericErrorMessage()
+        {
+            // Arrange
+            const int planId = 6;
+            const string expectedMessage = "Error encountered while running Pricing Model, please contact a system administrator for help";
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Failed,
+                    DiagnosticResult = "SomeDiagnosticResult",
+                    ErrorMessage = "SomeErrorMessage"
+                });
+
+            var service = _GetService();
+
+            // Act
+            var exception = Assert.Throws<Exception>(() => service.GetCurrentPricingExecution(planId));
+
+            // Assert
+            Assert.AreEqual(expectedMessage, exception.Message);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetCurrentPricingExecution_Queued()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Queued,
+                    Id = 6,
+                    HangfireJobId = "HangfireJobId 9",
+                    PlanVersionId = 4,
+                    Queued = new DateTime(2020, 2, 4, 11, 12, 13)
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetCurrentPricingExecution(planId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetCurrentPricingExecution_Processing()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Processing,
+                    Id = 6,
+                    HangfireJobId = "HangfireJobId 9",
+                    PlanVersionId = 4,
+                    Queued = new DateTime(2020, 2, 4, 11, 12, 13)
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetCurrentPricingExecution(planId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetCurrentPricingExecution_Canceled()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Canceled,
+                    Id = 6,
+                    HangfireJobId = "HangfireJobId 9",
+                    PlanVersionId = 4,
+                    Queued = new DateTime(2020, 2, 4, 11, 12, 13)
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetCurrentPricingExecution(planId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetCurrentPricingExecution_Succeeded_GoalFulfilledByProprietary()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                    Id = 6,
+                    HangfireJobId = "HangfireJobId 9",
+                    PlanVersionId = 4,
+                    Queued = new DateTime(2020, 2, 4, 11, 12, 13),
+                    Completed = new DateTime(2020, 2, 4, 11, 13, 13),
+                    DiagnosticResult = "DiagnosticResult"
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingResults(planId))
+                .Returns(new PlanPricingResultBaseDto
+                {
+                    Programs = new List<PlanPricingProgramDto>(),
+                    Totals = new PlanPricingTotalsDto(),
+                    OptimalCpm = 5,
+                    GoalFulfilledByProprietary = true,
+                    PlanVersionId = 11,
+                    JobId = 12
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetCurrentPricingExecution(planId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetCurrentPricingExecution_Succeeded_WithPricingResults()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                    Id = 6,
+                    HangfireJobId = "HangfireJobId 9",
+                    PlanVersionId = 4,
+                    Queued = new DateTime(2020, 2, 4, 11, 12, 13),
+                    Completed = new DateTime(2020, 2, 4, 11, 13, 13),
+                    DiagnosticResult = "DiagnosticResult"
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingResults(planId))
+                .Returns(new PlanPricingResultBaseDto
+                {
+                    Programs = new List<PlanPricingProgramDto>
+                    {
+                        new PlanPricingProgramDto
+                        {
+                            Id = 7,
+                            ProgramName = "1+1",
+                            Genre = "Comedy",
+                            MarketCount = 6,
+                            StationCount = 13,
+                            AvgCpm = 6m,
+                            AvgImpressions = 111000,
+                            PercentageOfBuy = 96
+                        }
+                    },
+                    Totals = new PlanPricingTotalsDto
+                    {
+                        MarketCount = 6,
+                        StationCount = 13,
+                        AvgCpm = 6m,
+                        AvgImpressions = 111000,
+                        Impressions = 555000,
+                        Budget = 1131
+                    },
+                    OptimalCpm = 5,
+                    GoalFulfilledByProprietary = true,
+                    PlanVersionId = 11,
+                    JobId = 12
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetCurrentPricingExecution(planId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void CanNotCancelJob_WhenItHasFailedStatus()
+        {
+            // Arrange
+            const int planId = 6;
+            const string expectedMessage = "Error encountered while running Pricing Model, please contact a system administrator for help";
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Failed
+                });
+
+            var service = _GetService();
+
+            // Act
+            var exception = Assert.Throws<Exception>(() => service.CancelCurrentPricingExecution(planId));
+
+            // Assert
+            Assert.AreEqual(expectedMessage, exception.Message);
+        }
+
+        [Test]
+        public void CanNotCancelJob_WhenItIsNotRunning()
+        {
+            // Arrange
+            const int planId = 6;
+            const string expectedMessage = "Error encountered while canceling Pricing Model, process is not running";
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded
+                });
+
+            var service = _GetService();
+
+            // Act
+            var exception = Assert.Throws<Exception>(() => service.CancelCurrentPricingExecution(planId));
+
+            // Assert
+            Assert.AreEqual(expectedMessage, exception.Message);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CancelsPricingJob()
+        {
+            // Arrange
+            const int planId = 6;
+            const string hangfireJobId = "#w2e3r4";
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Processing,
+                    HangfireJobId = hangfireJobId,
+                    Id = 7,
+                    PlanVersionId = 11,
+                    Queued = new DateTime(2020, 2, 4, 15, 31, 27)
+                });
+
+            var jobUpdates = new List<PlanPricingJob>();
+            _PlanRepositoryMock
+                .Setup(x => x.UpdatePlanPricingJob(It.IsAny<PlanPricingJob>()))
+                .Callback<PlanPricingJob>(jobUpdate => jobUpdates.Add(jobUpdate));
+
+            var hanfgireJobUpdates = new List<object>();
+            _BackgroundJobClientMock
+                .Setup(x => x.ChangeState(It.IsAny<string>(), It.IsAny<IState>(), It.IsAny<string>()))
+                .Callback<string, IState, string>((jobId, state, expectedState) => hanfgireJobUpdates.Add(new { jobId, state, expectedState }));
+
+            var service = _GetService();
+
+            // Act
+            var cancelCurrentPricingExecutionResult = service.CancelCurrentPricingExecution(planId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(new
+            {
+                cancelCurrentPricingExecutionResult,
+                jobUpdates,
+                hanfgireJobUpdates
+            }));
         }
     }
 }

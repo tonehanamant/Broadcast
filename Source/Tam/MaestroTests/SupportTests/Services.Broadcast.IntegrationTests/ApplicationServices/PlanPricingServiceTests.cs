@@ -65,28 +65,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
-        public void GetCurrentPricingExecutionNoJobQueuedTest()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var result = _PlanPricingService.GetCurrentPricingExecution(1196);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
-                jsonResolver.Ignore(typeof(PlanPricingJob), "HangfireJobId");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
-            }
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        [Category("short_running")]
         public void GetCurrentPricingExecutionTest()
         {
             using (new TransactionScopeWrapper())
@@ -396,24 +374,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
-        }
-        
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        [Category("short_running")]
-        public void GetUnitCaps()
-        {
-            var unitCaps = _PlanPricingService.GetUnitCaps();
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(unitCaps));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        [Category("short_running")]
-        public void GetPlanPricingDefaults()
-        {
-            var ppDefaults = _PlanPricingService.GetPlanPricingDefaults();
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(ppDefaults));
         }
 
         [Test]

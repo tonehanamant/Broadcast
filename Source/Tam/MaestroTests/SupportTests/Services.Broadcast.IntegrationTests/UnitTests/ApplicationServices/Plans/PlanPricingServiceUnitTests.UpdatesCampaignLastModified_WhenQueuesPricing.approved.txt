@@ -1,0 +1,7 @@
+﻿[
+  {
+    "campaignId": 17,
+    "currentDate": "2019-10-23T00:00:00",
+    "currentUser": "test user"
+  }
+]

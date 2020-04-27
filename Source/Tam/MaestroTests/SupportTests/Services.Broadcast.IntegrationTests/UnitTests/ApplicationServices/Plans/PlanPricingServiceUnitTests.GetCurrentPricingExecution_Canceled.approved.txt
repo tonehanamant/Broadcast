@@ -1,0 +1,29 @@
+﻿{
+  "IsPricingModelRunning": false,
+  "Job": {
+    "Completed": null,
+    "DiagnosticResult": null,
+    "ErrorMessage": null,
+    "HangfireJobId": "HangfireJobId 9",
+    "Id": 6,
+    "PlanVersionId": 4,
+    "Queued": "2020-02-04T11:12:13",
+    "Status": 5
+  },
+  "Result": {
+    "GoalFulfilledByProprietary": false,
+    "JobId": null,
+    "Notes": null,
+    "OptimalCpm": 0.0,
+    "PlanVersionId": 0,
+    "Programs": [],
+    "Totals": {
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "Budget": 0.0,
+      "Impressions": 0.0,
+      "MarketCount": 0,
+      "StationCount": 0
+    }
+  }
+}

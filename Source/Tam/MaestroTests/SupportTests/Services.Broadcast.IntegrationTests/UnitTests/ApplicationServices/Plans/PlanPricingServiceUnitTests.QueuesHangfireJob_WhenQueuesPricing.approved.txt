@@ -1,0 +1,105 @@
+﻿[
+  {
+    "job": {
+      "Args": [
+        {
+          "Budget": 1000.0,
+          "CompetitionFactor": 0.1,
+          "CPM": 5.0,
+          "CPP": 1.1,
+          "Currency": 1,
+          "DeliveryImpressions": 50000.0,
+          "DeliveryRatingPoints": 1.3,
+          "InflationFactor": 0.5,
+          "InventorySourcePercentages": [
+            {
+              "Id": 3,
+              "Name": null,
+              "Percentage": 12
+            },
+            {
+              "Id": 5,
+              "Name": null,
+              "Percentage": 13
+            },
+            {
+              "Id": 6,
+              "Name": null,
+              "Percentage": 14
+            },
+            {
+              "Id": 7,
+              "Name": null,
+              "Percentage": 15
+            },
+            {
+              "Id": 10,
+              "Name": null,
+              "Percentage": 16
+            },
+            {
+              "Id": 11,
+              "Name": null,
+              "Percentage": 17
+            },
+            {
+              "Id": 12,
+              "Name": null,
+              "Percentage": 8
+            }
+          ],
+          "InventorySourceTypePercentages": [
+            {
+              "Id": 5,
+              "Name": null,
+              "Percentage": 3
+            }
+          ],
+          "JobId": 5,
+          "Margin": 14.0,
+          "MaxCpm": 100.0,
+          "MinCpm": 1.0,
+          "PlanId": 222,
+          "PlanVersionId": 77,
+          "ProprietaryBlend": 0.2,
+          "UnitCaps": 10,
+          "UnitCapsType": 3
+        },
+        5,
+        {
+          "CanBeCanceled": false,
+          "IsCancellationRequested": false,
+          "WaitHandle": {
+            "SafeWaitHandle": {
+              "IsClosed": false,
+              "IsInvalid": false
+            }
+          }
+        }
+      ],
+      "Arguments": [
+        "{\"PlanId\":222,\"PlanVersionId\":77,\"MinCpm\":1.0,\"MaxCpm\":100.0,\"DeliveryImpressions\":50000.0,\"Budget\":1000.0,\"ProprietaryBlend\":0.2,\"CPM\":5.0,\"CompetitionFactor\":0.1,\"InflationFactor\":0.5,\"UnitCaps\":10,\"UnitCapsType\":3,\"Currency\":1,\"CPP\":1.1,\"DeliveryRatingPoints\":1.3,\"Margin\":14.0,\"JobId\":5,\"InventorySourcePercentages\":[{\"Id\":3,\"Name\":null,\"Percentage\":12},{\"Id\":5,\"Name\":null,\"Percentage\":13},{\"Id\":6,\"Name\":null,\"Percentage\":14},{\"Id\":7,\"Name\":null,\"Percentage\":15},{\"Id\":10,\"Name\":null,\"Percentage\":16},{\"Id\":11,\"Name\":null,\"Percentage\":17},{\"Id\":12,\"Name\":null,\"Percentage\":8}],\"InventorySourceTypePercentages\":[{\"Id\":5,\"Name\":null,\"Percentage\":3}]}",
+        "5",
+        null
+      ],
+      "Method": {
+        "Name": "RunPricingJob",
+        "AssemblyName": "Services.Broadcast, Version=20.6.1.0, Culture=neutral, PublicKeyToken=null",
+        "ClassName": "Services.Broadcast.ApplicationServices.IPlanPricingService",
+        "Signature": "Void RunPricingJob(Services.Broadcast.Entities.Plan.Pricing.PlanPricingParametersDto, Int32, System.Threading.CancellationToken)",
+        "Signature2": "System.Void RunPricingJob(Services.Broadcast.Entities.Plan.Pricing.PlanPricingParametersDto, System.Int32, System.Threading.CancellationToken)",
+        "MemberType": 8,
+        "GenericArguments": null
+      },
+      "Type": "Services.Broadcast.ApplicationServices.IPlanPricingService, Services.Broadcast, Version=20.6.1.0, Culture=neutral, PublicKeyToken=null"
+    },
+    "state": {
+      "Queue": "default",
+      "Reason": null
+    }
+  },
+  {
+    "hangFireJobId": "hangfire job 35",
+    "pricingJobId": 5
+  }
+]

@@ -1,0 +1,52 @@
+﻿{
+  "cancelCurrentPricingExecutionResult": {
+    "IsPricingModelRunning": false,
+    "Job": {
+      "Completed": null,
+      "DiagnosticResult": null,
+      "ErrorMessage": null,
+      "HangfireJobId": "#w2e3r4",
+      "Id": 7,
+      "PlanVersionId": 11,
+      "Queued": "2020-02-04T15:31:27",
+      "Status": 5
+    },
+    "Result": {
+      "GoalFulfilledByProprietary": false,
+      "JobId": null,
+      "Notes": null,
+      "OptimalCpm": 0.0,
+      "PlanVersionId": 0,
+      "Programs": [],
+      "Totals": {
+        "AvgCpm": 0.0,
+        "AvgImpressions": 0.0,
+        "Budget": 0.0,
+        "Impressions": 0.0,
+        "MarketCount": 0,
+        "StationCount": 0
+      }
+    }
+  },
+  "hanfgireJobUpdates": [
+    {
+      "expectedState": null,
+      "jobId": "#w2e3r4",
+      "state": {
+        "Reason": null
+      }
+    }
+  ],
+  "jobUpdates": [
+    {
+      "Completed": null,
+      "DiagnosticResult": null,
+      "ErrorMessage": null,
+      "HangfireJobId": "#w2e3r4",
+      "Id": 7,
+      "PlanVersionId": 11,
+      "Queued": "2020-02-04T15:31:27",
+      "Status": 5
+    }
+  ]
+}
