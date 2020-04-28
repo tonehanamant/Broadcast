@@ -19,6 +19,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -138,7 +139,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             stopWatch.Start();
 
             var processingLog = new StringBuilder();
-            processingLog.AppendLine($"Processing {fileName}");
+            _ImportResultsProcessingLogInfo($"Processing {fileName}", processingLog);
 
             try
             {
@@ -152,12 +153,12 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 fileParseSw.Start();
                 var parseResult = _ParseLinesFromFile(fileStream);
                 fileParseSw.Stop();
-                processingLog.AppendLine($"File parse took {fileParseSw.Elapsed.TotalSeconds} seconds.");
+                _ImportResultsProcessingLogInfo($"File parse took {fileParseSw.Elapsed.TotalSeconds} seconds.", processingLog);
 
                 if (parseResult.Success == false)
                 {
                     success = false;
-                    processingLog.AppendLine($"Parsing attempt failed on {parseResult.Messages.Count} lines.");
+                    _ImportResultsProcessingLogInfo($"Parsing attempt failed on {parseResult.Messages.Count} lines.", processingLog);
                     // Don't log them... it clouds the waters and takes a long time.
                     // maybe aggregate them and report that.
                     //parseResult.Messages.ForEach(m => processingLog.AppendLine(m));
@@ -165,14 +166,14 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                     _MoveImportFileFromInProgressToFailedDirectory(fileName, processingLog);
 
                     stopWatch.Stop();
-                    processingLog.AppendLine($"Processing took {stopWatch.Elapsed.TotalSeconds} seconds.");
+                    _ImportResultsProcessingLogInfo($"Processing took {stopWatch.Elapsed.TotalSeconds} seconds.", processingLog);
 
                     return processingLog.ToString();
                 }
 
                 if (parseResult.Warning)
                 {
-                    processingLog.AppendLine($"Parsing attempt yielded {parseResult.Messages.Count} warnings.");
+                    _ImportResultsProcessingLogWarning($"Parsing attempt yielded {parseResult.Messages.Count} warnings.", processingLog);
                     // Don't log them... it clouds the waters and takes a long time.
                     // maybe aggregate them and report that.
                     //parseResult.Messages.ForEach(m => processingLog.AppendLine(m));
@@ -180,20 +181,20 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
                 var lineItems = parseResult.LineItems;
 
-                processingLog.AppendLine($"Exported {lineItems.Count} lines from the file.");
+                _ImportResultsProcessingLogInfo($"Exported {lineItems.Count} lines from the file.", processingLog);
 
                 var processingBatches = _GetImportFileProcessingChunks(lineItems);
                 var totalProgramsExtracted = 0;
 
-                processingLog.AppendLine($"Transformed to {processingBatches.Count} processing batches.");
+                _ImportResultsProcessingLogInfo($"Transformed to {processingBatches.Count} processing batches.", processingLog);
 
                 var batchindex = 0;
                 foreach (var batch in processingBatches)
                 {
                     batchindex++;
-                    processingLog.AppendLine($"Starting batch {batchindex} of {processingBatches.Count}.");
+                    _ImportResultsProcessingLogInfo($"Starting batch {batchindex} of {processingBatches.Count}.", processingLog);
 
-                    processingLog.AppendLine($"Compressing dates for batch of {batch.Count}");
+                    _ImportResultsProcessingLogInfo($"Compressing dates for batch of {batch.Count}", processingLog);
                     var programGroups = batch.GroupBy(b => new
                         {
                             b.inventory_daypart_id,
@@ -205,8 +206,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                         })
                         .ToList();
 
-                    processingLog.AppendLine($"Grouped batch of {batch.Count} to {programGroups.Count} program groups.");
-                    processingLog.AppendLine($"Transforming to programs for {programGroups.Count} groups.");
+                    _ImportResultsProcessingLogInfo($"Grouped batch of {batch.Count} to {programGroups.Count} program groups.", processingLog);
+                    _ImportResultsProcessingLogInfo($"Transforming to programs for {programGroups.Count} groups.", processingLog);
                     
                     var programs = new List<StationInventoryManifestDaypartProgram>();
                     foreach (var programGroup in programGroups)
@@ -238,13 +239,13 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                         }
                         catch (Exception e)
                         {
-                            processingLog.AppendLine($"Error transforming from batch item to program : {e.Message}");
+                            _ImportResultsProcessingLogError($"Error transforming from batch item to program : {e.Message}", e, processingLog);
                         }
                     }
                     
                     totalProgramsExtracted += programs.Count;
 
-                    processingLog.AppendLine($"Transforming to {programs.Count} programs making {totalProgramsExtracted} total programs.");
+                    _ImportResultsProcessingLogInfo($"Transforming to {programs.Count} programs making {totalProgramsExtracted} total programs.", processingLog);
 
                     // setup first to minimize the transaction scope.
 
@@ -254,7 +255,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                         .Select(x => x.Select(v => v.Value).ToList())
                         .ToList();
 
-                    processingLog.AppendLine($"Transformed to {programSaveChunks.Count} save chunks.");
+                    _ImportResultsProcessingLogInfo($"Transformed to {programSaveChunks.Count} save chunks.", processingLog);
 
                     // prep the deletes.
                     var dateRangeManifests = batch.Select(d => new
@@ -274,14 +275,14 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                             })
                         .ToList();
 
-                    processingLog.AppendLine($"Transformed deletes to {dateRangeManifests.Count} dateRangeManifests.");
+                    _ImportResultsProcessingLogInfo($"Transformed deletes to {dateRangeManifests.Count} dateRangeManifests.", processingLog);
 
                     const int dbOperationTimeoutMinutes = 20;
                     // take action
                     using (var scope =
                         TransactionScopeHelper.CreateTransactionScope(TimeSpan.FromMinutes(dbOperationTimeoutMinutes)))
                     {
-                        processingLog.AppendLine($"Performing deletes...");
+                        _ImportResultsProcessingLogInfo($"Performing deletes...", processingLog);
                         // always delete
                         foreach (var group in dateRangeManifests)
                         {
@@ -297,7 +298,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                             }
                         }
 
-                        processingLog.AppendLine($"Performing saves...");
+                        _ImportResultsProcessingLogInfo($"Performing saves...", processingLog);
                         if (programs.Any())
                         {
                             programSaveChunks.ForEach(chunk =>
@@ -312,24 +313,24 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 var manifestIds = lineItems.Select(s => s.inventory_id).Distinct().ToList();
                 var manifests = _InventoryRepository.GetStationInventoryManifestsByIds(manifestIds);
                 _SetProgramData(manifests, (message) => processingLog.AppendLine(message));
-                
-                processingLog.AppendLine($"Extracted and saved {totalProgramsExtracted} program records.");
+
+                _ImportResultsProcessingLogInfo($"Extracted and saved {totalProgramsExtracted} program records.", processingLog);
                 success = true;
                 _MoveImportFileFromInProgressToCompletedDirectory(fileName, processingLog);
 
                 stopWatch.Stop();
-                processingLog.AppendLine($"Processing took {stopWatch.Elapsed.TotalSeconds} seconds.");
+                _ImportResultsProcessingLogInfo($"Processing took {stopWatch.Elapsed.TotalSeconds} seconds.", processingLog);
             }
             catch (Exception ex)
             {
                 success = false;
 
-                _LogError($"Error caught ingesting results file '{fileName}'.", ex);
+                _ImportResultsProcessingLogError($"Error caught ingesting results file '{fileName}'.", ex, processingLog);
                 processingLog.AppendLine($"Error caught : {ex.Message}");
                 _MoveImportFileFromInProgressToFailedDirectory(fileName, processingLog);
 
                 stopWatch.Stop();
-                processingLog.AppendLine($"Processing took {stopWatch.Elapsed.TotalSeconds} seconds.");
+                _ImportResultsProcessingLogInfo($"Processing took {stopWatch.Elapsed.TotalSeconds} seconds.", processingLog);
             }
 
             return processingLog.ToString();
@@ -343,12 +344,39 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 var filePath = Path.Combine(directoryName, fileName);
                 _FileService.Create(filePath, fileStream);
 
-                processingLog.AppendLine($"File '{fileName}' saved to '{directoryName}'.");
+                _ImportResultsProcessingLogInfo($"File '{fileName}' saved to '{directoryName}'.", processingLog);
             }
             catch (Exception e)
             {
                 throw new InvalidOperationException($"Error attempting to save file '{fileName}' in failed folder. Message : {e.Message}", e);
             }
+        }
+
+        /// <summary>
+        /// Helper method to log as it had been, but also log to the actual log.
+        /// </summary>
+        private void _ImportResultsProcessingLogInfo(string message, StringBuilder processingLog, [CallerMemberName]string memberName = "")
+        {
+            processingLog.AppendLine(message);
+            _LogInfo(message, null, memberName);
+        }
+
+        /// <summary>
+        /// Helper method to log as it had been, but also log to the actual log.
+        /// </summary>
+        private void _ImportResultsProcessingLogWarning(string message, StringBuilder processingLog, [CallerMemberName]string memberName = "")
+        {
+            processingLog.AppendLine(message);
+            _LogWarning(message, memberName);
+        }
+
+        /// <summary>
+        /// Helper method to log as it had been, but also log to the actual log.
+        /// </summary>
+        private void _ImportResultsProcessingLogError(string message, Exception ex, StringBuilder processingLog, [CallerMemberName]string memberName = "")
+        {
+            processingLog.AppendLine(message);
+            _LogError(message, ex, memberName);
         }
 
         private void _MoveImportFileFromInProgressToCompletedDirectory(string fileName, StringBuilder processingLog)

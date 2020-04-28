@@ -45,7 +45,7 @@ namespace BroadcastComposerWeb.Controllers
             if (TempData["Id"] != null) {
                 ViewBag.Id = TempData["Id"];
             }
-            if (TempData["TextareaMessage "] != null) {
+            if (TempData["TextareaMessage"] != null) {
                 ViewBag.TextareaMessage = TempData["TextareaMessage"];
             }
             return View("Index");
