@@ -229,7 +229,10 @@ namespace Services.Broadcast.ApplicationServices
         {
             foreach(var plan in plans)
             {
-                plan.SpotLengthId = plan.CreativeLengths.First().SpotLenghtId;
+                if (plan.CreativeLengths.Any())
+                {
+                    plan.SpotLengthId = plan.CreativeLengths.First().SpotLenghtId;
+                }
             }
         }
 
@@ -237,7 +240,10 @@ namespace Services.Broadcast.ApplicationServices
         {
             foreach (var plan in plans)
             {
-                plan.SpotLength = plan.SpotLengthValues.First();
+                if (plan.SpotLengthValues.Any())
+                {
+                    plan.SpotLength = plan.SpotLengthValues.First();
+                }
             }
         }
 

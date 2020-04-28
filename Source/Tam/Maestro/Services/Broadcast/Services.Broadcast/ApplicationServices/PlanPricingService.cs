@@ -703,7 +703,10 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SetPlanSpotLengthForBackwardsCompatibility(PlanDto plan)
         {
-            plan.SpotLengthId = plan.CreativeLengths.First().SpotLenghtId;
+            if (plan.CreativeLengths.Any())
+            {
+                plan.SpotLengthId = plan.CreativeLengths.First().SpotLenghtId;
+            }
         }
 
         private void _ApplyMargin(PlanPricingApiRequestParametersDto parameters)

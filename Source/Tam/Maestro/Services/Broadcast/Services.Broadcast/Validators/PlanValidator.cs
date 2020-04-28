@@ -128,6 +128,12 @@ namespace Services.Broadcast.Validators
 
         protected void _ValidateCreativeLengths(PlanDto plan)
         {
+            if (plan.CreativeLengths == null)
+            {
+                //we need it for backwards compatibility
+                //will be removed once the FE is done
+                return;
+            }
             if (plan.CreativeLengths.Count < 1)
             {
                 throw new ApplicationException(INVALID_NUMBER_OF_CREATIVE_LENGTHS);

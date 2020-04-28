@@ -195,6 +195,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 throw new Exception("The pricing model is running for the plan");
             }
 
+            if (plan.CreativeLengths == null)
+            {
+                plan.CreativeLengths = new List<Entities.CreativeLength> {
+                    new Entities.CreativeLength{ SpotLenghtId = plan.SpotLengthId}
+                };
+            }
+
             DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
 
             _CalculateDaypartOverrides(plan.Dayparts);
@@ -382,7 +389,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private void _SetSpotLengthForPlanBackwardCompatibility(PlanDto plan)
         {
-            plan.SpotLengthId = plan.CreativeLengths.First().SpotLenghtId;
+            if(plan.CreativeLengths == null)
+            {
+                plan.SpotLengthId = 1;
+            }
+            else
+            {
+                plan.SpotLengthId = plan.CreativeLengths.First().SpotLenghtId;
+            }
         }
 
         private void _SetWeeklyBreakdownTotals(PlanDto plan)

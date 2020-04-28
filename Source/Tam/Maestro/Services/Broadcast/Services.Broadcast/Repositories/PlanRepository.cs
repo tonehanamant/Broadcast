@@ -647,6 +647,10 @@ namespace Services.Broadcast.Repositories
         private void _MapCreativeLengths(plan_versions version, PlanDto planDto, QueryHintBroadcastContext context)
         {
             context.plan_version_creative_lengths.RemoveRange(version.plan_version_creative_lengths);
+            if(planDto.CreativeLengths == null)
+            {//will remove after FE is done
+                return;
+            }
             planDto.CreativeLengths.ForEach(d =>
             {
                 version.plan_version_creative_lengths.Add(new plan_version_creative_lengths {
