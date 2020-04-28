@@ -833,6 +833,12 @@
     <None Include="Files\ProprietaryDataFiles\Syndication_ValidFile5.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ProprietaryDataFiles\Syndication_ValidFile6.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ProprietaryDataFiles\Syndication_ValidFile7.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ProprietaryDataFiles\Syndicator NBCUSyn M35+ 07-01-2019 .xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

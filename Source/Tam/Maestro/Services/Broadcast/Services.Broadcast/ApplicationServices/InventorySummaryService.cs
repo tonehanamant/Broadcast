@@ -36,6 +36,16 @@ namespace Services.Broadcast.ApplicationServices
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void AggregateInventorySummaryData(List<int> inventorySourceIds);
 
+        /// <summary>
+        /// Aggregates all the information based on the list of inventory source ids
+        /// </summary>
+        /// <param name="inventorySourceIds">List of inventory source ids</param>
+        /// <param name="endDate">Inventory end date</param>
+        /// <param name="startDate">Inventory start date</param>
+        [Queue("inventorysummaryaggregation")]
+        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
+        void AggregateInventorySummaryData(List<int> inventorySourceIds, DateTime? startDate, DateTime? endDate);
+
         void QueueAggregateInventorySummaryDataJob(int inventorySourceId);
     }
 
@@ -178,6 +188,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var inventorySourceId = inventorySummaryFilterDto.InventorySourceId.Value;
             var inventorySource = _InventoryRepository.GetInventorySource(inventorySourceId);
+
             var inventorySourceDateRange = _GetInventorySourceOrCurrentQuarterDateRange(inventorySourceId, currentDate);
             var allQuartersBetweenDates =
                 _QuarterCalculationEngine.GetAllQuartersBetweenDates(inventorySourceDateRange.Start.Value,
@@ -202,16 +213,9 @@ namespace Services.Broadcast.ApplicationServices
         {
             var result = new List<InventoryQuarterSummary>();
             var sw = Stopwatch.StartNew();
-            var inventorySourceDateRange = _GetInventorySourceOrCurrentQuarterDateRange(inventorySource.Id, currentDate);
+            var quarters = _GetInventoryQuarters(inventorySource.Id, currentDate);
             sw.Stop();
-            Debug.WriteLine($"Got inventory date range in {sw.Elapsed}");
-
-            sw.Restart();
-            var allQuartersBetweenDates =
-                _QuarterCalculationEngine.GetAllQuartersBetweenDates(inventorySourceDateRange.Start.Value,
-                                                                     inventorySourceDateRange.End.Value);
-            sw.Stop();
-            Debug.WriteLine($"Got quarters in date range in {sw.Elapsed}");
+            Debug.WriteLine($"Got inventory quarters in {sw.Elapsed}");
 
             InventoryAvailability inventoryAvailability;
             try
@@ -227,7 +231,7 @@ namespace Services.Broadcast.ApplicationServices
             }
             
             var daypartDefaultsAndIds = _DaypartDefaultRepository.GetAllDaypartDefaults();
-            foreach (var quarterDetail in allQuartersBetweenDates)
+            foreach (var quarterDetail in quarters)
             {
                 InventoryQuarterSummary summaryData;
                 sw.Restart();
@@ -256,7 +260,58 @@ namespace Services.Broadcast.ApplicationServices
 
             return result;
         }
-        
+
+        private List<InventoryQuarterSummary> _CreateInventorySummariesForSource(InventorySource inventorySource,
+            BaseInventorySummaryAbstractFactory inventorySummaryFactory,
+            int householdAudienceId, List<QuarterDetailDto> quarters)
+        {
+            var result = new List<InventoryQuarterSummary>();
+            var sw = Stopwatch.StartNew();
+
+            InventoryAvailability inventoryAvailability;
+            try
+            {
+                inventoryAvailability = inventorySummaryFactory.GetInventoryAvailabilityBySource(inventorySource);
+            }
+            catch (Exception e)
+            {
+                var msg = $"Inventory not found for source '{inventorySource.Name}'.";
+                Debug.WriteLine(msg);
+                _LogError(msg, e);
+                return result;
+            }
+
+            var daypartDefaultsAndIds = _DaypartDefaultRepository.GetAllDaypartDefaults();
+            foreach (var quarterDetail in quarters)
+            {
+                InventoryQuarterSummary summaryData;
+                sw.Restart();
+                if ((InventorySourceEnum)inventorySource.Id == InventorySourceEnum.OpenMarket)
+                {
+                    summaryData = inventorySummaryFactory.CreateInventorySummary
+                        (inventorySource, householdAudienceId, quarterDetail,
+                        daypartDefaultsAndIds, inventoryAvailability);
+                }
+                else
+                {
+                    var manifests = _GetInventorySummaryManifests(inventorySource, quarterDetail);
+                    summaryData = inventorySummaryFactory.CreateInventorySummary
+                    (inventorySource, householdAudienceId, quarterDetail, manifests,
+                    daypartDefaultsAndIds, inventoryAvailability);
+                }
+                sw.Stop();
+                Debug.WriteLine($"Created inventory summary in {sw.Elapsed}");
+
+                // add summary only if there is some inventory during the quarter
+                if (summaryData.TotalPrograms > 0 || summaryData.TotalStations > 0 || summaryData.Details?.Any() == true)
+                {
+                    result.Add(summaryData);
+                }
+            }
+
+            return result;
+        }
+
         private void _SetHasLogo(List<InventorySummaryDto> inventorySummaryDtos)
         {
             var inventorySources = inventorySummaryDtos.Select(x => x.InventorySourceId).Distinct();
@@ -411,6 +466,37 @@ namespace Services.Broadcast.ApplicationServices
             return _QuarterCalculationEngine.GetAllQuartersBetweenDates(dateRange.Start.Value, dateRange.End.Value);
         }
 
+        private List<QuarterDetailDto> _GetInventoryQuarters(int inventorySourceId, DateTime currentDate)
+        {
+            var weeks = _InventoryRepository.GetInventoryWeeks(inventorySourceId);
+            if (!weeks.Any())
+            {
+                var currentDateRange = _GetCurrentQuarterDateRange(currentDate);
+                return _QuarterCalculationEngine.GetAllQuartersBetweenDates(currentDateRange.Start.Value, currentDateRange.End.Value);
+            }
+
+            var quarters = new List<QuarterDetailDto>();
+            foreach(var week in weeks)
+            {
+                var quartersBetweenDates = _QuarterCalculationEngine.GetAllQuartersBetweenDates(week.StartDate, week.EndDate);
+                foreach (var quarterFromWeek in quartersBetweenDates)
+                {
+                    if (!quarters.Any(q => q.Quarter == quarterFromWeek.Quarter && q.Year == quarterFromWeek.Year))
+                        quarters.Add(quarterFromWeek);
+                }
+            }
+
+            return quarters;
+        }
+
+        private List<QuarterDetailDto> _GetInventoryQuarters(DateTime? startDate, DateTime? endDate, DateTime currentDate, int inventorySourceId)
+        {
+            if (!startDate.HasValue || !endDate.HasValue)
+                return _GetInventoryQuarters(inventorySourceId, currentDate);
+
+            return _QuarterCalculationEngine.GetAllQuartersBetweenDates(startDate.GetValueOrDefault(), endDate.GetValueOrDefault());
+        }
+
         private DateRange _GetInventorySourceOrCurrentQuarterDateRange(int inventorySourceId, DateTime currentDate)
         {
             var dateRange = _InventoryRepository.GetInventorySourceDateRange(inventorySourceId);
@@ -464,6 +550,21 @@ namespace Services.Broadcast.ApplicationServices
                 var inventorySource = _InventoryRepository.GetInventorySource(inventorySourceId);
                 var inventorySummaryFactory = _GetInventorySummaryFactory(inventorySource.InventoryType);
                 var summaryData = _CreateInventorySummariesForSource(inventorySource, inventorySummaryFactory, houseHoldAudienceId, DateTime.Now);
+
+                _InventorySummaryRepository.SaveInventoryAggregatedData(summaryData, inventorySourceId);
+            }
+        }
+
+        public void AggregateInventorySummaryData(List<int> inventorySourceIds, DateTime? startDate, DateTime? endDate)
+        {
+            var houseHoldAudienceId = _AudiencesCache.GetDefaultAudience().Id;
+
+            foreach (var inventorySourceId in inventorySourceIds)
+            {
+                var inventorySource = _InventoryRepository.GetInventorySource(inventorySourceId);
+                var inventorySummaryFactory = _GetInventorySummaryFactory(inventorySource.InventoryType);
+                var quarters = _GetInventoryQuarters(startDate, endDate, DateTime.Now, inventorySourceId);
+                var summaryData = _CreateInventorySummariesForSource(inventorySource, inventorySummaryFactory, houseHoldAudienceId, quarters);
 
                 _InventorySummaryRepository.SaveInventoryAggregatedData(summaryData, inventorySourceId);
             }

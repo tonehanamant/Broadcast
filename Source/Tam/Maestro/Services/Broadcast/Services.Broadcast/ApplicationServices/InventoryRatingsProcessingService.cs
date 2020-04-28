@@ -319,7 +319,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (_ShouldTriggerInventorySourceAggregation())
                 {
-                    _BackgroundJobClient.Enqueue<IInventorySummaryService>(x => x.AggregateInventorySummaryData(new List<int> { inventorySource.Id }));
+                    _BackgroundJobClient.Enqueue<IInventorySummaryService>(x => x.AggregateInventorySummaryData(new List<int> { inventorySource.Id }, inventoryFile.EffectiveDate, inventoryFile.EndDate));
                 }
 
                 return inventoryFile.InventorySource.Id;

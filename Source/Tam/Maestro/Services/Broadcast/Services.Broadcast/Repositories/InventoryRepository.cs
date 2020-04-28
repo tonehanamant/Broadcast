@@ -157,6 +157,8 @@ namespace Services.Broadcast.Repositories
         List<StationInventoryManifest> GetInventoryBySourceWithUnprocessedPrograms(int sourceId, List<int> mediaWeekIds);
 
         void UpdatePrimaryProgramsForManifestDayparts(IEnumerable<StationInventoryManifestDaypart> manifestDayparts);
+
+        List<StationInventoryManifestWeek> GetInventoryWeeks(int inventorySourceId);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -1247,6 +1249,19 @@ namespace Services.Broadcast.Repositories
                                 IsActive = x.is_active
                             }).Single();
             });
+        }
+
+        public List<StationInventoryManifestWeek> GetInventoryWeeks(int inventorySourceId)
+        {
+            return _InReadUncommitedTransaction(
+               context =>
+               {
+               return context.station_inventory_manifest
+                   .Include(s => s.station_inventory_manifest_weeks)
+                   .Include(s => s.station_inventory_manifest_weeks.Select(w => w.media_weeks))
+                   .Where(x => x.inventory_source_id == inventorySourceId && (FileStatusEnum)x.inventory_files.status == FileStatusEnum.Loaded)
+                   .SelectMany(x => x.station_inventory_manifest_weeks).ToList().Select(_MapToInventoryManifestWeek).ToList();
+               });
         }
 
         ///<inheritdoc/>

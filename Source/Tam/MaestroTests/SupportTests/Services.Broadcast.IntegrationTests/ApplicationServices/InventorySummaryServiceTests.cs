@@ -19,6 +19,7 @@ using Services.Broadcast.Extensions;
 using System.Collections.Generic;
 using Services.Broadcast.Cache;
 using Services.Broadcast.IntegrationTests.Helpers;
+using System.Threading;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -229,6 +230,59 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards, jsonSerializerSettings));
+            }
+        }
+
+        [Test]
+        [Category("long_running")]
+        public void AggregateInventorySummaryData_Syndication_AggregateAffectedDates()
+        {
+            const int inventorySourceId = 13;
+            const string testFileName1 = "Syndication_ValidFile6.xlsx";
+            const string testFileName2 = "Syndication_ValidFile7.xlsx";
+            var currentDateTime = new DateTime(2019, 05, 1);
+
+            using (new TransactionScopeWrapper())
+            {
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile(testFileName1);
+                _InventorySummaryService.AggregateInventorySummaryData(new List<int> { inventorySourceId });
+
+                var inventoriesBeforeAggregation = _InventorySummaryService.GetInventorySummariesWithCache(new InventorySummaryFilterDto
+                {
+                    InventorySourceId = inventorySourceId,
+                }, currentDateTime);
+
+                var inventorySummariesPreUpdate = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
+                {
+                    Quarter = new QuarterDto
+                    {
+                        Quarter = 2,
+                        Year = 2019
+                    },
+                    InventorySourceType = InventorySourceTypeEnum.Syndication,
+                    InventorySourceId = inventorySourceId
+                }, currentDateTime);
+
+                var quarterPreUpdate = inventorySummariesPreUpdate.FirstOrDefault(i => i.Quarter.Quarter == 2 && i.Quarter.Year == 2019);
+
+                Thread.Sleep(1000);
+
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile(testFileName2);
+                _InventorySummaryService.AggregateInventorySummaryData(new List<int> { inventorySourceId }, new DateTime(2019, 5, 2), new DateTime(2019, 5, 5));
+
+                var inventorySummariesPostUpdate = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
+                {
+                    Quarter = new QuarterDto
+                    {
+                        Quarter = 2,
+                        Year = 2019
+                    },
+                    InventorySourceType = InventorySourceTypeEnum.Syndication,
+                    InventorySourceId = inventorySourceId
+                }, currentDateTime);
+                var quarterPostUpdate = inventorySummariesPostUpdate.FirstOrDefault(i => i.Quarter.Quarter == 2 && i.Quarter.Year == 2019);
+
+                Assert.Greater(quarterPostUpdate.LastUpdatedDate.Value.Ticks, quarterPreUpdate.LastUpdatedDate.GetValueOrDefault().Ticks);
             }
         }
 
