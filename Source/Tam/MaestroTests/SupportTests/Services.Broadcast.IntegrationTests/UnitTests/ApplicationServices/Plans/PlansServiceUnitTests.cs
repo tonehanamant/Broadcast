@@ -632,6 +632,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Name = "New Plan",
                 ProductId = 1,
                 SpotLengthId = 1,
+                CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLenghtId = 1, Weight = 50 } },
                 Status = Entities.Enums.PlanStatusEnum.Working,
                 FlightStartDate = new DateTime(2019, 1, 1),
                 FlightEndDate = new DateTime(2019, 7, 31),

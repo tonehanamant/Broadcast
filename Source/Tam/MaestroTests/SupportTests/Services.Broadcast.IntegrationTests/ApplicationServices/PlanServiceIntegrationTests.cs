@@ -29,7 +29,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IPlanService _PlanService;
         private ICampaignService _CampaignService;
         private IPlanPricingService _PlanPricingService;
-        
+
         private const int AUDIENCE_ID = 31;
 
         [SetUp]
@@ -97,7 +97,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.HUTBookId = null;
                 var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
-                
+
                 var planVersion = _PlanService.GetPlan(newPlanId);
 
                 Assert.IsTrue(newPlanId > 0);
@@ -268,7 +268,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //save version 3
                 plan.Dayparts.RemoveAt(1); //we remove a daypart to have different data between versions
                 plan.TargetImpressions = plan.TargetImpressions / 1000;
-                foreach(var week in plan.WeeklyBreakdownWeeks)
+                foreach (var week in plan.WeeklyBreakdownWeeks)
                 {
                     week.WeeklyImpressions = week.WeeklyImpressions / 1000;
                 }
@@ -524,10 +524,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.SpotLengthId = 100;
+                newPlan.CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLenghtId = 100, Weight = 50 } };
+                var exception = Assert.Throws<ApplicationException>(() => _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01)));
 
-                var exception = Assert.Throws<Exception>(() => _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01)));
-
-                Assert.That(exception.Message, Is.EqualTo("Invalid spot length"));
+                Assert.That(exception.Message, Is.EqualTo("Invalid spot length 100"));
             }
         }
 
@@ -1036,7 +1036,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 testPlan.FlightDays = null;
 
-                Assert.That(() => _PlanService.SavePlan(testPlan, "integration_test", new DateTime(2019, 01, 15)), 
+                Assert.That(() => _PlanService.SavePlan(testPlan, "integration_test", new DateTime(2019, 01, 15)),
                     Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid flight days. The plan should have at least one flight day"));
             }
         }
@@ -1721,7 +1721,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             request.Weeks.First(w => w.WeekNumber == 2).WeeklyImpressions = 300;
 
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
-            
+
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
@@ -2231,6 +2231,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Name = "New Plan",
                 ProductId = 1,
                 SpotLengthId = 1,
+                CreativeLengths = new List<CreativeLength> {
+                    new CreativeLength { SpotLenghtId = 1, Weight = 50},
+                    new CreativeLength{ SpotLenghtId = 2}
+                },
                 Status = PlanStatusEnum.Working,
                 FlightStartDate = new DateTime(2019, 1, 1),
                 FlightEndDate = new DateTime(2019, 1, 31),
@@ -2548,7 +2552,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var planRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             var job = planRepo.GetLatestPricingJob(planId);
-            if(job != null)
+            if (job != null)
             {
                 job.Status = BackgroundJobProcessingStatus.Succeeded;
                 job.Completed = DateTime.Now;

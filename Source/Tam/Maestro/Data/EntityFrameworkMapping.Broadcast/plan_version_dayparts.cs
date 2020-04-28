@@ -40,7 +40,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_daypart_genre_restrictions> plan_version_daypart_genre_restrictions { get; set; }
         public virtual ICollection<plan_version_daypart_program_restrictions> plan_version_daypart_program_restrictions { get; set; }
         public virtual ICollection<plan_version_daypart_show_type_restrictions> plan_version_daypart_show_type_restrictions { get; set; }
-        public virtual plan_versions plan_versions { get; set; }
         public virtual daypart_defaults daypart_defaults { get; set; }
+        public virtual plan_versions plan_versions { get; set; }
     }
 }

@@ -46,6 +46,12 @@
   "CampaignId": 1,
   "CampaignName": null,
   "CoverageGoalPercent": 80.5,
+  "CreativeLengths": [
+    {
+      "SpotLenghtId": 1,
+      "Weight": 50
+    }
+  ],
   "Currency": 0,
   "Dayparts": [],
   "Equivalized": true,

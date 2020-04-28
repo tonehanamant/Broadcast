@@ -38,7 +38,10 @@ namespace Services.Broadcast.Validators
         private readonly IPlanRepository _PlanRepository;
 
         const string INVALID_PLAN_NAME = "Invalid plan name";
-        const string INVALID_SPOT_LENGTH = "Invalid spot length";
+        const string INVALID_SPOT_LENGTH = "Invalid spot length {0}";
+        const string INVALID_NUMBER_OF_CREATIVE_LENGTHS = "There should be at least 1 creative length selected on the plan";
+        const string INVALID_CREATIVE_LENGTH_WEIGHT = "Creative length weight must be between 1 and 100";
+        const string INVALID_CREATIVE_LENGTH_WEIGHT_TOTAL = "Sum Weight of all Creative Lengths must equal 100%";
         const string INVALID_PRODUCT = "Invalid product";
         const string INVALID_SHARE_BOOK = "Invalid share book";
         const string INVALID_HUT_BOOK = "Invalid HUT book.";
@@ -74,7 +77,7 @@ namespace Services.Broadcast.Validators
         const string INVALID_STATUS_TRANSITION_MESSAGE = "Invalid status, can't update a plan from status {0} to status {1}";
         const string INVALID_DRAFT_ON_NEW_PLAN = "Cannot create a new draft on a non existing plan";
         const string STOP_WORD = "eOm3wgvfm0dq4rI3srL2";
-        
+
         const string SHOW_TYPE_CONTAIN_TYPE_IS_NOT_VALID = "Contain type of the show types restrictions is not valid";
         const string GENRE_CONTAIN_TYPE_IS_NOT_VALID = "Contain type of the genres restrictions is not valid";
         const string PROGRAM_CONTAIN_TYPE_IS_NOT_VALID = "Contain type of the program restrictions is not valid";
@@ -104,16 +107,12 @@ namespace Services.Broadcast.Validators
                 throw new Exception(INVALID_PLAN_NAME);
             }
 
-            if (!_SpotLengthEngine.SpotLengthIdExists(plan.SpotLengthId))
-            {
-                throw new Exception(INVALID_SPOT_LENGTH);
-            }
-
-            if((plan.VersionId == 0 || plan.Id == 0) && plan.IsDraft == true)
+            if ((plan.VersionId == 0 || plan.Id == 0) && plan.IsDraft == true)
             {
                 throw new Exception(INVALID_DRAFT_ON_NEW_PLAN);
             }
 
+            _ValidateCreativeLengths(plan);
             _ValidateProduct(plan);
             _ValidateFlightAndHiatus(plan);
             _ValidateDayparts(plan);
@@ -125,6 +124,48 @@ namespace Services.Broadcast.Validators
 
             // PRI-14012 We'll use a stop word so QA can trigger an error 
             _ValidateStopWord(plan);
+        }
+
+        protected void _ValidateCreativeLengths(PlanDto plan)
+        {
+            if (plan.CreativeLengths.Count < 1)
+            {
+                throw new ApplicationException(INVALID_NUMBER_OF_CREATIVE_LENGTHS);
+            }
+            plan.CreativeLengths.ForEach(creativeLength =>
+            {
+                if (!_SpotLengthEngine.SpotLengthIdExists(creativeLength.SpotLenghtId))
+                {
+                    throw new ApplicationException(string.Format(INVALID_SPOT_LENGTH, creativeLength.SpotLenghtId));
+                }
+            });
+            //each creative length must be between 1 and 100
+            plan.CreativeLengths.Where(x => x.Weight.HasValue).Select(x => x.Weight)
+                .ToList()
+                .ForEach(weight =>
+                {
+                    if (weight > 100 || weight < 1)
+                    {
+                        throw new ApplicationException(INVALID_CREATIVE_LENGTH_WEIGHT);
+                    }
+                });
+            if (plan.CreativeLengths.All(x => x.Weight.HasValue))
+            {   //the sum of all creative lengths has to be 100 if all are set by the user
+                if (plan.CreativeLengths.Sum(x => x.Weight.Value) != 100)
+                {
+                    throw new ApplicationException(INVALID_CREATIVE_LENGTH_WEIGHT_TOTAL);
+                }
+            }
+            else
+            if (plan.CreativeLengths.Any(x => x.Weight.HasValue))
+            {
+                //the sum of all creative lengths must be between 1 and 100
+                int sumOfUserSetWeight = plan.CreativeLengths.Where(x => x.Weight.HasValue).Sum(x => x.Weight.Value);
+                if (sumOfUserSetWeight < 1 || sumOfUserSetWeight > 100)
+                {
+                    throw new ApplicationException(INVALID_CREATIVE_LENGTH_WEIGHT);
+                }
+            }
         }
 
         private void _ValidateStopWord(PlanDto plan)
@@ -195,7 +236,7 @@ namespace Services.Broadcast.Validators
                 {
                     throw new Exception(INVALID_FLIGHT_HIATUS_DAY);
                 }
-                
+
                 var hasInvalidHiatusDaysWithFlightDays =
                     plan.FlightHiatusDays
                     .Select(hiatus => (int)hiatus.GetBroadcastDayOfWeek()).Distinct()
@@ -209,7 +250,7 @@ namespace Services.Broadcast.Validators
 
             if (!string.IsNullOrEmpty(plan.FlightNotes) && plan.FlightNotes.Length > 1024)
                 throw new Exception(INVALID_FLIGHT_NOTES);
-            
+
             var planFlightStartDateDayofWeek = (int)plan.FlightStartDate.Value.GetBroadcastDayOfWeek();
             var planFlightEndDateDayofWeek = (int)plan.FlightEndDate.Value.GetBroadcastDayOfWeek();
             if (!plan.FlightDays.Any(day => day == planFlightStartDateDayofWeek || day == planFlightEndDateDayofWeek))
@@ -251,7 +292,7 @@ namespace Services.Broadcast.Validators
 
         private void _ValidateSecondaryAudiences(List<PlanAudienceDto> secondaryAudiences, int primaryAudienceId)
         {
-            var distinctAudiences = new List<int> {primaryAudienceId};
+            var distinctAudiences = new List<int> { primaryAudienceId };
             foreach (var secondaryAudience in secondaryAudiences)
             {
                 if (!_AudienceCache.IsValidAudience(secondaryAudience.AudienceId))

@@ -50,6 +50,44 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START PRI-20790 *****************************************************/
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id =OBJECT_ID('plan_version_creative_lengths'))
+BEGIN
+    CREATE TABLE [plan_version_creative_lengths](
+        [id] INT IDENTITY(1,1) NOT NULL,
+        [plan_version_id] INT NOT NULL,    
+        [spot_length_id] INT NOT NULL,
+		[weight] INT NULL
+         CONSTRAINT [PK_plan_version_creative_lengths] PRIMARY KEY CLUSTERED
+    (
+        [id] ASC
+    )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+    ) ON [PRIMARY]
+ 
+    ALTER TABLE [dbo].[plan_version_creative_lengths] WITH CHECK ADD CONSTRAINT [FK_plan_version_creative_lengths_plan_versions] FOREIGN KEY ([plan_version_id])
+    REFERENCES [dbo].[plan_versions] (id)
+     
+    CREATE NONCLUSTERED INDEX [IX_plan_version_creative_lengths_plan_version_id] ON [dbo].[plan_version_creative_lengths] ([plan_version_id])
+ 
+    ALTER TABLE [dbo].[plan_version_creative_lengths] WITH CHECK ADD CONSTRAINT [FK_plan_version_creative_lengths_spot_lengths] FOREIGN KEY ([spot_length_id])
+    REFERENCES [dbo].[spot_lengths] (id)
+     
+    EXEC('INSERT INTO [plan_version_creative_lengths]([plan_version_id], [spot_length_id], [weight])
+        SELECT id, spot_length_id, NULL
+        FROM [plan_versions]')
+ 
+    --remove FK from plan_versions
+    IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id = OBJECT_ID('plan_versions') AND name = 'FK_plan_versions_spot_lengths')
+    BEGIN
+        ALTER TABLE [plan_versions] DROP CONSTRAINT [FK_plan_versions_spot_lengths]
+    END
+    --remove spot_length_id from plan_versions
+    IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'spot_length_id' and object_id = OBJECT_ID('plan_versions'))
+    BEGIN
+        ALTER TABLE [plan_versions] DROP COLUMN [spot_length_id]
+    END
+END
+/*************************************** END PRI-20790 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

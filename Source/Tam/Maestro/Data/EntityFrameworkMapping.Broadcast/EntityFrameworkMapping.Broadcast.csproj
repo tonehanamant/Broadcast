@@ -384,6 +384,9 @@
     <Compile Include="daypart.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="daypart_defaults.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="detection_files.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
@@ -394,9 +397,6 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="detection_map_types.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="daypart_defaults.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="detection_post_details.cs">
@@ -527,6 +527,9 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="plan_version_blackout_markets.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_creative_lengths.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="plan_version_dayparts.cs">

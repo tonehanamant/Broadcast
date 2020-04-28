@@ -319,6 +319,7 @@
     <Compile Include="ApplicationServices\BroadcastLockingManagerApplicationService.cs" />
     <Compile Include="ApplicationServices\CampaignAggregationJobTrigger.cs" />
     <Compile Include="ApplicationServices\CampaignAggregator.cs" />
+    <Compile Include="Entities\CreativeLength.cs" />
     <Compile Include="ApplicationServices\StationMappingService.cs" />
     <Compile Include="ApplicationServices\NtiUniverseService.cs" />
     <Compile Include="ApplicationServices\Maintenance\DaypartCleanupService.cs" />

@@ -119,7 +119,21 @@ namespace Services.Broadcast.Entities.Plan
 
         public string Name { get; set; }
 
+        /// <summary>
+        /// Gets or sets the length of the spot.
+        /// </summary>
+        /// <value>
+        /// The length of the spot.
+        /// </value>
         public int SpotLength { get; set; }
+
+        /// <summary>
+        /// Gets or sets the spot length values.
+        /// </summary>
+        /// <value>
+        /// The spot length values.
+        /// </value>
+        public List<int> SpotLengthValues { get; set; }
 
         public DateTime? FlightStartDate { get; set; }
 

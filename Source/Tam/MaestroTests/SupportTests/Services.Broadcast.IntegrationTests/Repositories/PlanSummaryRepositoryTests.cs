@@ -3,6 +3,7 @@ using ApprovalTests.Reporters;
 using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Repositories;
@@ -87,6 +88,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 Name = "New Plan",
                 ProductId = 1,
                 SpotLengthId = 1,
+                CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLenghtId = 1, Weight = 50 } },
                 AudienceType = AudienceTypeEnum.Nielsen,
                 AudienceId = 31,
                 ShareBookId = 437,

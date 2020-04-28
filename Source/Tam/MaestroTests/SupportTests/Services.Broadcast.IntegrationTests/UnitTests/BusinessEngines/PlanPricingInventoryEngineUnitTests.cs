@@ -1548,6 +1548,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             plan.PostingType = PostingTypeEnum.NTI;
             plan.ShareBookId = 201;
             plan.SpotLengthId = 5;
+            plan.CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLenghtId = 5, Weight = 50 } };
             plan.AudienceId = 25;
 
             _StationRepositoryMock
@@ -1673,6 +1674,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             plan.PostingType = PostingTypeEnum.NSI;
             plan.ShareBookId = 201;
             plan.SpotLengthId = 5;
+            plan.CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLenghtId = 5, Weight = 50 } };
             plan.AudienceId = 25;
 
             _StationRepositoryMock

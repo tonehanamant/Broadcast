@@ -4,6 +4,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
@@ -82,6 +83,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
+        public void ValidatePlan_NoWeightValueSet()
+        {
+            _spotLengthEngineMock.Setup(s => s.SpotLengthIdExists(It.IsAny<int>())).Returns(true);
+
+            var plan = _GetPlan();
+            //remove the first creative length because it has a value selected
+            plan.CreativeLengths.RemoveAt(0);
+
+            Assert.DoesNotThrow(() => _planValidator.UT_ValidateCreativeLengths(plan));
+        }
+
+        [Test]
         public void ValidatePlan_CannotSaveDraftOnEmptyPlan()
         {
             _ConfigureSpotLenghtEngineMockToReturnTrue();
@@ -113,7 +126,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var plan = _GetPlan();
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
-                Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid spot length"));
+                Throws.TypeOf<ApplicationException>().With.Message.EqualTo("Invalid spot length 1"));
         }
 
         [Test]
@@ -1218,6 +1231,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 HUTBookId = HUT_BOOK_ID,
                 Vpvh = 0.35,
                 SpotLengthId = 1,
+                CreativeLengths = new List<CreativeLength> {
+                    new CreativeLength { SpotLenghtId = 1, Weight = 50 },
+                    new CreativeLength { SpotLenghtId = 2}
+                },
                 Equivalized = true,
                 Status = PlanStatusEnum.Scenario,
                 ModifiedBy = "UnitTestUser",

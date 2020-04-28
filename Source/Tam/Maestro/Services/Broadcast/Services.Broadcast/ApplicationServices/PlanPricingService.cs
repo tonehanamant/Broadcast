@@ -564,6 +564,7 @@ namespace Services.Broadcast.ApplicationServices
                 diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FETCHING_PLAN_AND_PARAMETERS);
                 var goalsFulfilledByProprietaryInventory = true;
                 var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId);
+                _SetPlanSpotLengthForBackwardsCompatibility(plan);
                 var pricingMarkets = _MapToPlanPricingPrograms(plan);
                 var parameters = _GetPricingApiRequestParameters(planPricingParametersDto, plan, pricingMarkets);
                 var programInventoryParameters = new ProgramInventoryOptionalParametersDto
@@ -698,6 +699,11 @@ namespace Services.Broadcast.ApplicationServices
             {
                 _HandlePricingJobException(jobId, BackgroundJobProcessingStatus.Failed, exception, "Error attempting to run the pricing model");
             }
+        }
+
+        private void _SetPlanSpotLengthForBackwardsCompatibility(PlanDto plan)
+        {
+            plan.SpotLengthId = plan.CreativeLengths.First().SpotLenghtId;
         }
 
         private void _ApplyMargin(PlanPricingApiRequestParametersDto parameters)
@@ -1131,6 +1137,7 @@ namespace Services.Broadcast.ApplicationServices
             };
 
             var plan = _PlanRepository.GetPlan(planId);
+            _SetPlanSpotLengthForBackwardsCompatibility(plan);
             var inventorySourceIds = requestParameters.InventorySourceIds.IsEmpty() ?
                 _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes()) :
                 requestParameters.InventorySourceIds;
@@ -1151,6 +1158,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var diagnostic = new PlanPricingJobDiagnostic();
             var plan = _PlanRepository.GetPlan(planId);
+            _SetPlanSpotLengthForBackwardsCompatibility(plan);
             var pricingParams = new ProgramInventoryOptionalParametersDto
             {
                 MinCPM = requestParameters.MinCpm,

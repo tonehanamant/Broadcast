@@ -376,8 +376,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             _SortPlanDayparts(plan);
             _SortProgramRestrictions(plan);
-
+            _SetSpotLengthForPlanBackwardCompatibility(plan);
             return plan;
+        }
+
+        private void _SetSpotLengthForPlanBackwardCompatibility(PlanDto plan)
+        {
+            plan.SpotLengthId = plan.CreativeLengths.First().SpotLenghtId;
         }
 
         private void _SetWeeklyBreakdownTotals(PlanDto plan)

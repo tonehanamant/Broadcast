@@ -1106,6 +1106,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     FlightStartDate = new DateTime(2020, 03, 1),
                     FlightEndDate = new DateTime(2020, 03, 14),
                     SpotLengthId = spotLengthId,
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLenghtId = spotLengthId, Weight = 50 } },
                     Equivalized = false,
                     PostingType = PostingTypeEnum.NTI,
                     TargetImpressions = 250
@@ -1195,6 +1196,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     FlightStartDate = new DateTime(2020, 03, 1),
                     FlightEndDate = new DateTime(2020, 03, 14),
                     SpotLengthId = spotLengthId,
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLenghtId = spotLengthId, Weight = 50 } },
                     Equivalized = true,
                     PostingType = PostingTypeEnum.NTI,
                     TargetImpressions = 250
@@ -1284,6 +1286,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     FlightStartDate = new DateTime(2020, 03, 1),
                     FlightEndDate = new DateTime(2020, 03, 14),
                     SpotLengthId = spotLengthId,
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLenghtId = spotLengthId, Weight = 50 } },
                     Equivalized = true,
                     PostingType = PostingTypeEnum.NTI,
                     TargetImpressions = 250
@@ -1373,6 +1376,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     FlightStartDate = new DateTime(2020, 03, 1),
                     FlightEndDate = new DateTime(2020, 03, 14),
                     SpotLengthId = spotLengthId,
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLenghtId = spotLengthId, Weight = 50 } },
                     Equivalized = true,
                     PostingType = PostingTypeEnum.NTI,
                     TargetImpressions = 250

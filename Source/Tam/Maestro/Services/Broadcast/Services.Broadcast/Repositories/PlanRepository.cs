@@ -287,6 +287,7 @@ namespace Services.Broadcast.Repositories
                                   select plan)
                         .Include(x => x.campaign)
                         .Include(x => x.plan_versions)
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_creative_lengths))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_flight_days.Select(d => d.day)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_flight_hiatus_days))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_secondary_audiences))
@@ -472,7 +473,7 @@ namespace Services.Broadcast.Repositories
                 CampaignId = entity.campaign.id,
                 CampaignName = entity.campaign.name,
                 Name = entity.name,
-                SpotLengthId = latestPlanVersion.spot_length_id,
+                CreativeLengths = latestPlanVersion.plan_version_creative_lengths.Select(_MapCreativeLengthsToDto).ToList(),
                 Equivalized = latestPlanVersion.equivalized,
                 Status = EnumHelper.GetEnum<PlanStatusEnum>(latestPlanVersion.status),
                 ProductId = entity.product_id,
@@ -518,6 +519,15 @@ namespace Services.Broadcast.Repositories
                 IsAduEnabled = latestPlanVersion.is_adu_enabled
             };
             return dto;
+        }
+
+        private CreativeLength _MapCreativeLengthsToDto(plan_version_creative_lengths x)
+        {
+            return new CreativeLength
+            {
+                SpotLenghtId = x.spot_length_id,
+                Weight = x.weight
+            };
         }
 
         private PlanPricingParametersDto _MapPricingParameters(plan_version_pricing_parameters arg)
@@ -605,7 +615,6 @@ namespace Services.Broadcast.Repositories
             plan.product_id = planDto.ProductId;
             plan.campaign_id = planDto.CampaignId;
 
-            version.spot_length_id = planDto.SpotLengthId;
             version.equivalized = planDto.Equivalized;
             version.status = (int)planDto.Status;
             version.flight_start_date = planDto.FlightStartDate.Value;
@@ -624,6 +633,7 @@ namespace Services.Broadcast.Repositories
             version.version_number = planDto.VersionNumber;
             version.is_adu_enabled = planDto.IsAduEnabled;
 
+            _MapCreativeLengths(version, planDto, context);
             _MapPlanAudienceInfo(version, planDto);
             _MapPlanBudget(version, planDto);
             _MapPlanFlightDays(version, planDto, context);
@@ -632,6 +642,18 @@ namespace Services.Broadcast.Repositories
             _MapPlanSecondaryAudiences(version, planDto, context);
             _MapPlanMarkets(version, planDto, context);
             _MapWeeklyBreakdown(version, planDto, context);
+        }
+
+        private void _MapCreativeLengths(plan_versions version, PlanDto planDto, QueryHintBroadcastContext context)
+        {
+            context.plan_version_creative_lengths.RemoveRange(version.plan_version_creative_lengths);
+            planDto.CreativeLengths.ForEach(d =>
+            {
+                version.plan_version_creative_lengths.Add(new plan_version_creative_lengths {
+                    spot_length_id = d.SpotLenghtId,
+                    weight = d.Weight
+                });
+            });
         }
 
         private static void _SetCreatedDate(plan_versions version, string createdBy, DateTime createdDate)

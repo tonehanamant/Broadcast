@@ -18,23 +18,23 @@ namespace EntityFrameworkMapping.Broadcast
         {
             this.plan_version_available_markets = new HashSet<plan_version_available_markets>();
             this.plan_version_blackout_markets = new HashSet<plan_version_blackout_markets>();
+            this.plan_version_creative_lengths = new HashSet<plan_version_creative_lengths>();
+            this.plan_version_dayparts = new HashSet<plan_version_dayparts>();
+            this.plan_version_flight_days = new HashSet<plan_version_flight_days>();
             this.plan_version_flight_hiatus_days = new HashSet<plan_version_flight_hiatus_days>();
+            this.plan_version_pricing_api_results = new HashSet<plan_version_pricing_api_results>();
+            this.plan_version_pricing_executions = new HashSet<plan_version_pricing_executions>();
+            this.plan_version_pricing_job = new HashSet<plan_version_pricing_job>();
+            this.plan_version_pricing_parameters = new HashSet<plan_version_pricing_parameters>();
+            this.plan_version_pricing_results = new HashSet<plan_version_pricing_results>();
             this.plan_version_secondary_audiences = new HashSet<plan_version_secondary_audiences>();
             this.plan_version_summaries = new HashSet<plan_version_summaries>();
-            this.plan_version_pricing_executions = new HashSet<plan_version_pricing_executions>();
-            this.plan_version_pricing_parameters = new HashSet<plan_version_pricing_parameters>();
-            this.plan_version_pricing_api_results = new HashSet<plan_version_pricing_api_results>();
-            this.plan_version_dayparts = new HashSet<plan_version_dayparts>();
             this.plan_version_weeks = new HashSet<plan_version_weeks>();
-            this.plan_version_pricing_results = new HashSet<plan_version_pricing_results>();
-            this.plan_version_flight_days = new HashSet<plan_version_flight_days>();
-            this.plan_version_pricing_job = new HashSet<plan_version_pricing_job>();
         }
     
         public int id { get; set; }
         public int plan_id { get; set; }
         public bool is_draft { get; set; }
-        public int spot_length_id { get; set; }
         public bool equivalized { get; set; }
         public System.DateTime flight_start_date { get; set; }
         public System.DateTime flight_end_date { get; set; }
@@ -68,22 +68,22 @@ namespace EntityFrameworkMapping.Broadcast
         public bool is_adu_enabled { get; set; }
     
         public virtual audience audience { get; set; }
-        public virtual media_months share_media_months { get; set; }
-        public virtual media_months hut_media_months { get; set; }
+        public virtual media_months media_months { get; set; }
+        public virtual media_months media_months1 { get; set; }
         public virtual ICollection<plan_version_available_markets> plan_version_available_markets { get; set; }
         public virtual ICollection<plan_version_blackout_markets> plan_version_blackout_markets { get; set; }
+        public virtual ICollection<plan_version_creative_lengths> plan_version_creative_lengths { get; set; }
+        public virtual ICollection<plan_version_dayparts> plan_version_dayparts { get; set; }
+        public virtual ICollection<plan_version_flight_days> plan_version_flight_days { get; set; }
         public virtual ICollection<plan_version_flight_hiatus_days> plan_version_flight_hiatus_days { get; set; }
+        public virtual ICollection<plan_version_pricing_api_results> plan_version_pricing_api_results { get; set; }
+        public virtual ICollection<plan_version_pricing_executions> plan_version_pricing_executions { get; set; }
+        public virtual ICollection<plan_version_pricing_job> plan_version_pricing_job { get; set; }
+        public virtual ICollection<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
+        public virtual ICollection<plan_version_pricing_results> plan_version_pricing_results { get; set; }
         public virtual ICollection<plan_version_secondary_audiences> plan_version_secondary_audiences { get; set; }
         public virtual ICollection<plan_version_summaries> plan_version_summaries { get; set; }
-        public virtual plan plan { get; set; }
-        public virtual spot_lengths spot_lengths { get; set; }
-        public virtual ICollection<plan_version_pricing_executions> plan_version_pricing_executions { get; set; }
-        public virtual ICollection<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
-        public virtual ICollection<plan_version_pricing_api_results> plan_version_pricing_api_results { get; set; }
-        public virtual ICollection<plan_version_dayparts> plan_version_dayparts { get; set; }
         public virtual ICollection<plan_version_weeks> plan_version_weeks { get; set; }
-        public virtual ICollection<plan_version_pricing_results> plan_version_pricing_results { get; set; }
-        public virtual ICollection<plan_version_flight_days> plan_version_flight_days { get; set; }
-        public virtual ICollection<plan_version_pricing_job> plan_version_pricing_job { get; set; }
+        public virtual plan plan { get; set; }
     }
 }

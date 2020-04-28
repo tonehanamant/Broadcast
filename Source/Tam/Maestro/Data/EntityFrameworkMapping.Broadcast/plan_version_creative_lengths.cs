@@ -12,20 +12,14 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class plan_version_pricing_api_results
+    public partial class plan_version_creative_lengths
     {
-        public plan_version_pricing_api_results()
-        {
-            this.plan_version_pricing_api_result_spots = new HashSet<plan_version_pricing_api_result_spots>();
-        }
-    
         public int id { get; set; }
         public int plan_version_id { get; set; }
-        public decimal optimal_cpm { get; set; }
-        public Nullable<int> plan_version_pricing_job_id { get; set; }
+        public int spot_length_id { get; set; }
+        public Nullable<int> weight { get; set; }
     
-        public virtual ICollection<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
-        public virtual plan_version_pricing_job plan_version_pricing_job { get; set; }
+        public virtual spot_lengths spot_lengths { get; set; }
         public virtual plan_versions plan_versions { get; set; }
     }
 }

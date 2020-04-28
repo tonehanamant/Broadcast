@@ -28,5 +28,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         {
             _ValidateWeeklyBreakdownWeeks(plan);
         }
+
+        public void UT_ValidateCreativeLengths(PlanDto plan)
+        {
+            _ValidateCreativeLengths(plan);
+        }
     }
 }

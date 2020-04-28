@@ -112,6 +112,9 @@
         "ProcessingStatus": 1,
         "ProductName": "Product1",
         "SpotLength": 30,
+        "SpotLengthValues": [
+          30
+        ],
         "Status": 1,
         "TargetCPM": 12.0000,
         "TargetImpressions": 100.0,
@@ -161,6 +164,9 @@
         "ProcessingStatus": 1,
         "ProductName": "Product1",
         "SpotLength": 30,
+        "SpotLengthValues": [
+          30
+        ],
         "Status": 1,
         "TargetCPM": 12.0000,
         "TargetImpressions": 100.0,

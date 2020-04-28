@@ -43,6 +43,14 @@ namespace Services.Broadcast.Entities.Plan
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the creative lengths.
+        /// </summary>
+        /// <value>
+        /// The creative lengths.
+        /// </value>
+        public List<CreativeLength> CreativeLengths { get; set; }
+
+        /// <summary>
         /// Gets or sets the spot length identifier.
         /// </summary>
         /// <value>

@@ -33,10 +33,10 @@ namespace EntityFrameworkMapping.Broadcast
         public string hangfire_job_id { get; set; }
     
         public virtual ICollection<plan_version_pricing_job_inventory_source_estimates> plan_version_pricing_job_inventory_source_estimates { get; set; }
-        public virtual plan_versions plan_versions { get; set; }
         public virtual ICollection<plan_version_pricing_api_results> plan_version_pricing_api_results { get; set; }
         public virtual ICollection<plan_version_pricing_executions> plan_version_pricing_executions { get; set; }
         public virtual ICollection<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
         public virtual ICollection<plan_version_pricing_results> plan_version_pricing_results { get; set; }
+        public virtual plan_versions plan_versions { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int plan_version_id { get; set; }
         public Nullable<int> available_market_with_sov_count { get; set; }
     
-        public virtual plan_versions plan_versions { get; set; }
         public virtual ICollection<plan_version_summary_quarters> plan_version_summary_quarters { get; set; }
+        public virtual plan_versions plan_versions { get; set; }
     }
 }

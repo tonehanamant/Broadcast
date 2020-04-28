@@ -139,7 +139,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_secondary_audiences> plan_version_secondary_audiences { get; set; }
         public virtual DbSet<plan_version_summaries> plan_version_summaries { get; set; }
         public virtual DbSet<plan> plans { get; set; }
-        public virtual DbSet<plan_versions> plan_versions { get; set; }
         public virtual DbSet<plan_version_summary_quarters> plan_version_summary_quarters { get; set; }
         public virtual DbSet<plan_version_daypart_show_type_restrictions> plan_version_daypart_show_type_restrictions { get; set; }
         public virtual DbSet<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs { get; set; }
@@ -190,5 +189,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_pricing_job_inventory_source_estimates> plan_version_pricing_job_inventory_source_estimates { get; set; }
         public virtual DbSet<plan_version_pricing_job> plan_version_pricing_job { get; set; }
         public virtual DbSet<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
+        public virtual DbSet<plan_version_creative_lengths> plan_version_creative_lengths { get; set; }
+        public virtual DbSet<plan_versions> plan_versions { get; set; }
     }
 }

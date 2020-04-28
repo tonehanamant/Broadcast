@@ -27,6 +27,16 @@
   "CampaignId": 1,
   "CampaignName": "Test Campaign 1",
   "CoverageGoalPercent": 80.5,
+  "CreativeLengths": [
+    {
+      "SpotLenghtId": 1,
+      "Weight": 50
+    },
+    {
+      "SpotLenghtId": 2,
+      "Weight": null
+    }
+  ],
   "Currency": 1,
   "Dayparts": [
     {

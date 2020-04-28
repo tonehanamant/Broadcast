@@ -39,9 +39,9 @@ namespace EntityFrameworkMapping.Broadcast
         public double margin { get; set; }
         public Nullable<int> plan_version_pricing_job_id { get; set; }
     
-        public virtual plan_versions plan_versions { get; set; }
         public virtual ICollection<plan_version_pricing_parameters_inventory_source_percentages> plan_version_pricing_parameters_inventory_source_percentages { get; set; }
         public virtual ICollection<plan_version_pricing_parameters_inventory_source_type_percentages> plan_version_pricing_parameters_inventory_source_type_percentages { get; set; }
         public virtual plan_version_pricing_job plan_version_pricing_job { get; set; }
+        public virtual plan_versions plan_versions { get; set; }
     }
 }

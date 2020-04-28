@@ -166,7 +166,7 @@ namespace Services.Broadcast.Repositories
                         .Include(campaign => campaign.plans.Select(x=>x.plan_versions))
                         .Include(campaign => campaign.plans.Select(x => x.plan_versions.Select(y=>y.plan_version_summaries)))
                         .Include(campaign => campaign.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts)))
-                        .Include(campaign => campaign.plans.Select(x => x.plan_versions.Select(y => y.spot_lengths)))
+                        .Include(campaign => campaign.plans.Select(x => x.plan_versions.Select(y => y.plan_version_creative_lengths.Select(z=>z.spot_lengths))))
                         .GroupJoin(
                             context.campaign_summaries,
                             campaigns => campaigns.id,
@@ -264,11 +264,12 @@ namespace Services.Broadcast.Repositories
                     var campaign = context.campaigns
                         .Include(x => x.plans)
                         .Include(z => z.plans.Select(x => x.plan_versions))
+                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_creative_lengths)))
+                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_creative_lengths.Select(w=>w.spot_lengths))))
                         .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_summaries)))
                         .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts)))
                         .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts.Select(t=>t.daypart_defaults))))
                         .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts.Select(t => t.daypart_defaults.daypart))))
-                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.spot_lengths)))
                         .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_summaries.Select(t=>t.plan_version_summary_quarters))))
                         .Single(c => c.id.Equals(campaignId), $"Could not find existing campaign with id '{campaignId}'");
        
@@ -303,7 +304,7 @@ namespace Services.Broadcast.Repositories
                             PostingType = (PostingTypeEnum)version.posting_type,
                             Status = (PlanStatusEnum)version.status,
                             Name = version.plan.name,
-                            SpotLength = version.spot_lengths.length,
+                            SpotLengthValues = version.plan_version_creative_lengths.Select(x=> x.spot_lengths.length).ToList(),                            
                             FlightStartDate = version.flight_start_date,
                             FlightEndDate = version.flight_end_date,
                             TargetCPM = version.target_cpm,

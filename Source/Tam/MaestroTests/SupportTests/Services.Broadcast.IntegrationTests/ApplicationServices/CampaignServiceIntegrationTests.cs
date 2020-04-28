@@ -548,6 +548,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Name = "New Plan",
                 ProductId = 1,
                 SpotLengthId = 1,
+                CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLenghtId = 1, Weight = 50 } },
                 Status = PlanStatusEnum.Working,
                 FlightStartDate = new DateTime(2019, 1, 1),
                 FlightEndDate = new DateTime(2019, 7, 31),
@@ -958,7 +959,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ExportType = CampaignExportTypeEnum.Proposal,
                     SelectedPlans = new List<int> { 2190, 2191, 2192, 2193 }
                 });
-                
+
                 _WriteFileToLocalFileSystem(reportData, "CampaignExport_PlansWith13And14Weeks.xlsx");
                 Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
@@ -981,7 +982,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ExportType = CampaignExportTypeEnum.Proposal,
                     SelectedPlans = new List<int> { 2541, 2579 }
                 });
-                                
+
                 Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
             }
