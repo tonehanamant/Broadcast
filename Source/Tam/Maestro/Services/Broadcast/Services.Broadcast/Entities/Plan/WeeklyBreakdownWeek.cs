@@ -15,6 +15,9 @@ namespace Services.Broadcast.Entities.Plan
         public double WeeklyRatings { get; set; }
         public decimal WeeklyBudget { get; set; }
         public int WeeklyAdu { get; set; }
+        public int? SpotLengthId { get; set; }
+        public int? DaypartCodeId { get; set; }
+        public double? PercentageOfWeek { get; set; }
     }
 
     public class WeeklyBreakdownTotals

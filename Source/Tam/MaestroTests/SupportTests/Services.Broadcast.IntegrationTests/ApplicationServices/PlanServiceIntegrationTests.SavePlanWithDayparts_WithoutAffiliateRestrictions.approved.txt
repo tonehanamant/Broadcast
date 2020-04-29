@@ -62,17 +62,17 @@
       "IsStartTimeModified": true,
       "Restrictions": {
         "AffiliateRestrictions": {
-          "Affiliates": [],
+          "Affiliates": [
+            {
+              "Display": "FOX",
+              "Id": 20
+            }
+          ],
           "ContainType": 2
         },
         "GenreRestrictions": {
-          "ContainType": 1,
-          "Genres": [
-            {
-              "Display": "Horror",
-              "Id": 25
-            }
-          ]
+          "ContainType": 2,
+          "Genres": []
         },
         "ProgramRestrictions": {
           "ContainType": 1,
@@ -323,9 +323,12 @@
   "WeeklyBreakdownWeeks": [
     {
       "ActiveDays": "Tu-Su",
+      "DaypartCodeId": null,
       "EndDate": "2019-01-06T00:00:00",
       "MediaWeekId": 784,
       "NumberOfActiveDays": 6,
+      "PercentageOfWeek": null,
+      "SpotLengthId": null,
       "StartDate": "2018-12-31T00:00:00",
       "WeeklyAdu": 5,
       "WeeklyBudget": 20.0000,
@@ -336,9 +339,12 @@
     },
     {
       "ActiveDays": "M-Su",
+      "DaypartCodeId": null,
       "EndDate": "2019-01-13T00:00:00",
       "MediaWeekId": 785,
       "NumberOfActiveDays": 7,
+      "PercentageOfWeek": null,
+      "SpotLengthId": null,
       "StartDate": "2019-01-07T00:00:00",
       "WeeklyAdu": 0,
       "WeeklyBudget": 20.0000,
@@ -349,9 +355,12 @@
     },
     {
       "ActiveDays": "M-Sa",
+      "DaypartCodeId": null,
       "EndDate": "2019-01-20T00:00:00",
       "MediaWeekId": 786,
       "NumberOfActiveDays": 6,
+      "PercentageOfWeek": null,
+      "SpotLengthId": null,
       "StartDate": "2019-01-14T00:00:00",
       "WeeklyAdu": 0,
       "WeeklyBudget": 20.0000,
@@ -362,9 +371,12 @@
     },
     {
       "ActiveDays": "M-W,F-Su",
+      "DaypartCodeId": null,
       "EndDate": "2019-01-27T00:00:00",
       "MediaWeekId": 787,
       "NumberOfActiveDays": 6,
+      "PercentageOfWeek": null,
+      "SpotLengthId": null,
       "StartDate": "2019-01-21T00:00:00",
       "WeeklyAdu": 0,
       "WeeklyBudget": 20.0000,
@@ -375,9 +387,12 @@
     },
     {
       "ActiveDays": "M-Th",
+      "DaypartCodeId": null,
       "EndDate": "2019-02-03T00:00:00",
       "MediaWeekId": 788,
       "NumberOfActiveDays": 4,
+      "PercentageOfWeek": null,
+      "SpotLengthId": null,
       "StartDate": "2019-01-28T00:00:00",
       "WeeklyAdu": 30,
       "WeeklyBudget": 20.0000,
