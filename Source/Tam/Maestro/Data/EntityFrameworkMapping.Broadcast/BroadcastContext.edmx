@@ -3079,7 +3079,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_creative_lengths_plan_versions">
-          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1" />
+          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_creative_lengths" Type="Self.plan_version_creative_lengths" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_versions">
@@ -7758,11 +7760,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="plan_version_pricing_job" EntitySet="plan_version_pricing_job" />
             <End Role="plan_version_pricing_results" EntitySet="plan_version_pricing_results" />
           </AssociationSet>
-          <EntitySet Name="plan_version_creative_lengths" EntityType="BroadcastModel.plan_version_creative_lengths" />
-          <AssociationSet Name="FK_plan_version_creative_lengths_spot_lengths" Association="BroadcastModel.FK_plan_version_creative_lengths_spot_lengths">
-            <End Role="spot_lengths" EntitySet="spot_lengths" />
-            <End Role="plan_version_creative_lengths" EntitySet="plan_version_creative_lengths" />
-          </AssociationSet>
           <EntitySet Name="plan_versions" EntityType="BroadcastModel.plan_versions" />
           <AssociationSet Name="FK_plan_versions_audiences" Association="BroadcastModel.FK_plan_versions_audiences">
             <End Role="audience" EntitySet="audiences" />
@@ -7783,10 +7780,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_plan_version_blackout_markets_plan_versions" Association="BroadcastModel.FK_plan_version_blackout_markets_plan_versions">
             <End Role="plan_versions" EntitySet="plan_versions" />
             <End Role="plan_version_blackout_markets" EntitySet="plan_version_blackout_markets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_plan_version_creative_lengths_plan_versions" Association="BroadcastModel.FK_plan_version_creative_lengths_plan_versions">
-            <End Role="plan_versions" EntitySet="plan_versions" />
-            <End Role="plan_version_creative_lengths" EntitySet="plan_version_creative_lengths" />
           </AssociationSet>
           <AssociationSet Name="FK_plan_version_dayparts_plan_versions" Association="BroadcastModel.FK_plan_version_dayparts_plan_versions">
             <End Role="plan_versions" EntitySet="plan_versions" />
@@ -7835,6 +7828,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_plan_versions_plans" Association="BroadcastModel.FK_plan_versions_plans">
             <End Role="plan" EntitySet="plans" />
             <End Role="plan_versions" EntitySet="plan_versions" />
+          </AssociationSet>
+          <EntitySet Name="plan_version_creative_lengths" EntityType="BroadcastModel.plan_version_creative_lengths" />
+          <AssociationSet Name="FK_plan_version_creative_lengths_plan_versions" Association="BroadcastModel.FK_plan_version_creative_lengths_plan_versions">
+            <End Role="plan_versions" EntitySet="plan_versions" />
+            <End Role="plan_version_creative_lengths" EntitySet="plan_version_creative_lengths" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_creative_lengths_spot_lengths" Association="BroadcastModel.FK_plan_version_creative_lengths_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="plan_version_creative_lengths" EntitySet="plan_version_creative_lengths" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -13392,29 +13394,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="plan_version_creative_lengths">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="plan_version_id" Type="Int32" Nullable="false" />
-          <Property Name="spot_length_id" Type="Int32" Nullable="false" />
-          <Property Name="weight" Type="Int32" />
-          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_plan_version_creative_lengths_spot_lengths" FromRole="plan_version_creative_lengths" ToRole="spot_lengths" />
-          <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_creative_lengths_plan_versions" FromRole="plan_version_creative_lengths" ToRole="plan_versions" />
-        </EntityType>
-        <Association Name="FK_plan_version_creative_lengths_spot_lengths">
-          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
-          <End Type="BroadcastModel.plan_version_creative_lengths" Role="plan_version_creative_lengths" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_lengths">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_creative_lengths">
-              <PropertyRef Name="spot_length_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="plan_versions">
           <Key>
             <PropertyRef Name="id" />
@@ -13458,7 +13437,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="media_months1" Relationship="BroadcastModel.FK_plan_versions_share_media_months" FromRole="plan_versions" ToRole="media_months" />
           <NavigationProperty Name="plan_version_available_markets" Relationship="BroadcastModel.FK_plan_version_available_markets_plan_versions" FromRole="plan_versions" ToRole="plan_version_available_markets" />
           <NavigationProperty Name="plan_version_blackout_markets" Relationship="BroadcastModel.FK_plan_version_blackout_markets_plan_versions" FromRole="plan_versions" ToRole="plan_version_blackout_markets" />
-          <NavigationProperty Name="plan_version_creative_lengths" Relationship="BroadcastModel.FK_plan_version_creative_lengths_plan_versions" FromRole="plan_versions" ToRole="plan_version_creative_lengths" />
           <NavigationProperty Name="plan_version_dayparts" Relationship="BroadcastModel.FK_plan_version_dayparts_plan_versions" FromRole="plan_versions" ToRole="plan_version_dayparts" />
           <NavigationProperty Name="plan_version_flight_days" Relationship="BroadcastModel.FK_plan_version_flight_days_plan_versions" FromRole="plan_versions" ToRole="plan_version_flight_days" />
           <NavigationProperty Name="plan_version_flight_hiatus_days" Relationship="BroadcastModel.FK_plan_version_flight_hiatus_days_plan_versions" FromRole="plan_versions" ToRole="plan_version_flight_hiatus_days" />
@@ -13471,6 +13449,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_summaries" Relationship="BroadcastModel.FK_plan_version_summaries_plan_versions" FromRole="plan_versions" ToRole="plan_version_summaries" />
           <NavigationProperty Name="plan_version_weeks" Relationship="BroadcastModel.FK_plan_version_weeks_plan_versions" FromRole="plan_versions" ToRole="plan_version_weeks" />
           <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_versions_plans" FromRole="plan_versions" ToRole="plan" />
+          <NavigationProperty Name="plan_version_creative_lengths" Relationship="BroadcastModel.FK_plan_version_creative_lengths_plan_versions" FromRole="plan_versions" ToRole="plan_version_creative_lengths" />
         </EntityType>
         <Association Name="FK_plan_versions_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -13532,18 +13511,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="plan_version_blackout_markets">
-              <PropertyRef Name="plan_version_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plan_version_creative_lengths_plan_versions">
-          <End Type="BroadcastModel.plan_versions" Role="plan_versions" Multiplicity="1" />
-          <End Type="BroadcastModel.plan_version_creative_lengths" Role="plan_version_creative_lengths" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan_versions">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_creative_lengths">
               <PropertyRef Name="plan_version_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -13703,6 +13670,43 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_versions">
               <PropertyRef Name="plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="plan_version_creative_lengths">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_id" Type="Int32" Nullable="false" />
+          <Property Name="spot_length_id" Type="Int32" Nullable="false" />
+          <Property Name="weight" Type="Int32" />
+          <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_creative_lengths_plan_versions" FromRole="plan_version_creative_lengths" ToRole="plan_versions" />
+          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_plan_version_creative_lengths_spot_lengths" FromRole="plan_version_creative_lengths" ToRole="spot_lengths" />
+        </EntityType>
+        <Association Name="FK_plan_version_creative_lengths_plan_versions">
+          <End Type="BroadcastModel.plan_versions" Role="plan_versions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_creative_lengths" Role="plan_version_creative_lengths" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_versions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_creative_lengths">
+              <PropertyRef Name="plan_version_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_creative_lengths_spot_lengths">
+          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_creative_lengths" Role="plan_version_creative_lengths" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_creative_lengths">
+              <PropertyRef Name="spot_length_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -15937,16 +15941,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="plan_version_creative_lengths">
-            <EntityTypeMapping TypeName="BroadcastModel.plan_version_creative_lengths">
-              <MappingFragment StoreEntitySet="plan_version_creative_lengths">
-                <ScalarProperty Name="weight" ColumnName="weight" />
-                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
-                <ScalarProperty Name="plan_version_id" ColumnName="plan_version_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="plan_versions">
             <EntityTypeMapping TypeName="BroadcastModel.plan_versions">
               <MappingFragment StoreEntitySet="plan_versions">
@@ -15983,6 +15977,16 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="equivalized" ColumnName="equivalized" />
                 <ScalarProperty Name="is_draft" ColumnName="is_draft" />
                 <ScalarProperty Name="plan_id" ColumnName="plan_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_creative_lengths">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_creative_lengths">
+              <MappingFragment StoreEntitySet="plan_version_creative_lengths">
+                <ScalarProperty Name="weight" ColumnName="weight" />
+                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
+                <ScalarProperty Name="plan_version_id" ColumnName="plan_version_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

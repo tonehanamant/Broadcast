@@ -238,11 +238,14 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SetSpotLengthForBackwardsCompatibility(List<PlanSummaryDto> plans)
         {
-            foreach (var plan in plans)
+            if (plans!= null && plans.Any())
             {
-                if (plan.SpotLengthValues.Any())
+                foreach (var plan in plans)
                 {
-                    plan.SpotLength = plan.SpotLengthValues.First();
+                    if (plan.SpotLengthValues.Any())
+                    {
+                        plan.SpotLength = plan.SpotLengthValues.First();
+                    }
                 }
             }
         }
@@ -716,6 +719,7 @@ namespace Services.Broadcast.ApplicationServices
             var manifestDaypartIds = manifests.SelectMany(x => x.ManifestDayparts).Select(x => x.Id.Value).Distinct();
             var primaryProgramsByManifestDaypartIds = _StationProgramRepository.GetPrimaryProgramsForManifestDayparts(manifestDaypartIds);
             _SetSpotLengthForBackwardsCompatibility(campaign.Plans);
+            plan.SpotLengthId = plan.CreativeLengths.First().SpotLenghtId;
             return new ProgramLineupReportData(
                 plan, 
                 pricingJob, 

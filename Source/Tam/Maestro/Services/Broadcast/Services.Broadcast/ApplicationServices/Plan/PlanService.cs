@@ -195,11 +195,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 throw new Exception("The pricing model is running for the plan");
             }
 
+            //for backwards compatibility
             if (plan.CreativeLengths == null)
             {
                 plan.CreativeLengths = new List<Entities.CreativeLength> {
                     new Entities.CreativeLength{ SpotLenghtId = plan.SpotLengthId}
                 };
+            }
+            else
+            {
+                //if there is only 1 creative length set, the qweight is 100%
+                if(plan.CreativeLengths.Count == 1)
+                {
+                    plan.CreativeLengths.Single().Weight = 100;
+                }
             }
 
             DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);

@@ -407,15 +407,12 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_results" Width="1.5" PointX="22.125" PointY="0.75" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_results_plan_version_pricing_job" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_result_spots_plan_version_pricing_results" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_creative_lengths" Width="1.5" PointX="18.5" PointY="5" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_creative_lengths_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.plan_versions" Width="1.5" PointX="12.25" PointY="0.75" />
         <AssociationConnector Association="BroadcastModel.FK_plan_versions_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_plan_versions_hut_media_months" />
         <AssociationConnector Association="BroadcastModel.FK_plan_versions_share_media_months" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_available_markets_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_blackout_markets_plan_versions" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_creative_lengths_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_dayparts_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_flight_days_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_flight_hiatus_days_plan_versions" />
@@ -428,6 +425,9 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_summaries_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_weeks_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_versions_plans" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_creative_lengths" Width="1.5" PointX="18.5" PointY="6.125" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_creative_lengths_plan_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_creative_lengths_spot_lengths" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

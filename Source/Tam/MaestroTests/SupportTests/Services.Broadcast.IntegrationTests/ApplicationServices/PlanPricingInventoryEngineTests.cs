@@ -43,6 +43,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var diagnostic = new PlanPricingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1196);
+                //for backwards compatibility
+                plan.SpotLengthId = 2;
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan, 
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
@@ -73,6 +75,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     processInventoryProgramsJob: false);
 
                 var plan = _PlanRepository.GetPlan(1198);
+                //for backwards compatibility
+                plan.SpotLengthId = 2;
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan, 
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
@@ -103,6 +107,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var diagnostic = new PlanPricingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1199);
+                //for backwards compatibility
+                plan.SpotLengthId = 2;
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan, 
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
@@ -181,6 +187,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var diagnostic = new PlanPricingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1197);
+                //for backwards compatibility
+                plan.SpotLengthId = 2;
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan, 
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
@@ -200,6 +208,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var diagnostic = new PlanPricingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1197);
+                //for backwards compatibility
+                plan.SpotLengthId = 2;
                 plan.Dayparts[0].Restrictions.AffiliateRestrictions = new RestrictionsDto.AffiliateRestrictionsDto
                 {
                     Affiliates = new List<LookupDto>()
@@ -227,6 +237,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var diagnostic = new PlanPricingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1197);
+                //for backwards compatibility
+                plan.SpotLengthId = 2;
                 _StationRepository.SaveStationMonthDetails(new Entities.StationMonthDetailDto
                 {
                     Affiliation = "CW2",
@@ -288,6 +300,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var diagnostic = new PlanPricingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1200);
+                //for backwards compatibility
+                plan.SpotLengthId = 1;
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan, 
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),

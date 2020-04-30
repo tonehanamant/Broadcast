@@ -72,6 +72,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
+        public void CreateNewPlan_DefaultWeight()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.CreativeLengths.RemoveAt(1);
+
+                DateTime nowDate = new DateTime(2019, 01, 01);
+                string username = "integration_test";
+                var newPlanId = _PlanService.SavePlan(newPlan, username, nowDate);
+                var savedPlan = _PlanService.GetPlan(newPlanId);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedPlan, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CreateNewPlan_WithAduDisabled()
         {
             using (new TransactionScopeWrapper())

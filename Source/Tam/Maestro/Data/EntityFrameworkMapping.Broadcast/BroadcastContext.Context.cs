@@ -189,7 +189,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_pricing_job_inventory_source_estimates> plan_version_pricing_job_inventory_source_estimates { get; set; }
         public virtual DbSet<plan_version_pricing_job> plan_version_pricing_job { get; set; }
         public virtual DbSet<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
-        public virtual DbSet<plan_version_creative_lengths> plan_version_creative_lengths { get; set; }
         public virtual DbSet<plan_versions> plan_versions { get; set; }
+        public virtual DbSet<plan_version_creative_lengths> plan_version_creative_lengths { get; set; }
     }
 }
