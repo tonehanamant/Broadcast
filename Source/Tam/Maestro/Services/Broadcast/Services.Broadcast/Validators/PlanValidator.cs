@@ -140,9 +140,9 @@ namespace Services.Broadcast.Validators
             }
             plan.CreativeLengths.ForEach(creativeLength =>
             {
-                if (!_SpotLengthEngine.SpotLengthIdExists(creativeLength.SpotLenghtId))
+                if (!_SpotLengthEngine.SpotLengthIdExists(creativeLength.SpotLengthId))
                 {
-                    throw new ApplicationException(string.Format(INVALID_SPOT_LENGTH, creativeLength.SpotLenghtId));
+                    throw new ApplicationException(string.Format(INVALID_SPOT_LENGTH, creativeLength.SpotLengthId));
                 }
             });
             //each creative length must be between 1 and 100

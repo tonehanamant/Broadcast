@@ -43,7 +43,7 @@ namespace Services.Broadcast.Entities.Campaign
             AgencyDto agency,
             AdvertiserDto advertiser,
             PlanAudienceDisplay guaranteedDemo,
-            List<LookupDto> spotLenghts,
+            List<LookupDto> spotLengths,
             DateTime currentDate,
             List<PlanPricingAllocatedSpot> allocatedSpots,
             List<StationInventoryManifest> manifests,
@@ -52,7 +52,7 @@ namespace Services.Broadcast.Entities.Campaign
         {
             ExportFileName = string.Format(FILENAME_FORMAT, plan.Name, currentDate.ToString(DATE_FORMAT_FILENAME));
 
-            _PopulateHeaderData(plan, planPricingJob, agency, advertiser, guaranteedDemo, spotLenghts, currentDate);
+            _PopulateHeaderData(plan, planPricingJob, agency, advertiser, guaranteedDemo, spotLengths, currentDate);
             IEnumerable<DetailedViewRowData> detailedRowsData = _GetDetailedViewRowData(
                 allocatedSpots,
                 manifests,
@@ -78,7 +78,7 @@ namespace Services.Broadcast.Entities.Campaign
             AgencyDto agency,
             AdvertiserDto advertiser,
             PlanAudienceDisplay guaranteedDemo,
-            List<LookupDto> spotLenghts,
+            List<LookupDto> spotLengths,
             DateTime currentDate)
         {
             PlanHeaderName = string.Format(PLAN_HEADER_NAME_FORMAT, plan.Name);
@@ -89,7 +89,7 @@ namespace Services.Broadcast.Entities.Campaign
             FlightStartDate = plan.FlightStartDate.Value.ToString(DATE_FORMAT_SHORT_YEAR_SLASHES);
             FlightEndDate = plan.FlightEndDate.Value.ToString(DATE_FORMAT_SHORT_YEAR_SLASHES);
             GuaranteedDemo = guaranteedDemo.Code;
-            SpotLength = _GetSpotLength(plan, spotLenghts);
+            SpotLength = _GetSpotLength(plan, spotLengths);
             PostingType = plan.PostingType.ToString();
             AccountExecutive = string.Empty;
             ClientContact = string.Empty;
@@ -309,13 +309,13 @@ namespace Services.Broadcast.Entities.Campaign
                .ToList();
         }
 
-        private string _GetSpotLength(PlanDto plan, List<LookupDto> spotLenghts)
+        private string _GetSpotLength(PlanDto plan, List<LookupDto> spotLengths)
         {
-            var spotLenghtDisplay = spotLenghts.Single(x => x.Id == plan.SpotLengthId).Display;
-            spotLenghtDisplay = plan.Equivalized && int.Parse(spotLenghtDisplay) != 30 ? $"{spotLenghtDisplay} eq." : spotLenghtDisplay;
-            spotLenghtDisplay = ":" + spotLenghtDisplay;
+            var spotLengthDisplay = spotLengths.Single(x => x.Id == plan.SpotLengthId).Display;
+            spotLengthDisplay = plan.Equivalized && int.Parse(spotLengthDisplay) != 30 ? $"{spotLengthDisplay} eq." : spotLengthDisplay;
+            spotLengthDisplay = ":" + spotLengthDisplay;
 
-            return spotLenghtDisplay;
+            return spotLengthDisplay;
         }
 
         private double _CalculateWeight(double impressions, double planImpressions)

@@ -34,19 +34,19 @@ namespace Services.Broadcast.Validators
             var validationProblems = new List<InventoryFileProblem>();
             foreach (var inventoryGroup in inventoryFile.InventoryGroups)
             {
-                var spotLenghtStationGroups = inventoryGroup.Manifests.GroupBy(
+                var spotLengthStationGroups = inventoryGroup.Manifests.GroupBy(
                     m => new
                     {
                         m.SpotLengthId,
                         m.Station.LegacyCallLetters
                     }).Select(g => g).ToList();
-                foreach (var spotLenghtStationGroup in spotLenghtStationGroups)
+                foreach (var spotLengthStationGroup in spotLengthStationGroups)
                 {
                     var duplicateProblems =
-                        spotLenghtStationGroup.SelectMany(g => g.ManifestDayparts)
+                        spotLengthStationGroup.SelectMany(g => g.ManifestDayparts)
                             .GroupBy(d => d.Daypart.ToLongString())
                             .Where(g => g.Count() > 1)
-                            .Select(d => DuplicateRecordValidation(spotLenghtStationGroup.Key.LegacyCallLetters)).ToList();
+                            .Select(d => DuplicateRecordValidation(spotLengthStationGroup.Key.LegacyCallLetters)).ToList();
 
                     if (duplicateProblems.Count > 0)
                     {

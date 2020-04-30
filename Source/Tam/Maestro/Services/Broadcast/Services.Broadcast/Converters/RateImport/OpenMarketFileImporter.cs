@@ -440,7 +440,7 @@ namespace Services.Broadcast.Converters.RateImport
 
         private Dictionary<int, double> _GetSpotLengthAndMultipliers()
         {
-            // load spot lenght ids and multipliers
+            // load spot Length ids and multipliers
             var spotMultipliers = _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsAndCostMultipliers();
 
             return (from c in SpotLengths

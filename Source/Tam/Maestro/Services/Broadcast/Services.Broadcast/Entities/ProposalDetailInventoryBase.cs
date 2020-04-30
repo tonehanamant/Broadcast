@@ -24,7 +24,7 @@ namespace Services.Broadcast.Entities
         public List<ProposalFlightWeek> ProposalFlightWeeks { get; set; }
         public double? Margin { get; set; }
 
-        // spot lenght id is saved
+        // spot Length id is saved
         public int DetailSpotLengthId { get; set; }
         public int DetailSpotLength { get; set; }
         public DaypartDto DetailDaypart { get; set; }

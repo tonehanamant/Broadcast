@@ -542,7 +542,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.SpotLengthId = 100;
-                newPlan.CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLenghtId = 100, Weight = 50 } };
+                newPlan.CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 100, Weight = 50 } };
                 var exception = Assert.Throws<ApplicationException>(() => _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01)));
 
                 Assert.That(exception.Message, Is.EqualTo("Invalid spot length 100"));
@@ -2250,8 +2250,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ProductId = 1,
                 SpotLengthId = 1,
                 CreativeLengths = new List<CreativeLength> {
-                    new CreativeLength { SpotLenghtId = 1, Weight = 50},
-                    new CreativeLength{ SpotLenghtId = 2}
+                    new CreativeLength { SpotLengthId = 1, Weight = 50},
+                    new CreativeLength{ SpotLengthId = 2}
                 },
                 Status = PlanStatusEnum.Working,
                 FlightStartDate = new DateTime(2019, 1, 1),

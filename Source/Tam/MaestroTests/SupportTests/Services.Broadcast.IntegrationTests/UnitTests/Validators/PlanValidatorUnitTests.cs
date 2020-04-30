@@ -97,7 +97,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_CannotSaveDraftOnEmptyPlan()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
 
             var plan = _GetPlan();
             plan.VersionId = 0;
@@ -144,7 +144,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_FlightStartBiggerThanFlightEnd()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
 
             var plan = _GetPlan();
             plan.FlightStartDate = new DateTime(2019, 8, 1);
@@ -213,7 +213,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_InvalidFligthHiatusDay()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
 
             var plan = _GetPlan();
             plan.FlightStartDate = new DateTime(2019, 8, 1);
@@ -231,7 +231,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_InvalidFligthCannotStartOnNonFlightDay()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
 
             var plan = _GetPlan();
             plan.FlightStartDate = new DateTime(2020, 2, 1);
@@ -246,7 +246,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_InvalidFligthDaysThereShouldBeAtLeastOne()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
 
             var plan = _GetPlan();
             plan.FlightStartDate = new DateTime(2020, 2, 1);
@@ -261,7 +261,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_InvalidFligthHiatusDaysCannotIntersectWithNonFlightDays()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
 
             var plan = _GetPlan();
             plan.FlightStartDate = new DateTime(2020, 2, 1);
@@ -358,7 +358,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_WithoutDayparts()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
 
             var plan = _GetPlan();
             plan.Dayparts = null;
@@ -370,7 +370,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_WithWrongShowTypeRestrictionsContainType()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
 
             var plan = _GetPlan();
             plan.Dayparts[0].Restrictions.ShowTypeRestrictions.ContainType = 0;
@@ -382,7 +382,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_WithWrongGenreRestrictionsContainType()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
 
             var plan = _GetPlan();
             plan.Dayparts[0].Restrictions.GenreRestrictions.ContainType = 0;
@@ -394,7 +394,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_WithWrongProgramRestrictionsContainType()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
 
             var plan = _GetPlan();
             plan.Dayparts[0].Restrictions.ProgramRestrictions.ContainType = 0;
@@ -406,7 +406,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_WithWrongAffiliateRestrictionsContainType()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
 
             var plan = _GetPlan();
             plan.Dayparts[0].Restrictions.AffiliateRestrictions.ContainType = 0;
@@ -418,7 +418,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_DuplicateDaypart()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
 
             var plan = _GetPlan();
             plan.Dayparts = new List<PlanDaypartDto>
@@ -440,7 +440,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_DayPartStartLessThanSecondsMinimum()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
 
             var plan = _GetPlan();
             plan.Dayparts = new List<PlanDaypartDto>
@@ -458,7 +458,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_DayPartStartLargerThanSecondsMaximum()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
 
             var plan = _GetPlan();
             plan.Dayparts = new List<PlanDaypartDto>
@@ -476,7 +476,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_DayPartEndLessThanSecondsMinimum()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
 
             var plan = _GetPlan();
             plan.Dayparts = new List<PlanDaypartDto>
@@ -495,7 +495,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_DayPartEndLargerThanSecondsMaximum()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
 
             var plan = _GetPlan();
             plan.Dayparts = new List<PlanDaypartDto>
@@ -514,7 +514,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_WeightingGoalPercentLessThanMinimum()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
             var plan = _GetPlan();
             plan.Dayparts = new List<PlanDaypartDto>
             {
@@ -533,7 +533,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_WeightingGoalLargerThanMaximum()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
             var plan = _GetPlan();
             plan.Dayparts = new List<PlanDaypartDto>
             {
@@ -552,7 +552,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_SumofWeightingGoalPercentsExceeds100()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
             var plan = _GetPlan();
             plan.Dayparts = new List<PlanDaypartDto>
             {
@@ -696,7 +696,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_IsValidAudienceTrue()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
 
             var plan = _GetPlan();
             plan.AudienceId = 0;
@@ -795,7 +795,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_InvalidSecondaryAudience()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
             _broadcastAudiencesCacheMock.Setup(b => b.IsValidAudience(0)).Returns(true);
             _broadcastAudiencesCacheMock.Setup(b => b.IsValidAudience(21)).Returns(false);
 
@@ -1170,7 +1170,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             }
         }
 
-        private void _ConfigureSpotLenghtEngineMockToReturnTrue() =>
+        private void _ConfigureSpotLengthEngineMockToReturnTrue() =>
             _spotLengthEngineMock.Setup(s => s.SpotLengthIdExists(It.IsAny<int>())).Returns(true);
 
         private void _ConfigureBroadcastAudiencesCacheMockToReturnTrue() =>
@@ -1178,7 +1178,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
         private void _ConfigureMocksToReturnTrue()
         {
-            _ConfigureSpotLenghtEngineMockToReturnTrue();
+            _ConfigureSpotLengthEngineMockToReturnTrue();
             _ConfigureBroadcastAudiencesCacheMockToReturnTrue();
         }
 
@@ -1232,8 +1232,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 Vpvh = 0.35,
                 SpotLengthId = 1,
                 CreativeLengths = new List<CreativeLength> {
-                    new CreativeLength { SpotLenghtId = 1, Weight = 50 },
-                    new CreativeLength { SpotLenghtId = 2}
+                    new CreativeLength { SpotLengthId = 1, Weight = 50 },
+                    new CreativeLength { SpotLengthId = 2}
                 },
                 Equivalized = true,
                 Status = PlanStatusEnum.Scenario,

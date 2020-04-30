@@ -705,7 +705,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (plan.CreativeLengths.Any())
             {
-                plan.SpotLengthId = plan.CreativeLengths.First().SpotLenghtId;
+                plan.SpotLengthId = plan.CreativeLengths.First().SpotLengthId;
             }
         }
 

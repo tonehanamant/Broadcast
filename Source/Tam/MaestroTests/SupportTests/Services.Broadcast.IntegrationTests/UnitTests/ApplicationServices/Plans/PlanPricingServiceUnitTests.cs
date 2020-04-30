@@ -42,7 +42,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IPricingApiClient> _PricingApiClientMock;
         private Mock<IBackgroundJobClient> _BackgroundJobClientMock;
         private Mock<IPlanPricingInventoryEngine> _PlanPricingInventoryEngineMock;
-        private Mock<IBroadcastLockingManagerApplicationService> _BroadcastLockingManagerApplicationServiceMock;       
+        private Mock<IBroadcastLockingManagerApplicationService> _BroadcastLockingManagerApplicationServiceMock;
         private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
         private Mock<IPlanRepository> _PlanRepositoryMock;
         private Mock<IInventoryRepository> _InventoryRepositoryMock;
@@ -178,10 +178,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(new List<LookupDto>());
 
             var service = _GetService();
-            
+
             // Act
             service.GetPricingResultsReportData(planId, planVersionNumber);
-            
+
             // Assert
             _PlanRepositoryMock.Verify(x => x.GetPlanVersionIdByVersionNumber(It.IsAny<int>(), It.IsAny<int>()), Times.Never);
             _PlanRepositoryMock.Verify(x => x.GetPlan(planId, null), Times.Once);
@@ -554,7 +554,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         SpotCost = 250,
                         Impressions = 20000,
                     }
-                }                
+                }
             };
 
             var estimates = new List<PricingEstimate>
@@ -646,7 +646,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void CanNotQueuePricingJobWhenThereIsOneActive(BackgroundJobProcessingStatus status)
         {
             const string expectedMessage = "The pricing model is already running for the plan";
-            
+
             _PlanRepositoryMock
                 .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
                 .Returns(new PlanPricingJob { Status = status });
@@ -658,7 +658,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             var exception = Assert.Throws<Exception>(() => service.QueuePricingJob(
-                new PlanPricingParametersDto() 
+                new PlanPricingParametersDto()
                 , new DateTime(2019, 10, 23)
                 , "test user"));
 
@@ -678,7 +678,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 }
             };
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void ThrowsException_WhenWrongUnitCapType_IsPassed_WhenRunningPricing()
@@ -702,6 +702,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(new PlanDto
                 {
                     CoverageGoalPercent = 80,
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
                     AvailableMarkets = new List<PlanAvailableMarketDto>
                     {
                         new PlanAvailableMarketDto
@@ -879,7 +880,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
                 .Returns(_GetLatestMarketCoverages());
-            
+
             var jobUpdates = new List<PlanPricingJob>();
             _PlanRepositoryMock
                 .Setup(x => x.UpdatePlanPricingJob(It.IsAny<PlanPricingJob>()))
@@ -891,7 +892,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                  });
 
             var service = _GetService();
-            
+
             // Act
             service.RunPricingJob(parameters, jobId, CancellationToken.None);
 
@@ -927,7 +928,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(new PlanDto
                 {
                     AvailableMarkets = new List<PlanAvailableMarketDto>(),
-                    PricingParameters = _GetPlanPricingParametersDto()
+                    PricingParameters = _GetPlanPricingParametersDto(),
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } }
                 });
 
             _PlanPricingInventoryEngineMock
@@ -1615,7 +1617,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Callback<PlanPricingJob>(jobUpdate => jobUpdates.Add(jobUpdate));
 
             var service = _GetService();
-            
+
             // Act
             var task = Task.Run(() => service.RunPricingJob(parameters, jobId, cancellationTokenSource.Token));
             cancellationTokenSource.Cancel();
@@ -1657,6 +1659,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     .Returns(new PlanDto
                     {
                         CoverageGoalPercent = 80,
+                        CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
                         AvailableMarkets = new List<PlanAvailableMarketDto>(),
                         PricingParameters = _GetPlanPricingParametersDto()
                     });
@@ -1704,6 +1707,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(new PlanDto
                 {
                     CoverageGoalPercent = 80,
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
                     AvailableMarkets = new List<PlanAvailableMarketDto>(),
                     PricingParameters = _GetPlanPricingParametersDto()
                 });
@@ -1749,6 +1753,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(new PlanDto
                 {
                     CoverageGoalPercent = 80,
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
                     AvailableMarkets = new List<PlanAvailableMarketDto>(),
                     PricingParameters = _GetPlanPricingParametersDto(),
                     WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
@@ -1872,6 +1877,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(new PlanDto
                 {
                     CoverageGoalPercent = 80,
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
                     AvailableMarkets = new List<PlanAvailableMarketDto>
                     {
                         new PlanAvailableMarketDto
@@ -2016,6 +2022,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(new PlanDto
                 {
                     CoverageGoalPercent = 80,
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
                     AvailableMarkets = new List<PlanAvailableMarketDto>
                     {
                         new PlanAvailableMarketDto
@@ -2598,6 +2605,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(new PlanDto
                 {
                     CoverageGoalPercent = 80,
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
                     AvailableMarkets = new List<PlanAvailableMarketDto>
                     {
                         new PlanAvailableMarketDto
@@ -3145,7 +3153,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
                 .Returns(_GetLatestMarketCoverages());
-            
+
             _PricingApiClientMock
                 .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
                 .Returns(new PlanPricingApiSpotsResponseDto
@@ -3199,6 +3207,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(new PlanDto
                 {
                     CoverageGoalPercent = 80,
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
                     AvailableMarkets = new List<PlanAvailableMarketDto>
                     {
                         new PlanAvailableMarketDto
@@ -3801,6 +3810,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(new PlanDto
                 {
                     CoverageGoalPercent = 80,
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
                     AvailableMarkets = new List<PlanAvailableMarketDto>
                     {
                         new PlanAvailableMarketDto
@@ -4396,6 +4406,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(new PlanDto
                 {
                     VersionId = 77,
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
                     CoverageGoalPercent = 80,
                     AvailableMarkets = new List<PlanAvailableMarketDto>
                     {
@@ -4976,7 +4987,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         }
                     }
                 });
-            
+
             _MediaMonthAndWeekAggregateCacheMock
                 .Setup(x => x.GetMediaWeekById(It.IsAny<int>()))
                 .Returns<int>(weekId => new MediaWeek
@@ -4988,7 +4999,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanRepositoryMock
                 .Setup(x => x.SavePricingApiResults(It.IsAny<PlanPricingAllocationResult>()))
                 .Callback<PlanPricingAllocationResult>(p => passedParameters.Add(p));
-            
+
             var service = _GetService();
 
             // Act
@@ -5019,6 +5030,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 {
                     VersionId = 77,
                     CoverageGoalPercent = 80,
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
                     AvailableMarkets = new List<PlanAvailableMarketDto>
                     {
                         new PlanAvailableMarketDto
@@ -5675,7 +5687,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetUnitCapsTest()
@@ -6211,7 +6223,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanRepositoryMock
                 .Setup(x => x.AddPlanPricingJob(It.IsAny<PlanPricingJob>()))
                 .Returns(jobId);
-            
+
             var passedParameters = new List<object>();
             _PlanRepositoryMock
                 .Setup(x => x.UpdateJobHangfireId(It.IsAny<int>(), It.IsAny<string>()))
@@ -6281,7 +6293,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Act
             var exception = Assert.Throws<Exception>(() => service.GetCurrentPricingExecution(planId));
-            
+
             // Assert
             Assert.AreEqual(expectedMessage, exception.Message);
         }

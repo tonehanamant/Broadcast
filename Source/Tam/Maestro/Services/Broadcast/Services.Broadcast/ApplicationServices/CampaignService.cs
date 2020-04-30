@@ -231,7 +231,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 if (plan.CreativeLengths.Any())
                 {
-                    plan.SpotLengthId = plan.CreativeLengths.First().SpotLenghtId;
+                    plan.SpotLengthId = plan.CreativeLengths.First().SpotLengthId;
                 }
             }
         }
@@ -719,7 +719,7 @@ namespace Services.Broadcast.ApplicationServices
             var manifestDaypartIds = manifests.SelectMany(x => x.ManifestDayparts).Select(x => x.Id.Value).Distinct();
             var primaryProgramsByManifestDaypartIds = _StationProgramRepository.GetPrimaryProgramsForManifestDayparts(manifestDaypartIds);
             _SetSpotLengthForBackwardsCompatibility(campaign.Plans);
-            plan.SpotLengthId = plan.CreativeLengths.First().SpotLenghtId;
+            plan.SpotLengthId = plan.CreativeLengths.First().SpotLengthId;
             return new ProgramLineupReportData(
                 plan, 
                 pricingJob, 

@@ -44,11 +44,11 @@
   "CoverageGoalPercent": 80.5,
   "CreativeLengths": [
     {
-      "SpotLenghtId": 1,
+      "SpotLengthId": 1,
       "Weight": 50
     },
     {
-      "SpotLenghtId": 2,
+      "SpotLengthId": 2,
       "Weight": null
     }
   ],
@@ -62,17 +62,17 @@
       "IsStartTimeModified": true,
       "Restrictions": {
         "AffiliateRestrictions": {
-          "Affiliates": [
-            {
-              "Display": "FOX",
-              "Id": 20
-            }
-          ],
+          "Affiliates": [],
           "ContainType": 2
         },
         "GenreRestrictions": {
-          "ContainType": 2,
-          "Genres": []
+          "ContainType": 1,
+          "Genres": [
+            {
+              "Display": "Horror",
+              "Id": 25
+            }
+          ]
         },
         "ProgramRestrictions": {
           "ContainType": 1,

@@ -525,7 +525,7 @@ namespace Services.Broadcast.Repositories
         {
             return new CreativeLength
             {
-                SpotLenghtId = x.spot_length_id,
+                SpotLengthId = x.spot_length_id,
                 Weight = x.weight
             };
         }
@@ -654,7 +654,7 @@ namespace Services.Broadcast.Repositories
             planDto.CreativeLengths.ForEach(d =>
             {
                 version.plan_version_creative_lengths.Add(new plan_version_creative_lengths {
-                    spot_length_id = d.SpotLenghtId,
+                    spot_length_id = d.SpotLengthId,
                     weight = d.Weight
                 });
             });

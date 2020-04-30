@@ -4,6 +4,7 @@ using Common.Services.Repositories;
 using Hangfire;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
@@ -199,13 +200,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (plan.CreativeLengths == null)
             {
                 plan.CreativeLengths = new List<Entities.CreativeLength> {
-                    new Entities.CreativeLength{ SpotLenghtId = plan.SpotLengthId}
+                    new Entities.CreativeLength{ SpotLengthId = plan.SpotLengthId}
                 };
             }
             else
             {
                 //if there is only 1 creative length set, the qweight is 100%
-                if(plan.CreativeLengths.Count == 1)
+                if (plan.CreativeLengths.Count == 1)
                 {
                     plan.CreativeLengths.Single().Weight = 100;
                 }
@@ -398,13 +399,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private void _SetSpotLengthForPlanBackwardCompatibility(PlanDto plan)
         {
-            if(plan.CreativeLengths == null)
+            if (plan.CreativeLengths == null)
             {
                 plan.SpotLengthId = 1;
             }
             else
             {
-                plan.SpotLengthId = plan.CreativeLengths.First().SpotLenghtId;
+                plan.SpotLengthId = plan.CreativeLengths.First().SpotLengthId;
             }
         }
 
@@ -1094,7 +1095,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 Name = string.Empty,
                 AudienceId = householdAudienceId.Id,
-                SpotLengthId = defaultSpotLengthId,
+                CreativeLengths = new List<CreativeLength> {
+                    new CreativeLength {
+                    SpotLengthId = defaultSpotLengthId }
+                },
                 Equivalized = true,
                 AudienceType = AudienceTypeEnum.Nielsen,
                 PostingType = PostingTypeEnum.NTI,

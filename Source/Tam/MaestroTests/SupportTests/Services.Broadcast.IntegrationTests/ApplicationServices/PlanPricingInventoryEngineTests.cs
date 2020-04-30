@@ -132,7 +132,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _InventoryFileTestHelper.EnhanceProgramsForFileId(fileId, enhancements);
                 var plan = _PlanRepository.GetPlan(1197);
                 //for backwards compatibility
-                plan.SpotLengthId = plan.CreativeLengths.First().SpotLenghtId;
+                plan.SpotLengthId = plan.CreativeLengths.First().SpotLengthId;
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan,
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
@@ -167,7 +167,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _InventoryFileTestHelper.UploadOpenMarketInventoryFile("Open Market Pricing Programs.xml", null, false);
                 var plan = _PlanRepository.GetPlan(1197);
                 //for backwards compatibility
-                plan.SpotLengthId = plan.CreativeLengths.First().SpotLenghtId;
+                plan.SpotLengthId = plan.CreativeLengths.First().SpotLengthId;
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan,
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
@@ -279,7 +279,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 plan.FlightDays.Add(1);
                 plan.FlightDays.Add(5);
                 //for backwards compatibility
-                plan.SpotLengthId = plan.CreativeLengths.First().SpotLenghtId;
+                plan.SpotLengthId = plan.CreativeLengths.First().SpotLengthId;
                 _PlanRepository.SavePlan(plan, "IntegrationTestUser", new System.DateTime(2020, 2, 27));
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan,

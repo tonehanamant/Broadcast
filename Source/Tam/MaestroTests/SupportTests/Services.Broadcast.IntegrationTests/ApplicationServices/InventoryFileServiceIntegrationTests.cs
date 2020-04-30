@@ -681,7 +681,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                const string filename = @".\Files\TVBFileLoadTestInvalidSpothLenght.csv";
+                const string filename = @".\Files\TVBFileLoadTestInvalidSpothLength.csv";
 
                 var request = new InventoryFileSaveRequest
                 {

@@ -51,7 +51,7 @@ namespace Services.Broadcast.Entities.Campaign
         public CampaignReportData(CampaignExportTypeEnum exportType, CampaignDto campaign
             , List<PlanDto> plans, AgencyDto agency, AdvertiserDto advertiser
             , List<PlanAudienceDisplay> guaranteedDemos
-            , List<LookupDto> spotLenghts
+            , List<LookupDto> spotLengths
             , List<DaypartDefaultDto> daypartDefaults
             , List<PlanAudienceDisplay> orderedAudiences
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
@@ -59,10 +59,10 @@ namespace Services.Broadcast.Entities.Campaign
         {
             HasSecondaryAudiences = plans.Any(x => x.SecondaryAudiences.Any());
 
-            List<ProjectedPlan> projectedPlans = _ProjectPlansForProposalExport(plans, spotLenghts, daypartDefaults
+            List<ProjectedPlan> projectedPlans = _ProjectPlansForProposalExport(plans, spotLengths, daypartDefaults
                 , mediaMonthAndWeekAggregateCache, quarterCalculationEngine);
             _PopulateHeaderData(exportType, campaign, plans, agency, advertiser
-                , guaranteedDemos, spotLenghts, orderedAudiences, quarterCalculationEngine);
+                , guaranteedDemos, spotLengths, orderedAudiences, quarterCalculationEngine);
 
             List<DateTime> hiatusDays = plans.SelectMany(x => x.FlightHiatusDays).ToList();
             hiatusDays = hiatusDays.Distinct().ToList();
@@ -78,12 +78,12 @@ namespace Services.Broadcast.Entities.Campaign
             _PopulateNotes();
 
             //flow chart tab
-            projectedPlans = _ProjectPlansForQuarterExport(plans, spotLenghts, daypartDefaults, mediaMonthAndWeekAggregateCache, quarterCalculationEngine);
+            projectedPlans = _ProjectPlansForQuarterExport(plans, spotLengths, daypartDefaults, mediaMonthAndWeekAggregateCache, quarterCalculationEngine);
             _PopulateFlowChartQuarterTableData(projectedPlans, plans, mediaMonthAndWeekAggregateCache);
 
             if (exportType.Equals(CampaignExportTypeEnum.Contract))
             {
-                _PopulateContractQuarterTableData(projectedPlans, plans, spotLenghts
+                _PopulateContractQuarterTableData(projectedPlans, plans, spotLengths
                     , mediaMonthAndWeekAggregateCache
                     , quarterCalculationEngine);
             }
@@ -184,7 +184,7 @@ namespace Services.Broadcast.Entities.Campaign
         }
 
         private List<ProjectedPlan> _ProjectPlansForProposalExport(List<PlanDto> plans
-            , List<LookupDto> spotLenghts
+            , List<LookupDto> spotLengths
             , List<DaypartDefaultDto> daypartDefaults
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
             , IQuarterCalculationEngine quarterCalculationEngine)
@@ -225,7 +225,7 @@ namespace Services.Broadcast.Entities.Campaign
                                     : (weightingGoalFactor / 100) * quarterFactor;
 
                         var daypartCode = daypartDefaults.Single(dc => dc.Id == daypart.DaypartCodeId);
-                        var newProjectedPlan = _GetEmptyWeek(null, plan, quarter, null, daypartDefaults, spotLenghts, daypart);
+                        var newProjectedPlan = _GetEmptyWeek(null, plan, quarter, null, daypartDefaults, spotLengths, daypart);
 
                         newProjectedPlan.TotalCost = plan.Budget.Value * (decimal)daypartWeightingFactor;
                         newProjectedPlan.Units = 0; //we have no value calculated and stored for this property at the moment                            
@@ -290,7 +290,7 @@ namespace Services.Broadcast.Entities.Campaign
 
         //flow chart and contract tabs
         private List<ProjectedPlan> _ProjectPlansForQuarterExport(List<PlanDto> plans
-            , List<LookupDto> spotLenghts
+            , List<LookupDto> spotLengths
             , List<DaypartDefaultDto> daypartDefaults
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
             , IQuarterCalculationEngine quarterCalculationEngine)
@@ -311,7 +311,7 @@ namespace Services.Broadcast.Entities.Campaign
                         var planWeek = plan.WeeklyBreakdownWeeks.Where(x => x.MediaWeekId == week.Id).SingleOrDefault();
                         if (planWeek == null)
                         {
-                            result.AddRange(_AddEmptyWeekForPlanDayparts(week, plan, quarter, quarterMediaMonth, daypartDefaults, spotLenghts));
+                            result.AddRange(_AddEmptyWeekForPlanDayparts(week, plan, quarter, quarterMediaMonth, daypartDefaults, spotLengths));
                             continue;
                         }
 
@@ -338,7 +338,7 @@ namespace Services.Broadcast.Entities.Campaign
 
                             //don't need secondary audience data for flow chart or contract tabs
                             //map everything else
-                            var newProjectedPlan = _GetEmptyWeek(week, plan, quarter, quarterMediaMonth, daypartDefaults, spotLenghts, daypart);
+                            var newProjectedPlan = _GetEmptyWeek(week, plan, quarter, quarterMediaMonth, daypartDefaults, spotLengths, daypart);
                             newProjectedPlan.TotalCost = plan.Budget.Value * (decimal)daypartWeightingFactor;
                             newProjectedPlan.Units = 0; //we have no value calculated and stored for this property at the moment                            
 
@@ -372,15 +372,15 @@ namespace Services.Broadcast.Entities.Campaign
 
         private List<ProjectedPlan> _AddEmptyWeekForPlanDayparts(MediaWeek mediaWeek, PlanDto plan,
             QuarterDetailDto quarter, List<MediaMonth> mediaMonths, List<DaypartDefaultDto> dayparts,
-            List<LookupDto> spotLenghts)
+            List<LookupDto> spotLengths)
         {
-            return plan.Dayparts.Select(x => _GetEmptyWeek(mediaWeek, plan, quarter, mediaMonths, dayparts, spotLenghts, x)).ToList();
+            return plan.Dayparts.Select(x => _GetEmptyWeek(mediaWeek, plan, quarter, mediaMonths, dayparts, spotLengths, x)).ToList();
         }
 
         //Returns a ProjectedPlan object that will contain media and plan data without imps and cost data
         private static ProjectedPlan _GetEmptyWeek(MediaWeek mediaWeek, PlanDto plan, QuarterDetailDto quarter
             , List<MediaMonth> mediaMonths, List<DaypartDefaultDto> daypartsDefault
-            , List<LookupDto> spotLenghts, PlanDaypartDto daypart)
+            , List<LookupDto> spotLengths, PlanDaypartDto daypart)
         {
             return new ProjectedPlan
             {
@@ -395,7 +395,7 @@ namespace Services.Broadcast.Entities.Campaign
                 DaypartStartTime = DaypartTimeHelper.ConvertSecondsToFormattedTime(daypart.StartTimeSeconds, "hh:mmtt"),
                 DaypartEndTime = DaypartTimeHelper.ConvertSecondsToFormattedTime(daypart.EndTimeSeconds, "hh:mmtt"),
                 SpotLengthId = plan.SpotLengthId,
-                SpotLength = spotLenghts.Single(y => y.Id == plan.SpotLengthId).Display,
+                SpotLength = spotLengths.Single(y => y.Id == plan.SpotLengthId).Display,
                 Equivalized = plan.Equivalized,
                 FlightDays = plan.FlightDays
             };
@@ -720,7 +720,7 @@ namespace Services.Broadcast.Entities.Campaign
         }
 
         private void _PopulateContractQuarterTableData(List<ProjectedPlan> projectedPlans, List<PlanDto> plans
-            , List<LookupDto> spotLenghts
+            , List<LookupDto> spotLengths
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
             , IQuarterCalculationEngine quarterCalculationEngine)
         {
@@ -773,13 +773,13 @@ namespace Services.Broadcast.Entities.Campaign
                         ContractQuarterTables.Add(quarterTable);
                     }
 
-                    _CalculateAduTableData(quarter, plans, spotLenghts, mediaMonthAndWeekAggregateCache);
+                    _CalculateAduTableData(quarter, plans, spotLengths, mediaMonthAndWeekAggregateCache);
                 });
             _CalculateContractTabTotals();
         }
 
         private void _CalculateAduTableData(QuarterDetailDto quarter, List<PlanDto> plans
-            , List<LookupDto> spotLenghts
+            , List<LookupDto> spotLengths
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
         {
             List<DateTime> weeksStartDate = mediaMonthAndWeekAggregateCache
@@ -802,7 +802,7 @@ namespace Services.Broadcast.Entities.Campaign
                     continue;
                 }
 
-                plans.GroupBy(x => new { SpotLength = spotLenghts.Single(y => y.Id == x.SpotLengthId).Display, x.Equivalized })
+                plans.GroupBy(x => new { SpotLength = spotLengths.Single(y => y.Id == x.SpotLengthId).Display, x.Equivalized })
                     .OrderBy(x => Convert.ToInt32(x.Key.SpotLength))
                     .ThenByDescending(x => x.Key.Equivalized)
                     .ToList()
@@ -1053,7 +1053,7 @@ namespace Services.Broadcast.Entities.Campaign
             , AgencyDto agency
             , AdvertiserDto advertiser
             , List<PlanAudienceDisplay> guaranteedDemos
-            , List<LookupDto> spotLenghts
+            , List<LookupDto> spotLengths
             , List<PlanAudienceDisplay> orderedAudiences
             , IQuarterCalculationEngine quarterCalculationEngine)
         {
@@ -1066,13 +1066,13 @@ namespace Services.Broadcast.Entities.Campaign
             Status = exportType.Equals(CampaignExportTypeEnum.Contract) ? "Order" : "Proposal";
 
             _SetGuaranteeedDemo(guaranteedDemos, orderedAudiences);
-            _SetSpotLengths(plans, spotLenghts);
+            _SetSpotLengths(plans, spotLengths);
         }
 
-        private void _SetSpotLengths(List<PlanDto> plans, List<LookupDto> spotLenghts)
+        private void _SetSpotLengths(List<PlanDto> plans, List<LookupDto> spotLengths)
         {
             SpotLengths = plans
-                            .Select(x => new { spotLenghts.Single(y => y.Id == x.SpotLengthId).Display, x.Equivalized })
+                            .Select(x => new { spotLengths.Single(y => y.Id == x.SpotLengthId).Display, x.Equivalized })
                             .OrderBy(x => int.Parse(x.Display))
                             .Select(x => $":{x.Display}{_GetEquivalizedStatus(x.Equivalized, x.Display)}")
                             .Distinct()

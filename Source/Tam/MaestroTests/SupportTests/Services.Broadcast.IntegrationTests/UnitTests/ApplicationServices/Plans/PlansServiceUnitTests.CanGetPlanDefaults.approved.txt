@@ -4,6 +4,12 @@
   "AudienceType": 1,
   "BlackoutMarkets": [],
   "CoverageGoalPercent": 80.0,
+  "CreativeLengths": [
+    {
+      "SpotLengthId": 1,
+      "Weight": null
+    }
+  ],
   "Currency": 1,
   "Equivalized": true,
   "FlightDays": [
@@ -22,7 +28,6 @@
   "PostingType": 2,
   "ProgramContainType": 2,
   "ShowTypeContainType": 2,
-  "SpotLengthId": 1,
   "Status": 1,
   "WeeklyBreakdownWeeks": []
 }

@@ -2,7 +2,7 @@
 {
     public class CreativeLength
     {
-        public int SpotLenghtId { get; set; }
+        public int SpotLengthId { get; set; }
         public int? Weight { get; set; }
     }
 }

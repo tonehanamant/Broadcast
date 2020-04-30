@@ -44,7 +44,7 @@
   "CoverageGoalPercent": 80.5,
   "CreativeLengths": [
     {
-      "SpotLenghtId": 1,
+      "SpotLengthId": 1,
       "Weight": 100
     }
   ],

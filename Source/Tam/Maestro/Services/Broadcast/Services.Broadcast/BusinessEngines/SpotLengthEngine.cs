@@ -45,8 +45,8 @@ namespace Services.Broadcast.BusinessEngines
 
         public int GetSpotLengthValueById(int spotLengthId)
         {
-            var spotLenght = _SpotLengthsDict.Single(x => x.Value == spotLengthId, $"Invalid spot length id: '{spotLengthId}' found");
-            return spotLenght.Key;
+            var spotLength = _SpotLengthsDict.Single(x => x.Value == spotLengthId, $"Invalid spot length id: '{spotLengthId}' found");
+            return spotLength.Key;
         }
 
         public bool SpotLengthExists(int spotLengthValue)
