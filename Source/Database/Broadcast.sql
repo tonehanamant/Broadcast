@@ -89,6 +89,7 @@ BEGIN
 END
 IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id = OBJECT_ID('plan_version_creative_lengths') AND name = 'FK_plan_version_creative_lengths_plan_versions')
 BEGIN
+	ALTER TABLE [plan_version_creative_lengths] DROP CONSTRAINT [FK_plan_version_creative_lengths_plan_versions]
 	ALTER TABLE [dbo].[plan_version_creative_lengths] WITH CHECK ADD CONSTRAINT [FK_plan_version_creative_lengths_plan_versions] FOREIGN KEY ([plan_version_id])
     REFERENCES [dbo].[plan_versions] (id) ON DELETE CASCADE
 END
