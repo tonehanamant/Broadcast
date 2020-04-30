@@ -7,6 +7,8 @@ Param(
 
 $ErrorActionPreference = "Stop"
 
+$tempFileName = 'temp_' + $outputFileName
+
 #region Include required files
 $startingLoc = Get-Location
 Set-Location $PSScriptRoot
@@ -47,6 +49,12 @@ function Write-OutputWithTime
 Write-OutputWithTime "CombineCsvFiles starting..."
 Write-OutputWithTime "Output to file '$outputFileName'"
 
+if ($(Test-Path $tempFileName))
+{
+    Write-OutputWithTime "Deleting found temp file : '$tempFileName'"
+    Remove-Item $tempFileName
+}
+
 if ($(Test-Path $outputFileName))
 {
     Write-OutputWithTime "Deleting found output file : '$outputFileName'"
@@ -71,7 +79,7 @@ foreach ($file in $files)
     Write-OutputWithTime "Line Count : $lineCount"
 
 	# do this in one line to keep the memory usage down.
-    Import-Csv $file | Export-Csv $outputFileName -NoTypeInformation -Append
+    Import-Csv $file | Export-Csv $tempFileName -NoTypeInformation -Append
 
     $currentLinesCopied = $($lineCount - 1)  # subtract 1 for the header
     $totalLinesCopiedCount += $currentLinesCopied
@@ -82,9 +90,22 @@ foreach ($file in $files)
     Write-OutputWithTime " "
 }
 
+if ($filesCount -gt 1)
+{    
+    Write-OutputWithTime "Beginning de-duplication..."
+    Import-Csv $tempFileName | sort inventory_id,inventory_week_id,inventory_daypart_id -Unique | Export-Csv $outputFileName -NoTypeInformation -Append
+    Remove-Item $tempFileName
+    Write-OutputWithTime "De-deplication completed."
+    Write-OutputWithTime " "
+}
+else 
+{
+    Rename-Item -Path $tempFileName -NewName $outputFileName
+}
+
 $outputLineCount = $(Get-Content "$outputFileName" | Measure-Object -Line).Lines
 
 Write-OutputWithTime "Finished processing $filesCount files."
-Write-OutputWithTime "Outputfile contains $outputLineCount"
+Write-OutputWithTime "Outputfile contains $outputLineCount lines"
 
 Write-OutputWithTime "All done."
