@@ -159,6 +159,12 @@ namespace Services.Broadcast.Repositories
         void UpdatePrimaryProgramsForManifestDayparts(IEnumerable<StationInventoryManifestDaypart> manifestDayparts);
 
         List<StationInventoryManifestWeek> GetInventoryWeeks(int inventorySourceId);
+
+        /// <summary>
+        /// For tests
+        /// </summary>
+        /// <param name="groupIds"></param>
+        void RemoveManifestGroups(List<int> groupIds);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -169,6 +175,36 @@ namespace Services.Broadcast.Repositories
         public InventoryRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+
+        public void RemoveManifestGroups(List<int> groupIds)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var manifestIds = context.station_inventory_manifest
+                    .Where(x => groupIds.Contains(x.station_inventory_group_id.Value))
+                    .Select(x => x.id);
+
+                context.station_inventory_manifest_audiences.RemoveRange(
+                    context.station_inventory_manifest_audiences.Where(x => manifestIds.Contains(x.station_inventory_manifest_id)));
+
+                context.station_inventory_manifest_dayparts.RemoveRange(
+                    context.station_inventory_manifest_dayparts.Where(x => manifestIds.Contains(x.station_inventory_manifest_id)));
+
+                context.station_inventory_manifest_rates.RemoveRange(
+                    context.station_inventory_manifest_rates.Where(x => manifestIds.Contains(x.station_inventory_manifest_id)));
+
+                context.station_inventory_manifest_weeks.RemoveRange(
+                    context.station_inventory_manifest_weeks.Where(x => manifestIds.Contains(x.station_inventory_manifest_id)));
+
+                context.station_inventory_manifest.RemoveRange(
+                    context.station_inventory_manifest.Where(x => manifestIds.Contains(x.id)));
+
+                context.station_inventory_group.RemoveRange(
+                    context.station_inventory_group.Where(x => groupIds.Contains(x.id)));
+
+                context.SaveChanges();
+            });
+        }
 
         ///<inheritdoc/>
         public void AddValidationProblems(InventoryFileBase file)
