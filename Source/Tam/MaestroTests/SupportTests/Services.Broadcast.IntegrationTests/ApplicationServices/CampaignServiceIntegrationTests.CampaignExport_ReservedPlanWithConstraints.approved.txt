@@ -12,7 +12,6 @@
     {
       "DaypartCode": "EF",
       "DaypartCodeId": 6,
-      "DaysLabel": null,
       "EndTime": "06:00pm",
       "FlightDays": "M-SU",
       "GenreRestrictions": [],
@@ -22,7 +21,6 @@
     {
       "DaypartCode": "EM",
       "DaypartCodeId": 14,
-      "DaysLabel": null,
       "EndTime": "09:00am",
       "FlightDays": "M-SU",
       "GenreRestrictions": [],
@@ -32,7 +30,6 @@
     {
       "DaypartCode": "MDN",
       "DaypartCodeId": 2,
-      "DaysLabel": null,
       "EndTime": "01:00pm",
       "FlightDays": "M-F,SU",
       "GenreRestrictions": [
@@ -61,7 +58,6 @@
     {
       "DaypartCode": "MDN",
       "DaypartCodeId": 2,
-      "DaysLabel": null,
       "EndTime": "01:00pm",
       "FlightDays": "M-SU",
       "GenreRestrictions": [
@@ -87,7 +83,6 @@
     {
       "DaypartCode": "PA",
       "DaypartCodeId": 7,
-      "DaysLabel": null,
       "EndTime": "08:00pm",
       "FlightDays": "M-F,SU",
       "GenreRestrictions": [

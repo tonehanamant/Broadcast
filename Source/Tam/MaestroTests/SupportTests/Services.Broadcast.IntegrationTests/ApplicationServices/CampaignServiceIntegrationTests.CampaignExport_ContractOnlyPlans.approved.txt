@@ -469,7 +469,6 @@
     {
       "DaypartCode": "EF",
       "DaypartCodeId": 6,
-      "DaysLabel": null,
       "EndTime": "06:00pm",
       "FlightDays": "W-SU",
       "GenreRestrictions": [],
@@ -479,7 +478,6 @@
     {
       "DaypartCode": "EF",
       "DaypartCodeId": 6,
-      "DaysLabel": null,
       "EndTime": "06:00pm",
       "FlightDays": "TH-SU",
       "GenreRestrictions": [],
@@ -489,7 +487,6 @@
     {
       "DaypartCode": "EM",
       "DaypartCodeId": 14,
-      "DaysLabel": null,
       "EndTime": "09:00am",
       "FlightDays": "W-SU",
       "GenreRestrictions": [],
@@ -499,7 +496,6 @@
     {
       "DaypartCode": "EM",
       "DaypartCodeId": 14,
-      "DaysLabel": null,
       "EndTime": "09:00am",
       "FlightDays": "TH-SU",
       "GenreRestrictions": [],
@@ -509,7 +505,6 @@
     {
       "DaypartCode": "MDN",
       "DaypartCodeId": 2,
-      "DaysLabel": null,
       "EndTime": "01:00pm",
       "FlightDays": "W-SU",
       "GenreRestrictions": [],
@@ -519,7 +514,6 @@
     {
       "DaypartCode": "MDN",
       "DaypartCodeId": 2,
-      "DaysLabel": null,
       "EndTime": "01:00pm",
       "FlightDays": "TH-SU",
       "GenreRestrictions": [],
@@ -4273,8 +4267,10 @@
     }
   ],
   "SpotLengths": [
+    ":15 eq.",
     ":30",
-    ":45 eq."
+    ":45 eq.",
+    ":60 eq."
   ],
   "Status": "Order"
 }

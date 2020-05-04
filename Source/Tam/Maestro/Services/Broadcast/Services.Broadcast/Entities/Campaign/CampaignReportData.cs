@@ -908,7 +908,7 @@ namespace Services.Broadcast.Entities.Campaign
             ProposalCampaignTotalsTable.QuarterLabel = "Campaign Totals";
 
             ProposalQuarterTables.SelectMany(x => x.Rows)
-                .GroupBy(x => new { SpotLength = x.SpotLengthLabel, DaypartCode = x.DaypartCode })
+                .GroupBy(x => new { SpotLength = x.SpotLengthLabel, x.DaypartCode })
                 .ToList()
                 .ForEach(group =>
                 {
@@ -1072,7 +1072,7 @@ namespace Services.Broadcast.Entities.Campaign
         private void _SetSpotLengths(List<PlanDto> plans, List<LookupDto> spotLengths)
         {
             SpotLengths = plans
-                            .Select(x => new { spotLengths.Single(y => y.Id == x.SpotLengthId).Display, x.Equivalized })
+                            .SelectMany(x => x.CreativeLengths.Select(y => new { spotLengths.Single(w => w.Id == y.SpotLengthId).Display, x.Equivalized }))
                             .OrderBy(x => int.Parse(x.Display))
                             .Select(x => $":{x.Display}{_GetEquivalizedStatus(x.Equivalized, x.Display)}")
                             .Distinct()
@@ -1222,7 +1222,6 @@ namespace Services.Broadcast.Entities.Campaign
     {
         public int DaypartCodeId { get; set; }
         public string DaypartCode { get; set; }
-        public string DaysLabel { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
         public string FlightDays { get; set; }

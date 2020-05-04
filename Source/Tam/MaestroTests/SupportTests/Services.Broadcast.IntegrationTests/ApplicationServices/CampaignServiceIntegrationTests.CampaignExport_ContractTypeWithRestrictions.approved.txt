@@ -1195,7 +1195,6 @@
     {
       "DaypartCode": "EF",
       "DaypartCodeId": 6,
-      "DaysLabel": null,
       "EndTime": "06:00pm",
       "FlightDays": "M-SU",
       "GenreRestrictions": [],
@@ -1205,7 +1204,6 @@
     {
       "DaypartCode": "EF",
       "DaypartCodeId": 6,
-      "DaysLabel": null,
       "EndTime": "06:00pm",
       "FlightDays": "W-SU",
       "GenreRestrictions": [],
@@ -1215,7 +1213,6 @@
     {
       "DaypartCode": "EF",
       "DaypartCodeId": 6,
-      "DaysLabel": null,
       "EndTime": "06:00pm",
       "FlightDays": "TH-SU",
       "GenreRestrictions": [],
@@ -1225,7 +1222,6 @@
     {
       "DaypartCode": "EM",
       "DaypartCodeId": 14,
-      "DaysLabel": null,
       "EndTime": "09:00am",
       "FlightDays": "M-SU",
       "GenreRestrictions": [],
@@ -1235,7 +1231,6 @@
     {
       "DaypartCode": "EM",
       "DaypartCodeId": 14,
-      "DaysLabel": null,
       "EndTime": "09:00am",
       "FlightDays": "W-SU",
       "GenreRestrictions": [],
@@ -1245,7 +1240,6 @@
     {
       "DaypartCode": "EM",
       "DaypartCodeId": 14,
-      "DaysLabel": null,
       "EndTime": "09:00am",
       "FlightDays": "TH-SU",
       "GenreRestrictions": [],
@@ -1255,7 +1249,6 @@
     {
       "DaypartCode": "MDN",
       "DaypartCodeId": 2,
-      "DaysLabel": null,
       "EndTime": "01:00pm",
       "FlightDays": "M-F,SU",
       "GenreRestrictions": [
@@ -1284,7 +1277,6 @@
     {
       "DaypartCode": "MDN",
       "DaypartCodeId": 2,
-      "DaysLabel": null,
       "EndTime": "01:00pm",
       "FlightDays": "M-SU",
       "GenreRestrictions": [
@@ -1310,7 +1302,6 @@
     {
       "DaypartCode": "MDN",
       "DaypartCodeId": 2,
-      "DaysLabel": null,
       "EndTime": "01:00pm",
       "FlightDays": "W-SU",
       "GenreRestrictions": [],
@@ -1320,7 +1311,6 @@
     {
       "DaypartCode": "MDN",
       "DaypartCodeId": 2,
-      "DaysLabel": null,
       "EndTime": "01:00pm",
       "FlightDays": "TH-SU",
       "GenreRestrictions": [],
@@ -1330,7 +1320,6 @@
     {
       "DaypartCode": "PA",
       "DaypartCodeId": 7,
-      "DaysLabel": null,
       "EndTime": "08:00pm",
       "FlightDays": "M-F,SU",
       "GenreRestrictions": [
@@ -6908,8 +6897,10 @@
     }
   ],
   "SpotLengths": [
+    ":15 eq.",
     ":30",
     ":45 eq.",
+    ":60 eq.",
     ":90"
   ],
   "Status": "Order"

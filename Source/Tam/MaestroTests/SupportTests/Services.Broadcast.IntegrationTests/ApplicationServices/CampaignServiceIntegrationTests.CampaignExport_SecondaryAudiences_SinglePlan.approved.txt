@@ -12,7 +12,6 @@
     {
       "DaypartCode": "DAY",
       "DaypartCodeId": 12,
-      "DaysLabel": null,
       "EndTime": "04:00pm",
       "FlightDays": "M-SU",
       "GenreRestrictions": [],
@@ -22,7 +21,6 @@
     {
       "DaypartCode": "EMN",
       "DaypartCodeId": 1,
-      "DaysLabel": null,
       "EndTime": "10:00am",
       "FlightDays": "M-SU",
       "GenreRestrictions": [],
@@ -32,7 +30,6 @@
     {
       "DaypartCode": "PT",
       "DaypartCodeId": 8,
-      "DaysLabel": null,
       "EndTime": "11:00pm",
       "FlightDays": "M-SU",
       "GenreRestrictions": [],

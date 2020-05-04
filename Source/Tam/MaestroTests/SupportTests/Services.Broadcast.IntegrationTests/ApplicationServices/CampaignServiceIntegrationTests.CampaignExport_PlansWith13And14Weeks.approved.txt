@@ -12,7 +12,6 @@
     {
       "DaypartCode": "ENLN",
       "DaypartCodeId": 5,
-      "DaysLabel": null,
       "EndTime": "12:05am",
       "FlightDays": "M-F",
       "GenreRestrictions": [],

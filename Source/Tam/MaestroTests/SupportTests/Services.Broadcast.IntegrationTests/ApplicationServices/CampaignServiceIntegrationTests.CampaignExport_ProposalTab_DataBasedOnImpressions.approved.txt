@@ -12,7 +12,6 @@
     {
       "DaypartCode": "EF",
       "DaypartCodeId": 6,
-      "DaysLabel": null,
       "EndTime": "06:00pm",
       "FlightDays": "M-SU",
       "GenreRestrictions": [],
