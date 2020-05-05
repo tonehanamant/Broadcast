@@ -1098,8 +1098,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Name = string.Empty,
                 AudienceId = householdAudienceId.Id,
                 CreativeLengths = new List<CreativeLength> {
-                    new CreativeLength {
-                    SpotLengthId = defaultSpotLengthId }
+                    new CreativeLength
+                    {
+                        SpotLengthId = defaultSpotLengthId,
+                        Weight = 100
+                    }
                 },
                 Equivalized = true,
                 AudienceType = AudienceTypeEnum.Nielsen,
@@ -1112,10 +1115,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 ProgramContainType = ContainTypeEnum.Exclude,
                 AffiliateContainType = ContainTypeEnum.Exclude,
                 CoverageGoalPercent = 80d,
-                BlackoutMarkets = new List<PlanBlackoutMarketDto>(),
-                FlightHiatusDays = new List<DateTime>(),
                 FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
-                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>()
             };
         }
 

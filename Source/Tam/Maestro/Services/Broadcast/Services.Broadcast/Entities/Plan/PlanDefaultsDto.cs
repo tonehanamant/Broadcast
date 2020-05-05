@@ -20,9 +20,9 @@ namespace Services.Broadcast.Entities.Plan
         public ContainTypeEnum ProgramContainType { get; set; }
         public ContainTypeEnum AffiliateContainType { get; set; }
         public double CoverageGoalPercent { get; set; }
-        public List<PlanBlackoutMarketDto> BlackoutMarkets { get; set; }
-        public List<DateTime> FlightHiatusDays { get; set; }
+        public List<PlanBlackoutMarketDto> BlackoutMarkets { get; set; } = new List<PlanBlackoutMarketDto>();
+        public List<DateTime> FlightHiatusDays { get; set; } = new List<DateTime>();
         public List<int> FlightDays { get; set; }
-        public List<WeeklyBreakdownWeek> WeeklyBreakdownWeeks { get; set; }
+        public List<WeeklyBreakdownWeek> WeeklyBreakdownWeeks { get; set; } = new List<WeeklyBreakdownWeek>();
     }
 }
