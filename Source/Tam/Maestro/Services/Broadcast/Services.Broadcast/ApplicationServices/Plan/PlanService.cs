@@ -308,6 +308,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Margin = pricingDefaults.Margin,
                 PlanVersionId = plan.VersionId
             };
+
+            _PlanPricingService.ApplyMargin(plan.PricingParameters);
         }
 
         private void _SetPlanFlightDays(PlanDto plan)

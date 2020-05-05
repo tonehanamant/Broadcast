@@ -80,12 +80,6 @@ namespace Services.Broadcast.Repositories
         int CheckIfDraftExists(int planId);
 
         /// <summary>
-        /// Saves the model that ran in the pricing guide.
-        /// </summary>
-        /// <param name="planPricingRunModel">Plan pricing model data</param>
-        void SavePricingRequest(PlanPricingApiRequestParametersDto planPricingRunModel);
-
-        /// <summary>
         /// Deletes the plan draft.
         /// </summary>
         /// <param name="planId">The plan identifier.</param>
@@ -573,7 +567,9 @@ namespace Services.Broadcast.Repositories
                 UnitCapsType = (UnitCapEnum)arg.unit_caps_type,
                 Margin = arg.margin,
                 JobId = arg.plan_version_pricing_job_id,
-                PlanVersionId = arg.plan_version_id
+                PlanVersionId = arg.plan_version_id,
+                AdjustedCPM = arg.cpm_adjusted,
+                AdjustedBudget = arg.budget_adjusted,
             };
         }
 
@@ -1016,83 +1012,28 @@ namespace Services.Broadcast.Repositories
             return dto;
         }
 
-        public void SavePricingRequest(PlanPricingApiRequestParametersDto planPricingRunModel)
-        {
-            _InReadUncommitedTransaction(
-                context =>
-                {
-                    var plan = context.plans.Single(x => x.id == planPricingRunModel.PlanId);
-                    var planVersionId = plan.latest_version_id;
-
-                    var planPricingExecution = new plan_version_pricing_executions
-                    {
-                        plan_version_id = planVersionId,
-                        min_cpm = planPricingRunModel.MinCpm,
-                        max_cpm = planPricingRunModel.MaxCpm,
-                        impressions_goal = planPricingRunModel.ImpressionsGoal,
-                        budget_goal = planPricingRunModel.BudgetGoal,
-                        cpm_goal = planPricingRunModel.CpmGoal,
-                        proprietary_blend = planPricingRunModel.ProprietaryBlend,
-                        competition_factor = planPricingRunModel.CompetitionFactor,
-                        inflation_factor = planPricingRunModel.InflationFactor,
-                        coverage_goal = planPricingRunModel.CoverageGoalPercent,
-                        unit_caps_type = (int)planPricingRunModel.UnitCapType,
-                        unit_caps = planPricingRunModel.UnitCaps,
-                        margin = planPricingRunModel.Margin,
-                        plan_version_pricing_job_id = planPricingRunModel.JobId
-                    };
-
-                    foreach (var market in planPricingRunModel.Markets)
-                    {
-                        planPricingExecution.plan_version_pricing_execution_markets.Add(new plan_version_pricing_execution_markets
-                        {
-                            market_code = (short)market.MarketId,
-                            share_of_voice_percent = market.MarketShareOfVoice
-                        });
-                    }
-
-                    planPricingRunModel.InventorySourcePercentages.ForEach(s => planPricingExecution.plan_version_pricing_inventory_source_percentages.Add(
-                        new plan_version_pricing_inventory_source_percentages
-                        {
-                            inventory_source_id = s.Id,
-                            percentage = s.Percentage
-                        }));
-
-                    planPricingRunModel.InventorySourceTypePercentages.ForEach(s => planPricingExecution.plan_version_pricing_inventory_source_type_percentages.Add(
-                        new plan_version_pricing_inventory_source_type_percentages
-                        {
-                            inventory_source_type = (byte)s.Id,
-                            percentage = s.Percentage
-                        }));
-
-                    context.plan_version_pricing_executions.Add(planPricingExecution);
-                    context.SaveChanges();
-                }
-            );
-        }
-
         public List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId)
         {
             return _InReadUncommitedTransaction(context =>
             {
                 var executions = context
-                    .plan_version_pricing_executions
+                    .plan_version_pricing_parameters
                     .Include(x => x.plan_versions)
-                    .Include(x => x.plan_version_pricing_execution_markets)
-                    .Include(x => x.plan_version_pricing_inventory_source_percentages)
-                    .Include(x => x.plan_version_pricing_inventory_source_type_percentages)
+                    .Include(x => x.plan_versions.plan_version_available_markets)
+                    .Include(x => x.plan_version_pricing_parameters_inventory_source_percentages)
+                    .Include(x => x.plan_version_pricing_parameters_inventory_source_type_percentages)
                     .Where(p => p.plan_versions.plan_id == planId);
 
                 return executions.ToList().Select(e => new PlanPricingApiRequestParametersDto
                 {
                     PlanId = e.plan_versions.plan_id,
-                    BudgetGoal = e.budget_goal,
+                    BudgetGoal = e.budget_adjusted,
                     CompetitionFactor = e.competition_factor,
-                    CoverageGoalPercent = e.coverage_goal,
-                    CpmGoal = e.cpm_goal,
+                    CoverageGoalPercent = e.plan_versions.coverage_goal_percent,
+                    CpmGoal = e.cpm_adjusted,
                     ImpressionsGoal = e.impressions_goal,
                     InflationFactor = e.inflation_factor,
-                    Markets = e.plan_version_pricing_execution_markets.Select(m => new PlanPricingMarketDto
+                    Markets = e.plan_versions.plan_version_available_markets.Select(m => new PlanPricingMarketDto
                     {
                         MarketId = m.market_code,
                         MarketShareOfVoice = m.share_of_voice_percent
@@ -1102,14 +1043,14 @@ namespace Services.Broadcast.Repositories
                     ProprietaryBlend = e.proprietary_blend,
                     UnitCaps = e.unit_caps,
                     UnitCapType = (UnitCapEnum)e.unit_caps_type,
-                    InventorySourcePercentages = e.plan_version_pricing_inventory_source_percentages.Select(
+                    InventorySourcePercentages = e.plan_version_pricing_parameters_inventory_source_percentages.Select(
                         s => new PlanPricingInventorySourceDto
                         {
                             Id = s.inventory_source_id,
                             Name = s.inventory_sources.name,
                             Percentage = s.percentage
                         }).ToList(),
-                    InventorySourceTypePercentages = e.plan_version_pricing_inventory_source_type_percentages.Select(
+                    InventorySourceTypePercentages = e.plan_version_pricing_parameters_inventory_source_type_percentages.Select(
                         s => new PlanPricingInventorySourceTypeDto
                         {
                             Id = s.inventory_source_type,
@@ -1275,7 +1216,9 @@ namespace Services.Broadcast.Repositories
                 InventorySourcePercentages = entity.plan_version_pricing_parameters_inventory_source_percentages.Select(_MapPlanPricingInventorySourceDto).ToList(),
                 InventorySourceTypePercentages = entity.plan_version_pricing_parameters_inventory_source_type_percentages.Select(_MapPlanPricingInventorySourceTypeDto).ToList(),
                 JobId = entity.plan_version_pricing_job_id,
-                PlanVersionId = entity.plan_version_id
+                PlanVersionId = entity.plan_version_id,
+                AdjustedBudget = entity.budget_adjusted,
+                AdjustedCPM = entity.cpm_adjusted
             };
             return dto;
         }
@@ -1327,7 +1270,9 @@ namespace Services.Broadcast.Repositories
                     currency = (int)planPricingParametersDto.Currency,
                     rating_points = planPricingParametersDto.DeliveryRatingPoints,
                     margin = planPricingParametersDto.Margin,
-                    plan_version_pricing_job_id = planPricingParametersDto.JobId
+                    plan_version_pricing_job_id = planPricingParametersDto.JobId,
+                    budget_adjusted = planPricingParametersDto.AdjustedBudget,
+                    cpm_adjusted = planPricingParametersDto.AdjustedCPM
                 };
 
                 planPricingParametersDto.InventorySourcePercentages.ForEach(s => planPricingParameters.plan_version_pricing_parameters_inventory_source_percentages.Add(

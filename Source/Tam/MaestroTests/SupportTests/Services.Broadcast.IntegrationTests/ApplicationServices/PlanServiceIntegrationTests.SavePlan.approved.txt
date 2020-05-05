@@ -238,6 +238,8 @@
   "Name": "Renamed Plan",
   "PostingType": 2,
   "PricingParameters": {
+    "AdjustedBudget": 80.0000,
+    "AdjustedCPM": 0.8000,
     "Budget": 100.0000,
     "CompetitionFactor": null,
     "CPM": 12.0000,

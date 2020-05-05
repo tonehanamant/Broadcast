@@ -95,6 +95,53 @@ BEGIN
 END
 /*************************************** END PRI-20790 *****************************************************/
 
+/*************************************** START PRI-25974 *********************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'budget_adjusted' AND OBJECT_ID = OBJECT_ID('plan_version_pricing_parameters'))
+BEGIN
+	ALTER TABLE plan_version_pricing_parameters
+	ADD budget_adjusted MONEY NULL
+
+	EXEC('UPDATE plan_version_pricing_parameters
+	SET budget_adjusted = budget_goal * (1 - (margin / 100.0))')
+
+	ALTER TABLE plan_version_pricing_parameters
+	ALTER COLUMN budget_adjusted MONEY NOT NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'cpm_adjusted' AND OBJECT_ID = OBJECT_ID('plan_version_pricing_parameters'))
+BEGIN
+	ALTER TABLE plan_version_pricing_parameters
+	ADD cpm_adjusted MONEY NULL
+
+	EXEC('UPDATE plan_version_pricing_parameters
+	SET cpm_adjusted =  (budget_goal * (1 - (margin / 100.0)))/ impressions_goal')
+
+	ALTER TABLE plan_version_pricing_parameters
+	ALTER COLUMN cpm_adjusted MONEY NOT NULL
+END
+
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id =OBJECT_ID('plan_version_pricing_inventory_source_percentages'))
+BEGIN
+	EXEC('DROP TABLE plan_version_pricing_inventory_source_percentages')
+END
+
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id =OBJECT_ID('plan_version_pricing_inventory_source_type_percentages'))
+BEGIN
+	EXEC('DROP TABLE plan_version_pricing_inventory_source_type_percentages')
+END
+
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id =OBJECT_ID('plan_version_pricing_execution_markets'))
+BEGIN
+	EXEC('DROP TABLE plan_version_pricing_execution_markets')
+END
+
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id =OBJECT_ID('plan_version_pricing_executions'))
+BEGIN
+	EXEC('DROP TABLE plan_version_pricing_executions')
+END
+/*************************************** END PRI-25974 *********************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -3,20 +3,20 @@
   "AudienceType": 1,
   "AvailableMarkets": [
     {
-      "Market": "Portland-Auburn",
-      "MarketCode": 100,
-      "MarketCoverageFileId": 1,
-      "PercentageOfUS": 20.0,
-      "Rank": 1,
-      "ShareOfVoicePercent": 22.2
-    },
-    {
       "Market": "New York",
       "MarketCode": 101,
       "MarketCoverageFileId": 1,
       "PercentageOfUS": 32.5,
       "Rank": 2,
       "ShareOfVoicePercent": 34.5
+    },
+    {
+      "Market": "Portland-Auburn",
+      "MarketCode": 100,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 20.0,
+      "Rank": 1,
+      "ShareOfVoicePercent": 22.2
     }
   ],
   "AvailableMarketsWithSovCount": null,

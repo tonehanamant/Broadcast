@@ -45,7 +45,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _PlanPricingService.QueuePricingJob(new PlanPricingParametersDto
                 {
                     PlanId = 1196,
-                    Margin = 20
+                    Margin = 20,
+                    Budget = 1000,
+                    DeliveryImpressions = 10
                 }, new DateTime(2019, 11, 4)
                 , "test user");
 
@@ -71,7 +73,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 _PlanPricingService.QueuePricingJob(new PlanPricingParametersDto
                 {
-                    PlanId = 1196
+                    PlanId = 1196,
+                    Budget = 1000,
+                    DeliveryImpressions = 10
                 }, new DateTime(2019, 11, 4)
                 , "test user");
 
@@ -99,7 +103,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var result = _PlanPricingService.QueuePricingJob(new PlanPricingParametersDto
                 {
-                    PlanId = 1196
+                    PlanId = 1196,
+                    Budget = 1000,
+                    DeliveryImpressions = 10
                 }, new DateTime(2020, 3, 3)
                 , "test user");
 

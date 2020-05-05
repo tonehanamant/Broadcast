@@ -87,6 +87,8 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="templatesFilePath">Base path of the file templates</param>
         /// <returns>ReportOutput which contains filename and MemoryStream which actually contains report data</returns>
         ReportOutput GeneratePricingResultsReport(int planId, int? planVersionNumber, string templatesFilePath);
+
+        void ApplyMargin(PlanPricingParametersDto parameters);
     }
 
     public class PlanPricingService : BroadcastBaseClass, IPlanPricingService
@@ -184,6 +186,8 @@ namespace Services.Broadcast.ApplicationServices
 
                 var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId);
 
+                ApplyMargin(planPricingParametersDto);
+
                 var job = new PlanPricingJob
                 {
                     PlanVersionId = plan.VersionId,
@@ -214,6 +218,20 @@ namespace Services.Broadcast.ApplicationServices
             _PlanRepository.SavePlanPricingParameters(planPricingParametersDto);
 
             return jobId;
+        }
+
+        public void ApplyMargin(PlanPricingParametersDto parameters)
+        {
+            if (parameters.Margin > 0)
+            {
+                parameters.AdjustedBudget = parameters.Budget * (decimal)(1.0 - (parameters.Margin / 100.0));
+                parameters.AdjustedCPM = parameters.AdjustedBudget / Convert.ToDecimal(parameters.DeliveryImpressions);
+            }
+            else
+            {
+                parameters.AdjustedBudget = parameters.Budget;
+                parameters.AdjustedCPM = parameters.CPM;
+            }
         }
 
         public List<LookupDto> GetUnitCaps()
@@ -343,57 +361,6 @@ namespace Services.Broadcast.ApplicationServices
         {
             var job = _PlanRepository.GetLatestPricingJob(planId);
             return IsPricingModelRunning(job);
-        }
-
-        private PlanPricingApiRequestParametersDto _GetPricingApiRequestParameters(PlanPricingParametersDto planPricingParametersDto, PlanDto plan, List<PlanPricingMarketDto> pricingMarkets)
-        {
-            var parameters = _MapToApiParametersRequest(planPricingParametersDto);
-
-            parameters.Markets = pricingMarkets;
-            parameters.CoverageGoalPercent = plan.CoverageGoalPercent ?? 0;
-            parameters.JobId = planPricingParametersDto.JobId;
-
-            return parameters;
-        }
-
-        private List<PlanPricingMarketDto> _MapToPlanPricingPrograms(PlanDto plan)
-        {
-            var pricingMarkets = new List<PlanPricingMarketDto>();
-
-            foreach (var planMarket in plan.AvailableMarkets)
-            {
-                pricingMarkets.Add(new PlanPricingMarketDto
-                {
-                    MarketId = planMarket.Id,
-                    MarketName = planMarket.Market,
-                    MarketShareOfVoice = planMarket.ShareOfVoicePercent ?? 0,
-                });
-            }
-
-            return pricingMarkets;
-        }
-
-        private PlanPricingApiRequestParametersDto _MapToApiParametersRequest(PlanPricingParametersDto planPricingParametersDto)
-        {
-            var parameters = new PlanPricingApiRequestParametersDto
-            {
-                PlanId = planPricingParametersDto.PlanId,
-                MinCpm = planPricingParametersDto.MinCpm,
-                MaxCpm = planPricingParametersDto.MaxCpm,
-                ImpressionsGoal = planPricingParametersDto.DeliveryImpressions,
-                BudgetGoal = planPricingParametersDto.Budget,
-                ProprietaryBlend = planPricingParametersDto.ProprietaryBlend,
-                CpmGoal = planPricingParametersDto.CPM,
-                CompetitionFactor = planPricingParametersDto.CompetitionFactor,
-                InflationFactor = planPricingParametersDto.InflationFactor,
-                UnitCaps = planPricingParametersDto.UnitCaps,
-                UnitCapType = planPricingParametersDto.UnitCapsType,
-                InventorySourcePercentages = planPricingParametersDto.InventorySourcePercentages,
-                InventorySourceTypePercentages = planPricingParametersDto.InventorySourceTypePercentages,
-                Margin = planPricingParametersDto.Margin
-            };
-
-            return parameters;
         }
 
         public List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId)
@@ -565,8 +532,6 @@ namespace Services.Broadcast.ApplicationServices
                 var goalsFulfilledByProprietaryInventory = true;
                 var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId);
                 _SetPlanSpotLengthForBackwardsCompatibility(plan);
-                var pricingMarkets = _MapToPlanPricingPrograms(plan);
-                var parameters = _GetPricingApiRequestParameters(planPricingParametersDto, plan, pricingMarkets);
                 var programInventoryParameters = new ProgramInventoryOptionalParametersDto
                 {
                     MinCPM = planPricingParametersDto.MinCpm,
@@ -602,7 +567,6 @@ namespace Services.Broadcast.ApplicationServices
                 token.ThrowIfCancellationRequested();
 
                 diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
-                _ApplyMargin(parameters);
                 _ValidateInventory(inventory);
 
                 var pricingModelWeeks = _GetPricingModelWeeks(plan, proprietaryEstimates, programInventoryParameters, out List<int> skippedWeeksIds);
@@ -625,12 +589,6 @@ namespace Services.Broadcast.ApplicationServices
 
                     token.ThrowIfCancellationRequested();
 
-                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_PARAMETERS);
-                    _PlanRepository.SavePricingRequest(parameters);
-                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_PARAMETERS);
-
-                    token.ThrowIfCancellationRequested();
-
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
                     var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
                     diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
@@ -639,7 +597,7 @@ namespace Services.Broadcast.ApplicationServices
 
                     if (apiAllocationResult.Error != null)
                     {
-                        string errorMessage = $@"Pricing Model returned the following error: {apiAllocationResult.Error.Name} 
+                        var errorMessage = $@"Pricing Model returned the following error: {apiAllocationResult.Error.Name} 
                                 -  {string.Join(",", apiAllocationResult.Error.Messages).Trim(',')}";
                         throw new PricingModelException(errorMessage);
                     }
@@ -650,7 +608,7 @@ namespace Services.Broadcast.ApplicationServices
                     allocationResult.RequestId = apiAllocationResult.RequestId;
                 }
 
-                allocationResult.PricingCpm = _CalculatePricingCpm(allocationResult.Spots, proprietaryEstimates, parameters.Margin);
+                allocationResult.PricingCpm = _CalculatePricingCpm(allocationResult.Spots, proprietaryEstimates, planPricingParametersDto.Margin);
 
                 _ValidateAllocationResult(allocationResult);
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_VALIDATING_AND_MAPPING_API_RESPONSE);
@@ -706,15 +664,6 @@ namespace Services.Broadcast.ApplicationServices
             if (plan.CreativeLengths.Any())
             {
                 plan.SpotLengthId = plan.CreativeLengths.First().SpotLengthId;
-            }
-        }
-
-        private void _ApplyMargin(PlanPricingApiRequestParametersDto parameters)
-        {
-            if (parameters.Margin > 0)
-            {
-                parameters.BudgetGoal = parameters.BudgetGoal * (decimal)(1.0 - (parameters.Margin / 100.0));
-                parameters.CpmGoal = parameters.BudgetGoal / Convert.ToDecimal(parameters.ImpressionsGoal);
             }
         }
 

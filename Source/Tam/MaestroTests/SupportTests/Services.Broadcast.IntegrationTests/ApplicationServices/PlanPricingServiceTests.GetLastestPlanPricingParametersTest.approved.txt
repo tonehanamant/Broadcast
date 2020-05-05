@@ -112,6 +112,8 @@
   "Name": "Plan Pricing 2",
   "PostingType": 2,
   "PricingParameters": {
+    "AdjustedBudget": 1200.0000,
+    "AdjustedCPM": 5.0000,
     "Budget": 1200.0000,
     "CompetitionFactor": 0.1,
     "CPM": 5.0000,

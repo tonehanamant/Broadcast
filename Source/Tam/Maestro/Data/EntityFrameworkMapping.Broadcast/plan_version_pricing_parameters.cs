@@ -38,6 +38,8 @@ namespace EntityFrameworkMapping.Broadcast
         public double rating_points { get; set; }
         public double margin { get; set; }
         public Nullable<int> plan_version_pricing_job_id { get; set; }
+        public decimal budget_adjusted { get; set; }
+        public decimal cpm_adjusted { get; set; }
     
         public virtual ICollection<plan_version_pricing_parameters_inventory_source_percentages> plan_version_pricing_parameters_inventory_source_percentages { get; set; }
         public virtual ICollection<plan_version_pricing_parameters_inventory_source_type_percentages> plan_version_pricing_parameters_inventory_source_type_percentages { get; set; }

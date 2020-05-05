@@ -434,6 +434,7 @@
     <Compile Include="Entities\Plan\Pricing\PlanPricingAllocatedSpot.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingAllocationResult.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiCpmResponseDto.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingApiRequestParametersDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiSpotsResponseDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingManifestWithManifestDaypart.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiResultDto.cs" />
@@ -449,7 +450,6 @@
     <Compile Include="Entities\Plan\Pricing\PlanPricingProgramDto.cs" />
     <Compile Include="Entities\Plan\PlanVersion.cs" />
     <Compile Include="Entities\Plan\PlanVersionDto.cs" />
-    <Compile Include="Entities\Plan\Pricing\PlanPricingApiRequestParametersDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiRequestDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiResponsetDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResponseDto.cs" />

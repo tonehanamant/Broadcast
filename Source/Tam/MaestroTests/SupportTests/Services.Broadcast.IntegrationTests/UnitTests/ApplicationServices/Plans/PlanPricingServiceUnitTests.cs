@@ -1859,151 +1859,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void SavesAPIRequest_WhenRunningPricingJob()
-        {
-            // Arrange
-            const int jobId = 1;
-
-            var parameters = _GetPlanPricingParametersDto();
-            parameters.Margin = 20;
-            parameters.JobId = jobId;
-
-            _PlanRepositoryMock
-                .Setup(x => x.GetPlanPricingJob(It.IsAny<int>()))
-                .Returns(new PlanPricingJob());
-
-            _PlanRepositoryMock
-                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
-                .Returns(new PlanDto
-                {
-                    CoverageGoalPercent = 80,
-                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
-                    AvailableMarkets = new List<PlanAvailableMarketDto>
-                    {
-                        new PlanAvailableMarketDto
-                        {
-                            Id = 5,
-                            MarketCode = 101,
-                            ShareOfVoicePercent = 12
-                        }
-                    },
-                    Dayparts = new List<PlanDaypartDto>
-                    {
-                        new PlanDaypartDto
-                        {
-                            DaypartCodeId = 15,
-                            WeightingGoalPercent = 100
-                        }
-                    },
-                    PricingParameters = _GetPlanPricingParametersDto(),
-                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
-                    {
-                        new WeeklyBreakdownWeek
-                        {
-                            WeeklyImpressions = 150,
-                            WeeklyBudget = 15,
-                            MediaWeekId = 100
-                        },
-                        new WeeklyBreakdownWeek
-                        {
-                            WeeklyImpressions = 250,
-                            WeeklyBudget = 15m,
-                            MediaWeekId = 101
-                        },
-                        new WeeklyBreakdownWeek
-                        {
-                            WeeklyImpressions = 100,
-                            WeeklyBudget = 15m,
-                            MediaWeekId = 102
-                        }
-                    }
-                });
-
-            _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
-                .Returns(new List<PlanPricingInventoryProgram>
-                {
-                    new PlanPricingInventoryProgram
-                    {
-                        ManifestId = 1,
-                        StandardDaypartId = 15,
-                        Station = new DisplayBroadcastStation
-                        {
-                            LegacyCallLetters = "wnbc",
-                            MarketCode = 101,
-                        },
-                        ProvidedImpressions = 1000,
-                        ProjectedImpressions = 1100,
-                        SpotCost = 50,
-                        InventorySource = new InventorySource
-                        {
-                            Id = 3,
-                            InventoryType = InventorySourceTypeEnum.Barter
-                        },
-                        ManifestDayparts = new List<ManifestDaypart>
-                        {
-                            new ManifestDaypart
-                            {
-                                Daypart = new DisplayDaypart
-                                {
-                                    Id = 1,
-                                },
-                                Programs = new List<Program>
-                                {
-                                    new Program
-                                    {
-                                        Name = "seinfeld",
-                                        Genre = "News"
-                                    }
-                                },
-                                PrimaryProgram = new Program
-                                {
-                                    Name = "seinfeld",
-                                    Genre = "News"
-                                }
-                            }
-                        },
-                        ManifestWeeks = new List<ManifestWeek>
-                        {
-                            new ManifestWeek
-                            {
-                                Spots = 1,
-                                ContractMediaWeekId = 100,
-                            },
-                            new ManifestWeek
-                            {
-                                Spots = 2,
-                                ContractMediaWeekId = 101,
-                            },
-                            new ManifestWeek
-                            {
-                                Spots = 1,
-                                ContractMediaWeekId = 102,
-                            }
-                        }
-                    }
-                });
-
-            _MarketCoverageRepositoryMock
-                .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
-                .Returns(_GetLatestMarketCoverages());
-
-            var savedRequestParameters = new List<PlanPricingApiRequestParametersDto>();
-            _PlanRepositoryMock
-                .Setup(x => x.SavePricingRequest(It.IsAny<PlanPricingApiRequestParametersDto>()))
-                .Callback<PlanPricingApiRequestParametersDto>(p1 => savedRequestParameters.Add(p1));
-
-            var service = _GetService();
-
-            // Act
-            service.RunPricingJob(parameters, jobId, CancellationToken.None);
-
-            // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedRequestParameters));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void SendsRequestToDSAPI_WhenRunningPricingJob()
         {
             // Arrange
@@ -6594,6 +6449,43 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 jobUpdates,
                 hanfgireJobUpdates
             }));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ApplyMargin_WhenItHasMargin()
+        {
+            var parameters = new PlanPricingParametersDto
+            {
+                Budget = 10000,
+                DeliveryImpressions = 50,
+                CPM = 200,
+                Margin = 20
+            };
+
+            var pricingService = _GetService();
+
+            pricingService.ApplyMargin(parameters);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(parameters));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ApplyMargin_WhenItDoesntHaveMargin()
+        {
+            var parameters = new PlanPricingParametersDto
+            {
+                Budget = 10000,
+                DeliveryImpressions = 50,
+                CPM = 200,
+            };
+
+            var pricingService = _GetService();
+
+            pricingService.ApplyMargin(parameters);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(parameters));
         }
     }
 }

@@ -559,18 +559,6 @@
     <Compile Include="plan_version_pricing_api_result_spots.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="plan_version_pricing_executions.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="plan_version_pricing_execution_markets.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="plan_version_pricing_inventory_source_percentages.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="plan_version_pricing_inventory_source_type_percentages.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="plan_version_pricing_job.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

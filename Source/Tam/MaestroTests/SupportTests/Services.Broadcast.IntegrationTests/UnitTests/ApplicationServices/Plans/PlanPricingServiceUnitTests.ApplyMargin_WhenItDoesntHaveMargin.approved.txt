@@ -1,0 +1,23 @@
+﻿{
+  "AdjustedBudget": 10000.0,
+  "AdjustedCPM": 200.0,
+  "Budget": 10000.0,
+  "CompetitionFactor": null,
+  "CPM": 200.0,
+  "CPP": 0.0,
+  "Currency": 0,
+  "DeliveryImpressions": 50.0,
+  "DeliveryRatingPoints": 0.0,
+  "InflationFactor": null,
+  "InventorySourcePercentages": [],
+  "InventorySourceTypePercentages": [],
+  "JobId": null,
+  "Margin": 0.0,
+  "MaxCpm": null,
+  "MinCpm": null,
+  "PlanId": 0,
+  "PlanVersionId": 0,
+  "ProprietaryBlend": 0.0,
+  "UnitCaps": 0,
+  "UnitCapsType": 0
+}

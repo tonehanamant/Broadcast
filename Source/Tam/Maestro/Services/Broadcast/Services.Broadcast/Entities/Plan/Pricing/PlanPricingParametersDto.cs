@@ -11,8 +11,10 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public decimal? MaxCpm { get; set; }
         public double DeliveryImpressions { get; set; }
         public decimal Budget { get; set; }
+        public decimal AdjustedBudget { get; set; }
         public double ProprietaryBlend { get; set; }
         public decimal CPM { get; set; }
+        public decimal AdjustedCPM { get; set; }
         public double? CompetitionFactor { get; set; }
         public double? InflationFactor { get; set; }
         public int UnitCaps { get; set; }

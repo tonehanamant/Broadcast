@@ -22,7 +22,6 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_flight_days = new HashSet<plan_version_flight_days>();
             this.plan_version_flight_hiatus_days = new HashSet<plan_version_flight_hiatus_days>();
             this.plan_version_pricing_api_results = new HashSet<plan_version_pricing_api_results>();
-            this.plan_version_pricing_executions = new HashSet<plan_version_pricing_executions>();
             this.plan_version_pricing_job = new HashSet<plan_version_pricing_job>();
             this.plan_version_pricing_parameters = new HashSet<plan_version_pricing_parameters>();
             this.plan_version_pricing_results = new HashSet<plan_version_pricing_results>();
@@ -76,7 +75,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_flight_days> plan_version_flight_days { get; set; }
         public virtual ICollection<plan_version_flight_hiatus_days> plan_version_flight_hiatus_days { get; set; }
         public virtual ICollection<plan_version_pricing_api_results> plan_version_pricing_api_results { get; set; }
-        public virtual ICollection<plan_version_pricing_executions> plan_version_pricing_executions { get; set; }
         public virtual ICollection<plan_version_pricing_job> plan_version_pricing_job { get; set; }
         public virtual ICollection<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
         public virtual ICollection<plan_version_pricing_results> plan_version_pricing_results { get; set; }
