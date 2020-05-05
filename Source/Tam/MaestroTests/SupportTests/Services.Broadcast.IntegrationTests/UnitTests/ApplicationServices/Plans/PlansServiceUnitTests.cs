@@ -376,7 +376,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             const string expectedMessage = "The chosen plan has been locked by IntegrationUser";
             _BroadcastLockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(It.IsAny<string>())).Returns(new LockResponse
+                .Setup(x => x.GetLockObject(It.IsAny<string>()))
+                .Returns(new LockResponse
                 {
                     Success = false,
                     LockedUserName = "IntegrationUser"

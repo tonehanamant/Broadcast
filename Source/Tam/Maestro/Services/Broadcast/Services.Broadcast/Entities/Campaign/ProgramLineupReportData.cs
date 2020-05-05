@@ -21,7 +21,7 @@ namespace Services.Broadcast.Entities.Campaign
         public string FlightStartDate { get; set; }
         public string FlightEndDate { get; set; }
         public string GuaranteedDemo { get; set; }
-        public string SpotLength { get; set; }
+        public string SpotLengths { get; set; }
         public string PostingType { get; set; }
         public string AccountExecutive { get; set; }
         public string ClientContact { get; set; }
@@ -89,7 +89,7 @@ namespace Services.Broadcast.Entities.Campaign
             FlightStartDate = plan.FlightStartDate.Value.ToString(DATE_FORMAT_SHORT_YEAR_SLASHES);
             FlightEndDate = plan.FlightEndDate.Value.ToString(DATE_FORMAT_SHORT_YEAR_SLASHES);
             GuaranteedDemo = guaranteedDemo.Code;
-            SpotLength = _GetSpotLength(plan, spotLengths);
+            SpotLengths = _GetSpotLengths(plan, spotLengths);
             PostingType = plan.PostingType.ToString();
             AccountExecutive = string.Empty;
             ClientContact = string.Empty;
@@ -277,9 +277,9 @@ namespace Services.Broadcast.Entities.Campaign
             }
             else
             {
-                if ((daypart.StartTime >=startTimeSeconds && daypart.EndTime < BroadcastConstants.OneDayInSeconds && daypart.StartTime <= daypart.EndTime)
-                    || (daypart.StartTime >=startTimeSeconds && daypart.EndTime > 0 && daypart.EndTime <= endTimeSeconds)
-                    || (daypart.StartTime >= 0 && daypart.StartTime <= endTimeSeconds && daypart.StartTime <= daypart.EndTime && daypart.EndTime <=endTimeSeconds))
+                if ((daypart.StartTime >= startTimeSeconds && daypart.EndTime < BroadcastConstants.OneDayInSeconds && daypart.StartTime <= daypart.EndTime)
+                    || (daypart.StartTime >= startTimeSeconds && daypart.EndTime > 0 && daypart.EndTime <= endTimeSeconds)
+                    || (daypart.StartTime >= 0 && daypart.StartTime <= endTimeSeconds && daypart.StartTime <= daypart.EndTime && daypart.EndTime <= endTimeSeconds))
                 {
                     return true;
                 }
@@ -309,13 +309,18 @@ namespace Services.Broadcast.Entities.Campaign
                .ToList();
         }
 
-        private string _GetSpotLength(PlanDto plan, List<LookupDto> spotLengths)
+        private string _GetSpotLengths(PlanDto plan, List<LookupDto> spotLengths)
         {
-            var spotLengthDisplay = spotLengths.Single(x => x.Id == plan.SpotLengthId).Display;
-            spotLengthDisplay = plan.Equivalized && int.Parse(spotLengthDisplay) != 30 ? $"{spotLengthDisplay} eq." : spotLengthDisplay;
-            spotLengthDisplay = ":" + spotLengthDisplay;
+            return string.Join(",", plan.CreativeLengths
+                .Select(y => new { spotLengths.Single(w => w.Id == y.SpotLengthId).Display, plan.Equivalized })
+                .OrderBy(x => int.Parse(x.Display))
+                .Select(x => $":{x.Display}{_GetEquivalizedStatus(x.Equivalized, x.Display)}")
+                .ToList());
+        }
 
-            return spotLengthDisplay;
+        private string _GetEquivalizedStatus(bool equivalized, string display)
+        {
+            return equivalized && !display.Equals("30") ? " eq." : string.Empty;
         }
 
         private double _CalculateWeight(double impressions, double planImpressions)

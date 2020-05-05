@@ -212,7 +212,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             var fullName = _GetCurrentUserFullName();
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
-                .GenerateCampaignReport(request, fullName, DateTime.Now, AppDataPath));
+                .GenerateCampaignReport(request, fullName, AppDataPath));
         }
         
         /// <summary>

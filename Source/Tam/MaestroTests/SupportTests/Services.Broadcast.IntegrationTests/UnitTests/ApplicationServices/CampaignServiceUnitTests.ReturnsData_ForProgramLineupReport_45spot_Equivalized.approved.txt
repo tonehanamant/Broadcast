@@ -129,5 +129,5 @@
   "PlanHeaderName": "Brave Plan | Program Lineup*",
   "PostingType": "NTI",
   "ReportGeneratedDate": "10/17/17",
-  "SpotLength": ":45 eq."
+  "SpotLengths": ":45 eq."
 }

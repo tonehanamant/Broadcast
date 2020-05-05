@@ -152,5 +152,5 @@
   "GuaranteedDemo": "HH",
   "PlanHeaderName": "Plan Pricing 2 | Program Lineup*",
   "PostingType": "NTI",
-  "SpotLength": ":60 eq."
+  "SpotLengths": ":60 eq."
 }

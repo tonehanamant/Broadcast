@@ -93,10 +93,9 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <param name="request">CampaignReportRequest object containing the campaign id and the selected plans id</param>
         /// <param name="userName"></param>
-        /// <param name="currentDate"></param>
         /// <param name="templatesFilePath">Path to the template files</param>
         /// <returns>Campaign report identifier</returns>
-        Guid GenerateCampaignReport(CampaignReportRequest request, string userName, DateTime currentDate, string templatesFilePath);
+        Guid GenerateCampaignReport(CampaignReportRequest request, string userName, string templatesFilePath);
 
         /// <summary>
         /// Gets the campaign report data. Method used for testing purposes
@@ -147,6 +146,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IMarketCoverageRepository _MarketCoverageRepository;
         private readonly IStationProgramRepository _StationProgramRepository;
+        private readonly IDateTimeEngine _DateTimeEngine;
 
         public CampaignService(
             IDataRepositoryFactory dataRepositoryFactory,
@@ -160,7 +160,8 @@ namespace Services.Broadcast.ApplicationServices
             IAudienceService audienceService,
             ISpotLengthService spotLengthService,
             IDaypartDefaultService daypartDefaultService,
-            ISharedFolderService sharedFolderService)
+            ISharedFolderService sharedFolderService,
+            IDateTimeEngine _dateTimeEngine)
         {
             _CampaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _CampaignValidator = campaignValidator;
@@ -179,6 +180,7 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryRepository = dataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _MarketCoverageRepository = dataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
             _StationProgramRepository = dataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
+            _DateTimeEngine = _dateTimeEngine;
         }
 
         /// <inheritdoc />
@@ -494,7 +496,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <inheritdoc/>
-        public Guid GenerateCampaignReport(CampaignReportRequest request, string userName, DateTime currentDate, string templatesFilePath)
+        public Guid GenerateCampaignReport(CampaignReportRequest request, string userName, string templatesFilePath)
         {
             var campaignReportData = GetAndValidateCampaignReportData(request);
             var reportGenerator = new CampaignReportGenerator(templatesFilePath);
@@ -506,7 +508,7 @@ namespace Services.Broadcast.ApplicationServices
                 FileNameWithExtension = report.Filename,
                 FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 FileUsage = SharedFolderFileUsage.CampaignExport,
-                CreatedDate = currentDate,
+                CreatedDate = _DateTimeEngine.GetCurrentMoment(),
                 CreatedBy = userName,
                 FileContent = report.Stream
             });
@@ -544,7 +546,8 @@ namespace Services.Broadcast.ApplicationServices
                 _DaypartDefaultService.GetAllDaypartDefaults(),
                  _AudienceService.GetAudiences(),
                  _MediaMonthAndWeekAggregateCache,
-                _QuarterCalculationEngine);
+                _QuarterCalculationEngine,
+                _DateTimeEngine);
         }
 
         private void _ValidateCampaignLocking(int campaignId)

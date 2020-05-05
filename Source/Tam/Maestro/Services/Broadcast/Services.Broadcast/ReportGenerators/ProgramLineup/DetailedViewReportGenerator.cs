@@ -43,7 +43,7 @@ namespace Services.Broadcast.ReportGenerators.ProgramLineup
             worksheet.Cells[CLIENT_CELL].Value = reportData.Client;
             worksheet.Cells[FLIGHT_CELL].Value = $"{reportData.FlightStartDate} - {reportData.FlightEndDate}";
             worksheet.Cells[GUARANTEED_DEMO_CELL].Value = reportData.GuaranteedDemo;
-            worksheet.Cells[SPOT_LENGTH_CELL].Value = reportData.SpotLength;
+            worksheet.Cells[SPOT_LENGTH_CELL].Value = reportData.SpotLengths;
             worksheet.Cells[POSTING_TYPE_CELL].Value = reportData.PostingType;
             worksheet.Cells[ACCOUNT_EXECUTIVE_CELL].Value = reportData.AccountExecutive;
             worksheet.Cells[CLIENT_CONTRACT_CELL].Value = reportData.ClientContact;

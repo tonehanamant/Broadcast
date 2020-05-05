@@ -55,14 +55,15 @@ namespace Services.Broadcast.Entities.Campaign
             , List<DaypartDefaultDto> daypartDefaults
             , List<PlanAudienceDisplay> orderedAudiences
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
-            , IQuarterCalculationEngine quarterCalculationEngine)
+            , IQuarterCalculationEngine quarterCalculationEngine
+            , IDateTimeEngine dateTimeEngine)
         {
             HasSecondaryAudiences = plans.Any(x => x.SecondaryAudiences.Any());
 
             List<ProjectedPlan> projectedPlans = _ProjectPlansForProposalExport(plans, spotLengths, daypartDefaults
                 , mediaMonthAndWeekAggregateCache, quarterCalculationEngine);
             _PopulateHeaderData(exportType, campaign, plans, agency, advertiser
-                , guaranteedDemos, spotLengths, orderedAudiences, quarterCalculationEngine);
+                , guaranteedDemos, spotLengths, orderedAudiences, quarterCalculationEngine, dateTimeEngine);
 
             List<DateTime> hiatusDays = plans.SelectMany(x => x.FlightHiatusDays).ToList();
             hiatusDays = hiatusDays.Distinct().ToList();
@@ -1055,10 +1056,11 @@ namespace Services.Broadcast.Entities.Campaign
             , List<PlanAudienceDisplay> guaranteedDemos
             , List<LookupDto> spotLengths
             , List<PlanAudienceDisplay> orderedAudiences
-            , IQuarterCalculationEngine quarterCalculationEngine)
+            , IQuarterCalculationEngine quarterCalculationEngine
+            , IDateTimeEngine dateTimeEngine)
         {
             CampaignName = campaign.Name;
-            CreatedDate = DateTime.Now.ToString(DATE_FORMAT_SHORT_YEAR);
+            CreatedDate = dateTimeEngine.GetCurrentMoment().ToString(DATE_FORMAT_SHORT_YEAR);
             AgencyName = agency.Name;
             ClientName = advertiser.Name;
             _SetCampaignFlightDate(plans, quarterCalculationEngine);

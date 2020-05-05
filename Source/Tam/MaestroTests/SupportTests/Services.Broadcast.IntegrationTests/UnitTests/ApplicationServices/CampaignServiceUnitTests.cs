@@ -24,6 +24,7 @@ using System.Linq;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram.ManifestDaypart;
 using Tam.Maestro.Data.Entities;
+using Newtonsoft.Json;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -52,6 +53,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IInventoryRepository> _InventoryRepositoryMock;
         private Mock<IMarketCoverageRepository> _MarketCoverageRepositoryMock;
         private Mock<IStationProgramRepository> _StationProgramRepositoryMock;
+        private Mock<IDateTimeEngine> _DateTimeEngineMock;
 
         [SetUp]
         public void SetUp()
@@ -75,6 +77,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _MarketCoverageRepositoryMock = new Mock<IMarketCoverageRepository>();
             _InventoryRepositoryMock = new Mock<IInventoryRepository>();
             _StationProgramRepositoryMock = new Mock<IStationProgramRepository>();
+            _DateTimeEngineMock = new Mock<IDateTimeEngine>();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IStationProgramRepository>())
@@ -885,14 +888,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 });
 
             _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(KeyHelper.GetCampaignLockingKey(campaignId)))
-                .Returns(new LockResponse
-                {
-                    Success = true
-                });
-
-            _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(KeyHelper.GetPlanLockingKey(planId)))
+                .Setup(x => x.GetLockObject(It.IsAny<string>()))
                 .Returns(new LockResponse
                 {
                     Success = true
@@ -940,14 +936,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 });
 
             _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(KeyHelper.GetCampaignLockingKey(campaignId)))
-                .Returns(new LockResponse
-                {
-                    Success = true
-                });
-
-            _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(KeyHelper.GetPlanLockingKey(planId)))
+                .Setup(x => x.GetLockObject(It.IsAny<string>()))
                 .Returns(new LockResponse
                 {
                     Success = true
@@ -996,20 +985,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(new PlanDto());
 
             _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(KeyHelper.GetPlanLockingKey(1)))
-                .Returns(new LockResponse
-                {
-                    Success = true,
-                    LockedUserName = "Integration Test"
-                });
-
-            _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(KeyHelper.GetCampaignLockingKey(1)))
-                .Returns(new LockResponse
-                {
-                    Success = true,
-                    LockedUserName = "Integration Test"
-                });
+                 .Setup(x => x.GetLockObject(It.IsAny<string>()))
+                 .Returns(new LockResponse
+                 {
+                     Success = true
+                 });
 
             var tc = _BuildCampaignService();
 
@@ -1045,20 +1025,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 });
 
             _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(KeyHelper.GetPlanLockingKey(1)))
-                .Returns(new LockResponse
-                {
-                    Success = true,
-                    LockedUserName = "Integration Test"
-                });
-
-            _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(KeyHelper.GetCampaignLockingKey(1)))
-                .Returns(new LockResponse
-                {
-                    Success = true,
-                    LockedUserName = "Integration Test"
-                });
+                 .Setup(x => x.GetLockObject(It.IsAny<string>()))
+                 .Returns(new LockResponse
+                 {
+                     Success = true
+                 });
 
             var tc = _BuildCampaignService();
 
@@ -1080,8 +1051,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             const int agencyId = 4;
             const int advertiserId = 5;
             const int audienceId = 6;
-            const int spotLengthId = 7;
-            const string lockedUserName = "UnitTestsUser2";
 
             var request = new ProgramLineupReportRequest
             {
@@ -1097,8 +1066,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Name = "Brave Plan",
                     FlightStartDate = new DateTime(2020, 03, 1),
                     FlightEndDate = new DateTime(2020, 03, 14),
-                    SpotLengthId = spotLengthId,
-                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = spotLengthId, Weight = 50 } },
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 8, Weight = 50 } },
                     Equivalized = false,
                     PostingType = PostingTypeEnum.NTI,
                     TargetImpressions = 250
@@ -1113,19 +1081,92 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 });
 
             _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(KeyHelper.GetPlanLockingKey(firstPlanId)))
+                .Setup(x => x.GetLockObject(It.IsAny<string>()))
                 .Returns(new LockResponse
                 {
-                    Success = true,
-                    LockedUserName = lockedUserName
+                    Success = true
+                });
+                        
+            _SetupBaseProgramLineupTestData();
+
+            var tc = _BuildCampaignService();
+
+            // Act
+            var result = tc.GetProgramLineupReportData(request, _CurrentDate);
+
+            // Assert
+            _PlanRepositoryMock.Verify(x => x.GetPlan(firstPlanId, null), Times.Once);
+            _CampaignRepositoryMock.Verify(x => x.GetCampaign(campaignId), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetLatestPricingJob(firstPlanId), Times.Once);
+            _TrafficApiCacheMock.Verify(x => x.GetAgency(agencyId), Times.Once);
+            _TrafficApiCacheMock.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
+            _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
+            _SpotLengthServiceMock.Verify(x => x.GetAllSpotLengths(), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId), Times.Once);
+            _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
+
+            var passedManifestIds = new List<int> { 10, 20, 30, 40, 50, 60, 70 };
+            _InventoryRepositoryMock.Verify(x => x.GetStationInventoryManifestsByIds(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestIds))),
+                Times.Once);
+
+            var passedManifestDaypartIds = new List<int> { 1001, 2001, 3001, 6001 };
+            _StationProgramRepositoryMock.Verify(x => x.GetPrimaryProgramsForManifestDayparts(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestDaypartIds))),
+                Times.Once);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProgramLineup_MultipleCreativeLengths()
+        {
+            // Arrange
+            const int firstPlanId = 1;
+            const int secondPlanId = 2;
+            const int campaignId = 3;
+            const int agencyId = 4;
+            const int advertiserId = 5;
+            const int audienceId = 6;
+
+            var request = new ProgramLineupReportRequest
+            {
+                SelectedPlans = new List<int> { firstPlanId, secondPlanId }
+            };
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    CampaignId = campaignId,
+                    AudienceId = audienceId,
+                    Name = "Brave Plan",
+                    FlightStartDate = new DateTime(2020, 03, 1),
+                    FlightEndDate = new DateTime(2020, 03, 14),
+                    CreativeLengths = new List<CreativeLength> {
+                        new CreativeLength { SpotLengthId = 1, Weight = 50 },
+                        new CreativeLength { SpotLengthId = 2, Weight = 20 },
+                        new CreativeLength { SpotLengthId = 3, Weight = 30 }
+                    },
+                    Equivalized = true,
+                    PostingType = PostingTypeEnum.NTI,
+                    TargetImpressions = 250
+                });
+
+            _CampaignRepositoryMock
+                .Setup(x => x.GetCampaign(It.IsAny<int>()))
+                .Returns(new CampaignDto
+                {
+                    AgencyId = agencyId,
+                    AdvertiserId = advertiserId
                 });
 
             _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(KeyHelper.GetCampaignLockingKey(campaignId)))
+                .Setup(x => x.GetLockObject(It.IsAny<string>()))
                 .Returns(new LockResponse
                 {
-                    Success = true,
-                    LockedUserName = lockedUserName
+                    Success = true
                 });
 
             _SetupBaseProgramLineupTestData();
@@ -1161,7 +1202,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void ReturnsData_ForProgramLineupReport_45spot_Equivalized()
+        public void ProgramLineup_MultipleCreativeLengths_UnEquivalized()
         {
             // Arrange
             const int firstPlanId = 1;
@@ -1170,8 +1211,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             const int agencyId = 4;
             const int advertiserId = 5;
             const int audienceId = 6;
-            const int spotLengthId = 7;
-            const string lockedUserName = "UnitTestsUser2";
 
             var request = new ProgramLineupReportRequest
             {
@@ -1187,8 +1226,78 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Name = "Brave Plan",
                     FlightStartDate = new DateTime(2020, 03, 1),
                     FlightEndDate = new DateTime(2020, 03, 14),
-                    SpotLengthId = spotLengthId,
-                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = spotLengthId, Weight = 50 } },
+                    CreativeLengths = new List<CreativeLength> {
+                        new CreativeLength { SpotLengthId = 1, Weight = 50 },
+                        new CreativeLength { SpotLengthId = 2, Weight = 20 },
+                        new CreativeLength { SpotLengthId = 3, Weight = 30 }
+                    },
+                    Equivalized = false,
+                    PostingType = PostingTypeEnum.NTI,
+                    TargetImpressions = 250
+                });
+
+            _CampaignRepositoryMock
+                .Setup(x => x.GetCampaign(It.IsAny<int>()))
+                .Returns(new CampaignDto
+                {
+                    AgencyId = agencyId,
+                    AdvertiserId = advertiserId
+                });
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(It.IsAny<string>()))
+                .Returns(new LockResponse
+                {
+                    Success = true
+                });
+
+            _SetupBaseProgramLineupTestData();
+
+            var tc = _BuildCampaignService();
+
+            // Act
+            var result = tc.GetProgramLineupReportData(request, _CurrentDate);
+
+            var passedManifestIds = new List<int> { 10, 20, 30, 40, 50, 60, 70 };
+            _InventoryRepositoryMock.Verify(x => x.GetStationInventoryManifestsByIds(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestIds))),
+                Times.Once);
+
+            var passedManifestDaypartIds = new List<int> { 1001, 2001, 3001, 6001 };
+            _StationProgramRepositoryMock.Verify(x => x.GetPrimaryProgramsForManifestDayparts(
+                It.Is<IEnumerable<int>>(list => list.SequenceEqual(passedManifestDaypartIds))),
+                Times.Once);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ReturnsData_ForProgramLineupReport_45spot_Equivalized()
+        {
+            // Arrange
+            const int firstPlanId = 1;
+            const int secondPlanId = 2;
+            const int campaignId = 3;
+            const int agencyId = 4;
+            const int advertiserId = 5;
+            const int audienceId = 6;
+
+            var request = new ProgramLineupReportRequest
+            {
+                SelectedPlans = new List<int> { firstPlanId, secondPlanId }
+            };
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    CampaignId = campaignId,
+                    AudienceId = audienceId,
+                    Name = "Brave Plan",
+                    FlightStartDate = new DateTime(2020, 03, 1),
+                    FlightEndDate = new DateTime(2020, 03, 14),
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 8, Weight = 50 } },
                     Equivalized = true,
                     PostingType = PostingTypeEnum.NTI,
                     TargetImpressions = 250
@@ -1203,19 +1312,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 });
 
             _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(KeyHelper.GetPlanLockingKey(firstPlanId)))
+                .Setup(x => x.GetLockObject(It.IsAny<string>()))
                 .Returns(new LockResponse
                 {
-                    Success = true,
-                    LockedUserName = lockedUserName
-                });
-
-            _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(KeyHelper.GetCampaignLockingKey(campaignId)))
-                .Returns(new LockResponse
-                {
-                    Success = true,
-                    LockedUserName = lockedUserName
+                    Success = true
                 });
 
             _SetupBaseProgramLineupTestData();
@@ -1260,8 +1360,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             const int agencyId = 4;
             const int advertiserId = 5;
             const int audienceId = 6;
-            const int spotLengthId = 8;
-            const string lockedUserName = "UnitTestsUser2";
 
             var request = new ProgramLineupReportRequest
             {
@@ -1277,8 +1375,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Name = "Brave Plan",
                     FlightStartDate = new DateTime(2020, 03, 1),
                     FlightEndDate = new DateTime(2020, 03, 14),
-                    SpotLengthId = spotLengthId,
-                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = spotLengthId, Weight = 50 } },
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 50 } },
                     Equivalized = true,
                     PostingType = PostingTypeEnum.NTI,
                     TargetImpressions = 250
@@ -1293,20 +1390,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 });
 
             _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(KeyHelper.GetPlanLockingKey(firstPlanId)))
-                .Returns(new LockResponse
-                {
-                    Success = true,
-                    LockedUserName = lockedUserName
-                });
-
-            _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(KeyHelper.GetCampaignLockingKey(campaignId)))
-                .Returns(new LockResponse
-                {
-                    Success = true,
-                    LockedUserName = lockedUserName
-                });
+                 .Setup(x => x.GetLockObject(It.IsAny<string>()))
+                 .Returns(new LockResponse
+                 {
+                     Success = true
+                 });
 
             _SetupBaseProgramLineupTestData();
 
@@ -1350,8 +1438,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             const int agencyId = 4;
             const int advertiserId = 5;
             const int audienceId = 6;
-            const int spotLengthId = 8;
-            const string lockedUserName = "UnitTestsUser2";
 
             var request = new ProgramLineupReportRequest
             {
@@ -1367,8 +1453,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Name = "Brave Plan",
                     FlightStartDate = new DateTime(2020, 03, 1),
                     FlightEndDate = new DateTime(2020, 03, 14),
-                    SpotLengthId = spotLengthId,
-                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = spotLengthId, Weight = 50 } },
+                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 50 } },
                     Equivalized = true,
                     PostingType = PostingTypeEnum.NTI,
                     TargetImpressions = 250
@@ -1383,19 +1468,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 });
 
             _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(KeyHelper.GetPlanLockingKey(firstPlanId)))
+                .Setup(x => x.GetLockObject(It.IsAny<string>()))
                 .Returns(new LockResponse
                 {
-                    Success = true,
-                    LockedUserName = lockedUserName
-                });
-
-            _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(KeyHelper.GetCampaignLockingKey(campaignId)))
-                .Returns(new LockResponse
-                {
-                    Success = true,
-                    LockedUserName = lockedUserName
+                    Success = true
                 });
 
             _SetupBaseProgramLineupForRollupTestData();
@@ -1561,6 +1637,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 1
                     }
                 });
+
+            _DateTimeEngineMock
+                .Setup(x => x.GetCurrentMoment())
+                .Returns(new DateTime(2020, 01, 01));
 
             var tc = _BuildCampaignService();
 
@@ -2286,7 +2366,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _AudienceServiceMock.Object,
                 _SpotLengthServiceMock.Object,
                 _DaypartDefaultServiceMock.Object,
-                _SharedFolderServiceMock.Object);
+                _SharedFolderServiceMock.Object,
+                _DateTimeEngineMock.Object);
         }
 
         private CampaignDto _GetCampaignForExport(int campaignId, List<int> selectedPlanIds)

@@ -102,9 +102,9 @@
         "Spots": 0
       }
     ],
-    "ProjectedImpressions": 33431.66875,
-    "ProvidedImpressions": 29325.0,
-    "SpotCost": 375.0000,
+    "ProjectedImpressions": 66863.3375,
+    "ProvidedImpressions": 58650.0,
+    "SpotCost": 750.0000,
     "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "CW",
@@ -223,9 +223,9 @@
         "Spots": 0
       }
     ],
-    "ProjectedImpressions": 28572.98375,
-    "ProvidedImpressions": 25160.0,
-    "SpotCost": 350.0000,
+    "ProjectedImpressions": 57145.9675,
+    "ProvidedImpressions": 50320.0,
+    "SpotCost": 700.0000,
     "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "CW",
@@ -344,9 +344,9 @@
         "Spots": 0
       }
     ],
-    "ProjectedImpressions": 38248.5125,
-    "ProvidedImpressions": 25670.0,
-    "SpotCost": 400.0000,
+    "ProjectedImpressions": 76497.025,
+    "ProvidedImpressions": 51340.0,
+    "SpotCost": 800.0000,
     "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "CW",
@@ -465,9 +465,9 @@
         "Spots": 0
       }
     ],
-    "ProjectedImpressions": 26080.55,
-    "ProvidedImpressions": 18530.0,
-    "SpotCost": 375.0000,
+    "ProjectedImpressions": 52161.1,
+    "ProvidedImpressions": 37060.0,
+    "SpotCost": 750.0000,
     "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "CW",
@@ -586,9 +586,9 @@
         "Spots": 0
       }
     ],
-    "ProjectedImpressions": 34029.484375,
-    "ProvidedImpressions": 19890.0,
-    "SpotCost": 300.0000,
+    "ProjectedImpressions": 68058.96875,
+    "ProvidedImpressions": 39780.0,
+    "SpotCost": 600.0000,
     "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "CW",
@@ -707,9 +707,9 @@
         "Spots": 0
       }
     ],
-    "ProjectedImpressions": 74.545,
-    "ProvidedImpressions": 255.0,
-    "SpotCost": 25.0000,
+    "ProjectedImpressions": 149.09,
+    "ProvidedImpressions": 510.0,
+    "SpotCost": 50.0000,
     "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "FOX",
@@ -828,9 +828,9 @@
         "Spots": 0
       }
     ],
-    "ProjectedImpressions": 184.715625,
-    "ProvidedImpressions": 255.0,
-    "SpotCost": 6.0000,
+    "ProjectedImpressions": 369.43125,
+    "ProvidedImpressions": 510.0,
+    "SpotCost": 12.0000,
     "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "FOX",
@@ -949,9 +949,9 @@
         "Spots": 0
       }
     ],
-    "ProjectedImpressions": 246.5,
-    "ProvidedImpressions": 170.0,
-    "SpotCost": 6.0000,
+    "ProjectedImpressions": 493.0,
+    "ProvidedImpressions": 340.0,
+    "SpotCost": 12.0000,
     "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "FOX",
@@ -1070,9 +1070,9 @@
         "Spots": 0
       }
     ],
-    "ProjectedImpressions": 49.895,
-    "ProvidedImpressions": 170.0,
-    "SpotCost": 6.0000,
+    "ProjectedImpressions": 99.79,
+    "ProvidedImpressions": 340.0,
+    "SpotCost": 12.0000,
     "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "FOX",

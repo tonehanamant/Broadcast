@@ -214,7 +214,7 @@
     null,
     25.0000
   ],
-  "CreatedDate": "05/04/20",
+  "CreatedDate": "01/01/20",
   "DaypartsData": [
     {
       "DaypartCode": "EF",

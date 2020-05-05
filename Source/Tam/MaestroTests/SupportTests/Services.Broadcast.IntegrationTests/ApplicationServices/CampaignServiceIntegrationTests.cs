@@ -198,7 +198,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IAudienceService>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ISpotLengthService>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IDaypartDefaultService>(),
-                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ISharedFolderService>());
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<ISharedFolderService>(),
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IDateTimeEngine>());
 
                 var campaign = _GetValidCampaignForSave();
                 campaign.Id = 1;
@@ -651,7 +652,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("long_running")]
         public void CampaignExport_GenerateCampaignReport()
         {
-            var now = new DateTime(2020, 1, 1);
             var user = "IntegrationTestsUser";
 
             var fileServiceMock = new Mock<IFileService>();
@@ -668,7 +668,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     CampaignId = 652,
                     ExportType = CampaignExportTypeEnum.Contract,
                     SelectedPlans = new List<int> { 1852, 1853 }
-                }, user, now, "./Files/Excel templates");
+                }, user, "./Files/Excel templates");
 
                 sharedFolderFile = sharedFolderRepository.GetFileById(fileId);
             }
@@ -702,7 +702,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IAudienceService>(),
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ISpotLengthService>(),
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IDaypartDefaultService>(),
-                sharedFolderService);
+                sharedFolderService,
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<IDateTimeEngine>());
 
             return campaignService;
         }
@@ -1015,9 +1016,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var jsonResolver = new IgnorableSerializerContractResolver();
 
             jsonResolver.Ignore(typeof(CampaignReportData), "CreatedDate");
-            jsonResolver.Ignore(typeof(SharedFolderFile), "Id");
             jsonResolver.Ignore(typeof(CampaignReportData), "CampaignExportFileName");
-
+            jsonResolver.Ignore(typeof(SharedFolderFile), "Id");
+            jsonResolver.Ignore(typeof(SharedFolderFile), "CreatedDate");
+            jsonResolver.Ignore(typeof(SharedFolderFile), "SharedFolderFile");
+            
             return new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
