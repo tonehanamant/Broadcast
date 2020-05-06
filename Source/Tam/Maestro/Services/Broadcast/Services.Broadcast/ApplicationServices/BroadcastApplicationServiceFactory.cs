@@ -89,7 +89,8 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IBroadcastAudiencesCache, BroadcastAudiencesCache>();
             unityContainer.RegisterType<IMarketCoverageCache, MarketCoverageCache>();
             unityContainer.RegisterType<IInventoryService, InventoryService>();
-            unityContainer.RegisterType<IProprietaryInventoryService, ProprietaryInventoryService>();
+            unityContainer.RegisterType<IInventoryExportService, InventoryExportService>();
+			unityContainer.RegisterType<IProprietaryInventoryService, ProprietaryInventoryService>();
             unityContainer.RegisterType<IInventoryFileValidator, InventoryFileValidator>();
             unityContainer.RegisterType<ISchedulesReportService, SchedulesReportService>();
             unityContainer.RegisterType<IScheduleAggregateFactoryService, ScheduleAggregateFactoryService>();
@@ -189,7 +190,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IDataLakeFileService, DataLakeFileService>();
             unityContainer.RegisterType<IDataLakeSystemParameters, DataLakeSystemParameters>();
 
-            unityContainer.RegisterType<IInventorySummaryService, InventorySummaryService>();
+			unityContainer.RegisterType<IInventorySummaryService, InventorySummaryService>();
             unityContainer.RegisterType<IInventoryGapCalculationEngine, InventoryGapCalculationEngine>();
 
             unityContainer.RegisterType<ICampaignService, CampaignService>();

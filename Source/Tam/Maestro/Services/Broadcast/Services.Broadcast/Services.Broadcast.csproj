@@ -319,6 +319,7 @@
     <Compile Include="ApplicationServices\BroadcastLockingManagerApplicationService.cs" />
     <Compile Include="ApplicationServices\CampaignAggregationJobTrigger.cs" />
     <Compile Include="ApplicationServices\CampaignAggregator.cs" />
+    <Compile Include="ApplicationServices\Inventory\InventoryExportService.cs" />
     <Compile Include="Entities\CreativeLength.cs" />
     <Compile Include="ApplicationServices\StationMappingService.cs" />
     <Compile Include="ApplicationServices\NtiUniverseService.cs" />
@@ -389,9 +390,11 @@
     <Compile Include="Entities\Enums\BroadcastDayOfWeek.cs" />
     <Compile Include="Entities\Enums\InventoryPricingQuarterType.cs" />
     <Compile Include="Entities\Enums\InventoryProgramsProcessorType.cs" />
+    <Compile Include="Entities\Enums\Inventory\InventoryExportGenreTypeEnum.cs" />
     <Compile Include="Entities\Enums\PlanBuyingStatusEnum.cs" />
     <Compile Include="Entities\Enums\PlanBuyingTimeFramesEnum.cs" />
     <Compile Include="Entities\Enums\StationMapSetNamesEnum.cs" />
+    <Compile Include="Entities\Inventory\InventoryExportRequestDto.cs" />
     <Compile Include="Entities\InventoryPlannerDetails.cs" />
     <Compile Include="Entities\DTO\CurrentQuartersDto.cs" />
     <Compile Include="Entities\DetectionFileDetail.cs" />
@@ -552,6 +555,7 @@
     <Compile Include="Repositories\InventoryProgramsByFileJobsRepository.cs" />
     <Compile Include="Repositories\InventoryProgramsBySourceJobsRepository.cs" />
     <Compile Include="Repositories\InventoryProgramsJobsRepositoryBase.cs" />
+    <Compile Include="Repositories\Inventory\InventoryExportRepository.cs" />
     <Compile Include="Repositories\NsiStationRepository.cs" />
     <Compile Include="Repositories\NtiToNsiConversionRepository.cs" />
     <Compile Include="Repositories\NtiUniverseRepository.cs" />

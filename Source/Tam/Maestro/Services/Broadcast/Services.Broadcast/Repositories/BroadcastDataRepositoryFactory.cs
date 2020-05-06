@@ -3,6 +3,7 @@ using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Microsoft.Practices.Unity;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Repositories.Inventory;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast;
@@ -72,7 +73,8 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IMediaMonthAndWeekAggregateCache, MediaMonthAndWeekAggregateCache>();
             instance.RegisterType<IDisplayDaypartRepository, DisplayDaypartBroadcastRepository>();
             instance.RegisterType<IInventoryRepository, InventoryRepository>();
-            instance.RegisterType<IInventoryFileRatingsJobsRepository, InventoryFileRatingsJobsRepository>();
+            instance.RegisterType<IInventoryExportRepository, InventoryExportRepository>();
+			instance.RegisterType<IInventoryFileRatingsJobsRepository, InventoryFileRatingsJobsRepository>();
             instance.RegisterType<IAffidavitRepository, AffidavitRepository>();
             instance.RegisterType<INsiComponentAudienceRepository, NsiComponentAudienceRepository>();
             instance.RegisterType<IPostRepository, PostRepository>();

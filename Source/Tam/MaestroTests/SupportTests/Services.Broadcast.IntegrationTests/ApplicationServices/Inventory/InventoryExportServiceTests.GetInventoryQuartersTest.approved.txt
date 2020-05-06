@@ -1,0 +1,70 @@
+﻿{
+  "DefaultQuarter": {
+    "EndDate": "2019-12-29T23:59:59",
+    "Quarter": 4,
+    "StartDate": "2019-09-30T00:00:00",
+    "Year": 2019
+  },
+  "Quarters": [
+    {
+      "EndDate": "2019-12-29T23:59:59",
+      "Quarter": 4,
+      "StartDate": "2019-09-30T00:00:00",
+      "Year": 2019
+    },
+    {
+      "EndDate": "2018-12-30T23:59:59",
+      "Quarter": 4,
+      "StartDate": "2018-10-01T00:00:00",
+      "Year": 2018
+    },
+    {
+      "EndDate": "2018-09-30T23:59:59",
+      "Quarter": 3,
+      "StartDate": "2018-06-25T00:00:00",
+      "Year": 2018
+    },
+    {
+      "EndDate": "2018-06-24T23:59:59",
+      "Quarter": 2,
+      "StartDate": "2018-03-26T00:00:00",
+      "Year": 2018
+    },
+    {
+      "EndDate": "2018-03-25T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2018-01-01T00:00:00",
+      "Year": 2018
+    },
+    {
+      "EndDate": "2017-12-31T23:59:59",
+      "Quarter": 4,
+      "StartDate": "2017-09-25T00:00:00",
+      "Year": 2017
+    },
+    {
+      "EndDate": "2017-09-24T23:59:59",
+      "Quarter": 3,
+      "StartDate": "2017-06-26T00:00:00",
+      "Year": 2017
+    },
+    {
+      "EndDate": "2017-06-25T23:59:59",
+      "Quarter": 2,
+      "StartDate": "2017-03-27T00:00:00",
+      "Year": 2017
+    },
+    {
+      "EndDate": "2017-03-26T23:59:59",
+      "Quarter": 1,
+      "StartDate": "2016-12-26T00:00:00",
+      "Year": 2017
+    },
+    {
+      "EndDate": "2016-06-26T23:59:59",
+      "Quarter": 2,
+      "StartDate": "2016-03-28T00:00:00",
+      "Year": 2016
+    }
+  ]
+}

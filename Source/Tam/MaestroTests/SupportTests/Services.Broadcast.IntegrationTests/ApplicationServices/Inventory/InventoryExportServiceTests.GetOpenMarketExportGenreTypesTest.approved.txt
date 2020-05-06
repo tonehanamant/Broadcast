@@ -1,0 +1,10 @@
+﻿[
+  {
+    "Display": "News",
+    "Id": 1
+  },
+  {
+    "Display": "Non-News",
+    "Id": 2
+  }
+]
