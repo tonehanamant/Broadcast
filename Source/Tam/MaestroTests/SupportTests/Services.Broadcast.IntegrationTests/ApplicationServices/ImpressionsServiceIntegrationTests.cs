@@ -1,4 +1,5 @@
-﻿using ApprovalTests;
+﻿using System;
+using ApprovalTests;
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
 using NUnit.Framework;
@@ -75,6 +76,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             var observationManifestAudiences = testManifest.ManifestAudiences;
             Assert.AreEqual(expectedManifestAudienceCountPerManifest, observationManifestAudiences.Count);
+
+            // For some reason Audience ID 348 gets an Impressions value that flops between 2007.3735762621538 and 2007.3735762621539
+            // note the difference in the last digit.
+            // in practice this is rounded to <5 decimal points for usage so this flopping at 13 decimal points is acceptable.
+            // So just round to 10 decimals
+            observationManifestAudiences.ForEach(a => a.Impressions = Math.Round(a.Impressions ?? 0, 10));
+
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(observationManifestAudiences));
         }
 
