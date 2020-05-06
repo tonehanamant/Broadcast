@@ -18,6 +18,7 @@ namespace EntityFrameworkMapping.Broadcast
         {
             this.proposal_version_detail_criteria_show_types = new HashSet<proposal_version_detail_criteria_show_types>();
             this.plan_version_daypart_show_type_restrictions = new HashSet<plan_version_daypart_show_type_restrictions>();
+            this.program_name_mappings = new HashSet<program_name_mappings>();
         }
     
         public int id { get; set; }
@@ -29,5 +30,6 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual ICollection<proposal_version_detail_criteria_show_types> proposal_version_detail_criteria_show_types { get; set; }
         public virtual ICollection<plan_version_daypart_show_type_restrictions> plan_version_daypart_show_type_restrictions { get; set; }
+        public virtual ICollection<program_name_mappings> program_name_mappings { get; set; }
     }
 }

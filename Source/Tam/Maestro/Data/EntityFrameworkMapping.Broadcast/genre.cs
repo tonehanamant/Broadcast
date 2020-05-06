@@ -25,6 +25,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.station_inventory_manifest_daypart_programs = new HashSet<station_inventory_manifest_daypart_programs>();
             this.plan_version_daypart_program_restrictions = new HashSet<plan_version_daypart_program_restrictions>();
             this.station_inventory_manifest_daypart_programs1 = new HashSet<station_inventory_manifest_daypart_programs>();
+            this.program_name_mappings = new HashSet<program_name_mappings>();
         }
     
         public int id { get; set; }
@@ -45,5 +46,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs { get; set; }
         public virtual ICollection<plan_version_daypart_program_restrictions> plan_version_daypart_program_restrictions { get; set; }
         public virtual ICollection<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs1 { get; set; }
+        public virtual ICollection<program_name_mappings> program_name_mappings { get; set; }
     }
 }

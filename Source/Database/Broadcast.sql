@@ -142,6 +142,36 @@ END
 /*************************************** END PRI-25974 *********************************************************/
 
 
+/*************************************** START BP1-4 *****************************************************/
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id =OBJECT_ID('program_name_mappings'))
+BEGIN
+    CREATE TABLE [program_name_mappings]
+	(
+		[id] INT IDENTITY(1,1),
+		[inventory_program_name] NVARCHAR(500),
+		[official_program_name] NVARCHAR(500),
+		[genre_id] INT NOT NULL,
+		[show_type_id] INT NOT NULL,
+		CONSTRAINT [PK_program_name_mappings] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	CREATE UNIQUE INDEX [UX_program_name_mappings_inventory_program_name] ON program_name_mappings
+	(
+		[inventory_program_name] ASC
+	)
+	INCLUDE([id]) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[program_name_mappings] WITH CHECK ADD CONSTRAINT [FK_program_name_mappings_genres] FOREIGN KEY ([genre_id])
+    REFERENCES [dbo].[genres] (id)
+
+	ALTER TABLE [dbo].[program_name_mappings] WITH CHECK ADD CONSTRAINT [FK_program_name_mappings_show_types] FOREIGN KEY ([show_type_id])
+    REFERENCES [dbo].[show_types] (id)
+END
+/*************************************** END BP1-4 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

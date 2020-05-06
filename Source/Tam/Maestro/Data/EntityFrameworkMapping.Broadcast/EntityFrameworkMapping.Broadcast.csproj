@@ -643,6 +643,9 @@
     <Compile Include="program_names.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="program_name_mappings.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="proposal.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>

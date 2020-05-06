@@ -418,6 +418,9 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_version_creative_lengths" Width="1.5" PointX="18.5" PointY="6.125" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_creative_lengths_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_creative_lengths_spot_lengths" />
+        <EntityTypeShape EntityType="BroadcastModel.program_name_mappings" Width="1.5" PointX="28.375" PointY="17.75" />
+        <AssociationConnector Association="BroadcastModel.FK_program_name_mappings_genres" />
+        <AssociationConnector Association="BroadcastModel.FK_program_name_mappings_show_types" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
