@@ -114,7 +114,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var plan = _GetPlan();
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
-                Throws.TypeOf<ApplicationException>().With.Message.EqualTo("Invalid spot length 1"));
+                Throws.TypeOf<ApplicationException>().With.Message.EqualTo("Invalid spot length id 1"));
         }
 
         [Test]

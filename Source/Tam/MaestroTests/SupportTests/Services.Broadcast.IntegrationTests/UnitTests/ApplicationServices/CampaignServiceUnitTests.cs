@@ -1088,7 +1088,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 {
                     Success = true
                 });
-                        
+
             _SetupBaseProgramLineupTestData();
 
             var tc = _BuildCampaignService();
@@ -1588,6 +1588,187 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _MediaMonthAndWeekAggregateCacheMock
                 .Setup(s => s.GetMediaWeeksByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(_GetTheSameMediaWeeksAsThePlan(planDto));
+            _MediaMonthAndWeekAggregateCacheMock
+                .Setup(s => s.GetMediaWeeksInRange(new DateTime(2020, 01, 01), new DateTime(2020, 03, 31)))
+                .Returns(new List<MediaWeek> {
+                    _GetMediaWeek(846, "2020-03-09", "2020-03-15", 462),
+                    _GetMediaWeek(847, "2020-03-16", "2020-03-22", 462),
+                    _GetMediaWeek(848, "2020-03-23", "2020-03-29", 462)
+                });
+            _MediaMonthAndWeekAggregateCacheMock
+                .Setup(s => s.GetMediaWeeksInRange(new DateTime(2020, 04, 01), new DateTime(2020, 06, 30)))
+                .Returns(new List<MediaWeek> {
+                    _GetMediaWeek(849, "2020-03-30", "2020-04-05", 463),
+                    _GetMediaWeek(850, "2020-04-06", "2020-04-12", 463)
+                });
+            _MediaMonthAndWeekAggregateCacheMock
+                .Setup(s => s.GetMediaWeeksByMediaMonth(462))
+                .Returns(new List<MediaWeek> {
+                    _GetMediaWeek(846, "2020-03-09", "2020-03-15", 462),
+                    _GetMediaWeek(847, "2020-03-16", "2020-03-22", 462),
+                    _GetMediaWeek(848, "2020-03-23", "2020-03-29", 462)
+                });
+            _MediaMonthAndWeekAggregateCacheMock
+                .Setup(s => s.GetMediaWeeksByMediaMonth(463))
+                .Returns(new List<MediaWeek> {
+                    _GetMediaWeek(849, "2020-03-30", "2020-04-05", 463),
+                    _GetMediaWeek(850, "2020-04-06", "2020-04-12", 463)
+                });
+            _MediaMonthAndWeekAggregateCacheMock
+                .Setup(s => s.GetMediaMonthsBetweenDatesInclusive(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(new List<MediaMonth> {
+                    new MediaMonth{Id = 463, MediaMonthX = "April"}, new MediaMonth{ Id = 462, MediaMonthX = "March"}
+                });
+
+            _TrafficApiCacheMock
+                .Setup(x => x.GetAgency(It.IsAny<int>()))
+                .Returns(new AgencyDto { Id = 1, Name = "Name1" });
+            _TrafficApiCacheMock
+                .Setup(x => x.GetAdvertiser(It.IsAny<int>()))
+                .Returns(new AdvertiserDto { Id = 2, Name = "Name2", AgencyId = 1 });
+
+            _AudienceServiceMock
+                .Setup(x => x.GetAudienceById(It.IsAny<int>()))
+                .Returns(new PlanAudienceDisplay
+                {
+                    Code = "A18-20",
+                    Id = 1
+                });
+            _AudienceServiceMock
+                .Setup(x => x.GetAudiences())
+                .Returns(new List<PlanAudienceDisplay> {
+                    new PlanAudienceDisplay
+                    {
+                        Code = "A18-20",
+                        Id = 1
+                    }
+                });
+
+            _DateTimeEngineMock
+                .Setup(x => x.GetCurrentMoment())
+                .Returns(new DateTime(2020, 01, 01));
+
+            var tc = _BuildCampaignService();
+
+            // Act
+            var response = tc.GetAndValidateCampaignReportData(request);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CampaignExport_MultipleCreativeLengths_BP1_229()
+        {
+            // Arrange
+            const int campaignId = 1;
+
+            var request = new CampaignReportRequest
+            {
+                CampaignId = 1,
+                ExportType = CampaignExportTypeEnum.Contract,
+                SelectedPlans = new List<int> { 1, 2, 3 }
+            };
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(_GetWeeklyBreakdownByWeek());
+
+            _CampaignRepositoryMock
+                .Setup(x => x.GetCampaign(campaignId))
+                .Returns(_GetCampaignForExport(campaignId, request.SelectedPlans));
+
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(It.IsAny<string>()))
+                .Returns(new LockResponse
+                {
+                    Success = true
+                });
+
+            var plan1 = _GetPlanForCampaignExport(1, campaignId);
+            plan1.Equivalized = true;
+            plan1.CreativeLengths = new List<CreativeLength>
+            {
+                new CreativeLength { SpotLengthId = 9, Weight = 10},
+                new CreativeLength { SpotLengthId = 4, Weight = 2},
+                new CreativeLength { SpotLengthId = 1, Weight = 75},
+                new CreativeLength { SpotLengthId = 6, Weight = 13}
+            };
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(1, null))
+                .Returns(plan1);
+
+            var plan2 = _GetPlanForCampaignExport(2, campaignId);
+            plan2.CreativeLengths = new List<CreativeLength>
+            {
+                new CreativeLength { SpotLengthId = 1, Weight = 10},
+                new CreativeLength { SpotLengthId = 3, Weight = 80},
+                new CreativeLength { SpotLengthId = 9, Weight = 10}
+            };
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(2, null))
+                .Returns(plan2);
+
+            var plan3 = _GetPlanForCampaignExport(3, campaignId);
+            plan3.Equivalized = true;
+            plan3.CreativeLengths = new List<CreativeLength>
+            {
+                new CreativeLength { SpotLengthId = 5, Weight = 27},
+                new CreativeLength { SpotLengthId = 2, Weight = 19},
+                new CreativeLength { SpotLengthId = 9, Weight = 53},
+                new CreativeLength { SpotLengthId = 3, Weight = 1}
+            };
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(3, null))
+                .Returns(plan3);
+
+            _SpotLengthServiceMock
+                .Setup(x => x.GetAllSpotLengths())
+                .Returns(_GetAllSpotLengths());
+
+            _DaypartDefaultServiceMock
+                .Setup(s => s.GetAllDaypartDefaults())
+                .Returns(_GetDaypartDefaults());
+
+            _QuarterCalculationEngineMock
+                .Setup(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(new List<QuarterDetailDto>
+                    {
+                        new QuarterDetailDto { Quarter = 1, Year = 2020,
+                            StartDate = new DateTime(2020,01,01),
+                            EndDate = new DateTime(2020,03,31)
+                        },
+                        new QuarterDetailDto { Quarter = 2, Year = 2020,
+                            StartDate = new DateTime(2020,04,01),
+                            EndDate = new DateTime(2020,06,30)}
+                    });
+            _QuarterCalculationEngineMock
+                .Setup(s => s.GetQuarterRangeByDate(It.IsAny<DateTime>()))
+                .Returns(new QuarterDetailDto
+                {
+                    Quarter = 1,
+                    Year = 2020
+                });
+            _QuarterCalculationEngineMock
+                .Setup(s => s.GetQuarterDetail(1, 2020))
+                .Returns(new QuarterDetailDto
+                {
+                    Quarter = 1,
+                    Year = 2020,
+
+                });
+            _QuarterCalculationEngineMock
+                .Setup(s => s.GetQuarterDetail(2, 2020))
+                .Returns(new QuarterDetailDto
+                {
+                    Quarter = 2,
+                    Year = 2020
+                });
+
+            _MediaMonthAndWeekAggregateCacheMock
+                .Setup(s => s.GetMediaWeeksByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(_GetTheSameMediaWeeksAsThePlan(plan1));
             _MediaMonthAndWeekAggregateCacheMock
                 .Setup(s => s.GetMediaWeeksInRange(new DateTime(2020, 01, 01), new DateTime(2020, 03, 31)))
                 .Returns(new List<MediaWeek> {

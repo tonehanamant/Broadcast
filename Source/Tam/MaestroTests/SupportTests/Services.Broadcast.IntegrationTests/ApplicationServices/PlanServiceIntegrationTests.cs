@@ -545,7 +545,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 newPlan.CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 100, Weight = 50 } };
                 var exception = Assert.Throws<ApplicationException>(() => _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01)));
 
-                Assert.That(exception.Message, Is.EqualTo("Invalid spot length 100"));
+                Assert.That(exception.Message, Is.EqualTo("Invalid spot length id 100"));
             }
         }
 

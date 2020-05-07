@@ -1081,6 +1081,7 @@ namespace Services.Broadcast.Entities.Campaign
             SpotLengths = plans
                             .SelectMany(x => x.CreativeLengths.Select(y => new { spotLengths.Single(w => w.Id == y.SpotLengthId).Display, x.Equivalized }))
                             .OrderBy(x => int.Parse(x.Display))
+                            .ThenBy(x=>x.Equivalized)
                             .Select(x => $":{x.Display}{_GetEquivalizedStatus(x.Equivalized, x.Display)}")
                             .Distinct()
                             .ToList();
