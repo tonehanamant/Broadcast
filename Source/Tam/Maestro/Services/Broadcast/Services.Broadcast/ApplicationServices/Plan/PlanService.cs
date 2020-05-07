@@ -130,6 +130,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         CurrentQuartersDto GetCurrentQuarters(DateTime currentDateTime);
         List<VPVHForAudience> GetVPVHForAudiencesWithBooks(VPVHRequest request);
+
+        /// <summary>
+        /// Calculates the creative length weight.
+        /// </summary>
+        /// <param name="request">Creative lengths set on the plan.</param>
+        /// <returns>List of creative lengths with calculated values</returns>
+        List<CreativeLength> CalculateCreativeLengthWeight(List<CreativeLength> request);
     }
 
     public class PlanService : IPlanService
@@ -199,20 +206,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 throw new Exception("The pricing model is running for the plan");
             }
 
-            //for backwards compatibility
-            if (plan.CreativeLengths == null)
+            //if there is only 1 creative length set, the qweight is 100%
+            if (plan.CreativeLengths.Count == 1)
             {
-                plan.CreativeLengths = new List<Entities.CreativeLength> {
-                    new Entities.CreativeLength{ SpotLengthId = plan.SpotLengthId}
-                };
-            }
-            else
-            {
-                //if there is only 1 creative length set, the qweight is 100%
-                if (plan.CreativeLengths.Count == 1)
-                {
-                    plan.CreativeLengths.Single().Weight = 100;
-                }
+                plan.CreativeLengths.Single().Weight = 100;
             }
 
             DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
@@ -1204,5 +1201,50 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return result;
         }
 
+        /// <inheritdoc/>
+        public List<CreativeLength> CalculateCreativeLengthWeight(List<CreativeLength> request)
+        {
+            _PlanValidator.ValidateCreativeLengths(request);
+
+            //if all the creative lengths have a user entered value
+            //there is nothing else to do
+            if (request.All(x => x.Weight.HasValue))
+            {
+                return null;
+            }
+
+            var result = new List<CreativeLength>();
+
+            //if there is only 1 creative length on the plan we default it to 100
+            //we need to redistribute that weight, if the user adds more creative lengths
+            if(request.Any(x=>x.Weight == 100))
+            {
+                request.Single(x => x.Weight == 100).Weight = null;
+            }
+
+            int withoutWeightCount = request.Count(x => !x.Weight.HasValue);
+            int sumOfSetWeigh = request.Where(x => x.Weight.HasValue).Sum(x => x.Weight.Value);
+            int undistributedWeight = 100 - sumOfSetWeigh;            
+            foreach(var creativeLength in request.Where(x=> !x.Weight.HasValue))
+            {
+                int weight = undistributedWeight / withoutWeightCount;
+
+                result.Add(new CreativeLength
+                {
+                    SpotLengthId = creativeLength.SpotLengthId,
+                    Weight = weight
+                });
+            }
+
+            //if there is remaining weight, we allocate it to the first creative length
+            int sumOfAllocatedWeight = result.Sum(x => x.Weight.Value) 
+                + request.Where(x => x.Weight.HasValue).Sum(x => x.Weight.Value);
+            if(sumOfAllocatedWeight < 100)
+            {
+                result.First().Weight += 100 - sumOfAllocatedWeight;
+            }
+
+            return result;
+        }
     }
 }

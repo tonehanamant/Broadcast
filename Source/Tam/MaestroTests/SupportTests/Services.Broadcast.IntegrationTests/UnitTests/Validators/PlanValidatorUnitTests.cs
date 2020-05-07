@@ -83,18 +83,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
-        public void ValidatePlan_NoWeightValueSet()
-        {
-            _spotLengthEngineMock.Setup(s => s.SpotLengthIdExists(It.IsAny<int>())).Returns(true);
-
-            var plan = _GetPlan();
-            //remove the first creative length because it has a value selected
-            plan.CreativeLengths.RemoveAt(0);
-
-            Assert.DoesNotThrow(() => _planValidator.UT_ValidateCreativeLengths(plan));
-        }
-
-        [Test]
         public void ValidatePlan_CannotSaveDraftOnEmptyPlan()
         {
             _ConfigureSpotLengthEngineMockToReturnTrue();
@@ -227,7 +215,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 Throws.TypeOf<Exception>().With.Message
                     .EqualTo("Invalid flight hiatus day.  All days must be within the flight date range."));
         }
-        
+
         [Test]
         public void ValidatePlan_InvalidFligthCannotStartOnNonFlightDay()
         {
@@ -1129,7 +1117,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 Throws.TypeOf<Exception>().With.Message
                     .EqualTo("No updated week found or more than one found."));
         }
-        
+
 
         [Test]
         public void ValidateWeeklyBreakdownWeeks_WithoutWeeklyBreakdown()
@@ -1155,6 +1143,87 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             };
 
             _ValidateWeeklyBreakdownWeeks(plan, shouldThrow, PlanValidator.INVALID_IMPRESSIONS_COUNT);
+        }
+
+        [Test]
+        public void ValidatePlan_CreativeLength_NoWeightValueSet()
+        {
+            _spotLengthEngineMock.Setup(s => s.SpotLengthIdExists(It.IsAny<int>())).Returns(true);
+
+            var creativeLenghts = _GetCreativeLengths();
+            //remove the first creative length because it has a value selected
+            creativeLenghts[0].Weight = null;
+
+            Assert.DoesNotThrow(() => _planValidator.ValidateCreativeLengths(creativeLenghts));
+        }
+
+        [Test]
+        public void ValidatePlan_CreativeLength_None()
+        {
+            var exception = Assert.Throws<ApplicationException>(() => _planValidator.ValidateCreativeLengths(new List<CreativeLength>()));
+
+            Assert.AreEqual("There should be at least 1 creative length selected on the plan", exception.Message);
+        }
+
+        [Test]
+        [TestCase(100)]
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void ValidatePlan_CreativeLength_InvalidSpotLengthId(int spotLengthId)
+        {
+            _spotLengthEngineMock.Setup(s => s.SpotLengthIdExists(spotLengthId)).Returns(false);
+
+            var creativeLengths = _GetCreativeLengths(); 
+            creativeLengths[0].SpotLengthId = spotLengthId;
+
+            var exception = Assert.Throws<ApplicationException>(() => _planValidator.ValidateCreativeLengths(creativeLengths));
+
+            Assert.AreEqual($"Invalid spot length id {spotLengthId}", exception.Message);
+        }
+
+        [Test]
+        [TestCase(-1)]
+        [TestCase(0)]
+        [TestCase(101)]
+        public void ValidatePlan_CreativeLength_InvalidWeight(int weight)
+        {
+            _spotLengthEngineMock.Setup(s => s.SpotLengthIdExists(It.IsAny<int>())).Returns(true);
+
+            var creativeLengths = _GetCreativeLengths();
+            creativeLengths[0].Weight = weight;
+
+            var exception = Assert.Throws<ApplicationException>(() => _planValidator.ValidateCreativeLengths(creativeLengths));
+
+            Assert.AreEqual("Creative length weight must be between 1 and 100", exception.Message);
+        }
+
+        [Test]
+        [TestCase(20)]
+        [TestCase(60)]
+        public void ValidatePlan_CreativeLength_InvalidSum(int weight)
+        {
+            _spotLengthEngineMock.Setup(s => s.SpotLengthIdExists(It.IsAny<int>())).Returns(true);
+
+            var creativeLengths = _GetCreativeLengths();
+            creativeLengths[0].Weight = weight;
+
+            var exception = Assert.Throws<ApplicationException>(() => _planValidator.ValidateCreativeLengths(creativeLengths));
+
+            Assert.AreEqual("Sum Weight of all Creative Lengths must equal 100%", exception.Message);
+        }
+
+        [Test]
+        public void ValidatePlan_CreativeLength_InvalidPartialSum()
+        {
+            _spotLengthEngineMock.Setup(s => s.SpotLengthIdExists(It.IsAny<int>())).Returns(true);
+
+            var creativeLengths = _GetCreativeLengths();
+            creativeLengths.Add(new CreativeLength { SpotLengthId = 4, Weight = null });
+            creativeLengths[0].Weight = 60;
+
+            var exception = Assert.Throws<ApplicationException>(() => _planValidator.ValidateCreativeLengths(creativeLengths));
+
+            Assert.AreEqual("Creative length weight must be between 1 and 100", exception.Message);
         }
 
         private void _ValidateWeeklyBreakdownWeeks(PlanDto plan, bool shouldThrow = false, string errorMessageIfShouldThrow = null)
@@ -1231,10 +1300,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 HUTBookId = HUT_BOOK_ID,
                 Vpvh = 0.35,
                 SpotLengthId = 1,
-                CreativeLengths = new List<CreativeLength> {
-                    new CreativeLength { SpotLengthId = 1, Weight = 50 },
-                    new CreativeLength { SpotLengthId = 2}
-                },
+                CreativeLengths = _GetCreativeLengths(),
                 Equivalized = true,
                 Status = PlanStatusEnum.Scenario,
                 ModifiedBy = "UnitTestUser",
@@ -1260,5 +1326,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                     new PlanAvailableMarketDto { PercentageOfUS = 50.5 },
                 }
             };
+
+        private List<CreativeLength> _GetCreativeLengths()
+        {
+            return new List<CreativeLength> {
+                    new CreativeLength { SpotLengthId = 1, Weight = 50 },
+                    new CreativeLength { SpotLengthId = 2, Weight = 50 }
+                };
+        }
     }
 }

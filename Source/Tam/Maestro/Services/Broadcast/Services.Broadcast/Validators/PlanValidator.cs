@@ -2,6 +2,7 @@
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Extensions;
@@ -27,6 +28,12 @@ namespace Services.Broadcast.Validators
         /// </summary>
         /// <param name="request">WeeklyBreakdownRequest request object.</param>
         void ValidateWeeklyBreakdown(WeeklyBreakdownRequest request);
+
+        /// <summary>
+        /// Validates the creative lengths.
+        /// </summary>
+        /// <param name="creativeLengths">The creative lengths.</param>
+        void ValidateCreativeLengths(List<CreativeLength> creativeLengths);
     }
 
     public class PlanValidator : IPlanValidator
@@ -38,7 +45,7 @@ namespace Services.Broadcast.Validators
         private readonly IPlanRepository _PlanRepository;
 
         const string INVALID_PLAN_NAME = "Invalid plan name";
-        const string INVALID_SPOT_LENGTH = "Invalid spot length {0}";
+        const string INVALID_SPOT_LENGTH = "Invalid spot length id {0}";
         const string INVALID_NUMBER_OF_CREATIVE_LENGTHS = "There should be at least 1 creative length selected on the plan";
         const string INVALID_CREATIVE_LENGTH_WEIGHT = "Creative length weight must be between 1 and 100";
         const string INVALID_CREATIVE_LENGTH_WEIGHT_TOTAL = "Sum Weight of all Creative Lengths must equal 100%";
@@ -112,7 +119,7 @@ namespace Services.Broadcast.Validators
                 throw new Exception(INVALID_DRAFT_ON_NEW_PLAN);
             }
 
-            _ValidateCreativeLengths(plan);
+            ValidateCreativeLengths(plan.CreativeLengths);
             _ValidateProduct(plan);
             _ValidateFlightAndHiatus(plan);
             _ValidateDayparts(plan);
@@ -126,19 +133,19 @@ namespace Services.Broadcast.Validators
             _ValidateStopWord(plan);
         }
 
-        protected void _ValidateCreativeLengths(PlanDto plan)
+        public void ValidateCreativeLengths(List<CreativeLength> creativeLengths)
         {
-            if (plan.CreativeLengths == null)
+            if (creativeLengths == null)
             {
                 //we need it for backwards compatibility
                 //will be removed once the FE is done
                 return;
             }
-            if (plan.CreativeLengths.Count < 1)
+            if (creativeLengths.Count < 1)
             {
                 throw new ApplicationException(INVALID_NUMBER_OF_CREATIVE_LENGTHS);
             }
-            plan.CreativeLengths.ForEach(creativeLength =>
+            creativeLengths.ForEach(creativeLength =>
             {
                 if (!_SpotLengthEngine.SpotLengthIdExists(creativeLength.SpotLengthId))
                 {
@@ -146,7 +153,7 @@ namespace Services.Broadcast.Validators
                 }
             });
             //each creative length must be between 1 and 100
-            plan.CreativeLengths.Where(x => x.Weight.HasValue).Select(x => x.Weight)
+            creativeLengths.Where(x => x.Weight.HasValue).Select(x => x.Weight)
                 .ToList()
                 .ForEach(weight =>
                 {
@@ -155,18 +162,18 @@ namespace Services.Broadcast.Validators
                         throw new ApplicationException(INVALID_CREATIVE_LENGTH_WEIGHT);
                     }
                 });
-            if (plan.CreativeLengths.All(x => x.Weight.HasValue))
+            if (creativeLengths.All(x => x.Weight.HasValue))
             {   //the sum of all creative lengths has to be 100 if all are set by the user
-                if (plan.CreativeLengths.Sum(x => x.Weight.Value) != 100)
+                if (creativeLengths.Sum(x => x.Weight.Value) != 100)
                 {
                     throw new ApplicationException(INVALID_CREATIVE_LENGTH_WEIGHT_TOTAL);
                 }
             }
             else
-            if (plan.CreativeLengths.Any(x => x.Weight.HasValue))
+            if (creativeLengths.Any(x => x.Weight.HasValue))
             {
                 //the sum of all creative lengths must be between 1 and 100
-                int sumOfUserSetWeight = plan.CreativeLengths.Where(x => x.Weight.HasValue).Sum(x => x.Weight.Value);
+                int sumOfUserSetWeight = creativeLengths.Where(x => x.Weight.HasValue).Sum(x => x.Weight.Value);
                 if (sumOfUserSetWeight < 1 || sumOfUserSetWeight > 100)
                 {
                     throw new ApplicationException(INVALID_CREATIVE_LENGTH_WEIGHT);

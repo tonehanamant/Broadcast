@@ -1,5 +1,6 @@
 ﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Helpers;
@@ -203,6 +204,20 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<List<VPVHForAudience>> GetVPVHForAudiencesWithBooks(VPVHRequest request)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetVPVHForAudiencesWithBooks(request));
+        }
+
+        /// <summary>
+        /// Calculates the creative length weight.
+        /// </summary>
+        /// <param name="request">Creative lengths set on the plan.</param>
+        /// <returns>List of creative lengths with calculated values</returns>
+        [HttpPost]
+        [Route("CreativeLength")]
+        public BaseResponse<List<CreativeLength>> CalculateCreativeLengthWeight(List<CreativeLength> request)
+        {
+            return _ConvertToBaseResponse(() => 
+                _ApplicationServiceFactory.GetApplicationService<IPlanService>()
+                    .CalculateCreativeLengthWeight(request));
         }
     }
 }

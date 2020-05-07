@@ -1,0 +1,14 @@
+﻿[
+  {
+    "SpotLengthId": 1,
+    "Weight": 34
+  },
+  {
+    "SpotLengthId": 2,
+    "Weight": 33
+  },
+  {
+    "SpotLengthId": 3,
+    "Weight": 33
+  }
+]

@@ -461,7 +461,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        public void getVPVHForHouseholds()
+        public void GetVPVHForHouseholds()
         {
             var vpvhRequest = new VPVHRequest
             {
@@ -631,6 +631,78 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CalculateCreativeLengthWeight_DefaultValueSet()
+        {
+            var request = new List<CreativeLength>
+            {
+                new CreativeLength{ SpotLengthId = 1, Weight = 100},
+                new CreativeLength{ SpotLengthId = 2},
+                new CreativeLength{ SpotLengthId = 3}
+            };
+
+            // Act
+            var results = _PlanService.CalculateCreativeLengthWeight(request);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CalculateCreativeLengthWeight_UnevenDistribution()
+        {
+            var request = new List<CreativeLength>
+            {
+                new CreativeLength{ SpotLengthId = 1, Weight = 2},
+                new CreativeLength{ SpotLengthId = 2},
+                new CreativeLength{ SpotLengthId = 3},
+                new CreativeLength{ SpotLengthId = 4}
+            };
+
+            // Act
+            var results = _PlanService.CalculateCreativeLengthWeight(request);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CalculateCreativeLengthWeight_UserInput1()
+        {
+            var request = new List<CreativeLength>
+            {
+                new CreativeLength{ SpotLengthId = 1, Weight = 25},
+                new CreativeLength{ SpotLengthId = 2},
+                new CreativeLength{ SpotLengthId = 3}
+            };
+
+            // Act
+            var results = _PlanService.CalculateCreativeLengthWeight(request);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
+        }
+        
+        [Test]
+        public void CalculateCreativeLengthWeight_AllValuesSet()
+        {
+            var request = new List<CreativeLength>
+            {
+                new CreativeLength{ SpotLengthId = 1, Weight = 60},
+                new CreativeLength{ SpotLengthId = 2, Weight = 30},
+                new CreativeLength{ SpotLengthId = 3, Weight = 10}
+            };
+
+            // Act
+            var result = _PlanService.CalculateCreativeLengthWeight(request);
+
+            // Assert
+            Assert.AreEqual(null, result);
+        }
+                
         private static PlanDto _GetNewPlan()
         {
             return new PlanDto
