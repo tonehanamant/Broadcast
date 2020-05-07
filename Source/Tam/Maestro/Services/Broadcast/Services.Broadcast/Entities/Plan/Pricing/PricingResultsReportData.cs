@@ -29,7 +29,8 @@ namespace Services.Broadcast.Entities.Plan.Pricing
             List<PlanPricingAllocatedSpot> allocatedSpots,
             List<StationInventoryManifest> manifests,
             Dictionary<int, Program> primaryProgramsByManifestDaypartIds,
-            List<LookupDto> markets)
+            List<LookupDto> markets,
+            IWeeklyBreakdownEngine weeklyBreakdownEngine)
         {
             ExportFileName = string.Format(FILENAME_FORMAT, plan.Id, plan.VersionNumber.Value);
             PlanId = plan.Id.ToString();
@@ -42,7 +43,8 @@ namespace Services.Broadcast.Entities.Plan.Pricing
                 allocatedSpots,
                 manifests,
                 primaryProgramsByManifestDaypartIds,
-                markets);
+                markets,
+                weeklyBreakdownEngine);
         }
 
         private void _PopulateSpotAllocations(
@@ -50,15 +52,11 @@ namespace Services.Broadcast.Entities.Plan.Pricing
             List<PlanPricingAllocatedSpot> allocatedSpots,
             List<StationInventoryManifest> manifests,
             Dictionary<int, Program> primaryProgramsByManifestDaypartIds,
-            List<LookupDto> markets)
+            List<LookupDto> markets,
+            IWeeklyBreakdownEngine weeklyBreakdownEngine)
         {
             SpotAllocations = new List<SpotsAllocation>();
-
-            var planWeekNumbers = plan.WeeklyBreakdownWeeks
-                .OrderBy(x => x.MediaWeekId)
-                .Select((item, index) => new { WeekNumber = index + 1, item.MediaWeekId })
-                .ToDictionary(x => x.MediaWeekId, x => x.WeekNumber);
-
+            var weekNumberByMediaWeek = weeklyBreakdownEngine.GetWeekNumberByMediaWeekDictionary(plan.WeeklyBreakdownWeeks);
             var manifestsById = manifests.ToDictionary(x => x.Id, x => x);
             var marketsByCode = markets.ToDictionary(x => x.Id, x => x.Display);
 
@@ -80,7 +78,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
                     TotalImpressions = allocation.TotalImpressions,
                     TotalCost = allocation.TotalCost,
                     CPM = ProposalMath.CalculateCpm(allocation.SpotCost, allocation.Impressions),
-                    PlanWeekNumber = planWeekNumbers[allocation.ContractMediaWeek.Id],
+                    PlanWeekNumber = weekNumberByMediaWeek[allocation.ContractMediaWeek.Id],
                     StartDate = allocation.InventoryMediaWeek.StartDate,
                     EndDate = allocation.InventoryMediaWeek.EndDate,
                     StartTime = DaypartTimeHelper.ConvertSecondsToFormattedTime(manifestDaypart.Daypart.StartTime, TIME_FORMAT),

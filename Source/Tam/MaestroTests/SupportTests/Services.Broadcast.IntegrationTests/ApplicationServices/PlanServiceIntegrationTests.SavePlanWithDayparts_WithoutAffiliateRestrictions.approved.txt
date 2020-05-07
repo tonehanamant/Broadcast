@@ -325,12 +325,12 @@
   "WeeklyBreakdownWeeks": [
     {
       "ActiveDays": "Tu-Su",
-      "DaypartCodeId": null,
+      "DaypartCodeId": 1,
       "EndDate": "2019-01-06T00:00:00",
       "MediaWeekId": 784,
       "NumberOfActiveDays": 6,
-      "PercentageOfWeek": null,
-      "SpotLengthId": null,
+      "PercentageOfWeek": 50.0,
+      "SpotLengthId": 1,
       "StartDate": "2018-12-31T00:00:00",
       "WeeklyAdu": 5,
       "WeeklyBudget": 20.0000,

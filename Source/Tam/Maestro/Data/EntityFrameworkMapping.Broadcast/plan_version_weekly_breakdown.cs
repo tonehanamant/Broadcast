@@ -12,20 +12,25 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class plan_version_weeks
+    public partial class plan_version_weekly_breakdown
     {
         public int id { get; set; }
         public int media_week_id { get; set; }
         public int number_active_days { get; set; }
         public string active_days_label { get; set; }
-        public double weekly_impressions { get; set; }
-        public double weekly_impressions_percentage { get; set; }
+        public double impressions { get; set; }
+        public double impressions_percentage { get; set; }
         public int plan_version_id { get; set; }
-        public double weekly_rating_points { get; set; }
-        public decimal weekly_budget { get; set; }
-        public int weekly_adu { get; set; }
+        public double rating_points { get; set; }
+        public decimal budget { get; set; }
+        public int adu { get; set; }
+        public Nullable<int> spot_length_id { get; set; }
+        public Nullable<int> daypart_default_id { get; set; }
+        public Nullable<double> percentage_of_week { get; set; }
     
+        public virtual daypart_defaults daypart_defaults { get; set; }
         public virtual media_weeks media_weeks { get; set; }
         public virtual plan_versions plan_versions { get; set; }
+        public virtual spot_lengths spot_lengths { get; set; }
     }
 }

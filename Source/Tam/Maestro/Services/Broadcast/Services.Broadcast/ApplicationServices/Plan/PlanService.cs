@@ -151,6 +151,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly IDaypartDefaultService _DaypartDefaultService;
         private readonly IDayRepository _DayRepository;
+        private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
 
         private const string _DaypartDefaultNotFoundMessage = "Unable to find daypart default";
 
@@ -166,7 +167,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , IBroadcastLockingManagerApplicationService lockingManagerApplicationService
             , IPlanPricingService planPricingService
             , IQuarterCalculationEngine quarterCalculationEngine
-            , IDaypartDefaultService daypartDefaultService)
+            , IDaypartDefaultService daypartDefaultService
+            , IWeeklyBreakdownEngine weeklyBreakdownEngine)
         {
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _PlanValidator = planValidator;
@@ -186,6 +188,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanPricingService = planPricingService;
             _QuarterCalculationEngine = quarterCalculationEngine;
             _DaypartDefaultService = daypartDefaultService;
+            _WeeklyBreakdownEngine = weeklyBreakdownEngine;
         }
 
         ///<inheritdoc/>
@@ -413,7 +416,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private void _SetWeeklyBreakdownTotals(PlanDto plan)
         {
-            plan.WeeklyBreakdownTotals.TotalActiveDays = plan.WeeklyBreakdownWeeks.Sum(w => w.NumberOfActiveDays);
+            var weeklyBreakdownByWeek = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(plan.WeeklyBreakdownWeeks);
+
+            plan.WeeklyBreakdownTotals.TotalActiveDays = weeklyBreakdownByWeek.Sum(w => w.NumberOfActiveDays);
+            
             plan.WeeklyBreakdownTotals.TotalImpressions = Math.Floor(plan.WeeklyBreakdownWeeks.Sum(w => w.WeeklyImpressions) / 1000);
             var impressionsTotalsRatio = plan.TargetImpressions.HasValue && plan.TargetImpressions.Value > 0
                 ? plan.WeeklyBreakdownTotals.TotalImpressions * 1000 //because weekly breakdown is already in thousands
@@ -718,6 +724,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 response = _CalculateCustomPlanWeeklyGoalBreakdown(request, weeks);
             }
+
+            //the order of the weeks might be incorrect, so do the order
+            response.Weeks = response.Weeks.OrderBy(x => x.StartDate).ToList();
+            _SetWeekNumber(response.Weeks);
+
             return response;
         }
 
@@ -784,32 +795,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        private void _MapWeeksToResult(WeeklyBreakdownResponseDto result, List<DisplayMediaWeek> weeks, WeeklyBreakdownRequest request, bool isCustom = false)
+        private void _MapWeeksToResult(WeeklyBreakdownResponseDto result, List<DisplayMediaWeek> weeks, WeeklyBreakdownRequest request)
         {
-            var weekNumber = 1;
             foreach (DisplayMediaWeek week in weeks)
             {
                 var activeDays = _CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, request.FlightDays, request.FlightHiatusDays, out string activeDaysString);
-                var weeklyBreakdownWeek = new WeeklyBreakdownWeek
+
+                result.Weeks.Add(new WeeklyBreakdownWeek
                 {
                     ActiveDays = activeDaysString,
                     NumberOfActiveDays = activeDays,
                     StartDate = week.WeekStartDate,
                     EndDate = week.WeekEndDate,
                     MediaWeekId = week.Id
-                };
-
-                if (!isCustom)
-                {
-                    weeklyBreakdownWeek.WeekNumber = weekNumber++;
-
-                    if (request.Weeks?.Any(w => w.StartDate == week.WeekStartDate && w.EndDate == week.WeekEndDate) == true)
-                    {
-                        weeklyBreakdownWeek.WeeklyAdu = request.Weeks.Find(w => w.StartDate == week.WeekStartDate && w.EndDate == week.WeekEndDate).WeeklyAdu;
-                    }
-                }
-
-                result.Weeks.Add(weeklyBreakdownWeek);
+                });
             }
         }
 
@@ -817,10 +816,22 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             var result = new WeeklyBreakdownResponseDto();
             _MapWeeksToResult(result, weeks, request);
+            _CopyWeeklyAduFromOldWeeks(request, result);
 
             _CalculateEvenRatingPointsImpressionsAndPercentage(request, result.Weeks);
             _CalculateWeeklyGoalBreakdownTotals(result, request.TotalImpressions, request.TotalRatings, request.TotalBudget);
             return result;
+        }
+
+        private void _CopyWeeklyAduFromOldWeeks(WeeklyBreakdownRequest request, WeeklyBreakdownResponseDto response)
+        {
+            foreach (var week in response.Weeks)
+            {
+                var oldWeek = request.Weeks?.SingleOrDefault(w => w.StartDate == week.StartDate && w.EndDate == week.EndDate);
+
+                if (oldWeek != null)
+                    week.WeeklyAdu = oldWeek.WeeklyAdu;
+            }
         }
 
         private WeeklyBreakdownResponseDto _CalculateCustomPlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request, List<DisplayMediaWeek> weeks)
@@ -888,8 +899,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 _CalculateWeeklyBudget(request, week);
             }
-            //add the missing weeks
-            _MapWeeksToResult(result, weeks.Where(x => !request.Weeks.Select(y => y.StartDate).Contains(x.WeekStartDate)).ToList(), request, true);
+
+            //add the new weeks
+            var oldWeekStartDates = request.Weeks.Select(y => y.StartDate).ToList();
+            var newWeeks = weeks.Where(x => !oldWeekStartDates.Contains(x.WeekStartDate)).ToList();
+            _MapWeeksToResult(result, newWeeks, request);
 
             //only adjust first week if redistributing
             if (result.Weeks.Where(w => w.NumberOfActiveDays > 0).Any() && redistributeCustom)
@@ -897,11 +911,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 UpdateFirstWeekAndBudgetAdjustment(request, result.Weeks);
             }
             _CalculateWeeklyGoalBreakdownTotals(result, request.TotalImpressions, request.TotalRatings, request.TotalBudget);
-
-
-            //the order of the weeks might be incorrect, so do the order
-            result.Weeks = result.Weeks.OrderBy(x => x.StartDate).ToList();
-            _SetWeekNumber(result.Weeks);
 
             return result;
         }
@@ -948,10 +957,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private void _SetWeekNumber(IEnumerable<WeeklyBreakdownWeek> weeks)
         {
-            int i = 1;
+            var weekNumberByMediaWeek = _WeeklyBreakdownEngine.GetWeekNumberByMediaWeekDictionary(weeks);
+            
             foreach (var week in weeks)
             {
-                week.WeekNumber = i++;
+                week.WeekNumber = weekNumberByMediaWeek[week.MediaWeekId];
             }
         }
 

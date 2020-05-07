@@ -54,6 +54,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IMarketCoverageRepository> _MarketCoverageRepositoryMock;
         private Mock<IStationProgramRepository> _StationProgramRepositoryMock;
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
+        private Mock<IWeeklyBreakdownEngine> _WeeklyBreakdownEngineMock;
 
         [SetUp]
         public void SetUp()
@@ -78,6 +79,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _InventoryRepositoryMock = new Mock<IInventoryRepository>();
             _StationProgramRepositoryMock = new Mock<IStationProgramRepository>();
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
+            _WeeklyBreakdownEngineMock = new Mock<IWeeklyBreakdownEngine>();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IStationProgramRepository>())
@@ -1520,6 +1522,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 SelectedPlans = new List<int> { planId }
             };
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(_GetWeeklyBreakdownByWeek());
+            
             _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(campaignId))
                 .Returns(_GetCampaignForExport(campaignId, request.SelectedPlans));
@@ -2367,7 +2373,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _SpotLengthServiceMock.Object,
                 _DaypartDefaultServiceMock.Object,
                 _SharedFolderServiceMock.Object,
-                _DateTimeEngineMock.Object);
+                _DateTimeEngineMock.Object,
+                _WeeklyBreakdownEngineMock.Object);
         }
 
         private CampaignDto _GetCampaignForExport(int campaignId, List<int> selectedPlanIds)
@@ -2502,6 +2509,43 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         WeeklyBudget = 100000.00M,
                         WeeklyRatings = 29.8892007328832
                     }
+                }
+            };
+        }
+
+        private List<WeeklyBreakdownByWeek> _GetWeeklyBreakdownByWeek()
+        {
+            return new List<WeeklyBreakdownByWeek>
+            {
+                new WeeklyBreakdownByWeek
+                {
+                    MediaWeekId = 846,
+                    Impressions = 4000000,
+                    Budget = 100000.00M
+                },
+                new WeeklyBreakdownByWeek
+                {
+                    MediaWeekId = 847,
+                    Impressions = 4000000,
+                    Budget = 100000.00M
+                },
+                new WeeklyBreakdownByWeek
+                {
+                    MediaWeekId = 848,
+                    Impressions = 4000000,
+                    Budget = 100000.00M
+                },
+                new WeeklyBreakdownByWeek
+                {
+                    MediaWeekId = 849,
+                    Impressions = 4000000,
+                    Budget = 100000.00M
+                },
+                new WeeklyBreakdownByWeek
+                {
+                    MediaWeekId = 850,
+                    Impressions = 4000000,
+                    Budget = 100000.00M,
                 }
             };
         }

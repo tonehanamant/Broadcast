@@ -147,6 +147,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IMarketCoverageRepository _MarketCoverageRepository;
         private readonly IStationProgramRepository _StationProgramRepository;
         private readonly IDateTimeEngine _DateTimeEngine;
+        private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
 
         public CampaignService(
             IDataRepositoryFactory dataRepositoryFactory,
@@ -161,7 +162,8 @@ namespace Services.Broadcast.ApplicationServices
             ISpotLengthService spotLengthService,
             IDaypartDefaultService daypartDefaultService,
             ISharedFolderService sharedFolderService,
-            IDateTimeEngine _dateTimeEngine)
+            IDateTimeEngine _dateTimeEngine,
+            IWeeklyBreakdownEngine weeklyBreakdownEngine)
         {
             _CampaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _CampaignValidator = campaignValidator;
@@ -181,6 +183,7 @@ namespace Services.Broadcast.ApplicationServices
             _MarketCoverageRepository = dataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
             _StationProgramRepository = dataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
             _DateTimeEngine = _dateTimeEngine;
+            _WeeklyBreakdownEngine = weeklyBreakdownEngine;
         }
 
         /// <inheritdoc />
@@ -547,7 +550,8 @@ namespace Services.Broadcast.ApplicationServices
                  _AudienceService.GetAudiences(),
                  _MediaMonthAndWeekAggregateCache,
                 _QuarterCalculationEngine,
-                _DateTimeEngine);
+                _DateTimeEngine,
+                _WeeklyBreakdownEngine);
         }
 
         private void _ValidateCampaignLocking(int campaignId)

@@ -197,7 +197,7 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_secondary_audiences))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_available_markets))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_blackout_markets))
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_weeks))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_weekly_breakdown))
                         .Where(x => x.id == planDto.Id)
                         .Single(p => p.id == planDto.Id, "Invalid plan id.");
                     var version = new plan_versions();
@@ -229,7 +229,7 @@ namespace Services.Broadcast.Repositories
                            .Include(p => p.plan_versions.Select(x => x.plan_version_secondary_audiences))
                            .Include(p => p.plan_versions.Select(x => x.plan_version_available_markets))
                            .Include(p => p.plan_versions.Select(x => x.plan_version_blackout_markets))
-                           .Include(p => p.plan_versions.Select(x => x.plan_version_weeks))
+                           .Include(p => p.plan_versions.Select(x => x.plan_version_weekly_breakdown))
                        .Single(x => x.id == planDto.Id, "Invalid plan id");
 
                        //there can be only 1 draft on a plan, so we're doing Single here
@@ -296,9 +296,9 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_affiliate_restrictions.Select(r => r.affiliate))))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_available_markets))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_blackout_markets))
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_weeks))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_weekly_breakdown))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_summaries))
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_weeks.Select(y => y.media_weeks)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_weekly_breakdown.Select(y => y.media_weeks)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(y => y.plan_version_pricing_parameters_inventory_source_percentages)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(y => y.plan_version_pricing_parameters_inventory_source_type_percentages)))
@@ -389,9 +389,9 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_available_markets))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_blackout_markets))
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_weeks))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_weekly_breakdown))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_summaries))
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_weeks.Select(y => y.media_weeks)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_weekly_breakdown.Select(y => y.media_weeks)))
                     .ToList();
 
                 return entitiesRaw.Select(e => _MapToDto(e, markets)).ToList();
@@ -423,9 +423,9 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_available_markets))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_blackout_markets))
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_weeks))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_weekly_breakdown))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_summaries))
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_weeks.Select(y => y.media_weeks)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_weekly_breakdown.Select(y => y.media_weeks)))
                     .ToList();
 
                 return entitiesRaw.Select(e => _MapToDto(e, markets)).ToList();
@@ -493,7 +493,7 @@ namespace Services.Broadcast.Repositories
                 CoverageGoalPercent = latestPlanVersion.coverage_goal_percent,
                 AvailableMarkets = latestPlanVersion.plan_version_available_markets.Select(e => _MapAvailableMarketDto(e, markets)).ToList(),
                 BlackoutMarkets = latestPlanVersion.plan_version_blackout_markets.Select(e => _MapBlackoutMarketDto(e, markets)).ToList(),
-                WeeklyBreakdownWeeks = latestPlanVersion.plan_version_weeks.Select(_MapWeeklyBreakdownWeeks).ToList(),
+                WeeklyBreakdownWeeks = latestPlanVersion.plan_version_weekly_breakdown.Select(_MapWeeklyBreakdownWeeks).ToList(),
                 ModifiedBy = latestPlanVersion.modified_by ?? latestPlanVersion.created_by,
                 ModifiedDate = latestPlanVersion.modified_date ?? latestPlanVersion.created_date,
                 Vpvh = latestPlanVersion.target_vpvh,
@@ -573,20 +573,23 @@ namespace Services.Broadcast.Repositories
             };
         }
 
-        private WeeklyBreakdownWeek _MapWeeklyBreakdownWeeks(plan_version_weeks arg)
+        private WeeklyBreakdownWeek _MapWeeklyBreakdownWeeks(plan_version_weekly_breakdown arg)
         {
             return new WeeklyBreakdownWeek
             {
                 ActiveDays = arg.active_days_label,
                 EndDate = arg.media_weeks.end_date,
-                WeeklyImpressions = arg.weekly_impressions,
-                WeeklyRatings = arg.weekly_rating_points,
+                WeeklyImpressions = arg.impressions,
+                WeeklyRatings = arg.rating_points,
                 NumberOfActiveDays = arg.number_active_days,
-                WeeklyImpressionsPercentage = arg.weekly_impressions_percentage,
+                WeeklyImpressionsPercentage = arg.impressions_percentage,
                 StartDate = arg.media_weeks.start_date,
                 MediaWeekId = arg.media_weeks.id,
-                WeeklyBudget = arg.weekly_budget,
-                WeeklyAdu = arg.weekly_adu
+                WeeklyBudget = arg.budget,
+                WeeklyAdu = arg.adu,
+                SpotLengthId = arg.spot_length_id,
+                DaypartCodeId = arg.daypart_default_id,
+                PercentageOfWeek = arg.percentage_of_week
             };
         }
 
@@ -664,19 +667,22 @@ namespace Services.Broadcast.Repositories
 
         private static void _MapWeeklyBreakdown(plan_versions entity, PlanDto planDto, QueryHintBroadcastContext context)
         {
-            context.plan_version_weeks.RemoveRange(entity.plan_version_weeks);
+            context.plan_version_weekly_breakdown.RemoveRange(entity.plan_version_weekly_breakdown);
             planDto.WeeklyBreakdownWeeks.ForEach(d =>
             {
-                entity.plan_version_weeks.Add(new plan_version_weeks
+                entity.plan_version_weekly_breakdown.Add(new plan_version_weekly_breakdown
                 {
                     active_days_label = d.ActiveDays,
                     number_active_days = d.NumberOfActiveDays,
-                    weekly_impressions = d.WeeklyImpressions,
-                    weekly_rating_points = d.WeeklyRatings,
-                    weekly_impressions_percentage = d.WeeklyImpressionsPercentage,
+                    impressions = d.WeeklyImpressions,
+                    rating_points = d.WeeklyRatings,
+                    impressions_percentage = d.WeeklyImpressionsPercentage,
                     media_week_id = d.MediaWeekId,
-                    weekly_budget = d.WeeklyBudget,
-                    weekly_adu = d.WeeklyAdu
+                    budget = d.WeeklyBudget,
+                    adu = d.WeeklyAdu,
+                    spot_length_id = d.SpotLengthId,
+                    daypart_default_id = d.DaypartCodeId,
+                    percentage_of_week = d.PercentageOfWeek
                 });
             });
         }

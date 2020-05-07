@@ -109,6 +109,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IStationProgramRepository _StationProgramRepository;
         private readonly IMarketRepository _MarketRepository;
         private readonly IDateTimeEngine _DateTimeEngine;
+        private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -118,7 +119,8 @@ namespace Services.Broadcast.ApplicationServices
                                   IBroadcastLockingManagerApplicationService lockingManagerApplicationService,
                                   IDaypartCache daypartCache,
                                   IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-                                  IDateTimeEngine dateTimeEngine)
+                                  IDateTimeEngine dateTimeEngine,
+                                  IWeeklyBreakdownEngine weeklyBreakdownEngine)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
@@ -136,6 +138,7 @@ namespace Services.Broadcast.ApplicationServices
             _StationProgramRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
             _MarketRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>();
             _DateTimeEngine = dateTimeEngine;
+            _WeeklyBreakdownEngine = weeklyBreakdownEngine;
         }
 
         public ReportOutput GeneratePricingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)
@@ -167,7 +170,8 @@ namespace Services.Broadcast.ApplicationServices
                 allocatedSpots,
                 manifests,
                 primaryProgramsByManifestDaypartIds,
-                markets);
+                markets,
+                _WeeklyBreakdownEngine);
         }
 
         public PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto
@@ -429,30 +433,35 @@ namespace Services.Broadcast.ApplicationServices
             var daypartsWithWeighting = plan.Dayparts.Where(x => x.WeightingGoalPercent.HasValue);
             var planPricingParameters = plan.PricingParameters;
 
-            foreach (var week in plan.WeeklyBreakdownWeeks)
+            var weeklyBreakdownByWeek = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(plan.WeeklyBreakdownWeeks);
+
+            foreach (var week in weeklyBreakdownByWeek)
             {
-                if (week.WeeklyImpressions <= 0)
+                var mediaWeekId = week.MediaWeekId;
+                var planWeekImpressions = week.Impressions;
+                var planWeekBudget = week.Budget;
+
+                if (planWeekImpressions <= 0)
                 {
-                    SkippedWeeksIds.Add(week.MediaWeekId);
+                    SkippedWeeksIds.Add(mediaWeekId);
                     continue;
                 }
-
-                var mediaWeekId = week.MediaWeekId;
+                
                 var estimatesForWeek = proprietaryEstimates.Where(x => x.MediaWeekId == mediaWeekId);
                 var estimatedImpressions = estimatesForWeek.Sum(x => x.Impressions);
                 var estimatedCost = estimatesForWeek.Sum(x => x.Cost);
 
-                var impressionGoal = week.WeeklyImpressions > estimatedImpressions ? week.WeeklyImpressions - estimatedImpressions : 0;
+                var impressionGoal = planWeekImpressions > estimatedImpressions ? planWeekImpressions - estimatedImpressions : 0;
                 if (impressionGoal == 0)
                 {   //proprietary fulfills this week goal so we're not sending the week
-                    SkippedWeeksIds.Add(week.MediaWeekId);
+                    SkippedWeeksIds.Add(mediaWeekId);
                     continue;
                 }
 
-                var weeklyBudget = week.WeeklyBudget > estimatedCost ? week.WeeklyBudget - estimatedCost : 0;
+                var weeklyBudget = planWeekBudget > estimatedCost ? planWeekBudget - estimatedCost : 0;
                 if (weeklyBudget == 0)
                 {   //proprietary fulfills this week goal so we're not sending the week
-                    SkippedWeeksIds.Add(week.MediaWeekId);
+                    SkippedWeeksIds.Add(mediaWeekId);
                     continue;
                 }
 

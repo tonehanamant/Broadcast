@@ -2418,7 +2418,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         NumberOfActiveDays = 6, ActiveDays = "Tu-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
                         WeeklyRatings = .0123,
                         WeeklyBudget = 20m,
-                        WeeklyAdu = 5
+                        WeeklyAdu = 5,
+                        SpotLengthId = 1,
+                        DaypartCodeId = 1,
+                        PercentageOfWeek = 50
                     },
                     new WeeklyBreakdownWeek
                     {

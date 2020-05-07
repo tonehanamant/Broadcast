@@ -42,6 +42,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IPlanPricingService _PlanPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
         private readonly ICampaignSummaryRepository _CampaignSummaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
         private readonly IPlanRepository _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
+        private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IWeeklyBreakdownEngine>();
         private static readonly bool WRITE_FILE_TO_DISK = false;
 
         [Test]
@@ -199,7 +200,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ISpotLengthService>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IDaypartDefaultService>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ISharedFolderService>(),
-                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IDateTimeEngine>());
+                    IntegrationTestApplicationServiceFactory.Instance.Resolve<IDateTimeEngine>(),
+                    _WeeklyBreakdownEngine);
 
                 var campaign = _GetValidCampaignForSave();
                 campaign.Id = 1;
@@ -703,7 +705,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<ISpotLengthService>(),
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IDaypartDefaultService>(),
                 sharedFolderService,
-                IntegrationTestApplicationServiceFactory.Instance.Resolve<IDateTimeEngine>());
+                IntegrationTestApplicationServiceFactory.Instance.Resolve<IDateTimeEngine>(),
+                _WeeklyBreakdownEngine);
 
             return campaignService;
         }

@@ -27,8 +27,8 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_pricing_results = new HashSet<plan_version_pricing_results>();
             this.plan_version_secondary_audiences = new HashSet<plan_version_secondary_audiences>();
             this.plan_version_summaries = new HashSet<plan_version_summaries>();
-            this.plan_version_weeks = new HashSet<plan_version_weeks>();
             this.plan_version_creative_lengths = new HashSet<plan_version_creative_lengths>();
+            this.plan_version_weekly_breakdown = new HashSet<plan_version_weekly_breakdown>();
         }
     
         public int id { get; set; }
@@ -80,8 +80,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_pricing_results> plan_version_pricing_results { get; set; }
         public virtual ICollection<plan_version_secondary_audiences> plan_version_secondary_audiences { get; set; }
         public virtual ICollection<plan_version_summaries> plan_version_summaries { get; set; }
-        public virtual ICollection<plan_version_weeks> plan_version_weeks { get; set; }
         public virtual plan plan { get; set; }
         public virtual ICollection<plan_version_creative_lengths> plan_version_creative_lengths { get; set; }
+        public virtual ICollection<plan_version_weekly_breakdown> plan_version_weekly_breakdown { get; set; }
     }
 }

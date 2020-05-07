@@ -36,7 +36,7 @@
       "WeeklyImpressions": 500.0,
       "WeeklyImpressionsPercentage": 50.0,
       "WeeklyRatings": 0.0,
-      "WeekNumber": 2
+      "WeekNumber": 1
     }
   ]
 }

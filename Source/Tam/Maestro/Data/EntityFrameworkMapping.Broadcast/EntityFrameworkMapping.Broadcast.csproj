@@ -589,7 +589,7 @@
     <Compile Include="plan_version_summary_quarters.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="plan_version_weeks.cs">
+    <Compile Include="plan_version_weekly_breakdown.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="postlog_client_scrubs.cs">

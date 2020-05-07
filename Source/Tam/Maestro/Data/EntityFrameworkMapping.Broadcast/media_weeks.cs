@@ -23,9 +23,9 @@ namespace EntityFrameworkMapping.Broadcast
             this.proposal_buy_file_detail_weeks = new HashSet<proposal_buy_file_detail_weeks>();
             this.station_inventory_manifest_weeks = new HashSet<station_inventory_manifest_weeks>();
             this.plan_version_pricing_api_result_spots = new HashSet<plan_version_pricing_api_result_spots>();
-            this.plan_version_weeks = new HashSet<plan_version_weeks>();
             this.plan_version_pricing_job_inventory_source_estimates = new HashSet<plan_version_pricing_job_inventory_source_estimates>();
             this.plan_version_pricing_api_result_spots1 = new HashSet<plan_version_pricing_api_result_spots>();
+            this.plan_version_weekly_breakdown = new HashSet<plan_version_weekly_breakdown>();
         }
     
         public int id { get; set; }
@@ -42,8 +42,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<proposal_buy_file_detail_weeks> proposal_buy_file_detail_weeks { get; set; }
         public virtual ICollection<station_inventory_manifest_weeks> station_inventory_manifest_weeks { get; set; }
         public virtual ICollection<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
-        public virtual ICollection<plan_version_weeks> plan_version_weeks { get; set; }
         public virtual ICollection<plan_version_pricing_job_inventory_source_estimates> plan_version_pricing_job_inventory_source_estimates { get; set; }
         public virtual ICollection<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots1 { get; set; }
+        public virtual ICollection<plan_version_weekly_breakdown> plan_version_weekly_breakdown { get; set; }
     }
 }

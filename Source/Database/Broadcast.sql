@@ -172,6 +172,136 @@ BEGIN
 END
 /*************************************** END BP1-4 *****************************************************/
 
+/*************************************** START BP1-55 *****************************************************/
+-- rename table plan_version_weeks to plan_version_weekly_breakdown
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('plan_version_weeks'))
+BEGIN
+	EXEC sp_rename 'dbo.plan_version_weeks', 'plan_version_weekly_breakdown';
+END
+
+-- add column spot_length_id
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = N'spot_length_id' AND OBJECT_ID = OBJECT_ID(N'plan_version_weekly_breakdown'))
+BEGIN
+	EXEC('
+		ALTER TABLE [plan_version_weekly_breakdown] ADD [spot_length_id] int NULL
+
+		ALTER TABLE [plan_version_weekly_breakdown] WITH CHECK ADD CONSTRAINT [FK_plan_version_weekly_breakdown_spot_lengths] FOREIGN KEY([spot_length_id])
+		REFERENCES [spot_lengths] ([id])
+		ALTER TABLE [plan_version_weekly_breakdown] CHECK CONSTRAINT [FK_plan_version_weekly_breakdown_spot_lengths]
+	')
+END
+
+-- add column daypart_default_id
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = N'daypart_default_id' AND OBJECT_ID = OBJECT_ID(N'plan_version_weekly_breakdown'))
+BEGIN
+	EXEC('
+		ALTER TABLE [plan_version_weekly_breakdown] ADD [daypart_default_id] int NULL
+
+		ALTER TABLE [plan_version_weekly_breakdown] WITH CHECK ADD CONSTRAINT [FK_plan_version_weekly_breakdown_daypart_defaults] FOREIGN KEY([daypart_default_id])
+		REFERENCES [daypart_defaults] ([id])
+		ALTER TABLE [plan_version_weekly_breakdown] CHECK CONSTRAINT [FK_plan_version_weekly_breakdown_daypart_defaults]
+	')
+END
+
+-- add column percentage_of_week
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = N'percentage_of_week' AND OBJECT_ID = OBJECT_ID(N'plan_version_weekly_breakdown'))
+BEGIN
+    EXEC('ALTER TABLE [plan_version_weekly_breakdown] ADD [percentage_of_week] float NULL')
+END
+
+-- rename column weekly_impressions to impressions
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'weekly_impressions' AND OBJECT_ID = OBJECT_ID(N'plan_version_weekly_breakdown'))
+BEGIN
+	EXEC sp_rename 'dbo.plan_version_weekly_breakdown.weekly_impressions', 'impressions', 'COLUMN';
+END
+
+-- rename column weekly_impressions_percentage to impressions_percentage
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'weekly_impressions_percentage' AND OBJECT_ID = OBJECT_ID(N'plan_version_weekly_breakdown'))
+BEGIN
+	EXEC sp_rename 'dbo.plan_version_weekly_breakdown.weekly_impressions_percentage', 'impressions_percentage', 'COLUMN';
+END
+
+-- rename column weekly_rating_points to rating_points
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'weekly_rating_points' AND OBJECT_ID = OBJECT_ID(N'plan_version_weekly_breakdown'))
+BEGIN
+	EXEC sp_rename 'dbo.plan_version_weekly_breakdown.weekly_rating_points', 'rating_points', 'COLUMN';
+END
+
+-- rename column weekly_budget to budget
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'weekly_budget' AND OBJECT_ID = OBJECT_ID(N'plan_version_weekly_breakdown'))
+BEGIN
+	EXEC sp_rename 'dbo.plan_version_weekly_breakdown.weekly_budget', 'budget', 'COLUMN';
+END
+
+-- rename weekly_adu to adu
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'weekly_adu' AND OBJECT_ID = OBJECT_ID(N'plan_version_weekly_breakdown'))
+BEGIN
+	EXEC sp_rename 'dbo.plan_version_weekly_breakdown.weekly_adu', 'adu', 'COLUMN';
+END
+
+-- rename primary key PK_plan_version_weeks to PK_plan_version_weekly_breakdown
+IF EXISTS (
+	SELECT 1
+	FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+	WHERE CONSTRAINT_TYPE='PRIMARY KEY' AND TABLE_SCHEMA = 'dbo' AND TABLE_NAME = 'plan_version_weekly_breakdown' and CONSTRAINT_NAME = 'PK_plan_version_weeks')
+BEGIN
+	EXEC sp_rename 'dbo.plan_version_weekly_breakdown.PK_plan_version_weeks', 'PK_plan_version_weekly_breakdown'
+END
+
+-- rename foreign key FK_plan_version_weeks_plan_versions to FK_plan_version_weekly_breakdown_plan_versions
+IF EXISTS (
+  SELECT 1 
+  FROM sys.foreign_keys 
+  WHERE object_id = OBJECT_ID(N'dbo.FK_plan_version_weeks_plan_versions')
+  AND parent_object_id = OBJECT_ID(N'dbo.plan_version_weekly_breakdown')
+  )
+BEGIN
+	EXEC sp_rename 'dbo.FK_plan_version_weeks_plan_versions', 'FK_plan_version_weekly_breakdown_plan_versions';
+END
+
+-- rename foreign key FK_plan_weeks_media_weeks to FK_plan_version_weekly_breakdown_media_weeks
+IF EXISTS (
+  SELECT 1 
+  FROM sys.foreign_keys 
+  WHERE object_id = OBJECT_ID(N'dbo.FK_plan_weeks_media_weeks')
+  AND parent_object_id = OBJECT_ID(N'dbo.plan_version_weekly_breakdown')
+  )
+BEGIN
+	EXEC sp_rename 'dbo.FK_plan_weeks_media_weeks', 'FK_plan_version_weekly_breakdown_media_weeks';
+END
+
+-- rename index PK_plan_version_weeks to PK_plan_version_weekly_breakdown
+IF EXISTS (
+	SELECT 1 
+	FROM sys.indexes 
+	WHERE name='PK_plan_version_weeks' AND object_id = OBJECT_ID('dbo.plan_version_weekly_breakdown')
+	)
+BEGIN
+	EXEC sp_rename 'dbo.plan_version_weekly_breakdown.PK_plan_version_weeks', 'PK_plan_version_weekly_breakdown' , 'INDEX';
+END
+
+-- rename index FK_plan_version_weeks_media_weeks to IX_plan_version_weekly_breakdown_media_week_id
+IF EXISTS (
+	SELECT 1 
+	FROM sys.indexes 
+	WHERE name='FK_plan_version_weeks_media_weeks' AND object_id = OBJECT_ID('dbo.plan_version_weekly_breakdown')
+	)
+BEGIN
+	EXEC sp_rename 'dbo.plan_version_weekly_breakdown.FK_plan_version_weeks_media_weeks', 'IX_plan_version_weekly_breakdown_media_week_id' , 'INDEX';
+END
+
+-- rename index IX_plan_version_weeks_plan_version_id to IX_plan_version_weekly_breakdown_plan_version_id
+IF EXISTS (
+	SELECT 1 
+	FROM sys.indexes 
+	WHERE name='IX_plan_version_weeks_plan_version_id' AND object_id = OBJECT_ID('dbo.plan_version_weekly_breakdown')
+	)
+BEGIN
+	EXEC sp_rename 'dbo.plan_version_weekly_breakdown.IX_plan_version_weeks_plan_version_id', 'IX_plan_version_weekly_breakdown_plan_version_id' , 'INDEX';
+END
+
+/*************************************** END BP1-55 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

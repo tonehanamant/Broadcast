@@ -415,6 +415,7 @@
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryQuarterCalculatorEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventorySourceSortEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\TrackingEngineUnitTests.cs" />
+    <Compile Include="UnitTests\BusinessEngines\WeeklyBreakdownEngineUnitTests.cs" />
     <Compile Include="UnitTests\Converters\RateImport\DiginetFileImporterUnitTests.cs" />
     <Compile Include="UnitTests\DaytimeCleanupServiceTests.cs" />
     <Compile Include="UnitTests\EntitiesUnitTests\ProgramLineupReportDataUnitTest.cs" />

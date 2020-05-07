@@ -54,6 +54,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
         private Mock<IDaypartDefaultRepository> _DaypartDefaultRepositoryMock;
         private Mock<ICampaignRepository> _CampaignRepositoryMock;
+        private Mock<IWeeklyBreakdownEngine> _WeeklyBreakdownEngineMock;
 
         [SetUp]
         public void SetUp()
@@ -74,6 +75,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
             _DaypartDefaultRepositoryMock = new Mock<IDaypartDefaultRepository>();
             _CampaignRepositoryMock = new Mock<ICampaignRepository>();
+            _WeeklyBreakdownEngineMock = new Mock<IWeeklyBreakdownEngine>();
 
             _DateTimeEngineMock
                 .Setup(x => x.GetCurrentMoment())
@@ -277,6 +279,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MediaWeekId = 11
                         }
                     }
+                });
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GetWeekNumberByMediaWeekDictionary(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(new Dictionary<int, int>
+                {
+                    { 7, 1 },
+                    { 9, 3 },
+                    { 8, 2 },
+                    { 10, 4 },
+                    { 11, 5 }
                 });
 
             _PlanRepositoryMock
@@ -755,6 +768,30 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 });
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(new List<WeeklyBreakdownByWeek>
+                {
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 150,
+                        Budget = 15,
+                        MediaWeekId = 100
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 250,
+                        Budget = 15m,
+                        MediaWeekId = 101
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 100,
+                        Budget = 15m,
+                        MediaWeekId = 102
+                    }
+                });
+
             _PlanPricingInventoryEngineMock
                 .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
                 .Returns(new List<PlanPricingInventoryProgram>
@@ -911,7 +948,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _BroadcastLockingManagerApplicationServiceMock.Object,
                 _DaypartCacheMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
-                _DateTimeEngineMock.Object);
+                _DateTimeEngineMock.Object,
+                _WeeklyBreakdownEngineMock.Object);
         }
 
         [Test]
@@ -1744,6 +1782,30 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var parameters = _GetPlanPricingParametersDto();
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(new List<WeeklyBreakdownByWeek>
+                {
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 50,
+                        Budget = 5,
+                        MediaWeekId = 100
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 250,
+                        Budget = 0.5m,
+                        MediaWeekId = 101
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 0,
+                        Budget = 0.5m,
+                        MediaWeekId = 102
+                    }
+                });
+
             _PlanRepositoryMock
                 .Setup(x => x.GetPlanPricingJob(It.IsAny<int>()))
                 .Returns(new PlanPricingJob());
@@ -1933,6 +1995,36 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             WeeklyBudget = 15m,
                             MediaWeekId = 103
                         }
+                    }
+                });
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(new List<WeeklyBreakdownByWeek>
+                {
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 150,
+                        Budget = 15,
+                        MediaWeekId = 100
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 250,
+                        Budget = 15m,
+                        MediaWeekId = 101
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 100,
+                        Budget = 15m,
+                        MediaWeekId = 102
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 0,
+                        Budget = 15m,
+                        MediaWeekId = 103
                     }
                 });
 
@@ -2516,6 +2608,36 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             WeeklyBudget = 15m,
                             MediaWeekId = 103
                         }
+                    }
+                });
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(new List<WeeklyBreakdownByWeek>
+                {
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 150,
+                        Budget = 15,
+                        MediaWeekId = 100
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 250,
+                        Budget = 15m,
+                        MediaWeekId = 101
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 100,
+                        Budget = 15m,
+                        MediaWeekId = 102
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 0,
+                        Budget = 15m,
+                        MediaWeekId = 103
                     }
                 });
 
@@ -3118,6 +3240,36 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             WeeklyBudget = 15m,
                             MediaWeekId = 103
                         }
+                    }
+                });
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(new List<WeeklyBreakdownByWeek>
+                {
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 150,
+                        Budget = 15,
+                        MediaWeekId = 100
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 250,
+                        Budget = 15m,
+                        MediaWeekId = 101
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 100,
+                        Budget = 15m,
+                        MediaWeekId = 102
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 0,
+                        Budget = 15m,
+                        MediaWeekId = 103
                     }
                 });
 
@@ -3724,6 +3876,36 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 });
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(new List<WeeklyBreakdownByWeek>
+                {
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 150,
+                        Budget = 15,
+                        MediaWeekId = 100
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 250,
+                        Budget = 15m,
+                        MediaWeekId = 101
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 100,
+                        Budget = 15m,
+                        MediaWeekId = 102
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 0,
+                        Budget = 15m,
+                        MediaWeekId = 103
+                    }
+                });
+
             _PlanPricingInventoryEngineMock
                 .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
                 .Returns(new List<PlanPricingInventoryProgram>
@@ -4318,6 +4500,36 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             WeeklyBudget = 15m,
                             MediaWeekId = 103
                         }
+                    }
+                });
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(new List<WeeklyBreakdownByWeek>
+                {
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 150,
+                        Budget = 15,
+                        MediaWeekId = 100
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 250,
+                        Budget = 15m,
+                        MediaWeekId = 101
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 100,
+                        Budget = 15m,
+                        MediaWeekId = 102
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 0,
+                        Budget = 15m,
+                        MediaWeekId = 103
                     }
                 });
 
@@ -4941,6 +5153,36 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             WeeklyBudget = 15m,
                             MediaWeekId = 103
                         }
+                    }
+                });
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(new List<WeeklyBreakdownByWeek>
+                {
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 150,
+                        Budget = 15,
+                        MediaWeekId = 100
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 250,
+                        Budget = 15m,
+                        MediaWeekId = 101
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 100,
+                        Budget = 15m,
+                        MediaWeekId = 102
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 0,
+                        Budget = 15m,
+                        MediaWeekId = 103
                     }
                 });
 

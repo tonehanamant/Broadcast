@@ -56,7 +56,8 @@ namespace Services.Broadcast.Entities.Campaign
             , List<PlanAudienceDisplay> orderedAudiences
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
             , IQuarterCalculationEngine quarterCalculationEngine
-            , IDateTimeEngine dateTimeEngine)
+            , IDateTimeEngine dateTimeEngine
+            , IWeeklyBreakdownEngine weeklyBreakdownEngine)
         {
             HasSecondaryAudiences = plans.Any(x => x.SecondaryAudiences.Any());
 
@@ -79,7 +80,7 @@ namespace Services.Broadcast.Entities.Campaign
             _PopulateNotes();
 
             //flow chart tab
-            projectedPlans = _ProjectPlansForQuarterExport(plans, spotLengths, daypartDefaults, mediaMonthAndWeekAggregateCache, quarterCalculationEngine);
+            projectedPlans = _ProjectPlansForQuarterExport(plans, spotLengths, daypartDefaults, mediaMonthAndWeekAggregateCache, quarterCalculationEngine, weeklyBreakdownEngine);
             _PopulateFlowChartQuarterTableData(projectedPlans, plans, mediaMonthAndWeekAggregateCache);
 
             if (exportType.Equals(CampaignExportTypeEnum.Contract))
@@ -294,11 +295,14 @@ namespace Services.Broadcast.Entities.Campaign
             , List<LookupDto> spotLengths
             , List<DaypartDefaultDto> daypartDefaults
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
-            , IQuarterCalculationEngine quarterCalculationEngine)
+            , IQuarterCalculationEngine quarterCalculationEngine
+            , IWeeklyBreakdownEngine weeklyBreakdownEngine)
         {
             List<ProjectedPlan> result = new List<ProjectedPlan>();
+
             plans.ForEach(plan =>
             {
+                var weeklyBreakdownByWeek = weeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(plan.WeeklyBreakdownWeeks);
                 List<QuarterDetailDto> planQuarters = quarterCalculationEngine.GetAllQuartersBetweenDates(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
                 var planMediaWeeks = mediaMonthAndWeekAggregateCache.GetMediaWeeksIntersecting(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
                 planQuarters.ForEach(quarter =>
@@ -309,7 +313,8 @@ namespace Services.Broadcast.Entities.Campaign
                     foreach (var week in mediaMonthAndWeekAggregateCache.GetMediaWeeksInRange(quarter.StartDate, quarter.EndDate))
                     {
                         //not all quarter weeks are in the plan, that's why we do OrDefault here
-                        var planWeek = plan.WeeklyBreakdownWeeks.Where(x => x.MediaWeekId == week.Id).SingleOrDefault();
+                        var planWeek = weeklyBreakdownByWeek.SingleOrDefault(x => x.MediaWeekId == week.Id);
+
                         if (planWeek == null)
                         {
                             result.AddRange(_AddEmptyWeekForPlanDayparts(week, plan, quarter, quarterMediaMonth, daypartDefaults, spotLengths));
@@ -317,7 +322,7 @@ namespace Services.Broadcast.Entities.Campaign
                         }
 
                         //weekly factor: the percentage of this week impressions in the total guaranteed plan impressions
-                        double weeklyFactor = planWeek.WeeklyImpressions / plan.TargetImpressions.Value;
+                        double weeklyFactor = planWeek.Impressions / plan.TargetImpressions.Value;
 
                         //dayparts that don't have set a value for weighting goal will get an even part from the remaining goal
                         //calculate remaining goal by substracting the user set goal from 100

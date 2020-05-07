@@ -320,6 +320,7 @@
     <Compile Include="ApplicationServices\CampaignAggregationJobTrigger.cs" />
     <Compile Include="ApplicationServices\CampaignAggregator.cs" />
     <Compile Include="ApplicationServices\Inventory\InventoryExportService.cs" />
+    <Compile Include="BusinessEngines\WeeklyBreakdownEngine.cs" />
     <Compile Include="Entities\CreativeLength.cs" />
     <Compile Include="ApplicationServices\StationMappingService.cs" />
     <Compile Include="ApplicationServices\NtiUniverseService.cs" />

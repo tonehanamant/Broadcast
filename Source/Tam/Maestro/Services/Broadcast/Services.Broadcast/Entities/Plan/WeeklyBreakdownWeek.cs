@@ -28,4 +28,16 @@ namespace Services.Broadcast.Entities.Plan
         public double TotalImpressionsPercentage { get; set; }
         public int TotalActiveDays { get; set; }
     }
+
+    public class WeeklyBreakdownByWeek
+    {
+        public int WeekNumber { get; set; }
+        public int MediaWeekId { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public int NumberOfActiveDays { get; set; }
+        public string ActiveDays { get; set; }
+        public double Impressions { get; set; }
+        public decimal Budget { get; set; }
+    }
 }

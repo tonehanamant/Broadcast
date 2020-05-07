@@ -1,0 +1,32 @@
+﻿[
+  {
+    "ActiveDays": "M,Tu,W,Th,F",
+    "Budget": 300.0,
+    "EndDate": "2020-05-10T00:00:00",
+    "Impressions": 2500.0,
+    "MediaWeekId": 502,
+    "NumberOfActiveDays": 5,
+    "StartDate": "2020-05-04T00:00:00",
+    "WeekNumber": 3
+  },
+  {
+    "ActiveDays": "M,Tu,W,Th",
+    "Budget": 70.0,
+    "EndDate": "2020-05-03T00:00:00",
+    "Impressions": 800.0,
+    "MediaWeekId": 501,
+    "NumberOfActiveDays": 4,
+    "StartDate": "2020-04-27T00:00:00",
+    "WeekNumber": 2
+  },
+  {
+    "ActiveDays": "M,Tu,W",
+    "Budget": 30.0,
+    "EndDate": "2020-04-26T00:00:00",
+    "Impressions": 500.0,
+    "MediaWeekId": 500,
+    "NumberOfActiveDays": 3,
+    "StartDate": "2020-04-20T00:00:00",
+    "WeekNumber": 1
+  }
+]

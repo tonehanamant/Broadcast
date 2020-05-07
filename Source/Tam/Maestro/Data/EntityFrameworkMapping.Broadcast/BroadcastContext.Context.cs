@@ -166,7 +166,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<detection_map_types> detection_map_types { get; set; }
         public virtual DbSet<detection_maps> detection_maps { get; set; }
         public virtual DbSet<detection_post_details> detection_post_details { get; set; }
-        public virtual DbSet<plan_version_weeks> plan_version_weeks { get; set; }
         public virtual DbSet<plan_version_pricing_result_spots> plan_version_pricing_result_spots { get; set; }
         public virtual DbSet<plan_version_pricing_results> plan_version_pricing_results { get; set; }
         public virtual DbSet<shared_folder_files> shared_folder_files { get; set; }
@@ -188,5 +187,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_versions> plan_versions { get; set; }
         public virtual DbSet<plan_version_creative_lengths> plan_version_creative_lengths { get; set; }
         public virtual DbSet<program_name_mappings> program_name_mappings { get; set; }
+        public virtual DbSet<plan_version_weekly_breakdown> plan_version_weekly_breakdown { get; set; }
     }
 }

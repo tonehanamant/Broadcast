@@ -350,8 +350,6 @@
         <AssociationConnector Association="BroadcastModel.FK_detection_file_detection_file_details" />
         <AssociationConnector Association="BroadcastModel.FK_detection_post_details_detection_file_details" />
         <AssociationConnector Association="BroadcastModel.FK_detection_maps_detection_map_types" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_weeks" Width="1.5" PointX="20" PointY="12.25" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_weeks_media_weeks" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_result_spots" Width="1.5" PointX="16.75" PointY="74.75" />
         <EntityTypeShape EntityType="BroadcastModel.shared_folder_files" Width="1.5" PointX="31.375" PointY="10.75" />
         <EntityTypeShape EntityType="BroadcastModel.nti_universe_audience_mappings" Width="1.5" PointX="5" PointY="52" />
@@ -413,7 +411,6 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_results_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_secondary_audiences_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_summaries_plan_versions" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_weeks_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_versions_plans" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_creative_lengths" Width="1.5" PointX="18.5" PointY="6.125" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_creative_lengths_plan_versions" />
@@ -421,6 +418,11 @@
         <EntityTypeShape EntityType="BroadcastModel.program_name_mappings" Width="1.5" PointX="28.375" PointY="17.75" />
         <AssociationConnector Association="BroadcastModel.FK_program_name_mappings_genres" />
         <AssociationConnector Association="BroadcastModel.FK_program_name_mappings_show_types" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_weekly_breakdown" Width="1.5" PointX="24.25" PointY="46" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_daypart_defaults" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_media_weeks" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_plan_versions" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_spot_lengths" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

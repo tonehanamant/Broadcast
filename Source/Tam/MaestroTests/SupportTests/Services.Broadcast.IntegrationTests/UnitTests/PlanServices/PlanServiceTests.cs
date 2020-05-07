@@ -37,6 +37,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         private readonly Mock<IPlanPricingService> _PlanPricingServiceMock;
         private readonly Mock<IQuarterCalculationEngine> _QuarterCalculationEngineMock;
         private readonly Mock<IDaypartDefaultService> _DaypartDefaultServiceMock;
+        private readonly Mock<IWeeklyBreakdownEngine> _WeeklyBreakdownEngineMock;
 
         public PlanServiceTests()
         {
@@ -53,6 +54,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             _SpotLengthEngineMock = new Mock<ISpotLengthEngine>();
             _QuarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
             _DaypartDefaultServiceMock = new Mock<IDaypartDefaultService>();
+            _WeeklyBreakdownEngineMock = new Mock<IWeeklyBreakdownEngine>();
 
             planService = new PlanService(
                 _DataRepositoryFactoryMock.Object,
@@ -67,7 +69,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 _BroadcastLockingManagerApplicationServiceMock.Object,
                 _PlanPricingServiceMock.Object,
                 _QuarterCalculationEngineMock.Object,
-                _DaypartDefaultServiceMock.Object
+                _DaypartDefaultServiceMock.Object,
+                _WeeklyBreakdownEngineMock.Object
             );
         }
 
@@ -81,6 +84,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
             _MediaMonthAndWeekAggregateCacheMock.Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(mockedListMediaWeeksByFlight);
+
+            _WeeklyBreakdownEngineMock
+            .Setup(x => x.GetWeekNumberByMediaWeekDictionary(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+            .Returns(new Dictionary<int, int>
+            {
+                { 844, 1 },
+                { 845, 2 },
+                { 846, 3 },
+                { 847, 4 },
+                { 848, 5 }
+            });
 
             //Act
             var result = planService.CalculatePlanWeeklyGoalBreakdown(request);
@@ -102,6 +116,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
             _MediaMonthAndWeekAggregateCacheMock.Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(mockedListMediaWeeksByFlight);
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GetWeekNumberByMediaWeekDictionary(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(new Dictionary<int, int>
+                {
+                    { 844, 1 },
+                    { 845, 2 },
+                    { 846, 3 },
+                    { 847, 4 },
+                    { 848, 5 }
+                });
 
             //Act
             var result = planService.CalculatePlanWeeklyGoalBreakdown(request);
@@ -125,6 +150,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             _MediaMonthAndWeekAggregateCacheMock.Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(mockedListMediaWeeksByFlight);
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GetWeekNumberByMediaWeekDictionary(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(new Dictionary<int, int>
+                {
+                    { 844, 1 },
+                    { 845, 2 },
+                    { 846, 3 },
+                    { 847, 4 },
+                    { 848, 5 }
+                });
+
             //Act
             var result = planService.CalculatePlanWeeklyGoalBreakdown(request);
 
@@ -144,6 +180,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
             _MediaMonthAndWeekAggregateCacheMock.Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(mockedListMediaWeeksByFlight);
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GetWeekNumberByMediaWeekDictionary(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(new Dictionary<int, int>
+                {
+                    { 844, 1 },
+                    { 845, 2 },
+                    { 846, 3 },
+                    { 847, 4 },
+                    { 848, 5 }
+                });
 
             //Act
             var result = planService.CalculatePlanWeeklyGoalBreakdown(request);

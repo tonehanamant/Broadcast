@@ -46,6 +46,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IPlanPricingService> _PlanPricingServiceMock;
         private Mock<IQuarterCalculationEngine> _QuarterCalculationEngineMock;
         private Mock<IDaypartDefaultService> _DaypartDefaultServiceMock;
+        private Mock<IWeeklyBreakdownEngine> _WeeklyBreakdownEngineMock;
 
         [SetUp]
         public void CreatePlanService()
@@ -67,6 +68,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _SpotLengthEngineMock = new Mock<ISpotLengthEngine>();
             _QuarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
             _DaypartDefaultServiceMock = new Mock<IDaypartDefaultService>();
+            _WeeklyBreakdownEngineMock = new Mock<IWeeklyBreakdownEngine>();
 
             // Setup common mocks
             _NsiUniverseServiceMock.Setup(n => n.GetAudienceUniverseForMediaMonth(It.IsAny<int>(), It.IsAny<int>())).Returns(1000000);
@@ -140,7 +142,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _BroadcastLockingManagerApplicationServiceMock.Object,
                 _PlanPricingServiceMock.Object,
                 _QuarterCalculationEngineMock.Object,
-                _DaypartDefaultServiceMock.Object
+                _DaypartDefaultServiceMock.Object,
+                _WeeklyBreakdownEngineMock.Object
             );
         }
 
@@ -256,6 +259,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                      planToReturn.VersionId = versionId;
                      return planToReturn;
                  });
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(new List<WeeklyBreakdownByWeek>());
 
             // Act
             var result = _PlanService.GetPlan(1, 1);
