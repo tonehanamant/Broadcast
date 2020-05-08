@@ -26,8 +26,8 @@ namespace Services.Broadcast.BusinessEngines
         /// Generates the export file.
         /// </summary>
         InventoryExportGenerationResult GenerateExportFile(List<InventoryExportLineDetail> lineDetails, List<int> weekIds,
-            List<DisplayBroadcastStation> stations, Dictionary<int, DisplayDaypart> dayparts,
-            List<DateTime> weekStartDates);
+            List<DisplayBroadcastStation> stations, List<MarketCoverage> markets,
+            Dictionary<int, DisplayDaypart> dayparts, List<DateTime> weekStartDates);
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ namespace Services.Broadcast.BusinessEngines
         public enum ColumnTypeEnum
         {
             Text,
-            Impressions,
+            Integer,
             Money
         }
 
@@ -63,13 +63,14 @@ namespace Services.Broadcast.BusinessEngines
         /// </summary>
         private readonly List<ColumnDescriptor> _BaseColumnHeaders = new List<ColumnDescriptor>
         {
-            new ColumnDescriptor {ColumnIndex = 1, Name = "Market", ColumnType = ColumnTypeEnum.Text, Width = 27.43},
-            new ColumnDescriptor {ColumnIndex = 2, Name = "Station", ColumnType = ColumnTypeEnum.Text, Width = 8.29},
-            new ColumnDescriptor {ColumnIndex = 3, Name = "Day,Time", ColumnType = ColumnTypeEnum.Text, Width = 20.57},
-            new ColumnDescriptor {ColumnIndex = 4, Name = "Program", ColumnType = ColumnTypeEnum.Text, Width = 37},
-            new ColumnDescriptor {ColumnIndex = 5, Name = ":30 Rate", ColumnType = ColumnTypeEnum.Money, IsValueCentered = true},
-            new ColumnDescriptor {ColumnIndex = 6, Name = "HH(000)", ColumnType = ColumnTypeEnum.Impressions, IsValueCentered = true},
-            new ColumnDescriptor {ColumnIndex = 7, Name = ":30 CPM", ColumnType = ColumnTypeEnum.Money, IsValueCentered = true},
+            new ColumnDescriptor {ColumnIndex = 1, Name = "Rank", ColumnType = ColumnTypeEnum.Integer, Width = 7 },
+            new ColumnDescriptor {ColumnIndex = 2, Name = "Market", ColumnType = ColumnTypeEnum.Text, Width = 27.43},
+            new ColumnDescriptor {ColumnIndex = 3, Name = "Station", ColumnType = ColumnTypeEnum.Text, Width = 8.29},
+            new ColumnDescriptor {ColumnIndex = 4, Name = "Day,Time", ColumnType = ColumnTypeEnum.Text, Width = 20.57},
+            new ColumnDescriptor {ColumnIndex = 5, Name = "Program", ColumnType = ColumnTypeEnum.Text, Width = 37},
+            new ColumnDescriptor {ColumnIndex = 6, Name = ":30 Rate", ColumnType = ColumnTypeEnum.Money, IsValueCentered = true},
+            new ColumnDescriptor {ColumnIndex = 7, Name = "HH(000)", ColumnType = ColumnTypeEnum.Integer, IsValueCentered = true},
+            new ColumnDescriptor {ColumnIndex = 8, Name = ":30 CPM", ColumnType = ColumnTypeEnum.Money, IsValueCentered = true},
         };
 
         /// <inheritdoc />
@@ -126,11 +127,11 @@ namespace Services.Broadcast.BusinessEngines
 
         /// <inheritdoc />
         public InventoryExportGenerationResult GenerateExportFile(List<InventoryExportLineDetail> lineDetails, List<int> weekIds,
-            List<DisplayBroadcastStation> stations, Dictionary<int, DisplayDaypart> dayparts,
-            List<DateTime> weekStartDates)
+            List<DisplayBroadcastStation> stations, List<MarketCoverage> markets, 
+            Dictionary<int, DisplayDaypart> dayparts, List<DateTime> weekStartDates)
         {
             var columnDescriptors = _GetInventoryWorksheetColumnDescriptors(weekStartDates);
-            var lines = _TransformToExportLines(lineDetails, weekIds, stations, dayparts);
+            var lines = _TransformToExportLines(lineDetails, weekIds, stations, markets, dayparts);
 
             var excelPackage = new ExcelPackage();
             var excelInventoryTab = excelPackage.Workbook.Worksheets.Add("Inventory");
@@ -155,7 +156,7 @@ namespace Services.Broadcast.BusinessEngines
                 {
                     switch (columnDescriptors[i].ColumnType)
                     {
-                        case ColumnTypeEnum.Impressions:
+                        case ColumnTypeEnum.Integer:
                             excelInventoryTab.Cells[rowIndex, (i + 1)].Style.Numberformat.Format = "###,###,##0";
                             break;
                         case ColumnTypeEnum.Money:
@@ -191,28 +192,43 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         protected List<List<object>> _TransformToExportLines(List<InventoryExportLineDetail> lineDetails, List<int> weekIds,
-            List<DisplayBroadcastStation> stations, Dictionary<int, DisplayDaypart> dayparts)
+            List<DisplayBroadcastStation> stations, List<MarketCoverage> markets, Dictionary<int, DisplayDaypart> dayparts)
         {
             var lineStrings = new ConcurrentBag<List<object>>();
 
             Parallel.ForEach(lineDetails, (line) =>
                 {
                     // first or default to allow handling of missing station.
-                    var station = stations.FirstOrDefault(s => s.Id.Equals(line.StationId));
+                    var station = stations.FirstOrDefault(s => s.Id.Equals(line.StationId) && s.MarketCode.HasValue);
+                    var market = station == null ? null : markets.FirstOrDefault(m => m.MarketCode.Equals(station.MarketCode));
                     var daypart = dayparts.ContainsKey(line.DaypartId) ? dayparts[line.DaypartId] : null;
 
-                    var lineColumnValues = _TransformToLine(line, weekIds, station, daypart);
+                    var lineColumnValues = _TransformToLine(line, weekIds, station, market, daypart);
                     lineStrings.Add(lineColumnValues);
                 }
             );
 
-            return lineStrings.ToList();
+            var rankListIndex = _BaseColumnHeaders.First(s => s.Name.Equals("Rank")).ColumnIndex - 1; // 0 indexed
+            var marketNameListIndex = _BaseColumnHeaders.First(s => s.Name.Equals("Market")).ColumnIndex - 1;  // 0 indexed
+            var stationCallsignsListIndex = _BaseColumnHeaders.First(s => s.Name.Equals("Station")).ColumnIndex - 1;  // 0 indexed
+            var daypartListIndex = _BaseColumnHeaders.First(s => s.Name.Equals("Day,Time")).ColumnIndex - 1;  // 0 indexed
+
+            var orderedLines = lineStrings.
+                OrderBy(s => s[rankListIndex]).
+                ThenBy(s => s[marketNameListIndex]).
+                ThenBy(s => s[stationCallsignsListIndex]).
+                ThenBy(s => s[daypartListIndex]).
+                ToList();
+
+            return orderedLines;
         }
 
-        private List<object> _TransformToLine(InventoryExportLineDetail lineDetailDetail, List<int> weekIds, DisplayBroadcastStation station, DisplayDaypart daypart)
+        private List<object> _TransformToLine(InventoryExportLineDetail lineDetailDetail, List<int> weekIds, DisplayBroadcastStation station,
+            MarketCoverage market, DisplayDaypart daypart)
         {
             const string unknownIndicator = "UNKNOWN";
-            var market = station?.OriginMarket == null ? unknownIndicator : station.OriginMarket;
+            var marketRank = market?.Rank ?? -1;
+            var marketName = market?.Market ?? unknownIndicator;
             var callLetters = string.IsNullOrEmpty(station?.LegacyCallLetters) ? unknownIndicator : station.LegacyCallLetters;
             var daypartText = daypart == null ? unknownIndicator : daypart.Preview;
             var programNames = string.Join("/", lineDetailDetail.ProgramNames);
@@ -221,7 +237,7 @@ namespace Services.Broadcast.BusinessEngines
             var formattedImpressions = Convert.ToInt32(Math.Round(lineDetailDetail.AvgHhImpressions / 1000));
             var formattedCpm = lineDetailDetail.AvgCpm;
 
-            var lineColumnValues = new List<object> { market, callLetters, daypartText, programNames, formattedRate, formattedImpressions, formattedCpm };
+            var lineColumnValues = new List<object> { marketRank, marketName, callLetters, daypartText, programNames, formattedRate, formattedImpressions, formattedCpm };
             weekIds.ForEach(weekId =>
             {
                 var foundWeek = lineDetailDetail.Weeks.FirstOrDefault(s => s.MediaWeekId.Equals(weekId));

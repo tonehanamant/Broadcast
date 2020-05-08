@@ -7,6 +7,7 @@ using IntegrationTests.Common;
 using Moq;
 using NUnit.Framework;
 using OfficeOpenXml;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
@@ -55,6 +56,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var fileService = new Mock<IFileService>();
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             var daypartCache = new Mock<IDaypartCache>();
+            var marketService = new Mock<IMarketService>();
 
             var inventoryRepository = new Mock<IInventoryRepository>();
             var inventoryExportRepository = new Mock<IInventoryExportRepository>();
@@ -138,6 +140,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             stationRepository.Setup(s => s.GetBroadcastStations())
                 .Returns(stations);
 
+            var markets = new List<MarketCoverage>();
+            marketService.Setup(s => s.GetMarketsWithLatestCoverage())
+                .Returns(markets);
+
             var daypartsDict = new Dictionary<int, DisplayDaypart>();
             daypartCache.Setup(s => s.GetDisplayDayparts(It.IsAny<List<int>>()))
                 .Returns(daypartsDict);
@@ -149,8 +155,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
             generateExportFileResult.ExportExcelPackage.Workbook.Worksheets.Add("Inventory");
             inventoryExportEngine.Setup(s => s.GenerateExportFile(It.IsAny<List<InventoryExportLineDetail>>(),
-                    It.IsAny<List<int>>(),
-                    It.IsAny<List<DisplayBroadcastStation>>(), It.IsAny<Dictionary<int, DisplayDaypart>>(), It.IsAny<List<DateTime>>()))
+                    It.IsAny<List<int>>(), It.IsAny<List<DisplayBroadcastStation>>(), It.IsAny<List<MarketCoverage>>(),
+                    It.IsAny<Dictionary<int, DisplayDaypart>>(), It.IsAny<List<DateTime>>()))
                 .Returns(generateExportFileResult);
 
             var createFilesCalled = new List<Tuple<string, string, Stream>>();
@@ -180,7 +186,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 inventoryExportEngine.Object,
                 fileService.Object,
                 spotLengthEngine.Object,
-                daypartCache.Object)
+                daypartCache.Object,
+                marketService.Object)
             {
                 UT_DateTimeNow = testCurrentTimestamp
             };
@@ -242,6 +249,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var fileService = new Mock<IFileService>();
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             var daypartCache = new Mock<IDaypartCache>();
+            var marketService = new Mock<IMarketService>();
 
             var inventoryRepository = new Mock<IInventoryRepository>();
             var inventoryExportRepository = new Mock<IInventoryExportRepository>();
@@ -323,7 +331,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 inventoryExportEngine.Object,
                 fileService.Object,
                 spotLengthEngine.Object,
-                daypartCache.Object);
+                daypartCache.Object,
+                marketService.Object);
 
             service.UT_DateTimeNow = testCurrentTimestamp;
 
@@ -355,6 +364,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 null,
                 null,
                 null,
+                null,
                 null)
             {
                 UT_DateTimeNow = testCurrentTimestamp
@@ -378,6 +388,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var fileService = new Mock<IFileService>();
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             var daypartCache = new Mock<IDaypartCache>();
+            var marketService = new Mock<IMarketService>();
 
             var inventoryRepository = new Mock<IInventoryRepository>();
             var inventoryExportRepository = new Mock<IInventoryExportRepository>();
@@ -413,7 +424,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 inventoryExportEngine.Object,
                 fileService.Object,
                 spotLengthEngine.Object,
-                daypartCache.Object);
+                daypartCache.Object,
+                marketService.Object);
 
             // *** ACT ***/
             var result = service.DownloadOpenMarketExportFile(1);

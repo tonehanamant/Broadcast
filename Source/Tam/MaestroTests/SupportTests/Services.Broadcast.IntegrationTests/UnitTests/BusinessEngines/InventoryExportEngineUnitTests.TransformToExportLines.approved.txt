@@ -1,47 +1,6 @@
 ﻿[
   [
-    "MyMar\"ket9",
-    "Station9",
-    "M-SU 1AM-2AM",
-    "ProgramNine",
-    10.0,
-    5,
-    2.0,
-    10.0,
-    10.0,
-    10.0,
-    10.0,
-    10.0
-  ],
-  [
-    "MyMar,ket8",
-    "Station8",
-    "M-SU 1AM-2AM",
-    "ProgramNine",
-    10.0,
-    5,
-    2.0,
-    10.0,
-    10.0,
-    10.0,
-    10.0,
-    10.0
-  ],
-  [
-    "MyMar,ket8",
-    "Station8",
-    "M-W,SA-SU 5AM-6AM",
-    "ProgramNine",
-    10.0,
-    5,
-    2.0,
-    10.0,
-    10.0,
-    10.0,
-    10.0,
-    10.0
-  ],
-  [
+    21,
     "MyMarket1",
     "Station1",
     "M-SU 1AM-2AM",
@@ -56,6 +15,7 @@
     10.0
   ],
   [
+    22,
     "MyMarket2",
     "Station2",
     "M-SU 1AM-2AM",
@@ -70,6 +30,7 @@
     10.0
   ],
   [
+    23,
     "MyMarket3",
     "Station3",
     "M-SU 1AM-2AM",
@@ -84,6 +45,7 @@
     10.0
   ],
   [
+    24,
     "MyMarket4",
     "Station4",
     "M-SU 1AM-2AM",
@@ -98,6 +60,7 @@
     0.0
   ],
   [
+    25,
     "MyMarket5",
     "Station5",
     "M-SU 1AM-2AM",
@@ -112,6 +75,7 @@
     10.0
   ],
   [
+    26,
     "MyMarket6",
     "Station6",
     "M-SU 1AM-2AM",
@@ -126,10 +90,56 @@
     10.0
   ],
   [
+    27,
     "MyMarket7",
     "Station7",
     "M-SU 1AM-2AM",
     "ProgramSeven/ProgramEight",
+    10.0,
+    5,
+    2.0,
+    10.0,
+    10.0,
+    10.0,
+    10.0,
+    10.0
+  ],
+  [
+    28,
+    "MyMarket8",
+    "Station8",
+    "M-SU 1AM-2AM",
+    "ProgramNine",
+    10.0,
+    5,
+    2.0,
+    10.0,
+    10.0,
+    10.0,
+    10.0,
+    10.0
+  ],
+  [
+    28,
+    "MyMarket8",
+    "Station8",
+    "M-W,SA-SU 5AM-6AM",
+    "ProgramNine",
+    10.0,
+    5,
+    2.0,
+    10.0,
+    10.0,
+    10.0,
+    10.0,
+    10.0
+  ],
+  [
+    29,
+    "MyMarket9",
+    "Station9",
+    "M-SU 1AM-2AM",
+    "ProgramNine",
     10.0,
     5,
     2.0,

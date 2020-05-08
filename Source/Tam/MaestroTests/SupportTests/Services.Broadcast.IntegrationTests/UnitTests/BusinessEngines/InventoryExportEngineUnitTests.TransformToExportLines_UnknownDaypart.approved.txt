@@ -1,5 +1,6 @@
 ﻿[
   [
+    21,
     "MyMarket1",
     "Station1",
     "M-SU 1AM-2AM",
@@ -14,6 +15,7 @@
     10.0
   ],
   [
+    22,
     "MyMarket2",
     "Station2",
     "UNKNOWN",
@@ -28,6 +30,7 @@
     10.0
   ],
   [
+    23,
     "MyMarket3",
     "Station3",
     "M-SU 1AM-2AM",

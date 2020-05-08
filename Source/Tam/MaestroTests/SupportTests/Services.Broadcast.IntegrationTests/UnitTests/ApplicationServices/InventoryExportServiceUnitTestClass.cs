@@ -1,9 +1,10 @@
-﻿using System;
-using Common.Services;
+﻿using Common.Services;
 using Common.Services.Repositories;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Inventory;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using System;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -15,14 +16,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             IInventoryExportEngine inventoryExportEngine,
             IFileService fileService,
             ISpotLengthEngine spotLengthEngine,
-            IDaypartCache daypartCache)
+            IDaypartCache daypartCache,
+            IMarketService marketService)
         : base(broadcastDataRepositoryFactory, 
             quarterCalculationEngine, 
             mediaMonthAndWeekAggregateCache,
             inventoryExportEngine,
             fileService,
             spotLengthEngine,
-            daypartCache)
+            daypartCache,
+            marketService)
         {
         }
 

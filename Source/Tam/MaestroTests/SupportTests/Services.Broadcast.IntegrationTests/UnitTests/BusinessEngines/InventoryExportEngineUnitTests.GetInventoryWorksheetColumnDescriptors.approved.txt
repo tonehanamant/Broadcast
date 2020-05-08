@@ -1,6 +1,14 @@
 ﻿[
   {
     "ColumnIndex": 1,
+    "ColumnType": 1,
+    "IsHeaderBold": false,
+    "IsValueCentered": false,
+    "Name": "Rank",
+    "Width": 7.0
+  },
+  {
+    "ColumnIndex": 2,
     "ColumnType": 0,
     "IsHeaderBold": false,
     "IsValueCentered": false,
@@ -8,7 +16,7 @@
     "Width": 27.43
   },
   {
-    "ColumnIndex": 2,
+    "ColumnIndex": 3,
     "ColumnType": 0,
     "IsHeaderBold": false,
     "IsValueCentered": false,
@@ -16,7 +24,7 @@
     "Width": 8.29
   },
   {
-    "ColumnIndex": 3,
+    "ColumnIndex": 4,
     "ColumnType": 0,
     "IsHeaderBold": false,
     "IsValueCentered": false,
@@ -24,7 +32,7 @@
     "Width": 20.57
   },
   {
-    "ColumnIndex": 4,
+    "ColumnIndex": 5,
     "ColumnType": 0,
     "IsHeaderBold": false,
     "IsValueCentered": false,
@@ -32,7 +40,7 @@
     "Width": 37.0
   },
   {
-    "ColumnIndex": 5,
+    "ColumnIndex": 6,
     "ColumnType": 2,
     "IsHeaderBold": false,
     "IsValueCentered": true,
@@ -40,7 +48,7 @@
     "Width": 10.38
   },
   {
-    "ColumnIndex": 6,
+    "ColumnIndex": 7,
     "ColumnType": 1,
     "IsHeaderBold": false,
     "IsValueCentered": true,
@@ -48,7 +56,7 @@
     "Width": 10.38
   },
   {
-    "ColumnIndex": 7,
+    "ColumnIndex": 8,
     "ColumnType": 2,
     "IsHeaderBold": false,
     "IsValueCentered": true,
@@ -56,7 +64,7 @@
     "Width": 10.38
   },
   {
-    "ColumnIndex": 8,
+    "ColumnIndex": 9,
     "ColumnType": 2,
     "IsHeaderBold": true,
     "IsValueCentered": true,
@@ -64,7 +72,7 @@
     "Width": 10.38
   },
   {
-    "ColumnIndex": 9,
+    "ColumnIndex": 10,
     "ColumnType": 2,
     "IsHeaderBold": true,
     "IsValueCentered": true,
@@ -72,7 +80,7 @@
     "Width": 10.38
   },
   {
-    "ColumnIndex": 10,
+    "ColumnIndex": 11,
     "ColumnType": 2,
     "IsHeaderBold": true,
     "IsValueCentered": true,
@@ -80,7 +88,7 @@
     "Width": 10.38
   },
   {
-    "ColumnIndex": 11,
+    "ColumnIndex": 12,
     "ColumnType": 2,
     "IsHeaderBold": true,
     "IsValueCentered": true,
@@ -88,7 +96,7 @@
     "Width": 10.38
   },
   {
-    "ColumnIndex": 12,
+    "ColumnIndex": 13,
     "ColumnType": 2,
     "IsHeaderBold": true,
     "IsValueCentered": true,

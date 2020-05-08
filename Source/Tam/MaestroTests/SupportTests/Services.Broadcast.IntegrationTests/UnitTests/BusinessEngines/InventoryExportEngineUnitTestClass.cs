@@ -20,9 +20,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
         public List<List<object>> UT_TransformToExportLines(List<InventoryExportLineDetail> lineDetails,
             List<int> weekIds,
-            List<DisplayBroadcastStation> stations, Dictionary<int, DisplayDaypart> dayparts)
+            List<DisplayBroadcastStation> stations, List<MarketCoverage> markets, Dictionary<int, DisplayDaypart> dayparts)
         {
-            return _TransformToExportLines(lineDetails, weekIds, stations, dayparts);
+            return _TransformToExportLines(lineDetails, weekIds, stations, markets, dayparts);
         }
     }
 }

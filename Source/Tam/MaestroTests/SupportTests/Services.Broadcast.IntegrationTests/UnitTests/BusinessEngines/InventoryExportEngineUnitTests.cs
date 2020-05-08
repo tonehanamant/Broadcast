@@ -106,27 +106,40 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             
             var stations = new List<DisplayBroadcastStation>
             {
-                new DisplayBroadcastStation { Id = 1, LegacyCallLetters = "Station1", OriginMarket = "MyMarket1" },
-                new DisplayBroadcastStation { Id = 2, LegacyCallLetters = "Station2", OriginMarket = "MyMarket2" },
-                new DisplayBroadcastStation { Id = 3, LegacyCallLetters = "Station3", OriginMarket = "MyMarket3" },
-                new DisplayBroadcastStation { Id = 4, LegacyCallLetters = "Station4", OriginMarket = "MyMarket4" },
-                new DisplayBroadcastStation { Id = 5, LegacyCallLetters = "Station5", OriginMarket = "MyMarket5" },
-                new DisplayBroadcastStation { Id = 6, LegacyCallLetters = "Station6", OriginMarket = "MyMarket6" },
-                new DisplayBroadcastStation { Id = 7, LegacyCallLetters = "Station7", OriginMarket = "MyMarket7" },
-                new DisplayBroadcastStation { Id = 8, LegacyCallLetters = "Station8", OriginMarket = "MyMar,ket8" },
-                new DisplayBroadcastStation { Id = 9, LegacyCallLetters = "Station9", OriginMarket = "MyMar\"ket9" },
-                new DisplayBroadcastStation { Id = 10, LegacyCallLetters = "Station10", OriginMarket = "MyMarket10" },
-                new DisplayBroadcastStation { Id = 11, LegacyCallLetters = "Station11", OriginMarket = "MyMarket11" },
+                new DisplayBroadcastStation { Id = 1, LegacyCallLetters = "Station1", MarketCode = 1},
+                new DisplayBroadcastStation { Id = 2, LegacyCallLetters = "Station2", MarketCode = 2},
+                new DisplayBroadcastStation { Id = 3, LegacyCallLetters = "Station3", MarketCode = 3},
+                new DisplayBroadcastStation { Id = 4, LegacyCallLetters = "Station4", MarketCode = 4},
+                new DisplayBroadcastStation { Id = 5, LegacyCallLetters = "Station5", MarketCode = 5},
+                new DisplayBroadcastStation { Id = 6, LegacyCallLetters = "Station6", MarketCode = 6},
+                new DisplayBroadcastStation { Id = 7, LegacyCallLetters = "Station7", MarketCode = 7},
+                new DisplayBroadcastStation { Id = 8, LegacyCallLetters = "Station8", MarketCode = 8},
+                new DisplayBroadcastStation { Id = 9, LegacyCallLetters = "Station9", MarketCode = 9},
+                new DisplayBroadcastStation { Id = 10, LegacyCallLetters = "Station10", MarketCode = 10},
+                new DisplayBroadcastStation { Id = 11, LegacyCallLetters = "Station11", MarketCode = 11},
+            };
+
+            var markets = new List<MarketCoverage>
+            {
+                new MarketCoverage { MarketCode = 1, Market = "MyMarket1", Rank = 21},
+                new MarketCoverage { MarketCode = 2, Market = "MyMarket2", Rank = 22},
+                new MarketCoverage { MarketCode = 3, Market = "MyMarket3", Rank = 23},
+                new MarketCoverage { MarketCode = 4, Market = "MyMarket4", Rank = 24},
+                new MarketCoverage { MarketCode = 5, Market = "MyMarket5", Rank = 25},
+                new MarketCoverage { MarketCode = 6, Market = "MyMarket6", Rank = 26},
+                new MarketCoverage { MarketCode = 7, Market = "MyMarket7", Rank = 27},
+                new MarketCoverage { MarketCode = 8, Market = "MyMarket8", Rank = 28},
+                new MarketCoverage { MarketCode = 9, Market = "MyMarket9", Rank = 29},
+                new MarketCoverage { MarketCode = 10, Market = "MyMarket10", Rank = 30},
+                new MarketCoverage { MarketCode = 11, Market = "MyMarket11", Rank = 31},
             };
 
             var dayparts = new Dictionary<int, DisplayDaypart>();
             dayparts[1] = new DisplayDaypart(1, 3600, 7200, true, true, true, true, true, true, true);
             dayparts[2] = new DisplayDaypart(2, 18000, 21600, true, true, true, false, false, true, true);
 
-            var result = engine.UT_TransformToExportLines(testItems, testWeekIds, stations, dayparts);
-            // order so the verify comes out the same each time
-            var orderedResult = result.OrderBy(s => $"{s[0]}|{s[1]}|{s[2]}").ToList();
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(orderedResult));
+            var result = engine.UT_TransformToExportLines(testItems, testWeekIds, stations, markets, dayparts);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         [Test]
@@ -149,22 +162,30 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             // Unknown Station
             testItems.Add(new InventoryExportLineDetail { StationId = 4, DaypartId = 1, ProgramNames = new List<string> { "ProgramTwo" }, AvgSpotCost = 10, AvgHhImpressions = 5000, AvgCpm = 2, Weeks = testWeeks });
             testItems.Add(new InventoryExportLineDetail { StationId = 3, DaypartId = 1, ProgramNames = new List<string> { "ProgramThree" }, AvgSpotCost = 10, AvgHhImpressions = 5000, AvgCpm = 2, Weeks = testWeeks });
+            // Unknown Market
+            testItems.Add(new InventoryExportLineDetail { StationId = 5, DaypartId = 1, ProgramNames = new List<string> { "ProgramThree" }, AvgSpotCost = 10, AvgHhImpressions = 5000, AvgCpm = 2, Weeks = testWeeks });
 
             var stations = new List<DisplayBroadcastStation>
             {
-                new DisplayBroadcastStation { Id = 1, LegacyCallLetters = "Station1", OriginMarket = "MyMarket1" },
-                new DisplayBroadcastStation { Id = 2, LegacyCallLetters = "Station2", OriginMarket = "MyMarket2" },
-                new DisplayBroadcastStation { Id = 3, LegacyCallLetters = "Station3", OriginMarket = "MyMarket3" }
+                new DisplayBroadcastStation { Id = 1, LegacyCallLetters = "Station1", MarketCode = 1 },
+                new DisplayBroadcastStation { Id = 2, LegacyCallLetters = "Station2", MarketCode = 2 },
+                new DisplayBroadcastStation { Id = 3, LegacyCallLetters = "Station3", MarketCode = 3 },
+                new DisplayBroadcastStation { Id = 5, LegacyCallLetters = "StationFive", MarketCode = 5 }
+            };
+
+            var markets = new List<MarketCoverage>
+            {
+                new MarketCoverage { MarketCode = 1, Market = "MyMarket1", Rank = 21},
+                new MarketCoverage { MarketCode = 2, Market = "MyMarket2", Rank = 22},
+                new MarketCoverage { MarketCode = 3, Market = "MyMarket3", Rank = 23},
             };
 
             var dayparts = new Dictionary<int, DisplayDaypart>();
             dayparts[1] = new DisplayDaypart(1, 3600, 7200, true, true, true, true, true, true, true);
             dayparts[2] = new DisplayDaypart(2, 18000, 21600, true, true, true, false, false, true, true);
 
-            var result = engine.UT_TransformToExportLines(testItems, testWeekIds, stations, dayparts);
-            // order so the verify comes out the same each time
-            var orderedResult = result.OrderBy(s => $"{s[0]}|{s[1]}|{s[2]}").ToList();
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(orderedResult));
+            var result = engine.UT_TransformToExportLines(testItems, testWeekIds, stations, markets, dayparts);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         [Test]
@@ -190,19 +211,24 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             var stations = new List<DisplayBroadcastStation>
             {
-                new DisplayBroadcastStation { Id = 1, LegacyCallLetters = "Station1", OriginMarket = "MyMarket1" },
-                new DisplayBroadcastStation { Id = 2, LegacyCallLetters = "Station2", OriginMarket = "MyMarket2" },
-                new DisplayBroadcastStation { Id = 3, LegacyCallLetters = "Station3", OriginMarket = "MyMarket3" }
+                new DisplayBroadcastStation { Id = 1, LegacyCallLetters = "Station1", MarketCode = 1 },
+                new DisplayBroadcastStation { Id = 2, LegacyCallLetters = "Station2", MarketCode = 2 },
+                new DisplayBroadcastStation { Id = 3, LegacyCallLetters = "Station3", MarketCode = 3 }
+            };
+
+            var markets = new List<MarketCoverage>
+            {
+                new MarketCoverage { MarketCode = 1, Market = "MyMarket1", Rank = 21},
+                new MarketCoverage { MarketCode = 2, Market = "MyMarket2", Rank = 22},
+                new MarketCoverage { MarketCode = 3, Market = "MyMarket3", Rank = 23},
             };
 
             var dayparts = new Dictionary<int, DisplayDaypart>();
             dayparts[1] = new DisplayDaypart(1, 3600, 7200, true, true, true, true, true, true, true);
             dayparts[2] = new DisplayDaypart(2, 18000, 21600, true, true, true, false, false, true, true);
 
-            var result = engine.UT_TransformToExportLines(testItems, testWeekIds, stations, dayparts);
-            // order so the verify comes out the same each time
-            var orderedResult = result.OrderBy(s => $"{s[0]}|{s[1]}|{s[2]}").ToList();
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(orderedResult));
+            var result = engine.UT_TransformToExportLines(testItems, testWeekIds, stations, markets, dayparts);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
     }
 }

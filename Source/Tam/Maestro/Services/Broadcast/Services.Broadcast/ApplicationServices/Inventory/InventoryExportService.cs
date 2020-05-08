@@ -60,6 +60,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         private readonly IFileService _FileService;
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IDaypartCache _DaypartCache;
+        private readonly IMarketService _MarketService;
 
         public InventoryExportService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IQuarterCalculationEngine quarterCalculationEngine,
@@ -67,7 +68,8 @@ namespace Services.Broadcast.ApplicationServices.Inventory
             IInventoryExportEngine inventoryExportEngine,
             IFileService fileService,
             ISpotLengthEngine spotLengthEngine,
-            IDaypartCache daypartCache)
+            IDaypartCache daypartCache,
+            IMarketService marketService)
         {
             _InventoryExportRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryExportRepository>();
             _InventoryExportJobRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryExportJobRepository>();
@@ -82,6 +84,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory
             _FileService = fileService;
             _SpotLengthEngine = spotLengthEngine;
             _DaypartCache = daypartCache;
+            _MarketService = marketService;
         }
 
         /// <inheritdoc />
@@ -153,12 +156,14 @@ namespace Services.Broadcast.ApplicationServices.Inventory
                 var allStations = _StationRepository.GetBroadcastStations();
                 var stations = allStations.Where(s => relevantStationIds.Contains(s.Id)).ToList();
 
+                var markets = _MarketService.GetMarketsWithLatestCoverage();
+
                 var relevantDaypartIds = calculated.Select(s => s.DaypartId).Distinct();
                 var dayparts = _DaypartCache.GetDisplayDayparts(relevantDaypartIds);
 
                 var mediaWeekStartDates = mediaWeeks.Select(w => w.StartDate).ToList();
 
-                var generatedExportResult = _InventoryExportEngine.GenerateExportFile(calculated, mediaWeekIds, stations, dayparts, mediaWeekStartDates);
+                var generatedExportResult = _InventoryExportEngine.GenerateExportFile(calculated, mediaWeekIds, stations, markets, dayparts, mediaWeekStartDates);
 
                 processingSw.Stop();
 

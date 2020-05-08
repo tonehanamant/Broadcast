@@ -102,8 +102,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Inventory
                 job = _InventoryExportJobRepository.GetJob(jobId);
 
                 // download the file 
-                var generatedFileStream = _InventoryExportService.DownloadOpenMarketExportFile(jobId);
-                using (var reader = new StreamReader(generatedFileStream.Item2))
+                var downloadedFileResult = _InventoryExportService.DownloadOpenMarketExportFile(jobId);
+                using (var reader = new StreamReader(downloadedFileResult.Item2))
                 {
                     generatedFileContent = reader.ReadToEnd();
                 }
@@ -111,11 +111,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Inventory
 
             // Verify the job is as expected
             Assert.AreEqual(BackgroundJobProcessingStatus.Succeeded, job.Status);
-            
+
             // folderPath and fileName are validated in unit tests.
             // here we will only validate the file content.
-            // the file row order can come out different so we will only verify the length.
-            Assert.AreEqual(3481, generatedFileContent.Length);
+            // since that is Excel nonsense we will just verify the length.
+            Assert.AreEqual(3545, generatedFileContent.Length);
         }
 
         /// <summary>
