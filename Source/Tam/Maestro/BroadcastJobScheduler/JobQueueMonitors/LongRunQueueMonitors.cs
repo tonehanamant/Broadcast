@@ -41,6 +41,7 @@ namespace BroadcastJobScheduler.JobQueueMonitors
                 "inventoryprogramsprocessing",
                 "scxfilegeneration",
                 "stationsupdate",
+                "inventorysummaryaggregation",
                 "default"
             };
         }
