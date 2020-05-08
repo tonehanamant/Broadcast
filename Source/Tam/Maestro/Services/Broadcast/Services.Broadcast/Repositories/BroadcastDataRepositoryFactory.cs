@@ -99,6 +99,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<ISharedFolderFilesRepository, SharedFolderFilesRepository>();
             instance.RegisterType<INtiToNsiConversionRepository, NtiToNsiConversionRepository>();
             instance.RegisterType<IDayRepository, DayRepository>();
+            instance.RegisterType<IInventoryExportJobRepository, InventoryExportJobRepository>();
 
             WasRegistered = true;
         }

@@ -173,7 +173,6 @@ namespace BroadcastComposerWeb.Controllers
                             InventorySource = "Open Market"
                         },
                         fullName, DateTime.Now);
-
                 return new BaseResponse<InventoryFileSaveResult>()
                 {
                     Data = result,

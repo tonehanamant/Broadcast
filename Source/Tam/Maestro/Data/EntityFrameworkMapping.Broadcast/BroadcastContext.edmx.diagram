@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="25447c09bb944d43b4309b552b8ef2c5" Name="Diagram1" ZoomLevel="36">
+      <Diagram DiagramId="25447c09bb944d43b4309b552b8ef2c5" Name="Diagram1" ZoomLevel="81">
         <EntityTypeShape EntityType="BroadcastModel.audience_audiences" Width="1.5" PointX="0.75" PointY="2.75" />
         <EntityTypeShape EntityType="BroadcastModel.audience" Width="1.5" PointX="2.75" PointY="0.5" />
         <EntityTypeShape EntityType="BroadcastModel.daypart" Width="1.5" PointX="13.75" PointY="2.5" />
@@ -423,6 +423,8 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_media_weeks" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_spot_lengths" />
+        <EntityTypeShape EntityType="BroadcastModel.inventory_export_jobs" Width="1.5" PointX="2.75" PointY="70.5" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_export_jobs_inventory_source" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

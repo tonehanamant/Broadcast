@@ -1,0 +1,117 @@
+﻿[
+  {
+    "AvgCpm": 2.000,
+    "AvgHhImpressions": 10000.0,
+    "AvgSpotCost": 20.0,
+    "DaypartId": 1,
+    "ProgramNames": [
+      "ProgramOne"
+    ],
+    "StationId": 1,
+    "Weeks": [
+      {
+        "Cpm": 2.000,
+        "HhImpressions": 10000.0,
+        "MediaWeekId": 1,
+        "SpotCost": 20.0
+      },
+      {
+        "Cpm": 2.000,
+        "HhImpressions": 10000.0,
+        "MediaWeekId": 2,
+        "SpotCost": 20.0
+      },
+      {
+        "Cpm": 2.000,
+        "HhImpressions": 10000.0,
+        "MediaWeekId": 3,
+        "SpotCost": 20.0
+      }
+    ]
+  },
+  {
+    "AvgCpm": 2.000,
+    "AvgHhImpressions": 10000.0,
+    "AvgSpotCost": 20.0,
+    "DaypartId": 2,
+    "ProgramNames": [
+      "ProgramTwo"
+    ],
+    "StationId": 2,
+    "Weeks": [
+      {
+        "Cpm": 2.000,
+        "HhImpressions": 10000.0,
+        "MediaWeekId": 1,
+        "SpotCost": 20.0
+      },
+      {
+        "Cpm": 2.000,
+        "HhImpressions": 10000.0,
+        "MediaWeekId": 2,
+        "SpotCost": 20.0
+      },
+      {
+        "Cpm": 2.000,
+        "HhImpressions": 10000.0,
+        "MediaWeekId": 3,
+        "SpotCost": 20.0
+      }
+    ]
+  },
+  {
+    "AvgCpm": 4.1666666666666666666666667000,
+    "AvgHhImpressions": 8000.0,
+    "AvgSpotCost": 33.333333333333333333333333333,
+    "DaypartId": 3,
+    "ProgramNames": [
+      "ProgramThree",
+      "ProgramFour"
+    ],
+    "StationId": 3,
+    "Weeks": [
+      {
+        "Cpm": 5.7142857142857142857142857000,
+        "HhImpressions": 7000.0,
+        "MediaWeekId": 1,
+        "SpotCost": 40.0
+      },
+      {
+        "Cpm": 5.7142857142857142857142857000,
+        "HhImpressions": 7000.0,
+        "MediaWeekId": 2,
+        "SpotCost": 40.0
+      },
+      {
+        "Cpm": 2.000,
+        "HhImpressions": 10000.0,
+        "MediaWeekId": 3,
+        "SpotCost": 20.0
+      }
+    ]
+  },
+  {
+    "AvgCpm": 2.000,
+    "AvgHhImpressions": 10000.0,
+    "AvgSpotCost": 20.0,
+    "DaypartId": 3,
+    "ProgramNames": [
+      "ProgramFive"
+    ],
+    "StationId": 4,
+    "Weeks": [
+      {
+        "Cpm": 2.000,
+        "HhImpressions": 10000.0,
+        "MediaWeekId": 2,
+        "SpotCost": 20.0
+      },
+      {
+        "Cpm": 2.000,
+        "HhImpressions": 10000.0,
+        "MediaWeekId": 3,
+        "SpotCost": 20.0
+      }
+    ]
+  }
+]

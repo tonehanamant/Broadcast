@@ -412,6 +412,9 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Interceptors\TemporalTableCommandTreeInterceptor.cs" />
+    <Compile Include="inventory_export_jobs.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="inventory_files.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

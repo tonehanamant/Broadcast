@@ -29,6 +29,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.scx_generation_jobs = new HashSet<scx_generation_jobs>();
             this.inventory_programs_by_source_jobs = new HashSet<inventory_programs_by_source_jobs>();
             this.plan_version_pricing_job_inventory_source_estimates = new HashSet<plan_version_pricing_job_inventory_source_estimates>();
+            this.inventory_export_jobs = new HashSet<inventory_export_jobs>();
         }
     
         public int id { get; set; }
@@ -49,5 +50,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<scx_generation_jobs> scx_generation_jobs { get; set; }
         public virtual ICollection<inventory_programs_by_source_jobs> inventory_programs_by_source_jobs { get; set; }
         public virtual ICollection<plan_version_pricing_job_inventory_source_estimates> plan_version_pricing_job_inventory_source_estimates { get; set; }
+        public virtual ICollection<inventory_export_jobs> inventory_export_jobs { get; set; }
     }
 }

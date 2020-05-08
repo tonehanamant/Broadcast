@@ -1,0 +1,17 @@
+﻿{
+  "CompletedAt": "2020-05-06T14:32:18",
+  "CreatedAt": "0001-01-01T00:00:00",
+  "CreatedBy": null,
+  "ExportGenreType": 1,
+  "FileName": null,
+  "Id": 1,
+  "InventorySourceId": 1,
+  "Quarter": {
+    "EndDate": "2020-06-28T00:00:00",
+    "Quarter": 2,
+    "StartDate": "2020-03-30T00:00:00",
+    "Year": 2020
+  },
+  "Status": 4,
+  "StatusMessage": "No inventory found to export for job 1."
+}

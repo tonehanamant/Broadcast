@@ -1,23 +1,20 @@
-﻿using System;
+﻿using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Inventory;
+using Services.Broadcast.Entities.Inventory;
+using Services.Broadcast.Entities.InventorySummary;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
-using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.ApplicationServices.Inventory;
-using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.Inventory;
-using Services.Broadcast.Entities.InventorySummary;
-using Services.Broadcast.Entities.OpenMarketInventory;
-using Services.Broadcast.Exceptions;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Web.Common;
 
 namespace BroadcastComposerWeb.Controllers.Inventory
 {
-	[RoutePrefix("api/v1/InventoryExport")]
+    [RoutePrefix("api/v1/InventoryExport")]
 	public class InventoryExportApiController : BroadcastControllerBase
 	{
 		#region constructor
@@ -77,14 +74,11 @@ namespace BroadcastComposerWeb.Controllers.Inventory
 			try
 			{
 				var fullName = _GetCurrentUserFullName();
-				var result =
-					 _ApplicationServiceFactory.GetApplicationService<IInventoryExportService>().GenerateExportForOpenMarket(
-						dto, fullName)
-						;
+				var result = _ApplicationServiceFactory.GetApplicationService<IInventoryExportService>().GenerateExportForOpenMarket(dto, fullName);
 
 				return new BaseResponse<int>()
 				{
-					Data = result,// 
+					Data = result,
 					Success = true
 				};
 			}

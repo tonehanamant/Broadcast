@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Common.Services;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using Common.Services;
 
 
 namespace Services.Broadcast.IntegrationTests
@@ -97,11 +97,38 @@ namespace Services.Broadcast.IntegrationTests
 
         public Stream GetFileStream(string folderPath, string fileName)
         {
-            throw new NotImplementedException();
+            var found = CreatedFileStreams.FirstOrDefault(s =>
+                s.Item1.Equals(folderPath) && s.Item2.Equals(fileName));
+
+            if (found == null)
+            {
+                throw new FileNotFoundException();
+            }
+            var memoryStream = new MemoryStream();
+            var writer = new StreamWriter(memoryStream);
+            writer.Write(found.Item3);
+            writer.Flush();
+
+            memoryStream.Position = 0;
+            return memoryStream;
         }
+
+        /// <summary>
+        /// The parameters passed to the create method.
+        /// </summary>
+        /// <value>
+        /// folderPath, fileName, fileContent
+        /// </value>
+        public List<Tuple<string, string, string>> CreatedFileStreams { get; } = new List<Tuple<string, string, string>>();
 
         public void Create(string folderPath, string fileName, Stream stream)
         {
+            stream.Position = 0;
+            using (var reader = new StreamReader(stream))
+            {
+                var fileContent = reader.ReadToEnd();
+                CreatedFileStreams.Add(new Tuple<string, string, string>(folderPath, fileName, fileContent));
+            }
         }
     }
 

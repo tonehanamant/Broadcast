@@ -363,6 +363,22 @@
           <Property Name="modified_date" Type="datetime" Nullable="false" />
           <Property Name="source_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="inventory_export_jobs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inventory_source_id" Type="int" Nullable="false" />
+          <Property Name="quarter_year" Type="int" Nullable="false" />
+          <Property Name="quarter_number" Type="int" Nullable="false" />
+          <Property Name="export_genre_type_id" Type="int" Nullable="false" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="status_message" Type="varchar(max)" />
+          <Property Name="file_name" Type="varchar" MaxLength="200" />
+          <Property Name="completed_at" Type="datetime" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
+        </EntityType>
         <EntityType Name="inventory_file_problems">
           <Key>
             <PropertyRef Name="id" />
@@ -1970,7 +1986,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -2088,7 +2104,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventor
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -2116,7 +2132,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="daypart_text" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="total_hours" Type="float" Nullable="false" />
         </EntityType>
-        <Association Name="FK__genre_map__maest__27114E05">
+        <Association Name="FK__genre_map__maest__37FA4C37">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2128,7 +2144,19 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__genre_map__mappe__2805723E">
+        <Association Name="FK__genre_map__maest__44B528D7">
+          <End Role="genres" Type="Self.genres" Multiplicity="1" />
+          <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genres">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="genre_mappings">
+              <PropertyRef Name="maestro_genre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__genre_map__mappe__38EE7070">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2140,7 +2168,19 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__genres__source_i__2434E15A">
+        <Association Name="FK__genre_map__mappe__45A94D10">
+          <End Role="genres" Type="Self.genres" Multiplicity="1" />
+          <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genres">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="genre_mappings">
+              <PropertyRef Name="mapped_genre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__genres__source_i__39E294A9">
           <End Role="genre_sources" Type="Self.genre_sources" Multiplicity="1" />
           <End Role="genres" Type="Self.genres" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2152,7 +2192,31 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__plan_vers__genre__6CAFA246">
+        <Association Name="FK__genres__source_i__469D7149">
+          <End Role="genre_sources" Type="Self.genre_sources" Multiplicity="1" />
+          <End Role="genres" Type="Self.genres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genre_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="genres">
+              <PropertyRef Name="source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__plan_vers__genre__47919582">
+          <End Role="genres" Type="Self.genres" Multiplicity="0..1" />
+          <End Role="plan_version_daypart_program_restrictions" Type="Self.plan_version_daypart_program_restrictions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genres">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_daypart_program_restrictions">
+              <PropertyRef Name="genre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__plan_vers__genre__6A85CC04">
           <End Role="genres" Type="Self.genres" Multiplicity="0..1" />
           <End Role="plan_version_daypart_program_restrictions" Type="Self.plan_version_daypart_program_restrictions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2447,6 +2511,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="detection_post_details">
               <PropertyRef Name="detection_file_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_export_jobs_inventory_source">
+          <End Role="inventory_sources" Type="Self.inventory_sources" Multiplicity="1" />
+          <End Role="inventory_export_jobs" Type="Self.inventory_export_jobs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_export_jobs">
+              <PropertyRef Name="inventory_source_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5396,6 +5472,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="genre_mappings" EntityType="Self.genre_mappings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="genre_sources" EntityType="Self.genre_sources" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="genres" EntityType="Self.genres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="inventory_export_jobs" EntityType="Self.inventory_export_jobs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_file_problems" EntityType="Self.inventory_file_problems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_file_proprietary_header" EntityType="Self.inventory_file_proprietary_header" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_file_ratings_job_notes" EntityType="Self.inventory_file_ratings_job_notes" Schema="dbo" store:Type="Tables" />
@@ -5563,19 +5640,35 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
     [vw_ccc_daypart].[total_hours] AS [total_hours]
     FROM [dbo].[vw_ccc_daypart] AS [vw_ccc_daypart]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__genre_map__maest__27114E05" Association="Self.FK__genre_map__maest__27114E05">
+          <AssociationSet Name="FK__genre_map__maest__37FA4C37" Association="Self.FK__genre_map__maest__37FA4C37">
             <End Role="genres" EntitySet="genres" />
             <End Role="genre_mappings" EntitySet="genre_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK__genre_map__mappe__2805723E" Association="Self.FK__genre_map__mappe__2805723E">
+          <AssociationSet Name="FK__genre_map__maest__44B528D7" Association="Self.FK__genre_map__maest__44B528D7">
             <End Role="genres" EntitySet="genres" />
             <End Role="genre_mappings" EntitySet="genre_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK__genres__source_i__2434E15A" Association="Self.FK__genres__source_i__2434E15A">
+          <AssociationSet Name="FK__genre_map__mappe__38EE7070" Association="Self.FK__genre_map__mappe__38EE7070">
+            <End Role="genres" EntitySet="genres" />
+            <End Role="genre_mappings" EntitySet="genre_mappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__genre_map__mappe__45A94D10" Association="Self.FK__genre_map__mappe__45A94D10">
+            <End Role="genres" EntitySet="genres" />
+            <End Role="genre_mappings" EntitySet="genre_mappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__genres__source_i__39E294A9" Association="Self.FK__genres__source_i__39E294A9">
             <End Role="genre_sources" EntitySet="genre_sources" />
             <End Role="genres" EntitySet="genres" />
           </AssociationSet>
-          <AssociationSet Name="FK__plan_vers__genre__6CAFA246" Association="Self.FK__plan_vers__genre__6CAFA246">
+          <AssociationSet Name="FK__genres__source_i__469D7149" Association="Self.FK__genres__source_i__469D7149">
+            <End Role="genre_sources" EntitySet="genre_sources" />
+            <End Role="genres" EntitySet="genres" />
+          </AssociationSet>
+          <AssociationSet Name="FK__plan_vers__genre__47919582" Association="Self.FK__plan_vers__genre__47919582">
+            <End Role="genres" EntitySet="genres" />
+            <End Role="plan_version_daypart_program_restrictions" EntitySet="plan_version_daypart_program_restrictions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__plan_vers__genre__6A85CC04" Association="Self.FK__plan_vers__genre__6A85CC04">
             <End Role="genres" EntitySet="genres" />
             <End Role="plan_version_daypart_program_restrictions" EntitySet="plan_version_daypart_program_restrictions" />
           </AssociationSet>
@@ -5666,6 +5759,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_detection_post_details_detection_file_details" Association="Self.FK_detection_post_details_detection_file_details">
             <End Role="detection_file_details" EntitySet="detection_file_details" />
             <End Role="detection_post_details" EntitySet="detection_post_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_export_jobs_inventory_source" Association="Self.FK_inventory_export_jobs_inventory_source">
+            <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="inventory_export_jobs" EntitySet="inventory_export_jobs" />
           </AssociationSet>
           <AssociationSet Name="FK_inventory_file_problems_inventory_files" Association="Self.FK_inventory_file_problems_inventory_files">
             <End Role="inventory_files" EntitySet="inventory_files" />
@@ -7756,6 +7853,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="plan_version_weekly_breakdown" EntitySet="plan_version_weekly_breakdown" />
           </AssociationSet>
+          <EntitySet Name="inventory_export_jobs" EntityType="BroadcastModel.inventory_export_jobs" />
+          <AssociationSet Name="FK_inventory_export_jobs_inventory_source" Association="BroadcastModel.FK_inventory_export_jobs_inventory_source">
+            <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="inventory_export_jobs" EntitySet="inventory_export_jobs" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -8642,6 +8744,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="scx_generation_jobs" Relationship="BroadcastModel.FK_scx_generation_jobs_inventory_sources" FromRole="inventory_sources" ToRole="scx_generation_jobs" />
           <NavigationProperty Name="inventory_programs_by_source_jobs" Relationship="BroadcastModel.FK_inventory_programs_by_source_jobs_inventory_source" FromRole="inventory_sources" ToRole="inventory_programs_by_source_jobs" />
           <NavigationProperty Name="plan_version_pricing_job_inventory_source_estimates" Relationship="BroadcastModel.FK_plan_version_pricing_job_inventory_source_estimates_inventory_sources" FromRole="inventory_sources" ToRole="plan_version_pricing_job_inventory_source_estimates" />
+          <NavigationProperty Name="inventory_export_jobs" Relationship="BroadcastModel.FK_inventory_export_jobs_inventory_source" FromRole="inventory_sources" ToRole="inventory_export_jobs" />
         </EntityType>
         <EntityType Name="station_inventory_group">
           <Key>
@@ -12529,7 +12632,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="market_count" Type="Int32" Nullable="false" />
           <Property Name="percentage_of_buy" Type="Double" Nullable="false" />
           <NavigationProperty Name="plan_version_pricing_results" Relationship="BroadcastModel.FK_plan_version_pricing_result_spots_plan_version_pricing_results" FromRole="plan_version_pricing_result_spots" ToRole="plan_version_pricing_results" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="plan_version_pricing_results">
           <Key>
             <PropertyRef Name="id" />
@@ -13561,6 +13664,35 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_version_weekly_breakdown">
               <PropertyRef Name="spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="inventory_export_jobs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventory_source_id" Type="Int32" Nullable="false" />
+          <Property Name="quarter_year" Type="Int32" Nullable="false" />
+          <Property Name="quarter_number" Type="Int32" Nullable="false" />
+          <Property Name="export_genre_type_id" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="status_message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="file_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="completed_at" Type="DateTime" Precision="3" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_inventory_export_jobs_inventory_source" FromRole="inventory_export_jobs" ToRole="inventory_sources" />
+        </EntityType>
+        <Association Name="FK_inventory_export_jobs_inventory_source">
+          <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_export_jobs" Role="inventory_export_jobs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_export_jobs">
+              <PropertyRef Name="inventory_source_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -15806,6 +15938,23 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="genre_id" ColumnName="genre_id" />
                 <ScalarProperty Name="official_program_name" ColumnName="official_program_name" />
                 <ScalarProperty Name="inventory_program_name" ColumnName="inventory_program_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventory_export_jobs">
+            <EntityTypeMapping TypeName="BroadcastModel.inventory_export_jobs">
+              <MappingFragment StoreEntitySet="inventory_export_jobs">
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="completed_at" ColumnName="completed_at" />
+                <ScalarProperty Name="file_name" ColumnName="file_name" />
+                <ScalarProperty Name="status_message" ColumnName="status_message" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="export_genre_type_id" ColumnName="export_genre_type_id" />
+                <ScalarProperty Name="quarter_number" ColumnName="quarter_number" />
+                <ScalarProperty Name="quarter_year" ColumnName="quarter_year" />
+                <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

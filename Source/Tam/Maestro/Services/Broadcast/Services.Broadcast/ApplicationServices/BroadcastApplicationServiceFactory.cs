@@ -193,6 +193,7 @@ namespace Services.Broadcast.ApplicationServices
 
 			unityContainer.RegisterType<IInventorySummaryService, InventorySummaryService>();
             unityContainer.RegisterType<IInventoryGapCalculationEngine, InventoryGapCalculationEngine>();
+            unityContainer.RegisterType<IInventoryExportEngine, InventoryExportEngine>();
 
             unityContainer.RegisterType<ICampaignService, CampaignService>();
             unityContainer.RegisterType<ICampaignValidator, CampaignValidator>();

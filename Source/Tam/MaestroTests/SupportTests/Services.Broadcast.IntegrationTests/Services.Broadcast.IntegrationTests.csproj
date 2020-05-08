@@ -391,6 +391,8 @@
     <Compile Include="ApplicationServices\ProgramScrubbingEngineTests.cs" />
     <Compile Include="Stubs\TrafficApiCacheStub.cs" />
     <Compile Include="Stubs\TrafficApiClientStub.cs" />
+    <Compile Include="UnitTests\ApplicationServices\InventoryExportServiceUnitTests.cs" />
+    <Compile Include="UnitTests\ApplicationServices\InventoryExportServiceUnitTestClass.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryProgramsProcessingServiceTestClass.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryProgramsProcessingServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryServiceUnitTestClass.cs" />
@@ -400,6 +402,8 @@
     <Compile Include="UnitTests\ApplicationServices\SharedFolderServiceUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\ImpressionsCalculationEngineUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\StationServiceUnitTests.cs" />
+    <Compile Include="UnitTests\BusinessEngines\InventoryExportEngineUnitTestClass.cs" />
+    <Compile Include="UnitTests\BusinessEngines\InventoryExportEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsBySourceUnprocessedProcessorTestClass.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsBySourceUnprocessedProcessorUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsResultImportUnitTests.cs" />

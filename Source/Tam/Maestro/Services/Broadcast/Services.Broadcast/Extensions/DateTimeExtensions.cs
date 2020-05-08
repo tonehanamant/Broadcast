@@ -32,9 +32,17 @@ namespace Services.Broadcast.Extensions
             return date.AddDays(-differenceToMonday);
         }
 
+        private const string FILE_DATE_FORMAT = "yyyyMMdd";
+        private const string FILE_TIME_FORMAT = "HHmmss";
+
         public static string ToFileDateFormat(this DateTime date)
         {
-            return date.ToString("MMddyyyyy");
+            return date.ToString(FILE_DATE_FORMAT);
+        }
+
+        public static string ToFileDateTimeFormat(this DateTime date)
+        {
+            return date.ToString($"{FILE_DATE_FORMAT}_{FILE_TIME_FORMAT}");
         }
 
         public static BroadcastDayOfWeek GetBroadcastDayOfWeek(this DateTime date)

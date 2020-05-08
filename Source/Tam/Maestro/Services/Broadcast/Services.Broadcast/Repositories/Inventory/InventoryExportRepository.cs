@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Common.Services.Repositories;
+﻿using Common.Services.Repositories;
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
+using System.Collections.Generic;
+using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 
 namespace Services.Broadcast.Repositories.Inventory
 {
-	public interface IInventoryExportRepository : IDataRepository
+    public interface IInventoryExportRepository : IDataRepository
 	{
 		List<QuarterDto> GetInventoryQuartersForSource(int inventorySourceId);
 	}
@@ -21,7 +21,6 @@ namespace Services.Broadcast.Repositories.Inventory
 			: base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient)
 		{
 		}
-
 
 		public List<QuarterDto> GetInventoryQuartersForSource(int inventorySourceId)
 		{

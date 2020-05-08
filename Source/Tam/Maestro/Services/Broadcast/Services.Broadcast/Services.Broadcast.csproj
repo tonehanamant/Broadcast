@@ -319,8 +319,9 @@
     <Compile Include="ApplicationServices\BroadcastLockingManagerApplicationService.cs" />
     <Compile Include="ApplicationServices\CampaignAggregationJobTrigger.cs" />
     <Compile Include="ApplicationServices\CampaignAggregator.cs" />
-    <Compile Include="ApplicationServices\Inventory\InventoryExportService.cs" />
     <Compile Include="BusinessEngines\WeeklyBreakdownEngine.cs" />
+    <Compile Include="ApplicationServices\Inventory\InventoryExportService.cs" />
+    <Compile Include="BusinessEngines\InventoryExportEngine.cs" />
     <Compile Include="Entities\CreativeLength.cs" />
     <Compile Include="ApplicationServices\StationMappingService.cs" />
     <Compile Include="ApplicationServices\NtiUniverseService.cs" />
@@ -395,7 +396,12 @@
     <Compile Include="Entities\Enums\PlanBuyingStatusEnum.cs" />
     <Compile Include="Entities\Enums\PlanBuyingTimeFramesEnum.cs" />
     <Compile Include="Entities\Enums\StationMapSetNamesEnum.cs" />
+    <Compile Include="Entities\Inventory\InventoryExportGenerationResult.cs" />
+    <Compile Include="Entities\Inventory\InventoryExportLineWeekDetail.cs" />
     <Compile Include="Entities\Inventory\InventoryExportRequestDto.cs" />
+    <Compile Include="Entities\Inventory\InventoryExportDto.cs" />
+    <Compile Include="Entities\Inventory\InventoryExportLineDetail.cs" />
+    <Compile Include="Entities\Inventory\InventoryExportJobDto.cs" />
     <Compile Include="Entities\InventoryPlannerDetails.cs" />
     <Compile Include="Entities\DTO\CurrentQuartersDto.cs" />
     <Compile Include="Entities\DetectionFileDetail.cs" />
@@ -553,6 +559,7 @@
     <Compile Include="Repositories\DetectionPostDetailsRepository.cs" />
     <Compile Include="Repositories\DetectionRepository.cs" />
     <Compile Include="Repositories\DetectionTestDataGeneratorRepository.cs" />
+    <Compile Include="Repositories\Inventory\InventoryExportJobRepository.cs" />
     <Compile Include="Repositories\InventoryProgramsByFileJobsRepository.cs" />
     <Compile Include="Repositories\InventoryProgramsBySourceJobsRepository.cs" />
     <Compile Include="Repositories\InventoryProgramsJobsRepositoryBase.cs" />

@@ -302,6 +302,34 @@ END
 
 /*************************************** END BP1-55 *****************************************************/
 
+/*************************************** START BP1-19 *****************************************************/
+GO
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id =OBJECT_ID('inventory_export_jobs'))
+BEGIN
+    CREATE TABLE [inventory_export_jobs](
+        [id] INT IDENTITY(1,1) NOT NULL,
+		[inventory_source_id] INT NOT NULL , -- FK TODO
+		[quarter_year] INT NOT NULL,
+		[quarter_number] INT NOT NULL,
+		[export_genre_type_id] INT NOT NULL,
+		[status] INT NOT NULL,
+		[status_message] VARCHAR(MAX) NULL,
+		[file_name] VARCHAR(200) NULL,
+		[completed_at] DATETIME NULL,
+		[created_at] DATETIME NOT NULL,
+		[created_by] VARCHAR(63) NOT NULL
+         CONSTRAINT [PK_inventory_export_jobs] PRIMARY KEY CLUSTERED
+    (
+        [id] ASC
+    )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+    ) ON [PRIMARY]
+ 
+    ALTER TABLE [dbo].[inventory_export_jobs] WITH CHECK ADD CONSTRAINT [FK_inventory_export_jobs_inventory_source] FOREIGN KEY ([inventory_source_id])
+    REFERENCES [dbo].[inventory_sources] (id)     
+END
+GO
+/*************************************** END BP1-19 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

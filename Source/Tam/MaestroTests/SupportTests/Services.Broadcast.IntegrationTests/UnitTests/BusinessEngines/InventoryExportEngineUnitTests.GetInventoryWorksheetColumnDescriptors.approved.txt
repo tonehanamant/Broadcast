@@ -1,0 +1,98 @@
+﻿[
+  {
+    "ColumnIndex": 1,
+    "ColumnType": 0,
+    "IsHeaderBold": false,
+    "IsValueCentered": false,
+    "Name": "Market",
+    "Width": 27.43
+  },
+  {
+    "ColumnIndex": 2,
+    "ColumnType": 0,
+    "IsHeaderBold": false,
+    "IsValueCentered": false,
+    "Name": "Station",
+    "Width": 8.29
+  },
+  {
+    "ColumnIndex": 3,
+    "ColumnType": 0,
+    "IsHeaderBold": false,
+    "IsValueCentered": false,
+    "Name": "Day,Time",
+    "Width": 20.57
+  },
+  {
+    "ColumnIndex": 4,
+    "ColumnType": 0,
+    "IsHeaderBold": false,
+    "IsValueCentered": false,
+    "Name": "Program",
+    "Width": 37.0
+  },
+  {
+    "ColumnIndex": 5,
+    "ColumnType": 2,
+    "IsHeaderBold": false,
+    "IsValueCentered": true,
+    "Name": ":30 Rate",
+    "Width": 10.38
+  },
+  {
+    "ColumnIndex": 6,
+    "ColumnType": 1,
+    "IsHeaderBold": false,
+    "IsValueCentered": true,
+    "Name": "HH(000)",
+    "Width": 10.38
+  },
+  {
+    "ColumnIndex": 7,
+    "ColumnType": 2,
+    "IsHeaderBold": false,
+    "IsValueCentered": true,
+    "Name": ":30 CPM",
+    "Width": 10.38
+  },
+  {
+    "ColumnIndex": 8,
+    "ColumnType": 2,
+    "IsHeaderBold": true,
+    "IsValueCentered": true,
+    "Name": "04/06",
+    "Width": 10.38
+  },
+  {
+    "ColumnIndex": 9,
+    "ColumnType": 2,
+    "IsHeaderBold": true,
+    "IsValueCentered": true,
+    "Name": "04/13",
+    "Width": 10.38
+  },
+  {
+    "ColumnIndex": 10,
+    "ColumnType": 2,
+    "IsHeaderBold": true,
+    "IsValueCentered": true,
+    "Name": "04/20",
+    "Width": 10.38
+  },
+  {
+    "ColumnIndex": 11,
+    "ColumnType": 2,
+    "IsHeaderBold": true,
+    "IsValueCentered": true,
+    "Name": "04/27",
+    "Width": 10.38
+  },
+  {
+    "ColumnIndex": 12,
+    "ColumnType": 2,
+    "IsHeaderBold": true,
+    "IsValueCentered": true,
+    "Name": "05/04",
+    "Width": 10.38
+  }
+]
