@@ -49,7 +49,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
 
             var savedCalls = new List<List<StationInventoryManifestDaypartProgram>>();
             _InventoryRepo.Setup(s =>
-                    s.UpdateInventoryPrograms(It.IsAny<List<StationInventoryManifestDaypartProgram>>(),
+                    s.CreateInventoryPrograms(It.IsAny<List<StationInventoryManifestDaypartProgram>>(),
                         It.IsAny<DateTime>()))
                 .Callback<List<StationInventoryManifestDaypartProgram>, DateTime>((s, d) => savedCalls.Add(s));
 
@@ -163,7 +163,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
 
             var savedCalls = new List<List<StationInventoryManifestDaypartProgram>>();
             _InventoryRepo.Setup(s =>
-                    s.UpdateInventoryPrograms(It.IsAny<List<StationInventoryManifestDaypartProgram>>(),
+                    s.CreateInventoryPrograms(It.IsAny<List<StationInventoryManifestDaypartProgram>>(),
                         It.IsAny<DateTime>()))
                 .Callback<List<StationInventoryManifestDaypartProgram>, DateTime>((s, d) => savedCalls.Add(s));
 
@@ -278,7 +278,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
 
             var savedCalls = new List<List<StationInventoryManifestDaypartProgram>>();
             _InventoryRepo.Setup(s =>
-                    s.UpdateInventoryPrograms(It.IsAny<List<StationInventoryManifestDaypartProgram>>(),
+                    s.CreateInventoryPrograms(It.IsAny<List<StationInventoryManifestDaypartProgram>>(),
                         It.IsAny<DateTime>()))
                 .Callback<List<StationInventoryManifestDaypartProgram>, DateTime>((s, d) => savedCalls.Add(s));
 

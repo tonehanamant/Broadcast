@@ -302,7 +302,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                         if (programs.Any())
                         {
                             programSaveChunks.ForEach(chunk =>
-                                _InventoryRepository.UpdateInventoryPrograms(chunk, _GetCurrentDateTime()));
+                                _InventoryRepository.CreateInventoryPrograms(chunk, _GetCurrentDateTime()));
                         }
 
                         scope.Complete();
@@ -820,7 +820,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                         .ToList();
                     programSaveChunksCount = programSaveChunks.Count;
 
-                    programSaveChunks.ForEach(chunk => _InventoryRepository.UpdateInventoryPrograms(chunk, DateTime.Now));
+                    programSaveChunks.ForEach(chunk => _InventoryRepository.CreateInventoryPrograms(chunk, DateTime.Now));
                 }
                 else
                 {

@@ -61,11 +61,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                     It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback<List<int>, DateTime, DateTime>((a, b, c) => deleteProgramsCalls.Add(new Tuple<List<int>, DateTime, DateTime>(a, b, c)));
 
-            var updateProgramsCalls = new List<Tuple<List<StationInventoryManifestDaypartProgram>, DateTime>>();
-            _InventoryRepo.Setup(r => r.UpdateInventoryPrograms(
+            var createProgramsCalls = new List<Tuple<List<StationInventoryManifestDaypartProgram>, DateTime>>();
+            _InventoryRepo.Setup(r => r.CreateInventoryPrograms(
                     It.IsAny<List<StationInventoryManifestDaypartProgram>>(), It.IsAny<DateTime>()))
                 .Callback<List<StationInventoryManifestDaypartProgram>, DateTime>((a, b) =>
-                    updateProgramsCalls.Add(new Tuple<List<StationInventoryManifestDaypartProgram>, DateTime>(a, b)));
+                    createProgramsCalls.Add(new Tuple<List<StationInventoryManifestDaypartProgram>, DateTime>(a, b)));
 
             _InventoryFileRepo.Setup(r => r.GetInventoryFileById(It.IsAny<int>()))
                 .Returns(new InventoryFile
@@ -225,11 +225,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                     It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback<List<int>, DateTime, DateTime>((a, b, c) => deleteProgramsCalls.Add(new Tuple<List<int>, DateTime, DateTime>(a, b, c)));
 
-            var updateProgramsCalls = new List<Tuple<List<StationInventoryManifestDaypartProgram>, DateTime>>();
-            _InventoryRepo.Setup(r => r.UpdateInventoryPrograms(
+            var createProgramsCalls = new List<Tuple<List<StationInventoryManifestDaypartProgram>, DateTime>>();
+            _InventoryRepo.Setup(r => r.CreateInventoryPrograms(
                     It.IsAny<List<StationInventoryManifestDaypartProgram>>(), It.IsAny<DateTime>()))
                 .Callback<List<StationInventoryManifestDaypartProgram>, DateTime>((a, b) =>
-                    updateProgramsCalls.Add(new Tuple<List<StationInventoryManifestDaypartProgram>, DateTime>(a, b)));
+                    createProgramsCalls.Add(new Tuple<List<StationInventoryManifestDaypartProgram>, DateTime>(a, b)));
 
             _InventoryFileRepo.Setup(r => r.GetInventoryFileById(It.IsAny<int>()))
                 .Returns(new InventoryFile
@@ -642,11 +642,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                     It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback<List<int>, DateTime, DateTime>((a, b, c) => deleteProgramsCalls.Add(new Tuple<List<int>, DateTime, DateTime>(a, b, c)));
 
-            var updateProgramsCalls = new List<Tuple<List<StationInventoryManifestDaypartProgram>, DateTime>>();
-            _InventoryRepo.Setup(r => r.UpdateInventoryPrograms(
+            var createProgramsCalls = new List<Tuple<List<StationInventoryManifestDaypartProgram>, DateTime>>();
+            _InventoryRepo.Setup(r => r.CreateInventoryPrograms(
                     It.IsAny<List<StationInventoryManifestDaypartProgram>>(), It.IsAny<DateTime>()))
                 .Callback<List<StationInventoryManifestDaypartProgram>, DateTime>((a, b) =>
-                    updateProgramsCalls.Add(new Tuple<List<StationInventoryManifestDaypartProgram>, DateTime>(a, b)));
+                    createProgramsCalls.Add(new Tuple<List<StationInventoryManifestDaypartProgram>, DateTime>(a, b)));
 
             _InventoryFileRepo.Setup(r => r.GetInventoryFileById(It.IsAny<int>()))
                 .Returns(new InventoryFile
@@ -792,11 +792,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                     It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback<List<int>, DateTime, DateTime>((a, b, c) => deleteProgramsCalls.Add(new Tuple<List<int>, DateTime, DateTime>(a, b, c)));
 
-            var updateProgramsCalls = new List<Tuple<List<StationInventoryManifestDaypartProgram>, DateTime>>();
-            _InventoryRepo.Setup(r => r.UpdateInventoryPrograms(
+            var createProgramsCalls = new List<Tuple<List<StationInventoryManifestDaypartProgram>, DateTime>>();
+            _InventoryRepo.Setup(r => r.CreateInventoryPrograms(
                     It.IsAny<List<StationInventoryManifestDaypartProgram>>(), It.IsAny<DateTime>()))
                 .Callback<List<StationInventoryManifestDaypartProgram>, DateTime>((a, b) =>
-                    updateProgramsCalls.Add(new Tuple<List<StationInventoryManifestDaypartProgram>, DateTime>(a, b)));
+                    createProgramsCalls.Add(new Tuple<List<StationInventoryManifestDaypartProgram>, DateTime>(a, b)));
 
             _InventoryFileRepo.Setup(r => r.GetInventoryFileById(It.IsAny<int>()))
                 .Returns(new InventoryFile
@@ -972,10 +972,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                     It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback(() => deleteInventoryProgramsFromManifestDaypartsCalled++);
 
-            var updateInventoryProgramsCalls = new List<List<StationInventoryManifestDaypartProgram>>();
-            _InventoryRepo.Setup(r => r.UpdateInventoryPrograms(
+            var createInventoryProgramsCalls = new List<List<StationInventoryManifestDaypartProgram>>();
+            _InventoryRepo.Setup(r => r.CreateInventoryPrograms(
                     It.IsAny<List<StationInventoryManifestDaypartProgram>>(), It.IsAny<DateTime>()))
-                .Callback<List<StationInventoryManifestDaypartProgram>, DateTime>((programs, d) => updateInventoryProgramsCalls.Add(programs));
+                .Callback<List<StationInventoryManifestDaypartProgram>, DateTime>((programs, d) => createInventoryProgramsCalls.Add(programs));
 
             _InventoryFileRepo.Setup(r => r.GetInventoryFileById(It.IsAny<int>()))
                 .Returns(new InventoryFile

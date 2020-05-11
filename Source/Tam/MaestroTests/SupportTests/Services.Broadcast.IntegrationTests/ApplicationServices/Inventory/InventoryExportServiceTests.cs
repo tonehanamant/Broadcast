@@ -94,7 +94,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Inventory
                 // setup the test data
                 using (var transCreateData = new TransactionScopeWrapper())
                 {
-                    _InventoryRepository.UpdateInventoryPrograms(programs, DateTime.Now);
+                    _InventoryRepository.CreateInventoryPrograms(programs, DateTime.Now);
                     transCreateData.Complete();
                 }
                 // generate the file

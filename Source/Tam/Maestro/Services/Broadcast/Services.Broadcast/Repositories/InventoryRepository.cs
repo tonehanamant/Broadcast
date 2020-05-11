@@ -124,7 +124,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="inventorySourceId">The inventory source identifier.</param>
         void AddNewManifests(IEnumerable<StationInventoryManifest> manifests, int inventoryFileId, int inventorySourceId);
 
-        void UpdateInventoryPrograms(List<StationInventoryManifestDaypartProgram> newPrograms, DateTime createdAt);
+        void CreateInventoryPrograms(List<StationInventoryManifestDaypartProgram> newPrograms, DateTime createdAt);
 
         List<StationInventoryManifestDaypartProgram> GetDaypartProgramsForInventoryDayparts(List<int> stationInventoryManifestDaypartIds);
 
@@ -1609,7 +1609,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public void UpdateInventoryPrograms(List<StationInventoryManifestDaypartProgram> newPrograms, DateTime createdAt)
+        public void CreateInventoryPrograms(List<StationInventoryManifestDaypartProgram> newPrograms, DateTime createdAt)
         {
             lock (_ProgramsBulkInsertLock)
             {

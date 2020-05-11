@@ -90,7 +90,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
                 // only deletes some of them.
                 repo.DeleteInventoryPrograms(relatedStationInventoryManifestIds, startDate, endDate);
-                repo.UpdateInventoryPrograms(newPrograms, createdAtDate);
+                repo.CreateInventoryPrograms(newPrograms, createdAtDate);
 
                 var afterPrograms = repo.GetDaypartProgramsForInventoryDayparts(stationInventoryManifestDaypartIds);
 
@@ -192,7 +192,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             using (new TransactionScopeWrapper())
             {
                 // create the programs for our test.
-                repo.UpdateInventoryPrograms(newPrograms, createdAtDate);
+                repo.CreateInventoryPrograms(newPrograms, createdAtDate);
                 
                 var totalInventory = repo.GetInventoryBySourceForProgramsProcessing(inventorySourceId, weekIds);
                 var withoutPrograms = repo.GetInventoryBySourceWithUnprocessedPrograms(inventorySourceId, weekIds);
