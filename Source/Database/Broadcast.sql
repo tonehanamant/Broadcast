@@ -346,6 +346,19 @@ END
 
 /*************************************** END BP-33 *****************************************************/
 
+/*************************************** Start Cleanup - GenreSourceRename *****************************************************/
+
+GO
+
+UPDATE genre_sources SET
+	[name] = 'RedBee'
+WHERE id = 2
+AND [name] <> 'RedBee'
+
+GO
+
+/*************************************** End Cleanup - GenreSourceRename *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

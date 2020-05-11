@@ -133,7 +133,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         public string ImportInventoryProgramResults(Stream fileStream, string fileName)
         {
-            const GenreSourceEnum GENRE_SOURCE = GenreSourceEnum.Dativa;
+            const GenreSourceEnum GENRE_SOURCE = GenreSourceEnum.RedBee;
             var success = false;
             var stopWatch = new Stopwatch();
             stopWatch.Start();
@@ -869,7 +869,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         protected StationInventoryManifestDaypartProgram _MapProgramDto(GuideResponseProgramDto guideProgram, int manifestDaypartId,
             InventoryProgramsRequestPackage requestPackage)
         {
-            const GenreSourceEnum GENRE_SOURCE = GenreSourceEnum.Dativa;
+            const GenreSourceEnum GENRE_SOURCE = GenreSourceEnum.RedBee;
 
             var sourceGenre = _GenreCache.GetSourceGenreByName(guideProgram.SourceGenre, GENRE_SOURCE);
             var maestroGenre = _GenreCache.GetMaestroGenreBySourceGenre(sourceGenre, GENRE_SOURCE);

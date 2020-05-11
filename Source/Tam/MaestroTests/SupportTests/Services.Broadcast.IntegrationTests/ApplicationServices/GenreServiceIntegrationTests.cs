@@ -13,7 +13,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class GenreServiceIntegrationTests
     {
         private const int MAESTRO_ID = (int)GenreSourceEnum.Maestro;
-        private const int DATIVA_ID = (int)GenreSourceEnum.Dativa;
+        private const int REDBEE_ID = (int)GenreSourceEnum.RedBee;
         private IGenreService _GenreService;
 
         [SetUp]
@@ -41,7 +41,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var genres = _GenreService.GetGenres(DATIVA_ID);
+                var genres = _GenreService.GetGenres(REDBEE_ID);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(genres));
             }
