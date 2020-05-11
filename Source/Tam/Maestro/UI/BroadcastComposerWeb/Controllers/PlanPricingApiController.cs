@@ -76,6 +76,17 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetUnitCaps());
         }
 
+        /// <summary>
+        /// Gets the pricing market groups.
+        /// </summary>
+        /// <returns>List of LookupDto objects</returns>
+        [HttpGet]
+        [Route("MarketGroups")]
+        public BaseResponse<List<LookupDto>> GetPricingMarketGroups()
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPricingMarketGroups());
+        }
+
         [HttpGet]
         [Route("PlanPricingDefaults")]
         public BaseResponse<PlanPricingDefaults> GetPlanPricingDefaults()

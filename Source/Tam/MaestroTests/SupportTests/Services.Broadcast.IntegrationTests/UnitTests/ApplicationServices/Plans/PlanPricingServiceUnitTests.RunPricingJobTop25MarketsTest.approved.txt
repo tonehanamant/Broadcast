@@ -20,12 +20,12 @@
         "market_coverage_goal": 0.8,
         "share_of_voice": [
           {
-            "market_code": 100,
-            "market_goal": 0.1
+            "market_code": 403,
+            "market_goal": 0.04743
           },
           {
-            "market_code": 302,
-            "market_goal": 0.302
+            "market_code": 202,
+            "market_goal": 0.02942
           },
           {
             "market_code": 101,
@@ -57,12 +57,12 @@
         "market_coverage_goal": 0.8,
         "share_of_voice": [
           {
-            "market_code": 100,
-            "market_goal": 0.1
+            "market_code": 403,
+            "market_goal": 0.04743
           },
           {
-            "market_code": 302,
-            "market_goal": 0.302
+            "market_code": 202,
+            "market_goal": 0.02942
           },
           {
             "market_code": 101,

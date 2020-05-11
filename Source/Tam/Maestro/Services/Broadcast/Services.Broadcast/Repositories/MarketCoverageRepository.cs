@@ -44,6 +44,12 @@ namespace Services.Broadcast.Repositories
         MarketCoverageByStation GetLatestMarketCoveragesWithStations();
         List<MarketCoverageFile> GetMarketCoverageFiles();
         MarketCoverageByStation GetMarketCoveragesWithStations(int marketCoverageFileId);
+
+        MarketCoverageDto GetLatestTop100MarketCoverages();
+
+        MarketCoverageDto GetLatestTop50MarketCoverages();
+
+        MarketCoverageDto GetLatestTop25MarketCoverages();
     }
 
     public class MarketCoverageRepository : BroadcastRepositoryBase, IMarketCoverageRepository
@@ -113,6 +119,43 @@ namespace Services.Broadcast.Repositories
                         MarketCoveragesByMarketCode = marketCoveragesByMarketCode
                     };
                  });
+        }
+
+        public MarketCoverageDto GetLatestTop100MarketCoverages()
+        {
+            return GetLatestTopMarketCoverages(100);
+        }
+
+        public MarketCoverageDto GetLatestTop50MarketCoverages()
+        {
+            return GetLatestTopMarketCoverages(50);
+        }
+
+        public MarketCoverageDto GetLatestTop25MarketCoverages()
+        {
+            return GetLatestTopMarketCoverages(25);
+        }
+
+        public MarketCoverageDto GetLatestTopMarketCoverages(int marketCount)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var lastMarketCoverageFile = context.market_coverage_files
+                        .Include(x => x.market_coverages)
+                        .OrderByDescending(x => x.created_date)
+                        .First();
+
+                    var marketCoveragesOrdered = lastMarketCoverageFile.market_coverages.OrderBy(x => x.percentage_of_us).Take(marketCount);
+
+                    var marketCoveragesByMarketCode = marketCoveragesOrdered.ToDictionary(m => Convert.ToInt32(m.market_code), m => m.percentage_of_us);
+
+                    return new MarketCoverageDto
+                    {
+                        MarketCoverageFileId = lastMarketCoverageFile.id,
+                        MarketCoveragesByMarketCode = marketCoveragesByMarketCode
+                    };
+                });
         }
 
         public MarketCoverageDto GetMarketCoveragesForFile(IEnumerable<int> marketIds, int marketCoverageFileId)

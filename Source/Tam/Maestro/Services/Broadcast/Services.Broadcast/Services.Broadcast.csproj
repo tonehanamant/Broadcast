@@ -395,6 +395,7 @@
     <Compile Include="Entities\Enums\Inventory\InventoryExportGenreTypeEnum.cs" />
     <Compile Include="Entities\Enums\PlanBuyingStatusEnum.cs" />
     <Compile Include="Entities\Enums\PlanBuyingTimeFramesEnum.cs" />
+    <Compile Include="Entities\Enums\PricingMarketGroupEnum.cs" />
     <Compile Include="Entities\Enums\StationMapSetNamesEnum.cs" />
     <Compile Include="Entities\Inventory\InventoryExportGenerationResult.cs" />
     <Compile Include="Entities\Inventory\InventoryExportLineWeekDetail.cs" />

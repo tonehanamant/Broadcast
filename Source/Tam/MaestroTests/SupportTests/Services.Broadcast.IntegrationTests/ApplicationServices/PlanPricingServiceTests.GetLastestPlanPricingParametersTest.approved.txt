@@ -161,6 +161,7 @@
     ],
     "InventorySourceTypePercentages": [],
     "Margin": 0.0,
+    "MarketGroup": 5,
     "MaxCpm": 10.0000,
     "MinCpm": 1.0000,
     "PlanId": 1197,

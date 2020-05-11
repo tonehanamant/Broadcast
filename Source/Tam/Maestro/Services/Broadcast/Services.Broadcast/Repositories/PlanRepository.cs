@@ -570,6 +570,7 @@ namespace Services.Broadcast.Repositories
                 PlanVersionId = arg.plan_version_id,
                 AdjustedCPM = arg.cpm_adjusted,
                 AdjustedBudget = arg.budget_adjusted,
+                MarketGroup = (PricingMarketGroupEnum)arg.market_group
             };
         }
 
@@ -1221,7 +1222,8 @@ namespace Services.Broadcast.Repositories
                 JobId = entity.plan_version_pricing_job_id,
                 PlanVersionId = entity.plan_version_id,
                 AdjustedBudget = entity.budget_adjusted,
-                AdjustedCPM = entity.cpm_adjusted
+                AdjustedCPM = entity.cpm_adjusted,
+                MarketGroup = (PricingMarketGroupEnum)entity.market_group
             };
             return dto;
         }
@@ -1275,7 +1277,8 @@ namespace Services.Broadcast.Repositories
                     margin = planPricingParametersDto.Margin,
                     plan_version_pricing_job_id = planPricingParametersDto.JobId,
                     budget_adjusted = planPricingParametersDto.AdjustedBudget,
-                    cpm_adjusted = planPricingParametersDto.AdjustedCPM
+                    cpm_adjusted = planPricingParametersDto.AdjustedCPM,
+                    market_group = (int)planPricingParametersDto.MarketGroup
                 };
 
                 planPricingParametersDto.InventorySourcePercentages.ForEach(s => planPricingParameters.plan_version_pricing_parameters_inventory_source_percentages.Add(

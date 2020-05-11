@@ -63,6 +63,12 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>List of LookupDto objects</returns>
         List<LookupDto> GetUnitCaps();
 
+        /// <summary>
+        /// Gets the pricing market groups.
+        /// </summary>
+        /// <returns>List of LookupDto objects</returns>
+        List<LookupDto> GetPricingMarketGroups();
+
         PlanPricingDefaults GetPlanPricingDefaults();
 
         bool IsPricingModelRunningForPlan(int planId);
@@ -251,6 +257,19 @@ namespace Services.Broadcast.ApplicationServices
                 .ToList();
         }
 
+        public List<LookupDto> GetPricingMarketGroups()
+        {
+            return Enum.GetValues(typeof(PricingMarketGroupEnum))
+                .Cast<PricingMarketGroupEnum>()
+                .Select(e => new LookupDto
+                {
+                    Id = (int)e,
+                    Display = e.GetDescriptionAttribute()
+                })
+                .OrderBy(x => x.Id)
+                .ToList();
+        }
+
         public PlanPricingDefaults GetPlanPricingDefaults()
         {
             const int defaultPercent = 0;
@@ -263,7 +282,8 @@ namespace Services.Broadcast.ApplicationServices
                 UnitCapType = UnitCapEnum.Per30Min,
                 InventorySourcePercentages = PlanPricingInventorySourceSortEngine.GetSortedInventorySourcePercents(defaultPercent, allSources),
                 InventorySourceTypePercentages = PlanPricingInventorySourceSortEngine.GetSortedInventorySourceTypePercents(defaultPercent),
-                Margin = defaultMargin
+                Margin = defaultMargin,
+                MarketGroup = PricingMarketGroupEnum.Top100
             };
         }
 
@@ -429,7 +449,9 @@ namespace Services.Broadcast.ApplicationServices
             SkippedWeeksIds = new List<int>();
             var pricingModelWeeks = new List<PlanPricingApiRequestWeekDto>();
             var marketCoverageGoal = GeneralMath.ConvertPercentageToFraction(plan.CoverageGoalPercent.Value);
+            var topMarkets = _GetTopMarkets(parameters.MarketGroup);
             var marketsWithSov = plan.AvailableMarkets.Where(x => x.ShareOfVoicePercent.HasValue);
+            var shareOfVoice = _GetShareOfVoice(topMarkets, marketsWithSov);
             var daypartsWithWeighting = plan.Dayparts.Where(x => x.WeightingGoalPercent.HasValue);
             var planPricingParameters = plan.PricingParameters;
 
@@ -482,11 +504,7 @@ namespace Services.Broadcast.ApplicationServices
                     FrequencyCapSpots = planPricingParameters.UnitCaps,
                     FrequencyCapTime = capTime,
                     FrequencyCapUnit = capType,
-                    ShareOfVoice = marketsWithSov.Select(x => new ShareOfVoice
-                    {
-                        MarketCode = x.MarketCode,
-                        MarketGoal = GeneralMath.ConvertPercentageToFraction(x.ShareOfVoicePercent.Value)
-                    }).ToList(),
+                    ShareOfVoice = shareOfVoice,
                     DaypartWeighting = daypartsWithWeighting.Select(x => new DaypartWeighting
                     {
                         DaypartId = x.DaypartCodeId,
@@ -498,6 +516,44 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return pricingModelWeeks;
+        }
+
+        private List<ShareOfVoice> _GetShareOfVoice(MarketCoverageDto topMarkets, IEnumerable<PlanAvailableMarketDto> marketsWithSov)
+        {
+            var topMarketsShareOfVoice = topMarkets.MarketCoveragesByMarketCode.Select(x => new ShareOfVoice
+            {
+                MarketCode = x.Key,
+                MarketGoal = x.Value
+            }).ToList();
+
+            var planShareOfVoices = marketsWithSov.Select(x => new ShareOfVoice
+            {
+                MarketCode = x.MarketCode,
+                MarketGoal = GeneralMath.ConvertPercentageToFraction(x.ShareOfVoicePercent.Value)
+            }).ToList();
+
+            topMarketsShareOfVoice.RemoveAll(x => planShareOfVoices.Select(y => y.MarketCode).Contains(x.MarketCode));
+
+            topMarketsShareOfVoice.AddRange(planShareOfVoices);
+
+            return topMarketsShareOfVoice;
+        }
+
+        private MarketCoverageDto _GetTopMarkets(PricingMarketGroupEnum pricingMarketSovMinimum)
+        {
+            switch(pricingMarketSovMinimum)
+            {
+                case PricingMarketGroupEnum.Top100:
+                    return _MarketCoverageRepository.GetLatestTop100MarketCoverages();
+                case PricingMarketGroupEnum.Top50:
+                    return _MarketCoverageRepository.GetLatestTop50MarketCoverages();
+                case PricingMarketGroupEnum.Top25:
+                    return _MarketCoverageRepository.GetLatestTop25MarketCoverages();
+                case PricingMarketGroupEnum.All:
+                    return _MarketCoverageRepository.GetLatestMarketCoverages();
+                default:
+                    return new MarketCoverageDto();
+            }
         }
 
         /// <inheritdoc />
@@ -546,7 +602,8 @@ namespace Services.Broadcast.ApplicationServices
                     MinCPM = planPricingParametersDto.MinCpm,
                     MaxCPM = planPricingParametersDto.MaxCpm,
                     InflationFactor = planPricingParametersDto.InflationFactor,
-                    Margin = planPricingParametersDto.Margin
+                    Margin = planPricingParametersDto.Margin,
+                    MarketGroup = planPricingParametersDto.MarketGroup
                 };
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FETCHING_PLAN_AND_PARAMETERS);
 
@@ -1094,7 +1151,8 @@ namespace Services.Broadcast.ApplicationServices
                 MinCPM = requestParameters.MinCpm,
                 MaxCPM = requestParameters.MaxCpm,
                 InflationFactor = requestParameters.InflationFactor,
-                Margin = requestParameters.Margin
+                Margin = requestParameters.Margin,
+                MarketGroup = requestParameters.MarketGroup
             };
 
             var plan = _PlanRepository.GetPlan(planId);
@@ -1124,7 +1182,8 @@ namespace Services.Broadcast.ApplicationServices
             {
                 MinCPM = requestParameters.MinCpm,
                 MaxCPM = requestParameters.MaxCpm,
-                InflationFactor = requestParameters.InflationFactor
+                InflationFactor = requestParameters.InflationFactor,
+                MarketGroup = requestParameters.MarketGroup
             };
             var inventorySourceIds = requestParameters.InventorySourceIds.IsEmpty() ?
                 _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes()) :

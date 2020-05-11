@@ -20,14 +20,6 @@
         "market_coverage_goal": 0.8,
         "share_of_voice": [
           {
-            "market_code": 100,
-            "market_goal": 0.1
-          },
-          {
-            "market_code": 302,
-            "market_goal": 0.302
-          },
-          {
             "market_code": 101,
             "market_goal": 0.12
           },
@@ -56,14 +48,6 @@
         "impression_goal": 10.0,
         "market_coverage_goal": 0.8,
         "share_of_voice": [
-          {
-            "market_code": 100,
-            "market_goal": 0.1
-          },
-          {
-            "market_code": 302,
-            "market_goal": 0.302
-          },
           {
             "market_code": 101,
             "market_goal": 0.12

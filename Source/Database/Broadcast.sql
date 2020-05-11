@@ -330,6 +330,22 @@ END
 GO
 /*************************************** END BP1-19 *****************************************************/
 
+/*************************************** START BP-33 *****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'market_group' AND OBJECT_ID = OBJECT_ID('plan_version_pricing_parameters'))
+BEGIN
+	ALTER TABLE plan_version_pricing_parameters
+	ADD market_group INT NULL
+
+	EXEC('UPDATE plan_version_pricing_parameters
+	      SET market_group = 5')
+
+	ALTER TABLE plan_version_pricing_parameters
+	ALTER COLUMN market_group INT NOT NULL
+END
+
+/*************************************** END BP-33 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

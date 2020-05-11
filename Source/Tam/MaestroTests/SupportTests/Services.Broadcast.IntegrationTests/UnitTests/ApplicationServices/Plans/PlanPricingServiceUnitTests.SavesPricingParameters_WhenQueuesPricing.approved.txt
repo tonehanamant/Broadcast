@@ -56,6 +56,7 @@
     ],
     "JobId": 5,
     "Margin": 14.0,
+    "MarketGroup": 1,
     "MaxCpm": 100.0,
     "MinCpm": 1.0,
     "PlanId": 222,

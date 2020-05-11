@@ -144,7 +144,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs { get; set; }
         public virtual DbSet<plan_version_daypart_genre_restrictions> plan_version_daypart_genre_restrictions { get; set; }
         public virtual DbSet<plan_version_daypart_program_restrictions> plan_version_daypart_program_restrictions { get; set; }
-        public virtual DbSet<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
         public virtual DbSet<plan_version_pricing_parameters_inventory_source_percentages> plan_version_pricing_parameters_inventory_source_percentages { get; set; }
         public virtual DbSet<plan_version_pricing_api_results> plan_version_pricing_api_results { get; set; }
         public virtual DbSet<affiliate> affiliates { get; set; }
@@ -189,5 +188,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<program_name_mappings> program_name_mappings { get; set; }
         public virtual DbSet<plan_version_weekly_breakdown> plan_version_weekly_breakdown { get; set; }
         public virtual DbSet<inventory_export_jobs> inventory_export_jobs { get; set; }
+        public virtual DbSet<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
     }
 }

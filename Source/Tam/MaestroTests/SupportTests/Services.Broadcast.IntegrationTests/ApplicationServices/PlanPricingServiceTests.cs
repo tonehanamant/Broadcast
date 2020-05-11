@@ -335,6 +335,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
+                    MarketGroup = PricingMarketGroupEnum.None,
                     InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                     {
                         new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
@@ -415,6 +416,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     CPP = 1000,
                     Currency = PlanCurrenciesEnum.GRP,
                     DeliveryRatingPoints = 1234,
+                    MarketGroup = PricingMarketGroupEnum.None,
                     InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                     {
                         new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
@@ -470,6 +472,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
+                    MarketGroup = PricingMarketGroupEnum.None,
                     InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                     {
                         new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
@@ -527,6 +530,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
+                    MarketGroup = PricingMarketGroupEnum.None,
                     InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                     {
                         new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},

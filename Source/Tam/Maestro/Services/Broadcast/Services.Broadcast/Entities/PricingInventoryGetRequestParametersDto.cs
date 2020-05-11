@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Services.Broadcast.Entities.Enums;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities
 {
@@ -13,5 +14,7 @@ namespace Services.Broadcast.Entities
         public List<int> InventorySourceIds { get; set; } = new List<int>();
 
         public double Margin { get; set; }
+
+        public PricingMarketGroupEnum MarketGroup { get; set; }
     }
 }

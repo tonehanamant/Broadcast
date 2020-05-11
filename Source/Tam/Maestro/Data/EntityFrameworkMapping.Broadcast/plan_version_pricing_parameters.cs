@@ -40,10 +40,11 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> plan_version_pricing_job_id { get; set; }
         public decimal budget_adjusted { get; set; }
         public decimal cpm_adjusted { get; set; }
+        public int market_group { get; set; }
     
+        public virtual plan_version_pricing_job plan_version_pricing_job { get; set; }
         public virtual ICollection<plan_version_pricing_parameters_inventory_source_percentages> plan_version_pricing_parameters_inventory_source_percentages { get; set; }
         public virtual ICollection<plan_version_pricing_parameters_inventory_source_type_percentages> plan_version_pricing_parameters_inventory_source_type_percentages { get; set; }
-        public virtual plan_version_pricing_job plan_version_pricing_job { get; set; }
         public virtual plan_versions plan_versions { get; set; }
     }
 }
