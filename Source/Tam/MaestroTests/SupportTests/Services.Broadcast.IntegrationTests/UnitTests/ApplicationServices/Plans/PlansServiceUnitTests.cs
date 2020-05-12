@@ -259,7 +259,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                      planToReturn.VersionId = versionId;
                      return planToReturn;
                  });
-
+            _SpotLengthEngineMock
+                .Setup(a => a.GetSpotLengths())
+                .Returns(new Dictionary<int, int> { { 30, 1 } });
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
                 .Returns(new List<WeeklyBreakdownByWeek>());
@@ -685,7 +687,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
         }
-        
+
         [Test]
         public void CalculateCreativeLengthWeight_AllValuesSet()
         {
@@ -702,7 +704,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Assert.AreEqual(null, result);
         }
-                
+
         private static PlanDto _GetNewPlan()
         {
             return new PlanDto

@@ -650,7 +650,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
-
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]

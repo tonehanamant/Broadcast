@@ -34,7 +34,7 @@
     },
     {
       "SpotLengthId": 2,
-      "Weight": null
+      "Weight": 50
     }
   ],
   "Currency": 1,
