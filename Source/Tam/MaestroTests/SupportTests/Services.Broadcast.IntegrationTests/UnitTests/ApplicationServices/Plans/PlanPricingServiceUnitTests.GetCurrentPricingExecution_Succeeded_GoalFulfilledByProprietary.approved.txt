@@ -15,15 +15,6 @@
     "JobId": 12,
     "Notes": "Proprietary goals meet plan goals",
     "OptimalCpm": 5.0,
-    "PlanVersionId": 11,
-    "Programs": [],
-    "Totals": {
-      "AvgCpm": 0.0,
-      "AvgImpressions": 0.0,
-      "Budget": 0.0,
-      "Impressions": 0.0,
-      "MarketCount": 0,
-      "StationCount": 0
-    }
+    "PlanVersionId": 11
   }
 }

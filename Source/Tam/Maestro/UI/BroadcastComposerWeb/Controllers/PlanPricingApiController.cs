@@ -30,9 +30,21 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("Execution")]
-        public BaseResponse<PlanPricingResponseDto> GetCurrentPricingExecution(int planId)
+        public BaseResponse<CurrentPricingExecution> GetCurrentPricingExecution(int planId)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetCurrentPricingExecution(planId));
+        }
+
+        /// <summary>
+        /// Get programs data from the lastest pricing execution
+        /// </summary>
+        /// <param name="planId">Plan ID</param>
+        /// <returns>Programs from the lastest pricing execution</returns>
+        [HttpGet]
+        [Route("Programs/{planId}")]
+        public BaseResponse<PricingProgramsResultDto> GetPrograms(int planId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPrograms(planId));
         }
 
         [HttpPost]

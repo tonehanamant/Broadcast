@@ -30,6 +30,7 @@ namespace EntityFrameworkMapping.Broadcast
         public double total_impressions { get; set; }
         public decimal total_budget { get; set; }
         public Nullable<int> plan_version_pricing_job_id { get; set; }
+        public int total_spots { get; set; }
     
         public virtual ICollection<plan_version_pricing_result_spots> plan_version_pricing_result_spots { get; set; }
         public virtual plan_version_pricing_job plan_version_pricing_job { get; set; }

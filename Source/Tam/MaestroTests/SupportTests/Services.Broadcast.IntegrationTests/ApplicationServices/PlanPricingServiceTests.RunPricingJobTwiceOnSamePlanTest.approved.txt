@@ -10,34 +10,6 @@
     "GoalFulfilledByProprietary": false,
     "Notes": "",
     "OptimalCpm": 15.5094,
-    "PlanVersionId": 47,
-    "Programs": [
-      {
-        "AvgCpm": 15.2562,
-        "AvgImpressions": 47.43,
-        "Genre": "Children",
-        "MarketCount": 1,
-        "PercentageOfBuy": 99.28825623,
-        "ProgramName": "Early news",
-        "StationCount": 1
-      },
-      {
-        "AvgCpm": 50.8412,
-        "AvgImpressions": 0.425,
-        "Genre": "Comedy",
-        "MarketCount": 1,
-        "PercentageOfBuy": 0.71174377,
-        "ProgramName": "Late news",
-        "StationCount": 1
-      }
-    ],
-    "Totals": {
-      "AvgCpm": 15.5094,
-      "AvgImpressions": 26.53888889,
-      "Budget": 18522.1500,
-      "Impressions": 1194250.0,
-      "MarketCount": 2,
-      "StationCount": 2
-    }
+    "PlanVersionId": 47
   }
 }

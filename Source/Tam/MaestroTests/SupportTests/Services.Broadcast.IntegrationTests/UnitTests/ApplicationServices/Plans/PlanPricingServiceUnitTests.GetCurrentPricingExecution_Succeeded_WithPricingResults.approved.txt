@@ -15,26 +15,6 @@
     "JobId": 12,
     "Notes": "Proprietary goals meet plan goals",
     "OptimalCpm": 5.0,
-    "PlanVersionId": 11,
-    "Programs": [
-      {
-        "AvgCpm": 6.0,
-        "AvgImpressions": 111.0,
-        "Genre": "Comedy",
-        "Id": 7,
-        "MarketCount": 6,
-        "PercentageOfBuy": 96.0,
-        "ProgramName": "1+1",
-        "StationCount": 13
-      }
-    ],
-    "Totals": {
-      "AvgCpm": 6.0,
-      "AvgImpressions": 111.0,
-      "Budget": 1131.0,
-      "Impressions": 555000.0,
-      "MarketCount": 6,
-      "StationCount": 13
-    }
+    "PlanVersionId": 11
   }
 }

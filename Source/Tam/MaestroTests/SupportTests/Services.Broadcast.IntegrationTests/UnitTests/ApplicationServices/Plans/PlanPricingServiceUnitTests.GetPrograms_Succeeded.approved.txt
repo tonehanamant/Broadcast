@@ -1,0 +1,25 @@
+﻿{
+  "Programs": [
+    {
+      "AvgCpm": 6.0,
+      "AvgImpressions": 111.0,
+      "Budget": 1131.0,
+      "Genre": "Comedy",
+      "Id": 7,
+      "ImpressionsPercentage": 96.0,
+      "MarketCount": 6,
+      "ProgramName": "1+1",
+      "Spots": 3,
+      "StationCount": 13
+    }
+  ],
+  "Totals": {
+    "AvgCpm": 6.0,
+    "AvgImpressions": 111.0,
+    "Budget": 1131.0,
+    "ImpressionsPercentage": 100.0,
+    "MarketCount": 6,
+    "Spots": 3,
+    "StationCount": 13
+  }
+}

@@ -970,6 +970,8 @@
           <Property Name="station_count" Type="int" Nullable="false" />
           <Property Name="market_count" Type="int" Nullable="false" />
           <Property Name="percentage_of_buy" Type="float" Nullable="false" />
+          <Property Name="budget" Type="money" Nullable="false" />
+          <Property Name="spots" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_results">
           <Key>
@@ -986,6 +988,7 @@
           <Property Name="total_impressions" Type="float" Nullable="false" />
           <Property Name="total_budget" Type="money" Nullable="false" />
           <Property Name="plan_version_pricing_job_id" Type="int" />
+          <Property Name="total_spots" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_secondary_audiences">
           <Key>
@@ -12512,7 +12515,9 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <Property Name="market_count" Type="Int32" Nullable="false" />
           <Property Name="percentage_of_buy" Type="Double" Nullable="false" />
           <NavigationProperty Name="plan_version_pricing_results" Relationship="BroadcastModel.FK_plan_version_pricing_result_spots_plan_version_pricing_results" FromRole="plan_version_pricing_result_spots" ToRole="plan_version_pricing_results" />
-          </EntityType>
+          <Property Name="budget" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="spots" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityType Name="plan_version_pricing_results">
           <Key>
             <PropertyRef Name="id" />
@@ -12531,6 +12536,7 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <Property Name="plan_version_pricing_job_id" Type="Int32" />
           <NavigationProperty Name="plan_version_pricing_job" Relationship="BroadcastModel.FK_plan_version_pricing_results_plan_version_pricing_job" FromRole="plan_version_pricing_results" ToRole="plan_version_pricing_job" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_pricing_results_plan_versions" FromRole="plan_version_pricing_results" ToRole="plan_versions" />
+          <Property Name="total_spots" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_plan_version_pricing_result_spots_plan_version_pricing_results">
           <End Type="BroadcastModel.plan_version_pricing_results" Role="plan_version_pricing_results" Multiplicity="1">
@@ -15294,6 +15300,8 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <EntitySetMapping Name="plan_version_pricing_result_spots">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_result_spots">
               <MappingFragment StoreEntitySet="plan_version_pricing_result_spots">
+                <ScalarProperty Name="spots" ColumnName="spots" />
+                <ScalarProperty Name="budget" ColumnName="budget" />
                 <ScalarProperty Name="percentage_of_buy" ColumnName="percentage_of_buy" />
                 <ScalarProperty Name="market_count" ColumnName="market_count" />
                 <ScalarProperty Name="station_count" ColumnName="station_count" />
@@ -15309,6 +15317,7 @@ warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not
           <EntitySetMapping Name="plan_version_pricing_results">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_results">
               <MappingFragment StoreEntitySet="plan_version_pricing_results">
+                <ScalarProperty Name="total_spots" ColumnName="total_spots" />
                 <ScalarProperty Name="plan_version_pricing_job_id" ColumnName="plan_version_pricing_job_id" />
                 <ScalarProperty Name="total_budget" ColumnName="total_budget" />
                 <ScalarProperty Name="total_impressions" ColumnName="total_impressions" />

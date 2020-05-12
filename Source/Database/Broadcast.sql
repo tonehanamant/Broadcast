@@ -359,6 +359,47 @@ GO
 
 /*************************************** End Cleanup - GenreSourceRename *****************************************************/
 
+/*************************************** START BP1-25 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'budget' AND OBJECT_ID = OBJECT_ID('plan_version_pricing_result_spots'))
+BEGIN
+	ALTER TABLE plan_version_pricing_result_spots
+	ADD budget MONEY NULL
+
+	EXEC('UPDATE plan_version_pricing_result_spots
+	SET budget = 0
+	WHERE budget IS NULL')
+
+	ALTER TABLE plan_version_pricing_result_spots
+	ALTER COLUMN budget MONEY NOT NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'spots' AND OBJECT_ID = OBJECT_ID('plan_version_pricing_result_spots'))
+BEGIN
+	ALTER TABLE plan_version_pricing_result_spots
+	ADD spots INT NULL
+
+	EXEC('UPDATE plan_version_pricing_result_spots
+	SET spots = 0
+	WHERE spots IS NULL')
+
+	ALTER TABLE plan_version_pricing_result_spots
+	ALTER COLUMN spots INT NOT NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'total_spots' AND OBJECT_ID = OBJECT_ID('plan_version_pricing_results'))
+BEGIN
+	ALTER TABLE plan_version_pricing_results
+	ADD total_spots INT NULL
+
+	EXEC('UPDATE plan_version_pricing_results
+	SET total_spots = 0
+	WHERE total_spots IS NULL')
+
+	ALTER TABLE plan_version_pricing_results
+	ALTER COLUMN total_spots INT NOT NULL
+END
+/*************************************** END BP1-25 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

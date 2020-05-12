@@ -442,6 +442,8 @@
     <Compile Include="Entities\Nti\NtiUniverseHeader.cs" />
     <Compile Include="Entities\Plan\PlanAudienceDisplay.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuying.cs" />
+    <Compile Include="Entities\Plan\Pricing\CurrentPricingExecution.cs" />
+    <Compile Include="Entities\Plan\Pricing\PricingProgramsResultDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingAllocatedSpot.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingAllocationResult.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiCpmResponseDto.cs" />

@@ -10,7 +10,9 @@
       "AvgImpressions": 0.0,
       "Budget": 0.0,
       "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
       "MarketCount": 0,
+      "Spots": 0,
       "StationCount": 0
     }
   }

@@ -8,22 +8,26 @@
       {
         "AvgCpm": 50.00,
         "AvgImpressions": 1000.0,
+        "Budget": 150.0,
         "Genre": "Sport",
         "Id": 0,
         "MarketCount": 1,
         "PercentageOfBuy": 40.0,
         "ProgramName": "seinfeld_2",
+        "Spots": 3,
         "StationCount": 1
       },
       {
         "AvgCpm": 40.00,
         "AvgImpressions": 1500.0,
+        "Budget": 180.0,
         "Genre": "News",
         "Id": 0,
-        "MarketCount": 2,
+        "MarketCount": 1,
         "PercentageOfBuy": 60.0,
         "ProgramName": "seinfeld",
-        "StationCount": 2
+        "Spots": 3,
+        "StationCount": 1
       }
     ],
     "Totals": {
@@ -31,7 +35,9 @@
       "AvgImpressions": 1250.0,
       "Budget": 330.0,
       "Impressions": 7500.0,
+      "ImpressionsPercentage": 0.0,
       "MarketCount": 2,
+      "Spots": 6,
       "StationCount": 2
     }
   }

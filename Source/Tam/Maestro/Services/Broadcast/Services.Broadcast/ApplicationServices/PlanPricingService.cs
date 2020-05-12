@@ -29,7 +29,7 @@ namespace Services.Broadcast.ApplicationServices
     {
         PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate, string username);
 
-        PlanPricingResponseDto GetCurrentPricingExecution(int planId);
+        CurrentPricingExecution GetCurrentPricingExecution(int planId);
 
         /// <summary>
         /// Cancels the current pricing execution.
@@ -95,6 +95,8 @@ namespace Services.Broadcast.ApplicationServices
         ReportOutput GeneratePricingResultsReport(int planId, int? planVersionNumber, string templatesFilePath);
 
         void ApplyMargin(PlanPricingParametersDto parameters);
+
+        PricingProgramsResultDto GetPrograms(int planId);
     }
 
     public class PlanPricingService : BroadcastBaseClass, IPlanPricingService
@@ -287,10 +289,10 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        public PlanPricingResponseDto GetCurrentPricingExecution(int planId)
+        public CurrentPricingExecution GetCurrentPricingExecution(int planId)
         {
             var job = _PlanRepository.GetLatestPricingJob(planId);
-            GetPlanPricingResultDto pricingExecutionResult = null;
+            CurrentPricingExecutionResultDto pricingExecutionResult = null;
 
             if (job != null && job.Status == BackgroundJobProcessingStatus.Failed)
             {
@@ -308,44 +310,18 @@ namespace Services.Broadcast.ApplicationServices
 
             if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
             {
-                pricingExecutionResult = _MapToGetPlanPricingResult(_PlanRepository.GetPricingResults(planId));
-                _ConvertImpressionsToUserFormat(pricingExecutionResult);
+                pricingExecutionResult = _PlanRepository.GetPricingResults(planId);
+                if (pricingExecutionResult != null)
+                    pricingExecutionResult.Notes = pricingExecutionResult.GoalFulfilledByProprietary ? "Proprietary goals meet plan goals" : string.Empty;
             }
 
             //pricingExecutionResult might be null when there is no pricing run for the latest version            
-            return new PlanPricingResponseDto
+            return new CurrentPricingExecution
             {
                 Job = job,
-                Result = pricingExecutionResult ?? new GetPlanPricingResultDto(),
+                Result = pricingExecutionResult ?? new CurrentPricingExecutionResultDto(),
                 IsPricingModelRunning = IsPricingModelRunning(job)
             };
-        }
-
-        private GetPlanPricingResultDto _MapToGetPlanPricingResult(PlanPricingResultBaseDto planPricingResult)
-        {
-            return planPricingResult != null ? new GetPlanPricingResultDto
-            {
-                Programs = planPricingResult.Programs,
-                Totals = planPricingResult.Totals,
-                OptimalCpm = planPricingResult.OptimalCpm,
-                GoalFulfilledByProprietary = planPricingResult.GoalFulfilledByProprietary,
-                Notes = planPricingResult.GoalFulfilledByProprietary ? "Proprietary goals meet plan goals" : string.Empty,
-                PlanVersionId = planPricingResult.PlanVersionId,
-                JobId = planPricingResult.JobId
-            } : null;
-        }
-
-        private void _ConvertImpressionsToUserFormat(GetPlanPricingResultDto planPricingResult)
-        {
-            if (planPricingResult == null)
-                return;
-
-            planPricingResult.Totals.AvgImpressions /= 1000;
-
-            foreach (var program in planPricingResult.Programs)
-            {
-                program.AvgImpressions /= 1000;
-            }
         }
 
         /// <inheritdoc />
@@ -1017,7 +993,7 @@ namespace Services.Broadcast.ApplicationServices
                 throw new Exception(msg);
             }
         }
-
+        
         private PlanPricingResultBaseDto _AggregateResults(
             List<PlanPricingInventoryProgram> inventory,
             PlanPricingAllocationResult apiResponse,
@@ -1037,7 +1013,9 @@ namespace Services.Broadcast.ApplicationServices
                 MarketCount = x.MarketCodes.Count,
                 AvgImpressions = x.AvgImpressions,
                 AvgCpm = x.AvgCpm,
-                PercentageOfBuy = ProposalMath.CalculateImpressionsPercentage(x.TotalImpressions, totalImpressionsForAllPrograms)
+                PercentageOfBuy = ProposalMath.CalculateImpressionsPercentage(x.TotalImpressions, totalImpressionsForAllPrograms),
+                Budget = x.TotalCost,
+                Spots = x.TotalSpots,
             }));
 
             result.Totals = new PlanPricingTotalsDto
@@ -1047,7 +1025,8 @@ namespace Services.Broadcast.ApplicationServices
                 AvgImpressions = ProposalMath.CalculateAvgImpressions(totalImpressionsForAllPrograms, totalSpotsForAllPrograms),
                 AvgCpm = ProposalMath.CalculateCpm(totalCostForAllPrograms, totalImpressionsForAllPrograms),
                 Budget = totalCostForAllPrograms,
-                Impressions = totalImpressionsForAllPrograms
+                Impressions = totalImpressionsForAllPrograms,
+                Spots = totalSpotsForAllPrograms,
             };
 
             result.GoalFulfilledByProprietary = goalsFulfilledByProprietaryInventory;
@@ -1074,6 +1053,7 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var inventoryByProgramName in inventoryGroupedByProgramName)
             {
                 var programInventory = inventoryByProgramName.ToList();
+                var allocatedStations = _GetAllocatedStations(apiResponse, programInventory);
                 var allocatedProgramSpots = _GetAllocatedProgramSpots(apiResponse, programInventory);
 
                 _CalculateProgramTotals(allocatedProgramSpots, out var programCost, out var programImpressions, out var programSpots);
@@ -1090,14 +1070,21 @@ namespace Services.Broadcast.ApplicationServices
                     TotalImpressions = programImpressions,
                     TotalCost = programCost,
                     TotalSpots = programSpots,
-                    Stations = programInventory.Select(x => x.Manifest.Station.LegacyCallLetters).Distinct().ToList(),
-                    MarketCodes = programInventory.Select(x => x.Manifest.Station.MarketCode.Value).Distinct().ToList()
+                    Stations = allocatedStations.Select(s => s.LegacyCallLetters).Distinct().ToList(),
+                    MarketCodes = allocatedStations.Select(s => s.MarketCode.Value).Distinct().ToList()
                 };
 
                 result.Add(program);
             };
 
             return result;
+        }
+
+        private List<DisplayBroadcastStation> _GetAllocatedStations(PlanPricingAllocationResult apiResponse, List<PlanPricingManifestWithManifestDaypart> programInventory)
+        {
+            var manifestIds = apiResponse.Spots.Select(s => s.Id).Distinct();
+            var result = new List<PlanPricingManifestWithManifestDaypart>();
+            return programInventory.Where(p => manifestIds.Contains(p.Manifest.ManifestId)).Select(p => p.Manifest.Station).ToList();
         }
 
         private List<PlanPricingAllocatedSpot> _GetAllocatedProgramSpots(PlanPricingAllocationResult apiResponse, List<PlanPricingManifestWithManifestDaypart> programInventory)
@@ -1202,6 +1189,34 @@ namespace Services.Broadcast.ApplicationServices
             _PlanRepository.UpdatePlanPricingJob(job);
 
             return $"Job Id '{jobId}' has been forced to complete.";
+        }
+
+        public PricingProgramsResultDto GetPrograms(int planId)
+        {
+            var job = _PlanRepository.GetLatestPricingJob(planId);
+            if(job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
+                return null;
+
+            var results = _PlanRepository.GetPricingProgramsResult(planId);
+            if (results == null)
+                return null;
+            results.Totals.ImpressionsPercentage = 100;
+            _ConvertImpressionsToUserFormat(results);
+
+            return results;
+        }
+
+        private void _ConvertImpressionsToUserFormat(PricingProgramsResultDto planPricingResult)
+        {
+            if (planPricingResult == null)
+                return;
+
+            planPricingResult.Totals.AvgImpressions /= 1000;
+
+            foreach (var program in planPricingResult.Programs)
+            {
+                program.AvgImpressions /= 1000;
+            }
         }
 
         private class ProgramWithManifestWeek

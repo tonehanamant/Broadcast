@@ -111,8 +111,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _PlanPricingService.ForceCompletePlanPricingJob(result.Id, "Test User");
 
-                Exception problems = new Exception();
-                PlanPricingResponseDto resultPayload = new PlanPricingResponseDto();
+                var problems = new Exception();
+                var resultPayload = new CurrentPricingExecution();
 
                 try
                 {
@@ -373,6 +373,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 jsonResolver.Ignore(typeof(PlanPricingJob), "Completed");
                 jsonResolver.Ignore(typeof(PlanPricingJob), "DiagnosticResult");
                 jsonResolver.Ignore(typeof(PlanPricingResultBaseDto), "JobId");
+                jsonResolver.Ignore(typeof(CurrentPricingExecutionResultDto), "JobId");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

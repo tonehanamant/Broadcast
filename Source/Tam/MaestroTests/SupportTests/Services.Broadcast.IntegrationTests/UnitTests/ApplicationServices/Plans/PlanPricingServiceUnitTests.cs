@@ -6573,10 +6573,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _PlanRepositoryMock
                 .Setup(x => x.GetPricingResults(planId))
-                .Returns(new PlanPricingResultBaseDto
+                .Returns(new CurrentPricingExecutionResultDto
                 {
-                    Programs = new List<PlanPricingProgramDto>(),
-                    Totals = new PlanPricingTotalsDto(),
                     OptimalCpm = 5,
                     GoalFulfilledByProprietary = true,
                     PlanVersionId = 11,
@@ -6591,6 +6589,187 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPrograms_Succeeded()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingProgramsResult(planId))
+                .Returns(new PricingProgramsResultDto
+                {
+                    Programs = new List<PlanPricingProgramProgramDto>
+                    {
+                        new PlanPricingProgramProgramDto
+                        {
+                            Id = 7,
+                            ProgramName = "1+1",
+                            Genre = "Comedy",
+                            MarketCount = 6,
+                            StationCount = 13,
+                            AvgCpm = 6m,
+                            AvgImpressions = 111000,
+                            ImpressionsPercentage = 96,
+                            Budget = 1131,
+                            Spots = 3
+                        }
+                    },
+                    Totals = new PricingProgramsResultTotalsDto
+                    {
+                        MarketCount = 6,
+                        StationCount = 13,
+                        AvgCpm = 6m,
+                        AvgImpressions = 111000,
+                        ImpressionsPercentage = 100,
+                        Budget = 1131,
+                        Spots = 3
+                    }
+                });
+
+            // Act
+            var result = service.GetPrograms(planId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetPrograms_JobStatusFailed()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Failed,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPrograms(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetPrograms_JobStatusCanceled()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Canceled,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPrograms(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetPrograms_JobStatusProcessing()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Processing,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPrograms(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetPrograms_JobStatusQueued()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Queued,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPrograms(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetPrograms_JobNull()
+        {
+            // Arrange
+            const int planId = 6;
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPrograms(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetPrograms_GetPricingProgramsResultReturnsNull()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPrograms(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -6614,31 +6793,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _PlanRepositoryMock
                 .Setup(x => x.GetPricingResults(planId))
-                .Returns(new PlanPricingResultBaseDto
+                .Returns(new CurrentPricingExecutionResultDto
                 {
-                    Programs = new List<PlanPricingProgramDto>
-                    {
-                        new PlanPricingProgramDto
-                        {
-                            Id = 7,
-                            ProgramName = "1+1",
-                            Genre = "Comedy",
-                            MarketCount = 6,
-                            StationCount = 13,
-                            AvgCpm = 6m,
-                            AvgImpressions = 111000,
-                            PercentageOfBuy = 96
-                        }
-                    },
-                    Totals = new PlanPricingTotalsDto
-                    {
-                        MarketCount = 6,
-                        StationCount = 13,
-                        AvgCpm = 6m,
-                        AvgImpressions = 111000,
-                        Impressions = 555000,
-                        Budget = 1131
-                    },
                     OptimalCpm = 5,
                     GoalFulfilledByProprietary = true,
                     PlanVersionId = 11,

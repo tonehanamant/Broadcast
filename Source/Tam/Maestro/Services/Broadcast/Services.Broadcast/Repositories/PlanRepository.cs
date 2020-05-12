@@ -122,7 +122,7 @@ namespace Services.Broadcast.Repositories
         void SavePricingApiResults(PlanPricingAllocationResult result);
         PlanPricingAllocationResult GetPricingApiResults(int planId);
         void SavePricingAggregateResults(PlanPricingResultBaseDto result);
-        PlanPricingResultBaseDto GetPricingResults(int planId);
+        CurrentPricingExecutionResultDto GetPricingResults(int planId);
 
         PlanPricingJob GetPlanPricingJob(int jobId);
 
@@ -135,6 +135,8 @@ namespace Services.Broadcast.Repositories
         List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanVersionId(int planVersionId);
 
         int GetPlanVersionIdByVersionNumber(int planId, int versionNumber);
+
+        PricingProgramsResultDto GetPricingProgramsResult(int planId);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -650,7 +652,8 @@ namespace Services.Broadcast.Repositories
             
             planDto.CreativeLengths.ForEach(d =>
             {
-                version.plan_version_creative_lengths.Add(new plan_version_creative_lengths {
+                version.plan_version_creative_lengths.Add(new plan_version_creative_lengths
+                {
                     spot_length_id = d.SpotLengthId,
                     weight = d.Weight
                 });
@@ -1419,7 +1422,8 @@ namespace Services.Broadcast.Repositories
                     total_budget = pricingResult.Totals.Budget,
                     total_impressions = pricingResult.Totals.Impressions,
                     plan_version_pricing_job_id = pricingResult.JobId,
-                    goal_fulfilled_by_proprietary = pricingResult.GoalFulfilledByProprietary
+                    goal_fulfilled_by_proprietary = pricingResult.GoalFulfilledByProprietary,
+                    total_spots = pricingResult.Totals.Spots
                 };
 
                 context.plan_version_pricing_results.Add(planPricingResult);
@@ -1439,7 +1443,9 @@ namespace Services.Broadcast.Repositories
                         avg_cpm = program.AvgCpm,
                         percentage_of_buy = program.PercentageOfBuy,
                         market_count = program.MarketCount,
-                        station_count = program.StationCount
+                        station_count = program.StationCount,
+                        budget = program.Budget,
+                        spots = program.Spots
                     };
 
                     spots.Add(planPricingResultSpots);
@@ -1452,7 +1458,48 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PlanPricingResultBaseDto GetPricingResults(int planId)
+        public PricingProgramsResultDto GetPricingProgramsResult(int planId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var plan = context.plans.Single(x => x.id == planId);
+                var planVersionId = plan.latest_version_id;
+
+                var result = context.plan_version_pricing_results.Where(p => p.plan_version_id == planVersionId).OrderByDescending(p => p.id).FirstOrDefault();
+                if (result == null)
+                    return null;
+
+                return new PricingProgramsResultDto
+                {
+                    Totals = new PricingProgramsResultTotalsDto
+                    {
+                        MarketCount = result.total_market_count,
+                        StationCount = result.total_station_count,
+                        AvgCpm = result.total_avg_cpm,
+                        AvgImpressions = result.total_avg_impressions,
+                        Budget = result.total_budget,
+                        Spots = result.total_spots,
+                    },
+                    Programs = result.plan_version_pricing_result_spots.Select(r => new PlanPricingProgramProgramDto
+                    {
+                        Id = r.id,
+                        ProgramName = r.program_name,
+                        Genre = r.genre,
+                        AvgCpm = r.avg_cpm,
+                        AvgImpressions = r.avg_impressions,
+                        ImpressionsPercentage = r.percentage_of_buy,
+                        MarketCount = r.market_count,
+                        StationCount = r.station_count,
+                        Budget = r.budget,
+                        Spots = r.spots
+                    }).OrderByDescending(p => p.ImpressionsPercentage)
+                       .ThenByDescending(p => p.AvgCpm)
+                       .ThenBy(p => p.ProgramName).ToList()
+                };
+            });
+        }
+
+        public CurrentPricingExecutionResultDto GetPricingResults(int planId)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -1461,34 +1508,12 @@ namespace Services.Broadcast.Repositories
                 var result = context.plan_version_pricing_results.Where(p => p.plan_version_id == planVersionId).OrderByDescending(p => p.id).FirstOrDefault();
                 if (result == null)
                     return null;
-                return new PlanPricingResultBaseDto
+                return new CurrentPricingExecutionResultDto
                 {
                     OptimalCpm = result.optimal_cpm,
                     JobId = result.plan_version_pricing_job_id,
                     PlanVersionId = result.plan_version_id,
-                    GoalFulfilledByProprietary = result.goal_fulfilled_by_proprietary,
-                    Totals = new PlanPricingTotalsDto
-                    {
-                        MarketCount = result.total_market_count,
-                        StationCount = result.total_station_count,
-                        AvgCpm = result.total_avg_cpm,
-                        AvgImpressions = result.total_avg_impressions,
-                        Budget = result.total_budget,
-                        Impressions = result.total_impressions
-                    },
-                    Programs = result.plan_version_pricing_result_spots.Select(r => new PlanPricingProgramDto
-                    {
-                        Id = r.id,
-                        ProgramName = r.program_name,
-                        Genre = r.genre,
-                        AvgCpm = r.avg_cpm,
-                        AvgImpressions = r.avg_impressions,
-                        PercentageOfBuy = r.percentage_of_buy,
-                        MarketCount = r.market_count,
-                        StationCount = r.station_count
-                    }).OrderByDescending(p => p.PercentageOfBuy)
-                       .ThenByDescending(p => p.AvgCpm)
-                       .ThenBy(p => p.ProgramName).ToList()
+                    GoalFulfilledByProprietary = result.goal_fulfilled_by_proprietary
                 };
             });
         }
