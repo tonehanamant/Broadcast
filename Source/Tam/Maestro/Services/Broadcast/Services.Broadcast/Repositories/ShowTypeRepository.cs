@@ -6,6 +6,8 @@ using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
+using Services.Broadcast.Entities;
+using Common.Services.Extensions;
 
 namespace Services.Broadcast.Repositories
 {
@@ -18,6 +20,12 @@ namespace Services.Broadcast.Repositories
         /// <returns>List of LookupDto objects</returns>
         List<LookupDto> FindShowType(string showTypeSearchString);
         List<LookupDto> GetShowTypes();
+        /// <summary>
+        /// Gets the show type by name.
+        /// </summary>
+        /// <param name="showTypeName">Name of the show type.</param>
+        /// <returns>ShowTypeDto</returns>
+        ShowTypeDto GetShowTypeByName(string showTypeName);
     }
 
     public class ShowTypeRepository : BroadcastRepositoryBase, IShowTypeRepository
@@ -43,6 +51,25 @@ namespace Services.Broadcast.Repositories
                         .Select(_MapToLookupDto)
                         .ToList();
                 });
+        }
+
+        /// <inheritdoc />
+        public ShowTypeDto GetShowTypeByName(string showTypeName)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                return _MapToDto(context.show_types
+                    .Single(item => item.name == showTypeName, $"No show type was found by name : {showTypeName}"));
+            });
+        }
+
+        private ShowTypeDto _MapToDto(show_types showType)
+        {
+            return new ShowTypeDto
+            {
+                Id = showType.id,
+                Name = showType.name,
+            };
         }
 
         public List<LookupDto> GetShowTypes()

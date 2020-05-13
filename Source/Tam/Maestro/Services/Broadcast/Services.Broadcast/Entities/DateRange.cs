@@ -4,9 +4,12 @@ namespace Services.Broadcast.Entities
 {
     public class DateRange
     {
+        public DateRange()
+        { }
+
         public DateRange(DateTime? start, DateTime? end)
         {
-            Start= start;
+            Start = start;
             End = end;
         }
 

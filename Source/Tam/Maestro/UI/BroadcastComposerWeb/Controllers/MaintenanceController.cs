@@ -119,6 +119,36 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
+        [Route("ImportProgramMappings")]
+        public ActionResult ImportProgramMappings(HttpPostedFileBase file)
+        {
+            if (file != null && file.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                if (!fileName.EndsWith(".xlsx"))
+                {
+                    TempData["Message"] = "Only Excel (.xlsx) files supported";
+                }
+                else
+                {
+                    try
+                    {
+                        var service = _ApplicationServiceFactory.GetApplicationService<IProgramMappingService>();
+                        var jobId = service.LoadProgramMappings(file.InputStream, fileName, "maintenance controller", DateTime.Now);
+                        TempData["Message"] = $"Program mappings file uploaded and a background job with id {jobId} was created!";
+                    }
+                    catch (Exception ex)
+                    {
+                        TempData["Message"] = ex.Message;
+                    }
+                }
+            }
+
+            TempData["TabId"] = "reference_data";
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
         [Route("ImportInventoryProgramsResults")]
         public ActionResult ImportInventoryProgramsResults(HttpPostedFileBase file)
         {

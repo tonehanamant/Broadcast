@@ -1,4 +1,5 @@
 ﻿using Common.Services;
+using Common.Services.Extensions;
 using Common.Services.Repositories;
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
@@ -131,6 +132,8 @@ namespace Services.Broadcast.Repositories
         void DeleteInventoryPrograms(List<int> manifestIds, DateTime startDate,
             DateTime endDate);
 
+        void DeleteInventoryPrograms(List<int> manifestDaypartIds);
+
         /// <summary>
         /// Gets the inventory by file identifier for programs processing.
         /// </summary>
@@ -158,6 +161,20 @@ namespace Services.Broadcast.Repositories
         List<StationInventoryManifest> GetInventoryBySourceWithUnprocessedPrograms(int sourceId, List<int> mediaWeekIds);
 
         void UpdatePrimaryProgramsForManifestDayparts(IEnumerable<StationInventoryManifestDaypart> manifestDayparts);
+
+        /// <summary>
+        /// Gets the manifest dayparts by program name.
+        /// </summary>
+        /// <param name="programName">Name of the program.</param> 
+        /// <returns>The station inventory manifest daypart</returns>
+        List<StationInventoryManifestDaypart> GetManifestDaypartsForProgramName(string programName);
+
+        /// <summary>
+        /// Gets the station inventory manifes daypart weeks date range.
+        /// </summary>
+        /// <param name="manifestDaypartId">The manifest daypart identifier.</param>
+        /// <returns>DateRange containing the start and end date</returns>
+        DateRange GetStationInventoryManifesDaypartWeeksDateRange(int manifestDaypartId);
 
         List<StationInventoryManifestWeek> GetInventoryWeeks(int inventorySourceId);
 
@@ -1010,6 +1027,27 @@ namespace Services.Broadcast.Repositories
         }
 
         ///<inheritdoc/>
+        public DateRange GetStationInventoryManifesDaypartWeeksDateRange(int manifestDaypartId)
+        {
+            return _InReadUncommitedTransaction(
+                c =>
+                {
+                    var sourceManifestId = c.station_inventory_manifest_dayparts
+                        .Single(x => x.id == manifestDaypartId).station_inventory_manifest_id;
+
+                    var query = c.station_inventory_manifest_weeks
+                        .Where(x => x.station_inventory_manifest_id == sourceManifestId)
+                        .GroupBy(s => s.station_inventory_manifest_id)
+                        .Select(weeks => new DateRange
+                            {
+                                Start = weeks.Min(week => week.start_date),
+                                End = weeks.Max(week => week.end_date)
+                            });
+                    return query.Single();
+                });
+        }
+
+        ///<inheritdoc/>
         public List<StationInventoryManifestWeek> GetStationInventoryManifestWeeksForOpenMarket(int stationId, string programName, int daypartId)
         {
             return _InReadUncommitedTransaction(
@@ -1609,6 +1647,19 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        public void DeleteInventoryPrograms(List<int> manifestDaypartIds)
+        {
+            var manifestIdsCsv = string.Join(",", manifestDaypartIds);
+            var sql = $"DELETE p FROM station_inventory_manifest_daypart_programs p " +
+                      $"WHERE p.station_inventory_manifest_daypart_id in ({manifestIdsCsv})";
+
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    context.Database.ExecuteSqlCommand(sql);
+                });
+        }
+
         public void CreateInventoryPrograms(List<StationInventoryManifestDaypartProgram> newPrograms, DateTime createdAt)
         {
             lock (_ProgramsBulkInsertLock)
@@ -1813,6 +1864,37 @@ namespace Services.Broadcast.Repositories
                         .Distinct()
                         .ToList();
                     return entities;
+                });
+        }
+
+        public List<StationInventoryManifestDaypart> GetManifestDaypartsForProgramName(string programName)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var manifestDayparts =
+                        context.station_inventory_manifest_dayparts
+                        .Include(md => md.daypart.timespan)
+                        .Where(md => md.program_name == programName).ToList();
+
+                    var manifestDaypartDtos = manifestDayparts.Select(x => new StationInventoryManifestDaypart()
+                    {
+                        Id = x.id,
+                        Daypart = new DisplayDaypart
+                        {
+                            Id = x.daypart_id,
+                            StartTime = x.daypart.timespan.start_time,
+                            EndTime = x.daypart.timespan.end_time
+                        },
+                        ProgramName = x.program_name,
+                        Genres = x.station_inventory_manifest_daypart_genres.Select(g => new LookupDto
+                        {
+                            Id = g.genre_id,
+                            Display = g.genre.name
+                        }).ToList()
+                    }).ToList();
+
+                    return manifestDaypartDtos;
                 });
         }
     }

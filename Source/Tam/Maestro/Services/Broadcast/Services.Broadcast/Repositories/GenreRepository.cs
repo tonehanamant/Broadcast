@@ -1,4 +1,5 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services.Extensions;
+using Common.Services.Repositories;
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
@@ -22,6 +23,8 @@ namespace Services.Broadcast.Repositories
         List<LookupDto> GetGenresBySourceId(int sourceId);
 
         List<GenreMapping> GetGenreMappings();
+
+        Genre GetGenreByName(string genreName, GenreSourceEnum source);
     }
 
     public class GenreRepository : BroadcastRepositoryBase, IGenreRepository
@@ -99,6 +102,14 @@ namespace Services.Broadcast.Repositories
                 Name = genre.name,
                 SourceId = genre.source_id
             };
+        }
+
+        public Genre GetGenreByName(string genreName, GenreSourceEnum source)
+        {
+            return _InReadUncommitedTransaction(context =>
+                _MapToGenre(
+                    context.genres
+                    .Single(item => item.source_id == (int)source && item.name == genreName, $"No genre found with name: {genreName}")));
         }
     }
 }

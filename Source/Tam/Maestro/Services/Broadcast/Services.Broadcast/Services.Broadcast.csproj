@@ -322,6 +322,7 @@
     <Compile Include="BusinessEngines\WeeklyBreakdownEngine.cs" />
     <Compile Include="ApplicationServices\Inventory\InventoryExportService.cs" />
     <Compile Include="BusinessEngines\InventoryExportEngine.cs" />
+    <Compile Include="ApplicationServices\ProgramMappingService.cs" />
     <Compile Include="Entities\CreativeLength.cs" />
     <Compile Include="ApplicationServices\StationMappingService.cs" />
     <Compile Include="ApplicationServices\NtiUniverseService.cs" />
@@ -488,6 +489,8 @@
     <Compile Include="Entities\DTO\Program\SearchProgramDativaRequestDto.cs" />
     <Compile Include="Entities\DTO\Program\SearchProgramDativaResponseDto.cs" />
     <Compile Include="Entities\InventoryProgramsByFileJobEnqueueResultDto.cs" />
+    <Compile Include="Entities\ProgramMappingsDto.cs" />
+    <Compile Include="Entities\ProgramMappingsFileRequestDto.cs" />
     <Compile Include="Entities\SaveCampaignDto.cs" />
     <Compile Include="Entities\DTO\EnvironmentDto.cs" />
     <Compile Include="Entities\DTO\ProductDto.cs" />
@@ -525,6 +528,7 @@
     <Compile Include="Entities\Scx\ScxFileGenerationDetailDto.cs" />
     <Compile Include="Entities\Scx\ScxFileGenerationDetail.cs" />
     <Compile Include="Entities\SharedFolderFile.cs" />
+    <Compile Include="Entities\ShowTypeDto.cs" />
     <Compile Include="Entities\StationInventory\StationInventoryManifestDaypartProgram.cs" />
     <Compile Include="Entities\StationMappingsDto.cs" />
     <Compile Include="Entities\StationMappingsFileRequestDto.cs" />
@@ -573,6 +577,7 @@
     <Compile Include="Repositories\NtiUniverseRepository.cs" />
     <Compile Include="Repositories\PlanRepository.cs" />
     <Compile Include="Repositories\PlanSummaryRepository.cs" />
+    <Compile Include="Repositories\ProgramMappingRepository.cs" />
     <Compile Include="Repositories\ScxGenerationJobRepository.cs" />
     <Compile Include="ApplicationServices\ScxGenerationService.cs" />
     <Compile Include="BusinessEngines\InventorySummaryRatesGapEngine.cs" />

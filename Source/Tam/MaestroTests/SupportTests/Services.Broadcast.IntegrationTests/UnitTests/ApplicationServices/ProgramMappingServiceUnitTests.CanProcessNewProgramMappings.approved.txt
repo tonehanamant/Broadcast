@@ -1,0 +1,13 @@
+﻿{
+  "OfficialGenre": {
+    "Id": 2,
+    "Name": "News",
+    "SourceId": 2
+  },
+  "OfficialProgramName": "10 NEWS",
+  "OfficialShowType": {
+    "Id": 1,
+    "Name": "News"
+  },
+  "OriginalProgramName": "10 NEWS 6PM"
+}
