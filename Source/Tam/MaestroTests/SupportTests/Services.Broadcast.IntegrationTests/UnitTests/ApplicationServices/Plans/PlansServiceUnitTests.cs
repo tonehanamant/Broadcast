@@ -47,6 +47,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IQuarterCalculationEngine> _QuarterCalculationEngineMock;
         private Mock<IDaypartDefaultService> _DaypartDefaultServiceMock;
         private Mock<IWeeklyBreakdownEngine> _WeeklyBreakdownEngineMock;
+        private Mock<ICreativeLengthEngine> _CreativeLengthEngineMock;
 
         [SetUp]
         public void CreatePlanService()
@@ -69,7 +70,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _QuarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
             _DaypartDefaultServiceMock = new Mock<IDaypartDefaultService>();
             _WeeklyBreakdownEngineMock = new Mock<IWeeklyBreakdownEngine>();
-
+            _CreativeLengthEngineMock = new Mock<ICreativeLengthEngine>();
             // Setup common mocks
             _NsiUniverseServiceMock.Setup(n => n.GetAudienceUniverseForMediaMonth(It.IsAny<int>(), It.IsAny<int>())).Returns(1000000);
             _BroadcastLockingManagerApplicationServiceMock
@@ -143,7 +144,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _PlanPricingServiceMock.Object,
                 _QuarterCalculationEngineMock.Object,
                 _DaypartDefaultServiceMock.Object,
-                _WeeklyBreakdownEngineMock.Object
+                _WeeklyBreakdownEngineMock.Object,
+                _CreativeLengthEngineMock.Object
             );
         }
 
@@ -644,24 +646,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new CreativeLength{ SpotLengthId = 3}
             };
 
-            // Act
-            var results = _PlanService.CalculateCreativeLengthWeight(request);
-
-            // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void CalculateCreativeLengthWeight_UnevenDistribution()
-        {
-            var request = new List<CreativeLength>
-            {
-                new CreativeLength{ SpotLengthId = 1, Weight = 2},
-                new CreativeLength{ SpotLengthId = 2},
-                new CreativeLength{ SpotLengthId = 3},
-                new CreativeLength{ SpotLengthId = 4}
-            };
+            _CreativeLengthEngineMock.Setup(x => x.DistributeWeight(request))
+                .Returns(new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 34 } });
 
             // Act
             var results = _PlanService.CalculateCreativeLengthWeight(request);
@@ -669,7 +655,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
         }
-
+        
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CalculateCreativeLengthWeight_UserInput1()
@@ -680,6 +666,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new CreativeLength{ SpotLengthId = 2},
                 new CreativeLength{ SpotLengthId = 3}
             };
+
+            _CreativeLengthEngineMock.Setup(x => x.DistributeWeight(request))
+                .Returns(new List<CreativeLength>
+                        {
+                            new CreativeLength{ SpotLengthId = 1, Weight = 25},
+                            new CreativeLength{ SpotLengthId = 2, Weight = 38},
+                            new CreativeLength{ SpotLengthId = 3, Weight = 37}
+                        });
 
             // Act
             var results = _PlanService.CalculateCreativeLengthWeight(request);

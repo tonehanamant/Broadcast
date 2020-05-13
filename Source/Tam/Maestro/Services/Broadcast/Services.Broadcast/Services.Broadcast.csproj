@@ -536,7 +536,7 @@
     <Compile Include="Extensions\HttpExtensions.cs" />
     <Compile Include="Extensions\PlanDaypartExtensions.cs" />
     <Compile Include="Extensions\QuarterDetailExtension.cs" />
-    <Compile Include="Helpers\CreativeLengthWeightHelper.cs" />
+    <Compile Include="BusinessEngines\CreativeLengthEngine.cs" />
     <Compile Include="Helpers\DaypartHelper.cs" />
     <Compile Include="Helpers\DaypartTimeHelper.cs" />
     <Compile Include="Helpers\FrequencyCapHelper.cs" />

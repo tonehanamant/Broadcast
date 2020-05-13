@@ -13,14 +13,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
     /// <seealso cref="Services.Broadcast.Validators.PlanValidator" />
     public class PlanValidatorUnitTestClass : PlanValidator
     {
-        public PlanValidatorUnitTestClass(ISpotLengthEngine spotLengthEngine
-            , IBroadcastAudiencesCache broadcastAudiencesCache
+        public PlanValidatorUnitTestClass(IBroadcastAudiencesCache broadcastAudiencesCache
             , IRatingForecastService ratingForecastService
             , ITrafficApiCache trafficApiCache
-            , IDataRepositoryFactory broadcastDataRepositoryFactory)
-            : base(spotLengthEngine, broadcastAudiencesCache,
+            , IDataRepositoryFactory broadcastDataRepositoryFactory
+            , ICreativeLengthEngine creativeLengthEngine)
+            : base(broadcastAudiencesCache,
                 ratingForecastService, trafficApiCache,
-                broadcastDataRepositoryFactory)
+                broadcastDataRepositoryFactory, creativeLengthEngine)
         {
         }
 

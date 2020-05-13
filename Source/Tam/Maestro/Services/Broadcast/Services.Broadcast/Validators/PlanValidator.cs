@@ -28,27 +28,18 @@ namespace Services.Broadcast.Validators
         /// </summary>
         /// <param name="request">WeeklyBreakdownRequest request object.</param>
         void ValidateWeeklyBreakdown(WeeklyBreakdownRequest request);
-
-        /// <summary>
-        /// Validates the creative lengths.
-        /// </summary>
-        /// <param name="creativeLengths">The creative lengths.</param>
-        void ValidateCreativeLengths(List<CreativeLength> creativeLengths);
     }
 
     public class PlanValidator : IPlanValidator
     {
-        private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IBroadcastAudiencesCache _AudienceCache;
         private readonly List<MediaMonth> _PostingBooks;
         private readonly ITrafficApiCache _TrafficApiCache;
         private readonly IPlanRepository _PlanRepository;
+        private readonly ICreativeLengthEngine _CreativeLengthEngine;
 
         const string INVALID_PLAN_NAME = "Invalid plan name";
         const string INVALID_SPOT_LENGTH = "Invalid spot length id {0}";
-        const string INVALID_NUMBER_OF_CREATIVE_LENGTHS = "There should be at least 1 creative length selected on the plan";
-        const string INVALID_CREATIVE_LENGTH_WEIGHT = "Creative length weight must be between 1 and 100";
-        const string INVALID_CREATIVE_LENGTH_WEIGHT_TOTAL = "Sum Weight of all Creative Lengths must equal 100%";
         const string INVALID_PRODUCT = "Invalid product";
         const string INVALID_SHARE_BOOK = "Invalid share book";
         const string INVALID_HUT_BOOK = "Invalid HUT book.";
@@ -90,16 +81,16 @@ namespace Services.Broadcast.Validators
         const string PROGRAM_CONTAIN_TYPE_IS_NOT_VALID = "Contain type of the program restrictions is not valid";
         const string AFFILIATE_CONTAIN_TYPE_IS_NOT_VALID = "Contain type of the affiliate restrictions is not valid";
 
-        public PlanValidator(ISpotLengthEngine spotLengthEngine
-            , IBroadcastAudiencesCache broadcastAudiencesCache
+        public PlanValidator(IBroadcastAudiencesCache broadcastAudiencesCache
             , IRatingForecastService ratingForecastService
             , ITrafficApiCache trafficApiCache
-            , IDataRepositoryFactory broadcastDataRepositoryFactory)
+            , IDataRepositoryFactory broadcastDataRepositoryFactory
+            , ICreativeLengthEngine creativeLengthEngine)
         {
-            _SpotLengthEngine = spotLengthEngine;
             _AudienceCache = broadcastAudiencesCache;
             _TrafficApiCache = trafficApiCache;
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
+            _CreativeLengthEngine = creativeLengthEngine;
 
             _PostingBooks = ratingForecastService.GetMediaMonthCrunchStatuses()
                 .Where(a => a.Crunched == CrunchStatusEnum.Crunched)
@@ -119,7 +110,7 @@ namespace Services.Broadcast.Validators
                 throw new Exception(INVALID_DRAFT_ON_NEW_PLAN);
             }
 
-            ValidateCreativeLengths(plan.CreativeLengths);
+            _CreativeLengthEngine.ValidateCreativeLengthsForPlanSave(plan.CreativeLengths);
             _ValidateProduct(plan);
             _ValidateFlightAndHiatus(plan);
             _ValidateDayparts(plan);
@@ -131,54 +122,6 @@ namespace Services.Broadcast.Validators
 
             // PRI-14012 We'll use a stop word so QA can trigger an error 
             _ValidateStopWord(plan);
-        }
-
-        public void ValidateCreativeLengths(List<CreativeLength> creativeLengths)
-        {
-            if (creativeLengths == null)
-            {
-                //we need it for backwards compatibility
-                //will be removed once the FE is done
-                return;
-            }
-            if (creativeLengths.Count < 1)
-            {
-                throw new ApplicationException(INVALID_NUMBER_OF_CREATIVE_LENGTHS);
-            }
-            creativeLengths.ForEach(creativeLength =>
-            {
-                if (!_SpotLengthEngine.SpotLengthIdExists(creativeLength.SpotLengthId))
-                {
-                    throw new ApplicationException(string.Format(INVALID_SPOT_LENGTH, creativeLength.SpotLengthId));
-                }
-            });
-            //each creative length must be between 1 and 100
-            creativeLengths.Where(x => x.Weight.HasValue).Select(x => x.Weight)
-                .ToList()
-                .ForEach(weight =>
-                {
-                    if (weight > 100 || weight < 1)
-                    {
-                        throw new ApplicationException(INVALID_CREATIVE_LENGTH_WEIGHT);
-                    }
-                });
-            if (creativeLengths.All(x => x.Weight.HasValue))
-            {   //the sum of all creative lengths has to be 100 if all are set by the user
-                if (creativeLengths.Sum(x => x.Weight.Value) != 100)
-                {
-                    throw new ApplicationException(INVALID_CREATIVE_LENGTH_WEIGHT_TOTAL);
-                }
-            }
-            else
-            if (creativeLengths.Any(x => x.Weight.HasValue))
-            {
-                //the sum of all creative lengths must be between 1 and 100
-                int sumOfUserSetWeight = creativeLengths.Where(x => x.Weight.HasValue).Sum(x => x.Weight.Value);
-                if (sumOfUserSetWeight < 1 || sumOfUserSetWeight > 100)
-                {
-                    throw new ApplicationException(INVALID_CREATIVE_LENGTH_WEIGHT);
-                }
-            }
         }
 
         private void _ValidateStopWord(PlanDto plan)

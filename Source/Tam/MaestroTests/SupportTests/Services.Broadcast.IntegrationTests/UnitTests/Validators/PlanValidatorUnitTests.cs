@@ -23,10 +23,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
     {
         private PlanValidatorUnitTestClass _planValidator;
         private Mock<IRatingForecastService> _ratingForecastServiceMock;
-        private Mock<ISpotLengthEngine> _spotLengthEngineMock;
         private Mock<IBroadcastAudiencesCache> _broadcastAudiencesCacheMock;
+        private Mock<ISpotLengthEngine> _spotLengthEngineMock;
         private Mock<IDataRepositoryFactory> _broadcastDataRepositoryFactoryMock;
         private Mock<IPlanRepository> _planRepositoryMock;
+        private Mock<ICreativeLengthEngine> _creativeLengthEngineMock;
 
         private const int HUT_BOOK_ID = 55;
         private const int SHARE_BOOK_ID = 79;
@@ -34,22 +35,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [SetUp]
         public void Init()
         {
-            _spotLengthEngineMock = new Mock<ISpotLengthEngine>();
+            _creativeLengthEngineMock = new Mock<ICreativeLengthEngine>();
             _ratingForecastServiceMock = new Mock<IRatingForecastService>();
             _broadcastAudiencesCacheMock = new Mock<IBroadcastAudiencesCache>();
+            _spotLengthEngineMock = new Mock<ISpotLengthEngine>();
             _ratingForecastServiceMock.Setup(r => r.GetMediaMonthCrunchStatuses()).Returns(
-                new List<Entities.MediaMonthCrunchStatus>
+                new List<MediaMonthCrunchStatus>
                 {
-                    new Entities.MediaMonthCrunchStatus(
-                        new Entities.RatingsForecastStatus
+                    new MediaMonthCrunchStatus(
+                        new RatingsForecastStatus
                         {
                             UniverseMarkets = 10,
                             MediaMonth = new Tam.Maestro.Data.Entities.MediaMonth
                                 {Id = HUT_BOOK_ID, StartDate = new DateTime(2019, 8, 11)},
                             UsageMarkets = 10, ViewerMarkets = 10
                         }, 10),
-                    new Entities.MediaMonthCrunchStatus(
-                        new Entities.RatingsForecastStatus
+                    new MediaMonthCrunchStatus(
+                        new RatingsForecastStatus
                         {
                             UniverseMarkets = 10,
                             MediaMonth = new Tam.Maestro.Data.Entities.MediaMonth
@@ -68,8 +70,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             _planRepositoryMock = new Mock<IPlanRepository>();
             _broadcastDataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
             _broadcastDataRepositoryFactoryMock.Setup(f => f.GetDataRepository<IPlanRepository>()).Returns(_planRepositoryMock.Object);
-            _planValidator = new PlanValidatorUnitTestClass(_spotLengthEngineMock.Object, _broadcastAudiencesCacheMock.Object,
-                _ratingForecastServiceMock.Object, new TrafficApiCache(new TrafficApiClientStub()), _broadcastDataRepositoryFactoryMock.Object);
+            _planValidator = new PlanValidatorUnitTestClass(_broadcastAudiencesCacheMock.Object,
+                _ratingForecastServiceMock.Object, new TrafficApiCache(new TrafficApiClientStub())
+                , _broadcastDataRepositoryFactoryMock.Object
+                , _creativeLengthEngineMock.Object);
         }
 
         [Test]
@@ -104,17 +108,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid plan name"));
-        }
-
-        [Test]
-        public void ValidatePlan_SpotLengthIdExistsReturnsFalse()
-        {
-            _spotLengthEngineMock.Setup(s => s.SpotLengthIdExists(It.IsAny<int>())).Returns(false);
-
-            var plan = _GetPlan();
-
-            Assert.That(() => _planValidator.ValidatePlan(plan),
-                Throws.TypeOf<ApplicationException>().With.Message.EqualTo("Invalid spot length id 1"));
         }
 
         [Test]
@@ -1143,87 +1136,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             };
 
             _ValidateWeeklyBreakdownWeeks(plan, shouldThrow, PlanValidator.INVALID_IMPRESSIONS_COUNT);
-        }
-
-        [Test]
-        public void ValidatePlan_CreativeLength_NoWeightValueSet()
-        {
-            _spotLengthEngineMock.Setup(s => s.SpotLengthIdExists(It.IsAny<int>())).Returns(true);
-
-            var creativeLenghts = _GetCreativeLengths();
-            //remove the first creative length because it has a value selected
-            creativeLenghts[0].Weight = null;
-
-            Assert.DoesNotThrow(() => _planValidator.ValidateCreativeLengths(creativeLenghts));
-        }
-
-        [Test]
-        public void ValidatePlan_CreativeLength_None()
-        {
-            var exception = Assert.Throws<ApplicationException>(() => _planValidator.ValidateCreativeLengths(new List<CreativeLength>()));
-
-            Assert.AreEqual("There should be at least 1 creative length selected on the plan", exception.Message);
-        }
-
-        [Test]
-        [TestCase(100)]
-        [TestCase(0)]
-        [TestCase(-1)]
-        public void ValidatePlan_CreativeLength_InvalidSpotLengthId(int spotLengthId)
-        {
-            _spotLengthEngineMock.Setup(s => s.SpotLengthIdExists(spotLengthId)).Returns(false);
-
-            var creativeLengths = _GetCreativeLengths(); 
-            creativeLengths[0].SpotLengthId = spotLengthId;
-
-            var exception = Assert.Throws<ApplicationException>(() => _planValidator.ValidateCreativeLengths(creativeLengths));
-
-            Assert.AreEqual($"Invalid spot length id {spotLengthId}", exception.Message);
-        }
-
-        [Test]
-        [TestCase(-1)]
-        [TestCase(0)]
-        [TestCase(101)]
-        public void ValidatePlan_CreativeLength_InvalidWeight(int weight)
-        {
-            _spotLengthEngineMock.Setup(s => s.SpotLengthIdExists(It.IsAny<int>())).Returns(true);
-
-            var creativeLengths = _GetCreativeLengths();
-            creativeLengths[0].Weight = weight;
-
-            var exception = Assert.Throws<ApplicationException>(() => _planValidator.ValidateCreativeLengths(creativeLengths));
-
-            Assert.AreEqual("Creative length weight must be between 1 and 100", exception.Message);
-        }
-
-        [Test]
-        [TestCase(20)]
-        [TestCase(60)]
-        public void ValidatePlan_CreativeLength_InvalidSum(int weight)
-        {
-            _spotLengthEngineMock.Setup(s => s.SpotLengthIdExists(It.IsAny<int>())).Returns(true);
-
-            var creativeLengths = _GetCreativeLengths();
-            creativeLengths[0].Weight = weight;
-
-            var exception = Assert.Throws<ApplicationException>(() => _planValidator.ValidateCreativeLengths(creativeLengths));
-
-            Assert.AreEqual("Sum Weight of all Creative Lengths must equal 100%", exception.Message);
-        }
-
-        [Test]
-        public void ValidatePlan_CreativeLength_InvalidPartialSum()
-        {
-            _spotLengthEngineMock.Setup(s => s.SpotLengthIdExists(It.IsAny<int>())).Returns(true);
-
-            var creativeLengths = _GetCreativeLengths();
-            creativeLengths.Add(new CreativeLength { SpotLengthId = 4, Weight = null });
-            creativeLengths[0].Weight = 60;
-
-            var exception = Assert.Throws<ApplicationException>(() => _planValidator.ValidateCreativeLengths(creativeLengths));
-
-            Assert.AreEqual("Creative length weight must be between 1 and 100", exception.Message);
         }
 
         private void _ValidateWeeklyBreakdownWeeks(PlanDto plan, bool shouldThrow = false, string errorMessageIfShouldThrow = null)

@@ -38,6 +38,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         private readonly Mock<IQuarterCalculationEngine> _QuarterCalculationEngineMock;
         private readonly Mock<IDaypartDefaultService> _DaypartDefaultServiceMock;
         private readonly Mock<IWeeklyBreakdownEngine> _WeeklyBreakdownEngineMock;
+        private readonly Mock<ICreativeLengthEngine> _CreativeLengthEngineMock;
 
         public PlanServiceTests()
         {
@@ -55,6 +56,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             _QuarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
             _DaypartDefaultServiceMock = new Mock<IDaypartDefaultService>();
             _WeeklyBreakdownEngineMock = new Mock<IWeeklyBreakdownEngine>();
+            _CreativeLengthEngineMock = new Mock<ICreativeLengthEngine>();
 
             planService = new PlanService(
                 _DataRepositoryFactoryMock.Object,
@@ -70,7 +72,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 _PlanPricingServiceMock.Object,
                 _QuarterCalculationEngineMock.Object,
                 _DaypartDefaultServiceMock.Object,
-                _WeeklyBreakdownEngineMock.Object
+                _WeeklyBreakdownEngineMock.Object,
+                _CreativeLengthEngineMock.Object
             );
         }
 

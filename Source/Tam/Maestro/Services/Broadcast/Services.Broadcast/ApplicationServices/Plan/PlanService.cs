@@ -23,7 +23,6 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {
-
     public interface IPlanService : IApplicationService
     {
         /// <summary>
@@ -143,6 +142,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
     {
         private readonly IPlanRepository _PlanRepository;
         private readonly IPlanValidator _PlanValidator;
+        private readonly ICreativeLengthEngine _CreativeLengthEngine;
         private readonly IPlanBudgetDeliveryCalculator _BudgetCalculator;
         private readonly IMediaMonthAndWeekAggregateCache _MediaWeekCache;
         private readonly IPlanAggregator _PlanAggregator;
@@ -175,7 +175,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , IPlanPricingService planPricingService
             , IQuarterCalculationEngine quarterCalculationEngine
             , IDaypartDefaultService daypartDefaultService
-            , IWeeklyBreakdownEngine weeklyBreakdownEngine)
+            , IWeeklyBreakdownEngine weeklyBreakdownEngine
+            , ICreativeLengthEngine creativeLengthEngine)
         {
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _PlanValidator = planValidator;
@@ -196,6 +197,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _QuarterCalculationEngine = quarterCalculationEngine;
             _DaypartDefaultService = daypartDefaultService;
             _WeeklyBreakdownEngine = weeklyBreakdownEngine;
+            _CreativeLengthEngine = creativeLengthEngine;
         }
 
         ///<inheritdoc/>
@@ -212,7 +214,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             else
             {
-                plan.CreativeLengths = CreativeLengthWeightHelper.DistributeWeight(plan.CreativeLengths);
+                plan.CreativeLengths = _CreativeLengthEngine.DistributeWeight(plan.CreativeLengths);
             }
 
             DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
@@ -1215,7 +1217,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <inheritdoc/>
         public List<CreativeLength> CalculateCreativeLengthWeight(List<CreativeLength> request)
         {
-            _PlanValidator.ValidateCreativeLengths(request);
+            _CreativeLengthEngine.ValidateCreativeLengths(request);
 
             //if all the creative lengths have a user entered value
             //there is nothing else to do
@@ -1230,7 +1232,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 request.Single(x => x.Weight == 100).Weight = null;
             }
-            var result = CreativeLengthWeightHelper.DistributeWeight(request);
+            var result = _CreativeLengthEngine.DistributeWeight(request);
             var creativeLengthsWithWeightSet = request.Where(x => x.Weight.HasValue).Select(x => x.SpotLengthId).ToList();
 
             //we only return the values for placeholders
