@@ -178,7 +178,6 @@ namespace BroadcastComposerWeb.Controllers
             return RedirectToAction("Index");
         }
 
-
         [HttpPost]
         public ActionResult ClearMediaMonthCrunchCache()
         {

@@ -1,0 +1,33 @@
+[
+  {
+    "Name": "PROD",
+    "SourceDirectoryPath": "\\\\cadfs11.crossmw.com\\Inventory Management UI\\ProgramGuide\\ExportsToProcess\\[yyyyMMdd]\\PROD\\Processed",
+    "TargetUrl": "http://cadapps-prod5.crossmw.com/Broadcast/Maintenance/ImportInventoryProgramsResults",
+    "IsEnabled": "false"
+  },
+  {
+    "Name": "QA",
+    "SourceDirectoryPath": "\\\\cadfs11.crossmw.com\\Inventory Management UI\\ProgramGuide\\ExportsToProcess\\[yyyyMMdd]\\QA\\Processed",
+    "TargetUrl": "http://devvmqa1.dev.crossmw.com/Broadcast/Maintenance/ImportInventoryProgramsResults",
+    "IsEnabled": "false"
+  },
+  {
+    "Name": "DEV",
+    "SourceDirectoryPath": "\\\\cadfs11.crossmw.com\\Inventory Management UI\\ProgramGuide\\ExportsToProcess\\[yyyyMMdd]\\DEV\\Processed",
+    "TargetUrl": "http://devvmqa2.dev.crossmw.com/Broadcast/Maintenance/ImportInventoryProgramsResults",
+    "IsEnabled": "true"
+  },
+  {
+    "Name": "UAT",
+    "SourceDirectoryPath": "\\\\cadfs11.crossmw.com\\Inventory Management UI\\ProgramGuide\\ExportsToProcess\\[yyyyMMdd]\\UAT\\Processed",
+    "TargetUrl": "http://cadapps-uat1.crossmw.com/Broadcast/Maintenance/ImportInventoryProgramsResults",
+    "IsEnabled": "false"
+  },
+  {
+    "Name": "STG",
+    "SourceDirectoryPath":
+      "\\\\cadfs11.crossmw.com\\Inventory Management UI\\STG\\ProgramGuide\\ExportsToProcess\\[yyyyMMdd]\\PROD\\Processed",
+    "TargetUrl": "http://cadapps-stg5.crossmw.com/Broadcast/Maintenance/ImportInventoryProgramsResults",
+    "IsEnabled": "false"
+  }
+]
