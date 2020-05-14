@@ -8,7 +8,6 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
-using Services.Broadcast.Entities.PlanPricing;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
@@ -339,8 +338,20 @@ namespace Services.Broadcast.ApplicationServices
                 throw new Exception("Error encountered while canceling Pricing Model, process is not running");
             }
 
-            _BackgroundJobClient.Delete(job.HangfireJobId);
+            if (string.IsNullOrEmpty(job?.HangfireJobId) == false)
+            {
+                try
+                {
+                    _BackgroundJobClient.Delete(job.HangfireJobId);
+                }
+                catch (Exception ex)
+                {
+                    _LogError($"Exception caught attempting to delete hangfire job '{job.HangfireJobId}'.", ex);
+                }
+            }
+            
             job.Status = BackgroundJobProcessingStatus.Canceled;
+            job.Completed = _GetCurrentDateTime();
 
             _PlanRepository.UpdatePlanPricingJob(job);
        
@@ -1224,6 +1235,16 @@ namespace Services.Broadcast.ApplicationServices
             public PlanPricingInventoryProgram Program { get; set; }
 
             public PlanPricingInventoryProgram.ManifestWeek ManifestWeek { get; set; }
+        }
+
+        /// <summary>
+        /// Gets the current date time.
+        /// Virtual to assist unit tests.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual DateTime _GetCurrentDateTime()
+        {
+            return DateTime.Now;
         }
     }
 }

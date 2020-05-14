@@ -980,9 +980,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(jobUpdates));
         }
 
-        protected PlanPricingService _GetService()
+        protected PlanPricingServiceUnitTestClass _GetService()
         {
-            return new PlanPricingService(
+            return new PlanPricingServiceUnitTestClass(
                 _DataRepositoryFactoryMock.Object,
                 _SpotLengthEngineMock.Object,
                 _PricingApiClientMock.Object,
@@ -6886,11 +6886,123 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Callback<string, IState, string>((jobId, state, expectedState) => hanfgireJobUpdates.Add(new { jobId, state, expectedState }));
 
             var service = _GetService();
+            service.UT_CurrentDateTime = new DateTime(2020, 2, 4, 15, 32, 52);
 
             // Act
             var cancelCurrentPricingExecutionResult = service.CancelCurrentPricingExecution(planId);
 
             // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(new
+            {
+                cancelCurrentPricingExecutionResult,
+                jobUpdates,
+                hanfgireJobUpdates
+            }));
+        }
+
+        /// <summary>
+        /// Scenario : Enqueued without a HangfireJobId.
+        /// </summary>
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CancelsPricingJob_WhenQueuedWithoutHangfireId()
+        {
+            // Arrange
+            const int planId = 6;
+            const string hangfireJobId = null;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Queued,
+                    HangfireJobId = hangfireJobId,
+                    Id = 7,
+                    PlanVersionId = 11,
+                    Queued = new DateTime(2020, 2, 4, 15, 31, 27)
+                });
+
+            var jobUpdates = new List<PlanPricingJob>();
+            _PlanRepositoryMock
+                .Setup(x => x.UpdatePlanPricingJob(It.IsAny<PlanPricingJob>()))
+                .Callback<PlanPricingJob>(jobUpdate => jobUpdates.Add(jobUpdate));
+
+            var hanfgireJobUpdates = new List<object>();
+            _BackgroundJobClientMock
+                .Setup(x => x.ChangeState(It.IsAny<string>(), It.IsAny<IState>(), It.IsAny<string>()))
+                .Callback<string, IState, string>((jobId, state, expectedState) =>
+                {
+                    // mimicing hangfire service behaviour
+                    if (string.IsNullOrEmpty(jobId))
+                    {
+                        throw new Exception("Null Job Id Exception");
+                    }
+
+                    hanfgireJobUpdates.Add(new {jobId, state, expectedState});
+                });
+
+            var service = _GetService();
+            service.UT_CurrentDateTime = new DateTime(2020, 2,4,15,32, 52);
+
+            // Act
+            var cancelCurrentPricingExecutionResult = service.CancelCurrentPricingExecution(planId);
+
+            // Assert
+            // it shouldn't even try to delete the hangfire job.
+            // it should update the job always
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(new
+            {
+                cancelCurrentPricingExecutionResult,
+                jobUpdates,
+                hanfgireJobUpdates
+            }));
+        }
+
+        /// <summary>
+        /// Scenario : When deleting the hangfire job it throws an exception.
+        /// </summary>
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CancelsPricingJob_WhenHangfireCancelThrowsException()
+        {
+            // Arrange
+            const int planId = 6;
+            const string hangfireJobId = "#w2e3r4";
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Queued,
+                    HangfireJobId = hangfireJobId,
+                    Id = 7,
+                    PlanVersionId = 11,
+                    Queued = new DateTime(2020, 2, 4, 15, 31, 27)
+                });
+
+            var jobUpdates = new List<PlanPricingJob>();
+            _PlanRepositoryMock
+                .Setup(x => x.UpdatePlanPricingJob(It.IsAny<PlanPricingJob>()))
+                .Callback<PlanPricingJob>(jobUpdate => jobUpdates.Add(jobUpdate));
+
+            var hanfgireJobUpdates = new List<object>();
+            _BackgroundJobClientMock
+                .Setup(x => x.ChangeState(It.IsAny<string>(), It.IsAny<IState>(), It.IsAny<string>()))
+                .Callback<string, IState, string>((jobId, state, expectedState) =>
+                {
+                    hanfgireJobUpdates.Add(new { jobId, state, expectedState });
+                    throw new Exception("Throwing a test exception.");
+                });
+
+            var service = _GetService();
+            service.UT_CurrentDateTime = new DateTime(2020, 2, 4, 15, 32, 52);
+
+            // Act
+            var cancelCurrentPricingExecutionResult = service.CancelCurrentPricingExecution(planId);
+
+            // Assert
+            // it shouldn't even try to delete the hangfire job.
+            // it should update the job always
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(new
             {
                 cancelCurrentPricingExecutionResult,

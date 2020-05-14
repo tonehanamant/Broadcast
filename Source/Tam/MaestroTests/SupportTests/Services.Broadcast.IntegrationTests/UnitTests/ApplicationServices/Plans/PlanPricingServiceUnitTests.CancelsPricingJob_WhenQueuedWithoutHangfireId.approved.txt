@@ -5,7 +5,7 @@
       "Completed": "2020-02-04T15:32:52",
       "DiagnosticResult": null,
       "ErrorMessage": null,
-      "HangfireJobId": "#w2e3r4",
+      "HangfireJobId": null,
       "Id": 7,
       "PlanVersionId": 11,
       "Queued": "2020-02-04T15:31:27",
@@ -30,21 +30,13 @@
       }
     }
   },
-  "hanfgireJobUpdates": [
-    {
-      "expectedState": null,
-      "jobId": "#w2e3r4",
-      "state": {
-        "Reason": null
-      }
-    }
-  ],
+  "hanfgireJobUpdates": [],
   "jobUpdates": [
     {
       "Completed": "2020-02-04T15:32:52",
       "DiagnosticResult": null,
       "ErrorMessage": null,
-      "HangfireJobId": "#w2e3r4",
+      "HangfireJobId": null,
       "Id": 7,
       "PlanVersionId": 11,
       "Queued": "2020-02-04T15:31:27",
