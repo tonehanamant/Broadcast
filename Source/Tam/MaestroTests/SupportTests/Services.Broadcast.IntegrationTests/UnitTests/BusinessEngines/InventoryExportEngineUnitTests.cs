@@ -2,12 +2,11 @@
 using ApprovalTests.Reporters;
 using IntegrationTests.Common;
 using NUnit.Framework;
-using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Inventory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Services.Broadcast.Entities.Inventory;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines

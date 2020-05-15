@@ -241,7 +241,7 @@ namespace Services.Broadcast.BusinessEngines
             weekIds.ForEach(weekId =>
             {
                 var foundWeek = lineDetailDetail.Weeks.FirstOrDefault(s => s.MediaWeekId.Equals(weekId));
-                var formattedWeekRate = foundWeek?.SpotCost ?? 0;
+                var formattedWeekRate = foundWeek == null ? "-" : $"{foundWeek.SpotCost:C}";
                 lineColumnValues.Add(formattedWeekRate);
             });
 
