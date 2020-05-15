@@ -66,10 +66,10 @@ namespace Services.Broadcast.BusinessEngines
             new ColumnDescriptor {ColumnIndex = 1, Name = "Rank", ColumnType = ColumnTypeEnum.Integer, Width = 7 },
             new ColumnDescriptor {ColumnIndex = 2, Name = "Market", ColumnType = ColumnTypeEnum.Text, Width = 27.43},
             new ColumnDescriptor {ColumnIndex = 3, Name = "Station", ColumnType = ColumnTypeEnum.Text, Width = 8.29},
-            new ColumnDescriptor {ColumnIndex = 4, Name = "Day,Time", ColumnType = ColumnTypeEnum.Text, Width = 20.57},
-            new ColumnDescriptor {ColumnIndex = 5, Name = "Program", ColumnType = ColumnTypeEnum.Text, Width = 37},
+            new ColumnDescriptor {ColumnIndex = 4, Name = "Timeslot", ColumnType = ColumnTypeEnum.Text, Width = 20.57},
+            new ColumnDescriptor {ColumnIndex = 5, Name = "Program name", ColumnType = ColumnTypeEnum.Text, Width = 37},
             new ColumnDescriptor {ColumnIndex = 6, Name = ":30 Rate", ColumnType = ColumnTypeEnum.Money, IsValueCentered = true},
-            new ColumnDescriptor {ColumnIndex = 7, Name = "HH(000)", ColumnType = ColumnTypeEnum.Integer, IsValueCentered = true},
+            new ColumnDescriptor {ColumnIndex = 7, Name = "HH Imp(000)", ColumnType = ColumnTypeEnum.Integer, IsValueCentered = true},
             new ColumnDescriptor {ColumnIndex = 8, Name = ":30 CPM", ColumnType = ColumnTypeEnum.Money, IsValueCentered = true},
         };
 
@@ -160,7 +160,7 @@ namespace Services.Broadcast.BusinessEngines
                             excelInventoryTab.Cells[rowIndex, (i + 1)].Style.Numberformat.Format = "###,###,##0";
                             break;
                         case ColumnTypeEnum.Money:
-                            excelInventoryTab.Cells[rowIndex, (i + 1)].Style.Numberformat.Format = "$###,###,##0.00";
+                            excelInventoryTab.Cells[rowIndex, (i + 1)].Style.Numberformat.Format = "$###,###,##0";
                             break;
                     }
 
@@ -211,7 +211,7 @@ namespace Services.Broadcast.BusinessEngines
             var rankListIndex = _BaseColumnHeaders.First(s => s.Name.Equals("Rank")).ColumnIndex - 1; // 0 indexed
             var marketNameListIndex = _BaseColumnHeaders.First(s => s.Name.Equals("Market")).ColumnIndex - 1;  // 0 indexed
             var stationCallsignsListIndex = _BaseColumnHeaders.First(s => s.Name.Equals("Station")).ColumnIndex - 1;  // 0 indexed
-            var daypartListIndex = _BaseColumnHeaders.First(s => s.Name.Equals("Day,Time")).ColumnIndex - 1;  // 0 indexed
+            var daypartListIndex = _BaseColumnHeaders.First(s => s.Name.Equals("Timeslot")).ColumnIndex - 1;  // 0 indexed
 
             var orderedLines = lineStrings.
                 OrderBy(s => s[rankListIndex]).

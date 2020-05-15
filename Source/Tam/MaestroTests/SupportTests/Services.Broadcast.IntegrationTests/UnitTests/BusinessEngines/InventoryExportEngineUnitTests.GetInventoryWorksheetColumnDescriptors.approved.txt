@@ -28,7 +28,7 @@
     "ColumnType": 0,
     "IsHeaderBold": false,
     "IsValueCentered": false,
-    "Name": "Day,Time",
+    "Name": "Timeslot",
     "Width": 20.57
   },
   {
@@ -36,7 +36,7 @@
     "ColumnType": 0,
     "IsHeaderBold": false,
     "IsValueCentered": false,
-    "Name": "Program",
+    "Name": "Program name",
     "Width": 37.0
   },
   {
@@ -52,7 +52,7 @@
     "ColumnType": 1,
     "IsHeaderBold": false,
     "IsValueCentered": true,
-    "Name": "HH(000)",
+    "Name": "HH Imp(000)",
     "Width": 10.38
   },
   {
