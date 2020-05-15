@@ -176,8 +176,6 @@ namespace Services.Broadcast.Repositories
         /// <returns>DateRange containing the start and end date</returns>
         DateRange GetStationInventoryManifesDaypartWeeksDateRange(int manifestDaypartId);
 
-        List<StationInventoryManifestWeek> GetInventoryWeeks(int inventorySourceId);
-
         /// <summary>
         /// For tests
         /// </summary>
@@ -1329,19 +1327,6 @@ namespace Services.Broadcast.Repositories
                                 IsActive = x.is_active
                             }).Single();
             });
-        }
-
-        public List<StationInventoryManifestWeek> GetInventoryWeeks(int inventorySourceId)
-        {
-            return _InReadUncommitedTransaction(
-               context =>
-               {
-               return context.station_inventory_manifest
-                   .Include(s => s.station_inventory_manifest_weeks)
-                   .Include(s => s.station_inventory_manifest_weeks.Select(w => w.media_weeks))
-                   .Where(x => x.inventory_source_id == inventorySourceId && (FileStatusEnum)x.inventory_files.status == FileStatusEnum.Loaded)
-                   .SelectMany(x => x.station_inventory_manifest_weeks).ToList().Select(_MapToInventoryManifestWeek).ToList();
-               });
         }
 
         ///<inheritdoc/>
