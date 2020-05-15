@@ -1,17 +1,15 @@
 ﻿using Common.Services.Repositories;
+using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
-using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventorySummary;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using ConfigurationService.Client;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Tam.Maestro.Services.Clients;
-using Services.Broadcast.Entities.Enums;
-using System.Data.Entity;
 
 namespace Services.Broadcast.Repositories
 {
@@ -24,12 +22,14 @@ namespace Services.Broadcast.Repositories
         List<InventorySummaryManifestDto> GetInventorySummaryManifestsForDiginetSources(InventorySource inventorySource, DateTime startDate, DateTime endDate);
         List<InventorySummaryManifestFileDto> GetInventorySummaryManifestFileDtos(List<int> inventoryFileIds);
         Dictionary<int, DateTime?> GetLatestSummaryUpdatesBySource();
+
         /// <summary>
-        /// Saves the inventory summary aggregated data for the source
+        /// Saves the inventory aggregated data.
         /// </summary>
-        /// <param name="inventorySummaryAggregation">InventorySummaryAggregation object to be saved</param>
-        /// <param name="inventorySourceId">Inventory source id</param>
-        void SaveInventoryAggregatedData(List<InventoryQuarterSummary> inventorySummaryAggregation, int inventorySourceId);
+        /// <param name="inventorySummaryAggregation">The inventory summary aggregation.</param>
+        /// <param name="inventorySourceId">The inventory source identifier.</param>
+        /// <param name="affectedQuarters">The affected quarters. Null means all.</param>
+        void SaveInventoryAggregatedData(List<InventoryQuarterSummary> inventorySummaryAggregation, int inventorySourceId, List<QuarterDetailDto> affectedQuarters);
 
         /// <summary>
         /// Gets the aggregated summary data for the source and selected quarter
@@ -74,14 +74,15 @@ namespace Services.Broadcast.Repositories
                             .ToList();
                 });
         }
-
+        
         /// <inheritdoc/>
-        public void SaveInventoryAggregatedData(List<InventoryQuarterSummary> inventorySummaryAggregation, int inventorySourceId)
+        public void SaveInventoryAggregatedData(List<InventoryQuarterSummary> inventorySummaryAggregation, int inventorySourceId, 
+            List<QuarterDetailDto> affectedQuarters)
         {
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    _RemoveExistingAggregationData(inventorySourceId, context);
+                    _RemoveExistingAggregationData(inventorySourceId, context, affectedQuarters);
 
                     var first = inventorySummaryAggregation.FirstOrDefault();
 
@@ -284,10 +285,22 @@ namespace Services.Broadcast.Repositories
             };
         }
 
-        private static void _RemoveExistingAggregationData(int inventorySourceId, QueryHintBroadcastContext context)
+        private static void _RemoveExistingAggregationData(int inventorySourceId, QueryHintBroadcastContext context, List<QuarterDetailDto> quarters)
         {
             context.inventory_summary.RemoveRange(context.inventory_summary.Where(x => x.inventory_source_id == inventorySourceId).ToList());
-            context.inventory_summary_quarters.RemoveRange(context.inventory_summary_quarters.Where(x => x.inventory_source_id == inventorySourceId).ToList());
+
+            if (quarters?.Any() == true)
+            {
+                var quarterIdentifiers = quarters.Select(s => $"{s.Year}_Q{s.Quarter}").ToList();
+                var allQuarters = context.inventory_summary_quarters.Where(x => x.inventory_source_id == inventorySourceId).ToList();
+                var quartersToRemove = allQuarters.Where(s => quarterIdentifiers.Contains($"{s.quarter_year}_Q{s.quarter_number}")).ToList();
+                context.inventory_summary_quarters.RemoveRange(quartersToRemove);
+            }
+            else
+            {
+                // remove all of them.
+                context.inventory_summary_quarters.RemoveRange(context.inventory_summary_quarters.Where(x => x.inventory_source_id == inventorySourceId).ToList());
+            }
         }
 
         private static List<inventory_summary_gaps> _MapInventorySummaryGapsData(InventoryQuarterSummary inventorySummaryAggregation)

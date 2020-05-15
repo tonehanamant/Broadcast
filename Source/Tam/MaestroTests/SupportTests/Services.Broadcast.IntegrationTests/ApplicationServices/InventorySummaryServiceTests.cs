@@ -3,23 +3,24 @@ using ApprovalTests.Namers;
 using ApprovalTests.Reporters;
 using Common.Services;
 using IntegrationTests.Common;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventorySummary;
+using Services.Broadcast.Extensions;
+using Services.Broadcast.IntegrationTests.Helpers;
 using Services.Broadcast.Repositories;
+using Services.Broadcast.Repositories.Inventory;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Tam.Maestro.Common.DataLayer;
-using Microsoft.Practices.Unity;
-using Services.Broadcast.Extensions;
-using System.Collections.Generic;
-using Services.Broadcast.Cache;
-using Services.Broadcast.IntegrationTests.Helpers;
 using System.Threading;
+using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -31,6 +32,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IInventorySummaryCache _InventorySummaryCache = IntegrationTestApplicationServiceFactory.Instance.Resolve<IInventorySummaryCache>();
         private readonly IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         private readonly IDaypartDefaultRepository _DaypartDefaultRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
+        private readonly IInventoryExportRepository _InventoryExportRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryExportRepository>();
+
         private InventoryFileTestHelper _InventoryFileTestHelper;
         private int nbcOAndO_InventorySourceId = 0;
 
@@ -263,6 +266,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     InventorySourceId = inventorySourceId
                 }, currentDateTime);
 
+                var exportableQuarterSummariesBefore = _InventoryExportRepository.GetInventoryQuartersForSource(inventorySourceId);
+
                 var quarterPreUpdate = inventorySummariesPreUpdate.FirstOrDefault(i => i.Quarter.Quarter == 2 && i.Quarter.Year == 2019);
 
                 Thread.Sleep(1000);
@@ -281,8 +286,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     InventorySourceId = inventorySourceId
                 }, currentDateTime);
                 var quarterPostUpdate = inventorySummariesPostUpdate.FirstOrDefault(i => i.Quarter.Quarter == 2 && i.Quarter.Year == 2019);
+                
+                var exportableQuarterSummariesAfter = _InventoryExportRepository.GetInventoryQuartersForSource(inventorySourceId);
 
                 Assert.Greater(quarterPostUpdate.LastUpdatedDate.Value.Ticks, quarterPreUpdate.LastUpdatedDate.GetValueOrDefault().Ticks);
+                // validate the untouched quarters remained for file export
+                Assert.AreEqual(exportableQuarterSummariesBefore.Count, exportableQuarterSummariesAfter.Count);
             }
         }
 

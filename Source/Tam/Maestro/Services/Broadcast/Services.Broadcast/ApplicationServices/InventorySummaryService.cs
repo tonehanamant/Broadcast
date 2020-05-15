@@ -516,10 +516,7 @@ namespace Services.Broadcast.ApplicationServices
             _BackgroundJobClient.Enqueue<IInventorySummaryService>(x => x.AggregateInventorySummaryData(new List<int> { inventorySourceId }));
         }
 
-        /// <summary>
-        /// Aggregates all the information based on the list of inventory source ids
-        /// </summary>
-        /// <param name="inventorySourceIds">List of inventory source ids</param>
+        /// <inheritdoc />
         public void AggregateInventorySummaryData(List<int> inventorySourceIds)
         {
             var houseHoldAudienceId = _AudiencesCache.GetDefaultAudience().Id;
@@ -530,10 +527,11 @@ namespace Services.Broadcast.ApplicationServices
                 var inventorySummaryFactory = _GetInventorySummaryFactory(inventorySource.InventoryType);
                 var summaryData = _CreateInventorySummariesForSource(inventorySource, inventorySummaryFactory, houseHoldAudienceId, DateTime.Now);
 
-                _InventorySummaryRepository.SaveInventoryAggregatedData(summaryData, inventorySourceId);
+                _InventorySummaryRepository.SaveInventoryAggregatedData(summaryData, inventorySourceId, null);
             }
         }
 
+        /// <inheritdoc 
         public void AggregateInventorySummaryData(List<int> inventorySourceIds, DateTime? startDate, DateTime? endDate)
         {
             var houseHoldAudienceId = _AudiencesCache.GetDefaultAudience().Id;
@@ -545,7 +543,7 @@ namespace Services.Broadcast.ApplicationServices
                 var quarters = _GetInventoryQuarters(startDate, endDate, DateTime.Now, inventorySourceId);
                 var summaryData = _CreateInventorySummariesForSource(inventorySource, inventorySummaryFactory, houseHoldAudienceId, quarters);
 
-                _InventorySummaryRepository.SaveInventoryAggregatedData(summaryData, inventorySourceId);
+                _InventorySummaryRepository.SaveInventoryAggregatedData(summaryData, inventorySourceId, quarters);
             }
         }
     }
