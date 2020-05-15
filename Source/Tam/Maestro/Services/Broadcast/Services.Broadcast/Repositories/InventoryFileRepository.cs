@@ -47,8 +47,6 @@ namespace Services.Broadcast.Repositories
                     UniqueIdentifier = file.identifier,
                     CreatedBy = file.created_by,
                     CreatedDate = file.created_date,
-                    RowsProcessed = file.rows_processed,
-                    EffectiveDate = file.effective_date,
                     EndDate = file.end_date,
                     InventorySource = new InventorySource
                     {
