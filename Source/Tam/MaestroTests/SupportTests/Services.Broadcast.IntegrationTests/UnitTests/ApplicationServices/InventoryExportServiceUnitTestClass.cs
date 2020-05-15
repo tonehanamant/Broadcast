@@ -34,11 +34,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             return "BroadcastServiceSystemParameter.BroadcastSharedFolder";
         }
 
-        public string UT_GetInventoryFileName(InventorySource source)
-        {
-            return base._GetInventoryFileName(source);
-        }
-
         public DateTime? UT_DateTimeNow { get; set; }
 
         protected override DateTime _GetDateTimeNow()

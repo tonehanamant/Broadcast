@@ -174,7 +174,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory
 
                 // save the file
                 var saveDirectory = _GetExportFileSaveDirectory();
-                var fileName = _GetInventoryFileName(inventorySource);
+                var fileName = _GetInventoryFileName(request.Quarter);
                 var filePath = Path.Combine(saveDirectory, fileName);
                 _LogInfo($"Export job {job.Id} beginning file save to path '{filePath}'.", userName);
 
@@ -233,12 +233,10 @@ namespace Services.Broadcast.ApplicationServices.Inventory
             return result;
         }
 
-        protected string _GetInventoryFileName(InventorySource source)
+        protected string _GetInventoryFileName(QuarterDetailDto quarter)
         {
-            var sourceName = source.Name.PrepareForUsingInFileName().RemoveWhiteSpaces();
-            var dateTimeGenerated = _GetDateTimeNow().ToFileDateTimeFormat();
-            var transformedSourceName = $"InventoryExport_{sourceName}_{dateTimeGenerated}.xlsx";
-            return transformedSourceName;
+            var fileName = $"Open Market inventory {quarter.Year} Q{quarter.Quarter}.xlsx";
+            return fileName;
         }
 
         private string _GetExportFileSaveDirectory()

@@ -219,7 +219,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // verify the saved file
             Assert.AreEqual(1, createFilesCalled.Count);
             Assert.AreEqual(@"BroadcastServiceSystemParameter.BroadcastSharedFolder\InventoryExports", createFilesCalled[0].Item1);
-            Assert.AreEqual("InventoryExport_OpenMarket_20200506_143218.xlsx", createFilesCalled[0].Item2);
+            Assert.AreEqual("Open Market inventory 2020 Q2.xlsx", createFilesCalled[0].Item2);
             Assert.IsNotNull(createFilesCalled[0].Item3);
         }
 
@@ -345,35 +345,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual("No inventory found to export for job 1.", caught.Message);
             Assert.AreEqual(1, updatedJobs.Count);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(updatedJobs[0]));
-        }
-
-        [Test]
-        [TestCase("Open Market", "OpenMarket")]
-        [TestCase("MLB", "MLB")]
-        [TestCase("ABC O&O", "ABCO&O")]
-        [TestCase("20th Century Fox (Twentieth Century)", "20thCenturyFox(TwentiethCentury)")]
-        public void GetInventoryFileName(string inventorySourceName, string expectedResultName)
-        {
-            var inventorySource = new InventorySource {Name = inventorySourceName };
-            var testCurrentTimestamp = new DateTime(2020, 05, 06, 14, 32, 18);
-            var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
-            var service = new InventoryExportServiceUnitTestClass(
-                broadcastDataRepositoryFactory.Object,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null)
-            {
-                UT_DateTimeNow = testCurrentTimestamp
-            };
-            var expectedResult = $"InventoryExport_{expectedResultName}_20200506_143218.xlsx";
-
-            var result = service.UT_GetInventoryFileName(inventorySource);
-            
-            Assert.AreEqual(expectedResult, result);
         }
 
         [Test]
