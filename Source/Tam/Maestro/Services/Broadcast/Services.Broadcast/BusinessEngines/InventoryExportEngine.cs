@@ -106,7 +106,8 @@ namespace Services.Broadcast.BusinessEngines
                 var avgSpotCost = itemWeeks.Average(w => w.SpotCost);
                 var avgHhImpressions = itemWeeks.Average(w => w.HhImpressions);
                 var avgCpm = avgHhImpressions.Equals(0) ? 0 : (avgSpotCost / (decimal)avgHhImpressions) * 1000;
-                var programNames = stationDaypartGroup.Select(s => s.ProgramName).Distinct().ToList();
+                var programNames = stationDaypartGroup.Select(s => string.IsNullOrWhiteSpace(s.ProgramName) ? s.InventoryProgramName : s.ProgramName)
+                    .Distinct().ToList();
 
                 var lineItem = new InventoryExportLineDetail
                 {

@@ -113,5 +113,42 @@
         "SpotCost": 20.0
       }
     ]
+  },
+  {
+    "AvgCpm": 2.000,
+    "AvgHhImpressions": 10000.0,
+    "AvgSpotCost": 20.0,
+    "DaypartId": 1,
+    "ProgramNames": [
+      "InventoryProgramNameSix"
+    ],
+    "StationId": 5,
+    "Weeks": [
+      {
+        "Cpm": 2.000,
+        "HhImpressions": 10000.0,
+        "MediaWeekId": 2,
+        "SpotCost": 20.0
+      }
+    ]
+  },
+  {
+    "AvgCpm": 2.000,
+    "AvgHhImpressions": 10000.0,
+    "AvgSpotCost": 20.0,
+    "DaypartId": 1,
+    "ProgramNames": [
+      "ProgramSeven",
+      "InventoryProgramNameSeven"
+    ],
+    "StationId": 6,
+    "Weeks": [
+      {
+        "Cpm": 2.000,
+        "HhImpressions": 10000.0,
+        "MediaWeekId": 2,
+        "SpotCost": 20.0
+      }
+    ]
   }
 ]

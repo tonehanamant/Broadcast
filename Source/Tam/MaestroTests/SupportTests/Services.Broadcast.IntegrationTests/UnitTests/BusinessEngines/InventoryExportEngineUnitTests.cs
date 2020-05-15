@@ -24,23 +24,28 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var engine = new InventoryExportEngineUnitTestClass();
             var items = new List<InventoryExportDto>();
             // item 1 - goes to line 1
-            items.Add(new InventoryExportDto() { InventoryId = 1, MediaWeekId = 1, StationId = 1, DaypartId = 1, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramOne"});
-            items.Add(new InventoryExportDto() { InventoryId = 1, MediaWeekId = 2, StationId = 1, DaypartId = 1, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramOne" });
-            items.Add(new InventoryExportDto() { InventoryId = 1, MediaWeekId = 3, StationId = 1, DaypartId = 1, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramOne" });
+            items.Add(new InventoryExportDto() { InventoryId = 1, MediaWeekId = 1, StationId = 1, DaypartId = 1, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramOne", InventoryProgramName = "InventoryProgramNameOne" });
+            items.Add(new InventoryExportDto() { InventoryId = 1, MediaWeekId = 2, StationId = 1, DaypartId = 1, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramOne", InventoryProgramName = "InventoryProgramNameOne" });
+            items.Add(new InventoryExportDto() { InventoryId = 1, MediaWeekId = 3, StationId = 1, DaypartId = 1, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramOne", InventoryProgramName = "InventoryProgramNameOne" });
             // item 2 - goes to line 2
-            items.Add(new InventoryExportDto() { InventoryId = 2, MediaWeekId = 1, StationId = 2, DaypartId = 2, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramTwo" });
-            items.Add(new InventoryExportDto() { InventoryId = 2, MediaWeekId = 2, StationId = 2, DaypartId = 2, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramTwo" });
-            items.Add(new InventoryExportDto() { InventoryId = 2, MediaWeekId = 3, StationId = 2, DaypartId = 2, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramTwo" });
+            items.Add(new InventoryExportDto() { InventoryId = 2, MediaWeekId = 1, StationId = 2, DaypartId = 2, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramTwo", InventoryProgramName = "InventoryProgramNameTwo" });
+            items.Add(new InventoryExportDto() { InventoryId = 2, MediaWeekId = 2, StationId = 2, DaypartId = 2, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramTwo", InventoryProgramName = "InventoryProgramNameTwo" });
+            items.Add(new InventoryExportDto() { InventoryId = 2, MediaWeekId = 3, StationId = 2, DaypartId = 2, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramTwo", InventoryProgramName = "InventoryProgramNameTwo" });
             // item 3 - goes to line 3
-            items.Add(new InventoryExportDto() { InventoryId = 3, MediaWeekId = 1, StationId = 3, DaypartId = 3, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramThree" });
-            items.Add(new InventoryExportDto() { InventoryId = 3, MediaWeekId = 2, StationId = 3, DaypartId = 3, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramThree" });
-            items.Add(new InventoryExportDto() { InventoryId = 3, MediaWeekId = 3, StationId = 3, DaypartId = 3, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramThree" });
+            items.Add(new InventoryExportDto() { InventoryId = 3, MediaWeekId = 1, StationId = 3, DaypartId = 3, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramThree", InventoryProgramName = "InventoryProgramNameThree" });
+            items.Add(new InventoryExportDto() { InventoryId = 3, MediaWeekId = 2, StationId = 3, DaypartId = 3, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramThree", InventoryProgramName = "InventoryProgramNameThree" });
+            items.Add(new InventoryExportDto() { InventoryId = 3, MediaWeekId = 3, StationId = 3, DaypartId = 3, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramThree", InventoryProgramName = "InventoryProgramNameThree" });
             // item 4 - goes to line 3
-            items.Add(new InventoryExportDto() { InventoryId = 4, MediaWeekId = 1, StationId = 3, DaypartId = 3, Impressions = 4000, SpotCost = 60, ProgramName = "ProgramFour" });
-            items.Add(new InventoryExportDto() { InventoryId = 4, MediaWeekId = 2, StationId = 3, DaypartId = 3, Impressions = 4000, SpotCost = 60, ProgramName = "ProgramFour" });
+            items.Add(new InventoryExportDto() { InventoryId = 4, MediaWeekId = 1, StationId = 3, DaypartId = 3, Impressions = 4000, SpotCost = 60, ProgramName = "ProgramFour", InventoryProgramName = "InventoryProgramNameFour" });
+            items.Add(new InventoryExportDto() { InventoryId = 4, MediaWeekId = 2, StationId = 3, DaypartId = 3, Impressions = 4000, SpotCost = 60, ProgramName = "ProgramFour", InventoryProgramName = "InventoryProgramNameFour" });
             // item 5 - goes to line 4
-            items.Add(new InventoryExportDto() { InventoryId = 5, MediaWeekId = 2, StationId = 4, DaypartId = 3, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramFive" });
-            items.Add(new InventoryExportDto() { InventoryId = 5, MediaWeekId = 3, StationId = 4, DaypartId = 3, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramFive" });
+            items.Add(new InventoryExportDto() { InventoryId = 5, MediaWeekId = 2, StationId = 4, DaypartId = 3, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramFive", InventoryProgramName = "InventoryProgramNameFive" });
+            items.Add(new InventoryExportDto() { InventoryId = 5, MediaWeekId = 3, StationId = 4, DaypartId = 3, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramFive", InventoryProgramName = "InventoryProgramNameFive" });
+            // item 6 - goes to line 5 - name fallback
+            items.Add(new InventoryExportDto() { InventoryId = 6, MediaWeekId = 2, StationId = 5, DaypartId = 1, Impressions = 10000, SpotCost = 20, ProgramName = "", InventoryProgramName = "InventoryProgramNameSix" });
+            // item 7 - goes to line 6 - multiple, one with no name.
+            items.Add(new InventoryExportDto() { InventoryId = 7, MediaWeekId = 2, StationId = 6, DaypartId = 1, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramSeven", InventoryProgramName = "InventoryProgramNameSeven" });
+            items.Add(new InventoryExportDto() { InventoryId = 7, MediaWeekId = 2, StationId = 6, DaypartId = 1, Impressions = 10000, SpotCost = 20, ProgramName = "", InventoryProgramName = "InventoryProgramNameSeven" });
 
             var result = engine.Calculate(items);
 

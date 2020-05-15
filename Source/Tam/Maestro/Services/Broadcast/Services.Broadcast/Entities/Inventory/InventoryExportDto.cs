@@ -36,5 +36,10 @@
         /// The name of the program that ran during this inventory.
         /// </summary>
         public string ProgramName { get; set; }
+
+        /// <summary>
+        /// The name of the program that the inventory file provided.
+        /// </summary>
+        public string InventoryProgramName { get; set; }
     }
 }

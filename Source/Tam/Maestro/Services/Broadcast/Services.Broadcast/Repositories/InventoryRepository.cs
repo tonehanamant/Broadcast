@@ -1843,7 +1843,8 @@ namespace Services.Broadcast.Repositories
                                     : nonReferenceAudiences.impressions > 0 ? nonReferenceAudiences.impressions.Value
                                     : 0,
                                 SpotCost = rates.spot_cost,
-                                ProgramName = programs.name
+                                ProgramName = programs.name,
+                                InventoryProgramName = daypart.program_name
                             }
                         )
                         .Distinct()
