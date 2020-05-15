@@ -48,6 +48,8 @@ namespace Services.Broadcast.Repositories
                     CreatedBy = file.created_by,
                     CreatedDate = file.created_date,
                     RowsProcessed = file.rows_processed,
+                    EffectiveDate = file.effective_date,
+                    EndDate = file.end_date,
                     InventorySource = new InventorySource
                     {
                         Id = file.inventory_sources.id,
