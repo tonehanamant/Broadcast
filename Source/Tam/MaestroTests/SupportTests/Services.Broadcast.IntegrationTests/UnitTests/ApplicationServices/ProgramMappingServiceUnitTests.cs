@@ -317,6 +317,44 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(programMappingsToBeCreated, _GetJsonSettings()));
         }
 
+        [Test]
+        public void CanEnrichInventoryProgramIfDaypartHasNoPrograms()
+        {
+            // Arrange
+            var programMappings = new List<ProgramMappingsFileRequestDto>
+            {
+                new ProgramMappingsFileRequestDto { OriginalProgramName = "10 NEWS 6PM", OfficialProgramName = "10 NEWS", OfficialGenre = "News", OfficialShowType = "News" },
+            };
+
+            // Manifest Daypart has no Programs associated
+            _InventoryRepositoryMock
+                .Setup(s => s.GetDaypartProgramsForInventoryDayparts(It.IsAny<List<int>>()))
+                .Returns(new List<StationInventoryManifestDaypartProgram>());
+
+            _ProgramMappingRepositoryMock
+                .Setup(s => s.MappingExistsForOriginalProgramName(It.IsAny<string>()))
+                .Returns(false);
+            
+            _ProgramMappingRepositoryMock
+                .Setup(s => s.CreateProgramMapping(It.IsAny<ProgramMappingsDto>()))
+                .Returns(1);
+
+            var ingestedRecordsCount = 0;
+            var updatedInventoryCount = 0;
+            var modifiedWhen = new DateTime(2020, 05, 13);
+
+            // Act
+            _ProgramMappingService.UT_ProcessProgramMappings(programMappings, modifiedWhen, ref updatedInventoryCount, ref ingestedRecordsCount);
+
+            // Assert
+            Assert.AreEqual(1, _getManifestDaypartByNameCalls.Count, "Invalid call count.");
+            Assert.AreEqual(0, _deleteInventoryCalls.Count, "Invalid call count.");
+            Assert.AreEqual(1, _createInventoryCalls.Count, "Invalid call count.");
+
+            Assert.AreEqual(1, ingestedRecordsCount, "Only one record should be ingested.");
+            Assert.AreEqual(1, updatedInventoryCount, "Only one inventory item should be updated.");
+        }
+
         private JsonSerializerSettings _GetJsonSettings()
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
