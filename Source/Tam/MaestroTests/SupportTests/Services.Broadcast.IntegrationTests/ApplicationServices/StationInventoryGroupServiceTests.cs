@@ -1,5 +1,4 @@
 ﻿using ApprovalTests;
-using ApprovalTests.Reporters;
 using Common.Services;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -17,6 +16,8 @@ using Microsoft.Practices.Unity;
 using IntegrationTests.Common;
 using Services.Broadcast.BusinessEngines;
 using Newtonsoft.Json;
+using DiffReporter = Services.Broadcast.IntegrationTests.BroadcastDiffReporter;
+using ApprovalTests.Reporters;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -216,44 +217,44 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile2.xlsx";
             const string inventorySourceName = "COZI";
             const string daypartString = "M-F 9a-10a SA-SU 6a-7a";
-            var effectiveDate = new DateTime(2018, 10, 5);
-            var endDate = new DateTime(2018, 10, 24);
+            var effectiveDate = new DateTime(2018, 10, 8);
+            var endDate = new DateTime(2018, 10, 14);
 
             using (new TransactionScopeWrapper())
             {
                 _InventoryDaypartParsingEngine.TryParse(daypartString, out var dayparts);
                 var fileId = _SaveInventoryFile(fileName);
-                var inventoruSource = _InventoryRepository.GetInventorySourceByName(inventorySourceName);
+                var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceName);
 
                 var inventoryFile = new InventoryFile
                 {
                     Id = fileId,
-                    InventorySource = inventoruSource,
+                    InventorySource = inventorySource,
                     InventoryManifests = new List<StationInventoryManifest>
                     {
                         new StationInventoryManifest
                         {
                             SpotLengthId = 1,
                             InventoryFileId = fileId,
-                            InventorySourceId = inventoruSource.Id,
+                            InventorySourceId = inventorySource.Id,
                             ManifestDayparts = dayparts.Select(d => new StationInventoryManifestDaypart { Daypart = d }).ToList(),
                             ManifestWeeks = _GetManifestWeeksInRange(effectiveDate, endDate, 1)
                         }
                     }
                 };
 
-                var fileManifests = _InventoryRepository.GetStationInventoryManifestsByFileId(inventoryFile.Id);
+                var fileManifests = _InventoryRepository.GetStationInventoryManifestsByFileId(inventoryFile.Id)
+                    .Where(m => m.Station.LegacyCallLetters == "KGBY").ToList();
 
-                var weeksHistoryBeforeExpiring = _InventoryRepository.GetStationInventoryManifestWeeksHistory(fileManifests.Select(x => x.Id.Value));
+                var weeksHistoryBeforeExpiring = _InventoryRepository.GetStationInventoryManifestWeeksHistory(
+                    fileManifests.Select(x => x.Id.Value));
 
                 _StationInventoryGroupService.AddNewStationInventory(inventoryFile);
 
-                var weeksHistoryAfterExpiring = _InventoryRepository.GetStationInventoryManifestWeeksHistory(fileManifests.Select(x => x.Id.Value));
+                var weeksHistoryAfterExpiring = _InventoryRepository.GetStationInventoryManifestWeeksHistory(
+                    fileManifests.Select(x => x.Id.Value));
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(StationInventoryManifestWeekHistory), "Id");
-                jsonResolver.Ignore(typeof(StationInventoryManifestWeekHistory), "SysStartDate");
-                jsonResolver.Ignore(typeof(StationInventoryManifestWeekHistory), "SysEndDate");
 
                 var jsonSettings = new JsonSerializerSettings
                 {
@@ -261,7 +262,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ContractResolver = jsonResolver
                 };
 
-                var result = new { weeksHistoryBeforeExpiring, weeksHistoryAfterExpiring };
+                var result = new { before = weeksHistoryBeforeExpiring.Count, after = weeksHistoryAfterExpiring.Count };
                 var resultJson = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
 
                 Approvals.Verify(resultJson);

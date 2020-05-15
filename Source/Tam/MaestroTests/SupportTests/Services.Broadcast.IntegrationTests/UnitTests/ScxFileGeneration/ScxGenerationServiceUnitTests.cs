@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ApprovalTests.Wpf;
 using Hangfire;
 using Hangfire.Common;
 using Hangfire.States;
