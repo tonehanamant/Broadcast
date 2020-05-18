@@ -5,6 +5,8 @@ using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.InventoryProgramsProcessing
 {
@@ -84,6 +86,25 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
         protected override int _GetDeleteBatchSize()
         {
             return 1000;
+        }
+
+        public string UT_GetProgramGuideExportWorkingDirectoryPath(int dayOffset)
+        {
+            return _GetProgramGuideExportWorkingDirectoryPath(dayOffset);
+        }
+
+        public List<Tuple<Stream, string>> UT_PerformImportInventoryProgramResultsCalls { get; set; } = new List<Tuple<Stream, string>>();
+        public bool UT_ShouldPerformImportInventoryProgramResults { get; set; } = true;
+
+        protected override string _PerformImportInventoryProgramResults(Stream fileStream, string fileName)
+        {
+            UT_PerformImportInventoryProgramResultsCalls.Add(new Tuple<Stream, string>(fileStream, fileName));
+            if (UT_ShouldPerformImportInventoryProgramResults)
+            {
+                return base._PerformImportInventoryProgramResults(fileStream, fileName);
+            }
+
+            return "called";
         }
     }
 }

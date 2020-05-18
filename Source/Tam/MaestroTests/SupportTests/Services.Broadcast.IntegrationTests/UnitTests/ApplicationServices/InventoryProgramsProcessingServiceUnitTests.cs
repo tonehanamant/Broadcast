@@ -544,6 +544,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(jobId, processInventoryProgramsBySourceJobCalled.First());
         }
 
+        [Test]
+        public void ProcessProgramEnrichedInventoryFiles()
+        {
+            var engineCalls = new List<int>();
+            _InventoryProgramsProcessingEngine.Setup(s => s.ImportInventoryProgramResultsFromDirectory(It.IsAny<int>()))
+                .Callback<int>((j) => engineCalls.Add(j));
+
+            var service = _GetService();
+
+            service.ProcessProgramEnrichedInventoryFiles();
+
+            Assert.AreEqual(1, engineCalls.Count);
+            Assert.AreEqual(-1, engineCalls.First());
+        }
+
         private class MonitorEmailProperties
         {
             public bool pIsHtmlBody { get; set; }

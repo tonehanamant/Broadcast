@@ -32,6 +32,11 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         InventoryProgramsProcessingJobDiagnostics ProcessInventoryJob(int jobId);
 
         string ImportInventoryProgramResults(Stream fileStream, string fileName);
+
+        /// <summary>
+        /// Pick up the enrichment result files from the drop folder and marshall them to the import process.
+        /// </summary>
+        void ImportInventoryProgramResultsFromDirectory(int dayOffset);
     }
 
     public abstract class InventoryProgramsProcessingEngineBase : BroadcastBaseClass, IInventoryProgramsProcessingEngine
@@ -129,6 +134,64 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 }
             }
             return processingBatches;
+        }
+
+        /// <inheritdoc />
+        public void ImportInventoryProgramResultsFromDirectory(int dayOffset)
+        {
+            var sourceDirectoryPath = _GetProgramGuideExportWorkingDirectoryPath(dayOffset);
+            _LogInfo($"Beginning to process enriched inventory files from source directory '{sourceDirectoryPath}'");
+
+            if (_FileService.DirectoryExists(sourceDirectoryPath) == false)
+            {
+                throw new DirectoryNotFoundException($"Processing directory not found : '{sourceDirectoryPath}'");
+            }
+            var allFiles = _FileService.GetFiles(sourceDirectoryPath);
+            var csvFiles = allFiles.Where(f => f.ToLower().EndsWith(".csv")).ToList();
+            var fileCount = csvFiles.Count;
+            if (fileCount == 0)
+            {
+                throw new FileNotFoundException($"No files found to process at directory '{sourceDirectoryPath}'.");
+            }
+
+            _LogInfo($"Found {fileCount} files to process.");
+            var fileIndex = 0;
+            var totalSw = new Stopwatch();
+            totalSw.Start();
+            foreach (var filePath in csvFiles)
+            {
+                fileIndex++;
+                var fileName = Path.GetFileName(filePath);
+
+                _LogInfo($"Beginning to process file {fileIndex} of {fileCount}.");
+                var fileSw = new Stopwatch();
+                fileSw.Start();
+                try
+                {
+                    var fileStream = _FileService.GetFileStream(filePath);
+                    _PerformImportInventoryProgramResults(fileStream, fileName);
+                }
+                catch (Exception ex)
+                {
+                    _LogError($"Exception caught while processing file 'fileName'.", ex);
+                }
+                finally
+                {
+                    fileSw.Stop();
+                }
+                _LogInfo($"Completed processing file {fileIndex} of {fileCount} in {fileSw.ElapsedMilliseconds}ms.");
+            }
+
+            totalSw.Stop();
+            _LogInfo($"Completed processing {fileCount} files in {totalSw.ElapsedMilliseconds}ms.");
+        }
+
+        /// <summary>
+        /// This pass through exists for unit testing of method ImportInventoryProgramResultsFromDirectory
+        /// </summary>
+        protected virtual string _PerformImportInventoryProgramResults(Stream fileStream, string fileName)
+        {
+            return ImportInventoryProgramResults(fileStream, fileName);
         }
 
         public string ImportInventoryProgramResults(Stream fileStream, string fileName)
@@ -1173,11 +1236,16 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         protected string _GetProgramGuideExportWorkingDirectoryPath()
         {
+            return _GetProgramGuideExportWorkingDirectoryPath(0);
+        }
+
+        protected string _GetProgramGuideExportWorkingDirectoryPath(int dayOffset)
+        {
             const string dirName = "ExportsToProcess";
             return Path.Combine(
                 _GetProgramGuideInterfacePath(),
                 dirName,
-                _GetDateDirName(_GetCurrentDateTime()),
+                _GetDateDirName(_GetCurrentDateTime().AddDays(dayOffset)),
                 _GetEnvironmentName());
         }
 

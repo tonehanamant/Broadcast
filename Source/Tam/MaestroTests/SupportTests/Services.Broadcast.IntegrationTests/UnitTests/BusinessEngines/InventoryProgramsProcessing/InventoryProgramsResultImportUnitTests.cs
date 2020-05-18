@@ -464,6 +464,147 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.IsTrue(fileServiceMoveCalls[0].Item2.Contains("Failed"));
         }
 
+        [Test]
+        public void ImportInventoryProgramResultsFromDirectory_DirectoryNotExist()
+        {
+            /*** Arrange ***/
+            const int dayOffset = -1;
+
+            // setup so that directory doesn't exist.
+            _FileService.Setup(s => s.DirectoryExists(It.IsAny<string>()))
+                .Returns(false);
+            
+            var engine = _GetInventoryProgramsProcessingEngine();
+            // simulate the actual import for our test.
+            engine.UT_ShouldPerformImportInventoryProgramResults = false;
+
+            /*** ACT **/
+            var caught = Assert.Throws<DirectoryNotFoundException>(() => engine.ImportInventoryProgramResultsFromDirectory(dayOffset));
+
+            /*** Assert ***/
+            Assert.IsNotNull(caught);
+            // verify we never actually called the import method.
+            Assert.AreEqual(0, engine.UT_PerformImportInventoryProgramResultsCalls.Count); 
+        }
+
+        [Test]
+        public void ImportInventoryProgramResultsFromDirectory_NoFilesToProcess()
+        {
+            /*** Arrange ***/
+            const int dayOffset = -1;
+
+            _FileService.Setup(s => s.DirectoryExists(It.IsAny<string>()))
+                .Returns(true);
+            // setup so that files don't exist
+            _FileService.Setup(s => s.GetFiles(It.IsAny<string>()))
+                .Returns(new List<string>());
+
+            var engine = _GetInventoryProgramsProcessingEngine();
+            // simulate the actual import for our test.
+            engine.UT_ShouldPerformImportInventoryProgramResults = false;
+
+            /*** ACT **/
+            var caught = Assert.Throws<FileNotFoundException>(() => engine.ImportInventoryProgramResultsFromDirectory(dayOffset));
+
+            /*** Assert ***/
+            Assert.IsNotNull(caught);
+            // verify we never actually called the import method.
+            Assert.AreEqual(0, engine.UT_PerformImportInventoryProgramResultsCalls.Count);
+        }
+
+        [Test]
+        public void ImportInventoryProgramResultsFromDirectory_FileProcessingError()
+        {
+            /*** Arrange ***/
+            const int dayOffset = -1;
+
+            _FileService.Setup(s => s.DirectoryExists(It.IsAny<string>()))
+                .Returns(true);
+            // setup so that files don't exist
+            _FileService.Setup(s => s.GetFiles(It.IsAny<string>()))
+                .Returns(new List<string>
+                {
+                    "fileOne.csv",
+                    "fileTwo.csv",
+                    "fileThree.csv"
+                });
+
+            _FileService.SetupSequence(s => s.GetFileStream(It.IsAny<string>()))
+                .Returns(new MemoryStream())
+                .Throws<Exception>()
+                .Returns(new MemoryStream());
+
+            var engine = _GetInventoryProgramsProcessingEngine();
+            // simulate the actual import for our test.
+            engine.UT_ShouldPerformImportInventoryProgramResults = false;
+
+            /*** ACT **/
+            engine.ImportInventoryProgramResultsFromDirectory(dayOffset);
+
+            /*** Assert ***/
+            // verify we called even though we hit an error.
+            Assert.AreEqual(2, engine.UT_PerformImportInventoryProgramResultsCalls.Count);
+            var processedFileNames = engine.UT_PerformImportInventoryProgramResultsCalls.Select(s => s.Item2).ToList();
+            Assert.IsTrue(processedFileNames.Contains("fileOne.csv"));
+            Assert.IsFalse(processedFileNames.Contains("fileTwo.csv"));
+            Assert.IsTrue(processedFileNames.Contains("fileThree.csv"));
+        }
+
+        [Test]
+        public void ImportInventoryProgramResultsFromDirectory()
+        {
+            /*** Arrange ***/
+            const int dayOffset = -1;
+
+            _FileService.Setup(s => s.DirectoryExists(It.IsAny<string>()))
+                .Returns(true);
+            // setup so that files don't exist
+            _FileService.Setup(s => s.GetFiles(It.IsAny<string>()))
+                .Returns(new List<string>
+                {
+                    "fileOne.csv",
+                    "fileTwo.csv",
+                    "fileThree.csv"
+                });
+
+            _FileService.SetupSequence(s => s.GetFileStream(It.IsAny<string>()))
+                .Returns(new MemoryStream())
+                .Returns(new MemoryStream())
+                .Returns(new MemoryStream());
+
+            var engine = _GetInventoryProgramsProcessingEngine();
+            // simulate the actual import for our test.
+            engine.UT_ShouldPerformImportInventoryProgramResults = false;
+
+            /*** ACT **/
+            engine.ImportInventoryProgramResultsFromDirectory(dayOffset);
+
+            /*** Assert ***/
+            // verify we called for each
+            Assert.AreEqual(3, engine.UT_PerformImportInventoryProgramResultsCalls.Count);
+            var processedFileNames = engine.UT_PerformImportInventoryProgramResultsCalls.Select(s => s.Item2).ToList();
+            Assert.IsTrue(processedFileNames.Contains("fileOne.csv"));
+            Assert.IsTrue(processedFileNames.Contains("fileTwo.csv"));
+            Assert.IsTrue(processedFileNames.Contains("fileThree.csv"));
+        }
+
+        [Test]
+        [TestCase(-1, "20200513", "05/14/2020")]
+        [TestCase(0, "20200514", "05/14/2020")]
+        public void GetProgramGuideExportWorkingDirectoryPath(int dayOffset, string expectedDateFileString, string currentDateString)
+        {
+            /*** Arrange ***/
+            var engine = _GetInventoryProgramsProcessingEngine();
+            engine.UT_CurrentDateTime = DateTime.Parse(currentDateString);
+            var expectedResult = $@"testSettingBroadcastSharedDirectoryPath\ProgramGuide\ExportsToProcess\{expectedDateFileString}\DEV";
+
+            /*** ACT **/
+            var result = engine.UT_GetProgramGuideExportWorkingDirectoryPath(dayOffset);
+
+            /*** Assert ***/
+            Assert.AreEqual(expectedResult, result);
+        }
+
         /// <remarks>Do this after you've setup all your data repository returns</remarks>
         private Mock<IDataRepositoryFactory> _GetDataRepositoryFactory()
         {

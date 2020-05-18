@@ -59,6 +59,13 @@ namespace BroadcastJobScheduler
                 Cron.Daily(_StationsUpdateJobRunHour()),
                 TimeZoneInfo.Local,
                 queue: "stationsupdate");
+
+            _RecurringJobManager.AddOrUpdate(
+                "process-program-enriched-inventory-files",
+                () => _InventoryProgramsProcessingService.ProcessProgramEnrichedInventoryFiles(),
+                Cron.Daily(_ProgramEnrichedInventoryFilesJobRunHour()),
+                TimeZoneInfo.Local,
+                queue: "processprogramenrichedinventoryfiles");
         }
 
         private int _GetInventoryProgramsProcessingForWeeksJobRunHour()
@@ -69,6 +76,11 @@ namespace BroadcastJobScheduler
         private int _StationsUpdateJobRunHour()
         {
             return ConfigurationSettingHelper.GetConfigSetting("StationImportJobRunHour", 0);
+        }
+
+        private int _ProgramEnrichedInventoryFilesJobRunHour()
+        {
+            return ConfigurationSettingHelper.GetConfigSetting("ProgramEnrichedInventoryFilesJobRunHour", 12);
         }
     }
 }

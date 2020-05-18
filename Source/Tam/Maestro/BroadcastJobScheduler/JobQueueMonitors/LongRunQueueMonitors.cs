@@ -39,6 +39,7 @@ namespace BroadcastJobScheduler.JobQueueMonitors
                 "inventoryrating",
                 "planpricing",
                 "inventoryprogramsprocessing",
+                "processprogramenrichedinventoryfiles",
                 "scxfilegeneration",
                 "stationsupdate",
                 "inventorysummaryaggregation",

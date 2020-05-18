@@ -51,6 +51,13 @@ namespace Services.Broadcast.ApplicationServices
         [Queue("inventoryprogramsprocessing")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         InventoryProgramsProcessingJobDiagnostics ProcessInventoryProgramsBySourceJobUnprocessed(int jobId);
+
+        /// <summary>
+        /// Pick up the enrichment result files from the drop folder and marshal them to the import process.
+        /// </summary>
+        [Queue("processprogramenrichedinventoryfiles")]
+        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
+        void ProcessProgramEnrichedInventoryFiles();
     }
 
     public class InventoryProgramsProcessingService : BroadcastBaseClass,  IInventoryProgramsProcessingService
@@ -261,6 +268,23 @@ namespace Services.Broadcast.ApplicationServices
             var engine = _InventoryProgramsProcessorFactory.GetInventoryProgramsProcessingEngine(InventoryProgramsProcessorType.ByFile);
             var result = engine.ImportInventoryProgramResults(fileStream, fileName);
             return result;
+        }
+
+        /// <inheritdoc />
+        public void ProcessProgramEnrichedInventoryFiles()
+        {
+            try
+            {
+                const int dayOffset = -1;
+                var engine = _InventoryProgramsProcessorFactory.GetInventoryProgramsProcessingEngine(InventoryProgramsProcessorType.ByFile);
+                engine.ImportInventoryProgramResultsFromDirectory(dayOffset);
+            }
+            catch (Exception ex)
+            {
+                _LogError("Exception caught attempting to process enriched inventory files from the directory.", ex);
+                // rethrow so that the caller (background service) Will mark it's job also as a fail
+                throw;
+            }
         }
 
         private void _ReportInventoryProgramsBySourceGroupJobCompleted(int jobId)
