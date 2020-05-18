@@ -311,7 +311,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 InventorySourcePercentages = pricingDefaults.InventorySourcePercentages,
                 InventorySourceTypePercentages = pricingDefaults.InventorySourceTypePercentages,
                 Margin = pricingDefaults.Margin,
-                PlanVersionId = plan.VersionId
+                PlanVersionId = plan.VersionId,
+                MarketGroup = pricingDefaults.MarketGroup
             };
 
             _PlanPricingService.ApplyMargin(plan.PricingParameters);

@@ -21,6 +21,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public int Spots { get; set; }
         public int StationCount { get; set; }
         public double AvgImpressions { get; set; }
+        public double Impressions { get; set; }
         public decimal AvgCpm { get; set; }
         public decimal Budget { get; set; }
         public double ImpressionsPercentage { get; set; }
@@ -38,5 +39,6 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public decimal AvgCpm { get; set; }
         public decimal Budget { get; set; }
         public double ImpressionsPercentage { get; set; }
+        public double Impressions { get; set; }
     }
 }

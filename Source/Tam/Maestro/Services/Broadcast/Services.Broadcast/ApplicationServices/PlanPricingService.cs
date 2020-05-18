@@ -1023,10 +1023,11 @@ namespace Services.Broadcast.ApplicationServices
                 StationCount = x.Stations.Count,
                 MarketCount = x.MarketCodes.Count,
                 AvgImpressions = x.AvgImpressions,
+                Impressions = x.TotalImpressions,
                 AvgCpm = x.AvgCpm,
                 PercentageOfBuy = ProposalMath.CalculateImpressionsPercentage(x.TotalImpressions, totalImpressionsForAllPrograms),
                 Budget = x.TotalCost,
-                Spots = x.TotalSpots,
+                Spots = x.TotalSpots
             }));
 
             result.Totals = new PlanPricingTotalsDto
@@ -1223,10 +1224,12 @@ namespace Services.Broadcast.ApplicationServices
                 return;
 
             planPricingResult.Totals.AvgImpressions /= 1000;
+            planPricingResult.Totals.Impressions /= 1000;
 
             foreach (var program in planPricingResult.Programs)
             {
                 program.AvgImpressions /= 1000;
+                program.Impressions /= 1000;
             }
         }
 

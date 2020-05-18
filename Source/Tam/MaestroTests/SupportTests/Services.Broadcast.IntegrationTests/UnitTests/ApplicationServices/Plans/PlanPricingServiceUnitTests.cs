@@ -6621,6 +6621,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             StationCount = 13,
                             AvgCpm = 6m,
                             AvgImpressions = 111000,
+                            Impressions = 200000,
                             ImpressionsPercentage = 96,
                             Budget = 1131,
                             Spots = 3
@@ -6634,7 +6635,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         AvgImpressions = 111000,
                         ImpressionsPercentage = 100,
                         Budget = 1131,
-                        Spots = 3
+                        Spots = 3,
+                        Impressions = 200000
                     }
                 });
 

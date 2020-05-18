@@ -294,7 +294,7 @@
     ],
     "JobId": null,
     "Margin": 20.0,
-    "MarketGroup": 0,
+    "MarketGroup": 1,
     "MaxCpm": null,
     "MinCpm": null,
     "ProprietaryBlend": 0.0,

@@ -26,6 +26,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public int StationCount { get; set; }
         public decimal AvgCpm { get; set; }
         public double AvgImpressions { get; set; }
+        public double Impressions { get; set; }
         public double PercentageOfBuy { get; set; }
         public int Spots { get; set; }
         public decimal Budget { get; set; }

@@ -25,6 +25,7 @@ namespace EntityFrameworkMapping.Broadcast
         public double percentage_of_buy { get; set; }
         public decimal budget { get; set; }
         public int spots { get; set; }
+        public double impressions { get; set; }
     
         public virtual plan_version_pricing_results plan_version_pricing_results { get; set; }
     }

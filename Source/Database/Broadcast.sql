@@ -400,6 +400,25 @@ BEGIN
 END
 /*************************************** END BP1-25 *****************************************************/
 
+/*************************************** END BP1-299 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'impressions' AND OBJECT_ID = OBJECT_ID('plan_version_pricing_result_spots'))
+BEGIN
+	ALTER TABLE plan_version_pricing_result_spots
+	ADD impressions FLOAT NULL
+
+	EXEC('UPDATE plan_version_pricing_result_spots
+SET impressions = plan_version_pricing_result_spots.percentage_of_buy * plan_version_pricing_results.total_impressions
+FROM plan_version_pricing_result_spots
+INNER JOIN plan_version_pricing_results
+ON plan_version_pricing_result_spots.plan_version_pricing_result_id = plan_version_pricing_results.id
+WHERE impressions IS NULL ')
+
+	ALTER TABLE plan_version_pricing_result_spots
+	ALTER COLUMN impressions FLOAT NOT NULL
+END
+/*************************************** END BP1-299 *****************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

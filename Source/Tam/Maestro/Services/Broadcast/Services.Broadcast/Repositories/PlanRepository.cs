@@ -1445,7 +1445,8 @@ namespace Services.Broadcast.Repositories
                         market_count = program.MarketCount,
                         station_count = program.StationCount,
                         budget = program.Budget,
-                        spots = program.Spots
+                        spots = program.Spots,
+                        impressions = program.Impressions
                     };
 
                     spots.Add(planPricingResultSpots);
@@ -1479,6 +1480,7 @@ namespace Services.Broadcast.Repositories
                         AvgImpressions = result.total_avg_impressions,
                         Budget = result.total_budget,
                         Spots = result.total_spots,
+                        Impressions = result.total_impressions
                     },
                     Programs = result.plan_version_pricing_result_spots.Select(r => new PlanPricingProgramProgramDto
                     {
@@ -1490,6 +1492,7 @@ namespace Services.Broadcast.Repositories
                         ImpressionsPercentage = r.percentage_of_buy,
                         MarketCount = r.market_count,
                         StationCount = r.station_count,
+                        Impressions = r.impressions,
                         Budget = r.budget,
                         Spots = r.spots
                     }).OrderByDescending(p => p.ImpressionsPercentage)
