@@ -1,6 +1,5 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using IntegrationTests.Common;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;

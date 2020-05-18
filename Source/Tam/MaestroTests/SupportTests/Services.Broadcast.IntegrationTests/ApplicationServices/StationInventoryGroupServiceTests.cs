@@ -1,8 +1,12 @@
 ﻿using ApprovalTests;
+using ApprovalTests.Reporters;
 using Common.Services;
+using Microsoft.Practices.Unity;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Security;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.StationInventory;
@@ -12,12 +16,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
-using Microsoft.Practices.Unity;
-using IntegrationTests.Common;
-using Services.Broadcast.BusinessEngines;
-using Newtonsoft.Json;
 using DiffReporter = Services.Broadcast.IntegrationTests.BroadcastDiffReporter;
-using ApprovalTests.Reporters;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

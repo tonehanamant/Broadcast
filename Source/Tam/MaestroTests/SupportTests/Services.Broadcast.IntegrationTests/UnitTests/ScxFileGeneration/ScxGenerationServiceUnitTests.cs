@@ -1,5 +1,8 @@
 ﻿using Common.Services;
 using Common.Services.Repositories;
+using Hangfire;
+using Hangfire.Common;
+using Hangfire.States;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -12,12 +15,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Hangfire;
-using Hangfire.Common;
-using Hangfire.States;
-using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Repositories;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ScxFileGeneration
 {

@@ -1,22 +1,21 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.DTO.PricingGuide;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.OpenMarketInventory;
+using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Transactions;
-using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using System.IO;
-using Services.Broadcast.Entities.DTO;
-using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Entities.DTO.PricingGuide;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

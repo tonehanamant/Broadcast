@@ -1,6 +1,4 @@
 ﻿using ApprovalTests;
-using ApprovalTests.Reporters;
-using IntegrationTests.Common;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 

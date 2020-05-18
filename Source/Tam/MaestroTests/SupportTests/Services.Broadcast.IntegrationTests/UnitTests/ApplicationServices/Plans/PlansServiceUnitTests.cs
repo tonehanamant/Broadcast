@@ -1,9 +1,6 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
-using IntegrationTests.Common;
-using Microsoft.Practices.Unity;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -19,7 +16,6 @@ using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using Tam.Maestro.Services.ContractInterfaces;
 

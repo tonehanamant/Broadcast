@@ -1,9 +1,8 @@
-﻿using NUnit.Framework;
-using ApprovalTests;
+﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services;
-using IntegrationTests.Common;
 using Newtonsoft.Json;
+using NUnit.Framework;
 
 namespace Services.Broadcast.IntegrationTests
 {

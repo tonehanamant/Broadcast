@@ -1,16 +1,11 @@
-﻿using NUnit.Framework;
+﻿using ApprovalTests;
+using ApprovalTests.Reporters;
+using Moq;
+using NUnit.Framework;
+using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Services.Broadcast.BusinessEngines;
-using Moq;
-using Common.Services.Repositories;
-using Services.Broadcast.Entities;
-using ApprovalTests;
-using IntegrationTests.Common;
-using ApprovalTests.Reporters;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 {

@@ -2,7 +2,6 @@
 using Common.Services.Repositories;
 using ConfigurationService.Client;
 using Hangfire;
-using IntegrationTests.Common;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using Moq;
@@ -11,7 +10,6 @@ using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
-using Services.Broadcast.IntegrationTests.UnitTests;
 using Services.Broadcast.Repositories;
 using System;
 using Tam.Maestro.Common;

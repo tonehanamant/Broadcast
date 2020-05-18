@@ -1,17 +1,15 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
-using Services.Broadcast.Entities.Plan;
-using Tam.Maestro.Common.DataLayer;
-using System.Threading.Tasks;
 using System.Linq;
-using Services.Broadcast.Entities;
+using System.Threading.Tasks;
+using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.Repositories
 {

@@ -1,13 +1,10 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using IntegrationTests.Common;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.StationInventory;
 using System;
 using System.Collections.Generic;
-using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

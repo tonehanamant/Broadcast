@@ -3,7 +3,6 @@ using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services;
 using Common.Services.Repositories;
-using IntegrationTests.Common;
 using Moq;
 using NUnit.Framework;
 using OfficeOpenXml;

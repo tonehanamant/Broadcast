@@ -1,6 +1,6 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using IntegrationTests.Common;
+using Common.Services;
 using Microsoft.Practices.Unity;
 using Moq;
 using Newtonsoft.Json;
@@ -8,9 +8,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Helpers;
 using System.IO;
-using Common.Services;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices

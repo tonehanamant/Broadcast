@@ -1,10 +1,8 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using EntityFrameworkMapping.Broadcast;
-using IntegrationTests.Common;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 using System;

@@ -1,14 +1,12 @@
-﻿using System;
-using IntegrationTests.Common;
+﻿using ApprovalTests;
+using ApprovalTests.Reporters;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using ApprovalTests;
-using ApprovalTests.Reporters;
-using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.Repositories

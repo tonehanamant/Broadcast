@@ -1,21 +1,20 @@
-﻿using NUnit.Framework;
-using System.Linq;
-using ApprovalTests;
+﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using IntegrationTests.Common;
 using Newtonsoft.Json;
-using Tam.Maestro.Common.DataLayer;
+using NUnit.Framework;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Converters.Scx;
-using System;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.spotcableXML;
 using Services.Broadcast.Entities.Scx;
+using Services.Broadcast.Entities.spotcableXML;
+using Services.Broadcast.Repositories;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using Services.Broadcast.ApplicationServices;
+using System.Linq;
+using Tam.Maestro.Common.DataLayer;
 using static Services.Broadcast.Entities.OpenMarketInventory.ProposalOpenMarketInventoryWeekDto;
 using static Services.Broadcast.Entities.Scx.ScxMarketDto.ScxStation;
-using Services.Broadcast.Repositories;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

@@ -1,18 +1,17 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using IntegrationTests.Common;
+using Common.Services;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Microsoft.Practices.Unity;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Helpers;
+using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using System.Collections.Generic;
 using System.Net.Mail;
-using Common.Services;
-using Services.Broadcast.ApplicationServices.Security;
 using Tam.Maestro.Common.DataLayer;
-using Services.Broadcast.ApplicationServices.Helpers;
-using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

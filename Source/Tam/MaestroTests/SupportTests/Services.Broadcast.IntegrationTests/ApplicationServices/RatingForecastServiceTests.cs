@@ -1,16 +1,7 @@
-﻿using IntegrationTests.Common;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using Tam.Maestro.Common;
-using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

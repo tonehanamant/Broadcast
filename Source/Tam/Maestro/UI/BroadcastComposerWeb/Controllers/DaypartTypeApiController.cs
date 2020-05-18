@@ -18,7 +18,6 @@ namespace BroadcastComposerWeb.Controllers
         /// <summary>
         /// Initializes a new instance of the <see cref="DaypartTypeApiController"/> class.
         /// </summary>
-        /// <param name="logger">The logger.</param>
         /// <param name="applicationServiceFactory">The application service factory.</param>
         public DaypartTypeApiController(
             BroadcastApplicationServiceFactory applicationServiceFactory)

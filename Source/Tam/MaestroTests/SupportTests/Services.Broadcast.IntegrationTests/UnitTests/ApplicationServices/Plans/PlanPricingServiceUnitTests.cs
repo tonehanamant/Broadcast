@@ -5,7 +5,6 @@ using Common.Services.Repositories;
 using Hangfire;
 using Hangfire.Common;
 using Hangfire.States;
-using IntegrationTests.Common;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;

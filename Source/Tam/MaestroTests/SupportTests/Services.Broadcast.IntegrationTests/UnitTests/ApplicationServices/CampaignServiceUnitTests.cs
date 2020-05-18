@@ -1,30 +1,28 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services.Repositories;
-using IntegrationTests.Common;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
-using Services.Broadcast.Cache;
-using Services.Broadcast.Entities.Campaign;
-using Tam.Maestro.Services.ContractInterfaces;
-using Services.Broadcast.Entities.Plan;
-using Services.Broadcast.Helpers;
-using Services.Broadcast.Entities.Plan.Pricing;
-using Services.Broadcast.Entities.StationInventory;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
 using System.Linq;
+using Tam.Maestro.Data.Entities;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram.ManifestDaypart;
-using Tam.Maestro.Data.Entities;
-using Newtonsoft.Json;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {

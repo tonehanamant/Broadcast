@@ -1,10 +1,8 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using IntegrationTests.Common;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.DTO.PricingGuide;
 using System.Collections.Generic;
 

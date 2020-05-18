@@ -1,14 +1,10 @@
-﻿using ApprovalTests.Reporters;
-using IntegrationTests.Common;
-using Moq;
+﻿using ApprovalTests;
+using ApprovalTests.Reporters;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Cache;
-using Services.Broadcast.Entities;
-using System;
-using System.Collections.Generic;
-using ApprovalTests;
 using Services.Broadcast.IntegrationTests.Stubs;
+using System;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {

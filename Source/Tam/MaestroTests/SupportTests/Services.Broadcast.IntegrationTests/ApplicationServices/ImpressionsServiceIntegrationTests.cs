@@ -1,12 +1,11 @@
-﻿using System;
-using ApprovalTests;
+﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using IntegrationTests.Common;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 

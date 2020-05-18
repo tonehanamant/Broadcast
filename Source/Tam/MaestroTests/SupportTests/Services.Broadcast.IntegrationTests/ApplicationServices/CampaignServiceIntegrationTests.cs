@@ -1,7 +1,7 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
+using Common.Services;
 using Common.Services.Repositories;
-using IntegrationTests.Common;
 using Microsoft.Practices.Unity;
 using Moq;
 using Newtonsoft.Json;
@@ -9,27 +9,25 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.IntegrationTests.Helpers;
+using Services.Broadcast.IntegrationTests.Stubs;
+using Services.Broadcast.ReportGenerators.CampaignExport;
+using Services.Broadcast.ReportGenerators.ProgramLineup;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.ContractInterfaces;
-using Services.Broadcast.Entities.Campaign;
-using Services.Broadcast.IntegrationTests.Stubs;
-using System.IO;
-using Common.Services;
-using Services.Broadcast.ReportGenerators.ProgramLineup;
-using Services.Broadcast.Entities.Plan.Pricing;
-using Services.Broadcast.ReportGenerators.CampaignExport;
-using Services.Broadcast.ReportGenerators;
-using Services.Broadcast.Clients;
-using System.Threading;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

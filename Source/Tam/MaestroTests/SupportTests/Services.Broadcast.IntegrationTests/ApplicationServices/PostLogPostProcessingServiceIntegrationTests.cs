@@ -1,21 +1,20 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using IntegrationTests.Common;
+using Common.Services;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.Entities;
-using System.IO;
-using Common.Services;
-using Tam.Maestro.Common.DataLayer;
-using Microsoft.Practices.Unity;
 using Services.Broadcast.ApplicationServices.Security;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Services.Broadcast.Repositories;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
-using System.Linq;
 using System;
+using System.IO;
+using System.Linq;
+using Tam.Maestro.Common.DataLayer;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

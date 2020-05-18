@@ -1,19 +1,18 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using IntegrationTests.Common;
+using Common.Services;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using OfficeOpenXml;
 using Services.Broadcast.Converters.RateImport;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.ProprietaryInventory;
 using System;
 using System.IO;
-using Tam.Maestro.Common.DataLayer;
-using Microsoft.Practices.Unity;
-using Common.Services;
 using System.Linq;
+using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

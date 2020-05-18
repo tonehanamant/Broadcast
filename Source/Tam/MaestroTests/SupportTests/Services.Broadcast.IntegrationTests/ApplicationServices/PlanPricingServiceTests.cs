@@ -1,12 +1,12 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using IntegrationTests.Common;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.Clients;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
@@ -14,9 +14,8 @@ using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
-using Services.Broadcast.Entities;
-using Tam.Maestro.Common.DataLayer;
 using System.Threading;
+using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

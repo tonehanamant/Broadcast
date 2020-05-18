@@ -1,11 +1,8 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using IntegrationTests.Common;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

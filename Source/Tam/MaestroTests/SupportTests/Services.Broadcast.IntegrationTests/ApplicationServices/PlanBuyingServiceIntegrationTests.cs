@@ -1,12 +1,9 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using IntegrationTests.Common;
 using NUnit.Framework;
-using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
-using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

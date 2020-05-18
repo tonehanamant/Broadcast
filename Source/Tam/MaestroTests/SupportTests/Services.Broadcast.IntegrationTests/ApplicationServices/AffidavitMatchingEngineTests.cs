@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using Common.Services;
+using Newtonsoft.Json;
 using NUnit.Framework;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
-using ApprovalTests;
-using IntegrationTests.Common;
-using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

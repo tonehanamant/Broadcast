@@ -1,13 +1,7 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using IntegrationTests.Common;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

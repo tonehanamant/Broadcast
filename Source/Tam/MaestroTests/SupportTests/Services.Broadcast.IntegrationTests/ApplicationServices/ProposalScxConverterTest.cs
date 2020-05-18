@@ -1,13 +1,5 @@
-﻿using System.IO;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
-using System.Linq;
-using ApprovalTests;
-using ApprovalTests.Reporters;
-using IntegrationTests.Common;
-using Newtonsoft.Json;
-using Services.Broadcast.Entities.spotcableXML;
-using Tam.Maestro.Common.DataLayer;
 using Services.Broadcast.Converters.Scx;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices

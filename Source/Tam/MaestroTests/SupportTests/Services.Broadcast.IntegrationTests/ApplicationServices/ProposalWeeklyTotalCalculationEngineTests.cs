@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using ApprovalTests;
+﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using IntegrationTests.Common;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
+using System.Collections.Generic;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices

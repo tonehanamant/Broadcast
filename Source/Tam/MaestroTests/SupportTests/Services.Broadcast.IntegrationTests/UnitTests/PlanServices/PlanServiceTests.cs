@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ApprovalTests;
+﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services.Repositories;
-using IntegrationTests.Common;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -15,6 +11,9 @@ using Services.Broadcast.Cache;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Validators;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices

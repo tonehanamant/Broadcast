@@ -1,5 +1,5 @@
-﻿using ApprovalTests.Reporters;
-using IntegrationTests.Common;
+﻿using ApprovalTests;
+using ApprovalTests.Reporters;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -7,7 +7,6 @@ using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
-using ApprovalTests;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {

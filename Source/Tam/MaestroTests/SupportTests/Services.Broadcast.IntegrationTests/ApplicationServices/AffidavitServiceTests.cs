@@ -1,22 +1,20 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using IntegrationTests.Common;
+using Common.Services;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Microsoft.Practices.Unity;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.OpenMarketInventory;
+using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Common.Services;
-using EntityFrameworkMapping.Broadcast;
-using Services.Broadcast.Entities.OpenMarketInventory;
-using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Services.Broadcast.Entities.DTO;
-using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -1034,13 +1032,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request = _SetupAffidavit();
 
-                List<WWTVInboundFileValidationResult> validationResults = new List<WWTVInboundFileValidationResult>();
-                validationResults.Add(new WWTVInboundFileValidationResult()
+                List<WWTVInboundFileValidationResult> validationResults = new List<WWTVInboundFileValidationResult>
                 {
-                    ErrorMessage = "Generic error message",
-                    InvalidField = "ErrorField",
-                    InvalidLine = 255
-                });
+                    new WWTVInboundFileValidationResult()
+                    {
+                        ErrorMessage = "Generic error message",
+                        InvalidField = "ErrorField",
+                        InvalidLine = 255
+                    }
+                };
                 var postingDate = new DateTime(2016, 4, 20);
                 var result = _AffidavitService.SaveAffidavitValidationErrors(request, "test user", validationResults);
 

@@ -2,7 +2,6 @@
 using ApprovalTests.Reporters;
 using Common.Services.Repositories;
 using Hangfire;
-using IntegrationTests.Common;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;

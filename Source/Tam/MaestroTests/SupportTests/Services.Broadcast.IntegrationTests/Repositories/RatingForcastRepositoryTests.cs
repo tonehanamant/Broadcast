@@ -1,19 +1,13 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityFrameworkMapping.Broadcast;
-using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.IntegrationTests.ApplicationServices;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
@@ -32,7 +26,6 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         {
             int posting_media_month_id = 437;
             string demos = "6,7,347,348,13,14,15,21,22,28,29,30,284,290";//', --A18 +
-            char min_playback_type = '3';
 
             List<ManifestDetailDaypart> details = new List<ManifestDetailDaypart>();
             DisplayDaypart dp = new DisplayDaypart(1, 32400, 35999, true, true, true, true, true, false, false);
@@ -118,7 +111,6 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         {
             int posting_media_month_id = 437;
             string demos = "6,7,347,348,13,14,15,21,22,28,29,30,284,290";//', --A18 +
-            char min_playback_type = '3';
 
             List<StationDetailPointInTime> details = new List<StationDetailPointInTime>();
             details.Add(new StationDetailPointInTime()

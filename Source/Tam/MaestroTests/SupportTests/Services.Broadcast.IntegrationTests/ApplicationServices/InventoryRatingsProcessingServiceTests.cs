@@ -1,18 +1,17 @@
-﻿using ApprovalTests.Reporters;
+﻿using ApprovalTests;
+using ApprovalTests.Reporters;
 using Common.Services;
+using Microsoft.Practices.Unity;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
 using System;
 using System.IO;
 using Tam.Maestro.Common.DataLayer;
-using Microsoft.Practices.Unity;
-using IntegrationTests.Common;
-using Services.Broadcast.Entities.StationInventory;
 using Tam.Maestro.Data.Entities;
-using Newtonsoft.Json;
-using ApprovalTests;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

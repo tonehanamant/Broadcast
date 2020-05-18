@@ -1,15 +1,12 @@
-﻿using EntityFrameworkMapping.Broadcast;
+﻿using ApprovalTests;
+using ApprovalTests.Reporters;
+using Newtonsoft.Json;
 using NUnit.Framework;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
 using System.Linq;
-using ApprovalTests;
-using ApprovalTests.Reporters;
-using IntegrationTests.Common;
-using Newtonsoft.Json;
-using Services.Broadcast.Entities;
 using Tam.Maestro.Common.DataLayer;
-using System;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

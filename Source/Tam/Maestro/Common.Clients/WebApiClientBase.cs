@@ -106,7 +106,7 @@ namespace Tam.Maestro.Common.Clients
                 }
                 result = response.Content.ReadAsAsync<T>().Result;
             }
-            catch (WebException e)
+            catch (WebException)
             {
                 throw;
             }

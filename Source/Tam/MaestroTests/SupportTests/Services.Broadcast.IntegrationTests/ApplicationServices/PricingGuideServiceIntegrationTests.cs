@@ -1,7 +1,7 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services;
-using IntegrationTests.Common;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -11,12 +11,11 @@ using Services.Broadcast.Entities.DTO.PricingGuide;
 using Services.Broadcast.Entities.Enums;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Microsoft.Practices.Unity;
 using Tam.Maestro.Services.ContractInterfaces.Common;
-using System.IO;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

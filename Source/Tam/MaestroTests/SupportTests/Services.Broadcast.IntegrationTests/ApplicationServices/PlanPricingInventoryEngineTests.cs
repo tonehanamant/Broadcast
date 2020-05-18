@@ -1,6 +1,5 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using IntegrationTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
@@ -14,7 +13,6 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using static Services.Broadcast.Entities.Plan.PlanDaypartDto;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram;
-using static Services.Broadcast.Entities.ProposalProgramDto;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
