@@ -46,7 +46,7 @@ namespace Services.Broadcast.Extensions
                             }                            
                             temp = new List<T1>();
                         }
-                        if (!current.Equals(default))
+                        if (current != null && !current.Equals(default))
                         {
                             temp.Add(current);
                         }
