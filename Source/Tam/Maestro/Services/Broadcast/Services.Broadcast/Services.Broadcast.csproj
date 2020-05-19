@@ -319,10 +319,12 @@
     <Compile Include="ApplicationServices\BroadcastLockingManagerApplicationService.cs" />
     <Compile Include="ApplicationServices\CampaignAggregationJobTrigger.cs" />
     <Compile Include="ApplicationServices\CampaignAggregator.cs" />
+    <Compile Include="ApplicationServices\VpvhService.cs" />
     <Compile Include="BusinessEngines\WeeklyBreakdownEngine.cs" />
     <Compile Include="ApplicationServices\Inventory\InventoryExportService.cs" />
     <Compile Include="BusinessEngines\InventoryExportEngine.cs" />
     <Compile Include="ApplicationServices\ProgramMappingService.cs" />
+    <Compile Include="Converters\VpvhFileImporter.cs" />
     <Compile Include="Entities\CreativeLength.cs" />
     <Compile Include="ApplicationServices\StationMappingService.cs" />
     <Compile Include="ApplicationServices\NtiUniverseService.cs" />
@@ -441,6 +443,7 @@
     <Compile Include="Entities\Nti\NtiUniverseAudienceMapping.cs" />
     <Compile Include="Entities\Nti\NtiUniverseDetail.cs" />
     <Compile Include="Entities\Nti\NtiUniverseHeader.cs" />
+    <Compile Include="Entities\Vpvh\VpvhExcelRecord.cs" />
     <Compile Include="Entities\Plan\PlanAudienceDisplay.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuying.cs" />
     <Compile Include="Entities\Plan\Pricing\CurrentPricingExecution.cs" />
@@ -534,6 +537,8 @@
     <Compile Include="Entities\StationMappingsFileRequestDto.cs" />
     <Compile Include="Entities\StationMonthDetailDto.cs" />
     <Compile Include="Entities\TimeRange.cs" />
+    <Compile Include="Entities\Vpvh\VpvhFile.cs" />
+    <Compile Include="Entities\Vpvh\VpvhFileItem.cs" />
     <Compile Include="Exceptions\PricingModelException.cs" />
     <Compile Include="Exceptions\UnknownGenreException.cs" />
     <Compile Include="Extensions\DetectionExtensions.cs" />
@@ -1042,6 +1047,7 @@
     <Compile Include="Repositories\StationRepository.cs" />
     <Compile Include="Repositories\TrackerMappingRepository.cs" />
     <Compile Include="Repositories\TrafficRepository.cs" />
+    <Compile Include="Repositories\VpvhRepository.cs" />
     <Compile Include="Service\ScheduledServiceMethod.cs" />
     <Compile Include="Service\ScheduledWindowsServiceMethodRunner.cs" />
     <Compile Include="Service\WindowsServiceBase.cs" />

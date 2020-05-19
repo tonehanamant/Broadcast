@@ -1,0 +1,86 @@
+[
+  {
+    "AMNews": 0.661,
+    "Audience": "W18+",
+    "PMNews": 0.722,
+    "Quarter": "1Q17",
+    "SynAll": 0.69
+  },
+  {
+    "AMNews": 0.055,
+    "Audience": "W18-34",
+    "PMNews": 0.06,
+    "Quarter": "1Q17",
+    "SynAll": 0.083
+  },
+  {
+    "AMNews": 0.195,
+    "Audience": "W18-49",
+    "PMNews": 0.18,
+    "Quarter": "1Q17",
+    "SynAll": 0.227
+  },
+  {
+    "AMNews": 0.261,
+    "Audience": "W25-54",
+    "PMNews": 0.231,
+    "Quarter": "1Q17",
+    "SynAll": 0.278
+  },
+  {
+    "AMNews": 0.387,
+    "Audience": "W35-64",
+    "PMNews": 0.358,
+    "Quarter": "1Q17",
+    "SynAll": 0.381
+  },
+  {
+    "AMNews": 0.387,
+    "Audience": "W55+",
+    "PMNews": 0.473,
+    "Quarter": "1Q17",
+    "SynAll": 0.39
+  },
+  {
+    "AMNews": 0.477,
+    "Audience": "M18+",
+    "PMNews": 0.548,
+    "Quarter": "1Q17",
+    "SynAll": 0.471
+  },
+  {
+    "AMNews": 0.041,
+    "Audience": "M18-34",
+    "PMNews": 0.054,
+    "Quarter": "1Q17",
+    "SynAll": 0.065
+  },
+  {
+    "AMNews": 0.133,
+    "Audience": "M18-49",
+    "PMNews": 0.15,
+    "Quarter": "1Q17",
+    "SynAll": 0.166
+  },
+  {
+    "AMNews": 0.179,
+    "Audience": "M25-54",
+    "PMNews": 0.186,
+    "Quarter": "1Q17",
+    "SynAll": 0.203
+  },
+  {
+    "AMNews": 0.291,
+    "Audience": "M35-64",
+    "PMNews": 0.291,
+    "Quarter": "1Q17",
+    "SynAll": 0.279
+  },
+  {
+    "AMNews": 0.286,
+    "Audience": "M55+",
+    "PMNews": 0.345,
+    "Quarter": "1Q17",
+    "SynAll": 0.249
+  }
+]

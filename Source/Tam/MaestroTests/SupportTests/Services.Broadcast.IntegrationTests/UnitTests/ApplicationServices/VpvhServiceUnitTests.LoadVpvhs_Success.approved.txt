@@ -1,0 +1,21 @@
+{
+  "CreatedBy": "IntegrationTestUser",
+  "CreatedDate": "2022-05-14T00:00:00",
+  "ErrorMessage": null,
+  "FileHash": "B8-F9-1C-3F-83-A9-42-B2-05-3E-EC-C6-E8-6A-77-95-44-1E-5C-61",
+  "FileName": "VPVH_valid.xlsx",
+  "Items": [
+    {
+      "AMNews": 1.0,
+      "Audience": {
+        "AudienceString": "Woman 18+",
+        "Id": 31
+      },
+      "PMNews": 1.0,
+      "Quarter": 49,
+      "SynAll": 1.0,
+      "Year": 2017
+    }
+  ],
+  "Success": true
+}

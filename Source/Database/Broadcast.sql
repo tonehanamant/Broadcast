@@ -346,6 +346,38 @@ END
 
 /*************************************** END BP-33 *****************************************************/
 
+/*************************************** START BP1-170 *****************************************************/
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id =OBJECT_ID('vpvh_files'))
+BEGIN
+	CREATE TABLE vpvh_files (
+		id INT NOT NULL PRIMARY KEY IDENTITY,
+		created_date DATETIME NOT NULL,
+		created_by VARCHAR(63) NOT NULL,
+		file_hash VARCHAR(255) NOT NULL,
+		file_name VARCHAR(255) NOT NULL,
+		success BIT NOT NULL,
+		error_message TEXT NULL
+	)
+END
+
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id =OBJECT_ID('vpvhs'))
+BEGIN
+	CREATE TABLE vpvhs (
+		id INT NOT NULL PRIMARY KEY IDENTITY,
+		quarter INT NOT NULL,
+		year INT NOT NULL,
+		audience_id INT NOT NULL,
+		am_news FLOAT NOT NULL,
+		pm_news FLOAT NOT NULL,
+		syn_all FLOAT NOT NULL,
+		vpvh_file_id INT NOT NULL,
+		CONSTRAINT FK_vpvh_files_vpvhs FOREIGN KEY (vpvh_file_id) REFERENCES vpvh_files (id),
+		CONSTRAINT FK_audiences_vpvhs FOREIGN KEY (audience_id) REFERENCES audiences (id)
+	)
+END
+/*************************************** END BP1-170 *****************************************************/
+
+
 /*************************************** Start Cleanup - GenreSourceRename *****************************************************/
 
 GO

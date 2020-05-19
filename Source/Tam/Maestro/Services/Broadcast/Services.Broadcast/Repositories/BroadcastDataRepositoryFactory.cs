@@ -101,6 +101,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<INtiToNsiConversionRepository, NtiToNsiConversionRepository>();
             instance.RegisterType<IDayRepository, DayRepository>();
             instance.RegisterType<IInventoryExportJobRepository, InventoryExportJobRepository>();
+            instance.RegisterType<IVpvhRepository, VpvhRepository>();
 
             WasRegistered = true;
         }

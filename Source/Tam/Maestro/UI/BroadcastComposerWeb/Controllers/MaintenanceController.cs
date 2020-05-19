@@ -35,17 +35,21 @@ namespace BroadcastComposerWeb.Controllers
         // GET
         public ActionResult Index()
         {
-            if (TempData["Message"] != null) {
+            if (TempData["Message"] != null)
+            {
                 ViewBag.Message = TempData["Message"];
             }
-            if (TempData["TabId"] != null) {
+            if (TempData["TabId"] != null)
+            {
                 ViewBag.TabId = TempData["TabId"];
             }
 
-            if (TempData["Id"] != null) {
+            if (TempData["Id"] != null)
+            {
                 ViewBag.Id = TempData["Id"];
             }
-            if (TempData["TextareaMessage"] != null) {
+            if (TempData["TextareaMessage"] != null)
+            {
                 ViewBag.TextareaMessage = TempData["TextareaMessage"];
             }
             return View("Index");
@@ -56,7 +60,7 @@ namespace BroadcastComposerWeb.Controllers
         {
             var quickEmailer = _ApplicationServiceFactory.GetApplicationService<IEmailerService>();
             quickEmailer.QuickSend(true, "<b>test</b><br/> This is only a test", "Test Email from Broadcast",
-                MailPriority.Normal, new string[] {"test_email@test.com"});
+                MailPriority.Normal, new string[] { "test_email@test.com" });
             TempData["Message"] = "Test email sent.";
             TempData["TabId"] = "settings";
             return RedirectToAction("Index");
@@ -76,7 +80,7 @@ namespace BroadcastComposerWeb.Controllers
                 {
                     var service = _ApplicationServiceFactory.GetApplicationService<IAffidavitService>();
                     InboundFileSaveRequest request = new InboundFileSaveRequest();
-                    var json = service.JSONifyFile(file.InputStream, fileName,out request);
+                    var json = service.JSONifyFile(file.InputStream, fileName, out request);
 
                     TempData["Id"] = service.SaveAffidavit(request, "uma", DateTime.Now);
                     TempData["TextareaMessage"] = json;
@@ -197,7 +201,7 @@ namespace BroadcastComposerWeb.Controllers
             NetworkCredential creds = helper.GetClientCredentials();
             var site = "ftp://" + helper.Host;
             var list = srv.GetFileList(creds, site);
-        
+
             TempData["Message"] = "Get file worked w/o error!\r\n";
             TempData["TabId"] = "settings";
             return RedirectToAction("Index");
@@ -306,7 +310,7 @@ namespace BroadcastComposerWeb.Controllers
                 var endDate = ParseDateTimeString(endDateString, "EndDate");
 
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
-                var result = service.QueueProcessInventoryProgramsBySourceJob(inventorySourceId, startDate, endDate,_GetCurrentUserFullName());
+                var result = service.QueueProcessInventoryProgramsBySourceJob(inventorySourceId, startDate, endDate, _GetCurrentUserFullName());
 
                 TempData["Message"] = $"Job queued as Job {result.Jobs.First().Id}. \r\n{result}";
             }
@@ -504,10 +508,10 @@ namespace BroadcastComposerWeb.Controllers
                         service.LoadCoverages(file.InputStream, fileName, "maintenance controller", DateTime.Now);
                         TempData["Message"] = "Market coverages file uploaded and processed successfully !";
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         TempData["Message"] = ex.Message;
-                    }                                      
+                    }
                 }
             }
 
@@ -596,6 +600,42 @@ namespace BroadcastComposerWeb.Controllers
                 ViewBag.Message = ex.Message;
                 return View("Index");
             }
+        }
+
+
+        [HttpPost]
+        public ActionResult UploadVpvhFile(HttpPostedFileBase file)
+        {
+            TempData["TabId"] = "reference_data";
+
+            if (file == null || file.ContentLength <= 0)
+                return RedirectToAction("Index");
+
+            if (Path.GetExtension(file.FileName) != ".xlsx")
+            {
+                TempData["Message"] = "Only Excel (.xlsx) files supported";
+                return RedirectToAction("Index");
+            }
+
+            try
+            {
+                var userName = _ApplicationServiceFactory
+                    .GetApplicationService<IUserService>()
+                    .GetCurrentUserFullName();
+
+                _ApplicationServiceFactory
+                    .GetApplicationService<IVpvhService>()
+                    .LoadVpvhs(file.InputStream, userName, file.FileName, DateTime.Now);
+
+                TempData["Message"] = "VPVH file uploaded and processed successfully !";
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+            }
+
+
+            return RedirectToAction("Index");
         }
     }
 }

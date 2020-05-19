@@ -518,6 +518,22 @@
                 </div>
             }
 
+            @using (Html.BeginForm("UploadVpvhFile", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h1 class="heading">Upload VPVH</h1>
+                    <div class="input-container">
+                        <label class="label" for="file">Filename:</label>
+                        <input class="input" type="file" name="file" id="file" />
+                    </div>
+                    <input class="button" type="submit" text="Upload VPVH" />
+                    <div>
+                        <span class="label">Result:</span>
+                        <label class="label" id="result_vpvh">@ViewBag.Message</label>
+                    </div>
+                </div>
+            }
+
         </div>
         <div id="settings" class="tabcontent">
             <div class="form">

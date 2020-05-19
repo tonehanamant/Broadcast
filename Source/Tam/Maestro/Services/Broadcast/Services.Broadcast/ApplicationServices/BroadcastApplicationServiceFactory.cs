@@ -124,6 +124,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IRatingForecastService, RatingForecastService>();
             unityContainer.RegisterType<IStationContactMasterFileImporter, StationContactMasterFileImporter>();
             unityContainer.RegisterType<IUniversesFileImporter, UniversesFileImporter>();
+            unityContainer.RegisterType<IVpvhFileImporter, VpvhFileImporter>();
 
             unityContainer.RegisterType<IProposalProgramsCalculationEngine, ProposalProgramsCalculationEngine>();
             unityContainer.RegisterType<IProposalMarketsCalculationEngine, ProposalMarketsCalculationEngine>();
@@ -207,6 +208,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IShowTypeService, ShowTypeService>();
             unityContainer.RegisterType<IContainTypeService, ContainTypeService>();
             unityContainer.RegisterType<IAffiliateService, AffiliateService>();
+            unityContainer.RegisterType<IVpvhService, VpvhService>();
 
             unityContainer.RegisterType<IScxGenerationService, ScxGenerationService>();
 

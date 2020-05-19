@@ -2126,6 +2126,31 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventor
           <Property Name="start_time" Type="int" Nullable="false" />
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="vpvh_files">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="file_hash" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="file_name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="success" Type="bit" Nullable="false" />
+          <Property Name="error_message" Type="text" />
+        </EntityType>
+        <EntityType Name="vpvhs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="quarter" Type="int" Nullable="false" />
+          <Property Name="year" Type="int" Nullable="false" />
+          <Property Name="audience_id" Type="int" Nullable="false" />
+          <Property Name="am_news" Type="float" Nullable="false" />
+          <Property Name="pm_news" Type="float" Nullable="false" />
+          <Property Name="syn_all" Type="float" Nullable="false" />
+          <Property Name="vpvh_file_id" Type="int" Nullable="false" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
@@ -2347,6 +2372,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="audience_maps">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_audiences_vpvhs">
+          <End Role="audiences" Type="Self.audiences" Multiplicity="1" />
+          <End Role="vpvhs" Type="Self.vpvhs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audiences">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="vpvhs">
               <PropertyRef Name="audience_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -5467,6 +5504,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_vpvh_files_vpvhs">
+          <End Role="vpvh_files" Type="Self.vpvh_files" Multiplicity="1" />
+          <End Role="vpvhs" Type="Self.vpvhs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vpvh_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="vpvhs">
+              <PropertyRef Name="vpvh_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="BroadcastModelStoreContainer">
           <EntitySet Name="affidavit_client_scrub_audiences" EntityType="Self.affidavit_client_scrub_audiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="affidavit_client_scrubs" EntityType="Self.affidavit_client_scrubs" Schema="dbo" store:Type="Tables" />
@@ -5633,6 +5682,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="stations" EntityType="Self.stations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="system_component_parameters" EntityType="Self.system_component_parameters" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="timespans" EntityType="Self.timespans" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vpvh_files" EntityType="Self.vpvh_files" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vpvhs" EntityType="Self.vpvhs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="station_inventory_manifest_weeks_history" EntityType="Self.station_inventory_manifest_weeks_history" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [station_inventory_manifest_weeks_history].[id] AS [id], 
@@ -5723,6 +5774,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_audience_maps_audiences" Association="Self.FK_audience_maps_audiences">
             <End Role="audiences" EntitySet="audiences" />
             <End Role="audience_maps" EntitySet="audience_maps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_audiences_vpvhs" Association="Self.FK_audiences_vpvhs">
+            <End Role="audiences" EntitySet="audiences" />
+            <End Role="vpvhs" EntitySet="vpvhs" />
           </AssociationSet>
           <AssociationSet Name="FK_campaign_summaries_campaign" Association="Self.FK_campaign_summaries_campaign">
             <End Role="campaigns" EntitySet="campaigns" />
@@ -6699,6 +6754,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_stations_markets" Association="Self.FK_stations_markets">
             <End Role="markets" EntitySet="markets" />
             <End Role="stations" EntitySet="stations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vpvh_files_vpvhs" Association="Self.FK_vpvh_files_vpvhs">
+            <End Role="vpvh_files" EntitySet="vpvh_files" />
+            <End Role="vpvhs" EntitySet="vpvhs" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -7899,6 +7958,16 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="plan_version_weekly_breakdown_duplicate" EntitySet="plan_version_weekly_breakdown_duplicate" />
           </AssociationSet>
+          <EntitySet Name="vpvh_files" EntityType="BroadcastModel.vpvh_files" />
+          <EntitySet Name="vpvhs" EntityType="BroadcastModel.vpvh" />
+          <AssociationSet Name="FK_audiences_vpvhs" Association="BroadcastModel.FK_audiences_vpvhs">
+            <End Role="audience" EntitySet="audiences" />
+            <End Role="vpvh" EntitySet="vpvhs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vpvh_files_vpvhs" Association="BroadcastModel.FK_vpvh_files_vpvhs">
+            <End Role="vpvh_files" EntitySet="vpvh_files" />
+            <End Role="vpvh" EntitySet="vpvhs" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -7946,6 +8015,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="nti_universe_audience_mappings" Relationship="BroadcastModel.FK_nti_universe_audience_mappings_audiences" FromRole="audience" ToRole="nti_universe_audience_mappings" />
           <NavigationProperty Name="nti_universes" Relationship="BroadcastModel.FK_nti_universes_audiences" FromRole="audience" ToRole="nti_universes" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_versions_audiences" FromRole="audience" ToRole="plan_versions" />
+          <NavigationProperty Name="vpvhs" Relationship="BroadcastModel.FK_audiences_vpvhs" FromRole="audience" ToRole="vpvh" />
         </EntityType>
         <EntityType Name="daypart">
           <Key>
@@ -13816,6 +13886,58 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vpvh_files">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="file_hash" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="file_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="success" Type="Boolean" Nullable="false" />
+          <Property Name="error_message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="vpvhs" Relationship="BroadcastModel.FK_vpvh_files_vpvhs" FromRole="vpvh_files" ToRole="vpvh" />
+        </EntityType>
+        <EntityType Name="vpvh">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="quarter" Type="Int32" Nullable="false" />
+          <Property Name="year" Type="Int32" Nullable="false" />
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <Property Name="am_news" Type="Double" Nullable="false" />
+          <Property Name="pm_news" Type="Double" Nullable="false" />
+          <Property Name="syn_all" Type="Double" Nullable="false" />
+          <Property Name="vpvh_file_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_audiences_vpvhs" FromRole="vpvh" ToRole="audience" />
+          <NavigationProperty Name="vpvh_files" Relationship="BroadcastModel.FK_vpvh_files_vpvhs" FromRole="vpvh" ToRole="vpvh_files" />
+        </EntityType>
+        <Association Name="FK_audiences_vpvhs">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
+          <End Type="BroadcastModel.vpvh" Role="vpvh" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audience">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="vpvh">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vpvh_files_vpvhs">
+          <End Type="BroadcastModel.vpvh_files" Role="vpvh_files" Multiplicity="1" />
+          <End Type="BroadcastModel.vpvh" Role="vpvh" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vpvh_files">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="vpvh">
+              <PropertyRef Name="vpvh_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -16099,6 +16221,33 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="active_days_label" ColumnName="active_days_label" />
                 <ScalarProperty Name="number_active_days" ColumnName="number_active_days" />
                 <ScalarProperty Name="media_week_id" ColumnName="media_week_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vpvh_files">
+            <EntityTypeMapping TypeName="BroadcastModel.vpvh_files">
+              <MappingFragment StoreEntitySet="vpvh_files">
+                <ScalarProperty Name="error_message" ColumnName="error_message" />
+                <ScalarProperty Name="success" ColumnName="success" />
+                <ScalarProperty Name="file_name" ColumnName="file_name" />
+                <ScalarProperty Name="file_hash" ColumnName="file_hash" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vpvhs">
+            <EntityTypeMapping TypeName="BroadcastModel.vpvh">
+              <MappingFragment StoreEntitySet="vpvhs">
+                <ScalarProperty Name="vpvh_file_id" ColumnName="vpvh_file_id" />
+                <ScalarProperty Name="syn_all" ColumnName="syn_all" />
+                <ScalarProperty Name="pm_news" ColumnName="pm_news" />
+                <ScalarProperty Name="am_news" ColumnName="am_news" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="quarter" ColumnName="quarter" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

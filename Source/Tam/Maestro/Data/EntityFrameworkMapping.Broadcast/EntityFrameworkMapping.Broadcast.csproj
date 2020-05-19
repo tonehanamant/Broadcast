@@ -828,6 +828,12 @@
     <Compile Include="timespan.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="vpvh.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vpvh_files.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="vw_ccc_daypart.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

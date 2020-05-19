@@ -430,6 +430,10 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_duplicate_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_duplicate_spot_lengths" />
+        <EntityTypeShape EntityType="BroadcastModel.vpvh_files" Width="1.5" PointX="2.75" PointY="79" />
+        <EntityTypeShape EntityType="BroadcastModel.vpvh" Width="1.5" PointX="5" PointY="0.75" />
+        <AssociationConnector Association="BroadcastModel.FK_audiences_vpvhs" />
+        <AssociationConnector Association="BroadcastModel.FK_vpvh_files_vpvhs" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
