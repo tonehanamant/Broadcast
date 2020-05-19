@@ -160,38 +160,42 @@ namespace Services.Broadcast.ApplicationServices
             var manifestDayparts = _InventoryRepository.GetManifestDaypartsForProgramName(programMapping.OriginalProgramName);
             foreach (var daypart in manifestDayparts)
             {
-                var programWeeksDateRange = _InventoryRepository.GetStationInventoryManifesDaypartWeeksDateRange(daypart.Id.Value);
-
-                // Get all StationInventoryManifestDaypartProgram for these
-                var manifestDaypartPrograms = _InventoryRepository.GetDaypartProgramsForInventoryDayparts(new List<int> { daypart.Id.Value });
-
-                // Remove the old programs
-                var manifestDaypartIds = manifestDaypartPrograms.Select(x => x.StationInventoryManifestDaypartId).Distinct().ToList();
-                if (!manifestDaypartIds.IsEmpty())
+                // If the daypart has no weeks, we ignore it, and don't update
+                if (_InventoryRepository.StationInventoryManifesDaypartHasWeeks(daypart.Id.Value))
                 {
-                    _InventoryRepository.DeleteInventoryPrograms(manifestDaypartIds);
-                }
+                    var programWeeksDateRange = _InventoryRepository.GetStationInventoryManifesDaypartWeeksDateRange(daypart.Id.Value);
 
-                // Create the new StationInventoryManifestDaypartProgram
-                var newManifestDaypartPrograms = new List<StationInventoryManifestDaypartProgram>
-                {
-                    new StationInventoryManifestDaypartProgram
+                    // Get all StationInventoryManifestDaypartProgram for these
+                    var manifestDaypartPrograms = _InventoryRepository.GetDaypartProgramsForInventoryDayparts(new List<int> { daypart.Id.Value });
+
+                    // Remove the old programs
+                    var manifestDaypartIds = manifestDaypartPrograms.Select(x => x.StationInventoryManifestDaypartId).Distinct().ToList();
+                    if (!manifestDaypartIds.IsEmpty())
                     {
-                        StationInventoryManifestDaypartId = daypart.Id.Value,
-                        ProgramName = programMapping.OfficialProgramName,
-                        GenreSourceId = (int)GenreSourceEnum.RedBee,
-                        MaestroGenreId = maestroGenre.Id,
-                        SourceGenreId = sourceGenre.Id,
-                        ShowType = mapping.OfficialShowType,
-                        StartTime = daypart.Daypart.StartTime,
-                        EndTime = daypart.Daypart.EndTime,
-                        StartDate = programWeeksDateRange.Start.Value,
-                        EndDate = programWeeksDateRange.End.Value,
-                        CreatedDate = createdDate
+                        _InventoryRepository.DeleteInventoryPrograms(manifestDaypartIds);
                     }
-                };
-                _InventoryRepository.CreateInventoryPrograms(newManifestDaypartPrograms, createdDate);
-                updatedInventoryCount++;
+
+                    // Create the new StationInventoryManifestDaypartProgram
+                    var newManifestDaypartPrograms = new List<StationInventoryManifestDaypartProgram>
+                    {
+                        new StationInventoryManifestDaypartProgram
+                        {
+                            StationInventoryManifestDaypartId = daypart.Id.Value,
+                            ProgramName = programMapping.OfficialProgramName,
+                            GenreSourceId = (int)GenreSourceEnum.RedBee,
+                            MaestroGenreId = maestroGenre.Id,
+                            SourceGenreId = sourceGenre.Id,
+                            ShowType = mapping.OfficialShowType,
+                            StartTime = daypart.Daypart.StartTime,
+                            EndTime = daypart.Daypart.EndTime,
+                            StartDate = programWeeksDateRange.Start.Value,
+                            EndDate = programWeeksDateRange.End.Value,
+                            CreatedDate = createdDate
+                        }
+                    };
+                    _InventoryRepository.CreateInventoryPrograms(newManifestDaypartPrograms, createdDate);
+                    updatedInventoryCount++; 
+                }
             };
 
             durationSw.Stop();

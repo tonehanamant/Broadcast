@@ -177,6 +177,13 @@ namespace Services.Broadcast.Repositories
         DateRange GetStationInventoryManifesDaypartWeeksDateRange(int manifestDaypartId);
 
         /// <summary>
+        /// Stations the inventory manifes daypart has weeks.
+        /// </summary>
+        /// <param name="manifestDaypartId">The manifest daypart identifier.</param>
+        /// <returns></returns>
+        bool StationInventoryManifesDaypartHasWeeks(int manifestDaypartId);
+
+        /// <summary>
         /// For tests
         /// </summary>
         /// <param name="groupIds"></param>
@@ -1042,6 +1049,21 @@ namespace Services.Broadcast.Repositories
                                 End = weeks.Max(week => week.end_date)
                             });
                     return query.Single();
+                });
+        }
+
+        ///<inheritdoc/>
+        public bool StationInventoryManifesDaypartHasWeeks(int manifestDaypartId)
+        {
+            return _InReadUncommitedTransaction(
+                c =>
+                {
+                    var sourceManifestId = c.station_inventory_manifest_dayparts
+                        .Single(x => x.id == manifestDaypartId).station_inventory_manifest_id;
+
+                    return c.station_inventory_manifest_weeks
+                        .Where(x => x.station_inventory_manifest_id == sourceManifestId)
+                        .Any(x => x.station_inventory_manifest_id == sourceManifestId);
                 });
         }
 
