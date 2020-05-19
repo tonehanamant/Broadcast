@@ -29,9 +29,6 @@ namespace BroadcastComposerWeb
             SetupLogging();
             LogInfo("Initializing Broadcast Web Application.");
 
-            LogInfo("Remap weekly breakdown data.");
-            RemapWeeklyBreakdownData();
-
             GlobalConfiguration.Configuration.DependencyResolver = new UnityWebApiResolver(_container);
             DependencyResolver.SetResolver(new UnityWebMvcResolver(_container));
 
@@ -61,11 +58,14 @@ namespace BroadcastComposerWeb
 
             LogInfo("Broadcast Web Application Initialized.");
             LogInfo($"DisableSecurity: {WebConfigurationManager.AppSettings["DisableSecurity"]}");
+
+            LogInfo("Remap weekly breakdown data.");
+            RemapWeeklyBreakdownData(instance);
         }
 
-        private void RemapWeeklyBreakdownData()
+        private void RemapWeeklyBreakdownData(UnityContainer unityContainer)
         {
-            var planService = _container.Resolve<IPlanService>();
+            var planService = unityContainer.Resolve<IPlanService>();
             planService.RemapWeeklyBreakdownData();
         }
 
