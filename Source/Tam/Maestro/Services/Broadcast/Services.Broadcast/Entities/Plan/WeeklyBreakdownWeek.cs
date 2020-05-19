@@ -15,9 +15,11 @@ namespace Services.Broadcast.Entities.Plan
         public double WeeklyRatings { get; set; }
         public decimal WeeklyBudget { get; set; }
         public int WeeklyAdu { get; set; }
+        public double AduImpressions { get; set; }
         public int? SpotLengthId { get; set; }
         public int? DaypartCodeId { get; set; }
         public double? PercentageOfWeek { get; set; }
+        public bool IsUpdated { get; set; }
     }
 
     public class WeeklyBreakdownTotals
@@ -39,5 +41,20 @@ namespace Services.Broadcast.Entities.Plan
         public string ActiveDays { get; set; }
         public double Impressions { get; set; }
         public decimal Budget { get; set; }
+        public int Adu { get; set; }
+    }
+
+    public class WeeklyBreakdownByWeekBySpotLength
+    {
+        public int WeekNumber { get; set; }
+        public int MediaWeekId { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public int NumberOfActiveDays { get; set; }
+        public string ActiveDays { get; set; }
+        public double Impressions { get; set; }
+        public decimal Budget { get; set; }
+        public int SpotLengthId { get; set; }
+        public int Adu { get; set; }
     }
 }

@@ -8,6 +8,7 @@ namespace Services.Broadcast.BusinessEngines
     public interface IWeeklyBreakdownEngine : IApplicationService
     {
         List<WeeklyBreakdownByWeek> GroupWeeklyBreakdownByWeek(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown);
+        List<WeeklyBreakdownByWeekBySpotLength> GroupWeeklyBreakdownByWeekBySpotLength(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown);
         Dictionary<int, int> GetWeekNumberByMediaWeekDictionary(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown);
     }
 
@@ -31,6 +32,7 @@ namespace Services.Broadcast.BusinessEngines
                 {
                     var first = grouping.First();
                     var allItems = grouping.ToList();
+                    var aduImpressions = allItems.Sum(x => x.AduImpressions);
 
                     return new WeeklyBreakdownByWeek
                     {
@@ -41,7 +43,35 @@ namespace Services.Broadcast.BusinessEngines
                         NumberOfActiveDays = first.NumberOfActiveDays,
                         ActiveDays = first.ActiveDays,
                         Impressions = allItems.Sum(x => x.WeeklyImpressions),
-                        Budget = allItems.Sum(x => x.WeeklyBudget)
+                        Budget = allItems.Sum(x => x.WeeklyBudget),
+                        Adu = (int)(aduImpressions / BroadcastConstants.ImpressionsPerUnit)
+                    };
+                })
+                .ToList();
+        }
+
+        public List<WeeklyBreakdownByWeekBySpotLength> GroupWeeklyBreakdownByWeekBySpotLength(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown)
+        {
+            return weeklyBreakdown
+                .GroupBy(x => new { x.MediaWeekId, x.SpotLengthId } )
+                .Select(grouping =>
+                {
+                    var first = grouping.First();
+                    var allItems = grouping.ToList();
+                    var aduImpressions = allItems.Sum(x => x.AduImpressions);
+
+                    return new WeeklyBreakdownByWeekBySpotLength
+                    {
+                        WeekNumber = first.WeekNumber,
+                        MediaWeekId = first.MediaWeekId,
+                        SpotLengthId = first.SpotLengthId.Value,
+                        StartDate = first.StartDate,
+                        EndDate = first.EndDate,
+                        NumberOfActiveDays = first.NumberOfActiveDays,
+                        ActiveDays = first.ActiveDays,
+                        Impressions = allItems.Sum(x => x.WeeklyImpressions),
+                        Budget = allItems.Sum(x => x.WeeklyBudget),
+                        Adu = (int)(aduImpressions / BroadcastConstants.ImpressionsPerUnit)
                     };
                 })
                 .ToList();

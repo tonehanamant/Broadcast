@@ -24,6 +24,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void GroupsWeeklyBreakdownByWeekBySpotLength()
+        {
+            var result = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeekBySpotLength(_WeeklyBreakdown);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void ReturnsWeekNumberByMediaWeekDictionary()
         {
             var result = _WeeklyBreakdownEngine.GetWeekNumberByMediaWeekDictionary(_WeeklyBreakdown);
@@ -42,7 +50,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 ActiveDays = "M,Tu,W,Th,F",
                 WeeklyImpressions = 1000,
                 WeeklyBudget = 100,
-                SpotLengthId = 1
+                SpotLengthId = 1,
+                DaypartCodeId = 1,
+                AduImpressions = 1000000
             },
             new WeeklyBreakdownWeek
             {
@@ -54,7 +64,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 ActiveDays = "M,Tu,W,Th,F",
                 WeeklyImpressions = 1500,
                 WeeklyBudget = 200,
-                SpotLengthId = 2
+                SpotLengthId = 2,
+                DaypartCodeId = 1,
+                AduImpressions = 1000000
             },
             new WeeklyBreakdownWeek
             {
@@ -66,7 +78,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 ActiveDays = "M,Tu,W,Th",
                 WeeklyImpressions = 800,
                 WeeklyBudget = 70,
-                SpotLengthId = 1
+                SpotLengthId = 1,
+                DaypartCodeId = 1,
             },
             new WeeklyBreakdownWeek
             {
@@ -78,7 +91,37 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 ActiveDays = "M,Tu,W",
                 WeeklyImpressions = 500,
                 WeeklyBudget = 30,
-                SpotLengthId = 1
+                SpotLengthId = 1,
+                DaypartCodeId = 1,
+                AduImpressions = 1000000
+            },
+            new WeeklyBreakdownWeek
+            {
+                WeekNumber = 1,
+                MediaWeekId = 500,
+                StartDate = new DateTime(2020, 4, 20),
+                EndDate = new DateTime(2020, 4, 26),
+                NumberOfActiveDays = 3,
+                ActiveDays = "M,Tu,W",
+                WeeklyImpressions = 500,
+                WeeklyBudget = 30,
+                SpotLengthId = 1,
+                DaypartCodeId = 2,
+                AduImpressions = 500000
+            },
+            new WeeklyBreakdownWeek
+            {
+                WeekNumber = 1,
+                MediaWeekId = 500,
+                StartDate = new DateTime(2020, 4, 20),
+                EndDate = new DateTime(2020, 4, 26),
+                NumberOfActiveDays = 3,
+                ActiveDays = "M,Tu,W",
+                WeeklyImpressions = 500,
+                WeeklyBudget = 30,
+                SpotLengthId = 2,
+                DaypartCodeId = 2,
+                AduImpressions = 1000000
             }
         };
     }

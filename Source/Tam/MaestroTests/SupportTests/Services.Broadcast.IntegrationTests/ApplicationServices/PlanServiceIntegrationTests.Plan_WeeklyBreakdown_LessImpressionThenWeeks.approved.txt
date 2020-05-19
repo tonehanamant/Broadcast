@@ -8,8 +8,10 @@
   "Weeks": [
     {
       "ActiveDays": "M-Su",
+      "AduImpressions": 0.0,
       "DaypartCodeId": null,
       "EndDate": "2020-01-05T00:00:00",
+      "IsUpdated": false,
       "MediaWeekId": 836,
       "NumberOfActiveDays": 7,
       "PercentageOfWeek": null,
@@ -24,8 +26,10 @@
     },
     {
       "ActiveDays": "M-Su",
+      "AduImpressions": 0.0,
       "DaypartCodeId": null,
       "EndDate": "2020-01-12T00:00:00",
+      "IsUpdated": false,
       "MediaWeekId": 837,
       "NumberOfActiveDays": 7,
       "PercentageOfWeek": null,
@@ -40,8 +44,10 @@
     },
     {
       "ActiveDays": "M-Su",
+      "AduImpressions": 0.0,
       "DaypartCodeId": null,
       "EndDate": "2020-01-19T00:00:00",
+      "IsUpdated": false,
       "MediaWeekId": 838,
       "NumberOfActiveDays": 7,
       "PercentageOfWeek": null,
@@ -56,8 +62,10 @@
     },
     {
       "ActiveDays": "M-Su",
+      "AduImpressions": 0.0,
       "DaypartCodeId": null,
       "EndDate": "2020-01-26T00:00:00",
+      "IsUpdated": false,
       "MediaWeekId": 839,
       "NumberOfActiveDays": 7,
       "PercentageOfWeek": null,
@@ -72,8 +80,10 @@
     },
     {
       "ActiveDays": "M-Su",
+      "AduImpressions": 0.0,
       "DaypartCodeId": null,
       "EndDate": "2020-02-02T00:00:00",
+      "IsUpdated": false,
       "MediaWeekId": 840,
       "NumberOfActiveDays": 7,
       "PercentageOfWeek": null,

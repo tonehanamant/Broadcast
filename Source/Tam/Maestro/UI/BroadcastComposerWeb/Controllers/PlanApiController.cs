@@ -38,6 +38,18 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
+        /// Endpoint used for manually remap the weekly breakdown data using the duplicate table
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("RemapWeeklyBreakdownData")]
+        [Authorize]
+        public BaseResponse<List<WeeklyBreakdownWeek>> RemapWeeklyBreakdownData()
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().RemapWeeklyBreakdownData());
+        }
+
+        /// <summary>
         /// Gets the plan statuses.
         /// </summary>
         /// <returns>List of LookupDto objects</returns>

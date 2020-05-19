@@ -96,7 +96,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 Status = PlanStatusEnum.Working,
                 ModifiedBy = modifiedUser,
                 ModifiedDate = modifiedDateTime,
-                GoalBreakdownType = PlanGoalBreakdownTypeEnum.Even,
+                GoalBreakdownType = PlanGoalBreakdownTypeEnum.EvenDelivery,
                 FlightStartDate = new DateTime(2019, 8, 1),
                 FlightEndDate = new DateTime(2019, 9, 1),
                 Budget = 500000m,

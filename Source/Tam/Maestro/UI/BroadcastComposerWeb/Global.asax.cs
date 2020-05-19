@@ -2,6 +2,7 @@
 using log4net;
 using Microsoft.Practices.Unity;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Plan;
 using System;
 using System.Runtime.CompilerServices;
 using System.Web.Configuration;
@@ -27,6 +28,9 @@ namespace BroadcastComposerWeb
             /*** Setup logging ***/
             SetupLogging();
             LogInfo("Initializing Broadcast Web Application.");
+
+            LogInfo("Remap weekly breakdown data.");
+            RemapWeeklyBreakdownData();
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityWebApiResolver(_container);
             DependencyResolver.SetResolver(new UnityWebMvcResolver(_container));
@@ -57,6 +61,12 @@ namespace BroadcastComposerWeb
 
             LogInfo("Broadcast Web Application Initialized.");
             LogInfo($"DisableSecurity: {WebConfigurationManager.AppSettings["DisableSecurity"]}");
+        }
+
+        private void RemapWeeklyBreakdownData()
+        {
+            var planService = _container.Resolve<IPlanService>();
+            planService.RemapWeeklyBreakdownData();
         }
 
         private void SetupLogging()

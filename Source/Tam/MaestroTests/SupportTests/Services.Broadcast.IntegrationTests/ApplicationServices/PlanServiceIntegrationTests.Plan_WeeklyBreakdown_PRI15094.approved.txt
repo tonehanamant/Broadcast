@@ -8,8 +8,10 @@
   "Weeks": [
     {
       "ActiveDays": "Su",
+      "AduImpressions": 0.0,
       "DaypartCodeId": null,
       "EndDate": "2019-09-29T00:00:00",
+      "IsUpdated": false,
       "MediaWeekId": 822,
       "NumberOfActiveDays": 1,
       "PercentageOfWeek": null,
@@ -24,8 +26,10 @@
     },
     {
       "ActiveDays": "M,Tu,Th,Sa,Su",
+      "AduImpressions": 0.0,
       "DaypartCodeId": null,
       "EndDate": "2019-10-06T00:00:00",
+      "IsUpdated": false,
       "MediaWeekId": 823,
       "NumberOfActiveDays": 5,
       "PercentageOfWeek": null,
@@ -40,8 +44,10 @@
     },
     {
       "ActiveDays": "M-W,F,Su",
+      "AduImpressions": 0.0,
       "DaypartCodeId": null,
       "EndDate": "2019-10-13T00:00:00",
+      "IsUpdated": false,
       "MediaWeekId": 824,
       "NumberOfActiveDays": 5,
       "PercentageOfWeek": null,

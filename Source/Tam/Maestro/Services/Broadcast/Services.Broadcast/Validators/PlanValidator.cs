@@ -44,7 +44,6 @@ namespace Services.Broadcast.Validators
         const string INVALID_SHARE_BOOK = "Invalid share book";
         const string INVALID_HUT_BOOK = "Invalid HUT book.";
         const string INVALID_FLIGHT_DATES = "Invalid flight dates.  The end date cannot be before the start date.";
-        const string UPDATED_WEEK_ERROR = "No updated week found or more than one found.";
         const string INVALID_FLIGHT_DAYS = "Invalid flight days. The plan should have at least one flight day";
         const string INVALID_FLIGHT_DATES_WITH_FLIGHT_DAYS = "Invalid flight dates. The flight cannot start or end, with non-flight days";
         const string INVALID_FLIGHT_DATE = "Invalid flight start/end date.";
@@ -154,17 +153,19 @@ namespace Services.Broadcast.Validators
             {
                 throw new Exception(INVALID_FLIGHT_DAYS);
             }
-            if (request.DeliveryType == PlanGoalBreakdownTypeEnum.Even
-                || request.UpdatedWeek <= 0)
+
+            if (request.DeliveryType != PlanGoalBreakdownTypeEnum.EvenDelivery &&
+                request.Weeks.Count(w => w.IsUpdated) > 1)
             {
-                return;
+                throw new Exception("More than one updated week found.");
             }
 
-            var updatedWeek = request.Weeks.Where(w => w.WeekNumber == request.UpdatedWeek);
-            if (updatedWeek.Count() != 1)
+            if (request.TotalImpressions <= 0)
             {
-                throw new Exception(UPDATED_WEEK_ERROR);
+                throw new Exception("Total impressions must be more than zero");
             }
+
+            _ValidateWeeklyBreakdownDeliveryTypeAndWeeks(request.DeliveryType, request.Weeks);
         }
 
         private void _ValidateFlightAndHiatus(PlanDto plan)
@@ -413,6 +414,28 @@ namespace Services.Broadcast.Validators
                 throw new Exception(INVALID_IMPRESSIONS_COUNT);
             }
             //We do not validate percentages or rating points since those are all derived from the impressions
+
+            _ValidateWeeklyBreakdownDeliveryTypeAndWeeks(plan.GoalBreakdownType, plan.WeeklyBreakdownWeeks);
+        }
+
+        private void _ValidateWeeklyBreakdownDeliveryTypeAndWeeks(PlanGoalBreakdownTypeEnum deliveryType, List<WeeklyBreakdownWeek> weeklyBreakdown)
+        {
+            if (deliveryType == PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength)
+            {
+                if (weeklyBreakdown.Any(x => !x.SpotLengthId.HasValue))
+                    throw new Exception("For the chosen delivery type, each weekly breakdown row must have spot length associated with it");
+
+                if (weeklyBreakdown.Any(x => !x.PercentageOfWeek.HasValue))
+                    throw new Exception("For the chosen delivery type, each weekly breakdown row must have percentage of week set");
+
+                var weeklyBreakdownHasSeveralRowsWithTheSameWeekAndSpotLength = weeklyBreakdown
+                    .GroupBy(x => new { x.MediaWeekId, x.SpotLengthId })
+                    .Select(x => x.Count())
+                    .Any(x => x > 1);
+
+                if (weeklyBreakdownHasSeveralRowsWithTheSameWeekAndSpotLength)
+                    throw new Exception("For the chosen delivery type, each week and spot Length combination must be unique");
+            }
         }
 
         private void _ValidateProduct(PlanDto plan)

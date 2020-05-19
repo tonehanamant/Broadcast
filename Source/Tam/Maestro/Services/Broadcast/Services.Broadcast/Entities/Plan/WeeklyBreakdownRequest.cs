@@ -56,11 +56,6 @@ namespace Services.Broadcast.Entities.Plan
         /// </summary>
         public List<WeeklyBreakdownWeek> Weeks { get; set; } = new List<WeeklyBreakdownWeek>();
 
-        /// <summary>
-        /// Gets or sets the Updated Week.
-        /// </summary>
-        public int UpdatedWeek { get; set; }
-
         public List<CreativeLength> CreativeLengths { get; set; }
 
         public List<PlanDaypartDto> Dayparts { get; set; }

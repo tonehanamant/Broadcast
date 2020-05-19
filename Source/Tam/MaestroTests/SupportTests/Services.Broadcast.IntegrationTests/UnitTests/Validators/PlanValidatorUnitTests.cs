@@ -1072,7 +1072,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
-        public void ValidateWeeklyBreakdown_UpdatedWeekNotMatchWithWeeks()
+        public void ValidateWeeklyBreakdown_MoreThanOneUpdatedWeekFound()
         {
             var request = new WeeklyBreakdownRequest
             {
@@ -1089,7 +1089,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                       WeeklyImpressionsPercentage = 50,
                       WeeklyRatings = 0.00045364591593469400,
                       StartDate= new DateTime(2019,09,30),
-                      WeekNumber= 1
+                      WeekNumber= 1,
+                      IsUpdated = true
                     },
                     new WeeklyBreakdownWeek {
                       ActiveDays= "",
@@ -1100,17 +1101,203 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                       WeeklyImpressionsPercentage = 50,
                       WeeklyRatings = 0.00045364591593469400,
                       StartDate= new DateTime(2019,10,7),
-                      WeekNumber= 2
+                      WeekNumber= 2,
+                      IsUpdated = true
                     },
-                },
-                UpdatedWeek = 3
+                }
             };
 
             Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request),
                 Throws.TypeOf<Exception>().With.Message
-                    .EqualTo("No updated week found or more than one found."));
+                    .EqualTo("More than one updated week found."));
         }
 
+        [Test]
+        public void ValidateWeeklyBreakdown_ZeroTotalImpressions()
+        {
+            var request = new WeeklyBreakdownRequest
+            {
+                FlightStartDate = new DateTime(2019, 8, 1),
+                FlightEndDate = new DateTime(2019, 9, 1),
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                TotalImpressions = 0,
+                TotalRatings = 10,
+                Weeks = new List<WeeklyBreakdownWeek> {
+                    new WeeklyBreakdownWeek {
+                      ActiveDays= "",
+                      EndDate= new DateTime(2019,10,6),
+                      WeeklyImpressions= 10,
+                      MediaWeekId= 814,
+                      NumberOfActiveDays= 7,
+                      WeeklyImpressionsPercentage = 50,
+                      WeeklyRatings = 0.00045364591593469400,
+                      StartDate= new DateTime(2019,09,30),
+                      WeekNumber= 1,
+                      IsUpdated = true
+                    },
+                    new WeeklyBreakdownWeek {
+                      ActiveDays= "",
+                      EndDate= new DateTime(2019,10,13),
+                      WeeklyImpressions= 500,
+                      MediaWeekId= 814,
+                      NumberOfActiveDays= 7,
+                      WeeklyImpressionsPercentage = 50,
+                      WeeklyRatings = 0.00045364591593469400,
+                      StartDate= new DateTime(2019,10,7),
+                      WeekNumber= 2,
+                      IsUpdated = false
+                    },
+                }
+            };
+
+            Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request),
+                Throws.TypeOf<Exception>().With.Message
+                    .EqualTo("Total impressions must be more than zero"));
+        }
+
+        [Test]
+        public void WeeklyBreakdownItem_WithoutSpotLength_IsFound_ForCustomByWeekByAdLengthDeliveryType_WhenValidatingBreakdown()
+        {
+            var request = new WeeklyBreakdownRequest
+            {
+                DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength,
+                FlightStartDate = new DateTime(2019, 8, 1),
+                FlightEndDate = new DateTime(2019, 9, 1),
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                TotalImpressions = 10,
+                TotalRatings = 10,
+                Weeks = new List<WeeklyBreakdownWeek> {
+                    new WeeklyBreakdownWeek {
+                      ActiveDays= "",
+                      EndDate= new DateTime(2019,10,6),
+                      WeeklyImpressions= 10,
+                      MediaWeekId= 814,
+                      NumberOfActiveDays= 7,
+                      WeeklyImpressionsPercentage = 50,
+                      WeeklyRatings = 1,
+                      StartDate= new DateTime(2019,09,30),
+                      WeekNumber= 1,
+                      IsUpdated = true,
+                      SpotLengthId = null,
+                      PercentageOfWeek = 50,
+                    },
+                    new WeeklyBreakdownWeek {
+                      ActiveDays= "",
+                      EndDate= new DateTime(2019,10,13),
+                      WeeklyImpressions= 500,
+                      MediaWeekId= 814,
+                      NumberOfActiveDays= 7,
+                      WeeklyImpressionsPercentage = 50,
+                      WeeklyRatings = 0.00045364591593469400,
+                      StartDate= new DateTime(2019,10,7),
+                      WeekNumber= 2,
+                      IsUpdated = false,
+                      SpotLengthId = 2,
+                      PercentageOfWeek = 50,
+                    },
+                }
+            };
+
+            Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request),
+                Throws.TypeOf<Exception>().With.Message
+                    .EqualTo("For the chosen delivery type, each weekly breakdown row must have spot length associated with it"));
+        }
+
+        [Test]
+        public void WeeklyBreakdownItem_WithoutPercentageOfWeek_IsFound_ForCustomByWeekByAdLengthDeliveryType_WhenValidatingBreakdown()
+        {
+            var request = new WeeklyBreakdownRequest
+            {
+                DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength,
+                FlightStartDate = new DateTime(2019, 8, 1),
+                FlightEndDate = new DateTime(2019, 9, 1),
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                TotalImpressions = 10,
+                TotalRatings = 10,
+                Weeks = new List<WeeklyBreakdownWeek> {
+                    new WeeklyBreakdownWeek {
+                      ActiveDays= "",
+                      EndDate= new DateTime(2019,10,6),
+                      WeeklyImpressions= 10,
+                      MediaWeekId= 814,
+                      NumberOfActiveDays= 7,
+                      WeeklyImpressionsPercentage = 50,
+                      WeeklyRatings = 1,
+                      StartDate= new DateTime(2019,09,30),
+                      WeekNumber= 1,
+                      IsUpdated = true,
+                      SpotLengthId = 1,
+                      PercentageOfWeek = null,
+                    },
+                    new WeeklyBreakdownWeek {
+                      ActiveDays= "",
+                      EndDate= new DateTime(2019,10,13),
+                      WeeklyImpressions= 500,
+                      MediaWeekId= 814,
+                      NumberOfActiveDays= 7,
+                      WeeklyImpressionsPercentage = 50,
+                      WeeklyRatings = 0.00045364591593469400,
+                      StartDate= new DateTime(2019,10,7),
+                      WeekNumber= 2,
+                      IsUpdated = false,
+                      SpotLengthId = 2,
+                      PercentageOfWeek = 50,
+                    },
+                }
+            };
+
+            Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request),
+                Throws.TypeOf<Exception>().With.Message
+                    .EqualTo("For the chosen delivery type, each weekly breakdown row must have percentage of week set"));
+        }
+
+        [Test]
+        public void WeeklyBreakdownItems_WithSameWeekAndSpotLength_AreFound_ForCustomByWeekByAdLengthDeliveryType_WhenValidatingBreakdown()
+        {
+            var request = new WeeklyBreakdownRequest
+            {
+                DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength,
+                FlightStartDate = new DateTime(2019, 8, 1),
+                FlightEndDate = new DateTime(2019, 9, 1),
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                TotalImpressions = 10,
+                TotalRatings = 10,
+                Weeks = new List<WeeklyBreakdownWeek> {
+                    new WeeklyBreakdownWeek {
+                      ActiveDays= "",
+                      EndDate= new DateTime(2019,10,6),
+                      WeeklyImpressions= 10,
+                      MediaWeekId= 814,
+                      NumberOfActiveDays= 7,
+                      WeeklyImpressionsPercentage = 50,
+                      WeeklyRatings = 1,
+                      StartDate= new DateTime(2019,09,30),
+                      WeekNumber= 1,
+                      IsUpdated = true,
+                      SpotLengthId = 1,
+                      PercentageOfWeek = 50,
+                    },
+                    new WeeklyBreakdownWeek {
+                      ActiveDays= "",
+                      EndDate= new DateTime(2019,10,13),
+                      WeeklyImpressions= 500,
+                      MediaWeekId= 814,
+                      NumberOfActiveDays= 7,
+                      WeeklyImpressionsPercentage = 50,
+                      WeeklyRatings = 0.00045364591593469400,
+                      StartDate= new DateTime(2019,10,7),
+                      WeekNumber= 2,
+                      IsUpdated = false,
+                      SpotLengthId = 1,
+                      PercentageOfWeek = 50,
+                    },
+                }
+            };
+
+            Assert.That(() => _planValidator.ValidateWeeklyBreakdown(request),
+                Throws.TypeOf<Exception>().With.Message
+                    .EqualTo("For the chosen delivery type, each week and spot Length combination must be unique"));
+        }
 
         [Test]
         public void ValidateWeeklyBreakdownWeeks_WithoutWeeklyBreakdown()
@@ -1136,6 +1323,93 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             };
 
             _ValidateWeeklyBreakdownWeeks(plan, shouldThrow, PlanValidator.INVALID_IMPRESSIONS_COUNT);
+        }
+
+        [Test]
+        public void WeeklyBreakdownItem_WithoutSpotLength_IsFound_ForCustomByWeekByAdLengthDeliveryType_WhenValidatingBreakdown_OnPlanSave()
+        {
+            var plan = new PlanDto
+            {
+                TargetImpressions = 12.121212121212123,
+                GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength,
+                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 6.060606060606061,
+                        WeeklyImpressionsPercentage = 50,
+                        SpotLengthId = null,
+                        PercentageOfWeek = 50
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 6.060606060606061,
+                        WeeklyImpressionsPercentage = 50,
+                        SpotLengthId = 2,
+                        PercentageOfWeek = 50
+                    }
+                }
+            };
+
+            _ValidateWeeklyBreakdownWeeks(plan, true, "For the chosen delivery type, each weekly breakdown row must have spot length associated with it");
+        }
+
+        [Test]
+        public void WeeklyBreakdownItem_WithoutPercentageOfWeek_IsFound_ForCustomByWeekByAdLengthDeliveryType_WhenValidatingBreakdown_OnPlanSave()
+        {
+            var plan = new PlanDto
+            {
+                TargetImpressions = 12.121212121212123,
+                GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength,
+                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 6.060606060606061,
+                        WeeklyImpressionsPercentage = 50,
+                        SpotLengthId = 1,
+                        PercentageOfWeek = null
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 6.060606060606061,
+                        WeeklyImpressionsPercentage = 50,
+                        SpotLengthId = 2,
+                        PercentageOfWeek = 50
+                    }
+                }
+            };
+
+            _ValidateWeeklyBreakdownWeeks(plan, true, "For the chosen delivery type, each weekly breakdown row must have percentage of week set");
+        }
+
+        [Test]
+        public void WeeklyBreakdownItems_WithSameWeekAndSpotLength_AreFound_ForCustomByWeekByAdLengthDeliveryType_WhenValidatingBreakdown_OnPlanSave()
+        {
+            var plan = new PlanDto
+            {
+                TargetImpressions = 12.121212121212123,
+                GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength,
+                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 6.060606060606061,
+                        WeeklyImpressionsPercentage = 50,
+                        SpotLengthId = 1,
+                        PercentageOfWeek = 50
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 6.060606060606061,
+                        WeeklyImpressionsPercentage = 50,
+                        SpotLengthId = 1,
+                        PercentageOfWeek = 50
+                    }
+                }
+            };
+
+            _ValidateWeeklyBreakdownWeeks(plan, true, "For the chosen delivery type, each week and spot Length combination must be unique");
         }
 
         private void _ValidateWeeklyBreakdownWeeks(PlanDto plan, bool shouldThrow = false, string errorMessageIfShouldThrow = null)
@@ -1227,7 +1501,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 Budget = 100.00m,
                 TargetImpressions = 100,
                 TargetCPM = 12.00m,
-                GoalBreakdownType = PlanGoalBreakdownTypeEnum.Custom,
+                GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeek,
                 TargetRatingPoints = 6,
                 TargetCPP = 200951583.9999m,
                 Currency = PlanCurrenciesEnum.Impressions,

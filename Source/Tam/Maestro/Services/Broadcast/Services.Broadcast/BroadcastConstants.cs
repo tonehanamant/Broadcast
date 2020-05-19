@@ -25,5 +25,7 @@
         public const string DATE_FORMAT_STANDARD = "yyyy-MM-dd";
 
         public const int DefaultDatabaseQueryChunkSize = 1000;
+
+        public const double ImpressionsPerUnit = 500000; // temporary hardcoded value
     }
 }

@@ -571,7 +571,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 TargetRatingPoints = 6d,
                 CoverageGoalPercent = 80.5,
                 Currency = PlanCurrenciesEnum.Impressions,
-                GoalBreakdownType = PlanGoalBreakdownTypeEnum.Even,
+                GoalBreakdownType = PlanGoalBreakdownTypeEnum.EvenDelivery,
                 AvailableMarkets = new List<PlanAvailableMarketDto>
                 {
                     new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 48, Rank = 1, ShareOfVoicePercent = 22.2, Market = "Portland-Auburn"},

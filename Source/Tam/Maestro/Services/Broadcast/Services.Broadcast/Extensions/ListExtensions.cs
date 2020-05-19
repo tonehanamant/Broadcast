@@ -78,5 +78,13 @@ namespace Services.Broadcast.Extensions
             return enumerable.Select(x=> (double)x).DefaultIfEmpty().Sum();
         }
 
+        public static T TakeOut<T>(this List<T> items, int index)
+        {
+            var result = items[index];
+
+            items.RemoveAt(index);
+
+            return result;
+        }
     }
 }

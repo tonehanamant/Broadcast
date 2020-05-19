@@ -1,0 +1,20 @@
+﻿[
+  {
+    "ActiveDays": "M,Tu,W,Th,F",
+    "AduImpressions": 0.0,
+    "DaypartCodeId": null,
+    "EndDate": "2020-05-17T00:00:00",
+    "IsUpdated": false,
+    "MediaWeekId": 401,
+    "NumberOfActiveDays": 5,
+    "PercentageOfWeek": null,
+    "SpotLengthId": null,
+    "StartDate": "2020-05-11T00:00:00",
+    "WeeklyAdu": 6,
+    "WeeklyBudget": 100.000,
+    "WeeklyImpressions": 100.0,
+    "WeeklyImpressionsPercentage": 100.0,
+    "WeeklyRatings": 50.0,
+    "WeekNumber": 1
+  }
+]

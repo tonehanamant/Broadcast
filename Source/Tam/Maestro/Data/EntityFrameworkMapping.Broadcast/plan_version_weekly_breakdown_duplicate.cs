@@ -12,7 +12,7 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class plan_version_weekly_breakdown
+    public partial class plan_version_weekly_breakdown_duplicate
     {
         public int id { get; set; }
         public int media_week_id { get; set; }
@@ -26,7 +26,7 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> spot_length_id { get; set; }
         public Nullable<int> daypart_default_id { get; set; }
         public Nullable<double> percentage_of_week { get; set; }
-        public double adu_impressions { get; set; }
+        public int adu { get; set; }
     
         public virtual daypart_defaults daypart_defaults { get; set; }
         public virtual media_weeks media_weeks { get; set; }

@@ -2,7 +2,8 @@
 {
     public enum PlanGoalBreakdownTypeEnum
     {
-        Even = 1,
-        Custom = 2
+        EvenDelivery = 1,
+        CustomByWeek = 2,
+        CustomByWeekByAdLength = 3
     }
 }

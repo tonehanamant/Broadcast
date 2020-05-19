@@ -1,10 +1,14 @@
 ﻿[
   {
-    "Display": "Even",
+    "Display": "EvenDelivery",
     "Id": 1
   },
   {
-    "Display": "Custom",
+    "Display": "CustomByWeek",
     "Id": 2
+  },
+  {
+    "Display": "CustomByWeekByAdLength",
+    "Id": 3
   }
 ]

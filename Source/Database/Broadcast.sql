@@ -419,6 +419,64 @@ END
 /*************************************** END BP1-299 *****************************************************/
 
 
+/*************************************** START BP1-94 Data integrity *********************************************************/
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id =OBJECT_ID('plan_version_weekly_breakdown_duplicate'))
+BEGIN
+	CREATE TABLE [dbo].[plan_version_weekly_breakdown_duplicate](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[media_week_id] [int] NOT NULL,
+		[number_active_days] [int] NOT NULL,
+		[active_days_label] [varchar](20) NULL,
+		[impressions] [float] NOT NULL,
+		[impressions_percentage] [float] NOT NULL,
+		[plan_version_id] [int] NOT NULL,
+		[rating_points] [float] NOT NULL,
+		[budget] [money] NOT NULL,
+		[spot_length_id] [int] NULL,
+		[daypart_default_id] [int] NULL,
+		[percentage_of_week] [float] NULL,
+		[adu] [int] NOT NULL,
+	 CONSTRAINT [PK_plan_version_weekly_breakdown_duplicate] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_weekly_breakdown_duplicate]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_weekly_breakdown_duplicate_daypart_defaults] FOREIGN KEY([daypart_default_id])
+	REFERENCES [dbo].[daypart_defaults] ([id])
+
+	ALTER TABLE [dbo].[plan_version_weekly_breakdown_duplicate]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_weekly_breakdown_duplicate_media_weeks] FOREIGN KEY([media_week_id])
+	REFERENCES [dbo].[media_weeks] ([id])
+
+
+	ALTER TABLE [dbo].[plan_version_weekly_breakdown_duplicate]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_weekly_breakdown_duplicate_plan_versions] FOREIGN KEY([plan_version_id])
+	REFERENCES [dbo].[plan_versions] ([id])
+
+
+	ALTER TABLE [dbo].[plan_version_weekly_breakdown_duplicate]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_weekly_breakdown_duplicate_spot_lengths] FOREIGN KEY([spot_length_id])
+	REFERENCES [dbo].[spot_lengths] ([id])
+
+	EXEC('INSERT INTO [plan_version_weekly_breakdown_duplicate](media_week_id, number_active_days, active_days_label, impressions, impressions_percentage, plan_version_id
+			, rating_points, budget, adu, spot_length_id, daypart_default_id, percentage_of_week)
+	SELECT media_week_id, number_active_days, active_days_label, impressions, impressions_percentage, plan_version_id
+			, rating_points, budget, adu, spot_length_id, daypart_default_id, percentage_of_week
+	FROM [plan_version_weekly_breakdown]')
+END
+/*************************************** STOP BP1-94 Data integrity *********************************************************/
+
+/*************************************** START BP1-94 *********************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'adu_impressions' AND OBJECT_ID = OBJECT_ID('plan_version_weekly_breakdown'))
+BEGIN
+	EXEC('ALTER TABLE plan_version_weekly_breakdown ADD adu_impressions float NULL')
+
+	-- impressions per unit are hardocoded to 500k for now
+	EXEC('UPDATE plan_version_weekly_breakdown SET adu_impressions = adu * 500000')
+
+	EXEC('ALTER TABLE plan_version_weekly_breakdown ALTER COLUMN adu_impressions float NOT NULL')
+	EXEC('ALTER TABLE plan_version_weekly_breakdown DROP COLUMN adu')
+END
+/*************************************** END BP1-94 *********************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

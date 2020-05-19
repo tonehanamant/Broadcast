@@ -81,13 +81,17 @@ namespace Services.Broadcast.Entities.Campaign
 
             //flow chart tab
             projectedPlans = _ProjectPlansForQuarterExport(plans, spotLengths, daypartDefaults, mediaMonthAndWeekAggregateCache, quarterCalculationEngine, weeklyBreakdownEngine);
-            _PopulateFlowChartQuarterTableData(projectedPlans, plans, mediaMonthAndWeekAggregateCache);
+            _PopulateFlowChartQuarterTableData(projectedPlans, plans, mediaMonthAndWeekAggregateCache, weeklyBreakdownEngine);
 
             if (exportType.Equals(CampaignExportTypeEnum.Contract))
             {
-                _PopulateContractQuarterTableData(projectedPlans, plans, spotLengths
-                    , mediaMonthAndWeekAggregateCache
-                    , quarterCalculationEngine);
+                _PopulateContractQuarterTableData(
+                    projectedPlans, 
+                    plans, 
+                    spotLengths, 
+                    mediaMonthAndWeekAggregateCache, 
+                    quarterCalculationEngine,
+                    weeklyBreakdownEngine);
             }
 
             _SetExportFileName(projectedPlans, campaign.ModifiedDate);
@@ -572,12 +576,17 @@ namespace Services.Broadcast.Entities.Campaign
         }
 
         //this is the adu table for a quarter
-        private void _CalculateAduTableData(List<FlowChartQuarterTableData> tables, List<PlanDto> plans)
+        private void _CalculateAduTableData(
+            List<FlowChartQuarterTableData> tables, 
+            List<PlanDto> plans, 
+            IWeeklyBreakdownEngine weeklyBreakdownEngine)
         {
             var firstTable = tables.First();
             //check if we have an ADU table for this quarter
             var weeksStartDates = firstTable.WeeksStartDate.Select(w => Convert.ToDateTime(w));
-            if (!plans.Any(x => x.WeeklyBreakdownWeeks.Any(y => weeksStartDates.Contains(y.StartDate) && y.WeeklyAdu > 0)))
+            var weeklyBreakdowns = plans.Select(x => weeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(x.WeeklyBreakdownWeeks)).ToList();
+
+            if (!weeklyBreakdowns.Any(x => x.Any(y => weeksStartDates.Contains(y.StartDate) && y.Adu > 0)))
             {
                 return;
             }
@@ -590,9 +599,11 @@ namespace Services.Broadcast.Entities.Campaign
             tableData.Months = firstTable.Months;
             for (int i = 0; i < firstTable.WeeksStartDate.Count; i++)
             {
-                int thisWeekADUUnits = plans.SelectMany(x => x.WeeklyBreakdownWeeks
-                                    .Where(y => y.StartDate.Equals(Convert.ToDateTime(firstTable.WeeksStartDate[i]))
-                                            && y.WeeklyAdu > 0).Select(y => y.WeeklyAdu)).Sum();
+                int thisWeekADUUnits = weeklyBreakdowns
+                    .SelectMany(x => x)
+                    .Where(y => y.StartDate.Equals(Convert.ToDateTime(firstTable.WeeksStartDate[i])))
+                    .Sum(y => y.Adu);
+
                 if (thisWeekADUUnits > 0)
                 {
                     tableData.DistributionPercentages.Add(EMPTY_CELL);
@@ -621,9 +632,11 @@ namespace Services.Broadcast.Entities.Campaign
             FlowChartQuarterTables.Add(tableData);
         }
 
-        private void _PopulateFlowChartQuarterTableData(List<ProjectedPlan> projectedPlans
-            , List<PlanDto> plans
-            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+        private void _PopulateFlowChartQuarterTableData(
+            List<ProjectedPlan> projectedPlans, 
+            List<PlanDto> plans, 
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+            IWeeklyBreakdownEngine weeklyBreakdownEngine)
         {
             var totalNumberOfImpressionsForExportedPlans = projectedPlans.Sum(x => x.GuaranteedAudience.TotalImpressions);
             projectedPlans.GroupBy(x => new { x.QuarterNumber, x.QuarterYear })
@@ -703,7 +716,7 @@ namespace Services.Broadcast.Entities.Campaign
                         _CalculateTotalTableData(tablesInQuarterDaypart, totalNumberOfImpressionsForExportedPlans);
                     });
 
-                    _CalculateAduTableData(tablesInQuarter, plans);
+                    _CalculateAduTableData(tablesInQuarter, plans, weeklyBreakdownEngine);
                 });
         }
 
@@ -725,10 +738,13 @@ namespace Services.Broadcast.Entities.Campaign
             return string.Join(", ", formattedGroups);
         }
 
-        private void _PopulateContractQuarterTableData(List<ProjectedPlan> projectedPlans, List<PlanDto> plans
-            , List<LookupDto> spotLengths
-            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
-            , IQuarterCalculationEngine quarterCalculationEngine)
+        private void _PopulateContractQuarterTableData(
+            List<ProjectedPlan> projectedPlans, 
+            List<PlanDto> plans, 
+            List<LookupDto> spotLengths, 
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache, 
+            IQuarterCalculationEngine quarterCalculationEngine,
+            IWeeklyBreakdownEngine weeklyBreakdownEngine)
         {
             projectedPlans.GroupBy(x => new { x.QuarterNumber, x.QuarterYear })
                 .OrderBy(x => x.Key.QuarterYear).ThenBy(x => x.Key.QuarterNumber)
@@ -779,44 +795,54 @@ namespace Services.Broadcast.Entities.Campaign
                         ContractQuarterTables.Add(quarterTable);
                     }
 
-                    _CalculateAduTableData(quarter, plans, spotLengths, mediaMonthAndWeekAggregateCache);
+                    _CalculateAduTableData(quarter, plans, spotLengths, mediaMonthAndWeekAggregateCache, weeklyBreakdownEngine);
                 });
             _CalculateContractTabTotals();
         }
 
-        private void _CalculateAduTableData(QuarterDetailDto quarter, List<PlanDto> plans
-            , List<LookupDto> spotLengths
-            , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache)
+        private void _CalculateAduTableData(
+            QuarterDetailDto quarter, 
+            List<PlanDto> plans, 
+            List<LookupDto> spotLengths, 
+            IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
+            IWeeklyBreakdownEngine weeklyBreakdownEngine)
         {
-            List<DateTime> weeksStartDate = mediaMonthAndWeekAggregateCache
+            List<DateTime> weeksStartDates = mediaMonthAndWeekAggregateCache
                 .GetMediaWeeksByFlight(quarter.StartDate, quarter.EndDate)
                 .Select(x => x.StartDate).ToList();
-            if (!plans.Any(x => x.WeeklyBreakdownWeeks.Any(y => weeksStartDate.Contains(y.StartDate) && y.WeeklyAdu > 0)))
+
+            var plansAndweeklyBreakdowns = plans.Select(x => new { Plan = x, WeeklyBreakdown = weeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(x.WeeklyBreakdownWeeks) }).ToList();
+
+            if (!plansAndweeklyBreakdowns.Any(x => x.WeeklyBreakdown.Any(y => weeksStartDates.Contains(y.StartDate) && y.Adu > 0)))
             {
                 return;
             }
+
             ContractQuarterTableData table = new ContractQuarterTableData
             {
                 Title = quarter.LongFormat(),
                 IsAduTable = true
             };
 
-            foreach (var startDate in weeksStartDate)
+            foreach (var startDate in weeksStartDates)
             {
-                if (!plans.Any(x => x.WeeklyBreakdownWeeks.Any(y => y.StartDate.Equals(startDate) && y.WeeklyAdu > 0)))
+                if (!plansAndweeklyBreakdowns.Any(x => x.WeeklyBreakdown.Any(y => y.StartDate.Equals(startDate) && y.Adu > 0)))
                 {
                     continue;
                 }
 
-                plans.GroupBy(x => new { SpotLength = spotLengths.Single(y => y.Id == x.SpotLengthId).Display, x.Equivalized })
+                plansAndweeklyBreakdowns
+                    .GroupBy(x => new { SpotLength = spotLengths.Single(y => y.Id == x.Plan.SpotLengthId).Display, x.Plan.Equivalized })
                     .OrderBy(x => Convert.ToInt32(x.Key.SpotLength))
                     .ThenByDescending(x => x.Key.Equivalized)
                     .ToList()
                     .ForEach(group =>
                     {
-                        int weeklyAdu = group.SelectMany(x => x.WeeklyBreakdownWeeks
-                                    .Where(y => y.StartDate.Equals(startDate)
-                                            && y.WeeklyAdu > 0).Select(y => y.WeeklyAdu)).Sum();
+                        int weeklyAdu = group
+                            .SelectMany(x => x.WeeklyBreakdown)
+                            .Where(y => y.StartDate.Equals(startDate))
+                            .Sum(y => y.Adu);
+
                         if (weeklyAdu > 0)
                         {
                             table.Rows.Add(

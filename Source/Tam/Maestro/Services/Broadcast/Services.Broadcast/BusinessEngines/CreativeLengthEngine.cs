@@ -70,7 +70,14 @@ namespace Services.Broadcast.BusinessEngines
             }
             result.AddRange(input.Where(x => x.Weight.HasValue));
 
-            return result;
+            var initialCreativeLengthsOrder = input
+                .Select((item, index) => new { item, order = index + 1 })
+                .ToDictionary(x => x.item.SpotLengthId, x => x.order);
+
+            // to keep the original order
+            return result
+                .OrderBy(x => initialCreativeLengthsOrder[x.SpotLengthId])
+                .ToList();
         }
 
         /// <inheritdoc/>
