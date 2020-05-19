@@ -1,5 +1,5 @@
 [{
-	"SpotCost": ,
+	"SpotCost": null,
 	"EstimateId": null,
 	"Market": "New York",
 	"Date": "12/26/2017",

@@ -75,7 +75,7 @@
       "SuppliedProgramName": null
     }
   ],
-  "FileHash": "3A-54-EF-0F-1C-CB-33-8D-E1-50-D0-51-45-1D-2A-16-68-66-E3-68",
+  "FileHash": "CE-99-9A-8E-33-28-AE-8F-1F-0B-A8-9F-94-C4-81-B1-EB-3B-D0-E3",
   "FileName": "WWTV_AffidavitValidFileContent_SpotCost.txt",
   "FileProblems": [],
   "SourceId": 3,
