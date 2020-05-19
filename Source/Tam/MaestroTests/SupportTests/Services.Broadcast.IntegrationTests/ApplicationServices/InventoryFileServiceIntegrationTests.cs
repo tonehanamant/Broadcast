@@ -1851,5 +1851,55 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(fileJson);
             }
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void OpenMarket_InventoryIsExpired()
+        {
+            // The same rate file is imported twice (files contain small differences so their hash is not the same).
+            // The inventory is the same.
+            // No duplicate records should be created (with flight weeks).
+            // The expiration logic should expire the week records from the first imported file.
+            const string firstFileName = @"InventoryExpirationTest.xml";
+            const string secondFileName = @"InventoryExpirationTest(2).xml";
+            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.OpenMarket, Name = "Open Market", Id = 1 };
+            var fileImporter = IntegrationTestApplicationServiceFactory.Instance.Resolve<IOpenMarketFileImporter>();
+
+            using (new TransactionScopeWrapper())
+            {
+                var now = new DateTime(2019, 02, 02);
+
+                var firstRequest = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\ImportingRateData\{firstFileName}", FileMode.Open, FileAccess.Read),
+                    FileName = firstFileName,
+                    InventorySource = "Open Market"
+                };
+
+                var firstResult = _InventoryService.SaveInventoryFile(firstRequest, "IntegrationTestUser", now);
+
+                var secondRequest = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\ImportingRateData\{secondFileName}", FileMode.Open, FileAccess.Read),
+                    FileName = secondFileName,
+                    InventorySource = "Open Market"
+                };
+
+                var secondResult = _InventoryService.SaveInventoryFile(secondRequest, "IntegrationTestUser", now);
+
+                var firstFileManifests = _InventoryRepository.GetStationInventoryManifestsByFileId(firstResult.FileId);
+
+                var secondFileManifests = _InventoryRepository.GetStationInventoryManifestsByFileId(secondResult.FileId);
+
+                var numberOfWeeksFirstFile = firstFileManifests.Sum(x => x.ManifestWeeks.Count);
+
+                var numberOfWeeksSecondFile = secondFileManifests.Sum(x => x.ManifestWeeks.Count);
+
+                Assert.AreEqual(0, numberOfWeeksFirstFile);
+
+                Assert.AreEqual(5, numberOfWeeksSecondFile);
+            }
+        }
     }
 }

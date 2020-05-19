@@ -1118,7 +1118,7 @@ namespace Services.Broadcast.Repositories
                     var sql = $@"delete w from station_inventory_manifest_weeks w
                         inner join	station_inventory_manifest m on w.station_inventory_manifest_id = m.id
                         inner join station_inventory_manifest_dayparts d on d.station_inventory_manifest_id = m.id
-                        inner join stations s on s.station_code = m.station_id
+                        inner join stations s on s.id = m.station_id
                         where s.market_code = @marketCode
                         and m.inventory_source_id = @inventorySource
                         and d.daypart_id = @daypart

@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<AAAA-Message xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tvb-tp="http://www.AAAA.org/schemas/TVBGeneralTypes" xmlns:tvb="http://www.AAAA.org/schemas/spotTV" xmlns="http://www.AAAA.org/schemas/spotTVCableProposal">
+  <AAAA-Values>
+    <SchemaName>SpotTVCableProposal</SchemaName>
+    <SchemaVersion>0.3.0.5A</SchemaVersion>
+    <Media>SpotTV</Media>
+    <BusinessObject>Proposal</BusinessObject>  
+    <Action>New</Action>   
+    <UniqueMessageID>COXREPS4</UniqueMessageID>       
+  </AAAA-Values>    
+  <Proposal startDate="2017-11-07" endDate="2017-12-30" uniqueIdentifier="6b3d1c18-6b2a-4cca-9a2c-65bdd512e344" version="1" sendDateTime="2017-09-17T14:52:40" weekStartDay="Mo">
+    <Seller companyName="WNBC">  
+      <Salesperson name="Allie Martin">
+        <Email type="primary">amartin@coxreps.com</Email>
+      </Salesperson>
+    </Seller>
+    <Buyer buyingCompanyName="Agency" />
+    <Advertiser name="Any advertiser">
+      <Product name="Political Spot Rates" />
+    </Advertiser>
+    <Name>WNBC</Name>
+    <Outlets>
+      <TelevisionStation callLetters="WNBC" parentPlus="N" outletId="OUT0" />
+    </Outlets>
+    <AvailList startDate="2017-11-07" endDate="2017-12-30" identifier="AL1" isPackage="N">
+      <Name>General List</Name>
+      <OutletReferences>
+        <OutletReference outletFromProposalRef="OUT0" outletForListId="OUL0" />
+      </OutletReferences>
+      <DemoCategories>
+        <DemoCategory DemoId="DM0">
+          <tvb:DemoType>Impression</tvb:DemoType>
+          <tvb:Group>Homes</tvb:Group>
+          <tvb:AgeFrom>0</tvb:AgeFrom>
+          <tvb:AgeTo>99</tvb:AgeTo>
+        </DemoCategory>
+        <DemoCategory DemoId="DM1">
+          <tvb:DemoType>Impression</tvb:DemoType>
+          <tvb:Group>Adults</tvb:Group>
+          <tvb:AgeFrom>18</tvb:AgeFrom>
+          <tvb:AgeTo>49</tvb:AgeTo>
+        </DemoCategory>
+        <DemoCategory DemoId="DM2">
+          <tvb:DemoType>Impression</tvb:DemoType>
+          <tvb:Group>Adults</tvb:Group>
+          <tvb:AgeFrom>25</tvb:AgeFrom>
+          <tvb:AgeTo>54</tvb:AgeTo>
+        </DemoCategory>
+        <DemoCategory DemoId="DM3">
+          <tvb:DemoType>Impression</tvb:DemoType>
+          <tvb:Group>Adults</tvb:Group>
+          <tvb:AgeFrom>35</tvb:AgeFrom>
+          <tvb:AgeTo>54</tvb:AgeTo>
+        </DemoCategory>
+        <DemoCategory DemoId="DM4">
+          <tvb:DemoType>Impression</tvb:DemoType>
+          <tvb:Group>Adults</tvb:Group>
+          <tvb:AgeFrom>35</tvb:AgeFrom>
+          <tvb:AgeTo>64</tvb:AgeTo>
+        </DemoCategory>
+      </DemoCategories>
+      <TargetDemo demoRef="DM0" />
+      <AvailLineWithDetailedPeriods>
+        <OutletReference outletFromListRef="OUL0" />
+        <DayTimes>
+          <DayTime>
+            <StartTime>09:00</StartTime>
+            <EndTime>09:30</EndTime>
+            <Days>
+              <tvb-tp:Monday>Y</tvb-tp:Monday>
+              <tvb-tp:Tuesday>Y</tvb-tp:Tuesday>
+              <tvb-tp:Wednesday>Y</tvb-tp:Wednesday>
+              <tvb-tp:Thursday>Y</tvb-tp:Thursday>
+              <tvb-tp:Friday>Y</tvb-tp:Friday>
+              <tvb-tp:Saturday>Y</tvb-tp:Saturday>
+              <tvb-tp:Sunday>Y</tvb-tp:Sunday>
+            </Days>
+          </DayTime>
+        </DayTimes>
+        <DaypartName>DAY/TIME</DaypartName>
+        <AvailName>MORNING NEWS</AvailName>
+        <SpotLength>00:00:30</SpotLength>
+        <Periods>
+          <DayDetailedPeriod startDate="2020-02-24" endDate="2020-03-29">
+            <Rate>25.00</Rate>
+            <DemoValues>
+              <DemoValue demoRef="DM0">0.6</DemoValue>
+              <DemoValue demoRef="DM1">0.2</DemoValue>
+              <DemoValue demoRef="DM2">0.1</DemoValue>
+              <DemoValue demoRef="DM3">0.1</DemoValue>
+              <DemoValue demoRef="DM4">0.4</DemoValue>
+            </DemoValues>
+          </DayDetailedPeriod>
+        </Periods>
+      </AvailLineWithDetailedPeriods>
+    </AvailList>
+  </Proposal>
+</AAAA-Message>
