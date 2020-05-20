@@ -596,10 +596,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             /*** Arrange ***/
             var engine = _GetInventoryProgramsProcessingEngine();
             engine.UT_CurrentDateTime = DateTime.Parse(currentDateString);
-            var expectedResult = $@"testSettingBroadcastSharedDirectoryPath\ProgramGuide\ExportsToProcess\{expectedDateFileString}\DEV";
+            var expectedResult = $@"testSettingBroadcastSharedDirectoryPath\ProgramGuide\ExportsToProcess\{expectedDateFileString}\DEV\Processed";
 
             /*** ACT **/
-            var result = engine.UT_GetProgramGuideExportWorkingDirectoryPath(dayOffset);
+            var result = engine.UT_GetProgramGuideInterfaceProcessedDirectoryPath(dayOffset);
 
             /*** Assert ***/
             Assert.AreEqual(expectedResult, result);

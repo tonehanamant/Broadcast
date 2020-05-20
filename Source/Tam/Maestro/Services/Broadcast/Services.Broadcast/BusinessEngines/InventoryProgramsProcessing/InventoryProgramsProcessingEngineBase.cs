@@ -44,6 +44,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         protected const string EXPORT_FILE_NAME_SEED = "ProgramGuideExport";
         protected const string EXPORT_FILE_SUFFIX_TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss";
         protected const string EXPORT_FILE_NAME_DATE_FORMAT = "yyyyMMdd";
+        private const string DIRECTORY_NAME_PROCESSED = "Processed";
 
         protected readonly IInventoryRepository _InventoryRepository;
         private readonly IProgramGuideApiClient _ProgramGuideApiClient;
@@ -139,7 +140,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         /// <inheritdoc />
         public void ImportInventoryProgramResultsFromDirectory(int dayOffset)
         {
-            var sourceDirectoryPath = _GetProgramGuideExportWorkingDirectoryPath(dayOffset);
+            var sourceDirectoryPath = _GetProgramGuideInterfaceProcessedDirectoryPath(dayOffset);
             _LogInfo($"Beginning to process enriched inventory files from source directory '{sourceDirectoryPath}'");
 
             if (_FileService.DirectoryExists(sourceDirectoryPath) == false)
@@ -1230,13 +1231,18 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         protected string _GetProgramGuideInterfaceProcessedDirectoryPath()
         {
-            const string dirName = "Processed";
-            return Path.Combine(_GetProgramGuideExportWorkingDirectoryPath(), dirName);
+            return Path.Combine(_GetProgramGuideExportWorkingDirectoryPath(), DIRECTORY_NAME_PROCESSED);
+        }
+
+        protected string _GetProgramGuideInterfaceProcessedDirectoryPath(int dayOffset)
+        {
+            return Path.Combine(_GetProgramGuideExportWorkingDirectoryPath(dayOffset), DIRECTORY_NAME_PROCESSED);
         }
 
         protected string _GetProgramGuideExportWorkingDirectoryPath()
         {
-            return _GetProgramGuideExportWorkingDirectoryPath(0);
+            const int dayOffsetForToday = 0;
+            return _GetProgramGuideExportWorkingDirectoryPath(dayOffsetForToday);
         }
 
         protected string _GetProgramGuideExportWorkingDirectoryPath(int dayOffset)

@@ -88,9 +88,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             return 1000;
         }
 
-        public string UT_GetProgramGuideExportWorkingDirectoryPath(int dayOffset)
+        public string UT_GetProgramGuideInterfaceProcessedDirectoryPath(int dayOffset)
         {
-            return _GetProgramGuideExportWorkingDirectoryPath(dayOffset);
+            return _GetProgramGuideInterfaceProcessedDirectoryPath(dayOffset);
         }
 
         public List<Tuple<Stream, string>> UT_PerformImportInventoryProgramResultsCalls { get; set; } = new List<Tuple<Stream, string>>();
