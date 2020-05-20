@@ -26,22 +26,12 @@ namespace BroadcastComposerWeb
             app.MapSignalR();
 
             ConfigureHangfire(app);
-
-            _Log.Info("Remap weekly breakdown data.");
-            RemapWeeklyBreakdownData();
         }
 
         private void _LogWarning(string message, [CallerMemberName]string memberName = "")
         {
             var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
             _Log.Warn(logMessage.ToJson());
-        }
-
-
-        private void RemapWeeklyBreakdownData()
-        {
-            var planService = BroadcastApplicationServiceFactory.Instance.Resolve<IPlanService>();
-            planService.RemapWeeklyBreakdownData();
         }
     }
 }
