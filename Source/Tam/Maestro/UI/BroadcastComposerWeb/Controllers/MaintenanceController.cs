@@ -625,7 +625,7 @@ namespace BroadcastComposerWeb.Controllers
 
                 _ApplicationServiceFactory
                     .GetApplicationService<IVpvhService>()
-                    .LoadVpvhs(file.InputStream, userName, file.FileName, DateTime.Now);
+                    .LoadVpvhs(file.InputStream, file.FileName, userName, DateTime.Now);
 
                 TempData["Message"] = "VPVH file uploaded and processed successfully !";
             }
