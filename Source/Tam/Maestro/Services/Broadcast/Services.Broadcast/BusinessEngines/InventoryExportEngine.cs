@@ -42,7 +42,8 @@ namespace Services.Broadcast.BusinessEngines
         {
             Text,
             Integer,
-            Money
+            Money,
+            MoneyWithDecimals
         }
 
         /// <summary>
@@ -56,6 +57,7 @@ namespace Services.Broadcast.BusinessEngines
             public double Width { get; set; } = 10.38;
             public bool IsValueCentered { get; set; } 
             public bool IsHeaderBold { get; set; }
+            public bool IsEmptyDisplayedAsDash { get; set; }
         }
 
         /// <summary>
@@ -69,8 +71,8 @@ namespace Services.Broadcast.BusinessEngines
             new ColumnDescriptor {ColumnIndex = 4, Name = "Timeslot", ColumnType = ColumnTypeEnum.Text, Width = 20.57},
             new ColumnDescriptor {ColumnIndex = 5, Name = "Program name", ColumnType = ColumnTypeEnum.Text, Width = 37},
             new ColumnDescriptor {ColumnIndex = 6, Name = ":30 Rate", ColumnType = ColumnTypeEnum.Money, IsValueCentered = true},
-            new ColumnDescriptor {ColumnIndex = 7, Name = "HH Imp(000)", ColumnType = ColumnTypeEnum.Integer, IsValueCentered = true},
-            new ColumnDescriptor {ColumnIndex = 8, Name = ":30 CPM", ColumnType = ColumnTypeEnum.Money, IsValueCentered = true},
+            new ColumnDescriptor {ColumnIndex = 7, Name = "HH Imp(000)", ColumnType = ColumnTypeEnum.Integer, IsValueCentered = true, Width = 11.29},
+            new ColumnDescriptor {ColumnIndex = 8, Name = ":30 CPM", ColumnType = ColumnTypeEnum.MoneyWithDecimals, IsValueCentered = true},
         };
 
         /// <inheritdoc />
@@ -145,7 +147,7 @@ namespace Services.Broadcast.BusinessEngines
                 excelInventoryTab.Cells[rowIndex, (i+1)].Value = columnDescriptors[i].Name;
                 excelInventoryTab.Column((i + 1)).Width = columnDescriptors[i].Width;
                 excelInventoryTab.Cells[rowIndex, (i + 1)].Style.Font.Bold = columnDescriptors[i].IsHeaderBold;
-                excelInventoryTab.Column((i + 1)).Style.HorizontalAlignment = columnDescriptors[i].IsValueCentered ? ExcelHorizontalAlignment.Center : ExcelHorizontalAlignment.Right;
+                excelInventoryTab.Column((i + 1)).Style.HorizontalAlignment = columnDescriptors[i].IsValueCentered ? ExcelHorizontalAlignment.Center : ExcelHorizontalAlignment.Left;
                 excelInventoryTab.Column((i + 1)).Style.VerticalAlignment = ExcelVerticalAlignment.Top;
             }
 
@@ -163,9 +165,19 @@ namespace Services.Broadcast.BusinessEngines
                         case ColumnTypeEnum.Money:
                             excelInventoryTab.Cells[rowIndex, (i + 1)].Style.Numberformat.Format = "$###,###,##0";
                             break;
+                        case ColumnTypeEnum.MoneyWithDecimals:
+                            excelInventoryTab.Cells[rowIndex, (i + 1)].Style.Numberformat.Format = "$###,###,##0.00";
+                            break;
                     }
 
-                    excelInventoryTab.Cells[rowIndex, (i + 1)].Value = line[i];
+                    if (columnDescriptors[i].IsEmptyDisplayedAsDash && line[i] == null)
+                    {
+                        excelInventoryTab.Cells[rowIndex, (i + 1)].Value = "-";
+                    }
+                    else
+                    {
+                        excelInventoryTab.Cells[rowIndex, (i + 1)].Value = line[i];
+                    }
                 }
             });
             var result = new InventoryExportGenerationResult
@@ -187,7 +199,8 @@ namespace Services.Broadcast.BusinessEngines
                     Name = w.ToString("MM/dd"),
                     ColumnType = ColumnTypeEnum.Money,
                     IsHeaderBold = true,
-                    IsValueCentered = true
+                    IsValueCentered = true,
+                    IsEmptyDisplayedAsDash = true
                 }));
             return headers;
         }
@@ -242,7 +255,7 @@ namespace Services.Broadcast.BusinessEngines
             weekIds.ForEach(weekId =>
             {
                 var foundWeek = lineDetailDetail.Weeks.FirstOrDefault(s => s.MediaWeekId.Equals(weekId));
-                var formattedWeekRate = foundWeek == null ? "-" : $"{foundWeek.SpotCost:C}";
+                var formattedWeekRate = foundWeek?.SpotCost;
                 lineColumnValues.Add(formattedWeekRate);
             });
 

@@ -114,7 +114,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Inventory
             // folderPath and fileName are validated in unit tests.
             // here we will only validate the file content.
             // since that is Excel nonsense we will just verify the length.
-            Assert.AreEqual(3540, generatedFileContent.Length);
+            Assert.AreEqual(3549, generatedFileContent.Length);
         }
 
         /// <summary>
