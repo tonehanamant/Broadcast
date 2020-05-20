@@ -16,7 +16,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
-using DiffReporter = Services.Broadcast.IntegrationTests.BroadcastDiffReporter;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -209,10 +208,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
         public void StoresHistory_WhenExpiresInventory()
         {
+            const int expectedHistoryDelta = 1;
             const string fileName = @"ProprietaryDataFiles\Diginet_ValidFile2.xlsx";
             const string inventorySourceName = "COZI";
             const string daypartString = "M-F 9a-10a SA-SU 6a-7a";
@@ -261,10 +260,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ContractResolver = jsonResolver
                 };
 
-                var result = new { before = weeksHistoryBeforeExpiring.Count, after = weeksHistoryAfterExpiring.Count };
-                var resultJson = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
-
-                Approvals.Verify(resultJson);
+                // the history table and the transaction scope is acting a little strange and giving varying counts run to run.
+                // the scope of the test will be limited  to looking at one station, before and after.
+                // as long as the after increments the before by one we declare success.
+                
+                var actualHistoryDelta = weeksHistoryAfterExpiring.Count - weeksHistoryBeforeExpiring.Count;
+                Assert.AreEqual(expectedHistoryDelta, actualHistoryDelta);
             }
         }
 
