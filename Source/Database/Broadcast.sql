@@ -344,6 +344,7 @@ BEGIN
 	ALTER COLUMN market_group INT NOT NULL
 END
 
+GO
 /*************************************** END BP-33 *****************************************************/
 
 /*************************************** START BP1-170 *****************************************************/
@@ -430,6 +431,8 @@ BEGIN
 	ALTER TABLE plan_version_pricing_results
 	ALTER COLUMN total_spots INT NOT NULL
 END
+
+GO
 /*************************************** END BP1-25 *****************************************************/
 
 /*************************************** END BP1-299 *****************************************************/
@@ -508,6 +511,69 @@ BEGIN
 	EXEC('ALTER TABLE plan_version_weekly_breakdown DROP COLUMN adu')
 END
 /*************************************** END BP1-94 *********************************************************/
+
+/*************************************** START BP-16 *****************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('plan_version_pricing_bands'))
+BEGIN
+	CREATE TABLE [dbo].[plan_version_pricing_bands]
+    (
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_id] [int] NOT NULL,
+		[plan_version_pricing_job_id] [int] NULL,
+		[total_spots] [int] NOT NULL,
+		[total_impressions] [float] NOT NULL,
+		[total_cpm] [money] NOT NULL,
+		[total_budget] [money] NOT NULL,
+		CONSTRAINT [PK_plan_version_pricing_bands] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_pricing_bands]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_bands_plan_version_pricing_job] FOREIGN KEY([plan_version_pricing_job_id])
+	REFERENCES [dbo].[plan_version_pricing_job] ([id])
+
+	ALTER TABLE [dbo].[plan_version_pricing_bands] CHECK CONSTRAINT [FK_plan_version_pricing_bands_plan_version_pricing_job]
+
+	ALTER TABLE [dbo].[plan_version_pricing_bands]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_bands_plan_versions] FOREIGN KEY([plan_version_id])
+	REFERENCES [dbo].[plan_versions] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[plan_version_pricing_bands] CHECK CONSTRAINT [FK_plan_version_pricing_bands_plan_versions]
+END
+
+GO
+
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('plan_version_pricing_band_details'))
+BEGIN
+	CREATE TABLE [dbo].[plan_version_pricing_band_details]
+	(
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_pricing_band_id] [int] NOT NULL,
+		[min_band] [money] NULL,
+		[max_band] [money] NULL,
+		[spots] [int] NOT NULL,
+		[impressions] [float] NOT NULL,
+		[cpm] [money] NOT NULL,
+		[budget] [money] NOT NULL,
+		[impressions_percentage] [float] NOT NULL,
+		[available_inventory_percentage] [float] NOT NULL,
+		CONSTRAINT [PK_plan_version_pricing_band_details] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+	
+	ALTER TABLE [dbo].[plan_version_pricing_band_details]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_band_details_plan_version_pricing_bands] FOREIGN KEY([plan_version_pricing_band_id])
+	REFERENCES [dbo].[plan_version_pricing_bands] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[plan_version_pricing_band_details] CHECK CONSTRAINT [FK_plan_version_pricing_band_details_plan_version_pricing_bands]
+END
+
+GO
+/*************************************** END BP-16 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

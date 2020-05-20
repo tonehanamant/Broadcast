@@ -105,7 +105,7 @@ namespace Services.Broadcast.BusinessEngines
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_APPLYING_NTI_CONVERSION_TO_NSI);
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM);
-            programs = FilterProgramsByMinAndMaxCPM(programs, parameters?.MinCPM, parameters?.MaxCPM);
+            programs = CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, parameters?.MinCPM, parameters?.MaxCPM);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM);
 
             return programs;
@@ -498,7 +498,7 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        protected List<PlanPricingInventoryProgram> FilterProgramsByMinAndMaxCPM(
+        protected List<PlanPricingInventoryProgram> CalculateProgramCpmAndFilterByMinAndMaxCpm(
             List<PlanPricingInventoryProgram> programs,
             decimal? minCPM,
             decimal? maxCPM)
@@ -512,13 +512,13 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach (var program in programs)
             {
-                var programCPM =
+                program.Cpm =
                     ProposalMath.CalculateCpm(
                         program.SpotCost,
-                        program.ProvidedImpressions.HasValue ? program.ProvidedImpressions.Value : program.ProjectedImpressions);
+                        program.ProvidedImpressions ?? program.ProjectedImpressions);
 
-                if (!(minCPM.HasValue && programCPM < minCPM.Value)
-                    && !(maxCPM.HasValue && programCPM > maxCPM.Value))
+                if (!(minCPM.HasValue && program.Cpm < minCPM.Value)
+                    && !(maxCPM.HasValue && program.Cpm > maxCPM.Value))
                 {
                     result.Add(program);
                 }

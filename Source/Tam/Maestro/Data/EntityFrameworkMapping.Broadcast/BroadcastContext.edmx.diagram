@@ -434,6 +434,11 @@
         <EntityTypeShape EntityType="BroadcastModel.vpvh" Width="1.5" PointX="5" PointY="0.75" />
         <AssociationConnector Association="BroadcastModel.FK_audiences_vpvhs" />
         <AssociationConnector Association="BroadcastModel.FK_vpvh_files_vpvhs" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_band_details" Width="1.5" PointX="19.375" PointY="16.5" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_bands" Width="1.5" PointX="17.125" PointY="0.75" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_band_details_plan_version_pricing_bands" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_bands_plan_version_pricing_job" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_bands_plan_versions" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

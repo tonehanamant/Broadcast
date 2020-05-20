@@ -16,6 +16,16 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 
         public double? ProvidedImpressions { get; set; }
 
+        public double Impressions
+        {
+            get
+            {
+                return ProvidedImpressions ?? ProjectedImpressions;
+            }
+        }
+
+        public decimal Cpm { get; set; }
+
         public DisplayBroadcastStation Station { get; set; }
 
         public string Unit { get; set; }

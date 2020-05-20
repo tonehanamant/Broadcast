@@ -42,7 +42,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             decimal? minCPM,
             decimal? maxCPM)
         {
-            return FilterProgramsByMinAndMaxCPM(programs, minCPM, maxCPM);
+            return CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, minCPM, maxCPM);
         }
 
         public void UT_ApplyInflationFactorToSpotCost(List<PlanPricingInventoryProgram> programs, double? inflationFactor)

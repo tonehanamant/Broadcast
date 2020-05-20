@@ -96,6 +96,8 @@ namespace Services.Broadcast.ApplicationServices
         void ApplyMargin(PlanPricingParametersDto parameters);
 
         PricingProgramsResultDto GetPrograms(int planId);
+
+        PlanPricingBandDto GetPricingBands(int planId);
     }
 
     public class PlanPricingService : BroadcastBaseClass, IPlanPricingService
@@ -117,6 +119,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IMarketRepository _MarketRepository;
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
+        private readonly IPlanPricingBandCalculationEngine _PlanPricingBandCalculationEngine;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -127,7 +130,8 @@ namespace Services.Broadcast.ApplicationServices
                                   IDaypartCache daypartCache,
                                   IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
                                   IDateTimeEngine dateTimeEngine,
-                                  IWeeklyBreakdownEngine weeklyBreakdownEngine)
+                                  IWeeklyBreakdownEngine weeklyBreakdownEngine,
+                                  IPlanPricingBandCalculationEngine planPricingBandCalculationEngine)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
@@ -146,6 +150,7 @@ namespace Services.Broadcast.ApplicationServices
             _MarketRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>();
             _DateTimeEngine = dateTimeEngine;
             _WeeklyBreakdownEngine = weeklyBreakdownEngine;
+            _PlanPricingBandCalculationEngine = planPricingBandCalculationEngine;
         }
 
         public ReportOutput GeneratePricingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)
@@ -358,7 +363,7 @@ namespace Services.Broadcast.ApplicationServices
             return new PlanPricingResponseDto
             {
                 Job = job,
-                Result = new GetPlanPricingResultDto(),
+                Result = new PlanPricingResultDto(),
                 IsPricingModelRunning = false
             };
         }
@@ -672,6 +677,10 @@ namespace Services.Broadcast.ApplicationServices
                 var aggregatedResults = _AggregateResults(inventory, allocationResult, goalsFulfilledByProprietaryInventory);
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
 
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_BANDS);
+                var pricingBands = _PlanPricingBandCalculationEngine.CalculatePricingBands(inventory, allocationResult);
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_BANDS);
+
                 token.ThrowIfCancellationRequested();
 
                 using (var transaction = new TransactionScopeWrapper())
@@ -683,6 +692,10 @@ namespace Services.Broadcast.ApplicationServices
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
                     _PlanRepository.SavePricingAggregateResults(aggregatedResults);
                     diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
+
+                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_BANDS);
+                    _PlanRepository.SavePlanPricingBands(pricingBands);
+                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_BANDS);
 
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
                     var pricingJob = _PlanRepository.GetPlanPricingJob(jobId);
@@ -1030,7 +1043,7 @@ namespace Services.Broadcast.ApplicationServices
                 Spots = x.TotalSpots
             }));
 
-            result.Totals = new PlanPricingTotalsDto
+            result.Totals = new PlanPricingProgramTotalsDto
             {
                 MarketCount = programs.SelectMany(x => x.MarketCodes).Distinct().Count(),
                 StationCount = programs.SelectMany(x => x.Stations).Distinct().Count(),
@@ -1206,13 +1219,17 @@ namespace Services.Broadcast.ApplicationServices
         public PricingProgramsResultDto GetPrograms(int planId)
         {
             var job = _PlanRepository.GetLatestPricingJob(planId);
-            if(job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
+
+            if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
             var results = _PlanRepository.GetPricingProgramsResult(planId);
+
             if (results == null)
                 return null;
+
             results.Totals.ImpressionsPercentage = 100;
+
             _ConvertImpressionsToUserFormat(results);
 
             return results;
@@ -1230,6 +1247,35 @@ namespace Services.Broadcast.ApplicationServices
             {
                 program.AvgImpressions /= 1000;
                 program.Impressions /= 1000;
+            }
+        }
+
+        public PlanPricingBandDto GetPricingBands(int planId)
+        {
+            var job = _PlanRepository.GetLatestPricingJob(planId);
+
+            if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
+                return null;
+
+            var results = _PlanRepository.GetPlanPricingBand(planId);
+
+            if (results == null)
+                return null;
+
+            _ConvertPricingBandImpressionsToUserFormat(results);
+
+            return results;
+        }
+
+        private void _ConvertPricingBandImpressionsToUserFormat(PlanPricingBandDto results)
+        {
+            results.Totals.TotalImpressions /= 1000;
+
+            foreach(var band in results.Bands)
+            {
+                band.Impressions /= 1000;
+                band.ImpressionsPercentage *= 100;
+                band.AvailableInventoryPercent *= 100;
             }
         }
 

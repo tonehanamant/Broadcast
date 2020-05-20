@@ -247,6 +247,7 @@ namespace Services.Broadcast.ApplicationServices
 
             unityContainer.RegisterType<IPlanPricingInventoryEngine, PlanPricingInventoryEngine>();
             unityContainer.RegisterType<IPlanPricingInventoryQuarterCalculatorEngine, PlanPricingInventoryQuarterCalculatorEngine>();
+            unityContainer.RegisterType<IPlanPricingBandCalculationEngine, PlanPricingBandCalculationEngine>();
 
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();

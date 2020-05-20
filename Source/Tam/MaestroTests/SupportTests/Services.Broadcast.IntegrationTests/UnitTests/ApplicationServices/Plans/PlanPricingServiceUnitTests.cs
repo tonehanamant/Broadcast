@@ -54,6 +54,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IDaypartDefaultRepository> _DaypartDefaultRepositoryMock;
         private Mock<ICampaignRepository> _CampaignRepositoryMock;
         private Mock<IWeeklyBreakdownEngine> _WeeklyBreakdownEngineMock;
+        private Mock<IPlanPricingBandCalculationEngine> _PlanPricingBandCalculationEngine;
 
         [SetUp]
         public void SetUp()
@@ -75,6 +76,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DaypartDefaultRepositoryMock = new Mock<IDaypartDefaultRepository>();
             _CampaignRepositoryMock = new Mock<ICampaignRepository>();
             _WeeklyBreakdownEngineMock = new Mock<IWeeklyBreakdownEngine>();
+            _PlanPricingBandCalculationEngine = new Mock<IPlanPricingBandCalculationEngine>();
 
             _DateTimeEngineMock
                 .Setup(x => x.GetCurrentMoment())
@@ -991,7 +993,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _DaypartCacheMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
                 _DateTimeEngineMock.Object,
-                _WeeklyBreakdownEngineMock.Object);
+                _WeeklyBreakdownEngineMock.Object,
+                _PlanPricingBandCalculationEngine.Object);
         }
 
         [Test]

@@ -562,6 +562,12 @@
     <Compile Include="plan_version_pricing_api_result_spots.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="plan_version_pricing_bands.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_pricing_band_details.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="plan_version_pricing_job.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

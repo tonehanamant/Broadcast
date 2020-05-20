@@ -47,6 +47,13 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPrograms(planId));
         }
 
+        [HttpGet]
+        [Route("Bands/{planId}")]
+        public BaseResponse<PlanPricingBandDto> GetPricingBands(int planId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPricingBands(planId));
+        }
+
         [HttpPost]
         [Route("CancelExecution")]
         public BaseResponse<PlanPricingResponseDto> CancelCurrentPricingExecution(int planId)

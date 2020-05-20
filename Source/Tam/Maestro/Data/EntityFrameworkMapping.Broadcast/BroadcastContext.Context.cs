@@ -192,5 +192,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_weekly_breakdown_duplicate> plan_version_weekly_breakdown_duplicate { get; set; }
         public virtual DbSet<vpvh_files> vpvh_files { get; set; }
         public virtual DbSet<vpvh> vpvhs { get; set; }
+        public virtual DbSet<plan_version_pricing_band_details> plan_version_pricing_band_details { get; set; }
+        public virtual DbSet<plan_version_pricing_bands> plan_version_pricing_bands { get; set; }
     }
 }

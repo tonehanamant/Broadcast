@@ -320,6 +320,7 @@
     <Compile Include="ApplicationServices\CampaignAggregationJobTrigger.cs" />
     <Compile Include="ApplicationServices\CampaignAggregator.cs" />
     <Compile Include="ApplicationServices\VpvhService.cs" />
+    <Compile Include="BusinessEngines\PlanPricingBandCalculationEngine.cs" />
     <Compile Include="BusinessEngines\WeeklyBreakdownEngine.cs" />
     <Compile Include="ApplicationServices\Inventory\InventoryExportService.cs" />
     <Compile Include="BusinessEngines\InventoryExportEngine.cs" />
@@ -447,6 +448,9 @@
     <Compile Include="Entities\Plan\PlanAudienceDisplay.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuying.cs" />
     <Compile Include="Entities\Plan\Pricing\CurrentPricingExecution.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingBandsDto.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingBandTotalsDto.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingBandDetailDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PricingProgramsResultDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingAllocatedSpot.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingAllocationResult.cs" />

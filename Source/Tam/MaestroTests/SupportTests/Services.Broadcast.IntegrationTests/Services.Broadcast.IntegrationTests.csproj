@@ -445,6 +445,7 @@
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsByFileProcessorUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsProcessingTestHelper.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanBudgetDeliveryCalculatorUnitTests.cs" />
+    <Compile Include="UnitTests\BusinessEngines\PlanPricingBandCalculationEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryEngineTestClass.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryQuarterCalculatorEngineTestClass.cs" />

@@ -148,6 +148,10 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="plan">The plan.</param>
         void SaveWeeklyBreakdownDistribution(PlanDto plan);
+
+        PlanPricingBandDto GetPlanPricingBand(int planId);
+
+        void SavePlanPricingBands(PlanPricingBandDto planPricingBandDto);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -1400,6 +1404,80 @@ namespace Services.Broadcast.Repositories
                         StandardDaypart = _MapToDaypartDefaultDto(x.daypart_defaults)
                     }).ToList()
                 };
+            });
+        }
+
+        public PlanPricingBandDto GetPlanPricingBand(int planId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var plan = context.plans.Single(x => x.id == planId);
+                var planVersionId = plan.latest_version_id;
+
+                var result = context.plan_version_pricing_bands.Where(p => p.plan_version_id == planVersionId).OrderByDescending(p => p.id).FirstOrDefault();
+
+                if (result == null)
+                    return null;
+
+                return new PlanPricingBandDto
+                {
+                    Totals = new PlanPricingBandTotalsDto
+                    {
+                        TotalCpm = result.total_cpm,
+                        TotalBudget = result.total_budget,
+                        TotalImpressions = result.total_impressions, 
+                        TotalSpots = result.total_spots
+                    },
+                    Bands = result.plan_version_pricing_band_details.Select(r => new PlanPricingBandDetailDto
+                    {
+                        Id = r.id,
+                        MinBand = r.min_band,
+                        MaxBand = r.max_band,
+                        Spots = r.spots,
+                        Impressions = r.impressions,
+                        Budget = r.budget,
+                        Cpm = r.cpm,
+                        ImpressionsPercentage = r.impressions_percentage,
+                        AvailableInventoryPercent = r.available_inventory_percentage
+                    }).OrderBy(p => p.MinBand).ToList()
+                };
+            });
+        }
+
+        public void SavePlanPricingBands(PlanPricingBandDto planPricingBandDto)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var planPricingBand = new plan_version_pricing_bands
+                {
+                    plan_version_id = planPricingBandDto.PlanVersionId,
+                    plan_version_pricing_job_id = planPricingBandDto.JobId,
+                    total_budget = planPricingBandDto.Totals.TotalBudget,
+                    total_cpm = planPricingBandDto.Totals.TotalCpm,
+                    total_impressions = planPricingBandDto.Totals.TotalImpressions,
+                    total_spots = planPricingBandDto.Totals.TotalSpots
+                };
+
+                foreach(var bandDto in planPricingBandDto.Bands)
+                {
+                    var band = new plan_version_pricing_band_details
+                    {
+                        cpm = bandDto.Cpm,
+                        max_band = bandDto.MaxBand,
+                        min_band = bandDto.MinBand,
+                        budget = bandDto.Budget,
+                        spots = bandDto.Spots,
+                        impressions = bandDto.Impressions,
+                        impressions_percentage = bandDto.ImpressionsPercentage,
+                        available_inventory_percentage = bandDto.AvailableInventoryPercent
+                    };
+
+                    planPricingBand.plan_version_pricing_band_details.Add(band);
+                }
+
+                context.plan_version_pricing_bands.Add(planPricingBand);
+
+                context.SaveChanges();
             });
         }
 
