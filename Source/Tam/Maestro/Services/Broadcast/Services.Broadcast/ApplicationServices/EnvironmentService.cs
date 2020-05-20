@@ -40,7 +40,8 @@ namespace Services.Broadcast.ApplicationServices
             {
                 Environment = environment,
                 DisplayCampaignLink = BroadcastServiceSystemParameter.DisplayCampaignLink,
-                DisplayBuyingLink = BroadcastServiceSystemParameter.DisplayBuyingLink
+                DisplayBuyingLink = BroadcastServiceSystemParameter.DisplayBuyingLink,
+                AllowMultipleCreativeLengths = BroadcastServiceSystemParameter.AllowMultipleCreativeLengths
             };
         }
     }

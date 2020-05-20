@@ -39,6 +39,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.AgencyAdvertiserBrandApiUrl); }
         }
 	 
+		public static bool AllowMultipleCreativeLengths  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.AllowMultipleCreativeLengths); }
+        }
+	 
 		public static string BroadcastDayStart  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>

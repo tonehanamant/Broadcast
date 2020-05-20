@@ -661,6 +661,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 {
                     DisplayBuyingLink = true,
                     DisplayCampaignLink = true,
+                    AllowMultipleCreativeLengths = false,
                     Environment = "DEV"
                 });
 

@@ -6,5 +6,7 @@
         public bool DisplayCampaignLink { get; set; }
 
         public bool DisplayBuyingLink { get; set; }
+
+        public bool AllowMultipleCreativeLengths { get; set; }
     }
 }

@@ -352,24 +352,16 @@ namespace Services.Broadcast.ApplicationServices
             }
             else
             {
-                //if (SafeBroadcastServiceSystemParameter.EnableCampaignsLocking)
-                if (true)
-                {
-                    var key = KeyHelper.GetCampaignLockingKey(campaign.Id);
-                    var lockingResult = _LockingManagerApplicationService.LockObject(key);
+                var key = KeyHelper.GetCampaignLockingKey(campaign.Id);
+                var lockingResult = _LockingManagerApplicationService.LockObject(key);
 
-                    if (lockingResult.Success)
-                    {
-                        return _CampaignRepository.UpdateCampaign(campaign);
-                    }
-                    else
-                    {
-                        throw new ApplicationException($"The chosen campaign has been locked by {lockingResult.LockedUserName}");
-                    }
+                if (lockingResult.Success)
+                {
+                    return _CampaignRepository.UpdateCampaign(campaign);
                 }
                 else
                 {
-                    return _CampaignRepository.UpdateCampaign(campaign);
+                    throw new ApplicationException($"The chosen campaign has been locked by {lockingResult.LockedUserName}");
                 }
             }
         }

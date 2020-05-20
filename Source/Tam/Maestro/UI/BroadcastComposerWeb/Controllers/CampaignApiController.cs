@@ -114,67 +114,14 @@ namespace BroadcastComposerWeb.Controllers
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<LockResponse> LockCampaign(int campaignId)
         {
-            //if (SafeBroadcastServiceSystemParameter.EnableCampaignsLocking)
-            if (true)
-            {
-                var key = KeyHelper.GetCampaignLockingKey(campaignId);
-                return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IBroadcastLockingManagerApplicationService>().LockObject(key));
-            }
-            else
-            {
-                // just return Success = true result so that we don`t need to write the switching logic on FE
-                var response = new LockResponse
-                {
-                    Key = "Stub key",
-                    Success = true,
-                    LockTimeoutInSeconds = 900,
-                    LockedUserId = null,
-                    LockedUserName = null,
-                    Error = null
-                };
-
-                return _ConvertToBaseResponse(() => response);
-            }
+            var key = KeyHelper.GetCampaignLockingKey(campaignId);
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IBroadcastLockingManagerApplicationService>().LockObject(key));
         }
 
         [HttpPost]
         [Route("{campaignId}/Unlock")]
         [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<ReleaseLockResponse> UnlockCampaign(int campaignId)
-        {
-            //if (SafeBroadcastServiceSystemParameter.EnableCampaignsLocking)
-            if (true)
-            {
-                var key = KeyHelper.GetCampaignLockingKey(campaignId);
-                return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IBroadcastLockingManagerApplicationService>().ReleaseObject(key));
-            }
-            else
-            {
-                // just return Success = true result so that we don`t need to write the switching logic on FE
-                var response = new ReleaseLockResponse
-                {
-                    Key = "Stub key",
-                    Success = true,
-                    Error = null
-                };
-
-                return _ConvertToBaseResponse(() => response);
-            }
-        }
-
-        [HttpPost]
-        [Route("LockTest/{campaignId}/Lock")]
-        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
-        public BaseResponse<LockResponse> LockTestLockCampaign(int campaignId)
-        {
-            var key = KeyHelper.GetCampaignLockingKey(campaignId);
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IBroadcastLockingManagerApplicationService>().LockObject(key));
-        }
-
-        [HttpPost]
-        [Route("LockTest/{campaignId}/Unlock")]
-        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
-        public BaseResponse<ReleaseLockResponse> LockTestUnlockCampaign(int campaignId)
         {
             var key = KeyHelper.GetCampaignLockingKey(campaignId);
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IBroadcastLockingManagerApplicationService>().ReleaseObject(key));
