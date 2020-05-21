@@ -435,7 +435,7 @@ END
 GO
 /*************************************** END BP1-25 *****************************************************/
 
-/*************************************** END BP1-299 *****************************************************/
+/*************************************** START BP1-299 *****************************************************/
 IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'impressions' AND OBJECT_ID = OBJECT_ID('plan_version_pricing_result_spots'))
 BEGIN
 	ALTER TABLE plan_version_pricing_result_spots
@@ -453,6 +453,16 @@ WHERE impressions IS NULL ')
 END
 /*************************************** END BP1-299 *****************************************************/
 
+/*************************************** START BP1-307 *****************************************************/
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id =OBJECT_ID('UC_plan_version_daypart_program_restrictions'))
+BEGIN
+	ALTER TABLE plan_version_daypart_program_restrictions
+	DROP CONSTRAINT UC_plan_version_daypart_program_restrictions
+
+	ALTER TABLE plan_version_daypart_program_restrictions
+	ADD CONSTRAINT UC_plan_version_daypart_program_restrictions UNIQUE (plan_version_daypart_id, program_name, genre_id)
+END
+/*************************************** END BP1-307 *****************************************************/
 
 /*************************************** START BP1-94 Data integrity *********************************************************/
 IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id =OBJECT_ID('plan_version_weekly_breakdown_duplicate'))

@@ -651,7 +651,77 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
-        
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void SavePlan_ProgramRestrictionsWithSameProgramName()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                // generate a plan for test
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypartDto
+                    {
+                        DaypartCodeId = 2,
+                        DaypartTypeId = DaypartTypeEnum.EntertainmentNonNews,
+                        StartTimeSeconds = 0,
+                        EndTimeSeconds = 2000,
+                        WeightingGoalPercent = 28.0,
+                        Restrictions = new PlanDaypartDto.RestrictionsDto
+                        {
+                            ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                ShowTypes = new List<LookupDto> { new LookupDto { Id = 1 } }
+                            },
+                            GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Include,
+                                Genres = new List<LookupDto> { new LookupDto { Id = 25 } }
+                            },
+                            ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                            {
+                                ContainType = ContainTypeEnum.Include,
+                                Programs = new List<ProgramDto>
+                                {
+                                    new ProgramDto
+                                    {
+                                        ContentRating = "PG-13",
+                                        Genre = new LookupDto { Id = 25},
+                                        Name = "Young Sheldon"
+                                    },
+                                    new ProgramDto
+                                    {
+                                        ContentRating = "PG-13",
+                                        Genre = new LookupDto { Id = 9},
+                                        Name = "Young Sheldon"
+                                    },
+                                }
+                            },
+                            AffiliateRestrictions = new PlanDaypartDto.RestrictionsDto.AffiliateRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                Affiliates = new List<LookupDto> { new LookupDto { Id = 20 } }
+                            }
+                        }
+                    }
+                };
+
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                _ForceCompletePlanPricingJob(newPlanId);
+
+                PlanDto testPlan = _PlanService.GetPlan(newPlanId);
+
+                var modifedPlanId = _PlanService.SavePlan(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
+                PlanDto finalPlan = _PlanService.GetPlan(modifedPlanId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(testPlan), _GetJsonSettings()));
+            }
+        }
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]

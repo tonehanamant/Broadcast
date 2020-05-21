@@ -156,7 +156,7 @@ namespace Services.Broadcast.Entities.Campaign
                     {
                         PlanId = plan.Id,
                         ContainType = planDaypart.Restrictions.ProgramRestrictions.ContainType,
-                        Restrictions = planDaypart.Restrictions.ProgramRestrictions.Programs.Select(x => x.Name).ToList()
+                        Restrictions = planDaypart.Restrictions.ProgramRestrictions.Programs.Select(x => x.Name).Distinct().ToList()
                     });
                 }
             }
