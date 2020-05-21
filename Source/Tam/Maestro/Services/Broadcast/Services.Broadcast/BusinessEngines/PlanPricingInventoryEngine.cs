@@ -571,23 +571,20 @@ namespace Services.Broadcast.BusinessEngines
             var programRestrictions = programInventoryDaypart.PlanDaypart.Restrictions.ProgramRestrictions;
 
             if (programRestrictions == null || programRestrictions.Programs.IsEmpty())
+            {
                 return true;
+            }
 
             var restrictedProgramNames = programRestrictions.Programs.Select(x => x.Name);
+            var primaryProgramName = programInventoryDaypart.ManifestDaypart.PrimaryProgram.Name;
+            var isInTheList = restrictedProgramNames.Contains(primaryProgramName);
 
             if (programRestrictions.ContainType == ContainTypeEnum.Include)
             {
-                var primaryProgramName = programInventoryDaypart.ManifestDaypart.PrimaryProgram.Name;
-
-                return restrictedProgramNames.Contains(primaryProgramName);
+                return isInTheList;
             }
-            else
-            {
-                var manifestDaypartProgramNames = programInventoryDaypart.ManifestDaypart.Programs.Select(x => x.Name);
-                var hasIntersections = restrictedProgramNames.ContainsAny(manifestDaypartProgramNames);
 
-                return !hasIntersections;
-            }
+            return isInTheList == false;
         }
 
         private bool _IsProgramAllowedByGenreRestrictions(ProgramInventoryDaypart programInventoryDaypart)
@@ -595,23 +592,20 @@ namespace Services.Broadcast.BusinessEngines
             var genreRestrictions = programInventoryDaypart.PlanDaypart.Restrictions.GenreRestrictions;
 
             if (genreRestrictions == null || genreRestrictions.Genres.IsEmpty())
+            {
                 return true;
+            }
 
             var restrictedGenres = genreRestrictions.Genres.Select(x => x.Display);
+            var primaryProgramGenre = programInventoryDaypart.ManifestDaypart.PrimaryProgram.Genre;
+            var isInTheList = restrictedGenres.Contains(primaryProgramGenre);
 
             if (genreRestrictions.ContainType == ContainTypeEnum.Include)
             {
-                var primaryProgramGenre = programInventoryDaypart.ManifestDaypart.PrimaryProgram.Genre;
-
-                return restrictedGenres.Contains(primaryProgramGenre);
+                return isInTheList;
             }
-            else
-            {
-                var manifestDaypartProgramGenres = programInventoryDaypart.ManifestDaypart.Programs.Select(x => x.Genre);
-                var hasIntersections = restrictedGenres.ContainsAny(manifestDaypartProgramGenres);
 
-                return !hasIntersections;
-            }
+            return isInTheList == false;
         }
 
         private bool _IsProgramAllowedByShowTypeRestrictions(ProgramInventoryDaypart programInventoryDaypart)
@@ -619,23 +613,20 @@ namespace Services.Broadcast.BusinessEngines
             var showTypeRestrictions = programInventoryDaypart.PlanDaypart.Restrictions.ShowTypeRestrictions;
 
             if (showTypeRestrictions == null || showTypeRestrictions.ShowTypes.IsEmpty())
+            {
                 return true;
+            }
 
             var restrictedShowTypes = showTypeRestrictions.ShowTypes.Select(x => x.Display);
+            var primaryProgramShowType = programInventoryDaypart.ManifestDaypart.PrimaryProgram.ShowType;
+            var isInTheList = restrictedShowTypes.Contains(primaryProgramShowType);
 
             if (showTypeRestrictions.ContainType == ContainTypeEnum.Include)
             {
-                var primaryProgramShowType = programInventoryDaypart.ManifestDaypart.PrimaryProgram.ShowType;
-
-                return restrictedShowTypes.Contains(primaryProgramShowType);
+                return isInTheList;
             }
-            else
-            {
-                var manifestDaypartShowTypes = programInventoryDaypart.ManifestDaypart.Programs.Select(x => x.ShowType);
-                var hasIntersections = restrictedShowTypes.ContainsAny(manifestDaypartShowTypes);
 
-                return !hasIntersections;
-            }
+            return isInTheList == false;
         }
 
         private List<ProgramInventoryDaypart> _GetPlanDaypartsThatMatchProgramByTimeAndDays(

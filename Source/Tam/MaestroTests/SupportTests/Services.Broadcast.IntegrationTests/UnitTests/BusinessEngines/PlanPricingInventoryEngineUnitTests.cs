@@ -244,6 +244,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     {
                         new PlanPricingInventoryProgram.ManifestDaypart
                         {
+                            // Make sure this program name is not considered.
+                            ProgramName = "SomethingToBeIgnored",
                             Daypart = new DisplayDaypart
                             {
                                 StartTime = 36000, // 10am
@@ -260,11 +262,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             {
                                 Name = inventoryProgramName
                             },
+                            // Make sure only the primary program is considered
                             Programs = new List<PlanPricingInventoryProgram.ManifestDaypart.Program>
                             {
                                 new PlanPricingInventoryProgram.ManifestDaypart.Program
                                 {
                                     Name = inventoryProgramName
+                                },
+                                new PlanPricingInventoryProgram.ManifestDaypart.Program
+                                {
+                                    Name = "Early news"
+                                },
+                                new PlanPricingInventoryProgram.ManifestDaypart.Program
+                                {
+                                    Name = "Late news"
                                 }
                             }
                         }
@@ -328,11 +339,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             {
                                 Genre = inventoryGenre
                             },
+                            // Make sure only the primary program is considered
                             Programs = new List<PlanPricingInventoryProgram.ManifestDaypart.Program>
                             {
                                 new PlanPricingInventoryProgram.ManifestDaypart.Program
                                 {
                                     Genre = inventoryGenre
+                                },
+                                new PlanPricingInventoryProgram.ManifestDaypart.Program
+                                {
+                                    Genre = "Comedy"
+                                },
+                                new PlanPricingInventoryProgram.ManifestDaypart.Program
+                                {
+                                    Genre = "Crime"
                                 }
                             }
                         }
@@ -396,11 +416,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             {
                                 ShowType = inventoryShowType
                             },
+                            // Make sure only the primary program is considered
                             Programs = new List<PlanPricingInventoryProgram.ManifestDaypart.Program>
                             {
                                 new PlanPricingInventoryProgram.ManifestDaypart.Program
                                 {
                                     ShowType = inventoryShowType
+                                },
+                                new PlanPricingInventoryProgram.ManifestDaypart.Program
+                                {
+                                    ShowType = "Mini-Movie"
+                                },
+                                new PlanPricingInventoryProgram.ManifestDaypart.Program
+                                {
+                                    ShowType = "Sports"
                                 }
                             }
                         }
@@ -729,7 +758,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             Assert.AreEqual(expectedCount, result.Count);
         }
-
+        
         [Test]
         [TestCase(null, null, 4)]
         [TestCase(12.00, null, 3)]
