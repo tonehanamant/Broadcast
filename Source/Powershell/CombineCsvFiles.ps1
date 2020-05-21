@@ -62,7 +62,32 @@ if ($(Test-Path $outputFileName))
 }
 
 $excluded = @($outputFileName)
-$files = Get-ChildItem . -Filter *.csv -Name -Exclude $excluded
+$foundFiles = $(Get-ChildItem . -Filter *.csv | Sort-Object LastWriteTime -Descending).Name
+
+$files = @()
+$fileNameStubs = @()
+$skippedFiles = @()
+foreach ($file in $foundFiles)
+{
+    # compare up to the file id to attempting to weed out dups
+    # since this is ordered by time descending we will keep the latest one.
+    $fileNameStubLength = 33
+    if ($file.StartsWith("ProgramGuideExport_FILE_")) 
+    { 
+        $fileNameStubLength = 29 
+    } 
+
+    $fileNameStub = $file.Substring(0, $fileNameStubLength)
+    if ($fileNameStubs.Contains($fileNameStub))
+    {
+        Write-OutputWithTime "Skipping file '$file' as a duplicate."
+        $skippedFiles += $file
+        continue;
+    }
+    $files += $file
+    $fileNameStubs += $fileNameStub
+}
+
 $filesCount = $files.Count
 
 Write-OutputWithTime "Found $filesCount files to process."
@@ -93,7 +118,14 @@ foreach ($file in $files)
 if ($filesCount -gt 1)
 {    
     Write-OutputWithTime "Beginning de-duplication..."
-    Import-Csv $tempFileName | sort inventory_id,inventory_week_id,inventory_daypart_id -Unique | Export-Csv $outputFileName -NoTypeInformation -Append
+    
+    # Dedup for 
+    # 1) duplicate space\time 
+    # 2) duplicate inventory record
+    # be sure to keep "the latest"
+
+    Import-Csv $tempFileName | sort station_call_letters,affiliation,start_date,end_date,daypart_text -Unique | sort inventory_id,inventory_week_id,inventory_daypart_id -Unique | Export-Csv $outputFileName -NoTypeInformation -Append
+    
     Remove-Item $tempFileName
     Write-OutputWithTime "De-deplication completed."
     Write-OutputWithTime " "
