@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2042
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BroadcastComposerWeb", "..\..\Tam\Maestro\UI\BroadcastComposerWeb\BroadcastComposerWeb.csproj", "{2A781CE5-8B2F-4E9A-ABA8-0417228A2A3C}"
 EndProject
@@ -72,8 +72,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Powershell", "Powershell", "{B7BD734A-111A-486E-B613-7EBE65A8DE1F}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\Powershell\Broadcast.ps1 = ..\..\Powershell\Broadcast.ps1
-		..\..\Powershell\ChopCsvFiles.ps1 = ..\..\Powershell\ChopCsvFiles.ps1
-		..\..\Powershell\CombineCsvFiles.ps1 = ..\..\Powershell\CombineCsvFiles.ps1
 		..\..\Powershell\Copy-AppSettings.ps1 = ..\..\Powershell\Copy-AppSettings.ps1
 		..\..\Powershell\Shutdown-Maestro.ps1 = ..\..\Powershell\Shutdown-Maestro.ps1
 		..\..\Powershell\Start-MaestroServices.ps1 = ..\..\Powershell\Start-MaestroServices.ps1
@@ -84,6 +82,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{E97233B4-5064-40FD-9BED-ABB601ED054A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryProgramEnrichmentIngest", "..\..\Tools\InventoryProgramEnrichmentIngest\InventoryProgramEnrichmentIngest.csproj", "{72DBF983-79A6-4CE3-8517-4ECF97115C47}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProgramGuideInterface", "ProgramGuideInterface", "{AB4580AA-CDB1-46C8-A528-2A57DEC2530A}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Powershell\ProgramGuideInterface\ChopCsvFiles.ps1 = ..\..\Powershell\ProgramGuideInterface\ChopCsvFiles.ps1
+		..\..\Powershell\ProgramGuideInterface\CombineCsvFiles.ps1 = ..\..\Powershell\ProgramGuideInterface\CombineCsvFiles.ps1
+		..\..\Powershell\ProgramGuideInterface\CopyProcessedFilesToShare.ps1 = ..\..\Powershell\ProgramGuideInterface\CopyProcessedFilesToShare.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1397,6 +1402,7 @@ Global
 		{7F878E8B-EEC5-4A31-966C-EE92C2B7D9E8} = {15B42F1A-1DB8-4944-9583-3BCFF04286CD}
 		{A5EB9EC9-D705-4D64-B63A-9D61D9ABDC99} = {ACCFBE65-F3F0-4CE3-A59F-31F94A8527D6}
 		{72DBF983-79A6-4CE3-8517-4ECF97115C47} = {E97233B4-5064-40FD-9BED-ABB601ED054A}
+		{AB4580AA-CDB1-46C8-A528-2A57DEC2530A} = {B7BD734A-111A-486E-B613-7EBE65A8DE1F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4BC15B7E-D396-4ACC-BE2F-1CC4402A6C07}
