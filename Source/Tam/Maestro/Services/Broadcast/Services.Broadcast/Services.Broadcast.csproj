@@ -481,6 +481,7 @@
     <Compile Include="Entities\Plan\Pricing\PricingResultsReportData.cs" />
     <Compile Include="Entities\Plan\VPVHRequest.cs" />
     <Compile Include="Entities\Plan\VPVHForAudience.cs" />
+    <Compile Include="Entities\Plan\WeeklyBreakdownCombination.cs" />
     <Compile Include="Entities\PricingEstimate.cs" />
     <Compile Include="Entities\PricingInventoryGetRequestParametersDto.cs" />
     <Compile Include="Entities\ProgramGuide\GuideInterfaceExportElement.cs" />

@@ -143,6 +143,7 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <returns></returns>
         List<PlanDto> LoadPlansForWeeklyBreakdownRemapping();
+        
         /// <summary>
         ///  TO BE DELETED ON NEXT RELEASE: Saves the weekly breakdown distribution.
         /// </summary>
@@ -152,6 +153,12 @@ namespace Services.Broadcast.Repositories
         PlanPricingBandDto GetPlanPricingBand(int planId);
 
         void SavePlanPricingBands(PlanPricingBandDto planPricingBandDto);
+        
+        /// <summary>
+        ///  TO BE DELETED ON NEXT RELEASE: Saves the creative lengthsdistribution.
+        /// </summary>
+        /// <param name="plan">The plan.</param>
+        void SaveCreativeLengths(PlanDto plan);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -1783,6 +1790,22 @@ namespace Services.Broadcast.Repositories
                         percentage_of_week = x.PercentageOfWeek,
                         rating_points = x.WeeklyRatings,
                         spot_length_id = x.SpotLengthId
+                    }).ToList());
+                context.SaveChanges();
+            });
+        }
+        public void SaveCreativeLengths(PlanDto plan)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                context.plan_version_creative_lengths
+                    .RemoveRange(context.plan_version_creative_lengths.Where(x => x.plan_version_id == plan.VersionId));
+                context.plan_version_creative_lengths.AddRange(
+                    plan.CreativeLengths.Select(x => new plan_version_creative_lengths
+                    {
+                        plan_version_id = plan.VersionId,
+                        spot_length_id = x.SpotLengthId,
+                        weight = x.Weight
                     }).ToList());
                 context.SaveChanges();
             });

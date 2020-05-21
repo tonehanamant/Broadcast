@@ -49,7 +49,7 @@
   "CreativeLengths": [
     {
       "SpotLengthId": 2,
-      "Weight": null
+      "Weight": 100
     }
   ],
   "Currency": 1,

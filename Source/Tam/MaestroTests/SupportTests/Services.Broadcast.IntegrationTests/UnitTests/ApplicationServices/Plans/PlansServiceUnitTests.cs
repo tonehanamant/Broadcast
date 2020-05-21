@@ -479,6 +479,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new CreativeLength { SpotLengthId = 2, Weight = 25 },
                     new CreativeLength { SpotLengthId = 3, Weight = 25 }
                 });
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GetWeeklyBreakdownCombinations(It.IsAny<List<CreativeLength>>(), It.IsAny<List<PlanDaypartDto>>()))
+                .Returns(new List<WeeklyBreakdownCombination> {
+                    new WeeklyBreakdownCombination{ SpotLengthId = 1, DaypartCodeId = 2, Weighting = 0.3},
+                    new WeeklyBreakdownCombination{ SpotLengthId = 1, DaypartCodeId = 11, Weighting = 0.2},
+                    new WeeklyBreakdownCombination{ SpotLengthId = 2, DaypartCodeId = 2, Weighting = 0.15},
+                    new WeeklyBreakdownCombination{ SpotLengthId = 2, DaypartCodeId = 11, Weighting = 0.1},
+                    new WeeklyBreakdownCombination{ SpotLengthId = 3, DaypartCodeId = 2, Weighting = 0.15},
+                    new WeeklyBreakdownCombination{ SpotLengthId = 3, DaypartCodeId = 11, Weighting = 0.1}
+                });
 
             var savedWeekyBreakdowns = new List<object>();
             _PlanRepositoryMock
@@ -569,6 +579,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Adu = x.Sum(i => i.WeeklyAdu)
                     })
                     .ToList());
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GetWeeklyBreakdownCombinations(It.IsAny<List<CreativeLength>>(), It.IsAny<List<PlanDaypartDto>>()))
+                .Returns(new List<WeeklyBreakdownCombination> {
+                    new WeeklyBreakdownCombination{ SpotLengthId = 1, DaypartCodeId = 2, Weighting = 0.3},
+                    new WeeklyBreakdownCombination{ SpotLengthId = 1, DaypartCodeId = 11, Weighting = 0.2},
+                    new WeeklyBreakdownCombination{ SpotLengthId = 2, DaypartCodeId = 2, Weighting = 0.15},
+                    new WeeklyBreakdownCombination{ SpotLengthId = 2, DaypartCodeId = 11, Weighting = 0.1},
+                    new WeeklyBreakdownCombination{ SpotLengthId = 3, DaypartCodeId = 2, Weighting = 0.15},
+                    new WeeklyBreakdownCombination{ SpotLengthId = 3, DaypartCodeId = 11, Weighting = 0.1}
+                });
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GetStandardDaypardWeightingGoals(It.IsAny<List<PlanDaypartDto>>()))
+                .Returns(new List<(int StadardDaypartId, double WeightingGoalPercent)> {
+                    (2, 60), (11, 40)
+                });
 
             _CreativeLengthEngineMock
                 .Setup(x => x.DistributeWeight(It.IsAny<IEnumerable<CreativeLength>>()))

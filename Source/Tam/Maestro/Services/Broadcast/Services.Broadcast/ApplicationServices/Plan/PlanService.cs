@@ -301,6 +301,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 plan.CreativeLengths = _CreativeLengthEngine.DistributeWeight(plan.CreativeLengths);
                 _DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
                 _PlanRepository.SaveWeeklyBreakdownDistribution(plan);
+                _PlanRepository.SaveCreativeLengths(plan);
                 result.AddRange(plan.WeeklyBreakdownWeeks);
             }
             return result;
@@ -311,17 +312,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// And distributes goals based on ad length and daypart weights
         /// </summary>
         private void _DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(PlanDto plan)
-        {
-            var standardDaypardWeightingGoals = _GetStandardDaypardWeightingGoals(plan.Dayparts);
-            
+        {            
             if (plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.EvenDelivery ||
                 plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.CustomByWeek)
             {
-                plan.WeeklyBreakdownWeeks = _DistributeGoals_ByWeekDeliveryType(plan, plan.CreativeLengths, standardDaypardWeightingGoals);
+                plan.WeeklyBreakdownWeeks = _DistributeGoals_ByWeekDeliveryType(plan);
             }
             else if (plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength)
             {
-                plan.WeeklyBreakdownWeeks = _DistributeGoals_ByWeekByAdLengthDeliveryType(plan, standardDaypardWeightingGoals);
+                plan.WeeklyBreakdownWeeks = _DistributeGoals_ByWeekByAdLengthDeliveryType(plan);
             }
             else
             {
@@ -333,13 +332,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// Splits each weekly breakdown record using plan daypart weighting goals to distribute the goals of each record
         /// </summary>
         /// <returns>A list of breakdown records with 'by week by ad length by daypart' structure</returns>
-        private List<WeeklyBreakdownWeek> _DistributeGoals_ByWeekByAdLengthDeliveryType(
-            PlanDto plan,
-            List<(int StadardDaypartId, double WeightingGoalPercent)> standardDaypardWeightingGoals)
+        private List<WeeklyBreakdownWeek> _DistributeGoals_ByWeekByAdLengthDeliveryType(PlanDto plan)
         {
             var result = new List<WeeklyBreakdownWeek>();
             var weeks = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(plan.WeeklyBreakdownWeeks);
-
+            var standardDaypardWeightingGoals = _WeeklyBreakdownEngine.GetStandardDaypardWeightingGoals(plan.Dayparts);
             foreach (var week in weeks)
             {
                 foreach (var breakdownItem in plan.WeeklyBreakdownWeeks.Where(x => x.MediaWeekId == week.MediaWeekId))
@@ -386,19 +383,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// Splits each weekly breakdown record using plan daypart and ad length weighting goals to distribute the goals of each record
         /// </summary>
         /// <returns>A list of breakdown records with 'by week by ad length by daypart' structure</returns>
-        private List<WeeklyBreakdownWeek> _DistributeGoals_ByWeekDeliveryType(
-            PlanDto plan,
-            List<CreativeLength> creativeLengths,
-            List<(int StadardDaypartId, double WeightingGoalPercent)> standardDaypardWeightingGoals)
+        private List<WeeklyBreakdownWeek> _DistributeGoals_ByWeekDeliveryType(PlanDto plan)
         {
             var result = new List<WeeklyBreakdownWeek>();
 
-            var allSpotLengthIdAndStandardDaypartIdCombinations = creativeLengths.SelectMany(x => standardDaypardWeightingGoals, (a, b) => new
-            {
-                a.SpotLengthId,
-                StandardDaypartId = b.StadardDaypartId,
-                Weighting = ((double)a.Weight.Value / 100) * (b.WeightingGoalPercent / 100)
-            });
+            var allSpotLengthIdAndStandardDaypartIdCombinations = 
+                _WeeklyBreakdownEngine.GetWeeklyBreakdownCombinations(plan.CreativeLengths, plan.Dayparts);
 
             foreach (var week in plan.WeeklyBreakdownWeeks)
             {
@@ -415,7 +405,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         NumberOfActiveDays = week.NumberOfActiveDays,
                         ActiveDays = week.ActiveDays,
                         SpotLengthId = combination.SpotLengthId,
-                        DaypartCodeId = combination.StandardDaypartId,
+                        DaypartCodeId = combination.DaypartCodeId,
                         AduImpressions = weeklyAduImpressions * combination.Weighting
                     };
 
@@ -435,41 +425,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// Takes a list of dayparts and calculates weights for those dayparts that does not have weight set
-        /// Remaining weight is distributed evenly
-        /// When weight can not be split evenly we split it into equal pieces and add what`s left to the first daypart that takes part in the distribution
-        /// </summary>
-        private List<(int StadardDaypartId, double WeightingGoalPercent)> _GetStandardDaypardWeightingGoals(List<PlanDaypartDto> dayparts)
-        {
-            var weightingGoalPercentByStandardDaypartIdDictionary = new Dictionary<int, double>();
-
-            var daypartsWithWeighting = dayparts.Where(x => x.WeightingGoalPercent.HasValue).ToList();
-            var daypartsWithoutWeighting = dayparts.Where(x => !x.WeightingGoalPercent.HasValue).ToList();
-
-            if (daypartsWithoutWeighting.Any())
-            {
-                var undistributedWeighing = 100 - daypartsWithWeighting.Sum(x => x.WeightingGoalPercent.Value);
-                var undistributedWeighingPerDaypart = Math.Floor(undistributedWeighing / daypartsWithoutWeighting.Count);
-
-                var remainingWeighing = undistributedWeighing - (undistributedWeighingPerDaypart * daypartsWithoutWeighting.Count);
-                var firstDaypartWeighing = undistributedWeighingPerDaypart + remainingWeighing;
-                var firstDaypart = daypartsWithoutWeighting.TakeOut(0);
-
-                weightingGoalPercentByStandardDaypartIdDictionary[firstDaypart.DaypartCodeId] = firstDaypartWeighing;
-                daypartsWithoutWeighting.ForEach(x => weightingGoalPercentByStandardDaypartIdDictionary[x.DaypartCodeId] = undistributedWeighingPerDaypart);
-            }
-            
-            daypartsWithWeighting.ForEach(x => weightingGoalPercentByStandardDaypartIdDictionary[x.DaypartCodeId] = x.WeightingGoalPercent.Value);
-
-            // to keep the original order
-            return dayparts
-                .Select(x => (
-                    StadardDaypartId: x.DaypartCodeId, 
-                    WeightingGoalPercent: weightingGoalPercentByStandardDaypartIdDictionary[x.DaypartCodeId]))
-                .ToList();
         }
 
         private void _UpdateCampaignLastModified(int campaignId, DateTime modifiedDate, string modifiedBy)

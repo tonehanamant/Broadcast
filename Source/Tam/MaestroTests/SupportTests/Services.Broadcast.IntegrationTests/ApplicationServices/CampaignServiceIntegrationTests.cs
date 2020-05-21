@@ -1102,19 +1102,33 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             if (WRITE_FILE_TO_DISK)
             {
-                var reportOutput = typeof(T).Equals("CampaignReportGenerator")
-                        ? new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData as CampaignReportData)
-                        : new ProgramLineupReportGenerator(@".\Files\Excel templates").Generate(reportData as ProgramLineupReportData);
-                reportOutput.Filename = filename;
-                using (var destinationFileStream = new FileStream($@"C:\Users\sroibu\Downloads\integration_tests_exports\{reportOutput.Filename}", FileMode.OpenOrCreate))
+                if (typeof(T).Name.Equals("CampaignReportData"))
                 {
-                    while (reportOutput.Stream.Position < reportOutput.Stream.Length)
-                    {
-                        destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
-                    }
+                    var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates").Generate(reportData as CampaignReportData);
+                    reportOutput.Filename = filename;
+                    _WriteStream(reportOutput);
+                    Assert.AreEqual(reportOutput.Stream.Length,
+                        File.ReadAllBytes($@".\Files\Campaign export\{reportOutput.Filename}").LongLength);
                 }
-                Assert.AreEqual(reportOutput.Stream.Length,
-                    File.ReadAllBytes($@".\Files\Campaign export\{reportOutput.Filename}").LongLength);
+                if (typeof(T).Name.Equals("CampaignReportData"))
+                {
+                    var reportOutput = new ProgramLineupReportGenerator(@".\Files\Excel templates").Generate(reportData as ProgramLineupReportData);
+                    reportOutput.Filename = filename;
+                    _WriteStream(reportOutput);
+                    Assert.AreEqual(reportOutput.Stream.Length,
+                        File.ReadAllBytes($@".\Files\Program lineup\{reportOutput.Filename}").LongLength);
+                }
+            }
+        }
+
+        private static void _WriteStream(ReportOutput reportOutput)
+        {
+            using (var destinationFileStream = new FileStream($@"C:\Users\sroibu\Downloads\integration_tests_exports\{reportOutput.Filename}", FileMode.OpenOrCreate))
+            {
+                while (reportOutput.Stream.Position < reportOutput.Stream.Length)
+                {
+                    destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
+                }
             }
         }
     }

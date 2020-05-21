@@ -2737,7 +2737,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         private PlanDto _GetPlanForCampaignExport(int planId, int campaignId)
         {
-            return new PlanDto
+            var planDto = new PlanDto
             {
                 Id = planId,
                 CampaignId = campaignId,
@@ -2798,51 +2798,35 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         StartTimeSeconds = 21600,
                         EndTimeSeconds = 32399
                     }
-                },
-                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                }                
+            };
+            planDto.WeeklyBreakdownWeeks = _GetWeeklyBreakdownWeeks(planDto, new List<int> { 846, 847, 848, 849, 850 });
+            return planDto;
+        }
+
+        private List<WeeklyBreakdownWeek> _GetWeeklyBreakdownWeeks(PlanDto planDto, List<int> weekIds)
+        {
+            List<WeeklyBreakdownWeek> result = new List<WeeklyBreakdownWeek>();
+            foreach(int id in weekIds)
+            {
+                foreach (var c in planDto.CreativeLengths)
                 {
-                    new WeeklyBreakdownWeek
+                    foreach (var d in planDto.Dayparts)
                     {
-                        MediaWeekId = 846,
-                        WeeklyAdu = 0,
-                        WeeklyImpressions = 4000000,
-                        WeeklyBudget = 100000.00M,
-                        WeeklyRatings = 29.8892007328832
-                    },
-                    new WeeklyBreakdownWeek
-                    {
-                        MediaWeekId = 847,
-                        WeeklyAdu = 0,
-                        WeeklyImpressions = 4000000,
-                        WeeklyBudget = 100000.00M,
-                        WeeklyRatings = 29.8892007328832
-                    },
-                    new WeeklyBreakdownWeek
-                    {
-                        MediaWeekId = 848,
-                        WeeklyAdu = 0,
-                        WeeklyImpressions = 4000000,
-                        WeeklyBudget = 100000.00M,
-                        WeeklyRatings = 29.8892007328832
-                    },
-                    new WeeklyBreakdownWeek
-                    {
-                        MediaWeekId = 849,
-                        WeeklyAdu = 0,
-                        WeeklyImpressions = 4000000,
-                        WeeklyBudget = 100000.00M,
-                        WeeklyRatings = 29.8892007328832
-                    },
-                    new WeeklyBreakdownWeek
-                    {
-                        MediaWeekId = 850,
-                        WeeklyAdu = 0,
-                        WeeklyImpressions = 4000000,
-                        WeeklyBudget = 100000.00M,
-                        WeeklyRatings = 29.8892007328832
+                        result.Add(new WeeklyBreakdownWeek
+                        {
+                            MediaWeekId = id,
+                            DaypartCodeId = d.DaypartCodeId,
+                            SpotLengthId = c.SpotLengthId,
+                            WeeklyAdu = 0,
+                            WeeklyImpressions = 4000000,
+                            WeeklyBudget = 100000.00M,
+                            WeeklyRatings = 29.8892007328832
+                        });
                     }
                 }
-            };
+            }
+            return result;
         }
 
         private List<WeeklyBreakdownByWeek> _GetWeeklyBreakdownByWeek()
