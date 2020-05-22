@@ -45,13 +45,13 @@ namespace Services.Broadcast.ApplicationServices
         Tuple<string, Stream, string> DownloadGeneratedScxFile(int fileId);
     }
 
-    public class ScxGenerationService : IScxGenerationService
+    public class ScxGenerationService :BroadcastBaseClass, IScxGenerationService
     {
         private readonly IScxGenerationJobRepository _ScxGenerationJobRepository;
         private readonly IProprietaryInventoryService _ProprietaryInventoryService;
         private readonly IFileService _FileService;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
-        private readonly IBackgroundJobClient _BackgroundJobClient;
+        private readonly IBackgroundJobClient _BackgroundJobClient;        
 
         public ScxGenerationService(IDataRepositoryFactory broadcastDataRepositoryFactory, 
             IProprietaryInventoryService proprietaryInventoryService, 
@@ -81,9 +81,9 @@ namespace Services.Broadcast.ApplicationServices
 
             var jobId = _ScxGenerationJobRepository.AddJob(job);
 
-            _BackgroundJobClient.Enqueue<IScxGenerationService>(x => x.ProcessScxGenerationJob(jobId));
+			  _BackgroundJobClient.Enqueue<IScxGenerationService>(x => x.ProcessScxGenerationJob(jobId));
 
-            return jobId;
+			  return jobId;
         }
 
         public void RequeueScxGenerationJob(int jobId)
@@ -202,6 +202,7 @@ namespace Services.Broadcast.ApplicationServices
         private void _SaveToFolder(List<InventoryScxFile> scxFiles)
         {
             var dropFolderPath = GetDropFolderPath();
+			_FileService.CreateDirectory(dropFolderPath);
             foreach (var scxFile in scxFiles)
             {
                 var path = Path.Combine(
@@ -219,10 +220,9 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <returns></returns>
         protected virtual string GetDropFolderPath()
-        {
-            var result = BroadcastServiceSystemParameter.ScxGenerationFolder;
-            return result;
-        }
+		{
+            return Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.SCX_EXPORT_DIRECTORY);
+		}
 
         /// <summary>
         /// Transforms from dto to entity.

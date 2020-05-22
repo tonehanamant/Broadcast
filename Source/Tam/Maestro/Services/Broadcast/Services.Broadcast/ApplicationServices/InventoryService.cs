@@ -305,9 +305,11 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _WriteErrorFileToDisk(int fileId, string fileName, List<string> validationErrors)
         {
-            string path = $@"{_GetInventoryUploadErrorsFolder()}\{fileId}_{fileName}.txt";
-
-            _FileService.CreateTextFile(path, validationErrors);
+			var saveDirectory = _GetInventoryUploadErrorsFolder();
+			string fullFileName = $@"{fileId}_{fileName}.txt";
+			string path = Path.Combine(saveDirectory, fullFileName);
+			_FileService.CreateDirectory(saveDirectory);
+			_FileService.CreateTextFile(path, validationErrors);
         }
 
         private InventoryFileSaveResult _SetInventoryFileSaveResult(InventoryFile file)
@@ -841,9 +843,11 @@ namespace Services.Broadcast.ApplicationServices
         /// For unit testing.  Abstracts from the static Configuration Service.
         /// </summary>
         protected virtual string _GetInventoryUploadErrorsFolder()
-        {
-            var settingValue = BroadcastServiceSystemParameter.InventoryUploadErrorsFolder;
-            return settingValue;
+        {	        
+			var path = Path.Combine(_GetBroadcastAppFolder()
+                , BroadcastConstants.FolderNames.INVENTORY_UPLOAD
+                , BroadcastConstants.FolderNames.INVENTORY_UPLOAD_ERRORS);
+	        return path;
         }
 
         /// <summary>

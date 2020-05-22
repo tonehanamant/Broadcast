@@ -296,13 +296,22 @@ namespace Services.Broadcast.ApplicationServices
 
             return inventorySource;
         }
-                
+
         private void WriteErrorFileToDisk(Stream stream, int fileId, string fileName)
         {
-            string path = $@"{BroadcastServiceSystemParameter.InventoryUploadErrorsFolder}\{fileId}_{fileName}";
-            stream.Position = 0;
-            _FileService.Copy(stream, path, true);
+	        var saveDirectory = _GetInventoryUploadErrorDirectory();
+	        var fullFileName = $@"{fileId}_{fileName}";
+	        var path = Path.Combine(saveDirectory, fullFileName);
+	        stream.Position = 0;
+	        _FileService.CreateDirectory(saveDirectory);
+	        _FileService.Copy(stream, path, true);
         }
-
-    }
+        private string _GetInventoryUploadErrorDirectory()
+        {
+			var path = Path.Combine(_GetBroadcastAppFolder()
+                , BroadcastConstants.FolderNames.INVENTORY_UPLOAD
+                , BroadcastConstants.FolderNames.INVENTORY_UPLOAD_ERRORS);
+            return path;
+		}
+	}
 }

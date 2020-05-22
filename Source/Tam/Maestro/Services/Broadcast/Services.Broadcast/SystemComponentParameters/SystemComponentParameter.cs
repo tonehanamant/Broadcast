@@ -45,16 +45,16 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.AllowMultipleCreativeLengths); }
         }
 	 
+		public static string BroadcastAppFolder  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.BroadcastAppFolder); }
+        }
+	 
 		public static string BroadcastDayStart  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.BroadcastDayStart); }
-        }
-	 
-		public static string BroadcastExcelTemplatesPath  
-		{
-            get { return SystemComponentParameterHelper.GetPropertyValue<string>
-					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.BroadcastExcelTemplatesPath); }
         }
 	 
 		public static int BroadcastMatchingBuffer  
@@ -73,12 +73,6 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.BroadcastSharedFolder); }
-        }
-	 
-		public static string CampaignExportReportsFolder  
-		{
-            get { return SystemComponentParameterHelper.GetPropertyValue<string>
-					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.CampaignExportReportsFolder); }
         }
 	 
 		public static string DataLake_NotificationEmail  
@@ -255,12 +249,6 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.InventorySummaryCacheAbsoluteExpirationSeconds); }
         }
 	 
-		public static string InventoryUploadErrorsFolder  
-		{
-            get { return SystemComponentParameterHelper.GetPropertyValue<string>
-					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.InventoryUploadErrorsFolder); }
-        }
-	 
 		public static string MediaMonthCruchCacheSlidingExpirationSeconds  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
@@ -313,12 +301,6 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ProgramGuideUrl); }
-        }
-	 
-		public static string ProgramLineupReportsFolder  
-		{
-            get { return SystemComponentParameterHelper.GetPropertyValue<string>
-					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ProgramLineupReportsFolder); }
         }
 	 
 		public static string ProgramSearchApiUrl  

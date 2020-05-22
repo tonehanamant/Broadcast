@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using BroadcastLogging;
 using log4net;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast
 {
@@ -37,5 +38,10 @@ namespace Services.Broadcast
             var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
             _Log.Debug(logMessage.ToJson());
         }
-    }
+      
+		protected virtual string _GetBroadcastAppFolder()
+        {
+	        return BroadcastServiceSystemParameter.BroadcastAppFolder;
+        }
+	}
 }

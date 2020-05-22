@@ -17,6 +17,7 @@ using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -127,7 +128,7 @@ namespace Services.Broadcast.ApplicationServices
     /// Operations related to the Campaign domain.
     /// </summary>
     /// <seealso cref="ICampaignService" />
-    public class CampaignService : ICampaignService
+    public class CampaignService :BroadcastBaseClass, ICampaignService
     {
         private readonly ICampaignValidator _CampaignValidator;
         private readonly ICampaignRepository _CampaignRepository;
@@ -496,10 +497,10 @@ namespace Services.Broadcast.ApplicationServices
             var campaignReportData = GetAndValidateCampaignReportData(request);
             var reportGenerator = new CampaignReportGenerator(templatesFilePath);
             var report = reportGenerator.Generate(campaignReportData);
-
-            return _SharedFolderService.SaveFile(new SharedFolderFile
+            
+			return _SharedFolderService.SaveFile(new SharedFolderFile
             {
-                FolderPath = $@"{BroadcastServiceSystemParameter.BroadcastSharedFolder}\{BroadcastServiceSystemParameter.CampaignExportReportsFolder}",
+                FolderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.CAMPAIGN_EXPORT_REPORTS),
                 FileNameWithExtension = report.Filename,
                 FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 FileUsage = SharedFolderFileUsage.CampaignExport,
@@ -680,11 +681,11 @@ namespace Services.Broadcast.ApplicationServices
             var programLineupReportData = GetProgramLineupReportData(request, currentDate);
             var reportGenerator = new ProgramLineupReportGenerator(templatesFilePath);
             var report = reportGenerator.Generate(programLineupReportData);
-
-            return _SharedFolderService.SaveFile(new SharedFolderFile
+            
+			return _SharedFolderService.SaveFile(new SharedFolderFile
             {
-                FolderPath = $@"{BroadcastServiceSystemParameter.BroadcastSharedFolder}\{BroadcastServiceSystemParameter.ProgramLineupReportsFolder}",
-                FileNameWithExtension = report.Filename,
+	            FolderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.PROGRAM_LINEUP_REPORTS),
+				FileNameWithExtension = report.Filename,
                 FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 FileUsage = SharedFolderFileUsage.ProgramLineup,
                 CreatedDate = currentDate,

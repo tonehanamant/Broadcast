@@ -47,14 +47,14 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "AllowMultipleCreativeLengths"; }
         }
 	 
+		public static string BroadcastAppFolder  
+		{
+            get { return "BroadcastAppFolder"; }
+        }
+	 
 		public static string BroadcastDayStart  
 		{
             get { return "BroadcastDayStart"; }
-        }
-	 
-		public static string BroadcastExcelTemplatesPath  
-		{
-            get { return "BroadcastExcelTemplatesPath"; }
         }
 	 
 		public static string BroadcastMatchingBuffer  
@@ -70,11 +70,6 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string BroadcastSharedFolder  
 		{
             get { return "BroadcastSharedFolder"; }
-        }
-	 
-		public static string CampaignExportReportsFolder  
-		{
-            get { return "CampaignExportReportsFolder"; }
         }
 	 
 		public static string DataLake_NotificationEmail  
@@ -222,11 +217,6 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "InventorySummaryCacheAbsoluteExpirationSeconds"; }
         }
 	 
-		public static string InventoryUploadErrorsFolder  
-		{
-            get { return "InventoryUploadErrorsFolder"; }
-        }
-	 
 		public static string MediaMonthCruchCacheSlidingExpirationSeconds  
 		{
             get { return "MediaMonthCruchCacheSlidingExpirationSeconds"; }
@@ -270,11 +260,6 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string ProgramGuideUrl  
 		{
             get { return "ProgramGuideUrl"; }
-        }
-	 
-		public static string ProgramLineupReportsFolder  
-		{
-            get { return "ProgramLineupReportsFolder"; }
         }
 	 
 		public static string ProgramSearchApiUrl  

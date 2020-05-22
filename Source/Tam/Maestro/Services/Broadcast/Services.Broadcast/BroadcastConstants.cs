@@ -27,5 +27,15 @@
         public const int DefaultDatabaseQueryChunkSize = 1000;
 
         public const double ImpressionsPerUnit = 500000; // temporary hardcoded value
+
+        public class FolderNames
+        {
+            public const string SCX_EXPORT_DIRECTORY = "ScxFiles";
+            public const string INVENTORY_UPLOAD = "InventoryUpload";
+            public const string INVENTORY_UPLOAD_ERRORS = "Errors";
+            public const string PROGRAM_LINEUP_REPORTS = "ProgramLineupReports";
+            public const string CAMPAIGN_EXPORT_REPORTS = "CampaignExportReports";
+            public const string INVENTORY_EXPORTS = "InventoryExports";
+        }
     }
 }

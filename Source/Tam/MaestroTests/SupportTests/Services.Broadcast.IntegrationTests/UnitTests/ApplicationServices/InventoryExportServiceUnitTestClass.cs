@@ -29,11 +29,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         {
         }
 
-        protected override string _GetBroadcastSharedFolders()
-        {
-            return "BroadcastServiceSystemParameter.BroadcastSharedFolder";
-        }
-
+		protected override string _GetBroadcastAppFolder()
+		{
+			return "BroadcastServiceSystemParameter.BroadcastAppFolder";
+		}
+		
         public DateTime? UT_DateTimeNow { get; set; }
 
         protected override DateTime _GetDateTimeNow()

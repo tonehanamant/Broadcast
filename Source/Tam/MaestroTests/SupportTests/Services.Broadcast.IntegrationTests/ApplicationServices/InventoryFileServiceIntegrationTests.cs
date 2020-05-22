@@ -1771,7 +1771,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var now = new DateTime(2019, 02, 02);
                 var result = _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", now);
-                string errorsFilePath = $@"{BroadcastServiceSystemParameter.InventoryUploadErrorsFolder}\{result.FileId}_{fileName}.txt";
+			
+                string errorsFilePath = $@"{BroadcastServiceSystemParameter.BroadcastAppFolder}\{result.FileId}_{fileName}.txt";
 
                 var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
                 Assert.IsTrue(fileService.Exists(errorsFilePath));

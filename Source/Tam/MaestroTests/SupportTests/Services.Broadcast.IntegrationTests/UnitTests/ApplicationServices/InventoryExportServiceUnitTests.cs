@@ -217,7 +217,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // verify the saved file
             Assert.AreEqual(1, createFilesCalled.Count);
-            Assert.AreEqual(@"BroadcastServiceSystemParameter.BroadcastSharedFolder\InventoryExports", createFilesCalled[0].Item1);
+            Assert.AreEqual(@"BroadcastServiceSystemParameter.BroadcastAppFolder\InventoryExports", createFilesCalled[0].Item1);
             Assert.AreEqual("Open Market inventory 2020 Q2.xlsx", createFilesCalled[0].Item2);
             Assert.IsNotNull(createFilesCalled[0].Item3);
         }
@@ -402,7 +402,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // *** ASSERT ***/
             Assert.AreEqual(1, getFileStreamCalls.Count);
-            Assert.AreEqual(@"BroadcastServiceSystemParameter.BroadcastSharedFolder\InventoryExports", getFileStreamCalls[0].Item1);
+            Assert.AreEqual(@"BroadcastServiceSystemParameter.BroadcastAppFolder\InventoryExports", getFileStreamCalls[0].Item1);
             Assert.AreEqual("TestFileName.xlsx", getFileStreamCalls[0].Item2);
             Assert.IsNotNull(result);
             Assert.AreEqual("TestFileName.xlsx", result.Item1);

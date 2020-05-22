@@ -241,14 +241,8 @@ namespace Services.Broadcast.ApplicationServices.Inventory
 
         private string _GetExportFileSaveDirectory()
         {
-            const string exportDirectory = "InventoryExports";
-            var path = Path.Combine(_GetBroadcastSharedFolders(), exportDirectory);
+            var path = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.INVENTORY_EXPORTS);
             return path;
-        }
-
-        protected virtual string _GetBroadcastSharedFolders()
-        {
-            return BroadcastServiceSystemParameter.BroadcastSharedFolder;
         }
 
         protected virtual DateTime _GetDateTimeNow()
