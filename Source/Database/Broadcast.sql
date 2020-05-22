@@ -383,11 +383,10 @@ END
 
 GO
 
-UPDATE genre_sources SET
-	[name] = 'RedBee'
-WHERE id = 2
-AND [name] <> 'RedBee'
-
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id =OBJECT_ID('genre_sources'))
+BEGIN
+	EXEC('UPDATE genre_sources SET [name] = ''RedBee'' WHERE id = 2 AND [name] <> ''RedBee''')
+END
 GO
 
 /*************************************** End Cleanup - GenreSourceRename *****************************************************/
