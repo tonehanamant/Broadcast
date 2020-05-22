@@ -145,7 +145,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Inventory
                     ProgramName = i % 2 == 0 ? $"News Program {i}" : $"Non News Program {i}",
                     ShowType = "SER",
                     SourceGenreId = 25,
-                    GenreSourceId = 2,
+                    ProgramSourceId = 2,
                     MaestroGenreId = i % 2 == 0 ? newsGenreIds[rng.Next(0, newsGenreIds.Length)] : notNewsGenreId[rng.Next(0, notNewsGenreId.Length)], // news : not-news
                     StartDate = startDate,
                     EndDate = endDate,

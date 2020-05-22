@@ -34,14 +34,14 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime created_date { get; set; }
         public string modified_by { get; set; }
         public System.DateTime modified_date { get; set; }
-        public int source_id { get; set; }
+        public int program_source_id { get; set; }
     
         public virtual ICollection<proposal_version_detail_criteria_genres> proposal_version_detail_criteria_genres { get; set; }
         public virtual ICollection<station_inventory_manifest_genres> station_inventory_manifest_genres { get; set; }
         public virtual ICollection<station_inventory_manifest_daypart_genres> station_inventory_manifest_daypart_genres { get; set; }
         public virtual ICollection<genre_mappings> genre_mappings { get; set; }
         public virtual ICollection<genre_mappings> genre_mappings1 { get; set; }
-        public virtual genre_sources genre_sources { get; set; }
+        public virtual program_sources program_sources { get; set; }
         public virtual ICollection<plan_version_daypart_genre_restrictions> plan_version_daypart_genre_restrictions { get; set; }
         public virtual ICollection<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs { get; set; }
         public virtual ICollection<plan_version_daypart_program_restrictions> plan_version_daypart_program_restrictions { get; set; }

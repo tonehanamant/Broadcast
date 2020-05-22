@@ -585,6 +585,59 @@ END
 GO
 /*************************************** END BP-16 *****************************************************/
 
+/*************************************** START BP1-3 *****************************************************/
+
+-- rename table genre_sources to program_sources
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('genre_sources'))
+BEGIN
+	EXEC sp_rename 'dbo.genre_sources', 'program_sources';
+END
+
+-- rename column genres.source_id to program_source_id
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'source_id' AND OBJECT_ID = OBJECT_ID(N'genres'))
+BEGIN
+	EXEC sp_rename 'dbo.genres.source_id', 'program_source_id', 'COLUMN';
+END
+
+-- rename foreign key FK__genres__source_i__2434E15A to FK_genres_program_sources
+IF EXISTS (
+  SELECT 1 
+  FROM sys.foreign_keys 
+  WHERE object_id = OBJECT_ID(N'dbo.FK__genres__source_i__2434E15A')
+  AND parent_object_id = OBJECT_ID(N'dbo.genres')
+  )
+BEGIN
+	EXEC sp_rename 'dbo.FK__genres__source_i__2434E15A', 'FK_genres_program_sources';
+END
+
+-- rename column station_inventory_manifest_daypart_programs.genre_source_id to program_source_id
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = N'genre_source_id' AND OBJECT_ID = OBJECT_ID(N'station_inventory_manifest_daypart_programs'))
+BEGIN
+	EXEC sp_rename 'dbo.station_inventory_manifest_daypart_programs.genre_source_id', 'program_source_id', 'COLUMN';
+END
+
+-- rename foreign key FK_station_inventory_manifest_daypart_programs_genre_sources to FK_station_inventory_manifest_daypart_programs_program_sources
+IF EXISTS (
+  SELECT 1 
+  FROM sys.foreign_keys 
+  WHERE object_id = OBJECT_ID(N'dbo.FK_station_inventory_manifest_daypart_programs_genre_sources')
+  AND parent_object_id = OBJECT_ID(N'dbo.station_inventory_manifest_daypart_programs')
+  )
+BEGIN
+	EXEC sp_rename 'dbo.FK_station_inventory_manifest_daypart_programs_genre_sources', 'FK_station_inventory_manifest_daypart_programs_program_sources';
+END
+
+-- rename primary key PK__genre_so__3213E83FB8FFF8C5 to PK_program_sources
+IF EXISTS (
+	SELECT 1
+	FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+	WHERE CONSTRAINT_TYPE='PRIMARY KEY' AND TABLE_SCHEMA = 'dbo' AND TABLE_NAME = 'program_sources' and CONSTRAINT_NAME = 'PK__genre_so__3213E83FB8FFF8C5')
+BEGIN
+	EXEC sp_rename 'dbo.program_sources.PK__genre_so__3213E83FB8FFF8C5', 'PK_program_sources'
+END
+
+/*************************************** END BP1-3 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -197,7 +197,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         public string ImportInventoryProgramResults(Stream fileStream, string fileName)
         {
-            const GenreSourceEnum GENRE_SOURCE = GenreSourceEnum.RedBee;
+            const ProgramSourceEnum PROGRAM_SOURCE = ProgramSourceEnum.RedBee;
             var success = false;
             var stopWatch = new Stopwatch();
             stopWatch.Start();
@@ -282,15 +282,15 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
                         try
                         {
-                            var sourceGenre = _GenreCache.GetSourceGenreByName(exported.genre, GENRE_SOURCE);
-                            var maestroGenre = _GenreCache.GetMaestroGenreBySourceGenre(sourceGenre, GENRE_SOURCE);
+                            var sourceGenre = _GenreCache.GetSourceGenreByName(exported.genre, PROGRAM_SOURCE);
+                            var maestroGenre = _GenreCache.GetMaestroGenreBySourceGenre(sourceGenre, PROGRAM_SOURCE);
 
                             var program = new StationInventoryManifestDaypartProgram
                             {
                                 StationInventoryManifestDaypartId = exported.inventory_daypart_id,
                                 ProgramName = exported.program_name,
                                 ShowType = exported.show_type,
-                                GenreSourceId = (int)GENRE_SOURCE,
+                                ProgramSourceId = (int)PROGRAM_SOURCE,
                                 SourceGenreId = sourceGenre.Id,
                                 MaestroGenreId = maestroGenre.Id,
                                 StartDate = startDate,
@@ -933,10 +933,10 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         protected StationInventoryManifestDaypartProgram _MapProgramDto(GuideResponseProgramDto guideProgram, int manifestDaypartId,
             InventoryProgramsRequestPackage requestPackage)
         {
-            const GenreSourceEnum GENRE_SOURCE = GenreSourceEnum.RedBee;
+            const ProgramSourceEnum PROGRAM_SOURCE = ProgramSourceEnum.RedBee;
 
-            var sourceGenre = _GenreCache.GetSourceGenreByName(guideProgram.SourceGenre, GENRE_SOURCE);
-            var maestroGenre = _GenreCache.GetMaestroGenreBySourceGenre(sourceGenre, GENRE_SOURCE);
+            var sourceGenre = _GenreCache.GetSourceGenreByName(guideProgram.SourceGenre, PROGRAM_SOURCE);
+            var maestroGenre = _GenreCache.GetMaestroGenreBySourceGenre(sourceGenre, PROGRAM_SOURCE);
 
             var program = new StationInventoryManifestDaypartProgram
             {
@@ -944,7 +944,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 ProgramName = guideProgram.ProgramName,
                 ShowType = guideProgram.ShowType,
                 SourceGenreId = sourceGenre.Id,
-                GenreSourceId = (int)GENRE_SOURCE,
+                ProgramSourceId = (int)PROGRAM_SOURCE,
                 MaestroGenreId = maestroGenre.Id,
                 StartDate = guideProgram.StartDate,
                 EndDate = guideProgram.EndDate,

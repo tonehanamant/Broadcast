@@ -13,19 +13,19 @@ namespace Services.Broadcast.Cache
 {
     public interface IGenreCache
     {
-        LookupDto GetMaestroGenreBySourceGenreName(string sourceGenreName, GenreSourceEnum genreSource);
+        LookupDto GetMaestroGenreBySourceGenreName(string sourceGenreName, ProgramSourceEnum programSource);
 
-        LookupDto GetMaestroGenreBySourceGenre(LookupDto sourceGenre, GenreSourceEnum genreSource);
+        LookupDto GetMaestroGenreBySourceGenre(LookupDto sourceGenre, ProgramSourceEnum programSource);
 
-        LookupDto GetSourceGenreByName(string genreName, GenreSourceEnum genreSource);
+        LookupDto GetSourceGenreByName(string genreName, ProgramSourceEnum programSource);
     }
 
     public class GenreCache : IGenreCache
     {
         private readonly Dictionary<int, Genre> _GenresByIds;
 
-        private readonly Dictionary<GenreSourceEnum, Dictionary<string, Genre>> _GenresByNamesBySource;
-        private readonly Dictionary<GenreSourceEnum, Dictionary<int, int>> _MappingsToMaestroGenreBySource;
+        private readonly Dictionary<ProgramSourceEnum, Dictionary<string, Genre>> _GenresByNamesBySource;
+        private readonly Dictionary<ProgramSourceEnum, Dictionary<int, int>> _MappingsToMaestroGenreBySource;
 
         public GenreCache(IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
@@ -33,47 +33,47 @@ namespace Services.Broadcast.Cache
             var genres = repository.GetAllGenres();
             var genreMappings = repository.GetGenreMappings();
 
-            _GenresByNamesBySource = new Dictionary<GenreSourceEnum, Dictionary<string, Genre>>();
-            _MappingsToMaestroGenreBySource = new Dictionary<GenreSourceEnum, Dictionary<int, int>>();
+            _GenresByNamesBySource = new Dictionary<ProgramSourceEnum, Dictionary<string, Genre>>();
+            _MappingsToMaestroGenreBySource = new Dictionary<ProgramSourceEnum, Dictionary<int, int>>();
 
-            foreach (var genreSource in EnumHelper.GetValues<GenreSourceEnum>())
+            foreach (var programSource in EnumHelper.GetValues<ProgramSourceEnum>())
             {
-                _GenresByNamesBySource[genreSource] = genres
-                    .Where(x => x.SourceId == (int)genreSource)
+                _GenresByNamesBySource[programSource] = genres
+                    .Where(x => x.ProgramSourceId == (int)programSource)
                     .ToDictionary(x => x.Name, x => x, StringComparer.InvariantCultureIgnoreCase);
 
-                _MappingsToMaestroGenreBySource[genreSource] = genreMappings
-                    .Where(x => x.SourceId == (int)genreSource)
+                _MappingsToMaestroGenreBySource[programSource] = genreMappings
+                    .Where(x => x.ProgramSourceId == (int)programSource)
                     .ToDictionary(x => x.SourceGenreId, x => x.MaestroGenreId);
             }
 
             _GenresByIds = genres.ToDictionary(x => x.Id, x => x);
         }
 
-        public LookupDto GetMaestroGenreBySourceGenreName(string sourceGenreName, GenreSourceEnum genreSource)
+        public LookupDto GetMaestroGenreBySourceGenreName(string sourceGenreName, ProgramSourceEnum programSource)
         {
-            var sourceGenre = GetSourceGenreByName(sourceGenreName, genreSource);
-            var maestroGenre = GetMaestroGenreBySourceGenre(sourceGenre, genreSource);
+            var sourceGenre = GetSourceGenreByName(sourceGenreName, programSource);
+            var maestroGenre = GetMaestroGenreBySourceGenre(sourceGenre, programSource);
 
             return maestroGenre;
         }
 
-        public LookupDto GetMaestroGenreBySourceGenre(LookupDto sourceGenre, GenreSourceEnum genreSource)
+        public LookupDto GetMaestroGenreBySourceGenre(LookupDto sourceGenre, ProgramSourceEnum programSource)
         {
-            var mappingsToMaestroGenre = _MappingsToMaestroGenreBySource[genreSource];
+            var mappingsToMaestroGenre = _MappingsToMaestroGenreBySource[programSource];
 
             if (!mappingsToMaestroGenre.TryGetValue(sourceGenre.Id, out var maestroGenreId))
-                throw new UnknownGenreException($"There is no mapping from the {genreSource.ToString()} genre : {sourceGenre.Display} to a Maestro genre");
+                throw new UnknownGenreException($"There is no mapping from the {programSource.ToString()} genre : {sourceGenre.Display} to a Maestro genre");
 
             return _ToLookupDto(_GenresByIds[maestroGenreId]);
         }
 
-        public LookupDto GetSourceGenreByName(string genreName, GenreSourceEnum genreSource)
+        public LookupDto GetSourceGenreByName(string genreName, ProgramSourceEnum programSource)
         {
-            var genresByNames = _GenresByNamesBySource[genreSource];
+            var genresByNames = _GenresByNamesBySource[programSource];
 
             if (!genresByNames.TryGetValue(genreName, out var sourceGenre))
-                throw new UnknownGenreException($"An unknown {genreSource.ToString()} genre was discovered: {genreName}");
+                throw new UnknownGenreException($"An unknown {programSource.ToString()} genre was discovered: {genreName}");
 
             return _ToLookupDto(sourceGenre);
         }

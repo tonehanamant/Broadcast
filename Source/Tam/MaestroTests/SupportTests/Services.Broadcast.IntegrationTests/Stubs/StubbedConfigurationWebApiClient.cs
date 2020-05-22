@@ -314,6 +314,9 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 case "DisplayBuyingLink":
                     result = "True";
                     break;
+                case "AllowMultipleCreativeLengths":
+                    result = "False";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }

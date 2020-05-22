@@ -23,7 +23,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns>List of genres</returns>
         [HttpGet]
         [Route("")]
-        public BaseResponse<List<LookupDto>> GetGenres(int sourceId = (int)GenreSourceEnum.Maestro)
+        public BaseResponse<List<LookupDto>> GetGenres(int sourceId = (int)ProgramSourceEnum.Maestro)
         {
             return _ConvertToBaseResponse(() =>
                  _ApplicationServiceFactory.GetApplicationService<IGenreService>().GetGenres(sourceId)

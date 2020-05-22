@@ -68,7 +68,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                         ProgramName = $"Program {(i+1)} For {daypartId}",
                         ShowType = "movie",
                         SourceGenreId = 57,
-                        GenreSourceId = 2,
+                        ProgramSourceId = 2,
                         MaestroGenreId = 39,
                         StartDate = startDate,
                         EndDate = endDate,
@@ -172,7 +172,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     ProgramName = $"Program For {daypartId}",
                     ShowType = "movie",
                     SourceGenreId = 57,
-                    GenreSourceId = 2,
+                    ProgramSourceId = 2,
                     MaestroGenreId = 39,
                     StartDate = startDate,
                     EndDate = endDate,
@@ -254,7 +254,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(StationInventoryManifestDaypartProgram), "Genre");
-            jsonResolver.Ignore(typeof(StationInventoryManifestDaypartProgram), "GenreSourceId");
+            jsonResolver.Ignore(typeof(StationInventoryManifestDaypartProgram), "ProgramSourceId");
             jsonResolver.Ignore(typeof(StationInventoryManifestDaypartProgram), "Id");
             var jsonSettings = new JsonSerializerSettings()
             {

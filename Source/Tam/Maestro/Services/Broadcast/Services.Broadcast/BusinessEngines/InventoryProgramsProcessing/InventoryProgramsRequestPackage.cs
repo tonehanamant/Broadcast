@@ -8,7 +8,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 {
     public class InventoryProgramsRequestPackage
     {
-        public GenreSourceEnum GenreSource => GenreSourceEnum.RedBee;
+        public ProgramSourceEnum ProgramSource => ProgramSourceEnum.RedBee;
         public DateTime StartDateRange { get; set; }
         public DateTime EndDateRange { get; set; }
         public List<GuideRequestResponseMapping> RequestMappings { get; set; } = new List<GuideRequestResponseMapping>();

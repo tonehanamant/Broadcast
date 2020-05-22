@@ -132,7 +132,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<campaign_summaries> campaign_summaries { get; set; }
         public virtual DbSet<inventory_file_ratings_job_notes> inventory_file_ratings_job_notes { get; set; }
         public virtual DbSet<genre_mappings> genre_mappings { get; set; }
-        public virtual DbSet<genre_sources> genre_sources { get; set; }
         public virtual DbSet<plan_version_available_markets> plan_version_available_markets { get; set; }
         public virtual DbSet<plan_version_blackout_markets> plan_version_blackout_markets { get; set; }
         public virtual DbSet<plan_version_flight_hiatus_days> plan_version_flight_hiatus_days { get; set; }
@@ -194,5 +193,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<vpvh> vpvhs { get; set; }
         public virtual DbSet<plan_version_pricing_band_details> plan_version_pricing_band_details { get; set; }
         public virtual DbSet<plan_version_pricing_bands> plan_version_pricing_bands { get; set; }
+        public virtual DbSet<program_sources> program_sources { get; set; }
     }
 }

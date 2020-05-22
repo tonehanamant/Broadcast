@@ -116,13 +116,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(s => s.GetDataRepository<IGenreRepository>())
                 .Returns(_GenreRepositoryMock.Object);
             _GenreRepositoryMock
-                .Setup(s => s.GetGenreByName(It.IsAny<string>(), It.IsAny<GenreSourceEnum>()))
-                .Returns((string genreName, GenreSourceEnum source) =>
+                .Setup(s => s.GetGenreByName(It.IsAny<string>(), It.IsAny<ProgramSourceEnum>()))
+                .Returns((string genreName, ProgramSourceEnum source) =>
                 {
                     return new Genre
                     {
                         Id = (int)source,
-                        SourceId = (int)source,
+                        ProgramSourceId = (int)source,
                         Name = genreName
                     };
                 });

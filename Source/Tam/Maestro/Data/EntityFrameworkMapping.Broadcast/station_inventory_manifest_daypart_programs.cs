@@ -24,12 +24,12 @@ namespace EntityFrameworkMapping.Broadcast
         public int start_time { get; set; }
         public int end_time { get; set; }
         public System.DateTime created_date { get; set; }
-        public int genre_source_id { get; set; }
+        public int program_source_id { get; set; }
         public int maestro_genre_id { get; set; }
     
-        public virtual genre_sources genre_sources { get; set; }
         public virtual genre genre { get; set; }
         public virtual genre maestro_genre { get; set; }
+        public virtual program_sources program_sources { get; set; }
         public virtual station_inventory_manifest_dayparts station_inventory_manifest_dayparts { get; set; }
     }
 }

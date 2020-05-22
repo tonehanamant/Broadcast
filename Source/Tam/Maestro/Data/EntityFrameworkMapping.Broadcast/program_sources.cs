@@ -12,9 +12,9 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class genre_sources
+    public partial class program_sources
     {
-        public genre_sources()
+        public program_sources()
         {
             this.genres = new HashSet<genre>();
             this.station_inventory_manifest_daypart_programs = new HashSet<station_inventory_manifest_daypart_programs>();

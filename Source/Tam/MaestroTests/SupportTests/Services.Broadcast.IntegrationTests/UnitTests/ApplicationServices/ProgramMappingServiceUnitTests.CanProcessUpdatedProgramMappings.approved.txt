@@ -3,7 +3,7 @@
   "OfficialGenre": {
     "Id": 2,
     "Name": "News",
-    "SourceId": 2
+    "ProgramSourceId": 2
   },
   "OfficialProgramName": "10 NEWS",
   "OfficialShowType": {

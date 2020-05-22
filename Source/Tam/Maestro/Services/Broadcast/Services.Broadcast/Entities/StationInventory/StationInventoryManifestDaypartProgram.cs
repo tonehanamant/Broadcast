@@ -9,7 +9,7 @@ namespace Services.Broadcast.Entities.StationInventory
         public string ProgramName { get; set; }
         public string ShowType { get; set; }
         public int SourceGenreId { get; set; }
-        public int GenreSourceId { get; set; }
+        public int ProgramSourceId { get; set; }
         public int MaestroGenreId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

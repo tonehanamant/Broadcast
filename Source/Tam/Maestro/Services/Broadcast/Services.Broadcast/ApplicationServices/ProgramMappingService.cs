@@ -123,7 +123,7 @@ namespace Services.Broadcast.ApplicationServices
                         {
                             // There are changes for an existing mapping
                             existingMapping.OfficialProgramName = mapping.OfficialProgramName;
-                            existingMapping.OfficialGenre = _GenreRepository.GetGenreByName(mapping.OfficialGenre, GenreSourceEnum.RedBee);
+                            existingMapping.OfficialGenre = _GenreRepository.GetGenreByName(mapping.OfficialGenre, ProgramSourceEnum.RedBee);
                             existingMapping.OfficialShowType = _ShowTypeRepository.GetShowTypeByName(mapping.OfficialShowType);
                             _ProgramMappingRepository.UpdateProgramMapping(existingMapping);
                             _UpdateInventoryWithEnrichedProgramName(existingMapping, mapping, createdDate, ref updatedInventoryCount);
@@ -136,7 +136,7 @@ namespace Services.Broadcast.ApplicationServices
                         {
                             OriginalProgramName = mapping.OriginalProgramName,
                             OfficialProgramName = mapping.OfficialProgramName,
-                            OfficialGenre = _GenreRepository.GetGenreByName(mapping.OfficialGenre, GenreSourceEnum.RedBee),
+                            OfficialGenre = _GenreRepository.GetGenreByName(mapping.OfficialGenre, ProgramSourceEnum.RedBee),
                             OfficialShowType = _ShowTypeRepository.GetShowTypeByName(mapping.OfficialShowType)
                         };
                         _ProgramMappingRepository.CreateProgramMapping(newProgramMapping);
@@ -153,8 +153,8 @@ namespace Services.Broadcast.ApplicationServices
             var durationSw = new Stopwatch();
             durationSw.Start();
 
-            var maestroGenre = _GenreRepository.GetGenreByName(mapping.OfficialGenre, GenreSourceEnum.Maestro);
-            var sourceGenre = _GenreRepository.GetGenreByName(mapping.OfficialGenre, GenreSourceEnum.RedBee);
+            var programSource = ProgramSourceEnum.Maestro;
+            var maestroGenre = _GenreRepository.GetGenreByName(mapping.OfficialGenre, programSource);
 
             // Get all StationInventoryManifestDaypart's with ProgramName
             var manifestDayparts = _InventoryRepository.GetManifestDaypartsForProgramName(programMapping.OriginalProgramName);
@@ -182,9 +182,9 @@ namespace Services.Broadcast.ApplicationServices
                         {
                             StationInventoryManifestDaypartId = daypart.Id.Value,
                             ProgramName = programMapping.OfficialProgramName,
-                            GenreSourceId = (int)GenreSourceEnum.RedBee,
+                            ProgramSourceId = (int)programSource,
                             MaestroGenreId = maestroGenre.Id,
-                            SourceGenreId = sourceGenre.Id,
+                            SourceGenreId = maestroGenre.Id,
                             ShowType = mapping.OfficialShowType,
                             StartTime = daypart.Daypart.StartTime,
                             EndTime = daypart.Daypart.EndTime,

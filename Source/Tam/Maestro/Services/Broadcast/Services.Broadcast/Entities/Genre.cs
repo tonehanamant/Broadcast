@@ -6,6 +6,6 @@
 
         public string Name { get; set; }
 
-        public int SourceId { get; set; }
+        public int ProgramSourceId { get; set; }
     }
 }

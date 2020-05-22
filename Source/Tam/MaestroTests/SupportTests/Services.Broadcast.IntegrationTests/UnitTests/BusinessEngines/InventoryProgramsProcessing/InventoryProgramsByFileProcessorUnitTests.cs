@@ -1145,7 +1145,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                     ProgramName = "ProgramName",
                     ShowType = "ShowType",
                     SourceGenreId = 1,
-                    GenreSourceId = 2,
+                    ProgramSourceId = 2,
                     MaestroGenreId = 2,
                     StartTime = 100,
                     EndTime = 200
@@ -1164,15 +1164,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             var dataRepoFactory = _GetDataRepositoryFactory();
 
             _GenreCacheMock
-                .Setup(x => x.GetSourceGenreByName(It.IsAny<string>(), It.IsAny<GenreSourceEnum>()))
-                .Returns<string, GenreSourceEnum>((p1, p2) => new LookupDto
+                .Setup(x => x.GetSourceGenreByName(It.IsAny<string>(), It.IsAny<ProgramSourceEnum>()))
+                .Returns<string, ProgramSourceEnum>((p1, p2) => new LookupDto
                 {
                     Id = 1,
                     Display = $"{p2.ToString()} Genre"
                 });
 
             _GenreCacheMock
-                .Setup(x => x.GetMaestroGenreBySourceGenre(It.IsAny<LookupDto>(), It.IsAny<GenreSourceEnum>()))
+                .Setup(x => x.GetMaestroGenreBySourceGenre(It.IsAny<LookupDto>(), It.IsAny<ProgramSourceEnum>()))
                 .Returns(new LookupDto
                 {
                     Id = 2,
