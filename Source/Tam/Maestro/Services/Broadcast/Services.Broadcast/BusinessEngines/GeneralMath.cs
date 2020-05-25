@@ -6,5 +6,10 @@
         {
             return percentage / 100;
         }
+
+        public static double ConvertFractionToPercentage(double fraction)
+        {
+            return fraction * 100;
+        }
     }
 }

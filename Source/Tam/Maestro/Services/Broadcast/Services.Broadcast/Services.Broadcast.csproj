@@ -444,6 +444,8 @@
     <Compile Include="Entities\Nti\NtiUniverseAudienceMapping.cs" />
     <Compile Include="Entities\Nti\NtiUniverseDetail.cs" />
     <Compile Include="Entities\Nti\NtiUniverseHeader.cs" />
+    <Compile Include="Entities\Plan\LengthMakeUpRequest.cs" />
+    <Compile Include="Entities\Plan\LengthMakeUpTableRow.cs" />
     <Compile Include="Entities\Vpvh\VpvhExcelRecord.cs" />
     <Compile Include="Entities\Plan\PlanAudienceDisplay.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuying.cs" />

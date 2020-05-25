@@ -231,5 +231,19 @@ namespace BroadcastComposerWeb.Controllers
                 _ApplicationServiceFactory.GetApplicationService<IPlanService>()
                     .CalculateCreativeLengthWeight(request));
         }
+
+        /// <summary>
+        /// Calculates the length make up table data
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns>List of LengthMakeUpTableRow objects</returns>
+        [HttpPost]
+        [Route("LengthMakeUp")]
+        public BaseResponse<List<LengthMakeUpTableRow>> CalculateLengthMakeUpTable(LengthMakeUpRequest request)
+        {
+            return _ConvertToBaseResponse(() =>
+                _ApplicationServiceFactory.GetApplicationService<IPlanService>()
+                    .CalculateLengthMakeUpTable(request));
+        }
     }
 }

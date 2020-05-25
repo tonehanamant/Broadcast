@@ -106,7 +106,7 @@ namespace Services.Broadcast.BusinessEngines
             {
                 SpotLengthId = a.SpotLengthId,
                 DaypartCodeId = b.StadardDaypartId,
-                Weighting = ((double)a.Weight.Value / 100) * (b.WeightingGoalPercent / 100)
+                Weighting = GeneralMath.ConvertPercentageToFraction(a.Weight.Value) *  GeneralMath.ConvertPercentageToFraction(b.WeightingGoalPercent)
             }).ToList();
             return allSpotLengthIdAndStandardDaypartIdCombinations;
         }
