@@ -1,0 +1,331 @@
+{
+  "AudienceId": 31,
+  "AudienceType": 1,
+  "AvailableMarkets": [
+    {
+      "Market": "Portland-Auburn",
+      "MarketCode": 100,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 48.0,
+      "Rank": 1,
+      "ShareOfVoicePercent": 22.2
+    },
+    {
+      "Market": "New York",
+      "MarketCode": 101,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 32.5,
+      "Rank": 2,
+      "ShareOfVoicePercent": 34.5
+    }
+  ],
+  "AvailableMarketsWithSovCount": null,
+  "BlackoutMarketCount": null,
+  "BlackoutMarkets": [
+    {
+      "Market": "Burlington-Plattsburgh",
+      "MarketCode": 123,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 5.5,
+      "Rank": 5
+    },
+    {
+      "Market": "Amarillo",
+      "MarketCode": 234,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 2.5,
+      "Rank": 8
+    }
+  ],
+  "BlackoutMarketTotalUsCoveragePercent": null,
+  "Budget": 100.0000,
+  "CampaignId": 1,
+  "CampaignName": "Test Campaign 1",
+  "CoverageGoalPercent": 80.5,
+  "CreativeLengths": [
+    {
+      "SpotLengthId": 1,
+      "Weight": 50
+    },
+    {
+      "SpotLengthId": 2,
+      "Weight": 50
+    }
+  ],
+  "Currency": 1,
+  "Dayparts": [
+    {
+      "DaypartCodeId": 2,
+      "DaypartTypeId": 2,
+      "EndTimeSeconds": 2000,
+      "IsEndTimeModified": true,
+      "IsStartTimeModified": true,
+      "Restrictions": {
+        "AffiliateRestrictions": {
+          "Affiliates": [
+            {
+              "Display": "FOX",
+              "Id": 20
+            }
+          ],
+          "ContainType": 2
+        },
+        "GenreRestrictions": {
+          "ContainType": 1,
+          "Genres": [
+            {
+              "Display": "Horror",
+              "Id": 25
+            }
+          ]
+        },
+        "ProgramRestrictions": {
+          "ContainType": 1,
+          "Programs": [
+            {
+              "ContentRating": "PG-13",
+              "Genre": {
+                "Display": "Comedy",
+                "Id": 9
+              },
+              "Name": "Young Sheldon"
+            },
+            {
+              "ContentRating": "PG-13",
+              "Genre": {
+                "Display": "Horror",
+                "Id": 25
+              },
+              "Name": "Young Sheldon"
+            }
+          ]
+        },
+        "ShowTypeRestrictions": {
+          "ContainType": 2,
+          "ShowTypes": [
+            {
+              "Display": "Mini-Movie",
+              "Id": 1
+            }
+          ]
+        }
+      },
+      "StartTimeSeconds": 0,
+      "WeightingGoalPercent": 28.0
+    }
+  ],
+  "Equivalized": true,
+  "FlightDays": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "FlightEndDate": "2019-01-31T00:00:00",
+  "FlightHiatusDays": [
+    "2019-01-20T00:00:00",
+    "2019-01-24T00:00:00"
+  ],
+  "FlightNotes": "Sample notes",
+  "FlightStartDate": "2019-01-01T00:00:00",
+  "GoalBreakdownType": 1,
+  "HHCPM": 0.0120,
+  "HHCPP": 14.4927,
+  "HHImpressions": 8333.333,
+  "HHRatingPoints": 6.9,
+  "HHUniverse": 120700000.0,
+  "HUTBookId": 437,
+  "IsAduEnabled": true,
+  "IsDraft": false,
+  "IsPricingModelRunning": false,
+  "ModifiedBy": "integration_test",
+  "ModifiedDate": "2019-01-01T00:00:00",
+  "Name": "New Plan",
+  "PostingType": 2,
+  "PricingParameters": {
+    "AdjustedBudget": 80.0000,
+    "AdjustedCPM": 0.8000,
+    "Budget": 100.0000,
+    "CompetitionFactor": null,
+    "CPM": 12.0000,
+    "CPP": 12.0000,
+    "Currency": 1,
+    "DeliveryImpressions": 100.0,
+    "DeliveryRatingPoints": 100.0,
+    "InflationFactor": null,
+    "InventorySourcePercentages": [
+      {
+        "Id": 10,
+        "Name": "ABC O&O",
+        "Percentage": 0
+      },
+      {
+        "Id": 5,
+        "Name": "CNN",
+        "Percentage": 0
+      },
+      {
+        "Id": 12,
+        "Name": "KATZ",
+        "Percentage": 0
+      },
+      {
+        "Id": 7,
+        "Name": "LilaMax",
+        "Percentage": 0
+      },
+      {
+        "Id": 11,
+        "Name": "NBC O&O",
+        "Percentage": 0
+      },
+      {
+        "Id": 6,
+        "Name": "Sinclair",
+        "Percentage": 0
+      },
+      {
+        "Id": 3,
+        "Name": "TVB",
+        "Percentage": 0
+      }
+    ],
+    "InventorySourceTypePercentages": [
+      {
+        "Id": 4,
+        "Name": "Syndication",
+        "Percentage": 0
+      },
+      {
+        "Id": 5,
+        "Name": "Diginet",
+        "Percentage": 0
+      }
+    ],
+    "JobId": null,
+    "Margin": 20.0,
+    "MarketGroup": 1,
+    "MaxCpm": null,
+    "MinCpm": null,
+    "ProprietaryBlend": 0.0,
+    "UnitCaps": 1,
+    "UnitCapsType": 1
+  },
+  "ProductId": 1,
+  "SecondaryAudiences": [],
+  "ShareBookId": 437,
+  "SpotLengthId": 1,
+  "Status": 1,
+  "TargetCPM": 12.0000,
+  "TargetCPP": 12.0000,
+  "TargetImpressions": 100.0,
+  "TargetRatingPoints": 100.0,
+  "TargetUniverse": 111222.0,
+  "TotalActiveDays": 29,
+  "TotalHiatusDays": 2,
+  "TotalShareOfVoice": 28.0,
+  "VersionNumber": 1,
+  "Vpvh": 0.012,
+  "WeeklyBreakdownTotals": {
+    "TotalActiveDays": 29,
+    "TotalBudget": 28.000000,
+    "TotalImpressions": 28.0,
+    "TotalImpressionsPercentage": 28.0,
+    "TotalRatingPoints": 100.0
+  },
+  "WeeklyBreakdownWeeks": [
+    {
+      "ActiveDays": "Tu-Su",
+      "AduImpressions": 0.0,
+      "DaypartCodeId": null,
+      "EndDate": "2019-01-06T00:00:00",
+      "IsUpdated": false,
+      "MediaWeekId": 784,
+      "NumberOfActiveDays": 6,
+      "PercentageOfWeek": null,
+      "SpotLengthId": null,
+      "StartDate": "2018-12-31T00:00:00",
+      "WeeklyAdu": 1,
+      "WeeklyBudget": 5.6000,
+      "WeeklyImpressions": 5.6,
+      "WeeklyImpressionsPercentage": 6.0,
+      "WeeklyRatings": 5.6,
+      "WeekNumber": 1
+    },
+    {
+      "ActiveDays": "M-Su",
+      "AduImpressions": 0.0,
+      "DaypartCodeId": null,
+      "EndDate": "2019-01-13T00:00:00",
+      "IsUpdated": false,
+      "MediaWeekId": 785,
+      "NumberOfActiveDays": 7,
+      "PercentageOfWeek": null,
+      "SpotLengthId": null,
+      "StartDate": "2019-01-07T00:00:00",
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 5.6000,
+      "WeeklyImpressions": 5.6,
+      "WeeklyImpressionsPercentage": 6.0,
+      "WeeklyRatings": 5.6,
+      "WeekNumber": 2
+    },
+    {
+      "ActiveDays": "M-Sa",
+      "AduImpressions": 0.0,
+      "DaypartCodeId": null,
+      "EndDate": "2019-01-20T00:00:00",
+      "IsUpdated": false,
+      "MediaWeekId": 786,
+      "NumberOfActiveDays": 6,
+      "PercentageOfWeek": null,
+      "SpotLengthId": null,
+      "StartDate": "2019-01-14T00:00:00",
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 5.6000,
+      "WeeklyImpressions": 5.6,
+      "WeeklyImpressionsPercentage": 6.0,
+      "WeeklyRatings": 5.6,
+      "WeekNumber": 3
+    },
+    {
+      "ActiveDays": "M-W,F-Su",
+      "AduImpressions": 0.0,
+      "DaypartCodeId": null,
+      "EndDate": "2019-01-27T00:00:00",
+      "IsUpdated": false,
+      "MediaWeekId": 787,
+      "NumberOfActiveDays": 6,
+      "PercentageOfWeek": null,
+      "SpotLengthId": null,
+      "StartDate": "2019-01-21T00:00:00",
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 5.6000,
+      "WeeklyImpressions": 5.6,
+      "WeeklyImpressionsPercentage": 6.0,
+      "WeeklyRatings": 5.6,
+      "WeekNumber": 4
+    },
+    {
+      "ActiveDays": "M-Th",
+      "AduImpressions": 0.0,
+      "DaypartCodeId": null,
+      "EndDate": "2019-02-03T00:00:00",
+      "IsUpdated": false,
+      "MediaWeekId": 788,
+      "NumberOfActiveDays": 4,
+      "PercentageOfWeek": null,
+      "SpotLengthId": null,
+      "StartDate": "2019-01-28T00:00:00",
+      "WeeklyAdu": 8,
+      "WeeklyBudget": 5.6000,
+      "WeeklyImpressions": 5.6,
+      "WeeklyImpressionsPercentage": 6.0,
+      "WeeklyRatings": 5.6,
+      "WeekNumber": 5
+    }
+  ]
+}

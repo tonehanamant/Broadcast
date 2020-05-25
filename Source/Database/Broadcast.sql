@@ -453,7 +453,12 @@ END
 /*************************************** END BP1-299 *****************************************************/
 
 /*************************************** START BP1-307 *****************************************************/
-IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id =OBJECT_ID('UC_plan_version_daypart_program_restrictions'))
+IF NOT EXISTS(SELECT 1
+	FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS tc
+    JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE AS ccu ON ccu.CONSTRAINT_NAME = tc.CONSTRAINT_NAME
+	WHERE tc.TABLE_NAME = 'plan_version_daypart_program_restrictions' AND 
+	tc.CONSTRAINT_NAME = 'UC_plan_version_daypart_program_restrictions' AND
+	ccu.COLUMN_NAME = 'genre_id')
 BEGIN
 	ALTER TABLE plan_version_daypart_program_restrictions
 	DROP CONSTRAINT UC_plan_version_daypart_program_restrictions

@@ -655,7 +655,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void SavePlan_ProgramRestrictionsWithSameProgramName()
+        public void SavePlan_ProgramRestrictions_DuplicateProgramName()
         {
             using (new TransactionScopeWrapper())
             {
@@ -710,13 +710,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
                 _ForceCompletePlanPricingJob(newPlanId);
 
                 PlanDto testPlan = _PlanService.GetPlan(newPlanId);
-
-                var modifedPlanId = _PlanService.SavePlan(testPlan, "integration_test", new System.DateTime(2019, 01, 15));
-                PlanDto finalPlan = _PlanService.GetPlan(modifedPlanId);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(testPlan), _GetJsonSettings()));
             }
