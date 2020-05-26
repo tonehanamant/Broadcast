@@ -15,6 +15,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using ApprovalTests;
+using ApprovalTests.Reporters;
 using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -570,14 +572,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void BySourceJob()
         {
             /*** Arrange ***/
             const int jobId = 13;
-            const int sourceID = 1;
+            const int sourceId = 1;
             var startDate = new DateTime(2020, 01, 01);
             var endDate = new DateTime(2020, 01, 21);
-
+            const int testManifestCount = 8;
+            const bool testOddDaypartsHaveMappedPrograms = false;
             var inventorySource = new InventorySource
             {
                 Id = 1,
@@ -591,7 +595,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 new DisplayMediaWeek {Id = 2},
                 new DisplayMediaWeek {Id = 3}
             };
-            var manifests = InventoryProgramsProcessingTestHelper.GetManifests(2);
+            var manifests = InventoryProgramsProcessingTestHelper.GetManifests(testManifestCount, testOddDaypartsHaveMappedPrograms);
             var guideResponse = _GetGuideResponse();
 
             var GetInventoryBySourceForProgramsProcessingCalled = 0;
@@ -621,7 +625,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 {
                     Id = id,
                     JobGroupId = new Guid("33a4940e-e0e7-4ccd-9dda-de0063b3ab40"),
-                    InventorySourceId = sourceID,
+                    InventorySourceId = sourceId,
                     StartDate = startDate,
                     EndDate = endDate,
                     Status = InventoryProgramsJobStatus.Queued,
@@ -667,22 +671,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             var createdFiles = new List<Tuple<string, List<string>>>();
             _FileService.Setup(s => s.CreateTextFile(It.IsAny<string>(), It.IsAny<List<string>>()))
                 .Callback<string, List<string>>((name, lines) => createdFiles.Add(new Tuple<string, List<string>>(name, lines)));
-            var expectedResultFileLines = new[]
-            {
-                "inventory_id,inventory_week_id,inventory_daypart_id,station_call_letters,affiliation,start_date,end_date,daypart_text,mon,tue,wed,thu,fri,sat,sun,daypart_start_time,daypart_end_time,program_name,show_type,genre,program_start_time,program_end_time,program_start_date,program_end_date",
-                "1,1,1,ExtendedMappedValue,ABC,2020-01-01,2020-01-07,M-F 2AM-4AM,1,1,1,1,1,0,0,7200,14399,,,,,,,",
-                "1,1,2,ExtendedMappedValue,ABC,2020-01-01,2020-01-07,F-SU 4AM-6AM,0,0,0,0,1,1,1,14400,21599,,,,,,,",
-                "1,2,1,ExtendedMappedValue,ABC,2020-01-08,2020-01-14,M-F 2AM-4AM,1,1,1,1,1,0,0,7200,14399,,,,,,,",
-                "1,2,2,ExtendedMappedValue,ABC,2020-01-08,2020-01-14,F-SU 4AM-6AM,0,0,0,0,1,1,1,14400,21599,,,,,,,",
-                "1,3,1,ExtendedMappedValue,ABC,2020-01-15,2020-01-21,M-F 2AM-4AM,1,1,1,1,1,0,0,7200,14399,,,,,,,",
-                "1,3,2,ExtendedMappedValue,ABC,2020-01-15,2020-01-21,F-SU 4AM-6AM,0,0,0,0,1,1,1,14400,21599,,,,,,,",
-                "2,4,3,ExtendedMappedValue,ABC,2020-01-01,2020-01-07,SA-SU 2AM-4AM,0,0,0,0,0,1,1,7200,14399,,,,,,,",
-                "2,4,4,ExtendedMappedValue,ABC,2020-01-01,2020-01-07,M-TH 4AM-6AM,1,1,1,1,0,0,0,14400,21599,,,,,,,",
-                "2,5,3,ExtendedMappedValue,ABC,2020-01-08,2020-01-14,SA-SU 2AM-4AM,0,0,0,0,0,1,1,7200,14399,,,,,,,",
-                "2,5,4,ExtendedMappedValue,ABC,2020-01-08,2020-01-14,M-TH 4AM-6AM,1,1,1,1,0,0,0,14400,21599,,,,,,,",
-                "2,6,3,ExtendedMappedValue,ABC,2020-01-15,2020-01-21,SA-SU 2AM-4AM,0,0,0,0,0,1,1,7200,14399,,,,,,,",
-                "2,6,4,ExtendedMappedValue,ABC,2020-01-15,2020-01-21,M-TH 4AM-6AM,1,1,1,1,0,0,0,14400,21599,,,,,,,"
-            };
             _FileService.Setup(s => s.CreateDirectory(It.IsAny<string>()));
 
             // body, subject, priority, to_emails
@@ -711,15 +699,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.AreEqual(0, setJobCompleteWarningCalled);
             Assert.AreEqual(0, setJobCompleteErrorCalled);
 
-            // verify the file was exported well
-            Assert.AreEqual(1, createdFiles.Count);
-            Assert.AreEqual("ProgramGuideExport_SOURCE_Numbe_20200101_20200121_20200306_142235.csv", Path.GetFileName(createdFiles[0].Item1));
-            Assert.AreEqual(13, createdFiles[0].Item2.Count);
-            for (var i = 0; i < 13; i++)
-            {
-                Assert.AreEqual(expectedResultFileLines[i], createdFiles[0].Item2[i]);
-            }
-
             // email disabled PRI-25264
             // verify that the email was sent
             Assert.AreEqual(0, emailsSent.Count);
@@ -734,6 +713,110 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             //Assert.AreEqual("Broadcast Inventory Programs - ProgramGuide Interface Export file available", emailsSent[0].Item2);
             //Assert.AreEqual(MailPriority.Normal, emailsSent[0].Item3);
             //Assert.IsTrue(emailsSent[0].Item4.Any());
+
+            // verify the file was exported well
+            Assert.AreEqual(1, createdFiles.Count);
+            Assert.AreEqual("ProgramGuideExport_SOURCE_Numbe_20200101_20200121_20200306_142235.csv", Path.GetFileName(createdFiles[0].Item1));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(createdFiles[0].Item2));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void BySourceJob_HasMappedPrograms()
+        {
+            /*** Arrange ***/
+            const int jobId = 13;
+            const int sourceId = 1;
+            var startDate = new DateTime(2020, 01, 01);
+            var endDate = new DateTime(2020, 01, 21);
+            const int testManifestCount = 8;
+            const bool testOddDaypartsHaveMappedPrograms = true;
+            var inventorySource = new InventorySource
+            {
+                Id = 1,
+                Name = "NumberOneSource",
+                IsActive = true,
+                InventoryType = InventorySourceTypeEnum.OpenMarket
+            };
+            var mediaWeeks = new List<DisplayMediaWeek>
+            {
+                new DisplayMediaWeek {Id = 1},
+                new DisplayMediaWeek {Id = 2},
+                new DisplayMediaWeek {Id = 3}
+            };
+            // odd manifests will have mapped programs and should not get exported
+            var manifests = InventoryProgramsProcessingTestHelper.GetManifests(testManifestCount, testOddDaypartsHaveMappedPrograms);
+            var guideResponse = _GetGuideResponse();
+
+            _InventoryRepo.Setup(r => r.GetInventoryBySourceForProgramsProcessing(It.IsAny<int>(), It.IsAny<List<int>>()))
+                .Returns(manifests);
+            _InventoryRepo.Setup(r => r.GetInventorySource(It.IsAny<int>()))
+                .Returns(inventorySource);
+
+            _InventoryRepo.Setup(r => r.DeleteInventoryPrograms(It.IsAny<List<int>>(),
+                It.IsAny<DateTime>(), It.IsAny<DateTime>()));
+
+            _InventoryRepo.Setup(r => r.CreateInventoryPrograms(
+                It.IsAny<List<StationInventoryManifestDaypartProgram>>(), It.IsAny<DateTime>()));
+
+            _InventoryProgramsBySourceJobsRepo.Setup(r => r.GetJob(It.IsAny<int>()))
+                .Returns<int>((id) => new InventoryProgramsBySourceJob
+                {
+                    Id = id,
+                    JobGroupId = new Guid("33a4940e-e0e7-4ccd-9dda-de0063b3ab40"),
+                    InventorySourceId = sourceId,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    Status = InventoryProgramsJobStatus.Queued,
+                    QueuedAt = DateTime.Now,
+                    QueuedBy = "TestUser"
+                });
+
+            _MediaWeekCache.Setup(c => c.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(mediaWeeks);
+
+            _InventoryProgramsBySourceJobsRepo.Setup(r =>
+                r.SetJobCompleteSuccess(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()));
+            _InventoryProgramsBySourceJobsRepo.Setup(r =>
+                r.SetJobCompleteError(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()));
+            _InventoryProgramsBySourceJobsRepo.Setup(r => r.SetJobCompleteWarning(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()));
+
+            _ProgramGuidClient.Setup(s => s.GetProgramsForGuide(It.IsAny<List<GuideRequestElementDto>>()))
+                .Returns(guideResponse);
+
+            var mappedStations = new List<StationMappingsDto>
+            {
+                new StationMappingsDto {StationId =  1, MapSet = StationMapSetNamesEnum.Sigma, MapValue = "SigmaMappedValue"},
+                new StationMappingsDto {StationId =  1, MapSet = StationMapSetNamesEnum.NSI, MapValue = "NSIMappedValue"},
+                new StationMappingsDto {StationId =  1, MapSet = StationMapSetNamesEnum.Extended, MapValue = "ExtendedMappedValue"},
+                new StationMappingsDto {StationId =  1, MapSet = StationMapSetNamesEnum.NSILegacy, MapValue = "NSILegacyMappedValue"}
+            };
+            _StationMappingService.Setup(s => s.GetStationMappingsByCadentCallLetter(It.IsAny<string>()))
+                .Returns(mappedStations);
+
+            var createdFiles = new List<Tuple<string, List<string>>>();
+            _FileService.Setup(s => s.CreateTextFile(It.IsAny<string>(), It.IsAny<List<string>>()))
+                .Callback<string, List<string>>((name, lines) => createdFiles.Add(new Tuple<string, List<string>>(name, lines)));
+            _FileService.Setup(s => s.CreateDirectory(It.IsAny<string>()));
+
+            // body, subject, priority, to_emails
+            _EmailerService.Setup(s => s.QuickSend(It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string>(),
+                    It.IsAny<MailPriority>(), It.IsAny<string[]>(),
+                    It.IsAny<List<string>>()))
+                .Returns(true);
+
+            var engine = _GetInventoryProgramsProcessingEngine();
+            engine.UT_CurrentDateTime = new DateTime(2020, 03, 06, 14, 22, 35);
+
+            /*** Act ***/
+            engine.ProcessInventoryJob(jobId);
+
+            /*** Assert ***/
+            // verify the file was exported well
+            Assert.AreEqual(1, createdFiles.Count);
+            Assert.AreEqual("ProgramGuideExport_SOURCE_Numbe_20200101_20200121_20200306_142235.csv", Path.GetFileName(createdFiles[0].Item1));
+            // odd manifests will have mapped programs and should not get exported
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(createdFiles[0].Item2));
         }
 
         [Test]
@@ -834,22 +917,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             var createdFiles = new List<Tuple<string, List<string>>>();
             _FileService.Setup(s => s.CreateTextFile(It.IsAny<string>(), It.IsAny<List<string>>()))
                 .Callback<string, List<string>>((name, lines) => createdFiles.Add(new Tuple<string, List<string>>(name, lines)));
-            var expectedResultFileLines = new[]
-            {
-                "inventory_id,inventory_week_id,inventory_daypart_id,station_call_letters,affiliation,start_date,end_date,daypart_text,mon,tue,wed,thu,fri,sat,sun,daypart_start_time,daypart_end_time,program_name,show_type,genre,program_start_time,program_end_time,program_start_date,program_end_date",
-                "1,1,1,ExtendedMappedValue,ABC,2020-01-01,2020-01-07,M-F 2AM-4AM,1,1,1,1,1,0,0,7200,14399,,,,,,,",
-                "1,1,2,ExtendedMappedValue,ABC,2020-01-01,2020-01-07,F-SU 4AM-6AM,0,0,0,0,1,1,1,14400,21599,,,,,,,",
-                "1,2,1,ExtendedMappedValue,ABC,2020-01-08,2020-01-14,M-F 2AM-4AM,1,1,1,1,1,0,0,7200,14399,,,,,,,",
-                "1,2,2,ExtendedMappedValue,ABC,2020-01-08,2020-01-14,F-SU 4AM-6AM,0,0,0,0,1,1,1,14400,21599,,,,,,,",
-                "1,3,1,ExtendedMappedValue,ABC,2020-01-15,2020-01-21,M-F 2AM-4AM,1,1,1,1,1,0,0,7200,14399,,,,,,,",
-                "1,3,2,ExtendedMappedValue,ABC,2020-01-15,2020-01-21,F-SU 4AM-6AM,0,0,0,0,1,1,1,14400,21599,,,,,,,",
-                "2,4,3,ExtendedMappedValue,ABC,2020-01-01,2020-01-07,SA-SU 2AM-4AM,0,0,0,0,0,1,1,7200,14399,,,,,,,",
-                "2,4,4,ExtendedMappedValue,ABC,2020-01-01,2020-01-07,M-TH 4AM-6AM,1,1,1,1,0,0,0,14400,21599,,,,,,,",
-                "2,5,3,ExtendedMappedValue,ABC,2020-01-08,2020-01-14,SA-SU 2AM-4AM,0,0,0,0,0,1,1,7200,14399,,,,,,,",
-                "2,5,4,ExtendedMappedValue,ABC,2020-01-08,2020-01-14,M-TH 4AM-6AM,1,1,1,1,0,0,0,14400,21599,,,,,,,",
-                "2,6,3,ExtendedMappedValue,ABC,2020-01-15,2020-01-21,SA-SU 2AM-4AM,0,0,0,0,0,1,1,7200,14399,,,,,,,",
-                "2,6,4,ExtendedMappedValue,ABC,2020-01-15,2020-01-21,M-TH 4AM-6AM,1,1,1,1,0,0,0,14400,21599,,,,,,,"
-            };
             _FileService.Setup(s => s.CreateDirectory(It.IsAny<string>()));
 
             // body, subject, priority, to_emails

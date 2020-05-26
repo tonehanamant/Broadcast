@@ -8,8 +8,7 @@
     "ShowType": "Mini-Movie",
     "SourceGenreId": 57,
     "StartDate": "2019-01-05T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358776
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-11-26T05:59:49.337",
@@ -20,8 +19,7 @@
     "ShowType": "Mini-Movie",
     "SourceGenreId": 57,
     "StartDate": "2019-01-05T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358777
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-11-26T05:59:49.337",
@@ -32,8 +30,7 @@
     "ShowType": "Mini-Movie",
     "SourceGenreId": 57,
     "StartDate": "2019-01-05T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358780
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-11-26T05:59:49.337",
@@ -44,8 +41,7 @@
     "ShowType": "Sports",
     "SourceGenreId": 58,
     "StartDate": "2019-01-05T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360318
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -56,8 +52,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358772
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -68,8 +63,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358772
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -80,8 +74,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358772
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -92,8 +85,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358772
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -104,8 +96,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358772
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -116,8 +107,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358772
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -128,8 +118,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358773
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -140,8 +129,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358773
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -152,8 +140,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358773
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -164,8 +151,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358773
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -176,8 +162,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358773
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -188,8 +173,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358773
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -200,8 +184,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358776
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -212,8 +195,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358776
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -224,8 +206,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358776
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -236,8 +217,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358776
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -248,8 +228,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358776
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -260,8 +239,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358776
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -272,8 +250,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358777
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -284,8 +261,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358777
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -296,8 +272,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358777
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -308,8 +283,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358777
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -320,8 +294,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358777
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -332,8 +305,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358777
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -344,8 +316,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358780
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -356,8 +327,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358780
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -368,8 +338,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358780
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -380,8 +349,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358780
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -392,8 +360,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358780
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -404,8 +371,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 358780
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -416,8 +382,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360318
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -428,8 +393,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360318
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -440,8 +404,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360318
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -452,8 +415,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360318
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -464,8 +426,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360318
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -476,8 +437,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360318
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -488,8 +448,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360319
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -500,8 +459,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360319
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -512,8 +470,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360319
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -524,8 +481,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360319
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -536,8 +492,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360319
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -548,8 +503,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360319
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -560,8 +514,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360320
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -572,8 +525,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360320
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -584,8 +536,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360320
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -596,8 +547,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360320
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -608,8 +558,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360320
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -620,8 +569,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360320
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -632,8 +580,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360321
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -644,8 +591,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360321
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -656,8 +602,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360321
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -668,8 +613,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360321
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -680,8 +624,7 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360321
+    "StartTime": 3600
   },
   {
     "CreatedDate": "2019-01-25T00:00:00",
@@ -692,7 +635,6 @@
     "ShowType": "movie",
     "SourceGenreId": 57,
     "StartDate": "2019-02-01T00:00:00",
-    "StartTime": 3600,
-    "StationInventoryManifestDaypartId": 360321
+    "StartTime": 3600
   }
 ]

@@ -530,7 +530,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             }
             return processDiagnostics;
         }
-
+        
         private void _ExportInventoryForProgramGuide(int jobId, List<StationInventoryManifest> manifests, InventorySource inventorySource, 
             InventoryProgramsProcessingJobDiagnostics processingDiags)
         {
@@ -540,7 +540,25 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
             // transform
             var transformWarnings = new List<string>();
-            var exportFileLines = manifests.SelectMany(m => _MapToExport(m, inventorySource, transformWarnings)).ToList();
+
+            var alreadyMappedCount = 0;
+            var exportFileLines = new List<GuideInterfaceExportElement>();
+            foreach (var manifest in manifests)
+            {
+                foreach (var manifestDaypart in manifest.ManifestDayparts)
+                {
+                    // does the manifest daypart have mapped programs?
+                    if (manifestDaypart.Programs.Any(p => p.ProgramSourceId.Equals((int)ProgramSourceEnum.Maestro)))
+                    {
+                        alreadyMappedCount++;
+                        continue;
+                    }
+                    exportFileLines.AddRange(_MapToExport(manifestDaypart, inventorySource, manifest, transformWarnings));
+                }
+            }
+
+            _LogInfo($"Manifest count {manifests.Count} generated {exportFileLines.Count} lines for export with {alreadyMappedCount} manifests already having programs mapped.");
+
             // consolidate the warnings
             transformWarnings.Distinct().ToList().ForEach(w => jobsRepository.UpdateJobNotes(jobId, w));
 
@@ -636,11 +654,13 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             _EmailerService.QuickSend(false, body, subject, priority, toEmails);
         }
 
-        private List<GuideInterfaceExportElement> _MapToExport(StationInventoryManifest manifest, InventorySource inventorySource, List<string> transformWarnings)
+        private List<GuideInterfaceExportElement> _MapToExport(StationInventoryManifestDaypart manifestDaypart, InventorySource inventorySource, StationInventoryManifest parentManifest,
+            List<string> transformWarnings)
         {
             var toExport = new List<GuideInterfaceExportElement>();
 
-            if (string.IsNullOrWhiteSpace(manifest.Station.Affiliation))
+
+            if (string.IsNullOrWhiteSpace(parentManifest.Station.Affiliation))
             {
                 return toExport;
             }
@@ -649,7 +669,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
             try
             {
-                mappedStationCallLetters = _GetManifestStationCallLetters(manifest, inventorySource);
+                mappedStationCallLetters = _GetManifestStationCallLetters(parentManifest, inventorySource);
             }
             catch (Exception ex)
             {
@@ -657,32 +677,29 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 return toExport;
             }
 
-            foreach (var week in manifest.ManifestWeeks)
+            foreach (var week in parentManifest.ManifestWeeks)
             {
-                foreach (var daypart in manifest.ManifestDayparts)
+                var exportItem = new GuideInterfaceExportElement
                 {
-                    var exportItem = new GuideInterfaceExportElement
-                    {
-                        inventory_id = manifest.Id.Value,
-                        inventory_week_id = week.Id,
-                        inventory_daypart_id = daypart.Id.Value,
-                        station_call_letters = mappedStationCallLetters,
-                        affiliation = manifest.Station.Affiliation,
-                        start_date = week.StartDate,
-                        end_date = week.EndDate,
-                        daypart_text = daypart.Daypart.Preview,
-                        mon = daypart.Daypart.Monday,
-                        tue = daypart.Daypart.Tuesday,
-                        wed = daypart.Daypart.Wednesday,
-                        thu = daypart.Daypart.Thursday,
-                        fri = daypart.Daypart.Friday,
-                        sat = daypart.Daypart.Saturday,
-                        sun = daypart.Daypart.Sunday,
-                        daypart_start_time = daypart.Daypart.StartTime,
-                        daypart_end_time = daypart.Daypart.EndTime
-                    };
-                    toExport.Add(exportItem);
-                }
+                    inventory_id = parentManifest.Id.Value,
+                    inventory_week_id = week.Id,
+                    inventory_daypart_id = manifestDaypart.Id.Value,
+                    station_call_letters = mappedStationCallLetters,
+                    affiliation = parentManifest.Station.Affiliation,
+                    start_date = week.StartDate,
+                    end_date = week.EndDate,
+                    daypart_text = manifestDaypart.Daypart.Preview,
+                    mon = manifestDaypart.Daypart.Monday,
+                    tue = manifestDaypart.Daypart.Tuesday,
+                    wed = manifestDaypart.Daypart.Wednesday,
+                    thu = manifestDaypart.Daypart.Thursday,
+                    fri = manifestDaypart.Daypart.Friday,
+                    sat = manifestDaypart.Daypart.Saturday,
+                    sun = manifestDaypart.Daypart.Sunday,
+                    daypart_start_time = manifestDaypart.Daypart.StartTime,
+                    daypart_end_time = manifestDaypart.Daypart.EndTime
+                };
+                toExport.Add(exportItem);
             }
             return toExport;
         }

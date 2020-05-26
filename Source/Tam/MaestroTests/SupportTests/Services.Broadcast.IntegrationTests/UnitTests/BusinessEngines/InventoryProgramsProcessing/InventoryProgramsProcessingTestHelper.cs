@@ -1,7 +1,9 @@
 ﻿using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.StationInventory;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -10,9 +12,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
 {
     public static class InventoryProgramsProcessingTestHelper
     {
-        public static List<StationInventoryManifest> GetManifests(int count)
+        public static List<StationInventoryManifest> GetManifests(int count, bool oddDaypartsHaveMappedPrograms = false)
         {
             var daypartIdIndex = 1;
+            var programIdIndex = 1;
             var weekIdIndex = 1;
             var result = new List<StationInventoryManifest>();
             for (var i = 1; i <= count; i++)
@@ -42,6 +45,39 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                                 Friday = i % 2 == 1,
                                 Saturday = i % 2 == 0
                             },
+                            Programs = new List<StationInventoryManifestDaypartProgram>
+                            {
+                                new StationInventoryManifestDaypartProgram
+                                {
+                                    Id = programIdIndex++,
+                                    StationInventoryManifestDaypartId = daypartIdIndex,
+                                    ProgramName = $"Program {programIdIndex}",
+                                    ShowType = "AShow",
+                                    SourceGenreId = (int)ProgramSourceEnum.RedBee,
+                                    ProgramSourceId = (int)ProgramSourceEnum.RedBee,
+                                    MaestroGenreId = 12,
+                                    StartDate = new DateTime(),
+                                    EndDate = new DateTime(),
+                                    StartTime = 0,
+                                    EndTime = 3600,
+                                    CreatedDate = new DateTime()
+                                },
+                                new StationInventoryManifestDaypartProgram
+                                {
+                                    Id = programIdIndex++,
+                                    StationInventoryManifestDaypartId = daypartIdIndex,
+                                    ProgramName = $"Program {programIdIndex}",
+                                    ShowType = "AShow",
+                                    SourceGenreId = (int)ProgramSourceEnum.RedBee,
+                                    ProgramSourceId = _GetProgramSourceId(i, oddDaypartsHaveMappedPrograms),
+                                    MaestroGenreId = 12,
+                                    StartDate = new DateTime(),
+                                    EndDate = new DateTime(),
+                                    StartTime = 0,
+                                    EndTime = 3600,
+                                    CreatedDate = new DateTime()
+                                }
+                            }
                         },
                         new StationInventoryManifestDaypart
                         {
@@ -57,6 +93,39 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                                 Thursday = i % 2 == 0,
                                 Friday = i % 2 == 1,
                                 Saturday = i % 2 == 1
+                            },
+                            Programs = new List<StationInventoryManifestDaypartProgram>
+                            {
+                                new StationInventoryManifestDaypartProgram
+                                {
+                                    Id = programIdIndex++,
+                                    StationInventoryManifestDaypartId = daypartIdIndex,
+                                    ProgramName = $"Program {programIdIndex}",
+                                    ShowType = "AShow",
+                                    SourceGenreId = (int)ProgramSourceEnum.RedBee,
+                                    ProgramSourceId = _GetProgramSourceId(i, oddDaypartsHaveMappedPrograms),
+                                    MaestroGenreId = 12,
+                                    StartDate = new DateTime(),
+                                    EndDate = new DateTime(),
+                                    StartTime = 0,
+                                    EndTime = 3600,
+                                    CreatedDate = new DateTime()
+                                },
+                                new StationInventoryManifestDaypartProgram
+                                {
+                                    Id = programIdIndex++,
+                                    StationInventoryManifestDaypartId = daypartIdIndex,
+                                    ProgramName = $"Program {programIdIndex}",
+                                    ShowType = "AShow",
+                                    SourceGenreId = (int)ProgramSourceEnum.RedBee,
+                                    ProgramSourceId = (int)ProgramSourceEnum.RedBee,
+                                    MaestroGenreId = 12,
+                                    StartDate = new DateTime(),
+                                    EndDate = new DateTime(),
+                                    StartTime = 0,
+                                    EndTime = 3600,
+                                    CreatedDate = new DateTime()
+                                }
                             }
                         }
                     },
@@ -104,6 +173,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             }
 
             return result;
+        }
+
+        private static int _GetProgramSourceId(int daypartId, bool oddDaypartsHaveMappedPrograms)
+        {
+            if (daypartId % 2 == 1 && oddDaypartsHaveMappedPrograms)
+            {
+                return (int)ProgramSourceEnum.Maestro;
+            }
+            return (int)ProgramSourceEnum.RedBee;
         }
 
         public static List<LookupDto> GetGenres()

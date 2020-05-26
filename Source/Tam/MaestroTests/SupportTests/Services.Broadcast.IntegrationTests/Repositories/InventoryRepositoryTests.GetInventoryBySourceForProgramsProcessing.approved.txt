@@ -28,9 +28,21 @@
         },
         "DaypartDefault": null,
         "Genres": [],
-        "Id": 576682,
         "PrimaryProgramId": null,
-        "ProgramName": "News 10 @ Noon"
+        "ProgramName": "News 10 @ Noon",
+        "Programs": [
+          {
+            "CreatedDate": "2019-01-25T00:00:00",
+            "EndDate": "2019-02-12T00:00:00",
+            "EndTime": 5400,
+            "MaestroGenreId": 39,
+            "ProgramName": "Program 1 For 576682",
+            "ShowType": "movie",
+            "SourceGenreId": 57,
+            "StartDate": "2019-02-01T00:00:00",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestRates": [],
@@ -96,9 +108,32 @@
         },
         "DaypartDefault": null,
         "Genres": [],
-        "Id": 576683,
         "PrimaryProgramId": null,
-        "ProgramName": "News 10 @ Noon"
+        "ProgramName": "News 10 @ Noon",
+        "Programs": [
+          {
+            "CreatedDate": "2019-11-26T05:59:49.337",
+            "EndDate": "2019-02-04T00:00:00",
+            "EndTime": 7200,
+            "MaestroGenreId": 52,
+            "ProgramName": "Early news",
+            "ShowType": "Mini-Movie",
+            "SourceGenreId": 57,
+            "StartDate": "2019-02-04T00:00:00",
+            "StartTime": 3600
+          },
+          {
+            "CreatedDate": "2019-01-25T00:00:00",
+            "EndDate": "2019-02-12T00:00:00",
+            "EndTime": 5400,
+            "MaestroGenreId": 39,
+            "ProgramName": "Program 1 For 576683",
+            "ShowType": "movie",
+            "SourceGenreId": 57,
+            "StartDate": "2019-02-01T00:00:00",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestRates": [],
@@ -178,9 +213,21 @@
         },
         "DaypartDefault": null,
         "Genres": [],
-        "Id": 576684,
         "PrimaryProgramId": null,
-        "ProgramName": "News 10 @ Noon"
+        "ProgramName": "News 10 @ Noon",
+        "Programs": [
+          {
+            "CreatedDate": "2019-01-25T00:00:00",
+            "EndDate": "2019-02-12T00:00:00",
+            "EndTime": 5400,
+            "MaestroGenreId": 39,
+            "ProgramName": "Program 1 For 576684",
+            "ShowType": "movie",
+            "SourceGenreId": 57,
+            "StartDate": "2019-02-01T00:00:00",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestRates": [],
@@ -246,9 +293,32 @@
         },
         "DaypartDefault": null,
         "Genres": [],
-        "Id": 576685,
         "PrimaryProgramId": null,
-        "ProgramName": "News 10 @ Noon"
+        "ProgramName": "News 10 @ Noon",
+        "Programs": [
+          {
+            "CreatedDate": "2019-11-26T05:59:49.337",
+            "EndDate": "2019-02-04T00:00:00",
+            "EndTime": 7200,
+            "MaestroGenreId": 52,
+            "ProgramName": "Early news",
+            "ShowType": "Mini-Movie",
+            "SourceGenreId": 57,
+            "StartDate": "2019-02-04T00:00:00",
+            "StartTime": 3600
+          },
+          {
+            "CreatedDate": "2019-01-25T00:00:00",
+            "EndDate": "2019-02-12T00:00:00",
+            "EndTime": 5400,
+            "MaestroGenreId": 39,
+            "ProgramName": "Program 1 For 576685",
+            "ShowType": "movie",
+            "SourceGenreId": 57,
+            "StartDate": "2019-02-01T00:00:00",
+            "StartTime": 3600
+          }
+        ]
       }
     ],
     "ManifestRates": [],

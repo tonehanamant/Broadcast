@@ -57,28 +57,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 288695
             };
 
-            var newPrograms = new List<StationInventoryManifestDaypartProgram>();
-            foreach (var daypartId in stationInventoryManifestDaypartIds)
-            {
-                for (var i = 0; i < newProgramCountPerManifestDaypart; i++)
-                {
-                    var newProgram = new StationInventoryManifestDaypartProgram
-                    {
-                        StationInventoryManifestDaypartId = daypartId,
-                        ProgramName = $"Program {(i+1)} For {daypartId}",
-                        ShowType = "movie",
-                        SourceGenreId = 57,
-                        ProgramSourceId = 2,
-                        MaestroGenreId = 39,
-                        StartDate = startDate,
-                        EndDate = endDate,
-                        StartTime = 3600,
-                        EndTime = 5400
-                    };
-                    newPrograms.Add(newProgram);
-                }
-            }
-
+            var newPrograms = _GetPrograms(stationInventoryManifestDaypartIds, newProgramCountPerManifestDaypart);
             var repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
 
             using (new TransactionScopeWrapper())
@@ -103,15 +82,32 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         [Category("short_running")]
         public void GetInventoryByFileIdForProgramsProcessing()
         {
+            /*** Arrange ***/
             const int testFileId = 251392;
+            var createdAtDate = new DateTime(2019, 01, 25);
+            const int newProgramCountPerManifestDaypart = 1;
+            var stationInventoryManifestDaypartIds = new List<int>
+            {
+                576682,
+                576683,
+                576684,
+                576685
+            };
+
+            var newPrograms = _GetPrograms(stationInventoryManifestDaypartIds, newProgramCountPerManifestDaypart);
             var repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
 
+            List<StationInventoryManifest> results;
             using (new TransactionScopeWrapper())
             {
-                var results = repo.GetInventoryByFileIdForProgramsProcessing(testFileId);
+                repo.CreateInventoryPrograms(newPrograms, createdAtDate);
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, _GetJsonSettings()));
+                /*** Act ***/
+                results = repo.GetInventoryByFileIdForProgramsProcessing(testFileId);
             }
+
+            /*** Assert ***/
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, _GetJsonSettings()));
         }
 
         [Test]
@@ -119,17 +115,32 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         [Category("short_running")]
         public void GetInventoryBySourceForProgramsProcessing()
         {
+            /*** Arrange ***/
             const int inventorySourceId = 1;
             var weekIds = new List<int> {743, 744, 745};
+            var createdAtDate = new DateTime(2019, 01, 25);
+            const int newProgramCountPerManifestDaypart = 1;
+            var stationInventoryManifestDaypartIds = new List<int>
+            {
+                576682,
+                576683,
+                576684,
+                576685
+            };
 
+            var newPrograms = _GetPrograms(stationInventoryManifestDaypartIds, newProgramCountPerManifestDaypart);
             var repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
 
+            List<StationInventoryManifest> results;
             using (new TransactionScopeWrapper())
             {
-                var results = repo.GetInventoryBySourceForProgramsProcessing(inventorySourceId, weekIds);
+                repo.CreateInventoryPrograms(newPrograms, createdAtDate);
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, _GetJsonSettings()));
+                /*** Act ***/
+                results = repo.GetInventoryBySourceForProgramsProcessing(inventorySourceId, weekIds);
             }
+            /*** Assert ***/
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results, _GetJsonSettings()));
         }
 
         [Test]
@@ -250,12 +261,45 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             repo.RemoveManifestGroups(groupIdsToRemove);
         }
 
+        private List<StationInventoryManifestDaypartProgram> _GetPrograms(List<int> stationInventoryManifestDaypartIds, int newProgramCountPerManifestDaypart)
+        {
+            var startDate = new DateTime(2019, 02, 01);
+            var endDate = new DateTime(2019, 02, 12);
+
+            var newPrograms = new List<StationInventoryManifestDaypartProgram>();
+            foreach (var daypartId in stationInventoryManifestDaypartIds)
+            {
+                for (var i = 0; i < newProgramCountPerManifestDaypart; i++)
+                {
+                    var newProgram = new StationInventoryManifestDaypartProgram
+                    {
+                        StationInventoryManifestDaypartId = daypartId,
+                        ProgramName = $"Program {(i + 1)} For {daypartId}",
+                        ShowType = "movie",
+                        SourceGenreId = 57,
+                        ProgramSourceId = 2,
+                        MaestroGenreId = 39,
+                        StartDate = startDate,
+                        EndDate = endDate,
+                        StartTime = 3600,
+                        EndTime = 5400
+                    };
+                    newPrograms.Add(newProgram);
+                }
+            }
+
+            return newPrograms;
+        }
+
         private JsonSerializerSettings _GetJsonSettings()
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(StationInventoryManifestDaypartProgram), "Genre");
             jsonResolver.Ignore(typeof(StationInventoryManifestDaypartProgram), "ProgramSourceId");
             jsonResolver.Ignore(typeof(StationInventoryManifestDaypartProgram), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifestDaypartProgram), "StationInventoryManifestDaypartId");
+            jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
+            jsonResolver.Ignore(typeof(DaypartDto), "Id");
             var jsonSettings = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

@@ -16,6 +16,7 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using Services.Broadcast.Entities.Inventory;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
@@ -619,6 +620,48 @@ namespace Services.Broadcast.Repositories
             return sig;
         }
 
+        private List<StationInventoryManifestDaypart> _MapToInventoryDayparts(station_inventory_manifest manifest)
+        {
+            var dayparts = manifest.station_inventory_manifest_dayparts.Select(md => new StationInventoryManifestDaypart()
+            {
+                Id = md.id,
+                Daypart = DaypartCache.Instance.GetDisplayDaypart(md.daypart_id),
+                ProgramName = md.program_name,
+                DaypartDefault = md.daypart_defaults == null
+                    ? null
+                    : new DaypartDefaultDto
+                    {
+                        Id = md.daypart_defaults.id,
+                        Code = md.daypart_defaults.code,
+                        FullName = md.daypart_defaults.name
+                    },
+                Programs = md.station_inventory_manifest_daypart_programs.Select(_MapToInventoryDaypartProgram).ToList()
+            }).ToList();
+
+            return dayparts;
+        }
+
+        private StationInventoryManifestDaypartProgram _MapToInventoryDaypartProgram(station_inventory_manifest_daypart_programs program)
+        {
+            var result = new StationInventoryManifestDaypartProgram
+            {
+                Id = program.id,
+                StationInventoryManifestDaypartId = program.station_inventory_manifest_daypart_id,
+                ProgramName = program.name,
+                ShowType = program.show_type,
+                SourceGenreId = program.source_genre_id,
+                ProgramSourceId = program.program_source_id,
+                MaestroGenreId = program.maestro_genre_id,
+                StartDate = program.start_date,
+                EndDate = program.end_date,
+                StartTime = program.start_time,
+                EndTime = program.end_time,
+                CreatedDate = program.created_date
+            };
+
+            return result;
+        }
+
         private StationInventoryManifest _MapToInventoryManifest(station_inventory_manifest manifest, string daypartCode = null)
         {
             var result = new StationInventoryManifest()
@@ -631,18 +674,7 @@ namespace Services.Broadcast.Repositories
                 SpotsPerDay = manifest.spots_per_day,
                 Comment = manifest.comment,
                 InventoryFileId = manifest.file_id,
-                ManifestDayparts = manifest.station_inventory_manifest_dayparts.Select(md => new StationInventoryManifestDaypart()
-                {
-                    Id = md.id,
-                    Daypart = DaypartCache.Instance.GetDisplayDaypart(md.daypart_id),
-                    ProgramName = md.program_name,
-                    DaypartDefault = md.daypart_defaults == null ? null : new DaypartDefaultDto
-                    {
-                        Id = md.daypart_defaults.id,
-                        Code = md.daypart_defaults.code,
-                        FullName = md.daypart_defaults.name
-                    }
-                }).ToList(),
+                ManifestDayparts = _MapToInventoryDayparts(manifest),
                 ManifestAudiences = manifest.station_inventory_manifest_audiences.Where(ma => !ma.is_reference).Select(
                                 audience => new StationInventoryManifestAudience()
                                 {
@@ -716,18 +748,7 @@ namespace Services.Broadcast.Repositories
                 SpotsPerDay = manifest.spots_per_day,
                 Comment = manifest.comment,
                 InventoryFileId = manifest.file_id,
-                ManifestDayparts = manifest.station_inventory_manifest_dayparts.Select(md => new StationInventoryManifestDaypart()
-                {
-                    Id = md.id,
-                    Daypart = DaypartCache.Instance.GetDisplayDaypart(md.daypart_id),
-                    ProgramName = md.program_name,
-                    DaypartDefault = md.daypart_defaults == null ? null : new DaypartDefaultDto
-                    {
-                        Id = md.daypart_defaults.id,
-                        Code = md.daypart_defaults.code,
-                        FullName = md.daypart_defaults.name
-                    }
-                }).ToList(),
+                ManifestDayparts = _MapToInventoryDayparts(manifest),
                 ManifestWeeks = manifest.station_inventory_manifest_weeks
                                 .Where(w => mediaWeekIds.Contains(w.media_week_id))
                                 .Select(_MapToInventoryManifestWeek)
@@ -1641,11 +1662,13 @@ namespace Services.Broadcast.Repositories
         public void DeleteInventoryPrograms(List<int> manifestIds, DateTime startDate, DateTime endDate)
         {
             var manifestIdsCsv = string.Join(",", manifestIds);
-            var sql = $"DELETE p FROM station_inventory_manifest_daypart_programs p " +
-                      $"INNER JOIN station_inventory_manifest_dayparts d ON p.station_inventory_manifest_daypart_id = d.id " +
-                      $"WHERE d.station_inventory_manifest_id in ({manifestIdsCsv}) " +
-                      $"AND p.start_date <= '{endDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)} 23:59:59' " +
-                      $"AND p.end_date >= '{startDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)} 00:00:00' ";
+            var sql = $"UPDATE station_inventory_manifest_dayparts SET primary_program_id = null  WHERE station_inventory_manifest_id in ({manifestIdsCsv});"
+                      + "\r\n"
+                      + $"DELETE p FROM station_inventory_manifest_daypart_programs p"
+                      + $" INNER JOIN station_inventory_manifest_dayparts d ON p.station_inventory_manifest_daypart_id = d.id"
+                      + $" WHERE d.station_inventory_manifest_id in ({manifestIdsCsv})"
+                      + $" AND p.start_date <= '{endDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)} 23:59:59'"
+                      + $" AND p.end_date >= '{startDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)} 00:00:00'";
 
             _InReadUncommitedTransaction(
                 context =>
@@ -1756,11 +1779,11 @@ namespace Services.Broadcast.Repositories
                                     .Include(x => x.station_inventory_manifest_weeks)
                                     .Include(x => x.station_inventory_manifest_dayparts)
                                     .Include(s => s.station)
-                         where m.file_id == fileId &&
-                               m.station != null &&
-                               m.station.affiliation != null &&
-                               m.station_inventory_manifest_weeks.Any() &&
-                               m.station_inventory_manifest_dayparts.Any()
+                            where m.file_id == fileId &&
+                                  m.station != null &&
+                                  m.station.affiliation != null &&
+                                  m.station_inventory_manifest_weeks.Any() &&
+                                  m.station_inventory_manifest_dayparts.Any()
                          select m).ToList();
 
                     return manifests
