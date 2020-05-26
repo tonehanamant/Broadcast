@@ -497,8 +497,8 @@ namespace Services.Broadcast.ApplicationServices
             var campaignReportData = GetAndValidateCampaignReportData(request);
             var reportGenerator = new CampaignReportGenerator(templatesFilePath);
             var report = reportGenerator.Generate(campaignReportData);
-            
-			return _SharedFolderService.SaveFile(new SharedFolderFile
+
+            return _SharedFolderService.SaveFile(new SharedFolderFile
             {
                 FolderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.CAMPAIGN_EXPORT_REPORTS),
                 FileNameWithExtension = report.Filename,

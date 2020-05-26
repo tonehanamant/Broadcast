@@ -317,6 +317,9 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 case "AllowMultipleCreativeLengths":
                     result = "False";
                     break;
+                case "BroadcastAppFolder":
+                    result = @"\\cadfs11\Broadcast\IntegrationTests\";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }
