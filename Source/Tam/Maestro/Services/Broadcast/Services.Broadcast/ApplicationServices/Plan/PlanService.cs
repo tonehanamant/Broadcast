@@ -511,14 +511,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
             //the UI is sending the user entered value instead of the raw value. BE needs to adjust
             if (plan.TargetImpressions.HasValue)
             {
-                plan.TargetImpressions /= plan.TargetImpressions.Value;
+                plan.TargetImpressions /= 1000;
             }
             plan.HHImpressions /= 1000;
             foreach (var audience in plan.SecondaryAudiences)
             {
                 if (audience.Impressions.HasValue)
                 {
-                    audience.Impressions /= audience.Impressions.Value;
+                    audience.Impressions /= 1000;
                 }
             }
             foreach (var week in plan.WeeklyBreakdownWeeks)
