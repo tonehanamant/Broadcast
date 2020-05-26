@@ -75,6 +75,8 @@
   },
   "programs": [
     {
+      "Cpm": 0.0,
+      "Impressions": 3450.0,
       "InventoryPricingQuarterType": 0,
       "InventorySource": null,
       "ManifestAudiences": null,
@@ -149,6 +151,8 @@
       "Unit": null
     },
     {
+      "Cpm": 0.0,
+      "Impressions": 2100.0,
       "InventoryPricingQuarterType": 0,
       "InventorySource": null,
       "ManifestAudiences": null,

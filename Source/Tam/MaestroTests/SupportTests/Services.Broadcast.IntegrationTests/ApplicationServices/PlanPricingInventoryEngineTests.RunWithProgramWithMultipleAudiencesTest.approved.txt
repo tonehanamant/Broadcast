@@ -1,5 +1,7 @@
 ﻿[
   {
+    "Cpm": 0.0,
+    "Impressions": 18139.87125,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 1,
@@ -189,6 +191,8 @@
     "Unit": null
   },
   {
+    "Cpm": 0.0,
+    "Impressions": 850.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 1,

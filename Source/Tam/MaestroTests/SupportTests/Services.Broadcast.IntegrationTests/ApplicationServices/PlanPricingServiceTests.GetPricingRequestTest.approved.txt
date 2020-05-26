@@ -1,7 +1,7 @@
 ﻿{
   "contract": [
     {
-      "cpm_goal": 1000.0000,
+      "cpm_goal": 1.0000,
       "daypart_weighting": [
         {
           "daypart_goal": 1.0,
@@ -26,7 +26,7 @@
       "week_id": 784
     },
     {
-      "cpm_goal": 1000.0000,
+      "cpm_goal": 1.0000,
       "daypart_weighting": [
         {
           "daypart_goal": 1.0,
@@ -51,7 +51,7 @@
       "week_id": 785
     },
     {
-      "cpm_goal": 1000.0000,
+      "cpm_goal": 1.0000,
       "daypart_weighting": [
         {
           "daypart_goal": 1.0,
@@ -76,7 +76,7 @@
       "week_id": 786
     },
     {
-      "cpm_goal": 1000.0000,
+      "cpm_goal": 1.0000,
       "daypart_weighting": [
         {
           "daypart_goal": 1.0,
@@ -101,7 +101,7 @@
       "week_id": 787
     },
     {
-      "cpm_goal": 1000.0000,
+      "cpm_goal": 1.0000,
       "daypart_weighting": [
         {
           "daypart_goal": 1.0,

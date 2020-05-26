@@ -1,5 +1,7 @@
 ﻿[
   {
+    "Cpm": 0.0,
+    "Impressions": 0.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -32,6 +34,8 @@
     "Unit": null
   },
   {
+    "Cpm": 0.0,
+    "Impressions": 0.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -64,6 +68,8 @@
     "Unit": null
   },
   {
+    "Cpm": 0.0,
+    "Impressions": 0.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -96,6 +102,8 @@
     "Unit": null
   },
   {
+    "Cpm": 0.0,
+    "Impressions": 0.0,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -128,6 +136,8 @@
     "Unit": null
   },
   {
+    "Cpm": 0.0,
+    "Impressions": 0.0,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": null,
     "ManifestAudiences": null,
@@ -160,6 +170,8 @@
     "Unit": null
   },
   {
+    "Cpm": 0.0,
+    "Impressions": 0.0,
     "InventoryPricingQuarterType": "Fallback",
     "InventorySource": null,
     "ManifestAudiences": null,

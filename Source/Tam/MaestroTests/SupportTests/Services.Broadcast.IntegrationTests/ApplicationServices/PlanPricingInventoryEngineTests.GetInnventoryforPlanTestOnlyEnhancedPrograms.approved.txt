@@ -1,5 +1,7 @@
 ﻿[
   {
+    "Cpm": 0.0,
+    "Impressions": 58650.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 1,
@@ -118,6 +120,8 @@
     "Unit": null
   },
   {
+    "Cpm": 0.0,
+    "Impressions": 50320.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 1,
@@ -236,6 +240,8 @@
     "Unit": null
   },
   {
+    "Cpm": 0.0,
+    "Impressions": 51340.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 1,
@@ -354,6 +360,8 @@
     "Unit": null
   },
   {
+    "Cpm": 0.0,
+    "Impressions": 37060.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 1,
@@ -472,6 +480,8 @@
     "Unit": null
   },
   {
+    "Cpm": 0.0,
+    "Impressions": 39780.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 1,
@@ -590,6 +600,8 @@
     "Unit": null
   },
   {
+    "Cpm": 0.0,
+    "Impressions": 510.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 1,
@@ -708,6 +720,8 @@
     "Unit": null
   },
   {
+    "Cpm": 0.0,
+    "Impressions": 510.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 1,
@@ -826,6 +840,8 @@
     "Unit": null
   },
   {
+    "Cpm": 0.0,
+    "Impressions": 340.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 1,
@@ -944,6 +960,8 @@
     "Unit": null
   },
   {
+    "Cpm": 0.0,
+    "Impressions": 340.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 1,
@@ -1062,6 +1080,8 @@
     "Unit": null
   },
   {
+    "Cpm": 0.0,
+    "Impressions": 47676.98875,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
       "Id": 1,

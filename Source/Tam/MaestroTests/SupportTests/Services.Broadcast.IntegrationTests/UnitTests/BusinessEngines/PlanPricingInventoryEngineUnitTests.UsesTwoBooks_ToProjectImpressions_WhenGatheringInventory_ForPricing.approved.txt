@@ -1,6 +1,8 @@
 ﻿{
   "inventory": [
     {
+      "Cpm": 0.0,
+      "Impressions": 1500.0,
       "InventoryPricingQuarterType": "Plan",
       "InventorySource": null,
       "ManifestAudiences": null,
@@ -65,6 +67,8 @@
         "SpotCost": 0.0,
         "ProjectedImpressions": 0.0,
         "ProvidedImpressions": null,
+        "Impressions": 0.0,
+        "Cpm": 0.0,
         "Station": {
           "Id": 0,
           "Code": null,
