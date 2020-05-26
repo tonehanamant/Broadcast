@@ -50,6 +50,21 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START BP1-227 *****************************************************/
+CREATE UNIQUE CLUSTERED INDEX [IX_uvw_market_codes_call_letters] ON [nsi].[uvw_market_codes_call_letters]
+
+(
+
+       [media_month_id] ASC,
+
+       [legacy_call_letters] ASC,
+
+       [market_code] ASC
+
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = ON, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [MediaMonthSmallIntScheme]([media_month_id])
+
+GO
+/*************************************** END BP1-227 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

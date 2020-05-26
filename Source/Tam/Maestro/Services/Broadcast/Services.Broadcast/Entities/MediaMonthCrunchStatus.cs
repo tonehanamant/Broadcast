@@ -27,9 +27,9 @@ namespace Services.Broadcast.Entities
                 if (NielsonMarkets == 0)
                     return CrunchStatusEnum.NoMarkets;
 
-                if (UniverseMarkets == NielsonMarkets &&
-                    UsageMarkets == NielsonMarkets &&
-                    ViewerMarkets == NielsonMarkets)
+                if (UniverseMarkets > 0 &&
+                    UsageMarkets == UniverseMarkets &&
+                    ViewerMarkets == UniverseMarkets)
                     return CrunchStatusEnum.Crunched;
 
                 if (UniverseMarkets > 0 ||
