@@ -40,7 +40,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Eyewitness News at 430a"
+        "ProgramName": "Eyewitness News at 430a",
+        "Programs": []
       }
     ],
     "ManifestRates": [],
@@ -115,7 +116,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Eyewitness News/GMA Weekend"
+        "ProgramName": "Eyewitness News/GMA Weekend",
+        "Programs": []
       }
     ],
     "ManifestRates": [],
@@ -214,7 +216,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Eyewitness News/GMA Weekend"
+        "ProgramName": "Eyewitness News/GMA Weekend",
+        "Programs": []
       }
     ],
     "ManifestRates": [],
@@ -301,7 +304,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Eyewitness News at Noon"
+        "ProgramName": "Eyewitness News at Noon",
+        "Programs": []
       }
     ],
     "ManifestRates": [],
@@ -376,7 +380,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Eyewitness News at 4p"
+        "ProgramName": "Eyewitness News at 4p",
+        "Programs": []
       }
     ],
     "ManifestRates": [],
@@ -487,7 +492,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Eyewitness News at 5p"
+        "ProgramName": "Eyewitness News at 5p",
+        "Programs": []
       }
     ],
     "ManifestRates": [],
@@ -586,7 +592,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Eyewitness News at 11p"
+        "ProgramName": "Eyewitness News at 11p",
+        "Programs": []
       }
     ],
     "ManifestRates": [],
@@ -697,7 +704,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Eyewitness News at 430a"
+        "ProgramName": "Eyewitness News at 430a",
+        "Programs": []
       }
     ],
     "ManifestRates": [],
@@ -772,7 +780,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Eyewitness News/GMA Weekend"
+        "ProgramName": "Eyewitness News/GMA Weekend",
+        "Programs": []
       }
     ],
     "ManifestRates": [],
@@ -871,7 +880,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Eyewitness News/GMA Weekend"
+        "ProgramName": "Eyewitness News/GMA Weekend",
+        "Programs": []
       }
     ],
     "ManifestRates": [],
@@ -958,7 +968,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Eyewitness News/GMA Weekend"
+        "ProgramName": "Eyewitness News/GMA Weekend",
+        "Programs": []
       }
     ],
     "ManifestRates": [],

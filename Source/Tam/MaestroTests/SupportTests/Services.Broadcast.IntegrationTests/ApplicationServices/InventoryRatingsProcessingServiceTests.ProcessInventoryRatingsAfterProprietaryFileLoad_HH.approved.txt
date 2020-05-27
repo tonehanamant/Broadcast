@@ -315,7 +315,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1246,7 +1247,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -2177,7 +2179,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -3108,7 +3111,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       },
       {
         "Daypart": {
@@ -3131,7 +3135,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       },
       {
         "Daypart": {
@@ -3154,7 +3159,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -4085,7 +4091,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -5016,7 +5023,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -5947,7 +5955,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -6878,7 +6887,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       },
       {
         "Daypart": {
@@ -6901,7 +6911,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       },
       {
         "Daypart": {
@@ -6924,7 +6935,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -7855,7 +7867,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -8786,7 +8799,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -9717,7 +9731,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -10648,7 +10663,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       },
       {
         "Daypart": {
@@ -10671,7 +10687,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       },
       {
         "Daypart": {
@@ -10694,7 +10711,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -11625,7 +11643,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -12556,7 +12575,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -13487,7 +13507,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -14418,7 +14439,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       },
       {
         "Daypart": {
@@ -14441,7 +14463,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       },
       {
         "Daypart": {
@@ -14464,7 +14487,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -15395,7 +15419,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -16326,7 +16351,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -17257,7 +17283,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -18188,7 +18215,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       },
       {
         "Daypart": {
@@ -18211,7 +18239,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       },
       {
         "Daypart": {
@@ -18234,7 +18263,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -19165,7 +19195,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -20096,7 +20127,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -21027,7 +21059,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -21958,7 +21991,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       },
       {
         "Daypart": {
@@ -21981,7 +22015,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       },
       {
         "Daypart": {
@@ -22004,7 +22039,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -22935,7 +22971,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -23866,7 +23903,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -24797,7 +24835,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -25728,7 +25767,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       },
       {
         "Daypart": {
@@ -25751,7 +25791,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       },
       {
         "Daypart": {
@@ -25774,7 +25815,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": null
+        "ProgramName": null,
+        "Programs": []
       }
     ],
     "ManifestRates": [

@@ -315,7 +315,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "News 10 @ Noon"
+        "ProgramName": "News 10 @ Noon",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -754,7 +755,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "News 10 @ Noon"
+        "ProgramName": "News 10 @ Noon",
+        "Programs": []
       }
     ],
     "ManifestRates": [

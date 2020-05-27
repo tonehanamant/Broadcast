@@ -53,7 +53,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "American Dad@31231"
+        "ProgramName": "American Dad@31231",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -136,7 +137,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Bob's Burgers M-F"
+        "ProgramName": "Bob's Burgers M-F",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -219,7 +221,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Bob's Burgers"
+        "ProgramName": "Bob's Burgers",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -302,7 +305,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Bones Weekend"
+        "ProgramName": "Bones Weekend",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -385,7 +389,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Caught in Providence"
+        "ProgramName": "Caught in Providence",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -468,7 +473,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Cops"
+        "ProgramName": "Cops",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -551,7 +557,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Divorce Court"
+        "ProgramName": "Divorce Court",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -634,7 +641,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "FAMILY FEUD M-F"
+        "ProgramName": "FAMILY FEUD M-F",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -717,7 +725,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "FAMILY FEUD WKND"
+        "ProgramName": "FAMILY FEUD WKND",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -800,7 +809,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Family Guy"
+        "ProgramName": "Family Guy",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -883,7 +893,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Family Guy Weekend"
+        "ProgramName": "Family Guy Weekend",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -966,7 +977,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "How I Met Your Mother"
+        "ProgramName": "How I Met Your Mother",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1049,7 +1061,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Last Man Standing"
+        "ProgramName": "Last Man Standing",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1132,7 +1145,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Last Man Standing Weekend"
+        "ProgramName": "Last Man Standing Weekend",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1215,7 +1229,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Modern Family"
+        "ProgramName": "Modern Family",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1298,7 +1313,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Modern Family Weekend"
+        "ProgramName": "Modern Family Weekend",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1381,7 +1397,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Page Six"
+        "ProgramName": "Page Six",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1464,7 +1481,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "TRUE Crime Files"
+        "ProgramName": "TRUE Crime Files",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1547,7 +1565,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "WENDY WILLIAMS"
+        "ProgramName": "WENDY WILLIAMS",
+        "Programs": []
       }
     ],
     "ManifestRates": [

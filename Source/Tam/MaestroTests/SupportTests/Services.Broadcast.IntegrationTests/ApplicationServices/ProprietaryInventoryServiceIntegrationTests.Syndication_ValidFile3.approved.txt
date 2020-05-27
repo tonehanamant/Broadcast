@@ -53,7 +53,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "House"
+        "ProgramName": "House",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -136,7 +137,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Modern Family Weekend"
+        "ProgramName": "Modern Family Weekend",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -219,7 +221,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Page Six"
+        "ProgramName": "Page Six",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -302,7 +305,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "True Crime Files"
+        "ProgramName": "True Crime Files",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -385,7 +389,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Wendy Williams"
+        "ProgramName": "Wendy Williams",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -468,7 +473,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Cleveland/King of the Hill Combo"
+        "ProgramName": "Cleveland/King of the Hill Combo",
+        "Programs": []
       }
     ],
     "ManifestRates": [

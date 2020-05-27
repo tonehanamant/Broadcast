@@ -235,6 +235,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Assert.IsTrue(planVersion.Id > 0);
                 Assert.IsTrue(planVersion.VersionId > 0);
+                // order these for verification matching
+                planVersion.AvailableMarkets = planVersion.AvailableMarkets.OrderBy(m => m.Rank).ToList();
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(planVersion, _GetJsonSettings()));
             }
         }

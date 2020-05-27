@@ -15,6 +15,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using ApprovalTests;
+using ApprovalTests.Reporters;
 using Services.Broadcast.Entities.DTO;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -37,6 +39,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
         private Mock<IEnvironmentService> _EnvironmentService = new Mock<IEnvironmentService>();
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void BySourceUnprocessedJob()
         {
             /*** Arrange ***/
@@ -134,22 +137,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             var createdFiles = new List<Tuple<string, List<string>>>();
             _FileService.Setup(s => s.CreateTextFile(It.IsAny<string>(), It.IsAny<List<string>>()))
                 .Callback<string, List<string>>((name, lines) => createdFiles.Add(new Tuple<string, List<string>>(name, lines)));
-            var expectedResultFileLines = new[]
-            {
-                "inventory_id,inventory_week_id,inventory_daypart_id,station_call_letters,affiliation,start_date,end_date,daypart_text,mon,tue,wed,thu,fri,sat,sun,daypart_start_time,daypart_end_time,program_name,show_type,genre,program_start_time,program_end_time,program_start_date,program_end_date",
-                "1,1,1,ExtendedMappedValue,ABC,2020-01-01,2020-01-07,M-F 2AM-4AM,1,1,1,1,1,0,0,7200,14399,,,,,,,",
-                "1,1,2,ExtendedMappedValue,ABC,2020-01-01,2020-01-07,F-SU 4AM-6AM,0,0,0,0,1,1,1,14400,21599,,,,,,,",
-                "1,2,1,ExtendedMappedValue,ABC,2020-01-08,2020-01-14,M-F 2AM-4AM,1,1,1,1,1,0,0,7200,14399,,,,,,,",
-                "1,2,2,ExtendedMappedValue,ABC,2020-01-08,2020-01-14,F-SU 4AM-6AM,0,0,0,0,1,1,1,14400,21599,,,,,,,",
-                "1,3,1,ExtendedMappedValue,ABC,2020-01-15,2020-01-21,M-F 2AM-4AM,1,1,1,1,1,0,0,7200,14399,,,,,,,",
-                "1,3,2,ExtendedMappedValue,ABC,2020-01-15,2020-01-21,F-SU 4AM-6AM,0,0,0,0,1,1,1,14400,21599,,,,,,,",
-                "2,4,3,ExtendedMappedValue,ABC,2020-01-01,2020-01-07,SA-SU 2AM-4AM,0,0,0,0,0,1,1,7200,14399,,,,,,,",
-                "2,4,4,ExtendedMappedValue,ABC,2020-01-01,2020-01-07,M-TH 4AM-6AM,1,1,1,1,0,0,0,14400,21599,,,,,,,",
-                "2,5,3,ExtendedMappedValue,ABC,2020-01-08,2020-01-14,SA-SU 2AM-4AM,0,0,0,0,0,1,1,7200,14399,,,,,,,",
-                "2,5,4,ExtendedMappedValue,ABC,2020-01-08,2020-01-14,M-TH 4AM-6AM,1,1,1,1,0,0,0,14400,21599,,,,,,,",
-                "2,6,3,ExtendedMappedValue,ABC,2020-01-15,2020-01-21,SA-SU 2AM-4AM,0,0,0,0,0,1,1,7200,14399,,,,,,,",
-                "2,6,4,ExtendedMappedValue,ABC,2020-01-15,2020-01-21,M-TH 4AM-6AM,1,1,1,1,0,0,0,14400,21599,,,,,,,"
-            };
             _FileService.Setup(s => s.CreateDirectory(It.IsAny<string>()));
 
             // body, subject, priority, to_emails
@@ -178,15 +165,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.AreEqual(0, setJobCompleteWarningCalled);
             Assert.AreEqual(0, setJobCompleteErrorCalled);
 
-            // verify the file was exported well
-            Assert.AreEqual(1, createdFiles.Count);
-            Assert.AreEqual("ProgramGuideExport_SOURCE_Numbe_20200101_20200121_20200306_142235.csv", Path.GetFileName(createdFiles[0].Item1));
-            Assert.AreEqual(13, createdFiles[0].Item2.Count);
-            for (var i = 0; i < 13; i++)
-            {
-                Assert.AreEqual(expectedResultFileLines[i], createdFiles[0].Item2[i]);
-            }
-
             // email disabled PRI-25264
             // verify that the email was sent
             Assert.AreEqual(0, emailsSent.Count);
@@ -201,6 +179,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             //Assert.AreEqual("Broadcast Inventory Programs - ProgramGuide Interface Export file available", emailsSent[0].Item2);
             //Assert.AreEqual(MailPriority.Normal, emailsSent[0].Item3);
             //Assert.IsTrue(emailsSent[0].Item4.Any());
+
+            // verify the file was exported well
+            Assert.AreEqual(1, createdFiles.Count);
+            Assert.AreEqual("ProgramGuideExport_SOURCE_Numbe_20200101_20200121_20200306_142235.csv", Path.GetFileName(createdFiles[0].Item1));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(createdFiles[0].Item2));
         }
 
         private List<GuideResponseElementDto> _GetGuideResponse()

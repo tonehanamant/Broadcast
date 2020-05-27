@@ -105,7 +105,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "MEGYN KELLY TODAY"
+        "ProgramName": "MEGYN KELLY TODAY",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -266,7 +267,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "TODAY SHOW 3"
+        "ProgramName": "TODAY SHOW 3",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -427,7 +429,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "ACCESS"
+        "ProgramName": "ACCESS",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -588,7 +591,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "MILLIONAIRE"
+        "ProgramName": "MILLIONAIRE",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -749,7 +753,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "DAYS OF OUR LIVES"
+        "ProgramName": "DAYS OF OUR LIVES",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -910,7 +915,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "DR. OZ"
+        "ProgramName": "DR. OZ",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1071,7 +1077,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "RACHAEL RAY"
+        "ProgramName": "RACHAEL RAY",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1232,7 +1239,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "ENTERTAINMENT TONIGHT"
+        "ProgramName": "ENTERTAINMENT TONIGHT",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1393,7 +1401,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "INSIDE EDITION"
+        "ProgramName": "INSIDE EDITION",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1554,7 +1563,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "ET WEEKEND"
+        "ProgramName": "ET WEEKEND",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1715,7 +1725,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "TONIGHT SHOW W/ FALLON"
+        "ProgramName": "TONIGHT SHOW W/ FALLON",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1876,7 +1887,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "LATE NIGHT W/ MEYERS"
+        "ProgramName": "LATE NIGHT W/ MEYERS",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -2037,7 +2049,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "LAST CALL W/ DALY"
+        "ProgramName": "LAST CALL W/ DALY",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -2198,7 +2211,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "SATURDAY NIGHT LIVE"
+        "ProgramName": "SATURDAY NIGHT LIVE",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -2359,7 +2373,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "COMEDY TV"
+        "ProgramName": "COMEDY TV",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -2520,7 +2535,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "AMERICAN NINJA WARRIOR"
+        "ProgramName": "AMERICAN NINJA WARRIOR",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -2681,7 +2697,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "ROOKIE BLUE"
+        "ProgramName": "ROOKIE BLUE",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -2842,7 +2859,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "MEGYN KELLY TODAY"
+        "ProgramName": "MEGYN KELLY TODAY",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -3003,7 +3021,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "TODAY SHOW 3"
+        "ProgramName": "TODAY SHOW 3",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -3164,7 +3183,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "ACCESS"
+        "ProgramName": "ACCESS",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -3325,7 +3345,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "MILLIONAIRE"
+        "ProgramName": "MILLIONAIRE",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -3486,7 +3507,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "DAYS OF OUR LIVES"
+        "ProgramName": "DAYS OF OUR LIVES",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -3647,7 +3669,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "DR. OZ"
+        "ProgramName": "DR. OZ",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -3808,7 +3831,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "RACHAEL RAY"
+        "ProgramName": "RACHAEL RAY",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -3969,7 +3993,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "ENTERTAINMENT TONIGHT"
+        "ProgramName": "ENTERTAINMENT TONIGHT",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -4130,7 +4155,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "INSIDE EDITION"
+        "ProgramName": "INSIDE EDITION",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -4291,7 +4317,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "ET WEEKEND"
+        "ProgramName": "ET WEEKEND",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -4452,7 +4479,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "TONIGHT SHOW W/ FALLON"
+        "ProgramName": "TONIGHT SHOW W/ FALLON",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -4613,7 +4641,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "LATE NIGHT W/ MEYERS"
+        "ProgramName": "LATE NIGHT W/ MEYERS",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -4774,7 +4803,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "LAST CALL W/ DALY"
+        "ProgramName": "LAST CALL W/ DALY",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -4935,7 +4965,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "SATURDAY NIGHT LIVE"
+        "ProgramName": "SATURDAY NIGHT LIVE",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -5096,7 +5127,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "COMEDY TV"
+        "ProgramName": "COMEDY TV",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -5257,7 +5289,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "AMERICAN NINJA WARRIOR"
+        "ProgramName": "AMERICAN NINJA WARRIOR",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -5418,7 +5451,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "ROOKIE BLUE"
+        "ProgramName": "ROOKIE BLUE",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -5514,7 +5548,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "NEWSCHANNEL 13 LIVE AT NOON"
+        "ProgramName": "NEWSCHANNEL 13 LIVE AT NOON",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -5618,7 +5653,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "MEET THE PRESS"
+        "ProgramName": "MEET THE PRESS",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -5722,7 +5758,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "SUNDAY TODAY"
+        "ProgramName": "SUNDAY TODAY",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -5826,7 +5863,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "NEWSCHANNEL 13 TODAY SUN-8A"
+        "ProgramName": "NEWSCHANNEL 13 TODAY SUN-8A",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -5930,7 +5968,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "NEWSCHANNEL 13 TODAY SUN-7A"
+        "ProgramName": "NEWSCHANNEL 13 TODAY SUN-7A",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -6034,7 +6073,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "FORUM 13"
+        "ProgramName": "FORUM 13",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -6138,7 +6178,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "SAT TODAY SHOW - HR 2"
+        "ProgramName": "SAT TODAY SHOW - HR 2",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -6242,7 +6283,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "NEWSCHANNEL 13 TODAY"
+        "ProgramName": "NEWSCHANNEL 13 TODAY",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -6346,7 +6388,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "SAT TODAY SHOW - HR 1"
+        "ProgramName": "SAT TODAY SHOW - HR 1",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -6450,7 +6493,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "NEWSCHANNEL 13 TODAY"
+        "ProgramName": "NEWSCHANNEL 13 TODAY",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -6554,7 +6598,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "ON THE MONEY"
+        "ProgramName": "ON THE MONEY",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -6658,7 +6703,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "TODAY SHOW"
+        "ProgramName": "TODAY SHOW",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -6762,7 +6808,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "NEWSCHANNEL 13 EARLY TODAY-6A"
+        "ProgramName": "NEWSCHANNEL 13 EARLY TODAY-6A",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -6866,7 +6913,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "NEWSCHANNEL 13 EARLY TODAY-530A"
+        "ProgramName": "NEWSCHANNEL 13 EARLY TODAY-530A",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -6970,7 +7018,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "NEWSCHANNEL 13 EARLY TODAY-5A"
+        "ProgramName": "NEWSCHANNEL 13 EARLY TODAY-5A",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -7074,7 +7123,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "NBC EARLY TODAY"
+        "ProgramName": "NBC EARLY TODAY",
+        "Programs": []
       }
     ],
     "ManifestRates": [

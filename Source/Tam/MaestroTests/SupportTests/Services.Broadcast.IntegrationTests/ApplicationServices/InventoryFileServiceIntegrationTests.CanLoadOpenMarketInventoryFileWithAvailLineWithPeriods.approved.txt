@@ -40,7 +40,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "WINDY CITY WKND"
+        "ProgramName": "WINDY CITY WKND",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -144,7 +145,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "WINDY CITY LIVE B"
+        "ProgramName": "WINDY CITY LIVE B",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -248,7 +250,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "SCANDAL"
+        "ProgramName": "SCANDAL",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -352,7 +355,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "SCANDAL"
+        "ProgramName": "SCANDAL",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -456,7 +460,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "NIGHTLINE"
+        "ProgramName": "NIGHTLINE",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -560,7 +565,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "JIMMY KIMMEL"
+        "ProgramName": "JIMMY KIMMEL",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -664,7 +670,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "INSIDE EDITION W"
+        "ProgramName": "INSIDE EDITION W",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -768,7 +775,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "CASTLE"
+        "ProgramName": "CASTLE",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -872,7 +880,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "CASTLE"
+        "ProgramName": "CASTLE",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -976,7 +985,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "CASTLE"
+        "ProgramName": "CASTLE",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1080,7 +1090,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "CASTLE"
+        "ProgramName": "CASTLE",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1184,7 +1195,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "ABC7 LATE NEWS (R)"
+        "ProgramName": "ABC7 LATE NEWS (R)",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1288,7 +1300,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "ABC7 LATE NEWS (R)"
+        "ProgramName": "ABC7 LATE NEWS (R)",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1392,7 +1405,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "JEOPARDY"
+        "ProgramName": "JEOPARDY",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1496,7 +1510,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "INSIDE EDITION"
+        "ProgramName": "INSIDE EDITION",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1600,7 +1615,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "WINDY CITY LIVE"
+        "ProgramName": "WINDY CITY LIVE",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1704,7 +1720,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "THE VIEW"
+        "ProgramName": "THE VIEW",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1808,7 +1825,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "THE CHEW"
+        "ProgramName": "THE CHEW",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -1912,7 +1930,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "LIVE WITH KELLY"
+        "ProgramName": "LIVE WITH KELLY",
+        "Programs": []
       }
     ],
     "ManifestRates": [
@@ -2016,7 +2035,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "GENERAL HOSPITAL"
+        "ProgramName": "GENERAL HOSPITAL",
+        "Programs": []
       }
     ],
     "ManifestRates": [

@@ -40,7 +40,8 @@
         "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
-        "ProgramName": "Eyewitness News/GMA Weekend"
+        "ProgramName": "Eyewitness News/GMA Weekend",
+        "Programs": []
       }
     ],
     "ManifestRates": [],

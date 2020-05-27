@@ -22,6 +22,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Tam.Maestro.Data.Entities;
@@ -30,6 +31,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.BusinessEngines.PlanPricingInventoryEngine;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram.ManifestDaypart;
+using Job = Hangfire.Common.Job;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {
@@ -6389,10 +6391,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             service.QueuePricingJob(parameters, now, user);
 
             // Assert
+            // Verify these since they're excluded from the json due version increments
+            var passedJob = ((dynamic)passedParameters[0]).job;
+            Assert.AreEqual("Services.Broadcast.ApplicationServices.IPlanPricingService", passedJob.Type.FullName);
+            Assert.AreEqual("RunPricingJob", passedJob.Method.Name);
+
             var jsonResolver = new IgnorableSerializerContractResolver();
-
             jsonResolver.Ignore(typeof(WaitHandle), "Handle");
-
+            jsonResolver.Ignore(typeof(Job), "Type");
+            jsonResolver.Ignore(typeof(Job), "Method");
             var settings = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

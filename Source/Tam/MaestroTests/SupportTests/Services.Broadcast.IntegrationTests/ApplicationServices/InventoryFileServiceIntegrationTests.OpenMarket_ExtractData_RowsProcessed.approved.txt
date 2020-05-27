@@ -117,7 +117,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "FOX NFL SUNDAY WRAP-UP"
+          "ProgramName": "FOX NFL SUNDAY WRAP-UP",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -413,7 +414,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "IN DEPTH WITH GRAHAM B"
+          "ProgramName": "IN DEPTH WITH GRAHAM B",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -709,7 +711,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "THE BIG BANG THEORY 2X"
+          "ProgramName": "THE BIG BANG THEORY 2X",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -1005,7 +1008,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "FULL MEASURE"
+          "ProgramName": "FULL MEASURE",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -1301,7 +1305,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "SEINFELD 2X"
+          "ProgramName": "SEINFELD 2X",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -1597,7 +1602,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "FOX NETWORK"
+          "ProgramName": "FOX NETWORK",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -1893,7 +1899,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "SATURDAY ACCESS ROS"
+          "ProgramName": "SATURDAY ACCESS ROS",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -2189,7 +2196,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "MODERN FAMILY"
+          "ProgramName": "MODERN FAMILY",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -2485,7 +2493,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "MODERN FAMILY"
+          "ProgramName": "MODERN FAMILY",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -2781,7 +2790,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "SAT FRINGE/ACCESS ROS"
+          "ProgramName": "SAT FRINGE/ACCESS ROS",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -3077,7 +3087,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "FAMILY FEUD X2"
+          "ProgramName": "FAMILY FEUD X2",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -3373,7 +3384,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "KMPH 2P MOVIE"
+          "ProgramName": "KMPH 2P MOVIE",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -3669,7 +3681,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "KMPH 12N MOVIE"
+          "ProgramName": "KMPH 12N MOVIE",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -3965,7 +3978,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "2 BROKE GIRLS"
+          "ProgramName": "2 BROKE GIRLS",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -4261,7 +4275,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "MIKE & MOLLY"
+          "ProgramName": "MIKE & MOLLY",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -4557,7 +4572,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "MIKE & MOLLY"
+          "ProgramName": "MIKE & MOLLY",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -4853,7 +4869,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "SEINFELD"
+          "ProgramName": "SEINFELD",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -5149,7 +5166,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "SEINFELD"
+          "ProgramName": "SEINFELD",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -5445,7 +5463,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "MODERN FAMILY ROTATOR"
+          "ProgramName": "MODERN FAMILY ROTATOR",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -5741,7 +5760,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "MODERN FAMILY"
+          "ProgramName": "MODERN FAMILY",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -6037,7 +6057,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "MODERN FAMILY"
+          "ProgramName": "MODERN FAMILY",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -6333,7 +6354,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "MODERN FAMILY"
+          "ProgramName": "MODERN FAMILY",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -6629,7 +6651,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "MODERN FAMILY"
+          "ProgramName": "MODERN FAMILY",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -6925,7 +6948,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "BIG BANG THEORY"
+          "ProgramName": "BIG BANG THEORY",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -7221,7 +7245,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "BIG BANG THEORY"
+          "ProgramName": "BIG BANG THEORY",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -7517,7 +7542,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "SIMPSONS"
+          "ProgramName": "SIMPSONS",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -7813,7 +7839,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "SIMPSONS"
+          "ProgramName": "SIMPSONS",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -8109,7 +8136,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "FAMILY FEUD"
+          "ProgramName": "FAMILY FEUD",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -8405,7 +8433,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "BIG BANG THEORY"
+          "ProgramName": "BIG BANG THEORY",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -8701,7 +8730,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "BIG BANG THEORY"
+          "ProgramName": "BIG BANG THEORY",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -8997,7 +9027,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "FRINGE/ACCESS ROTATOR"
+          "ProgramName": "FRINGE/ACCESS ROTATOR",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -9293,7 +9324,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "FRINGE ROTATOR"
+          "ProgramName": "FRINGE ROTATOR",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -9589,7 +9621,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "SIMPSONS"
+          "ProgramName": "SIMPSONS",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -9885,7 +9918,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "SIMPSONS"
+          "ProgramName": "SIMPSONS",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -10181,7 +10215,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "FAMILY FEUD"
+          "ProgramName": "FAMILY FEUD",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -10477,7 +10512,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "JUDGE JUDY X2"
+          "ProgramName": "JUDGE JUDY X2",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -10773,7 +10809,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "HOT BENCH X2"
+          "ProgramName": "HOT BENCH X2",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -11069,7 +11106,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "PEOPLE'S COURT"
+          "ProgramName": "PEOPLE'S COURT",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -11365,7 +11403,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "COPS"
+          "ProgramName": "COPS",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -11661,7 +11700,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "AM ROTATION"
+          "ProgramName": "AM ROTATION",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -11957,7 +11997,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "LIFESTYLE MATTERS"
+          "ProgramName": "LIFESTYLE MATTERS",
+          "Programs": []
         }
       ],
       "ManifestRates": [
@@ -12253,7 +12294,8 @@
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
-          "ProgramName": "WENDY WILLIAMS"
+          "ProgramName": "WENDY WILLIAMS",
+          "Programs": []
         }
       ],
       "ManifestRates": [

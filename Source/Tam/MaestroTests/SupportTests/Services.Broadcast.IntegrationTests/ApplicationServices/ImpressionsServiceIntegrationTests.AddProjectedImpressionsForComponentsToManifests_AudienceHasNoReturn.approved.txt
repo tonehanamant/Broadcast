@@ -370,7 +370,8 @@
         "Genres": [],
         "Id": 362548,
         "PrimaryProgramId": null,
-        "ProgramName": "MORNING DOSE"
+        "ProgramName": "MORNING DOSE",
+        "Programs": []
       }
     ],
     "ManifestRates": [
