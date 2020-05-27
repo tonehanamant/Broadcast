@@ -51,6 +51,9 @@ GO
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
 /*************************************** START BP1-227 *****************************************************/
+SET QUOTED_IDENTIFIER ON;
+GO
+
 IF EXISTS (SELECT * FROM sys.indexes WHERE name='IX_uvw_market_codes_call_letters' AND object_id = OBJECT_ID('nsi.uvw_market_codes_call_letters'))
 BEGIN
     DROP INDEX [IX_uvw_market_codes_call_letters] ON [nsi].[uvw_market_codes_call_letters] WITH ( ONLINE = OFF )
@@ -63,6 +66,9 @@ CREATE UNIQUE CLUSTERED INDEX [IX_uvw_market_codes_call_letters] ON [nsi].[uvw_m
     [legacy_call_letters] ASC,
     [market_code] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [MediaMonthSmallIntScheme]([media_month_id])
+GO
+
+SET QUOTED_IDENTIFIER OFF;
 GO
 /*************************************** END BP1-227 *****************************************************/
 
