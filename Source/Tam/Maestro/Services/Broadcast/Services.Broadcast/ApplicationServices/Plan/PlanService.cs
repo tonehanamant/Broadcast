@@ -1761,8 +1761,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     ImpressionsPercentage = Math.Round(GeneralMath.ConvertFractionToPercentage(impressions / request.TotalImpressions))
                 });
             }
-
-            return result;
+            var spotLengths = _SpotLengthEngine.GetSpotLengths();
+            return result.OrderBy(x => spotLengths.Where(y => y.Value == x.SpotLengthId).Single().Key).ToList();
         }
     }
 }

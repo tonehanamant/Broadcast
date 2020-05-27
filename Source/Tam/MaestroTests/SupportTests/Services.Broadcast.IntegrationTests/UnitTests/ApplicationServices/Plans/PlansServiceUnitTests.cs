@@ -1303,6 +1303,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Weeks = _GetWeeklyBreakdownWeeks()
             };
 
+            _SpotLengthEngineMock
+                .Setup(a => a.GetSpotLengths())
+                .Returns(new Dictionary<int, int> { { 30, 1 }, { 15, 2}, { 45, 3} });
+
             // Act
             var results = _PlanService.CalculateLengthMakeUpTable(request);
 
