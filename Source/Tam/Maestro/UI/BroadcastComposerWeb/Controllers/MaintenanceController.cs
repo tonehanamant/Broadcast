@@ -158,6 +158,29 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
+        [Route("ImportProgramMappings")]
+        public ActionResult ExportProgramMappings()
+        {
+            try
+            {
+                var userName = _ApplicationServiceFactory.GetApplicationService<IUserService>().GetCurrentUserFullName();
+                var programMappingService = _ApplicationServiceFactory.GetApplicationService<IProgramMappingService>();
+                var exportedFile = programMappingService.ExportProgramMappingsFile(userName);
+
+                TempData["Message"] = $"Downloaded file {exportedFile.Filename}";
+
+                return File(exportedFile.Stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", exportedFile.Filename);
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+            }
+
+            TempData["TabId"] = "reference_data";
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
         [Route("ImportInventoryProgramsResults")]
         public ActionResult ImportInventoryProgramsResults(HttpPostedFileBase file)
         {

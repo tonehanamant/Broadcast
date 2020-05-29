@@ -43,5 +43,10 @@ namespace Services.Broadcast
         {
 	        return BroadcastServiceSystemParameter.BroadcastAppFolder;
         }
+
+        protected virtual DateTime _GetCurrentDateTime()
+        {
+            return DateTime.Now;
+        }
 	}
 }

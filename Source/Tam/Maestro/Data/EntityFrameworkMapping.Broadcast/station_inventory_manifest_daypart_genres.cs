@@ -18,7 +18,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int station_inventory_manifest_daypart_id { get; set; }
         public int genre_id { get; set; }
     
-        public virtual genre genre { get; set; }
         public virtual station_inventory_manifest_dayparts station_inventory_manifest_dayparts { get; set; }
+        public virtual genre genre { get; set; }
     }
 }

@@ -55,7 +55,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<proposal_version_audiences> proposal_version_audiences { get; set; }
         public virtual DbSet<proposal_version_detail_quarters> proposal_version_detail_quarters { get; set; }
         public virtual DbSet<proposal_version_detail_quarter_weeks> proposal_version_detail_quarter_weeks { get; set; }
-        public virtual DbSet<genre> genres { get; set; }
         public virtual DbSet<proposal_version_detail_criteria_cpm> proposal_version_detail_criteria_cpm { get; set; }
         public virtual DbSet<proposal_version_detail_criteria_genres> proposal_version_detail_criteria_genres { get; set; }
         public virtual DbSet<rep_firms> rep_firms { get; set; }
@@ -140,7 +139,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan> plans { get; set; }
         public virtual DbSet<plan_version_summary_quarters> plan_version_summary_quarters { get; set; }
         public virtual DbSet<plan_version_daypart_show_type_restrictions> plan_version_daypart_show_type_restrictions { get; set; }
-        public virtual DbSet<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs { get; set; }
         public virtual DbSet<plan_version_daypart_genre_restrictions> plan_version_daypart_genre_restrictions { get; set; }
         public virtual DbSet<plan_version_daypart_program_restrictions> plan_version_daypart_program_restrictions { get; set; }
         public virtual DbSet<plan_version_pricing_parameters_inventory_source_percentages> plan_version_pricing_parameters_inventory_source_percentages { get; set; }
@@ -194,5 +192,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_pricing_band_details> plan_version_pricing_band_details { get; set; }
         public virtual DbSet<plan_version_pricing_bands> plan_version_pricing_bands { get; set; }
         public virtual DbSet<program_sources> program_sources { get; set; }
+        public virtual DbSet<genre> genres { get; set; }
+        public virtual DbSet<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs { get; set; }
     }
 }

@@ -506,18 +506,29 @@
                 <textarea class="input" rows="5" id="divCleanupJSON">@ViewBag.TextareaMessage</textarea>
             </div>
         </div>
-        @using (Html.BeginForm("ImportProgramMappings", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            <div class="form">
-                <h1 class="heading">Import program mappings</h1>
-                <div class="input-container">
-                    <label class="label" for="file">Filename:</label>
-                    <input class="input" type="file" name="file" id="file" />
+        <div class="form">
+            <h1 class="heading">Program Name Mappings</h1>
+            @using (Html.BeginForm("ImportProgramMappings", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h1 class="heading">Import program mappings</h1>
+                    <div class="input-container">
+                        <label class="label" for="file">Filename:</label>
+                        <input class="input" type="file" name="file" id="file" />
+                    </div>
+                    <input class="button" type="submit" value="Submit" id="txt Import Program Mappings" />
+                    <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>
                 </div>
-                <input class="button" type="submit" value="Submit" id="txt Import Program Mappings" />
-                <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>
-            </div>
-        }
+            }
+            @using (Html.BeginForm("ExportProgramMappings", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h1 class="heading">Export program mappings</h1>
+                    <input class="button" type="submit" value="Submit" id="txt Export Program Mappings" />
+                    <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>
+                </div>
+            }
+        </div>
 
         @using (Html.BeginForm("UploadVpvhFile", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {

@@ -88,8 +88,15 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _SaveFileContent(SharedFolderFile file)
         {
+            _CreateDirectory(file.FolderPath);
+
             var sharedFolderFileName = _GetSharedFolderFileName(file.Id, file.FileExtension);
             _FileService.Create(file.FolderPath, sharedFolderFileName, file.FileContent);
+        }
+
+        private void _CreateDirectory(string directoryPath)
+        {
+            _FileService.CreateDirectory(directoryPath);
         }
 
         private Stream _GetFileContent(SharedFolderFile file)

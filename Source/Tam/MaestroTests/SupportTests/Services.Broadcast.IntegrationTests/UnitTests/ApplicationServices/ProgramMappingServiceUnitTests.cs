@@ -122,7 +122,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Setup the actual Program Mapping Service
             _ProgramMappingService = new ProgramMappingServiceTestClass(
-                _BackgroundJobClientMock.Object, _DataRepositoryFactoryMock.Object, _SharedFolderServiceMock.Object);
+                _BackgroundJobClientMock.Object, _DataRepositoryFactoryMock.Object, _SharedFolderServiceMock.Object, null);
         }
 
         [Test]
@@ -151,8 +151,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             var createNewMappingCalls = new List<DateTime>();
             _ProgramMappingRepositoryMock
-                .Setup(s => s.CreateProgramMapping(It.IsAny<ProgramMappingsDto>()))
-                .Callback((ProgramMappingsDto mapping) => 
+                .Setup(s => s.CreateProgramMapping(It.IsAny<ProgramMappingsDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback((ProgramMappingsDto mapping, string uName, DateTime dCreated) => 
                 {
                     createdProgramMapping = mapping;
                     createNewMappingCalls.Add(DateTime.Now);
@@ -167,9 +167,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var ingestedRecordsCount = 0;
             var updatedInventoryCount = 0;
             var modifiedWhen = new DateTime(2020, 05, 13);
+            var username = "testUser";
 
             // Act
-            _ProgramMappingService.UT_ProcessProgramMappings(programMappings, modifiedWhen, ref updatedInventoryCount, ref ingestedRecordsCount);
+            _ProgramMappingService.UT_ProcessProgramMappings(programMappings, modifiedWhen, username, ref updatedInventoryCount, ref ingestedRecordsCount);
 
             // Assert
             Assert.AreEqual(1, checkForExistingCalls.Count, "Invalid call count.");
@@ -227,7 +228,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             var createNewMappingCalls = new List<DateTime>();
             _ProgramMappingRepositoryMock
-                .Setup(s => s.CreateProgramMapping(It.IsAny<ProgramMappingsDto>()))
+                .Setup(s => s.CreateProgramMapping(It.IsAny<ProgramMappingsDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
                 .Callback(() =>
                 {
                     createNewMappingCalls.Add(DateTime.Now);
@@ -236,8 +237,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             var updateExistingMappingCalls = new List<DateTime>();
             _ProgramMappingRepositoryMock
-                .Setup(s => s.UpdateProgramMapping(It.IsAny<ProgramMappingsDto>()))
-                .Callback((ProgramMappingsDto mapping) =>
+                .Setup(s => s.UpdateProgramMapping(It.IsAny<ProgramMappingsDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback((ProgramMappingsDto mapping, string uName, DateTime dUpdated) =>
                 {
                     programMappingToBeUpdated = mapping;
                     updateExistingMappingCalls.Add(DateTime.Now);
@@ -251,9 +252,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var ingestedRecordsCount = 0;
             var updatedInventoryCount = 0;
             var modifiedWhen = new DateTime(2020, 05, 13);
+            var username = "testUser";
 
             // Act
-            _ProgramMappingService.UT_ProcessProgramMappings(programMappings, modifiedWhen, ref updatedInventoryCount, ref ingestedRecordsCount);
+            _ProgramMappingService.UT_ProcessProgramMappings(programMappings, modifiedWhen, username, ref updatedInventoryCount, ref ingestedRecordsCount);
 
             // Assert
             Assert.AreEqual(1, checkForExistingCalls.Count, "Invalid call count.");
@@ -296,8 +298,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             var createNewMappingCalls = new List<DateTime>();
             _ProgramMappingRepositoryMock
-                .Setup(s => s.CreateProgramMapping(It.IsAny<ProgramMappingsDto>()))
-                .Callback((ProgramMappingsDto mapping) =>
+                .Setup(s => s.CreateProgramMapping(It.IsAny<ProgramMappingsDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback((ProgramMappingsDto mapping, string uName, DateTime dCreated) =>
                 {
                     programMappingsToBeCreated.Add(mapping);
                     createNewMappingCalls.Add(DateTime.Now);
@@ -306,7 +308,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             var updateExistingMappingCalls = new List<DateTime>();
             _ProgramMappingRepositoryMock
-                .Setup(s => s.UpdateProgramMapping(It.IsAny<ProgramMappingsDto>()))
+                .Setup(s => s.UpdateProgramMapping(It.IsAny<ProgramMappingsDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
                 .Callback(() =>
                 {
                     updateExistingMappingCalls.Add(DateTime.Now);
@@ -320,9 +322,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var ingestedRecordsCount = 0;
             var updatedInventoryCount = 0;
             var modifiedWhen = new DateTime(2020, 05, 13);
+            var username = "testUser";
 
             // Act
-            _ProgramMappingService.UT_ProcessProgramMappings(programMappings, modifiedWhen, ref updatedInventoryCount, ref ingestedRecordsCount);
+            _ProgramMappingService.UT_ProcessProgramMappings(programMappings, modifiedWhen, username, ref updatedInventoryCount, ref ingestedRecordsCount);
 
             // Assert
             Assert.AreEqual(3, checkForExistingCalls.Count, "Invalid call count.");
@@ -362,15 +365,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(false);
             
             _ProgramMappingRepositoryMock
-                .Setup(s => s.CreateProgramMapping(It.IsAny<ProgramMappingsDto>()))
+                .Setup(s => s.CreateProgramMapping(It.IsAny<ProgramMappingsDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
                 .Returns(1);
 
             var ingestedRecordsCount = 0;
             var updatedInventoryCount = 0;
             var modifiedWhen = new DateTime(2020, 05, 13);
+            var username = "testUser";
 
             // Act
-            _ProgramMappingService.UT_ProcessProgramMappings(programMappings, modifiedWhen, ref updatedInventoryCount, ref ingestedRecordsCount);
+            _ProgramMappingService.UT_ProcessProgramMappings(programMappings, modifiedWhen, username, ref updatedInventoryCount, ref ingestedRecordsCount);
 
             // Assert
             Assert.AreEqual(1, _getManifestDaypartByNameCalls.Count, "Invalid call count.");

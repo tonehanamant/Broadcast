@@ -1382,6 +1382,10 @@
           <Property Name="official_program_name" Type="nvarchar" MaxLength="500" />
           <Property Name="genre_id" Type="int" Nullable="false" />
           <Property Name="show_type_id" Type="int" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="modified_by" Type="varchar" MaxLength="63" />
+          <Property Name="modified_at" Type="datetime" />
         </EntityType>
         <EntityType Name="program_names">
           <Key>
@@ -2036,7 +2040,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -2179,7 +2183,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventor
           <Property Name="vpvh_file_id" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -2207,7 +2211,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="daypart_text" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="total_hours" Type="float" Nullable="false" />
         </EntityType>
-        <Association Name="FK__genre_map__maest__27114E05">
+        <Association Name="FK__genre_map__maest__436BFEE3">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2219,7 +2223,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__genre_map__mappe__2805723E">
+        <Association Name="FK__genre_map__mappe__4460231C">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2231,7 +2235,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__plan_vers__genre__6CAFA246">
+        <Association Name="FK__plan_vers__genre__76EBA2E9">
           <End Role="genres" Type="Self.genres" Multiplicity="0..1" />
           <End Role="plan_version_daypart_program_restrictions" Type="Self.plan_version_daypart_program_restrictions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -5784,15 +5788,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
     [vw_ccc_daypart].[total_hours] AS [total_hours]
     FROM [dbo].[vw_ccc_daypart] AS [vw_ccc_daypart]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__genre_map__maest__27114E05" Association="Self.FK__genre_map__maest__27114E05">
+          <AssociationSet Name="FK__genre_map__maest__436BFEE3" Association="Self.FK__genre_map__maest__436BFEE3">
             <End Role="genres" EntitySet="genres" />
             <End Role="genre_mappings" EntitySet="genre_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK__genre_map__mappe__2805723E" Association="Self.FK__genre_map__mappe__2805723E">
+          <AssociationSet Name="FK__genre_map__mappe__4460231C" Association="Self.FK__genre_map__mappe__4460231C">
             <End Role="genres" EntitySet="genres" />
             <End Role="genre_mappings" EntitySet="genre_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK__plan_vers__genre__6CAFA246" Association="Self.FK__plan_vers__genre__6CAFA246">
+          <AssociationSet Name="FK__plan_vers__genre__76EBA2E9" Association="Self.FK__plan_vers__genre__76EBA2E9">
             <End Role="genres" EntitySet="genres" />
             <End Role="plan_version_daypart_program_restrictions" EntitySet="plan_version_daypart_program_restrictions" />
           </AssociationSet>
@@ -13504,6 +13508,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="show_type_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="show_types" Relationship="BroadcastModel.FK_program_name_mappings_show_types" FromRole="program_name_mappings" ToRole="show_types" />
           <NavigationProperty Name="genre" Relationship="BroadcastModel.FK_program_name_mappings_genres" FromRole="program_name_mappings" ToRole="genre" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_by" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="modified_at" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_program_name_mappings_show_types">
           <End Type="BroadcastModel.show_types" Role="show_types" Multiplicity="1" />
@@ -16264,6 +16272,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="program_name_mappings">
             <EntityTypeMapping TypeName="BroadcastModel.program_name_mappings">
               <MappingFragment StoreEntitySet="program_name_mappings">
+                <ScalarProperty Name="modified_at" ColumnName="modified_at" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="show_type_id" ColumnName="show_type_id" />
                 <ScalarProperty Name="genre_id" ColumnName="genre_id" />
                 <ScalarProperty Name="official_program_name" ColumnName="official_program_name" />

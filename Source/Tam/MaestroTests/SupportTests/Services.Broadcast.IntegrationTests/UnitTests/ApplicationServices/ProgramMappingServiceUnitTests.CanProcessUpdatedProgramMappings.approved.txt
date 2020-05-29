@@ -1,6 +1,10 @@
 ﻿{
   "programMappingToBeUpdated": {
+    "CreatedAt": null,
+    "CreatedBy": null,
     "Id": 1,
+    "ModifiedAt": null,
+    "ModifiedBy": null,
     "OfficialGenre": {
       "Id": 1,
       "Name": "News",

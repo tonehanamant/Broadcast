@@ -2,6 +2,7 @@
 using Common.Services.Repositories;
 using Hangfire;
 using OfficeOpenXml;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.StationInventory;
@@ -42,6 +43,12 @@ namespace Services.Broadcast.ApplicationServices
         [Queue("programmappings")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void RunProgramMappingsProcessingJob(Guid fileId, string userName, DateTime createdDate);
+
+        /// <summary>
+        /// Exports a file containing all the program mappings.
+        /// </summary>
+        /// <returns></returns>
+        ReportOutput ExportProgramMappingsFile(string username);
     }
 
     public class ProgramMappingService : BroadcastBaseClass, IProgramMappingService
@@ -52,10 +59,12 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IShowTypeRepository _ShowTypeRepository;
         private readonly IGenreRepository _GenreRepository;
         private readonly ISharedFolderService _SharedFolderService;
+        private readonly IProgramNameMappingsExportEngine _ProgramNameMappingsExportEngine;
 
         public ProgramMappingService(IBackgroundJobClient backgroundJobClient,
             IDataRepositoryFactory broadcastDataRepositoryFactory,
-            ISharedFolderService sharedFolderService)
+            ISharedFolderService sharedFolderService,
+            IProgramNameMappingsExportEngine programNameMappingsExportEngine)
         {
             _BackgroundJobClient = backgroundJobClient;
             _ProgramMappingRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramMappingRepository>();
@@ -63,6 +72,7 @@ namespace Services.Broadcast.ApplicationServices
             _ShowTypeRepository = broadcastDataRepositoryFactory.GetDataRepository<IShowTypeRepository>();
             _GenreRepository = broadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
             _SharedFolderService = sharedFolderService;
+            _ProgramNameMappingsExportEngine = programNameMappingsExportEngine;
         }
 
         /// <inheritdoc />
@@ -98,7 +108,7 @@ namespace Services.Broadcast.ApplicationServices
             _LogInfo($"The selected program mapping file has {programMappings.Count} rows");
 
             WebUtilityHelper.HtmlDecodeProgramNames(programMappings);
-            _ProcessProgramMappings(programMappings, createdDate, ref updatedInventoryCount, ref ingestedRecordsCount);
+            _ProcessProgramMappings(programMappings, createdDate, userName, ref updatedInventoryCount, ref ingestedRecordsCount);
 
             _SharedFolderService.RemoveFile(fileId);
 
@@ -107,11 +117,40 @@ namespace Services.Broadcast.ApplicationServices
                 
         }
 
+        /// <inheritdoc />
+        public ReportOutput ExportProgramMappingsFile(string username)
+        {
+            const string fileName = "BroadcastMappedPrograms.xlsx";
+
+            _LogInfo($"Export beginning." , username);
+            var durationSw = new Stopwatch();
+            durationSw.Start();
+
+            var mappings = _ProgramMappingRepository.GetProgramMappings();
+
+            _LogInfo($"Exporting {mappings.Count} records.", username);
+
+            var excelPackage = _ProgramNameMappingsExportEngine.GenerateExportFile(mappings);
+            var saveStream = new MemoryStream();
+            excelPackage.SaveAs(saveStream);
+            saveStream.Position = 0;
+            
+            var output = new ReportOutput(fileName)
+            {
+                Stream = saveStream
+            };
+
+            durationSw.Stop();
+
+            _LogInfo($"Export complete for {mappings.Count} mappings to file '{fileName}'. Duration {durationSw.ElapsedMilliseconds} ms", username);
+
+            return output;
+        }
+
         protected void _ProcessProgramMappings(
             List<ProgramMappingsFileRequestDto> programMappings,
-            DateTime createdDate,
-            ref int updatedInventoryCount, 
-            ref int ingestedRecordsCount)
+            DateTime createdDate, string username,
+            ref int updatedInventoryCount, ref int ingestedRecordsCount)
         {
             const ProgramSourceEnum programSource = ProgramSourceEnum.Mapped;
 
@@ -130,7 +169,7 @@ namespace Services.Broadcast.ApplicationServices
                             existingMapping.OfficialProgramName = mapping.OfficialProgramName;
                             existingMapping.OfficialGenre = _GenreRepository.GetGenreByName(mapping.OfficialGenre, programSource);
                             existingMapping.OfficialShowType = _ShowTypeRepository.GetShowTypeByName(mapping.OfficialShowType);
-                            _ProgramMappingRepository.UpdateProgramMapping(existingMapping);
+                            _ProgramMappingRepository.UpdateProgramMapping(existingMapping, username, createdDate);
                             _UpdateInventoryWithEnrichedProgramName(existingMapping, mapping, createdDate, programSource, ref updatedInventoryCount);
                             ingestedRecordsCount++;
                         }
@@ -144,7 +183,7 @@ namespace Services.Broadcast.ApplicationServices
                             OfficialGenre = _GenreRepository.GetGenreByName(mapping.OfficialGenre, programSource),
                             OfficialShowType = _ShowTypeRepository.GetShowTypeByName(mapping.OfficialShowType)
                         };
-                        _ProgramMappingRepository.CreateProgramMapping(newProgramMapping);
+                        _ProgramMappingRepository.CreateProgramMapping(newProgramMapping, username, createdDate);
                         _UpdateInventoryWithEnrichedProgramName(newProgramMapping, mapping, createdDate, programSource, ref updatedInventoryCount);
                         ingestedRecordsCount++;
                     }
@@ -243,7 +282,8 @@ namespace Services.Broadcast.ApplicationServices
         protected string _GetProgramMappingsDirectoryPath()
         {
             const string dirName = "ProgramMappings";
-            return Directory.CreateDirectory(Path.Combine(BroadcastServiceSystemParameter.BroadcastSharedFolder, dirName)).FullName;
+            var appFolderPath = _GetBroadcastAppFolder();
+            return Path.Combine(appFolderPath, dirName);
         }
     }
 }

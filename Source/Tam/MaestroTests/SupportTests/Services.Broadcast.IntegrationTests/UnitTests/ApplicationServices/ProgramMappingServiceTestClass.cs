@@ -4,6 +4,7 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
+using Services.Broadcast.BusinessEngines;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -12,17 +13,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         public ProgramMappingServiceTestClass(
             IBackgroundJobClient backgroundJobClient,
             IDataRepositoryFactory broadcastDataRepositoryFactory,
-            ISharedFolderService sharedFolderService) 
-            : base(backgroundJobClient, broadcastDataRepositoryFactory, sharedFolderService)
+            ISharedFolderService sharedFolderService,
+            IProgramNameMappingsExportEngine programNameMappingsExportEngine) 
+            : base(backgroundJobClient, broadcastDataRepositoryFactory, sharedFolderService, programNameMappingsExportEngine)
         {
         }
 
         public void UT_ProcessProgramMappings(
             List<ProgramMappingsFileRequestDto> programMappings,
-            DateTime createdDate,
+            DateTime createdDate, string username,
             ref int updatedInventoryCount, ref int ingestedRecordsCount)
         {
-            _ProcessProgramMappings(programMappings, createdDate, ref updatedInventoryCount, ref ingestedRecordsCount);
+            _ProcessProgramMappings(programMappings, createdDate, username, ref updatedInventoryCount, ref ingestedRecordsCount);
         }
     }
 }

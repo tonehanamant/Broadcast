@@ -20,7 +20,7 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> genre_id { get; set; }
         public string content_rating { get; set; }
     
-        public virtual genre genre { get; set; }
         public virtual plan_version_dayparts plan_version_dayparts { get; set; }
+        public virtual genre genre { get; set; }
     }
 }

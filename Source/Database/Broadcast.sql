@@ -73,6 +73,36 @@ update program_sources set name = 'Mapped' where name = 'Maestro'
 update program_sources set name = 'Forecasted' where name = 'RedBee'
 
 /*************************************** END BP1-3 *****************************************************/
+/*************************************** START BP1-7 *****************************************************/
+
+GO
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'created_by' AND OBJECT_ID = OBJECT_ID('program_name_mappings'))
+BEGIN
+	ALTER TABLE program_name_mappings
+		ADD created_by VARCHAR(63) NULL
+
+	ALTER TABLE program_name_mappings
+		ADD created_at datetime NULL
+
+	ALTER TABLE program_name_mappings
+		ADD modified_by VARCHAR(63) NULL
+
+	ALTER TABLE program_name_mappings
+		ADD modified_at DATETIME NULL
+
+	EXEC('UPDATE program_name_mappings SET created_by = ''system_column_add'', created_at = SYSDATETIME()')
+
+	ALTER TABLE program_name_mappings
+		ALTER COLUMN created_by VARCHAR(63) NOT NULL
+
+	ALTER TABLE program_name_mappings
+		ALTER COLUMN created_at DATETIME NOT NULL
+END
+
+GO
+
+/*************************************** END BP1-7 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

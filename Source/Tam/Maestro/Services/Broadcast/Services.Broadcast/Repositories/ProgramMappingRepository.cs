@@ -28,20 +28,21 @@ namespace Services.Broadcast.Repositories
         /// <returns>The program mapping</returns>
         ProgramMappingsDto GetProgramMappingByOriginalProgramName(string originalProgramName);
 
+        /// <summary>
+        /// Get all the program mappings.
+        /// </summary>
+        /// <returns></returns>
         List<ProgramMappingsDto> GetProgramMappings();
 
         /// <summary>
         /// Creates a new program mapping.
         /// </summary>
-        /// <param name="newProgramMapping">The new program mapping.</param>
-        /// <returns>The program mapping</returns>
-        int CreateProgramMapping(ProgramMappingsDto newProgramMapping);
+        int CreateProgramMapping(ProgramMappingsDto newProgramMapping, string createdBy, DateTime createdAt);
 
         /// <summary>
         /// Updates the program mapping.
         /// </summary>
-        /// <param name="programMapping">The program mapping.</param>
-        void UpdateProgramMapping(ProgramMappingsDto programMapping);
+        void UpdateProgramMapping(ProgramMappingsDto programMapping, string updatedBy, DateTime updatedAt);
     }
 
     public class ProgramMappingRepository : BroadcastRepositoryBase, IProgramMappingRepository
@@ -64,20 +65,6 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public List<ProgramMappingsDto> GetProgramMappings()
-        {
-            return _InReadUncommitedTransaction(
-                context =>
-                {
-                    return context.program_name_mappings
-                        .Include(x => x.genre)
-                        .Include(x => x.show_types)
-                        .ToList()
-                        .Select(_MapToDto)
-                        .ToList();
-                });
-        }
-
         /// <inheritdoc />
         public bool MappingExistsForOriginalProgramName(string originalProgramName)
         {
@@ -90,12 +77,14 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc />
-        public int CreateProgramMapping(ProgramMappingsDto programMappingDto)
+        public int CreateProgramMapping(ProgramMappingsDto programMappingDto, string createdBy, DateTime createdAt)
         {
             return _InReadUncommitedTransaction(context =>
             {
                 var newProgramMapping = new program_name_mappings();
                 _MapFromDto(programMappingDto, newProgramMapping);
+                newProgramMapping.created_at = createdAt;
+                newProgramMapping.created_by = createdBy;
 
                 context.program_name_mappings.Add(newProgramMapping);
                 context.SaveChanges();
@@ -106,7 +95,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public void UpdateProgramMapping(ProgramMappingsDto programMappingDto)
+        public void UpdateProgramMapping(ProgramMappingsDto programMappingDto, string updatedBy, DateTime updatedAt)
         {
             _InReadUncommitedTransaction(context =>
             {
@@ -119,7 +108,25 @@ namespace Services.Broadcast.Repositories
                 programMapping.genre_id = programMappingDto.OfficialGenre.Id;
                 programMapping.show_type_id = programMappingDto.OfficialShowType.Id;
                 
+                programMapping.modified_by = updatedBy;
+                programMapping.modified_at = updatedAt;
+
                 context.SaveChanges();
+            });
+        }
+
+        /// <inheritdoc />
+        public List<ProgramMappingsDto> GetProgramMappings()
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var mappingEntities = context.program_name_mappings
+                    .Include(x => x.genre)
+                    .Include(x => x.show_types)
+                    .ToList();
+
+                var programMappings = mappingEntities.Select(_MapToDto).ToList();
+                return programMappings;
             });
         }
 
@@ -139,7 +146,11 @@ namespace Services.Broadcast.Repositories
                 {
                     Id = program_name_mappings.show_types.id,
                     Name = program_name_mappings.show_types.name
-                }
+                },
+                CreatedBy = program_name_mappings.created_by,
+                CreatedAt = program_name_mappings.created_at,
+                ModifiedBy = program_name_mappings.modified_by,
+                ModifiedAt = program_name_mappings.modified_at
             };
         }
 

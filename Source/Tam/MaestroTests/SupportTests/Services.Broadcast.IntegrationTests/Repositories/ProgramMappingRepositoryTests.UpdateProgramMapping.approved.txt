@@ -1,0 +1,17 @@
+{
+  "CreatedAt": "2020-10-17T08:32:12",
+  "CreatedBy": "testUser",
+  "ModifiedAt": "2020-10-20T08:32:12",
+  "ModifiedBy": "testUser",
+  "OfficialGenre": {
+    "Id": 39,
+    "Name": "Reality",
+    "ProgramSourceId": 0
+  },
+  "OfficialProgramName": "TestOfficialProgramNameNowModified",
+  "OfficialShowType": {
+    "Id": 12,
+    "Name": "To Be Announced"
+  },
+  "OriginalProgramName": "testProgramName"
+}

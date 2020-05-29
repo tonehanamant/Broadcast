@@ -339,6 +339,7 @@
     <Compile Include="ApplicationServices\AudienceServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PostingBookServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProgramGuideServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\ProgramMappingServiceTests.cs" />
     <Compile Include="ApplicationServices\ProgramServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProprietaryFileImporterIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProprietaryInventoryServiceIntegrationTests.cs" />
@@ -397,6 +398,7 @@
     <Compile Include="Repositories\InventoryFileRepositoryTests.cs" />
     <Compile Include="Repositories\InventoryRepositoryTests.cs" />
     <Compile Include="Repositories\PlanSummaryRepositoryTests.cs" />
+    <Compile Include="Repositories\ProgramMappingRepositoryTests.cs" />
     <Compile Include="Repositories\RatingForcastRepositoryTests.cs" />
     <Compile Include="Repositories\PostRepositoryTests.cs" />
     <Compile Include="Repositories\StationRepositoryTests.cs" />
@@ -452,6 +454,8 @@
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryQuarterCalculatorEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventorySourceSortEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingUnitCapImpressionsCalculationEngineTests.cs" />
+    <Compile Include="UnitTests\BusinessEngines\ProgramNameMappingsExportEngineUnitTestClass.cs" />
+    <Compile Include="UnitTests\BusinessEngines\ProgramNameMappingsExportEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\TrackingEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\WeeklyBreakdownEngineUnitTests.cs" />
     <Compile Include="UnitTests\Converters\RateImport\DiginetFileImporterUnitTests.cs" />

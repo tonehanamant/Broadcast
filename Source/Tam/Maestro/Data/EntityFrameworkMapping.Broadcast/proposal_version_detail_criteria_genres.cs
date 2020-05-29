@@ -19,7 +19,7 @@ namespace EntityFrameworkMapping.Broadcast
         public byte contain_type { get; set; }
         public int genre_id { get; set; }
     
-        public virtual genre genre { get; set; }
         public virtual proposal_version_details proposal_version_details { get; set; }
+        public virtual genre genre { get; set; }
     }
 }

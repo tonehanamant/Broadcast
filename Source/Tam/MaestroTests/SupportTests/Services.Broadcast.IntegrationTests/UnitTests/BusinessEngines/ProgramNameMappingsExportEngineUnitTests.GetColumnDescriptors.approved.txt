@@ -1,0 +1,38 @@
+[
+  {
+    "ColumnIndex": 1,
+    "ColumnType": 0,
+    "Name": "Rate Card Program Name",
+    "Width": 80.0
+  },
+  {
+    "ColumnIndex": 2,
+    "ColumnType": 0,
+    "Name": "Official Program Name",
+    "Width": 67.0
+  },
+  {
+    "ColumnIndex": 3,
+    "ColumnType": 0,
+    "Name": "Official Genre",
+    "Width": 15.0
+  },
+  {
+    "ColumnIndex": 4,
+    "ColumnType": 0,
+    "Name": "Official Show Type",
+    "Width": 16.71
+  },
+  {
+    "ColumnIndex": 5,
+    "ColumnType": 0,
+    "Name": "Last Updated By",
+    "Width": 15.43
+  },
+  {
+    "ColumnIndex": 6,
+    "ColumnType": 1,
+    "Name": "Last Updated",
+    "Width": 15.43
+  }
+]
