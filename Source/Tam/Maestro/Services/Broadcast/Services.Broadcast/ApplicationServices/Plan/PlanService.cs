@@ -1749,6 +1749,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         public List<LengthMakeUpTableRow> CalculateLengthMakeUpTable(LengthMakeUpRequest request)
         {
             List<LengthMakeUpTableRow> result = new List<LengthMakeUpTableRow>();
+            request.CreativeLengths = _CreativeLengthEngine.DistributeWeight(request.CreativeLengths);
             foreach (var creativeLength in request.CreativeLengths)
             {
                 var impressions = request.Weeks.Where(x => x.SpotLengthId == creativeLength.SpotLengthId).Sum(x => x.WeeklyImpressions);

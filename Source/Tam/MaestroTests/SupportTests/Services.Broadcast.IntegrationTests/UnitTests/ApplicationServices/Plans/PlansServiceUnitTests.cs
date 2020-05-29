@@ -1313,5 +1313,39 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CalculateLengthMakeUpTable_WeightNotSet()
+        {
+            var request = new LengthMakeUpRequest
+            {
+                CreativeLengths = new List<CreativeLength>{
+                    new CreativeLength{ SpotLengthId = 1, Weight = 50},
+                    new CreativeLength{ SpotLengthId = 2, Weight = 20},
+                    new CreativeLength{ SpotLengthId = 3}
+                },
+                TotalImpressions = 100000,
+                Weeks = _GetWeeklyBreakdownWeeks()
+            };
+
+            _CreativeLengthEngineMock
+                .Setup(x => x.DistributeWeight(It.IsAny<IEnumerable<CreativeLength>>()))
+                .Returns(new List<CreativeLength>
+                {
+                    new CreativeLength { SpotLengthId = 1, Weight = 50 },
+                    new CreativeLength { SpotLengthId = 2, Weight = 20 },
+                    new CreativeLength { SpotLengthId = 3, Weight = 30 }
+                });
+            _SpotLengthEngineMock
+                .Setup(a => a.GetSpotLengths())
+                .Returns(new Dictionary<int, int> { { 30, 1 }, { 15, 2 }, { 45, 3 } });
+
+            // Act
+            var results = _PlanService.CalculateLengthMakeUpTable(request);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
+        }
     }
 }

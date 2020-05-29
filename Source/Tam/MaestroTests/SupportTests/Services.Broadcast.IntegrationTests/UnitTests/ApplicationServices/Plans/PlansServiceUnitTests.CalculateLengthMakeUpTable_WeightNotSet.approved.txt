@@ -1,0 +1,23 @@
+[
+  {
+    "Budget": 25.0,
+    "GoalPercentage": 20,
+    "Impressions": 25000.0,
+    "ImpressionsPercentage": 25.0,
+    "SpotLengthId": 2
+  },
+  {
+    "Budget": 50.0,
+    "GoalPercentage": 50,
+    "Impressions": 50000.0,
+    "ImpressionsPercentage": 50.0,
+    "SpotLengthId": 1
+  },
+  {
+    "Budget": 25.0,
+    "GoalPercentage": 30,
+    "Impressions": 25000.0,
+    "ImpressionsPercentage": 25.0,
+    "SpotLengthId": 3
+  }
+]
