@@ -12,6 +12,7 @@
   },
   "Result": {
     "GoalFulfilledByProprietary": false,
+    "HasProgramResults": false,
     "JobId": null,
     "Notes": null,
     "OptimalCpm": 0.0,

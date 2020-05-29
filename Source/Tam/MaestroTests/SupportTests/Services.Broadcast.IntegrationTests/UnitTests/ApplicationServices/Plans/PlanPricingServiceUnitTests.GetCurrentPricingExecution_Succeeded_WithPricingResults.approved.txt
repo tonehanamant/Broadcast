@@ -12,6 +12,7 @@
   },
   "Result": {
     "GoalFulfilledByProprietary": true,
+    "HasProgramResults": false,
     "JobId": 12,
     "Notes": "Proprietary goals meet plan goals",
     "OptimalCpm": 5.0,
