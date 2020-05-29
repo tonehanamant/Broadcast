@@ -36,7 +36,7 @@ namespace Services.Broadcast.BusinessEngines
             public int ColumnIndex { get; set; }
             public string Name { get; set; }
             public ColumnTypeEnum ColumnType { get; set; }
-            public double Width { get; set; } = 10.38;
+            public double Width { get; set; }
         }
 
         /// <summary>
@@ -44,12 +44,12 @@ namespace Services.Broadcast.BusinessEngines
         /// </summary>
         private readonly List<ColumnDescriptor> _BaseColumnHeaders = new List<ColumnDescriptor>
         {
-            new ColumnDescriptor {ColumnIndex = 1, Name = "Rate Card Program Name", ColumnType = ColumnTypeEnum.Text, Width = 80},
-            new ColumnDescriptor {ColumnIndex = 2, Name = "Official Program Name", ColumnType = ColumnTypeEnum.Text, Width = 67},
-            new ColumnDescriptor {ColumnIndex = 3, Name = "Official Genre", ColumnType = ColumnTypeEnum.Text, Width = 15},
-            new ColumnDescriptor {ColumnIndex = 4, Name = "Official Show Type", ColumnType = ColumnTypeEnum.Text, Width = 16.71},
-            new ColumnDescriptor {ColumnIndex = 5, Name = "Last Updated By", ColumnType = ColumnTypeEnum.Text, Width = 15.43},
-            new ColumnDescriptor {ColumnIndex = 6, Name = "Last Updated", ColumnType = ColumnTypeEnum.DateTime, Width = 15.43},
+            new ColumnDescriptor {ColumnIndex = 1, Name = "Rate Card Program Name", ColumnType = ColumnTypeEnum.Text, Width = 38.86},
+            new ColumnDescriptor {ColumnIndex = 2, Name = "Official Program Name", ColumnType = ColumnTypeEnum.Text, Width = 32.14},
+            new ColumnDescriptor {ColumnIndex = 3, Name = "Official Genre", ColumnType = ColumnTypeEnum.Text, Width = 13.29},
+            new ColumnDescriptor {ColumnIndex = 4, Name = "Official Show Type", ColumnType = ColumnTypeEnum.Text, Width = 17.14},
+            new ColumnDescriptor {ColumnIndex = 5, Name = "Last Updated By", ColumnType = ColumnTypeEnum.Text, Width = 22.71},
+            new ColumnDescriptor {ColumnIndex = 6, Name = "Last Updated", ColumnType = ColumnTypeEnum.DateTime, Width = 20},
         };
 
         private const int ROW_NUMBER_GENERATED_TIMESTAMP = 1;

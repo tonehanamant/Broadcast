@@ -158,7 +158,7 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
-        [Route("ImportProgramMappings")]
+        [Route("ExportProgramMappings")]
         public ActionResult ExportProgramMappings()
         {
             try
