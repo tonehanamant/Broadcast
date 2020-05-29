@@ -1,4 +1,6 @@
 ﻿using Common.Services;
+using Common.Services.Repositories;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using Services.Broadcast;
 using Services.Broadcast.ApplicationServices;
@@ -6,6 +8,7 @@ using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.ApplicationServices.Maintenance;
 using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Repositories;
 using System;
 using System.IO;
 using System.Linq;
@@ -22,11 +25,13 @@ namespace BroadcastComposerWeb.Controllers
     public class MaintenanceController : Controller
     {
         private readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
+        private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
 
         public MaintenanceController(
             BroadcastApplicationServiceFactory applicationServiceFactory)
         {
             _ApplicationServiceFactory = applicationServiceFactory;
+            _BroadcastDataRepositoryFactory = BroadcastApplicationServiceFactory.Instance.Resolve<IDataRepositoryFactory>();
         }
 
         protected string _GetCurrentUserFullName() =>
@@ -636,6 +641,32 @@ namespace BroadcastComposerWeb.Controllers
 
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult HTMLDecodeProgramNames(string protectionKey)
+        {
+            try
+            {
+                if (protectionKey == "q1w2e3r4")
+                {
+                    _BroadcastDataRepositoryFactory
+                        .GetDataRepository<IDataMaintenanceRepository>()
+                        .HtmlDecodeProgramNames();
+
+                    ViewBag.Message = "Program names were successfully decoded";
+                }
+                else
+                {
+                    ViewBag.Message = "Invalid protection key";
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+            }
+
+            return View("Index");
         }
     }
 }

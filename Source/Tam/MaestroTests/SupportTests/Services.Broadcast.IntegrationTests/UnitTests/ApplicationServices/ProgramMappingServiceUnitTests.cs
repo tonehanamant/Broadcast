@@ -72,9 +72,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         }
                     };
                 });
-            _InventoryRepositoryMock
-                .Setup(s => s.GetStationInventoryManifesDaypartWeeksDateRange(It.IsAny<int>()))
-                .Returns(new DateRange { Start = new DateTime(2020, 5, 20), End = new DateTime(2020, 6, 1) });
 
             _InventoryRepositoryMock
                 .Setup(s => s.GetDaypartProgramsForInventoryDayparts(It.IsAny<List<int>>()))
@@ -82,10 +79,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 {
                     new StationInventoryManifestDaypartProgram { Id = 1, StationInventoryManifestDaypartId = 1 }
                 });
-
-            _InventoryRepositoryMock
-                .Setup(s => s.StationInventoryManifesDaypartHasWeeks(It.IsAny<int>()))
-                .Returns(true);
 
             _deleteInventoryCalls = new List<DateTime>();
             _InventoryRepositoryMock
@@ -166,6 +159,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 })
                 .Returns(1);
 
+            var savedPrimaryPrograms = new List<IEnumerable<StationInventoryManifestDaypart>>();
+            _InventoryRepositoryMock
+                .Setup(x => x.UpdatePrimaryProgramsForManifestDayparts(It.IsAny<IEnumerable<StationInventoryManifestDaypart>>()))
+                .Callback<IEnumerable<StationInventoryManifestDaypart>>(x => savedPrimaryPrograms.Add(x));
+                
             var ingestedRecordsCount = 0;
             var updatedInventoryCount = 0;
             var modifiedWhen = new DateTime(2020, 05, 13);
@@ -183,7 +181,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(1, ingestedRecordsCount, "Only one record should be ingested.");
             Assert.AreEqual(1, updatedInventoryCount, "Only one inventory item should be updated.");
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(createdProgramMapping, _GetJsonSettings()));
+            var result = new
+            {
+                createdProgramMapping,
+                savedPrimaryPrograms
+            };
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
         }
 
         [Test]
@@ -240,6 +243,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     updateExistingMappingCalls.Add(DateTime.Now);
                 });
 
+            var savedPrimaryPrograms = new List<IEnumerable<StationInventoryManifestDaypart>>();
+            _InventoryRepositoryMock
+                .Setup(x => x.UpdatePrimaryProgramsForManifestDayparts(It.IsAny<IEnumerable<StationInventoryManifestDaypart>>()))
+                .Callback<IEnumerable<StationInventoryManifestDaypart>>(x => savedPrimaryPrograms.Add(x));
+
             var ingestedRecordsCount = 0;
             var updatedInventoryCount = 0;
             var modifiedWhen = new DateTime(2020, 05, 13);
@@ -258,7 +266,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(1, ingestedRecordsCount, "Only one record should be ingested.");
             Assert.AreEqual(1, updatedInventoryCount, "Only one inventory item should be updated.");
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(programMappingToBeUpdated));
+            var result = new
+            {
+                programMappingToBeUpdated,
+                savedPrimaryPrograms
+            };
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         [Test]
@@ -299,6 +312,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     updateExistingMappingCalls.Add(DateTime.Now);
                 });
 
+            var savedPrimaryPrograms = new List<IEnumerable<StationInventoryManifestDaypart>>();
+            _InventoryRepositoryMock
+                .Setup(x => x.UpdatePrimaryProgramsForManifestDayparts(It.IsAny<IEnumerable<StationInventoryManifestDaypart>>()))
+                .Callback<IEnumerable<StationInventoryManifestDaypart>>(x => savedPrimaryPrograms.Add(x));
+
             var ingestedRecordsCount = 0;
             var updatedInventoryCount = 0;
             var modifiedWhen = new DateTime(2020, 05, 13);
@@ -317,7 +335,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(3, ingestedRecordsCount, "Only one record should be ingested.");
             Assert.AreEqual(3, updatedInventoryCount, "Only one inventory item should be updated.");
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(programMappingsToBeCreated, _GetJsonSettings()));
+            var result = new
+            {
+                programMappingsToBeCreated,
+                savedPrimaryPrograms
+            };
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
         }
 
         [Test]
@@ -356,82 +379,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             Assert.AreEqual(1, ingestedRecordsCount, "Only one record should be ingested.");
             Assert.AreEqual(1, updatedInventoryCount, "Only one inventory item should be updated.");
-        }
-
-        [Test]
-        public void WillNotUpdateInventoryIfItHasNoWeeks()
-        {
-            // Arrange
-            var programMappings = new List<ProgramMappingsFileRequestDto>
-            {
-                new ProgramMappingsFileRequestDto { OriginalProgramName = "10 NEWS 6PM", OfficialProgramName = "10 NEWS", OfficialGenre = "News", OfficialShowType = "News" },
-            };
-
-            _InventoryRepositoryMock
-                .Setup(s => s.StationInventoryManifesDaypartHasWeeks(It.IsAny<int>()))
-                .Returns(false);
-
-            var checkForExistingCalls = new List<DateTime>();
-            _ProgramMappingRepositoryMock
-                .Setup(s => s.MappingExistsForOriginalProgramName(It.IsAny<string>()))
-                .Callback(() => checkForExistingCalls.Add(DateTime.Now))
-                .Returns(true);
-            _ProgramMappingRepositoryMock
-               .Setup(s => s.GetProgramMappingByOriginalProgramName(It.IsAny<string>()))
-               .Returns(new ProgramMappingsDto
-               {
-                   Id = 1,
-                   OriginalProgramName = "10 NEWS 6PM",
-                   OfficialProgramName = "10 NEWS R",
-                   OfficialGenre = new Genre
-                   {
-                       Id = 2,
-                       Name = "Religious"
-                   },
-                   OfficialShowType = new ShowTypeDto
-                   {
-                       Id = 2,
-                       Name = "Paid Programming"
-                   }
-               });
-
-            var programMappingToBeUpdated = new ProgramMappingsDto();
-
-            var createNewMappingCalls = new List<DateTime>();
-            _ProgramMappingRepositoryMock
-                .Setup(s => s.CreateProgramMapping(It.IsAny<ProgramMappingsDto>()))
-                .Callback(() =>
-                {
-                    createNewMappingCalls.Add(DateTime.Now);
-                })
-                .Returns(1);
-
-            var updateExistingMappingCalls = new List<DateTime>();
-            _ProgramMappingRepositoryMock
-                .Setup(s => s.UpdateProgramMapping(It.IsAny<ProgramMappingsDto>()))
-                .Callback((ProgramMappingsDto mapping) =>
-                {
-                    programMappingToBeUpdated = mapping;
-                    updateExistingMappingCalls.Add(DateTime.Now);
-                });
-
-            var ingestedRecordsCount = 0;
-            var updatedInventoryCount = 0;
-            var modifiedWhen = new DateTime(2020, 05, 13);
-
-            // Act
-            _ProgramMappingService.UT_ProcessProgramMappings(programMappings, modifiedWhen, ref updatedInventoryCount, ref ingestedRecordsCount);
-
-            // Assert
-            Assert.AreEqual(1, checkForExistingCalls.Count, "Invalid call count.");
-            Assert.AreEqual(0, createNewMappingCalls.Count, "Invalid call count.");
-            Assert.AreEqual(1, updateExistingMappingCalls.Count, "Invalid call count.");
-            Assert.AreEqual(1, _getManifestDaypartByNameCalls.Count, "Invalid call count.");
-            Assert.AreEqual(0, _deleteInventoryCalls.Count, "Invalid call count.");
-            Assert.AreEqual(0, _createInventoryCalls.Count, "Invalid call count.");
-
-            Assert.AreEqual(1, ingestedRecordsCount, "Only one record should be ingested.");
-            Assert.AreEqual(0, updatedInventoryCount, "No inventory item should be updated.");
         }
 
         private JsonSerializerSettings _GetJsonSettings()

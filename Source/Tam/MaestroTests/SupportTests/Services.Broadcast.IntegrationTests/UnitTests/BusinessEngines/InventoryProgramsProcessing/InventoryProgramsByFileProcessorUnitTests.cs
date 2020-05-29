@@ -19,6 +19,9 @@ using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
+using ApprovalTests.Reporters;
+using ApprovalTests;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.InventoryProgramsProcessing
 {
@@ -32,6 +35,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
         private Mock<IProgramGuideApiClient> _ProgramGuidClient = new Mock<IProgramGuideApiClient>();
         private Mock<IStationMappingService> _StationMappingService = new Mock<IStationMappingService>();
         private Mock<IGenreCache> _GenreCacheMock = new Mock<IGenreCache>();
+        private Mock<IProgramMappingRepository> _ProgramMappingRepositoryMock = new Mock<IProgramMappingRepository>();
 
         private Mock<IFileService> _FileService = new Mock<IFileService>();
         private Mock<IEmailerService> _EmailerService = new Mock<IEmailerService>();
@@ -136,6 +140,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                     emailsSent.Add(new Tuple<string, string, MailPriority, string[]>(b,s,p,t)))
                 .Returns(true);
 
+            var createdPrograms = new List<List<StationInventoryManifestDaypartProgram>>();
+            _InventoryRepo
+                .Setup(x => x.CreateInventoryPrograms(It.IsAny<List<StationInventoryManifestDaypartProgram>>(), It.IsAny<DateTime>()))
+                .Callback<List<StationInventoryManifestDaypartProgram>, DateTime>((programs, date) => createdPrograms.Add(programs));
+
+            var daypartsUpdatedWithPrimaryProgram = new List<IEnumerable<StationInventoryManifestDaypart>>();
+            _InventoryRepo
+                .Setup(x => x.UpdatePrimaryProgramsForManifestDayparts(It.IsAny<IEnumerable<StationInventoryManifestDaypart>>()))
+                .Callback<IEnumerable<StationInventoryManifestDaypart>>(dayparts => daypartsUpdatedWithPrimaryProgram.Add(dayparts));
+
             var engine = _GetInventoryProgramsProcessingEngine();
             engine.UT_CurrentDateTime = new DateTime(2020, 03, 06, 14,22, 35);
 
@@ -171,7 +185,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             // verify the file was exported well
             Assert.AreEqual(1, createdFiles.Count);
             Assert.AreEqual("ProgramGuideExport_FILE_12_20200306_142235.csv", Path.GetFileName(createdFiles[0].Item1));
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(createdFiles[0].Item2));
+
+            var result = new
+            {
+                createdPrograms,
+                daypartsUpdatedWithPrimaryProgram,
+                exportedFile = createdFiles[0].Item2
+            };
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         [Test]
@@ -1073,11 +1094,34 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                     StartTime = 100,
                     EndTime = 200
                 }).ToList());
-                
+
+            _ProgramMappingRepositoryMock
+                .Setup(x => x.GetProgramMappings())
+                .Returns(new List<ProgramMappingsDto>
+                {
+                    new ProgramMappingsDto
+                    {
+                        Id = 3,
+                        OriginalProgramName = "wOnder womAn 1984",
+                        OfficialProgramName = "Wonder Woman 1984",
+                        OfficialGenre = new Genre
+                        {
+                            Id = 4,
+                            Name = "Fantasy"
+                        },
+                        OfficialShowType = new ShowTypeDto
+                        {
+                            Id = 5,
+                            Name = "Movie"
+                        }
+                    }
+                });
+
             var dataRepoFactory = new Mock<IDataRepositoryFactory>();
             dataRepoFactory.Setup(s => s.GetDataRepository<IInventoryRepository>()).Returns(_InventoryRepo.Object);
             dataRepoFactory.Setup(s => s.GetDataRepository<IInventoryFileRepository>()).Returns(_InventoryFileRepo.Object);
             dataRepoFactory.Setup(s => s.GetDataRepository<IInventoryProgramsByFileJobsRepository>()).Returns(_InventoryProgramsByFileJobsRepo.Object);
+            dataRepoFactory.Setup(x => x.GetDataRepository<IProgramMappingRepository>()).Returns(_ProgramMappingRepositoryMock.Object);
 
             return dataRepoFactory;
         }

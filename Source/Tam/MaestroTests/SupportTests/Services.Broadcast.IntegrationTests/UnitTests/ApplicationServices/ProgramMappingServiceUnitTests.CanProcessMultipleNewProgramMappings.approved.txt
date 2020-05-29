@@ -1,41 +1,78 @@
-﻿[
-  {
-    "OfficialGenre": {
-      "Id": 2,
-      "Name": "News",
-      "ProgramSourceId": 2
+﻿{
+  "programMappingsToBeCreated": [
+    {
+      "OfficialGenre": {
+        "Id": 1,
+        "Name": "News",
+        "ProgramSourceId": 1
+      },
+      "OfficialProgramName": "10 NEWS",
+      "OfficialShowType": {
+        "Id": 1,
+        "Name": "News"
+      },
+      "OriginalProgramName": "10 NEWS 6PM"
     },
-    "OfficialProgramName": "10 NEWS",
-    "OfficialShowType": {
-      "Id": 1,
-      "Name": "News"
+    {
+      "OfficialGenre": {
+        "Id": 1,
+        "Name": "News",
+        "ProgramSourceId": 1
+      },
+      "OfficialProgramName": "NBC4 NEWS",
+      "OfficialShowType": {
+        "Id": 1,
+        "Name": "News"
+      },
+      "OriginalProgramName": "NBC 4 NEWS AT 5P WKND"
     },
-    "OriginalProgramName": "10 NEWS 6PM"
-  },
-  {
-    "OfficialGenre": {
-      "Id": 2,
-      "Name": "News",
-      "ProgramSourceId": 2
-    },
-    "OfficialProgramName": "NBC4 NEWS",
-    "OfficialShowType": {
-      "Id": 1,
-      "Name": "News"
-    },
-    "OriginalProgramName": "NBC 4 NEWS AT 5P WKND"
-  },
-  {
-    "OfficialGenre": {
-      "Id": 2,
-      "Name": "News",
-      "ProgramSourceId": 2
-    },
-    "OfficialProgramName": "WVLT NEWS",
-    "OfficialShowType": {
-      "Id": 1,
-      "Name": "News"
-    },
-    "OriginalProgramName": "WVLT NEWS SUN 6:30P"
-  }
-]
+    {
+      "OfficialGenre": {
+        "Id": 1,
+        "Name": "News",
+        "ProgramSourceId": 1
+      },
+      "OfficialProgramName": "WVLT NEWS",
+      "OfficialShowType": {
+        "Id": 1,
+        "Name": "News"
+      },
+      "OriginalProgramName": "WVLT NEWS SUN 6:30P"
+    }
+  ],
+  "savedPrimaryPrograms": [
+    [
+      {
+        "Daypart": null,
+        "DaypartDefault": null,
+        "Genres": [],
+        "Id": 1,
+        "PrimaryProgramId": 1,
+        "ProgramName": null,
+        "Programs": []
+      }
+    ],
+    [
+      {
+        "Daypart": null,
+        "DaypartDefault": null,
+        "Genres": [],
+        "Id": 1,
+        "PrimaryProgramId": 1,
+        "ProgramName": null,
+        "Programs": []
+      }
+    ],
+    [
+      {
+        "Daypart": null,
+        "DaypartDefault": null,
+        "Genres": [],
+        "Id": 1,
+        "PrimaryProgramId": 1,
+        "ProgramName": null,
+        "Programs": []
+      }
+    ]
+  ]
+}

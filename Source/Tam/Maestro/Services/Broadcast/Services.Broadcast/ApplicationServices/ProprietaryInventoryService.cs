@@ -157,6 +157,7 @@ namespace Services.Broadcast.ApplicationServices
                         fileImporter.PopulateManifests(proprietaryFile, stations);
                         fileImporter.PopulateInventoryFileDateRange(proprietaryFile);
                         _SetStartAndEndDatesForManifestWeeks(proprietaryFile, header.EffectiveDate, header.EndDate);
+                        WebUtilityHelper.HtmlDecodeProgramNames(proprietaryFile);
 
                         _LockingEngine.LockStations(stationsDict, lockedStationIds, stationLocks);
 

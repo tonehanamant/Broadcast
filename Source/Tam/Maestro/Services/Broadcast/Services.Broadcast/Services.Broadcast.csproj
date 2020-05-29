@@ -420,7 +420,7 @@
     <Compile Include="Entities\DetectionTrackingDetail.cs" />
     <Compile Include="Entities\DTO\Program\ProgramDto.cs" />
     <Compile Include="Entities\DTO\Program\SearchRequestProgramDto.cs" />
-    <Compile Include="Entities\Enums\GenreSourceEnum.cs" />
+    <Compile Include="Entities\Enums\ProgramSourceEnum.cs" />
     <Compile Include="Entities\Enums\ContainTypeEnum.cs" />
     <Compile Include="Entities\Enums\SharedFolderFileUsage.cs" />
     <Compile Include="Entities\Enums\UnitCapEnum.cs" />
@@ -557,6 +557,7 @@
     <Compile Include="Helpers\DaypartTimeHelper.cs" />
     <Compile Include="Helpers\FrequencyCapHelper.cs" />
     <Compile Include="Helpers\GroupHelper.cs" />
+    <Compile Include="Helpers\WebUtilityHelper.cs" />
     <Compile Include="Helpers\KeyHelper.cs" />
     <Compile Include="BusinessEngines\PlanPricingInventoryQuarterCalculatorEngine.cs" />
     <Compile Include="Helpers\SystemComponentParameterHelper.cs" />
@@ -575,6 +576,7 @@
     <Compile Include="ReportGenerators\ProgramLineup\DetailedViewReportGenerator.cs" />
     <Compile Include="Repositories\AffiliateRepository.cs" />
     <Compile Include="Repositories\CampaignSummaryRepository.cs" />
+    <Compile Include="Repositories\DataMaintenanceRepository.cs" />
     <Compile Include="Repositories\DayRepository.cs" />
     <Compile Include="Repositories\DetectionPostDetailsRepository.cs" />
     <Compile Include="Repositories\DetectionRepository.cs" />

@@ -28,6 +28,8 @@ namespace Services.Broadcast.Repositories
         /// <returns>The program mapping</returns>
         ProgramMappingsDto GetProgramMappingByOriginalProgramName(string originalProgramName);
 
+        List<ProgramMappingsDto> GetProgramMappings();
+
         /// <summary>
         /// Creates a new program mapping.
         /// </summary>
@@ -59,6 +61,20 @@ namespace Services.Broadcast.Repositories
                         .Include(x => x.genre)
                         .Include(x => x.show_types)
                         .Single(x => x.inventory_program_name == originalProgramName, $"No program mapping found for name: {originalProgramName}"));
+                });
+        }
+
+        public List<ProgramMappingsDto> GetProgramMappings()
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return context.program_name_mappings
+                        .Include(x => x.genre)
+                        .Include(x => x.show_types)
+                        .ToList()
+                        .Select(_MapToDto)
+                        .ToList();
                 });
         }
 

@@ -33,6 +33,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                         new StationInventoryManifestDaypart
                         {
                             Id = daypartIdIndex++,
+                            ProgramName = "wonder woman 1984",
                             Daypart = new DisplayDaypart
                             {
                                 StartTime = 3600 * 2,
@@ -53,8 +54,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                                     StationInventoryManifestDaypartId = daypartIdIndex,
                                     ProgramName = $"Program {programIdIndex}",
                                     ShowType = "AShow",
-                                    SourceGenreId = (int)ProgramSourceEnum.RedBee,
-                                    ProgramSourceId = (int)ProgramSourceEnum.RedBee,
+                                    SourceGenreId = (int)ProgramSourceEnum.Forecasted,
+                                    ProgramSourceId = (int)ProgramSourceEnum.Forecasted,
                                     MaestroGenreId = 12,
                                     StartDate = new DateTime(),
                                     EndDate = new DateTime(),
@@ -68,7 +69,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                                     StationInventoryManifestDaypartId = daypartIdIndex,
                                     ProgramName = $"Program {programIdIndex}",
                                     ShowType = "AShow",
-                                    SourceGenreId = (int)ProgramSourceEnum.RedBee,
+                                    SourceGenreId = (int)ProgramSourceEnum.Forecasted,
                                     ProgramSourceId = _GetProgramSourceId(i, oddDaypartsHaveMappedPrograms),
                                     MaestroGenreId = 12,
                                     StartDate = new DateTime(),
@@ -102,7 +103,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                                     StationInventoryManifestDaypartId = daypartIdIndex,
                                     ProgramName = $"Program {programIdIndex}",
                                     ShowType = "AShow",
-                                    SourceGenreId = (int)ProgramSourceEnum.RedBee,
+                                    SourceGenreId = (int)ProgramSourceEnum.Forecasted,
                                     ProgramSourceId = _GetProgramSourceId(i, oddDaypartsHaveMappedPrograms),
                                     MaestroGenreId = 12,
                                     StartDate = new DateTime(),
@@ -117,8 +118,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                                     StationInventoryManifestDaypartId = daypartIdIndex,
                                     ProgramName = $"Program {programIdIndex}",
                                     ShowType = "AShow",
-                                    SourceGenreId = (int)ProgramSourceEnum.RedBee,
-                                    ProgramSourceId = (int)ProgramSourceEnum.RedBee,
+                                    SourceGenreId = (int)ProgramSourceEnum.Forecasted,
+                                    ProgramSourceId = (int)ProgramSourceEnum.Forecasted,
                                     MaestroGenreId = 12,
                                     StartDate = new DateTime(),
                                     EndDate = new DateTime(),
@@ -179,9 +180,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
         {
             if (daypartId % 2 == 1 && oddDaypartsHaveMappedPrograms)
             {
-                return (int)ProgramSourceEnum.Maestro;
+                return (int)ProgramSourceEnum.Mapped;
             }
-            return (int)ProgramSourceEnum.RedBee;
+            return (int)ProgramSourceEnum.Forecasted;
         }
 
         public static List<LookupDto> GetGenres()

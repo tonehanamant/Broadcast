@@ -7,6 +7,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.ProgramGuide;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -238,6 +239,11 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             return withoutSpaces.Length <= sourceNameTruncationLimit
                 ? withoutSpaces
                 : withoutSpaces.Substring(0, sourceNameTruncationLimit);
+        }
+
+        protected override void SetPrimaryProgramFromProgramMappings(List<StationInventoryManifest> manifests, Action<string> logger)
+        {
+            // not needed for now
         }
     }
 }

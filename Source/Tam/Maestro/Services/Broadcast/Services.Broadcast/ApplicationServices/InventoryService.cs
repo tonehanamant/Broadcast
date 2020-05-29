@@ -234,6 +234,8 @@ namespace Services.Broadcast.ApplicationServices
                        .GroupBy(s => s.Id)
                        .ToDictionary(g => g.First().Id, g => g.First().LegacyCallLetters);
 
+                    WebUtilityHelper.HtmlDecodeProgramNames(inventoryFile);
+
                     using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                     {
                         _LockingEngine.LockStations(fileStationsDict, lockedStationIds, stationLocks);

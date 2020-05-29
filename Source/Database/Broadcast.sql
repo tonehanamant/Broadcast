@@ -50,6 +50,29 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START BP1-3 *****************************************************/
+
+-- update mappings that were loaded with RedBee genres
+update program_name_mappings
+set genre_id = (select top 1 maestro_genre_id from genre_mappings where mapped_genre_id = genre_id)
+where genre_id in (select id from genres where program_source_id = 2) -- RedBee
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'start_date' AND OBJECT_ID = OBJECT_ID('station_inventory_manifest_daypart_programs'))
+BEGIN
+	ALTER TABLE station_inventory_manifest_daypart_programs
+	ALTER COLUMN [start_date] date NULL
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'end_date' AND OBJECT_ID = OBJECT_ID('station_inventory_manifest_daypart_programs'))
+BEGIN
+	ALTER TABLE station_inventory_manifest_daypart_programs
+	ALTER COLUMN [end_date] date NULL
+END
+
+update program_sources set name = 'Mapped' where name = 'Maestro'
+update program_sources set name = 'Forecasted' where name = 'RedBee'
+
+/*************************************** END BP1-3 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

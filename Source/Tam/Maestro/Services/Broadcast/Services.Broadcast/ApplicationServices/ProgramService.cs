@@ -50,7 +50,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 try
                 {
-                    var programGenre = _GenreCache.GetMaestroGenreBySourceGenreName(externalApiProgram.Genre, ProgramSourceEnum.RedBee);
+                    var programGenre = _GenreCache.GetMaestroGenreBySourceGenreName(externalApiProgram.Genre, ProgramSourceEnum.Forecasted);
 
                     result.Add(new ProgramDto
                     {

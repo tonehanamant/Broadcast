@@ -19,8 +19,8 @@ namespace EntityFrameworkMapping.Broadcast
         public string name { get; set; }
         public string show_type { get; set; }
         public int source_genre_id { get; set; }
-        public System.DateTime start_date { get; set; }
-        public System.DateTime end_date { get; set; }
+        public Nullable<System.DateTime> start_date { get; set; }
+        public Nullable<System.DateTime> end_date { get; set; }
         public int start_time { get; set; }
         public int end_time { get; set; }
         public System.DateTime created_date { get; set; }

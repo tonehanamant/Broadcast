@@ -1954,8 +1954,8 @@
           <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="show_type" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="source_genre_id" Type="int" Nullable="false" />
-          <Property Name="start_date" Type="date" Nullable="false" />
-          <Property Name="end_date" Type="date" Nullable="false" />
+          <Property Name="start_date" Type="date" />
+          <Property Name="end_date" Type="date" />
           <Property Name="start_time" Type="int" Nullable="false" />
           <Property Name="end_time" Type="int" Nullable="false" />
           <Property Name="created_date" Type="datetime" Nullable="false" />
@@ -13934,8 +13934,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="show_type" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="source_genre_id" Type="Int32" Nullable="false" />
-          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="start_date" Type="DateTime" Precision="0" />
+          <Property Name="end_date" Type="DateTime" Precision="0" />
           <Property Name="start_time" Type="Int32" Nullable="false" />
           <Property Name="end_time" Type="Int32" Nullable="false" />
           <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />

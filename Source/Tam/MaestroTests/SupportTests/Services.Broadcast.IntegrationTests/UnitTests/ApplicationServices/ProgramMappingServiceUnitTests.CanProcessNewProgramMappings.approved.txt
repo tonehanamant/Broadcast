@@ -1,13 +1,28 @@
 ﻿{
-  "OfficialGenre": {
-    "Id": 2,
-    "Name": "News",
-    "ProgramSourceId": 2
+  "createdProgramMapping": {
+    "OfficialGenre": {
+      "Id": 1,
+      "Name": "News",
+      "ProgramSourceId": 1
+    },
+    "OfficialProgramName": "10 NEWS",
+    "OfficialShowType": {
+      "Id": 1,
+      "Name": "News"
+    },
+    "OriginalProgramName": "10 NEWS 6PM"
   },
-  "OfficialProgramName": "10 NEWS",
-  "OfficialShowType": {
-    "Id": 1,
-    "Name": "News"
-  },
-  "OriginalProgramName": "10 NEWS 6PM"
+  "savedPrimaryPrograms": [
+    [
+      {
+        "Daypart": null,
+        "DaypartDefault": null,
+        "Genres": [],
+        "Id": 1,
+        "PrimaryProgramId": 1,
+        "ProgramName": null,
+        "Programs": []
+      }
+    ]
+  ]
 }

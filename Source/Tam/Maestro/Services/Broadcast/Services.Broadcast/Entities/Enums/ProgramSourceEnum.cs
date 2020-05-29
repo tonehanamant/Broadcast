@@ -2,7 +2,7 @@
 {
     public enum ProgramSourceEnum
     {
-        Maestro = 1,
-        RedBee = 2
+        Mapped = 1,
+        Forecasted = 2
     }
 }

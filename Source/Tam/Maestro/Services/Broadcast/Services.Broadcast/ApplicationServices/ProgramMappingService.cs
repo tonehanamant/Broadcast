@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -96,6 +97,7 @@ namespace Services.Broadcast.ApplicationServices
             var programMappings = _ReadProgramMappingsFile(file.FileContent);
             _LogInfo($"The selected program mapping file has {programMappings.Count} rows");
 
+            WebUtilityHelper.HtmlDecodeProgramNames(programMappings);
             _ProcessProgramMappings(programMappings, createdDate, ref updatedInventoryCount, ref ingestedRecordsCount);
 
             _SharedFolderService.RemoveFile(fileId);
@@ -108,8 +110,11 @@ namespace Services.Broadcast.ApplicationServices
         protected void _ProcessProgramMappings(
             List<ProgramMappingsFileRequestDto> programMappings,
             DateTime createdDate,
-            ref int updatedInventoryCount, ref int ingestedRecordsCount)
+            ref int updatedInventoryCount, 
+            ref int ingestedRecordsCount)
         {
+            const ProgramSourceEnum programSource = ProgramSourceEnum.Mapped;
+
             foreach (var mapping in programMappings)
             {
                 using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(30)))
@@ -123,10 +128,10 @@ namespace Services.Broadcast.ApplicationServices
                         {
                             // There are changes for an existing mapping
                             existingMapping.OfficialProgramName = mapping.OfficialProgramName;
-                            existingMapping.OfficialGenre = _GenreRepository.GetGenreByName(mapping.OfficialGenre, ProgramSourceEnum.RedBee);
+                            existingMapping.OfficialGenre = _GenreRepository.GetGenreByName(mapping.OfficialGenre, programSource);
                             existingMapping.OfficialShowType = _ShowTypeRepository.GetShowTypeByName(mapping.OfficialShowType);
                             _ProgramMappingRepository.UpdateProgramMapping(existingMapping);
-                            _UpdateInventoryWithEnrichedProgramName(existingMapping, mapping, createdDate, ref updatedInventoryCount);
+                            _UpdateInventoryWithEnrichedProgramName(existingMapping, mapping, createdDate, programSource, ref updatedInventoryCount);
                             ingestedRecordsCount++;
                         }
                     }
@@ -136,11 +141,11 @@ namespace Services.Broadcast.ApplicationServices
                         {
                             OriginalProgramName = mapping.OriginalProgramName,
                             OfficialProgramName = mapping.OfficialProgramName,
-                            OfficialGenre = _GenreRepository.GetGenreByName(mapping.OfficialGenre, ProgramSourceEnum.RedBee),
+                            OfficialGenre = _GenreRepository.GetGenreByName(mapping.OfficialGenre, programSource),
                             OfficialShowType = _ShowTypeRepository.GetShowTypeByName(mapping.OfficialShowType)
                         };
                         _ProgramMappingRepository.CreateProgramMapping(newProgramMapping);
-                        _UpdateInventoryWithEnrichedProgramName(newProgramMapping, mapping, createdDate, ref updatedInventoryCount);
+                        _UpdateInventoryWithEnrichedProgramName(newProgramMapping, mapping, createdDate, programSource, ref updatedInventoryCount);
                         ingestedRecordsCount++;
                     }
                     transaction.Complete();
@@ -148,58 +153,79 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private void _UpdateInventoryWithEnrichedProgramName(ProgramMappingsDto programMapping, ProgramMappingsFileRequestDto mapping, DateTime createdDate, ref int updatedInventoryCount)
+        private void _UpdateInventoryWithEnrichedProgramName(
+            ProgramMappingsDto programMapping, 
+            ProgramMappingsFileRequestDto mapping, 
+            DateTime createdDate,
+            ProgramSourceEnum programSource,
+            ref int updatedInventoryCount)
         {
             var durationSw = new Stopwatch();
             durationSw.Start();
 
-            var programSource = ProgramSourceEnum.Maestro;
-            var maestroGenre = _GenreRepository.GetGenreByName(mapping.OfficialGenre, programSource);
+            var updatedManifestDaypartIds = new List<int>();
 
             // Get all StationInventoryManifestDaypart's with ProgramName
             var manifestDayparts = _InventoryRepository.GetManifestDaypartsForProgramName(programMapping.OriginalProgramName);
+
             foreach (var daypart in manifestDayparts)
             {
-                // If the daypart has no weeks, we ignore it, and don't update
-                if (_InventoryRepository.StationInventoryManifesDaypartHasWeeks(daypart.Id.Value))
+                // Get all StationInventoryManifestDaypartProgram for these
+                var manifestDaypartPrograms = _InventoryRepository.GetDaypartProgramsForInventoryDayparts(new List<int> { daypart.Id.Value });
+
+                // Remove the old programs
+                var manifestDaypartIds = manifestDaypartPrograms.Select(x => x.StationInventoryManifestDaypartId).Distinct().ToList();
+                if (!manifestDaypartIds.IsEmpty())
                 {
-                    var programWeeksDateRange = _InventoryRepository.GetStationInventoryManifesDaypartWeeksDateRange(daypart.Id.Value);
+                    _InventoryRepository.DeleteInventoryPrograms(manifestDaypartIds);
+                }
 
-                    // Get all StationInventoryManifestDaypartProgram for these
-                    var manifestDaypartPrograms = _InventoryRepository.GetDaypartProgramsForInventoryDayparts(new List<int> { daypart.Id.Value });
-
-                    // Remove the old programs
-                    var manifestDaypartIds = manifestDaypartPrograms.Select(x => x.StationInventoryManifestDaypartId).Distinct().ToList();
-                    if (!manifestDaypartIds.IsEmpty())
-                    {
-                        _InventoryRepository.DeleteInventoryPrograms(manifestDaypartIds);
-                    }
-
-                    // Create the new StationInventoryManifestDaypartProgram
-                    var newManifestDaypartPrograms = new List<StationInventoryManifestDaypartProgram>
+                // Create the new StationInventoryManifestDaypartProgram
+                var newManifestDaypartPrograms = new List<StationInventoryManifestDaypartProgram>
                     {
                         new StationInventoryManifestDaypartProgram
                         {
                             StationInventoryManifestDaypartId = daypart.Id.Value,
                             ProgramName = programMapping.OfficialProgramName,
                             ProgramSourceId = (int)programSource,
-                            MaestroGenreId = maestroGenre.Id,
-                            SourceGenreId = maestroGenre.Id,
+                            MaestroGenreId = programMapping.OfficialGenre.Id,
+                            SourceGenreId = programMapping.OfficialGenre.Id,
                             ShowType = mapping.OfficialShowType,
                             StartTime = daypart.Daypart.StartTime,
                             EndTime = daypart.Daypart.EndTime,
-                            StartDate = programWeeksDateRange.Start.Value,
-                            EndDate = programWeeksDateRange.End.Value,
                             CreatedDate = createdDate
                         }
                     };
-                    _InventoryRepository.CreateInventoryPrograms(newManifestDaypartPrograms, createdDate);
-                    updatedInventoryCount++; 
-                }
+
+                _InventoryRepository.CreateInventoryPrograms(newManifestDaypartPrograms, createdDate);
+
+                updatedManifestDaypartIds.Add(daypart.Id.Value);
+
+                updatedInventoryCount++;
             };
+
+            _ResetPrimaryPrograms(updatedManifestDaypartIds);
 
             durationSw.Stop();
             _LogInfo($"Updating inventory for program with {programMapping.OriginalProgramName}, finished successfully in {durationSw.ElapsedMilliseconds} ms.");
+        }
+
+        private void _ResetPrimaryPrograms(List<int> manifestDaypartIds)
+        {
+            var manifestDaypartProgramsByManifestDaypart = _InventoryRepository
+                .GetDaypartProgramsForInventoryDayparts(manifestDaypartIds)
+                .ToDictionary(x => x.StationInventoryManifestDaypartId, x => x.Id);
+
+            var manifestDayparts = manifestDaypartIds
+                .Where(x => manifestDaypartProgramsByManifestDaypart.ContainsKey(x))
+                .Select(manifestDaypartId => new StationInventoryManifestDaypart 
+                { 
+                    Id = manifestDaypartId, 
+                    PrimaryProgramId = manifestDaypartProgramsByManifestDaypart[manifestDaypartId] 
+                })
+                .ToList();
+
+            _InventoryRepository.UpdatePrimaryProgramsForManifestDayparts(manifestDayparts);
         }
 
         private List<ProgramMappingsFileRequestDto> _ReadProgramMappingsFile(Stream stream)

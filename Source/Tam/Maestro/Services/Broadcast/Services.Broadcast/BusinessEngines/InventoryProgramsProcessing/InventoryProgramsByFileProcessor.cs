@@ -4,8 +4,10 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.ProgramGuide;
 using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -271,6 +273,82 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             }
 
             return result;
+        }
+
+        protected override void SetPrimaryProgramFromProgramMappings(List<StationInventoryManifest> manifests, Action<string> logger)
+        {
+            var programMappings = _ProgramMappingRepository.GetProgramMappings();
+            var programMappingByInventoryProgramName = programMappings.ToDictionary(x => x.OriginalProgramName, x => x, StringComparer.OrdinalIgnoreCase);
+            var batchSize = _GetSaveBatchSize();
+            var manifestDayparts = manifests.SelectMany(x => x.ManifestDayparts);
+            var manifestDaypartsCount = manifestDayparts.Count();
+            var chunks = manifestDayparts.GetChunks(batchSize);
+
+            logger($"Setting primary programs. Total manifest dayparts: {manifestDaypartsCount}. Total chunks: {chunks.Count()}");
+
+            for (var i = 0; i < chunks.Count; i++)
+            {
+                var chunk = chunks[i];
+
+                logger($"Setting primary programs for chunk #{i + 1} / {chunks.Count}, items: {chunk.Count}");
+
+                _SetPrimaryProgramFromProgramMappings(chunk, programMappingByInventoryProgramName);
+            }
+
+            logger($"Finished setting primary programs. Total manifest dayparts: {manifestDaypartsCount}");
+        }
+
+        private void _SetPrimaryProgramFromProgramMappings(
+            List<StationInventoryManifestDaypart> manifestDayparts,
+            Dictionary<string, ProgramMappingsDto> programMappingByInventoryProgramName)
+        {
+            var programSource = ProgramSourceEnum.Mapped;
+            var updatedManifestDaypartIds = new List<int>();
+            var newManifestDaypartPrograms = new List<StationInventoryManifestDaypartProgram>();
+
+            foreach (var manifestDaypart in manifestDayparts.Where(x => !string.IsNullOrWhiteSpace(x.ProgramName)))
+            {
+                // If there is no mapping for the program, go to the next daypart
+                if (!programMappingByInventoryProgramName.TryGetValue(manifestDaypart.ProgramName, out var mapping))
+                    continue;
+
+                // Create the new StationInventoryManifestDaypartProgram
+                newManifestDaypartPrograms.Add(new StationInventoryManifestDaypartProgram
+                {
+                    StationInventoryManifestDaypartId = manifestDaypart.Id.Value,
+                    ProgramName = mapping.OfficialProgramName,
+                    ProgramSourceId = (int)programSource,
+                    MaestroGenreId = mapping.OfficialGenre.Id,
+                    SourceGenreId = mapping.OfficialGenre.Id,
+                    ShowType = mapping.OfficialShowType.Name,
+                    StartTime = manifestDaypart.Daypart.StartTime,
+                    EndTime = manifestDaypart.Daypart.EndTime,
+                    CreatedDate = _GetCurrentDateTime()
+                });
+
+                updatedManifestDaypartIds.Add(manifestDaypart.Id.Value);
+            }
+
+            _InventoryRepository.CreateInventoryPrograms(newManifestDaypartPrograms, _GetCurrentDateTime());
+            _ResetPrimaryPrograms(updatedManifestDaypartIds);
+        }
+
+        private void _ResetPrimaryPrograms(List<int> manifestDaypartIds)
+        {
+            var manifestDaypartProgramsByManifestDaypart = _InventoryRepository
+                .GetDaypartProgramsForInventoryDayparts(manifestDaypartIds)
+                .ToDictionary(x => x.StationInventoryManifestDaypartId, x => x.Id);
+
+            var manifestDayparts = manifestDaypartIds
+                .Where(x => manifestDaypartProgramsByManifestDaypart.ContainsKey(x))
+                .Select(manifestDaypartId => new StationInventoryManifestDaypart
+                {
+                    Id = manifestDaypartId,
+                    PrimaryProgramId = manifestDaypartProgramsByManifestDaypart[manifestDaypartId]
+                })
+                .ToList();
+
+            _InventoryRepository.UpdatePrimaryProgramsForManifestDayparts(manifestDayparts);
         }
     }
 }

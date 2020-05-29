@@ -10,6 +10,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.ProgramGuide;
 using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
@@ -47,6 +48,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         private const string DIRECTORY_NAME_PROCESSED = "Processed";
 
         protected readonly IInventoryRepository _InventoryRepository;
+        protected readonly IProgramMappingRepository _ProgramMappingRepository;
+
         private readonly IProgramGuideApiClient _ProgramGuideApiClient;
         private readonly IStationMappingService _StationMappingService;
         private readonly IGenreCache _GenreCache;
@@ -73,6 +76,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             _EnvironmentService = environmentService;
 
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+            _ProgramMappingRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramMappingRepository>();
 
             _Log = LogManager.GetLogger(GetType());
         }
@@ -97,6 +101,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         protected abstract string _GetNoInventoryToProcessNotificationEmailBody(int jobId);
 
+        protected abstract void SetPrimaryProgramFromProgramMappings(List<StationInventoryManifest> manifests, Action<string> logger);
 
         protected abstract string _GetExportFileName(int jobId);
 
@@ -197,7 +202,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         public string ImportInventoryProgramResults(Stream fileStream, string fileName)
         {
-            const ProgramSourceEnum PROGRAM_SOURCE = ProgramSourceEnum.RedBee;
+            const ProgramSourceEnum PROGRAM_SOURCE = ProgramSourceEnum.Forecasted;
             var success = false;
             var stopWatch = new Stopwatch();
             stopWatch.Start();
@@ -513,6 +518,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 // Disabling calling ProgramGuide with PRI-23390
                 //var requestsPackage = _BuildRequestPackage(manifests, inventorySource, processDiagnostics, jobId);
                 //_ProcessInventory(jobId, requestsPackage, processDiagnostics);
+
+                SetPrimaryProgramFromProgramMappings(manifests, (message) => _LogInfo(message));
                 _ExportInventoryForProgramGuide(jobId, manifests, inventorySource, processDiagnostics);
             }
             catch (Exception ex)
@@ -548,7 +555,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 foreach (var manifestDaypart in manifest.ManifestDayparts)
                 {
                     // does the manifest daypart have mapped programs?
-                    if (manifestDaypart.Programs.Any(p => p.ProgramSourceId.Equals((int)ProgramSourceEnum.Maestro)))
+                    if (manifestDaypart.Programs.Any(p => p.ProgramSourceId.Equals((int)ProgramSourceEnum.Mapped)))
                     {
                         alreadyMappedCount++;
                         continue;
@@ -950,7 +957,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         protected StationInventoryManifestDaypartProgram _MapProgramDto(GuideResponseProgramDto guideProgram, int manifestDaypartId,
             InventoryProgramsRequestPackage requestPackage)
         {
-            const ProgramSourceEnum PROGRAM_SOURCE = ProgramSourceEnum.RedBee;
+            const ProgramSourceEnum PROGRAM_SOURCE = ProgramSourceEnum.Forecasted;
 
             var sourceGenre = _GenreCache.GetSourceGenreByName(guideProgram.SourceGenre, PROGRAM_SOURCE);
             var maestroGenre = _GenreCache.GetMaestroGenreBySourceGenre(sourceGenre, PROGRAM_SOURCE);

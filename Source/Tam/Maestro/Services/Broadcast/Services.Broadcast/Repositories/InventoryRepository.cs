@@ -171,20 +171,6 @@ namespace Services.Broadcast.Repositories
         List<StationInventoryManifestDaypart> GetManifestDaypartsForProgramName(string programName);
 
         /// <summary>
-        /// Gets the station inventory manifes daypart weeks date range.
-        /// </summary>
-        /// <param name="manifestDaypartId">The manifest daypart identifier.</param>
-        /// <returns>DateRange containing the start and end date</returns>
-        DateRange GetStationInventoryManifesDaypartWeeksDateRange(int manifestDaypartId);
-
-        /// <summary>
-        /// Stations the inventory manifes daypart has weeks.
-        /// </summary>
-        /// <param name="manifestDaypartId">The manifest daypart identifier.</param>
-        /// <returns></returns>
-        bool StationInventoryManifesDaypartHasWeeks(int manifestDaypartId);
-
-        /// <summary>
         /// For tests
         /// </summary>
         /// <param name="groupIds"></param>
@@ -1049,42 +1035,6 @@ namespace Services.Broadcast.Repositories
                                     x.station_inventory_manifest.inventory_files.inventory_file_proprietary_header.FirstOrDefault().contracted_daypart_id == contractedDaypartId &&
                                     mediaWeekIds.Contains(x.media_week_id));
                     return query.ToList().Select(_MapToInventoryManifestWeek).ToList();
-                });
-        }
-
-        ///<inheritdoc/>
-        public DateRange GetStationInventoryManifesDaypartWeeksDateRange(int manifestDaypartId)
-        {
-            return _InReadUncommitedTransaction(
-                c =>
-                {
-                    var sourceManifestId = c.station_inventory_manifest_dayparts
-                        .Single(x => x.id == manifestDaypartId).station_inventory_manifest_id;
-
-                    var query = c.station_inventory_manifest_weeks
-                        .Where(x => x.station_inventory_manifest_id == sourceManifestId)
-                        .GroupBy(s => s.station_inventory_manifest_id)
-                        .Select(weeks => new DateRange
-                            {
-                                Start = weeks.Min(week => week.start_date),
-                                End = weeks.Max(week => week.end_date)
-                            });
-                    return query.Single();
-                });
-        }
-
-        ///<inheritdoc/>
-        public bool StationInventoryManifesDaypartHasWeeks(int manifestDaypartId)
-        {
-            return _InReadUncommitedTransaction(
-                c =>
-                {
-                    var sourceManifestId = c.station_inventory_manifest_dayparts
-                        .Single(x => x.id == manifestDaypartId).station_inventory_manifest_id;
-
-                    return c.station_inventory_manifest_weeks
-                        .Where(x => x.station_inventory_manifest_id == sourceManifestId)
-                        .Any(x => x.station_inventory_manifest_id == sourceManifestId);
                 });
         }
 
