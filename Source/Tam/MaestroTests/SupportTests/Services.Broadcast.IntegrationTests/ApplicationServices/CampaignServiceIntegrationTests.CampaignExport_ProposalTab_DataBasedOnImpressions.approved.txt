@@ -332,19 +332,19 @@
       {
         "DaypartCode": "EF",
         "GuaranteedData": {
-          "CPM": 100.49796287913082842915346311,
-          "CPP": 123333.33333333333333333333333,
+          "CPM": 100.49796278859212313263920326,
+          "CPP": 138749.999875,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
           "TotalImpressions": 2209.0,
-          "TotalRatingPoints": 1.8,
+          "TotalRatingPoints": 1.6,
           "VPVH": 1.0
         },
         "HHData": {
-          "CPM": 100.49796287913082842915346311,
-          "CPP": 123333.33333333333333333333333,
+          "CPM": 100.49796278859212313263920326,
+          "CPP": 123333.33322222222222222222222,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
@@ -354,7 +354,7 @@
           "VPVH": 0.0
         },
         "SpotLengthLabel": "30",
-        "TotalCost": 222000.0000,
+        "TotalCost": 221999.9998,
         "Units": 0,
         "UnitsCost": 0.0
       }
@@ -363,19 +363,19 @@
     "TotalRow": {
       "DaypartCode": null,
       "GuaranteedData": {
-        "CPM": 100.49796287913082842915346311,
-        "CPP": 123333.33333333333333333333333,
+        "CPM": 100.49796278859212313263920326,
+        "CPP": 138749.999875,
         "DaypartCode": null,
         "Impressions": 0.0,
         "RatingPoints": 0.0,
         "SpotLengthLabel": null,
         "TotalImpressions": 2209.0,
-        "TotalRatingPoints": 1.8,
+        "TotalRatingPoints": 1.6,
         "VPVH": 0.0
       },
       "HHData": {
-        "CPM": 100.49796287913082842915346311,
-        "CPP": 123333.33333333333333333333333,
+        "CPM": 100.49796278859212313263920326,
+        "CPP": 123333.33322222222222222222222,
         "DaypartCode": null,
         "Impressions": 0.0,
         "RatingPoints": 0.0,
@@ -385,7 +385,7 @@
         "VPVH": 0.0
       },
       "SpotLengthLabel": null,
-      "TotalCost": 222000.0000,
+      "TotalCost": 221999.9998,
       "Units": 0,
       "UnitsCost": 0.0
     }
@@ -398,19 +398,19 @@
         {
           "DaypartCode": "EF",
           "GuaranteedData": {
-            "CPM": 100.49796287913082842915346311,
-            "CPP": 123333.33333333333333333333333,
+            "CPM": 100.49796278859212313263920326,
+            "CPP": 138749.999875,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
             "TotalImpressions": 2209.0,
-            "TotalRatingPoints": 1.8,
+            "TotalRatingPoints": 1.6,
             "VPVH": 1.0
           },
           "HHData": {
-            "CPM": 100.49796287913082842915346311,
-            "CPP": 123333.33333333333333333333333,
+            "CPM": 100.49796278859212313263920326,
+            "CPP": 123333.33322222222222222222222,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
@@ -420,7 +420,7 @@
             "VPVH": 0.0
           },
           "SpotLengthLabel": "30",
-          "TotalCost": 222000.0000,
+          "TotalCost": 221999.9998,
           "Units": 0,
           "UnitsCost": 0.0
         }
@@ -429,19 +429,19 @@
       "TotalRow": {
         "DaypartCode": null,
         "GuaranteedData": {
-          "CPM": 100.49796287913082842915346311,
-          "CPP": 123333.33333333333333333333333,
+          "CPM": 100.49796278859212313263920326,
+          "CPP": 138749.999875,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
           "TotalImpressions": 2209.0,
-          "TotalRatingPoints": 1.8,
+          "TotalRatingPoints": 1.6,
           "VPVH": 0.0
         },
         "HHData": {
-          "CPM": 100.49796287913082842915346311,
-          "CPP": 123333.33333333333333333333333,
+          "CPM": 100.49796278859212313263920326,
+          "CPP": 123333.33322222222222222222222,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
@@ -451,7 +451,7 @@
           "VPVH": 0.0
         },
         "SpotLengthLabel": null,
-        "TotalCost": 222000.0000,
+        "TotalCost": 221999.9998,
         "Units": 0,
         "UnitsCost": 0.0
       }
