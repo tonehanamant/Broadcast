@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -673,15 +674,32 @@ namespace Services.Broadcast.ApplicationServices
 
                 token.ThrowIfCancellationRequested();
 
-                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
-                var aggregatedResults = _AggregateResults(inventory, allocationResult, goalsFulfilledByProprietaryInventory);
-                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
+                var aggregateResultsTask = new Task<PlanPricingResultBaseDto>(() => 
+                {
+                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
+                    var aggregatedResults = _AggregateResults(inventory, allocationResult, goalsFulfilledByProprietaryInventory);
+                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
+                    return aggregatedResults;
+                });
 
-                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_BANDS);
-                var pricingBands = _PlanPricingBandCalculationEngine.CalculatePricingBands(inventory, allocationResult);
-                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_BANDS);
+                var calculatePricingBandsTask = new Task<PlanPricingBandDto>(() =>
+                {
+                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_BANDS);
+                    var pricingBands = _PlanPricingBandCalculationEngine.CalculatePricingBands(inventory, allocationResult, planPricingParametersDto);
+                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_BANDS);
+                    return pricingBands;
+                });
+
+                aggregateResultsTask.Start();
+                calculatePricingBandsTask.Start();
 
                 token.ThrowIfCancellationRequested();
+
+                aggregateResultsTask.Wait();
+                var aggregateTaskResult = aggregateResultsTask.Result;
+
+                calculatePricingBandsTask.Wait();
+                var calculatePricingBandTaskResult = calculatePricingBandsTask.Result;
 
                 using (var transaction = new TransactionScopeWrapper())
                 {
@@ -690,11 +708,11 @@ namespace Services.Broadcast.ApplicationServices
                     diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
 
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
-                    _PlanRepository.SavePricingAggregateResults(aggregatedResults);
+                    _PlanRepository.SavePricingAggregateResults(aggregateTaskResult);
                     diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
 
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_BANDS);
-                    _PlanRepository.SavePlanPricingBands(pricingBands);
+                    _PlanRepository.SavePlanPricingBands(calculatePricingBandTaskResult);
                     diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_BANDS);
 
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
@@ -1269,7 +1287,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _ConvertPricingBandImpressionsToUserFormat(PlanPricingBandDto results)
         {
-            results.Totals.TotalImpressions /= 1000;
+            results.Totals.Impressions /= 1000;
 
             foreach(var band in results.Bands)
             {

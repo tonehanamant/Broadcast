@@ -1,4 +1,5 @@
-﻿using Services.Broadcast.Entities.Plan.Pricing;
+﻿using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Plan.Pricing;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,18 +9,28 @@ namespace Services.Broadcast.BusinessEngines
     {
         PlanPricingBandDto CalculatePricingBands(
             List<PlanPricingInventoryProgram> inventory,
-            PlanPricingAllocationResult allocationResult);
+            PlanPricingAllocationResult allocationResult,
+            PlanPricingParametersDto parametersDto);
     }
 
     public class PlanPricingBandCalculationEngine : IPlanPricingBandCalculationEngine
     {
+        public IPlanPricingUnitCapImpressionsCalculationEngine _PlanPricingUnitCapImpressionsCalculationEngine;
+
+        public PlanPricingBandCalculationEngine(
+            IPlanPricingUnitCapImpressionsCalculationEngine planPricingUnitCapImpressionsCalculationEngine)
+        {
+            _PlanPricingUnitCapImpressionsCalculationEngine = planPricingUnitCapImpressionsCalculationEngine;
+        }
+
         public PlanPricingBandDto CalculatePricingBands(
             List<PlanPricingInventoryProgram> inventory,
-            PlanPricingAllocationResult allocationResult)
+            PlanPricingAllocationResult allocationResult,
+            PlanPricingParametersDto parametersDto)
         {
             var pricingBandDto = new PlanPricingBandDto
             {
-                Bands = _CreateBands(allocationResult.PricingCpm),
+                Bands = _CreateBands(parametersDto.AdjustedCPM),
                 PlanVersionId = allocationResult.PlanVersionId,
                 JobId = allocationResult.JobId
             };
@@ -42,24 +53,25 @@ namespace Services.Broadcast.BusinessEngines
                     maxBand = band.MaxBand.Value;
 
                 var allocatedBandPrograms = allocatedInventory.Where(x => x.AvgCpm >= minBand && x.AvgCpm < maxBand);
-                var inventoryBandPrograms = inventory.Where(x => x.Cpm >= minBand && x.Cpm <= maxBand);
-                var totalInventoryImpressions = inventory.Sum(x => x.Impressions);
+                var inventoryBandPrograms = inventory.Where(x => x.Cpm >= minBand && x.Cpm < maxBand).ToList();
+                var totalInventoryImpressions = 
+                    _PlanPricingUnitCapImpressionsCalculationEngine.CalculateTotalImpressionsForUnitCaps(inventoryBandPrograms, parametersDto);
                 band.Spots = allocatedBandPrograms.Sum(x => x.TotalSpots);
                 band.Impressions = allocatedBandPrograms.Sum(x => x.TotalImpressions);
                 band.Budget = allocatedBandPrograms.Sum(x => x.TotalCost);
                 band.Cpm = ProposalMath.CalculateCpm(band.Budget, band.Impressions);
                 band.ImpressionsPercentage = totalAllocatedImpressions == 0 ?
-                    0 : band.Impressions / totalAllocatedImpressions;
+                    0 : (band.Impressions / totalAllocatedImpressions) * 100;
                 band.AvailableInventoryPercent = totalInventoryImpressions == 0 ?
-                    0 : band.Impressions / totalInventoryImpressions;
+                    0 : (band.Impressions / totalInventoryImpressions)  * 100;
             }
 
             pricingBandDto.Totals = new PlanPricingBandTotalsDto
             {
-                TotalSpots = totalAllocatedSpots,
-                TotalImpressions = totalAllocatedImpressions,
-                TotalBudget = totalAllocatedCost,
-                TotalCpm = ProposalMath.CalculateCpm(totalAllocatedCost, totalAllocatedImpressions),
+                Spots = totalAllocatedSpots,
+                Impressions = totalAllocatedImpressions,
+                Budget = totalAllocatedCost,
+                Cpm = ProposalMath.CalculateCpm(totalAllocatedCost, totalAllocatedImpressions),
             };
 
             return pricingBandDto;
@@ -69,7 +81,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             const decimal minBandMultiplier = 0.1m;
             const decimal maxBandMultiplier = 2;
-            const decimal numberOfBands = 7;
+            const decimal numberOfBands = 5;
 
             var firstBand = pricingCpm * minBandMultiplier;
             var lastBand = pricingCpm * maxBandMultiplier;

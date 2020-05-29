@@ -1430,10 +1430,10 @@ namespace Services.Broadcast.Repositories
                 {
                     Totals = new PlanPricingBandTotalsDto
                     {
-                        TotalCpm = result.total_cpm,
-                        TotalBudget = result.total_budget,
-                        TotalImpressions = result.total_impressions, 
-                        TotalSpots = result.total_spots
+                        Cpm = result.total_cpm,
+                        Budget = result.total_budget,
+                        Impressions = result.total_impressions, 
+                        Spots = result.total_spots
                     },
                     Bands = result.plan_version_pricing_band_details.Select(r => new PlanPricingBandDetailDto
                     {
@@ -1459,10 +1459,10 @@ namespace Services.Broadcast.Repositories
                 {
                     plan_version_id = planPricingBandDto.PlanVersionId,
                     plan_version_pricing_job_id = planPricingBandDto.JobId,
-                    total_budget = planPricingBandDto.Totals.TotalBudget,
-                    total_cpm = planPricingBandDto.Totals.TotalCpm,
-                    total_impressions = planPricingBandDto.Totals.TotalImpressions,
-                    total_spots = planPricingBandDto.Totals.TotalSpots
+                    total_budget = planPricingBandDto.Totals.Budget,
+                    total_cpm = planPricingBandDto.Totals.Cpm,
+                    total_impressions = planPricingBandDto.Totals.Impressions,
+                    total_spots = planPricingBandDto.Totals.Spots
                 };
 
                 foreach(var bandDto in planPricingBandDto.Bands)
@@ -1605,14 +1605,19 @@ namespace Services.Broadcast.Repositories
                 var plan = context.plans.Single(x => x.id == planId);
                 var planVersionId = plan.latest_version_id;
                 var result = context.plan_version_pricing_results.Where(p => p.plan_version_id == planVersionId).OrderByDescending(p => p.id).FirstOrDefault();
+
                 if (result == null)
                     return null;
+
+                var hasProgramResults = result.plan_version_pricing_result_spots.Any();
+
                 return new CurrentPricingExecutionResultDto
                 {
                     OptimalCpm = result.optimal_cpm,
                     JobId = result.plan_version_pricing_job_id,
                     PlanVersionId = result.plan_version_id,
-                    GoalFulfilledByProprietary = result.goal_fulfilled_by_proprietary
+                    GoalFulfilledByProprietary = result.goal_fulfilled_by_proprietary,
+                    HasProgramResults = hasProgramResults
                 };
             });
         }

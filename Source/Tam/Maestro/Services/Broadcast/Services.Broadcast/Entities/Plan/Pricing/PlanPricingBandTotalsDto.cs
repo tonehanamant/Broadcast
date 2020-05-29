@@ -2,9 +2,9 @@
 {
     public class PlanPricingBandTotalsDto
     {
-        public int TotalSpots { get; set; }
-        public double TotalImpressions { get; set; }
-        public decimal TotalBudget { get; set; }
-        public decimal TotalCpm { get; set; }
+        public int Spots { get; set; }
+        public double Impressions { get; set; }
+        public decimal Budget { get; set; }
+        public decimal Cpm { get; set; }
     }
 }

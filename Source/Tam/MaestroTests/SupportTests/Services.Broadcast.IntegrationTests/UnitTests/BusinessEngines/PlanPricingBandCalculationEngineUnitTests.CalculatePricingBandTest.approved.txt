@@ -18,7 +18,7 @@
       "Id": 0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 3.7142857142857142857142857143,
+      "MaxBand": 4.8,
       "MinBand": 1.0,
       "Spots": 0
     },
@@ -29,30 +29,19 @@
       "Id": 0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 6.4285714285714285714285714286,
-      "MinBand": 3.7142857142857142857142857143,
+      "MaxBand": 8.6,
+      "MinBand": 4.8,
       "Spots": 0
     },
     {
-      "AvailableInventoryPercent": 0.0,
-      "Budget": 0.0,
-      "Cpm": 0.0,
-      "Id": 0,
-      "Impressions": 0.0,
-      "ImpressionsPercentage": 0.0,
-      "MaxBand": 9.142857142857142857142857143,
-      "MinBand": 6.4285714285714285714285714286,
-      "Spots": 0
-    },
-    {
-      "AvailableInventoryPercent": 10.0,
+      "AvailableInventoryPercent": 100.0,
       "Budget": 500.0,
       "Cpm": 10.00,
       "Id": 0,
       "Impressions": 50000.0,
-      "ImpressionsPercentage": 1.0,
-      "MaxBand": 11.857142857142857142857142857,
-      "MinBand": 9.142857142857142857142857143,
+      "ImpressionsPercentage": 100.0,
+      "MaxBand": 12.4,
+      "MinBand": 8.6,
       "Spots": 10
     },
     {
@@ -62,8 +51,8 @@
       "Id": 0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 14.571428571428571428571428571,
-      "MinBand": 11.857142857142857142857142857,
+      "MaxBand": 16.2,
+      "MinBand": 12.4,
       "Spots": 0
     },
     {
@@ -73,19 +62,8 @@
       "Id": 0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 17.285714285714285714285714285,
-      "MinBand": 14.571428571428571428571428571,
-      "Spots": 0
-    },
-    {
-      "AvailableInventoryPercent": 0.0,
-      "Budget": 0.0,
-      "Cpm": 0.0,
-      "Id": 0,
-      "Impressions": 0.0,
-      "ImpressionsPercentage": 0.0,
-      "MaxBand": 19.999999999999999999999999999,
-      "MinBand": 17.285714285714285714285714285,
+      "MaxBand": 20.0,
+      "MinBand": 16.2,
       "Spots": 0
     },
     {
@@ -104,9 +82,9 @@
   "JobId": 1,
   "PlanVersionId": 1,
   "Totals": {
-    "TotalBudget": 500.0,
-    "TotalCpm": 10.00,
-    "TotalImpressions": 50000.0,
-    "TotalSpots": 10
+    "Budget": 500.0,
+    "Cpm": 10.00,
+    "Impressions": 50000.0,
+    "Spots": 10
   }
 }

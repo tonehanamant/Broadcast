@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Text;
 
@@ -6,7 +6,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 {
     public class PlanPricingJobDiagnostic
     {
-        private Dictionary<string, Stopwatch> StopWatchDict { get; } = new Dictionary<string, Stopwatch>();
+        private ConcurrentDictionary<string, Stopwatch> StopWatchDict { get; } = new ConcurrentDictionary<string, Stopwatch>();
         private StringBuilder DiagnosticMessage { get; set; } = new StringBuilder();
 
         public static string SW_KEY_TOTAL_DURATION = "Total duration";

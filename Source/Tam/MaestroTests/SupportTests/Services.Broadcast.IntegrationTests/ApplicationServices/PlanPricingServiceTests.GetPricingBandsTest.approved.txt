@@ -6,7 +6,7 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 1.5509,
+      "MaxBand": 0.5000,
       "MinBand": null,
       "Spots": 0
     },
@@ -16,8 +16,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 5.7606,
-      "MinBand": 1.5509,
+      "MaxBand": 2.4000,
+      "MinBand": 0.5000,
       "Spots": 0
     },
     {
@@ -26,49 +26,9 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 9.9703,
-      "MinBand": 5.7606,
+      "MaxBand": 4.3000,
+      "MinBand": 2.4000,
       "Spots": 0
-    },
-    {
-      "AvailableInventoryPercent": 228.113879,
-      "Budget": 7286.2500,
-      "Cpm": 13.3729,
-      "Impressions": 544.85,
-      "ImpressionsPercentage": 45.6227758,
-      "MaxBand": 14.1800,
-      "MinBand": 9.9703,
-      "Spots": 10
-    },
-    {
-      "AvailableInventoryPercent": 190.74733096,
-      "Budget": 7035.0000,
-      "Cpm": 15.4411,
-      "Impressions": 455.6,
-      "ImpressionsPercentage": 38.14946619,
-      "MaxBand": 18.3897,
-      "MinBand": 14.1800,
-      "Spots": 10
-    },
-    {
-      "AvailableInventoryPercent": 77.58007117,
-      "Budget": 3768.7500,
-      "Cpm": 20.3386,
-      "Impressions": 185.3,
-      "ImpressionsPercentage": 15.51601423,
-      "MaxBand": 22.5994,
-      "MinBand": 18.3897,
-      "Spots": 5
-    },
-    {
-      "AvailableInventoryPercent": 1.06761566,
-      "Budget": 60.3000,
-      "Cpm": 23.6470,
-      "Impressions": 2.55,
-      "ImpressionsPercentage": 0.21352313,
-      "MaxBand": 26.8091,
-      "MinBand": 22.5994,
-      "Spots": 5
     },
     {
       "AvailableInventoryPercent": 0.0,
@@ -76,26 +36,46 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 31.0188,
-      "MinBand": 26.8091,
+      "MaxBand": 6.2000,
+      "MinBand": 4.3000,
       "Spots": 0
     },
     {
-      "AvailableInventoryPercent": 2.4911032,
-      "Budget": 371.8500,
-      "Cpm": 62.4957,
-      "Impressions": 5.95,
-      "ImpressionsPercentage": 0.49822064,
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0000,
+      "Cpm": 0.0000,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MaxBand": 8.1000,
+      "MinBand": 6.2000,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0000,
+      "Cpm": 0.0000,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MaxBand": 10.0000,
+      "MinBand": 8.1000,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 807.47126437,
+      "Budget": 18522.1500,
+      "Cpm": 15.5094,
+      "Impressions": 1194.25,
+      "ImpressionsPercentage": 10000.0,
       "MaxBand": null,
-      "MinBand": 31.0188,
-      "Spots": 15
+      "MinBand": 10.0000,
+      "Spots": 45
     }
   ],
   "PlanVersionId": 0,
   "Totals": {
-    "TotalBudget": 18522.1500,
-    "TotalCpm": 15.5094,
-    "TotalImpressions": 1194.25,
-    "TotalSpots": 45
+    "Budget": 18522.1500,
+    "Cpm": 15.5094,
+    "Impressions": 1194.25,
+    "Spots": 45
   }
 }

@@ -8,6 +8,7 @@
   },
   "Result": {
     "GoalFulfilledByProprietary": false,
+    "HasProgramResults": true,
     "Notes": "",
     "OptimalCpm": 15.5094,
     "PlanVersionId": 47
