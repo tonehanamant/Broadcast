@@ -307,5 +307,26 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             };
             return jsonSettings;
         }
+
+        [Test]
+        public void GetDistinctUnmappedProgramsTest()
+        {
+	        const int expectedCount = 2795;
+
+	        var repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+		        .GetDataRepository<IInventoryRepository>();
+
+	        using (new TransactionScopeWrapper())
+	        {
+		        /*** Act ***/
+                var result = repo.GetUnmappedPrograms();
+
+		        var totalCount = result.Count;
+
+                /*** Assert ***/
+                Assert.AreEqual(expectedCount, totalCount);
+		       
+	        }
+        }
     }
 }

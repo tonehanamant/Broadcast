@@ -465,6 +465,8 @@
     <Compile Include="UnitTests\Helpers\FrequencyCapHelperUnitTests.cs" />
     <Compile Include="UnitTests\InventoryRatingsProcessing\MediaMonthCrunchStatusTests.cs" />
     <Compile Include="UnitTests\PlanServices\PlanServiceTests.cs" />
+    <Compile Include="UnitTests\ReportGenerator\UnMappedProgramNameReportGeneratorTest.cs" />
+    <Compile Include="UnitTests\ReportGenerator\UnMappedProgramNameReportGeneratorTestClass.cs" />
     <Compile Include="UnitTests\TrafficApiCacheTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\AdvertiserServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\AgencyServiceUnitTests.cs" />

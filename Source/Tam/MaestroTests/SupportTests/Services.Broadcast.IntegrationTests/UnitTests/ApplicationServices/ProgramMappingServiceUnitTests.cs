@@ -12,6 +12,8 @@ using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using Services.Broadcast.Entities.ProgramMapping;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
@@ -32,6 +34,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private List<DateTime> _getManifestDaypartByNameCalls;
         private List<DateTime> _deleteInventoryCalls;
         private List<DateTime> _createInventoryCalls;
+        private static bool WRITE_FILE_TO_DISK = false;
 
         [SetUp]
         public void CreateProgramMappingService()
@@ -396,6 +399,38 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 ContractResolver = jsonResolver
             };
+        }
+
+        [Test]
+        public void GenerateUnmappedProgramNameReportTest()
+        {
+	        var expectedData = new List<string>() { "test1", "test2" };
+            var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+	        var inventoryRepository = new Mock<IInventoryRepository>();
+
+	        inventoryRepository.Setup(p => p.GetUnmappedPrograms()).Returns(expectedData);
+	        broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IInventoryRepository>())
+		        .Returns(inventoryRepository.Object);
+
+	        var sut = new ProgramMappingService(null,broadcastDataRepositoryFactory.Object,null,null);
+
+	        var reportData = sut.GenerateUnmappedProgramNameReport();
+	        _WriteStream(reportData);
+
+	        Assert.IsNotNull(reportData.Stream);
+	        Assert.AreEqual("UnMappedProgramReport.xlsx", reportData.Filename);
+        }
+
+        private static void _WriteStream(ReportOutput reportOutput)
+        {
+	        if (WRITE_FILE_TO_DISK)
+		        using (var destinationFileStream =
+			        new FileStream($@"C:\Users\sgoel\Desktop\IntegrationTesting\{reportOutput.Filename}.xlsx",
+				        FileMode.OpenOrCreate))
+		        {
+			        while (reportOutput.Stream.Position < reportOutput.Stream.Length)
+				        destinationFileStream.WriteByte((byte) reportOutput.Stream.ReadByte());
+		        }
         }
     }
 }

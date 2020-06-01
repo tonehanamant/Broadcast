@@ -199,6 +199,24 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
+        [Route("ExportUnmappedPrograms")]
+        public ActionResult ExportUnmappedPrograms()
+        {
+	        try
+	        {
+		        var service = _ApplicationServiceFactory.GetApplicationService<IProgramMappingService>();
+		        var result = service.GenerateUnmappedProgramNameReport();
+		        return File(result.Stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+			        result.Filename);
+	        }
+	        catch (Exception ex)
+	        {
+		        ViewBag.Message = ex.Message;
+		        return View("Index");
+	        }
+        }
+
+        [HttpPost]
         [Route("ImportInventoryProgramsResults")]
         public ActionResult ImportInventoryProgramsResults(HttpPostedFileBase file)
         {

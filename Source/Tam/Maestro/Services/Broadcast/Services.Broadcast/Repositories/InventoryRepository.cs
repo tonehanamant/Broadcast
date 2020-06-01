@@ -18,6 +18,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Services.Broadcast.Entities.Inventory;
+using Services.Broadcast.Entities.ProgramMapping;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -180,13 +181,18 @@ namespace Services.Broadcast.Repositories
         /// Gets the inventory for export.  Only for Open Market.
         /// </summary>
         List<InventoryExportDto> GetInventoryForExportOpenMarket(List<int> spotLengthIds, List<int> genreIds, List<int> mediaWeekIds);
+        /// <summary>
+        /// Get distinct list of Program Names
+        /// </summary>
+        /// <returns></returns>
+        List<string> GetUnmappedPrograms();
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
     {
         private static object _InventoryBulkInsertLock = new object();
         private static object _ProgramsBulkInsertLock = new object();
-
+      
         public InventoryRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
@@ -1878,5 +1884,26 @@ namespace Services.Broadcast.Repositories
                     return manifestDaypartDtos;
                 });
         }
+
+        public List<string> GetUnmappedPrograms()
+        {
+	        return _InReadUncommitedTransaction(
+		        context =>
+		        {
+			        var unmappedPrograms = context.station_inventory_manifest_dayparts
+				        .Where(x =>
+					        !x.station_inventory_manifest_daypart_programs.Any(s =>
+						        s.program_source_id.Equals((int)ProgramSourceEnum.Mapped)))
+				        .OrderBy(x => x.program_name)
+                        .Select(x =>
+					       x.program_name
+					        )
+				        .Distinct()
+				        .ToList();
+
+			        return unmappedPrograms;
+		        });
+        }
+
     }
 }

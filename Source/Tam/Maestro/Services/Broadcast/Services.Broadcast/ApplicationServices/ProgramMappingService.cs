@@ -17,6 +17,8 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Services.Broadcast.Entities.ProgramMapping;
+using Services.Broadcast.ReportGenerators.ProgramMapping;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
@@ -49,6 +51,11 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <returns></returns>
         ReportOutput ExportProgramMappingsFile(string username);
+        /// <summary>
+        /// Generate Excel for UnMapped Program Names
+        /// </summary>
+        /// <returns></returns>
+        ReportOutput GenerateUnmappedProgramNameReport();
     }
 
     public class ProgramMappingService : BroadcastBaseClass, IProgramMappingService
@@ -60,7 +67,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IGenreRepository _GenreRepository;
         private readonly ISharedFolderService _SharedFolderService;
         private readonly IProgramNameMappingsExportEngine _ProgramNameMappingsExportEngine;
-
+        private const string UnmappedProgramReportFileName = "UnmappedProgramReport.xlsx";
         public ProgramMappingService(IBackgroundJobClient backgroundJobClient,
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             ISharedFolderService sharedFolderService,
@@ -74,7 +81,7 @@ namespace Services.Broadcast.ApplicationServices
             _SharedFolderService = sharedFolderService;
             _ProgramNameMappingsExportEngine = programNameMappingsExportEngine;
         }
-
+        
         /// <inheritdoc />
         public string LoadProgramMappings(Stream fileStream, string fileName, string userName, DateTime createdDate)
         {
@@ -285,5 +292,31 @@ namespace Services.Broadcast.ApplicationServices
             var appFolderPath = _GetBroadcastAppFolder();
             return Path.Combine(appFolderPath, dirName);
         }
+
+        public ReportOutput GenerateUnmappedProgramNameReport()
+        {
+	        _LogInfo("Started process to generate unmapped program names.");
+	        var durationSw = new Stopwatch();
+	        durationSw.Start();
+
+            var programNames = _InventoryRepository.GetUnmappedPrograms();
+
+	        _LogInfo($"Total count of Distinct unmapped program names: {programNames.Count}");
+	        var reportData = new UnMappedProgramNameReportData
+	        {
+		        ProgramNames = programNames,
+		        ExportFileName = UnmappedProgramReportFileName
+	        };
+	        var reportGenerator = new UnMappedProgramNameReportGenerator();
+
+	        _LogInfo("Process of generating excel sheet from report data has been started.");
+	        var report = reportGenerator.Generate(reportData);
+	        durationSw.Stop();
+	        _LogInfo($"Processing of the program mapping file {reportData.ExportFileName}, finished successfully with count {programNames.Count} in {durationSw.ElapsedMilliseconds} ms.");
+
+
+	        return report;
+        }
+
     }
 }
