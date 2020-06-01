@@ -93,7 +93,9 @@ namespace Services.Broadcast.ApplicationServices
                         {
                             broadcastStation = _StationRepository.GetBroadcastStationByLegacyCallLetters(forecastStation.LegacyCallLetters);
 
-                            if (broadcastStation.Affiliation == null)
+                            if (!forecastStation.DistributorCode.Equals(broadcastStation.Code) ||
+                                !forecastStation.PrimaryAffiliation.Equals(broadcastStation.Affiliation) ||
+                                !forecastStation.MarketCode.Equals(broadcastStation.MarketCode))
                             {
                                 broadcastStation.Code = forecastStation.DistributorCode;
                                 broadcastStation.Affiliation = forecastStation.PrimaryAffiliation;

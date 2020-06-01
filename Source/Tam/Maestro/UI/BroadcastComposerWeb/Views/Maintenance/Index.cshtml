@@ -487,6 +487,15 @@
                 <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>
             </div>
         }
+        
+        @using (Html.BeginForm("PerformImportStationsFromForecastDatabase", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="form">
+                <h1 class="heading">Perform Nightly Stations Update</h1>
+                <input class="button" type="submit" value="Submit" id="txt Perform Nightly Stations Update" />
+            </div>
+        }
+
         <div class="form">
             <h1 class="heading">Cleanup Dayparts</h1>
             @using (Html.BeginForm("CleanupDaypartsFilterErroneousDayparts", "Maintenance", FormMethod.Post))

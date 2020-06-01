@@ -127,6 +127,24 @@ namespace BroadcastComposerWeb.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult PerformImportStationsFromForecastDatabase()
+        {
+            try
+            {
+                var username = _GetCurrentUserFullName();
+                var service = _ApplicationServiceFactory.GetApplicationService<IStationService>();
+                service.ImportStationsFromForecastDatabaseJobEntryPoint(username);
+                TempData["Message"] = "Stations Etl completed.";
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+            }
+
+            TempData["TabId"] = "reference_data";
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         [Route("ImportProgramMappings")]
         public ActionResult ImportProgramMappings(HttpPostedFileBase file)

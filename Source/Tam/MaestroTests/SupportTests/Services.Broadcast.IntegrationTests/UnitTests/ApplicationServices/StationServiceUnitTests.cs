@@ -1,4 +1,6 @@
-﻿using Common.Services.Repositories;
+﻿using ApprovalTests;
+using ApprovalTests.Reporters;
+using Common.Services.Repositories;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -48,6 +50,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         // Create unknown stations with month details
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void ImportStationsFromForecastDatabase_UpdateUnratedStation()
         {
             /*** Arrange ***/
@@ -62,6 +65,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 {
                     MediaMonthId = nsiMediaMonth, LegacyCallLetters = "TVTV", CallLetters = "TVTV 1.0",
                     PrimaryAffiliation = "ABC", MarketCode = 123, DistributorCode = 456, DistributorGroup = ""
+                },
+                new NsiStationDto
+                {
+                    MediaMonthId = nsiMediaMonth, LegacyCallLetters = "ROGR", CallLetters = "ROGR 2.0",
+                    PrimaryAffiliation = "NBC", MarketCode = 123, DistributorCode = 666, DistributorGroup = ""
+                },
+                new NsiStationDto
+                {
+                    MediaMonthId = nsiMediaMonth, LegacyCallLetters = "WOPR", CallLetters = "WOPR 2.0",
+                    PrimaryAffiliation = "CBS", MarketCode = 123, DistributorCode = 555, DistributorGroup = ""
                 }
             };
 
@@ -78,7 +91,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(broadcastMediaMonth);
             stationRepo.Setup(s => s.ExistsStationWithCallLetter(It.IsAny<string>()))
                 .Returns(true);
-            stationRepo.Setup(s => s.GetBroadcastStationByLegacyCallLetters(It.IsAny<string>()))
+            stationRepo.Setup(s => s.GetBroadcastStationByLegacyCallLetters("TVTV"))
                 .Returns(new DisplayBroadcastStation
                 {
                     Id = 4,
@@ -87,6 +100,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Code = null,
                     Affiliation = null,
                     MarketCode = null
+                });
+            stationRepo.Setup(s => s.GetBroadcastStationByLegacyCallLetters("ROGR"))
+                .Returns(new DisplayBroadcastStation
+                {
+                    Id = 4,
+                    LegacyCallLetters = "ROGR",
+                    CallLetters = "ROGR 2.0",
+                    Code = null,
+                    Affiliation = "CBS",
+                    MarketCode = null
+                });
+            stationRepo.Setup(s => s.GetBroadcastStationByLegacyCallLetters("WOPR"))
+                .Returns(new DisplayBroadcastStation
+                {
+                    Id = 4,
+                    LegacyCallLetters = "WOPR",
+                    CallLetters = "WOPR 2.0",
+                    Code = null,
+                    Affiliation = "NBC",
+                    MarketCode = 888
                 });
             var updatedStations = new List<Tuple<DisplayBroadcastStation, string, DateTime>>();
             stationRepo.Setup(s => s.UpdateStation(It.IsAny<DisplayBroadcastStation>(), It.IsAny<string>(), It.IsAny<DateTime>()))
@@ -108,21 +141,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             /*** Assert ***/
             Assert.AreEqual(1, getNsiStationListByMediaMonthCalledCount);
-            // verify we made the unrated rated
-            Assert.AreEqual(1, updatedStations.Count);
-            Assert.AreEqual("ABC", updatedStations[0].Item1.Affiliation);
-            Assert.AreEqual(123, updatedStations[0].Item1.MarketCode);
-            Assert.AreEqual(456, updatedStations[0].Item1.Code);
-            Assert.AreEqual(testUser, updatedStations[0].Item2);
-            // saved the media month details
-            Assert.AreEqual(1, saveStationMonthDetailsCalls.Count);
-            Assert.AreEqual(4, saveStationMonthDetailsCalls[0].StationId);
-            Assert.AreEqual(nsiMediaMonth, saveStationMonthDetailsCalls[0].MediaMonthId);
-            Assert.AreEqual("ABC", saveStationMonthDetailsCalls[0].Affiliation);
-            Assert.AreEqual(123, saveStationMonthDetailsCalls[0].MarketCode);
-            Assert.AreEqual(456, saveStationMonthDetailsCalls[0].DistributorCode);
-            // looked for unrated
             Assert.AreEqual(1, getUnratedBroadcastStationsCalledCount);
+            // stations and details were created correctly
+            var result = new
+            {
+                updatedStations,
+                saveStationMonthDetailsCalls
+            };
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         private StationService _GetService(

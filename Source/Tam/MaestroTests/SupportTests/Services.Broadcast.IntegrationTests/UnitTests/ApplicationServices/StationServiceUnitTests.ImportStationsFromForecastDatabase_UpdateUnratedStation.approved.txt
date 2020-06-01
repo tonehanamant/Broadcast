@@ -1,0 +1,75 @@
+{
+  "saveStationMonthDetailsCalls": [
+    {
+      "Affiliation": "ABC",
+      "DistributorCode": 456,
+      "MarketCode": 123,
+      "MediaMonthId": 124,
+      "StationId": 4
+    },
+    {
+      "Affiliation": "NBC",
+      "DistributorCode": 666,
+      "MarketCode": 123,
+      "MediaMonthId": 124,
+      "StationId": 4
+    },
+    {
+      "Affiliation": "CBS",
+      "DistributorCode": 555,
+      "MarketCode": 123,
+      "MediaMonthId": 124,
+      "StationId": 4
+    }
+  ],
+  "updatedStations": [
+    {
+      "Item1": {
+        "Affiliation": "ABC",
+        "CallLetters": "TVTV 1.0",
+        "Code": 456,
+        "Id": 4,
+        "LegacyCallLetters": "TVTV",
+        "ManifestMaxEndDate": null,
+        "MarketCode": 123,
+        "ModifiedDate": null,
+        "OriginMarket": null,
+        "RateDataThrough": null
+      },
+      "Item2": "UnitTestUser",
+      "Item3": "2020-04-11T01:36:26"
+    },
+    {
+      "Item1": {
+        "Affiliation": "NBC",
+        "CallLetters": "ROGR 2.0",
+        "Code": 666,
+        "Id": 4,
+        "LegacyCallLetters": "ROGR",
+        "ManifestMaxEndDate": null,
+        "MarketCode": 123,
+        "ModifiedDate": null,
+        "OriginMarket": null,
+        "RateDataThrough": null
+      },
+      "Item2": "UnitTestUser",
+      "Item3": "2020-04-11T01:36:26"
+    },
+    {
+      "Item1": {
+        "Affiliation": "CBS",
+        "CallLetters": "WOPR 2.0",
+        "Code": 555,
+        "Id": 4,
+        "LegacyCallLetters": "WOPR",
+        "ManifestMaxEndDate": null,
+        "MarketCode": 123,
+        "ModifiedDate": null,
+        "OriginMarket": null,
+        "RateDataThrough": null
+      },
+      "Item2": "UnitTestUser",
+      "Item3": "2020-04-11T01:36:26"
+    }
+  ]
+}
