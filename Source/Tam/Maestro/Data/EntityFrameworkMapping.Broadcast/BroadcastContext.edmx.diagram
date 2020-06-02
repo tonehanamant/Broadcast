@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="25447c09bb944d43b4309b552b8ef2c5" Name="Diagram1" ZoomLevel="79">
+      <Diagram DiagramId="25447c09bb944d43b4309b552b8ef2c5" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="BroadcastModel.audience_audiences" Width="1.5" PointX="0.75" PointY="2.75" />
         <EntityTypeShape EntityType="BroadcastModel.audience" Width="1.5" PointX="2.75" PointY="0.5" />
         <EntityTypeShape EntityType="BroadcastModel.daypart" Width="1.5" PointX="13.75" PointY="2.5" />
@@ -439,6 +439,11 @@
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_genres_genres" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_daypart_programs_program_sources" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_daypart_programs_station_inventory_manifest_dayparts" />
+        <EntityTypeShape EntityType="BroadcastModel.vpvh_quarters" Width="1.5" PointX="5" PointY="83.125" />
+        <AssociationConnector Association="BroadcastModel.FK_vpvh_quarters_audiences" />
+        <EntityTypeShape EntityType="BroadcastModel.vpvh_audience_mappings" Width="1.5" PointX="5" PointY="59.5" />
+        <AssociationConnector Association="BroadcastModel.FK_vpvh_audience_mapping_audiences_compose_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_vpvh_audience_mappings_audiences" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

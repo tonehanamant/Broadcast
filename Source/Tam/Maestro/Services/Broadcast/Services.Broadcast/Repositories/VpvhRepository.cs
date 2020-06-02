@@ -1,14 +1,16 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services.Extensions;
+using Common.Services.Repositories;
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Vpvh;
-using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
+using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 
 namespace Services.Broadcast.Repositories
 {
@@ -17,6 +19,16 @@ namespace Services.Broadcast.Repositories
         bool HasFile(string fileHash);
 
         void SaveFile(VpvhFile vpvhFile);
+
+        void SaveQuarter(VpvhQuarter quarter);
+
+        void SaveNewQuarter(VpvhQuarter quarter);
+
+        List<VpvhQuarter> GetQuarters(QuarterDto quarter);
+
+        VpvhQuarter GetQuarter(int audienceId, int year, int quarter);
+
+        List<VpvhAudienceMapping> GetVpvhMappings();
     }
 
     public class VpvhRepository : BroadcastRepositoryBase, IVpvhRepository
@@ -31,6 +43,28 @@ namespace Services.Broadcast.Repositories
             IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
+
+        public List<VpvhQuarter> GetQuarters(QuarterDto quarter)
+        {
+            return _InReadUncommitedTransaction(
+                context => context.vpvh_quarters.Include(v => v.audience).Where(v => v.quarter == quarter.Quarter && v.year == quarter.Year).Select(_MapToDto).ToList());
+        }
+
+        public VpvhQuarter GetQuarter(int audienceId, int year, int quarter)
+        {
+            return _MapToDto(_InReadUncommitedTransaction(
+                context => context.vpvh_quarters.Include(v => v.audience).Where(v => v.quarter == quarter && v.year == year && v.audience_id == audienceId).SingleOrDefault()));
+        }
+
+        public List<VpvhAudienceMapping> GetVpvhMappings()
+        {
+            return _InReadUncommitedTransaction(context => 
+                context.vpvh_audience_mappings
+                .Include(v => v.audience)
+                .Include(v => v.compose_audience)
+                .Select(_MapToVpvhMappingAudienceDto).ToList()
+            );
+        }
 
         public bool HasFile(string fileHash) =>
             _InReadUncommitedTransaction(
@@ -62,5 +96,76 @@ namespace Services.Broadcast.Repositories
                 context.SaveChanges();
             });
         }
+
+        public void SaveNewQuarter(VpvhQuarter quarterDto)
+        {
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    var vpvhQuarter = new vpvh_quarters();
+                    _MapFromDto(vpvhQuarter, quarterDto);
+                    context.vpvh_quarters.Add(vpvhQuarter);
+
+                    context.SaveChanges();
+                });
+        }
+
+        public void SaveQuarter(VpvhQuarter quarterDto)
+        {
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    var vpvhQuarter = context.vpvh_quarters
+                    .Single(v => v.quarter == quarterDto.Quarter && v.year == quarterDto.Year && v.audience_id == quarterDto.Audience.Id);
+
+                    _MapFromDto(vpvhQuarter, quarterDto);
+
+                    context.SaveChanges();
+                });
+        }
+
+        private void _MapFromDto(vpvh_quarters quarter, VpvhQuarter quarterDto)
+        {
+            quarter.am_news = quarterDto.AMNews;
+            quarter.quarter = quarterDto.Quarter;
+            quarter.audience_id = quarterDto.Audience.Id;
+            quarter.pm_news = quarterDto.PMNews;
+            quarter.syn_all = quarterDto.SynAll;
+            quarter.tdn = quarterDto.Tdn;
+            quarter.tdns = quarterDto.Tdns;
+            quarter.year = quarterDto.Year;
+        }
+
+        private VpvhQuarter _MapToDto(vpvh_quarters quarter)
+        {
+            if (quarter == null)
+                return null;
+
+            return new VpvhQuarter
+            {
+                Id = quarter.id,
+                AMNews = quarter.am_news,
+                Audience = _MapToDisplayAudience(quarter.audience),
+                PMNews = quarter.pm_news,
+                Quarter = quarter.quarter,
+                SynAll = quarter.syn_all,
+                Tdn = quarter.tdn,
+                Tdns = quarter.tdns,
+                Year = quarter.year
+            };
+        }
+            
+
+        private DisplayAudience _MapToDisplayAudience(audience audience) =>
+            new DisplayAudience(audience.id, audience.code);
+
+        private VpvhAudienceMapping _MapToVpvhMappingAudienceDto(vpvh_audience_mappings mapping) =>
+            new VpvhAudienceMapping
+            {
+                Id = mapping.id,
+                Audience = _MapToDisplayAudience(mapping.audience),
+                ComposeAudience = _MapToDisplayAudience(mapping.compose_audience),
+                Operation = (VpvhOperationEnum)mapping.operation
+            };
     }
 }

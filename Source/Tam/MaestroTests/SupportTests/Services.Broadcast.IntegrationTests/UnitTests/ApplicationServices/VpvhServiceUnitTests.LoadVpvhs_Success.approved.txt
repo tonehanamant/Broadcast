@@ -12,7 +12,7 @@
         "Id": 31
       },
       "PMNews": 1.0,
-      "Quarter": 49,
+      "Quarter": 1,
       "SynAll": 1.0,
       "Year": 2017
     }

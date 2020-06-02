@@ -205,6 +205,20 @@
     {
       "Audience": {
         "_CategoryCode": 0,
+        "_Code": "A18-24",
+        "_Custom": true,
+        "_Id": 420,
+        "_Name": "Adults 18-24",
+        "_RangeEnd": 24,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 28630000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
         "_Code": "A18-34",
         "_Custom": true,
         "_Id": 32,
@@ -243,6 +257,20 @@
         "IsDirty": true
       },
       "Universe": 149790000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "A18-64",
+        "_Custom": true,
+        "_Id": 421,
+        "_Name": "Adults 18-64",
+        "_RangeEnd": 64,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 190690000.0
     },
     {
       "Audience": {
@@ -429,6 +457,20 @@
     {
       "Audience": {
         "_CategoryCode": 0,
+        "_Code": "A50-64",
+        "_Custom": true,
+        "_Id": 422,
+        "_Name": "Adults 50-64",
+        "_RangeEnd": 64,
+        "_RangeStart": 50,
+        "_SubCategoryCode": "A",
+        "IsDirty": true
+      },
+      "Universe": 61220000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
         "_Code": "A55+",
         "_Custom": true,
         "_Id": 43,
@@ -527,6 +569,20 @@
     {
       "Audience": {
         "_CategoryCode": 0,
+        "_Code": "M18-24",
+        "_Custom": true,
+        "_Id": 423,
+        "_Name": "Men 18-24",
+        "_RangeEnd": 24,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 14480000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
         "_Code": "M18-34",
         "_Custom": true,
         "_Id": 48,
@@ -565,6 +621,20 @@
         "IsDirty": true
       },
       "Universe": 74280000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "M18-64",
+        "_Custom": true,
+        "_Id": 424,
+        "_Name": "Men 18-64",
+        "_RangeEnd": 64,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 93930000.0
     },
     {
       "Audience": {
@@ -751,6 +821,20 @@
     {
       "Audience": {
         "_CategoryCode": 0,
+        "_Code": "M50-64",
+        "_Custom": true,
+        "_Id": 425,
+        "_Name": "Men 50-64",
+        "_RangeEnd": 64,
+        "_RangeStart": 50,
+        "_SubCategoryCode": "M",
+        "IsDirty": true
+      },
+      "Universe": 29550000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
         "_Code": "M55+",
         "_Custom": true,
         "_Id": 296,
@@ -849,6 +933,20 @@
     {
       "Audience": {
         "_CategoryCode": 0,
+        "_Code": "W18-24",
+        "_Custom": true,
+        "_Id": 426,
+        "_Name": "Women 18-24",
+        "_RangeEnd": 24,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 14150000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
         "_Code": "W18-34",
         "_Custom": true,
         "_Id": 55,
@@ -887,6 +985,20 @@
         "IsDirty": true
       },
       "Universe": 75510000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W18-64",
+        "_Custom": true,
+        "_Id": 427,
+        "_Name": "Women 18-64",
+        "_RangeEnd": 64,
+        "_RangeStart": 18,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 96760000.0
     },
     {
       "Audience": {
@@ -1069,6 +1181,20 @@
         "IsDirty": true
       },
       "Universe": 10420000.0
+    },
+    {
+      "Audience": {
+        "_CategoryCode": 0,
+        "_Code": "W50-64",
+        "_Custom": true,
+        "_Id": 428,
+        "_Name": "Women 50-64",
+        "_RangeEnd": 64,
+        "_RangeStart": 50,
+        "_SubCategoryCode": "W",
+        "IsDirty": true
+      },
+      "Universe": 31670000.0
     },
     {
       "Audience": {

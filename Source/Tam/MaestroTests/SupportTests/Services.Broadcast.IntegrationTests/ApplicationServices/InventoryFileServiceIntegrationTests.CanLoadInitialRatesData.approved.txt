@@ -13,6 +13,10 @@
       "Id": 418
     },
     {
+      "Display": "Adults 18-24",
+      "Id": 420
+    },
+    {
       "Display": "Adults 18-34",
       "Id": 32
     },
@@ -23,6 +27,10 @@
     {
       "Display": "Adults 18-54",
       "Id": 247
+    },
+    {
+      "Display": "Adults 18-64",
+      "Id": 421
     },
     {
       "Display": "Adults 21-24",
@@ -77,6 +85,10 @@
       "Id": 264
     },
     {
+      "Display": "Adults 50-64",
+      "Id": 422
+    },
+    {
       "Display": "Adults 55+",
       "Id": 43
     },
@@ -105,6 +117,10 @@
       "Id": 21
     },
     {
+      "Display": "Men 18-24",
+      "Id": 423
+    },
+    {
       "Display": "Men 18-34",
       "Id": 48
     },
@@ -115,6 +131,10 @@
     {
       "Display": "Men 18-54",
       "Id": 50
+    },
+    {
+      "Display": "Men 18-64",
+      "Id": 424
     },
     {
       "Display": "Men 21-24",
@@ -169,6 +189,10 @@
       "Id": 28
     },
     {
+      "Display": "Men 50-64",
+      "Id": 425
+    },
+    {
       "Display": "Men 55+",
       "Id": 296
     },
@@ -197,6 +221,10 @@
       "Id": 6
     },
     {
+      "Display": "Women 18-24",
+      "Id": 426
+    },
+    {
       "Display": "Women 18-34",
       "Id": 55
     },
@@ -207,6 +235,10 @@
     {
       "Display": "Women 18-54",
       "Id": 306
+    },
+    {
+      "Display": "Women 18-64",
+      "Id": 427
     },
     {
       "Display": "Women 21-24",
@@ -259,6 +291,10 @@
     {
       "Display": "Women 50-54",
       "Id": 13
+    },
+    {
+      "Display": "Women 50-64",
+      "Id": 428
     },
     {
       "Display": "Women 55+",

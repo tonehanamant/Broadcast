@@ -39,6 +39,9 @@ namespace EntityFrameworkMapping.Broadcast
             this.nti_universes = new HashSet<nti_universes>();
             this.plan_versions = new HashSet<plan_versions>();
             this.vpvhs = new HashSet<vpvh>();
+            this.vpvh_quarters = new HashSet<vpvh_quarters>();
+            this.vpvh_audience_mappings = new HashSet<vpvh_audience_mappings>();
+            this.vpvh_audience_mappings1 = new HashSet<vpvh_audience_mappings>();
         }
     
         public int id { get; set; }
@@ -74,5 +77,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<nti_universes> nti_universes { get; set; }
         public virtual ICollection<plan_versions> plan_versions { get; set; }
         public virtual ICollection<vpvh> vpvhs { get; set; }
+        public virtual ICollection<vpvh_quarters> vpvh_quarters { get; set; }
+        public virtual ICollection<vpvh_audience_mappings> vpvh_audience_mappings { get; set; }
+        public virtual ICollection<vpvh_audience_mappings> vpvh_audience_mappings1 { get; set; }
     }
 }

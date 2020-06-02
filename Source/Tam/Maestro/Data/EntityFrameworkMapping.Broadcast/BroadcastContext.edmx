@@ -2040,7 +2040,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -2157,6 +2157,15 @@ warning 6002: The table/view 'broadcast.dbo.station_inventory_manifest_weeks_his
           <Property Name="start_time" Type="int" Nullable="false" />
           <Property Name="end_time" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="vpvh_audience_mappings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="audience_id" Type="int" Nullable="false" />
+          <Property Name="compose_audience_id" Type="int" Nullable="false" />
+          <Property Name="operation" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="vpvh_files">
           <Key>
             <PropertyRef Name="id" />
@@ -2168,6 +2177,20 @@ warning 6002: The table/view 'broadcast.dbo.station_inventory_manifest_weeks_his
           <Property Name="file_name" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="success" Type="bit" Nullable="false" />
           <Property Name="error_message" Type="text" />
+        </EntityType>
+        <EntityType Name="vpvh_quarters">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="audience_id" Type="int" Nullable="false" />
+          <Property Name="year" Type="int" Nullable="false" />
+          <Property Name="quarter" Type="int" Nullable="false" />
+          <Property Name="pm_news" Type="float" Nullable="false" />
+          <Property Name="am_news" Type="float" Nullable="false" />
+          <Property Name="syn_all" Type="float" Nullable="false" />
+          <Property Name="tdn" Type="float" Nullable="false" />
+          <Property Name="tdns" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="vpvhs">
           <Key>
@@ -2183,7 +2206,7 @@ warning 6002: The table/view 'broadcast.dbo.station_inventory_manifest_weeks_his
           <Property Name="vpvh_file_id" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -2211,7 +2234,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="daypart_text" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="total_hours" Type="float" Nullable="false" />
         </EntityType>
-        <Association Name="FK__genre_map__maest__436BFEE3">
+        <Association Name="FK__genre_map__maest__27114E05">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2223,7 +2246,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__genre_map__mappe__4460231C">
+        <Association Name="FK__genre_map__mappe__2805723E">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2235,7 +2258,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__plan_vers__genre__76EBA2E9">
+        <Association Name="FK__plan_vers__genre__6CAFA246">
           <End Role="genres" Type="Self.genres" Multiplicity="0..1" />
           <End Role="plan_version_daypart_program_restrictions" Type="Self.plan_version_daypart_program_restrictions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -5575,6 +5598,30 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_vpvh_audience_mapping_audiences_compose_audiences">
+          <End Role="audiences" Type="Self.audiences" Multiplicity="1" />
+          <End Role="vpvh_audience_mappings" Type="Self.vpvh_audience_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audiences">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="vpvh_audience_mappings">
+              <PropertyRef Name="compose_audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vpvh_audience_mappings_audiences">
+          <End Role="audiences" Type="Self.audiences" Multiplicity="1" />
+          <End Role="vpvh_audience_mappings" Type="Self.vpvh_audience_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audiences">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="vpvh_audience_mappings">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_vpvh_files_vpvhs">
           <End Role="vpvh_files" Type="Self.vpvh_files" Multiplicity="1" />
           <End Role="vpvhs" Type="Self.vpvhs" Multiplicity="*" />
@@ -5584,6 +5631,18 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Principal>
             <Dependent Role="vpvhs">
               <PropertyRef Name="vpvh_file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vpvh_quarters_audiences">
+          <End Role="audiences" Type="Self.audiences" Multiplicity="1" />
+          <End Role="vpvh_quarters" Type="Self.vpvh_quarters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audiences">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="vpvh_quarters">
+              <PropertyRef Name="audience_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5755,7 +5814,9 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <EntitySet Name="stations" EntityType="Self.stations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="system_component_parameters" EntityType="Self.system_component_parameters" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="timespans" EntityType="Self.timespans" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vpvh_audience_mappings" EntityType="Self.vpvh_audience_mappings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vpvh_files" EntityType="Self.vpvh_files" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vpvh_quarters" EntityType="Self.vpvh_quarters" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vpvhs" EntityType="Self.vpvhs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="station_inventory_manifest_weeks_history" EntityType="Self.station_inventory_manifest_weeks_history" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -5788,15 +5849,15 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
     [vw_ccc_daypart].[total_hours] AS [total_hours]
     FROM [dbo].[vw_ccc_daypart] AS [vw_ccc_daypart]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__genre_map__maest__436BFEE3" Association="Self.FK__genre_map__maest__436BFEE3">
+          <AssociationSet Name="FK__genre_map__maest__27114E05" Association="Self.FK__genre_map__maest__27114E05">
             <End Role="genres" EntitySet="genres" />
             <End Role="genre_mappings" EntitySet="genre_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK__genre_map__mappe__4460231C" Association="Self.FK__genre_map__mappe__4460231C">
+          <AssociationSet Name="FK__genre_map__mappe__2805723E" Association="Self.FK__genre_map__mappe__2805723E">
             <End Role="genres" EntitySet="genres" />
             <End Role="genre_mappings" EntitySet="genre_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK__plan_vers__genre__76EBA2E9" Association="Self.FK__plan_vers__genre__76EBA2E9">
+          <AssociationSet Name="FK__plan_vers__genre__6CAFA246" Association="Self.FK__plan_vers__genre__6CAFA246">
             <End Role="genres" EntitySet="genres" />
             <End Role="plan_version_daypart_program_restrictions" EntitySet="plan_version_daypart_program_restrictions" />
           </AssociationSet>
@@ -6840,9 +6901,21 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="markets" EntitySet="markets" />
             <End Role="stations" EntitySet="stations" />
           </AssociationSet>
+          <AssociationSet Name="FK_vpvh_audience_mapping_audiences_compose_audiences" Association="Self.FK_vpvh_audience_mapping_audiences_compose_audiences">
+            <End Role="audiences" EntitySet="audiences" />
+            <End Role="vpvh_audience_mappings" EntitySet="vpvh_audience_mappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vpvh_audience_mappings_audiences" Association="Self.FK_vpvh_audience_mappings_audiences">
+            <End Role="audiences" EntitySet="audiences" />
+            <End Role="vpvh_audience_mappings" EntitySet="vpvh_audience_mappings" />
+          </AssociationSet>
           <AssociationSet Name="FK_vpvh_files_vpvhs" Association="Self.FK_vpvh_files_vpvhs">
             <End Role="vpvh_files" EntitySet="vpvh_files" />
             <End Role="vpvhs" EntitySet="vpvhs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vpvh_quarters_audiences" Association="Self.FK_vpvh_quarters_audiences">
+            <End Role="audiences" EntitySet="audiences" />
+            <End Role="vpvh_quarters" EntitySet="vpvh_quarters" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -8067,6 +8140,20 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="station_inventory_manifest_dayparts" EntitySet="station_inventory_manifest_dayparts" />
             <End Role="station_inventory_manifest_daypart_programs" EntitySet="station_inventory_manifest_daypart_programs" />
           </AssociationSet>
+          <EntitySet Name="vpvh_quarters" EntityType="BroadcastModel.vpvh_quarters" />
+          <AssociationSet Name="FK_vpvh_quarters_audiences" Association="BroadcastModel.FK_vpvh_quarters_audiences">
+            <End Role="audience" EntitySet="audiences" />
+            <End Role="vpvh_quarters" EntitySet="vpvh_quarters" />
+          </AssociationSet>
+          <EntitySet Name="vpvh_audience_mappings" EntityType="BroadcastModel.vpvh_audience_mappings" />
+          <AssociationSet Name="FK_vpvh_audience_mapping_audiences_compose_audiences" Association="BroadcastModel.FK_vpvh_audience_mapping_audiences_compose_audiences">
+            <End Role="audience" EntitySet="audiences" />
+            <End Role="vpvh_audience_mappings" EntitySet="vpvh_audience_mappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vpvh_audience_mappings_audiences" Association="BroadcastModel.FK_vpvh_audience_mappings_audiences">
+            <End Role="audience" EntitySet="audiences" />
+            <End Role="vpvh_audience_mappings" EntitySet="vpvh_audience_mappings" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -8115,6 +8202,9 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <NavigationProperty Name="nti_universes" Relationship="BroadcastModel.FK_nti_universes_audiences" FromRole="audience" ToRole="nti_universes" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_versions_audiences" FromRole="audience" ToRole="plan_versions" />
           <NavigationProperty Name="vpvhs" Relationship="BroadcastModel.FK_audiences_vpvhs" FromRole="audience" ToRole="vpvh" />
+          <NavigationProperty Name="vpvh_quarters" Relationship="BroadcastModel.FK_vpvh_quarters_audiences" FromRole="audience" ToRole="vpvh_quarters" />
+          <NavigationProperty Name="vpvh_audience_mappings" Relationship="BroadcastModel.FK_vpvh_audience_mapping_audiences_compose_audiences" FromRole="audience" ToRole="vpvh_audience_mappings" />
+          <NavigationProperty Name="vpvh_audience_mappings1" Relationship="BroadcastModel.FK_vpvh_audience_mappings_audiences" FromRole="audience" ToRole="vpvh_audience_mappings" />
         </EntityType>
         <EntityType Name="daypart">
           <Key>
@@ -14114,6 +14204,68 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vpvh_quarters">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <Property Name="year" Type="Int32" Nullable="false" />
+          <Property Name="quarter" Type="Int32" Nullable="false" />
+          <Property Name="pm_news" Type="Double" Nullable="false" />
+          <Property Name="am_news" Type="Double" Nullable="false" />
+          <Property Name="syn_all" Type="Double" Nullable="false" />
+          <Property Name="tdn" Type="Double" Nullable="false" />
+          <Property Name="tdns" Type="Double" Nullable="false" />
+          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_vpvh_quarters_audiences" FromRole="vpvh_quarters" ToRole="audience" />
+        </EntityType>
+        <Association Name="FK_vpvh_quarters_audiences">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
+          <End Type="BroadcastModel.vpvh_quarters" Role="vpvh_quarters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audience">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="vpvh_quarters">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vpvh_audience_mappings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <Property Name="compose_audience_id" Type="Int32" Nullable="false" />
+          <Property Name="operation" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="compose_audience" Relationship="BroadcastModel.FK_vpvh_audience_mapping_audiences_compose_audiences" FromRole="vpvh_audience_mappings" ToRole="audience" />
+          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_vpvh_audience_mappings_audiences" FromRole="vpvh_audience_mappings" ToRole="audience" />
+        </EntityType>
+        <Association Name="FK_vpvh_audience_mapping_audiences_compose_audiences">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
+          <End Type="BroadcastModel.vpvh_audience_mappings" Role="vpvh_audience_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audience">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="vpvh_audience_mappings">
+              <PropertyRef Name="compose_audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vpvh_audience_mappings_audiences">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
+          <End Type="BroadcastModel.vpvh_audience_mappings" Role="vpvh_audience_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audience">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="vpvh_audience_mappings">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -16457,6 +16609,31 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
                 <ScalarProperty Name="show_type" ColumnName="show_type" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="station_inventory_manifest_daypart_id" ColumnName="station_inventory_manifest_daypart_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vpvh_quarters">
+            <EntityTypeMapping TypeName="BroadcastModel.vpvh_quarters">
+              <MappingFragment StoreEntitySet="vpvh_quarters">
+                <ScalarProperty Name="tdns" ColumnName="tdns" />
+                <ScalarProperty Name="tdn" ColumnName="tdn" />
+                <ScalarProperty Name="syn_all" ColumnName="syn_all" />
+                <ScalarProperty Name="am_news" ColumnName="am_news" />
+                <ScalarProperty Name="pm_news" ColumnName="pm_news" />
+                <ScalarProperty Name="quarter" ColumnName="quarter" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vpvh_audience_mappings">
+            <EntityTypeMapping TypeName="BroadcastModel.vpvh_audience_mappings">
+              <MappingFragment StoreEntitySet="vpvh_audience_mappings">
+                <ScalarProperty Name="operation" ColumnName="operation" />
+                <ScalarProperty Name="compose_audience_id" ColumnName="compose_audience_id" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

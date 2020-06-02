@@ -15,6 +15,11 @@
     "Id": 418
   },
   {
+    "Code": "A18-24",
+    "Display": "Adults 18-24",
+    "Id": 420
+  },
+  {
     "Code": "A18-34",
     "Display": "Adults 18-34",
     "Id": 32
@@ -28,6 +33,11 @@
     "Code": "A18-54",
     "Display": "Adults 18-54",
     "Id": 247
+  },
+  {
+    "Code": "A18-64",
+    "Display": "Adults 18-64",
+    "Id": 421
   },
   {
     "Code": "A21-24",
@@ -95,6 +105,11 @@
     "Id": 264
   },
   {
+    "Code": "A50-64",
+    "Display": "Adults 50-64",
+    "Id": 422
+  },
+  {
     "Code": "A55+",
     "Display": "Adults 55+",
     "Id": 43
@@ -130,6 +145,11 @@
     "Id": 21
   },
   {
+    "Code": "M18-24",
+    "Display": "Men 18-24",
+    "Id": 423
+  },
+  {
     "Code": "M18-34",
     "Display": "Men 18-34",
     "Id": 48
@@ -143,6 +163,11 @@
     "Code": "M18-54",
     "Display": "Men 18-54",
     "Id": 50
+  },
+  {
+    "Code": "M18-64",
+    "Display": "Men 18-64",
+    "Id": 424
   },
   {
     "Code": "M21-24",
@@ -210,6 +235,11 @@
     "Id": 28
   },
   {
+    "Code": "M50-64",
+    "Display": "Men 50-64",
+    "Id": 425
+  },
+  {
     "Code": "M55+",
     "Display": "Men 55+",
     "Id": 296
@@ -245,6 +275,11 @@
     "Id": 6
   },
   {
+    "Code": "W18-24",
+    "Display": "Women 18-24",
+    "Id": 426
+  },
+  {
     "Code": "W18-34",
     "Display": "Women 18-34",
     "Id": 55
@@ -258,6 +293,11 @@
     "Code": "W18-54",
     "Display": "Women 18-54",
     "Id": 306
+  },
+  {
+    "Code": "W18-64",
+    "Display": "Women 18-64",
+    "Id": 427
   },
   {
     "Code": "W21-24",
@@ -323,6 +363,11 @@
     "Code": "W50-54",
     "Display": "Women 50-54",
     "Id": 13
+  },
+  {
+    "Code": "W50-64",
+    "Display": "Women 50-64",
+    "Id": 428
   },
   {
     "Code": "W55+",

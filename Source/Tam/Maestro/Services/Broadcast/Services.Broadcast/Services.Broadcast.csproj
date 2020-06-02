@@ -403,6 +403,7 @@
     <Compile Include="Entities\Enums\PlanBuyingTimeFramesEnum.cs" />
     <Compile Include="Entities\Enums\PricingMarketGroupEnum.cs" />
     <Compile Include="Entities\Enums\StationMapSetNamesEnum.cs" />
+    <Compile Include="Entities\Enums\VpvhOperationEnum.cs" />
     <Compile Include="Entities\Inventory\InventoryExportGenerationResult.cs" />
     <Compile Include="Entities\Inventory\InventoryExportLineWeekDetail.cs" />
     <Compile Include="Entities\Inventory\InventoryExportRequestDto.cs" />
@@ -549,6 +550,8 @@
     <Compile Include="Entities\TimeRange.cs" />
     <Compile Include="Entities\Vpvh\VpvhFile.cs" />
     <Compile Include="Entities\Vpvh\VpvhFileItem.cs" />
+    <Compile Include="Entities\Vpvh\VpvhMapping.cs" />
+    <Compile Include="Entities\Vpvh\VpvhQuarter.cs" />
     <Compile Include="Exceptions\PricingModelException.cs" />
     <Compile Include="Exceptions\UnknownGenreException.cs" />
     <Compile Include="Extensions\DetectionExtensions.cs" />

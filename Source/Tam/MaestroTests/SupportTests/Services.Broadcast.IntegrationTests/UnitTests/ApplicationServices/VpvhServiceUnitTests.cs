@@ -192,6 +192,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             VpvhFile vpvhFile = null;
             _VpvhRepositoryMock.Setup(r => r.SaveFile(It.IsAny<VpvhFile>())).Callback<VpvhFile>(c => vpvhFile = c);
+            _VpvhRepositoryMock.Setup(r => r.GetVpvhMappings()).Returns(new List<VpvhAudienceMapping>());
 
             _VpvhService.LoadVpvhs(new FileStream(filename, FileMode.Open, FileAccess.Read), "VPVH_valid.xlsx", IntegrationTestUser, CreatedDate);
 
