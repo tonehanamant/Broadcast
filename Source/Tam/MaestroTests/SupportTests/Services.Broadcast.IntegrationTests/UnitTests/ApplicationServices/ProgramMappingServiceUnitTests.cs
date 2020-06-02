@@ -418,7 +418,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 	        _WriteStream(reportData);
 
 	        Assert.IsNotNull(reportData.Stream);
-	        Assert.AreEqual("UnMappedProgramReport.xlsx", reportData.Filename);
+	        Assert.AreEqual("UnmappedProgramReport.xlsx", reportData.Filename);
         }
 
         private static void _WriteStream(ReportOutput reportOutput)
