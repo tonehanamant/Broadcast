@@ -520,6 +520,11 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 //_ProcessInventory(jobId, requestsPackage, processDiagnostics);
 
                 SetPrimaryProgramFromProgramMappings(manifests, (message) => _LogInfo(message));
+
+                // the inventory just changed.
+                // get it again to reflect that change.
+                manifests = _GatherInventory(jobId, processDiagnostics);
+
                 _ExportInventoryForProgramGuide(jobId, manifests, inventorySource, processDiagnostics);
             }
             catch (Exception ex)

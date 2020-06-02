@@ -693,7 +693,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.IsTrue(getInventorySourceCalled > 0);
             Assert.AreEqual(1, getDisplayMediaWeekByFlightCalled);
             Assert.IsTrue(inventoryProgramsBySourceJobsRepoCalls > 0);
-            Assert.AreEqual(1, GetInventoryBySourceForProgramsProcessingCalled);
+            Assert.AreEqual(2, GetInventoryBySourceForProgramsProcessingCalled);
 
             Assert.AreEqual(1, setJobCompleteSuccessCalled);
             Assert.AreEqual(0, setJobCompleteWarningCalled);

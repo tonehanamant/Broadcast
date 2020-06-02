@@ -19,6 +19,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
     {
         protected readonly IInventoryProgramsBySourceJobsRepository _InventoryProgramsBySourceJobsRepository;
         protected readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
+        private List<int> _MediaWeekIds = null;
 
         public InventoryProgramsBySourceProcessor(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IProgramGuideApiClient programGuideApiClient,
@@ -57,13 +58,24 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             return inventorySource;
         }
 
+        protected List<int> _GetMediaWeekIds(DateTime startDate, DateTime endDate, InventoryProgramsProcessingJobDiagnostics processDiagnostics)
+        {
+            if (_MediaWeekIds == null)
+            {
+                var mediaWeekIds = _MediaMonthAndWeekAggregateCache.GetDisplayMediaWeekByFlight(startDate, endDate).Select(w => w.Id).ToList();
+                ((InventoryProgramsProcessingJobBySourceDiagnostics)processDiagnostics).RecordMediaWeekIds(mediaWeekIds);
+                _MediaWeekIds = mediaWeekIds;
+            }
+
+            return _MediaWeekIds;
+        }
+
         protected override List<StationInventoryManifest> _GatherInventory(int jobId, InventoryProgramsProcessingJobDiagnostics processDiagnostics)
         {
             var job = _InventoryProgramsBySourceJobsRepository.GetJob(jobId);
             ((InventoryProgramsProcessingJobBySourceDiagnostics)processDiagnostics).RecordRequestParameters(job.InventorySourceId, job.StartDate, job.EndDate);
 
-            var mediaWeekIds = _MediaMonthAndWeekAggregateCache.GetDisplayMediaWeekByFlight(job.StartDate, job.EndDate).Select(w => w.Id).ToList();
-            ((InventoryProgramsProcessingJobBySourceDiagnostics)processDiagnostics).RecordMediaWeekIds(mediaWeekIds);
+            var mediaWeekIds = _GetMediaWeekIds(job.StartDate, job.EndDate, processDiagnostics);
 
             var manifests = _InventoryRepository.GetInventoryBySourceForProgramsProcessing(job.InventorySourceId, mediaWeekIds);
             return manifests;

@@ -3,7 +3,7 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.StationInventory;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using System.Linq;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -171,6 +171,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                     }
                 };
                 result.Add(manifest);
+                manifest.ManifestDayparts.ForEach(d => d.PrimaryProgramId = d.Programs.FirstOrDefault()?.Id);
             }
 
             return result;

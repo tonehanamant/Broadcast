@@ -1,15 +1,13 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services;
+using Common.Services.Repositories;
 using Hangfire;
-using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
 using System;
 using System.Collections.Generic;
-using Common.Services;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
-    [TestFixture]
     public class InventoryProgramsProcessingServiceTestClass : InventoryProgramsProcessingService
     {
         public InventoryProgramsProcessingServiceTestClass(

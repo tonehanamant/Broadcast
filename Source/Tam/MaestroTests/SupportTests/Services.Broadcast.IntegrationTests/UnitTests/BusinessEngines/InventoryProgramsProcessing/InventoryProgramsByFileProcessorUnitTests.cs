@@ -159,7 +159,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             /*** Assert ***/
             Assert.NotNull(results);
             Assert.IsTrue(inventoryProgramsByFileJobsRepoCalls > 1);
-            Assert.AreEqual(1, getStationInventoryByFileIdForProgramsProcessingCalled);
+            Assert.AreEqual(2, getStationInventoryByFileIdForProgramsProcessingCalled);
 
             Assert.AreEqual(1, setJobCompleteSuccessCalled);
             Assert.AreEqual(0, setJobCompleteWarningCalled);
@@ -215,7 +215,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             var manifests = InventoryProgramsProcessingTestHelper.GetManifests(testManifestCount, testOddDaypartsHaveMappedPrograms);
             var guideResponse = _GetGuideResponse();
 
-            _InventoryRepo.Setup(r => r.GetInventoryByFileIdForProgramsProcessing(It.IsAny<int>()))
+            // yes, I'm returning it twice... 
+            // that's because the repo is mocked and not reflecting saved "add mapping program" changes.
+            _InventoryRepo.SetupSequence(r => r.GetInventoryByFileIdForProgramsProcessing(It.IsAny<int>()))
+                .Returns(manifests)
                 .Returns(manifests);
 
             _InventoryRepo.Setup(r => r.DeleteInventoryPrograms(It.IsAny<List<int>>(),

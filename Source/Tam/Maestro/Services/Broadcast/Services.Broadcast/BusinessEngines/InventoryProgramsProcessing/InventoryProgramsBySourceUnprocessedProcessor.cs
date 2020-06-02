@@ -41,8 +41,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             var job = _InventoryProgramsBySourceJobsRepository.GetJob(jobId);
             ((InventoryProgramsProcessingJobBySourceDiagnostics)processDiagnostics).RecordRequestParameters(job.InventorySourceId, job.StartDate, job.EndDate);
 
-            var mediaWeekIds = _MediaMonthAndWeekAggregateCache.GetDisplayMediaWeekByFlight(job.StartDate, job.EndDate).Select(w => w.Id).ToList();
-            ((InventoryProgramsProcessingJobBySourceDiagnostics)processDiagnostics).RecordMediaWeekIds(mediaWeekIds);
+            var mediaWeekIds = _GetMediaWeekIds(job.StartDate, job.EndDate, processDiagnostics);
 
             var manifests = _InventoryRepository.GetInventoryBySourceWithUnprocessedPrograms(job.InventorySourceId, mediaWeekIds);
             _InventoryProgramsBySourceJobsRepository.UpdateJobNotes(jobId, $"Found {manifests.Count} inventory that did not have programs.");
