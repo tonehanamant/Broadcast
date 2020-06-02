@@ -59,7 +59,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         }
 
         [Test]
-        public void CalculatePricingBandTest_HasSevenBands()
+        public void CalculatePricingBandTest_HasNineBands()
         {
             var inventory = _GetInventory();
 
@@ -90,7 +90,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters);
 
-            Assert.AreEqual(7, pricingBand.Bands.Count);
+            Assert.AreEqual(9, pricingBand.Bands.Count);
         }
 
         [Test]
@@ -160,7 +160,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters);
 
-            Assert.AreEqual(20, pricingBand.Bands[6].MinBand);
+            Assert.AreEqual(20, pricingBand.Bands[8].MinBand);
         }
 
         [Test]
@@ -188,15 +188,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             var parameters = new PlanPricingParametersDto
             {
-                AdjustedCPM = 50,
+                AdjustedCPM = 70,
                 UnitCaps = 1,
                 UnitCapsType = UnitCapEnum.PerHour
             };
 
             var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters);
            
-            Assert.AreEqual(5, pricingBand.Bands[1].MinBand);
-            Assert.AreEqual(24, pricingBand.Bands[1].MaxBand);
+            Assert.AreEqual(7, pricingBand.Bands[1].MinBand);
+            Assert.AreEqual(26, pricingBand.Bands[1].MaxBand);
         }
 
         [Test]

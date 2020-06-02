@@ -81,12 +81,14 @@ namespace Services.Broadcast.BusinessEngines
         {
             const decimal minBandMultiplier = 0.1m;
             const decimal maxBandMultiplier = 2;
-            const decimal numberOfBands = 5;
+            // The number of bands between the first and last band that are fixed.
+            // Amounts to 9 bands.
+            const decimal numberOfIntermediateBands = 7;
 
             var firstBand = pricingCpm * minBandMultiplier;
             var lastBand = pricingCpm * maxBandMultiplier;
             var bandDifference = lastBand - firstBand;
-            var bandIncrement = bandDifference / numberOfBands;
+            var bandIncrement = bandDifference / numberOfIntermediateBands;
 
             var bands = new List<PlanPricingBandDetailDto>()
             {
@@ -98,7 +100,7 @@ namespace Services.Broadcast.BusinessEngines
 
             decimal? previousBand = firstBand;
 
-            for (var index = 0; index < numberOfBands; index++)
+            for (var index = 0; index < numberOfIntermediateBands; index++)
             {
                 var band = new PlanPricingBandDetailDto
                 {

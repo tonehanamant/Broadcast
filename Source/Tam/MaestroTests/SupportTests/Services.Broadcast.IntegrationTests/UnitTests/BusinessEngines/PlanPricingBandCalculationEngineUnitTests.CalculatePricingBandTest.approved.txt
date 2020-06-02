@@ -18,7 +18,7 @@
       "Id": 0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 4.8,
+      "MaxBand": 3.7142857142857142857142857143,
       "MinBand": 1.0,
       "Spots": 0
     },
@@ -29,8 +29,19 @@
       "Id": 0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 8.6,
-      "MinBand": 4.8,
+      "MaxBand": 6.4285714285714285714285714286,
+      "MinBand": 3.7142857142857142857142857143,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0,
+      "Cpm": 0.0,
+      "Id": 0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MaxBand": 9.142857142857142857142857143,
+      "MinBand": 6.4285714285714285714285714286,
       "Spots": 0
     },
     {
@@ -40,8 +51,8 @@
       "Id": 0,
       "Impressions": 50000.0,
       "ImpressionsPercentage": 100.0,
-      "MaxBand": 12.4,
-      "MinBand": 8.6,
+      "MaxBand": 11.857142857142857142857142857,
+      "MinBand": 9.142857142857142857142857143,
       "Spots": 10
     },
     {
@@ -51,8 +62,8 @@
       "Id": 0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 16.2,
-      "MinBand": 12.4,
+      "MaxBand": 14.571428571428571428571428571,
+      "MinBand": 11.857142857142857142857142857,
       "Spots": 0
     },
     {
@@ -62,8 +73,19 @@
       "Id": 0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 20.0,
-      "MinBand": 16.2,
+      "MaxBand": 17.285714285714285714285714285,
+      "MinBand": 14.571428571428571428571428571,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0,
+      "Cpm": 0.0,
+      "Id": 0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MaxBand": 19.999999999999999999999999999,
+      "MinBand": 17.285714285714285714285714285,
       "Spots": 0
     },
     {
