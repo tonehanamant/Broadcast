@@ -652,6 +652,9 @@
     <Compile Include="program_names.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="program_name_exceptions.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="program_name_mappings.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

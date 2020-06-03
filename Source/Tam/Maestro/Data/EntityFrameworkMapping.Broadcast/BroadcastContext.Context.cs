@@ -196,5 +196,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs { get; set; }
         public virtual DbSet<vpvh_quarters> vpvh_quarters { get; set; }
         public virtual DbSet<vpvh_audience_mappings> vpvh_audience_mappings { get; set; }
+        public virtual DbSet<program_name_exceptions> program_name_exceptions { get; set; }
     }
 }

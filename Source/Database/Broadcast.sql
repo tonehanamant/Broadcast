@@ -396,6 +396,46 @@ BEGIN
 END
 /*************************************** END BP-265 *****************************************************/
 
+/*************************************** START BP1-481 *****************************************************/
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('program_name_exceptions'))
+BEGIN
+	CREATE TABLE [program_name_exceptions] (
+		[id] INT IDENTITY(1,1) NOT NULL,
+		[custom_program_name] NVARCHAR(500) NOT NULL,
+		[genre_id] INT NOT NULL,
+		[show_type_id] INT NOT NULL,
+		[created_by] VARCHAR(63) NOT NULL,
+		[created_at] DATETIME2 NOT NULL
+		CONSTRAINT [PK_program_name_exceptions] PRIMARY KEY CLUSTERED
+	(
+        [id] ASC
+    )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+    ) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[program_name_exceptions]  WITH CHECK ADD  CONSTRAINT [FK_program_name_exceptions_genres] FOREIGN KEY([genre_id])
+	REFERENCES [dbo].[genres] ([id])
+	
+	ALTER TABLE [dbo].[program_name_exceptions]  WITH CHECK ADD  CONSTRAINT [FK_program_name_exceptions_show_types] FOREIGN KEY([show_type_id])
+	REFERENCES [dbo].[show_types] ([id])
+
+	INSERT INTO [program_name_exceptions]([custom_program_name], [genre_id], [show_type_id], [created_by], [created_at])
+	VALUES('Golf', (SELECT id FROM genres WHERE name = 'Sports/Sports Talk')
+				 , (SELECT id FROM show_types WHERE name = 'Sports')
+				 , 'System', getdate())
+	INSERT INTO [program_name_exceptions]([custom_program_name], [genre_id], [show_type_id], [created_by], [created_at])
+	VALUES('NBA', (SELECT id FROM genres WHERE name = 'Sports/Sports Talk')
+				 , (SELECT id FROM show_types WHERE name = 'Sports')
+				 , 'System', getdate())
+	INSERT INTO [program_name_exceptions]([custom_program_name], [genre_id], [show_type_id], [created_by], [created_at])
+	VALUES('NHL', (SELECT id FROM genres WHERE name = 'Sports/Sports Talk')
+				 , (SELECT id FROM show_types WHERE name = 'Sports')
+				 , 'System', getdate())
+	INSERT INTO [program_name_exceptions]([custom_program_name], [genre_id], [show_type_id], [created_by], [created_at])
+	VALUES('NFL', (SELECT id FROM genres WHERE name = 'Sports/Sports Talk')
+				 , (SELECT id FROM show_types WHERE name = 'Sports')
+				 , 'System', getdate())
+END
+/*************************************** END BP1-481 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

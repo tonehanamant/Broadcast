@@ -444,6 +444,9 @@
         <EntityTypeShape EntityType="BroadcastModel.vpvh_audience_mappings" Width="1.5" PointX="5" PointY="59.5" />
         <AssociationConnector Association="BroadcastModel.FK_vpvh_audience_mapping_audiences_compose_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_vpvh_audience_mappings_audiences" />
+        <EntityTypeShape EntityType="BroadcastModel.program_name_exceptions" Width="1.5" PointX="30.25" PointY="50.75" />
+        <AssociationConnector Association="BroadcastModel.FK_program_name_exceptions_genres" />
+        <AssociationConnector Association="BroadcastModel.FK_program_name_exceptions_show_types" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -26,6 +26,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.station_inventory_manifest_daypart_programs = new HashSet<station_inventory_manifest_daypart_programs>();
             this.station_inventory_manifest_daypart_programs1 = new HashSet<station_inventory_manifest_daypart_programs>();
             this.station_inventory_manifest_genres = new HashSet<station_inventory_manifest_genres>();
+            this.program_name_exceptions = new HashSet<program_name_exceptions>();
         }
     
         public int id { get; set; }
@@ -47,5 +48,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs { get; set; }
         public virtual ICollection<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs1 { get; set; }
         public virtual ICollection<station_inventory_manifest_genres> station_inventory_manifest_genres { get; set; }
+        public virtual ICollection<program_name_exceptions> program_name_exceptions { get; set; }
     }
 }

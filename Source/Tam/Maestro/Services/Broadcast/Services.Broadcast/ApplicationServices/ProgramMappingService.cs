@@ -36,10 +36,9 @@ namespace Services.Broadcast.ApplicationServices
         string LoadProgramMappings(Stream fileStream, string fileName, string userName, DateTime createdDate);
 
         /// <summary>
-        /// Processes the program mappings file.
+        /// Runs the program mappings processing job.
         /// </summary>
-        /// <param name="fileStream">The file stream.</param>
-        /// <param name="fileName">Name of the file.</param>
+        /// <param name="fileId">The file identifier.</param>
         /// <param name="userName">Name of the user.</param>
         /// <param name="createdDate">The created date.</param>
         [Queue("programmappings")]
