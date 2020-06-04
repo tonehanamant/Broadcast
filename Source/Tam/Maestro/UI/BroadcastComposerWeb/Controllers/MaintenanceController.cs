@@ -13,6 +13,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
@@ -202,18 +203,18 @@ namespace BroadcastComposerWeb.Controllers
         [Route("ExportUnmappedPrograms")]
         public ActionResult ExportUnmappedPrograms()
         {
-	        try
-	        {
-		        var service = _ApplicationServiceFactory.GetApplicationService<IProgramMappingService>();
-		        var result = service.GenerateUnmappedProgramNameReport();
-		        return File(result.Stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-			        result.Filename);
-	        }
-	        catch (Exception ex)
-	        {
-		        ViewBag.Message = ex.Message;
-		        return View("Index");
-	        }
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IProgramMappingService>();
+                var result = service.GenerateUnmappedProgramNameReport();
+                return File(result.Stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    result.Filename);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return View("Index");
+            }
         }
 
         [HttpPost]
@@ -698,6 +699,30 @@ namespace BroadcastComposerWeb.Controllers
                 TempData["Message"] = ex.Message;
             }
 
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult ExportVpvh()
+        {
+            try
+            {
+                var excelFile = _ApplicationServiceFactory
+                        .GetApplicationService<IVpvhService>().Export();
+
+                var contentDisposition = new System.Net.Mime.ContentDisposition
+                {
+                    FileName = "VpvhExport.xlsx",
+                    Inline = false,
+                };
+                Response.AppendHeader("Content-Disposition", contentDisposition.ToString());
+                return File(excelFile, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+            }
 
             return RedirectToAction("Index");
         }

@@ -53,5 +53,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 , Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid audience."));
             }
         }
+
+        [Test]
+        [Category("long_running")]
+        public void Export_GenerateFile()
+        {
+            var fileStream = _VpvhService.Export();
+
+            Assert.IsNotNull(fileStream);
+        }
     }
 }

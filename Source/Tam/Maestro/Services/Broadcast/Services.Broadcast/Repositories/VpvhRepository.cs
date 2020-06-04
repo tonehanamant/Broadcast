@@ -29,6 +29,8 @@ namespace Services.Broadcast.Repositories
         VpvhQuarter GetQuarter(int audienceId, int year, int quarter);
 
         List<VpvhAudienceMapping> GetVpvhMappings();
+
+        List<VpvhQuarter> GetAllQuarters();
     }
 
     public class VpvhRepository : BroadcastRepositoryBase, IVpvhRepository
@@ -54,6 +56,12 @@ namespace Services.Broadcast.Repositories
         {
             return _MapToDto(_InReadUncommitedTransaction(
                 context => context.vpvh_quarters.Include(v => v.audience).Where(v => v.quarter == quarter && v.year == year && v.audience_id == audienceId).SingleOrDefault()));
+        }
+
+        public List<VpvhQuarter> GetAllQuarters()
+        {
+            return _InReadUncommitedTransaction(
+                context => context.vpvh_quarters.Include(v => v.audience).Select(_MapToDto).ToList());
         }
 
         public List<VpvhAudienceMapping> GetVpvhMappings()

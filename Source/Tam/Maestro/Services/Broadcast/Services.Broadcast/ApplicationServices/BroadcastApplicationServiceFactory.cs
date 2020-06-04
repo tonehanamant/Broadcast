@@ -208,7 +208,9 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IShowTypeService, ShowTypeService>();
             unityContainer.RegisterType<IContainTypeService, ContainTypeService>();
             unityContainer.RegisterType<IAffiliateService, AffiliateService>();
+
             unityContainer.RegisterType<IVpvhService, VpvhService>();
+            unityContainer.RegisterType<IVpvhExportEngine, VpvhExportEngine>();
 
             unityContainer.RegisterType<IScxGenerationService, ScxGenerationService>();
 

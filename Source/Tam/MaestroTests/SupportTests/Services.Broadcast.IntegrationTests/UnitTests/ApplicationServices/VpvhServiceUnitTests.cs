@@ -4,6 +4,7 @@ using Common.Services.Repositories;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities.Vpvh;
@@ -28,6 +29,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IBroadcastAudiencesCache> _BroadcastAudiencesCacheMock;
         private Mock<IVpvhFileImporter> _VpvhFileImporterMock;
         private Mock<IVpvhRepository> _VpvhRepositoryMock;
+        private Mock<IVpvhExportEngine> _VpvhExportEngine;
 
         [SetUp]
         public void SetUp()
@@ -36,11 +38,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _BroadcastAudiencesCacheMock = new Mock<IBroadcastAudiencesCache>();
             _VpvhFileImporterMock = new Mock<IVpvhFileImporter>();
             _VpvhRepositoryMock = new Mock<IVpvhRepository>();
+            _VpvhExportEngine = new Mock<IVpvhExportEngine>();
 
             dataRepositoryFactoryMock.Setup(x => x.GetDataRepository<IVpvhRepository>())
                 .Returns(_VpvhRepositoryMock.Object);
 
-            _VpvhService = new VpvhService(dataRepositoryFactoryMock.Object, _VpvhFileImporterMock.Object, _BroadcastAudiencesCacheMock.Object);
+            _VpvhService = new VpvhService(dataRepositoryFactoryMock.Object, _VpvhFileImporterMock.Object, _BroadcastAudiencesCacheMock.Object, _VpvhExportEngine.Object);
         }
 
         [Test]

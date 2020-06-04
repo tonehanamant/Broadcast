@@ -323,6 +323,7 @@
     <Compile Include="BusinessEngines\PlanPricingBandCalculationEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricingUnitCapImpressionsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProgramNameMappingsExportEngine.cs" />
+    <Compile Include="BusinessEngines\VpvhExportEngine.cs" />
     <Compile Include="BusinessEngines\WeeklyBreakdownEngine.cs" />
     <Compile Include="ApplicationServices\Inventory\InventoryExportService.cs" />
     <Compile Include="BusinessEngines\InventoryExportEngine.cs" />

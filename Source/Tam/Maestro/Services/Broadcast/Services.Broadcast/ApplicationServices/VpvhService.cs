@@ -1,6 +1,8 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
+using OfficeOpenXml;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Converters;
@@ -43,6 +45,12 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="audienceId">Audience</param>
         /// <returns>VPVH quarter</returns>
         VpvhQuarter GetQuarter(QuarterDto quarter, int audienceId);
+
+        /// <summary>
+        /// Export all VPVH quarters
+        /// </summary>
+        /// <returns>Excel file stream</returns>
+        Stream Export();
     }
 
     public class VpvhService : IVpvhService
@@ -50,14 +58,17 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IBroadcastAudiencesCache _BroadcastAudiencesCache;
         private readonly IVpvhFileImporter _VpvhFileImporter;
         private readonly IVpvhRepository _VpvhRepository;
+        private readonly IVpvhExportEngine _VpvhExportEngine;
 
         public VpvhService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IVpvhFileImporter vpvhFileImporter,
-            IBroadcastAudiencesCache broadcastAudiencesCache)
+            IBroadcastAudiencesCache broadcastAudiencesCache,
+            IVpvhExportEngine vpvhExportEngine)
         {
             _VpvhRepository = broadcastDataRepositoryFactory.GetDataRepository<IVpvhRepository>();
             _VpvhFileImporter = vpvhFileImporter;
             _BroadcastAudiencesCache = broadcastAudiencesCache;
+            _VpvhExportEngine = vpvhExportEngine;
         }
 
         public List<VpvhQuarter> GetQuarters(QuarterDto quarter)
@@ -114,7 +125,7 @@ namespace Services.Broadcast.ApplicationServices
         private void _CalculateDerivedQuarters(List<QuarterDto> quarters)
         {
             var vpvhMappings = _VpvhRepository.GetVpvhMappings();
-            foreach(var quarter in quarters)
+            foreach (var quarter in quarters)
             {
                 var vpvhQuarters = _VpvhRepository.GetQuarters(quarter);
 
@@ -232,6 +243,15 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (vpvh > 10 || vpvh < 0.001)
                 throw new Exception("VPVH must be between 0.01 and 10.");
+        }
+
+        public Stream Export()
+        {
+            var vpvhQuarters = _VpvhRepository.GetAllQuarters();
+
+            var excel = _VpvhExportEngine.ExportQuarters(vpvhQuarters);
+
+            return new MemoryStream(excel.GetAsByteArray());
         }
     }
 }
