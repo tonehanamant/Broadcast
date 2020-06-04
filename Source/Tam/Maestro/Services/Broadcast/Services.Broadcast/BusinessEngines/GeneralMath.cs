@@ -11,5 +11,9 @@
         {
             return fraction * 100;
         }
+        public static decimal ConvertFractionToPercentage(decimal fraction)
+        {
+	        return fraction * 100;
+        }
     }
 }

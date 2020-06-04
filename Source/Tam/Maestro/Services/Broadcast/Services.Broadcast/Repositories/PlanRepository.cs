@@ -159,6 +159,13 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="plan">The plan.</param>
         void SaveCreativeLengths(PlanDto plan);
+      /// <summary>
+      /// Get Goal CPM value
+      /// </summary>
+      /// <param name="planVersionId"></param>
+      /// <param name="jobId"></param>
+      /// <returns></returns>
+        decimal GetGoalCpm(int planVersionId, int jobId);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -1622,6 +1629,17 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        public decimal GetGoalCpm(int planVersionId, int jobId)
+        {
+	        return _InReadUncommitedTransaction(context =>
+	        {
+		        var result = context.plan_version_pricing_parameters.Where(p =>
+				        p.plan_version_id == planVersionId && p.plan_version_pricing_job_id == jobId)
+			        .Select(p => p.cpm_goal).FirstOrDefault();
+
+		        return result;
+	        });
+        }
         public void SavePlanPricingEstimates(int jobId, List<PricingEstimate> estimates)
         {
             _InReadUncommitedTransaction(context =>

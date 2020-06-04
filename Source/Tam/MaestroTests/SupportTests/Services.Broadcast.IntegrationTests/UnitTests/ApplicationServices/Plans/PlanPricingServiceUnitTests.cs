@@ -6587,16 +6587,38 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     OptimalCpm = 5,
                     GoalFulfilledByProprietary = true,
                     PlanVersionId = 11,
-                    JobId = 12
-                });
+                    JobId = 12,
+                    CpmPercentage = 204
 
-            var service = _GetService();
+                });
+             
+
+            _PlanRepositoryMock
+				.Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>())).Returns(6.75M);
+					
+                
+
+			var service = _GetService();
 
             // Act
             var result = service.GetCurrentPricingExecution(planId);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void CalculateCpmPercentageTest()
+        {
+	        //Arrange
+	        var expected = 204M;
+	        var service = _GetService();
+
+	        // Act
+	        var actual = service.CalculateCpmPercentage(13.75M, 6.75M);
+
+	        //Assert
+	        Assert.AreEqual(expected, actual);
         }
 
         [Test]

@@ -296,37 +296,55 @@ namespace Services.Broadcast.ApplicationServices
 
         public CurrentPricingExecution GetCurrentPricingExecution(int planId)
         {
-            var job = _PlanRepository.GetLatestPricingJob(planId);
-            CurrentPricingExecutionResultDto pricingExecutionResult = null;
+	        var job = _PlanRepository.GetLatestPricingJob(planId);
+	        CurrentPricingExecutionResultDto pricingExecutionResult = null;
 
-            if (job != null && job.Status == BackgroundJobProcessingStatus.Failed)
-            {
-                //in case the error is comming from the Pricing Run model, the error message field will have better
-                //message then the generic we construct here
-                if (string.IsNullOrWhiteSpace(job.DiagnosticResult))
-                {
-                    throw new Exception(job.ErrorMessage);
-                }
-                else
-                {
-                    throw new Exception("Error encountered while running Pricing Model, please contact a system administrator for help");
-                }
-            }
+	        if (job != null && job.Status == BackgroundJobProcessingStatus.Failed)
+	        {
+		        //in case the error is comming from the Pricing Run model, the error message field will have better
+		        //message then the generic we construct here
+		        if (string.IsNullOrWhiteSpace(job.DiagnosticResult))
+			        throw new Exception(job.ErrorMessage);
+		        throw new Exception(
+			        "Error encountered while running Pricing Model, please contact a system administrator for help");
+	        }
 
-            if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
-            {
-                pricingExecutionResult = _PlanRepository.GetPricingResults(planId);
-                if (pricingExecutionResult != null)
-                    pricingExecutionResult.Notes = pricingExecutionResult.GoalFulfilledByProprietary ? "Proprietary goals meet plan goals" : string.Empty;
-            }
+	        if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
+	        {
+		        pricingExecutionResult = _PlanRepository.GetPricingResults(planId);
 
-            //pricingExecutionResult might be null when there is no pricing run for the latest version            
-            return new CurrentPricingExecution
-            {
-                Job = job,
-                Result = pricingExecutionResult ?? new CurrentPricingExecutionResultDto(),
-                IsPricingModelRunning = IsPricingModelRunning(job)
-            };
+		        if (pricingExecutionResult != null)
+		        {
+			        pricingExecutionResult.Notes = pricingExecutionResult.GoalFulfilledByProprietary
+				        ? "Proprietary goals meet plan goals"
+				        : string.Empty;
+			        if (pricingExecutionResult.JobId.HasValue)
+			        {
+				        var goalCpm = _PlanRepository.GetGoalCpm(pricingExecutionResult.PlanVersionId,
+					        pricingExecutionResult.JobId.Value);
+				        pricingExecutionResult.CpmPercentage =
+					        CalculateCpmPercentage(pricingExecutionResult.OptimalCpm, goalCpm);
+			        }
+		        }
+	        }
+
+	        //pricingExecutionResult might be null when there is no pricing run for the latest version            
+	        return new CurrentPricingExecution
+	        {
+		        Job = job,
+		        Result = pricingExecutionResult ?? new CurrentPricingExecutionResultDto(),
+		        IsPricingModelRunning = IsPricingModelRunning(job)
+	        };
+        }
+        /// <summary>
+        /// Goal CPM Percentage Indicator Calculation
+        /// </summary>
+        /// <param name="targetCpm"></param>
+        /// <param name="optimalCpm"></param>
+        /// <returns></returns>
+        public int CalculateCpmPercentage(decimal optimalCpm, decimal goalCpm)
+        {
+	        return (int) Math.Round(GeneralMath.ConvertFractionToPercentage(optimalCpm / goalCpm));
         }
 
         /// <inheritdoc />
