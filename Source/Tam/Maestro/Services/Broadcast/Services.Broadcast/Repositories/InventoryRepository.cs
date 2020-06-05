@@ -131,6 +131,8 @@ namespace Services.Broadcast.Repositories
 
         List<StationInventoryManifestDaypartProgram> GetDaypartProgramsForInventoryDayparts(List<int> stationInventoryManifestDaypartIds);
 
+        List<StationInventoryManifestDaypart> GetManifestDayparts(List<int> stationInventoryManifestDaypartIds);
+
         void DeleteInventoryPrograms(List<int> manifestIds, DateTime startDate,
             DateTime endDate);
 
@@ -1593,6 +1595,20 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        public List<StationInventoryManifestDaypart> GetManifestDayparts(List<int> stationInventoryManifestDaypartIds)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var entities = context.station_inventory_manifest_dayparts
+                        .Where(d => stationInventoryManifestDaypartIds.Contains(d.id))
+                        .ToList();
+                    var result = entities.Select(_MapToManifestDaypart).ToList();
+
+                    return result;
+                });
+        }
+
         private StationInventoryManifestDaypartProgram _MapToInventoryManifestDaypartProgram(
             station_inventory_manifest_daypart_programs item)
         {
@@ -1618,13 +1634,19 @@ namespace Services.Broadcast.Repositories
         public void DeleteInventoryPrograms(List<int> manifestIds, DateTime startDate, DateTime endDate)
         {
             var manifestIdsCsv = string.Join(",", manifestIds);
-            var sql = $"UPDATE station_inventory_manifest_dayparts SET primary_program_id = null  WHERE station_inventory_manifest_id in ({manifestIdsCsv});"
-                      + "\r\n"
-                      + $"DELETE p FROM station_inventory_manifest_daypart_programs p"
-                      + $" INNER JOIN station_inventory_manifest_dayparts d ON p.station_inventory_manifest_daypart_id = d.id"
+            // gather first
+            var sql = "SELECT p.id AS ProgramId, station_inventory_manifest_daypart_id AS DaypartId INTO #ProgramsIdsToDelete"
+                      + " FROM station_inventory_manifest_daypart_programs p"
+                      + " INNER JOIN station_inventory_manifest_dayparts d ON p.station_inventory_manifest_daypart_id = d.id"
                       + $" WHERE d.station_inventory_manifest_id in ({manifestIdsCsv})"
                       + $" AND p.start_date <= '{endDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)} 23:59:59'"
-                      + $" AND p.end_date >= '{startDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)} 00:00:00'";
+                      + $" AND p.end_date >= '{startDate.ToString(BroadcastConstants.DATE_FORMAT_STANDARD)} 00:00:00';"
+                      + "\r\n"
+                      // clear the primary program id
+                      + "UPDATE d SET primary_program_id = NULL FROM station_inventory_manifest_dayparts d JOIN #ProgramsIdsToDelete pd ON d.id = pd.DaypartId AND d.primary_program_id = pd.ProgramId;"
+                      + "\r\n"
+                      // now can delete the programs
+                      + "DELETE FROM station_inventory_manifest_daypart_programs WHERE id IN (SELECT ProgramId FROM #ProgramsIdsToDelete);";
 
             _InReadUncommitedTransaction(
                 context =>
@@ -1636,8 +1658,16 @@ namespace Services.Broadcast.Repositories
         public void DeleteInventoryPrograms(List<int> manifestDaypartIds)
         {
             var manifestIdsCsv = string.Join(",", manifestDaypartIds);
-            var sql = $"DELETE p FROM station_inventory_manifest_daypart_programs p " +
-                      $"WHERE p.station_inventory_manifest_daypart_id in ({manifestIdsCsv})";
+            // gather first
+            var sql = "SELECT p.id AS ProgramId, station_inventory_manifest_daypart_id AS DaypartId INTO #ProgramsIdsToDelete"
+                      + " FROM station_inventory_manifest_daypart_programs p"
+                      + $" WHERE p.station_inventory_manifest_daypart_id in ({manifestIdsCsv});"
+                      + "\r\n"
+                      // clear the primary program id
+                      + "UPDATE d SET primary_program_id = NULL FROM station_inventory_manifest_dayparts d JOIN #ProgramsIdsToDelete pd ON d.id = pd.DaypartId AND d.primary_program_id = pd.ProgramId;"
+                      + "\r\n"
+                      // now can delete the programs
+                      + "DELETE FROM station_inventory_manifest_daypart_programs WHERE id IN (SELECT ProgramId FROM #ProgramsIdsToDelete);";
 
             _InReadUncommitedTransaction(
                 context =>
@@ -1861,28 +1891,36 @@ namespace Services.Broadcast.Repositories
                 {
                     var manifestDayparts =
                         context.station_inventory_manifest_dayparts
-                        .Include(md => md.daypart.timespan)
-                        .Where(md => md.program_name == programName).ToList();
+                            .Include(md => md.daypart.timespan)
+                            .Where(md => md.program_name == programName).ToList();
 
-                    var manifestDaypartDtos = manifestDayparts.Select(x => new StationInventoryManifestDaypart()
-                    {
-                        Id = x.id,
-                        Daypart = new DisplayDaypart
-                        {
-                            Id = x.daypart_id,
-                            StartTime = x.daypart.timespan.start_time,
-                            EndTime = x.daypart.timespan.end_time
-                        },
-                        ProgramName = x.program_name,
-                        Genres = x.station_inventory_manifest_daypart_genres.Select(g => new LookupDto
-                        {
-                            Id = g.genre_id,
-                            Display = g.genre.name
-                        }).ToList()
-                    }).ToList();
+                    var manifestDaypartDtos = manifestDayparts.Select(_MapToManifestDaypart).ToList();
 
                     return manifestDaypartDtos;
                 });
+        }
+
+        private StationInventoryManifestDaypart _MapToManifestDaypart(station_inventory_manifest_dayparts entity)
+        {
+            var dto = new StationInventoryManifestDaypart()
+            {
+                Id = entity.id,
+                Daypart = new DisplayDaypart
+                {
+                    Id = entity.daypart_id,
+                    StartTime = entity.daypart.timespan.start_time,
+                    EndTime = entity.daypart.timespan.end_time
+                },
+                ProgramName = entity.program_name,
+                PrimaryProgramId = entity.primary_program_id,
+                Genres = entity.station_inventory_manifest_daypart_genres.Select(g => new LookupDto
+                {
+                    Id = g.genre_id,
+                    Display = g.genre.name
+                }).ToList(),
+                Programs = entity.station_inventory_manifest_daypart_programs.Select(_MapToInventoryManifestDaypartProgram).ToList()
+            };
+            return dto;
         }
 
         public List<string> GetUnmappedPrograms()

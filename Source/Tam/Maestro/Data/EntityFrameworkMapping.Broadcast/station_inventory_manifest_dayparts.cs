@@ -32,5 +32,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_inventory_manifest_daypart_genres> station_inventory_manifest_daypart_genres { get; set; }
         public virtual daypart_defaults daypart_defaults { get; set; }
         public virtual ICollection<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs { get; set; }
+        public virtual station_inventory_manifest_daypart_programs station_inventory_manifest_daypart_programs1 { get; set; }
     }
 }

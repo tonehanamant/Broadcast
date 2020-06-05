@@ -60,21 +60,134 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             var newPrograms = _GetPrograms(stationInventoryManifestDaypartIds, newProgramCountPerManifestDaypart);
             var repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
 
+            List<StationInventoryManifestDaypart> beforeManifestDayparts;
+            List<StationInventoryManifestDaypart> afterManifestDayparts;
+
+            List<StationInventoryManifestDaypartProgram> beforePrograms;
+            List<StationInventoryManifestDaypartProgram> afterPrograms;
+
             using (new TransactionScopeWrapper())
             {
-                var beforePrograms = repo.GetDaypartProgramsForInventoryDayparts(stationInventoryManifestDaypartIds);
+                beforePrograms = repo.GetDaypartProgramsForInventoryDayparts(stationInventoryManifestDaypartIds);
+                // align their primary_program_ids
+                var daypartsToUpdate = new List<StationInventoryManifestDaypart>();
+                var daypartGroups = beforePrograms.GroupBy(s => s.StationInventoryManifestDaypartId);
+                foreach (var daypartGroup in daypartGroups)
+                {
+                    var manifestDaypartId = daypartGroup.Key;
+                    var primaryProgramId = daypartGroup.First().Id;
+
+                    daypartsToUpdate.Add(new StationInventoryManifestDaypart { Id = manifestDaypartId, PrimaryProgramId = primaryProgramId });
+                }
+                repo.UpdatePrimaryProgramsForManifestDayparts(daypartsToUpdate);
+
+                beforeManifestDayparts = repo.GetManifestDayparts(stationInventoryManifestDaypartIds);
                 Assert.AreEqual(expectedBeforeProgramCount, beforePrograms.Count);
 
                 // only deletes some of them.
                 repo.DeleteInventoryPrograms(relatedStationInventoryManifestIds, startDate, endDate);
+                // and create some more...
                 repo.CreateInventoryPrograms(newPrograms, createdAtDate);
 
-                var afterPrograms = repo.GetDaypartProgramsForInventoryDayparts(stationInventoryManifestDaypartIds);
-
-                Assert.AreEqual(expectedAfterProgramCount, afterPrograms.Count);
-                // contains a mix of old and new.
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(afterPrograms, _GetJsonSettings()));
+                afterPrograms = repo.GetDaypartProgramsForInventoryDayparts(stationInventoryManifestDaypartIds);
+                afterManifestDayparts = repo.GetManifestDayparts(stationInventoryManifestDaypartIds);
             }
+
+            Assert.AreEqual(expectedAfterProgramCount, afterPrograms.Count);
+
+            var verifiableResult = new
+            {
+                beforePrograms,
+                beforeManifestDayparts,
+                afterPrograms,
+                afterManifestDayparts
+            };
+
+            // contains a mix of old and new.
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(verifiableResult, _GetJsonSettings()));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void StationInventoryManifestDaypartDeleteAllRelatedPrograms()
+        {
+            const int expectedBeforeProgramCount = 9;
+            const int expectedAfterProgramCount = 0;
+            var stationInventoryManifestDaypartIds = new List<int>
+            {
+                358772,
+                358773,
+                358776,
+                358777,
+                358780,
+                360318,
+                360319,
+                360320,
+                360321
+            };
+
+            var repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+
+            List<StationInventoryManifestDaypart> beforeManifestDayparts;
+            List<StationInventoryManifestDaypart> afterManifestDayparts;
+
+            List<StationInventoryManifestDaypartProgram> beforePrograms;
+            List<StationInventoryManifestDaypartProgram> afterPrograms;
+
+            using (new TransactionScopeWrapper())
+            {
+                beforePrograms = repo.GetDaypartProgramsForInventoryDayparts(stationInventoryManifestDaypartIds);
+                // align their primary_program_ids
+                var daypartsToUpdate = new List<StationInventoryManifestDaypart>();
+                var daypartGroups = beforePrograms.GroupBy(s => s.StationInventoryManifestDaypartId);
+                foreach (var daypartGroup in daypartGroups)
+                {
+                    var manifestDaypartId = daypartGroup.Key;
+                    var primaryProgramId = daypartGroup.First().Id;
+
+                    daypartsToUpdate.Add(new StationInventoryManifestDaypart { Id = manifestDaypartId, PrimaryProgramId = primaryProgramId });
+                }
+                repo.UpdatePrimaryProgramsForManifestDayparts(daypartsToUpdate);
+
+                beforeManifestDayparts = repo.GetManifestDayparts(stationInventoryManifestDaypartIds);
+                Assert.AreEqual(expectedBeforeProgramCount, beforePrograms.Count);
+
+                repo.DeleteInventoryPrograms(stationInventoryManifestDaypartIds);
+
+                afterPrograms = repo.GetDaypartProgramsForInventoryDayparts(stationInventoryManifestDaypartIds);
+                afterManifestDayparts = repo.GetManifestDayparts(stationInventoryManifestDaypartIds);
+            }
+
+            Assert.AreEqual(expectedAfterProgramCount, afterPrograms.Count);
+
+            var verifiableResult = new
+            {
+                beforePrograms,
+                beforeManifestDayparts,
+                afterPrograms,
+                afterManifestDayparts
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(verifiableResult, _GetJsonSettings()));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetManifestDaypartsForProgramName()
+        {
+            const string testProgramName = "News 10 @ Noon";
+            const string emptyTestProgramName = "";
+            var repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+
+            var testResult = repo.GetManifestDaypartsForProgramName(testProgramName);
+            var emptyTestResult = repo.GetManifestDaypartsForProgramName(emptyTestProgramName);
+
+            var verifiable = new
+            {
+                testResult,
+                emptyTestResult
+            };
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(verifiable));
         }
 
         [Test]

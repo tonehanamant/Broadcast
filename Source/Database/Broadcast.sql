@@ -437,6 +437,28 @@ BEGIN
 END
 /*************************************** END BP1-481 *****************************************************/
 
+/*************************************** START BP1-539 *****************************************************/
+
+GO
+
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id =OBJECT_ID('FK_station_inventory_manifest_dayparts_station_inventory_manifest_daypart_programs'))
+BEGIN
+	UPDATE d SET
+		primary_program_id = NULL
+	FROM station_inventory_manifest_dayparts d
+	LEFT JOIN station_inventory_manifest_daypart_programs p
+		ON p.id = d.primary_program_id
+	WHERE p.id IS NULL
+
+	ALTER TABLE station_inventory_manifest_dayparts
+		ADD CONSTRAINT FK_station_inventory_manifest_dayparts_station_inventory_manifest_daypart_programs 
+		FOREIGN KEY (primary_program_id) 
+		REFERENCES station_inventory_manifest_daypart_programs (id)
+END
+
+GO
+/*************************************** END BP1-539 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -447,6 +447,7 @@
         <EntityTypeShape EntityType="BroadcastModel.program_name_exceptions" Width="1.5" PointX="30.25" PointY="50.75" />
         <AssociationConnector Association="BroadcastModel.FK_program_name_exceptions_genres" />
         <AssociationConnector Association="BroadcastModel.FK_program_name_exceptions_show_types" />
+        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_dayparts_station_inventory_manifest_daypart_programs" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
