@@ -1303,6 +1303,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Weeks = _GetWeeklyBreakdownWeeks()
             };
 
+            var distributeWeightCallCount = 0;
+            _CreativeLengthEngineMock.Setup(s => s.DistributeWeight(It.IsAny<List<CreativeLength>>()))
+                .Callback(() => distributeWeightCallCount++)
+                .Returns(request.CreativeLengths);
+
             _SpotLengthEngineMock
                 .Setup(a => a.GetSpotLengths())
                 .Returns(new Dictionary<int, int> { { 30, 1 }, { 15, 2}, { 45, 3} });
@@ -1311,6 +1316,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var results = _PlanService.CalculateLengthMakeUpTable(request);
 
             // Assert
+            Assert.AreEqual(1, distributeWeightCallCount);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
         }
 
