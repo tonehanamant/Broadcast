@@ -50,7 +50,8 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
-
+-- a test query to establish that the build is running the correct script against the correct environment and database
+SELECT @@SERVERNAME AS ServerName, DB_Name() AS DbName, 'UAT' AS Environment
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
