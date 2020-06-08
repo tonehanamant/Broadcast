@@ -459,6 +459,17 @@ END
 GO
 /*************************************** END BP1-539 *****************************************************/
 
+/*************************************** START BP1-538 *****************************************************/
+
+IF (0 = COLUMNPROPERTY(OBJECT_ID('plan_version_pricing_parameters', 'U'), 'margin', 'AllowsNull'))
+BEGIN 
+	ALTER TABLE plan_version_pricing_parameters ALTER COLUMN margin float NULL;
+END
+
+GO
+
+/*************************************** END BP1-538 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

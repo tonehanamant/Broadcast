@@ -36,7 +36,7 @@ namespace EntityFrameworkMapping.Broadcast
         public decimal cpp { get; set; }
         public int currency { get; set; }
         public double rating_points { get; set; }
-        public double margin { get; set; }
+        public Nullable<double> margin { get; set; }
         public Nullable<int> plan_version_pricing_job_id { get; set; }
         public decimal budget_adjusted { get; set; }
         public decimal cpm_adjusted { get; set; }

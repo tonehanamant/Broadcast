@@ -471,7 +471,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 MarketGroup = pricingDefaults.MarketGroup
             };
 
-            _PlanPricingService.ApplyMargin(plan.PricingParameters);
+            _PlanPricingService.ValidateAndApplyMargin(plan.PricingParameters);
         }
 
         private void _SetPlanFlightDays(PlanDto plan)

@@ -1,0 +1,134 @@
+[
+  {
+    "contract": [
+      {
+        "cpm_goal": 300.0,
+        "daypart_weighting": [
+          {
+            "daypart_goal": 0.6,
+            "daypart_id": 15
+          },
+          {
+            "daypart_goal": 0.4,
+            "daypart_id": 16
+          }
+        ],
+        "frequency_cap_spots": 10,
+        "frequency_cap_time": 1.0,
+        "frequency_cap_unit": "day",
+        "impression_goal": 30.0,
+        "market_coverage_goal": 0.8,
+        "share_of_voice": [
+          {
+            "market_code": 100,
+            "market_goal": 0.1
+          },
+          {
+            "market_code": 302,
+            "market_goal": 0.302
+          },
+          {
+            "market_code": 403,
+            "market_goal": 0.04743
+          },
+          {
+            "market_code": 202,
+            "market_goal": 0.02942
+          },
+          {
+            "market_code": 101,
+            "market_goal": 0.12
+          },
+          {
+            "market_code": 102,
+            "market_goal": 0.13
+          }
+        ],
+        "week_id": 100
+      },
+      {
+        "cpm_goal": 300.0,
+        "daypart_weighting": [
+          {
+            "daypart_goal": 0.6,
+            "daypart_id": 15
+          },
+          {
+            "daypart_goal": 0.4,
+            "daypart_id": 16
+          }
+        ],
+        "frequency_cap_spots": 10,
+        "frequency_cap_time": 1.0,
+        "frequency_cap_unit": "day",
+        "impression_goal": 10.0,
+        "market_coverage_goal": 0.8,
+        "share_of_voice": [
+          {
+            "market_code": 100,
+            "market_goal": 0.1
+          },
+          {
+            "market_code": 302,
+            "market_goal": 0.302
+          },
+          {
+            "market_code": 403,
+            "market_goal": 0.04743
+          },
+          {
+            "market_code": 202,
+            "market_goal": 0.02942
+          },
+          {
+            "market_code": 101,
+            "market_goal": 0.12
+          },
+          {
+            "market_code": 102,
+            "market_goal": 0.13
+          }
+        ],
+        "week_id": 101
+      }
+    ],
+    "inventory": [
+      {
+        "cost": 50.0,
+        "daypart_id": 15,
+        "id": 1,
+        "impressions": 1000.0,
+        "market_code": 101,
+        "percentage_of_us": 0.00101,
+        "spot_days": 1,
+        "spot_hours": 1.0,
+        "station_id": 5,
+        "week_id": 100
+      },
+      {
+        "cost": 50.0,
+        "daypart_id": 15,
+        "id": 1,
+        "impressions": 1000.0,
+        "market_code": 101,
+        "percentage_of_us": 0.00101,
+        "spot_days": 1,
+        "spot_hours": 1.0,
+        "station_id": 5,
+        "week_id": 101
+      },
+      {
+        "cost": 60.0,
+        "daypart_id": 16,
+        "id": 2,
+        "impressions": 1500.0,
+        "market_code": 100,
+        "percentage_of_us": 0.001,
+        "spot_days": 2,
+        "spot_hours": 2.0,
+        "station_id": 6,
+        "week_id": 100
+      }
+    ]
+  }
+]

@@ -594,6 +594,87 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void CalculatePricingCpmTestWithNullMargin()
+        {
+            var allocationResult = new PlanPricingAllocationResult
+            {
+                Spots = new List<PlanPricingAllocatedSpot>
+                {
+                    new PlanPricingAllocatedSpot
+                    {
+                        Id = 1,
+                        Spots = 2,
+                        SpotCost = 200,
+                        Impressions = 10000,
+                    },
+                    new PlanPricingAllocatedSpot
+                    {
+                        Id = 2,
+                        Spots = 4,
+                        SpotCost = 300,
+                        Impressions = 50000,
+                    },
+                    new PlanPricingAllocatedSpot
+                    {
+                        Id = 3,
+                        Spots = 3,
+                        SpotCost = 500,
+                        Impressions = 20000,
+                    },
+                    new PlanPricingAllocatedSpot
+                    {
+                        Id = 4,
+                        Spots = 1,
+                        SpotCost = 100,
+                        Impressions = 30000,
+                    },
+                    new PlanPricingAllocatedSpot
+                    {
+                        Id = 5,
+                        Spots = 3,
+                        SpotCost = 300,
+                        Impressions = 10000,
+                    },
+                    new PlanPricingAllocatedSpot
+                    {
+                        Id = 6,
+                        Spots = 2,
+                        SpotCost = 400,
+                        Impressions = 50000,
+                    },
+                    new PlanPricingAllocatedSpot
+                    {
+                        Id = 7,
+                        Spots = 1,
+                        SpotCost = 250,
+                        Impressions = 20000,
+                    }
+                }
+            };
+
+            var estimates = new List<PricingEstimate>
+            {
+                new PricingEstimate
+                {
+                    InventorySourceId = 3,
+                    InventorySourceType = InventorySourceTypeEnum.Barter,
+                    Cost = 5000,
+                    Impressions = 10000,
+                    MediaWeekId  = 4
+                }
+            };
+
+            double? margin = null;
+
+            var service = _GetService();
+
+            var result = service._CalculatePricingCpm(allocationResult.Spots, estimates, margin);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void CalculatePricingCpmTestMultipleSpots()
         {
             var allocationResult = new PlanPricingAllocationResult
@@ -6118,6 +6199,162 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
+        [TestCase(null, false)]
+        [TestCase(12.0, false)]
+        [TestCase(.01, false)]
+        [TestCase(100.0, false)]
+        [TestCase(112.0, true)]
+        [TestCase(.001, true)]
+        public void SavesPricingParameters_ValidateMargin(double? testMargin, bool expectError)
+        {
+            // Arrange
+            const string user = "test user";
+            const int jobId = 5;
+
+            var now = new DateTime(2019, 10, 23);
+
+            var parameters = new PlanPricingParametersDto
+            {
+                PlanId = 222,
+                MaxCpm = 100m,
+                MinCpm = 1m,
+                Budget = 1000,
+                CompetitionFactor = 0.1,
+                CPM = 5m,
+                DeliveryImpressions = 50000,
+                InflationFactor = 0.5,
+                ProprietaryBlend = 0.2,
+                UnitCaps = 10,
+                UnitCapsType = UnitCapEnum.PerDay,
+                Currency = PlanCurrenciesEnum.Impressions,
+                CPP = 1.1m,
+                DeliveryRatingPoints = 1.3,
+                Margin = testMargin,
+                MarketGroup = PricingMarketGroupEnum.Top100,
+                InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                {
+                    new PlanPricingInventorySourceDto{ Id = 3, Percentage = 12 },
+                    new PlanPricingInventorySourceDto{ Id = 5, Percentage = 13 },
+                    new PlanPricingInventorySourceDto{ Id = 6, Percentage = 14 },
+                    new PlanPricingInventorySourceDto{ Id = 7, Percentage = 15 },
+                    new PlanPricingInventorySourceDto{ Id = 10, Percentage = 16 },
+                    new PlanPricingInventorySourceDto{ Id = 11, Percentage = 17 },
+                    new PlanPricingInventorySourceDto{ Id = 12, Percentage = 8 },
+                },
+                InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                {
+                    new PlanPricingInventorySourceTypeDto { Id = 5, Percentage = 3 }
+                }
+            };
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    CampaignId = 17,
+                    VersionId = 77,
+                    CoverageGoalPercent = 80,
+                    AvailableMarkets = new List<PlanAvailableMarketDto>
+                    {
+                                    new PlanAvailableMarketDto
+                                    {
+                                        Id = 5,
+                                        MarketCode = 101,
+                                        ShareOfVoicePercent = 12
+                                    },
+                                    new PlanAvailableMarketDto
+                                    {
+                                        Id = 6,
+                                        MarketCode = 102,
+                                        ShareOfVoicePercent = 13
+                                    }
+                    },
+                    Dayparts = new List<PlanDaypartDto>
+                    {
+                                    new PlanDaypartDto
+                                    {
+                                        DaypartCodeId = 15,
+                                        WeightingGoalPercent = 60
+                                    },
+                                    new PlanDaypartDto
+                                    {
+                                        DaypartCodeId = 16,
+                                        WeightingGoalPercent = 40
+                                    }
+                    },
+                    PricingParameters = _GetPlanPricingParametersDto(),
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 150,
+                            WeeklyBudget = 15,
+                            MediaWeekId = 100
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 250,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 101
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 100,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 102
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 0,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 103
+                        }
+                    }
+                });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Returns(new PlanPricingJob { Status = BackgroundJobProcessingStatus.Succeeded });
+
+            _BroadcastLockingManagerApplicationServiceMock
+                .Setup(x => x.GetNotUserBasedLockObjectForKey(It.IsAny<string>()))
+                .Returns(new object());
+
+            _PlanRepositoryMock
+                .Setup(x => x.AddPlanPricingJob(It.IsAny<PlanPricingJob>()))
+                .Returns(jobId);
+
+            var passedParameters = new List<PlanPricingParametersDto>();
+            _PlanRepositoryMock
+                .Setup(x => x.SavePlanPricingParameters(It.IsAny<PlanPricingParametersDto>()))
+                .Callback<PlanPricingParametersDto>(p => passedParameters.Add(p));
+
+            var service = _GetService();
+
+            Exception caught = null;
+
+            // Act
+            try
+            {
+                service.QueuePricingJob(parameters, now, user);
+            }
+            catch (Exception e)
+            {
+                caught = e;
+            }
+
+            // Assert
+            if (expectError)
+            {
+                Assert.IsNotNull(caught);
+            }
+            else
+            {
+                Assert.IsNull(caught);
+            }
+        }
+
+        [Test]
         [UseReporter(typeof(DiffReporter))]
         public void UpdatesCampaignLastModified_WhenQueuesPricing()
         {
@@ -7042,6 +7279,110 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 jobUpdates,
                 hanfgireJobUpdates
             }));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void RunPricingJobWithoutMargin()
+        {
+            // Arrange
+            const int jobId = 1;
+
+            var parameters = _GetPlanPricingParametersDto();
+            parameters.MarketGroup = PricingMarketGroupEnum.Top100;
+            parameters.Margin = null;
+            parameters.JobId = jobId;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(It.IsAny<int>()))
+                .Returns(new PlanPricingJob());
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(_GetPlan());
+
+            _PlanPricingInventoryEngineMock
+                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .Returns(_GetInventoryProgram())
+                .Returns(_GetInventoryProgram())
+                .Returns(_GetMultipleInventoryPrograms());
+
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetLatestMarketCoverages());
+
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestTop100MarketCoverages())
+                .Returns(_GetTop100Markets());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(_GetWeeklyBreakDownGroup());
+
+            var requests = new List<PlanPricingApiRequestDto>();
+            _PricingApiClientMock
+                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
+                .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
+
+            var service = _GetService();
+
+            // Act
+            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(requests));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void RunPricingJobWithMargin()
+        {
+            // Arrange
+            const int jobId = 1;
+
+            var parameters = _GetPlanPricingParametersDto();
+            parameters.MarketGroup = PricingMarketGroupEnum.Top100;
+            parameters.Margin = 10;
+            parameters.JobId = jobId;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(It.IsAny<int>()))
+                .Returns(new PlanPricingJob());
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(_GetPlan());
+
+            _PlanPricingInventoryEngineMock
+                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .Returns(_GetInventoryProgram())
+                .Returns(_GetInventoryProgram())
+                .Returns(_GetMultipleInventoryPrograms());
+
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetLatestMarketCoverages());
+
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestTop100MarketCoverages())
+                .Returns(_GetTop100Markets());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(_GetWeeklyBreakDownGroup());
+
+            var requests = new List<PlanPricingApiRequestDto>();
+            _PricingApiClientMock
+                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
+                .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
+
+            var service = _GetService();
+
+            // Act
+            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(requests));
         }
 
         [Test]

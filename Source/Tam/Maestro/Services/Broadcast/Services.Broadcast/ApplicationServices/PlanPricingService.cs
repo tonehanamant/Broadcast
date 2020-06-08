@@ -94,7 +94,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>ReportOutput which contains filename and MemoryStream which actually contains report data</returns>
         ReportOutput GeneratePricingResultsReport(int planId, int? planVersionNumber, string templatesFilePath);
 
-        void ApplyMargin(PlanPricingParametersDto parameters);
+        void ValidateAndApplyMargin(PlanPricingParametersDto parameters);
 
         PricingProgramsResultDto GetPrograms(int planId);
 
@@ -203,7 +203,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId);
 
-                ApplyMargin(planPricingParametersDto);
+                ValidateAndApplyMargin(planPricingParametersDto);
 
                 var job = new PlanPricingJob
                 {
@@ -237,8 +237,20 @@ namespace Services.Broadcast.ApplicationServices
             return jobId;
         }
 
-        public void ApplyMargin(PlanPricingParametersDto parameters)
+        public void ValidateAndApplyMargin(PlanPricingParametersDto parameters)
         {
+            const double allowedMinValue = .01;
+            const double allowedMaxValue = 100;
+
+            if (parameters.Margin.HasValue)
+            {
+                if (parameters.Margin.Value > allowedMaxValue ||
+                    parameters.Margin.Value < allowedMinValue)
+                {
+                    throw new InvalidOperationException("A provided Margin value must be between .01% And 100%.");
+                }
+            }
+
             if (parameters.Margin > 0)
             {
                 parameters.AdjustedBudget = parameters.Budget * (decimal)(1.0 - (parameters.Margin / 100.0));
@@ -804,7 +816,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         internal decimal _CalculatePricingCpm(List<PlanPricingAllocatedSpot> spots, List<PricingEstimate> proprietaryEstimates
-            , double margin)
+            , double? margin)
         {
             var totalCost = proprietaryEstimates.Sum(x => x.Cost);
             var totalImpressions = proprietaryEstimates.Sum(x => x.Impressions);
@@ -813,9 +825,17 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var allocatedTotalCost = spots.Sum(x => x.TotalCost);
                 var allocatedTotalImpressions = spots.Sum(x => x.TotalImpressions);
-                var marginAdjustedAllocatedTotalCost = allocatedTotalCost / (decimal)(1.0 - (margin / 100.0));
 
-                totalCost = marginAdjustedAllocatedTotalCost + totalCost;
+                if (margin.HasValue)
+                {
+                    var marginAdjustedAllocatedTotalCost = allocatedTotalCost / (decimal)(1.0 - (margin / 100.0));
+                    totalCost = marginAdjustedAllocatedTotalCost + totalCost;
+                }
+                else
+                {
+                    totalCost = allocatedTotalCost;
+                }
+
                 totalImpressions = allocatedTotalImpressions + totalImpressions;
             }
 

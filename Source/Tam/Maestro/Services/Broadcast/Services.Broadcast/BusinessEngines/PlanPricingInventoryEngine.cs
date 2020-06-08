@@ -747,7 +747,7 @@ namespace Services.Broadcast.BusinessEngines
 
             public double? InflationFactor { get; set; }
 
-            public double Margin { get; set; }
+            public double? Margin { get; set; }
 
             public PricingMarketGroupEnum MarketGroup { get; set; }
         }
