@@ -1,0 +1,9 @@
+[
+  {
+    "ContentRating": null,
+    "Genre": {
+      "Display": "Sports/Sports Talk"
+    },
+    "Name": "Golf"
+  }
+]

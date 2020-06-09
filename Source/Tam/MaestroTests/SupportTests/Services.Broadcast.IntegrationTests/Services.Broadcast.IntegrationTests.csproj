@@ -399,6 +399,7 @@
     <Compile Include="Repositories\InventoryRepositoryTests.cs" />
     <Compile Include="Repositories\PlanSummaryRepositoryTests.cs" />
     <Compile Include="Repositories\ProgramMappingRepositoryTests.cs" />
+    <Compile Include="Repositories\ProgramNameRepositoryTests.cs" />
     <Compile Include="Repositories\RatingForcastRepositoryTests.cs" />
     <Compile Include="Repositories\PostRepositoryTests.cs" />
     <Compile Include="Repositories\StationRepositoryTests.cs" />

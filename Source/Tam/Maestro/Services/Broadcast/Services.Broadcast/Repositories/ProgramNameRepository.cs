@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ConfigurationService.Client;
+using Services.Broadcast.Entities.ProgramMapping;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Data.EntityFrameworkMapping;
@@ -16,6 +17,7 @@ namespace Services.Broadcast.Repositories
     public interface IProgramNameRepository : IDataRepository
     {
         List<LookupDto> FindPrograms(string programSearchString, int start, int limit);
+        List<ProgramNameExceptionDto> FindProgramsExceptions(string programSearchString);
     }
     public class ProgramNameRepository : BroadcastRepositoryBase, IProgramNameRepository
     {
@@ -38,6 +40,25 @@ namespace Services.Broadcast.Repositories
                             Id = p.id
                         }).ToList();
                 });
+        }
+
+        public List<ProgramNameExceptionDto> FindProgramsExceptions(string programSearchString)
+        {
+	        return _InReadUncommitedTransaction(
+		        context =>
+		        {
+			        return context.program_name_exceptions
+				        .Where(p => p.custom_program_name.ToLower().Contains(programSearchString.ToLower()))
+				        .OrderBy(p => p.custom_program_name)
+				        .Select(
+					        p => new ProgramNameExceptionDto
+					        {
+						        CustomProgramName = p.custom_program_name,
+						        Id = p.id,
+						        GenreId = p.genre_id,
+						        ShowTypeId = p.show_type_id
+					        }).ToList();
+		        });
         }
     }
 }

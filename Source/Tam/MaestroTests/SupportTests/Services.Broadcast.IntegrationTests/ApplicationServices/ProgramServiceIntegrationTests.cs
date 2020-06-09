@@ -99,7 +99,32 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             _VerifyPrograms(programs);
         }
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetExceptionProgramsTest()
+        {
+	        var searchRequest = new SearchRequestProgramDto
+	        {
+		        ProgramName = "golf"
+	        };
 
+	        var programs = _ProgramService.GetPrograms(searchRequest, "IntegrationTestsUser");
+
+	        _VerifyPrograms(programs);
+        }
+        [Test]
+      
+        public void GetExceptionProgramsTest_SpecialCharacter()
+        {
+	        var searchRequest = new SearchRequestProgramDto
+	        {
+		        ProgramName = "golf'"
+	        };
+
+	        var programs = _ProgramService.GetPrograms(searchRequest, "IntegrationTestsUser");
+
+	       Assert.IsEmpty(programs);
+        }
         private static void _VerifyPrograms(List<ProgramDto> programs)
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
@@ -112,5 +137,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(programs, jsonSettings));
         }
+
+     
     }
 }

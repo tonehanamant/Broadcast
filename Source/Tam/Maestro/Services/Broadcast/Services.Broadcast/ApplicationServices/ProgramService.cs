@@ -8,6 +8,8 @@ using Services.Broadcast.Exceptions;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Common.Services.Repositories;
+using Services.Broadcast.Repositories;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -21,15 +23,17 @@ namespace Services.Broadcast.ApplicationServices
         private IGenreCache _GenreCache;
         private IConfigurationWebApiClient _ConfigurationWebApiClient;
         private IProgramsSearchApiClient _ProgramsSearchApiClient;
-
+        private readonly IProgramNameRepository _ProgramNameRepository;
         public ProgramService(
             IGenreCache genreCache,
             IConfigurationWebApiClient configurationWebApiClient,
-            IProgramsSearchApiClient programsSearchApiClient)
+            IProgramsSearchApiClient programsSearchApiClient,
+            IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
             _GenreCache = genreCache;
             _ConfigurationWebApiClient = configurationWebApiClient;
             _ProgramsSearchApiClient = programsSearchApiClient;
+            _ProgramNameRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramNameRepository>();
         }
 
         public List<ProgramDto> GetPrograms(SearchRequestProgramDto searchRequest, string userName)
@@ -40,8 +44,18 @@ namespace Services.Broadcast.ApplicationServices
             searchRequest.Start = searchRequest.Start ?? 1;
             searchRequest.Limit = searchRequest.Limit ?? upperLimit;
 
-            var externalApiPrograms = _ProgramsSearchApiClient.GetPrograms(searchRequest);
             var result = new List<ProgramDto>();
+            var exceptionPrograms = _ProgramNameRepository.FindProgramsExceptions(searchRequest.ProgramName);
+            foreach (var exceptionProgram in exceptionPrograms)
+            {
+	            result.Add(new ProgramDto
+	            {
+		            Name = exceptionProgram.CustomProgramName,
+		            Genre = _GenreCache.GetGenreById(exceptionProgram.GenreId, ProgramSourceEnum.Mapped)
+
+	            });
+            }
+            var externalApiPrograms = _ProgramsSearchApiClient.GetPrograms(searchRequest);
 
             foreach (var externalApiProgram in externalApiPrograms)
             {

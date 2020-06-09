@@ -450,6 +450,7 @@
     <Compile Include="Entities\Nti\NtiUniverseHeader.cs" />
     <Compile Include="Entities\Plan\LengthMakeUpRequest.cs" />
     <Compile Include="Entities\Plan\LengthMakeUpTableRow.cs" />
+    <Compile Include="Entities\ProgramMapping\ProgramNameExceptionDto.cs" />
     <Compile Include="Entities\ProgramMapping\UnMappedProgramNameReportData.cs" />
     <Compile Include="Entities\Vpvh\VpvhExcelRecord.cs" />
     <Compile Include="Entities\Plan\PlanAudienceDisplay.cs" />
