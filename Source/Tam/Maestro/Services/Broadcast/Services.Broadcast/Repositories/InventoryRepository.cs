@@ -5,6 +5,7 @@ using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Inventory;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.StationInventory;
@@ -16,9 +17,6 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using Services.Broadcast.Entities.Inventory;
-using Services.Broadcast.Entities.ProgramMapping;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -185,6 +183,8 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <returns></returns>
         List<string> GetUnmappedPrograms();
+
+        List<int> GetManuallyMappedPrograms(List<int> inventoryDaypartIds);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -1884,5 +1884,21 @@ namespace Services.Broadcast.Repositories
 		        });
         }
 
+        public List<int> GetManuallyMappedPrograms(List<int> inventoryDaypartIds)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var manuallyMapped = context.station_inventory_manifest_dayparts
+                        .Where(x =>
+                            x.station_inventory_manifest_daypart_programs.Any(s =>
+                                s.program_source_id.Equals((int)ProgramSourceEnum.Mapped) &&
+                                inventoryDaypartIds.Contains(x.id)))
+                        .Select(x => x.id)
+                        .ToList();
+
+                    return manuallyMapped;
+                });
+        }
     }
 }

@@ -147,6 +147,123 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
         }
 
         [Test]
+        public void ImportResultsFile_SkipsMappedProgams()
+        {
+            /*** Arrange ***/
+            const string fileName = @"Results_ProgramGuideInventoryExportFile_20200307_172832.csv";
+
+            const string filesDirectoryPath = @".\Files\InventoryProgramsResultsImport";
+            var filePath = Path.Combine(filesDirectoryPath, fileName);
+            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+
+            var deleteCalls = new List<Tuple<List<int>, DateTime, DateTime>>();
+            _InventoryRepo.Setup(s =>
+                    s.DeleteInventoryPrograms(It.IsAny<List<int>>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback<List<int>, DateTime, DateTime>((ids, s, e) => deleteCalls.Add(new Tuple<List<int>, DateTime, DateTime>(ids, s, e)));
+
+            var savedCalls = new List<List<StationInventoryManifestDaypartProgram>>();
+            _InventoryRepo.Setup(s =>
+                    s.CreateInventoryPrograms(It.IsAny<List<StationInventoryManifestDaypartProgram>>(),
+                        It.IsAny<DateTime>()))
+                .Callback<List<StationInventoryManifestDaypartProgram>, DateTime>((s, d) => savedCalls.Add(s));
+
+            _InventoryRepo.Setup(s => s.GetStationInventoryManifestsByIds(It.IsAny<List<int>>()))
+                .Returns(new List<StationInventoryManifest>());
+
+            _InventoryRepo.Setup(s => s.GetManuallyMappedPrograms(It.IsAny<List<int>>()))
+                .Returns(new List<int>{ 194936 });
+
+            _FileService.Setup(s => s.CreateDirectory(It.IsAny<string>()));
+
+            var fileServiceCreateCalls = new List<Tuple<string, Stream, long, long>>();
+            _FileService.Setup(s => s.Create(It.IsAny<string>(), It.IsAny<Stream>()))
+                .Callback<string, Stream>((s, a) => fileServiceCreateCalls.Add(new Tuple<string, Stream, long, long>(s, a, a.Length, a.Position)));
+
+            var fileServiceMoveCalls = new List<Tuple<string, string>>();
+            _FileService.Setup(s => s.Move(It.IsAny<string>(), It.IsAny<string>()))
+                .Callback<string, string>((f, t) => fileServiceMoveCalls.Add(new Tuple<string, string>(f, t)))
+                .Returns("moved");
+
+            var engine = _GetInventoryProgramsProcessingEngine();
+
+            /*** Act ***/
+            var result = engine.ImportInventoryProgramResults(fileStream, fileName);
+
+            /*** Assert ***/
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Contains("Exported 4 lines from the file."));
+            // Skipped one.
+            Assert.IsTrue(result.Contains("Extracted and saved 3 program records."));
+            Assert.IsTrue(result.Contains(@"File 'Results_ProgramGuideInventoryExportFile_20200307_172832.csv' moved from to 'testSettingBroadcastSharedDirectoryPath\ProgramGuide\ResultProcessing\DEV\Completed'."));
+
+            // validate we deleted
+            Assert.AreEqual(3, deleteCalls.Count);
+            Assert.AreEqual(1, deleteCalls[0].Item1.Count);
+            Assert.IsTrue(deleteCalls[0].Item1.Contains(192899));
+            Assert.AreEqual(1, deleteCalls[1].Item1.Count);
+            Assert.IsTrue(deleteCalls[1].Item1.Contains(192900));
+            Assert.AreEqual(1, deleteCalls[2].Item1.Count);
+            Assert.IsTrue(deleteCalls[2].Item1.Contains(192902));
+
+            // validate we saved
+            Assert.AreEqual(1, savedCalls.Count);
+            Assert.AreEqual(3, savedCalls[0].Count);
+
+            //Assert.AreEqual(194936, savedCalls[0][0].StationInventoryManifestDaypartId);
+            //Assert.AreEqual("Tacoma FD", savedCalls[0][0].ProgramName);
+            //Assert.AreEqual("Series", savedCalls[0][0].ShowType);
+            //Assert.AreEqual(2, savedCalls[0][0].ProgramSourceId);
+            //Assert.AreEqual(2, savedCalls[0][0].MaestroGenreId);
+            //Assert.AreEqual("2019-03-20", savedCalls[0][0].StartDate.Value.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            //Assert.AreEqual("2019-04-20", savedCalls[0][0].EndDate.Value.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            //Assert.AreEqual(39600, savedCalls[0][0].StartTime);
+            //Assert.AreEqual(46799, savedCalls[0][0].EndTime);
+
+            Assert.AreEqual(194937, savedCalls[0][0].StationInventoryManifestDaypartId);
+            Assert.AreEqual("Big Bang Theory", savedCalls[0][0].ProgramName);
+            Assert.AreEqual("Series", savedCalls[0][0].ShowType);
+            Assert.AreEqual(2, savedCalls[0][0].ProgramSourceId);
+            Assert.AreEqual(2, savedCalls[0][0].MaestroGenreId);
+            Assert.AreEqual("2019-03-06", savedCalls[0][0].StartDate.Value.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual("2019-04-24", savedCalls[0][0].EndDate.Value.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual(43200, savedCalls[0][0].StartTime);
+            Assert.AreEqual(50399, savedCalls[0][0].EndTime);
+
+            Assert.AreEqual(194938, savedCalls[0][1].StationInventoryManifestDaypartId);
+            Assert.AreEqual("Big Brother", savedCalls[0][1].ProgramName);
+            Assert.AreEqual("Series", savedCalls[0][1].ShowType);
+            Assert.AreEqual(2, savedCalls[0][1].ProgramSourceId);
+            Assert.AreEqual(2, savedCalls[0][1].MaestroGenreId);
+            Assert.AreEqual("2019-04-01", savedCalls[0][1].StartDate.Value.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual("2019-06-18", savedCalls[0][1].EndDate.Value.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual(39600, savedCalls[0][1].StartTime);
+            Assert.AreEqual(48599, savedCalls[0][1].EndTime);
+
+            Assert.AreEqual(194940, savedCalls[0][2].StationInventoryManifestDaypartId);
+            Assert.AreEqual("Super Troopers", savedCalls[0][2].ProgramName);
+            Assert.AreEqual("Movie", savedCalls[0][2].ShowType);
+            Assert.AreEqual(2, savedCalls[0][2].ProgramSourceId);
+            Assert.AreEqual(2, savedCalls[0][2].MaestroGenreId);
+            Assert.AreEqual("2019-04-01", savedCalls[0][2].StartDate.Value.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual("2019-05-01", savedCalls[0][2].EndDate.Value.ToString(BroadcastConstants.DATE_FORMAT_STANDARD));
+            Assert.AreEqual(50400, savedCalls[0][2].StartTime);
+            Assert.AreEqual(68399, savedCalls[0][2].EndTime);
+
+            // validate we moved the file
+            // created in progress
+            Assert.AreEqual(1, fileServiceCreateCalls.Count);
+            Assert.IsTrue(fileServiceCreateCalls[0].Item1.Contains("InProgress"));
+            // length > 0 means there is content to save.
+            Assert.IsTrue(fileServiceCreateCalls[0].Item3 > 0);
+            // position 0 means we are at beginning of the content to save
+            Assert.AreEqual(0, fileServiceCreateCalls[0].Item4);
+            // moved to Completed
+            Assert.AreEqual(1, fileServiceMoveCalls.Count);
+            Assert.IsTrue(fileServiceMoveCalls[0].Item1.Contains("InProgress"));
+            Assert.IsTrue(fileServiceMoveCalls[0].Item2.Contains("Completed"));
+        }
+
+        [Test]
         public void ImportResultsFile_CompressDateRange()
         {
             /*** Arrange ***/

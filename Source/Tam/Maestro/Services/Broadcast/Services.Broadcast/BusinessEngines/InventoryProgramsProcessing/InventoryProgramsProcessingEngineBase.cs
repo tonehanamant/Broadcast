@@ -263,6 +263,15 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                     batchindex++;
                     _ImportResultsProcessingLogInfo($"Starting batch {batchindex} of {processingBatches.Count}.", processingLog);
 
+                    _ImportResultsProcessingLogInfo($"Looking for manually mapped programs for batch of {batch.Count}", processingLog);
+
+                    var inventoryDaypartIds = batch.Select(x => x.inventory_daypart_id).Distinct().ToList();
+                    var manuallyMappedInventoryDaypartIds = _InventoryRepository.GetManuallyMappedPrograms(inventoryDaypartIds);
+
+                    batch.RemoveAll(x => manuallyMappedInventoryDaypartIds.Contains(x.inventory_daypart_id));
+
+                    _ImportResultsProcessingLogInfo($"Found {manuallyMappedInventoryDaypartIds.Count} programs for batch of {batch.Count} and excluded them from processing", processingLog);
+
                     _ImportResultsProcessingLogInfo($"Compressing dates for batch of {batch.Count}", processingLog);
                     var programGroups = batch.GroupBy(b => new
                         {
