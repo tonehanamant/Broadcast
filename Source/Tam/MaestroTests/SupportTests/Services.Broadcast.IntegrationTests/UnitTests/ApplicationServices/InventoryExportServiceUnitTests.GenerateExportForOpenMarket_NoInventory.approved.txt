@@ -13,5 +13,5 @@
     "Year": 2020
   },
   "Status": 4,
-  "StatusMessage": "No inventory found to export for job 1."
+  "StatusMessage": "No 'News' inventory found to export for Q2 2020."
 }

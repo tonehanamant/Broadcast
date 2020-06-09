@@ -1,11 +1,16 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using NUnit.Framework;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Enums.Inventory;
 using Services.Broadcast.Entities.Inventory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EntityFrameworkMapping.Broadcast;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
@@ -20,31 +25,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [UseReporter(typeof(DiffReporter))]
         public void Calculate()
         {
-            var engine = new InventoryExportEngineUnitTestClass();
+            var engine = new InventoryExportEngine();
             var items = new List<InventoryExportDto>();
-            // item 1 - goes to line 1
-            items.Add(new InventoryExportDto() { InventoryId = 1, MediaWeekId = 1, StationId = 1, DaypartId = 1, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramOne", InventoryProgramName = "InventoryProgramNameOne" });
-            items.Add(new InventoryExportDto() { InventoryId = 1, MediaWeekId = 2, StationId = 1, DaypartId = 1, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramOne", InventoryProgramName = "InventoryProgramNameOne" });
-            items.Add(new InventoryExportDto() { InventoryId = 1, MediaWeekId = 3, StationId = 1, DaypartId = 1, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramOne", InventoryProgramName = "InventoryProgramNameOne" });
-            // item 2 - goes to line 2
-            items.Add(new InventoryExportDto() { InventoryId = 2, MediaWeekId = 1, StationId = 2, DaypartId = 2, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramTwo", InventoryProgramName = "InventoryProgramNameTwo" });
-            items.Add(new InventoryExportDto() { InventoryId = 2, MediaWeekId = 2, StationId = 2, DaypartId = 2, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramTwo", InventoryProgramName = "InventoryProgramNameTwo" });
-            items.Add(new InventoryExportDto() { InventoryId = 2, MediaWeekId = 3, StationId = 2, DaypartId = 2, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramTwo", InventoryProgramName = "InventoryProgramNameTwo" });
-            // item 3 - goes to line 3
-            items.Add(new InventoryExportDto() { InventoryId = 3, MediaWeekId = 1, StationId = 3, DaypartId = 3, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramThree", InventoryProgramName = "InventoryProgramNameThree" });
-            items.Add(new InventoryExportDto() { InventoryId = 3, MediaWeekId = 2, StationId = 3, DaypartId = 3, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramThree", InventoryProgramName = "InventoryProgramNameThree" });
-            items.Add(new InventoryExportDto() { InventoryId = 3, MediaWeekId = 3, StationId = 3, DaypartId = 3, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramThree", InventoryProgramName = "InventoryProgramNameThree" });
-            // item 4 - goes to line 3
-            items.Add(new InventoryExportDto() { InventoryId = 4, MediaWeekId = 1, StationId = 3, DaypartId = 3, Impressions = 4000, SpotCost = 60, ProgramName = "ProgramFour", InventoryProgramName = "InventoryProgramNameFour" });
-            items.Add(new InventoryExportDto() { InventoryId = 4, MediaWeekId = 2, StationId = 3, DaypartId = 3, Impressions = 4000, SpotCost = 60, ProgramName = "ProgramFour", InventoryProgramName = "InventoryProgramNameFour" });
-            // item 5 - goes to line 4
-            items.Add(new InventoryExportDto() { InventoryId = 5, MediaWeekId = 2, StationId = 4, DaypartId = 3, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramFive", InventoryProgramName = "InventoryProgramNameFive" });
-            items.Add(new InventoryExportDto() { InventoryId = 5, MediaWeekId = 3, StationId = 4, DaypartId = 3, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramFive", InventoryProgramName = "InventoryProgramNameFive" });
-            // item 6 - goes to line 5 - name fallback
-            items.Add(new InventoryExportDto() { InventoryId = 6, MediaWeekId = 2, StationId = 5, DaypartId = 1, Impressions = 10000, SpotCost = 20, ProgramName = "", InventoryProgramName = "InventoryProgramNameSix" });
-            // item 7 - goes to line 6 - multiple, one with no name.
-            items.Add(new InventoryExportDto() { InventoryId = 7, MediaWeekId = 2, StationId = 6, DaypartId = 1, Impressions = 10000, SpotCost = 20, ProgramName = "ProgramSeven", InventoryProgramName = "InventoryProgramNameSeven" });
-            items.Add(new InventoryExportDto() { InventoryId = 7, MediaWeekId = 2, StationId = 6, DaypartId = 1, Impressions = 10000, SpotCost = 20, ProgramName = "", InventoryProgramName = "InventoryProgramNameSeven" });
+            // item 1 - forecasted
+            items.Add(_GetInventoryExportDto(1, 1, 1, 1,  10000, 20, "One", "One", ProgramSourceEnum.Forecasted, 33));
+            items.Add(_GetInventoryExportDto(1, 2, 1, 1, 10000, 20, "One", "One", ProgramSourceEnum.Forecasted, 33));
+            items.Add(_GetInventoryExportDto(1, 3, 1, 1, 10000, 20, "One", "One", ProgramSourceEnum.Forecasted, 33));
+            // item 2 -  Mapped
+            items.Add(_GetInventoryExportDto(2, 1, 2, 2, 10000, 20, "Two", "Two", ProgramSourceEnum.Mapped, 33));
+            items.Add(_GetInventoryExportDto(2, 2, 2, 2, 10000, 20, "Two", "Two", ProgramSourceEnum.Mapped, 33));
+            items.Add(_GetInventoryExportDto(2, 3, 2, 2, 10000, 20, "Two", "Two", ProgramSourceEnum.Mapped, 33));
+            // item 3 - Doesn't have all three weeks
+            items.Add(_GetInventoryExportDto(3, 2, 3, 3, 10000, 20, "Three", "Three", ProgramSourceEnum.Mapped, 33));
+            items.Add(_GetInventoryExportDto(3, 3, 3, 3, 10000, 20, "Three", "Three", ProgramSourceEnum.Mapped, 33));
 
             var result = engine.Calculate(items);
 
@@ -53,9 +46,42 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetInventoryWorksheetColumnDescriptors()
+        public void Calculate_WithoutPrograms()
         {
-            var engine = new InventoryExportEngineUnitTestClass();
+            var engine = new InventoryExportEngine();
+            var items = new List<InventoryExportDto>();
+            // item 1 
+            items.Add(_GetInventoryExportDto(1, 1, 1, 1, 10000, 20, null, "One", null, null));
+            items.Add(_GetInventoryExportDto(1, 2, 1, 1, 10000, 20, null, "One", null, null));
+            items.Add(_GetInventoryExportDto(1, 3, 1, 1, 10000, 20, null, "One", null, null));
+            // item 2 -  Doesn't have all three weeks
+            items.Add(_GetInventoryExportDto(2, 1, 2, 2, 10000, 20, null, "Two", null, null));
+            items.Add(_GetInventoryExportDto(2, 2, 2, 2, 10000, 20, null, "Two", null, null));
+
+            var result = engine.Calculate(items);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [TestCase(InventoryExportGenreTypeEnum.News, 2020, 2, "Open Market inventory NEWS 2020 Q2.xlsx")]
+        [TestCase(InventoryExportGenreTypeEnum.NonNews, 2019, 1, "Open Market inventory NON-NEWS 2019 Q1.xlsx")]
+        [TestCase(InventoryExportGenreTypeEnum.NotEnriched, 2019, 1, "Open Market inventory NOT ENRICHED 2019 Q1.xlsx")]
+        public void GetInventoryExportFileName(InventoryExportGenreTypeEnum genreEnum, int year, int quarter, string expectedResult)
+        {
+            var quarterDetail = new QuarterDetailDto {Year = year, Quarter = quarter};
+            var engine = new InventoryExportEngine();
+
+            var result = engine.GetInventoryExportFileName(genreEnum, quarterDetail);
+
+            Assert.AreEqual(result, expectedResult);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventoryTableWeeklyColumnHeaders()
+        {
+            var engine = new InventoryExportEngine();
             var dates = new List<DateTime>
             {
                 new DateTime(2020, 04, 06),
@@ -65,16 +91,39 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 new DateTime(2020, 05, 04),
             };
 
-            var result = engine.UT_GetInventoryWorksheetColumnDescriptors(dates);
+            var result = engine.GetInventoryTableWeeklyColumnHeaders(dates);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
+        public InventoryExportLineDetail _GetInventoryExportLineDetail(int inventoryId, int? stationId, int daypartId, 
+            string inventoryProgramNameSeed, string programNameSeed, ProgramSourceEnum? programSource, int? maestroGenreId, 
+            List<InventoryExportAudienceDto> providedAudienceImpressions, List<InventoryExportLineWeekDetail> weeks)
+        {
+            var detail = new InventoryExportLineDetail
+            {
+                InventoryId = inventoryId,
+                StationId = stationId,
+                DaypartId = daypartId,
+                InventoryProgramName = string.IsNullOrWhiteSpace(inventoryProgramNameSeed) ?  null : $"InventoryProgramName-{inventoryProgramNameSeed}",
+                ProgramName = string.IsNullOrWhiteSpace(programNameSeed) ? null : $"ProgramName-{programNameSeed}",
+                ProgramSource = programSource,
+                MaestroGenreId = maestroGenreId,
+                AvgSpotCost = 10,
+                AvgHhImpressions = 5000,
+                AvgCpm = 2,
+                ProvidedAudienceImpressions = providedAudienceImpressions,
+                Weeks = weeks
+            };
+
+            return detail;
+        }
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void TransformToExportLines()
+        public void GetInventoryTableData()
         {
-            var engine = new InventoryExportEngineUnitTestClass();
+            var engine = new InventoryExportEngine();
             var testWeeks = new List<InventoryExportLineWeekDetail>
             {
                 new InventoryExportLineWeekDetail {MediaWeekId = 1, SpotCost = 10, HhImpressions = 5000, Cpm = 2},
@@ -83,44 +132,43 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 new InventoryExportLineWeekDetail {MediaWeekId = 4, SpotCost = 10, HhImpressions = 5000, Cpm = 2},
                 new InventoryExportLineWeekDetail {MediaWeekId = 5, SpotCost = 10, HhImpressions = 5000, Cpm = 2},
             };
-            var testWeekIds = testWeeks.Select(s => s.MediaWeekId).ToList();
             var testWeeksSansLast = testWeeks.Where(w => w.MediaWeekId != 5).ToList();
             var testWeeksSansFirst = testWeeks.Where(w => w.MediaWeekId != 1).ToList();
             var testWeeksSansMiddle = testWeeks.Where(w => w.MediaWeekId != 3).ToList();
+            var testWeekIds = testWeeks.Select(s => s.MediaWeekId).ToList();
+
+            var oneAudience = new List<InventoryExportAudienceDto>
+            {
+                new InventoryExportAudienceDto  { AudienceId = 31, Impressions = 6000 }
+            };
+            var manyAudiences = new List<InventoryExportAudienceDto>
+            {
+                new InventoryExportAudienceDto  { AudienceId = 31, Impressions = 3000 },
+                new InventoryExportAudienceDto  { AudienceId = 40, Impressions = 5000 },
+                new InventoryExportAudienceDto  { AudienceId = 66, Impressions = 8000 }
+            };
 
             var testItems = new List<InventoryExportLineDetail>();
-            testItems.Add(new InventoryExportLineDetail { StationId = 1, DaypartId = 1, ProgramNames = new List<string> { "ProgramOne" }, AvgSpotCost = 10, AvgHhImpressions = 5000, AvgCpm = 2, Weeks = testWeeks });
-            testItems.Add(new InventoryExportLineDetail { StationId = 2, DaypartId = 1, ProgramNames = new List<string> { "ProgramTwo" }, AvgSpotCost = 10, AvgHhImpressions = 5000, AvgCpm = 2, Weeks = testWeeks });
-            testItems.Add(new InventoryExportLineDetail { StationId = 3, DaypartId = 1, ProgramNames = new List<string> { "ProgramThree" }, AvgSpotCost = 10, AvgHhImpressions = 5000, AvgCpm = 2, Weeks = testWeeks });
-            // not in last week
-            testItems.Add(new InventoryExportLineDetail { StationId = 4, DaypartId = 1, ProgramNames = new List<string> { "ProgramFour" }, AvgSpotCost = 10, AvgHhImpressions = 5000, AvgCpm = 2, Weeks = testWeeksSansLast });
-            // not in first week
-            testItems.Add(new InventoryExportLineDetail { StationId = 5, DaypartId = 1, ProgramNames = new List<string> { "ProgramFive" }, AvgSpotCost = 10, AvgHhImpressions = 5000, AvgCpm = 2, Weeks = testWeeksSansFirst });
-            // not in middle week
-            testItems.Add(new InventoryExportLineDetail { StationId = 6, DaypartId = 1, ProgramNames = new List<string> { "ProgramSix" }, AvgSpotCost = 10, AvgHhImpressions = 5000, AvgCpm = 2, Weeks = testWeeksSansMiddle });
-            // multiple program names
-            testItems.Add(new InventoryExportLineDetail { StationId = 7, DaypartId = 1, ProgramNames = new List<string> { "ProgramSeven", "ProgramEight" }, AvgSpotCost = 10, AvgHhImpressions = 5000, AvgCpm = 2, Weeks = testWeeks });
+            // full and mapped
+            testItems.Add(_GetInventoryExportLineDetail(1, 1, 1, "one", "one", ProgramSourceEnum.Mapped, 33, manyAudiences, testWeeks));
+            // full and enriched
+            testItems.Add(_GetInventoryExportLineDetail(2, 2, 1, "two", "two", ProgramSourceEnum.Forecasted, 33, manyAudiences, testWeeks));
+            // full and not mapped
+            testItems.Add(_GetInventoryExportLineDetail(3, 3, 1, "three", null, null, null, manyAudiences, testWeeks));
+            // less audiences
+            testItems.Add(_GetInventoryExportLineDetail(4, 4, 1, "four", "four", ProgramSourceEnum.Mapped, 33, oneAudience, testWeeks));
+            // less weeks
+            testItems.Add(_GetInventoryExportLineDetail(5, 5, 1, "five", "five", ProgramSourceEnum.Mapped, 33, manyAudiences, testWeeksSansLast));
+            testItems.Add(_GetInventoryExportLineDetail(6, 6, 1, "six", "six", ProgramSourceEnum.Mapped, 33, manyAudiences, testWeeksSansFirst));
+            testItems.Add(_GetInventoryExportLineDetail(7, 7, 1, "seven", "seven", ProgramSourceEnum.Mapped, 33, manyAudiences, testWeeksSansMiddle));
             // Market has comma
-            testItems.Add(new InventoryExportLineDetail { StationId = 8, DaypartId = 1, ProgramNames = new List<string> { "ProgramNine" }, AvgSpotCost = 10, AvgHhImpressions = 5000, AvgCpm = 2, Weeks = testWeeks });
+            testItems.Add(_GetInventoryExportLineDetail(8, 8, 1, "eight", "eight", ProgramSourceEnum.Mapped, 33, manyAudiences, testWeeks));
             // Market has quote
-            testItems.Add(new InventoryExportLineDetail { StationId = 9, DaypartId = 1, ProgramNames = new List<string> { "ProgramNine" }, AvgSpotCost = 10, AvgHhImpressions = 5000, AvgCpm = 2, Weeks = testWeeks });
+            testItems.Add(_GetInventoryExportLineDetail(9, 9, 1, "nine", "nine", ProgramSourceEnum.Mapped, 33, manyAudiences, testWeeks));
             // daypart has comma
-            testItems.Add(new InventoryExportLineDetail { StationId = 8, DaypartId = 2, ProgramNames = new List<string> { "ProgramNine" }, AvgSpotCost = 10, AvgHhImpressions = 5000, AvgCpm = 2, Weeks = testWeeks });
-            
-            var stations = new List<DisplayBroadcastStation>
-            {
-                new DisplayBroadcastStation { Id = 1, LegacyCallLetters = "Station1", MarketCode = 1},
-                new DisplayBroadcastStation { Id = 2, LegacyCallLetters = "Station2", MarketCode = 2},
-                new DisplayBroadcastStation { Id = 3, LegacyCallLetters = "Station3", MarketCode = 3},
-                new DisplayBroadcastStation { Id = 4, LegacyCallLetters = "Station4", MarketCode = 4},
-                new DisplayBroadcastStation { Id = 5, LegacyCallLetters = "Station5", MarketCode = 5},
-                new DisplayBroadcastStation { Id = 6, LegacyCallLetters = "Station6", MarketCode = 6},
-                new DisplayBroadcastStation { Id = 7, LegacyCallLetters = "Station7", MarketCode = 7},
-                new DisplayBroadcastStation { Id = 8, LegacyCallLetters = "Station8", MarketCode = 8},
-                new DisplayBroadcastStation { Id = 9, LegacyCallLetters = "Station9", MarketCode = 9},
-                new DisplayBroadcastStation { Id = 10, LegacyCallLetters = "Station10", MarketCode = 10},
-                new DisplayBroadcastStation { Id = 11, LegacyCallLetters = "Station11", MarketCode = 11},
-            };
+            testItems.Add(_GetInventoryExportLineDetail(10, 10, 2, "ten", "ten", ProgramSourceEnum.Mapped, 33, manyAudiences, testWeeks));
+
+            var stations = Enumerable.Range(1, 11).Select(i => new DisplayBroadcastStation {Id = i, LegacyCallLetters = $"Station{i}", MarketCode = i, Affiliation = $"AFF{i}"}).ToList();
 
             var markets = new List<MarketCoverage>
             {
@@ -131,25 +179,35 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 new MarketCoverage { MarketCode = 5, Market = "MyMarket5", Rank = 25},
                 new MarketCoverage { MarketCode = 6, Market = "MyMarket6", Rank = 26},
                 new MarketCoverage { MarketCode = 7, Market = "MyMarket7", Rank = 27},
-                new MarketCoverage { MarketCode = 8, Market = "MyMarket8", Rank = 28},
-                new MarketCoverage { MarketCode = 9, Market = "MyMarket9", Rank = 29},
+                new MarketCoverage { MarketCode = 8, Market = "My,Market8", Rank = 28},
+                new MarketCoverage { MarketCode = 9, Market = "My\"Market9", Rank = 29},
                 new MarketCoverage { MarketCode = 10, Market = "MyMarket10", Rank = 30},
                 new MarketCoverage { MarketCode = 11, Market = "MyMarket11", Rank = 31},
             };
 
+            var audiences = new List<LookupDto>
+            {
+                new LookupDto(31, "Audience 31"),
+                new LookupDto(40, "Audience 40"),
+                new LookupDto(66, "Audience 66")
+            };
+
+            var genres = new List<LookupDto> {new LookupDto(33, "News")};
+
             var dayparts = new Dictionary<int, DisplayDaypart>();
             dayparts[1] = new DisplayDaypart(1, 3600, 7200, true, true, true, true, true, true, true);
             dayparts[2] = new DisplayDaypart(2, 18000, 21600, true, true, true, false, false, true, true);
 
-            var result = engine.UT_TransformToExportLines(testItems, testWeekIds, stations, markets, dayparts);
+            var result = engine.GetInventoryTableData(testItems, stations, markets, testWeekIds, dayparts, audiences, genres);
+
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void TransformToExportLines_UnknownStation()
+        public void GetInventoryTableData_UnknownStation()
         {
-            var engine = new InventoryExportEngineUnitTestClass();
+            var engine = new InventoryExportEngine();
             var testWeeks = new List<InventoryExportLineWeekDetail>
             {
                 new InventoryExportLineWeekDetail {MediaWeekId = 1, SpotCost = 10, HhImpressions = 5000, Cpm = 2},
@@ -159,21 +217,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 new InventoryExportLineWeekDetail {MediaWeekId = 5, SpotCost = 10, HhImpressions = 5000, Cpm = 2},
             };
             var testWeekIds = testWeeks.Select(s => s.MediaWeekId).ToList();
+            var testAudiences = new List<InventoryExportAudienceDto>
+            {
+                new InventoryExportAudienceDto  { AudienceId = 31, Impressions = 3000 },
+                new InventoryExportAudienceDto  { AudienceId = 40, Impressions = 5000 },
+                new InventoryExportAudienceDto  { AudienceId = 66, Impressions = 8000 }
+            };
 
             var testItems = new List<InventoryExportLineDetail>();
-            testItems.Add(new InventoryExportLineDetail { StationId = 1, DaypartId = 1, ProgramNames = new List<string> { "ProgramOne" }, AvgSpotCost = 10, AvgHhImpressions = 5000, AvgCpm = 2, Weeks = testWeeks });
+            testItems.Add(_GetInventoryExportLineDetail(1, 1, 1, "one", "one", ProgramSourceEnum.Mapped, 33, testAudiences, testWeeks));
             // Unknown Station
-            testItems.Add(new InventoryExportLineDetail { StationId = 4, DaypartId = 1, ProgramNames = new List<string> { "ProgramTwo" }, AvgSpotCost = 10, AvgHhImpressions = 5000, AvgCpm = 2, Weeks = testWeeks });
-            testItems.Add(new InventoryExportLineDetail { StationId = 3, DaypartId = 1, ProgramNames = new List<string> { "ProgramThree" }, AvgSpotCost = 10, AvgHhImpressions = 5000, AvgCpm = 2, Weeks = testWeeks });
+            testItems.Add(_GetInventoryExportLineDetail(2, 4, 1, "two", "two", ProgramSourceEnum.Mapped, 33, testAudiences, testWeeks));
             // Unknown Market
-            testItems.Add(new InventoryExportLineDetail { StationId = 5, DaypartId = 1, ProgramNames = new List<string> { "ProgramThree" }, AvgSpotCost = 10, AvgHhImpressions = 5000, AvgCpm = 2, Weeks = testWeeks });
+            testItems.Add(_GetInventoryExportLineDetail(3, 5, 1, "three", "three", ProgramSourceEnum.Mapped, 33, testAudiences, testWeeks));
 
             var stations = new List<DisplayBroadcastStation>
             {
-                new DisplayBroadcastStation { Id = 1, LegacyCallLetters = "Station1", MarketCode = 1 },
-                new DisplayBroadcastStation { Id = 2, LegacyCallLetters = "Station2", MarketCode = 2 },
-                new DisplayBroadcastStation { Id = 3, LegacyCallLetters = "Station3", MarketCode = 3 },
-                new DisplayBroadcastStation { Id = 5, LegacyCallLetters = "StationFive", MarketCode = 5 }
+                new DisplayBroadcastStation { Id = 1, LegacyCallLetters = "Station1", MarketCode = 1, Affiliation = "Aff1" },
+                new DisplayBroadcastStation { Id = 2, LegacyCallLetters = "Station2", MarketCode = 2, Affiliation = "Aff2" },
+                new DisplayBroadcastStation { Id = 3, LegacyCallLetters = "Station3", MarketCode = 3, Affiliation = "Aff3" },
+                new DisplayBroadcastStation { Id = 5, LegacyCallLetters = "StationFive", MarketCode = 5, Affiliation = "Aff5" }
             };
 
             var markets = new List<MarketCoverage>
@@ -183,19 +246,29 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 new MarketCoverage { MarketCode = 3, Market = "MyMarket3", Rank = 23},
             };
 
+            var audiences = new List<LookupDto>
+            {
+                new LookupDto(31, "Audience 31"),
+                new LookupDto(40, "Audience 40"),
+                new LookupDto(66, "Audience 66")
+            };
+
+            var genres = new List<LookupDto> { new LookupDto(33, "News") };
+
             var dayparts = new Dictionary<int, DisplayDaypart>();
             dayparts[1] = new DisplayDaypart(1, 3600, 7200, true, true, true, true, true, true, true);
             dayparts[2] = new DisplayDaypart(2, 18000, 21600, true, true, true, false, false, true, true);
 
-            var result = engine.UT_TransformToExportLines(testItems, testWeekIds, stations, markets, dayparts);
+            var result = engine.GetInventoryTableData(testItems, stations, markets, testWeekIds, dayparts, audiences, genres);
+
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void TransformToExportLines_UnknownDaypart()
+        public void GetInventoryTableData_UnknownDaypart()
         {
-            var engine = new InventoryExportEngineUnitTestClass();
+            var engine = new InventoryExportEngine();
             var testWeeks = new List<InventoryExportLineWeekDetail>
             {
                 new InventoryExportLineWeekDetail {MediaWeekId = 1, SpotCost = 10, HhImpressions = 5000, Cpm = 2},
@@ -205,18 +278,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 new InventoryExportLineWeekDetail {MediaWeekId = 5, SpotCost = 10, HhImpressions = 5000, Cpm = 2},
             };
             var testWeekIds = testWeeks.Select(s => s.MediaWeekId).ToList();
+            var testAudiences = new List<InventoryExportAudienceDto>
+            {
+                new InventoryExportAudienceDto  { AudienceId = 31, Impressions = 3000 },
+                new InventoryExportAudienceDto  { AudienceId = 40, Impressions = 5000 },
+                new InventoryExportAudienceDto  { AudienceId = 66, Impressions = 8000 }
+            };
 
             var testItems = new List<InventoryExportLineDetail>();
-            testItems.Add(new InventoryExportLineDetail { StationId = 1, DaypartId = 1, ProgramNames = new List<string> { "ProgramOne" }, AvgSpotCost = 10, AvgHhImpressions = 5000, AvgCpm = 2, Weeks = testWeeks });
+            testItems.Add(_GetInventoryExportLineDetail(1, 1, 1, "one", "one", ProgramSourceEnum.Mapped, 33, testAudiences, testWeeks));
             // unknown daypart
-            testItems.Add(new InventoryExportLineDetail { StationId = 2, DaypartId = 3, ProgramNames = new List<string> { "ProgramTwo" }, AvgSpotCost = 10, AvgHhImpressions = 5000, AvgCpm = 2, Weeks = testWeeks });
-            testItems.Add(new InventoryExportLineDetail { StationId = 3, DaypartId = 1, ProgramNames = new List<string> { "ProgramThree" }, AvgSpotCost = 10, AvgHhImpressions = 5000, AvgCpm = 2, Weeks = testWeeks });
+            testItems.Add(_GetInventoryExportLineDetail(2, 1, 666, "two", "two", ProgramSourceEnum.Mapped, 33, testAudiences, testWeeks));
 
             var stations = new List<DisplayBroadcastStation>
             {
-                new DisplayBroadcastStation { Id = 1, LegacyCallLetters = "Station1", MarketCode = 1 },
-                new DisplayBroadcastStation { Id = 2, LegacyCallLetters = "Station2", MarketCode = 2 },
-                new DisplayBroadcastStation { Id = 3, LegacyCallLetters = "Station3", MarketCode = 3 }
+                new DisplayBroadcastStation { Id = 1, LegacyCallLetters = "Station1", MarketCode = 1, Affiliation = "Aff1" },
+                new DisplayBroadcastStation { Id = 2, LegacyCallLetters = "Station2", MarketCode = 2, Affiliation = "Aff2" },
+                new DisplayBroadcastStation { Id = 3, LegacyCallLetters = "Station3", MarketCode = 3, Affiliation = "Aff3" },
             };
 
             var markets = new List<MarketCoverage>
@@ -226,12 +304,51 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 new MarketCoverage { MarketCode = 3, Market = "MyMarket3", Rank = 23},
             };
 
+            var audiences = new List<LookupDto>
+            {
+                new LookupDto(31, "Audience 31"),
+                new LookupDto(40, "Audience 40"),
+                new LookupDto(66, "Audience 66")
+            };
+
+            var genres = new List<LookupDto> { new LookupDto(33, "News") };
+
             var dayparts = new Dictionary<int, DisplayDaypart>();
             dayparts[1] = new DisplayDaypart(1, 3600, 7200, true, true, true, true, true, true, true);
             dayparts[2] = new DisplayDaypart(2, 18000, 21600, true, true, true, false, false, true, true);
 
-            var result = engine.UT_TransformToExportLines(testItems, testWeekIds, stations, markets, dayparts);
+            var result = engine.GetInventoryTableData(testItems, stations, markets, testWeekIds, dayparts, audiences, genres);
+
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        private InventoryExportDto _GetInventoryExportDto(int inventoryId, int mediaWeekId, int stationId, int daypartId,
+            int hhImpressions, int spotCost, string programNameSeed, string inventoryProgramNameSeed,
+            ProgramSourceEnum? programSource, int? maestroGenreId)
+        {
+            const int hhAudienceId = 31;
+            var programName = string.IsNullOrWhiteSpace(programNameSeed) ? null : $"ProgramName{programNameSeed}";
+            var inventoryProgramName = string.IsNullOrWhiteSpace(inventoryProgramNameSeed) ? null : $"InventoryProgramName{inventoryProgramNameSeed}";
+
+            var item = new InventoryExportDto()
+            {
+                InventoryId = inventoryId,
+                StationId = stationId,
+                MediaWeekId = mediaWeekId,
+                DaypartId = daypartId,
+                SpotCost = spotCost,
+                ProgramName = programName,
+                InventoryProgramName = inventoryProgramName,
+                ProgramSource = programSource,
+                MaestroGenreId = maestroGenreId,
+                HhImpressionsProjected = hhImpressions,
+                ProvidedAudiences = new List<InventoryExportAudienceDto>
+                {
+                    new InventoryExportAudienceDto {AudienceId = hhAudienceId, Impressions = hhImpressions}
+                }
+            };
+
+            return item;
         }
     }
 }

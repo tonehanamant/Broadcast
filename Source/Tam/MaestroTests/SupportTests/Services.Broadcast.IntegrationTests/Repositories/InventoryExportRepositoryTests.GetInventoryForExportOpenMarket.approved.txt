@@ -1,0 +1,38 @@
+[
+  {
+    "DaypartId": 1617,
+    "HhImpressionsProjected": 19870.775,
+    "InventoryId": 469330,
+    "InventoryProgramName": "News 10 @ Noon",
+    "MaestroGenreId": 39,
+    "MediaWeekId": 747,
+    "ProgramName": "Program 1 For 576683",
+    "ProgramSource": 2,
+    "ProvidedAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": null
+      }
+    ],
+    "SpotCost": 75.0000,
+    "StationId": 36
+  },
+  {
+    "DaypartId": 1617,
+    "HhImpressionsProjected": 19870.775,
+    "InventoryId": 469330,
+    "InventoryProgramName": "News 10 @ Noon",
+    "MaestroGenreId": 39,
+    "MediaWeekId": 748,
+    "ProgramName": "Program 1 For 576683",
+    "ProgramSource": 2,
+    "ProvidedAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": null
+      }
+    ],
+    "SpotCost": 75.0000,
+    "StationId": 36
+  }
+]

@@ -405,8 +405,9 @@
     <Compile Include="Entities\Enums\PricingMarketGroupEnum.cs" />
     <Compile Include="Entities\Enums\StationMapSetNamesEnum.cs" />
     <Compile Include="Entities\Enums\VpvhOperationEnum.cs" />
-    <Compile Include="Entities\Inventory\InventoryExportGenerationResult.cs" />
+    <Compile Include="Entities\Inventory\InventoryExportAudienceDto.cs" />
     <Compile Include="Entities\Inventory\InventoryExportLineWeekDetail.cs" />
+    <Compile Include="Entities\Inventory\InventoryExportReportData.cs" />
     <Compile Include="Entities\Inventory\InventoryExportRequestDto.cs" />
     <Compile Include="Entities\Inventory\InventoryExportDto.cs" />
     <Compile Include="Entities\Inventory\InventoryExportLineDetail.cs" />
@@ -576,6 +577,8 @@
     <Compile Include="ReportGenerators\CampaignExport\ProposalReportGenerator.cs" />
     <Compile Include="ReportGenerators\CampaignExport\CampaignReportGenerator.cs" />
     <Compile Include="ReportGenerators\DetectionExcelReportGenerator.cs" />
+    <Compile Include="ReportGenerators\InventoryExport\InventoryExportGenerator.cs" />
+    <Compile Include="ReportGenerators\InventoryExport\InventoryViewReportGenerator.cs" />
     <Compile Include="ReportGenerators\PricingResults\PricingResultsReportGenerator.cs" />
     <Compile Include="ReportGenerators\PricingResults\PricingSpotAllocationViewReportGenerator.cs" />
     <Compile Include="ReportGenerators\ProgramLineup\ProgramLineupReportGenerator.cs" />

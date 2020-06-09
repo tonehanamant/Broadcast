@@ -8,6 +8,9 @@ namespace Services.Broadcast.Entities.Enums.Inventory
 		News = 1,
 
 		[Description("Non-News")]
-		NonNews = 2
+		NonNews = 2,
+
+        [Description("Not Enriched")]
+		NotEnriched = 3
 	}
 }

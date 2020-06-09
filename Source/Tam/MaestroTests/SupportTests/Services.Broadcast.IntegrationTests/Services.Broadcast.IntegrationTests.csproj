@@ -395,6 +395,7 @@
     <Compile Include="IntegrationTestHelper.cs" />
     <Compile Include="JsonTextWriterOptimized.cs" />
     <Compile Include="MediaMonthCrunchCacheTest.cs" />
+    <Compile Include="Repositories\InventoryExportRepositoryTests.cs" />
     <Compile Include="Repositories\InventoryFileRepositoryTests.cs" />
     <Compile Include="Repositories\InventoryRepositoryTests.cs" />
     <Compile Include="Repositories\PlanSummaryRepositoryTests.cs" />
@@ -437,7 +438,6 @@
     <Compile Include="UnitTests\BusinessEngines\CreativeLengthEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\ImpressionsCalculationEngineUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\StationServiceUnitTests.cs" />
-    <Compile Include="UnitTests\BusinessEngines\InventoryExportEngineUnitTestClass.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryExportEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsBySourceUnprocessedProcessorTestClass.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsBySourceUnprocessedProcessorUnitTests.cs" />
@@ -563,6 +563,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\Excel templates\Template - Campaign Export.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Excel templates\Template - Open Market inventory.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\Excel templates\Template - Program Lineup.xlsx">

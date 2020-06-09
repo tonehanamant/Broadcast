@@ -1,13 +1,16 @@
 ﻿using Common.Services.Extensions;
-using OfficeOpenXml;
-using OfficeOpenXml.Style;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Enums.Inventory;
 using Services.Broadcast.Entities.Inventory;
+using Services.Broadcast.Helpers;
+using Services.Broadcast.ReportGenerators.CampaignExport;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.BusinessEngines
@@ -23,11 +26,32 @@ namespace Services.Broadcast.BusinessEngines
         List<InventoryExportLineDetail> Calculate(List<InventoryExportDto> items);
 
         /// <summary>
-        /// Generates the export file.
+        /// Get the formatted name of the file.
         /// </summary>
-        InventoryExportGenerationResult GenerateExportFile(List<InventoryExportLineDetail> lineDetails, List<int> weekIds,
+        string GetInventoryExportFileName(InventoryExportGenreTypeEnum genre, QuarterDetailDto quarter);
+
+        /// <summary>
+        /// Generates the value for when the export was generated.
+        /// </summary>
+        string GetExportGeneratedTimestamp(DateTime generatedTimestamp);
+
+        /// <summary>
+        /// Generates the inventory table column headers for the given audiences.
+        /// </summary>
+        object[][] GetInventoryTableAudienceColumnHeaders(List<LookupDto> audiences);
+
+        /// <summary>
+        /// Generates the inventory table column headers for the given media weeks.
+        /// </summary>
+        object[][] GetInventoryTableWeeklyColumnHeaders(List<DateTime> mediaWeekStartDates);
+
+        /// <summary>
+        /// Get the table data.
+        /// </summary>
+        object[][] GetInventoryTableData(List<InventoryExportLineDetail> inventoryExportLineDetails,
             List<DisplayBroadcastStation> stations, List<MarketCoverage> markets,
-            Dictionary<int, DisplayDaypart> dayparts, List<DateTime> weekStartDates);
+            List<int> mediaWeekIds, Dictionary<int, DisplayDaypart> dayparts,
+            List<LookupDto> audiences, List<LookupDto> genres);
     }
 
     /// <summary>
@@ -35,62 +59,46 @@ namespace Services.Broadcast.BusinessEngines
     /// </summary>
     public class InventoryExportEngine : BroadcastBaseClass, IInventoryExportEngine
     {
-        /// <summary>
-        /// The types of columns used in this export
-        /// </summary>
-        public enum ColumnTypeEnum
+        private const int COLUMN_INDEX_RANK = 1;
+        private const int COLUMN_INDEX_MARKET_NAME = 2;
+        private const int COLUMN_INDEX_STATION_CALLSIGN = 3;
+        private const int COLUMN_INDEX_DAYPART_TEXT = 5;
+
+        /// <inheritdoc />
+        public string GetInventoryExportFileName(InventoryExportGenreTypeEnum genre, QuarterDetailDto quarter)
         {
-            Text,
-            Integer,
-            Money,
-            MoneyWithDecimals
+            var genreValue = genre.GetDescriptionAttribute().ToUpper();
+            var fileName = $"Open Market inventory {genreValue} {quarter.Year} Q{quarter.Quarter}.xlsx";
+            return fileName;
         }
 
-        /// <summary>
-        /// Local column descriptor
-        /// </summary>
-        public class ColumnDescriptor
+        /// <inheritdoc />
+        public string GetExportGeneratedTimestamp(DateTime generatedTimestamp)
         {
-            public int ColumnIndex { get; set; }
-            public string Name { get; set; }
-            public ColumnTypeEnum ColumnType { get; set; }
-            public double Width { get; set; } = 10.38;
-            public bool IsValueCentered { get; set; } 
-            public bool IsHeaderBold { get; set; }
-            public bool IsEmptyDisplayedAsDash { get; set; }
+            const string format = "dd/MM/yyyy HH:mm:ss";
+            var result = $"Generated : {generatedTimestamp.ToString(format)}";
+            return result;
         }
-
-        /// <summary>
-        /// The base column headers
-        /// </summary>
-        private readonly List<ColumnDescriptor> _BaseColumnHeaders = new List<ColumnDescriptor>
-        {
-            new ColumnDescriptor {ColumnIndex = 1, Name = "Rank", ColumnType = ColumnTypeEnum.Integer, Width = 7 },
-            new ColumnDescriptor {ColumnIndex = 2, Name = "Market", ColumnType = ColumnTypeEnum.Text, Width = 27.43},
-            new ColumnDescriptor {ColumnIndex = 3, Name = "Station", ColumnType = ColumnTypeEnum.Text, Width = 8.29},
-            new ColumnDescriptor {ColumnIndex = 4, Name = "Timeslot", ColumnType = ColumnTypeEnum.Text, Width = 20.57},
-            new ColumnDescriptor {ColumnIndex = 5, Name = "Program name", ColumnType = ColumnTypeEnum.Text, Width = 37},
-            new ColumnDescriptor {ColumnIndex = 6, Name = ":30 Rate", ColumnType = ColumnTypeEnum.Money, IsValueCentered = true},
-            new ColumnDescriptor {ColumnIndex = 7, Name = "HH Imp(000)", ColumnType = ColumnTypeEnum.Integer, IsValueCentered = true, Width = 11.29},
-            new ColumnDescriptor {ColumnIndex = 8, Name = ":30 CPM", ColumnType = ColumnTypeEnum.MoneyWithDecimals, IsValueCentered = true},
-        };
 
         /// <inheritdoc />
         public List<InventoryExportLineDetail> Calculate(List<InventoryExportDto> items)
         {
             var result = new List<InventoryExportLineDetail>();
 
-            var stationDaypartGroups = items.Where(s => s.StationId.HasValue).GroupBy(s => new {StationId = s.StationId.Value, DaypartId = s.DaypartId});
-            foreach (var stationDaypartGroup in stationDaypartGroups)
-            {
-                var itemWeeks = new List<InventoryExportLineWeekDetail>();
+            var inventoryGroups = items
+                .GroupBy(s => s.InventoryId)
+                .ToList();
 
-                var weekGroups = stationDaypartGroup.GroupBy(g => g.MediaWeekId).ToList();
+            foreach (var inventoryGroup in inventoryGroups)
+            {
+                var inventoryItem = inventoryGroup.First();
+                var itemWeeks = new List<InventoryExportLineWeekDetail>();
+                var weekGroups = inventoryGroup.GroupBy(g => g.MediaWeekId).ToList();
                 foreach (var weekItems in weekGroups)
                 {
                     // Average these in case of multiple program names
                     var weekAvgSpotCost = weekItems.Average(s => s.SpotCost);
-                    var weekAvgHhImpressions = weekItems.Average(s => s.Impressions ?? 0);
+                    var weekAvgHhImpressions = weekItems.Average(s => s.HhImpressionsProjected ?? 0);
                     var weekAvgCpm = weekAvgHhImpressions.Equals(0) ? 0 : (weekAvgSpotCost / (decimal)weekAvgHhImpressions) * 1000;
 
                     var weekItem = new InventoryExportLineWeekDetail
@@ -100,7 +108,7 @@ namespace Services.Broadcast.BusinessEngines
                         HhImpressions = weekAvgHhImpressions,
                         Cpm = weekAvgCpm
                     };
-                    
+
                     itemWeeks.Add(weekItem);
                 }
 
@@ -108,158 +116,135 @@ namespace Services.Broadcast.BusinessEngines
                 var avgSpotCost = itemWeeks.Average(w => w.SpotCost);
                 var avgHhImpressions = itemWeeks.Average(w => w.HhImpressions);
                 var avgCpm = avgHhImpressions.Equals(0) ? 0 : (avgSpotCost / (decimal)avgHhImpressions) * 1000;
-                var programNames = stationDaypartGroup.Select(s => string.IsNullOrWhiteSpace(s.ProgramName) ? s.InventoryProgramName : s.ProgramName)
-                    .Distinct().ToList();
 
                 var lineItem = new InventoryExportLineDetail
                 {
-                    StationId = stationDaypartGroup.Key.StationId,
-                    DaypartId = stationDaypartGroup.Key.DaypartId,
-                    ProgramNames = programNames,
+                    InventoryId = inventoryItem.InventoryId,
+                    StationId = inventoryItem.StationId,
+                    DaypartId = inventoryItem.DaypartId,
+                    InventoryProgramName = inventoryItem.InventoryProgramName,
+                    ProgramName = inventoryItem.ProgramName,
+                    ProgramSource = inventoryItem.ProgramSource,
+                    MaestroGenreId = inventoryItem.MaestroGenreId,
                     AvgSpotCost = avgSpotCost,
                     AvgHhImpressions = avgHhImpressions,
                     AvgCpm = avgCpm,
-                    Weeks = itemWeeks
+                    Weeks = itemWeeks,
+                    ProvidedAudienceImpressions = inventoryItem.ProvidedAudiences
                 };
 
                 result.Add(lineItem);
             }
-
             return result;
         }
 
         /// <inheritdoc />
-        public InventoryExportGenerationResult GenerateExportFile(List<InventoryExportLineDetail> lineDetails, List<int> weekIds,
-            List<DisplayBroadcastStation> stations, List<MarketCoverage> markets, 
-            Dictionary<int, DisplayDaypart> dayparts, List<DateTime> weekStartDates)
+        public object[][] GetInventoryTableAudienceColumnHeaders(List<LookupDto> audiences)
         {
-            var columnDescriptors = _GetInventoryWorksheetColumnDescriptors(weekStartDates);
-            var lines = _TransformToExportLines(lineDetails, weekIds, stations, markets, dayparts);
+            var headers = audiences.Select(a => (object)($"{a.Display} Imp(000)")).ToArray();
+            return new[] { headers };
+        }
 
-            var excelPackage = new ExcelPackage();
-            var excelInventoryTab = excelPackage.Workbook.Worksheets.Add("Inventory");
+        /// <inheritdoc />
+        public object[][] GetInventoryTableWeeklyColumnHeaders(List<DateTime> mediaWeekStartDates)
+        {
+            var headers = mediaWeekStartDates.Select(w => (object)w.ToString("MM/dd")).ToArray();
+            return new[] {headers};
+        }
 
-            const int headerRowIndex = 1;
-            var rowIndex = headerRowIndex;
-            // add the header
-            for (var i = 0; i < columnDescriptors.Count; i++)
+        /// <inheritdoc />
+        public object[][] GetInventoryTableData(List<InventoryExportLineDetail> inventoryExportLineDetails,
+            List<DisplayBroadcastStation> stations, List<MarketCoverage> markets,
+            List<int> mediaWeekIds, Dictionary<int, DisplayDaypart> dayparts,
+            List<LookupDto> audiences, List<LookupDto> genres)
+        {
+            var lineStrings = new ConcurrentBag<object[]>();
+
+            Parallel.ForEach(inventoryExportLineDetails, (line) =>
             {
-                excelInventoryTab.Cells[rowIndex, (i+1)].Value = columnDescriptors[i].Name;
-                excelInventoryTab.Column((i + 1)).Width = columnDescriptors[i].Width;
-                excelInventoryTab.Cells[rowIndex, (i + 1)].Style.Font.Bold = columnDescriptors[i].IsHeaderBold;
-                excelInventoryTab.Column((i + 1)).Style.HorizontalAlignment = columnDescriptors[i].IsValueCentered ? ExcelHorizontalAlignment.Center : ExcelHorizontalAlignment.Left;
-                excelInventoryTab.Column((i + 1)).Style.VerticalAlignment = ExcelVerticalAlignment.Top;
-            }
+                // first or default to allow handling of missing station.
+                var station = stations.FirstOrDefault(s => s.Id.Equals(line.StationId) && s.MarketCode.HasValue);
+                var market = station == null ? null : markets.FirstOrDefault(m => m.MarketCode.Equals(station.MarketCode));
+                var daypart = dayparts.ContainsKey(line.DaypartId) ? dayparts[line.DaypartId] : null;
 
-            // add the lines
-            lines.ForEach(line =>
-            {
-                rowIndex++;
-                for (var i = 0; i < columnDescriptors.Count; i++)
-                {
-                    switch (columnDescriptors[i].ColumnType)
-                    {
-                        case ColumnTypeEnum.Integer:
-                            excelInventoryTab.Cells[rowIndex, (i + 1)].Style.Numberformat.Format = "###,###,##0";
-                            break;
-                        case ColumnTypeEnum.Money:
-                            excelInventoryTab.Cells[rowIndex, (i + 1)].Style.Numberformat.Format = "$###,###,##0";
-                            break;
-                        case ColumnTypeEnum.MoneyWithDecimals:
-                            excelInventoryTab.Cells[rowIndex, (i + 1)].Style.Numberformat.Format = "$###,###,##0.00";
-                            break;
-                    }
-
-                    if (columnDescriptors[i].IsEmptyDisplayedAsDash && line[i] == null)
-                    {
-                        excelInventoryTab.Cells[rowIndex, (i + 1)].Value = "-";
-                    }
-                    else
-                    {
-                        excelInventoryTab.Cells[rowIndex, (i + 1)].Value = line[i];
-                    }
-                }
+                var lineColumnValues = _TransformToLine(line, mediaWeekIds, station, market, daypart, audiences, genres);
+                lineStrings.Add(lineColumnValues);
             });
-            var result = new InventoryExportGenerationResult
-            {
-                InventoryTabLineCount = lines.Count,
-                ExportExcelPackage = excelPackage
-            };
-            return result;
-        }
-
-        protected List<ColumnDescriptor> _GetInventoryWorksheetColumnDescriptors(List<DateTime> weekStartDates)
-        {
-            var headers = _BaseColumnHeaders;
-            var columnIndex = headers.Max(h => h.ColumnIndex) + 1;
-            
-            headers.AddRange(weekStartDates.Select(w => 
-                new ColumnDescriptor {
-                    ColumnIndex = columnIndex++,
-                    Name = w.ToString("MM/dd"),
-                    ColumnType = ColumnTypeEnum.Money,
-                    IsHeaderBold = true,
-                    IsValueCentered = true,
-                    IsEmptyDisplayedAsDash = true
-                }));
-            return headers;
-        }
-
-        protected List<List<object>> _TransformToExportLines(List<InventoryExportLineDetail> lineDetails, List<int> weekIds,
-            List<DisplayBroadcastStation> stations, List<MarketCoverage> markets, Dictionary<int, DisplayDaypart> dayparts)
-        {
-            var lineStrings = new ConcurrentBag<List<object>>();
-
-            Parallel.ForEach(lineDetails, (line) =>
-                {
-                    // first or default to allow handling of missing station.
-                    var station = stations.FirstOrDefault(s => s.Id.Equals(line.StationId) && s.MarketCode.HasValue);
-                    var market = station == null ? null : markets.FirstOrDefault(m => m.MarketCode.Equals(station.MarketCode));
-                    var daypart = dayparts.ContainsKey(line.DaypartId) ? dayparts[line.DaypartId] : null;
-
-                    var lineColumnValues = _TransformToLine(line, weekIds, station, market, daypart);
-                    lineStrings.Add(lineColumnValues);
-                }
-            );
-
-            var rankListIndex = _BaseColumnHeaders.First(s => s.Name.Equals("Rank")).ColumnIndex - 1; // 0 indexed
-            var marketNameListIndex = _BaseColumnHeaders.First(s => s.Name.Equals("Market")).ColumnIndex - 1;  // 0 indexed
-            var stationCallsignsListIndex = _BaseColumnHeaders.First(s => s.Name.Equals("Station")).ColumnIndex - 1;  // 0 indexed
-            var daypartListIndex = _BaseColumnHeaders.First(s => s.Name.Equals("Timeslot")).ColumnIndex - 1;  // 0 indexed
 
             var orderedLines = lineStrings.
-                OrderBy(s => s[rankListIndex]).
-                ThenBy(s => s[marketNameListIndex]).
-                ThenBy(s => s[stationCallsignsListIndex]).
-                ThenBy(s => s[daypartListIndex]).
-                ToList();
+                OrderBy(s => s[COLUMN_INDEX_RANK]).
+                ThenBy(s => s[COLUMN_INDEX_MARKET_NAME]).
+                ThenBy(s => s[COLUMN_INDEX_STATION_CALLSIGN]).
+                ThenBy(s => s[COLUMN_INDEX_DAYPART_TEXT]).
+                ToArray();
 
             return orderedLines;
         }
 
-        private List<object> _TransformToLine(InventoryExportLineDetail lineDetailDetail, List<int> weekIds, DisplayBroadcastStation station,
-            MarketCoverage market, DisplayDaypart daypart)
+        private object[] _TransformToLine(InventoryExportLineDetail lineDetail, List<int> weekIds, DisplayBroadcastStation station,
+            MarketCoverage market, DisplayDaypart daypart, List<LookupDto> audiences, List<LookupDto> genres)
         {
             const string unknownIndicator = "UNKNOWN";
             var marketRank = market?.Rank ?? -1;
             var marketName = market?.Market ?? unknownIndicator;
-            var callLetters = string.IsNullOrEmpty(station?.LegacyCallLetters) ? unknownIndicator : station.LegacyCallLetters;
+            var callLetters = string.IsNullOrWhiteSpace(station?.LegacyCallLetters) ? unknownIndicator : station.LegacyCallLetters;
+            var affiliate = string.IsNullOrWhiteSpace(station?.Affiliation) ? unknownIndicator : station.Affiliation;
             var daypartText = daypart == null ? unknownIndicator : daypart.Preview;
-            var programNames = string.Join("/", lineDetailDetail.ProgramNames);
+            
+            var programSource = lineDetail.ProgramSource.HasValue
+                ? lineDetail.ProgramSource == ProgramSourceEnum.Forecasted ? "Dativa" : "Mapping"
+                : "None";
+            var genre = genres.FirstOrDefault(g => g.Id.Equals(lineDetail.MaestroGenreId))?.Display;
 
-            var formattedRate = lineDetailDetail.AvgSpotCost;
-            var formattedImpressions = Convert.ToInt32(Math.Round(lineDetailDetail.AvgHhImpressions / 1000));
-            var formattedCpm = lineDetailDetail.AvgCpm;
+            var formattedRate = lineDetail.AvgSpotCost;
+            var formattedImpressions = Convert.ToInt32(Math.Round(lineDetail.AvgHhImpressions / 1000));
+            var formattedCpm = lineDetail.AvgCpm;
 
-            var lineColumnValues = new List<object> { marketRank, marketName, callLetters, daypartText, programNames, formattedRate, formattedImpressions, formattedCpm };
+            var lineColumnValues = new List<object> { 
+                lineDetail.InventoryId,
+                marketRank, 
+                marketName, 
+                callLetters, 
+                affiliate,
+                daypartText,
+                lineDetail.InventoryProgramName, 
+                lineDetail.ProgramName,
+                genre, 
+                programSource, 
+                formattedRate, 
+                formattedImpressions,
+                formattedCpm };
+
+            foreach (var audience in audiences)
+            {
+                var audienceImpressions = lineDetail.ProvidedAudienceImpressions
+                    .Where(s => s.AudienceId == audience.Id)
+                    .Average(s => s.Impressions);
+
+                if (audienceImpressions.HasValue)
+                {
+                    lineColumnValues.Add(Convert.ToInt32(Math.Round(audienceImpressions.Value / 1000)));
+                }
+                else
+                {
+                    lineColumnValues.Add(ExportSharedLogic.NO_VALUE_CELL);
+                }
+            }
+
             weekIds.ForEach(weekId =>
             {
-                var foundWeek = lineDetailDetail.Weeks.FirstOrDefault(s => s.MediaWeekId.Equals(weekId));
-                var formattedWeekRate = foundWeek?.SpotCost;
-                lineColumnValues.Add(formattedWeekRate);
+                var foundWeek = lineDetail.Weeks.FirstOrDefault(s => s.MediaWeekId.Equals(weekId));
+                if (foundWeek == null)
+                {
+                    lineColumnValues.Add(ExportSharedLogic.NO_VALUE_CELL);
+                }
+                else
+                {
+                    lineColumnValues.Add(foundWeek.SpotCost);
+                }
             });
 
-            return lineColumnValues;
+            return lineColumnValues.ToArray();
         }
     }
 }

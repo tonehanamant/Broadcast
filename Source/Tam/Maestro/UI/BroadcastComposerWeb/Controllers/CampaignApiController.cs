@@ -1,31 +1,26 @@
-﻿using Common.Services.WebComponents;
-using Services.Broadcast.ApplicationServices;
+﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Helpers;
+using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
+using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Web.Common;
-using Tam.Maestro.Data.Entities;
-using Tam.Maestro.Services.Cable.Security;
-using Services.Broadcast.Entities.Campaign;
-using System.Web;
 
 namespace BroadcastComposerWeb.Controllers
 {
     [RoutePrefix("api/v1/Campaigns")]
     public class CampaignApiController : BroadcastControllerBase
     {
-        private readonly string AppDataPath;
-
         public CampaignApiController(BroadcastApplicationServiceFactory applicationServiceFactory) : 
             base(new ControllerNameRetriever(typeof(CampaignApiController).Name), applicationServiceFactory)
         {
-            AppDataPath = HttpContext.Current.Server.MapPath("~/App_Data");
         }
 
         /// <summary>
@@ -158,8 +153,9 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<Guid> GenerateCampaignReport([FromBody]CampaignReportRequest request)
         {
             var fullName = _GetCurrentUserFullName();
+            var appDataPath = _GetAppDataPath();
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
-                .GenerateCampaignReport(request, fullName, AppDataPath));
+                .GenerateCampaignReport(request, fullName, appDataPath));
         }
         
         /// <summary>
@@ -173,8 +169,9 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<Guid> GenerateProgramLineupReport([FromBody]ProgramLineupReportRequest request)
         {
             var fullName = _GetCurrentUserFullName();
+            var appDataPath = _GetAppDataPath();
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ICampaignService>()
-                .GenerateProgramLineupReport(request, fullName, DateTime.Now, AppDataPath));
+                .GenerateProgramLineupReport(request, fullName, DateTime.Now, appDataPath));
         }
     }
 }

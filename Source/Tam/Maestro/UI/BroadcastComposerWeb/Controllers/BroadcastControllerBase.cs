@@ -20,16 +20,23 @@ namespace BroadcastComposerWeb.Controllers
     public class BroadcastControllerBase : ControllerBase
     {
         protected readonly BroadcastApplicationServiceFactory _ApplicationServiceFactory;
+        private readonly string _AppDataPath;
 
         public BroadcastControllerBase(ControllerNameRetriever controllerNameRetriever, BroadcastApplicationServiceFactory applicationServiceFactory) 
             : base(controllerNameRetriever)
         {
             _ApplicationServiceFactory = applicationServiceFactory;
+            _AppDataPath = HttpContext.Current.Server.MapPath("~/App_Data");
         }
 
         public WindowsIdentity Identity
         {
             get { return HttpContext.Current.Request.LogonUserIdentity; }
+        }
+
+        protected string _GetAppDataPath()
+        {
+            return _AppDataPath;
         }
 
         protected string _GetCurrentUserFullName() =>

@@ -69,6 +69,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Inventory
         public void GenerateExportForOpenMarketAndDownloadIt()
         {
             const string testUser = "TestUser";
+            const string templatePath = @".\Files\Excel templates";
             var testRequest = new InventoryExportRequestDto
             {
                 Genre = InventoryExportGenreTypeEnum.News,
@@ -81,10 +82,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Inventory
                 }
             };
 
+            var daypartIds = new[] { 576682, 576683, 576683, 576683, 576683, 576683, 576684, 576685, 576685, 576685, 576685, 576685 };
+
             var jobId = -1;
             InventoryExportJobDto job = null;
 
-            var programs = _GetProgramsForTest();
+            var programs = _GetProgramsForTest(daypartIds);
 
             _FileService.CreatedFileStreams.Clear();
             string generatedFileContent;
@@ -94,10 +97,26 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Inventory
                 using (var transCreateData = new TransactionScopeWrapper())
                 {
                     _InventoryRepository.CreateInventoryPrograms(programs, DateTime.Now);
+
+                    // make them primary on the dayparts
+                    var dayparts = new List<StationInventoryManifestDaypart>();
+                    foreach (var id in daypartIds.Distinct())
+                    {
+                        // last to ensure it's the programs we think.
+                        var primaryProgram = _InventoryRepository.GetDaypartProgramsForInventoryDayparts(new List<int> { id }).Last();
+                        var daypart = new StationInventoryManifestDaypart
+                        {
+                            Id = id,
+                            PrimaryProgramId = primaryProgram.Id
+                        };
+                        dayparts.Add(daypart);
+                    }
+                    _InventoryRepository.UpdatePrimaryProgramsForManifestDayparts(dayparts);
+
                     transCreateData.Complete();
                 }
                 // generate the file
-                jobId = _InventoryExportService.GenerateExportForOpenMarket(testRequest, testUser);
+                jobId = _InventoryExportService.GenerateExportForOpenMarket(testRequest, testUser, templatePath);
                 job = _InventoryExportJobRepository.GetJob(jobId);
 
                 // download the file 
@@ -114,16 +133,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Inventory
             // folderPath and fileName are validated in unit tests.
             // here we will only validate the file content.
             // since that is Excel nonsense we will just verify the length.
-            Assert.AreEqual(3549, generatedFileContent.Length);
+            // and since these the content contains a timestamp we can't check by exact length
+            // so we we will only check that it's at least X
+            var resultLength = generatedFileContent.Length;
+            var expectedRange = new { floor = 8400, ceiling = 8500};
+            Assert.IsTrue(resultLength > expectedRange.floor);
+            Assert.IsTrue(resultLength < expectedRange.ceiling);
         }
 
         /// <summary>
         /// Gets the programs data we will insert for our test.
         /// </summary>
-        private List<StationInventoryManifestDaypartProgram> _GetProgramsForTest()
+        private List<StationInventoryManifestDaypartProgram> _GetProgramsForTest(IEnumerable<int> daypartIds)
         {
-            var daypartIds = new[] { 576682, 576683, 576683, 576683, 576683, 576683, 576684, 576685, 576685, 576685, 576685, 576685 };
-
             var genres = _GenreRepository.GetAllMaestroGenres().ToList();
             var notNewsGenreId = genres
                 .Where(g => g.Display.ToUpper().Equals("NEWS") == false)

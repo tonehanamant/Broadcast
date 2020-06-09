@@ -17,6 +17,7 @@ using Services.Broadcast.Repositories.Inventory;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -29,6 +30,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
     public class InventoryExportServiceUnitTests
     {
         private const string TEST_USERNAME = "testUser";
+        private const string TEST_TEMPLATE_PATH = @".\Files\Excel templates";
 
         [Test]
         public void GenerateExportForOpenMarket()
@@ -62,6 +64,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var inventoryExportJobRepository = new Mock<IInventoryExportJobRepository>();
             var genreRepository = new Mock<IGenreRepository>();
             var stationRepository = new Mock<IStationRepository>();
+            var audienceRepository = new Mock<IBroadcastAudienceRepository>();
 
             // load our mocks with our test data.
             var inventorySource = new InventorySource
@@ -103,20 +106,24 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new MediaWeek(861, 465, 4,  DateTime.Parse("2020-06-22T00:00:00"), DateTime.Parse("2020-06-28T00:00:00")),
             };
             mediaMonthAndWeekAggregateCache
+                .Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
+                .Returns(new MediaMonth(1, 2020, 12, "NotSure", new DateTime(2020,12, 1), new DateTime(2020, 12, 31)));
+
+            mediaMonthAndWeekAggregateCache
                 .Setup(s => s.GetMediaWeeksByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(testMediaWeeks);
 
             var inventory = new List<InventoryExportDto>
             {
-                new InventoryExportDto{ InventoryId = 1, StationId = 1, MediaWeekId = 849, DaypartId = 1, Impressions = 1, SpotCost =1, ProgramName = "One"},
-                new InventoryExportDto{ InventoryId = 2, StationId = 2, MediaWeekId = 850, DaypartId = 2, Impressions = 2, SpotCost =2, ProgramName = "Two"},
+                _GetInventoryExportDto(1,1,849, 1, "One", "One"),
+                _GetInventoryExportDto(2,2,850, 2, "Two", "Two"),
             };
-            var betInventoryForExportOpenMarketCalls = new List<Tuple<List<int>, List<int>, List<int>>>();
-            inventoryRepository.Setup(s =>
+            var getInventoryForExportOpenMarketCalls = new List<Tuple<List<int>, List<int>, List<int>>>();
+            inventoryExportRepository.Setup(s =>
                     s.GetInventoryForExportOpenMarket(It.IsAny<List<int>>(), It.IsAny<List<int>>(),
                         It.IsAny<List<int>>()))
                 .Callback<List<int>, List<int>, List<int>>((s, g, w) =>
-                    betInventoryForExportOpenMarketCalls.Add(new Tuple<List<int>, List<int>, List<int>>(s, g, w)))
+                    getInventoryForExportOpenMarketCalls.Add(new Tuple<List<int>, List<int>, List<int>>(s, g, w)))
                 .Returns(inventory);
 
             var calculateReturn = new List<InventoryExportLineDetail>
@@ -128,6 +135,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             inventoryExportEngine.Setup(s => s.Calculate(It.IsAny<List<InventoryExportDto>>()))
                 .Callback(() => calculateCalledCount++)
                 .Returns(calculateReturn);
+
+            object[][] headers =  { new object[] { "01/01", "02/02"} };
+            inventoryExportEngine.Setup(s => s.GetInventoryTableWeeklyColumnHeaders(It.IsAny<List<DateTime>>()))
+                .Returns(headers);
 
             var stations = new List<DisplayBroadcastStation>
             {
@@ -147,16 +158,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             daypartCache.Setup(s => s.GetDisplayDayparts(It.IsAny<List<int>>()))
                 .Returns(daypartsDict);
 
-            var generateExportFileResult = new InventoryExportGenerationResult
-            {
-                InventoryTabLineCount = 1,
-                ExportExcelPackage = new ExcelPackage()
-            };
-            generateExportFileResult.ExportExcelPackage.Workbook.Worksheets.Add("Inventory");
-            inventoryExportEngine.Setup(s => s.GenerateExportFile(It.IsAny<List<InventoryExportLineDetail>>(),
-                    It.IsAny<List<int>>(), It.IsAny<List<DisplayBroadcastStation>>(), It.IsAny<List<MarketCoverage>>(),
-                    It.IsAny<Dictionary<int, DisplayDaypart>>(), It.IsAny<List<DateTime>>()))
-                .Returns(generateExportFileResult);
+            const int testDataRowCount = 10;
+            var tableData = _GetTestInventoryTableData(testDataRowCount);
+            inventoryExportEngine.Setup(s => s.GetInventoryTableData(It.IsAny<List<InventoryExportLineDetail>>(),
+                    It.IsAny<List<DisplayBroadcastStation>>(), It.IsAny<List<MarketCoverage>>(),
+                    It.IsAny<List<int>>(), It.IsAny<Dictionary<int, DisplayDaypart>>(),
+                    It.IsAny<List<LookupDto>>(), It.IsAny<List<LookupDto>>()))
+                .Returns(tableData);
+
+            inventoryExportEngine.Setup(s => s.GetInventoryExportFileName(It.IsAny<InventoryExportGenreTypeEnum>(), It.IsAny<QuarterDetailDto>()))
+                .Returns("TestFileName.xlsx");
 
             var createFilesCalled = new List<Tuple<string, string, Stream>>();
             fileService.Setup(s => s.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Stream>()))
@@ -165,6 +176,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var updatedJobs = new List<InventoryExportJobDto>();
             inventoryExportJobRepository.Setup(s => s.UpdateJob(It.IsAny<InventoryExportJobDto>()))
                 .Callback<InventoryExportJobDto>((j) => updatedJobs.Add(j));
+
+            audienceRepository.Setup(s => s.GetAudienceDtosById(It.IsAny<List<int>>()))
+                .Returns(new List<LookupDto>());
+
+            var nsiPostingBooksService = new Mock<INsiPostingBookService>();
+            var shareBookId = 5;
+            nsiPostingBooksService.Setup(s => s.GetLatestNsiPostingBookForMonthContainingDate(It.IsAny<DateTime>()))
+                .Returns(shareBookId);
 
             // Register all the repo objects that are now setup.
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IInventoryRepository>())
@@ -177,6 +196,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(genreRepository.Object);
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IStationRepository>())
                 .Returns(stationRepository.Object);
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IBroadcastAudienceRepository>())
+                .Returns(audienceRepository.Object);
 
             // instantiate our test server with all our setup mocks.
             var service = new InventoryExportServiceUnitTestClass(broadcastDataRepositoryFactory.Object,
@@ -186,13 +207,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 fileService.Object,
                 spotLengthEngine.Object,
                 daypartCache.Object,
-                marketService.Object)
+                marketService.Object,
+                nsiPostingBooksService.Object)
             {
                 UT_DateTimeNow = testCurrentTimestamp
             };
 
             // *** ACT ***/
-            var result = service.GenerateExportForOpenMarket(request, TEST_USERNAME);
+            var result = service.GenerateExportForOpenMarket(request, TEST_USERNAME, TEST_TEMPLATE_PATH);
 
             // *** Assert ***/
             Assert.AreEqual(1, result);
@@ -204,9 +226,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(2, jobsCreated[0].Item3.Quarter);
             Assert.AreEqual(request.Genre, jobsCreated[0].Item4);
             // verify the get inventory call 
-            Assert.AreEqual(1, betInventoryForExportOpenMarketCalls.Count);
-            Assert.AreEqual(spotLengthId, betInventoryForExportOpenMarketCalls[0].Item1[0]); // spotlengthid
-            Assert.AreEqual(34, betInventoryForExportOpenMarketCalls[0].Item2[0]); // genre id should be news only
+            Assert.AreEqual(1, getInventoryForExportOpenMarketCalls.Count);
+            Assert.AreEqual(spotLengthId, getInventoryForExportOpenMarketCalls[0].Item1[0]); // spotlengthid
+            Assert.AreEqual(34, getInventoryForExportOpenMarketCalls[0].Item2[0]); // genre id should be news only
             // verify the calculated call
             Assert.AreEqual(1, calculateCalledCount);
             // verify the saved job
@@ -218,8 +240,299 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // verify the saved file
             Assert.AreEqual(1, createFilesCalled.Count);
             Assert.AreEqual(@"BroadcastServiceSystemParameter.BroadcastAppFolder\InventoryExports", createFilesCalled[0].Item1);
-            Assert.AreEqual("Open Market inventory 2020 Q2.xlsx", createFilesCalled[0].Item2);
+            Assert.AreEqual("TestFileName.xlsx", createFilesCalled[0].Item2);
             Assert.IsNotNull(createFilesCalled[0].Item3);
+        }
+
+        [Test]
+        public void GenerateExportForOpenMarket_Unenriched()
+        {
+            /*** Arrange ***/
+            var request = new InventoryExportRequestDto
+            {
+                Genre = InventoryExportGenreTypeEnum.NotEnriched,
+                Quarter = new QuarterDetailDto
+                {
+                    Quarter = 2,
+                    Year = 2020,
+                    StartDate = new DateTime(2020, 3, 30),
+                    EndDate = new DateTime(2020, 6, 28)
+                }
+            };
+            var testCurrentTimestamp = new DateTime(2020, 05, 06, 14, 32, 18);
+
+            // instantiate our mocks.
+            var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var inventoryExportEngine = new Mock<IInventoryExportEngine>();
+            var fileService = new Mock<IFileService>();
+            var spotLengthEngine = new Mock<ISpotLengthEngine>();
+            var daypartCache = new Mock<IDaypartCache>();
+            var marketService = new Mock<IMarketService>();
+            var nsiPostingBooksService = new Mock<INsiPostingBookService>();
+
+            var inventoryRepository = new Mock<IInventoryRepository>();
+            var inventoryExportRepository = new Mock<IInventoryExportRepository>();
+            var inventoryExportJobRepository = new Mock<IInventoryExportJobRepository>();
+            var genreRepository = new Mock<IGenreRepository>();
+            var stationRepository = new Mock<IStationRepository>();
+            var audienceRepository = new Mock<IBroadcastAudienceRepository>();
+
+            // load our mocks with our test data.
+            var inventorySource = new InventorySource
+            {
+                Id = 1,
+                Name = "Open Market"
+            };
+
+            inventoryRepository.Setup(s => s.GetInventorySource(It.IsAny<int>()))
+                .Returns(inventorySource);
+
+            const int createdJobId = 1;
+            var jobsCreated = new List<Tuple<int, BackgroundJobProcessingStatus, QuarterDetailDto, InventoryExportGenreTypeEnum>>();
+            inventoryExportJobRepository.Setup(s => s.CreateJob(It.IsAny<InventoryExportJobDto>(), It.IsAny<string>()))
+                .Callback<InventoryExportJobDto, string>((j, u) => jobsCreated.Add(
+                    new Tuple<int, BackgroundJobProcessingStatus, QuarterDetailDto, InventoryExportGenreTypeEnum>(j.InventorySourceId, j.Status, j.Quarter, j.ExportGenreType)))
+                .Returns(createdJobId);
+            const int spotLengthId = 1;
+            spotLengthEngine.Setup(s => s.GetSpotLengthIdByValue(It.IsAny<int>()))
+                .Returns(spotLengthId);
+
+            genreRepository.Setup(s => s.GetAllMaestroGenres())
+                .Returns(_GetAllGenres());
+
+            var testMediaWeeks = new List<MediaWeek>
+            {
+                new MediaWeek(849, 463, 1,  DateTime.Parse("2020-03-30T00:00:00"), DateTime.Parse("2020-04-05T00:00:00")),
+                new MediaWeek(850, 463, 2,  DateTime.Parse("2020-04-06T00:00:00"), DateTime.Parse("2020-04-12T00:00:00")),
+                new MediaWeek(851, 463, 3,  DateTime.Parse("2020-04-13T00:00:00"), DateTime.Parse("2020-04-19T00:00:00")),
+                new MediaWeek(852, 463, 4,  DateTime.Parse("2020-04-20T00:00:00"), DateTime.Parse("2020-04-26T00:00:00")),
+                new MediaWeek(853, 464, 1,  DateTime.Parse("2020-04-27T00:00:00"), DateTime.Parse("2020-05-03T00:00:00")),
+                new MediaWeek(854, 464, 2,  DateTime.Parse("2020-05-04T00:00:00"), DateTime.Parse("2020-05-10T00:00:00")),
+                new MediaWeek(855, 464, 3,  DateTime.Parse("2020-05-11T00:00:00"), DateTime.Parse("2020-05-17T00:00:00")),
+                new MediaWeek(856, 464, 4,  DateTime.Parse("2020-05-18T00:00:00"), DateTime.Parse("2020-05-24T00:00:00")),
+                new MediaWeek(857, 464, 5,  DateTime.Parse("2020-05-25T00:00:00"), DateTime.Parse("2020-05-31T00:00:00")),
+                new MediaWeek(858, 465, 1,  DateTime.Parse("2020-06-01T00:00:00"), DateTime.Parse("2020-06-07T00:00:00")),
+                new MediaWeek(859, 465, 2,  DateTime.Parse("2020-06-08T00:00:00"), DateTime.Parse("2020-06-14T00:00:00")),
+                new MediaWeek(860, 465, 3,  DateTime.Parse("2020-06-15T00:00:00"), DateTime.Parse("2020-06-21T00:00:00")),
+                new MediaWeek(861, 465, 4,  DateTime.Parse("2020-06-22T00:00:00"), DateTime.Parse("2020-06-28T00:00:00")),
+            };
+            mediaMonthAndWeekAggregateCache
+                .Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
+                .Returns(new MediaMonth(1, 2020, 12, "NotSure", new DateTime(2020, 12, 1), new DateTime(2020, 12, 31)));
+
+            mediaMonthAndWeekAggregateCache
+                .Setup(s => s.GetMediaWeeksByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(testMediaWeeks);
+
+            var inventory = new List<InventoryExportDto>
+            {
+                _GetInventoryExportDto(1,1,849, 1, "One", "One"),
+                _GetInventoryExportDto(2,2,850, 2, "Two", "Two"),
+            };
+            var getInventoryForExportOpenMarketCalls = new List<Tuple<List<int>, List<int>, List<int>>>();
+            inventoryExportRepository.Setup(s =>
+                    s.GetInventoryForExportOpenMarket(It.IsAny<List<int>>(), It.IsAny<List<int>>(),
+                        It.IsAny<List<int>>()))
+                .Callback<List<int>, List<int>, List<int>>((s, g, w) =>
+                    getInventoryForExportOpenMarketCalls.Add(new Tuple<List<int>, List<int>, List<int>>(s, g, w)))
+                .Returns(inventory);
+
+            var getInventoryForExportOpenMarketNotEnriched = new List<Tuple<List<int>, List<int>>>();
+            inventoryExportRepository.Setup(s =>
+                    s.GetInventoryForExportOpenMarketNotEnriched(It.IsAny<List<int>>(), It.IsAny<List<int>>()))
+                .Callback<List<int>, List<int>>((s, w) =>
+                    getInventoryForExportOpenMarketNotEnriched.Add(new Tuple<List<int>, List<int>>(s, w)))
+                .Returns(inventory);
+
+            var calculateReturn = new List<InventoryExportLineDetail>
+            {
+                new InventoryExportLineDetail {StationId = 1},
+                new InventoryExportLineDetail {StationId = 2}
+            };
+            var calculateCalledCount = 0;
+            inventoryExportEngine.Setup(s => s.Calculate(It.IsAny<List<InventoryExportDto>>()))
+                .Callback(() => calculateCalledCount++)
+                .Returns(calculateReturn);
+
+            object[][] headers = { new object[] { "01/01", "02/02" } };
+            inventoryExportEngine.Setup(s => s.GetInventoryTableWeeklyColumnHeaders(It.IsAny<List<DateTime>>()))
+                .Returns(headers);
+
+            var stations = new List<DisplayBroadcastStation>
+            {
+                new DisplayBroadcastStation{ Id = 1},
+                new DisplayBroadcastStation{ Id = 2},
+                new DisplayBroadcastStation{ Id = 3},
+                new DisplayBroadcastStation{ Id = 4}
+            };
+            stationRepository.Setup(s => s.GetBroadcastStations())
+                .Returns(stations);
+
+            var markets = new List<MarketCoverage>();
+            marketService.Setup(s => s.GetMarketsWithLatestCoverage())
+                .Returns(markets);
+
+            var daypartsDict = new Dictionary<int, DisplayDaypart>();
+            daypartCache.Setup(s => s.GetDisplayDayparts(It.IsAny<List<int>>()))
+                .Returns(daypartsDict);
+
+            const int testDataRowCount = 10;
+            var tableData = _GetTestInventoryTableData(testDataRowCount);
+            inventoryExportEngine.Setup(s => s.GetInventoryTableData(It.IsAny<List<InventoryExportLineDetail>>(),
+                    It.IsAny<List<DisplayBroadcastStation>>(), It.IsAny<List<MarketCoverage>>(),
+                    It.IsAny<List<int>>(), It.IsAny<Dictionary<int, DisplayDaypart>>(),
+                    It.IsAny<List<LookupDto>>(), It.IsAny<List<LookupDto>>()))
+                .Returns(tableData);
+
+            inventoryExportEngine.Setup(s => s.GetInventoryExportFileName(It.IsAny<InventoryExportGenreTypeEnum>(), It.IsAny<QuarterDetailDto>()))
+                .Returns("TestFileName.xlsx");
+
+            var createFilesCalled = new List<Tuple<string, string, Stream>>();
+            fileService.Setup(s => s.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Stream>()))
+                .Callback<string, string, Stream>((sd, fn, st) => createFilesCalled.Add(new Tuple<string, string, Stream>(sd, fn, st)));
+
+            var updatedJobs = new List<InventoryExportJobDto>();
+            inventoryExportJobRepository.Setup(s => s.UpdateJob(It.IsAny<InventoryExportJobDto>()))
+                .Callback<InventoryExportJobDto>((j) => updatedJobs.Add(j));
+
+            audienceRepository.Setup(s => s.GetAudienceDtosById(It.IsAny<List<int>>()))
+                .Returns(new List<LookupDto>());
+
+            var shareBookId = 5;
+            nsiPostingBooksService.Setup(s => s.GetLatestNsiPostingBookForMonthContainingDate(It.IsAny<DateTime>()))
+                .Returns(shareBookId);
+
+            // Register all the repo objects that are now setup.
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IInventoryRepository>())
+                .Returns(inventoryRepository.Object);
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IInventoryExportRepository>())
+                .Returns(inventoryExportRepository.Object);
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IInventoryExportJobRepository>())
+                .Returns(inventoryExportJobRepository.Object);
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IGenreRepository>())
+                .Returns(genreRepository.Object);
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IStationRepository>())
+                .Returns(stationRepository.Object);
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IBroadcastAudienceRepository>())
+                .Returns(audienceRepository.Object);
+
+            // instantiate our test server with all our setup mocks.
+            var service = new InventoryExportServiceUnitTestClass(broadcastDataRepositoryFactory.Object,
+                quarterCalculationEngine.Object,
+                mediaMonthAndWeekAggregateCache.Object,
+                inventoryExportEngine.Object,
+                fileService.Object,
+                spotLengthEngine.Object,
+                daypartCache.Object,
+                marketService.Object,
+                nsiPostingBooksService.Object)
+            {
+                UT_DateTimeNow = testCurrentTimestamp
+            };
+
+            // *** ACT ***/
+            var result = service.GenerateExportForOpenMarket(request, TEST_USERNAME, TEST_TEMPLATE_PATH);
+
+            // *** Assert ***/
+            Assert.AreEqual(1, result);
+            // verify JobsCreated
+            Assert.AreEqual(1, jobsCreated.Count);
+            Assert.AreEqual(1, jobsCreated[0].Item1);
+            Assert.AreEqual(BackgroundJobProcessingStatus.Processing, jobsCreated[0].Item2);
+            Assert.AreEqual(2020, jobsCreated[0].Item3.Year);
+            Assert.AreEqual(2, jobsCreated[0].Item3.Quarter);
+            Assert.AreEqual(request.Genre, jobsCreated[0].Item4);
+            // verify the get inventory call 
+            Assert.AreEqual(0, getInventoryForExportOpenMarketCalls.Count);
+            Assert.AreEqual(1, getInventoryForExportOpenMarketNotEnriched.Count);
+            Assert.AreEqual(spotLengthId, getInventoryForExportOpenMarketNotEnriched[0].Item1[0]); // spotlengthid
+
+            // verify the calculated call
+            Assert.AreEqual(1, calculateCalledCount);
+            // verify the saved job
+            //updatedJobs
+            Assert.AreEqual(1, updatedJobs.Count);
+            Assert.AreEqual(BackgroundJobProcessingStatus.Succeeded, updatedJobs[0].Status);
+            Assert.IsNotNull(updatedJobs[0].CompletedAt);
+
+            // verify the saved file
+            Assert.AreEqual(1, createFilesCalled.Count);
+            Assert.AreEqual(@"BroadcastServiceSystemParameter.BroadcastAppFolder\InventoryExports", createFilesCalled[0].Item1);
+            Assert.AreEqual("TestFileName.xlsx", createFilesCalled[0].Item2);
+            Assert.IsNotNull(createFilesCalled[0].Item3);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetExportGenreIds_NotNews()
+        {
+            var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var inventoryExportEngine = new Mock<IInventoryExportEngine>();
+            var fileService = new Mock<IFileService>();
+            var spotLengthEngine = new Mock<ISpotLengthEngine>();
+            var daypartCache = new Mock<IDaypartCache>();
+            var marketService = new Mock<IMarketService>();
+            var nsiPostingBooksService = new Mock<INsiPostingBookService>();
+
+            var service = new InventoryExportServiceUnitTestClass(broadcastDataRepositoryFactory.Object,
+                quarterCalculationEngine.Object,
+                mediaMonthAndWeekAggregateCache.Object,
+                inventoryExportEngine.Object,
+                fileService.Object,
+                spotLengthEngine.Object,
+                daypartCache.Object,
+                marketService.Object,
+                nsiPostingBooksService.Object);
+
+            var genres = _GetAllGenres();
+
+            var result = service.UT_GetExportGenreIds(InventoryExportGenreTypeEnum.NonNews, genres);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+
+        private InventoryExportDto _GetInventoryExportDto(int inventoryId, int mediaWeekId, int stationId, int daypartId, string programNameSeed, string inventoryProgramNameSeed)
+        {
+            const int hhAudienceId = 31;
+            var programName = string.IsNullOrWhiteSpace(programNameSeed) ? null : $"ProgramName{programNameSeed}";
+            var inventoryProgramName = string.IsNullOrWhiteSpace(inventoryProgramNameSeed) ? null : $"InventoryProgramName{inventoryProgramNameSeed}";
+
+            var item = new InventoryExportDto()
+            {
+                InventoryId = inventoryId,
+                MediaWeekId = mediaWeekId,
+                StationId = stationId,
+                DaypartId = daypartId,
+                HhImpressionsProjected = 10000,
+                SpotCost = 20,
+                ProgramName = programName,
+                InventoryProgramName = inventoryProgramName,
+                ProvidedAudiences = new List<InventoryExportAudienceDto>
+                {
+                    new InventoryExportAudienceDto {AudienceId = hhAudienceId, Impressions = 20000}
+                }
+            };
+
+            return item;
+        }
+
+        private object[][] _GetTestInventoryTableData(int count)
+        {
+            const int columnCount = 10;
+            var rows = new List<object[]>();
+
+            for (var i = 0; i < count; i++)
+            {
+                var columns = Enumerable.Range(1, columnCount).ToList().Select(s => (object)$"Column{s}").ToArray();
+                rows.Add(columns);
+            }
+
+            return rows.ToArray();
         }
 
         [Test]
@@ -300,7 +613,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             var inventory = new List<InventoryExportDto>();
             var getInventoryForExportOpenMarketCalls = new List<Tuple<List<int>, List<int>, List<int>>>();
-            inventoryRepository.Setup(s =>
+            inventoryExportRepository.Setup(s =>
                     s.GetInventoryForExportOpenMarket(It.IsAny<List<int>>(), It.IsAny<List<int>>(),
                         It.IsAny<List<int>>()))
                 .Callback<List<int>, List<int>, List<int>>((s, g, w) =>
@@ -310,6 +623,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var updatedJobs = new List<InventoryExportJobDto>();
             inventoryExportJobRepository.Setup(s => s.UpdateJob(It.IsAny<InventoryExportJobDto>()))
                 .Callback<InventoryExportJobDto>((j) => updatedJobs.Add(j));
+
+            var nsiPostingBooksService = new Mock<INsiPostingBookService>();
+            var shareBookId = 5;
+            nsiPostingBooksService.Setup(s => s.GetLatestNsiPostingBookForMonthContainingDate(It.IsAny<DateTime>()))
+                .Returns(shareBookId);
 
             // Register all the repo objects that are now setup.
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IInventoryRepository>())
@@ -331,17 +649,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 fileService.Object,
                 spotLengthEngine.Object,
                 daypartCache.Object,
-                marketService.Object);
+                marketService.Object,
+                nsiPostingBooksService.Object);
 
             service.UT_DateTimeNow = testCurrentTimestamp;
 
             // *** ACT ***/
-            var caught = Assert.Throws<InvalidOperationException>(() => service.GenerateExportForOpenMarket(request, TEST_USERNAME));
+            var caught = Assert.Throws<InvalidOperationException>(() => service.GenerateExportForOpenMarket(request, TEST_USERNAME, TEST_TEMPLATE_PATH));
 
             // *** Assert ***/
             Assert.AreEqual(1, getInventoryForExportOpenMarketCalls.Count);
             Assert.IsNotNull(caught);
-            Assert.AreEqual("No inventory found to export for job 1.", caught.Message);
+            Assert.AreEqual("No 'News' inventory found to export for Q2 2020.", caught.Message);
             Assert.AreEqual(1, updatedJobs.Count);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(updatedJobs[0]));
         }
@@ -375,6 +694,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Callback<string,string>((s,sf) => getFileStreamCalls.Add(new Tuple<string, string>(s, sf)))
                 .Returns(new MemoryStream());
 
+            var nsiPostingBooksService = new Mock<INsiPostingBookService>();
+            var shareBookId = 5;
+            nsiPostingBooksService.Setup(s => s.GetLatestNsiPostingBookForMonthContainingDate(It.IsAny<DateTime>()))
+                .Returns(shareBookId);
+
             // Register all the repo objects that are now setup.
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IInventoryRepository>())
                 .Returns(inventoryRepository.Object);
@@ -395,7 +719,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 fileService.Object,
                 spotLengthEngine.Object,
                 daypartCache.Object,
-                marketService.Object);
+                marketService.Object,
+                nsiPostingBooksService.Object);
 
             // *** ACT ***/
             var result = service.DownloadOpenMarketExportFile(1);

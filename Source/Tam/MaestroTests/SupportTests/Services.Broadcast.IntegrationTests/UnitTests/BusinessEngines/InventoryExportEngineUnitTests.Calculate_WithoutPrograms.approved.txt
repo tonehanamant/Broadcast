@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "AvgCpm": 2.000,
     "AvgHhImpressions": 10000.0,
@@ -6,9 +6,9 @@
     "DaypartId": 1,
     "InventoryId": 1,
     "InventoryProgramName": "InventoryProgramNameOne",
-    "MaestroGenreId": 33,
-    "ProgramName": "ProgramNameOne",
-    "ProgramSource": 2,
+    "MaestroGenreId": null,
+    "ProgramName": null,
+    "ProgramSource": null,
     "ProvidedAudienceImpressions": [
       {
         "AudienceId": 31,
@@ -44,9 +44,9 @@
     "DaypartId": 2,
     "InventoryId": 2,
     "InventoryProgramName": "InventoryProgramNameTwo",
-    "MaestroGenreId": 33,
-    "ProgramName": "ProgramNameTwo",
-    "ProgramSource": 1,
+    "MaestroGenreId": null,
+    "ProgramName": null,
+    "ProgramSource": null,
     "ProvidedAudienceImpressions": [
       {
         "AudienceId": 31,
@@ -65,44 +65,6 @@
         "Cpm": 2.000,
         "HhImpressions": 10000.0,
         "MediaWeekId": 2,
-        "SpotCost": 20.0
-      },
-      {
-        "Cpm": 2.000,
-        "HhImpressions": 10000.0,
-        "MediaWeekId": 3,
-        "SpotCost": 20.0
-      }
-    ]
-  },
-  {
-    "AvgCpm": 2.000,
-    "AvgHhImpressions": 10000.0,
-    "AvgSpotCost": 20.0,
-    "DaypartId": 3,
-    "InventoryId": 3,
-    "InventoryProgramName": "InventoryProgramNameThree",
-    "MaestroGenreId": 33,
-    "ProgramName": "ProgramNameThree",
-    "ProgramSource": 1,
-    "ProvidedAudienceImpressions": [
-      {
-        "AudienceId": 31,
-        "Impressions": 10000.0
-      }
-    ],
-    "StationId": 3,
-    "Weeks": [
-      {
-        "Cpm": 2.000,
-        "HhImpressions": 10000.0,
-        "MediaWeekId": 2,
-        "SpotCost": 20.0
-      },
-      {
-        "Cpm": 2.000,
-        "HhImpressions": 10000.0,
-        "MediaWeekId": 3,
         "SpotCost": 20.0
       }
     ]

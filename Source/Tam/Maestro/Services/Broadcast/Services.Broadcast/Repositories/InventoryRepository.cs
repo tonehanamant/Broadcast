@@ -179,10 +179,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="groupIds"></param>
         void RemoveManifestGroups(List<int> groupIds);
 
-        /// <summary>
-        /// Gets the inventory for export.  Only for Open Market.
-        /// </summary>
-        List<InventoryExportDto> GetInventoryForExportOpenMarket(List<int> spotLengthIds, List<int> genreIds, List<int> mediaWeekIds);
+        
         /// <summary>
         /// Get distinct list of Program Names
         /// </summary>
@@ -1825,62 +1822,6 @@ namespace Services.Broadcast.Repositories
 
                     var manifestDtos = manifests.Select(x => _MapToInventoryManifestForProgramsProcessing(x, mediaWeekIds)).ToList();
                     return manifestDtos;
-                });
-        }
-
-        ///<inheritdoc/>
-        public List<InventoryExportDto> GetInventoryForExportOpenMarket(List<int> spotLengthIds, List<int> genreIds, List<int> mediaWeekIds)
-        {
-            const int openMarketInventorySourceId = 1;
-            const int hhAudienceId = 31;
-
-            return _InReadUncommitedTransaction(
-                context =>
-                {
-                    var entities = (from week in context.station_inventory_manifest_weeks
-                            join manifest in context.station_inventory_manifest
-                                on week.station_inventory_manifest_id equals manifest.id
-                            join daypart in context.station_inventory_manifest_dayparts
-                                on manifest.id equals daypart.station_inventory_manifest_id
-                            join programs in context.station_inventory_manifest_daypart_programs
-                                on daypart.id equals programs.station_inventory_manifest_daypart_id
-                            join ratingsJob in context.inventory_file_ratings_jobs
-                                on manifest.file_id equals ratingsJob.inventory_file_id
-                            join referenceAudiences in context.station_inventory_manifest_audiences
-                                on new { id = manifest.id, audienceId = hhAudienceId, IsReference = true} 
-                                equals new {id = referenceAudiences.station_inventory_manifest_id,
-                                    audienceId = referenceAudiences.audience_id,
-                                    IsReference = referenceAudiences.is_reference }
-                            join nonReferenceAudiences in context.station_inventory_manifest_audiences
-                                on new { id = manifest.id, audienceId = hhAudienceId, IsReference = false }
-                                equals new { id = nonReferenceAudiences.station_inventory_manifest_id,
-                                    audienceId = nonReferenceAudiences.audience_id,
-                                    IsReference = nonReferenceAudiences.is_reference }
-                            join rates in context.station_inventory_manifest_rates 
-                                on new { id = manifest.id, spot_length_id = manifest.spot_length_id } 
-                                equals new { id = rates.station_inventory_manifest_id , spot_length_id = rates.spot_length_id }
-                            where manifest.inventory_source_id == openMarketInventorySourceId
-                                  && spotLengthIds.Contains(manifest.spot_length_id)
-                                  && mediaWeekIds.Contains(week.media_week_id)
-                                  && ratingsJob.status == (int)BackgroundJobProcessingStatus.Succeeded
-                                  && genreIds.Contains(programs.maestro_genre_id)
-                            select new InventoryExportDto
-                            {
-                                InventoryId = manifest.id,
-                                StationId = manifest.station_id,
-                                MediaWeekId = week.media_week_id,
-                                DaypartId = daypart.daypart_id,
-                                Impressions = referenceAudiences.impressions > 0 ? referenceAudiences.impressions.Value 
-                                    : nonReferenceAudiences.impressions > 0 ? nonReferenceAudiences.impressions.Value
-                                    : 0,
-                                SpotCost = rates.spot_cost,
-                                ProgramName = programs.name,
-                                InventoryProgramName = daypart.program_name
-                            }
-                        )
-                        .Distinct()
-                        .ToList();
-                    return entities;
                 });
         }
 

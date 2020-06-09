@@ -3,12 +3,13 @@ using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Enums.Inventory;
 using Services.Broadcast.Entities.Inventory;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Extensions;
+using Services.Broadcast.Helpers;
+using Services.Broadcast.ReportGenerators.InventoryExport;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Repositories.Inventory;
 using System;
@@ -18,7 +19,6 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices.Inventory
 {
@@ -38,7 +38,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         /// <summary>
         /// Generates the inventory export file for the Open Market inventory source.
         /// </summary>
-        int GenerateExportForOpenMarket(InventoryExportRequestDto inventoryExportDto, string userName);
+        int GenerateExportForOpenMarket(InventoryExportRequestDto inventoryExportDto, string userName, string templatesFilePath);
 
         /// <summary>
         /// Downloads the generated export file.
@@ -53,6 +53,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         private readonly IInventoryExportJobRepository _InventoryExportJobRepository;
         private readonly IGenreRepository _GenreRepository;
         private readonly IStationRepository _StationRepository;
+        private readonly IBroadcastAudienceRepository _AudienceRepository;
 
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
@@ -61,6 +62,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IDaypartCache _DaypartCache;
         private readonly IMarketService _MarketService;
+        private readonly INsiPostingBookService _NsiPostingBookService;
 
         public InventoryExportService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IQuarterCalculationEngine quarterCalculationEngine,
@@ -69,22 +71,24 @@ namespace Services.Broadcast.ApplicationServices.Inventory
             IFileService fileService,
             ISpotLengthEngine spotLengthEngine,
             IDaypartCache daypartCache,
-            IMarketService marketService)
+            IMarketService marketService,
+            INsiPostingBookService nsiPostingBookService)
         {
             _InventoryExportRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryExportRepository>();
             _InventoryExportJobRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryExportJobRepository>();
             _GenreRepository = broadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
+            _AudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
 
             _QuarterCalculationEngine = quarterCalculationEngine;
-            _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _InventoryExportEngine = inventoryExportEngine;
             _FileService = fileService;
             _SpotLengthEngine = spotLengthEngine;
             _DaypartCache = daypartCache;
             _MarketService = marketService;
+            _NsiPostingBookService = nsiPostingBookService;
         }
 
         /// <inheritdoc />
@@ -106,7 +110,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         }
 
         /// <inheritdoc />
-        public int GenerateExportForOpenMarket(InventoryExportRequestDto request, string userName)
+        public int GenerateExportForOpenMarket(InventoryExportRequestDto request, string userName, string templatesFilePath)
         {
             const int spotLengthMinutes = 30;
             const int inventorySourceIdOpenMarket = 1;
@@ -122,73 +126,102 @@ namespace Services.Broadcast.ApplicationServices.Inventory
 
             // create the job record as in progress
             job.Id = _InventoryExportJobRepository.CreateJob(job, userName);
-
             try
             {
                 _LogInfo($"Starting export job {job.Id}. Inventory Source = '{inventorySource.Name}'; ExportGenreType = {request.Genre}; Quarter = Q{request.Quarter.Quarter}-{request.Quarter.Year};", userName);
 
                 // Get the raw data from the repo
                 var spotLengthIds = new List<int> { _SpotLengthEngine.GetSpotLengthIdByValue(spotLengthMinutes) };
-                var exportGenreIds = _GetExportGenreIds(request.Genre);
                 var mediaWeeks = _MediaMonthAndWeekAggregateCache.GetMediaWeeksByFlight(request.Quarter.StartDate, request.Quarter.EndDate);
                 var mediaWeekIds = mediaWeeks.Select(w => w.Id).ToList();
 
+                var genres = _GenreRepository.GetAllMaestroGenres();
+
                 var gatherInventorySw = new Stopwatch();
                 gatherInventorySw.Start();
-                var inventory = _InventoryRepository.GetInventoryForExportOpenMarket(spotLengthIds, exportGenreIds, mediaWeekIds);
+
+                List<InventoryExportDto> inventory;
+                if (request.Genre == InventoryExportGenreTypeEnum.NotEnriched)
+                {
+                    inventory = _InventoryExportRepository.GetInventoryForExportOpenMarketNotEnriched(spotLengthIds, mediaWeekIds);
+                }
+                else
+                {
+                    var exportGenreIds = _GetExportGenreIds(request.Genre, genres);
+                    inventory = _InventoryExportRepository.GetInventoryForExportOpenMarket(spotLengthIds, exportGenreIds, mediaWeekIds);
+                }
+
                 gatherInventorySw.Stop();
 
                 if (inventory.Any() == false)
                 {
-                    throw new InvalidOperationException($"No inventory found to export for job {job.Id}.");
+                    throw new InvalidOperationException($"No '{request.Genre.GetDescriptionAttribute()}' inventory found to export for Q{request.Quarter.Quarter} {request.Quarter.Year}.");
                 }
                 _LogInfo($"Export job {job.Id} found {inventory.Count} inventory records to export in {gatherInventorySw.ElapsedMilliseconds} ms.", userName);
 
                 var processingSw = new Stopwatch();
                 processingSw.Start();
-
                 // Perform the calculations
                 var inScopeInventory = inventory.Where(i => mediaWeekIds.Contains(i.MediaWeekId)).ToList();
                 var calculated = _InventoryExportEngine.Calculate(inScopeInventory);
 
                 // generate the file
+                var generatedTimeStampValue = _InventoryExportEngine.GetExportGeneratedTimestamp(_GetCurrentDateTime());
+                var fileName = _InventoryExportEngine.GetInventoryExportFileName(request.Genre, request.Quarter);
+
+                var relevantAudienceIds = inScopeInventory.SelectMany(i => i.ProvidedAudiences.Select(s => s.AudienceId))
+                    .Distinct()
+                    .OrderBy(s => s)
+                    .ToList();
+                var audiences = _AudienceRepository.GetAudienceDtosById(relevantAudienceIds);
+                var audienceColumnHeaders = _InventoryExportEngine.GetInventoryTableAudienceColumnHeaders(audiences);
+
+                var mediaWeekStartDates = mediaWeeks.Select(w => w.StartDate).ToList();
+                var weeklyColumnHeaders = _InventoryExportEngine.GetInventoryTableWeeklyColumnHeaders(mediaWeekStartDates);
+
                 var relevantStationIds = calculated.Select(s => s.StationId).Distinct();
                 var allStations = _StationRepository.GetBroadcastStations();
                 var stations = allStations.Where(s => relevantStationIds.Contains(s.Id)).ToList();
 
-                var markets = _MarketService.GetMarketsWithLatestCoverage();
-
                 var relevantDaypartIds = calculated.Select(s => s.DaypartId).Distinct();
                 var dayparts = _DaypartCache.GetDisplayDayparts(relevantDaypartIds);
 
-                var mediaWeekStartDates = mediaWeeks.Select(w => w.StartDate).ToList();
+                var markets = _MarketService.GetMarketsWithLatestCoverage();
 
-                var generatedExportResult = _InventoryExportEngine.GenerateExportFile(calculated, mediaWeekIds, stations, markets, dayparts, mediaWeekStartDates);
+                var tableData = _InventoryExportEngine.GetInventoryTableData(calculated, stations, markets, mediaWeekIds, dayparts, audiences, genres);
+                
+                var shareBookId = _NsiPostingBookService.GetLatestNsiPostingBookForMonthContainingDate(request.Quarter.StartDate);
+                var shareBookMonth = _MediaMonthAndWeekAggregateCache.GetMediaMonthById(shareBookId);
 
+                var reportData = new InventoryExportReportData
+                {
+                    ExportFileName = fileName,
+                    GeneratedTimestampValue = generatedTimeStampValue,
+                    ProvidedAudienceHeaders = audienceColumnHeaders,
+                    WeeklyColumnHeaders = weeklyColumnHeaders,
+                    InventoryTableData = tableData,
+                    ShareBookValue = $"Share Book : {shareBookMonth.LongMonthNameAndYear}"
+                };
+
+                var reportGenerator = new InventoryExportGenerator(templatesFilePath);
+                var reportOutput = reportGenerator.Generate(reportData);
+                
                 processingSw.Stop();
 
-                var exportFileLineCount = generatedExportResult.InventoryTabLineCount;
-                var generatedExportFile = generatedExportResult.ExportExcelPackage;
-
-                _LogInfo($"Export job {job.Id} processed {inventory.Count} records to {exportFileLineCount} file lines in {processingSw.ElapsedMilliseconds} ms", userName);
+                _LogInfo($"Export job {job.Id} processed {inventory.Count} records to {tableData.Length} file lines in {processingSw.ElapsedMilliseconds} ms", userName);
 
                 // save the file
                 var saveDirectory = _GetExportFileSaveDirectory();
-                var fileName = _GetInventoryFileName(request.Quarter);
-                var filePath = Path.Combine(saveDirectory, fileName);
+                var filePath = Path.Combine(saveDirectory, reportData.ExportFileName);
                 _LogInfo($"Export job {job.Id} beginning file save to path '{filePath}'.", userName);
 
-                var memoryStream = new MemoryStream();
-                generatedExportFile.SaveAs(memoryStream);
-                generatedExportFile.Dispose();
-
                 _FileService.CreateDirectory(saveDirectory);
-                _FileService.Create(saveDirectory, fileName, memoryStream);
+                _FileService.Create(saveDirectory, reportData.ExportFileName, reportOutput.Stream);
 
                 // update the jobs object to completed.
-                job.FileName = fileName;
+                job.FileName = reportData.ExportFileName;
                 job.Status = BackgroundJobProcessingStatus.Succeeded;
-                job.CompletedAt = _GetDateTimeNow();
+                job.CompletedAt = _GetCurrentDateTime();
 
                 _InventoryExportJobRepository.UpdateJob(job);
 
@@ -201,7 +234,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory
 
                 job.StatusMessage = ex.Message;
                 job.Status = BackgroundJobProcessingStatus.Failed;
-                job.CompletedAt = _GetDateTimeNow();
+                job.CompletedAt = _GetCurrentDateTime();
                 _InventoryExportJobRepository.UpdateJob(job);
 
                 throw;
@@ -223,31 +256,19 @@ namespace Services.Broadcast.ApplicationServices.Inventory
             return response;
         }
 
-        private List<int> _GetExportGenreIds(InventoryExportGenreTypeEnum genreType)
+        protected List<int> _GetExportGenreIds(InventoryExportGenreTypeEnum genreType, List<LookupDto> genres)
         {
             const string newsGenreName = "NEWS";
-            var allGenres = _GenreRepository.GetAllMaestroGenres();
             var result = genreType == InventoryExportGenreTypeEnum.News
-                ? allGenres.Where(g => g.Display.ToUpper().Equals(newsGenreName)).Select(g => g.Id).ToList()
-                : allGenres.Where(g => g.Display.ToUpper().Equals(newsGenreName) == false).Select(g => g.Id).ToList();
+                ? genres.Where(g => g.Display.ToUpper().Equals(newsGenreName)).Select(g => g.Id).ToList()
+                : genres.Where(g => g.Display.ToUpper().Equals(newsGenreName) == false).Select(g => g.Id).ToList();
             return result;
-        }
-
-        protected string _GetInventoryFileName(QuarterDetailDto quarter)
-        {
-            var fileName = $"Open Market inventory {quarter.Year} Q{quarter.Quarter}.xlsx";
-            return fileName;
         }
 
         private string _GetExportFileSaveDirectory()
         {
             var path = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.INVENTORY_EXPORTS);
             return path;
-        }
-
-        protected virtual DateTime _GetDateTimeNow()
-        {
-            return DateTime.Now;
         }
     }
 }

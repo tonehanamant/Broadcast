@@ -6,5 +6,9 @@
   {
     "Display": "Non-News",
     "Id": 2
+  },
+  {
+    "Display": "Not Enriched",
+    "Id": 3
   }
 ]

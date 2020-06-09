@@ -74,7 +74,8 @@ namespace BroadcastComposerWeb.Controllers.Inventory
 			try
 			{
 				var fullName = _GetCurrentUserFullName();
-				var result = _ApplicationServiceFactory.GetApplicationService<IInventoryExportService>().GenerateExportForOpenMarket(dto, fullName);
+                var appDataPath = _GetAppDataPath();
+				var result = _ApplicationServiceFactory.GetApplicationService<IInventoryExportService>().GenerateExportForOpenMarket(dto, fullName, appDataPath);
 
 				return new BaseResponse<int>()
 				{
