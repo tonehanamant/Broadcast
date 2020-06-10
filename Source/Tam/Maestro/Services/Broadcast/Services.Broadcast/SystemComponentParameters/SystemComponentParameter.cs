@@ -171,6 +171,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EnableCampaignsLocking); }
         }
 	 
+		public static bool EnableInternalProgramSearch  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.EnableInternalProgramSearch); }
+        }
+	 
 		public static bool EnableOpenMarketInventoryForPricingModel  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<bool>
@@ -703,6 +709,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.IndexRecommendModelLogsFilePath); }
+        }
+	 
+		public static bool InventoryToggle  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.InventoryToggle); }
         }
 	 
 		public static bool MVPDTotalOrderMinimumFeatureEnabled  

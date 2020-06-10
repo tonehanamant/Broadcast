@@ -9,6 +9,7 @@
     "Status": 1
   },
   "Result": {
+    "CpmPercentage": 0,
     "GoalFulfilledByProprietary": false,
     "HasProgramResults": false,
     "JobId": null,

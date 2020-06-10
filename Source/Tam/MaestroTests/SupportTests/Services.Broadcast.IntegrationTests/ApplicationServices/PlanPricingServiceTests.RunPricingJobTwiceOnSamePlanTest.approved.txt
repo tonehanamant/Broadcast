@@ -7,6 +7,7 @@
     "Status": 3
   },
   "Result": {
+    "CpmPercentage": 310,
     "GoalFulfilledByProprietary": false,
     "HasProgramResults": true,
     "Notes": "",

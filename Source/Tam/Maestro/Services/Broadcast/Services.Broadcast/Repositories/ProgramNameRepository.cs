@@ -16,8 +16,27 @@ namespace Services.Broadcast.Repositories
 {
     public interface IProgramNameRepository : IDataRepository
     {
+        /// <summary>
+        /// Get list of programs from program_names tables which matches search criteria.
+        /// Return list of programs from program_names 
+        /// </summary>
+        /// <param name="programSearchString"></param>
+        /// <param name="start"></param>
+        /// <param name="limit"></param>
+        /// <returns>List of Programs </returns>
         List<LookupDto> FindPrograms(string programSearchString, int start, int limit);
-        List<ProgramNameExceptionDto> FindProgramsExceptions(string programSearchString);
+        /// <summary>
+        /// Return list of official_program_name from program_name_mappings 
+        /// </summary>
+        /// <param name="programSearchString"></param>
+        /// <returns>List of Program Name mappings</returns>
+        List<ProgramNameMappingDto> FindProgramFromMapping(string programSearchString);
+        /// <summary>
+        /// Return list of custom_program_name from program_name_exceptions 
+        /// </summary>
+        /// <param name="programSearchString"></param>
+        /// <returns>List of Program Exceptions</returns>
+        List<ProgramNameExceptionDto> FindProgramFromExceptions(string programSearchString);
     }
     public class ProgramNameRepository : BroadcastRepositoryBase, IProgramNameRepository
     {
@@ -25,6 +44,7 @@ namespace Services.Broadcast.Repositories
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
+        /// <inheritdoc />
         public List<LookupDto> FindPrograms(string programSearchString, int start, int limit)
         {
             return _InReadUncommitedTransaction(
@@ -42,7 +62,8 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public List<ProgramNameExceptionDto> FindProgramsExceptions(string programSearchString)
+        /// <inheritdoc />
+        public List<ProgramNameExceptionDto> FindProgramFromExceptions(string programSearchString)
         {
 	        return _InReadUncommitedTransaction(
 		        context =>
@@ -55,6 +76,25 @@ namespace Services.Broadcast.Repositories
 					        {
 						        CustomProgramName = p.custom_program_name,
 						        Id = p.id,
+						        GenreId = p.genre_id,
+						        ShowTypeId = p.show_type_id
+					        }).ToList();
+		        });
+        }
+
+        /// <inheritdoc />
+        public List<ProgramNameMappingDto> FindProgramFromMapping(string programSearchString)
+        {
+	        return _InReadUncommitedTransaction(
+		        context =>
+		        {
+			        return context.program_name_mappings
+				        .Where(p => p.official_program_name.ToLower().Contains(programSearchString.ToLower()))
+				        .OrderBy(p => p.official_program_name)
+				        .Select(
+					        p => new ProgramNameMappingDto
+					        {
+						        OfficialProgramName = p.official_program_name,
 						        GenreId = p.genre_id,
 						        ShowTypeId = p.show_type_id
 					        }).ToList();

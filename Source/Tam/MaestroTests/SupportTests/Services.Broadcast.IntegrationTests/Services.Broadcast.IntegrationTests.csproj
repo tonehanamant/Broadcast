@@ -433,6 +433,8 @@
     <Compile Include="UnitTests\ApplicationServices\InventoryServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\ProgramMappingServiceTestClass.cs" />
     <Compile Include="UnitTests\ApplicationServices\ProgramMappingServiceUnitTests.cs" />
+    <Compile Include="UnitTests\ApplicationServices\ProgramServiceUnitTestClass.cs" />
+    <Compile Include="UnitTests\ApplicationServices\ProgramServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\SharedFolderServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\VpvhServiceUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\CreativeLengthEngineUnitTests.cs" />

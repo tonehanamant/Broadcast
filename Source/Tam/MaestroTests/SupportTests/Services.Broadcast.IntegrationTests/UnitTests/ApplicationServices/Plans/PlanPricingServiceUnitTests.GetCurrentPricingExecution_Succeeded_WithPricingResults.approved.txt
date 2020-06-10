@@ -11,7 +11,7 @@
     "Status": 3
   },
   "Result": {
-    "GoalCPM": 0.0,
+    "CpmPercentage": 5,
     "GoalFulfilledByProprietary": true,
     "HasProgramResults": false,
     "JobId": 12,

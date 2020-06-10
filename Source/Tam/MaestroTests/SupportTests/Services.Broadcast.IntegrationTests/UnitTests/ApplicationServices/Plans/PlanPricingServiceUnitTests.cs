@@ -7070,7 +7070,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     PlanVersionId = 11,
                     JobId = 12
                 });
-
+            _PlanRepositoryMock
+	            .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>()))
+	            .Returns(110.0M);
             var service = _GetService();
 
             // Act

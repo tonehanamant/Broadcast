@@ -320,6 +320,9 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 case "BroadcastAppFolder":
                     result = @"\\cadfs11\Broadcast\IntegrationTests\";
                     break;
+                case "EnableInternalProgramSearch":
+	                result = "False";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }

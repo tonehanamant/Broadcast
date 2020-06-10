@@ -2,6 +2,7 @@
   "IsPricingModelRunning": false,
   "Job": null,
   "Result": {
+    "CpmPercentage": 0,
     "GoalFulfilledByProprietary": false,
     "HasProgramResults": false,
     "JobId": null,

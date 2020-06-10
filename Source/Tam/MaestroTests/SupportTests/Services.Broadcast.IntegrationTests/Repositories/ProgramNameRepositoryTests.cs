@@ -20,7 +20,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 				.GetDataRepository<IProgramNameRepository>();
 			using (new TransactionScopeWrapper())
 			{
-				var result = repo.FindProgramsExceptions(expectedProgramName);
+				var result = repo.FindProgramFromExceptions(expectedProgramName);
 				var actual = result.Any(p=>p.CustomProgramName.ToLower().Equals(expectedProgramName));
 				Assert.IsTrue(actual);
 			}

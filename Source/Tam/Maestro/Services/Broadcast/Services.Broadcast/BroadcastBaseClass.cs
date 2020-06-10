@@ -40,9 +40,9 @@ namespace Services.Broadcast
         }
       
 		protected virtual string _GetBroadcastAppFolder()
-        {
-	        return BroadcastServiceSystemParameter.BroadcastAppFolder;
-        }
+		{
+			return BroadcastServiceSystemParameter.BroadcastAppFolder;
+		}
 
         protected virtual DateTime _GetCurrentDateTime()
         {

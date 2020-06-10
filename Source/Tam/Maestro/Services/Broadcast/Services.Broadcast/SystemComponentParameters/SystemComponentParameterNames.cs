@@ -152,6 +152,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "EnableCampaignsLocking"; }
         }
 	 
+		public static string EnableInternalProgramSearch  
+		{
+            get { return "EnableInternalProgramSearch"; }
+        }
+	 
 		public static string EnableOpenMarketInventoryForPricingModel  
 		{
             get { return "EnableOpenMarketInventoryForPricingModel"; }
@@ -617,6 +622,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string IndexRecommendModelLogsFilePath  
 		{
             get { return "IndexRecommendModelLogsFilePath"; }
+        }
+	 
+		public static string InventoryToggle  
+		{
+            get { return "InventoryToggle"; }
         }
 	 
 		public static string MVPDTotalOrderMinimumFeatureEnabled  
