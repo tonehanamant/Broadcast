@@ -32,6 +32,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void GroupsWeeklyBreakdownByStandardDaypart()
+        {
+            var result = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByStandardDaypart(_WeeklyBreakdown);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void ReturnsWeekNumberByMediaWeekDictionary()
         {
             var result = _WeeklyBreakdownEngine.GetWeekNumberByMediaWeekDictionary(_WeeklyBreakdown);

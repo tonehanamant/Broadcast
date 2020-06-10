@@ -37,8 +37,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCacheMock;
         private Mock<IPlanAggregator> _PlanAggregatorMock;
         private Mock<ICampaignAggregationJobTrigger> _CampaignAggregationJobTriggerMock;
-        private Mock<INsiUniverseService> _NsiUniverseServiceMock;
-        private Mock<IBroadcastAudiencesCache> _BroadcastAudiencesCacheMock;
         private Mock<ISpotLengthEngine> _SpotLengthEngineMock;
         private Mock<IBroadcastLockingManagerApplicationService> _BroadcastLockingManagerApplicationServiceMock;
         private Mock<IPlanPricingService> _PlanPricingServiceMock;
@@ -60,8 +58,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _MediaMonthAndWeekAggregateCacheMock = new Mock<IMediaMonthAndWeekAggregateCache>();
             _PlanAggregatorMock = new Mock<IPlanAggregator>();
             _CampaignAggregationJobTriggerMock = new Mock<ICampaignAggregationJobTrigger>();
-            _NsiUniverseServiceMock = new Mock<INsiUniverseService>();
-            _BroadcastAudiencesCacheMock = new Mock<IBroadcastAudiencesCache>();
             _BroadcastLockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
             _PlanPricingServiceMock = new Mock<IPlanPricingService>();
             _SpotLengthEngineMock = new Mock<ISpotLengthEngine>();
@@ -69,8 +65,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DaypartDefaultServiceMock = new Mock<IDaypartDefaultService>();
             _WeeklyBreakdownEngineMock = new Mock<IWeeklyBreakdownEngine>();
             _CreativeLengthEngineMock = new Mock<ICreativeLengthEngine>();
-            // Setup common mocks
-            _NsiUniverseServiceMock.Setup(n => n.GetAudienceUniverseForMediaMonth(It.IsAny<int>(), It.IsAny<int>())).Returns(1000000);
             _BroadcastLockingManagerApplicationServiceMock
                 .Setup(x => x.LockObject(It.IsAny<string>()))
                 .Returns(new LockResponse
@@ -113,9 +107,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(s => s.GetDataRepository<IPlanSummaryRepository>())
                 .Returns(_PlanSummaryRepositoryMock.Object);
 
-            var broadcastAudienceCacheMock = new Mock<IBroadcastAudiencesCache>();
-            _BroadcastAudiencesCacheMock.Setup(a => a.GetDefaultAudience()).Returns(new BroadcastAudience());
-
             _PlanPricingServiceMock
                 .Setup(s => s.GetPlanPricingDefaults())
                 .Returns(_GetPlanPricingDefaults());
@@ -128,6 +119,24 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(s => s.GetAllDaypartDefaults())
                 .Returns(new List<DaypartDefaultDto>());
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByStandardDaypart(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(new List<WeeklyBreakdownByStandardDaypart>
+                {
+                    new WeeklyBreakdownByStandardDaypart
+                    {
+                        Impressions = 1000,
+                        Budget = 100,
+                        StandardDaypartId = 2
+                    },
+                    new WeeklyBreakdownByStandardDaypart
+                    {
+                        Impressions = 1000,
+                        Budget = 100,
+                        StandardDaypartId = 11
+                    }
+                });
+
             _PlanService = new PlanService(
                 _DataRepositoryFactoryMock.Object,
                 _PlanValidatorMock.Object,
@@ -135,8 +144,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _MediaMonthAndWeekAggregateCacheMock.Object,
                 _PlanAggregatorMock.Object,
                 _CampaignAggregationJobTriggerMock.Object,
-                _NsiUniverseServiceMock.Object,
-                _BroadcastAudiencesCacheMock.Object,
                 _SpotLengthEngineMock.Object,
                 _BroadcastLockingManagerApplicationServiceMock.Object,
                 _PlanPricingServiceMock.Object,
@@ -948,37 +955,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        public void getVPVHForMaestroAudience()
-        {
-            var vpvhRequest = new VPVHRequest
-            {
-                AudienceIds = new List<int> { 38 },
-                ShareBookId = 422
-            };
-            _NsiUniverseServiceMock
-                .Setup(n => n.GetAudienceUniverseForMediaMonth(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns((int month, int audience) =>
-                {
-                    if (audience == 38) return 20000;
-                    else return 10000;
-                });
-            var result = _PlanService.GetVPVHForAudiencesWithBooks(vpvhRequest);
-            Assert.IsTrue(result.Exists(i => i.AudienceId == 38 && i.VPVH == 2));
-        }
-
-        [Test]
-        public void GetVPVHForHouseholds()
-        {
-            var vpvhRequest = new VPVHRequest
-            {
-                AudienceIds = new List<int> { 31 },
-                ShareBookId = 422
-            };
-            var result = _PlanService.GetVPVHForAudiencesWithBooks(vpvhRequest);
-            Assert.IsTrue(result.Exists(i => i.AudienceId == 31 && i.VPVH == 1));
-        }
-
-        [Test]
         [UseReporter(typeof(DiffReporter))]
         public void OrderPlanDaypartsCorrectly()
         {
@@ -1017,7 +993,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [UseReporter(typeof(DiffReporter))]
         public void CanGetPlanDefaults()
         {
-            _BroadcastAudiencesCacheMock.Setup(a => a.GetDefaultAudience()).Returns(new BroadcastAudience { Id = 1 });
             _SpotLengthEngineMock.Setup(a => a.GetSpotLengthIdByValue(It.IsAny<int>())).Returns(1);
 
             var planDefaults = _PlanService.GetPlanDefaults();
@@ -1244,8 +1219,40 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 ModifiedDate = new DateTime(2019, 01, 12, 12, 30, 29),
                 Dayparts = new List<PlanDaypartDto>
                 {
-                    new PlanDaypartDto{ DaypartCodeId = 2, StartTimeSeconds = 0, EndTimeSeconds = 2000, WeightingGoalPercent = 28.0 },
-                    new PlanDaypartDto{ DaypartCodeId = 11, StartTimeSeconds = 1500, EndTimeSeconds = 2788, WeightingGoalPercent = 33.2 }
+                    new PlanDaypartDto
+                    { 
+                        DaypartCodeId = 2, 
+                        StartTimeSeconds = 0, 
+                        EndTimeSeconds = 2000, 
+                        WeightingGoalPercent = 28.0,
+                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                        {
+                            new PlanDaypartVpvhForAudienceDto
+                            {
+                                AudienceId = 31,
+                                Vpvh = 0.5,
+                                VpvhType = VpvhTypeEnum.FourBookAverage,
+                                StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                            }
+                        }
+                    },
+                    new PlanDaypartDto
+                    { 
+                        DaypartCodeId = 11, 
+                        StartTimeSeconds = 1500, 
+                        EndTimeSeconds = 2788, 
+                        WeightingGoalPercent = 33.2,
+                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                        {
+                            new PlanDaypartVpvhForAudienceDto
+                            {
+                                AudienceId = 31,
+                                Vpvh = 0.5,
+                                VpvhType = VpvhTypeEnum.FourBookAverage,
+                                StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                            }
+                        }
+                    }
                 },
                 Vpvh = 0.234543,
                 TargetRatingPoints = 50,

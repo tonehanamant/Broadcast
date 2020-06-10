@@ -1,82 +1,102 @@
 ﻿[
   {
     "Code": "AMN",
-    "FullName": "AM News"
+    "FullName": "AM News",
+    "VpvhCalculationSourceType": 1
   },
   {
     "Code": "DAY",
-    "FullName": "Daytime"
+    "FullName": "Daytime",
+    "VpvhCalculationSourceType": 3
   },
   {
     "Code": "EF",
-    "FullName": "Early Fringe"
+    "FullName": "Early Fringe",
+    "VpvhCalculationSourceType": 3
   },
   {
     "Code": "EM",
-    "FullName": "Early morning"
+    "FullName": "Early morning",
+    "VpvhCalculationSourceType": 3
   },
   {
     "Code": "EMN",
-    "FullName": "Early Morning News"
+    "FullName": "Early Morning News",
+    "VpvhCalculationSourceType": 1
   },
   {
     "Code": "EN",
-    "FullName": "Evening News"
+    "FullName": "Evening News",
+    "VpvhCalculationSourceType": 2
   },
   {
     "Code": "ENLN",
-    "FullName": "Evening News/Late News"
+    "FullName": "Evening News/Late News",
+    "VpvhCalculationSourceType": 2
   },
   {
     "Code": "LF",
-    "FullName": "Late Fringe"
+    "FullName": "Late Fringe",
+    "VpvhCalculationSourceType": 3
   },
   {
     "Code": "LN",
-    "FullName": "Late News"
+    "FullName": "Late News",
+    "VpvhCalculationSourceType": 2
   },
   {
     "Code": "MDN",
-    "FullName": "Midday News"
+    "FullName": "Midday News",
+    "VpvhCalculationSourceType": 1
   },
   {
     "Code": "OVN",
-    "FullName": "Overnights"
+    "FullName": "Overnights",
+    "VpvhCalculationSourceType": 3
   },
   {
     "Code": "PA",
-    "FullName": "Prime Access"
+    "FullName": "Prime Access",
+    "VpvhCalculationSourceType": 3
   },
   {
     "Code": "PMN",
-    "FullName": "PM News"
+    "FullName": "PM News",
+    "VpvhCalculationSourceType": 2
   },
   {
     "Code": "PT",
-    "FullName": "Prime"
+    "FullName": "Prime",
+    "VpvhCalculationSourceType": 3
   },
   {
     "Code": "ROSP",
-    "FullName": "ROS Programming"
+    "FullName": "ROS Programming",
+    "VpvhCalculationSourceType": 3
   },
   {
     "Code": "ROSS",
-    "FullName": "ROS Syndication"
+    "FullName": "ROS Syndication",
+    "VpvhCalculationSourceType": 3
   },
   {
     "Code": "SPORTS",
-    "FullName": "ROS Sports"
+    "FullName": "ROS Sports",
+    "VpvhCalculationSourceType": 3
   },
   {
     "Code": "SYN",
-    "FullName": "Total Day Syndication"
+    "FullName": "Total Day Syndication",
+    "VpvhCalculationSourceType": 3
   },
   {
     "Code": "TDN",
-    "FullName": "Total Day News"
+    "FullName": "Total Day News",
+    "VpvhCalculationSourceType": 4
   },
   {
     "Code": "TDNS",
-    "FullName": "Total Day News and Syndication"
+    "FullName": "Total Day News and Syndication",
+    "VpvhCalculationSourceType": 5
   }
 ]

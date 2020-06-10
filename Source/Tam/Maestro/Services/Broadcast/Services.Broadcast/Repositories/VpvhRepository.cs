@@ -26,11 +26,15 @@ namespace Services.Broadcast.Repositories
 
         List<VpvhQuarter> GetQuarters(QuarterDto quarter);
 
+        List<VpvhQuarter> GetQuartersByYears(IEnumerable<int> years);
+
         VpvhQuarter GetQuarter(int audienceId, int year, int quarter);
 
         List<VpvhAudienceMapping> GetVpvhMappings();
 
         List<VpvhQuarter> GetAllQuarters();
+
+        List<QuarterDto> GetQuartersWithVpvhData();
     }
 
     public class VpvhRepository : BroadcastRepositoryBase, IVpvhRepository
@@ -50,6 +54,23 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(
                 context => context.vpvh_quarters.Include(v => v.audience).Where(v => v.quarter == quarter.Quarter && v.year == quarter.Year).Select(_MapToDto).ToList());
+        }
+
+        public List<QuarterDto> GetQuartersWithVpvhData()
+        {
+            return _InReadUncommitedTransaction(context =>
+                context.vpvh_quarters
+                    .Select(x => new { x.quarter, x.year })
+                    .Distinct()
+                    .ToList()
+                    .Select(x => new QuarterDto { Quarter = x.quarter, Year = x.year })
+                    .ToList());
+        }
+
+        public List<VpvhQuarter> GetQuartersByYears(IEnumerable<int> years)
+        {
+            return _InReadUncommitedTransaction(
+                context => context.vpvh_quarters.Include(v => v.audience).Where(v => years.Contains(v.year)).Select(_MapToDto).ToList());
         }
 
         public VpvhQuarter GetQuarter(int audienceId, int year, int quarter)

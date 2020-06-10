@@ -128,7 +128,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         void AutomaticStatusTransitions(DateTime transitionDate, string updatedBy, DateTime updatedDate, bool aggregatePlanSynchronously = false);
 
         CurrentQuartersDto GetCurrentQuarters(DateTime currentDateTime);
-        List<VPVHForAudience> GetVPVHForAudiencesWithBooks(VPVHRequest request);
 
         /// <summary>
         /// Calculates the creative length weight.
@@ -159,8 +158,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
         private readonly ICampaignRepository _CampaignRepository;
         private readonly ICampaignAggregationJobTrigger _CampaignAggregationJobTrigger;
-        private readonly INsiUniverseService _NsiUniverseService;
-        private readonly IBroadcastAudiencesCache _BroadcastAudiencesCache;
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IBroadcastLockingManagerApplicationService _LockingManagerApplicationService;
         private readonly IPlanPricingService _PlanPricingService;
@@ -178,8 +175,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
             , IPlanAggregator planAggregator
             , ICampaignAggregationJobTrigger campaignAggregationJobTrigger
-            , INsiUniverseService nsiUniverseService
-            , IBroadcastAudiencesCache broadcastAudiencesCache
             , ISpotLengthEngine spotLengthEngine
             , IBroadcastLockingManagerApplicationService lockingManagerApplicationService
             , IPlanPricingService planPricingService
@@ -199,8 +194,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _DayRepository = broadcastDataRepositoryFactory.GetDataRepository<IDayRepository>();
             _PlanAggregator = planAggregator;
             _CampaignAggregationJobTrigger = campaignAggregationJobTrigger;
-            _NsiUniverseService = nsiUniverseService;
-            _BroadcastAudiencesCache = broadcastAudiencesCache;
             _SpotLengthEngine = spotLengthEngine;
             _LockingManagerApplicationService = lockingManagerApplicationService;
             _PlanPricingService = planPricingService;
@@ -234,8 +227,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             _ConvertImpressionsToRawFormat(plan);
             _DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
-            _CalculateHouseholdDeliveryData(plan);
-            _CalculateSecondaryAudiencesDeliveryData(plan);
+            _CalculateDeliveryDataPerAudience(plan);
             _SetPlanVersionNumber(plan);
             _SetPlanFlightDays(plan);
 
@@ -707,7 +699,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 IsStartTimeModified = x.IsStartTimeModified,
                 Restrictions = x.Restrictions,
                 WeightingGoalPercent = x.WeightingGoalPercent,
-                FlightDays = plan.FlightDays.ToList()
+                FlightDays = plan.FlightDays.ToList(),
+                VpvhForAudiences = x.VpvhForAudiences,
             }).ToList();
 
             plan.Dayparts = planDayparts.OrderDayparts(daypartDefaults);
@@ -1616,13 +1609,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
         public PlanDefaultsDto GetPlanDefaults()
         {
             const int defaultSpotLength = 30;
-            var householdAudienceId = _BroadcastAudiencesCache.GetDefaultAudience();
             var defaultSpotLengthId = _SpotLengthEngine.GetSpotLengthIdByValue(defaultSpotLength);
 
             return new PlanDefaultsDto
             {
                 Name = string.Empty,
-                AudienceId = householdAudienceId.Id,
+                AudienceId = BroadcastConstants.HouseholdAudienceId,
                 CreativeLengths = new List<CreativeLength> {
                     new CreativeLength
                     {
@@ -1644,12 +1636,59 @@ namespace Services.Broadcast.ApplicationServices.Plan
             };
         }
 
-        private void _CalculateHouseholdDeliveryData(PlanDto plan)
+        private void _CalculateDeliveryDataPerAudience(PlanDto plan)
+        {
+            var hhImpressionsByStandardDaypart = _GetHhImpressionsByStandardDaypart(plan);
+            var totalHhImpressions = Math.Floor(hhImpressionsByStandardDaypart.Sum(x => x.Value));
+
+            _CalculateHouseholdDeliveryData(plan, totalHhImpressions);
+            _CalculateSecondaryAudiencesDeliveryData(plan, hhImpressionsByStandardDaypart, totalHhImpressions);
+        }
+
+        private Dictionary<int, double> _GetHhImpressionsByStandardDaypart(PlanDto plan)
+        {
+            var result = new Dictionary<int, double>();
+
+            var weeklyBreakdownByStandardDaypart = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByStandardDaypart(plan.WeeklyBreakdownWeeks);
+
+            foreach (var item in weeklyBreakdownByStandardDaypart)
+            {
+                var targetAudienceImpressions = item.Impressions;
+                var targetAudienceVpvh = plan
+                    .Dayparts.Single(x => x.DaypartCodeId == item.StandardDaypartId)
+                    .VpvhForAudiences.Single(x => x.AudienceId == plan.AudienceId)
+                    .Vpvh;
+
+                result[item.StandardDaypartId] = ProposalMath.CalculateHhImpressionsUsingVpvh(targetAudienceImpressions, targetAudienceVpvh);
+            }
+
+            return result;
+        }
+
+        private Dictionary<int, double> _GetAudienceImpressionsByStandardDaypart(
+            PlanDto plan, 
+            Dictionary<int, double> hhImpressionsByStandardDaypart,
+            int audienceId)
+        {
+            var result = new Dictionary<int, double>();
+
+            foreach (var daypart in plan.Dayparts)
+            {
+                var hhImpressions = hhImpressionsByStandardDaypart[daypart.DaypartCodeId];
+                var audienceVpvh = daypart.VpvhForAudiences.Single(x => x.AudienceId == audienceId).Vpvh;
+
+                result[daypart.DaypartCodeId] = ProposalMath.CalculateAudienceImpressionsUsingVpvh(hhImpressions, audienceVpvh);
+            }
+
+            return result;
+        }
+
+        private void _CalculateHouseholdDeliveryData(PlanDto plan, double hhImpressions)
         {
             var householdPlanDeliveryBudget = _BudgetCalculator.CalculateBudget(new PlanDeliveryBudget
             {
-                Impressions = Math.Floor(plan.TargetImpressions.Value / plan.Vpvh),
-                AudienceId = _BroadcastAudiencesCache.GetDefaultAudience().Id,
+                Impressions = hhImpressions,
+                AudienceId = BroadcastConstants.HouseholdAudienceId,
                 Budget = plan.Budget
             });
 
@@ -1658,15 +1697,21 @@ namespace Services.Broadcast.ApplicationServices.Plan
             plan.HHCPM = householdPlanDeliveryBudget.CPM.Value;
             plan.HHRatingPoints = householdPlanDeliveryBudget.RatingPoints.Value;
             plan.HHCPP = householdPlanDeliveryBudget.CPP.Value;
+            plan.Vpvh = ProposalMath.CalculateVpvh(plan.TargetImpressions.Value, hhImpressions);
         }
 
-        private void _CalculateSecondaryAudiencesDeliveryData(PlanDto plan)
+        private void _CalculateSecondaryAudiencesDeliveryData(
+            PlanDto plan, 
+            Dictionary<int, double> hhImpressionsByStandardDaypart, 
+            double hhImpressions)
         {
             Parallel.ForEach(plan.SecondaryAudiences, (planAudience) =>
             {
+                var totalImpressionsForAudience = Math.Floor(_GetAudienceImpressionsByStandardDaypart(plan, hhImpressionsByStandardDaypart, planAudience.AudienceId).Sum(x => x.Value));
+
                 var planDeliveryBudget = _BudgetCalculator.CalculateBudget(new PlanDeliveryBudget
                 {
-                    Impressions = Math.Floor(plan.HHImpressions * planAudience.Vpvh),
+                    Impressions = totalImpressionsForAudience,
                     AudienceId = planAudience.AudienceId,
                     Budget = plan.Budget
                 });
@@ -1676,6 +1721,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 planAudience.CPM = planDeliveryBudget.CPM;
                 planAudience.CPP = planDeliveryBudget.CPP;
                 planAudience.Universe = planDeliveryBudget.Universe.Value;
+                planAudience.Vpvh = ProposalMath.CalculateVpvh(totalImpressionsForAudience, hhImpressions);
             });
         }
 
@@ -1695,28 +1741,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Error = lockingResponse.Error,
                 PlanName = planName
             };
-        }
-
-        public List<VPVHForAudience> GetVPVHForAudiencesWithBooks(VPVHRequest request)
-        {
-            var result = new List<VPVHForAudience>();
-
-            var mediaMonthId = request.HutBookId.HasValue ? request.HutBookId.Value : request.ShareBookId;
-
-            var householdUniverse = _NsiUniverseService.GetAudienceUniverseForMediaMonth(mediaMonthId, BroadcastConstants.HouseholdAudienceId);
-
-            foreach (var audienceId in request.AudienceIds)
-            {
-                var audienceUniverse = _NsiUniverseService.GetAudienceUniverseForMediaMonth(mediaMonthId, audienceId);
-                var audienceVPVH = audienceUniverse / householdUniverse;
-                result.Add(new VPVHForAudience
-                {
-                    AudienceId = audienceId,
-                    VPVH = audienceVPVH
-                });
-            }
-
-            return result;
         }
 
         /// <inheritdoc/>

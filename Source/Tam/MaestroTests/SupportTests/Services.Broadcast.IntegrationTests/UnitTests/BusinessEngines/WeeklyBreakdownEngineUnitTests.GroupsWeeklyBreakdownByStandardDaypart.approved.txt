@@ -1,0 +1,12 @@
+[
+  {
+    "Budget": 400.0,
+    "Impressions": 3800.0,
+    "StandardDaypartId": 1
+  },
+  {
+    "Budget": 60.0,
+    "Impressions": 1000.0,
+    "StandardDaypartId": 2
+  }
+]

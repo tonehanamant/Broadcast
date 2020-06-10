@@ -103,6 +103,20 @@
         }
       },
       "StartTimeSeconds": 0,
+      "VpvhForAudiences": [
+        {
+          "AudienceId": 31,
+          "StartingPoint": "2019-01-12T12:30:29",
+          "Vpvh": 0.8,
+          "VpvhType": 2
+        },
+        {
+          "AudienceId": 6,
+          "StartingPoint": "2019-01-12T12:30:29",
+          "Vpvh": 0.5,
+          "VpvhType": 2
+        }
+      ],
       "WeightingGoalPercent": 28.0
     },
     {
@@ -157,6 +171,20 @@
         }
       },
       "StartTimeSeconds": 57600,
+      "VpvhForAudiences": [
+        {
+          "AudienceId": 31,
+          "StartingPoint": "2019-01-12T12:30:29",
+          "Vpvh": 0.7,
+          "VpvhType": 3
+        },
+        {
+          "AudienceId": 6,
+          "StartingPoint": "2019-01-12T12:30:29",
+          "Vpvh": 0.5,
+          "VpvhType": 2
+        }
+      ],
       "WeightingGoalPercent": null
     },
     {
@@ -203,6 +231,20 @@
         }
       },
       "StartTimeSeconds": 1500,
+      "VpvhForAudiences": [
+        {
+          "AudienceId": 31,
+          "StartingPoint": "2019-01-12T12:30:29",
+          "Vpvh": 0.9,
+          "VpvhType": 4
+        },
+        {
+          "AudienceId": 6,
+          "StartingPoint": "2019-01-12T12:30:29",
+          "Vpvh": 0.5,
+          "VpvhType": 2
+        }
+      ],
       "WeightingGoalPercent": 33.0
     }
   ],
@@ -224,10 +266,10 @@
   "FlightNotes": "Sample notes",
   "FlightStartDate": "2019-01-01T00:00:00",
   "GoalBreakdownType": 1,
-  "HHCPM": 0.0120,
-  "HHCPP": 14.4927,
-  "HHImpressions": 8333.333,
-  "HHRatingPoints": 6.9,
+  "HHCPM": 0.7850,
+  "HHCPP": 1000.0000,
+  "HHImpressions": 127.38,
+  "HHRatingPoints": 0.1,
   "HHUniverse": 120700000.0,
   "HUTBookId": 437,
   "IsAduEnabled": true,
@@ -310,13 +352,13 @@
   "SecondaryAudiences": [
     {
       "AudienceId": 6,
-      "CPM": 0.0263,
-      "CPP": 1.64473684210526,
-      "Impressions": 3799.999,
-      "RatingPoints": 60.8,
+      "CPM": 1.5701,
+      "CPP": 100.0,
+      "Impressions": 63.69,
+      "RatingPoints": 1.0,
       "Type": 1,
       "Universe": 6250000.0,
-      "Vpvh": 0.456
+      "Vpvh": 0.5
     }
   ],
   "ShareBookId": 437,
@@ -331,7 +373,7 @@
   "TotalHiatusDays": 2,
   "TotalShareOfVoice": 100.0,
   "VersionNumber": 1,
-  "Vpvh": 0.012,
+  "Vpvh": 0.7850526,
   "WeeklyBreakdownTotals": {
     "TotalActiveDays": 29,
     "TotalBudget": 100.0000,

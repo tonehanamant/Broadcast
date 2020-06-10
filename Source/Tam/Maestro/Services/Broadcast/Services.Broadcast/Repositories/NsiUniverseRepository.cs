@@ -21,15 +21,6 @@ namespace Services.Broadcast.Repositories
         /// <param name="audienceIds"></param>
         /// <returns></returns>
         Dictionary<short, double> GetUniverseDataByAudience(int sweepMediaMonth, List<int> audienceIds);
-
-        /// <summary>
-        /// Gets the universe value by summing up all the universes for all the markets based on an audience id and a media month
-        /// </summary>
-        /// <param name="mediaMonthId">Media Month Id</param>
-        /// <param name="audienceId">Audience Id</param>
-        /// <param name="playbackType">Minumum playback type</param>
-        /// <returns>Value of the universe for that media month and audience id</returns>
-        double GetAudienceUniverseForMediaMonth(int mediaMonthId, int audienceId, ProposalEnums.ProposalPlaybackType playbackType);
     }
 
     public class NsiUniverseRepository : BroadcastForecastRepositoryBase, INsiUniverseRepository
@@ -65,30 +56,6 @@ namespace Services.Broadcast.Repositories
                         var universeData = marketUniverses.GroupBy(g => g.market_code);
                         return universeData.ToDictionary(k => k.Key, v => v.Average(el => el.universe1));
                     });
-            }
-        }
-
-        ///<inheritdoc/>
-        public double GetAudienceUniverseForMediaMonth(int mediaMonthId, int audienceId, ProposalEnums.ProposalPlaybackType playbackType)
-        {
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, System.Transactions.IsolationLevel.ReadUncommitted))
-            {
-                string sql = @"SELECT SUM(t1.universe)
-                                FROM nsi.universes AS t1
-                                INNER JOIN (SELECT * FROM nsi.udf_GetMinPlaybackTypes(@media_month_id,@min_playback_type)) AS t2
-                                ON t1.market_code = t2.market_code AND t1.playback_type = t2.available_playback_type
-                                WHERE t1.audience_id = @audience_id AND t1.media_month_id = @media_month_id";
-                return _InReadUncommitedTransaction(context =>
-                {
-                    var mediaMonth = new System.Data.SqlClient.SqlParameter("media_month_id", SqlDbType.SmallInt) { Value = mediaMonthId };
-                    var minPlaybackType = new System.Data.SqlClient.SqlParameter("min_playback_type", SqlDbType.VarChar, 1)
-                    {
-                        Value = (char)PlaybackTypeConverter.ProposalPlaybackTypeToForecastPlaybackType(playbackType)
-                    };
-                    var audience = new System.Data.SqlClient.SqlParameter("audience_id", SqlDbType.SmallInt) { Value = audienceId };
-
-                    return context.Database.SqlQuery<double>(sql, mediaMonth, minPlaybackType, audience).Single();
-                });
             }
         }
     }

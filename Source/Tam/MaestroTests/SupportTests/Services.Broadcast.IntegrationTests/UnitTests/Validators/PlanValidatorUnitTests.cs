@@ -349,6 +349,60 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
+        public void ValidatePlan_VpvhLessThanZero()
+        {
+            _ConfigureSpotLengthEngineMockToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.Dayparts[0].VpvhForAudiences.Add(new PlanDaypartVpvhForAudienceDto
+            {
+                AudienceId = 6,
+                Vpvh = -1,
+                VpvhType = VpvhTypeEnum.FourBookAverage,
+                StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+            });
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("VPVH can not be less than zero"));
+        }
+
+        [Test]
+        public void ValidatePlan_UnknownVpvhType()
+        {
+            _ConfigureSpotLengthEngineMockToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.Dayparts[0].VpvhForAudiences.Add(new PlanDaypartVpvhForAudienceDto
+            {
+                AudienceId = 6,
+                Vpvh = 1,
+                VpvhType = (VpvhTypeEnum)9999,
+                StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+            });
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Unknown VPVH type was discovered"));
+        }
+
+        [Test]
+        public void ValidatePlan_DefaultStartingPoint()
+        {
+            _ConfigureSpotLengthEngineMockToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.Dayparts[0].VpvhForAudiences.Add(new PlanDaypartVpvhForAudienceDto
+            {
+                AudienceId = 6,
+                Vpvh = 1,
+                VpvhType = VpvhTypeEnum.FourBookAverage,
+                StartingPoint = default
+            });
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("StartingPoint is a required property"));
+        }
+
+        [Test]
         public void ValidatePlan_WithWrongShowTypeRestrictionsContainType()
         {
             _ConfigureSpotLengthEngineMockToReturnTrue();
@@ -735,45 +789,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
-        public void ValidatePlan_PrimaryAudienceVPVHWithDefault()
-        {
-            _ConfigureMocksToReturnTrue();
-
-            var plan = _GetPlan();
-            plan.Vpvh = default;
-
-            Assert.That(() => _planValidator.ValidatePlan(plan),
-                Throws.TypeOf<Exception>().With.Message
-                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
-        }
-
-        [Test]
-        public void ValidatePlan_PrimaryAudienceVPVHLessThanMinimum()
-        {
-            _ConfigureMocksToReturnTrue();
-
-            var plan = _GetPlan();
-            plan.Vpvh = 0.0001;
-
-            Assert.That(() => _planValidator.ValidatePlan(plan),
-                Throws.TypeOf<Exception>().With.Message
-                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
-        }
-
-        [Test]
-        public void ValidatePlan_PrimaryAudienceVPVHBiggerThanMaximum()
-        {
-            _ConfigureMocksToReturnTrue();
-
-            var plan = _GetPlan();
-            plan.Vpvh = 12;
-
-            Assert.That(() => _planValidator.ValidatePlan(plan),
-                Throws.TypeOf<Exception>().With.Message
-                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
-        }
-
-        [Test]
         public void ValidatePlan_InvalidSecondaryAudience()
         {
             _ConfigureSpotLengthEngineMockToReturnTrue();
@@ -816,45 +831,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<Exception>().With.Message.EqualTo("An audience cannot appear multiple times"));
-        }
-
-        [Test]
-        public void ValidatePlan_SecondaryAudienceVPVHLessThanMinimum()
-        {
-            _ConfigureMocksToReturnTrue();
-
-            var plan = _GetPlan();
-            plan.SecondaryAudiences = new List<PlanAudienceDto>
-            {
-                new PlanAudienceDto
-                {
-                    AudienceId = 11,
-                    Vpvh = -1
-                },
-            };
-
-            Assert.That(() => _planValidator.ValidatePlan(plan),
-                Throws.TypeOf<Exception>().With.Message
-                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
-        }
-
-        [Test]
-        public void ValidatePlan_SecondaryAudienceVPVHBiggerThanMaximum()
-        {
-            _ConfigureMocksToReturnTrue();
-
-            var plan = _GetPlan();
-            plan.SecondaryAudiences = new List<PlanAudienceDto>
-            {
-                new PlanAudienceDto
-                {
-                    AudienceId = 11, Vpvh = 10.5
-                },
-            };
-
-            Assert.That(() => _planValidator.ValidatePlan(plan),
-                Throws.TypeOf<Exception>().With.Message
-                    .EqualTo("Invalid VPVH. The value must be between 0.001 and 1."));
         }
 
         [Test]

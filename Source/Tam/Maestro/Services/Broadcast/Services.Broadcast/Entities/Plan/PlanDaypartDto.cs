@@ -67,6 +67,8 @@ namespace Services.Broadcast.Entities.Plan
         /// </value>
         public double? WeightingGoalPercent { get; set; }
 
+        public List<PlanDaypartVpvhForAudienceDto> VpvhForAudiences { get; set; } = new List<PlanDaypartVpvhForAudienceDto>();
+
         public RestrictionsDto Restrictions { get; set; } = new RestrictionsDto();
 
         public bool Equals(PlanDaypartDto other)

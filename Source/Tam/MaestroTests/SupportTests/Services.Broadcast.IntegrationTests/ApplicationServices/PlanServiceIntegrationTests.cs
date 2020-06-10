@@ -1,5 +1,6 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
+using EntityFrameworkMapping.Broadcast;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -612,6 +613,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         Vpvh =0.456
                     }
                 };
+                newPlan.Dayparts[0].VpvhForAudiences.Add(new PlanDaypartVpvhForAudienceDto
+                {
+                    AudienceId = 6,
+                    Vpvh = 0.5,
+                    VpvhType = VpvhTypeEnum.FourBookAverage,
+                    StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                });
+                newPlan.Dayparts[1].VpvhForAudiences.Add(new PlanDaypartVpvhForAudienceDto
+                {
+                    AudienceId = 6,
+                    Vpvh = 0.5,
+                    VpvhType = VpvhTypeEnum.FourBookAverage,
+                    StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                });
+                newPlan.Dayparts[2].VpvhForAudiences.Add(new PlanDaypartVpvhForAudienceDto
+                {
+                    AudienceId = 6,
+                    Vpvh = 0.5,
+                    VpvhType = VpvhTypeEnum.FourBookAverage,
+                    StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                });
+
                 var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
 
                 PlanDto testPlan = _PlanService.GetPlan(newPlanId);
@@ -672,6 +695,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         StartTimeSeconds = 0,
                         EndTimeSeconds = 2000,
                         WeightingGoalPercent = 28.0,
+                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                        {
+                            new PlanDaypartVpvhForAudienceDto
+                            {
+                                AudienceId = 31,
+                                Vpvh = 0.8,
+                                VpvhType = VpvhTypeEnum.FourBookAverage,
+                                StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                            }
+                        },
                         Restrictions = new PlanDaypartDto.RestrictionsDto
                         {
                             ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
@@ -971,6 +1004,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     StartTimeSeconds = 54000,
                     EndTimeSeconds = 64799,
                     WeightingGoalPercent = 13.8,
+                    VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                    {
+                        new PlanDaypartVpvhForAudienceDto
+                        {
+                            AudienceId = 31,
+                            Vpvh = 0.8,
+                            VpvhType = VpvhTypeEnum.FourBookAverage,
+                            StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                        }
+                    },
                     Restrictions = new PlanDaypartDto.RestrictionsDto
                     {
                         ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
@@ -1057,6 +1100,48 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     new PlanAudienceDto {AudienceId = 7, Type = Entities.Enums.AudienceTypeEnum.Nielsen, Vpvh = 0.435},
                     new PlanAudienceDto {AudienceId = 6, Type = Entities.Enums.AudienceTypeEnum.Nielsen, Vpvh = 0.635}
                 };
+                newPlan.Dayparts[0].VpvhForAudiences.Add(new PlanDaypartVpvhForAudienceDto
+                {
+                    AudienceId = 7,
+                    Vpvh = 0.8,
+                    VpvhType = VpvhTypeEnum.FourBookAverage,
+                    StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                });
+                newPlan.Dayparts[0].VpvhForAudiences.Add(new PlanDaypartVpvhForAudienceDto
+                {
+                    AudienceId = 6,
+                    Vpvh = 0.8,
+                    VpvhType = VpvhTypeEnum.FourBookAverage,
+                    StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                });
+                newPlan.Dayparts[1].VpvhForAudiences.Add(new PlanDaypartVpvhForAudienceDto
+                {
+                    AudienceId = 7,
+                    Vpvh = 0.8,
+                    VpvhType = VpvhTypeEnum.FourBookAverage,
+                    StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                });
+                newPlan.Dayparts[1].VpvhForAudiences.Add(new PlanDaypartVpvhForAudienceDto
+                {
+                    AudienceId = 6,
+                    Vpvh = 0.8,
+                    VpvhType = VpvhTypeEnum.FourBookAverage,
+                    StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                });
+                newPlan.Dayparts[2].VpvhForAudiences.Add(new PlanDaypartVpvhForAudienceDto
+                {
+                    AudienceId = 7,
+                    Vpvh = 0.8,
+                    VpvhType = VpvhTypeEnum.FourBookAverage,
+                    StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                });
+                newPlan.Dayparts[2].VpvhForAudiences.Add(new PlanDaypartVpvhForAudienceDto
+                {
+                    AudienceId = 6,
+                    Vpvh = 0.8,
+                    VpvhType = VpvhTypeEnum.FourBookAverage,
+                    StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                });
 
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
                 Assert.IsTrue(planId > 0);
@@ -2271,6 +2356,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         StartTimeSeconds = 0,
                         EndTimeSeconds = 2000,
                         WeightingGoalPercent = 28.0,
+                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                        {
+                            new PlanDaypartVpvhForAudienceDto
+                            {
+                                AudienceId = 31,
+                                Vpvh = 0.8,
+                                VpvhType = VpvhTypeEnum.FourBookAverage,
+                                StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                            }
+                        },
                         Restrictions = new PlanDaypartDto.RestrictionsDto
                         {
                             ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
@@ -2310,6 +2405,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         StartTimeSeconds = 1500,
                         EndTimeSeconds = 2788,
                         WeightingGoalPercent = 33,
+                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                        {
+                            new PlanDaypartVpvhForAudienceDto
+                            {
+                                AudienceId = 31,
+                                Vpvh = 0.9,
+                                VpvhType = VpvhTypeEnum.LastYear,
+                                StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                            }
+                        },
                         Restrictions = new PlanDaypartDto.RestrictionsDto
                         {
                             ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
@@ -2343,6 +2448,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         DaypartTypeId = DaypartTypeEnum.ROS,
                         StartTimeSeconds = 57600,
                         EndTimeSeconds = 68400,
+                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                        {
+                            new PlanDaypartVpvhForAudienceDto
+                            {
+                                AudienceId = 31,
+                                Vpvh = 0.7,
+                                VpvhType = VpvhTypeEnum.PreviousQuarter,
+                                StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                            }
+                        },
                         Restrictions = new PlanDaypartDto.RestrictionsDto
                         {
                             ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto

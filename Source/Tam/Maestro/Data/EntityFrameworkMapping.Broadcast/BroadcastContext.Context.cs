@@ -197,5 +197,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<vpvh_quarters> vpvh_quarters { get; set; }
         public virtual DbSet<vpvh_audience_mappings> vpvh_audience_mappings { get; set; }
         public virtual DbSet<program_name_exceptions> program_name_exceptions { get; set; }
+        public virtual DbSet<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
     }
 }

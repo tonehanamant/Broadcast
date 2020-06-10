@@ -79,6 +79,7 @@
         }
       },
       "StartTimeSeconds": 0,
+      "VpvhForAudiences": [],
       "WeightingGoalPercent": 100.0
     }
   ],
@@ -160,7 +161,7 @@
       }
     ],
     "InventorySourceTypePercentages": [],
-    "Margin": 0.0,
+    "Margin": null,
     "MarketGroup": 5,
     "MaxCpm": 10.0000,
     "MinCpm": 1.0000,

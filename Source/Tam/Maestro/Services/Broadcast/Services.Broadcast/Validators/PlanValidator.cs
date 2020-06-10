@@ -2,7 +2,6 @@
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
-using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Extensions;
@@ -62,7 +61,6 @@ namespace Services.Broadcast.Validators
         const string INVALID_REQUEST = "Invalid request";
         public const string INVALID_IMPRESSIONS_COUNT = "The impressions count is different between the delivery and the weekly breakdown";
         public const string INVALID_SOV_COUNT = "The share of voice count is not equal to 100%";
-        const string INVALID_VPVH = "Invalid VPVH. The value must be between 0.001 and 1.";
         const string INVALID_FLIGHT_NOTES = "Flight notes cannot be longer than 1024 characters.";
         const string STOP_WORD_DETECTED = "Stop word detected in plan name";
         const string SUM_OF_DAYPART_WEIGHTINGS_EXCEEDS_LIMIT = "Sum of weighting is greater than 100%";
@@ -243,8 +241,6 @@ namespace Services.Broadcast.Validators
                     throw new Exception(INVALID_SHARE_HUT_BOOKS);
                 }
             }
-
-            _ValidateVPVH(plan.Vpvh);
         }
 
         private void _ValidateSecondaryAudiences(List<PlanAudienceDto> secondaryAudiences, int primaryAudienceId)
@@ -259,8 +255,6 @@ namespace Services.Broadcast.Validators
                     throw new Exception(INVALID_AUDIENCE_DUPLICATE);
 
                 distinctAudiences.Add(secondaryAudience.AudienceId);
-
-                _ValidateVPVH(secondaryAudience.Vpvh);
             }
         }
 
@@ -300,12 +294,30 @@ namespace Services.Broadcast.Validators
                 }
 
                 _ValidatePlanDaypartRestrictions(daypart);
+                _ValidatePlanDaypartAudienceVpvh(daypart);
             }
 
             var sumOfDaypartWeighting = plan.Dayparts.Aggregate(0d, (sumOfWeighting, dayPart) => sumOfWeighting + dayPart.WeightingGoalPercent.GetValueOrDefault());
             if (sumOfDaypartWeighting > 100)
             {
                 throw new Exception(SUM_OF_DAYPART_WEIGHTINGS_EXCEEDS_LIMIT);
+            }
+        }
+
+        private void _ValidatePlanDaypartAudienceVpvh(PlanDaypartDto planDaypartDto)
+        {
+            var vpvhForAudiences = planDaypartDto.VpvhForAudiences;
+
+            foreach (var vpvhForAudience in vpvhForAudiences)
+            {
+                if (vpvhForAudience.Vpvh < 0)
+                    throw new Exception("VPVH can not be less than zero");
+
+                if (!EnumHelper.IsDefined(vpvhForAudience.VpvhType))
+                    throw new Exception("Unknown VPVH type was discovered");
+
+                if (vpvhForAudience.StartingPoint == default)
+                    throw new Exception("StartingPoint is a required property");
             }
         }
 
@@ -389,14 +401,6 @@ namespace Services.Broadcast.Validators
                 (candidate < 0.1 || candidate > 100.0))
             {
                 throw new Exception(errorMessage);
-            }
-        }
-
-        private void _ValidateVPVH(double value)
-        {
-            if (value < 0.001 || value > 10) //Maximum VPVH is set to 10. See PRI-17734
-            {
-                throw new Exception(INVALID_VPVH);
             }
         }
 

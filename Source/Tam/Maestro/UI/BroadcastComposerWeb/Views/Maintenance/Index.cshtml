@@ -577,6 +577,8 @@
                 }
 
             </div>
+
+            </div>
             <div id="settings" class="tabcontent">
                 <div class="form">
                     <h1 class="heading">Testing Services</h1>
@@ -618,20 +620,21 @@
                 </div>
             </div>
 
-            <div id="data_maintenance" class="tabcontent">
-                @using (Html.BeginForm("HTMLDecodeProgramNames", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    <div class="form">
-                        <h4 class="heading">Click to decode HTML symbols in program names of all program name mappings and inventory records</h4>
-                        <div class="input-container">
-                            <label class="label" for="protectionKey">Protection key helps to avoid occasional clicks(enter next value 'q1w2e3r4')</label>
-                            <input class="input" type="text" name="protectionKey" placeholder="Protection key" />
-                        </div>
-                        <input class="button" type="submit" value="HTML Decode" id="submit" />
-                    </div>
-                }
+    <div id="data_maintenance" class="tabcontent">
+        @using (Html.BeginForm("HTMLDecodeProgramNames", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="form">
+                <h4 class="heading">Click to decode HTML symbols in program names of all program name mappings and inventory records</h4>
+                <div class="input-container">
+                    <label class="label" for="protectionKey">Protection key helps to avoid occasional clicks(enter next value 'q1w2e3r4')</label>
+                    <input class="input" type="text" name="protectionKey" placeholder="Protection key" />
+                </div>
+                <input class="button" type="submit" value="HTML Decode" id="submit" />
             </div>
-    </content>
+        }
+    </div>
+
+            </content>
     <script>
         function copyToClip() {
             var copyText = document.getElementById("divJSON");

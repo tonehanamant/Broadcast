@@ -375,6 +375,7 @@
     <Compile Include="Controllers\PlanningController.cs" />
     <Compile Include="Controllers\TrackerController.cs" />
     <Compile Include="Controllers\ViewControllerBase.cs" />
+    <Compile Include="Controllers\VpvhApiController.cs" />
     <Compile Include="Filters\HangfireAuthorizationFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

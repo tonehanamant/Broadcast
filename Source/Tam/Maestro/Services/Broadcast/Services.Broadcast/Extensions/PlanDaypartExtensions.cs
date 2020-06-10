@@ -35,7 +35,8 @@ namespace Services.Broadcast.Extensions
                     planDaypart.IsStartTimeModified,
                     planDaypart.Restrictions,
                     planDaypart.WeightingGoalPercent,
-                    planDaypart.FlightDays
+                    planDaypart.FlightDays,
+                    planDaypart.VpvhForAudiences
                 }).ToList();
 
             // return the ordered list
@@ -58,7 +59,8 @@ namespace Services.Broadcast.Extensions
                     IsEndTimeModified = item.IsEndTimeModified,
                     IsStartTimeModified = item.IsStartTimeModified,
                     Restrictions = item.Restrictions,
-                    WeightingGoalPercent = item.WeightingGoalPercent
+                    WeightingGoalPercent = item.WeightingGoalPercent,
+                    VpvhForAudiences = item.VpvhForAudiences
                 }).ToList();
         }
 

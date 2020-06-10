@@ -103,6 +103,26 @@
         }
       },
       "StartTimeSeconds": 0,
+      "VpvhForAudiences": [
+        {
+          "AudienceId": 31,
+          "StartingPoint": "2019-01-12T12:30:29",
+          "Vpvh": 0.8,
+          "VpvhType": 2
+        },
+        {
+          "AudienceId": 7,
+          "StartingPoint": "2019-01-12T12:30:29",
+          "Vpvh": 0.8,
+          "VpvhType": 2
+        },
+        {
+          "AudienceId": 6,
+          "StartingPoint": "2019-01-12T12:30:29",
+          "Vpvh": 0.8,
+          "VpvhType": 2
+        }
+      ],
       "WeightingGoalPercent": 28.0
     },
     {
@@ -157,6 +177,26 @@
         }
       },
       "StartTimeSeconds": 57600,
+      "VpvhForAudiences": [
+        {
+          "AudienceId": 31,
+          "StartingPoint": "2019-01-12T12:30:29",
+          "Vpvh": 0.7,
+          "VpvhType": 3
+        },
+        {
+          "AudienceId": 7,
+          "StartingPoint": "2019-01-12T12:30:29",
+          "Vpvh": 0.8,
+          "VpvhType": 2
+        },
+        {
+          "AudienceId": 6,
+          "StartingPoint": "2019-01-12T12:30:29",
+          "Vpvh": 0.8,
+          "VpvhType": 2
+        }
+      ],
       "WeightingGoalPercent": null
     },
     {
@@ -203,6 +243,26 @@
         }
       },
       "StartTimeSeconds": 1500,
+      "VpvhForAudiences": [
+        {
+          "AudienceId": 31,
+          "StartingPoint": "2019-01-12T12:30:29",
+          "Vpvh": 0.9,
+          "VpvhType": 4
+        },
+        {
+          "AudienceId": 7,
+          "StartingPoint": "2019-01-12T12:30:29",
+          "Vpvh": 0.8,
+          "VpvhType": 2
+        },
+        {
+          "AudienceId": 6,
+          "StartingPoint": "2019-01-12T12:30:29",
+          "Vpvh": 0.8,
+          "VpvhType": 2
+        }
+      ],
       "WeightingGoalPercent": 33.0
     }
   ],
@@ -224,10 +284,10 @@
   "FlightNotes": "Sample notes",
   "FlightStartDate": "2019-01-01T00:00:00",
   "GoalBreakdownType": 1,
-  "HHCPM": 0.0120,
-  "HHCPP": 14.4927,
-  "HHImpressions": 8333.333,
-  "HHRatingPoints": 6.9,
+  "HHCPM": 0.7850,
+  "HHCPP": 1000.0000,
+  "HHImpressions": 127.38,
+  "HHRatingPoints": 0.1,
   "HHUniverse": 120700000.0,
   "HUTBookId": 437,
   "IsAduEnabled": true,
@@ -310,23 +370,23 @@
   "SecondaryAudiences": [
     {
       "AudienceId": 7,
-      "CPM": 0.0275,
-      "CPP": 2.17864923747277,
-      "Impressions": 3624.999,
-      "RatingPoints": 45.9,
+      "CPM": 0.9813,
+      "CPP": 76.9230769230769,
+      "Impressions": 101.904,
+      "RatingPoints": 1.3,
       "Type": 1,
       "Universe": 7900000.0,
-      "Vpvh": 0.435
+      "Vpvh": 0.8
     },
     {
       "AudienceId": 6,
-      "CPM": 0.0188,
-      "CPP": 1.18063754427391,
-      "Impressions": 5291.666,
-      "RatingPoints": 84.7,
+      "CPM": 0.9813,
+      "CPP": 62.5,
+      "Impressions": 101.904,
+      "RatingPoints": 1.6,
       "Type": 1,
       "Universe": 6250000.0,
-      "Vpvh": 0.635
+      "Vpvh": 0.8
     }
   ],
   "ShareBookId": 437,
@@ -341,7 +401,7 @@
   "TotalHiatusDays": 2,
   "TotalShareOfVoice": 100.0,
   "VersionNumber": 1,
-  "Vpvh": 0.012,
+  "Vpvh": 0.7850526,
   "WeeklyBreakdownTotals": {
     "TotalActiveDays": 29,
     "TotalBudget": 100.0000,

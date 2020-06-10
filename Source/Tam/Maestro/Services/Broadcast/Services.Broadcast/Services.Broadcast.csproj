@@ -397,6 +397,8 @@
     <Compile Include="Entities\Day.cs" />
     <Compile Include="Entities\DaypartCleanupDto.cs" />
     <Compile Include="Entities\Enums\BroadcastDayOfWeek.cs" />
+    <Compile Include="Entities\Enums\VpvhCalculationSourceTypeEnum.cs" />
+    <Compile Include="Entities\Enums\VpvhTypeEnum.cs" />
     <Compile Include="Entities\Enums\InventoryPricingQuarterType.cs" />
     <Compile Include="Entities\Enums\InventoryProgramsProcessorType.cs" />
     <Compile Include="Entities\Enums\Inventory\InventoryExportGenreTypeEnum.cs" />
@@ -454,6 +456,7 @@
     <Compile Include="Entities\ProgramMapping\ProgramNameExceptionDto.cs" />
     <Compile Include="Entities\ProgramMapping\ProgramNameMappingDto.cs" />
     <Compile Include="Entities\ProgramMapping\UnMappedProgramNameReportData.cs" />
+    <Compile Include="Entities\Vpvh\VpvhDefaultResponse.cs" />
     <Compile Include="Entities\Vpvh\VpvhExcelRecord.cs" />
     <Compile Include="Entities\Plan\PlanAudienceDisplay.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuying.cs" />
@@ -489,8 +492,8 @@
     <Compile Include="Entities\Campaign\ProgramLineupReportData.cs" />
     <Compile Include="Entities\Campaign\ProgramLineupReportRequest.cs" />
     <Compile Include="Entities\Plan\Pricing\PricingResultsReportData.cs" />
-    <Compile Include="Entities\Plan\VPVHRequest.cs" />
-    <Compile Include="Entities\Plan\VPVHForAudience.cs" />
+    <Compile Include="Entities\Vpvh\VpvhDefaultsRequest.cs" />
+    <Compile Include="Entities\Plan\PlanDaypartVpvhForAudienceDto.cs" />
     <Compile Include="Entities\Plan\WeeklyBreakdownCombination.cs" />
     <Compile Include="Entities\PricingEstimate.cs" />
     <Compile Include="Entities\PricingInventoryGetRequestParametersDto.cs" />

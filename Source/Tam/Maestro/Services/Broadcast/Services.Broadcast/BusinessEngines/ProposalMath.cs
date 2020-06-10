@@ -63,5 +63,20 @@ namespace Services.Broadcast.BusinessEngines
             var power = Math.Pow(10, decimalPlaces);
             return Math.Floor(i * power) / power;
         }
+
+        public static double CalculateHhImpressionsUsingVpvh(double audienceImpressions, double audienceVpvh)
+        {
+            return audienceImpressions / audienceVpvh;
+        }
+
+        public static double CalculateAudienceImpressionsUsingVpvh(double hhImpressions, double audienceVpvh)
+        {
+            return hhImpressions * audienceVpvh;
+        }
+
+        public static double CalculateVpvh(double audienceImpressions, double hhImpressions)
+        {
+            return audienceImpressions / hhImpressions;
+        }
     }
 }

@@ -523,6 +523,9 @@
     <Compile Include="plan_versions.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="plan_version_audience_daypart_vpvh.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="plan_version_available_markets.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

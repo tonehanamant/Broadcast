@@ -40,7 +40,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -125,7 +126,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -210,7 +212,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -295,7 +298,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -380,7 +384,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -465,7 +470,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -550,7 +556,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -635,7 +642,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -720,7 +728,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -805,7 +814,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -890,7 +900,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -975,7 +986,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -1060,7 +1072,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -1145,7 +1158,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -1230,7 +1244,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -1315,7 +1330,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -1400,7 +1416,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -1485,7 +1502,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -1570,7 +1588,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -1655,7 +1674,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -1740,7 +1760,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -1825,7 +1846,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -1910,7 +1932,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -1995,7 +2018,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -2080,7 +2104,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -2165,7 +2190,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -2250,7 +2276,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -2335,7 +2362,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -2420,7 +2448,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -2505,7 +2534,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -2590,7 +2620,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -2675,7 +2706,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -2760,7 +2792,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -2845,7 +2878,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -2930,7 +2964,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -3015,7 +3050,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -3100,7 +3136,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -3185,7 +3222,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -3270,7 +3308,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -3355,7 +3394,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -3440,7 +3480,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -3525,7 +3566,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -3610,7 +3652,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -3695,7 +3738,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -3780,7 +3824,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -3865,7 +3910,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -3950,7 +3996,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -4035,7 +4082,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -4120,7 +4168,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -4205,7 +4254,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -4290,7 +4340,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -4375,7 +4426,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -4460,7 +4512,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -4545,7 +4598,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -4630,7 +4684,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -4715,7 +4770,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -4800,7 +4856,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -4885,7 +4942,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -4970,7 +5028,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -5055,7 +5114,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -5140,7 +5200,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -5225,7 +5286,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -5310,7 +5372,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -5395,7 +5458,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -5480,7 +5544,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -5565,7 +5630,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -5650,7 +5716,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -5735,7 +5802,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -5820,7 +5888,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -5905,7 +5974,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -5990,7 +6060,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -6075,7 +6146,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -6160,7 +6232,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -6245,7 +6318,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -6330,7 +6404,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -6415,7 +6490,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -6500,7 +6576,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -6585,7 +6662,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -6670,7 +6748,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -6755,7 +6834,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -6840,7 +6920,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -6925,7 +7006,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -7010,7 +7092,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -7095,7 +7178,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -7180,7 +7264,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -7265,7 +7350,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -7350,7 +7436,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -7435,7 +7522,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -7520,7 +7608,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -7605,7 +7694,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -7690,7 +7780,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -7775,7 +7866,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -7860,7 +7952,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -7945,7 +8038,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -8030,7 +8124,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -8115,7 +8210,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -8200,7 +8296,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -8285,7 +8382,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -8370,7 +8468,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -8455,7 +8554,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -8540,7 +8640,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -8625,7 +8726,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -8710,7 +8812,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -8795,7 +8898,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -8880,7 +8984,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -8965,7 +9070,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -9050,7 +9156,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -9135,7 +9242,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -9220,7 +9328,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -9305,7 +9414,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -9390,7 +9500,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -9475,7 +9586,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -9560,7 +9672,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -9645,7 +9758,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -9730,7 +9844,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -9815,7 +9930,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -9900,7 +10016,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -9985,7 +10102,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -10070,7 +10188,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -10155,7 +10274,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -10240,7 +10360,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -10325,7 +10446,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -10410,7 +10532,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -10495,7 +10618,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -10593,7 +10717,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -10691,7 +10816,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -10789,7 +10915,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -10887,7 +11014,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -10985,7 +11113,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -11083,7 +11212,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -11181,7 +11311,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -11279,7 +11410,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -11377,7 +11509,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -11475,7 +11608,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -11573,7 +11707,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -11671,7 +11806,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -11769,7 +11905,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -11867,7 +12004,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -11965,7 +12103,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -12063,7 +12202,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -12161,7 +12301,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -12259,7 +12400,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -12357,7 +12499,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -12455,7 +12598,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -12553,7 +12697,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -12651,7 +12796,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -12749,7 +12895,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -12847,7 +12994,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -12945,7 +13093,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -13043,7 +13192,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -13141,7 +13291,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -13239,7 +13390,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -13337,7 +13489,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -13435,7 +13588,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -13533,7 +13687,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -13631,7 +13786,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -13729,7 +13885,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -13827,7 +13984,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -13925,7 +14083,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -14023,7 +14182,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -14121,7 +14281,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -14219,7 +14380,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -14317,7 +14479,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -14415,7 +14578,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -14513,7 +14677,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -14611,7 +14776,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -14709,7 +14875,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -14807,7 +14974,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -14905,7 +15073,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -15003,7 +15172,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -15101,7 +15271,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -15199,7 +15370,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -15297,7 +15469,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -15395,7 +15568,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -15493,7 +15667,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -15591,7 +15766,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -15689,7 +15865,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -15787,7 +15964,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -15885,7 +16063,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -15983,7 +16162,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -16081,7 +16261,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -16179,7 +16360,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -16277,7 +16459,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -16375,7 +16558,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -16473,7 +16657,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -16571,7 +16756,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -16669,7 +16855,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -16767,7 +16954,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -16865,7 +17053,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -16963,7 +17152,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -17061,7 +17251,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -17159,7 +17350,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -17257,7 +17449,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -17355,7 +17548,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -17453,7 +17647,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -17551,7 +17746,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -17649,7 +17845,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -17747,7 +17944,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -17845,7 +18043,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -17943,7 +18142,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -18041,7 +18241,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -18139,7 +18340,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -18237,7 +18439,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -18335,7 +18538,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -18433,7 +18637,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -18531,7 +18736,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -18629,7 +18835,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -18727,7 +18934,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -18825,7 +19033,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -18923,7 +19132,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -19021,7 +19231,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -19119,7 +19330,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -19217,7 +19429,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -19315,7 +19528,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -19413,7 +19627,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -19511,7 +19726,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -19609,7 +19825,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -19707,7 +19924,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -19805,7 +20023,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -19903,7 +20122,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -20001,7 +20221,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -20099,7 +20320,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -20197,7 +20419,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -20295,7 +20518,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -20393,7 +20617,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -20491,7 +20716,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -20589,7 +20815,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -20687,7 +20914,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -20785,7 +21013,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -20883,7 +21112,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -20981,7 +21211,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -21079,7 +21310,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -21177,7 +21409,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -21275,7 +21508,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -21373,7 +21607,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -21471,7 +21706,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -21569,7 +21805,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -21667,7 +21904,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -21765,7 +22003,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -21863,7 +22102,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -21961,7 +22201,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -22059,7 +22300,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -22157,7 +22399,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -22255,7 +22498,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -22353,7 +22597,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -22451,7 +22696,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -22549,7 +22795,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,
@@ -22647,7 +22894,8 @@
         "DaypartDefault": {
           "Code": "EM",
           "FullName": "Early morning",
-          "Id": 14
+          "Id": 14,
+          "VpvhCalculationSourceType": 0
         },
         "Genres": [],
         "PrimaryProgramId": null,

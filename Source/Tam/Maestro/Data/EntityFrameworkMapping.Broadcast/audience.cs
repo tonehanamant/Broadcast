@@ -42,6 +42,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.vpvh_quarters = new HashSet<vpvh_quarters>();
             this.vpvh_audience_mappings = new HashSet<vpvh_audience_mappings>();
             this.vpvh_audience_mappings1 = new HashSet<vpvh_audience_mappings>();
+            this.plan_version_audience_daypart_vpvh = new HashSet<plan_version_audience_daypart_vpvh>();
         }
     
         public int id { get; set; }
@@ -80,5 +81,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<vpvh_quarters> vpvh_quarters { get; set; }
         public virtual ICollection<vpvh_audience_mappings> vpvh_audience_mappings { get; set; }
         public virtual ICollection<vpvh_audience_mappings> vpvh_audience_mappings1 { get; set; }
+        public virtual ICollection<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
     }
 }

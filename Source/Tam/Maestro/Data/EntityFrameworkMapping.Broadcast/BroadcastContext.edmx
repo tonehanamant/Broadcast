@@ -235,6 +235,7 @@
           <Property Name="daypart_id" Type="int" Nullable="false" />
           <Property Name="code" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="vpvh_calculation_source_type" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="dayparts">
           <Key>
@@ -757,6 +758,18 @@
           <Property Name="audience_id" Type="int" Nullable="false" />
           <Property Name="universe" Type="float" Nullable="false" />
           <Property Name="nti_universe_header_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="plan_version_audience_daypart_vpvh">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_id" Type="int" Nullable="false" />
+          <Property Name="audience_id" Type="int" Nullable="false" />
+          <Property Name="daypart_default_id" Type="int" Nullable="false" />
+          <Property Name="vpvh_type" Type="int" Nullable="false" />
+          <Property Name="vpvh_value" Type="float" Nullable="false" />
+          <Property Name="starting_point" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_available_markets">
           <Key>
@@ -3168,6 +3181,42 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_version_summary_quarters">
               <PropertyRef Name="plan_version_summary_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_audience_daypart_vpvh_audiences">
+          <End Role="audiences" Type="Self.audiences" Multiplicity="1" />
+          <End Role="plan_version_audience_daypart_vpvh" Type="Self.plan_version_audience_daypart_vpvh" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audiences">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_audience_daypart_vpvh">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_audience_daypart_vpvh_daypart_defaults">
+          <End Role="daypart_defaults" Type="Self.daypart_defaults" Multiplicity="1" />
+          <End Role="plan_version_audience_daypart_vpvh" Type="Self.plan_version_audience_daypart_vpvh" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart_defaults">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_audience_daypart_vpvh">
+              <PropertyRef Name="daypart_default_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_audience_daypart_vpvh_plan_versions">
+          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1" />
+          <End Role="plan_version_audience_daypart_vpvh" Type="Self.plan_version_audience_daypart_vpvh" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_versions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_audience_daypart_vpvh">
+              <PropertyRef Name="plan_version_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5744,6 +5793,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="nti_universe_details" EntityType="Self.nti_universe_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="nti_universe_headers" EntityType="Self.nti_universe_headers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="nti_universes" EntityType="Self.nti_universes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_audience_daypart_vpvh" EntityType="Self.plan_version_audience_daypart_vpvh" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_available_markets" EntityType="Self.plan_version_available_markets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_blackout_markets" EntityType="Self.plan_version_blackout_markets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_creative_lengths" EntityType="Self.plan_version_creative_lengths" Schema="dbo" store:Type="Tables" />
@@ -6176,6 +6226,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_plan_summary_quarters_plan_summary" Association="Self.FK_plan_summary_quarters_plan_summary">
             <End Role="plan_version_summaries" EntitySet="plan_version_summaries" />
             <End Role="plan_version_summary_quarters" EntitySet="plan_version_summary_quarters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_audience_daypart_vpvh_audiences" Association="Self.FK_plan_version_audience_daypart_vpvh_audiences">
+            <End Role="audiences" EntitySet="audiences" />
+            <End Role="plan_version_audience_daypart_vpvh" EntitySet="plan_version_audience_daypart_vpvh" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_audience_daypart_vpvh_daypart_defaults" Association="Self.FK_plan_version_audience_daypart_vpvh_daypart_defaults">
+            <End Role="daypart_defaults" EntitySet="daypart_defaults" />
+            <End Role="plan_version_audience_daypart_vpvh" EntitySet="plan_version_audience_daypart_vpvh" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_audience_daypart_vpvh_plan_versions" Association="Self.FK_plan_version_audience_daypart_vpvh_plan_versions">
+            <End Role="plan_versions" EntitySet="plan_versions" />
+            <End Role="plan_version_audience_daypart_vpvh" EntitySet="plan_version_audience_daypart_vpvh" />
           </AssociationSet>
           <AssociationSet Name="FK_plan_version_available_markets_plan_versions" Association="Self.FK_plan_version_available_markets_plan_versions">
             <End Role="plan_versions" EntitySet="plan_versions" />
@@ -8211,6 +8273,19 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="station_inventory_manifest_daypart_programs" EntitySet="station_inventory_manifest_daypart_programs" />
             <End Role="station_inventory_manifest_dayparts" EntitySet="station_inventory_manifest_dayparts" />
           </AssociationSet>
+          <EntitySet Name="plan_version_audience_daypart_vpvh" EntityType="BroadcastModel.plan_version_audience_daypart_vpvh" />
+          <AssociationSet Name="FK_plan_version_audience_daypart_vpvh_audiences" Association="BroadcastModel.FK_plan_version_audience_daypart_vpvh_audiences">
+            <End Role="audience" EntitySet="audiences" />
+            <End Role="plan_version_audience_daypart_vpvh" EntitySet="plan_version_audience_daypart_vpvh" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_audience_daypart_vpvh_daypart_defaults" Association="BroadcastModel.FK_plan_version_audience_daypart_vpvh_daypart_defaults">
+            <End Role="daypart_defaults" EntitySet="daypart_defaults" />
+            <End Role="plan_version_audience_daypart_vpvh" EntitySet="plan_version_audience_daypart_vpvh" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_audience_daypart_vpvh_plan_versions" Association="BroadcastModel.FK_plan_version_audience_daypart_vpvh_plan_versions">
+            <End Role="plan_versions" EntitySet="plan_versions" />
+            <End Role="plan_version_audience_daypart_vpvh" EntitySet="plan_version_audience_daypart_vpvh" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -8262,6 +8337,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="vpvh_quarters" Relationship="BroadcastModel.FK_vpvh_quarters_audiences" FromRole="audience" ToRole="vpvh_quarters" />
           <NavigationProperty Name="vpvh_audience_mappings" Relationship="BroadcastModel.FK_vpvh_audience_mapping_audiences_compose_audiences" FromRole="audience" ToRole="vpvh_audience_mappings" />
           <NavigationProperty Name="vpvh_audience_mappings1" Relationship="BroadcastModel.FK_vpvh_audience_mappings_audiences" FromRole="audience" ToRole="vpvh_audience_mappings" />
+          <NavigationProperty Name="plan_version_audience_daypart_vpvh" Relationship="BroadcastModel.FK_plan_version_audience_daypart_vpvh_audiences" FromRole="audience" ToRole="plan_version_audience_daypart_vpvh" />
         </EntityType>
         <EntityType Name="daypart">
           <Key>
@@ -12417,6 +12493,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_pricing_api_result_spots" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_daypart_defaults" FromRole="daypart_defaults" ToRole="plan_version_pricing_api_result_spots" />
           <NavigationProperty Name="plan_version_weekly_breakdown" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_daypart_defaults" FromRole="daypart_defaults" ToRole="plan_version_weekly_breakdown" />
           <NavigationProperty Name="plan_version_weekly_breakdown_duplicate" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_duplicate_daypart_defaults" FromRole="daypart_defaults" ToRole="plan_version_weekly_breakdown_duplicate" />
+          <NavigationProperty Name="plan_version_audience_daypart_vpvh" Relationship="BroadcastModel.FK_plan_version_audience_daypart_vpvh_daypart_defaults" FromRole="daypart_defaults" ToRole="plan_version_audience_daypart_vpvh" />
+          <Property Name="vpvh_calculation_source_type" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_daypart_defaults_dayparts">
           <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
@@ -13424,6 +13502,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_weekly_breakdown" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_plan_versions" FromRole="plan_versions" ToRole="plan_version_weekly_breakdown" />
           <NavigationProperty Name="plan_version_weekly_breakdown_duplicate" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_duplicate_plan_versions" FromRole="plan_versions" ToRole="plan_version_weekly_breakdown_duplicate" />
           <NavigationProperty Name="plan_version_pricing_bands" Relationship="BroadcastModel.FK_plan_version_pricing_bands_plan_versions" FromRole="plan_versions" ToRole="plan_version_pricing_bands" />
+          <NavigationProperty Name="plan_version_audience_daypart_vpvh" Relationship="BroadcastModel.FK_plan_version_audience_daypart_vpvh_plan_versions" FromRole="plan_versions" ToRole="plan_version_audience_daypart_vpvh" />
         </EntityType>
         <Association Name="FK_plan_versions_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -14327,6 +14406,33 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="plan_version_audience_daypart_vpvh">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_id" Type="Int32" Nullable="false" />
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <Property Name="daypart_default_id" Type="Int32" Nullable="false" />
+          <Property Name="vpvh_type" Type="Int32" Nullable="false" />
+          <Property Name="vpvh_value" Type="Double" Nullable="false" />
+          <Property Name="starting_point" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_plan_version_audience_daypart_vpvh_audiences" FromRole="plan_version_audience_daypart_vpvh" ToRole="audience" />
+          <NavigationProperty Name="daypart_defaults" Relationship="BroadcastModel.FK_plan_version_audience_daypart_vpvh_daypart_defaults" FromRole="plan_version_audience_daypart_vpvh" ToRole="daypart_defaults" />
+          <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_audience_daypart_vpvh_plan_versions" FromRole="plan_version_audience_daypart_vpvh" ToRole="plan_versions" />
+        </EntityType>
+        <Association Name="FK_plan_version_audience_daypart_vpvh_audiences">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_audience_daypart_vpvh" Role="plan_version_audience_daypart_vpvh" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audience">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_audience_daypart_vpvh">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="program_name_exceptions">
           <Key>
             <PropertyRef Name="id" />
@@ -14373,6 +14479,30 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="station_inventory_manifest_dayparts">
               <PropertyRef Name="primary_program_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_audience_daypart_vpvh_daypart_defaults">
+          <End Type="BroadcastModel.daypart_defaults" Role="daypart_defaults" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_audience_daypart_vpvh" Role="plan_version_audience_daypart_vpvh" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart_defaults">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_audience_daypart_vpvh">
+              <PropertyRef Name="daypart_default_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_audience_daypart_vpvh_plan_versions">
+          <End Type="BroadcastModel.plan_versions" Role="plan_versions" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_audience_daypart_vpvh" Role="plan_version_audience_daypart_vpvh" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_versions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_audience_daypart_vpvh">
+              <PropertyRef Name="plan_version_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -16146,6 +16276,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="daypart_defaults">
             <EntityTypeMapping TypeName="BroadcastModel.daypart_defaults">
               <MappingFragment StoreEntitySet="daypart_defaults">
+                <ScalarProperty Name="vpvh_calculation_source_type" ColumnName="vpvh_calculation_source_type" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
@@ -16744,6 +16875,19 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="operation" ColumnName="operation" />
                 <ScalarProperty Name="compose_audience_id" ColumnName="compose_audience_id" />
                 <ScalarProperty Name="audience_id" ColumnName="audience_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_audience_daypart_vpvh">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_audience_daypart_vpvh">
+              <MappingFragment StoreEntitySet="plan_version_audience_daypart_vpvh">
+                <ScalarProperty Name="starting_point" ColumnName="starting_point" />
+                <ScalarProperty Name="vpvh_value" ColumnName="vpvh_value" />
+                <ScalarProperty Name="vpvh_type" ColumnName="vpvh_type" />
+                <ScalarProperty Name="daypart_default_id" ColumnName="daypart_default_id" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
+                <ScalarProperty Name="plan_version_id" ColumnName="plan_version_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -7,6 +7,7 @@ using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Vpvh;
 using Services.Broadcast.Repositories;
 using System;
@@ -51,6 +52,8 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <returns>Excel file stream</returns>
         Stream Export();
+
+        List<VpvhDefaultResponse> GetVpvhDefaults(VpvhDefaultsRequest request);
     }
 
     public class VpvhService : IVpvhService
@@ -59,16 +62,138 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IVpvhFileImporter _VpvhFileImporter;
         private readonly IVpvhRepository _VpvhRepository;
         private readonly IVpvhExportEngine _VpvhExportEngine;
+        private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
+        private readonly IDateTimeEngine _DateTimeEngine;
 
-        public VpvhService(IDataRepositoryFactory broadcastDataRepositoryFactory,
+        public VpvhService(
+            IDataRepositoryFactory broadcastDataRepositoryFactory,
             IVpvhFileImporter vpvhFileImporter,
             IBroadcastAudiencesCache broadcastAudiencesCache,
-            IVpvhExportEngine vpvhExportEngine)
+            IVpvhExportEngine vpvhExportEngine,
+            IDateTimeEngine dateTimeEngine)
         {
             _VpvhRepository = broadcastDataRepositoryFactory.GetDataRepository<IVpvhRepository>();
+            _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
             _VpvhFileImporter = vpvhFileImporter;
             _BroadcastAudiencesCache = broadcastAudiencesCache;
             _VpvhExportEngine = vpvhExportEngine;
+            _DateTimeEngine = dateTimeEngine;
+        }
+
+        public List<VpvhDefaultResponse> GetVpvhDefaults(VpvhDefaultsRequest request)
+        {
+            var standardDayparts = _DaypartDefaultRepository.GetAllDaypartDefaults();
+
+            // default VPVH type is FourBookAverage (last 4 available quarter average, including future quarters)
+            var lastFourQuartersVpvhData = _GetLastFourQuartersVpvhData(request.AudienceIds);
+            var result = _CalculateFourBookAverageVpvhPerDaypartPerAudience(lastFourQuartersVpvhData, standardDayparts, request.AudienceIds);
+
+            return result;
+        }
+
+        private List<VpvhQuarter> _GetLastFourQuartersVpvhData(List<int> audienceIds)
+        {
+            var quarterWithVpvhData = _VpvhRepository.GetQuartersWithVpvhData();
+
+            if (quarterWithVpvhData.Count < 4)
+            {
+                throw new Exception("There must VPVH data for at least 4 quarters");
+            }
+
+            var lastFourQuarters = quarterWithVpvhData.OrderByDescending(x => x.Year).ThenByDescending(x => x.Quarter).Take(4).ToList();
+            var years = lastFourQuarters.Select(x => x.Year).Distinct();
+            var quartersVpvhData = _VpvhRepository.GetQuartersByYears(years);
+            var lastFourQuartersVpvhData = quartersVpvhData.Where(x => lastFourQuarters.Any(q => x.Year == q.Year && x.Quarter == q.Quarter)).ToList();
+
+            _EnsureVpvhDataExistsForQuartersAndAudiences(lastFourQuartersVpvhData, lastFourQuarters, audienceIds);
+
+            return lastFourQuartersVpvhData;
+        }
+
+        private List<VpvhDefaultResponse> _CalculateFourBookAverageVpvhPerDaypartPerAudience(
+            List<VpvhQuarter> vpvhQuarters,
+            List<DaypartDefaultDto> standardDayparts,
+            List<int> audienceIds)
+        {
+            var currentDate = _DateTimeEngine.GetCurrentMoment();
+            var vpvhValueExtractors = new Dictionary<VpvhCalculationSourceTypeEnum, Func<VpvhQuarter, double>>
+            {
+                { VpvhCalculationSourceTypeEnum.AM_NEWS, x => x.AMNews },
+                { VpvhCalculationSourceTypeEnum.PM_NEWS, x => x.PMNews },
+                { VpvhCalculationSourceTypeEnum.SYN_All, x => x.SynAll },
+                { VpvhCalculationSourceTypeEnum.AVG_OF_AM_NEWS_AND_PM_NEWS, x => x.Tdn },
+                { VpvhCalculationSourceTypeEnum.AVG_OF_AM_NEWS_AND_PM_NEWS_AND_SYN_ALL, x => x.Tdns }
+            };
+
+            var result = new List<VpvhDefaultResponse>();
+
+            foreach (var audienceId in audienceIds)
+            {
+                if (audienceId == BroadcastConstants.HouseholdAudienceId)
+                {
+                    result.AddRange(standardDayparts.Select(x => new VpvhDefaultResponse
+                    {
+                        StandardDaypartId = x.Id,
+                        AudienceId = audienceId,
+                        Vpvh = 1, // VPVH for HH is always 1
+                        VpvhType = VpvhTypeEnum.FourBookAverage,
+                        StartingPoint = currentDate
+                    }));
+
+                    continue;
+                }
+
+                var quartersForAudience = vpvhQuarters.Where(x => x.Audience.Id == audienceId).ToList();
+
+                foreach (var standardDaypart in standardDayparts)
+                {
+                    if (vpvhValueExtractors.TryGetValue(standardDaypart.VpvhCalculationSourceType, out var vpvhValueExtractor))
+                    {
+                        var averageVpvh = quartersForAudience.Select(vpvhValueExtractor).Sum() / 4;
+
+                        result.Add(new VpvhDefaultResponse
+                        {
+                            StandardDaypartId = standardDaypart.Id,
+                            AudienceId = audienceId,
+                            Vpvh = averageVpvh,
+                            VpvhType = VpvhTypeEnum.FourBookAverage,
+                            StartingPoint = currentDate
+                        });
+                    }
+                    else
+                    {
+                        throw new Exception("Unknown VpvhCalculationSourceTypeEnum was discovered");
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private void _EnsureVpvhDataExistsForQuartersAndAudiences(
+            List<VpvhQuarter> vpvhQuarters,
+            List<QuarterDto> targetQuarters,
+            List<int> audienceIds)
+        {
+            foreach (var audienceId in audienceIds)
+            {
+                // there is no need to validate VPVH for HH, it`s always 1
+                if (audienceId == BroadcastConstants.HouseholdAudienceId)
+                    continue;
+
+                var vpvhDataForAudience = vpvhQuarters.Where(x => x.Audience.Id == audienceId).ToList();
+
+                foreach (var targetQuarter in targetQuarters)
+                {
+                    var numberOfRecordsForQuarter = vpvhDataForAudience.Count(x => x.Quarter == targetQuarter.Quarter && x.Year == targetQuarter.Year);
+
+                    if (numberOfRecordsForQuarter == 0)
+                        throw new Exception($"There is no VPVH data. Audience id: {audienceId}, quarter: Q{targetQuarter.Quarter} {targetQuarter.Year}");
+
+                    if (numberOfRecordsForQuarter > 1)
+                        throw new Exception($"More than one VPVH record exists. Audience id: {audienceId}, quarter: Q{targetQuarter.Quarter} {targetQuarter.Year}");
+                }
+            }
         }
 
         public List<VpvhQuarter> GetQuarters(QuarterDto quarter)

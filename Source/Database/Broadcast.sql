@@ -470,6 +470,73 @@ GO
 
 /*************************************** END BP1-538 *****************************************************/
 
+/*************************************** START - BP1-171 ****************************************************/
+
+IF OBJECT_ID('plan_version_audience_daypart_vpvh') IS NULL
+BEGIN
+	CREATE TABLE [plan_version_audience_daypart_vpvh]
+	(
+		[id] INT IDENTITY(1,1) NOT NULL,
+		[plan_version_id] INT NOT NULL,
+		[audience_id] INT NOT NULL,
+		[daypart_default_id] INT NOT NULL,
+		[vpvh_type] INT NOT NULL,
+		[vpvh_value] FLOAT NOT NULL,
+		[starting_point] DATETIME2 NOT NULL
+
+		CONSTRAINT [PK_plan_version_audience_daypart_vpvh] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)
+	)
+
+	ALTER TABLE [dbo].[plan_version_audience_daypart_vpvh] WITH CHECK ADD CONSTRAINT [FK_plan_version_audience_daypart_vpvh_plan_versions] FOREIGN KEY([plan_version_id])
+	REFERENCES [dbo].[plan_versions] ([id]) ON DELETE CASCADE
+	ALTER TABLE [dbo].[plan_version_audience_daypart_vpvh] CHECK CONSTRAINT [FK_plan_version_audience_daypart_vpvh_plan_versions]
+
+	CREATE NONCLUSTERED INDEX [IX_plan_version_audience_daypart_vpvh_plan_version_id] ON [dbo].[plan_version_audience_daypart_vpvh] ([plan_version_id])
+
+	ALTER TABLE [dbo].[plan_version_audience_daypart_vpvh] WITH CHECK ADD CONSTRAINT [FK_plan_version_audience_daypart_vpvh_audiences] FOREIGN KEY([audience_id])
+	REFERENCES [dbo].[audiences] ([id])
+	ALTER TABLE [dbo].[plan_version_audience_daypart_vpvh] CHECK CONSTRAINT [FK_plan_version_audience_daypart_vpvh_audiences]
+
+	ALTER TABLE [dbo].[plan_version_audience_daypart_vpvh] WITH CHECK ADD CONSTRAINT [FK_plan_version_audience_daypart_vpvh_daypart_defaults] FOREIGN KEY([daypart_default_id])
+	REFERENCES [dbo].[daypart_defaults] ([id])
+	ALTER TABLE [dbo].[plan_version_audience_daypart_vpvh] CHECK CONSTRAINT [FK_plan_version_audience_daypart_vpvh_daypart_defaults]
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'vpvh_calculation_source_type' AND OBJECT_ID = OBJECT_ID('daypart_defaults'))
+BEGIN
+	ALTER TABLE daypart_defaults
+	ADD vpvh_calculation_source_type int NULL
+
+	EXEC('UPDATE daypart_defaults SET vpvh_calculation_source_type = 1 where code = ''EMN''')
+	EXEC('UPDATE daypart_defaults SET vpvh_calculation_source_type = 1 where code = ''MDN''')
+	EXEC('UPDATE daypart_defaults SET vpvh_calculation_source_type = 2 where code = ''EN''')
+	EXEC('UPDATE daypart_defaults SET vpvh_calculation_source_type = 2 where code = ''LN''')
+	EXEC('UPDATE daypart_defaults SET vpvh_calculation_source_type = 2 where code = ''ENLN''')
+	EXEC('UPDATE daypart_defaults SET vpvh_calculation_source_type = 3 where code = ''EF''')
+	EXEC('UPDATE daypart_defaults SET vpvh_calculation_source_type = 3 where code = ''PA''')
+	EXEC('UPDATE daypart_defaults SET vpvh_calculation_source_type = 3 where code = ''PT''')
+	EXEC('UPDATE daypart_defaults SET vpvh_calculation_source_type = 3 where code = ''LF''')
+	EXEC('UPDATE daypart_defaults SET vpvh_calculation_source_type = 3 where code = ''SYN''')
+	EXEC('UPDATE daypart_defaults SET vpvh_calculation_source_type = 3 where code = ''OVN''')
+	EXEC('UPDATE daypart_defaults SET vpvh_calculation_source_type = 3 where code = ''DAY''')
+	EXEC('UPDATE daypart_defaults SET vpvh_calculation_source_type = 3 where code = ''EM''')
+	EXEC('UPDATE daypart_defaults SET vpvh_calculation_source_type = 1 where code = ''AMN''')
+	EXEC('UPDATE daypart_defaults SET vpvh_calculation_source_type = 2 where code = ''PMN''')
+	EXEC('UPDATE daypart_defaults SET vpvh_calculation_source_type = 4 where code = ''TDN''')
+	EXEC('UPDATE daypart_defaults SET vpvh_calculation_source_type = 3 where code = ''ROSS''')
+	EXEC('UPDATE daypart_defaults SET vpvh_calculation_source_type = 3 where code = ''SPORTS''')
+	EXEC('UPDATE daypart_defaults SET vpvh_calculation_source_type = 3 where code = ''ROSP''')
+	EXEC('UPDATE daypart_defaults SET vpvh_calculation_source_type = 5 where code = ''TDNS''')
+
+	ALTER TABLE daypart_defaults
+	ALTER COLUMN vpvh_calculation_source_type int NOT NULL 
+END
+
+/*************************************** END - BP1-171 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

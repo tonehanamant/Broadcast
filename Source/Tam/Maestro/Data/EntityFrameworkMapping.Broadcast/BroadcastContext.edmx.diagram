@@ -448,6 +448,10 @@
         <AssociationConnector Association="BroadcastModel.FK_program_name_exceptions_genres" />
         <AssociationConnector Association="BroadcastModel.FK_program_name_exceptions_show_types" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_dayparts_station_inventory_manifest_daypart_programs" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_audience_daypart_vpvh" Width="1.5" PointX="20.25" PointY="37.625" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_audience_daypart_vpvh_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_audience_daypart_vpvh_daypart_defaults" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_audience_daypart_vpvh_plan_versions" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

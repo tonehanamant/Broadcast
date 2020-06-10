@@ -34,8 +34,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         private readonly Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCacheMock;
         private readonly Mock<IPlanAggregator> _PlanAggregatorMock;
         private readonly Mock<ICampaignAggregationJobTrigger> _CampaignAggregationJobTriggerMock;
-        private readonly Mock<INsiUniverseService> _NsiUniverseServiceMock;
-        private readonly Mock<IBroadcastAudiencesCache> _BroadcastAudiencesCacheMock;
         private readonly Mock<ISpotLengthEngine> _SpotLengthEngineMock;
         private readonly Mock<IBroadcastLockingManagerApplicationService> _BroadcastLockingManagerApplicationServiceMock;
         private readonly Mock<IPlanPricingService> _PlanPricingServiceMock;
@@ -52,8 +50,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             _MediaMonthAndWeekAggregateCacheMock = new Mock<IMediaMonthAndWeekAggregateCache>();
             _PlanAggregatorMock = new Mock<IPlanAggregator>();
             _CampaignAggregationJobTriggerMock = new Mock<ICampaignAggregationJobTrigger>();
-            _NsiUniverseServiceMock = new Mock<INsiUniverseService>();
-            _BroadcastAudiencesCacheMock = new Mock<IBroadcastAudiencesCache>();
             _BroadcastLockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
             _PlanPricingServiceMock = new Mock<IPlanPricingService>();
             _SpotLengthEngineMock = new Mock<ISpotLengthEngine>();
@@ -69,16 +65,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 _MediaMonthAndWeekAggregateCacheMock.Object,
                 _PlanAggregatorMock.Object,
                 _CampaignAggregationJobTriggerMock.Object,
-                _NsiUniverseServiceMock.Object,
-                _BroadcastAudiencesCacheMock.Object,
                 _SpotLengthEngineMock.Object,
                 _BroadcastLockingManagerApplicationServiceMock.Object,
                 _PlanPricingServiceMock.Object,
                 _QuarterCalculationEngineMock.Object,
                 _DaypartDefaultServiceMock.Object,
                 _WeeklyBreakdownEngineMock.Object,
-                _CreativeLengthEngineMock.Object
-            );
+                _CreativeLengthEngineMock.Object);
         }
 
         [Test]

@@ -117,7 +117,8 @@ namespace Services.Broadcast.Repositories
             {
                 Id = daypartDefault.id,
                 Code = daypartDefault.code,
-                FullName = daypartDefault.name
+                FullName = daypartDefault.name,
+                VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)daypartDefault.vpvh_calculation_source_type
             };
         }
 

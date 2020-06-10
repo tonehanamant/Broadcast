@@ -12,6 +12,7 @@ namespace Services.Broadcast.BusinessEngines
     {
         List<WeeklyBreakdownByWeek> GroupWeeklyBreakdownByWeek(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown);
         List<WeeklyBreakdownByWeekBySpotLength> GroupWeeklyBreakdownByWeekBySpotLength(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown);
+        List<WeeklyBreakdownByStandardDaypart> GroupWeeklyBreakdownByStandardDaypart(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown);
         Dictionary<int, int> GetWeekNumberByMediaWeekDictionary(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown);
 
         /// <summary>
@@ -91,6 +92,22 @@ namespace Services.Broadcast.BusinessEngines
                         Impressions = allItems.Sum(x => x.WeeklyImpressions),
                         Budget = allItems.Sum(x => x.WeeklyBudget),
                         Adu = (int)(aduImpressions / BroadcastConstants.ImpressionsPerUnit)
+                    };
+                })
+                .ToList();
+        }
+
+        public List<WeeklyBreakdownByStandardDaypart> GroupWeeklyBreakdownByStandardDaypart(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown)
+        {
+            return weeklyBreakdown
+                .GroupBy(x => x.DaypartCodeId.Value)
+                .Select(grouping =>
+                {
+                    return new WeeklyBreakdownByStandardDaypart
+                    {
+                        StandardDaypartId = grouping.Key,
+                        Impressions = grouping.Sum(x => x.WeeklyImpressions),
+                        Budget = grouping.Sum(x => x.WeeklyBudget)
                     };
                 })
                 .ToList();
