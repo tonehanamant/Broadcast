@@ -109,7 +109,7 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
                 _MapToGenre(
                     context.genres
-                    .Single(item => item.program_source_id == (int)source && item.name == genreName, $"No genre found with name: {genreName}")));
+                    .Single(item => item.program_source_id == (int)source && item.name.ToUpper() == genreName.ToUpper(), $"No genre found with name: {genreName}")));
         }
     }
 }

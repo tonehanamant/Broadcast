@@ -537,6 +537,515 @@ END
 
 /*************************************** END - BP1-171 ****************************************************/
 
+/*************************************** START - BP1-567 ****************************************************/
+/* Add genres */
+if not exists(select 1 from genres where upper(name)='VARIOUS' and program_source_id=1)
+insert into genres (name, created_by, created_date, modified_by, modified_date, program_source_id)
+values ('Various', 'BP1-567', getdate(), 'BP1-567', getdate(), 1)
+
+if not exists(select 1 from genres where upper(name)='UNMATCHED' and program_source_id=1)
+insert into genres (name, created_by, created_date, modified_by, modified_date, program_source_id)
+values ('Unmatched', 'BP1-567', getdate(), 'BP1-567', getdate(), 1)
+
+if not exists(select 1 from genres where upper(name)='ANIMATION' and program_source_id=1)
+insert into genres (name, created_by, created_date, modified_by, modified_date, program_source_id)
+values ('Animation', 'BP1-567', getdate(), 'BP1-567', getdate(), 1)
+
+if not exists(select 1 from genres where upper(name)='COURT' and program_source_id=1)
+insert into genres (name, created_by, created_date, modified_by, modified_date, program_source_id)
+values ('Court', 'BP1-567', getdate(), 'BP1-567', getdate(), 1)
+
+if not exists(select 1 from genres where upper(name)='ENTERTAINMENT/REALITY' and program_source_id=1)
+insert into genres (name, created_by, created_date, modified_by, modified_date, program_source_id)
+values ('Entertainment/Reality', 'BP1-567', getdate(), 'BP1-567', getdate(), 1)
+
+if not exists(select 1 from genres where upper(name)='INFORMATIONAL/NEWS' and program_source_id=1)
+insert into genres (name, created_by, created_date, modified_by, modified_date, program_source_id)
+values ('Informational/News', 'BP1-567', getdate(), 'BP1-567', getdate(), 1)
+
+if not exists(select 1 from genres where upper(name)='MOVIE' and program_source_id=1)
+insert into genres (name, created_by, created_date, modified_by, modified_date, program_source_id)
+values ('Movie', 'BP1-567', getdate(), 'BP1-567', getdate(), 1)
+
+if not exists(select 1 from genres where upper(name)='SPANISH' and program_source_id=1)
+insert into genres (name, created_by, created_date, modified_by, modified_date, program_source_id)
+values ('Spanish', 'BP1-567', getdate(), 'BP1-567', getdate(), 1)
+
+if not exists(select 1 from genres where upper(name)='SPORTS TALK' and program_source_id=1)
+insert into genres (name, created_by, created_date, modified_by, modified_date, program_source_id)
+values ('Sports Talk', 'BP1-567', getdate(), 'BP1-567', getdate(), 1)
+
+if exists(select 1 from genres where upper(name)='SPORTS/SPORTS TALK' and program_source_id=1)
+update genres set name='Sports', modified_by='BP1-567', modified_date=getdate() 
+where upper(name)='SPORTS/SPORTS TALK' and program_source_id=1
+
+if not exists(select 1 from genres where upper(name)='TALK/TRASH TALK' and program_source_id=1)
+insert into genres (name, created_by, created_date, modified_by, modified_date, program_source_id)
+values ('Talk/Trash Talk', 'BP1-567', getdate(), 'BP1-567', getdate(), 1)
+
+/* Add exceptions */
+
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='ABC PRIME ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('ABC PRIME ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='ACCESS & PRIME ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('ACCESS & PRIME ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='ACCESS ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('ACCESS ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='ANIMATION ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('ANIMATION ROTATOR', 
+(select id from genres where upper(name)='ANIMATION' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='BOYS BASKETBALL')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('BOYS BASKETBALL', 
+(select id from genres where upper(name)='SPORTS' and program_source_id=1), 
+(select id from show_types where upper(name)='SPORTS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='BOYS BASKETBALL')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('BOYS BASKETBALL', 
+(select id from genres where upper(name)='SPORTS' and program_source_id=1), 
+(select id from show_types where upper(name)='SPORTS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='BOYS HOCKEY')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('BOYS HOCKEY', 
+(select id from genres where upper(name)='SPORTS' and program_source_id=1), 
+(select id from show_types where upper(name)='SPORTS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='CBS NEWS OVERNIGHT ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('CBS NEWS OVERNIGHT ROTATOR', 
+(select id from genres where upper(name)='NEWS' and program_source_id=1), 
+(select id from show_types where upper(name)='NEWS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='CHILDREN ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('CHILDREN ROTATOR', 
+(select id from genres where upper(name)='CHILDREN' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='COMEDY ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('COMEDY ROTATOR', 
+(select id from genres where upper(name)='COMEDY' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='CRIME DAYTIME ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('CRIME DAYTIME ROTATOR', 
+(select id from genres where upper(name)='CRIME' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='CRIME EARLY FRINGE ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('CRIME EARLY FRINGE ROTATOR', 
+(select id from genres where upper(name)='CRIME' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='CRIME LATE FRINGE ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('CRIME LATE FRINGE ROTATOR', 
+(select id from genres where upper(name)='CRIME' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='CRIME ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('CRIME ROTATOR', 
+(select id from genres where upper(name)='CRIME' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='DAYTIME & EARLY FRINGE ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('DAYTIME & EARLY FRINGE ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='DAYTIME ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('DAYTIME ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='DAYTIME-EARLY FRINGE ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('DAYTIME-EARLY FRINGE ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='DIRECT RESPONSE ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('DIRECT RESPONSE ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='DRAMA ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('DRAMA ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='EARLY & LATE FRINGE ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('EARLY & LATE FRINGE ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='EARLY FRINGE ACCESS ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('EARLY FRINGE ACCESS ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='EARLY FRINGE ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('EARLY FRINGE ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='EARLY MORNING & DAYTIME ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('EARLY MORNING & DAYTIME ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='EARLY MORNING ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('EARLY MORNING ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='EARLY MORNING ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('EARLY MORNING ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='EARLY NEWS ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('EARLY NEWS ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='EVENING NEWS ACCESS ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('EVENING NEWS ACCESS ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='EVENING NEWS ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('EVENING NEWS ROTATOR', 
+(select id from genres where upper(name)='NEWS' and program_source_id=1), 
+(select id from show_types where upper(name)='NEWS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='FRINGE ACCESS ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('FRINGE ACCESS ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='FRINGE ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('FRINGE ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='HOLIDAY ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('HOLIDAY ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='HOME IMPROVEMENT ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('HOME IMPROVEMENT ROTATOR', 
+(select id from genres where upper(name)='INFORMATIONAL' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='LATE FRING & ACCESS ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('LATE FRING & ACCESS ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='LATE FRINGE ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('LATE FRINGE ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='LATE NIGHT ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('LATE NIGHT ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='MOVIE ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('MOVIE ROTATOR', 
+(select id from genres where upper(name)='MOVIE' and program_source_id=1), 
+(select id from show_types where upper(name)='MOVIE'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='NBA')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('NBA', 
+(select id from genres where upper(name)='SPORTS' and program_source_id=1), 
+(select id from show_types where upper(name)='SPORTS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='NFL')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('NFL', 
+(select id from genres where upper(name)='SPORTS' and program_source_id=1), 
+(select id from show_types where upper(name)='SPORTS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='NFL')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('NFL', 
+(select id from genres where upper(name)='SPORTS' and program_source_id=1), 
+(select id from show_types where upper(name)='SPORTS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='NFL')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('NFL', 
+(select id from genres where upper(name)='SPORTS' and program_source_id=1), 
+(select id from show_types where upper(name)='SPORTS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='OVERNIGHT ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('OVERNIGHT ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='PAID PROGRAMMING ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('PAID PROGRAMMING ROTATOR', 
+(select id from genres where upper(name)='PAID PROGRAM' and program_source_id=1), 
+(select id from show_types where upper(name)='PAID PROGRAMMING'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='PRIME ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('PRIME ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='RELIGIOUS ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('RELIGIOUS ROTATOR', 
+(select id from genres where upper(name)='RELIGIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='ROS ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('ROS ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='ROTATORS')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('ROTATORS', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='SKATING')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('SKATING', 
+(select id from genres where upper(name)='SPORTS' and program_source_id=1), 
+(select id from show_types where upper(name)='SPORTS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='SOAPS ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('SOAPS ROTATOR', 
+(select id from genres where upper(name)='DRAMA' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='SPANISH MOVIE')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('SPANISH MOVIE', 
+(select id from genres where upper(name)='MOVIE' and program_source_id=1), 
+(select id from show_types where upper(name)='MOVIE'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='SPORTS ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('SPORTS ROTATOR', 
+(select id from genres where upper(name)='SPORTS' and program_source_id=1), 
+(select id from show_types where upper(name)='SPORTS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='SYNDICATION ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('SYNDICATION ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='TALK ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('TALK ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='WEEKEND ACCESS ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('WEEKEND ACCESS ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='WEEKEND DAYTIME ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('WEEKEND DAYTIME ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='WEEKEND EARLY FRINGE & ACCESS ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('WEEKEND EARLY FRINGE & ACCESS ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='WEEKEND EARLY FRINGE ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('WEEKEND EARLY FRINGE ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='WEEKEND EARLY MORNING ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('WEEKEND EARLY MORNING ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='WEEKEND LATE FRINGE ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('WEEKEND LATE FRINGE ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='WEEKEND MOVIE ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('WEEKEND MOVIE ROTATOR', 
+(select id from genres where upper(name)='MOVIE' and program_source_id=1), 
+(select id from show_types where upper(name)='MOVIE'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='WEEKEND PRIME ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('WEEKEND PRIME ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='WEEKEND ROS ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('WEEKEND ROS ROTATOR', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='WEEKEND SPORTS ROTATOR')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('WEEKEND SPORTS ROTATOR', 
+(select id from genres where upper(name)='SPORTS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='WNBA')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('WNBA', 
+(select id from genres where upper(name)='SPORTS' and program_source_id=1), 
+(select id from show_types where upper(name)='SPORTS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='XFL')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('XFL', 
+(select id from genres where upper(name)='SPORTS' and program_source_id=1), 
+(select id from show_types where upper(name)='SPORTS'),
+ 'BP1-567', getdate());
+
+if not exists (select 1 from program_name_exceptions where upper(custom_program_name)='UNMATCHED')
+ insert into program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+ values ('UNMATCHED', 
+(select id from genres where upper(name)='VARIOUS' and program_source_id=1), 
+(select id from show_types where upper(name)='MISCELLANEOUS'),
+ 'BP1-567', getdate());
+
+
+
+/*************************************** END - BP1-567 ****************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

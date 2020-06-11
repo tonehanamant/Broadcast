@@ -59,7 +59,7 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
             {
                 return _MapToDto(context.show_types
-                    .Single(item => item.name == showTypeName, $"No show type was found by name : {showTypeName}"));
+                    .Single(item => item.name.ToUpper() == showTypeName.ToUpper(), $"No show type was found by name : {showTypeName}"));
             });
         }
 
