@@ -47,7 +47,7 @@ namespace Services.Broadcast.ApplicationServices
 	        searchRequest.Start = searchRequest.Start ?? 1;
 	        searchRequest.Limit = searchRequest.Limit ?? upperLimit;
 	        var result = new List<ProgramDto>();
-	        var exceptionResults = _LoadProgramFromExceptions(searchRequest.ProgramName);
+	        var exceptionResults = _LoadProgramFromExceptions(searchRequest);
 	        foreach (var exceptionResult in exceptionResults)
 	        {
 		        result.Add(exceptionResult);
@@ -125,21 +125,28 @@ namespace Services.Broadcast.ApplicationServices
         {
 	        var result = new List<ProgramDto>();
 			var internalPrograms = _ProgramNameRepository.FindProgramFromMapping(searchRequest.ProgramName);
-	        foreach (var internalProgram in internalPrograms)
-		        result.Add(new ProgramDto
-		        {
-			        Name = internalProgram.OfficialProgramName,
-			        Genre = _GenreCache.GetGenreById(internalProgram.GenreId, ProgramSourceEnum.Mapped)
-		        });
-	        return result;
+			foreach (var internalProgram in internalPrograms)
+			{
+				if (searchRequest.IgnorePrograms.Contains(internalProgram.OfficialProgramName))
+					continue;
+				result.Add(new ProgramDto
+				{
+					Name = internalProgram.OfficialProgramName,
+					Genre = _GenreCache.GetGenreById(internalProgram.GenreId, ProgramSourceEnum.Mapped)
+				});
+			}
+
+			return result;
         }
 
-		private List<ProgramDto> _LoadProgramFromExceptions(string programName)
+		private List<ProgramDto> _LoadProgramFromExceptions(SearchRequestProgramDto searchRequest)
 		{
 			var result = new List<ProgramDto>();
-			var exceptionPrograms = _ProgramNameRepository.FindProgramFromExceptions(programName);
+			var exceptionPrograms = _ProgramNameRepository.FindProgramFromExceptions(searchRequest.ProgramName);
 			foreach (var exceptionProgram in exceptionPrograms)
 			{
+				if (searchRequest.IgnorePrograms.Contains(exceptionProgram.CustomProgramName))
+					continue;
 				result.Add(new ProgramDto
 				{
 					Name = exceptionProgram.CustomProgramName,

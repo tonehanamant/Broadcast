@@ -54,5 +54,87 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 			Assert.AreEqual("Golf", result.FirstOrDefault().Name, "Valid Result");
 			Assert.AreNotEqual("NBC", result.FirstOrDefault().Name, "Invalid Result");
 		}
+		[Test]
+		public void GetProgramsForMappingIgnoreProgramFromMapping()
+		{
+			// Arrange
+			var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+			var programNameRepository = new Mock<IProgramNameRepository>();
+			var genreCacheMock = new Mock<IGenreCache>();
+			broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IProgramNameRepository>())
+				.Returns(programNameRepository.Object);
+			programNameRepository.Setup(p => p.FindProgramFromMapping(It.IsAny<string>()))
+				.Returns(new List<ProgramNameMappingDto>
+					{new ProgramNameMappingDto {GenreId = 33, ShowTypeId = 1, OfficialProgramName = "Golf"}});
+			programNameRepository.Setup(p => p.FindProgramFromExceptions(It.IsAny<string>()))
+				.Returns(new List<ProgramNameExceptionDto>
+					{new ProgramNameExceptionDto {GenreId = 33, ShowTypeId = 1, CustomProgramName = "Golf 123"}});
+
+			genreCacheMock
+				.Setup(x => x.GetGenreById(It.IsAny<int>(), It.IsAny<ProgramSourceEnum>()))
+				.Returns(new LookupDto
+				{
+					Id = 1,
+					Display = "Genre"
+				});
+			var searchRequest = new SearchRequestProgramDto
+			{
+				ProgramName = "Golf",
+				IgnorePrograms = {"Golf"}
+			};
+
+			var service = new ProgramServiceUnitTestClass(genreCacheMock.Object, null, null,
+				broadcastDataRepositoryFactory.Object);
+			service.UT_EnableInternalProgramSearch = true;
+
+			// Act
+			var result = service.GetPrograms(searchRequest, "shubhra");
+
+			// Assert
+			Assert.AreEqual(1, result.Count, "Valid Count");
+			Assert.AreEqual("Golf 123", result.FirstOrDefault().Name, "Valid Result");
+			
+		}
+		[Test]
+		public void GetProgramsForMappingIgnoreProgramFromException()
+		{
+			// Arrange
+			var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+			var programNameRepository = new Mock<IProgramNameRepository>();
+			var genreCacheMock = new Mock<IGenreCache>();
+			broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IProgramNameRepository>())
+				.Returns(programNameRepository.Object);
+			programNameRepository.Setup(p => p.FindProgramFromMapping(It.IsAny<string>()))
+				.Returns(new List<ProgramNameMappingDto>
+					{new ProgramNameMappingDto {GenreId = 33, ShowTypeId = 1, OfficialProgramName = "Golf"}});
+			programNameRepository.Setup(p => p.FindProgramFromExceptions(It.IsAny<string>()))
+				.Returns(new List<ProgramNameExceptionDto>
+					{new ProgramNameExceptionDto {GenreId = 33, ShowTypeId = 1, CustomProgramName = "Golf 123"}});
+
+			genreCacheMock
+				.Setup(x => x.GetGenreById(It.IsAny<int>(), It.IsAny<ProgramSourceEnum>()))
+				.Returns(new LookupDto
+				{
+					Id = 1,
+					Display = "Genre"
+				});
+			var searchRequest = new SearchRequestProgramDto
+			{
+				ProgramName = "Golf",
+				IgnorePrograms = { "Golf 123" }
+			};
+
+			var service = new ProgramServiceUnitTestClass(genreCacheMock.Object, null, null,
+				broadcastDataRepositoryFactory.Object);
+			service.UT_EnableInternalProgramSearch = true;
+
+			// Act
+			var result = service.GetPrograms(searchRequest, "shubhra");
+
+			// Assert
+			Assert.AreEqual(1, result.Count, "Valid Count");
+			Assert.AreEqual("Golf", result.FirstOrDefault().Name, "Valid Result");
+
+		}
 	}
 }
