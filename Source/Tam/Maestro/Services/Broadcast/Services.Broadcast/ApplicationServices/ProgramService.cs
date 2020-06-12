@@ -121,23 +121,22 @@ namespace Services.Broadcast.ApplicationServices
 			return result;
 		}
 
-		private List<ProgramDto> _LoadProgramFromMapping(SearchRequestProgramDto searchRequest)
+        private List<ProgramDto> _LoadProgramFromMapping(SearchRequestProgramDto searchRequest)
         {
-	        var result = new List<ProgramDto>();
-			var internalPrograms = _ProgramNameRepository.FindProgramFromMapping(searchRequest.ProgramName);
-			foreach (var internalProgram in internalPrograms)
-			{
-				if (searchRequest.IgnorePrograms.Contains(internalProgram.OfficialProgramName))
-					continue;
-				result.Add(new ProgramDto
-				{
-					Name = internalProgram.OfficialProgramName,
-					Genre = _GenreCache.GetGenreById(internalProgram.GenreId, ProgramSourceEnum.Mapped)
-				});
-			}
-
-			return result;
-        }
+            var result = new List<ProgramDto>();
+            var internalPrograms = _ProgramNameRepository.FindProgramFromMapping(searchRequest.ProgramName);
+            foreach (var internalProgram in internalPrograms)
+            {
+                if (searchRequest.IgnorePrograms.Contains(internalProgram.OfficialProgramName))
+                    continue;
+                result.Add(new ProgramDto
+                {
+                    Name = internalProgram.OfficialProgramName,
+                    Genre = _GenreCache.GetGenreById(internalProgram.GenreId, ProgramSourceEnum.Mapped)
+                });
+            }
+            return result;
+        }		
 
 		private List<ProgramDto> _LoadProgramFromExceptions(SearchRequestProgramDto searchRequest)
 		{
@@ -156,6 +155,5 @@ namespace Services.Broadcast.ApplicationServices
 			}
 			return result;
 		}
-
 	}
 }

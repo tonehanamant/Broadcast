@@ -872,6 +872,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         }
                     },
                     PricingParameters = planParameters,
+                    FlightStartDate = new DateTime(2005, 11, 21),
+                    FlightEndDate = new DateTime(2005, 12, 18),
+                    FlightDays = new List<int>(),
+                    TargetRatingPoints = 1000,
                     WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
                     {
                         new WeeklyBreakdownWeek
@@ -1044,6 +1048,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
                 .Returns(_GetLatestMarketCoverages());
+
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+                .Returns(_GetWeeklyBreakDownWeeks());
 
             var jobUpdates = new List<PlanPricingJob>();
             _PlanRepositoryMock
@@ -1947,6 +1956,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
                     AvailableMarkets = new List<PlanAvailableMarketDto>(),
                     PricingParameters = _GetPlanPricingParametersDto(),
+                    FlightStartDate = new DateTime(2005, 11, 21),
+                    FlightEndDate = new DateTime(2005, 12, 18),
+                    FlightDays = new List<int>(),
+                    TargetRatingPoints = 1000,
                     WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
                     {
                         new WeeklyBreakdownWeek
@@ -2043,6 +2056,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
                 .Returns(_GetLatestMarketCoverages());
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+                .Returns(_GetWeeklyBreakDownWeeks());
+
             var service = _GetService();
 
             // Act
@@ -2102,6 +2119,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         }
                     },
                     PricingParameters = _GetPlanPricingParametersDto(),
+                    FlightStartDate = new DateTime(2005, 11, 21),
+                    FlightEndDate = new DateTime(2005, 12, 18),
+                    FlightDays = new List<int>(),
+                    TargetRatingPoints = 1000,
                     WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
                     {
                         new WeeklyBreakdownWeek
@@ -2160,6 +2181,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         MediaWeekId = 103
                     }
                 });
+
+            _WeeklyBreakdownEngineMock
+               .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+               .Returns(_GetWeeklyBreakDownWeeks());
 
             _PlanPricingInventoryEngineMock
                 .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
@@ -2715,6 +2740,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         }
                     },
                     PricingParameters = _GetPlanPricingParametersDto(),
+                    FlightStartDate = new DateTime(2005, 11, 21),
+                    FlightEndDate = new DateTime(2005, 12, 18),
+                    FlightDays = new List<int>(),
+                    TargetRatingPoints = 1000,
                     WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
                     {
                         new WeeklyBreakdownWeek
@@ -3264,6 +3293,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
                 .Returns(_GetLatestMarketCoverages());
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+                .Returns(_GetWeeklyBreakDownWeeks());
+
             _PricingApiClientMock
                 .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
                 .Returns(new PlanPricingApiSpotsResponseDto
@@ -3346,6 +3379,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             WeightingGoalPercent = 40
                         }
                     },
+                    FlightStartDate = new DateTime(2005, 11, 21),
+                    FlightEndDate = new DateTime(2005, 12, 18),
+                    FlightDays = new List<int>(),
+                    TargetRatingPoints = 1000,
                     PricingParameters = _GetPlanPricingParametersDto(),
                     WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
                     {
@@ -3895,6 +3932,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
                 .Returns(_GetLatestMarketCoverages());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+                .Returns(_GetWeeklyBreakDownWeeks());
 
             _PricingApiClientMock
                 .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
@@ -3980,6 +4021,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         }
                     },
                     PricingParameters = _GetPlanPricingParametersDto(),
+                    FlightStartDate = new DateTime(2005, 11, 21),
+                    FlightEndDate = new DateTime(2005, 12, 18),
+                    FlightDays = new List<int>(),
+                    TargetRatingPoints = 1000,
                     WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
                     {
                         new WeeklyBreakdownWeek
@@ -4529,6 +4574,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
                 .Returns(_GetLatestMarketCoverages());
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+                .Returns(_GetWeeklyBreakDownWeeks());
+
             _PricingApiClientMock
                 .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
                 .Returns(new PlanPricingApiSpotsResponseDto
@@ -4578,6 +4627,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     VersionId = 77,
                     CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
                     CoverageGoalPercent = 80,
+                    FlightStartDate = new DateTime(2005, 11, 21),
+                    FlightEndDate = new DateTime(2005, 12, 18),
+                    FlightDays = new List<int>(),
+                    TargetRatingPoints = 1000,
                     AvailableMarkets = new List<PlanAvailableMarketDto>
                     {
                         new PlanAvailableMarketDto
@@ -5160,6 +5213,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
                 .Returns(_GetLatestMarketCoverages());
 
+            _WeeklyBreakdownEngineMock
+               .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+               .Returns(_GetWeeklyBreakDownWeeks());
+
             _PricingApiClientMock
                 .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
                 .Returns(new PlanPricingApiSpotsResponseDto
@@ -5246,6 +5303,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             ShareOfVoicePercent = 13
                         }
                     },
+                    FlightStartDate = new DateTime(2005, 11, 21),
+                    FlightEndDate = new DateTime(2005, 12, 18),
+                    FlightDays = new List<int>(),
+                    TargetRatingPoints = 1000,
                     Dayparts = new List<PlanDaypartDto>
                     {
                         new PlanDaypartDto
@@ -5288,6 +5349,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         }
                     }
                 });
+
+            _WeeklyBreakdownEngineMock
+               .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+               .Returns(_GetWeeklyBreakDownWeeks());
 
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
@@ -7321,6 +7386,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
                 .Returns(_GetWeeklyBreakDownGroup());
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+                .Returns(_GetWeeklyBreakDownWeeks());
+
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
                 .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
@@ -7372,6 +7441,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
                 .Returns(_GetWeeklyBreakDownGroup());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+                .Returns(_GetWeeklyBreakDownWeeks());
 
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
@@ -7425,6 +7498,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
                 .Returns(_GetWeeklyBreakDownGroup());
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+                .Returns(_GetWeeklyBreakDownWeeks());
+
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
                 .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
@@ -7477,6 +7554,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
                 .Returns(_GetWeeklyBreakDownGroup());
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+                .Returns(_GetWeeklyBreakDownWeeks());
+
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
                 .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
@@ -7524,6 +7605,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestTop25MarketCoverages())
                 .Returns(_GetTop25Markets());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+                .Returns(_GetWeeklyBreakDownWeeks());
 
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
@@ -7577,6 +7662,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
                 .Returns(_GetWeeklyBreakDownGroup());
 
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+                .Returns(_GetWeeklyBreakDownWeeks());
+
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
                 .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
@@ -7622,6 +7711,40 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 };
         }
 
+        private WeeklyBreakdownResponseDto _GetWeeklyBreakDownWeeks()
+        {
+            return new WeeklyBreakdownResponseDto
+            {
+                Weeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 150,
+                        WeeklyBudget = 15,
+                        MediaWeekId = 100
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 250,
+                        WeeklyBudget = 15m,
+                        MediaWeekId = 101
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 100,
+                        WeeklyBudget = 15m,
+                        MediaWeekId = 102
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 0,
+                        WeeklyBudget = 15m,
+                        MediaWeekId = 103
+                    }
+                }
+            }; 
+        }
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void RunPricingJobNoMarketsTest()
@@ -7655,6 +7778,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
                 .Returns(_GetWeeklyBreakDownGroup());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+                .Returns(_GetWeeklyBreakDownWeeks());
 
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
@@ -8077,6 +8204,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         }
                     },
                 PricingParameters = _GetPlanPricingParametersDto(),
+                FlightStartDate = new DateTime(2005, 11, 21),
+                FlightEndDate = new DateTime(2005, 12, 18),
+                FlightDays = new List<int>(),
+                TargetRatingPoints = 1000,
                 WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
                     {
                         new WeeklyBreakdownWeek

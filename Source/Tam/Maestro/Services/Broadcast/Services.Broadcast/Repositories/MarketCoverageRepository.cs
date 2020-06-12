@@ -146,7 +146,7 @@ namespace Services.Broadcast.Repositories
                         .OrderByDescending(x => x.created_date)
                         .First();
 
-                    var marketCoveragesOrdered = lastMarketCoverageFile.market_coverages.OrderBy(x => x.percentage_of_us).Take(marketCount);
+                    var marketCoveragesOrdered = lastMarketCoverageFile.market_coverages.OrderBy(x => x.rank).Take(marketCount);
 
                     var marketCoveragesByMarketCode = marketCoveragesOrdered.ToDictionary(m => Convert.ToInt32(m.market_code), m => m.percentage_of_us);
 

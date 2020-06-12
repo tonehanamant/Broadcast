@@ -21,11 +21,11 @@
         "share_of_voice": [
           {
             "market_code": 100,
-            "market_goal": 0.1
+            "market_goal": 0.001
           },
           {
             "market_code": 302,
-            "market_goal": 0.302
+            "market_goal": 0.00302
           },
           {
             "market_code": 101,
@@ -58,11 +58,11 @@
         "share_of_voice": [
           {
             "market_code": 100,
-            "market_goal": 0.1
+            "market_goal": 0.001
           },
           {
             "market_code": 302,
-            "market_goal": 0.302
+            "market_goal": 0.00302
           },
           {
             "market_code": 101,

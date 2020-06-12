@@ -1,4 +1,4 @@
-﻿{
+{
   "contract": [
     {
       "cpm_goal": 0.02000,
@@ -15,6 +15,102 @@
       "market_coverage_goal": 0.805,
       "share_of_voice": [
         {
+          "market_code": 403,
+          "market_goal": 0.04743
+        },
+        {
+          "market_code": 202,
+          "market_goal": 0.02942
+        },
+        {
+          "market_code": 104,
+          "market_goal": 0.02559
+        },
+        {
+          "market_code": 223,
+          "market_goal": 0.02362
+        },
+        {
+          "market_code": 111,
+          "market_goal": 0.02222
+        },
+        {
+          "market_code": 218,
+          "market_goal": 0.022
+        },
+        {
+          "market_code": 407,
+          "market_goal": 0.02186
+        },
+        {
+          "market_code": 124,
+          "market_goal": 0.02184
+        },
+        {
+          "market_code": 106,
+          "market_goal": 0.02163
+        },
+        {
+          "market_code": 353,
+          "market_goal": 0.01712
+        },
+        {
+          "market_code": 419,
+          "market_goal": 0.01677
+        },
+        {
+          "market_code": 139,
+          "market_goal": 0.01676
+        },
+        {
+          "market_code": 105,
+          "market_goal": 0.01587
+        },
+        {
+          "market_code": 213,
+          "market_goal": 0.01543
+        },
+        {
+          "market_code": 128,
+          "market_goal": 0.01496
+        },
+        {
+          "market_code": 351,
+          "market_goal": 0.01417
+        },
+        {
+          "market_code": 134,
+          "market_goal": 0.01365
+        },
+        {
+          "market_code": 110,
+          "market_goal": 0.01291
+        },
+        {
+          "market_code": 462,
+          "market_goal": 0.0126
+        },
+        {
+          "market_code": 209,
+          "market_goal": 0.01061
+        },
+        {
+          "market_code": 420,
+          "market_goal": 0.01053
+        },
+        {
+          "market_code": 117,
+          "market_goal": 0.01021
+        },
+        {
+          "market_code": 108,
+          "market_goal": 0.01018
+        },
+        {
+          "market_code": 160,
+          "market_goal": 0.0101
+        },
+        {
           "market_code": 100,
           "market_goal": 0.222
         },
@@ -39,6 +135,102 @@
       "impression_goal": 10000000.0,
       "market_coverage_goal": 0.805,
       "share_of_voice": [
+        {
+          "market_code": 403,
+          "market_goal": 0.04743
+        },
+        {
+          "market_code": 202,
+          "market_goal": 0.02942
+        },
+        {
+          "market_code": 104,
+          "market_goal": 0.02559
+        },
+        {
+          "market_code": 223,
+          "market_goal": 0.02362
+        },
+        {
+          "market_code": 111,
+          "market_goal": 0.02222
+        },
+        {
+          "market_code": 218,
+          "market_goal": 0.022
+        },
+        {
+          "market_code": 407,
+          "market_goal": 0.02186
+        },
+        {
+          "market_code": 124,
+          "market_goal": 0.02184
+        },
+        {
+          "market_code": 106,
+          "market_goal": 0.02163
+        },
+        {
+          "market_code": 353,
+          "market_goal": 0.01712
+        },
+        {
+          "market_code": 419,
+          "market_goal": 0.01677
+        },
+        {
+          "market_code": 139,
+          "market_goal": 0.01676
+        },
+        {
+          "market_code": 105,
+          "market_goal": 0.01587
+        },
+        {
+          "market_code": 213,
+          "market_goal": 0.01543
+        },
+        {
+          "market_code": 128,
+          "market_goal": 0.01496
+        },
+        {
+          "market_code": 351,
+          "market_goal": 0.01417
+        },
+        {
+          "market_code": 134,
+          "market_goal": 0.01365
+        },
+        {
+          "market_code": 110,
+          "market_goal": 0.01291
+        },
+        {
+          "market_code": 462,
+          "market_goal": 0.0126
+        },
+        {
+          "market_code": 209,
+          "market_goal": 0.01061
+        },
+        {
+          "market_code": 420,
+          "market_goal": 0.01053
+        },
+        {
+          "market_code": 117,
+          "market_goal": 0.01021
+        },
+        {
+          "market_code": 108,
+          "market_goal": 0.01018
+        },
+        {
+          "market_code": 160,
+          "market_goal": 0.0101
+        },
         {
           "market_code": 100,
           "market_goal": 0.222
@@ -65,6 +257,102 @@
       "market_coverage_goal": 0.805,
       "share_of_voice": [
         {
+          "market_code": 403,
+          "market_goal": 0.04743
+        },
+        {
+          "market_code": 202,
+          "market_goal": 0.02942
+        },
+        {
+          "market_code": 104,
+          "market_goal": 0.02559
+        },
+        {
+          "market_code": 223,
+          "market_goal": 0.02362
+        },
+        {
+          "market_code": 111,
+          "market_goal": 0.02222
+        },
+        {
+          "market_code": 218,
+          "market_goal": 0.022
+        },
+        {
+          "market_code": 407,
+          "market_goal": 0.02186
+        },
+        {
+          "market_code": 124,
+          "market_goal": 0.02184
+        },
+        {
+          "market_code": 106,
+          "market_goal": 0.02163
+        },
+        {
+          "market_code": 353,
+          "market_goal": 0.01712
+        },
+        {
+          "market_code": 419,
+          "market_goal": 0.01677
+        },
+        {
+          "market_code": 139,
+          "market_goal": 0.01676
+        },
+        {
+          "market_code": 105,
+          "market_goal": 0.01587
+        },
+        {
+          "market_code": 213,
+          "market_goal": 0.01543
+        },
+        {
+          "market_code": 128,
+          "market_goal": 0.01496
+        },
+        {
+          "market_code": 351,
+          "market_goal": 0.01417
+        },
+        {
+          "market_code": 134,
+          "market_goal": 0.01365
+        },
+        {
+          "market_code": 110,
+          "market_goal": 0.01291
+        },
+        {
+          "market_code": 462,
+          "market_goal": 0.0126
+        },
+        {
+          "market_code": 209,
+          "market_goal": 0.01061
+        },
+        {
+          "market_code": 420,
+          "market_goal": 0.01053
+        },
+        {
+          "market_code": 117,
+          "market_goal": 0.01021
+        },
+        {
+          "market_code": 108,
+          "market_goal": 0.01018
+        },
+        {
+          "market_code": 160,
+          "market_goal": 0.0101
+        },
+        {
           "market_code": 100,
           "market_goal": 0.222
         },
@@ -90,6 +378,102 @@
       "market_coverage_goal": 0.805,
       "share_of_voice": [
         {
+          "market_code": 403,
+          "market_goal": 0.04743
+        },
+        {
+          "market_code": 202,
+          "market_goal": 0.02942
+        },
+        {
+          "market_code": 104,
+          "market_goal": 0.02559
+        },
+        {
+          "market_code": 223,
+          "market_goal": 0.02362
+        },
+        {
+          "market_code": 111,
+          "market_goal": 0.02222
+        },
+        {
+          "market_code": 218,
+          "market_goal": 0.022
+        },
+        {
+          "market_code": 407,
+          "market_goal": 0.02186
+        },
+        {
+          "market_code": 124,
+          "market_goal": 0.02184
+        },
+        {
+          "market_code": 106,
+          "market_goal": 0.02163
+        },
+        {
+          "market_code": 353,
+          "market_goal": 0.01712
+        },
+        {
+          "market_code": 419,
+          "market_goal": 0.01677
+        },
+        {
+          "market_code": 139,
+          "market_goal": 0.01676
+        },
+        {
+          "market_code": 105,
+          "market_goal": 0.01587
+        },
+        {
+          "market_code": 213,
+          "market_goal": 0.01543
+        },
+        {
+          "market_code": 128,
+          "market_goal": 0.01496
+        },
+        {
+          "market_code": 351,
+          "market_goal": 0.01417
+        },
+        {
+          "market_code": 134,
+          "market_goal": 0.01365
+        },
+        {
+          "market_code": 110,
+          "market_goal": 0.01291
+        },
+        {
+          "market_code": 462,
+          "market_goal": 0.0126
+        },
+        {
+          "market_code": 209,
+          "market_goal": 0.01061
+        },
+        {
+          "market_code": 420,
+          "market_goal": 0.01053
+        },
+        {
+          "market_code": 117,
+          "market_goal": 0.01021
+        },
+        {
+          "market_code": 108,
+          "market_goal": 0.01018
+        },
+        {
+          "market_code": 160,
+          "market_goal": 0.0101
+        },
+        {
           "market_code": 100,
           "market_goal": 0.222
         },
@@ -114,6 +498,102 @@
       "impression_goal": 10000000.0,
       "market_coverage_goal": 0.805,
       "share_of_voice": [
+        {
+          "market_code": 403,
+          "market_goal": 0.04743
+        },
+        {
+          "market_code": 202,
+          "market_goal": 0.02942
+        },
+        {
+          "market_code": 104,
+          "market_goal": 0.02559
+        },
+        {
+          "market_code": 223,
+          "market_goal": 0.02362
+        },
+        {
+          "market_code": 111,
+          "market_goal": 0.02222
+        },
+        {
+          "market_code": 218,
+          "market_goal": 0.022
+        },
+        {
+          "market_code": 407,
+          "market_goal": 0.02186
+        },
+        {
+          "market_code": 124,
+          "market_goal": 0.02184
+        },
+        {
+          "market_code": 106,
+          "market_goal": 0.02163
+        },
+        {
+          "market_code": 353,
+          "market_goal": 0.01712
+        },
+        {
+          "market_code": 419,
+          "market_goal": 0.01677
+        },
+        {
+          "market_code": 139,
+          "market_goal": 0.01676
+        },
+        {
+          "market_code": 105,
+          "market_goal": 0.01587
+        },
+        {
+          "market_code": 213,
+          "market_goal": 0.01543
+        },
+        {
+          "market_code": 128,
+          "market_goal": 0.01496
+        },
+        {
+          "market_code": 351,
+          "market_goal": 0.01417
+        },
+        {
+          "market_code": 134,
+          "market_goal": 0.01365
+        },
+        {
+          "market_code": 110,
+          "market_goal": 0.01291
+        },
+        {
+          "market_code": 462,
+          "market_goal": 0.0126
+        },
+        {
+          "market_code": 209,
+          "market_goal": 0.01061
+        },
+        {
+          "market_code": 420,
+          "market_goal": 0.01053
+        },
+        {
+          "market_code": 117,
+          "market_goal": 0.01021
+        },
+        {
+          "market_code": 108,
+          "market_goal": 0.01018
+        },
+        {
+          "market_code": 160,
+          "market_goal": 0.0101
+        },
         {
           "market_code": 100,
           "market_goal": 0.222
@@ -128,7 +608,7 @@
   ],
   "inventory": [
     {
-      "cost": 750.0000,
+      "cost": 753.7500000,
       "daypart_id": 2,
       "id": 287146,
       "impressions": 58650.0,
@@ -140,7 +620,7 @@
       "week_id": 771
     },
     {
-      "cost": 750.0000,
+      "cost": 753.7500000,
       "daypart_id": 2,
       "id": 287146,
       "impressions": 58650.0,
@@ -152,7 +632,7 @@
       "week_id": 772
     },
     {
-      "cost": 750.0000,
+      "cost": 753.7500000,
       "daypart_id": 2,
       "id": 287146,
       "impressions": 58650.0,
@@ -164,7 +644,7 @@
       "week_id": 773
     },
     {
-      "cost": 750.0000,
+      "cost": 753.7500000,
       "daypart_id": 2,
       "id": 287146,
       "impressions": 58650.0,
@@ -176,7 +656,7 @@
       "week_id": 774
     },
     {
-      "cost": 750.0000,
+      "cost": 753.7500000,
       "daypart_id": 2,
       "id": 287146,
       "impressions": 58650.0,
@@ -188,7 +668,7 @@
       "week_id": 775
     },
     {
-      "cost": 700.0000,
+      "cost": 703.5000000,
       "daypart_id": 2,
       "id": 287147,
       "impressions": 50320.0,
@@ -200,7 +680,7 @@
       "week_id": 771
     },
     {
-      "cost": 700.0000,
+      "cost": 703.5000000,
       "daypart_id": 2,
       "id": 287147,
       "impressions": 50320.0,
@@ -212,7 +692,7 @@
       "week_id": 772
     },
     {
-      "cost": 700.0000,
+      "cost": 703.5000000,
       "daypart_id": 2,
       "id": 287147,
       "impressions": 50320.0,
@@ -224,7 +704,7 @@
       "week_id": 773
     },
     {
-      "cost": 700.0000,
+      "cost": 703.5000000,
       "daypart_id": 2,
       "id": 287147,
       "impressions": 50320.0,
@@ -236,7 +716,7 @@
       "week_id": 774
     },
     {
-      "cost": 700.0000,
+      "cost": 703.5000000,
       "daypart_id": 2,
       "id": 287147,
       "impressions": 50320.0,
@@ -248,7 +728,7 @@
       "week_id": 775
     },
     {
-      "cost": 800.0000,
+      "cost": 804.0000000,
       "daypart_id": 2,
       "id": 287150,
       "impressions": 51340.0,
@@ -260,7 +740,7 @@
       "week_id": 771
     },
     {
-      "cost": 800.0000,
+      "cost": 804.0000000,
       "daypart_id": 2,
       "id": 287150,
       "impressions": 51340.0,
@@ -272,7 +752,7 @@
       "week_id": 772
     },
     {
-      "cost": 800.0000,
+      "cost": 804.0000000,
       "daypart_id": 2,
       "id": 287150,
       "impressions": 51340.0,
@@ -284,7 +764,7 @@
       "week_id": 773
     },
     {
-      "cost": 800.0000,
+      "cost": 804.0000000,
       "daypart_id": 2,
       "id": 287150,
       "impressions": 51340.0,
@@ -296,7 +776,7 @@
       "week_id": 774
     },
     {
-      "cost": 800.0000,
+      "cost": 804.0000000,
       "daypart_id": 2,
       "id": 287150,
       "impressions": 51340.0,
@@ -308,7 +788,7 @@
       "week_id": 775
     },
     {
-      "cost": 750.0000,
+      "cost": 753.7500000,
       "daypart_id": 2,
       "id": 287151,
       "impressions": 37060.0,
@@ -320,7 +800,7 @@
       "week_id": 771
     },
     {
-      "cost": 750.0000,
+      "cost": 753.7500000,
       "daypart_id": 2,
       "id": 287151,
       "impressions": 37060.0,
@@ -332,7 +812,7 @@
       "week_id": 772
     },
     {
-      "cost": 750.0000,
+      "cost": 753.7500000,
       "daypart_id": 2,
       "id": 287151,
       "impressions": 37060.0,
@@ -344,7 +824,7 @@
       "week_id": 773
     },
     {
-      "cost": 750.0000,
+      "cost": 753.7500000,
       "daypart_id": 2,
       "id": 287151,
       "impressions": 37060.0,
@@ -356,7 +836,7 @@
       "week_id": 774
     },
     {
-      "cost": 750.0000,
+      "cost": 753.7500000,
       "daypart_id": 2,
       "id": 287151,
       "impressions": 37060.0,
@@ -368,7 +848,7 @@
       "week_id": 775
     },
     {
-      "cost": 600.0000,
+      "cost": 603.0000000,
       "daypart_id": 2,
       "id": 287154,
       "impressions": 39780.0,
@@ -380,7 +860,7 @@
       "week_id": 771
     },
     {
-      "cost": 600.0000,
+      "cost": 603.0000000,
       "daypart_id": 2,
       "id": 287154,
       "impressions": 39780.0,
@@ -392,7 +872,7 @@
       "week_id": 772
     },
     {
-      "cost": 600.0000,
+      "cost": 603.0000000,
       "daypart_id": 2,
       "id": 287154,
       "impressions": 39780.0,
@@ -404,7 +884,7 @@
       "week_id": 773
     },
     {
-      "cost": 600.0000,
+      "cost": 603.0000000,
       "daypart_id": 2,
       "id": 287154,
       "impressions": 39780.0,
@@ -416,7 +896,7 @@
       "week_id": 774
     },
     {
-      "cost": 600.0000,
+      "cost": 603.0000000,
       "daypart_id": 2,
       "id": 287154,
       "impressions": 39780.0,
@@ -428,7 +908,7 @@
       "week_id": 775
     },
     {
-      "cost": 50.0000,
+      "cost": 50.2500000,
       "daypart_id": 2,
       "id": 288692,
       "impressions": 510.0,
@@ -440,7 +920,7 @@
       "week_id": 771
     },
     {
-      "cost": 50.0000,
+      "cost": 50.2500000,
       "daypart_id": 2,
       "id": 288692,
       "impressions": 510.0,
@@ -452,7 +932,7 @@
       "week_id": 772
     },
     {
-      "cost": 50.0000,
+      "cost": 50.2500000,
       "daypart_id": 2,
       "id": 288692,
       "impressions": 510.0,
@@ -464,7 +944,7 @@
       "week_id": 773
     },
     {
-      "cost": 50.0000,
+      "cost": 50.2500000,
       "daypart_id": 2,
       "id": 288692,
       "impressions": 510.0,
@@ -476,7 +956,7 @@
       "week_id": 774
     },
     {
-      "cost": 50.0000,
+      "cost": 50.2500000,
       "daypart_id": 2,
       "id": 288692,
       "impressions": 510.0,
@@ -488,7 +968,7 @@
       "week_id": 775
     },
     {
-      "cost": 12.0000,
+      "cost": 12.0600000,
       "daypart_id": 2,
       "id": 288693,
       "impressions": 510.0,
@@ -500,7 +980,7 @@
       "week_id": 771
     },
     {
-      "cost": 12.0000,
+      "cost": 12.0600000,
       "daypart_id": 2,
       "id": 288693,
       "impressions": 510.0,
@@ -512,7 +992,7 @@
       "week_id": 772
     },
     {
-      "cost": 12.0000,
+      "cost": 12.0600000,
       "daypart_id": 2,
       "id": 288693,
       "impressions": 510.0,
@@ -524,7 +1004,7 @@
       "week_id": 773
     },
     {
-      "cost": 12.0000,
+      "cost": 12.0600000,
       "daypart_id": 2,
       "id": 288693,
       "impressions": 510.0,
@@ -536,7 +1016,7 @@
       "week_id": 774
     },
     {
-      "cost": 12.0000,
+      "cost": 12.0600000,
       "daypart_id": 2,
       "id": 288693,
       "impressions": 510.0,
@@ -548,7 +1028,7 @@
       "week_id": 775
     },
     {
-      "cost": 12.0000,
+      "cost": 12.0600000,
       "daypart_id": 2,
       "id": 288694,
       "impressions": 340.0,
@@ -560,7 +1040,7 @@
       "week_id": 771
     },
     {
-      "cost": 12.0000,
+      "cost": 12.0600000,
       "daypart_id": 2,
       "id": 288694,
       "impressions": 340.0,
@@ -572,7 +1052,7 @@
       "week_id": 772
     },
     {
-      "cost": 12.0000,
+      "cost": 12.0600000,
       "daypart_id": 2,
       "id": 288694,
       "impressions": 340.0,
@@ -584,7 +1064,7 @@
       "week_id": 773
     },
     {
-      "cost": 12.0000,
+      "cost": 12.0600000,
       "daypart_id": 2,
       "id": 288694,
       "impressions": 340.0,
@@ -596,7 +1076,7 @@
       "week_id": 774
     },
     {
-      "cost": 12.0000,
+      "cost": 12.0600000,
       "daypart_id": 2,
       "id": 288694,
       "impressions": 340.0,
@@ -608,7 +1088,7 @@
       "week_id": 775
     },
     {
-      "cost": 12.0000,
+      "cost": 12.0600000,
       "daypart_id": 2,
       "id": 288695,
       "impressions": 340.0,
@@ -620,7 +1100,7 @@
       "week_id": 771
     },
     {
-      "cost": 12.0000,
+      "cost": 12.0600000,
       "daypart_id": 2,
       "id": 288695,
       "impressions": 340.0,
@@ -632,7 +1112,7 @@
       "week_id": 772
     },
     {
-      "cost": 12.0000,
+      "cost": 12.0600000,
       "daypart_id": 2,
       "id": 288695,
       "impressions": 340.0,
@@ -644,7 +1124,7 @@
       "week_id": 773
     },
     {
-      "cost": 12.0000,
+      "cost": 12.0600000,
       "daypart_id": 2,
       "id": 288695,
       "impressions": 340.0,
@@ -656,7 +1136,7 @@
       "week_id": 774
     },
     {
-      "cost": 12.0000,
+      "cost": 12.0600000,
       "daypart_id": 2,
       "id": 288695,
       "impressions": 340.0,

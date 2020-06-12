@@ -1,4 +1,4 @@
-﻿{
+{
   "TotalActiveDays": 20,
   "TotalBudget": 400.0,
   "TotalImpressions": 20.0,

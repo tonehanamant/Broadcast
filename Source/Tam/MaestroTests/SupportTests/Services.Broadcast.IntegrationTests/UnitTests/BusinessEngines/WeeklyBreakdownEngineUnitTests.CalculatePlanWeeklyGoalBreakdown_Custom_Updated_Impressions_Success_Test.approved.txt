@@ -1,10 +1,10 @@
-﻿{
+{
   "TotalActiveDays": 35,
-  "TotalBudget": 278599.999999999800000,
-  "TotalImpressions": 27860.0,
-  "TotalImpressionsPercentage": 93.0,
-  "TotalRatingPoints": 26.0,
-  "TotalShareOfVoice": 93.0,
+  "TotalBudget": 270000.0,
+  "TotalImpressions": 27000.0,
+  "TotalImpressionsPercentage": 90.0,
+  "TotalRatingPoints": 25.2,
+  "TotalShareOfVoice": 90.0,
   "Weeks": [
     {
       "ActiveDays": "M-Su",
@@ -54,10 +54,10 @@
       "SpotLengthId": null,
       "StartDate": "2020-03-09T00:00:00",
       "WeeklyAdu": 0,
-      "WeeklyBudget": 38600.0,
-      "WeeklyImpressions": 3860.0,
-      "WeeklyImpressionsPercentage": 13.0,
-      "WeeklyRatings": 3.6,
+      "WeeklyBudget": 30000.0,
+      "WeeklyImpressions": 3000.0,
+      "WeeklyImpressionsPercentage": 10.0,
+      "WeeklyRatings": 2.8,
       "WeekNumber": 3
     },
     {

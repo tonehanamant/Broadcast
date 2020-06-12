@@ -970,7 +970,7 @@ namespace Services.Broadcast.Repositories
                 {
                     daypart.plan_version_daypart_program_restrictions.Add(new plan_version_daypart_program_restrictions
                     {
-                        genre_id = programRestriction.Genre.Id,
+                        genre_id = programRestriction.Genre?.Id,
                         content_rating = programRestriction.ContentRating,
                         program_name = programRestriction.Name
                     });

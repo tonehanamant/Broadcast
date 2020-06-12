@@ -478,7 +478,8 @@ namespace Services.Broadcast.ApplicationServices
             var daypartsWithWeighting = plan.Dayparts.Where(x => x.WeightingGoalPercent.HasValue);
             var planPricingParameters = plan.PricingParameters;
 
-            var weeklyBreakdownByWeek = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(plan.WeeklyBreakdownWeeks);
+            var planWeeks = _CalculatePlanWeeksWithPricingParameters(plan);
+            var weeklyBreakdownByWeek = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(planWeeks);
 
             foreach (var week in weeklyBreakdownByWeek)
             {
@@ -541,12 +542,36 @@ namespace Services.Broadcast.ApplicationServices
             return pricingModelWeeks;
         }
 
+        private List<WeeklyBreakdownWeek> _CalculatePlanWeeksWithPricingParameters(PlanDto plan)
+        {
+            var request = new WeeklyBreakdownRequest
+            {
+                CreativeLengths = plan.CreativeLengths,
+                Dayparts = plan.Dayparts,
+                DeliveryType = plan.GoalBreakdownType,
+                FlightStartDate = plan.FlightStartDate.Value,
+                FlightEndDate = plan.FlightEndDate.Value,
+                FlightDays = plan.FlightDays,
+                // Use parameter values for budget and impressions.
+                TotalBudget = plan.PricingParameters.Budget,
+                TotalImpressions = plan.PricingParameters.DeliveryImpressions * 1000,
+                FlightHiatusDays = plan.FlightHiatusDays,
+                TotalRatings = plan.TargetRatingPoints.Value,
+                Weeks = plan.WeeklyBreakdownWeeks,
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+            };
+
+            var weeklyBreakdown = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
+
+            return weeklyBreakdown.Weeks;
+        }
+
         private List<ShareOfVoice> _GetShareOfVoice(MarketCoverageDto topMarkets, IEnumerable<PlanAvailableMarketDto> marketsWithSov)
         {
             var topMarketsShareOfVoice = topMarkets.MarketCoveragesByMarketCode.Select(x => new ShareOfVoice
             {
                 MarketCode = x.Key,
-                MarketGoal = x.Value
+                MarketGoal = GeneralMath.ConvertPercentageToFraction(x.Value)
             }).ToList();
 
             var planShareOfVoices = marketsWithSov.Select(x => new ShareOfVoice

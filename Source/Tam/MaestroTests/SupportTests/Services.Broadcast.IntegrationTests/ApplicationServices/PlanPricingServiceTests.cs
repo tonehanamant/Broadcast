@@ -629,5 +629,114 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
             }
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void MarketCoveragesAreSentDividedBy100ToPricingApiTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var apiClient = new PricingApiClientStub();
+
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance(apiClient);
+
+                // New service with injected API client.
+                var planPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
+
+                var planPricingRequestDto = new PlanPricingParametersDto
+                {
+                    PlanId = 1197,
+                    PlanVersionId = 47,
+                    MaxCpm = 100m,
+                    MinCpm = 1m,
+                    Budget = 1000,
+                    CompetitionFactor = 0.1,
+                    CPM = 5m,
+                    DeliveryImpressions = 50000,
+                    InflationFactor = 0.5,
+                    ProprietaryBlend = 0.2,
+                    UnitCaps = 10,
+                    UnitCapsType = UnitCapEnum.PerDay,
+                    MarketGroup = PricingMarketGroupEnum.Top25,
+                    InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                    {
+                        new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
+                        new PlanPricingInventorySourceDto{Id = 5, Percentage = 13},
+                        new PlanPricingInventorySourceDto{Id = 6, Percentage = 10},
+                        new PlanPricingInventorySourceDto{Id = 7, Percentage = 9},
+                        new PlanPricingInventorySourceDto{Id = 10, Percentage = 8},
+                        new PlanPricingInventorySourceDto{Id = 11, Percentage = 7},
+                        new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
+                    },
+                    InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                    {
+                        new PlanPricingInventorySourceTypeDto { Id = 4, Name = "Syndication", Percentage = 11 },
+                        new PlanPricingInventorySourceTypeDto { Id = 5, Name = "Diginet", Percentage = 22 }
+                    }
+                };
+
+                var job = planPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+
+                planPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+
+                var sentParameters = apiClient.LastSentRequest;
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingApiRequestParametersDto), "JobId");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(sentParameters, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void WeeklyValuesAreUpdatedForPricingRequest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var apiClient = new PricingApiClientStub();
+
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance(apiClient);
+
+                // New service with injected API client.
+                var planPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
+
+                var planPricingRequestDto = new PlanPricingParametersDto
+                {
+                    PlanId = 1197,
+                    PlanVersionId = 47,
+                    Budget = 8000,
+                    CPM = 5m,
+                    DeliveryImpressions = 50000,
+                    ProprietaryBlend = 0.2,
+                    UnitCaps = 10,
+                    UnitCapsType = UnitCapEnum.PerDay,
+                    MarketGroup = PricingMarketGroupEnum.None
+                };
+
+                var job = planPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+
+                planPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+
+                var request = apiClient.LastSentRequest;
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingApiRequestParametersDto), "JobId");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(request, jsonSettings));
+            }
+        }
     }
 }

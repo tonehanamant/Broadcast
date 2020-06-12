@@ -180,7 +180,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             const string testProgramName = "News 10 @ Noon";
             const string emptyTestProgramName = "";
             var repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-
+            
             var testResult = repo.GetManifestDaypartsForProgramName(testProgramName);
             var emptyTestResult = repo.GetManifestDaypartsForProgramName(emptyTestProgramName);
 

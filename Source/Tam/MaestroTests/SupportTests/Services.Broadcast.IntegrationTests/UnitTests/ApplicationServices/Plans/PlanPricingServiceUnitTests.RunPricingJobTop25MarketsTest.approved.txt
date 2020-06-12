@@ -21,11 +21,11 @@
         "share_of_voice": [
           {
             "market_code": 403,
-            "market_goal": 0.04743
+            "market_goal": 0.0004743
           },
           {
             "market_code": 202,
-            "market_goal": 0.02942
+            "market_goal": 0.0002942
           },
           {
             "market_code": 101,
@@ -58,11 +58,11 @@
         "share_of_voice": [
           {
             "market_code": 403,
-            "market_goal": 0.04743
+            "market_goal": 0.0004743
           },
           {
             "market_code": 202,
-            "market_goal": 0.02942
+            "market_goal": 0.0002942
           },
           {
             "market_code": 101,

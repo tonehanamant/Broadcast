@@ -398,6 +398,7 @@
     <Compile Include="Repositories\InventoryExportRepositoryTests.cs" />
     <Compile Include="Repositories\InventoryFileRepositoryTests.cs" />
     <Compile Include="Repositories\InventoryRepositoryTests.cs" />
+    <Compile Include="Repositories\MarketCoverageRepositoryTests.cs" />
     <Compile Include="Repositories\PlanSummaryRepositoryTests.cs" />
     <Compile Include="Repositories\ProgramMappingRepositoryTests.cs" />
     <Compile Include="Repositories\ProgramNameRepositoryTests.cs" />
@@ -468,7 +469,6 @@
     <Compile Include="UnitTests\EntitiesUnitTests\ProgramLineupReportDataUnitTest.cs" />
     <Compile Include="UnitTests\Helpers\FrequencyCapHelperUnitTests.cs" />
     <Compile Include="UnitTests\InventoryRatingsProcessing\MediaMonthCrunchStatusTests.cs" />
-    <Compile Include="UnitTests\PlanServices\PlanServiceTests.cs" />
     <Compile Include="UnitTests\ReportGenerator\UnMappedProgramNameReportGeneratorTest.cs" />
     <Compile Include="UnitTests\ReportGenerator\UnMappedProgramNameReportGeneratorTestClass.cs" />
     <Compile Include="UnitTests\TrafficApiCacheTests.cs" />
