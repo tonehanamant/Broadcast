@@ -14,7 +14,7 @@ namespace Services.Broadcast.Cache
 
         AgencyDto GetAgency(int agencyId);
 
-        List<AdvertiserDto> GetAdvertisersByAgencyId(int agencyId);
+        List<AdvertiserDto> GetAdvertisers();
 
         AdvertiserDto GetAdvertiser(int advertiserId);
 
@@ -60,22 +60,22 @@ namespace Services.Broadcast.Cache
             return _Agencies.Single(a => a.Id == agencyId, $"Agency with id '{agencyId}' not found.");
         }
 
-        public List<AdvertiserDto> GetAdvertisersByAgencyId(int agencyId)
+        public List<AdvertiserDto> GetAdvertisers()
         {
             var policy = new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(CACHE_ITEM_TTL_SECONDS) };
-            return _AgencyAdvertisersCache.GetOrCreate(agencyId.ToString(), () => _TrafficApiClient.GetAdvertisersByAgencyId(agencyId), policy);
+            return _AgencyAdvertisersCache.GetOrCreate("advertisers", () => _TrafficApiClient.GetAdvertisers(), policy);
         }
 
         public AdvertiserDto GetAdvertiser(int advertiserId)
         {
             var policy = new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(CACHE_ITEM_TTL_SECONDS) };
-            return _AdvertisersCache.GetOrCreate(advertiserId.ToString(),() => _TrafficApiClient.GetAdvertiser(advertiserId), policy);
+            return _AdvertisersCache.GetOrCreate(advertiserId.ToString(), () => _TrafficApiClient.GetAdvertiser(advertiserId), policy);
         }
 
         public List<ProductDto> GetProductsByAdvertiserId(int advertiserId)
         {
             var policy = new CacheItemPolicy { AbsoluteExpiration = DateTime.Now.AddSeconds(CACHE_ITEM_TTL_SECONDS) };
-            return _AdvertiserProductsCache.GetOrCreate(advertiserId.ToString(),() => _TrafficApiClient.GetProductsByAdvertiserId(advertiserId), policy);
+            return _AdvertiserProductsCache.GetOrCreate(advertiserId.ToString(), () => _TrafficApiClient.GetProductsByAdvertiserId(advertiserId), policy);
         }
 
         public ProductDto GetProduct(int productId)
@@ -86,7 +86,7 @@ namespace Services.Broadcast.Cache
 
         private void BuildAgencyCache(CacheEntryRemovedArguments args)
         {
-            var agencies = GetAgenciesFromClient();
+            var agencies = _TrafficApiClient.GetAgencies();
             var policy = new CacheItemPolicy
             {
                 AbsoluteExpiration = DateTime.Now.AddSeconds(CACHE_ITEM_TTL_SECONDS),
@@ -95,39 +95,6 @@ namespace Services.Broadcast.Cache
 
             _AgencyCache.Add(CACHE_KEY_AGENCIES, agencies, policy);
             _Agencies = agencies;
-        }
-
-        // the API is not case sensitive
-        private static readonly string[] _AgencyAllowedChars = { "!", "\"", "#", "$", "%", "&amp;", "'", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "&lt;", "=", "&gt;", "?", "@", "[", "\\", "]", "^", "_", "`", "{", "|", "}", "~", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
-
-        private List<AgencyDto> GetAgenciesFromClient()
-        {
-            const int callMaxReturn = 50;
-
-            var agencies = new List<AgencyDto>();
-            foreach (var filter in _AgencyAllowedChars)
-            {
-                List<AgencyDto> found = _TrafficApiClient.GetFilteredAgencies(filter);
-                if (found.Count == callMaxReturn)
-                {
-                    // according to the data set this should not happen.
-                    // at time of this writing (9/2019) :
-                    //      Max Call Count = 50
-                    //      Max Agencies per Letter = 31
-                    // 
-                    //  This solution is temporary until late PI-5
-                    //  Between now and then no Agency list per first letter will go beyond 50... right?
-                    throw new InvalidOperationException(
-                        $"The return count for filter '{filter}' returned more than the max count of {callMaxReturn}.");
-                }
-
-                if (found.Count > 0)
-                {
-                    agencies.AddRange(found);
-                }
-            }
-
-            return agencies;
         }
     }
 }

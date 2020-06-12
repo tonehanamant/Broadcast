@@ -1,4 +1,4 @@
 ﻿{
   "Id": 3,
-  "Name": "!_Name_3"
+  "Name": "Name_3"
 }

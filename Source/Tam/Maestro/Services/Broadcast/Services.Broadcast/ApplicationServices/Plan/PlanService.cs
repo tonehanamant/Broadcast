@@ -218,7 +218,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             else
             {
                 plan.CreativeLengths = _CreativeLengthEngine.DistributeWeight(plan.CreativeLengths);
-            }
+            } 
 
             DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
 

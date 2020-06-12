@@ -23,24 +23,18 @@ namespace Services.Broadcast.IntegrationTests.Stubs
         }
 
 
-        public int GetAdvertisersByAgencyIdCalledCount { get; set; }
-        public List<AdvertiserDto> GetAdvertisersByAgencyId(int agencyId)
+        public int GetAdvertisersCalledCount { get; set; }
+        public List<AdvertiserDto> GetAdvertisers()
         {
-            GetAdvertisersByAgencyIdCalledCount++;
-
-            // imitates the client behavior when not existing advertiser id is passed
-            if (agencyId == 666)
-            {
-                throw new Exception($"Cannot fetch advertisers data for agency {agencyId}.");
-            }
+            GetAdvertisersCalledCount++;
 
             return new List<AdvertiserDto>
             {
-                new AdvertiserDto { Id = 1, Name = "Name1", AgencyId = agencyId },
-                new AdvertiserDto { Id = 2, Name = "Name1", AgencyId = agencyId },
-                new AdvertiserDto { Id = 3, Name = "Name1", AgencyId = agencyId },
-                new AdvertiserDto { Id = 4, Name = "Name1", AgencyId = agencyId },
-                new AdvertiserDto { Id = 37444, Name = "Leagas Delaney", AgencyId = agencyId }
+                new AdvertiserDto { Id = 1, Name = "Name1", AgencyId = 1 },
+                new AdvertiserDto { Id = 2, Name = "Name1", AgencyId = 1 },
+                new AdvertiserDto { Id = 3, Name = "Name1", AgencyId = 2 },
+                new AdvertiserDto { Id = 4, Name = "Name1", AgencyId = 2 },
+                new AdvertiserDto { Id = 37444, Name = "Leagas Delaney", AgencyId = 3 }
             };
         }
 
@@ -99,6 +93,16 @@ namespace Services.Broadcast.IntegrationTests.Stubs
             };
 
             return agencies;
+        }
+
+        public List<AgencyDto> GetAgencies()
+        {
+            return new List<AgencyDto>
+            {
+                new AgencyDto { Id = ++_agenciesListId, Name = $"Name_{_agenciesListId}"},
+                new AgencyDto { Id = ++_agenciesListId, Name = $"Name_{_agenciesListId}"},
+                new AgencyDto { Id = ++_agenciesListId, Name = $"Name_{_agenciesListId}"}
+            };
         }
     }
 }

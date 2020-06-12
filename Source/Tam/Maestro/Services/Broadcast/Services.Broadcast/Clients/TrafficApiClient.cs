@@ -12,25 +12,37 @@ namespace Services.Broadcast.Clients
     {
         List<AgencyDto> GetFilteredAgencies(string filter);
         AdvertiserDto GetAdvertiser(int advertiserId);
-        List<AdvertiserDto> GetAdvertisersByAgencyId(int agencyId);
+
+        /// <summary>
+        /// Gets the advertisers.
+        /// </summary>
+        /// <returns>List of AdvertiserDto objects</returns>
+        List<AdvertiserDto> GetAdvertisers();
+
         List<ProductDto> GetProductsByAdvertiserId(int advertiserId);
         ProductDto GetProduct(int productId);
+
+        /// <summary>
+        /// Gets the agencies.
+        /// </summary>
+        /// <returns>List of AgencyDto objects</returns>
+        List<AgencyDto> GetAgencies();
     }
 
     public class TrafficApiClient : ITrafficApiClient
     {
-        private readonly string _AgencyAdvertiserBrandApiUrl;
+        private readonly string _AABApiUrl;
         private readonly HttpClient _HttpClient;
 
         public TrafficApiClient()
         {
-            _AgencyAdvertiserBrandApiUrl = $"{BroadcastServiceSystemParameter.AgencyAdvertiserBrandApiUrl}";
+            _AABApiUrl = $"{BroadcastServiceSystemParameter.AgencyAdvertiserBrandApiUrl}";
             _HttpClient = new HttpClient();
         }
 
         public List<AgencyDto> GetFilteredAgencies(string filter)
         {
-            var url = $"{_AgencyAdvertiserBrandApiUrl}/agency?filter={Uri.EscapeDataString(filter)}";
+            var url = $"{_AABApiUrl}/agency?filter={Uri.EscapeDataString(filter)}";
 
             try
             {
@@ -42,9 +54,25 @@ namespace Services.Broadcast.Clients
             }
         }
 
-        public List<AdvertiserDto> GetAdvertisersByAgencyId(int agencyId)
+        /// <inheritdoc/>
+        public List<AgencyDto> GetAgencies()
         {
-            var url = $"{_AgencyAdvertiserBrandApiUrl}/agency/{agencyId}/advertisers";
+            var url = $"{_AABApiUrl}/agency/nolimit";
+
+            try
+            {
+                return _HttpClient.Get<List<AgencyDto>>(url);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Cannot fetch agencies data.", ex);
+            }
+        }
+
+        /// <inheritdoc/>
+        public List<AdvertiserDto> GetAdvertisers()
+        {
+            var url = $"{_AABApiUrl}/advertiser/nolimit";
 
             try
             {
@@ -54,13 +82,13 @@ namespace Services.Broadcast.Clients
             }
             catch (Exception ex)
             {
-                throw new Exception($"Cannot fetch advertisers data for agency {agencyId}.", ex);
+                throw new Exception($"Cannot fetch advertisers data.", ex);
             }
         }
 
         public List<ProductDto> GetProductsByAdvertiserId(int advertiserId)
         {
-            var url = $"{_AgencyAdvertiserBrandApiUrl}/advertiser/{advertiserId}/products";
+            var url = $"{_AABApiUrl}/advertiser/{advertiserId}/products";
 
             try
             {
@@ -76,7 +104,7 @@ namespace Services.Broadcast.Clients
 
         public ProductDto GetProduct(int productId)
         {
-            var url = $"{_AgencyAdvertiserBrandApiUrl}/product/{productId}";
+            var url = $"{_AABApiUrl}/product/{productId}";
 
             try
             {
@@ -92,7 +120,7 @@ namespace Services.Broadcast.Clients
 
         public AdvertiserDto GetAdvertiser(int advertiserId)
         {
-            var url = $"{_AgencyAdvertiserBrandApiUrl}/advertiser/{advertiserId}";
+            var url = $"{_AABApiUrl}/advertiser/{advertiserId}";
 
             try
             {

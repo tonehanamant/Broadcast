@@ -14,9 +14,9 @@ namespace Services.Broadcast.IntegrationTests.Stubs
             return new AdvertiserDto { Id = advertiserId, AgencyId = 1, Name = "Stub Advertiser" };
         }
 
-        public List<AdvertiserDto> GetAdvertisersByAgencyId(int agencyId)
+        public List<AdvertiserDto> GetAdvertisers()
         {
-            return new List<AdvertiserDto> { new AdvertiserDto { Id = 1, AgencyId = agencyId, Name = "Stub Advertiser" } };
+            return new List<AdvertiserDto> { new AdvertiserDto { Id = 1, AgencyId = 1, Name = "Stub Advertiser" } };
         }
 
         public List<AgencyDto> GetAgencies()

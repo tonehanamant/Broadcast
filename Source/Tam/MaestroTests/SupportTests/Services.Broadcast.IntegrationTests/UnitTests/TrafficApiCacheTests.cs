@@ -41,62 +41,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         }
 
         [Test]
-        public void GetAgency_WithInvalidId()
-        {
-            const int agencyId = 666;
-            var trafficApiClient = new TrafficApiClientStub();
-            var cache = new TrafficApiCache(trafficApiClient);
-            const int expectedClientCallCount = 68; // number of allowed chars
-
-            Assert.That(() => cache.GetAgency(agencyId), 
-                Throws.TypeOf<Exception>().With.Message.EqualTo($"Agency with id '{agencyId}' not found."));
-
-            Assert.AreEqual(expectedClientCallCount, trafficApiClient.GetFilteredAgenciesCalledCount);
-        }
-
-        [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetAdvertisersByAgencyId()
+        public void GetAdvertisers()
         {
-            const int agencyId = 3;
             const int expectedClientCallCount = 1;
             var trafficApiClient = new TrafficApiClientStub();
             var cache = new TrafficApiCache(trafficApiClient);
 
-            var result = cache.GetAdvertisersByAgencyId(agencyId);
+            var result = cache.GetAdvertisers();
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            Assert.AreEqual(expectedClientCallCount, trafficApiClient.GetAdvertisersByAgencyIdCalledCount);
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void GetAdvertisersByAgencyId_VerifyCached()
-        {
-            const int agencyId = 3;
-            const int expectedClientCallCount = 1;
-            var trafficApiClient = new TrafficApiClientStub();
-            var cache = new TrafficApiCache(trafficApiClient);
-
-            var result1 = cache.GetAdvertisersByAgencyId(agencyId);
-            var result2 = cache.GetAdvertisersByAgencyId(agencyId);
-
-            Assert.AreEqual(IntegrationTestHelper.ConvertToJson(result1), IntegrationTestHelper.ConvertToJson(result2));
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result2));
-            Assert.AreEqual(expectedClientCallCount, trafficApiClient.GetAdvertisersByAgencyIdCalledCount);
-        }
-
-        [Test]
-        public void GetAdvertisersByAgencyId_WithInvalidId()
-        {
-            const int agencyId = 666;
-            const int expectedClientCallCount = 1;
-            var trafficApiClient = new TrafficApiClientStub();
-            var cache = new TrafficApiCache(trafficApiClient);
-
-            Assert.That(() => cache.GetAdvertisersByAgencyId(agencyId),
-                Throws.TypeOf<Exception>().With.Message.EqualTo($"Cannot fetch advertisers data for agency {agencyId}."));
-            Assert.AreEqual(expectedClientCallCount, trafficApiClient.GetAdvertisersByAgencyIdCalledCount);
+            Assert.AreEqual(expectedClientCallCount, trafficApiClient.GetAdvertisersCalledCount);
         }
 
         [Test]

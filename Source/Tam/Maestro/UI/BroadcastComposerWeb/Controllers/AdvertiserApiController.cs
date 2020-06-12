@@ -17,14 +17,13 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
-        /// Returns advertisers for a specific agency
+        /// Returns all advertisers
         /// </summary>
-        /// <param name="agencyId">Agency id</param>
         [HttpGet]
         [Route("")]
-        public BaseResponse<List<AdvertiserDto>> GetAdvertisersByAgencyId(int agencyId)
+        public BaseResponse<List<AdvertiserDto>> GetAdvertisers()
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IAdvertiserService>().GetAdvertisersByAgencyId(agencyId));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IAdvertiserService>().GetAdvertisers());
         }
     }
 }

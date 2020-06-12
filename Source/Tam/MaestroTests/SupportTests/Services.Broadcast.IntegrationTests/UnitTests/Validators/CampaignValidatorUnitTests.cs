@@ -53,7 +53,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             var trafficApiCacheMock = _GetTrafficApiCacheMock();
             trafficApiCacheMock.Setup(x => x.GetAdvertiser(It.IsAny<int>())).Throws(new Exception());
             trafficApiCacheMock.Setup(x => x.GetAgency(It.IsAny<int>())).Returns(new AgencyDto());
-            
+
             var tc = new CampaignValidator(trafficApiCacheMock.Object);
 
             var caughtException = Assert.Throws<InvalidOperationException>(() => tc.Validate(item));
@@ -81,8 +81,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             trafficApiCacheMock.Setup(s => s.GetAgency(It.IsAny<int>()))
                 .Returns<int>((i) => agencies.Single(a => a.Id == i, "Agency not found"));
 
-            trafficApiCacheMock.Setup(s => s.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(getAdvertisersByAgencyIdReturn);
-            trafficApiCacheMock.Setup(s => s.GetAdvertisersByAgencyId(It.IsAny<int>())).Returns(getAdvertisersByAgencyIdReturn);
+            trafficApiCacheMock.Setup(s => s.GetAdvertisers()).Returns(getAdvertisersByAgencyIdReturn);
 
             return trafficApiCacheMock;
         }
@@ -123,7 +122,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             if (throws)
             {
-                var caughtException = Assert.Throws<InvalidOperationException>(() => tc.Validate(item) );
+                var caughtException = Assert.Throws<InvalidOperationException>(() => tc.Validate(item));
 
                 Assert.AreEqual(expectedMessage, caughtException.Message);
             }
@@ -153,7 +152,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             if (throws)
             {
-                var caughtException = Assert.Throws<InvalidOperationException>(() => tc.Validate(item) );
+                var caughtException = Assert.Throws<InvalidOperationException>(() => tc.Validate(item));
 
                 Assert.AreEqual(expectedMessage, caughtException.Message);
             }

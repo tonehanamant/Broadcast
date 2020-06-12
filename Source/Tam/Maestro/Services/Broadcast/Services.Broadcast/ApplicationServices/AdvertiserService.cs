@@ -8,9 +8,9 @@ namespace Services.Broadcast.ApplicationServices
     public interface IAdvertiserService : IApplicationService
     {
         /// <summary>
-        /// Returns advertisers for a specific agency
+        /// Returns all advertisers
         /// </summary>
-        List<AdvertiserDto> GetAdvertisersByAgencyId(int agencyId);
+        List<AdvertiserDto> GetAdvertisers();
     }
 
     public class AdvertiserService : IAdvertiserService
@@ -23,9 +23,9 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <inheritdoc />
-        public List<AdvertiserDto> GetAdvertisersByAgencyId(int agencyId)
+        public List<AdvertiserDto> GetAdvertisers()
         {
-            return _TrafficApiCache.GetAdvertisersByAgencyId(agencyId);
+            return _TrafficApiCache.GetAdvertisers();
         }
     }
 }
