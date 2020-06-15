@@ -174,8 +174,8 @@ namespace Services.Broadcast.ApplicationServices
 
         private Tuple<int, int> _ProcessIndividualProgramMapping(ProgramMappingsFileRequestDto mapping, ProgramSourceEnum programSource, string username, DateTime createdDate)
         {
-            using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(30)))
-            {
+            //using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(30)))
+            //{
                 var updatedRecords = 0;
                 if (_ProgramMappingRepository.MappingExistsForOriginalProgramName(mapping.OriginalProgramName))
                 {
@@ -204,10 +204,10 @@ namespace Services.Broadcast.ApplicationServices
                     _ProgramMappingRepository.CreateProgramMapping(newProgramMapping, username, createdDate);
                     updatedRecords = _UpdateInventoryWithEnrichedProgramName(newProgramMapping, mapping, createdDate, programSource);
                 }
-                transaction.Complete();
+                //transaction.Complete();
                 var ingestedRecords = 1;
                 return Tuple.Create(ingestedRecords, updatedRecords);
-            }
+            //}
         }
 
         private int _UpdateInventoryWithEnrichedProgramName(
