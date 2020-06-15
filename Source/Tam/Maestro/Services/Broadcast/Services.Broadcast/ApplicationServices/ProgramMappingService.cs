@@ -99,6 +99,7 @@ namespace Services.Broadcast.ApplicationServices
             // Hand off to a background job
             var hangfireJobId = _BackgroundJobClient.Enqueue<IProgramMappingService>(x => x.RunProgramMappingsProcessingJob(fileId, userName, createdDate));
             return hangfireJobId;
+
         }
 
         public void RunProgramMappingsProcessingJob(Guid fileId, string userName, DateTime createdDate)
@@ -174,8 +175,8 @@ namespace Services.Broadcast.ApplicationServices
 
         private Tuple<int, int> _ProcessIndividualProgramMapping(ProgramMappingsFileRequestDto mapping, ProgramSourceEnum programSource, string username, DateTime createdDate)
         {
-            using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(30)))
-            {
+            //using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(30)))
+            //{
                 var updatedRecords = 0;
                 var existingMapping = _ProgramMappingRepository.GetProgramMappingOrDefaultByOriginalProgramName(mapping.OriginalProgramName);
                 if (existingMapping != null) 
@@ -204,10 +205,10 @@ namespace Services.Broadcast.ApplicationServices
                     _ProgramMappingRepository.CreateProgramMapping(newProgramMapping, username, createdDate);
                     updatedRecords = _UpdateInventoryWithEnrichedProgramName(newProgramMapping, mapping, createdDate, programSource);
                 }
-                transaction.Complete();
+                //transaction.Complete();
                 var ingestedRecords = 1;
                 return Tuple.Create(ingestedRecords, updatedRecords);
-            }
+            //}
         }
 
         private int _UpdateInventoryWithEnrichedProgramName(
@@ -235,6 +236,7 @@ namespace Services.Broadcast.ApplicationServices
                 var manifestDaypartIds = manifestDaypartPrograms.Select(x => x.StationInventoryManifestDaypartId).Distinct().ToList();
                 if (!manifestDaypartIds.IsEmpty())
                 {
+                    _InventoryRepository.RemovePrimaryProgramFromManifestDayparts(manifestDaypartIds);
                     _InventoryRepository.DeleteInventoryPrograms(manifestDaypartIds);
                 }
 
@@ -271,8 +273,9 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _ResetPrimaryPrograms(List<int> manifestDaypartIds)
         {
-            var manifestDaypartProgramsByManifestDaypart = _InventoryRepository
-                .GetDaypartProgramsForInventoryDayparts(manifestDaypartIds)
+            var programList = _InventoryRepository
+                .GetDaypartProgramsForInventoryDayparts(manifestDaypartIds, ProgramSourceEnum.Mapped);
+            var manifestDaypartProgramsByManifestDaypart = programList
                 .ToDictionary(x => x.StationInventoryManifestDaypartId, x => x.Id);
 
             var manifestDayparts = manifestDaypartIds
