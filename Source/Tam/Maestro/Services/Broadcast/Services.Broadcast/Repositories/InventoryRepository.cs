@@ -1654,17 +1654,16 @@ namespace Services.Broadcast.Repositories
 
         public void DeleteInventoryPrograms(List<int> manifestDaypartIds)
         {
-            var manifestIdsCsv = string.Join(",", manifestDaypartIds);
-            // gather first
-            var sql = "SELECT p.id AS ProgramId, station_inventory_manifest_daypart_id AS DaypartId INTO #ProgramsIdsToDelete"
-                      + " FROM station_inventory_manifest_daypart_programs p"
-                      + $" WHERE p.station_inventory_manifest_daypart_id in ({manifestIdsCsv});"
-                      + "\r\n"
-                      // clear the primary program id
-                      + "UPDATE d SET primary_program_id = NULL FROM station_inventory_manifest_dayparts d JOIN #ProgramsIdsToDelete pd ON d.id = pd.DaypartId AND d.primary_program_id = pd.ProgramId;"
+            var manifestDaypartIdsCsv = string.Join(",", manifestDaypartIds);
+            // clear the primary program id
+            var sql = "UPDATE d SET primary_program_id = NULL "
+                      + "FROM station_inventory_manifest_dayparts d "
+                      + $"WHERE d.id in ({manifestDaypartIdsCsv}); "
                       + "\r\n"
                       // now can delete the programs
-                      + "DELETE FROM station_inventory_manifest_daypart_programs WHERE id IN (SELECT ProgramId FROM #ProgramsIdsToDelete);";
+                      + "DELETE FROM station_inventory_manifest_daypart_programs "
+                      + "WHERE program_source_id = 1 "
+                      + $"AND station_inventory_manifest_daypart_id IN({manifestDaypartIdsCsv}); ";
 
             _InReadUncommitedTransaction(
                 context =>

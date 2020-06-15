@@ -189,7 +189,7 @@ namespace Services.Broadcast.ApplicationServices
                         existingMapping.OfficialGenre = _GenreRepository.GetGenreByName(mapping.OfficialGenre, programSource);
                         existingMapping.OfficialShowType = _ShowTypeRepository.GetShowTypeByName(mapping.OfficialShowType);
                         _ProgramMappingRepository.UpdateProgramMapping(existingMapping, username, createdDate);
-                        //updatedRecords = _UpdateInventoryWithEnrichedProgramName(existingMapping, mapping, createdDate, programSource);
+                        updatedRecords = _UpdateInventoryWithEnrichedProgramName(existingMapping, mapping, createdDate, programSource);
                     }
                 }
                 else
@@ -202,7 +202,7 @@ namespace Services.Broadcast.ApplicationServices
                         OfficialShowType = _ShowTypeRepository.GetShowTypeByName(mapping.OfficialShowType)
                     };
                     _ProgramMappingRepository.CreateProgramMapping(newProgramMapping, username, createdDate);
-                    //updatedRecords = _UpdateInventoryWithEnrichedProgramName(newProgramMapping, mapping, createdDate, programSource);
+                    updatedRecords = _UpdateInventoryWithEnrichedProgramName(newProgramMapping, mapping, createdDate, programSource);
                 }
                 transaction.Complete();
                 var ingestedRecords = 1;
