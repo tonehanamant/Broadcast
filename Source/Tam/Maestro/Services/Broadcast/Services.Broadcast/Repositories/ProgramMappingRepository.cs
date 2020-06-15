@@ -145,6 +145,10 @@ namespace Services.Broadcast.Repositories
 
         private ProgramMappingsDto _MapToDto(program_name_mappings program_name_mappings)
         {
+            if(program_name_mappings == null)
+            {
+                return null;
+            }
             return new ProgramMappingsDto
             {
                 Id = program_name_mappings.id,
