@@ -1110,7 +1110,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Assert.AreEqual(reportOutput.Stream.Length,
                         File.ReadAllBytes($@".\Files\Campaign export\{reportOutput.Filename}").LongLength);
                 }
-                if (typeof(T).Name.Equals("CampaignReportData"))
+                if (typeof(T).Name.Equals("ProgramLineupReportData"))
                 {
                     var reportOutput = new ProgramLineupReportGenerator(@".\Files\Excel templates").Generate(reportData as ProgramLineupReportData);
                     reportOutput.Filename = filename;
