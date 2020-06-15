@@ -17,8 +17,6 @@ namespace Services.Broadcast.BusinessEngines
 
     public class VpvhExportEngine : BroadcastBaseClass, IVpvhExportEngine
     {
-
-
         public ExcelPackage ExportQuarters(List<VpvhQuarter> vpvhQuarters)
         {
             const string amNewsTabName = "AM News";
@@ -65,7 +63,7 @@ namespace Services.Broadcast.BusinessEngines
             {
                 rowIndex = 1;
 
-                var quarter = $"{quarters[quarterIndex].Quarter}Q{quarters[quarterIndex].Year}";
+                var quarter = $"{quarters[quarterIndex].Quarter}Q{quarters[quarterIndex].Year.ToString().Substring(2, 2)}";
 
                 _SetCellValue(amNewsTab, rowIndex, columnIndex, quarter, true);
                 _SetCellValue(pmNewsTab, rowIndex, columnIndex, quarter, true);

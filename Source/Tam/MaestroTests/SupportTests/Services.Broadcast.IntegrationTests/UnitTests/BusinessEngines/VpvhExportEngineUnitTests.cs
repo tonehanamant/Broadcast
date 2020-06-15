@@ -50,8 +50,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             for (var i = 1; i <= 5; i++)
             {
-                Assert.AreEqual("1Q2019", excelFile.Workbook.Worksheets[i].Cells[1, 2].Value);
-                Assert.AreEqual("2Q2019", excelFile.Workbook.Worksheets[i].Cells[1, 3].Value);
+                Assert.AreEqual("1Q19", excelFile.Workbook.Worksheets[i].Cells[1, 2].Value);
+                Assert.AreEqual("2Q19", excelFile.Workbook.Worksheets[i].Cells[1, 3].Value);
             }
         }
 
