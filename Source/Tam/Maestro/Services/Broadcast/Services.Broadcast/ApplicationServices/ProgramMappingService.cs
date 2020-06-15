@@ -174,12 +174,12 @@ namespace Services.Broadcast.ApplicationServices
 
         private Tuple<int, int> _ProcessIndividualProgramMapping(ProgramMappingsFileRequestDto mapping, ProgramSourceEnum programSource, string username, DateTime createdDate)
         {
-            //using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(30)))
-            //{
+            using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(30)))
+            {
                 var updatedRecords = 0;
-                if (_ProgramMappingRepository.MappingExistsForOriginalProgramName(mapping.OriginalProgramName))
+                var existingMapping = _ProgramMappingRepository.GetProgramMappingOrDefaultByOriginalProgramName(mapping.OriginalProgramName);
+                if (existingMapping != null) 
                 {
-                    var existingMapping = _ProgramMappingRepository.GetProgramMappingByOriginalProgramName(mapping.OriginalProgramName);
                     if (existingMapping.OfficialProgramName != mapping.OfficialProgramName ||
                         existingMapping.OfficialGenre.Name != mapping.OfficialGenre ||
                         existingMapping.OfficialShowType.Name != mapping.OfficialShowType)
@@ -189,7 +189,7 @@ namespace Services.Broadcast.ApplicationServices
                         existingMapping.OfficialGenre = _GenreRepository.GetGenreByName(mapping.OfficialGenre, programSource);
                         existingMapping.OfficialShowType = _ShowTypeRepository.GetShowTypeByName(mapping.OfficialShowType);
                         _ProgramMappingRepository.UpdateProgramMapping(existingMapping, username, createdDate);
-                        updatedRecords = _UpdateInventoryWithEnrichedProgramName(existingMapping, mapping, createdDate, programSource);
+                        //updatedRecords = _UpdateInventoryWithEnrichedProgramName(existingMapping, mapping, createdDate, programSource);
                     }
                 }
                 else
@@ -202,12 +202,12 @@ namespace Services.Broadcast.ApplicationServices
                         OfficialShowType = _ShowTypeRepository.GetShowTypeByName(mapping.OfficialShowType)
                     };
                     _ProgramMappingRepository.CreateProgramMapping(newProgramMapping, username, createdDate);
-                    updatedRecords = _UpdateInventoryWithEnrichedProgramName(newProgramMapping, mapping, createdDate, programSource);
+                    //updatedRecords = _UpdateInventoryWithEnrichedProgramName(newProgramMapping, mapping, createdDate, programSource);
                 }
-                //transaction.Complete();
+                transaction.Complete();
                 var ingestedRecords = 1;
                 return Tuple.Create(ingestedRecords, updatedRecords);
-            //}
+            }
         }
 
         private int _UpdateInventoryWithEnrichedProgramName(

@@ -27,6 +27,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="originalProgramName">Name of the original program.</param>
         /// <returns>The program mapping</returns>
         ProgramMappingsDto GetProgramMappingByOriginalProgramName(string originalProgramName);
+        ProgramMappingsDto GetProgramMappingOrDefaultByOriginalProgramName(string originalProgramName);
 
         /// <summary>
         /// Get all the program mappings.
@@ -62,6 +63,18 @@ namespace Services.Broadcast.Repositories
                         .Include(x => x.genre)
                         .Include(x => x.show_types)
                         .Single(x => x.inventory_program_name == originalProgramName, $"No program mapping found for name: {originalProgramName}"));
+                });
+        }
+
+        public ProgramMappingsDto GetProgramMappingOrDefaultByOriginalProgramName(string originalProgramName)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return _MapToDto(context.program_name_mappings
+                        .Include(x => x.genre)
+                        .Include(x => x.show_types)
+                        .SingleOrDefault(x => x.inventory_program_name == originalProgramName);
                 });
         }
 
