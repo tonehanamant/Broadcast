@@ -74,7 +74,7 @@ namespace Services.Broadcast.Repositories
                     return _MapToDto(context.program_name_mappings
                         .Include(x => x.genre)
                         .Include(x => x.show_types)
-                        .SingleOrDefault(x => x.inventory_program_name == originalProgramName);
+                        .SingleOrDefault(x => x.inventory_program_name == originalProgramName));
                 });
         }
 
