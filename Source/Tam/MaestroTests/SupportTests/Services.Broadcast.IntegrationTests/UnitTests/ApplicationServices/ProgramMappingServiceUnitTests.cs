@@ -125,7 +125,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Setup the actual Program Mapping Service
             _ProgramMappingService = new ProgramMappingServiceTestClass(
-                _BackgroundJobClientMock.Object, _DataRepositoryFactoryMock.Object, _SharedFolderServiceMock.Object, null);
+                _BackgroundJobClientMock.Object, _DataRepositoryFactoryMock.Object, _SharedFolderServiceMock.Object, null, null);
         }
 
         [Test]
@@ -412,7 +412,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 	        broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IInventoryRepository>())
 		        .Returns(inventoryRepository.Object);
 
-	        var sut = new ProgramMappingService(null,broadcastDataRepositoryFactory.Object,null,null);
+	        var sut = new ProgramMappingService(null,broadcastDataRepositoryFactory.Object,null,null, null);
 
 	        var reportData = sut.GenerateUnmappedProgramNameReport();
 	        _WriteStream(reportData);

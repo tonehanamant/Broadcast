@@ -5,6 +5,7 @@ using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Cache;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -14,8 +15,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             IBackgroundJobClient backgroundJobClient,
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             ISharedFolderService sharedFolderService,
-            IProgramNameMappingsExportEngine programNameMappingsExportEngine) 
-            : base(backgroundJobClient, broadcastDataRepositoryFactory, sharedFolderService, programNameMappingsExportEngine)
+            IProgramNameMappingsExportEngine programNameMappingsExportEngine,
+            IGenreCache genreCache) 
+            : base(backgroundJobClient, broadcastDataRepositoryFactory, sharedFolderService, programNameMappingsExportEngine, genreCache)
         {
         }
 
