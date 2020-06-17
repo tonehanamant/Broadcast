@@ -266,6 +266,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<ITrafficApiCache, TrafficApiCache>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IAwsCognitoClient, AwsCognitoClient>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IGenreCache, GenreCache>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IShowTypeCache, ShowTypeCache>(new ContainerControlledLifetimeManager());
         }
 
         public T GetApplicationService<T>() where T : class, IApplicationService

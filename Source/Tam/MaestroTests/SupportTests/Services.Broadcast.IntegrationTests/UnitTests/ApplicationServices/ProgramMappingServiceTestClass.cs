@@ -16,8 +16,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             ISharedFolderService sharedFolderService,
             IProgramNameMappingsExportEngine programNameMappingsExportEngine,
-            IGenreCache genreCache) 
-            : base(backgroundJobClient, broadcastDataRepositoryFactory, sharedFolderService, programNameMappingsExportEngine, genreCache)
+            IGenreCache genreCache,
+            IShowTypeCache showTypeCache) 
+            : base(backgroundJobClient, broadcastDataRepositoryFactory, sharedFolderService
+                  , programNameMappingsExportEngine, genreCache, showTypeCache)
         {
         }
 

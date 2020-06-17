@@ -407,6 +407,7 @@
     <Compile Include="Repositories\StationRepositoryTests.cs" />
     <Compile Include="Stubs\DataLakeFileServiceStub.cs" />
     <Compile Include="Stubs\FileServiceStub.cs" />
+    <Compile Include="Stubs\GenreCacheStub.cs" />
     <Compile Include="Stubs\ImpersonateUserStub.cs" />
     <Compile Include="Stubs\FtpServiceStub.cs" />
     <Compile Include="Repositories\ProposalInventoryRepositoryIntegrationTests.cs" />
@@ -417,6 +418,7 @@
     <Compile Include="Stubs\PricingApiClientStub.cs" />
     <Compile Include="Stubs\ProgramGuideApiClientStub.cs" />
     <Compile Include="Stubs\ProgramsSearchApiClientStub.cs" />
+    <Compile Include="Stubs\ShowTypeCacheStub.cs" />
     <Compile Include="Stubs\StubbedConfigurationWebApiClient.cs" />
     <Compile Include="Stubs\StubbedSMSClient.cs" />
     <Compile Include="ApplicationServices\EmailerServiceTests.cs" />

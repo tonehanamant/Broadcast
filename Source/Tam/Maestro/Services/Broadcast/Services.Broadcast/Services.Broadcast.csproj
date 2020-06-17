@@ -328,6 +328,7 @@
     <Compile Include="ApplicationServices\Inventory\InventoryExportService.cs" />
     <Compile Include="BusinessEngines\InventoryExportEngine.cs" />
     <Compile Include="ApplicationServices\ProgramMappingService.cs" />
+    <Compile Include="Cache\ShowTypeCache.cs" />
     <Compile Include="Converters\VpvhFileImporter.cs" />
     <Compile Include="Entities\CreativeLength.cs" />
     <Compile Include="ApplicationServices\StationMappingService.cs" />

@@ -65,26 +65,29 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IBackgroundJobClient _BackgroundJobClient;
         private readonly IProgramMappingRepository _ProgramMappingRepository;
         private readonly IInventoryRepository _InventoryRepository;
-        private readonly IShowTypeRepository _ShowTypeRepository;
-        private readonly IGenreRepository _GenreRepository;
         private readonly IGenreCache _GenreCache;
         private readonly ISharedFolderService _SharedFolderService;
         private readonly IProgramNameMappingsExportEngine _ProgramNameMappingsExportEngine;
+        private readonly IGenreCache _GenreCache;
+        private readonly IShowTypeCache _ShowTypeCache;
+
         private const string UnmappedProgramReportFileName = "UnmappedProgramReport.xlsx";
-        public ProgramMappingService(IBackgroundJobClient backgroundJobClient,
+
+        public ProgramMappingService(
+            IBackgroundJobClient backgroundJobClient,
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             ISharedFolderService sharedFolderService,
             IProgramNameMappingsExportEngine programNameMappingsExportEngine,
-            IGenreCache genreCache)
+            IGenreCache genreCache,
+            IShowTypeCache showTypeCache)
         {
             _BackgroundJobClient = backgroundJobClient;
             _ProgramMappingRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramMappingRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-            _ShowTypeRepository = broadcastDataRepositoryFactory.GetDataRepository<IShowTypeRepository>();
-            _GenreRepository = broadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
             _SharedFolderService = sharedFolderService;
             _ProgramNameMappingsExportEngine = programNameMappingsExportEngine;
             _GenreCache = genreCache;
+            _ShowTypeCache = showTypeCache;
         }
         
         /// <inheritdoc />
@@ -196,8 +199,8 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         // There are changes for an existing mapping
                         existingMapping.OfficialProgramName = mapping.OfficialProgramName;
-                        existingMapping.OfficialGenre = _MapLookupToGenre(_GenreCache.GetSourceGenreByName(mapping.OfficialGenre, programSource), programSource);
-                        existingMapping.OfficialShowType = _ShowTypeRepository.GetShowTypeByName(mapping.OfficialShowType);
+                        existingMapping.OfficialGenre = _MapToGenre(_GenreCache.GetSourceGenreByName(mapping.OfficialGenre, programSource), programSource);
+                        existingMapping.OfficialShowType = _MapToShowTypeDto(_ShowTypeCache.GetShowTypeByName(mapping.OfficialShowType));
                         _ProgramMappingRepository.UpdateProgramMapping(existingMapping, username, createdDate);
                         updatedRecords = _UpdateInventoryWithEnrichedProgramName(existingMapping, mapping, createdDate, programSource);
                     }
@@ -208,8 +211,8 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         OriginalProgramName = mapping.OriginalProgramName,
                         OfficialProgramName = mapping.OfficialProgramName,
-                        OfficialGenre = _MapLookupToGenre(_GenreCache.GetSourceGenreByName(mapping.OfficialGenre, programSource), programSource),
-                OfficialShowType = _ShowTypeRepository.GetShowTypeByName(mapping.OfficialShowType)
+                        OfficialGenre = _MapToGenre(_GenreCache.GetSourceGenreByName(mapping.OfficialGenre, programSource), programSource),
+                        OfficialShowType = _MapToShowTypeDto(_ShowTypeCache.GetShowTypeByName(mapping.OfficialShowType))
                     };
                     _ProgramMappingRepository.CreateProgramMapping(newProgramMapping, username, createdDate);
                     updatedRecords = _UpdateInventoryWithEnrichedProgramName(newProgramMapping, mapping, createdDate, programSource);
@@ -218,6 +221,25 @@ namespace Services.Broadcast.ApplicationServices
                 var ingestedRecords = 1;
                 return Tuple.Create(ingestedRecords, updatedRecords);
             //}
+        }
+
+        private Genre _MapToGenre(LookupDto genreLookup, ProgramSourceEnum programSource)
+        {
+            return new Genre
+            {
+                Id = genreLookup.Id,
+                Name = genreLookup.Display,
+                ProgramSourceId = (int)programSource
+            };
+        }
+
+        private ShowTypeDto _MapToShowTypeDto(LookupDto showTypeLookup)
+        {
+            return new ShowTypeDto
+            {
+                Id = showTypeLookup.Id,
+                Name = showTypeLookup.Display
+            };
         }
 
         private static Genre _MapLookupToGenre(LookupDto dto, ProgramSourceEnum source)
