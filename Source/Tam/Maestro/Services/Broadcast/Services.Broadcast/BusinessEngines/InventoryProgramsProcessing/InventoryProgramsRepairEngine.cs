@@ -114,10 +114,11 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
             token.ThrowIfCancellationRequested();
 
-            _InventoryRepository.CreateInventoryPrograms(newManifestDaypartPrograms, _GetCurrentDateTime());
-
             var manifestDaypartIds = manifestDayparts.Where(s => s.Id.HasValue).Select(s => s.Id.Value).ToList();
             _InventoryRepository.DeReferenceAndDeleteInventoryPrograms(manifestDaypartIds);
+
+            _InventoryRepository.CreateInventoryPrograms(newManifestDaypartPrograms, _GetCurrentDateTime());
+
             _InventoryRepository.UpdatePrimaryProgramsForManifestDayparts(manifestDaypartIds);
         }
 
