@@ -38,15 +38,19 @@ namespace Services.Broadcast
             var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
             _Log.Debug(logMessage.ToJson());
         }
-      
-		protected virtual string _GetBroadcastAppFolder()
-		{
-			return BroadcastServiceSystemParameter.BroadcastAppFolder;
-		}
+
+        protected virtual string _GetBroadcastAppFolder()
+        {
+#if DEBUG
+            return Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+#else
+            return BroadcastServiceSystemParameter.BroadcastAppFolder;
+#endif
+        }
 
         protected virtual DateTime _GetCurrentDateTime()
         {
             return DateTime.Now;
         }
-	}
+    }
 }

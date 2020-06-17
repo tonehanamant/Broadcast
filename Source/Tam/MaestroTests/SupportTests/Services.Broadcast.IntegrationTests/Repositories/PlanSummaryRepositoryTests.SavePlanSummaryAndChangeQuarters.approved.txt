@@ -36,7 +36,6 @@
   "PostingType": 0,
   "ProcessingStatus": 1,
   "ProductName": "ProductTwo",
-  "SpotLength": 0,
   "SpotLengthValues": null,
   "Status": 0,
   "TargetCPM": null,

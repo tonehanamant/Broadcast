@@ -111,7 +111,6 @@
         "PostingType": 2,
         "ProcessingStatus": 1,
         "ProductName": "Product1",
-        "SpotLength": 30,
         "SpotLengthValues": [
           30
         ],
@@ -163,7 +162,6 @@
         "PostingType": 2,
         "ProcessingStatus": 1,
         "ProductName": "Product1",
-        "SpotLength": 30,
         "SpotLengthValues": [
           30
         ],

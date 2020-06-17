@@ -92,8 +92,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CalculatePlanWeeklyGoalBreakdown_Custom_Updated_Impressions_Percentage_Success_Test()
-        {
+        public void Updated_Impres_Percentage_Success()
+        {//CalculatePlanWeeklyGoalBreakdown_Custom_Updated_Impressions_Percentage_Success_Test
             //Arrange
             var request = _GetWeeklyBreakDownRequest();
             request.Weeks.Add(new WeeklyBreakdownWeek
@@ -206,8 +206,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RecalculatesPlanWeeklyBreakdown_ImpressionsChange_ForCustomByWeekByAdLengthDeliveryType()
-        {
+        public void Recalc_ImpsChange_CustWeekAdLen()
+        {//Recalculate_ImpressionsChange_ForCustomByWeekByAdLengthDeliveryType
             //Arrange
             var request = _GetWeeklyBreakdownRequest_CustomByWeekByAdLengthDeliveryType();
             request.Weeks.First().IsUpdated = true;
@@ -229,8 +229,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RecalculatesPlanWeeklyBreakdown_RatingsChange_ForCustomByWeekByAdLengthDeliveryType()
-        {
+        public void Recalc_RatingsChange_CustomWeekAdLength()
+        {//RecalculatesPlanWeeklyBreakdown_RatingsChange_ForCustomByWeekByAdLengthDeliveryType
             //Arrange
             var request = _GetWeeklyBreakdownRequest_CustomByWeekByAdLengthDeliveryType();
             request.Weeks.First().IsUpdated = true;

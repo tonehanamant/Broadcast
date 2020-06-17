@@ -196,7 +196,6 @@ namespace Services.Broadcast.ApplicationServices
             var quarterDateRange = _GetQuarterDateRange(filter.Quarter);
             var campaigns = _CampaignRepository.GetCampaignsWithSummary(quarterDateRange.Start, quarterDateRange.End, filter.PlanStatus)
                 .Select(x => _MapToCampaignListItemDto(x)).ToList();
-            _SetSpotLengthForBackwardsCompatibility(campaigns.Where(x=>x.HasPlans == true).SelectMany(x => x.Plans).ToList());
             var cacheAdvertisers = new BaseMemoryCache<List<AdvertiserDto>>("localAdvertisersCache");
 
             foreach (var campaign in campaigns)
@@ -227,33 +226,7 @@ namespace Services.Broadcast.ApplicationServices
             var summary = _CampaignSummaryRepository.GetSummaryForCampaign(campaignId);
 
             _HydrateCampaignWithSummary(campaign, summary);
-            _SetSpotLengthForBackwardsCompatibility(campaign.Plans);
             return campaign;
-        }
-
-        private void _SetSpotLengthForBackwardsCompatibility(List<PlanDto> plans)
-        {
-            foreach(var plan in plans)
-            {
-                if (plan.CreativeLengths.Any())
-                {
-                    plan.SpotLengthId = plan.CreativeLengths.First().SpotLengthId;
-                }
-            }
-        }
-
-        private void _SetSpotLengthForBackwardsCompatibility(List<PlanSummaryDto> plans)
-        {
-            if (plans!= null && plans.Any())
-            {
-                foreach (var plan in plans)
-                {
-                    if (plan.SpotLengthValues.Any())
-                    {
-                        plan.SpotLength = plan.SpotLengthValues.First();
-                    }
-                }
-            }
         }
 
         private void _HydrateCampaignWithSummary(CampaignDto campaign, CampaignSummaryDto summary)
@@ -536,7 +509,6 @@ namespace Services.Broadcast.ApplicationServices
             _ValidateSecondaryAudiences(plans);
             List<PlanAudienceDisplay> guaranteedDemos = plans.Select(x => x.AudienceId).Distinct()
                 .Select(x => _AudienceService.GetAudienceById(x)).ToList();
-            _SetSpotLengthForBackwardsCompatibility(plans);
             return new CampaignReportData(request.ExportType, campaign, plans, agency, advertiser, guaranteedDemos,
                 _SpotLengthService.GetAllSpotLengths(),
                 _DaypartDefaultService.GetAllDaypartDefaults(),
@@ -718,7 +690,6 @@ namespace Services.Broadcast.ApplicationServices
             var marketCoverages = _MarketCoverageRepository.GetLatestMarketCoveragesWithStations();
             var manifestDaypartIds = manifests.SelectMany(x => x.ManifestDayparts).Select(x => x.Id.Value).Distinct();
             var primaryProgramsByManifestDaypartIds = _StationProgramRepository.GetPrimaryProgramsForManifestDayparts(manifestDaypartIds);
-            _SetSpotLengthForBackwardsCompatibility(campaign.Plans);
             plan.SpotLengthId = plan.CreativeLengths.First().SpotLengthId;
             return new ProgramLineupReportData(
                 plan, 

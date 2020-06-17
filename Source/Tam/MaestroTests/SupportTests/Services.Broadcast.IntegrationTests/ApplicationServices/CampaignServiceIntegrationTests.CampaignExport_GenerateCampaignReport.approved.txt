@@ -5,6 +5,5 @@
   "FileMediaType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   "FileName": "Stub Advertiser EF EM MDN Q1'20-Q2'20 Plan Rev - 05-20",
   "FileNameWithExtension": "Stub Advertiser EF EM MDN Q1'20-Q2'20 Plan Rev - 05-20.xlsx",
-  "FileUsage": 1,
-  "FolderPath": "\\\\cadfs11\\Broadcast\\IntegrationTests\\CampaignExportReports"
+  "FileUsage": 1
 }

@@ -548,7 +548,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Equivalized = true,
                 Name = "New Plan",
                 ProductId = 1,
-                SpotLengthId = 1,
                 CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 50 } },
                 Status = PlanStatusEnum.Working,
                 FlightStartDate = new DateTime(2019, 1, 1),
@@ -674,11 +673,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
 
             Assert.AreNotEqual(Guid.Empty, fileId);
-
+#if DEBUG
+            //we don't care where the file is saved
+#else
             fileServiceMock.Verify(x => x.Create(
                 @"\\cadfs11\Broadcast\IntegrationTests\CampaignExportReports",
                 fileId + ".xlsx",
                 It.Is<Stream>(y => y != null && y.Length > 0)), Times.Once);
+#endif
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(sharedFolderFile, _GetJsonSettingsForCampaignExport()));
         }
@@ -1021,7 +1023,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(SharedFolderFile), "Id");
             jsonResolver.Ignore(typeof(SharedFolderFile), "CreatedDate");
             jsonResolver.Ignore(typeof(SharedFolderFile), "SharedFolderFile");
-            
+            jsonResolver.Ignore(typeof(SharedFolderFile), "FolderPath");
+
             return new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
