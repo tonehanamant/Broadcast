@@ -196,7 +196,7 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         // There are changes for an existing mapping
                         existingMapping.OfficialProgramName = mapping.OfficialProgramName;
-                        existingMapping.OfficialGenre = _MapLookupToGenre(_GenreCache.GetMaestroGenreBySourceGenreName(mapping.OfficialGenre, programSource), programSource);
+                        existingMapping.OfficialGenre = _MapLookupToGenre(_GenreCache.GetSourceGenreByName(mapping.OfficialGenre, programSource), programSource);
                         existingMapping.OfficialShowType = _ShowTypeRepository.GetShowTypeByName(mapping.OfficialShowType);
                         _ProgramMappingRepository.UpdateProgramMapping(existingMapping, username, createdDate);
                         updatedRecords = _UpdateInventoryWithEnrichedProgramName(existingMapping, mapping, createdDate, programSource);
@@ -208,7 +208,7 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         OriginalProgramName = mapping.OriginalProgramName,
                         OfficialProgramName = mapping.OfficialProgramName,
-                        OfficialGenre = _MapLookupToGenre(_GenreCache.GetMaestroGenreBySourceGenreName(mapping.OfficialGenre, programSource), programSource),
+                        OfficialGenre = _MapLookupToGenre(_GenreCache.GetSourceGenreByName(mapping.OfficialGenre, programSource), programSource),
                 OfficialShowType = _ShowTypeRepository.GetShowTypeByName(mapping.OfficialShowType)
                     };
                     _ProgramMappingRepository.CreateProgramMapping(newProgramMapping, username, createdDate);
