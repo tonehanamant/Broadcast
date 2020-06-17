@@ -1738,7 +1738,7 @@ namespace Services.Broadcast.Repositories
                       + "INNER JOIN station_inventory_manifest_daypart_programs p "
                       + "ON d.id = p.station_inventory_manifest_daypart_id "
                       + "WHERE p.program_source_id = 1" //mapped
-                      + "(d.primary_program_id IS NULL OR d.primary_program_id <> p.id) "
+                      + "AND (d.primary_program_id IS NULL OR d.primary_program_id <> p.id) "
                       + $"AND d.id in ({manifestDaypartIdsCsv}); ";
 
             _InReadUncommitedTransaction(
