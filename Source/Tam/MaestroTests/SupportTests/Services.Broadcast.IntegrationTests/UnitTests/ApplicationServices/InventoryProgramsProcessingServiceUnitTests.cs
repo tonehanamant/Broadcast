@@ -27,6 +27,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         private readonly Mock<IBackgroundJobClient> _BackgroundJobClient = new Mock<IBackgroundJobClient>();
         private readonly Mock<IInventoryProgramsProcessingEngine> _InventoryProgramsProcessingEngine = new Mock<IInventoryProgramsProcessingEngine>();
+        private readonly Mock<InventoryProgramsRepairEngine> _InventoryProgramsRepairEngine = new Mock<InventoryProgramsRepairEngine>();
 
         private readonly Mock<IEmailerService> _EmailerService = new Mock<IEmailerService>();
 
@@ -599,7 +600,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 dataRepoFactory.Object,
                 _BackgroundJobClient.Object,
                 _EmailerService.Object,
-                engineFactory.Object);
+                engineFactory.Object,
+                _InventoryProgramsRepairEngine.Object);
 
             return service;
         }

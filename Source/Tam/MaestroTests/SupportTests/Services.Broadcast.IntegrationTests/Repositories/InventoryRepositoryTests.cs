@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Inventory;
 using Tam.Maestro.Common.DataLayer;
@@ -18,6 +19,10 @@ namespace Services.Broadcast.IntegrationTests.Repositories
     [TestFixture]
     public class InventoryRepositoryTests
     {
+	    private readonly IGenreRepository _GenreRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
+	    private readonly IShowTypeRepository _ShowTypeRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IShowTypeRepository>();
+	    private readonly IProgramMappingRepository _ProgramMappingRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProgramMappingRepository>();
+
         /// <summary>
         /// Tests both delete within daterange and update.
         /// Within the delete only a subset are deleted.
@@ -424,9 +429,10 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void GetDistinctUnmappedProgramsTest()
         {
-	        const int expectedCount = 2795;
+	        const int expectedCount = 2666;
 
 	        var repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
 		        .GetDataRepository<IInventoryRepository>();
@@ -437,11 +443,56 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 var result = repo.GetUnmappedPrograms();
 
 		        var totalCount = result.Count;
+		        var verifiableResult = new
+		        {
+			        result
+                };
 
                 /*** Assert ***/
                 Assert.AreEqual(expectedCount, totalCount);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(verifiableResult));
+
+            }
+        }
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetOrphanedManifestDaypartsTest()
+        {
+	      //  const int expectedCount = 123;
+
+	        var repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+		        .GetDataRepository<IInventoryRepository>();
+	        var createdBy = "testUser";
+	        var createdAt = new DateTime(2020, 10, 17, 8, 32, 12);
+	        var genre = _GenreRepository.GetGenreByName("News", ProgramSourceEnum.Mapped);
+	        var showType = _ShowTypeRepository.GetShowTypes().First();
+	        var newProgramMapping = new ProgramMappingsDto
+	        {
+		        OriginalProgramName = "TestOriginalProgramName",
+		        OfficialProgramName = "TestOfficialProgramName",
+		        OfficialGenre = genre,
+		        OfficialShowType = new ShowTypeDto
+		        {
+			        Id = showType.Id,
+			        Name = showType.Display
+		        }
+	        };
+
+	        var result = new List<StationInventoryManifestDaypart>();
+
+            using (new TransactionScopeWrapper())
+	        {
+		        _ProgramMappingRepository.CreateProgramMapping(newProgramMapping, createdBy, createdAt);
+                /*** Act ***/
+                 result = repo.GetOrphanedManifestDayparts();
+                
+
+		        /*** Assert ***/
+		      //  Assert.AreEqual(expectedCount, totalCount);
 		       
+
 	        }
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
     }
 }

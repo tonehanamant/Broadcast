@@ -14,8 +14,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IBackgroundJobClient backgroundJobClient,
             IEmailerService emailerService,
-            IInventoryProgramsProcessorFactory iInventoryProgramsProcessorFactory)
-        : base(broadcastDataRepositoryFactory, backgroundJobClient, emailerService, iInventoryProgramsProcessorFactory)
+            IInventoryProgramsProcessorFactory inventoryProgramsProcessorFactory,
+            IInventoryProgramsRepairEngine inventoryProgramsRepairEngine)
+        : base(broadcastDataRepositoryFactory, backgroundJobClient, emailerService, 
+            inventoryProgramsProcessorFactory, inventoryProgramsRepairEngine)
         {
         }
 

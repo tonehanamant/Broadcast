@@ -15,6 +15,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using Tam.Maestro.Data.Entities;
@@ -751,6 +752,63 @@ namespace BroadcastComposerWeb.Controllers
             }
 
             return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult QueueRepairInventoryProgramsJob()
+        {
+            TempData["TabId"] = "program_guide";
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
+                var jobId = service.QueueRepairInventoryProgramsJob();
+
+                TempData["Message"] = $"Repair Inventory Programs processed queued with Id : '{jobId}'";
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult CancelQueuedRepairInventoryProgramsJob(int hangfireJobId)
+        {
+            TempData["TabId"] = "program_guide";
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
+                var resultMessage = service.CancelQueueRepairInventoryProgramsJob(hangfireJobId);
+
+                TempData["Message"] = resultMessage;
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult ExecuteRepairInventoryPrograms()
+        {
+            TempData["TabId"] = "program_guide";
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProgramsProcessingService>();
+                service.PerformRepairInventoryPrograms(CancellationToken.None);
+
+                TempData["Message"] = $"Repair Inventory Programs processed Completed.";
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

@@ -320,6 +320,7 @@
     <Compile Include="ApplicationServices\CampaignAggregationJobTrigger.cs" />
     <Compile Include="ApplicationServices\CampaignAggregator.cs" />
     <Compile Include="ApplicationServices\VpvhService.cs" />
+    <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsRepairEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricingBandCalculationEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricingUnitCapImpressionsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProgramNameMappingsExportEngine.cs" />

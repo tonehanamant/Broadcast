@@ -181,7 +181,6 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="groupIds"></param>
         void RemoveManifestGroups(List<int> groupIds);
-
         
         /// <summary>
         /// Get distinct list of Program Names
@@ -190,6 +189,8 @@ namespace Services.Broadcast.Repositories
         List<string> GetUnmappedPrograms();
 
         List<int> GetManuallyMappedPrograms(List<int> inventoryDaypartIds);
+
+        List<StationInventoryManifestDaypart> GetOrphanedManifestDayparts();
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -1923,8 +1924,9 @@ namespace Services.Broadcast.Repositories
 	        return _InReadUncommitedTransaction(
 		        context =>
 		        {
-			        var unmappedPrograms = context.station_inventory_manifest_dayparts
-				        .Where(x =>
+                    var unmappedPrograms = context.station_inventory_manifest_dayparts
+				        .Include(x=>x.station_inventory_manifest.station_inventory_manifest_weeks)
+				        .Where(x => x.station_inventory_manifest.station_inventory_manifest_weeks.Any() &&
 					        !x.station_inventory_manifest_daypart_programs.Any(s =>
 						        s.program_source_id.Equals((int)ProgramSourceEnum.Mapped)))
 				        .OrderBy(x => x.program_name)
@@ -1952,6 +1954,34 @@ namespace Services.Broadcast.Repositories
                         .ToList();
 
                     return manuallyMapped;
+                });
+        }
+
+        public List<StationInventoryManifestDaypart> GetOrphanedManifestDayparts()
+        {
+	        return  _InReadUncommitedTransaction(
+		        context =>
+		        {
+			        var sqlQuery = "SELECT DISTINCT d.id"
+				        + " FROM station_inventory_manifest_dayparts d"
+				        + " JOIN station_inventory_manifest_weeks w ON d.station_inventory_manifest_id = w.station_inventory_manifest_id"
+				        + " JOIN program_name_mappings m ON m.official_program_name = d.program_name"
+				        + " LEFT OUTER JOIN station_inventory_manifest_daypart_programs p ON p.id = d.primary_program_id"
+                        + " WHERE p.id is null " 
+                        + " OR (p.id IS NOT NULL AND p.name <> m.official_program_name)"
+                        + " order by d.id;";
+                    
+                    var manifestDaypartIds = context.Database.SqlQuery<int>(sqlQuery);
+                    var entities = context.station_inventory_manifest_dayparts
+                        .Include(s => s.daypart)
+                        .Include(s => s.station_inventory_manifest_daypart_genres)
+                        .Include(s => s.station_inventory_manifest_daypart_programs)
+                        .Where(s => manifestDaypartIds.Contains(s.id))
+                        .ToList()
+                        .Select(_MapToManifestDaypart)
+                        .ToList();
+
+                    return entities;
                 });
         }
     }

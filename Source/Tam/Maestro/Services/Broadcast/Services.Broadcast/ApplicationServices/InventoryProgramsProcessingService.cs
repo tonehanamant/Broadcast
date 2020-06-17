@@ -8,10 +8,12 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
+using System.Threading;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices
@@ -58,6 +60,14 @@ namespace Services.Broadcast.ApplicationServices
         [Queue("processprogramenrichedinventoryfiles")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void ProcessProgramEnrichedInventoryFiles();
+
+        int QueueRepairInventoryProgramsJob();
+
+        string CancelQueueRepairInventoryProgramsJob(int hangfireJobId);
+
+        [Queue("inventoryprogramsprocessing")]
+        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
+        void PerformRepairInventoryPrograms(CancellationToken token);
     }
 
     public class InventoryProgramsProcessingService : BroadcastBaseClass,  IInventoryProgramsProcessingService
@@ -68,6 +78,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryProgramsByFileJobsRepository _InventoryProgramsByFileJobsRepository;
         private readonly IInventoryProgramsBySourceJobsRepository _InventoryProgramsBySourceJobsRepository;
         private readonly IEmailerService _EmailerService;
+        private readonly IInventoryProgramsRepairEngine _InventoryProgramsRepairEngine;
 
         private readonly IInventoryProgramsProcessorFactory _InventoryProgramsProcessorFactory;
 
@@ -75,7 +86,8 @@ namespace Services.Broadcast.ApplicationServices
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IBackgroundJobClient backgroundJobClient,
             IEmailerService emailerService,
-            IInventoryProgramsProcessorFactory inventoryProgramsProcessorFactory)
+            IInventoryProgramsProcessorFactory inventoryProgramsProcessorFactory,
+            IInventoryProgramsRepairEngine inventoryProgramsRepairEngine)
         {
             _BackgroundJobClient = backgroundJobClient;
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -84,6 +96,7 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryProgramsBySourceJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProgramsBySourceJobsRepository>();
             _EmailerService = emailerService;
             _InventoryProgramsProcessorFactory = inventoryProgramsProcessorFactory;
+            _InventoryProgramsRepairEngine = inventoryProgramsRepairEngine;
         }
 
         public InventoryProgramsByFileJobEnqueueResultDto QueueProcessInventoryProgramsByFileJob(int fileId, string username)
@@ -357,6 +370,47 @@ namespace Services.Broadcast.ApplicationServices
             // PRI-25264 : disabling sending the email
             // the engine will send on error
             //_EmailerService.QuickSend(false, body.ToString(), subject, priority, toEmails);
+        }
+
+        public int QueueRepairInventoryProgramsJob()
+        {
+            var hangfireId = _BackgroundJobClient.Enqueue<IInventoryProgramsProcessingService>(x => x.PerformRepairInventoryPrograms(CancellationToken.None));
+            // it always comes back as an int.
+            var hangfireIdAsInt = int.Parse(hangfireId);
+            return hangfireIdAsInt;
+        }
+
+        public string CancelQueueRepairInventoryProgramsJob(int hangfireJobId)
+        {
+            _LogInfo($"Canceling RepairInventoryProgramsJob with hangfireJobId '{hangfireJobId}'.");
+            try
+            {
+                _BackgroundJobClient.Delete(hangfireJobId.ToString());
+                return $"Hangfire job '{hangfireJobId}' has been canceled.";
+            }
+            catch (Exception ex)
+            {
+                _LogError($"Exception caught attempting to cancel hangfire job '{hangfireJobId}'.", ex);
+
+                var msg = $"Error caught attempting to cancel hangfire job '{hangfireJobId}'.  See log for details.";
+                return msg;
+            }
+        }
+
+        public void PerformRepairInventoryPrograms(CancellationToken token)
+        {
+            _LogInfo("Processing RepairInventoryPrograms starting.");
+            var sw = new Stopwatch();
+            sw.Start();
+            try
+            {
+                _InventoryProgramsRepairEngine.RepairInventoryPrograms(token);
+            }
+            finally
+            {
+                sw.Stop();
+                _LogInfo($"Processing RepairInventoryPrograms Completed in {sw.ElapsedMilliseconds} ms.");
+            }
         }
 
         protected virtual DateTime _GetDateTimeNow()
