@@ -21,31 +21,6 @@
       },
       "DaypartDefault": null,
       "Genres": [],
-      "Id": 576682,
-      "PrimaryProgramId": null,
-      "ProgramName": "News 10 @ Noon",
-      "Programs": []
-    },
-    {
-      "Daypart": {
-        "_Code": "",
-        "_EndTime": 46799,
-        "_Friday": false,
-        "_Id": 1617,
-        "_Is24Hour": false,
-        "_LastEndTime": 0,
-        "_LastStartTime": 0,
-        "_Monday": false,
-        "_Name": "",
-        "_Saturday": false,
-        "_StartTime": 43200,
-        "_Sunday": false,
-        "_Thursday": false,
-        "_Tuesday": false,
-        "_Wednesday": false
-      },
-      "DaypartDefault": null,
-      "Genres": [],
       "Id": 576683,
       "PrimaryProgramId": 14753,
       "ProgramName": "News 10 @ Noon",
@@ -130,6 +105,31 @@
           "StationInventoryManifestDaypartId": 576685
         }
       ]
+    },
+    {
+      "Daypart": {
+        "_Code": "",
+        "_EndTime": 46799,
+        "_Friday": false,
+        "_Id": 1617,
+        "_Is24Hour": false,
+        "_LastEndTime": 0,
+        "_LastStartTime": 0,
+        "_Monday": false,
+        "_Name": "",
+        "_Saturday": false,
+        "_StartTime": 43200,
+        "_Sunday": false,
+        "_Thursday": false,
+        "_Tuesday": false,
+        "_Wednesday": false
+      },
+      "DaypartDefault": null,
+      "Genres": [],
+      "Id": 576682,
+      "PrimaryProgramId": null,
+      "ProgramName": "News 10 @ Noon",
+      "Programs": []
     }
   ]
 }

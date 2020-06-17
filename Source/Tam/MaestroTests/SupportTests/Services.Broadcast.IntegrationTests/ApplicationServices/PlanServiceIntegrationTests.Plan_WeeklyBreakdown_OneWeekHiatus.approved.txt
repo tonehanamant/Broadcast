@@ -5,6 +5,7 @@
   "TotalImpressionsPercentage": 100.0,
   "TotalRatingPoints": 0.0,
   "TotalShareOfVoice": 100.0,
+  "TotalUnits": 10.0,
   "Weeks": [
     {
       "ActiveDays": "Th-Su",
@@ -17,11 +18,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2019-07-29T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 0.0,
       "WeeklyImpressions": 250.0,
       "WeeklyImpressionsPercentage": 25.0,
       "WeeklyRatings": 0.0,
+      "WeeklyUnits": 2.5,
       "WeekNumber": 1
     },
     {
@@ -35,11 +38,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2019-08-05T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 0.0,
       "WeeklyImpressions": 0.0,
       "WeeklyImpressionsPercentage": 0.0,
       "WeeklyRatings": 0.0,
+      "WeeklyUnits": 0.0,
       "WeekNumber": 2
     },
     {
@@ -53,11 +58,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2019-08-12T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 0.0,
       "WeeklyImpressions": 250.0,
       "WeeklyImpressionsPercentage": 25.0,
       "WeeklyRatings": 0.0,
+      "WeeklyUnits": 2.5,
       "WeekNumber": 3
     },
     {
@@ -71,11 +78,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2019-08-19T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 0.0,
       "WeeklyImpressions": 250.0,
       "WeeklyImpressionsPercentage": 25.0,
       "WeeklyRatings": 0.0,
+      "WeeklyUnits": 2.5,
       "WeekNumber": 4
     },
     {
@@ -89,11 +98,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2019-08-26T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 0.0,
       "WeeklyImpressions": 250.0,
       "WeeklyImpressionsPercentage": 25.0,
       "WeeklyRatings": 0.0,
+      "WeeklyUnits": 2.5,
       "WeekNumber": 5
     }
   ]

@@ -476,7 +476,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 WeeklyImpressionsPercentage = 100,
                 WeeklyRatings = 50,
                 WeeklyBudget = 100,
-                WeeklyAdu = 6
+                WeeklyAdu = 6,
+                WeeklyUnits = 5
             });
 
             _CreativeLengthEngineMock
@@ -537,7 +538,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 WeeklyRatings = 25,
                 WeeklyBudget = 50,
                 WeeklyAdu = 2,
-                SpotLengthId = 1
+                SpotLengthId = 1,
+                WeeklyUnits = 2.5
             });
             plan.WeeklyBreakdownWeeks.Add(new WeeklyBreakdownWeek
             {
@@ -552,7 +554,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 WeeklyRatings = 12.5,
                 WeeklyBudget = 25,
                 WeeklyAdu = 2,
-                SpotLengthId = 2
+                SpotLengthId = 2,
+                WeeklyUnits = 1.25
             });
             plan.WeeklyBreakdownWeeks.Add(new WeeklyBreakdownWeek
             {
@@ -567,26 +570,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 WeeklyRatings = 12.5,
                 WeeklyBudget = 25,
                 WeeklyAdu = 2,
-                SpotLengthId = 3
+                SpotLengthId = 3,
+                WeeklyUnits = 0.65
             });
 
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<List<WeeklyBreakdownWeek>>()))
-                .Returns<List<WeeklyBreakdownWeek>>(p => p
-                    .GroupBy(x => x.MediaWeekId)
-                    .Select(x => new WeeklyBreakdownByWeek
-                    {
-                        WeekNumber = x.First().WeekNumber,
-                        MediaWeekId = x.First().MediaWeekId,
-                        StartDate = x.First().StartDate,
-                        EndDate = x.First().EndDate,
-                        NumberOfActiveDays = x.First().NumberOfActiveDays,
-                        ActiveDays = x.First().ActiveDays,
-                        Impressions = x.Sum(i => i.WeeklyImpressions),
-                        Budget = x.Sum(i => i.WeeklyBudget),
-                        Adu = x.Sum(i => i.WeeklyAdu)
-                    })
-                    .ToList());
+                .Returns<List<WeeklyBreakdownWeek>>(p => _GetWeeklyBreakdownWeeks(p));
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GetWeeklyBreakdownCombinations(It.IsAny<List<CreativeLength>>(), It.IsAny<List<PlanDaypartDto>>()))
                 .Returns(new List<WeeklyBreakdownCombination> {
@@ -611,6 +601,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new CreativeLength { SpotLengthId = 2, Weight = 25 },
                     new CreativeLength { SpotLengthId = 3, Weight = 25 }
                 });
+            _PlanAggregatorMock.Setup(s => s.Aggregate(It.IsAny<PlanDto>()))
+                .Returns(new PlanSummaryDto());
 
             var savedWeekyBreakdowns = new List<object>();
             _PlanRepositoryMock
@@ -622,6 +614,25 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedWeekyBreakdowns));
+        }
+
+        private static List<WeeklyBreakdownByWeek> _GetWeeklyBreakdownWeeks(List<WeeklyBreakdownWeek> weeks)
+        {
+            return weeks.GroupBy(x => x.MediaWeekId)
+                    .Select(x => new WeeklyBreakdownByWeek
+                    {
+                        WeekNumber = x.First().WeekNumber,
+                        MediaWeekId = x.First().MediaWeekId,
+                        StartDate = x.First().StartDate,
+                        EndDate = x.First().EndDate,
+                        NumberOfActiveDays = x.First().NumberOfActiveDays,
+                        ActiveDays = x.First().ActiveDays,
+                        Impressions = x.Sum(i => i.WeeklyImpressions),
+                        Budget = x.Sum(i => i.WeeklyBudget),
+                        Adu = (int)(x.Sum(i => i.AduImpressions) / BroadcastConstants.ImpressionsPerUnit),
+                        Units = x.Sum(i => i.UnitImpressions) / x.Sum(i => i.WeeklyImpressions)
+                    })
+                    .ToList();
         }
 
         [Test]
@@ -648,6 +659,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 WeeklyImpressions = 30000,
                 WeeklyImpressionsPercentage = 30,
                 WeeklyRatings = 15,
+                UnitImpressions = 20000
             });
             plan.WeeklyBreakdownWeeks.Add(new WeeklyBreakdownWeek
             {
@@ -665,6 +677,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 WeeklyImpressions = 20000,
                 WeeklyImpressionsPercentage = 20,
                 WeeklyRatings = 10,
+                UnitImpressions = 20000
             });
             plan.WeeklyBreakdownWeeks.Add(new WeeklyBreakdownWeek
             {
@@ -682,6 +695,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 WeeklyImpressions = 15000,
                 WeeklyImpressionsPercentage = 15,
                 WeeklyRatings = 7.5,
+                UnitImpressions = 20000
             });
             plan.WeeklyBreakdownWeeks.Add(new WeeklyBreakdownWeek
             {
@@ -699,6 +713,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 WeeklyImpressions = 10000,
                 WeeklyImpressionsPercentage = 10,
                 WeeklyRatings = 5,
+                UnitImpressions = 20000
             });
             plan.WeeklyBreakdownWeeks.Add(new WeeklyBreakdownWeek
             {
@@ -716,6 +731,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 WeeklyImpressions = 15000,
                 WeeklyImpressionsPercentage = 15,
                 WeeklyRatings = 7.5,
+                UnitImpressions = 20000
             });
             plan.WeeklyBreakdownWeeks.Add(new WeeklyBreakdownWeek
             {
@@ -733,6 +749,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 WeeklyImpressions = 10000,
                 WeeklyImpressionsPercentage = 10,
                 WeeklyRatings = 5,
+                UnitImpressions = 20000
             });
 
             _PlanRepositoryMock
@@ -741,21 +758,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<List<WeeklyBreakdownWeek>>()))
-                .Returns<List<WeeklyBreakdownWeek>>(p => p
-                    .GroupBy(x => x.MediaWeekId)
-                    .Select(x => new WeeklyBreakdownByWeek
-                    {
-                        WeekNumber = x.First().WeekNumber,
-                        MediaWeekId = x.First().MediaWeekId,
-                        StartDate = x.First().StartDate,
-                        EndDate = x.First().EndDate,
-                        NumberOfActiveDays = x.First().NumberOfActiveDays,
-                        ActiveDays = x.First().ActiveDays,
-                        Impressions = x.Sum(i => i.WeeklyImpressions),
-                        Budget = x.Sum(i => i.WeeklyBudget),
-                        Adu = (int)(x.Sum(i => i.AduImpressions) / BroadcastConstants.ImpressionsPerUnit)
-                    })
-                    .ToList());
+                .Returns<List<WeeklyBreakdownWeek>>(p => _GetWeeklyBreakdownWeeks(p));
 
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GetWeekNumberByMediaWeekDictionary(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
@@ -791,21 +794,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<List<WeeklyBreakdownWeek>>()))
-                .Returns<List<WeeklyBreakdownWeek>>(p => p
-                    .GroupBy(x => x.MediaWeekId)
-                    .Select(x => new WeeklyBreakdownByWeek
-                    {
-                        WeekNumber = x.First().WeekNumber,
-                        MediaWeekId = x.First().MediaWeekId,
-                        StartDate = x.First().StartDate,
-                        EndDate = x.First().EndDate,
-                        NumberOfActiveDays = x.First().NumberOfActiveDays,
-                        ActiveDays = x.First().ActiveDays,
-                        Impressions = x.Sum(i => i.WeeklyImpressions),
-                        Budget = x.Sum(i => i.WeeklyBudget),
-                        Adu = (int)(x.Sum(i => i.AduImpressions) / BroadcastConstants.ImpressionsPerUnit)
-                    })
-                    .ToList());
+                .Returns<List<WeeklyBreakdownWeek>>(p => _GetWeeklyBreakdownWeeks(p));
 
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByWeekBySpotLength(It.IsAny<List<WeeklyBreakdownWeek>>()))
@@ -822,7 +811,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         ActiveDays = x.First().ActiveDays,
                         Impressions = x.Sum(i => i.WeeklyImpressions),
                         Budget = x.Sum(i => i.WeeklyBudget),
-                        Adu = (int)(x.Sum(i => i.AduImpressions) / BroadcastConstants.ImpressionsPerUnit)
+                        Adu = (int)(x.Sum(i => i.AduImpressions) / BroadcastConstants.ImpressionsPerUnit),
+                        Units = x.Sum(i=>i.UnitImpressions) / x.Sum(i => i.WeeklyImpressions)
                     })
                     .ToList());
 
@@ -863,7 +853,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     WeeklyBudget = 30,
                     WeeklyImpressions = 30000,
                     WeeklyImpressionsPercentage = 30,
-                    WeeklyRatings = 15,
+                    WeeklyRatings = 15
                 },
                 new WeeklyBreakdownWeek
                 {
@@ -1197,14 +1187,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new DateTime(2019,4,15)
                 },
                 AudienceId = 31,        //HH
-                AudienceType = Entities.Enums.AudienceTypeEnum.Nielsen,
+                AudienceType = AudienceTypeEnum.Nielsen,
                 HUTBookId = 436,
-                PostingType = Entities.Enums.PostingTypeEnum.NTI,
+                PostingType = PostingTypeEnum.NTI,
                 ShareBookId = 437,
                 Budget = 100m,
                 TargetCPM = 12m,
                 TargetImpressions = 100d,
-                CoverageGoalPercent = 80.5,
+                CoverageGoalPercent = 80.5,                
                 AvailableMarkets = new List<PlanAvailableMarketDto>
                 {
                     new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 20, Rank = 1, ShareOfVoicePercent = 22.2, Market = "Portland-Auburn"},
@@ -1257,7 +1247,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Vpvh = 0.234543,
                 TargetRatingPoints = 50,
                 TargetCPP = 50,
-                GoalBreakdownType = PlanGoalBreakdownTypeEnum.EvenDelivery
+                GoalBreakdownType = PlanGoalBreakdownTypeEnum.EvenDelivery,
+                ImpressionsPerUnit = 20
             };
         }
 
@@ -1309,12 +1300,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 TotalImpressions = 100000,
                 Weeks = _GetWeeklyBreakdownWeeks()
             };
-
+            
             var distributeWeightCallCount = 0;
             _CreativeLengthEngineMock.Setup(s => s.DistributeWeight(It.IsAny<List<CreativeLength>>()))
                 .Callback(() => distributeWeightCallCount++)
                 .Returns(request.CreativeLengths);
-
             _SpotLengthEngineMock
                 .Setup(a => a.GetSpotLengths())
                 .Returns(new Dictionary<int, int> { { 30, 1 }, { 15, 2}, { 45, 3} });
@@ -1360,5 +1350,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
         }
+
+        private Dictionary<int, double> _SpotLengthMultiplier = new Dictionary<int, double>
+        {
+            { 1,1}, { 2, 2}
+        };
     }
 }

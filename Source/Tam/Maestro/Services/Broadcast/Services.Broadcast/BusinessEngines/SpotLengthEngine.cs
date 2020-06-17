@@ -43,28 +43,44 @@ namespace Services.Broadcast.BusinessEngines
         /// </summary>
         /// <returns>Returns a dictionary of lengths where key is the length and value is the Id</returns>
         Dictionary<int, int> GetSpotLengths();
+
+        /// <summary>
+        /// Gets the spot length multipliers.
+        /// </summary>
+        /// <returns>Dictionary of spot length id and spot multiplier</returns>
+        Dictionary<int, double> GetSpotLengthMultipliers();
     }
 
     public class SpotLengthEngine : ISpotLengthEngine
     {
-        private readonly Dictionary<int, int> _SpotLengthsDict;
+        private readonly Lazy<Dictionary<int, int>> _SpotLengthsDict;
+        private readonly Lazy<Dictionary<int, double>> _SpotLengthMultipliers;
 
         /// <inheritdoc/>
         public SpotLengthEngine(IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
-            _SpotLengthsDict = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+            _SpotLengthsDict = new Lazy<Dictionary<int, int>>(() => 
+                        broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds());
+            _SpotLengthMultipliers = new Lazy<Dictionary<int, double>>(() => 
+                        broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthMultipliers());
         }
 
         /// <inheritdoc/>
         public Dictionary<int, int> GetSpotLengths()
         {
-            return _SpotLengthsDict;
+            return _SpotLengthsDict.Value;
+        }
+
+        /// <inheritdoc/>
+        public Dictionary<int, double> GetSpotLengthMultipliers()
+        {
+            return _SpotLengthMultipliers.Value.ToDictionary(x=> GetSpotLengthIdByValue(x.Key), x=>x.Value);
         }
 
         /// <inheritdoc/>
         public int GetSpotLengthIdByValue(int spotLengthValue)
         {
-            if (_SpotLengthsDict.TryGetValue(spotLengthValue, out var spotLengthId))
+            if (_SpotLengthsDict.Value.TryGetValue(spotLengthValue, out var spotLengthId))
             {
                 return spotLengthId;
             }
@@ -75,20 +91,20 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc/>
         public int GetSpotLengthValueById(int spotLengthId)
         {
-            var spotLength = _SpotLengthsDict.Single(x => x.Value == spotLengthId, $"Invalid spot length id: '{spotLengthId}' found");
+            var spotLength = _SpotLengthsDict.Value.Single(x => x.Value == spotLengthId, $"Invalid spot length id: '{spotLengthId}' found");
             return spotLength.Key;
         }
 
         /// <inheritdoc/>
         public bool SpotLengthExists(int spotLengthValue)
         {
-            return _SpotLengthsDict.ContainsKey(spotLengthValue);
+            return _SpotLengthsDict.Value.ContainsKey(spotLengthValue);
         }
 
         /// <inheritdoc/>
         public bool SpotLengthIdExists(int spotLengthId)
         {
-            return _SpotLengthsDict.ContainsValue(spotLengthId);
+            return _SpotLengthsDict.Value.ContainsValue(spotLengthId);
         }
     }
 }

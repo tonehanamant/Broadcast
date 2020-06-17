@@ -5,6 +5,7 @@
   "TotalImpressionsPercentage": 113.0,
   "TotalRatingPoints": 7.9,
   "TotalShareOfVoice": 113.0,
+  "TotalUnits": 24.1,
   "Weeks": [
     {
       "ActiveDays": "Tu-F",
@@ -17,11 +18,13 @@
       "PercentageOfWeek": 0.0,
       "SpotLengthId": 1,
       "StartDate": "2020-02-24T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 0.0,
       "WeeklyImpressions": 0.0,
       "WeeklyImpressionsPercentage": 0.0,
       "WeeklyRatings": 0.0,
+      "WeeklyUnits": 0.0,
       "WeekNumber": 1
     },
     {
@@ -35,11 +38,13 @@
       "PercentageOfWeek": 0.0,
       "SpotLengthId": 2,
       "StartDate": "2020-02-24T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 0.0,
       "WeeklyImpressions": 0.0,
       "WeeklyImpressionsPercentage": 0.0,
       "WeeklyRatings": 0.0,
+      "WeeklyUnits": 0.0,
       "WeekNumber": 1
     },
     {
@@ -53,11 +58,13 @@
       "PercentageOfWeek": 0.0,
       "SpotLengthId": 3,
       "StartDate": "2020-02-24T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 0.0,
       "WeeklyImpressions": 0.0,
       "WeeklyImpressionsPercentage": 0.0,
       "WeeklyRatings": 0.0,
+      "WeeklyUnits": 0.0,
       "WeekNumber": 1
     },
     {
@@ -71,11 +78,13 @@
       "PercentageOfWeek": 66.0,
       "SpotLengthId": 1,
       "StartDate": "2020-03-02T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 3,
       "WeeklyBudget": 284.03755868544600938967136150,
       "WeeklyImpressions": 121.0,
       "WeeklyImpressionsPercentage": 57.0,
       "WeeklyRatings": 3.9,
+      "WeeklyUnits": 12.1,
       "WeekNumber": 2
     },
     {
@@ -89,11 +98,13 @@
       "PercentageOfWeek": 17.0,
       "SpotLengthId": 2,
       "StartDate": "2020-03-02T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 3,
       "WeeklyBudget": 60.0,
       "WeeklyImpressions": 30.0,
       "WeeklyImpressionsPercentage": 60.0,
       "WeeklyRatings": 3.0,
+      "WeeklyUnits": 3.0,
       "WeekNumber": 2
     },
     {
@@ -107,11 +118,13 @@
       "PercentageOfWeek": 17.0,
       "SpotLengthId": 3,
       "StartDate": "2020-03-02T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 3,
       "WeeklyBudget": 60.0,
       "WeeklyImpressions": 30.0,
       "WeeklyImpressionsPercentage": 60.0,
       "WeeklyRatings": 3.0,
+      "WeeklyUnits": 3.0,
       "WeekNumber": 2
     },
     {
@@ -125,11 +138,13 @@
       "PercentageOfWeek": 34.0,
       "SpotLengthId": 1,
       "StartDate": "2020-03-09T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 1,
       "WeeklyBudget": 20.0,
       "WeeklyImpressions": 10.0,
       "WeeklyImpressionsPercentage": 20.0,
       "WeeklyRatings": 1.0,
+      "WeeklyUnits": 1.0,
       "WeekNumber": 3
     },
     {
@@ -143,11 +158,13 @@
       "PercentageOfWeek": 33.0,
       "SpotLengthId": 2,
       "StartDate": "2020-03-09T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 1,
       "WeeklyBudget": 20.0,
       "WeeklyImpressions": 10.0,
       "WeeklyImpressionsPercentage": 20.0,
       "WeeklyRatings": 1.0,
+      "WeeklyUnits": 1.0,
       "WeekNumber": 3
     },
     {
@@ -161,11 +178,13 @@
       "PercentageOfWeek": 33.0,
       "SpotLengthId": 3,
       "StartDate": "2020-03-09T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 1,
       "WeeklyBudget": 20.0,
       "WeeklyImpressions": 10.0,
       "WeeklyImpressionsPercentage": 20.0,
       "WeeklyRatings": 1.0,
+      "WeeklyUnits": 1.0,
       "WeekNumber": 3
     },
     {
@@ -179,11 +198,13 @@
       "PercentageOfWeek": 34.0,
       "SpotLengthId": 1,
       "StartDate": "2020-03-16T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 1,
       "WeeklyBudget": 20.0,
       "WeeklyImpressions": 10.0,
       "WeeklyImpressionsPercentage": 20.0,
       "WeeklyRatings": 1.0,
+      "WeeklyUnits": 1.0,
       "WeekNumber": 4
     },
     {
@@ -197,11 +218,13 @@
       "PercentageOfWeek": 33.0,
       "SpotLengthId": 2,
       "StartDate": "2020-03-16T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 1,
       "WeeklyBudget": 20.0,
       "WeeklyImpressions": 10.0,
       "WeeklyImpressionsPercentage": 20.0,
       "WeeklyRatings": 1.0,
+      "WeeklyUnits": 1.0,
       "WeekNumber": 4
     },
     {
@@ -215,11 +238,13 @@
       "PercentageOfWeek": 33.0,
       "SpotLengthId": 3,
       "StartDate": "2020-03-16T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 1,
       "WeeklyBudget": 20.0,
       "WeeklyImpressions": 10.0,
       "WeeklyImpressionsPercentage": 20.0,
       "WeeklyRatings": 1.0,
+      "WeeklyUnits": 1.0,
       "WeekNumber": 4
     },
     {
@@ -233,11 +258,13 @@
       "PercentageOfWeek": 0.0,
       "SpotLengthId": 1,
       "StartDate": "2020-03-23T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 0.0,
       "WeeklyImpressions": 0.0,
       "WeeklyImpressionsPercentage": 0.0,
       "WeeklyRatings": 0.0,
+      "WeeklyUnits": 0.0,
       "WeekNumber": 5
     },
     {
@@ -251,11 +278,13 @@
       "PercentageOfWeek": 0.0,
       "SpotLengthId": 2,
       "StartDate": "2020-03-23T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 0.0,
       "WeeklyImpressions": 0.0,
       "WeeklyImpressionsPercentage": 0.0,
       "WeeklyRatings": 0.0,
+      "WeeklyUnits": 0.0,
       "WeekNumber": 5
     },
     {
@@ -269,11 +298,13 @@
       "PercentageOfWeek": 0.0,
       "SpotLengthId": 3,
       "StartDate": "2020-03-23T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 0.0,
       "WeeklyImpressions": 0.0,
       "WeeklyImpressionsPercentage": 0.0,
       "WeeklyRatings": 0.0,
+      "WeeklyUnits": 0.0,
       "WeekNumber": 5
     }
   ]

@@ -437,8 +437,52 @@ BEGIN
 END
 /*************************************** END BP1-481 *****************************************************/
 
-/*************************************** START BP1-539 *****************************************************/
+/*************************************** START BP1-37 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'impressions_per_unit' AND OBJECT_ID = OBJECT_ID('plan_versions'))
+BEGIN
+	ALTER TABLE plan_versions
+	ADD [impressions_per_unit] FLOAT NULL
+END
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE name = 'unit_impressions' AND OBJECT_ID = OBJECT_ID('plan_version_weekly_breakdown'))
+BEGIN
+	ALTER TABLE plan_version_weekly_breakdown
+	ADD [unit_impressions] FLOAT NULL
+END
+/*************************************** END BP1-37 *****************************************************/
 
+/*************************************** START BP1-37 Cleanup*****************************************************/
+IF EXISTS (SELECT 1 FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('plan_version_weekly_breakdown_duplicate'))
+BEGIN
+	IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id = OBJECT_ID('plan_version_weekly_breakdown_duplicate')
+				 AND name = 'FK_plan_version_weekly_breakdown_duplicate_daypart_defaults')
+	BEGIN
+		ALTER TABLE [plan_version_weekly_breakdown_duplicate] 
+		DROP CONSTRAINT [FK_plan_version_weekly_breakdown_duplicate_daypart_defaults]
+	END 
+	IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id = OBJECT_ID('plan_version_weekly_breakdown_duplicate')
+				 AND name = 'FK_plan_version_weekly_breakdown_duplicate_media_weeks')
+	BEGIN
+		ALTER TABLE [plan_version_weekly_breakdown_duplicate] 
+		DROP CONSTRAINT [FK_plan_version_weekly_breakdown_duplicate_media_weeks]
+	END 
+	IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id = OBJECT_ID('plan_version_weekly_breakdown_duplicate')
+				 AND name = 'FK_plan_version_weekly_breakdown_duplicate_plan_versions')
+	BEGIN
+		ALTER TABLE [plan_version_weekly_breakdown_duplicate] 
+		DROP CONSTRAINT [FK_plan_version_weekly_breakdown_duplicate_plan_versions]
+	END 
+	IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id = OBJECT_ID('plan_version_weekly_breakdown_duplicate')
+				 AND name = 'FK_plan_version_weekly_breakdown_duplicate_spot_lengths')
+	BEGIN
+		ALTER TABLE [plan_version_weekly_breakdown_duplicate] 
+		DROP CONSTRAINT [FK_plan_version_weekly_breakdown_duplicate_spot_lengths]
+	END 
+
+	DROP TABLE [plan_version_weekly_breakdown_duplicate]
+END
+/*************************************** END BP1-37 Cleanup*****************************************************/
+
+/*************************************** START BP1-539 *****************************************************/
 GO
 
 IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE object_id =OBJECT_ID('FK_station_inventory_manifest_dayparts_station_inventory_manifest_daypart_programs'))

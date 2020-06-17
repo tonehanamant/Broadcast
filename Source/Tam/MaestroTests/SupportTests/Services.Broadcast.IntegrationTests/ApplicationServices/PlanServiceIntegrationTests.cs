@@ -269,33 +269,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                PlanDto newPlan = _GetNewPlan();
-
-                //save version 1
-                int newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
-                _ForceCompletePlanPricingJob(newPlanId);
-
-                //get the plan and format the impressions
-                PlanDto plan = _PlanService.GetPlan(newPlanId);
-
-                //save version 2
-                plan.Budget = 222;  //we change the budget to have different data between versions    
-
-                plan.WeeklyBreakdownWeeks.FirstOrDefault().WeeklyBudget = 142;
-                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 05));
-                _ForceCompletePlanPricingJob(newPlanId);
-
-                //save version 3
-                plan = _PlanService.GetPlan(newPlanId);
-                plan.Dayparts.RemoveAt(1); //we remove a daypart to have different data between versions
-                plan.TargetImpressions = plan.TargetImpressions / 1000;
-                foreach (var week in plan.WeeklyBreakdownWeeks)
-                {
-                    week.WeeklyImpressions = week.WeeklyImpressions / 1000;
-                }
-                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 07));
-
-                var planHistory = _PlanService.GetPlanHistory(newPlanId);
+                var planHistory = _PlanService.GetPlanHistory(1848);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(planHistory, _GetJsonSettings()));
             }
@@ -314,23 +288,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 int newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
                 _ForceCompletePlanPricingJob(newPlanId);
 
-                //get the plan and format the impressions
-                PlanDto plan = _PlanService.GetPlan(newPlanId);
-
-                //save version 2
-                plan.Budget = 222;
-                plan.WeeklyBreakdownWeeks.FirstOrDefault().WeeklyBudget = 142;
-                _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01));
-                _ForceCompletePlanPricingJob(newPlanId);
-
                 //save draft
-                plan = _PlanService.GetPlan(newPlanId);
-                plan.IsDraft = true;
-                plan.TargetImpressions = plan.TargetImpressions / 1000;
-                foreach (var week in plan.WeeklyBreakdownWeeks)
-                {
-                    week.WeeklyImpressions = week.WeeklyImpressions / 1000;
-                }
+                PlanDto plan = _PlanService.GetPlan(newPlanId);
+                plan.IsDraft = true;                
                 _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01));
 
                 var planHistory = _PlanService.GetPlanHistory(newPlanId);
@@ -597,22 +557,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                // generate a plan for test
-                PlanDto newPlan = _GetNewPlan();
-                newPlan.SecondaryAudiences = new List<PlanAudienceDto>
-                {
-                    new PlanAudienceDto
-                    {
-                        AudienceId = 6,
-                        CPM = 10,
-                        CPP = 12,
-                        Impressions = 100000,
-                        RatingPoints = 25,
-                        Type = AudienceTypeEnum.Nielsen,
-                        Universe = 123123,
-                        Vpvh =0.456
-                    }
-                };
+                PlanDto newPlan = _PlanService.GetPlan(2190);
+                newPlan.WeeklyBreakdownWeeks = newPlan.WeeklyBreakdownWeeks.OrderBy(x => x.WeekNumber).ToList();
                 newPlan.Dayparts[0].VpvhForAudiences.Add(new PlanDaypartVpvhForAudienceDto
                 {
                     AudienceId = 6,
@@ -635,11 +581,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
                 });
 
-                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
-
-                PlanDto testPlan = _PlanService.GetPlan(newPlanId);
-
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(testPlan), _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(newPlan), _GetJsonSettings()));
             }
         }
 
@@ -1718,6 +1660,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("short_running")]
+        public void Plan_WeeklyBreakdown_InvalidImpressionsPerUnit()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                Assert.That(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
+                {
+                    FlightEndDate = new DateTime(2019, 05, 31),
+                    FlightStartDate = new DateTime(2019, 01, 01),
+                    TotalImpressions = 1000,
+                    ImpressionsPerUnit = 1001,
+                    FlightDays = new List<int> { 1, 2, 3, 4, 5 },
+                }), Throws.TypeOf<Exception>().With.Message.EqualTo("Impressions per Unit must be less or equal to delivery impressions."));
+            }
+        }
+
+        [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void Plan_WeeklyBreakdown_CustomDelivery_InitialRequest()
@@ -1733,7 +1692,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FlightHiatusDays = new List<DateTime>(),
                     TotalImpressions = 10000,
                     TotalRatings = 0.000907291831869388,
-                    WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions
+                    WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                    ImpressionsPerUnit = 100
                 });
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -1753,7 +1713,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
                 TotalImpressions = 1000,
                 TotalRatings = 0.000907291831869388,
-                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                ImpressionsPerUnit = 100
             });
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -1772,6 +1733,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 8, 15) },
                 FlightDays = new List<int> { 1, 2, 3, 4, 7 },
                 TotalImpressions = 1000,
+                ImpressionsPerUnit = 250,
                 TotalRatings = 0.000907291831869388,
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions
             });
@@ -1793,7 +1755,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
                 TotalImpressions = 1000,
                 TotalRatings = 0.000907291831869388,
-                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                ImpressionsPerUnit = 100
             });
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -1806,14 +1769,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
             {
-                DeliveryType = Entities.Enums.PlanGoalBreakdownTypeEnum.EvenDelivery,
+                DeliveryType = PlanGoalBreakdownTypeEnum.EvenDelivery,
                 FlightStartDate = new DateTime(2019, 09, 29),
                 FlightEndDate = new DateTime(2019, 10, 13),
                 FlightHiatusDays = new List<DateTime> { new DateTime(2019, 10, 10), new DateTime(2019, 10, 12), new DateTime(2019, 10, 4), new DateTime(2019, 10, 2) },
                 FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
                 TotalImpressions = 20095158400,
                 TotalRatings = 896090.698153806, // not accurate to the total impressions, but that doesn't matter for the test.
-                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                ImpressionsPerUnit = 10000000
             });
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -1834,7 +1798,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
                 TotalImpressions = 1000,
                 TotalRatings = 0.000907291831869388,
-                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                ImpressionsPerUnit = 100
             });
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -1865,7 +1830,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                       WeeklyImpressionsPercentage= 20.0,
                       StartDate= new DateTime(2019,07,29),
                       WeekNumber= 1
-                }}
+                }},
+                ImpressionsPerUnit = 100
             });
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -1878,7 +1844,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var request = _GetBaseRequestForCustomWeeklyBreakdown();
             request.Weeks.First(w => w.WeekNumber == 2).WeeklyRatings = .03;
+            request.Weeks.First(w => w.WeekNumber == 2).IsUpdated = true;
             request.WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Ratings;
+
+            var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
+        public void WeeklyBreakdown_Custom_ChangeUnits()
+        {
+            var request = _GetBaseRequestForCustomWeeklyBreakdown();
+            request.Weeks.First(w => w.WeekNumber == 2).WeeklyUnits = 4;
+            request.Weeks.First(w => w.WeekNumber == 2).IsUpdated = true;
+            request.WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Units;
 
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
 
@@ -1892,6 +1874,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var request = _GetBaseRequestForCustomWeeklyBreakdown();
             request.Weeks.First(w => w.WeekNumber == 2).WeeklyImpressions = 300;
+            request.Weeks.First(w => w.WeekNumber == 2).IsUpdated = true;
 
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
 
@@ -1905,6 +1888,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var request = _GetBaseRequestForCustomWeeklyBreakdown();
             request.Weeks.First(w => w.WeekNumber == 2).WeeklyImpressionsPercentage = 30;
+            request.Weeks.First(w => w.WeekNumber == 2).IsUpdated = true;
+
             request.WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Percentage;
 
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
@@ -1950,7 +1935,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                       StartDate= new DateTime(2019,10,7),
                       WeekNumber= 2
                     },
-                }
+                },
+                ImpressionsPerUnit = 100
             });
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -1970,7 +1956,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
                 TotalImpressions = 500,
                 TotalRatings = 0.453645915934694,
-                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                ImpressionsPerUnit = 100
             };
 
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
@@ -2037,7 +2024,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 TotalRatings = 1,
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
                 TotalBudget = 85000,
-                FlightHiatusDays = new List<DateTime>()
+                FlightHiatusDays = new List<DateTime>(),
+                ImpressionsPerUnit = 1
             };
 
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
@@ -2128,7 +2116,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         WeeklyBudget = 15000,
                         WeeklyRatings = 0.00036291673274775507
                     }
-                }
+                },
+                ImpressionsPerUnit = 1
             };
 
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
@@ -2166,7 +2155,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         WeeklyImpressionsPercentage = 40,
                         WeeklyRatings = 0.00036291673274775507,
                         WeeklyBudget = 30000,
-                        WeeklyAdu = 1
+                        WeeklyAdu = 1,
+                        WeeklyUnits = 1
 
                     },
                     new WeeklyBreakdownWeek
@@ -2181,7 +2171,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         WeeklyImpressionsPercentage = 0,
                         WeeklyRatings = 0.00036291673274775507,
                         WeeklyBudget = 0,
-                        WeeklyAdu = 2
+                        WeeklyAdu = 2,
+                        WeeklyUnits = 1
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -2195,7 +2186,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         WeeklyImpressionsPercentage = 20,
                         WeeklyBudget = 15000,
                         WeeklyRatings = 0.00036291673274775507,
-                        WeeklyAdu = 3
+                        WeeklyAdu = 3,
+                        WeeklyUnits = 1
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -2209,7 +2201,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         WeeklyImpressionsPercentage = 20,
                         WeeklyBudget = 15000,
                         WeeklyRatings = 0.00036291673274775507,
-                        WeeklyAdu = 4
+                        WeeklyAdu = 4,
+                        WeeklyUnits = 1
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -2223,9 +2216,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         WeeklyImpressionsPercentage = 20,
                         WeeklyBudget = 15000,
                         WeeklyRatings = 0.00036291673274775507,
-                        WeeklyAdu = 5
+                        WeeklyAdu = 5,
+                        WeeklyUnits = 1
                     }
-                }
+                },
+                ImpressionsPerUnit = 1
             };
 
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
@@ -2249,7 +2244,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
                 TotalBudget = 75000,
                 FlightHiatusDays = new List<DateTime>(),
-                Weeks = null
+                Weeks = null,
+                ImpressionsPerUnit = 1
             };
 
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
@@ -2273,7 +2269,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
                 TotalBudget = 75000,
                 FlightHiatusDays = new List<DateTime>(),
-                Weeks = null
+                Weeks = null,
+                ImpressionsPerUnit = 1
             };
 
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
@@ -2508,7 +2505,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         WeeklyAdu = 5,
                         SpotLengthId = 1,
                         DaypartCodeId = 1,
-                        PercentageOfWeek = 50
+                        PercentageOfWeek = 50,
+                        WeeklyUnits = 4
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -2516,7 +2514,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         StartDate = new DateTime(2019,01,07), EndDate = new DateTime(2019,01,13),
                         NumberOfActiveDays = 7, ActiveDays = "M-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
                         WeeklyRatings = .0123,
-                        WeeklyBudget = 20m
+                        WeeklyBudget = 20m,
+                        WeeklyUnits = 4
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -2524,7 +2523,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         StartDate = new DateTime(2019,01,14), EndDate = new DateTime(2019,01,20),
                         NumberOfActiveDays = 6, ActiveDays = "M-Sa", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
                         WeeklyRatings = .0123,
-                        WeeklyBudget = 20m
+                        WeeklyBudget = 20m,
+                        WeeklyUnits = 4
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -2533,7 +2533,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         NumberOfActiveDays = 6, ActiveDays = "M-W,F-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
                         WeeklyRatings = .0123,
                         WeeklyBudget = 20m,
-                        WeeklyAdu = 0
+                        WeeklyAdu = 0,
+                        WeeklyUnits = 4
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -2542,9 +2543,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         NumberOfActiveDays = 4, ActiveDays = "M-Th", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
                         WeeklyRatings = .0123,
                         WeeklyBudget = 20m,
-                        WeeklyAdu = 30
+                        WeeklyAdu = 30,
+                        WeeklyUnits = 4
                     }
-                }
+                },
+                ImpressionsPerUnit = 5
             };
         }
 
@@ -2629,7 +2632,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         WeeklyBudget = 5000,
                         WeeklyAdu = 30
                     }
-                }
+                },
+                ImpressionsPerUnit = 100
             };
         }
 
@@ -2665,19 +2669,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 job.Status = BackgroundJobProcessingStatus.Succeeded;
                 job.Completed = DateTime.Now;
                 planRepo.UpdatePlanPricingJob(job);
-            }
-        }
-
-        [Test]
-        [Ignore("Used to remap weekly breakdown table data")]
-        [UseReporter(typeof(DiffReporter))]
-        public void RemapWeeklyBreakdownData()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                var weeks = _PlanService.RemapWeeklyBreakdownData(916);
-                weeks = weeks.OrderBy(x => x.MediaWeekId).ThenBy(x => x.SpotLengthId).ToList();
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(weeks));
             }
         }
     }

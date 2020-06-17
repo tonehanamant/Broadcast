@@ -1,10 +1,11 @@
 ﻿{
   "TotalActiveDays": 17,
-  "TotalBudget": 20000.0,
-  "TotalImpressions": 1000.0,
-  "TotalImpressionsPercentage": 100.0,
+  "TotalBudget": 21000.00,
+  "TotalImpressions": 1050.0,
+  "TotalImpressionsPercentage": 105.0,
   "TotalRatingPoints": 0.1,
-  "TotalShareOfVoice": 100.0,
+  "TotalShareOfVoice": 105.0,
+  "TotalUnits": 10.5,
   "Weeks": [
     {
       "ActiveDays": "Sa,Su",
@@ -17,11 +18,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2019-07-29T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 5000.0,
       "WeeklyImpressions": 250.0,
       "WeeklyImpressionsPercentage": 25.0,
-      "WeeklyRatings": 0.0,
+      "WeeklyRatings": 0.025,
+      "WeeklyUnits": 2.5,
       "WeekNumber": 1
     },
     {
@@ -35,11 +38,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2019-08-05T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
-      "WeeklyBudget": 5000.0,
-      "WeeklyImpressions": 250.0,
-      "WeeklyImpressionsPercentage": 25.0,
+      "WeeklyBudget": 6000.0,
+      "WeeklyImpressions": 300.0,
+      "WeeklyImpressionsPercentage": 30.0,
       "WeeklyRatings": 0.0,
+      "WeeklyUnits": 3.0,
       "WeekNumber": 2
     },
     {
@@ -53,11 +58,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2019-08-12T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 5,
       "WeeklyBudget": 5000.0,
       "WeeklyImpressions": 250.0,
       "WeeklyImpressionsPercentage": 25.0,
-      "WeeklyRatings": 0.0,
+      "WeeklyRatings": 0.025,
+      "WeeklyUnits": 2.5,
       "WeekNumber": 3
     },
     {
@@ -71,11 +78,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2019-08-19T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 30,
       "WeeklyBudget": 5000.0,
       "WeeklyImpressions": 250.0,
       "WeeklyImpressionsPercentage": 25.0,
-      "WeeklyRatings": 0.0,
+      "WeeklyRatings": 0.025,
+      "WeeklyUnits": 2.5,
       "WeekNumber": 4
     }
   ]

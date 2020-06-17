@@ -15,7 +15,6 @@ namespace Services.Broadcast.BusinessEngines
     {
         List<WeeklyBreakdownByWeek> GroupWeeklyBreakdownByWeek(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown);
         List<WeeklyBreakdownByWeekBySpotLength> GroupWeeklyBreakdownByWeekBySpotLength(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown);
-        List<WeeklyBreakdownByStandardDaypart> GroupWeeklyBreakdownByStandardDaypart(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown);
         Dictionary<int, int> GetWeekNumberByMediaWeekDictionary(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown);
 
         /// <summary>
@@ -35,6 +34,7 @@ namespace Services.Broadcast.BusinessEngines
         List<(int StadardDaypartId, double WeightingGoalPercent)> GetStandardDaypardWeightingGoals(List<PlanDaypartDto> dayparts);
 
         WeeklyBreakdownResponseDto CalculatePlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request);
+        List<WeeklyBreakdownByStandardDaypart> GroupWeeklyBreakdownByStandardDaypart(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown);
 
         void RecalculatePercentageOfWeekBasedOnImpressions(List<WeeklyBreakdownWeek> weeks);
 
@@ -46,21 +46,26 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IPlanValidator _PlanValidator;
         private readonly IMediaMonthAndWeekAggregateCache _MediaWeekCache;
         private readonly ICreativeLengthEngine _CreativeLengthEngine;
+        private readonly Dictionary<int, double> _SpotLengthMultiplier;
 
         private const string _UnsupportedDeliveryTypeMessage = "Unsupported Delivery Type";
 
         public WeeklyBreakdownEngine(IPlanValidator planValidator,
                                          IMediaMonthAndWeekAggregateCache mediaWeekCache,
-                                         ICreativeLengthEngine creativeLengthEngine)
+                                         ICreativeLengthEngine creativeLengthEngine,
+                                         ISpotLengthEngine spotLengthEngine)
         {
             _PlanValidator = planValidator;
             _MediaWeekCache = mediaWeekCache;
             _CreativeLengthEngine = creativeLengthEngine;
+            _SpotLengthMultiplier = spotLengthEngine.GetSpotLengthMultipliers();
+
         }
 
         public WeeklyBreakdownResponseDto CalculatePlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request)
         {
             _PlanValidator.ValidateWeeklyBreakdown(request);
+            _PlanValidator.ValidateImpressionsPerUnit(request.ImpressionsPerUnit, request.TotalImpressions);
 
             //calculate flight weeks based on start/end date of the flight
             List<DisplayMediaWeek> weeks = _MediaWeekCache.GetDisplayMediaWeekByFlight(request.FlightStartDate, request.FlightEndDate);
@@ -96,12 +101,33 @@ namespace Services.Broadcast.BusinessEngines
                 throw new ApplicationException(_UnsupportedDeliveryTypeMessage);
             }
 
+            _CalculateUnits(response.Weeks, request);
             _CalculateWeeklyGoalBreakdownTotals(response, request);
             _OrderWeeks(request, response);
             SetWeekNumber(response.Weeks);
 
             return response;
         }
+
+        private void _CalculateUnits(List<WeeklyBreakdownWeek> weeks, WeeklyBreakdownRequest request)
+        {
+            foreach (var week in weeks)
+            {
+                if (request.Equivalized)
+                {
+                    double weekSpotLengthMultiplier = week.SpotLengthId.HasValue
+                        ? _SpotLengthMultiplier.Single(x => x.Key == week.SpotLengthId).Value
+                        : _CreativeLengthEngine.CalculateDeliveryMultipliers(request.CreativeLengths);
+
+                    week.WeeklyUnits = week.WeeklyImpressions / (request.ImpressionsPerUnit * weekSpotLengthMultiplier);
+                }
+                else
+                {
+                    week.WeeklyUnits = week.WeeklyImpressions / request.ImpressionsPerUnit;
+                }
+            }
+        }
+
 
         private List<DateTime> _GetDaysOutsideOfTheFlight(DateTime flightStartDate, DateTime flightEndDate, List<DisplayMediaWeek> weeks)
         {
@@ -238,6 +264,7 @@ namespace Services.Broadcast.BusinessEngines
 
             weeklyBreakdown.TotalRatingPoints = Math.Round(request.TotalRatings * impressionsTotalRatio, 1);
             weeklyBreakdown.TotalBudget = request.TotalBudget * (decimal)impressionsTotalRatio;
+            weeklyBreakdown.TotalUnits = weeklyBreakdown.Weeks.Sum(w => w.WeeklyUnits);
         }
 
         private void _RemoveOutOfFlightWeeks(List<WeeklyBreakdownWeek> requestWeeks, List<DisplayMediaWeek> flightWeeks)
@@ -332,6 +359,20 @@ namespace Services.Broadcast.BusinessEngines
                         break;
                     case WeeklyBreakdownCalculationFrom.Percentage:
                         week.WeeklyImpressions = Math.Floor((week.WeeklyImpressionsPercentage / 100) * request.TotalImpressions);
+                        break;
+                    case WeeklyBreakdownCalculationFrom.Units:
+                        if (request.Equivalized)
+                        {
+                            double weekSpotLengthMultiplier = week.SpotLengthId.HasValue
+                                ? _SpotLengthMultiplier.Single(x => x.Key == week.SpotLengthId).Value
+                                : _CreativeLengthEngine.CalculateDeliveryMultipliers(request.CreativeLengths);
+
+                            week.WeeklyImpressions = week.WeeklyUnits * (request.ImpressionsPerUnit * weekSpotLengthMultiplier);
+                        }
+                        else
+                        {
+                            week.WeeklyImpressions = week.WeeklyUnits * request.ImpressionsPerUnit;
+                        }
                         break;
                     default:
                         if (redistributeCustom && oldImpressionTotals > 0)
@@ -629,7 +670,8 @@ namespace Services.Broadcast.BusinessEngines
                 {
                     var first = grouping.First();
                     var allItems = grouping.ToList();
-                    var aduImpressions = allItems.Sum(x => x.AduImpressions);
+                    double weeklyImpressions = allItems.Sum(x => x.WeeklyImpressions);
+                    double unitsImpressions = allItems.Sum(x => x.UnitImpressions);
 
                     return new WeeklyBreakdownByWeek
                     {
@@ -639,9 +681,12 @@ namespace Services.Broadcast.BusinessEngines
                         EndDate = first.EndDate,
                         NumberOfActiveDays = first.NumberOfActiveDays,
                         ActiveDays = first.ActiveDays,
-                        Impressions = allItems.Sum(x => x.WeeklyImpressions),
+                        Impressions = weeklyImpressions,
                         Budget = allItems.Sum(x => x.WeeklyBudget),
-                        Adu = (int)(aduImpressions / BroadcastConstants.ImpressionsPerUnit)
+                        Adu = (int)(allItems.Sum(x => x.AduImpressions) / BroadcastConstants.ImpressionsPerUnit),
+                        Units = unitsImpressions == 0
+                            ? 0
+                            : weeklyImpressions / unitsImpressions
                     };
                 })
                 .ToList();
@@ -650,12 +695,13 @@ namespace Services.Broadcast.BusinessEngines
         public List<WeeklyBreakdownByWeekBySpotLength> GroupWeeklyBreakdownByWeekBySpotLength(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown)
         {
             return weeklyBreakdown
-                .GroupBy(x => new { x.MediaWeekId, x.SpotLengthId } )
+                .GroupBy(x => new { x.MediaWeekId, x.SpotLengthId })
                 .Select(grouping =>
                 {
                     var first = grouping.First();
                     var allItems = grouping.ToList();
-                    var aduImpressions = allItems.Sum(x => x.AduImpressions);
+                    double weekImpressions = allItems.Sum(x => x.WeeklyImpressions);
+                    double unitsImpressions = allItems.Sum(x => x.UnitImpressions);
 
                     return new WeeklyBreakdownByWeekBySpotLength
                     {
@@ -666,12 +712,14 @@ namespace Services.Broadcast.BusinessEngines
                         EndDate = first.EndDate,
                         NumberOfActiveDays = first.NumberOfActiveDays,
                         ActiveDays = first.ActiveDays,
-                        Impressions = allItems.Sum(x => x.WeeklyImpressions),
+                        Impressions = weekImpressions,
                         Budget = allItems.Sum(x => x.WeeklyBudget),
-                        Adu = (int)(aduImpressions / BroadcastConstants.ImpressionsPerUnit)
+                        Adu = (int)(allItems.Sum(x => x.AduImpressions) / BroadcastConstants.ImpressionsPerUnit),
+                        Units = unitsImpressions == 0 
+                            ? 0 
+                            : weekImpressions / unitsImpressions
                     };
-                })
-                .ToList();
+                }).ToList();
         }
 
         public List<WeeklyBreakdownByStandardDaypart> GroupWeeklyBreakdownByStandardDaypart(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown)
@@ -695,12 +743,12 @@ namespace Services.Broadcast.BusinessEngines
             , List<PlanDaypartDto> dayparts)
         {
             var standardDaypardWeightingGoals = GetStandardDaypardWeightingGoals(dayparts);
-            var allSpotLengthIdAndStandardDaypartIdCombinations = creativeLengths.SelectMany(x => standardDaypardWeightingGoals, (a, b) => 
+            var allSpotLengthIdAndStandardDaypartIdCombinations = creativeLengths.SelectMany(x => standardDaypardWeightingGoals, (a, b) =>
             new WeeklyBreakdownCombination
             {
                 SpotLengthId = a.SpotLengthId,
                 DaypartCodeId = b.StadardDaypartId,
-                Weighting = GeneralMath.ConvertPercentageToFraction(a.Weight.Value) *  GeneralMath.ConvertPercentageToFraction(b.WeightingGoalPercent)
+                Weighting = GeneralMath.ConvertPercentageToFraction(a.Weight.Value) * GeneralMath.ConvertPercentageToFraction(b.WeightingGoalPercent)
             }).ToList();
             return allSpotLengthIdAndStandardDaypartIdCombinations;
         }

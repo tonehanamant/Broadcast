@@ -19,6 +19,12 @@ namespace Services.Broadcast.Entities.Plan
         /// </summary>
         public DateTime FlightEndDate { get; set; }
 
+        /// <summary>
+        /// Gets or sets the flight days.
+        /// </summary>
+        /// <value>
+        /// The flight days.
+        /// </value>
         public List<int> FlightDays { get; set; }
 
         /// <summary>
@@ -56,8 +62,36 @@ namespace Services.Broadcast.Entities.Plan
         /// </summary>
         public List<WeeklyBreakdownWeek> Weeks { get; set; } = new List<WeeklyBreakdownWeek>();
 
+        /// <summary>
+        /// Gets or sets the creative lengths.
+        /// </summary>
+        /// <value>
+        /// The creative lengths.
+        /// </value>
         public List<CreativeLength> CreativeLengths { get; set; }
 
+        /// <summary>
+        /// Gets or sets the dayparts.
+        /// </summary>
+        /// <value>
+        /// The dayparts.
+        /// </value>
         public List<PlanDaypartDto> Dayparts { get; set; }
+
+        /// <summary>
+        /// Gets or sets the impressions per unit.
+        /// </summary>
+        /// <value>
+        /// The impressions per unit.
+        /// </value>
+        public double ImpressionsPerUnit { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this is equivalized.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if equivalized; otherwise, <c>false</c>.
+        /// </value>
+        public bool Equivalized { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿[
   {
-    "Budget": 222.0000,
+    "Budget": 100.0000,
     "FlightEndDate": "2019-01-31T00:00:00",
     "FlightStartDate": "2019-01-01T00:00:00",
     "IsDraft": true,
@@ -15,7 +15,7 @@
     "Status": 1,
     "TargetAudienceId": 31,
     "TargetCPM": 12.0000,
-    "TargetImpressions": 100.0,
+    "TargetImpressions": 100000.0,
     "TotalDayparts": 3,
     "VersionName": "Draft"
   },
@@ -24,12 +24,12 @@
     "FlightEndDate": "2019-01-31T00:00:00",
     "FlightStartDate": "2019-01-01T00:00:00",
     "IsDraft": false,
-    "IsModifiedBudget": true,
+    "IsModifiedBudget": false,
     "IsModifiedDayparts": false,
     "IsModifiedFlight": false,
     "IsModifiedTargetAudience": false,
     "IsModifiedTargetCPM": false,
-    "IsModifiedTargetImpressions": true,
+    "IsModifiedTargetImpressions": false,
     "ModifiedBy": "integration_test",
     "ModifiedDate": "2019-01-01T00:00:00",
     "Status": 1,
@@ -38,25 +38,5 @@
     "TargetImpressions": 100000.0,
     "TotalDayparts": 3,
     "VersionName": "Version 1"
-  },
-  {
-    "Budget": 222.0000,
-    "FlightEndDate": "2019-01-31T00:00:00",
-    "FlightStartDate": "2019-01-01T00:00:00",
-    "IsDraft": false,
-    "IsModifiedBudget": false,
-    "IsModifiedDayparts": false,
-    "IsModifiedFlight": false,
-    "IsModifiedTargetAudience": false,
-    "IsModifiedTargetCPM": false,
-    "IsModifiedTargetImpressions": true,
-    "ModifiedBy": "integration_test",
-    "ModifiedDate": "2019-01-01T00:00:00",
-    "Status": 1,
-    "TargetAudienceId": 31,
-    "TargetCPM": 12.0000,
-    "TargetImpressions": 100000.0,
-    "TotalDayparts": 3,
-    "VersionName": "Version 2"
   }
 ]

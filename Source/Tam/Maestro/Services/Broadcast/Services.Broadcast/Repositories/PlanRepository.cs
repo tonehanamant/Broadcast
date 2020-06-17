@@ -138,27 +138,9 @@ namespace Services.Broadcast.Repositories
 
         PricingProgramsResultDto GetPricingProgramsResult(int planId);
 
-        /// <summary>
-        /// TO BE DELETED ON NEXT RELEASE: Loads the plans for weekly breakdown remapping.
-        /// </summary>
-        /// <returns></returns>
-        List<PlanDto> LoadPlansForWeeklyBreakdownRemapping();
-        
-        /// <summary>
-        ///  TO BE DELETED ON NEXT RELEASE: Saves the weekly breakdown distribution.
-        /// </summary>
-        /// <param name="plan">The plan.</param>
-        void SaveWeeklyBreakdownDistribution(PlanDto plan);
-
         PlanPricingBandDto GetPlanPricingBand(int planId);
 
-        void SavePlanPricingBands(PlanPricingBandDto planPricingBandDto);
-        
-        /// <summary>
-        ///  TO BE DELETED ON NEXT RELEASE: Saves the creative lengthsdistribution.
-        /// </summary>
-        /// <param name="plan">The plan.</param>
-        void SaveCreativeLengths(PlanDto plan);
+        void SavePlanPricingBands(PlanPricingBandDto planPricingBandDto);        
       /// <summary>
       /// Get Goal CPM value
       /// </summary>
@@ -544,7 +526,8 @@ namespace Services.Broadcast.Repositories
                 IsDraft = latestPlanVersion.is_draft,
                 VersionNumber = latestPlanVersion.version_number,
                 VersionId = latestPlanVersion.id,
-                IsAduEnabled = latestPlanVersion.is_adu_enabled
+                IsAduEnabled = latestPlanVersion.is_adu_enabled,
+                ImpressionsPerUnit = latestPlanVersion.impressions_per_unit ?? 0
             };
 
             return dto;
@@ -625,7 +608,8 @@ namespace Services.Broadcast.Repositories
                 AduImpressions = arg.adu_impressions,
                 SpotLengthId = arg.spot_length_id,
                 DaypartCodeId = arg.daypart_default_id,
-                PercentageOfWeek = arg.percentage_of_week
+                PercentageOfWeek = arg.percentage_of_week,
+                UnitImpressions = arg.unit_impressions ?? 0
             };
         }
 
@@ -667,6 +651,7 @@ namespace Services.Broadcast.Repositories
             version.is_draft = planDto.IsDraft;
             version.version_number = planDto.VersionNumber;
             version.is_adu_enabled = planDto.IsAduEnabled;
+            version.impressions_per_unit = planDto.ImpressionsPerUnit;
 
             _MapCreativeLengths(version, planDto, context);
             _MapPlanAudienceInfo(version, planDto);
@@ -717,7 +702,8 @@ namespace Services.Broadcast.Repositories
                     adu_impressions = d.AduImpressions,
                     spot_length_id = d.SpotLengthId,
                     daypart_default_id = d.DaypartCodeId,
-                    percentage_of_week = d.PercentageOfWeek
+                    percentage_of_week = d.PercentageOfWeek,
+                    unit_impressions = d.UnitImpressions
                 });
             });
         }
@@ -1762,111 +1748,6 @@ namespace Services.Broadcast.Repositories
                 },
                 StandardDaypart = _MapToDaypartDefaultDto(spot.daypart_defaults)
             };
-        }
-
-        public List<PlanDto> LoadPlansForWeeklyBreakdownRemapping()
-        {
-            return _InReadUncommitedTransaction(context =>
-            {
-                List<PlanDto> result = new List<PlanDto>();
-                var queryData = (from plan in context.plans
-                                 from planVersion in plan.plan_versions
-                                 let planWeeks = planVersion.plan_version_weekly_breakdown_duplicate
-                                 let planDayparts = planVersion.plan_version_dayparts
-                                 let planCreativeLengths = planVersion.plan_version_creative_lengths
-                                 where planWeeks.All(x => x.daypart_default_id == null && x.spot_length_id == null)
-                                 select new
-                                 {
-                                     PlanVersionId = planVersion.id,
-                                     PlanId = plan.id,
-                                     GoalBreakdownType = planVersion.goal_breakdown_type,
-                                     TargetImpression = planVersion.target_impression,
-                                     Budget = planVersion.budget,
-                                     TargetRatingPoints = planVersion.target_rating_points,
-                                     Weeks = planWeeks,
-                                     Dayparts = planDayparts,
-                                     CreativeLengths = planCreativeLengths
-                                 }).ToList();
-                queryData.ForEach(x =>
-                  result.Add(new PlanDto
-                  {
-                      VersionId = x.PlanVersionId,
-                      Id = x.PlanId,
-                      TargetImpressions = x.TargetImpression,
-                      Budget = x.Budget,
-                      TargetRatingPoints = x.TargetRatingPoints,
-                      GoalBreakdownType = (PlanGoalBreakdownTypeEnum)x.GoalBreakdownType,
-                      CreativeLengths = x.CreativeLengths.Select(y => new CreativeLength
-                      {
-                          SpotLengthId = y.spot_length_id,
-                          Weight = y.weight
-                      }).ToList(),
-                      Dayparts = x.Dayparts.Select(y => new PlanDaypartDto
-                      {
-                          DaypartCodeId = y.daypart_default_id,
-                          DaypartTypeId = EnumHelper.GetEnum<DaypartTypeEnum>(y.daypart_type),
-                          StartTimeSeconds = y.start_time_seconds,
-                          IsStartTimeModified = y.is_start_time_modified,
-                          EndTimeSeconds = y.end_time_seconds,
-                          IsEndTimeModified = y.is_end_time_modified,
-                          WeightingGoalPercent = y.weighting_goal_percent
-                      }).ToList(),
-                      WeeklyBreakdownWeeks = x.Weeks.Select(y => new WeeklyBreakdownWeek
-                      {
-                          ActiveDays = y.active_days_label,
-                          WeeklyImpressions = y.impressions,
-                          WeeklyRatings = y.rating_points,
-                          NumberOfActiveDays = y.number_active_days,
-                          WeeklyImpressionsPercentage = y.impressions_percentage,
-                          MediaWeekId = y.media_week_id,
-                          WeeklyBudget = y.budget,
-                          WeeklyAdu = y.adu
-                      }).ToList()
-                  }));
-                return result;
-            });
-        }
-
-        public void SaveWeeklyBreakdownDistribution(PlanDto plan)
-        {
-            _InReadUncommitedTransaction(context =>
-            {
-                context.plan_version_weekly_breakdown
-                    .RemoveRange(context.plan_version_weekly_breakdown.Where(x => x.plan_version_id == plan.VersionId));
-                context.plan_version_weekly_breakdown.AddRange(
-                    plan.WeeklyBreakdownWeeks.Select(x => new plan_version_weekly_breakdown
-                    {
-                        plan_version_id = plan.VersionId,
-                        active_days_label = x.ActiveDays,
-                        adu_impressions = x.AduImpressions,
-                        budget = x.WeeklyBudget,
-                        daypart_default_id = x.DaypartCodeId,
-                        impressions = x.WeeklyImpressions,
-                        impressions_percentage = x.WeeklyImpressionsPercentage,
-                        media_week_id = x.MediaWeekId,
-                        number_active_days = x.NumberOfActiveDays,
-                        percentage_of_week = x.PercentageOfWeek,
-                        rating_points = x.WeeklyRatings,
-                        spot_length_id = x.SpotLengthId
-                    }).ToList());
-                context.SaveChanges();
-            });
-        }
-        public void SaveCreativeLengths(PlanDto plan)
-        {
-            _InReadUncommitedTransaction(context =>
-            {
-                context.plan_version_creative_lengths
-                    .RemoveRange(context.plan_version_creative_lengths.Where(x => x.plan_version_id == plan.VersionId));
-                context.plan_version_creative_lengths.AddRange(
-                    plan.CreativeLengths.Select(x => new plan_version_creative_lengths
-                    {
-                        plan_version_id = plan.VersionId,
-                        spot_length_id = x.SpotLengthId,
-                        weight = x.Weight
-                    }).ToList());
-                context.SaveChanges();
-            });
         }
     }
 }

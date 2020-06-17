@@ -27,6 +27,7 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> daypart_default_id { get; set; }
         public Nullable<double> percentage_of_week { get; set; }
         public double adu_impressions { get; set; }
+        public Nullable<double> unit_impressions { get; set; }
     
         public virtual daypart_defaults daypart_defaults { get; set; }
         public virtual media_weeks media_weeks { get; set; }

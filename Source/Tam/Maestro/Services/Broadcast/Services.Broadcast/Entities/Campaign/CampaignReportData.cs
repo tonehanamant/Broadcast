@@ -751,7 +751,7 @@ namespace Services.Broadcast.Entities.Campaign
                 Plan = x,
                 WeeklyBreakdown = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(x.WeeklyBreakdownWeeks)
             }).ToList();
-
+               
             if (!plansAndweeklyBreakdowns.Any(x => x.WeeklyBreakdown.Any(y => weeksStartDates.Contains(y.StartDate) && y.Adu > 0)))
             {
                 return;

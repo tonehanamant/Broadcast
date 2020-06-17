@@ -2762,6 +2762,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 FlightStartDate = new DateTime(2020, 03, 14),
                 FlightEndDate = new DateTime(2020, 04, 12),
                 TargetImpressions = 20000000,
+                ImpressionsPerUnit = 4000000,
                 TargetRatingPoints = 149.446003664416,
                 HHImpressions = 40000000,
                 HHRatingPoints = 36.2916732747755,

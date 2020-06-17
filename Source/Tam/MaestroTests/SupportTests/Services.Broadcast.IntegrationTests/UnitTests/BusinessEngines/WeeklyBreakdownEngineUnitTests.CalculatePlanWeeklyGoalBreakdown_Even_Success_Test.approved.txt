@@ -5,6 +5,7 @@
   "TotalImpressionsPercentage": 100.0,
   "TotalRatingPoints": 0.0,
   "TotalShareOfVoice": 100.0,
+  "TotalUnits": 2.0,
   "Weeks": [
     {
       "ActiveDays": "Tu-Su",
@@ -17,11 +18,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2020-02-24T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 160.0,
       "WeeklyImpressions": 8.0,
       "WeeklyImpressionsPercentage": 40.0,
       "WeeklyRatings": 0.0,
+      "WeeklyUnits": 0.8,
       "WeekNumber": 1
     },
     {
@@ -35,11 +38,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2020-03-02T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 120.0,
       "WeeklyImpressions": 6.0,
       "WeeklyImpressionsPercentage": 30.0,
       "WeeklyRatings": 0.0,
+      "WeeklyUnits": 0.6,
       "WeekNumber": 2
     },
     {
@@ -53,11 +58,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2020-03-09T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 120.0,
       "WeeklyImpressions": 6.0,
       "WeeklyImpressionsPercentage": 30.0,
       "WeeklyRatings": 0.0,
+      "WeeklyUnits": 0.6,
       "WeekNumber": 3
     }
   ]

@@ -7,6 +7,7 @@
     {
         Impressions = 1,
         Ratings = 2,
-        Percentage = 3
+        Percentage = 3,
+        Units = 4
     }
 }

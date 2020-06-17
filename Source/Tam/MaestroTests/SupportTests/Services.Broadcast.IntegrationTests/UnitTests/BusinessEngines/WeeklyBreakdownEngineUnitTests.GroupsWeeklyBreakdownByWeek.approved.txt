@@ -8,6 +8,7 @@
     "MediaWeekId": 502,
     "NumberOfActiveDays": 5,
     "StartDate": "2020-05-04T00:00:00",
+    "Units": 0.0,
     "WeekNumber": 3
   },
   {
@@ -19,6 +20,7 @@
     "MediaWeekId": 501,
     "NumberOfActiveDays": 4,
     "StartDate": "2020-04-27T00:00:00",
+    "Units": 0.0,
     "WeekNumber": 2
   },
   {
@@ -30,6 +32,7 @@
     "MediaWeekId": 500,
     "NumberOfActiveDays": 3,
     "StartDate": "2020-04-20T00:00:00",
+    "Units": 0.0,
     "WeekNumber": 1
   }
 ]

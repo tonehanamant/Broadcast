@@ -43,12 +43,10 @@ namespace Services.Broadcast.BusinessEngines
     public class ImpressionAdjustmentEngine : IImpressionAdjustmentEngine
     {
         private readonly Lazy<Dictionary<int, double>> _SpotLengthMultipliers;
-        private readonly Lazy<Dictionary<int, int>> _SpotLengths;
         private readonly Lazy<Dictionary<int, RatingAdjustmentsDto>> _RatingAdjustments;
 
         public ImpressionAdjustmentEngine(IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
-            _SpotLengths = new Lazy<Dictionary<int, int>>(() => broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds());
             _SpotLengthMultipliers = new Lazy<Dictionary<int, double>>(() => broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthMultipliers());
             _RatingAdjustments = new Lazy<Dictionary<int, RatingAdjustmentsDto>>(() => broadcastDataRepositoryFactory.GetDataRepository<IRatingAdjustmentsRepository>().GetRatingAdjustments().ToDictionary(ra => ra.MediaMonthId));
         }
@@ -61,11 +59,11 @@ namespace Services.Broadcast.BusinessEngines
             {
                 if (applyAnnualAdjustment)
                 {
-                    result = result * (double)(1 - adjustments.AnnualAdjustment / 100);
+                    result *= (double)(1 - adjustments.AnnualAdjustment / 100);
                 }
                 if (postType == PostingTypeEnum.NTI)
                 {
-                    result = result * (double)(1 - adjustments.NtiAdjustment / 100);
+                    result *= (double)(1 - adjustments.NtiAdjustment / 100);
                 }
             }
 

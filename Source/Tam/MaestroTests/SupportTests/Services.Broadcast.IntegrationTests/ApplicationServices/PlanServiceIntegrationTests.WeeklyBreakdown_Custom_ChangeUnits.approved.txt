@@ -1,11 +1,11 @@
-﻿{
+{
   "TotalActiveDays": 17,
-  "TotalBudget": 21000.00,
-  "TotalImpressions": 1050.0,
-  "TotalImpressionsPercentage": 105.0,
+  "TotalBudget": 23000.00,
+  "TotalImpressions": 1150.0,
+  "TotalImpressionsPercentage": 115.0,
   "TotalRatingPoints": 0.1,
-  "TotalShareOfVoice": 105.0,
-  "TotalUnits": 10.5,
+  "TotalShareOfVoice": 115.0,
+  "TotalUnits": 11.5,
   "Weeks": [
     {
       "ActiveDays": "Sa,Su",
@@ -40,11 +40,11 @@
       "StartDate": "2019-08-05T00:00:00",
       "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
-      "WeeklyBudget": 6000.0,
-      "WeeklyImpressions": 300.0,
-      "WeeklyImpressionsPercentage": 30.0,
+      "WeeklyBudget": 8000.0,
+      "WeeklyImpressions": 400.0,
+      "WeeklyImpressionsPercentage": 40.0,
       "WeeklyRatings": 0.0,
-      "WeeklyUnits": 3.0,
+      "WeeklyUnits": 4.0,
       "WeekNumber": 2
     },
     {

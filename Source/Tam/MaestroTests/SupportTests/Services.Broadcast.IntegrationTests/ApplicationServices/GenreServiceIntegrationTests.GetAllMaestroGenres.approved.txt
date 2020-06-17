@@ -4,12 +4,20 @@
     "Id": 51
   },
   {
+    "Display": "Animation",
+    "Id": 109
+  },
+  {
     "Display": "Children",
     "Id": 52
   },
   {
     "Display": "Comedy",
     "Id": 9
+  },
+  {
+    "Display": "Court",
+    "Id": 110
   },
   {
     "Display": "Crime",
@@ -32,6 +40,10 @@
     "Id": 15
   },
   {
+    "Display": "Entertainment/Reality",
+    "Id": 111
+  },
+  {
     "Display": "Game Show",
     "Id": 20
   },
@@ -44,8 +56,16 @@
     "Id": 26
   },
   {
+    "Display": "Informational/News",
+    "Id": 112
+  },
+  {
     "Display": "Lifestyle",
     "Id": 54
+  },
+  {
+    "Display": "Movie",
+    "Id": 113
   },
   {
     "Display": "Nature",
@@ -72,15 +92,35 @@
     "Id": 42
   },
   {
+    "Display": "Spanish",
+    "Id": 114
+  },
+  {
     "Display": "Special",
     "Id": 56
   },
   {
-    "Display": "Sports/Sports Talk",
+    "Display": "Sports",
     "Id": 44
+  },
+  {
+    "Display": "Sports Talk",
+    "Id": 115
   },
   {
     "Display": "Talk",
     "Id": 45
+  },
+  {
+    "Display": "Talk/Trash Talk",
+    "Id": 116
+  },
+  {
+    "Display": "Unmatched",
+    "Id": 108
+  },
+  {
+    "Display": "Various",
+    "Id": 107
   }
 ]

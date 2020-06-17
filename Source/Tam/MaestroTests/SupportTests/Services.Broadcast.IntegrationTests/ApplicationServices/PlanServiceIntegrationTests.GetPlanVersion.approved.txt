@@ -131,6 +131,7 @@
   "HHRatingPoints": 2.0,
   "HHUniverse": 10000.0,
   "HUTBookId": 428,
+  "ImpressionsPerUnit": 0.0,
   "IsAduEnabled": false,
   "IsDraft": false,
   "IsPricingModelRunning": false,
@@ -159,7 +160,8 @@
     "TotalBudget": 0.0000,
     "TotalImpressions": 0.0,
     "TotalImpressionsPercentage": 0.0,
-    "TotalRatingPoints": 6.0
+    "TotalRatingPoints": 6.0,
+    "TotalUnits": 0.0
   },
   "WeeklyBreakdownWeeks": []
 }

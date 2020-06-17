@@ -430,5 +430,13 @@ namespace Services.Broadcast.Entities.Plan
         ///   <c>true</c> if this instance is enable; otherwise, <c>false</c>.
         /// </value>
         public bool IsAduEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the impressions per unit.
+        /// </summary>
+        /// <value>
+        /// The impressions per unit value.
+        /// </value>
+        public double ImpressionsPerUnit { get; set; }
     }
 }

@@ -27,6 +27,13 @@ namespace Services.Broadcast.Validators
         /// </summary>
         /// <param name="request">WeeklyBreakdownRequest request object.</param>
         void ValidateWeeklyBreakdown(WeeklyBreakdownRequest request);
+
+        /// <summary>
+        /// Validates the impressions per unit.
+        /// </summary>
+        /// <param name="impressionsPerUnit">The impressions per unit.</param>
+        /// <param name="totalImpressions">The total impressions.</param>
+        void ValidateImpressionsPerUnit(double impressionsPerUnit, double totalImpressions);
     }
 
     public class PlanValidator : IPlanValidator
@@ -38,7 +45,6 @@ namespace Services.Broadcast.Validators
         private readonly ICreativeLengthEngine _CreativeLengthEngine;
 
         const string INVALID_PLAN_NAME = "Invalid plan name";
-        const string INVALID_SPOT_LENGTH = "Invalid spot length id {0}";
         const string INVALID_PRODUCT = "Invalid product";
         const string INVALID_SHARE_BOOK = "Invalid share book";
         const string INVALID_HUT_BOOK = "Invalid HUT book.";
@@ -69,7 +75,7 @@ namespace Services.Broadcast.Validators
         const string INVALID_CPM = "Invalid CPM.";
         const string INVALID_CPP = "Invalid CPP.";
         const string INVALID_DELIVERY_IMPRESSIONS = "Invalid Delivery Impressions.";
-        const string INVALID_STATUS_TRANSITION_MESSAGE = "Invalid status, can't update a plan from status {0} to status {1}";
+        const string INVALID_IMPRESSIONS_PER_UNIT = "Impressions per Unit must be less or equal to delivery impressions.";
         const string INVALID_DRAFT_ON_NEW_PLAN = "Cannot create a new draft on a non existing plan";
         const string STOP_WORD = "eOm3wgvfm0dq4rI3srL2";
 
@@ -116,6 +122,7 @@ namespace Services.Broadcast.Validators
             _ValidateMarkets(plan);
             _ValidateWeeklyBreakdownWeeks(plan);
             _ValidateBudgetAndDelivery(plan);
+            ValidateImpressionsPerUnit(plan.ImpressionsPerUnit, plan.TargetImpressions.Value);
 
             // PRI-14012 We'll use a stop word so QA can trigger an error 
             _ValidateStopWord(plan);
@@ -474,6 +481,14 @@ namespace Services.Broadcast.Validators
             if (!(plan.TargetImpressions.HasValue && plan.TargetImpressions.Value > 0d))
             {
                 throw new Exception(INVALID_DELIVERY_IMPRESSIONS);
+            }
+        }
+
+        public void ValidateImpressionsPerUnit(double impressionsPerUnit, double totalImpressions)
+        {
+            if(impressionsPerUnit <= 0 || impressionsPerUnit > totalImpressions)
+            {
+                throw new Exception(INVALID_IMPRESSIONS_PER_UNIT);
             }
         }
     }

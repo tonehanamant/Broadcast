@@ -5,6 +5,7 @@
   "TotalImpressionsPercentage": 90.0,
   "TotalRatingPoints": 25.2,
   "TotalShareOfVoice": 90.0,
+  "TotalUnits": 5.4,
   "Weeks": [
     {
       "ActiveDays": "M-Su",
@@ -17,11 +18,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2020-02-24T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 60000.0,
       "WeeklyImpressions": 6000.0,
       "WeeklyImpressionsPercentage": 20.0,
       "WeeklyRatings": 5.60823401,
+      "WeeklyUnits": 1.2,
       "WeekNumber": 1
     },
     {
@@ -35,11 +38,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2020-03-02T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 60000.0,
       "WeeklyImpressions": 6000.0,
       "WeeklyImpressionsPercentage": 20.0,
       "WeeklyRatings": 5.60823401,
+      "WeeklyUnits": 1.2,
       "WeekNumber": 2
     },
     {
@@ -53,11 +58,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2020-03-09T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 30000.0,
       "WeeklyImpressions": 3000.0,
       "WeeklyImpressionsPercentage": 10.0,
       "WeeklyRatings": 2.8,
+      "WeeklyUnits": 0.6,
       "WeekNumber": 3
     },
     {
@@ -71,11 +78,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2020-03-16T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 60000.0,
       "WeeklyImpressions": 6000.0,
       "WeeklyImpressionsPercentage": 20.0,
       "WeeklyRatings": 5.60823401,
+      "WeeklyUnits": 1.2,
       "WeekNumber": 4
     },
     {
@@ -89,11 +98,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2020-03-23T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 60000.0,
       "WeeklyImpressions": 6000.0,
       "WeeklyImpressionsPercentage": 20.0,
       "WeeklyRatings": 5.60823401,
+      "WeeklyUnits": 1.2,
       "WeekNumber": 5
     }
   ]

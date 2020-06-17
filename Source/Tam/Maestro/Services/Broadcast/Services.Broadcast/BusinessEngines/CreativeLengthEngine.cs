@@ -3,6 +3,7 @@ using Services.Broadcast.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,6 +29,13 @@ namespace Services.Broadcast.BusinessEngines
         /// </summary>
         /// <param name="creativeLengths">The creative lengths.</param>
         void ValidateCreativeLengthsForPlanSave(List<CreativeLength> creativeLengths);
+
+        /// <summary>
+        /// Sums the delivery multipliers.
+        /// </summary>
+        /// <param name="creativeLengths">The creative lengths.</param>
+        /// <returns></returns>
+        double CalculateDeliveryMultipliers(List<CreativeLength> creativeLengths);
     }
 
     public class CreativeLengthEngine : ICreativeLengthEngine
@@ -121,6 +129,15 @@ namespace Services.Broadcast.BusinessEngines
             {
                 throw new ApplicationException(INVALID_CREATIVE_LENGTH_WEIGHT);
             }
+        }
+
+        /// <inheritdoc/>
+        public double CalculateDeliveryMultipliers(List<CreativeLength> creativeLengths)
+        {
+            var spotLengthsMultiplier = _SpotLengthEngine.GetSpotLengthMultipliers();
+            creativeLengths = DistributeWeight(creativeLengths);
+            return creativeLengths.Sum(p => GeneralMath.ConvertPercentageToFraction(p.Weight.Value) * spotLengthsMultiplier[p.SpotLengthId]);
+
         }
     }
 }

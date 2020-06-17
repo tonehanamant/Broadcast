@@ -29,7 +29,6 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_creative_lengths = new HashSet<plan_version_creative_lengths>();
             this.plan_version_pricing_parameters = new HashSet<plan_version_pricing_parameters>();
             this.plan_version_weekly_breakdown = new HashSet<plan_version_weekly_breakdown>();
-            this.plan_version_weekly_breakdown_duplicate = new HashSet<plan_version_weekly_breakdown_duplicate>();
             this.plan_version_pricing_bands = new HashSet<plan_version_pricing_bands>();
             this.plan_version_audience_daypart_vpvh = new HashSet<plan_version_audience_daypart_vpvh>();
         }
@@ -68,6 +67,7 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<System.DateTime> modified_date { get; set; }
         public Nullable<int> version_number { get; set; }
         public bool is_adu_enabled { get; set; }
+        public Nullable<double> impressions_per_unit { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual media_months media_months { get; set; }
@@ -86,7 +86,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_creative_lengths> plan_version_creative_lengths { get; set; }
         public virtual ICollection<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
         public virtual ICollection<plan_version_weekly_breakdown> plan_version_weekly_breakdown { get; set; }
-        public virtual ICollection<plan_version_weekly_breakdown_duplicate> plan_version_weekly_breakdown_duplicate { get; set; }
         public virtual ICollection<plan_version_pricing_bands> plan_version_pricing_bands { get; set; }
         public virtual ICollection<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
     }

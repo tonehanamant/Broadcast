@@ -1081,24 +1081,7 @@
           <Property Name="daypart_default_id" Type="int" />
           <Property Name="percentage_of_week" Type="float" />
           <Property Name="adu_impressions" Type="float" Nullable="false" />
-        </EntityType>
-        <EntityType Name="plan_version_weekly_breakdown_duplicate">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="media_week_id" Type="int" Nullable="false" />
-          <Property Name="number_active_days" Type="int" Nullable="false" />
-          <Property Name="active_days_label" Type="varchar" MaxLength="20" />
-          <Property Name="impressions" Type="float" Nullable="false" />
-          <Property Name="impressions_percentage" Type="float" Nullable="false" />
-          <Property Name="plan_version_id" Type="int" Nullable="false" />
-          <Property Name="rating_points" Type="float" Nullable="false" />
-          <Property Name="budget" Type="money" Nullable="false" />
-          <Property Name="spot_length_id" Type="int" />
-          <Property Name="daypart_default_id" Type="int" />
-          <Property Name="percentage_of_week" Type="float" />
-          <Property Name="adu" Type="int" Nullable="false" />
+          <Property Name="unit_impressions" Type="float" />
         </EntityType>
         <EntityType Name="plan_versions">
           <Key>
@@ -1138,6 +1121,7 @@
           <Property Name="modified_date" Type="datetime" />
           <Property Name="version_number" Type="int" />
           <Property Name="is_adu_enabled" Type="bit" Nullable="false" />
+          <Property Name="impressions_per_unit" Type="float" />
         </EntityType>
         <EntityType Name="plans">
           <Key>
@@ -3209,7 +3193,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_plan_version_audience_daypart_vpvh_plan_versions">
-          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1" />
+          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="plan_version_audience_daypart_vpvh" Type="Self.plan_version_audience_daypart_vpvh" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="plan_versions">
@@ -3739,54 +3725,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_version_weekly_breakdown">
               <PropertyRef Name="daypart_default_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plan_version_weekly_breakdown_duplicate_daypart_defaults">
-          <End Role="daypart_defaults" Type="Self.daypart_defaults" Multiplicity="0..1" />
-          <End Role="plan_version_weekly_breakdown_duplicate" Type="Self.plan_version_weekly_breakdown_duplicate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="daypart_defaults">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_weekly_breakdown_duplicate">
-              <PropertyRef Name="daypart_default_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plan_version_weekly_breakdown_duplicate_media_weeks">
-          <End Role="media_weeks" Type="Self.media_weeks" Multiplicity="1" />
-          <End Role="plan_version_weekly_breakdown_duplicate" Type="Self.plan_version_weekly_breakdown_duplicate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="media_weeks">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_weekly_breakdown_duplicate">
-              <PropertyRef Name="media_week_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plan_version_weekly_breakdown_duplicate_plan_versions">
-          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1" />
-          <End Role="plan_version_weekly_breakdown_duplicate" Type="Self.plan_version_weekly_breakdown_duplicate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan_versions">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_weekly_breakdown_duplicate">
-              <PropertyRef Name="plan_version_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plan_version_weekly_breakdown_duplicate_spot_lengths">
-          <End Role="spot_lengths" Type="Self.spot_lengths" Multiplicity="0..1" />
-          <End Role="plan_version_weekly_breakdown_duplicate" Type="Self.plan_version_weekly_breakdown_duplicate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_lengths">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_weekly_breakdown_duplicate">
-              <PropertyRef Name="spot_length_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5260,6 +5198,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_station_inventory_manifest_dayparts_station_inventory_manifest_daypart_programs">
+          <End Role="station_inventory_manifest_daypart_programs" Type="Self.station_inventory_manifest_daypart_programs" Multiplicity="0..1" />
+          <End Role="station_inventory_manifest_dayparts" Type="Self.station_inventory_manifest_dayparts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station_inventory_manifest_daypart_programs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_inventory_manifest_dayparts">
+              <PropertyRef Name="primary_program_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_station_inventory_manifest_generation_media_weeks">
           <End Role="media_weeks" Type="Self.media_weeks" Multiplicity="1" />
           <End Role="station_inventory_manifest_generation" Type="Self.station_inventory_manifest_generation" Multiplicity="*" />
@@ -5819,7 +5769,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="plan_version_summaries" EntityType="Self.plan_version_summaries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_summary_quarters" EntityType="Self.plan_version_summary_quarters" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_weekly_breakdown" EntityType="Self.plan_version_weekly_breakdown" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="plan_version_weekly_breakdown_duplicate" EntityType="Self.plan_version_weekly_breakdown_duplicate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_versions" EntityType="Self.plan_versions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plans" EntityType="Self.plans" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post_file_demos" EntityType="Self.post_file_demos" Schema="dbo" store:Type="Tables" />
@@ -6399,22 +6348,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="daypart_defaults" EntitySet="daypart_defaults" />
             <End Role="plan_version_weekly_breakdown" EntitySet="plan_version_weekly_breakdown" />
           </AssociationSet>
-          <AssociationSet Name="FK_plan_version_weekly_breakdown_duplicate_daypart_defaults" Association="Self.FK_plan_version_weekly_breakdown_duplicate_daypart_defaults">
-            <End Role="daypart_defaults" EntitySet="daypart_defaults" />
-            <End Role="plan_version_weekly_breakdown_duplicate" EntitySet="plan_version_weekly_breakdown_duplicate" />
-          </AssociationSet>
-          <AssociationSet Name="FK_plan_version_weekly_breakdown_duplicate_media_weeks" Association="Self.FK_plan_version_weekly_breakdown_duplicate_media_weeks">
-            <End Role="media_weeks" EntitySet="media_weeks" />
-            <End Role="plan_version_weekly_breakdown_duplicate" EntitySet="plan_version_weekly_breakdown_duplicate" />
-          </AssociationSet>
-          <AssociationSet Name="FK_plan_version_weekly_breakdown_duplicate_plan_versions" Association="Self.FK_plan_version_weekly_breakdown_duplicate_plan_versions">
-            <End Role="plan_versions" EntitySet="plan_versions" />
-            <End Role="plan_version_weekly_breakdown_duplicate" EntitySet="plan_version_weekly_breakdown_duplicate" />
-          </AssociationSet>
-          <AssociationSet Name="FK_plan_version_weekly_breakdown_duplicate_spot_lengths" Association="Self.FK_plan_version_weekly_breakdown_duplicate_spot_lengths">
-            <End Role="spot_lengths" EntitySet="spot_lengths" />
-            <End Role="plan_version_weekly_breakdown_duplicate" EntitySet="plan_version_weekly_breakdown_duplicate" />
-          </AssociationSet>
           <AssociationSet Name="FK_plan_version_weekly_breakdown_media_weeks" Association="Self.FK_plan_version_weekly_breakdown_media_weeks">
             <End Role="media_weeks" EntitySet="media_weeks" />
             <End Role="plan_version_weekly_breakdown" EntitySet="plan_version_weekly_breakdown" />
@@ -6869,6 +6802,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </AssociationSet>
           <AssociationSet Name="FK_station_inventory_manifest_dayparts_station_inventory_manifest" Association="Self.FK_station_inventory_manifest_dayparts_station_inventory_manifest">
             <End Role="station_inventory_manifest" EntitySet="station_inventory_manifest" />
+            <End Role="station_inventory_manifest_dayparts" EntitySet="station_inventory_manifest_dayparts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_inventory_manifest_dayparts_station_inventory_manifest_daypart_programs" Association="Self.FK_station_inventory_manifest_dayparts_station_inventory_manifest_daypart_programs">
+            <End Role="station_inventory_manifest_daypart_programs" EntitySet="station_inventory_manifest_daypart_programs" />
             <End Role="station_inventory_manifest_dayparts" EntitySet="station_inventory_manifest_dayparts" />
           </AssociationSet>
           <AssociationSet Name="FK_station_inventory_manifest_generation_media_weeks" Association="Self.FK_station_inventory_manifest_generation_media_weeks">
@@ -8134,18 +8071,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="plan_version_pricing_parameters" EntitySet="plan_version_pricing_parameters" />
           </AssociationSet>
           <EntitySet Name="plan_version_weekly_breakdown" EntityType="BroadcastModel.plan_version_weekly_breakdown" />
-          <EntitySet Name="plan_version_weekly_breakdown_duplicate" EntityType="BroadcastModel.plan_version_weekly_breakdown_duplicate" />
           <AssociationSet Name="FK_plan_version_weekly_breakdown_daypart_defaults" Association="BroadcastModel.FK_plan_version_weekly_breakdown_daypart_defaults">
             <End Role="daypart_defaults" EntitySet="daypart_defaults" />
             <End Role="plan_version_weekly_breakdown" EntitySet="plan_version_weekly_breakdown" />
-          </AssociationSet>
-          <AssociationSet Name="FK_plan_version_weekly_breakdown_duplicate_daypart_defaults" Association="BroadcastModel.FK_plan_version_weekly_breakdown_duplicate_daypart_defaults">
-            <End Role="daypart_defaults" EntitySet="daypart_defaults" />
-            <End Role="plan_version_weekly_breakdown_duplicate" EntitySet="plan_version_weekly_breakdown_duplicate" />
-          </AssociationSet>
-          <AssociationSet Name="FK_plan_version_weekly_breakdown_duplicate_media_weeks" Association="BroadcastModel.FK_plan_version_weekly_breakdown_duplicate_media_weeks">
-            <End Role="media_weeks" EntitySet="media_weeks" />
-            <End Role="plan_version_weekly_breakdown_duplicate" EntitySet="plan_version_weekly_breakdown_duplicate" />
           </AssociationSet>
           <AssociationSet Name="FK_plan_version_weekly_breakdown_media_weeks" Association="BroadcastModel.FK_plan_version_weekly_breakdown_media_weeks">
             <End Role="media_weeks" EntitySet="media_weeks" />
@@ -8158,14 +8086,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_plan_version_weekly_breakdown_spot_lengths" Association="BroadcastModel.FK_plan_version_weekly_breakdown_spot_lengths">
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="plan_version_weekly_breakdown" EntitySet="plan_version_weekly_breakdown" />
-          </AssociationSet>
-          <AssociationSet Name="FK_plan_version_weekly_breakdown_duplicate_plan_versions" Association="BroadcastModel.FK_plan_version_weekly_breakdown_duplicate_plan_versions">
-            <End Role="plan_versions" EntitySet="plan_versions" />
-            <End Role="plan_version_weekly_breakdown_duplicate" EntitySet="plan_version_weekly_breakdown_duplicate" />
-          </AssociationSet>
-          <AssociationSet Name="FK_plan_version_weekly_breakdown_duplicate_spot_lengths" Association="BroadcastModel.FK_plan_version_weekly_breakdown_duplicate_spot_lengths">
-            <End Role="spot_lengths" EntitySet="spot_lengths" />
-            <End Role="plan_version_weekly_breakdown_duplicate" EntitySet="plan_version_weekly_breakdown_duplicate" />
           </AssociationSet>
           <EntitySet Name="vpvh_files" EntityType="BroadcastModel.vpvh_files" />
           <EntitySet Name="vpvhs" EntityType="BroadcastModel.vpvh" />
@@ -8427,7 +8347,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_pricing_api_result_spots" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_media_weeks" FromRole="media_weeks" ToRole="plan_version_pricing_api_result_spots" />
           <NavigationProperty Name="plan_version_pricing_job_inventory_source_estimates" Relationship="BroadcastModel.FK_plan_version_pricing_job_inventory_source_estimates_media_weeks" FromRole="media_weeks" ToRole="plan_version_pricing_job_inventory_source_estimates" />
           <NavigationProperty Name="plan_version_pricing_api_result_spots1" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_media_weeks1" FromRole="media_weeks" ToRole="plan_version_pricing_api_result_spots" />
-          <NavigationProperty Name="plan_version_weekly_breakdown_duplicate" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_duplicate_media_weeks" FromRole="media_weeks" ToRole="plan_version_weekly_breakdown_duplicate" />
           <NavigationProperty Name="plan_version_weekly_breakdown" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_media_weeks" FromRole="media_weeks" ToRole="plan_version_weekly_breakdown" />
         </EntityType>
         <EntityType Name="post_file_demos">
@@ -9225,7 +9144,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="detection_file_details" Relationship="BroadcastModel.FK_detection_file_details_spot_lengths" FromRole="spot_lengths" ToRole="detection_file_details" />
           <NavigationProperty Name="plan_version_creative_lengths" Relationship="BroadcastModel.FK_plan_version_creative_lengths_spot_lengths" FromRole="spot_lengths" ToRole="plan_version_creative_lengths" />
           <NavigationProperty Name="plan_version_weekly_breakdown" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_spot_lengths" FromRole="spot_lengths" ToRole="plan_version_weekly_breakdown" />
-          <NavigationProperty Name="plan_version_weekly_breakdown_duplicate" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_duplicate_spot_lengths" FromRole="spot_lengths" ToRole="plan_version_weekly_breakdown_duplicate" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_audiences">
           <Key>
@@ -12492,7 +12410,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="name" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="plan_version_pricing_api_result_spots" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_daypart_defaults" FromRole="daypart_defaults" ToRole="plan_version_pricing_api_result_spots" />
           <NavigationProperty Name="plan_version_weekly_breakdown" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_daypart_defaults" FromRole="daypart_defaults" ToRole="plan_version_weekly_breakdown" />
-          <NavigationProperty Name="plan_version_weekly_breakdown_duplicate" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_duplicate_daypart_defaults" FromRole="daypart_defaults" ToRole="plan_version_weekly_breakdown_duplicate" />
           <NavigationProperty Name="plan_version_audience_daypart_vpvh" Relationship="BroadcastModel.FK_plan_version_audience_daypart_vpvh_daypart_defaults" FromRole="daypart_defaults" ToRole="plan_version_audience_daypart_vpvh" />
           <Property Name="vpvh_calculation_source_type" Type="Int32" Nullable="false" />
         </EntityType>
@@ -13500,9 +13417,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_creative_lengths" Relationship="BroadcastModel.FK_plan_version_creative_lengths_plan_versions" FromRole="plan_versions" ToRole="plan_version_creative_lengths" />
           <NavigationProperty Name="plan_version_pricing_parameters" Relationship="BroadcastModel.FK_plan_version_pricing_parameters_plan_versions" FromRole="plan_versions" ToRole="plan_version_pricing_parameters" />
           <NavigationProperty Name="plan_version_weekly_breakdown" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_plan_versions" FromRole="plan_versions" ToRole="plan_version_weekly_breakdown" />
-          <NavigationProperty Name="plan_version_weekly_breakdown_duplicate" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_duplicate_plan_versions" FromRole="plan_versions" ToRole="plan_version_weekly_breakdown_duplicate" />
           <NavigationProperty Name="plan_version_pricing_bands" Relationship="BroadcastModel.FK_plan_version_pricing_bands_plan_versions" FromRole="plan_versions" ToRole="plan_version_pricing_bands" />
           <NavigationProperty Name="plan_version_audience_daypart_vpvh" Relationship="BroadcastModel.FK_plan_version_audience_daypart_vpvh_plan_versions" FromRole="plan_versions" ToRole="plan_version_audience_daypart_vpvh" />
+          <Property Name="impressions_per_unit" Type="Double" />
         </EntityType>
         <Association Name="FK_plan_versions_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -13885,28 +13802,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="media_weeks" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_media_weeks" FromRole="plan_version_weekly_breakdown" ToRole="media_weeks" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_plan_versions" FromRole="plan_version_weekly_breakdown" ToRole="plan_versions" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_spot_lengths" FromRole="plan_version_weekly_breakdown" ToRole="spot_lengths" />
-        </EntityType>
-        <EntityType Name="plan_version_weekly_breakdown_duplicate">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="media_week_id" Type="Int32" Nullable="false" />
-          <Property Name="number_active_days" Type="Int32" Nullable="false" />
-          <Property Name="active_days_label" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="impressions" Type="Double" Nullable="false" />
-          <Property Name="impressions_percentage" Type="Double" Nullable="false" />
-          <Property Name="plan_version_id" Type="Int32" Nullable="false" />
-          <Property Name="rating_points" Type="Double" Nullable="false" />
-          <Property Name="budget" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="spot_length_id" Type="Int32" />
-          <Property Name="daypart_default_id" Type="Int32" />
-          <Property Name="percentage_of_week" Type="Double" />
-          <Property Name="adu" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="daypart_defaults" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_duplicate_daypart_defaults" FromRole="plan_version_weekly_breakdown_duplicate" ToRole="daypart_defaults" />
-          <NavigationProperty Name="media_weeks" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_duplicate_media_weeks" FromRole="plan_version_weekly_breakdown_duplicate" ToRole="media_weeks" />
-          <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_duplicate_plan_versions" FromRole="plan_version_weekly_breakdown_duplicate" ToRole="plan_versions" />
-          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_duplicate_spot_lengths" FromRole="plan_version_weekly_breakdown_duplicate" ToRole="spot_lengths" />
+          <Property Name="unit_impressions" Type="Double" />
         </EntityType>
         <Association Name="FK_plan_version_weekly_breakdown_daypart_defaults">
           <End Type="BroadcastModel.daypart_defaults" Role="daypart_defaults" Multiplicity="0..1" />
@@ -13917,30 +13813,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_version_weekly_breakdown">
               <PropertyRef Name="daypart_default_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plan_version_weekly_breakdown_duplicate_daypart_defaults">
-          <End Type="BroadcastModel.daypart_defaults" Role="daypart_defaults" Multiplicity="0..1" />
-          <End Type="BroadcastModel.plan_version_weekly_breakdown_duplicate" Role="plan_version_weekly_breakdown_duplicate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="daypart_defaults">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_weekly_breakdown_duplicate">
-              <PropertyRef Name="daypart_default_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plan_version_weekly_breakdown_duplicate_media_weeks">
-          <End Type="BroadcastModel.media_weeks" Role="media_weeks" Multiplicity="1" />
-          <End Type="BroadcastModel.plan_version_weekly_breakdown_duplicate" Role="plan_version_weekly_breakdown_duplicate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="media_weeks">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_weekly_breakdown_duplicate">
-              <PropertyRef Name="media_week_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -13978,30 +13850,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="plan_version_weekly_breakdown">
-              <PropertyRef Name="spot_length_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plan_version_weekly_breakdown_duplicate_plan_versions">
-          <End Type="BroadcastModel.plan_versions" Role="plan_versions" Multiplicity="1" />
-          <End Type="BroadcastModel.plan_version_weekly_breakdown_duplicate" Role="plan_version_weekly_breakdown_duplicate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan_versions">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_weekly_breakdown_duplicate">
-              <PropertyRef Name="plan_version_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plan_version_weekly_breakdown_duplicate_spot_lengths">
-          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="0..1" />
-          <End Type="BroadcastModel.plan_version_weekly_breakdown_duplicate" Role="plan_version_weekly_breakdown_duplicate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_lengths">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_weekly_breakdown_duplicate">
               <PropertyRef Name="spot_length_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -16615,6 +16463,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_versions">
             <EntityTypeMapping TypeName="BroadcastModel.plan_versions">
               <MappingFragment StoreEntitySet="plan_versions">
+                <ScalarProperty Name="impressions_per_unit" ColumnName="impressions_per_unit" />
                 <ScalarProperty Name="is_adu_enabled" ColumnName="is_adu_enabled" />
                 <ScalarProperty Name="version_number" ColumnName="version_number" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
@@ -16724,26 +16573,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_weekly_breakdown">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_weekly_breakdown">
               <MappingFragment StoreEntitySet="plan_version_weekly_breakdown">
+                <ScalarProperty Name="unit_impressions" ColumnName="unit_impressions" />
                 <ScalarProperty Name="adu_impressions" ColumnName="adu_impressions" />
-                <ScalarProperty Name="percentage_of_week" ColumnName="percentage_of_week" />
-                <ScalarProperty Name="daypart_default_id" ColumnName="daypart_default_id" />
-                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
-                <ScalarProperty Name="budget" ColumnName="budget" />
-                <ScalarProperty Name="rating_points" ColumnName="rating_points" />
-                <ScalarProperty Name="plan_version_id" ColumnName="plan_version_id" />
-                <ScalarProperty Name="impressions_percentage" ColumnName="impressions_percentage" />
-                <ScalarProperty Name="impressions" ColumnName="impressions" />
-                <ScalarProperty Name="active_days_label" ColumnName="active_days_label" />
-                <ScalarProperty Name="number_active_days" ColumnName="number_active_days" />
-                <ScalarProperty Name="media_week_id" ColumnName="media_week_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="plan_version_weekly_breakdown_duplicate">
-            <EntityTypeMapping TypeName="BroadcastModel.plan_version_weekly_breakdown_duplicate">
-              <MappingFragment StoreEntitySet="plan_version_weekly_breakdown_duplicate">
-                <ScalarProperty Name="adu" ColumnName="adu" />
                 <ScalarProperty Name="percentage_of_week" ColumnName="percentage_of_week" />
                 <ScalarProperty Name="daypart_default_id" ColumnName="daypart_default_id" />
                 <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />

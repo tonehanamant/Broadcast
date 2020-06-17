@@ -230,6 +230,7 @@
   "HHRatingPoints": 0.1,
   "HHUniverse": 120700000.0,
   "HUTBookId": 437,
+  "ImpressionsPerUnit": 5.0,
   "IsAduEnabled": true,
   "IsDraft": false,
   "IsPricingModelRunning": false,
@@ -326,7 +327,8 @@
     "TotalBudget": 100.0000,
     "TotalImpressions": 100.0,
     "TotalImpressionsPercentage": 100.0,
-    "TotalRatingPoints": 100.0
+    "TotalRatingPoints": 100.0,
+    "TotalUnits": 20.0
   },
   "WeeklyBreakdownWeeks": [
     {
@@ -340,11 +342,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2018-12-31T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 5,
       "WeeklyBudget": 20.0000,
       "WeeklyImpressions": 20.0,
       "WeeklyImpressionsPercentage": 20.0,
       "WeeklyRatings": 20.0,
+      "WeeklyUnits": 4.0,
       "WeekNumber": 1
     },
     {
@@ -358,11 +362,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2019-01-07T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 20.0000,
       "WeeklyImpressions": 20.0,
       "WeeklyImpressionsPercentage": 20.0,
       "WeeklyRatings": 20.0,
+      "WeeklyUnits": 4.0,
       "WeekNumber": 2
     },
     {
@@ -376,11 +382,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2019-01-14T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 20.0000,
       "WeeklyImpressions": 20.0,
       "WeeklyImpressionsPercentage": 20.0,
       "WeeklyRatings": 20.0,
+      "WeeklyUnits": 4.0,
       "WeekNumber": 3
     },
     {
@@ -394,11 +402,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2019-01-21T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 0,
       "WeeklyBudget": 20.0000,
       "WeeklyImpressions": 20.0,
       "WeeklyImpressionsPercentage": 20.0,
       "WeeklyRatings": 20.0,
+      "WeeklyUnits": 4.0,
       "WeekNumber": 4
     },
     {
@@ -412,11 +422,13 @@
       "PercentageOfWeek": null,
       "SpotLengthId": null,
       "StartDate": "2019-01-28T00:00:00",
+      "UnitImpressions": 0.0,
       "WeeklyAdu": 30,
       "WeeklyBudget": 20.0000,
       "WeeklyImpressions": 20.0,
       "WeeklyImpressionsPercentage": 20.0,
       "WeeklyRatings": 20.0,
+      "WeeklyUnits": 4.0,
       "WeekNumber": 5
     }
   ]

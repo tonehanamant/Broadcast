@@ -2,7 +2,7 @@
   {
     "ContentRating": null,
     "Genre": {
-      "Display": "Sports/Sports Talk"
+      "Display": "Sports"
     },
     "Name": "Golf"
   }

@@ -1,40 +1,77 @@
-﻿using ApprovalTests;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using ApprovalTests;
 using ApprovalTests.Reporters;
+using Common.Services.Repositories;
 using Moq;
+using Newtonsoft.Json;
 using NUnit.Framework;
+using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 {
     [TestFixture]
     [Category("short_running")]
-    public class WeeklyBreakdownEngineUnitTests
+    public class PlanServiceTests
     {
-        private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
+        private readonly IPlanService planService;
+        private readonly Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
         private readonly Mock<IPlanValidator> _PlanValidatorMock;
+        private readonly Mock<IPlanBudgetDeliveryCalculator> _PlanBudgetDeliveryCalculatorMock;
         private readonly Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCacheMock;
+        private readonly Mock<IPlanAggregator> _PlanAggregatorMock;
+        private readonly Mock<ICampaignAggregationJobTrigger> _CampaignAggregationJobTriggerMock;
+        private readonly Mock<ISpotLengthEngine> _SpotLengthEngineMock;
+        private readonly Mock<IBroadcastLockingManagerApplicationService> _BroadcastLockingManagerApplicationServiceMock;
+        private readonly Mock<IPlanPricingService> _PlanPricingServiceMock;
+        private readonly Mock<IQuarterCalculationEngine> _QuarterCalculationEngineMock;
+        private readonly Mock<IDaypartDefaultService> _DaypartDefaultServiceMock;
+        private readonly Mock<IWeeklyBreakdownEngine> _WeeklyBreakdownEngineMock;
         private readonly Mock<ICreativeLengthEngine> _CreativeLengthEngineMock;
-        private readonly Mock<ISpotLengthEngine> _SpotLengthEngine;
 
-        public WeeklyBreakdownEngineUnitTests()
+        public PlanServiceTests()
         {
+            _DataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
             _PlanValidatorMock = new Mock<IPlanValidator>();
+            _PlanBudgetDeliveryCalculatorMock = new Mock<IPlanBudgetDeliveryCalculator>();
             _MediaMonthAndWeekAggregateCacheMock = new Mock<IMediaMonthAndWeekAggregateCache>();
+            _PlanAggregatorMock = new Mock<IPlanAggregator>();
+            _CampaignAggregationJobTriggerMock = new Mock<ICampaignAggregationJobTrigger>();
+            _BroadcastLockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
+            _PlanPricingServiceMock = new Mock<IPlanPricingService>();
+            _SpotLengthEngineMock = new Mock<ISpotLengthEngine>();
+            _QuarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
+            _DaypartDefaultServiceMock = new Mock<IDaypartDefaultService>();
+            _WeeklyBreakdownEngineMock = new Mock<IWeeklyBreakdownEngine>();
             _CreativeLengthEngineMock = new Mock<ICreativeLengthEngine>();
-            _SpotLengthEngine = new Mock<ISpotLengthEngine>();
 
-            _WeeklyBreakdownEngine = new WeeklyBreakdownEngine(
+            planService = new PlanService(
+                _DataRepositoryFactoryMock.Object,
                 _PlanValidatorMock.Object,
+                _PlanBudgetDeliveryCalculatorMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
-                _CreativeLengthEngineMock.Object, _SpotLengthEngine.Object);
+                _PlanAggregatorMock.Object,
+                _CampaignAggregationJobTriggerMock.Object,
+                _SpotLengthEngineMock.Object,
+                _BroadcastLockingManagerApplicationServiceMock.Object,
+                _PlanPricingServiceMock.Object,
+                _QuarterCalculationEngineMock.Object,
+                _DaypartDefaultServiceMock.Object,
+                _WeeklyBreakdownEngineMock.Object,
+                _CreativeLengthEngineMock.Object);
         }
 
         [Test]
@@ -48,8 +85,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             _MediaMonthAndWeekAggregateCacheMock.Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(mockedListMediaWeeksByFlight);
 
+            _SetupWeeklyBreakdownEngineMock(request);
+
             //Act
-            var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
+            var result = planService.CalculatePlanWeeklyGoalBreakdown(request);
 
             //Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -75,8 +114,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 WeeklyRatings = 5.608234009172268,
                 WeeklyBudget = 60000,
                 WeeklyAdu = 0,
-                IsUpdated = true,
-                WeeklyUnits = 1
+                IsUpdated = true
             });
             request.WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions;
             request.DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek;
@@ -86,8 +124,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             _MediaMonthAndWeekAggregateCacheMock.Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(mockedListMediaWeeksByFlight);
 
+            _SetupWeeklyBreakdownEngineMock(request);
+
             //Act
-            var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
+            var result = planService.CalculatePlanWeeklyGoalBreakdown(request);
 
             //Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -95,8 +135,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void Updated_Impres_Percentage_Success()
-        {//CalculatePlanWeeklyGoalBreakdown_Custom_Updated_Impressions_Percentage_Success_Test
+        public void CalculatePlanWeeklyGoalBreakdown_Custom_Updated_Impressions_Percentage_Success_Test()
+        {
             //Arrange
             var request = _GetWeeklyBreakDownRequest();
             request.Weeks.Add(new WeeklyBreakdownWeek
@@ -112,8 +152,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 WeeklyRatings = 5.608234009172268,
                 WeeklyBudget = 60000,
                 WeeklyAdu = 0,
-                IsUpdated = true,
-                WeeklyUnits = 1
+                IsUpdated = true
             });
             request.WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Percentage;
             request.DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek;
@@ -123,8 +162,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             _MediaMonthAndWeekAggregateCacheMock.Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(mockedListMediaWeeksByFlight);
 
+            _SetupWeeklyBreakdownEngineMock(request);
+
             //Act
-            var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
+            var result = planService.CalculatePlanWeeklyGoalBreakdown(request);
 
             //Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -159,8 +200,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             _MediaMonthAndWeekAggregateCacheMock.Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(mockedListMediaWeeksByFlight);
 
+            _SetupWeeklyBreakdownEngineMock(request);
+
             //Act
-            var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
+            var result = planService.CalculatePlanWeeklyGoalBreakdown(request);
 
             //Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -178,10 +221,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 .Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(_GetDisplayMediaWeeks());
 
+            _SetupWeeklyBreakdownEngineMock(request);
             _SetupCreativeLengthEngineMock();
 
             //Act
-            var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
+            var result = planService.CalculatePlanWeeklyGoalBreakdown(request);
 
             //Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -199,10 +243,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 .Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(_GetDisplayMediaWeeks());
 
+            _SetupWeeklyBreakdownEngineMock(request);
             _SetupCreativeLengthEngineMock();
 
             //Act
-            var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
+            var result = planService.CalculatePlanWeeklyGoalBreakdown(request);
 
             //Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -210,8 +255,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void Recalc_ImpsChange_CustWeekAdLen()
-        {//Recalculate_ImpressionsChange_ForCustomByWeekByAdLengthDeliveryType
+        public void RecalculatesPlanWeeklyBreakdown_ImpressionsChange_ForCustomByWeekByAdLengthDeliveryType()
+        {
             //Arrange
             var request = _GetWeeklyBreakdownRequest_CustomByWeekByAdLengthDeliveryType();
             request.Weeks.First().IsUpdated = true;
@@ -222,10 +267,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 .Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(_GetDisplayMediaWeeks());
 
+            _SetupWeeklyBreakdownEngineMock(request);
             _SetupCreativeLengthEngineMock();
 
             //Act
-            var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
+            var result = planService.CalculatePlanWeeklyGoalBreakdown(request);
 
             //Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -233,8 +279,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void Recalc_RatingsChange_CustomWeekAdLength()
-        {//RecalculatesPlanWeeklyBreakdown_RatingsChange_ForCustomByWeekByAdLengthDeliveryType
+        public void RecalculatesPlanWeeklyBreakdown_RatingsChange_ForCustomByWeekByAdLengthDeliveryType()
+        {
             //Arrange
             var request = _GetWeeklyBreakdownRequest_CustomByWeekByAdLengthDeliveryType();
             request.Weeks.First().IsUpdated = true;
@@ -245,10 +291,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 .Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(_GetDisplayMediaWeeks());
 
+            _SetupWeeklyBreakdownEngineMock(request);
             _SetupCreativeLengthEngineMock();
 
             //Act
-            var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
+            var result = planService.CalculatePlanWeeklyGoalBreakdown(request);
 
             //Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -256,7 +303,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RecalculatesPlanWeeklyBreakdown_CustomByWeekByAdLengthDeliveryType()
+        public void RecalculatesPlanWeeklyBreakdown_WeeklyPercentageChange_ForCustomByWeekByAdLengthDeliveryType()
         {
             //Arrange
             var request = _GetWeeklyBreakdownRequest_CustomByWeekByAdLengthDeliveryType();
@@ -268,133 +315,45 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 .Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(_GetDisplayMediaWeeks());
 
+            _SetupWeeklyBreakdownEngineMock(request);
             _SetupCreativeLengthEngineMock();
 
             //Act
-            var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
+            var result = planService.CalculatePlanWeeklyGoalBreakdown(request);
 
             //Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void GroupsWeeklyBreakdownByWeek()
+        private void _SetupWeeklyBreakdownEngineMock(WeeklyBreakdownRequest request)
         {
-            var result = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(_WeeklyBreakdown);
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GetWeekNumberByMediaWeekDictionary(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(_GetWeekNumberByMediaWeekDictionary());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<List<WeeklyBreakdownWeek>>()))
+                .Returns<List<WeeklyBreakdownWeek>>(p => _GetWeeklyBreakdownGroupedWeeks(p));
         }
 
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void GroupsWeeklyBreakdownByWeekBySpotLength()
+        private static List<WeeklyBreakdownByWeek> _GetWeeklyBreakdownGroupedWeeks(List<WeeklyBreakdownWeek> weeks)
         {
-            var result = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeekBySpotLength(_WeeklyBreakdown);
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            return weeks.GroupBy(x => x.MediaWeekId)
+                    .Select(x => new WeeklyBreakdownByWeek
+                    {
+                        WeekNumber = x.First().WeekNumber,
+                        MediaWeekId = x.First().MediaWeekId,
+                        StartDate = x.First().StartDate,
+                        EndDate = x.First().EndDate,
+                        NumberOfActiveDays = x.First().NumberOfActiveDays,
+                        ActiveDays = x.First().ActiveDays,
+                        Impressions = x.Sum(i => i.WeeklyImpressions),
+                        Budget = x.Sum(i => i.WeeklyBudget),
+                        Adu = x.Sum(i => i.WeeklyAdu),
+                        Units = x.Sum(i=>i.WeeklyUnits)
+                    })
+                    .ToList();
         }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void GroupsWeeklyBreakdownByStandardDaypart()
-        {
-            var result = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByStandardDaypart(_WeeklyBreakdown);
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void ReturnsWeekNumberByMediaWeekDictionary()
-        {
-            var result = _WeeklyBreakdownEngine.GetWeekNumberByMediaWeekDictionary(_WeeklyBreakdown);
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-        }
-
-        private IEnumerable<WeeklyBreakdownWeek> _WeeklyBreakdown = new List<WeeklyBreakdownWeek>
-        {
-            new WeeklyBreakdownWeek
-            {
-                WeekNumber = 3,
-                MediaWeekId = 502,
-                StartDate = new DateTime(2020, 5, 4),
-                EndDate = new DateTime(2020, 5, 10),
-                NumberOfActiveDays = 5,
-                ActiveDays = "M,Tu,W,Th,F",
-                WeeklyImpressions = 1000,
-                WeeklyBudget = 100,
-                SpotLengthId = 1,
-                DaypartCodeId = 1,
-                AduImpressions = 1000000
-            },
-            new WeeklyBreakdownWeek
-            {
-                WeekNumber = 3,
-                MediaWeekId = 502,
-                StartDate = new DateTime(2020, 5, 4),
-                EndDate = new DateTime(2020, 5, 10),
-                NumberOfActiveDays = 5,
-                ActiveDays = "M,Tu,W,Th,F",
-                WeeklyImpressions = 1500,
-                WeeklyBudget = 200,
-                SpotLengthId = 2,
-                DaypartCodeId = 1,
-                AduImpressions = 1000000
-            },
-            new WeeklyBreakdownWeek
-            {
-                WeekNumber = 2,
-                MediaWeekId = 501,
-                StartDate = new DateTime(2020, 4, 27),
-                EndDate = new DateTime(2020, 5, 3),
-                NumberOfActiveDays = 4,
-                ActiveDays = "M,Tu,W,Th",
-                WeeklyImpressions = 800,
-                WeeklyBudget = 70,
-                SpotLengthId = 1,
-                DaypartCodeId = 1,
-            },
-            new WeeklyBreakdownWeek
-            {
-                WeekNumber = 1,
-                MediaWeekId = 500,
-                StartDate = new DateTime(2020, 4, 20),
-                EndDate = new DateTime(2020, 4, 26),
-                NumberOfActiveDays = 3,
-                ActiveDays = "M,Tu,W",
-                WeeklyImpressions = 500,
-                WeeklyBudget = 30,
-                SpotLengthId = 1,
-                DaypartCodeId = 1,
-                AduImpressions = 1000000
-            },
-            new WeeklyBreakdownWeek
-            {
-                WeekNumber = 1,
-                MediaWeekId = 500,
-                StartDate = new DateTime(2020, 4, 20),
-                EndDate = new DateTime(2020, 4, 26),
-                NumberOfActiveDays = 3,
-                ActiveDays = "M,Tu,W",
-                WeeklyImpressions = 500,
-                WeeklyBudget = 30,
-                SpotLengthId = 1,
-                DaypartCodeId = 2,
-                AduImpressions = 500000
-            },
-            new WeeklyBreakdownWeek
-            {
-                WeekNumber = 1,
-                MediaWeekId = 500,
-                StartDate = new DateTime(2020, 4, 20),
-                EndDate = new DateTime(2020, 4, 26),
-                NumberOfActiveDays = 3,
-                ActiveDays = "M,Tu,W",
-                WeeklyImpressions = 500,
-                WeeklyBudget = 30,
-                SpotLengthId = 2,
-                DaypartCodeId = 2,
-                AduImpressions = 1000000
-            }
-        };
 
         private void _SetupCreativeLengthEngineMock()
         {
@@ -419,12 +378,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                     }
                 });
         }
-        
-         private Dictionary<int, double> _SpotLengthMultiplier = new Dictionary<int, double>
-        {
-            { 1,1}, { 2, 2}
-        };
-
 
         private Dictionary<int, int> _GetWeekNumberByMediaWeekDictionary()
         {
@@ -451,7 +404,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 },
                 DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength,
                 TotalImpressions = 213,
-                ImpressionsPerUnit = 20,
+                ImpressionsPerUnit = 10,
                 TotalRatings = 7,
                 TotalBudget = 500,
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
@@ -491,8 +444,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         WeeklyAdu = 3,
                         SpotLengthId = 1,
                         PercentageOfWeek = 34,
-                        IsUpdated = false,
-                        WeeklyUnits = 2
+                        IsUpdated = false
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -509,8 +461,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         WeeklyAdu = 3,
                         SpotLengthId = 2,
                         PercentageOfWeek = 33,
-                        IsUpdated = false,
-                        WeeklyUnits = 2
+                        IsUpdated = false
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -527,8 +478,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         WeeklyAdu = 3,
                         SpotLengthId = 3,
                         PercentageOfWeek = 33,
-                        IsUpdated = false,
-                        WeeklyUnits = 2
+                        IsUpdated = false
                     },
 
                     // week 2
@@ -547,8 +497,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         WeeklyAdu = 1,
                         SpotLengthId = 1,
                         PercentageOfWeek = 34,
-                        IsUpdated = false,
-                        WeeklyUnits = 2
+                        IsUpdated = false
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -565,8 +514,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         WeeklyAdu = 1,
                         SpotLengthId = 2,
                         PercentageOfWeek = 33,
-                        IsUpdated = false,
-                        WeeklyUnits = 2
+                        IsUpdated = false
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -583,8 +531,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         WeeklyAdu = 1,
                         SpotLengthId = 3,
                         PercentageOfWeek = 33,
-                        IsUpdated = false,
-                        WeeklyUnits = 2
+                        IsUpdated = false
                     },
 
                     // week 3
@@ -603,8 +550,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         WeeklyAdu = 1,
                         SpotLengthId = 1,
                         PercentageOfWeek = 34,
-                        IsUpdated = false,
-                        WeeklyUnits = 2
+                        IsUpdated = false
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -621,8 +567,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         WeeklyAdu = 1,
                         SpotLengthId = 2,
                         PercentageOfWeek = 33,
-                        IsUpdated = false,
-                        WeeklyUnits = 2
+                        IsUpdated = false
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -639,8 +584,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         WeeklyAdu = 1,
                         SpotLengthId = 3,
                         PercentageOfWeek = 33,
-                        IsUpdated = false,
-                        WeeklyUnits = 2
+                        IsUpdated = false
                     },
                     // week with not chosen spot length
                     new WeeklyBreakdownWeek
@@ -658,8 +602,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         WeeklyAdu = 1,
                         SpotLengthId = 4,
                         PercentageOfWeek = 33,
-                        IsUpdated = false,
-                        WeeklyUnits = 2
+                        IsUpdated = false
                     },
 
                     // out of flight week
@@ -678,8 +621,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         WeeklyAdu = 1,
                         SpotLengthId = 3,
                         PercentageOfWeek = 33,
-                        IsUpdated = false,
-                        WeeklyUnits = 2
+                        IsUpdated = false
                     }
                 }
             };
@@ -710,8 +652,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         WeeklyImpressionsPercentage = 20,
                         WeeklyRatings = 5.608234009172268,
                         WeeklyBudget = 60000,
-                        WeeklyAdu = 0,
-                        WeeklyUnits = 1
+                        WeeklyAdu = 0
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -725,8 +666,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         WeeklyImpressionsPercentage = 20,
                         WeeklyRatings = 5.608234009172268,
                         WeeklyBudget = 60000,
-                        WeeklyAdu = 0,
-                        WeeklyUnits = 1
+                        WeeklyAdu = 0
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -740,8 +680,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         WeeklyImpressionsPercentage = 20,
                         WeeklyRatings = 5.608234009172268,
                         WeeklyBudget = 60000,
-                        WeeklyAdu = 0,
-                        WeeklyUnits = 1
+                        WeeklyAdu = 0
                     },
                     new WeeklyBreakdownWeek
                     {
@@ -755,8 +694,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                         WeeklyImpressionsPercentage = 20,
                         WeeklyRatings = 5.608234009172268,
                         WeeklyBudget = 60000,
-                        WeeklyAdu = 0,
-                        WeeklyUnits = 1
+                        WeeklyAdu = 0
                     }
                 },
                 FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 }
@@ -771,13 +709,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 FlightEndDate = new DateTime(2020, 3, 15),
                 FlightHiatusDays = new List<DateTime>(),
                 TotalImpressions = 20,
-                ImpressionsPerUnit = 10,
                 TotalRatings = 0.00928868473742818,
                 TotalBudget = 400,
                 DeliveryType = PlanGoalBreakdownTypeEnum.EvenDelivery,
                 Weeks = new List<WeeklyBreakdownWeek>(),
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
-                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 }
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                ImpressionsPerUnit = 5
             };
         }
 

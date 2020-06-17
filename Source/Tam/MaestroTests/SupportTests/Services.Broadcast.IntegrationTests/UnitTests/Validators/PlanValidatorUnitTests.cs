@@ -300,6 +300,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             plan.TargetCPP = 0.0000001m;
             plan.TargetCPM = 0.0000001m;
             plan.TargetImpressions = 0.0000001;
+            plan.ImpressionsPerUnit = 0.00000001;
 
             Assert.DoesNotThrow(() => _planValidator.ValidatePlan(plan));
         }
@@ -949,6 +950,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             var plan = _GetPlan();
             plan.TargetImpressions = 100;
+            plan.ImpressionsPerUnit = 50;
             plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
             {
                 new WeeklyBreakdownWeek {WeeklyImpressions = 50, WeeklyImpressionsPercentage=50, WeeklyBudget = 50},
@@ -1476,6 +1478,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 AudienceId = 31,
                 Budget = 100.00m,
                 TargetImpressions = 100,
+                ImpressionsPerUnit = 25,
                 TargetCPM = 12.00m,
                 GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeek,
                 TargetRatingPoints = 6,
