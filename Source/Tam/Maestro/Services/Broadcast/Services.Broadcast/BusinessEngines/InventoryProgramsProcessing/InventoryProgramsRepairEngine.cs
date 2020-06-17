@@ -115,25 +115,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             token.ThrowIfCancellationRequested();
 
             _InventoryRepository.CreateInventoryPrograms(newManifestDaypartPrograms, _GetCurrentDateTime());
-            _ResetPrimaryPrograms(updatedManifestDaypartIds);
-        }
 
-        private void _ResetPrimaryPrograms(List<int> manifestDaypartIds)
-        {
-            var manifestDaypartProgramsByManifestDaypart = _InventoryRepository
-                .GetDaypartProgramsForInventoryDayparts(manifestDaypartIds)
-                .ToDictionary(x => x.StationInventoryManifestDaypartId, x => x.Id);
-
-            var manifestDayparts = manifestDaypartIds
-                .Where(x => manifestDaypartProgramsByManifestDaypart.ContainsKey(x))
-                .Select(manifestDaypartId => new StationInventoryManifestDaypart
-                {
-                    Id = manifestDaypartId,
-                    PrimaryProgramId = manifestDaypartProgramsByManifestDaypart[manifestDaypartId]
-                })
-                .ToList();
-
-            _InventoryRepository.UpdatePrimaryProgramsForManifestDayparts(manifestDayparts);
+            var manifestDaypartIds = manifestDayparts.Where(s => s.Id.HasValue).Select(s => s.Id.Value).ToList();
+            _InventoryRepository.UpdatePrimaryProgramsForManifestDayparts(manifestDaypartIds);
         }
 
         protected virtual int _GetSaveBatchSize()
