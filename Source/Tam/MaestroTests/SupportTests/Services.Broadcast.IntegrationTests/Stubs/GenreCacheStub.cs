@@ -26,6 +26,11 @@ namespace Services.Broadcast.IntegrationTests.Stubs
             throw new NotImplementedException();
         }
 
+        public LookupDto GetMaestroGenreByName(string name)
+        {
+            throw new NotImplementedException();
+        }
+
         public LookupDto GetSourceGenreByName(string genreName, ProgramSourceEnum programSource)
         {
             return new LookupDto

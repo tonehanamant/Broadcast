@@ -65,7 +65,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IBackgroundJobClient _BackgroundJobClient;
         private readonly IProgramMappingRepository _ProgramMappingRepository;
         private readonly IInventoryRepository _InventoryRepository;
-        private readonly IGenreCache _GenreCache;
         private readonly ISharedFolderService _SharedFolderService;
         private readonly IProgramNameMappingsExportEngine _ProgramNameMappingsExportEngine;
         private readonly IGenreCache _GenreCache;
@@ -199,7 +198,7 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         // There are changes for an existing mapping
                         existingMapping.OfficialProgramName = mapping.OfficialProgramName;
-                        existingMapping.OfficialGenre = _MapToGenre(_GenreCache.GetSourceGenreByName(mapping.OfficialGenre, programSource), programSource);
+                        existingMapping.OfficialGenre = _MapToGenre(_GenreCache.GetMaestroGenreByName(mapping.OfficialGenre), programSource);
                         existingMapping.OfficialShowType = _MapToShowTypeDto(_ShowTypeCache.GetShowTypeByName(mapping.OfficialShowType));
                         _ProgramMappingRepository.UpdateProgramMapping(existingMapping, username, createdDate);
                         updatedRecords = _UpdateInventoryWithEnrichedProgramName(existingMapping, mapping, createdDate, programSource);
@@ -211,7 +210,7 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         OriginalProgramName = mapping.OriginalProgramName,
                         OfficialProgramName = mapping.OfficialProgramName,
-                        OfficialGenre = _MapToGenre(_GenreCache.GetSourceGenreByName(mapping.OfficialGenre, programSource), programSource),
+                        OfficialGenre = _MapToGenre(_GenreCache.GetMaestroGenreByName(mapping.OfficialGenre), programSource),
                         OfficialShowType = _MapToShowTypeDto(_ShowTypeCache.GetShowTypeByName(mapping.OfficialShowType))
                     };
                     _ProgramMappingRepository.CreateProgramMapping(newProgramMapping, username, createdDate);

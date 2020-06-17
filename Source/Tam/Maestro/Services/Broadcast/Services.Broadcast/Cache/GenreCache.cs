@@ -17,6 +17,8 @@ namespace Services.Broadcast.Cache
 
         LookupDto GetMaestroGenreBySourceGenre(LookupDto sourceGenre, ProgramSourceEnum programSource);
 
+        LookupDto GetMaestroGenreByName(string genreName);
+
         LookupDto GetSourceGenreByName(string genreName, ProgramSourceEnum programSource);
         LookupDto GetGenreById(int genreId, ProgramSourceEnum programSource);
     }
@@ -27,6 +29,7 @@ namespace Services.Broadcast.Cache
 
         private readonly Dictionary<ProgramSourceEnum, Dictionary<string, Genre>> _GenresByNamesBySource;
         private readonly Dictionary<ProgramSourceEnum, Dictionary<int, int>> _MappingsToMaestroGenreBySource;
+        private readonly Dictionary<String, int> _MaestroGenresByName;
 
         public GenreCache(IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
@@ -48,6 +51,9 @@ namespace Services.Broadcast.Cache
                     .ToDictionary(x => x.SourceGenreId, x => x.MaestroGenreId);
             }
 
+            _MaestroGenresByName = genres.Where(g => g.ProgramSourceId == (int)ProgramSourceEnum.Mapped)
+                .ToDictionary(g => g.Name.ToUpper(), g => g.Id);
+
             _GenresByIds = genres.ToDictionary(x => x.Id, x => x);
         }
 
@@ -57,6 +63,18 @@ namespace Services.Broadcast.Cache
             var maestroGenre = GetMaestroGenreBySourceGenre(sourceGenre, programSource);
 
             return maestroGenre;
+        }
+
+        public LookupDto GetMaestroGenreByName(string genreName)
+        {
+            if (!_MaestroGenresByName.TryGetValue(genreName.ToUpper(), out var maestroGenreId))
+                throw new UnknownGenreException($"There is no genre {genreName}.");
+
+            return new LookupDto
+            {
+                Id = maestroGenreId,
+                Display = genreName.ToUpper()
+            };
         }
 
         public LookupDto GetMaestroGenreBySourceGenre(LookupDto sourceGenre, ProgramSourceEnum programSource)
