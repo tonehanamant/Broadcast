@@ -1731,6 +1731,11 @@ namespace Services.Broadcast.Repositories
 
         public void UpdatePrimaryProgramsForManifestDayparts(List<int> manifestDaypartIds)
         {
+            if (!manifestDaypartIds.Any())
+            {
+                return;
+            }
+
             var manifestDaypartIdsCsv = string.Join(",", manifestDaypartIds);
             // clear the primary program id
             var sql = "UPDATE d SET primary_program_id = p.id "
