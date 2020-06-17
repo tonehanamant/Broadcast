@@ -191,6 +191,8 @@ namespace Services.Broadcast.Repositories
         List<int> GetManuallyMappedPrograms(List<int> inventoryDaypartIds);
 
         List<StationInventoryManifestDaypart> GetOrphanedManifestDayparts();
+
+        void DeReferenceAndDeleteInventoryPrograms(List<int> manifestDaypartIds);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -1700,6 +1702,20 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     context.Database.ExecuteSqlCommand(sql);
+                });
+        }
+
+        public void DeReferenceAndDeleteInventoryPrograms(List<int> manifestDaypartIds)
+        {
+            var manifestDaypartIdsCsv = string.Join(",", manifestDaypartIds);
+            var sql_deref = $"UPDATE d SET primary_program_id = NULL FROM station_inventory_manifest_dayparts d WHERE ID IN ({manifestDaypartIdsCsv});";
+            var sql_delete = $"DELETE FROM station_inventory_manifest_daypart_programs WHERE station_inventory_manifest_daypart_id IN({manifestDaypartIdsCsv});";
+
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    context.Database.ExecuteSqlCommand(sql_deref);
+                    context.Database.ExecuteSqlCommand(sql_delete);
                 });
         }
 
