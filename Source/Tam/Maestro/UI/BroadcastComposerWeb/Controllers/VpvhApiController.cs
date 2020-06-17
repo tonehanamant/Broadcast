@@ -16,6 +16,18 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
+        /// Returns the four books, last year and previous quarter VPVH for each audience
+        /// </summary>
+        /// <param name="request">Daypart and audience ids</param>
+        /// <returns>Vpvh data to each audiences</returns>
+        [Route("")]
+        [HttpPost]
+        public BaseResponse<List<VpvhResponse>> GetVPVHs(VpvhRequest request)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IVpvhService>().GetVpvhs(request));
+        }
+
+        /// <summary>
         /// Returns a list of VPVH default values for all combinations of the given audiences and all existing dayparts
         /// </summary>
         [HttpPost]

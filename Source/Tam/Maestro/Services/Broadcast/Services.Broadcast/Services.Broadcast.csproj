@@ -559,6 +559,8 @@
     <Compile Include="Entities\Vpvh\VpvhFileItem.cs" />
     <Compile Include="Entities\Vpvh\VpvhMapping.cs" />
     <Compile Include="Entities\Vpvh\VpvhQuarter.cs" />
+    <Compile Include="Entities\Vpvh\VpvhRequest.cs" />
+    <Compile Include="Entities\Vpvh\VpvhResponse.cs" />
     <Compile Include="Exceptions\PricingModelException.cs" />
     <Compile Include="Exceptions\UnknownGenreException.cs" />
     <Compile Include="Extensions\DetectionExtensions.cs" />

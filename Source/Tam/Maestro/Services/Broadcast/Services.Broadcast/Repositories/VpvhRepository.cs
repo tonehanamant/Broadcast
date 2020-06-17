@@ -26,6 +26,8 @@ namespace Services.Broadcast.Repositories
 
         List<VpvhQuarter> GetQuarters(QuarterDto quarter);
 
+        List<VpvhQuarter> GetQuarters(int year, int quarter, List<int> audienceIds);
+
         List<VpvhQuarter> GetQuartersByYears(IEnumerable<int> years);
 
         VpvhQuarter GetQuarter(int audienceId, int year, int quarter);
@@ -71,6 +73,13 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(
                 context => context.vpvh_quarters.Include(v => v.audience).Where(v => years.Contains(v.year)).Select(_MapToDto).ToList());
+        }
+
+        public List<VpvhQuarter> GetQuarters(int year, int quarter, List<int> audienceIds)
+        {
+            return _InReadUncommitedTransaction(
+                context => context.vpvh_quarters.Include(v => v.audience)
+                .Where(v => v.quarter == quarter && v.year == year && audienceIds.Contains(v.audience_id) ).Select(_MapToDto).ToList());
         }
 
         public VpvhQuarter GetQuarter(int audienceId, int year, int quarter)

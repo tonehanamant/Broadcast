@@ -15,8 +15,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
@@ -26,6 +24,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
     {
         private const string IntegrationTestUser = "IntegrationTestUser";
         private readonly DateTime CreatedDate = new DateTime(2022, 5, 14);
+        private readonly DateTime PreviousYearDate = new DateTime(2021, 5, 14);
+        private readonly DateTime PreviousQuarterDate = new DateTime(2022, 2, 14);
+        private const int AudienceId = 1;
 
         private IVpvhService _VpvhService;
         private Mock<IBroadcastAudiencesCache> _BroadcastAudiencesCacheMock;
@@ -34,6 +35,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IVpvhExportEngine> _VpvhExportEngine;
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
         private Mock<IDaypartDefaultRepository> _DaypartDefaultRepositoryMock;
+        private Mock<IQuarterCalculationEngine> _QuarterCalculationEngineMock;
 
         [SetUp]
         public void SetUp()
@@ -45,6 +47,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _VpvhExportEngine = new Mock<IVpvhExportEngine>();
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
             _DaypartDefaultRepositoryMock = new Mock<IDaypartDefaultRepository>();
+            _QuarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
 
             _DateTimeEngineMock
                 .Setup(x => x.GetCurrentMoment())
@@ -71,11 +74,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(_GetVpvhQuarters());
 
             _VpvhService = new VpvhService(
-                dataRepositoryFactoryMock.Object, 
-                _VpvhFileImporterMock.Object, 
-                _BroadcastAudiencesCacheMock.Object, 
+                dataRepositoryFactoryMock.Object,
+                _VpvhFileImporterMock.Object,
+                _BroadcastAudiencesCacheMock.Object,
                 _VpvhExportEngine.Object,
-                _DateTimeEngineMock.Object);
+                _DateTimeEngineMock.Object,
+                _QuarterCalculationEngineMock.Object);
         }
 
         [Test]
@@ -279,7 +283,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GetQuartersByYears(It.IsAny<IEnumerable<int>>()))
                 .Returns(_GetVpvhQuarters())
                 .Callback<IEnumerable<int>>(x => passedYears.Add(x));
-                
+
             // Act
             var vpvhDefaults = _VpvhService.GetVpvhDefaults(request);
 
@@ -309,7 +313,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var exception = Assert.Throws<Exception>(() => _VpvhService.GetVpvhDefaults(request));
 
             // Assert
-            Assert.That(exception.Message, Is.EqualTo("There must VPVH data for at least 4 quarters"));
+            Assert.AreEqual("There must VPVH data for at least 4 quarters", exception.Message);
         }
 
         [Test]
@@ -329,7 +333,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var exception = Assert.Throws<Exception>(() => _VpvhService.GetVpvhDefaults(request));
 
             // Assert
-            Assert.That(exception.Message, Is.EqualTo("There is no VPVH data. Audience id: 1, quarter: Q1 2019"));
+            Assert.AreEqual("There is no VPVH data. Audience id: 1, quarter: Q1 2019", exception.Message);
         }
 
         [Test]
@@ -343,7 +347,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             _VpvhRepositoryMock
                 .Setup(x => x.GetQuartersByYears(It.IsAny<IEnumerable<int>>()))
-                .Returns(_GetVpvhQuarters().Union(new List<VpvhQuarter> 
+                .Returns(_GetVpvhQuarters().Union(new List<VpvhQuarter>
                 {
                     new VpvhQuarter
                     {
@@ -362,7 +366,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var exception = Assert.Throws<Exception>(() => _VpvhService.GetVpvhDefaults(request));
 
             // Assert
-            Assert.That(exception.Message, Is.EqualTo("More than one VPVH record exists. Audience id: 1, quarter: Q1 2019"));
+            Assert.AreEqual("More than one VPVH record exists. Audience id: 1, quarter: Q1 2019", exception.Message);
         }
 
         [Test]
@@ -385,8 +389,136 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var exception = Assert.Throws<Exception>(() => _VpvhService.GetVpvhDefaults(request));
 
             // Assert
-            Assert.That(exception.Message, Is.EqualTo("Unknown VpvhCalculationSourceTypeEnum was discovered"));
+            Assert.AreEqual("Unknown VpvhCalculationSourceTypeEnum was discovered", exception.Message);
         }
+
+        [Test]
+        public void GetVpvhs_MissingVpvhDataToPreviousQuarter()
+        {
+            _DaypartDefaultRepositoryMock.Setup(d => d.GetDaypartDefaultById(It.IsAny<int>())).Returns(_GetDaypartDefaults().First());
+            _QuarterCalculationEngineMock.Setup(q => q.GetQuarterRangeByDate(PreviousQuarterDate)).Returns(_GetPreviousQuarter());
+            _QuarterCalculationEngineMock.Setup(q => q.GetQuarterRangeByDate(PreviousYearDate)).Returns(_GetPreviousYearQuarter());
+
+            _VpvhRepositoryMock.Setup(v => v.GetQuartersWithVpvhData()).Returns(_GetQuartersWithVpvhData);
+
+            _VpvhRepositoryMock
+                .Setup(x => x.GetQuartersByYears(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetVpvhQuarters());
+
+            _VpvhRepositoryMock.Setup(v => v.GetQuarters(2022, 1, It.IsAny<List<int>>())).Returns(new List<VpvhQuarter>());
+            _VpvhRepositoryMock.Setup(v => v.GetQuarters(2021, 2, It.IsAny<List<int>>())).Returns(new List<VpvhQuarter> { _GetVpvhQuarter(2, 2022) });
+
+            var exception = Assert.Throws<Exception>(() => _VpvhService.GetVpvhs(_GetVpvhRequest()));
+
+            Assert.AreEqual("There is no VPVH data. Quarter: Q1 2022", exception.Message);
+        }
+
+        [Test]
+        public void GetVpvhs_MissingVpvhDataToLastYear()
+        {
+            _DaypartDefaultRepositoryMock.Setup(d => d.GetDaypartDefaultById(It.IsAny<int>())).Returns(_GetDaypartDefaults().First());
+            _QuarterCalculationEngineMock.Setup(q => q.GetQuarterRangeByDate(PreviousQuarterDate)).Returns(_GetPreviousQuarter());
+            _QuarterCalculationEngineMock.Setup(q => q.GetQuarterRangeByDate(PreviousYearDate)).Returns(_GetPreviousYearQuarter());
+
+            _VpvhRepositoryMock.Setup(v => v.GetQuartersWithVpvhData()).Returns(_GetQuartersWithVpvhData);
+
+            _VpvhRepositoryMock
+                .Setup(x => x.GetQuartersByYears(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetVpvhQuarters());
+
+            _VpvhRepositoryMock.Setup(v => v.GetQuarters(2022, 1, It.IsAny<List<int>>())).Returns(new List<VpvhQuarter> { _GetVpvhQuarter(1, 2022) });
+            _VpvhRepositoryMock.Setup(v => v.GetQuarters(2021, 2, It.IsAny<List<int>>())).Returns(new List<VpvhQuarter>());
+
+            var exception = Assert.Throws<Exception>(() => _VpvhService.GetVpvhs(_GetVpvhRequest()));
+
+            Assert.AreEqual("There is no VPVH data. Quarter: Q2 2021", exception.Message);
+        }
+
+        [Test]
+        public void GetVpvhs_MissingVpvhDataForAudienceInPreviousQuarter()
+        {
+            _DaypartDefaultRepositoryMock.Setup(d => d.GetDaypartDefaultById(It.IsAny<int>())).Returns(_GetDaypartDefaults().First());
+            _QuarterCalculationEngineMock.Setup(q => q.GetQuarterRangeByDate(PreviousQuarterDate)).Returns(_GetPreviousQuarter());
+            _QuarterCalculationEngineMock.Setup(q => q.GetQuarterRangeByDate(PreviousYearDate)).Returns(_GetPreviousYearQuarter());
+
+            _VpvhRepositoryMock.Setup(v => v.GetQuartersWithVpvhData()).Returns(_GetQuartersWithVpvhData);
+
+            _VpvhRepositoryMock
+                .Setup(x => x.GetQuartersByYears(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetVpvhQuarters());
+
+            _VpvhRepositoryMock.Setup(v => v.GetQuarters(2022, 1, It.IsAny<List<int>>())).Returns(new List<VpvhQuarter> { _GetVpvhQuarter(1, 2022) });
+            _VpvhRepositoryMock.Setup(v => v.GetQuarters(2021, 2, It.IsAny<List<int>>())).Returns(new List<VpvhQuarter> { _GetVpvhQuarter(2, 2021) });
+
+            var request = _GetVpvhRequest();
+            request.AudienceIds = new List<int> { 2 };
+
+            var exception = Assert.Throws<Exception>(() => _VpvhService.GetVpvhs(request));
+
+            Assert.AreEqual("There is no VPVH data. Audience id: 2, quarter: Q1 2022", exception.Message);
+        }
+
+        [Test]
+        public void GetVpvhs_MissingVpvhDataForAudienceInLastYear()
+        {
+            _DaypartDefaultRepositoryMock.Setup(d => d.GetDaypartDefaultById(It.IsAny<int>())).Returns(_GetDaypartDefaults().First());
+            _QuarterCalculationEngineMock.Setup(q => q.GetQuarterRangeByDate(PreviousQuarterDate)).Returns(_GetPreviousQuarter());
+            _QuarterCalculationEngineMock.Setup(q => q.GetQuarterRangeByDate(PreviousYearDate)).Returns(_GetPreviousYearQuarter());
+
+            _VpvhRepositoryMock.Setup(v => v.GetQuartersWithVpvhData()).Returns(_GetQuartersWithVpvhData);
+
+            _VpvhRepositoryMock
+                .Setup(x => x.GetQuartersByYears(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetVpvhQuarters());
+
+            var vpvhQuarterPreviousQuarter = _GetVpvhQuarter(1, 2022);
+            vpvhQuarterPreviousQuarter.Audience.Id = 2;
+
+            _VpvhRepositoryMock.Setup(v => v.GetQuarters(2022, 1, It.IsAny<List<int>>())).Returns(new List<VpvhQuarter> { vpvhQuarterPreviousQuarter });
+            _VpvhRepositoryMock.Setup(v => v.GetQuarters(2021, 2, It.IsAny<List<int>>())).Returns(new List<VpvhQuarter> { _GetVpvhQuarter(2, 2021) });
+
+            var request = _GetVpvhRequest();
+            request.AudienceIds = new List<int> { 2 };
+
+            var exception = Assert.Throws<Exception>(() => _VpvhService.GetVpvhs(request));
+
+            Assert.AreEqual("There is no VPVH data. Audience id: 2, quarter: Q2 2021", exception.Message);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetVpvhs_Success()
+        {
+            _DaypartDefaultRepositoryMock.Setup(d => d.GetDaypartDefaultById(It.IsAny<int>())).Returns(_GetDaypartDefaults().First());
+            _QuarterCalculationEngineMock.Setup(q => q.GetQuarterRangeByDate(PreviousQuarterDate)).Returns(_GetPreviousQuarter());
+            _QuarterCalculationEngineMock.Setup(q => q.GetQuarterRangeByDate(PreviousYearDate)).Returns(_GetPreviousYearQuarter());
+
+            _VpvhRepositoryMock.Setup(v => v.GetQuartersWithVpvhData()).Returns(_GetQuartersWithVpvhData);
+
+            _VpvhRepositoryMock
+                .Setup(x => x.GetQuartersByYears(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetVpvhQuarters());
+
+            _VpvhRepositoryMock.Setup(v => v.GetQuarters(2022, 1, It.IsAny<List<int>>())).Returns(new List<VpvhQuarter> { _GetVpvhQuarter(1, 2022) });
+            _VpvhRepositoryMock.Setup(v => v.GetQuarters(2021, 2, It.IsAny<List<int>>())).Returns(new List<VpvhQuarter> { _GetVpvhQuarter(2, 2021) });
+
+            var vpvhs = _VpvhService.GetVpvhs(_GetVpvhRequest());
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(vpvhs));
+        }
+
+        private VpvhQuarter _GetVpvhQuarter(int quarter, int year) =>
+            new VpvhQuarter { Audience = new DisplayAudience { Id = AudienceId }, Quarter = quarter, Year = year, AMNews = 1.154, PMNews = 2.234, SynAll = 0.863, Tdn = 3.123, Tdns = 4 };
+
+
+        private VpvhRequest _GetVpvhRequest() =>
+            new VpvhRequest { AudienceIds = new List<int> { AudienceId }, StandardDaypartId = 34 };
+
+        private QuarterDetailDto _GetPreviousYearQuarter() =>
+            new QuarterDetailDto { Quarter = 2, Year = 2021 };
+
+        private QuarterDetailDto _GetPreviousQuarter() =>
+            new QuarterDetailDto { Quarter = 1, Year = 2022 };
 
         private List<DaypartDefaultDto> _GetDaypartDefaults()
         {
@@ -418,7 +550,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             {
                 new VpvhQuarter
                 {
-                    Audience = new DisplayAudience { Id = 1 },
+                    Audience = new DisplayAudience { Id = AudienceId },
                     Quarter = 1,
                     Year = 2019,
                     AMNews = 0.1,
@@ -429,7 +561,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 },
                 new VpvhQuarter
                 {
-                    Audience = new DisplayAudience { Id = 1 },
+                    Audience = new DisplayAudience { Id = AudienceId },
                     Quarter = 1,
                     Year = 2021,
                     AMNews = 0.1,
@@ -440,7 +572,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 },
                 new VpvhQuarter
                 {
-                    Audience = new DisplayAudience { Id = 1 },
+                    Audience = new DisplayAudience { Id = AudienceId },
                     Quarter = 1,
                     Year = 2018,
                     AMNews = 0.1,
@@ -451,7 +583,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 },
                 new VpvhQuarter
                 {
-                    Audience = new DisplayAudience { Id = 1 },
+                    Audience = new DisplayAudience { Id = AudienceId },
                     Quarter = 3,
                     Year = 2018,
                     AMNews = 0.1,
@@ -462,7 +594,62 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 },
                 new VpvhQuarter
                 {
-                    Audience = new DisplayAudience { Id = 1 },
+                    Audience = new DisplayAudience { Id = AudienceId },
+                    Quarter = 2,
+                    Year = 2018,
+                    AMNews = 0.1,
+                    PMNews = 0.2,
+                    SynAll = 0.3,
+                    Tdn = 0.4,
+                    Tdns = 0.5
+                },
+                new VpvhQuarter
+                {
+                    Audience = new DisplayAudience { Id = 2 },
+                    Quarter = 1,
+                    Year = 2019,
+                    AMNews = 0.1,
+                    PMNews = 0.2,
+                    SynAll = 0.3,
+                    Tdn = 0.4,
+                    Tdns = 0.5
+                },
+                new VpvhQuarter
+                {
+                    Audience = new DisplayAudience { Id = 2 },
+                    Quarter = 1,
+                    Year = 2021,
+                    AMNews = 0.1,
+                    PMNews = 0.2,
+                    SynAll = 0.3,
+                    Tdn = 0.4,
+                    Tdns = 0.5
+                },
+                new VpvhQuarter
+                {
+                    Audience = new DisplayAudience { Id = 2 },
+                    Quarter = 1,
+                    Year = 2018,
+                    AMNews = 0.1,
+                    PMNews = 0.2,
+                    SynAll = 0.3,
+                    Tdn = 0.4,
+                    Tdns = 0.5
+                },
+                new VpvhQuarter
+                {
+                    Audience = new DisplayAudience { Id = 2 },
+                    Quarter = 3,
+                    Year = 2018,
+                    AMNews = 0.1,
+                    PMNews = 0.2,
+                    SynAll = 0.3,
+                    Tdn = 0.4,
+                    Tdns = 0.5
+                },
+                new VpvhQuarter
+                {
+                    Audience = new DisplayAudience { Id = 2 },
                     Quarter = 2,
                     Year = 2018,
                     AMNews = 0.1,
