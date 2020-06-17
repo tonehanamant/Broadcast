@@ -21,6 +21,8 @@ using Services.Broadcast.Entities.ProgramMapping;
 using Services.Broadcast.ReportGenerators.ProgramMapping;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using System.Collections.Concurrent;
+using Services.Broadcast.Cache;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -65,13 +67,15 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IShowTypeRepository _ShowTypeRepository;
         private readonly IGenreRepository _GenreRepository;
+        private readonly IGenreCache _GenreCache;
         private readonly ISharedFolderService _SharedFolderService;
         private readonly IProgramNameMappingsExportEngine _ProgramNameMappingsExportEngine;
         private const string UnmappedProgramReportFileName = "UnmappedProgramReport.xlsx";
         public ProgramMappingService(IBackgroundJobClient backgroundJobClient,
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             ISharedFolderService sharedFolderService,
-            IProgramNameMappingsExportEngine programNameMappingsExportEngine)
+            IProgramNameMappingsExportEngine programNameMappingsExportEngine,
+            IGenreCache genreCache)
         {
             _BackgroundJobClient = backgroundJobClient;
             _ProgramMappingRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramMappingRepository>();
@@ -80,6 +84,7 @@ namespace Services.Broadcast.ApplicationServices
             _GenreRepository = broadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
             _SharedFolderService = sharedFolderService;
             _ProgramNameMappingsExportEngine = programNameMappingsExportEngine;
+            _GenreCache = genreCache;
         }
         
         /// <inheritdoc />
@@ -162,12 +167,16 @@ namespace Services.Broadcast.ApplicationServices
         {
             const ProgramSourceEnum programSource = ProgramSourceEnum.Mapped;
             var results = new ConcurrentBag<Tuple<int, int>>();
-            Parallel.ForEach(programMappings, 
-                new ParallelOptions { MaxDegreeOfParallelism = 4 }, 
-                (mapping) => {
-                    var result = _ProcessIndividualProgramMapping(mapping, programSource, username, createdDate);
-                    results.Add(result);
-                });
+            //Parallel.ForEach(programMappings, 
+            //    new ParallelOptions { MaxDegreeOfParallelism = 4 }, 
+            //    (mapping) => {
+            foreach (var mapping in programMappings)
+            {
+                var result = _ProcessIndividualProgramMapping(mapping, programSource, username, createdDate);
+                results.Add(result);
+                _LogInfo($"Program mapping file completed {results.Sum(r => r.Item1)} records", username);
+            }
+            //    });
             ingestedRecordsCount = results.Sum(r => r.Item1);
             updatedInventoryCount = results.Sum(r => r.Item2);
 
@@ -187,7 +196,7 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         // There are changes for an existing mapping
                         existingMapping.OfficialProgramName = mapping.OfficialProgramName;
-                        existingMapping.OfficialGenre = _GenreRepository.GetGenreByName(mapping.OfficialGenre, programSource);
+                        existingMapping.OfficialGenre = _MapLookupToGenre(_GenreCache.GetMaestroGenreBySourceGenreName(mapping.OfficialGenre, programSource), programSource);
                         existingMapping.OfficialShowType = _ShowTypeRepository.GetShowTypeByName(mapping.OfficialShowType);
                         _ProgramMappingRepository.UpdateProgramMapping(existingMapping, username, createdDate);
                         updatedRecords = _UpdateInventoryWithEnrichedProgramName(existingMapping, mapping, createdDate, programSource);
@@ -199,8 +208,8 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         OriginalProgramName = mapping.OriginalProgramName,
                         OfficialProgramName = mapping.OfficialProgramName,
-                        OfficialGenre = _GenreRepository.GetGenreByName(mapping.OfficialGenre, programSource),
-                        OfficialShowType = _ShowTypeRepository.GetShowTypeByName(mapping.OfficialShowType)
+                        OfficialGenre = _MapLookupToGenre(_GenreCache.GetMaestroGenreBySourceGenreName(mapping.OfficialGenre, programSource), programSource),
+                OfficialShowType = _ShowTypeRepository.GetShowTypeByName(mapping.OfficialShowType)
                     };
                     _ProgramMappingRepository.CreateProgramMapping(newProgramMapping, username, createdDate);
                     updatedRecords = _UpdateInventoryWithEnrichedProgramName(newProgramMapping, mapping, createdDate, programSource);
@@ -209,6 +218,16 @@ namespace Services.Broadcast.ApplicationServices
                 var ingestedRecords = 1;
                 return Tuple.Create(ingestedRecords, updatedRecords);
             //}
+        }
+
+        private static Genre _MapLookupToGenre(LookupDto dto, ProgramSourceEnum source)
+        {
+            return new Genre
+            {
+                ProgramSourceId = (int) source,
+                Id = dto.Id,
+                Name = dto.Display
+            };
         }
 
         private int _UpdateInventoryWithEnrichedProgramName(
@@ -260,7 +279,7 @@ namespace Services.Broadcast.ApplicationServices
                 (newManifestDaypartPrograms.Select(p => p.StationInventoryManifestDaypartId).Distinct().ToList());
 
             durationSw.Stop();
-            _LogInfo($"Updating inventory for program with {programMapping.OriginalProgramName}, finished successfully in {durationSw.ElapsedMilliseconds} ms.");
+            _LogInfo($"Updating inventory {newManifestDaypartPrograms.Count} records for program with {programMapping.OriginalProgramName}, finished successfully in {durationSw.ElapsedMilliseconds} ms. Speed = {durationSw.ElapsedMilliseconds / (newManifestDaypartPrograms.Count == 0 ? 1 : newManifestDaypartPrograms.Count)} per record. ");
             return newManifestDaypartPrograms.Count;
         }
 
