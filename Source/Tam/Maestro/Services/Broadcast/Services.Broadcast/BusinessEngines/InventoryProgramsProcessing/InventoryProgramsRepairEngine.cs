@@ -117,6 +117,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             _InventoryRepository.CreateInventoryPrograms(newManifestDaypartPrograms, _GetCurrentDateTime());
 
             var manifestDaypartIds = manifestDayparts.Where(s => s.Id.HasValue).Select(s => s.Id.Value).ToList();
+            _InventoryRepository.DeleteInventoryPrograms(manifestDaypartIds);
             _InventoryRepository.UpdatePrimaryProgramsForManifestDayparts(manifestDaypartIds);
         }
 
