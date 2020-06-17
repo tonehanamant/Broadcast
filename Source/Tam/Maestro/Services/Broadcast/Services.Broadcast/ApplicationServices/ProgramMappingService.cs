@@ -221,12 +221,10 @@ namespace Services.Broadcast.ApplicationServices
             var durationSw = new Stopwatch();
             durationSw.Start();
 
-            var updatedManifestDaypartIds = new List<int>();
-
             // Get all StationInventoryManifestDaypart's with ProgramName
             var manifestDayparts = _InventoryRepository.GetManifestDaypartsForProgramName(programMapping.OriginalProgramName);
 
-            var updatedInventoryCount = 0;
+            var newManifestDaypartPrograms = new List<StationInventoryManifestDaypartProgram>();
             foreach (var daypart in manifestDayparts)
             {
                 // Get all StationInventoryManifestDaypartProgram for these
@@ -241,8 +239,8 @@ namespace Services.Broadcast.ApplicationServices
                 }
 
                 // Create the new StationInventoryManifestDaypartProgram
-                var newManifestDaypartPrograms = new List<StationInventoryManifestDaypartProgram>
-                    {
+
+                newManifestDaypartPrograms.Add(
                         new StationInventoryManifestDaypartProgram
                         {
                             StationInventoryManifestDaypartId = daypart.Id.Value,
@@ -254,40 +252,16 @@ namespace Services.Broadcast.ApplicationServices
                             StartTime = daypart.Daypart.StartTime,
                             EndTime = daypart.Daypart.EndTime,
                             CreatedDate = createdDate
-                        }
-                    };
-
-                _InventoryRepository.CreateInventoryPrograms(newManifestDaypartPrograms, createdDate);
-
-                updatedManifestDaypartIds.Add(daypart.Id.Value);
-                updatedInventoryCount++;
-
+                        });
             };
 
-            _ResetPrimaryPrograms(updatedManifestDaypartIds);
+            _InventoryRepository.CreateInventoryPrograms(newManifestDaypartPrograms, createdDate);
+            _InventoryRepository.UpdatePrimaryProgramsForManifestDayparts
+                (newManifestDaypartPrograms.Select(p => p.StationInventoryManifestDaypartId).Distinct().ToList());
 
             durationSw.Stop();
             _LogInfo($"Updating inventory for program with {programMapping.OriginalProgramName}, finished successfully in {durationSw.ElapsedMilliseconds} ms.");
-            return updatedInventoryCount;
-        }
-
-        private void _ResetPrimaryPrograms(List<int> manifestDaypartIds)
-        {
-            var programList = _InventoryRepository
-                .GetDaypartProgramsForInventoryDayparts(manifestDaypartIds, ProgramSourceEnum.Mapped);
-            var manifestDaypartProgramsByManifestDaypart = programList
-                .ToDictionary(x => x.StationInventoryManifestDaypartId, x => x.Id);
-
-            var manifestDayparts = manifestDaypartIds
-                .Where(x => manifestDaypartProgramsByManifestDaypart.ContainsKey(x))
-                .Select(manifestDaypartId => new StationInventoryManifestDaypart 
-                { 
-                    Id = manifestDaypartId, 
-                    PrimaryProgramId = manifestDaypartProgramsByManifestDaypart[manifestDaypartId] 
-                })
-                .ToList();
-
-            _InventoryRepository.UpdatePrimaryProgramsForManifestDayparts(manifestDayparts);
+            return newManifestDaypartPrograms.Count;
         }
 
         private List<ProgramMappingsFileRequestDto> _ReadProgramMappingsFile(Stream stream)

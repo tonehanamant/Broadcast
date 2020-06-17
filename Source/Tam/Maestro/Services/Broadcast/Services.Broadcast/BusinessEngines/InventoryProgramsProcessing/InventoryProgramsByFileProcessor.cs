@@ -330,25 +330,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             }
 
             _InventoryRepository.CreateInventoryPrograms(newManifestDaypartPrograms, _GetCurrentDateTime());
-            _ResetPrimaryPrograms(updatedManifestDaypartIds);
+            _InventoryRepository.UpdatePrimaryProgramsForManifestDayparts(updatedManifestDaypartIds);
         }
 
-        private void _ResetPrimaryPrograms(List<int> manifestDaypartIds)
-        {
-            var manifestDaypartProgramsByManifestDaypart = _InventoryRepository
-                .GetDaypartProgramsForInventoryDayparts(manifestDaypartIds)
-                .ToDictionary(x => x.StationInventoryManifestDaypartId, x => x.Id);
-
-            var manifestDayparts = manifestDaypartIds
-                .Where(x => manifestDaypartProgramsByManifestDaypart.ContainsKey(x))
-                .Select(manifestDaypartId => new StationInventoryManifestDaypart
-                {
-                    Id = manifestDaypartId,
-                    PrimaryProgramId = manifestDaypartProgramsByManifestDaypart[manifestDaypartId]
-                })
-                .ToList();
-
-            _InventoryRepository.UpdatePrimaryProgramsForManifestDayparts(manifestDayparts);
-        }
     }
 }

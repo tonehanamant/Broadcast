@@ -166,6 +166,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="mediaWeekIds">The media week ids.</param>
         List<StationInventoryManifest> GetInventoryBySourceWithUnprocessedPrograms(int sourceId, List<int> mediaWeekIds);
 
+        void UpdatePrimaryProgramsForManifestDayparts(List<int> manifestDaypartIds);
         void UpdatePrimaryProgramsForManifestDayparts(IEnumerable<StationInventoryManifestDaypart> manifestDayparts);
 
         /// <summary>
@@ -1726,6 +1727,26 @@ namespace Services.Broadcast.Repositories
                         BulkInsert(context, entities, propertiesToIgnore: new List<string> { "id" });
                     });
             }
+        }
+
+        public void UpdatePrimaryProgramsForManifestDayparts(List<int> manifestDaypartIds)
+        {
+            var manifestDaypartIdsCsv = string.Join(",", manifestDaypartIds);
+            // clear the primary program id
+            var sql = "UPDATE d SET primary_program_id = p.id "
+                      + "FROM station_inventory_manifest_dayparts d "
+                      + "INNER JOIN station_inventory_manifest_daypart_programs p "
+                      + "ON d.id = p.station_inventory_manifest_daypart_id "
+                      + "WHERE p.program_source_id = 1" //mapped
+                      + "(d.primary_program_id IS NULL OR d.primary_program_id <> p.id) "
+                      + $"AND d.id in ({manifestDaypartIdsCsv}); ";
+
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    context.Database.ExecuteSqlCommand(sql);
+                });
+
         }
 
         public void UpdatePrimaryProgramsForManifestDayparts(IEnumerable<StationInventoryManifestDaypart> manifestDayparts)
