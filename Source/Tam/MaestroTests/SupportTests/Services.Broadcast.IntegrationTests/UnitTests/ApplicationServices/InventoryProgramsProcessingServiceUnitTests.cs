@@ -27,7 +27,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         private readonly Mock<IBackgroundJobClient> _BackgroundJobClient = new Mock<IBackgroundJobClient>();
         private readonly Mock<IInventoryProgramsProcessingEngine> _InventoryProgramsProcessingEngine = new Mock<IInventoryProgramsProcessingEngine>();
-        private readonly Mock<InventoryProgramsRepairEngine> _InventoryProgramsRepairEngine = new Mock<InventoryProgramsRepairEngine>();
+        private readonly Mock<IInventoryProgramsRepairEngine> _InventoryProgramsRepairEngine = new Mock<IInventoryProgramsRepairEngine>();
 
         private readonly Mock<IEmailerService> _EmailerService = new Mock<IEmailerService>();
 

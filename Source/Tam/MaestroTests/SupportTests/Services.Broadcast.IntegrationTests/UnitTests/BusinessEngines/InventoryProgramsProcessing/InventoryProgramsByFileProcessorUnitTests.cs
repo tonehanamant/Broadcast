@@ -145,10 +145,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 .Setup(x => x.CreateInventoryPrograms(It.IsAny<List<StationInventoryManifestDaypartProgram>>(), It.IsAny<DateTime>()))
                 .Callback<List<StationInventoryManifestDaypartProgram>, DateTime>((programs, date) => createdPrograms.Add(programs));
 
-            var daypartsUpdatedWithPrimaryProgram = new List<IEnumerable<StationInventoryManifestDaypart>>();
+            var daypartsUpdatedWithPrimaryProgram = new List<List<int>>();
             _InventoryRepo
-                .Setup(x => x.UpdatePrimaryProgramsForManifestDayparts(It.IsAny<IEnumerable<StationInventoryManifestDaypart>>()))
-                .Callback<IEnumerable<StationInventoryManifestDaypart>>(dayparts => daypartsUpdatedWithPrimaryProgram.Add(dayparts));
+                .Setup(x => x.UpdatePrimaryProgramsForManifestDayparts(It.IsAny<List<int>>()))
+                .Callback<List<int>>(dayparts => daypartsUpdatedWithPrimaryProgram.Add(dayparts));
 
             var engine = _GetInventoryProgramsProcessingEngine();
             engine.UT_CurrentDateTime = new DateTime(2020, 03, 06, 14,22, 35);

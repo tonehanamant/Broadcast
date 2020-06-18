@@ -9,25 +9,20 @@ using Tam.Maestro.Data.EntityFrameworkMapping;
 using Services.Broadcast.Entities;
 using Common.Services.Extensions;
 using System;
+using Services.Broadcast.Extensions;
 
 namespace Services.Broadcast.Repositories
 {
     public interface IProgramMappingRepository : IDataRepository
     {
         /// <summary>
-        /// Checks if a program name mapping exists for original program name.
-        /// </summary>
-        /// <param name="originalProgramName">Original program name.</param>
-        /// <returns>Boolean value representing whether mapping exists program name</returns>
-        bool MappingExistsForOriginalProgramName(string originalProgramName);
-
-        /// <summary>
         /// Gets the program mapping by original program name.
         /// </summary>
         /// <param name="originalProgramName">Name of the original program.</param>
         /// <returns>The program mapping</returns>
         ProgramMappingsDto GetProgramMappingByOriginalProgramName(string originalProgramName);
-        ProgramMappingsDto GetProgramMappingOrDefaultByOriginalProgramName(string originalProgramName);
+
+        List<ProgramMappingsDto> GetProgramMappingsByOriginalProgramNames(IEnumerable<string> originalProgramNames);
 
         /// <summary>
         /// Get all the program mappings.
@@ -78,15 +73,28 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        /// <inheritdoc />
-        public bool MappingExistsForOriginalProgramName(string originalProgramName)
+        public List<ProgramMappingsDto> GetProgramMappingsByOriginalProgramNames(IEnumerable<string> originalProgramNames)
         {
-            return _InReadUncommitedTransaction(
-                context =>
+            var chunks = originalProgramNames.GetChunks(BroadcastConstants.DefaultDatabaseQueryChunkSize);
+
+            var result = chunks
+                .AsParallel()
+                .SelectMany(chunk =>
                 {
-                    return context.program_name_mappings
-                        .Any(x => x.inventory_program_name == originalProgramName);
-                });
+                    return _InReadUncommitedTransaction(context =>
+                    {
+                        return context.program_name_mappings
+                            .Include(x => x.genre)
+                            .Include(x => x.show_types)
+                            .Where(x => chunk.Contains(x.inventory_program_name))
+                            .ToList()
+                            .Select(_MapToDto)
+                            .ToList();
+                    });
+                })
+                .ToList();
+
+            return result;
         }
 
         /// <inheritdoc />
@@ -112,10 +120,7 @@ namespace Services.Broadcast.Repositories
         {
             _InReadUncommitedTransaction(context =>
             {
-                var programMapping = context.program_name_mappings
-                    .Include(x => x.genre)
-                    .Include(x => x.show_types)
-                    .Single(x => x.id == programMappingDto.Id, $"Program mapping not found with id: {programMappingDto.Id}");
+                var programMapping = context.program_name_mappings.Single(x => x.id == programMappingDto.Id, $"Program mapping not found with id: {programMappingDto.Id}");
 
                 programMapping.official_program_name = programMappingDto.OfficialProgramName;
                 programMapping.genre_id = programMappingDto.OfficialGenre.Id;

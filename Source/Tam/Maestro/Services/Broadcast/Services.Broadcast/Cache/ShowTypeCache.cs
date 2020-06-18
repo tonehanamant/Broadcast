@@ -21,12 +21,12 @@ namespace Services.Broadcast.Cache
             var showTypeRepository = broadcastDataRepositoryFactory.GetDataRepository<IShowTypeRepository>();
             var showTypes = showTypeRepository.GetShowTypes();
 
-            _ShowTypeByName = showTypes.ToDictionary(x => x.Display.ToUpper(), x => x);
+            _ShowTypeByName = showTypes.ToDictionary(x => x.Display, x => x, StringComparer.InvariantCultureIgnoreCase);
         }
 
         public LookupDto GetShowTypeByName(string name)
         {
-            if (_ShowTypeByName.TryGetValue(name.ToUpper(), out var showType))
+            if (_ShowTypeByName.TryGetValue(name, out var showType))
                 return showType;
             else
                 throw new Exception($"No show type was found by name : {name}");

@@ -117,78 +117,14 @@
   ],
   "daypartsUpdatedWithPrimaryProgram": [
     [
-      {
-        "Daypart": null,
-        "DaypartDefault": null,
-        "Genres": [],
-        "Id": 1,
-        "PrimaryProgramId": 1,
-        "ProgramName": null,
-        "Programs": []
-      },
-      {
-        "Daypart": null,
-        "DaypartDefault": null,
-        "Genres": [],
-        "Id": 3,
-        "PrimaryProgramId": 1,
-        "ProgramName": null,
-        "Programs": []
-      },
-      {
-        "Daypart": null,
-        "DaypartDefault": null,
-        "Genres": [],
-        "Id": 5,
-        "PrimaryProgramId": 1,
-        "ProgramName": null,
-        "Programs": []
-      },
-      {
-        "Daypart": null,
-        "DaypartDefault": null,
-        "Genres": [],
-        "Id": 7,
-        "PrimaryProgramId": 1,
-        "ProgramName": null,
-        "Programs": []
-      },
-      {
-        "Daypart": null,
-        "DaypartDefault": null,
-        "Genres": [],
-        "Id": 9,
-        "PrimaryProgramId": 1,
-        "ProgramName": null,
-        "Programs": []
-      },
-      {
-        "Daypart": null,
-        "DaypartDefault": null,
-        "Genres": [],
-        "Id": 11,
-        "PrimaryProgramId": 1,
-        "ProgramName": null,
-        "Programs": []
-      },
-      {
-        "Daypart": null,
-        "DaypartDefault": null,
-        "Genres": [],
-        "Id": 13,
-        "PrimaryProgramId": 1,
-        "ProgramName": null,
-        "Programs": []
-      },
-      {
-        "Daypart": null,
-        "DaypartDefault": null,
-        "Genres": [],
-        "Id": 15,
-        "PrimaryProgramId": 1,
-        "ProgramName": null,
-        "Programs": []
-      }
+      1,
+      3,
+      5,
+      7,
+      9,
+      11,
+      13,
+      15
     ]
   ],
   "exportedFile": [

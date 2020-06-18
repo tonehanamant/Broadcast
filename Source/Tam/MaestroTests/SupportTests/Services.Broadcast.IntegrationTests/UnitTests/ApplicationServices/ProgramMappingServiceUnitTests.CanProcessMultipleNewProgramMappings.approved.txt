@@ -54,37 +54,13 @@
   ],
   "savedPrimaryPrograms": [
     [
-      {
-        "Daypart": null,
-        "DaypartDefault": null,
-        "Genres": [],
-        "Id": 1,
-        "PrimaryProgramId": 1,
-        "ProgramName": null,
-        "Programs": []
-      }
+      1
     ],
     [
-      {
-        "Daypart": null,
-        "DaypartDefault": null,
-        "Genres": [],
-        "Id": 1,
-        "PrimaryProgramId": 1,
-        "ProgramName": null,
-        "Programs": []
-      }
+      1
     ],
     [
-      {
-        "Daypart": null,
-        "DaypartDefault": null,
-        "Genres": [],
-        "Id": 1,
-        "PrimaryProgramId": 1,
-        "ProgramName": null,
-        "Programs": []
-      }
+      1
     ]
   ]
 }

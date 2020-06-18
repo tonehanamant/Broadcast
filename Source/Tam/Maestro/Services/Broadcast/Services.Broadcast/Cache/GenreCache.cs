@@ -17,7 +17,7 @@ namespace Services.Broadcast.Cache
 
         LookupDto GetMaestroGenreBySourceGenre(LookupDto sourceGenre, ProgramSourceEnum programSource);
 
-        LookupDto GetMaestroGenreByName(string genreName);
+        Genre GetMaestroGenreByName(string genreName);
 
         LookupDto GetSourceGenreByName(string genreName, ProgramSourceEnum programSource);
         LookupDto GetGenreById(int genreId, ProgramSourceEnum programSource);
@@ -29,7 +29,7 @@ namespace Services.Broadcast.Cache
 
         private readonly Dictionary<ProgramSourceEnum, Dictionary<string, Genre>> _GenresByNamesBySource;
         private readonly Dictionary<ProgramSourceEnum, Dictionary<int, int>> _MappingsToMaestroGenreBySource;
-        private readonly Dictionary<String, int> _MaestroGenresByName;
+        private readonly Dictionary<string, Genre> _MaestroGenresByName;
 
         public GenreCache(IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
@@ -51,8 +51,7 @@ namespace Services.Broadcast.Cache
                     .ToDictionary(x => x.SourceGenreId, x => x.MaestroGenreId);
             }
 
-            _MaestroGenresByName = genres.Where(g => g.ProgramSourceId == (int)ProgramSourceEnum.Mapped)
-                .ToDictionary(g => g.Name.ToUpper(), g => g.Id);
+            _MaestroGenresByName = _GenresByNamesBySource[ProgramSourceEnum.Mapped];
 
             _GenresByIds = genres.ToDictionary(x => x.Id, x => x);
         }
@@ -65,16 +64,12 @@ namespace Services.Broadcast.Cache
             return maestroGenre;
         }
 
-        public LookupDto GetMaestroGenreByName(string genreName)
+        public Genre GetMaestroGenreByName(string genreName)
         {
-            if (!_MaestroGenresByName.TryGetValue(genreName.ToUpper(), out var maestroGenreId))
+            if (!_MaestroGenresByName.TryGetValue(genreName, out var maestroGenre))
                 throw new UnknownGenreException($"There is no genre {genreName}.");
 
-            return new LookupDto
-            {
-                Id = maestroGenreId,
-                Display = genreName.ToUpper()
-            };
+            return maestroGenre;
         }
 
         public LookupDto GetMaestroGenreBySourceGenre(LookupDto sourceGenre, ProgramSourceEnum programSource)

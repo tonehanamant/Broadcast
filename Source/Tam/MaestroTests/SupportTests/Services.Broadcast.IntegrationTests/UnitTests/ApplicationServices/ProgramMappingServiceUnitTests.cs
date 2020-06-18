@@ -29,7 +29,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IProgramMappingRepository> _ProgramMappingRepositoryMock;
         private Mock<IInventoryRepository> _InventoryRepositoryMock;
         private Mock<IShowTypeRepository> _ShowTypeRepositoryMock;
-        private Mock<IGenreRepository> _GenreRepositoryMock;
         private Mock<ISharedFolderService> _SharedFolderServiceMock;
 
         private IGenreCache _GenreCache;
@@ -49,7 +48,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _ProgramMappingRepositoryMock = new Mock<IProgramMappingRepository>();
             _InventoryRepositoryMock = new Mock<IInventoryRepository>();
             _ShowTypeRepositoryMock = new Mock<IShowTypeRepository>();
-            _GenreRepositoryMock = new Mock<IGenreRepository>();
             _SharedFolderServiceMock = new Mock<ISharedFolderService>();
             _GenreCache = new GenreCacheStub();
             _ShowTypeCache = new ShowTypeCacheStub();
@@ -114,25 +112,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     };
                 });
 
-            _DataRepositoryFactoryMock
-                .Setup(s => s.GetDataRepository<IGenreRepository>())
-                .Returns(_GenreRepositoryMock.Object);
-            _GenreRepositoryMock
-                .Setup(s => s.GetGenreByName(It.IsAny<string>(), It.IsAny<ProgramSourceEnum>()))
-                .Returns((string genreName, ProgramSourceEnum source) =>
-                {
-                    return new Genre
-                    {
-                        Id = (int)source,
-                        ProgramSourceId = (int)source,
-                        Name = genreName
-                    };
-                });
-
             // Setup the actual Program Mapping Service
             _ProgramMappingService = new ProgramMappingServiceTestClass(
-                _BackgroundJobClientMock.Object, _DataRepositoryFactoryMock.Object, _SharedFolderServiceMock.Object, null
-                , _GenreCache, _ShowTypeCache);
+                _BackgroundJobClientMock.Object,
+                _DataRepositoryFactoryMock.Object,
+                _SharedFolderServiceMock.Object,
+                null, 
+                _GenreCache, 
+                _ShowTypeCache);
         }
 
         [Test]
@@ -143,7 +130,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Ignore("Test is failing. Need to investigate")]
         public void CanProcessNewProgramMappings()
         {
             // Arrange
@@ -152,14 +138,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new ProgramMappingsFileRequestDto { OriginalProgramName = "10 NEWS 6PM", OfficialProgramName = "10 NEWS", OfficialGenre = "News", OfficialShowType = "News" },
             };
 
-            var checkForExistingCalls = new List<DateTime>();
-            _ProgramMappingRepositoryMock
-                .Setup(s => s.MappingExistsForOriginalProgramName(It.IsAny<string>()))
-                .Callback(() => checkForExistingCalls.Add(DateTime.Now))
-                .Returns(false);
-
             var createdProgramMapping = new ProgramMappingsDto();
-
             var createNewMappingCalls = new List<DateTime>();
             _ProgramMappingRepositoryMock
                 .Setup(s => s.CreateProgramMapping(It.IsAny<ProgramMappingsDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
@@ -170,10 +149,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 })
                 .Returns(1);
 
-            var savedPrimaryPrograms = new List<IEnumerable<StationInventoryManifestDaypart>>();
+            _ProgramMappingRepositoryMock
+                .Setup(x => x.GetProgramMappingsByOriginalProgramNames(It.IsAny<IEnumerable<string>>()))
+                .Returns(new List<ProgramMappingsDto>());
+
+            var savedPrimaryPrograms = new List<List<int>>();
             _InventoryRepositoryMock
-                .Setup(x => x.UpdatePrimaryProgramsForManifestDayparts(It.IsAny<IEnumerable<StationInventoryManifestDaypart>>()))
-                .Callback<IEnumerable<StationInventoryManifestDaypart>>(x => savedPrimaryPrograms.Add(x));
+                .Setup(x => x.UpdatePrimaryProgramsForManifestDayparts(It.IsAny<List<int>>()))
+                .Callback<List<int>>(x => savedPrimaryPrograms.Add(x));
 
             var ingestedRecordsCount = 0;
             var updatedInventoryCount = 0;
@@ -184,7 +167,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _ProgramMappingService.UT_ProcessProgramMappings(programMappings, modifiedWhen, username, ref updatedInventoryCount, ref ingestedRecordsCount);
 
             // Assert
-            Assert.AreEqual(1, checkForExistingCalls.Count, "Invalid call count.");
             Assert.AreEqual(1, createNewMappingCalls.Count, "Invalid call count.");
             Assert.AreEqual(1, _getManifestDaypartByNameCalls.Count, "Invalid call count.");
             Assert.AreEqual(1, _deleteInventoryCalls.Count, "Invalid call count.");
@@ -203,7 +185,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Ignore("Test is failing. Need to investigate")]
         public void CanProcessUpdatedProgramMappings()
         {
             // Arrange
@@ -212,29 +193,27 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new ProgramMappingsFileRequestDto { OriginalProgramName = "10 NEWS 6PM", OfficialProgramName = "10 NEWS", OfficialGenre = "News", OfficialShowType = "News" },
             };
 
-            var checkForExistingCalls = new List<DateTime>();
             _ProgramMappingRepositoryMock
-                .Setup(s => s.MappingExistsForOriginalProgramName(It.IsAny<string>()))
-                .Callback(() => checkForExistingCalls.Add(DateTime.Now))
-                .Returns(true);
-            _ProgramMappingRepositoryMock
-               .Setup(s => s.GetProgramMappingByOriginalProgramName(It.IsAny<string>()))
-               .Returns(new ProgramMappingsDto
-               {
-                   Id = 1,
-                   OriginalProgramName = "10 NEWS 6PM",
-                   OfficialProgramName = "10 NEWS R",
-                   OfficialGenre = new Genre
-                   {
-                       Id = 2,
-                       Name = "Religious"
-                   },
-                   OfficialShowType = new ShowTypeDto
-                   {
-                       Id = 2,
-                       Name = "Paid Programming"
-                   }
-               });
+                .Setup(x => x.GetProgramMappingsByOriginalProgramNames(It.IsAny<IEnumerable<string>>()))
+                .Returns(new List<ProgramMappingsDto>
+                {
+                    new ProgramMappingsDto
+                    {
+                        Id = 1,
+                        OriginalProgramName = "10 NEWS 6PM",
+                        OfficialProgramName = "10 NEWS R",
+                        OfficialGenre = new Genre
+                        {
+                            Id = 2,
+                            Name = "Religious"
+                        },
+                        OfficialShowType = new ShowTypeDto
+                        {
+                            Id = 2,
+                            Name = "Paid Programming"
+                        }
+                    }
+                });
 
             var programMappingToBeUpdated = new ProgramMappingsDto();
 
@@ -256,10 +235,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     updateExistingMappingCalls.Add(DateTime.Now);
                 });
 
-            var savedPrimaryPrograms = new List<IEnumerable<StationInventoryManifestDaypart>>();
+            var savedPrimaryPrograms = new List<List<int>>();
             _InventoryRepositoryMock
-                .Setup(x => x.UpdatePrimaryProgramsForManifestDayparts(It.IsAny<IEnumerable<StationInventoryManifestDaypart>>()))
-                .Callback<IEnumerable<StationInventoryManifestDaypart>>(x => savedPrimaryPrograms.Add(x));
+                .Setup(x => x.UpdatePrimaryProgramsForManifestDayparts(It.IsAny<List<int>>()))
+                .Callback<List<int>>(x => savedPrimaryPrograms.Add(x));
 
             var ingestedRecordsCount = 0;
             var updatedInventoryCount = 0;
@@ -270,7 +249,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _ProgramMappingService.UT_ProcessProgramMappings(programMappings, modifiedWhen, username, ref updatedInventoryCount, ref ingestedRecordsCount);
 
             // Assert
-            Assert.AreEqual(1, checkForExistingCalls.Count, "Invalid call count.");
             Assert.AreEqual(0, createNewMappingCalls.Count, "Invalid call count.");
             Assert.AreEqual(1, updateExistingMappingCalls.Count, "Invalid call count.");
             Assert.AreEqual(1, _getManifestDaypartByNameCalls.Count, "Invalid call count.");
@@ -290,7 +268,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Ignore("Test is failing. Need to investigate")]
         public void CanProcessMultipleNewProgramMappings()
         {
             // Arrange
@@ -301,13 +278,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new ProgramMappingsFileRequestDto { OriginalProgramName = "WVLT NEWS SUN 6:30P", OfficialProgramName = "WVLT NEWS", OfficialGenre = "News", OfficialShowType = "News" },
             };
 
-            var checkForExistingCalls = new List<DateTime>();
-            _ProgramMappingRepositoryMock
-                .Setup(s => s.MappingExistsForOriginalProgramName(It.IsAny<string>()))
-                .Callback(() => checkForExistingCalls.Add(DateTime.Now))
-                .Returns(false);
-
             var programMappingsToBeCreated = new List<ProgramMappingsDto>();
+
+            _ProgramMappingRepositoryMock
+                .Setup(x => x.GetProgramMappingsByOriginalProgramNames(It.IsAny<IEnumerable<string>>()))
+                .Returns(new List<ProgramMappingsDto>());
 
             var createNewMappingCalls = new List<DateTime>();
             _ProgramMappingRepositoryMock
@@ -327,10 +302,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     updateExistingMappingCalls.Add(DateTime.Now);
                 });
 
-            var savedPrimaryPrograms = new List<IEnumerable<StationInventoryManifestDaypart>>();
+            var savedPrimaryPrograms = new List<List<int>>();
             _InventoryRepositoryMock
-                .Setup(x => x.UpdatePrimaryProgramsForManifestDayparts(It.IsAny<IEnumerable<StationInventoryManifestDaypart>>()))
-                .Callback<IEnumerable<StationInventoryManifestDaypart>>(x => savedPrimaryPrograms.Add(x));
+                .Setup(x => x.UpdatePrimaryProgramsForManifestDayparts(It.IsAny<List<int>>()))
+                .Callback<List<int>>(x => savedPrimaryPrograms.Add(x));
 
             var ingestedRecordsCount = 0;
             var updatedInventoryCount = 0;
@@ -341,7 +316,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _ProgramMappingService.UT_ProcessProgramMappings(programMappings, modifiedWhen, username, ref updatedInventoryCount, ref ingestedRecordsCount);
 
             // Assert
-            Assert.AreEqual(3, checkForExistingCalls.Count, "Invalid call count.");
             Assert.AreEqual(3, createNewMappingCalls.Count, "Invalid call count.");
             Assert.AreEqual(0, updateExistingMappingCalls.Count, "Invalid call count.");
             Assert.AreEqual(3, _getManifestDaypartByNameCalls.Count, "Invalid call count.");
@@ -357,58 +331,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 savedPrimaryPrograms
             };
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
-        }
-
-        [Test]
-        [Ignore("Test is failing. Need to investigate")]
-        public void CanEnrichInventoryProgramIfDaypartHasNoPrograms()
-        {
-            // Arrange
-            var programMappings = new List<ProgramMappingsFileRequestDto>
-            {
-                new ProgramMappingsFileRequestDto {
-                    OriginalProgramName = "10 NEWS 6PM"
-                    , OfficialProgramName = "10 NEWS"
-                    , OfficialGenre = "News"
-                    , OfficialShowType = "News"
-                }
-            };
-
-            // Manifest Daypart has no Programs associated
-            _InventoryRepositoryMock
-                .Setup(s => s.GetDaypartProgramsForInventoryDayparts(It.IsAny<List<int>>(), It.IsAny<ProgramSourceEnum>()))
-                .Returns(new List<StationInventoryManifestDaypartProgram>() {
-                    new StationInventoryManifestDaypartProgram
-                    {
-                        Id = 1,
-                        StationInventoryManifestDaypartId = 1
-                    }
-                });
-
-            _ProgramMappingRepositoryMock
-                .Setup(s => s.MappingExistsForOriginalProgramName(It.IsAny<string>()))
-                .Returns(false);
-
-            _ProgramMappingRepositoryMock
-                .Setup(s => s.CreateProgramMapping(It.IsAny<ProgramMappingsDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
-                .Returns(1);
-
-            var ingestedRecordsCount = 0;
-            var updatedInventoryCount = 0;
-            var modifiedWhen = new DateTime(2020, 05, 13);
-            var username = "testUser";
-
-            // Act
-            _ProgramMappingService.UT_ProcessProgramMappings(programMappings, modifiedWhen, username
-                , ref updatedInventoryCount, ref ingestedRecordsCount);
-
-            // Assert
-            Assert.AreEqual(1, _getManifestDaypartByNameCalls.Count, "Invalid call count.");
-            Assert.AreEqual(0, _deleteInventoryCalls.Count, "Invalid call count.");
-            Assert.AreEqual(1, _createInventoryCalls.Count, "Invalid call count.");
-
-            Assert.AreEqual(1, ingestedRecordsCount, "Only one record should be ingested.");
-            Assert.AreEqual(1, updatedInventoryCount, "Only one inventory item should be updated.");
         }
 
         private JsonSerializerSettings _GetJsonSettings()

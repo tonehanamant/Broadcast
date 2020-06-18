@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.Cache;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using System;
 using System.Collections.Generic;
@@ -26,9 +27,14 @@ namespace Services.Broadcast.IntegrationTests.Stubs
             throw new NotImplementedException();
         }
 
-        public LookupDto GetMaestroGenreByName(string name)
+        public Genre GetMaestroGenreByName(string name)
         {
-            throw new NotImplementedException();
+            return new Genre
+            {
+                Id = 1,
+                Name = name,
+                ProgramSourceId = 1
+            };
         }
 
         public LookupDto GetSourceGenreByName(string genreName, ProgramSourceEnum programSource)
