@@ -46,7 +46,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             }
 
             token.ThrowIfCancellationRequested();
-            _SetPrimaryProgramFromProgramMappings(manifestDayparts, token);
+            _BatchAndSetPrimaryProgramFromProgramMappings(manifestDayparts, token);
         }
 
         private List<StationInventoryManifestDaypart> _GetOrphanedManifestDayparts()
@@ -55,7 +55,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             return manifestDayparts;
         }
 
-        private void _SetPrimaryProgramFromProgramMappings(List<StationInventoryManifestDaypart> manifestDayparts, CancellationToken token)
+        private void _BatchAndSetPrimaryProgramFromProgramMappings(List<StationInventoryManifestDaypart> manifestDayparts, CancellationToken token)
         {
             var programMappings = _ProgramMappingRepository.GetProgramMappings();
             var programMappingByInventoryProgramName = programMappings.ToDictionary(x => x.OriginalProgramName, x => x, StringComparer.OrdinalIgnoreCase);
@@ -115,7 +115,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             token.ThrowIfCancellationRequested();
 
             var manifestDaypartIds = manifestDayparts.Where(s => s.Id.HasValue).Select(s => s.Id.Value).ToList();
-            _InventoryRepository.DeReferenceAndDeleteInventoryPrograms(manifestDaypartIds);
+            _InventoryRepository.RemovePrimaryProgramFromManifestDayparts(manifestDaypartIds);
+            _InventoryRepository.DeleteInventoryPrograms(manifestDaypartIds);
 
             _InventoryRepository.CreateInventoryPrograms(newManifestDaypartPrograms, _GetCurrentDateTime());
 
