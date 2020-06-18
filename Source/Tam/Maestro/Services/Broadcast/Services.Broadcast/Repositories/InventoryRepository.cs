@@ -1968,7 +1968,7 @@ namespace Services.Broadcast.Repositories
 				        + " JOIN program_name_mappings m ON m.inventory_program_name = d.program_name"
                         + " LEFT OUTER JOIN station_inventory_manifest_daypart_programs p ON p.id = d.primary_program_id"
                         + " WHERE p.id is null " 
-                        + " OR (p.id IS NOT NULL AND p.name <> m.official_program_name AND p.program_source_id = 1)"
+                        + " OR (p.id IS NOT NULL AND p.name <> m.official_program_name)"
                         + " ORDER BY d.id;";
                     
                     var manifestDaypartIds = context.Database.SqlQuery<int>(sqlQuery);
