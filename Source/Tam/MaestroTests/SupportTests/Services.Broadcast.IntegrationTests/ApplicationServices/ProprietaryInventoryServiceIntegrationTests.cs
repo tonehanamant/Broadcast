@@ -809,21 +809,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("long_running")]
         public void Barter_SaveErrorFileToDisk()
         {
-            const string fileName = @"ProprietaryDataFiles\Barter_BadFormats.xlsx";
+            const string fileName = "Barter_BadFormats.xlsx";
             
             using (new TransactionScopeWrapper())
             {
                 var request = new FileRequest
                 {
-                    StreamData = new FileStream($@".\Files\{fileName}", FileMode.Open, FileAccess.Read),
-                    FileName = fileName
+                    StreamData = new FileStream($@".\Files\ProprietaryDataFiles\{fileName}", FileMode.Open, FileAccess.Read),
+                    FileName = "Barter_BadFormats.xlsx"
                 };
 
                 var now = new DateTime(2019, 02, 02);
                 var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
                 var errorsFilePath = Path.Combine(BroadcastServiceSystemParameter.BroadcastAppFolder, "InventoryUpload", "Errors", 
                     $"{result.FileId}_{fileName}");
-                
                 var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
                 Assert.IsTrue(fileService.Exists(errorsFilePath));
             }

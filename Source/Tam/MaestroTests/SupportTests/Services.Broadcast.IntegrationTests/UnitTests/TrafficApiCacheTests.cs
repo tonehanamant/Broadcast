@@ -19,12 +19,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         {
             var trafficApiClient = new TrafficApiClientStub();
             var cache = new TrafficApiCache(trafficApiClient);
-            const int expectedCallCount = 68; // number of allowed chars
 
             var result = cache.GetAgencies();
-
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            Assert.AreEqual(expectedCallCount, trafficApiClient.GetFilteredAgenciesCalledCount);
         }
 
         [Test]

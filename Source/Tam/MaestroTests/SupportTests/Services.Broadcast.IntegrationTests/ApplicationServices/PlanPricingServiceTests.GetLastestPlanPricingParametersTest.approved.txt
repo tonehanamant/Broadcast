@@ -105,7 +105,7 @@
   "HHUniverse": 112143960.0,
   "HUTBookId": 437,
   "Id": 1197,
-  "ImpressionsPerUnit": 0.0,
+  "ImpressionsPerUnit": 50000.0,
   "IsAduEnabled": false,
   "IsDraft": false,
   "IsPricingModelRunning": true,

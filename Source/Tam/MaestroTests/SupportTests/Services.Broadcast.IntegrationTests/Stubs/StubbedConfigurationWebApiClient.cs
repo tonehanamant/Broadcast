@@ -318,7 +318,7 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                     result = "False";
                     break;
                 case "BroadcastAppFolder":
-                    result = @"\\cadfs11\Broadcast\IntegrationTests\";
+                    result = @"\\cadfs11\Broadcast\Dev\";
                     break;
                 case "EnableInternalProgramSearch":
 	                result = "False";
