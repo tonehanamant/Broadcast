@@ -1,4 +1,5 @@
-﻿using Common.Services.Repositories;
+﻿using System;
+using Common.Services.Repositories;
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Helpers;
@@ -23,21 +24,35 @@ namespace Services.Broadcast.Repositories
 
         public void HtmlDecodeProgramNames()
         {
-            _InReadUncommitedTransaction(context =>
+            try
             {
-                foreach (var programMapping in context.program_name_mappings.ToList())
+                _InReadUncommitedTransaction(context =>
                 {
-                    programMapping.inventory_program_name = WebUtilityHelper.HtmlDecodeProgramName(programMapping.inventory_program_name);
-                    programMapping.official_program_name = WebUtilityHelper.HtmlDecodeProgramName(programMapping.official_program_name);
-                }
+                    foreach (var programMapping in context.program_name_mappings.ToList())
+                    {
+                        programMapping.inventory_program_name = WebUtilityHelper.HtmlDecodeProgramName(programMapping.inventory_program_name);
+                        programMapping.official_program_name = WebUtilityHelper.HtmlDecodeProgramName(programMapping.official_program_name);
+                    }
 
-                foreach (var manifestDaypart in context.station_inventory_manifest_dayparts.ToList())
+                    foreach (var manifestDaypart in context.station_inventory_manifest_dayparts.ToList())
+                    {
+                        manifestDaypart.program_name = WebUtilityHelper.HtmlDecodeProgramName(manifestDaypart.program_name);
+                    }
+
+                    context.SaveChanges();
+                });
+            }
+            catch (Exception e)
+            {
+                _LogError("Exception caught decoding.", e);
+                if (e.InnerException?.InnerException?.Message?.Contains("Cannot insert duplicate key row in object") == true)
                 {
-                    manifestDaypart.program_name = WebUtilityHelper.HtmlDecodeProgramName(manifestDaypart.program_name);
+                    var duplicateKeyException = e.InnerException.InnerException;
+                    throw new InvalidOperationException($"Duplicate key exception caught attempting to decode program names. : {duplicateKeyException.Message}", duplicateKeyException);
                 }
-
-                context.SaveChanges();
-            });
+                
+                throw;
+            }
         }
     }
 }

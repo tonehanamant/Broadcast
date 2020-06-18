@@ -49,6 +49,11 @@ namespace Services.Broadcast.Extensions
 
         public static string UnicodeDecodeString(this string encoded)
         {
+            if (string.IsNullOrWhiteSpace(encoded))
+            {
+                return null;
+            }
+
             var decoded = Encoding.ASCII.GetString(
                 Encoding.Convert(
                     Encoding.UTF8,

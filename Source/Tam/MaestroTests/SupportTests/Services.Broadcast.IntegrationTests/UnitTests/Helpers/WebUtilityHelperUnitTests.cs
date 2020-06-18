@@ -20,7 +20,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
             // Unicode to decode
             @"AMERICA RISING: FIGHTING THE PANDEMIC - A SPECIAL EDITION OF 20/20",
             @"POPSTARS BEST OF 2018",
-            @"POPSTARS BEST OF 2019"
+            @"POPSTARS BEST OF 2019",
+            null
         };
 
         [Test]
