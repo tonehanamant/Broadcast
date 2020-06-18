@@ -1,5 +1,5 @@
 ﻿using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,8 +12,8 @@ namespace Services.Broadcast.Helpers
         {
             foreach (var item in programMappings)
             {
-                item.OriginalProgramName = WebUtility.HtmlDecode(item.OriginalProgramName);
-                item.OfficialProgramName = WebUtility.HtmlDecode(item.OfficialProgramName);
+                item.OriginalProgramName = WebUtility.HtmlDecode(item.OriginalProgramName).UnicodeDecodeString();
+                item.OfficialProgramName = WebUtility.HtmlDecode(item.OfficialProgramName).UnicodeDecodeString();
             }
         }
 
@@ -21,7 +21,7 @@ namespace Services.Broadcast.Helpers
         {
             foreach (var item in inventoryFileBase.GetAllManifests().SelectMany(x => x.ManifestDayparts))
             {
-                item.ProgramName = WebUtility.HtmlDecode(item.ProgramName);
+                item.ProgramName = WebUtility.HtmlDecode(item.ProgramName).UnicodeDecodeString();
             }
         }
     }

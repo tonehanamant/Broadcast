@@ -1,0 +1,16 @@
+﻿{
+  "afterManifestDaypartNames": [
+    "Routine & Routine",
+    "Routine < Routine",
+    "AMERICA RISING: FIGHTING THE PANDEMIC - A SPECIAL EDITION OF 20/20",
+    "POPSTARS BEST OF 2018",
+    "POPSTARS BEST OF 2019"
+  ],
+  "testNames": [
+    "Routine &amp; Routine",
+    "Routine &lt; Routine",
+    "AMERICA RISING: FIGHTING THE PANDEMIC - A SPECIAL EDITION OF 20/20",
+    "POPSTARS BEST OF 2018",
+    "POPSTARS BEST OF 2019"
+  ]
+}

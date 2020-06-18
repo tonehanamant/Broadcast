@@ -46,5 +46,21 @@ namespace Services.Broadcast.Extensions
         {
             return source.IndexOf(search, stringComparison) != -1;
         }
+
+        public static string UnicodeDecodeString(this string encoded)
+        {
+            var decoded = Encoding.ASCII.GetString(
+                Encoding.Convert(
+                    Encoding.UTF8,
+                    Encoding.GetEncoding(
+                        Encoding.ASCII.EncodingName,
+                        new EncoderReplacementFallback(string.Empty),
+                        new DecoderExceptionFallback()
+                    ),
+                    Encoding.UTF8.GetBytes(encoded)
+                ));
+
+            return decoded;
+        }
     }
 }
