@@ -12,8 +12,8 @@ namespace Services.Broadcast.Helpers
         {
             foreach (var item in programMappings)
             {
-                item.OriginalProgramName = WebUtility.HtmlDecode(item.OriginalProgramName).UnicodeDecodeString();
-                item.OfficialProgramName = WebUtility.HtmlDecode(item.OfficialProgramName).UnicodeDecodeString();
+                item.OriginalProgramName = HtmlDecodeProgramName(item.OriginalProgramName);
+                item.OfficialProgramName = HtmlDecodeProgramName(item.OfficialProgramName);
             }
         }
 
@@ -21,8 +21,14 @@ namespace Services.Broadcast.Helpers
         {
             foreach (var item in inventoryFileBase.GetAllManifests().SelectMany(x => x.ManifestDayparts))
             {
-                item.ProgramName = WebUtility.HtmlDecode(item.ProgramName).UnicodeDecodeString();
+                item.ProgramName = HtmlDecodeProgramName(item.ProgramName);
             }
+        }
+
+        public static string HtmlDecodeProgramName(string programName)
+        {
+            var result = WebUtility.HtmlDecode(programName).UnicodeDecodeString();
+            return result;
         }
     }
 }
