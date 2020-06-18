@@ -1981,11 +1981,11 @@ namespace Services.Broadcast.Repositories
 			        var sqlQuery = "SELECT DISTINCT d.id"
 				        + " FROM station_inventory_manifest_dayparts d"
 				        + " JOIN station_inventory_manifest_weeks w ON d.station_inventory_manifest_id = w.station_inventory_manifest_id"
-				        + " JOIN program_name_mappings m ON m.official_program_name = d.program_name"
-				        + " LEFT OUTER JOIN station_inventory_manifest_daypart_programs p ON p.id = d.primary_program_id"
+				        + " JOIN program_name_mappings m ON m.inventory_program_name = d.program_name"
+                        + " LEFT OUTER JOIN station_inventory_manifest_daypart_programs p ON p.id = d.primary_program_id"
                         + " WHERE p.id is null " 
                         + " OR (p.id IS NOT NULL AND p.name <> m.official_program_name)"
-                        + " order by d.id;";
+                        + " ORDER BY d.id;";
                     
                     var manifestDaypartIds = context.Database.SqlQuery<int>(sqlQuery);
                     var entities = context.station_inventory_manifest_dayparts
