@@ -380,36 +380,6 @@
                         </div>
                     }
                 </div>
-
-                <div class="inner-form">
-                    <h2 class="heading2">Rapair Inventory Programs</h2>
-                    @using (Html.BeginForm("QueueRepairInventoryProgramsJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                    {
-                        <div class="inner-form">
-                            <h4 class="heading4">Queue Repair Inventory Programs Job (Background Service)</h4>
-                            <input class="button" type="submit" value="Queue Job" id="submit" />
-                        </div>
-                    }
-
-                    @using (Html.BeginForm("CancelQueuedRepairInventoryProgramsJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                    {
-                        <div class="inner-form">
-                            <h4 class="heading4">Cancel Queued Repair Inventory Programs Job (Background Service)</h4>
-                            <div class="input-container-row">
-                                <input class="input" type="text" name="HangfireJobId" />
-                                <input class="button" type="submit" value="Cancel Job" id="submit" />
-                            </div>
-                        </div>
-                    }
-
-                    @using (Html.BeginForm("ExecuteRepairInventoryPrograms", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                    {
-                        <div class="inner-form">
-                            <h4 class="heading4">Execute Repair Inventory Programs Job (Wait for Completion)</h4>
-                            <input class="button" type="submit" value="Execute" id="submit" />
-                        </div>
-                    }
-                </div>
             </div>
         </div>
         <div id="planning" class="tabcontent">
@@ -580,7 +550,35 @@
                     </div>
                 }
             </div>
+            <div class="form">
+                <h2 class="heading">Repair Inventory Programs</h2>
+                @using (Html.BeginForm("QueueRepairInventoryProgramsJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="form">
+                        <h4 class="heading4">Queue Repair Inventory Programs Job (Background Service)</h4>
+                        <input class="button" type="submit" value="Queue Job" id="submit" />
+                    </div>
+                }
 
+                @using (Html.BeginForm("CancelQueuedRepairInventoryProgramsJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="form">
+                        <h4 class="heading4">Cancel Queued Repair Inventory Programs Job (Background Service)</h4>
+                        <div class="input-container-row">
+                            <input class="input" type="text" name="HangfireJobId" />
+                            <input class="button" type="submit" value="Cancel Job" id="submit" />
+                        </div>
+                    </div>
+                }
+                
+                @using (Html.BeginForm("ExecuteRepairInventoryPrograms", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="form">
+                        <h4 class="heading4">Execute Repair Inventory Programs Job (Wait for Completion)</h4>
+                        <input class="button" type="submit" value="Execute" id="submit" />
+                    </div>
+                }
+            </div>
             <div class="form">
                 @using (Html.BeginForm("UploadVpvhFile", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
