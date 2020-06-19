@@ -329,6 +329,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 updatedManifestDaypartIds.Add(manifestDaypart.Id.Value);
             }
 
+            _InventoryRepository.RemovePrimaryProgramFromManifestDayparts(updatedManifestDaypartIds);
+            _InventoryRepository.DeleteInventoryPrograms(updatedManifestDaypartIds);
+
             _InventoryRepository.CreateInventoryPrograms(newManifestDaypartPrograms, _GetCurrentDateTime());
             _InventoryRepository.UpdatePrimaryProgramsForManifestDayparts(updatedManifestDaypartIds);
         }
