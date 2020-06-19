@@ -79,7 +79,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
             var spotLengthIds = new List<int> { 1 };
             var weekIds = new List<int> { 747, 748, 749 };
-            var stationInventoryManifestDaypartIds = new List<int> { 576683 };
+            var stationInventoryManifestIds = new List<int> { 469330 };
 
             var inventoryRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             var inventoryExportRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryExportRepository>();
@@ -87,7 +87,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             List<InventoryExportDto> results;
             using (new TransactionScopeWrapper())
             {
-                inventoryRepo.DeleteInventoryPrograms(stationInventoryManifestDaypartIds);
+                inventoryRepo.DeleteInventoryPrograms(stationInventoryManifestIds, DateTime.MinValue, DateTime.MaxValue);
 
                 /*** Act ***/
                 results = inventoryExportRepo.GetInventoryForExportOpenMarketNotEnriched(spotLengthIds, weekIds);

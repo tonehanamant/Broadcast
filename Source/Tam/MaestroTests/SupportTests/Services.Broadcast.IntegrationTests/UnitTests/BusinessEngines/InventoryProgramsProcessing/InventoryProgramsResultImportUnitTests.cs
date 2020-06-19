@@ -56,6 +56,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             _InventoryRepo.Setup(s => s.GetStationInventoryManifestsByIds(It.IsAny<List<int>>()))
                 .Returns(new List<StationInventoryManifest>());
 
+            _InventoryRepo.Setup(s => s.GetManuallyMappedPrograms(It.IsAny<List<int>>()))
+                .Returns(new List<int> { 123456 });
+
             _FileService.Setup(s => s.CreateDirectory(It.IsAny<string>()));
 
             var fileServiceCreateCalls = new List<Tuple<string, Stream, long, long>>();
@@ -287,6 +290,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             _InventoryRepo.Setup(s => s.GetStationInventoryManifestsByIds(It.IsAny<List<int>>()))
                 .Returns(new List<StationInventoryManifest>());
 
+            _InventoryRepo.Setup(s => s.GetManuallyMappedPrograms(It.IsAny<List<int>>()))
+                .Returns(new List<int> { 123456 });
+
             _FileService.Setup(s => s.CreateDirectory(It.IsAny<string>()));
 
             var fileServiceCreateCalls = new List<Tuple<string, Stream, long, long>>();
@@ -401,6 +407,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
 
             _InventoryRepo.Setup(s => s.GetStationInventoryManifestsByIds(It.IsAny<List<int>>()))
                 .Returns(new List<StationInventoryManifest>());
+
+            _InventoryRepo.Setup(s => s.GetManuallyMappedPrograms(It.IsAny<List<int>>()))
+                .Returns(new List<int> { 123456 });
 
             _FileService.Setup(s => s.CreateDirectory(It.IsAny<string>()));
 

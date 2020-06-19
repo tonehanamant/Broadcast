@@ -1,4 +1,4 @@
-{
+﻿{
   "result": [
     "Prime Access Rotator",
     "Saturday 2P Movie",
@@ -1627,7 +1627,7 @@
     "The Closer",
     "MY4 ALBANY PET SHOW",
     "NFL on FOX v. Buffalo Bills",
-    "KWWL Today in Iowa @ 8 � Sat",
+    "KWWL Today in Iowa @ 8 – Sat",
     "TV 5 WEEKEND WAKEUP",
     "2 BROKE GIRLS X2",
     "2 NEWS AT 10 SIMULCAST",
