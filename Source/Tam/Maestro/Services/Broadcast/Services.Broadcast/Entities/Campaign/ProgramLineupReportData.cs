@@ -58,16 +58,17 @@ namespace Services.Broadcast.Entities.Campaign
                 manifests,
                 marketCoverageByStation,
                 primaryProgramsByManifestDaypartIds);
+            double totalAllocatedImpressions = detailedRowsData.Sum(x => x.TotalSpotsImpressions);
             DetailedViewRows = _MapToDetailedViewRows(detailedRowsData);
 
-            DefaultViewRows = _MapToDefaultViewRows(detailedRowsData, plan.TargetImpressions.Value);
-            AllocationByDaypartViewRows = _MapToAllocationViewRows(detailedRowsData, plan.TargetImpressions.Value
+            DefaultViewRows = _MapToDefaultViewRows(detailedRowsData, totalAllocatedImpressions);
+            AllocationByDaypartViewRows = _MapToAllocationViewRows(detailedRowsData, totalAllocatedImpressions
                 , x => x.DaypartCode
                 , false);
-            AllocationByGenreViewRows = _MapToAllocationViewRows(detailedRowsData, plan.TargetImpressions.Value
+            AllocationByGenreViewRows = _MapToAllocationViewRows(detailedRowsData, totalAllocatedImpressions
                 , x => x.Genre
                 , true);
-            AllocationByDMAViewRows = _MapToAllocationViewRows(detailedRowsData, plan.TargetImpressions.Value
+            AllocationByDMAViewRows = _MapToAllocationViewRows(detailedRowsData, totalAllocatedImpressions
                 , x => x.MarketGeographyName
                 , true);
         }
@@ -197,7 +198,7 @@ namespace Services.Broadcast.Entities.Campaign
                 .ToList();
         }
 
-        private List<DefaultViewRowDisplay> _MapToDefaultViewRows(IEnumerable<DetailedViewRowData> dataRows, double planImpressions)
+        private List<DefaultViewRowDisplay> _MapToDefaultViewRows(IEnumerable<DetailedViewRowData> dataRows, double totalAllocatedImpressions)
         {
             _RollupStationSpecificNewsPrograms(dataRows);
 
@@ -209,7 +210,7 @@ namespace Services.Broadcast.Entities.Campaign
                    return new DefaultViewRowDisplay
                    {
                        Program = x.Key.ToUpper(),
-                       Weight = _CalculateWeight(items.Sum(y => y.TotalSpotsImpressions), planImpressions),
+                       Weight = _CalculateWeight(items.Sum(y => y.TotalSpotsImpressions), totalAllocatedImpressions),
                        Genre = items.First().Genre.ToUpper(),
                        NoOfMarkets = items.Select(y => y.MarketGeographyName).Distinct().Count(),
                        NoOfStations = items.Select(y => y.StationLegacyCallLetters).Distinct().Count()
@@ -290,7 +291,7 @@ namespace Services.Broadcast.Entities.Campaign
 
         private List<AllocationViewRowDisplay> _MapToAllocationViewRows(
             IEnumerable<DetailedViewRowData> dataRows
-            , double planImpressions
+            , double totalAllocatedImpressions
             , Func<DetailedViewRowData, string> groupFunction
             , bool toUpper)
         {
@@ -302,7 +303,7 @@ namespace Services.Broadcast.Entities.Campaign
                    return new AllocationViewRowDisplay
                    {
                        FilterLabel = toUpper ? x.Key.ToUpper() : x.Key,
-                       Weight = _CalculateWeight(items.Sum(y => y.TotalSpotsImpressions), planImpressions)
+                       Weight = _CalculateWeight(items.Sum(y => y.TotalSpotsImpressions), totalAllocatedImpressions)
                    };
                })
                .OrderByDescending(x => x.Weight)
@@ -323,11 +324,11 @@ namespace Services.Broadcast.Entities.Campaign
             return equivalized && !display.Equals("30") ? " eq." : string.Empty;
         }
 
-        private double _CalculateWeight(double impressions, double planImpressions)
+        private double _CalculateWeight(double impressions, double totalAllocatedImpressions)
         {
-            return planImpressions == 0
+            return totalAllocatedImpressions == 0
                 ? 0
-                : impressions / planImpressions;
+                : impressions / totalAllocatedImpressions;
         }
 
         public class DetailedViewRowDisplay

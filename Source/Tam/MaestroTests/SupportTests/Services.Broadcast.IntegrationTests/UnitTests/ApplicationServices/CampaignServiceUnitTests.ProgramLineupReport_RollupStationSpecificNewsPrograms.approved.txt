@@ -5,35 +5,35 @@
   "AllocationByDaypartViewRows": [
     {
       "FilterLabel": "LN",
-      "Weight": 0.16
+      "Weight": 0.4
     },
     {
       "FilterLabel": "EM",
-      "Weight": 0.16
+      "Weight": 0.4
     },
     {
       "FilterLabel": "EMN",
-      "Weight": 0.08
+      "Weight": 0.2
     }
   ],
   "AllocationByDMAViewRows": [
     {
       "FilterLabel": "NEW YORK",
-      "Weight": 0.16
+      "Weight": 0.4
     },
     {
       "FilterLabel": "MACON",
-      "Weight": 0.16
+      "Weight": 0.4
     },
     {
       "FilterLabel": "BINGHAMTON",
-      "Weight": 0.08
+      "Weight": 0.2
     }
   ],
   "AllocationByGenreViewRows": [
     {
       "FilterLabel": "NEWS",
-      "Weight": 0.4
+      "Weight": 1.0
     }
   ],
   "Client": "PetMed Express, Inc",
@@ -44,28 +44,28 @@
       "NoOfMarkets": 1,
       "NoOfStations": 1,
       "Program": "MIDDAY NEWS",
-      "Weight": 0.16
+      "Weight": 0.4
     },
     {
       "Genre": "NEWS",
       "NoOfMarkets": 1,
       "NoOfStations": 1,
       "Program": "MORNING NEWS",
-      "Weight": 0.08
+      "Weight": 0.2
     },
     {
       "Genre": "NEWS",
       "NoOfMarkets": 1,
       "NoOfStations": 1,
       "Program": "EVENING NEWS",
-      "Weight": 0.08
+      "Weight": 0.2
     },
     {
       "Genre": "NEWS",
       "NoOfMarkets": 1,
       "NoOfStations": 1,
       "Program": "LATE NEWS",
-      "Weight": 0.08
+      "Weight": 0.2
     }
   ],
   "DetailedViewRows": [
