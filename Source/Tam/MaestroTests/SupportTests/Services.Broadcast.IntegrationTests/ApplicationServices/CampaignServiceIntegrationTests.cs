@@ -657,7 +657,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             fileServiceMock.Setup(x => x.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Stream>()));
             var campaignService = _SetupCampaignService(fileServiceMock.Object);
             var fileId = Guid.Empty;
-            var sharedFolderRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ISharedFolderFilesRepository>();
+            var sharedFolderRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+                .GetDataRepository<ISharedFolderFilesRepository>();
             SharedFolderFile sharedFolderFile = null;
 
             using (new TransactionScopeWrapper())

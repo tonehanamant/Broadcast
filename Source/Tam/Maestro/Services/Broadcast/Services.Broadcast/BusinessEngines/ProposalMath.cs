@@ -66,7 +66,7 @@ namespace Services.Broadcast.BusinessEngines
 
         public static double CalculateHhImpressionsUsingVpvh(double audienceImpressions, double audienceVpvh)
         {
-            return audienceImpressions / audienceVpvh;
+            return audienceVpvh == 0 ? 0 : audienceImpressions / audienceVpvh;
         }
 
         public static double CalculateAudienceImpressionsUsingVpvh(double hhImpressions, double audienceVpvh)
@@ -76,7 +76,7 @@ namespace Services.Broadcast.BusinessEngines
 
         public static double CalculateVpvh(double audienceImpressions, double hhImpressions)
         {
-            return audienceImpressions / hhImpressions;
+            return hhImpressions == 0 ? 0 : audienceImpressions / hhImpressions;
         }
     }
 }

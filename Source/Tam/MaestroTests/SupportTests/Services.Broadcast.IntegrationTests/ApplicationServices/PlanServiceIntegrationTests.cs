@@ -559,28 +559,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 PlanDto newPlan = _PlanService.GetPlan(2190);
                 newPlan.WeeklyBreakdownWeeks = newPlan.WeeklyBreakdownWeeks.OrderBy(x => x.WeekNumber).ToList();
-                newPlan.Dayparts[0].VpvhForAudiences.Add(new PlanDaypartVpvhForAudienceDto
-                {
-                    AudienceId = 6,
-                    Vpvh = 0.5,
-                    VpvhType = VpvhTypeEnum.FourBookAverage,
-                    StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
-                });
-                newPlan.Dayparts[1].VpvhForAudiences.Add(new PlanDaypartVpvhForAudienceDto
-                {
-                    AudienceId = 6,
-                    Vpvh = 0.5,
-                    VpvhType = VpvhTypeEnum.FourBookAverage,
-                    StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
-                });
-                newPlan.Dayparts[2].VpvhForAudiences.Add(new PlanDaypartVpvhForAudienceDto
-                {
-                    AudienceId = 6,
-                    Vpvh = 0.5,
-                    VpvhType = VpvhTypeEnum.FourBookAverage,
-                    StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
-                });
-
+                
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(newPlan), _GetJsonSettings()));
             }
         }

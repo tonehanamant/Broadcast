@@ -312,10 +312,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
+        [Ignore("There is no inventory loaded for this plan in broadcast_integration db")]
         public void RunPricingJobTwiceOnSamePlanTest()
         {
             using (new TransactionScopeWrapper())
@@ -333,7 +334,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     InflationFactor = 0.5,
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
-                    UnitCapsType = UnitCapEnum.PerDay,
+                    UnitCapsType = UnitCapEnum.PerDay,                    
                     MarketGroup = PricingMarketGroupEnum.None,
                     InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                     {
@@ -363,7 +364,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _PlanPricingService.RunPricingJob(planPricingRequestDto, job2.Id, CancellationToken.None);
 
-                var result = _PlanPricingService.GetCurrentPricingExecution(1197);
+                var result = _PlanPricingService.GetCurrentPricingExecution(1849);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
@@ -401,20 +402,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var planPricingRequestDto = new PlanPricingParametersDto
                 {
-                    PlanId = 1197,
-                    PlanVersionId = 47,
-                    MaxCpm = 10m,
+                    PlanId = 1849,
+                    PlanVersionId = 7236,
+                    MaxCpm = 35m,
                     MinCpm = 1m,
-                    Budget = 1000,
+                    Budget = 500000,
                     CompetitionFactor = 0.1,
-                    CPM = 5m,
-                    DeliveryImpressions = 50000,
+                    CPM = 25m,
+                    DeliveryImpressions = 20000,
                     InflationFactor = 0.5,
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
-                    CPP = 1000,
-                    Currency = PlanCurrenciesEnum.GRP,
+                    CPP = 14.6m,
+                    Currency = PlanCurrenciesEnum.Impressions,
                     DeliveryRatingPoints = 1234,
                     MarketGroup = PricingMarketGroupEnum.None,
                     InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
@@ -438,7 +439,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
-                var result = _PlanService.GetPlan(1197);
+                var result = _PlanService.GetPlan(1849);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingParametersDto), "JobId");

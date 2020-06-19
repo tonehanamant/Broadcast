@@ -238,8 +238,6 @@ namespace Services.Broadcast.Entities.Campaign
         {
             newProjectedPlan.TotalHHImpressions = plan.HHImpressions * factor;
             newProjectedPlan.TotalHHRatingPoints = plan.HHRatingPoints * factor;
-            newProjectedPlan.HHCPM = _CalculateCost(newProjectedPlan.TotalHHImpressions * 1000, newProjectedPlan.TotalCost);
-            newProjectedPlan.HHCPP = _CalculateCost(newProjectedPlan.TotalHHRatingPoints, newProjectedPlan.TotalCost);
         }
 
         private static void _ProjectGuaranteedAudienceDataByWeek(PlanDto plan, WeeklyBreakdownWeek planWeek
@@ -248,32 +246,21 @@ namespace Services.Broadcast.Entities.Campaign
             projection.GuaranteedAudience.IsGuaranteedAudience = true;
             projection.GuaranteedAudience.AudienceId = plan.AudienceId;
             projection.GuaranteedAudience.WeightedPercentage = planWeek.WeeklyImpressions / plan.TargetImpressions.Value;
-            projection.GuaranteedAudience.VPVH = plan.Vpvh;
             projection.GuaranteedAudience.TotalImpressions = planWeek.WeeklyImpressions;
             projection.GuaranteedAudience.TotalRatingPoints = planWeek.WeeklyRatings;
-
-            projection.GuaranteedAudience.CPM =
-                _CalculateCost(planWeek.WeeklyImpressions / 1000, projection.TotalCost);
-            projection.GuaranteedAudience.CPP =
-                _CalculateCost(projection.GuaranteedAudience.TotalRatingPoints, projection.TotalCost);
         }
 
         private static void _ProjectSecondaryAudiencesData(PlanDto plan, double multiplicationFactor, ProjectedPlan newProjectedPlan)
         {
             foreach (var audience in plan.SecondaryAudiences)
             {
-                var secondaryAudience =
+                newProjectedPlan.SecondaryAudiences.Add(
                     new ProjectedPlan.Audience
                     {
                         AudienceId = audience.AudienceId,
                         TotalImpressions = audience.Impressions.Value * multiplicationFactor,
-                        TotalRatingPoints = audience.RatingPoints.Value * multiplicationFactor,
-
-                    };
-                secondaryAudience.VPVH = _CalculateVPVH(secondaryAudience.TotalImpressions, newProjectedPlan.TotalHHImpressions);
-                secondaryAudience.CPM = _CalculateCost(secondaryAudience.TotalImpressions * 1000, newProjectedPlan.TotalCost);
-                secondaryAudience.CPP = _CalculateCost(secondaryAudience.TotalRatingPoints, newProjectedPlan.TotalCost);
-                newProjectedPlan.SecondaryAudiences.Add(secondaryAudience);
+                        TotalRatingPoints = audience.RatingPoints.Value * multiplicationFactor
+                    });
             }
         }
 
@@ -414,7 +401,7 @@ namespace Services.Broadcast.Entities.Campaign
                             },
                             GuaranteedData = new AudienceData
                             {
-                                VPVH = _CalculateVPVH(totalImpressions, totalHHImpressions),
+                                VPVH = ProposalMath.CalculateVpvh(totalImpressions, totalHHImpressions),
                                 RatingPoints = (unitsSum == 0 ? 0 : totalRatingPoints / unitsSum),
                                 TotalRatingPoints = totalRatingPoints,
                                 Impressions = (unitsSum == 0 ? 0 : totalImpressions / unitsSum),
@@ -436,7 +423,7 @@ namespace Services.Broadcast.Entities.Campaign
                                     {
                                         DaypartCode = daypartGroup.Key.DaypartCode,
                                         SpotLengthLabel = spotLengthLabel,
-                                        VPVH = _CalculateVPVH(totalImpressionsForDemo, totalHHImpressions),
+                                        VPVH = ProposalMath.CalculateVpvh(totalImpressionsForDemo, totalHHImpressions),
                                         RatingPoints = (unitsSum == 0 ? 0 : totalRatingPointsForDemo / unitsSum),
                                         TotalRatingPoints = totalRatingPointsForDemo,
                                         Impressions = (unitsSum == 0 ? 0 : totalImpressionsForDemo / unitsSum),
@@ -751,7 +738,7 @@ namespace Services.Broadcast.Entities.Campaign
                 Plan = x,
                 WeeklyBreakdown = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(x.WeeklyBreakdownWeeks)
             }).ToList();
-               
+
             if (!plansAndweeklyBreakdowns.Any(x => x.WeeklyBreakdown.Any(y => weeksStartDates.Contains(y.StartDate) && y.Adu > 0)))
             {
                 return;
@@ -878,11 +865,6 @@ namespace Services.Broadcast.Entities.Campaign
             return points == 0 ? 0 : cost / (decimal)points;
         }
 
-        private static double _CalculateVPVH(double impressions, double hhImpressions)
-        {
-            return hhImpressions == 0 ? 0 : impressions / hhImpressions;
-        }
-
         private void _PopulateCampaignTotalsTable()
         {
             ProposalCampaignTotalsTable.QuarterLabel = "Campaign Totals";
@@ -917,7 +899,7 @@ namespace Services.Broadcast.Entities.Campaign
                         },
                         GuaranteedData = new AudienceData
                         {
-                            VPVH = _CalculateVPVH(totalImpressions, totalHHImpressions),
+                            VPVH = ProposalMath.CalculateVpvh(totalImpressions, totalHHImpressions),
                             RatingPoints = items.Sum(x => x.GuaranteedData.RatingPoints),
                             TotalRatingPoints = totalRatingPoints,
                             Impressions = items.Sum(x => x.GuaranteedData.Impressions),
@@ -961,7 +943,7 @@ namespace Services.Broadcast.Entities.Campaign
                         newTable.Rows.Add(
                             new AudienceData
                             {
-                                VPVH = _CalculateVPVH(totalImpressionsForDemo, totalHHImpressions),
+                                VPVH = ProposalMath.CalculateVpvh(totalImpressionsForDemo, totalHHImpressions),
                                 RatingPoints = (unitsSum == 0 ? 0 : totalRatingPointsForDemo / unitsSum),
                                 TotalRatingPoints = totalRatingPointsForDemo,
                                 Impressions = (unitsSum == 0 ? 0 : totalImpressionsForDemo / unitsSum),
