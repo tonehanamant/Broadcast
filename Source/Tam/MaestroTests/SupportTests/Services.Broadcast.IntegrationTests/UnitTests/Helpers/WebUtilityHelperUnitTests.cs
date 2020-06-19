@@ -17,10 +17,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
             // HTML to decode
             @"Routine &amp; Routine",
             @"Routine &lt; Routine",
-            // Unicode to decode
-            @"AMERICA RISING: FIGHTING THE PANDEMIC - A SPECIAL EDITION OF 20/20",
-            @"POPSTARS BEST OF 2018",
-            @"POPSTARS BEST OF 2019",
+            // Unicode to decode - Removed - Unicode Decode as we decide if we really want that.
+            //@"AMERICA RISING: FIGHTING THE PANDEMIC - A SPECIAL EDITION OF 20/20",
+            //@"POPSTARS BEST OF 2018",
+            //@"POPSTARS BEST OF 2019",
+
+            // ensure handles null
             null
         };
 

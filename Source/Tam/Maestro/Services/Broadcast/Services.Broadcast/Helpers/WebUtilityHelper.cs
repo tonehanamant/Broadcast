@@ -1,5 +1,4 @@
 ﻿using Services.Broadcast.Entities;
-using Services.Broadcast.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -27,7 +26,7 @@ namespace Services.Broadcast.Helpers
 
         public static string HtmlDecodeProgramName(string programName)
         {
-            var result = WebUtility.HtmlDecode(programName).UnicodeDecodeString();
+            var result = WebUtility.HtmlDecode(programName);
             return result;
         }
     }
