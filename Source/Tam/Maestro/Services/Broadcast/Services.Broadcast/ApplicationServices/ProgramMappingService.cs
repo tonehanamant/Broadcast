@@ -113,10 +113,11 @@ namespace Services.Broadcast.ApplicationServices
             _LogInfo($"Started processing the program mapping file {file.FileNameWithExtension}");
 
             var programMappings = _ReadProgramMappingsFile(file.FileContent);
-            _LogInfo($"The selected program mapping file has {programMappings.Count} rows");
+            var uniqueProgramMappings = _RemoveDuplicateMappings(programMappings);
+            _LogInfo($"The selected program mapping file has {programMappings.Count} rows, unique mappings: {uniqueProgramMappings.Count}");
 
-            WebUtilityHelper.HtmlDecodeProgramNames(programMappings);
-            _ProcessProgramMappings(programMappings, createdDate, userName);
+            WebUtilityHelper.HtmlDecodeProgramNames(uniqueProgramMappings);
+            _ProcessProgramMappings(uniqueProgramMappings, createdDate, userName);
             _SharedFolderService.RemoveFile(fileId);
 
             durationSw.Stop();
@@ -125,6 +126,14 @@ namespace Services.Broadcast.ApplicationServices
 
             var hangfireId = _BackgroundJobClient.Enqueue<IInventoryProgramsProcessingService>(x => x.PerformRepairInventoryPrograms(CancellationToken.None));
             _LogInfo($"RepairInventoryPrograms job has been queued, hangfire id: {hangfireId}");
+        }
+
+        private List<ProgramMappingsFileRequestDto> _RemoveDuplicateMappings(List<ProgramMappingsFileRequestDto> programMappings)
+        {
+            return programMappings
+                .GroupBy(x => x.OriginalProgramName)
+                .Select(x => x.First())
+                .ToList();
         }
 
         /// <inheritdoc />
