@@ -183,7 +183,7 @@ namespace Services.Broadcast.Repositories
 
         List<int> GetManuallyMappedPrograms(List<int> inventoryDaypartIds);
 
-        List<StationInventoryManifestDaypart> GetOrphanedManifestDayparts();
+        List<StationInventoryManifestDaypart> GetOrphanedManifestDayparts(Action<string> logger);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -1943,7 +1943,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public List<StationInventoryManifestDaypart> GetOrphanedManifestDayparts()
+        public List<StationInventoryManifestDaypart> GetOrphanedManifestDayparts(Action<string> logger)
         {
 	        return  _InReadUncommitedTransaction(
 		        context =>
@@ -1960,12 +1960,18 @@ namespace Services.Broadcast.Repositories
                         + " OR (p.id IS NOT NULL AND p.show_type <> st.name)"
                         + " ORDER BY d.id;";
                     
-                    var manifestDaypartIds = context.Database.SqlQuery<int>(sqlQuery);
+                    var manifestDaypartIds = context.Database.SqlQuery<int>(sqlQuery).ToList();
                     var chunks = manifestDaypartIds.GetChunks(BroadcastConstants.DefaultDatabaseQueryChunkSize);
                     var result = new List<StationInventoryManifestDaypart>();
 
-                    foreach (var chunk in chunks)
+                    logger($"Fetching manifest dayparts data. Total manifest dayparts: {manifestDaypartIds.Count}. Total chunks: {chunks.Count()}");
+
+                    for (var i = 0; i < chunks.Count; i++)
                     {
+                        var chunk = chunks[i];
+
+                        logger($"Fetching manifest dayparts data for chunk #{i + 1} / {chunks.Count}, items: {chunk.Count}");
+
                         var entities = context.station_inventory_manifest_dayparts
                             .Include(s => s.daypart)
                             .Include(s => s.station_inventory_manifest_daypart_genres)

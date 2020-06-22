@@ -51,7 +51,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         private List<StationInventoryManifestDaypart> _GetOrphanedManifestDayparts()
         {
-            var manifestDayparts = _InventoryRepository.GetOrphanedManifestDayparts();
+            var manifestDayparts = _InventoryRepository.GetOrphanedManifestDayparts((message) => _LogInfo(message));
             return manifestDayparts;
         }
 

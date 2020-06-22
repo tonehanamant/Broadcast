@@ -13,6 +13,7 @@ using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Inventory;
 using Tam.Maestro.Common.DataLayer;
+using System.Diagnostics;
 
 namespace Services.Broadcast.IntegrationTests.Repositories
 {
@@ -401,7 +402,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 	        {
 		        _ProgramMappingRepository.CreateProgramMappings(new List<ProgramMappingsDto> { newProgramMapping }, createdBy, createdAt);
                 /*** Act ***/
-                 result = repo.GetOrphanedManifestDayparts();
+                 result = repo.GetOrphanedManifestDayparts(message => Debug.WriteLine(message));
                 
 
 		        /*** Assert ***/
