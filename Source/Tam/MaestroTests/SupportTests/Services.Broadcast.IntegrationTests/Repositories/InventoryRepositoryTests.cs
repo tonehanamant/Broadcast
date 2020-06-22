@@ -14,14 +14,16 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Inventory;
 using Tam.Maestro.Common.DataLayer;
 using System.Diagnostics;
+using Services.Broadcast.Cache;
+using Microsoft.Practices.Unity;
 
 namespace Services.Broadcast.IntegrationTests.Repositories
 {
     [TestFixture]
     public class InventoryRepositoryTests
     {
-	    private readonly IGenreRepository _GenreRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
-	    private readonly IShowTypeRepository _ShowTypeRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IShowTypeRepository>();
+	    private readonly IGenreCache _GenreCache = IntegrationTestApplicationServiceFactory.Instance.Resolve<IGenreCache>();
+        private readonly IShowTypeCache _ShowTypeCache = IntegrationTestApplicationServiceFactory.Instance.Resolve<IShowTypeCache>();
 	    private readonly IProgramMappingRepository _ProgramMappingRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProgramMappingRepository>();
 
         /// <summary>
@@ -382,8 +384,8 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 		        .GetDataRepository<IInventoryRepository>();
 	        var createdBy = "testUser";
 	        var createdAt = new DateTime(2020, 10, 17, 8, 32, 12);
-	        var genre = _GenreRepository.GetGenreByName("News", ProgramSourceEnum.Mapped);
-	        var showType = _ShowTypeRepository.GetShowTypes().First();
+	        var genre = _GenreCache.GetMaestroGenreByName("News");
+	        var showType = _ShowTypeCache.GetShowTypeByName("Mini-Movie");
 	        var newProgramMapping = new ProgramMappingsDto
 	        {
 		        OriginalProgramName = "TestOriginalProgramName",

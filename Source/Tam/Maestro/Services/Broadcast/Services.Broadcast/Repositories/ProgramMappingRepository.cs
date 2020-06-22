@@ -71,7 +71,7 @@ namespace Services.Broadcast.Repositories
             {
                 _InReadUncommitedTransaction(context =>
                 {
-                    var recordsToInsert = newProgramMappings
+                    var recordsToInsert = chunk
                         .Select(x =>
                         {
                             var newProgramMapping = new program_name_mappings();
