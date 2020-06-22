@@ -1961,16 +1961,24 @@ namespace Services.Broadcast.Repositories
                         + " ORDER BY d.id;";
                     
                     var manifestDaypartIds = context.Database.SqlQuery<int>(sqlQuery);
-                    var entities = context.station_inventory_manifest_dayparts
-                        .Include(s => s.daypart)
-                        .Include(s => s.station_inventory_manifest_daypart_genres)
-                        .Include(s => s.station_inventory_manifest_daypart_programs)
-                        .Where(s => manifestDaypartIds.Contains(s.id))
-                        .ToList()
-                        .Select(_MapToManifestDaypart)
-                        .ToList();
+                    var chunks = manifestDaypartIds.GetChunks(BroadcastConstants.DefaultDatabaseQueryChunkSize);
+                    var result = new List<StationInventoryManifestDaypart>();
 
-                    return entities;
+                    foreach (var chunk in chunks)
+                    {
+                        var entities = context.station_inventory_manifest_dayparts
+                            .Include(s => s.daypart)
+                            .Include(s => s.station_inventory_manifest_daypart_genres)
+                            .Include(s => s.station_inventory_manifest_daypart_programs)
+                            .Where(s => chunk.Contains(s.id))
+                            .ToList()
+                            .Select(_MapToManifestDaypart)
+                            .ToList();
+
+                        result.AddRange(entities);
+                    }
+
+                    return result;
                 });
         }
     }
