@@ -207,14 +207,17 @@ namespace Services.Broadcast.ApplicationServices
             {
                 if (existingProgramMappingByOriginalProgramName.TryGetValue(mapping.OriginalProgramName, out var existingMapping))
                 {
+                    var genre = _GenreCache.GetMaestroGenreByName(mapping.OfficialGenre);
+                    var showType = _ShowTypeCache.GetShowTypeByName(mapping.OfficialShowType);
+
                     // if there are changes for an existing mapping
                     if (existingMapping.OfficialProgramName != mapping.OfficialProgramName ||
-                        existingMapping.OfficialGenre.Name != mapping.OfficialGenre ||
-                        existingMapping.OfficialShowType.Name != mapping.OfficialShowType)
+                        existingMapping.OfficialGenre.Name != genre.Name ||
+                        existingMapping.OfficialShowType.Name != showType.Display)
                     {
                         existingMapping.OfficialProgramName = mapping.OfficialProgramName;
-                        existingMapping.OfficialGenre = _GenreCache.GetMaestroGenreByName(mapping.OfficialGenre);
-                        existingMapping.OfficialShowType = _MapToShowTypeDto(_ShowTypeCache.GetShowTypeByName(mapping.OfficialShowType));
+                        existingMapping.OfficialGenre = genre;
+                        existingMapping.OfficialShowType = _MapToShowTypeDto(showType);
 
                         updatedProgramMappings.Add(existingMapping);
                     }
