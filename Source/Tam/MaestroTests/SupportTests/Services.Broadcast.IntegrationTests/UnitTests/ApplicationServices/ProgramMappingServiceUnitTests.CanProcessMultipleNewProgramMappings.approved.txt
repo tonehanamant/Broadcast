@@ -1,66 +1,60 @@
 ﻿{
-  "programMappingsToBeCreated": [
-    {
-      "CreatedAt": null,
-      "CreatedBy": null,
-      "ModifiedAt": null,
-      "ModifiedBy": null,
-      "OfficialGenre": {
-        "Id": 1,
-        "Name": "News",
-        "ProgramSourceId": 1
-      },
-      "OfficialProgramName": "10 NEWS",
-      "OfficialShowType": {
-        "Id": 1,
-        "Name": "News"
-      },
-      "OriginalProgramName": "10 NEWS 6PM"
-    },
-    {
-      "CreatedAt": null,
-      "CreatedBy": null,
-      "ModifiedAt": null,
-      "ModifiedBy": null,
-      "OfficialGenre": {
-        "Id": 1,
-        "Name": "News",
-        "ProgramSourceId": 1
-      },
-      "OfficialProgramName": "NBC4 NEWS",
-      "OfficialShowType": {
-        "Id": 1,
-        "Name": "News"
-      },
-      "OriginalProgramName": "NBC 4 NEWS AT 5P WKND"
-    },
-    {
-      "CreatedAt": null,
-      "CreatedBy": null,
-      "ModifiedAt": null,
-      "ModifiedBy": null,
-      "OfficialGenre": {
-        "Id": 1,
-        "Name": "News",
-        "ProgramSourceId": 1
-      },
-      "OfficialProgramName": "WVLT NEWS",
-      "OfficialShowType": {
-        "Id": 1,
-        "Name": "News"
-      },
-      "OriginalProgramName": "WVLT NEWS SUN 6:30P"
-    }
-  ],
-  "savedPrimaryPrograms": [
+  "createdProgramMappings": [
     [
-      1
-    ],
-    [
-      1
-    ],
-    [
-      1
+      {
+        "CreatedAt": null,
+        "CreatedBy": null,
+        "ModifiedAt": null,
+        "ModifiedBy": null,
+        "OfficialGenre": {
+          "Id": 1,
+          "Name": "News",
+          "ProgramSourceId": 1
+        },
+        "OfficialProgramName": "10 NEWS",
+        "OfficialShowType": {
+          "Id": 1,
+          "Name": "News"
+        },
+        "OriginalProgramName": "10 NEWS 6PM"
+      },
+      {
+        "CreatedAt": null,
+        "CreatedBy": null,
+        "ModifiedAt": null,
+        "ModifiedBy": null,
+        "OfficialGenre": {
+          "Id": 1,
+          "Name": "News",
+          "ProgramSourceId": 1
+        },
+        "OfficialProgramName": "NBC4 NEWS",
+        "OfficialShowType": {
+          "Id": 1,
+          "Name": "News"
+        },
+        "OriginalProgramName": "NBC 4 NEWS AT 5P WKND"
+      },
+      {
+        "CreatedAt": null,
+        "CreatedBy": null,
+        "ModifiedAt": null,
+        "ModifiedBy": null,
+        "OfficialGenre": {
+          "Id": 1,
+          "Name": "News",
+          "ProgramSourceId": 1
+        },
+        "OfficialProgramName": "WVLT NEWS",
+        "OfficialShowType": {
+          "Id": 1,
+          "Name": "News"
+        },
+        "OriginalProgramName": "WVLT NEWS SUN 6:30P"
+      }
     ]
+  ],
+  "updatedProgramMappings": [
+    []
   ]
 }

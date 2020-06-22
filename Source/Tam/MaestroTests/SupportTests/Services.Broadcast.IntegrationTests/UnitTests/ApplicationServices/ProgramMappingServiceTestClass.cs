@@ -25,10 +25,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         public void UT_ProcessProgramMappings(
             List<ProgramMappingsFileRequestDto> programMappings,
-            DateTime createdDate, string username,
-            ref int updatedInventoryCount, ref int ingestedRecordsCount)
+            DateTime createdDate, 
+            string username)
         {
-            _ProcessProgramMappings(programMappings, createdDate, username, ref updatedInventoryCount, ref ingestedRecordsCount);
+            _ProcessProgramMappings(programMappings, createdDate, username);
         }
     }
 }

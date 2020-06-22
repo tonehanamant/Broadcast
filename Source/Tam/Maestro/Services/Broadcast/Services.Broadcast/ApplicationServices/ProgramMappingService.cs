@@ -5,7 +5,6 @@ using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
@@ -14,15 +13,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Services.Broadcast.Entities.ProgramMapping;
 using Services.Broadcast.ReportGenerators.ProgramMapping;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
-using System.Collections.Concurrent;
 using Services.Broadcast.Cache;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using System.Threading;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -114,8 +109,6 @@ namespace Services.Broadcast.ApplicationServices
             var durationSw = new Stopwatch();
             durationSw.Start();
             var file = _SharedFolderService.GetFile(fileId);
-            var ingestedRecordsCount = 0;
-            var updatedInventoryCount = 0;
 
             _LogInfo($"Started processing the program mapping file {file.FileNameWithExtension}");
 
@@ -123,13 +116,15 @@ namespace Services.Broadcast.ApplicationServices
             _LogInfo($"The selected program mapping file has {programMappings.Count} rows");
 
             WebUtilityHelper.HtmlDecodeProgramNames(programMappings);
-            _ProcessProgramMappings(programMappings, createdDate, userName, ref updatedInventoryCount, ref ingestedRecordsCount);
-
+            _ProcessProgramMappings(programMappings, createdDate, userName);
             _SharedFolderService.RemoveFile(fileId);
 
             durationSw.Stop();
-            _LogInfo($"Processing of the program mapping file {file.FileNameWithExtension}, finished successfully in {durationSw.ElapsedMilliseconds} ms. Ingested {ingestedRecordsCount} records, updated {updatedInventoryCount} inventory.");
-                
+
+            _LogInfo($@"Processing of the program mapping file {file.FileNameWithExtension}, finished successfully in {durationSw.ElapsedMilliseconds} ms");
+
+            var hangfireId = _BackgroundJobClient.Enqueue<IInventoryProgramsProcessingService>(x => x.PerformRepairInventoryPrograms(CancellationToken.None));
+            _LogInfo($"RepairInventoryPrograms job has been queued, hangfire id: {hangfireId}");
         }
 
         /// <inheritdoc />
@@ -164,23 +159,22 @@ namespace Services.Broadcast.ApplicationServices
 
         protected void _ProcessProgramMappings(
             List<ProgramMappingsFileRequestDto> programMappings,
-            DateTime createdDate, string username,
-            ref int updatedInventoryCount, ref int ingestedRecordsCount)
+            DateTime createdDate,
+            string username)
         {
-            const ProgramSourceEnum programSource = ProgramSourceEnum.Mapped;
-            var results = new List<Tuple<int, int>>();
             var existingProgramMappingByOriginalProgramName = _GetExistingProgramMappings(programMappings);
 
-            foreach (var mapping in programMappings)
-            {
-                var result = _ProcessIndividualProgramMapping(mapping, programSource, username, createdDate, existingProgramMappingByOriginalProgramName);
-                results.Add(result);
+            _FindNewAndUpdatedProgramMappings(
+                programMappings, 
+                existingProgramMappingByOriginalProgramName, 
+                out var newProgramMappings,
+                out var updatedProgramMappings);
 
-                _LogInfo($"Program mapping file completed {results.Sum(r => r.Item1)} records", username);
-            }
+            _LogInfo($"Updating {updatedProgramMappings.Count} existing program mappings");
+            _ProgramMappingRepository.UpdateProgramMappings(updatedProgramMappings, username, createdDate);
 
-            ingestedRecordsCount = results.Sum(r => r.Item1);
-            updatedInventoryCount = results.Sum(r => r.Item2);
+            _LogInfo($"Inserting {newProgramMappings.Count} new program mappings");
+            _ProgramMappingRepository.CreateProgramMappings(newProgramMappings, username, createdDate);
         }
 
         private Dictionary<string, ProgramMappingsDto> _GetExistingProgramMappings(List<ProgramMappingsFileRequestDto> fileProgramMappings)
@@ -191,44 +185,44 @@ namespace Services.Broadcast.ApplicationServices
             return existingProgramMappings.ToDictionary(x => x.OriginalProgramName, x => x, StringComparer.InvariantCultureIgnoreCase);
         }
 
-        private Tuple<int, int> _ProcessIndividualProgramMapping(
-            ProgramMappingsFileRequestDto mapping, 
-            ProgramSourceEnum programSource, 
-            string username, 
-            DateTime createdDate,
-            Dictionary<string, ProgramMappingsDto> existingProgramMappingByOriginalProgramName)
+        private void _FindNewAndUpdatedProgramMappings(
+            List<ProgramMappingsFileRequestDto> mappings,
+            Dictionary<string, ProgramMappingsDto> existingProgramMappingByOriginalProgramName,
+            out List<ProgramMappingsDto> newProgramMappings,
+            out List<ProgramMappingsDto> updatedProgramMappings)
         {
-            var updatedRecords = 0;
+            newProgramMappings = new List<ProgramMappingsDto>();
+            updatedProgramMappings = new List<ProgramMappingsDto>();
 
-            if (existingProgramMappingByOriginalProgramName.TryGetValue(mapping.OriginalProgramName, out var existingMapping))
+            foreach (var mapping in mappings)
             {
-                if (existingMapping.OfficialProgramName != mapping.OfficialProgramName ||
-                    existingMapping.OfficialGenre.Name != mapping.OfficialGenre ||
-                    existingMapping.OfficialShowType.Name != mapping.OfficialShowType)
+                if (existingProgramMappingByOriginalProgramName.TryGetValue(mapping.OriginalProgramName, out var existingMapping))
                 {
-                    // There are changes for an existing mapping
-                    existingMapping.OfficialProgramName = mapping.OfficialProgramName;
-                    existingMapping.OfficialGenre = _GenreCache.GetMaestroGenreByName(mapping.OfficialGenre);
-                    existingMapping.OfficialShowType = _MapToShowTypeDto(_ShowTypeCache.GetShowTypeByName(mapping.OfficialShowType));
-                    _ProgramMappingRepository.UpdateProgramMapping(existingMapping, username, createdDate);
-                    updatedRecords = _UpdateInventoryWithEnrichedProgramName(existingMapping, createdDate, programSource);
+                    // if there are changes for an existing mapping
+                    if (existingMapping.OfficialProgramName != mapping.OfficialProgramName ||
+                        existingMapping.OfficialGenre.Name != mapping.OfficialGenre ||
+                        existingMapping.OfficialShowType.Name != mapping.OfficialShowType)
+                    {
+                        existingMapping.OfficialProgramName = mapping.OfficialProgramName;
+                        existingMapping.OfficialGenre = _GenreCache.GetMaestroGenreByName(mapping.OfficialGenre);
+                        existingMapping.OfficialShowType = _MapToShowTypeDto(_ShowTypeCache.GetShowTypeByName(mapping.OfficialShowType));
+
+                        updatedProgramMappings.Add(existingMapping);
+                    }
+                }
+                else
+                {
+                    var newProgramMapping = new ProgramMappingsDto
+                    {
+                        OriginalProgramName = mapping.OriginalProgramName,
+                        OfficialProgramName = mapping.OfficialProgramName,
+                        OfficialGenre = _GenreCache.GetMaestroGenreByName(mapping.OfficialGenre),
+                        OfficialShowType = _MapToShowTypeDto(_ShowTypeCache.GetShowTypeByName(mapping.OfficialShowType))
+                    };
+
+                    newProgramMappings.Add(newProgramMapping);
                 }
             }
-            else
-            {
-                var newProgramMapping = new ProgramMappingsDto
-                {
-                    OriginalProgramName = mapping.OriginalProgramName,
-                    OfficialProgramName = mapping.OfficialProgramName,
-                    OfficialGenre = _GenreCache.GetMaestroGenreByName(mapping.OfficialGenre),
-                    OfficialShowType = _MapToShowTypeDto(_ShowTypeCache.GetShowTypeByName(mapping.OfficialShowType))
-                };
-                _ProgramMappingRepository.CreateProgramMapping(newProgramMapping, username, createdDate);
-                updatedRecords = _UpdateInventoryWithEnrichedProgramName(newProgramMapping, createdDate, programSource);
-            }
-
-            var ingestedRecords = 1;
-            return Tuple.Create(ingestedRecords, updatedRecords);
         }
 
         private ShowTypeDto _MapToShowTypeDto(LookupDto showTypeLookup)
@@ -238,47 +232,6 @@ namespace Services.Broadcast.ApplicationServices
                 Id = showTypeLookup.Id,
                 Name = showTypeLookup.Display
             };
-        }
-
-        private int _UpdateInventoryWithEnrichedProgramName(
-            ProgramMappingsDto programMapping,
-            DateTime createdDate,
-            ProgramSourceEnum programSource)
-        {
-            var durationSw = new Stopwatch();
-            durationSw.Start();
-
-            // Get all StationInventoryManifestDaypart's with ProgramName
-            var manifestDayparts = _InventoryRepository.GetManifestDaypartsForProgramName(programMapping.OriginalProgramName);
-            var manifestDaypartIds = manifestDayparts.Select(x => x.Id.Value).Distinct().ToList();
-
-            if (!manifestDaypartIds.IsEmpty())
-            {
-                _InventoryRepository.RemovePrimaryProgramFromManifestDayparts(manifestDaypartIds);
-                _InventoryRepository.DeleteInventoryPrograms(manifestDaypartIds);
-            }
-
-            var newManifestDaypartPrograms = manifestDayparts
-                .Select(x => new StationInventoryManifestDaypartProgram
-                {
-                    StationInventoryManifestDaypartId = x.Id.Value,
-                    ProgramName = programMapping.OfficialProgramName,
-                    ProgramSourceId = (int)programSource,
-                    MaestroGenreId = programMapping.OfficialGenre.Id,
-                    SourceGenreId = programMapping.OfficialGenre.Id,
-                    ShowType = programMapping.OfficialShowType.Name,
-                    StartTime = x.Daypart.StartTime,
-                    EndTime = x.Daypart.EndTime,
-                    CreatedDate = createdDate
-                })
-                .ToList();
-
-            _InventoryRepository.CreateInventoryPrograms(newManifestDaypartPrograms, createdDate);
-            _InventoryRepository.UpdatePrimaryProgramsForManifestDayparts(manifestDaypartIds);
-
-            durationSw.Stop();
-            _LogInfo($"Updating inventory {newManifestDaypartPrograms.Count} records for program with {programMapping.OriginalProgramName}, finished successfully in {durationSw.ElapsedMilliseconds} ms. Speed = {durationSw.ElapsedMilliseconds / (newManifestDaypartPrograms.Count == 0 ? 1 : newManifestDaypartPrograms.Count)} per record. ");
-            return newManifestDaypartPrograms.Count;
         }
 
         private List<ProgramMappingsFileRequestDto> _ReadProgramMappingsFile(Stream stream)

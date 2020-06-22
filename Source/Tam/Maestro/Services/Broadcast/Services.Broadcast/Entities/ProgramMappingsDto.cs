@@ -1,5 +1,4 @@
 ﻿using System;
-using Services.Broadcast.Entities.Plan;
 
 namespace Services.Broadcast.Entities
 {

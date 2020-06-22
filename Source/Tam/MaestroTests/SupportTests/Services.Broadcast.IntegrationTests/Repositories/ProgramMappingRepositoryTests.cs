@@ -12,14 +12,17 @@ using EntityFrameworkMapping.Broadcast;
 using Microsoft.Practices.Unity;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
+using System.Collections.Generic;
+using Services.Broadcast.Cache;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.Repositories
 {
     [TestFixture]
     public class ProgramMappingRepositoryTests
     {
-        private readonly IGenreRepository _GenreRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
-        private readonly IShowTypeRepository _ShowTypeRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IShowTypeRepository>();
+        private readonly IGenreCache _GenreCache = IntegrationTestApplicationServiceFactory.Instance.Resolve<IGenreCache>();
+        private readonly IShowTypeCache _ShowTypeCache = IntegrationTestApplicationServiceFactory.Instance.Resolve<IShowTypeCache>();
         private readonly IProgramMappingRepository _ProgramMappingRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProgramMappingRepository>();
 
         [Test]
@@ -28,75 +31,118 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         {
             var createdBy = "testUser";
             var createdAt = new DateTime(2020, 10, 17, 8, 32, 12);
-            var genre = _GenreRepository.GetGenreByName("News", ProgramSourceEnum.Mapped);
-            var showType = _ShowTypeRepository.GetShowTypes().First();
             var newProgramMapping = new ProgramMappingsDto
             {
                 OriginalProgramName = "TestOriginalProgramName",
                 OfficialProgramName = "TestOfficialProgramName",
-                OfficialGenre = genre,
-                OfficialShowType = new ShowTypeDto
-                {
-                    Id = showType.Id,
-                    Name = showType.Display
-                }
+                OfficialGenre = _GenreCache.GetMaestroGenreByName("News"),
+                OfficialShowType = _ToShowTypeDto(_ShowTypeCache.GetShowTypeByName("Mini-Movie"))
             };
 
-            ProgramMappingsDto createdMapping;
+            List<ProgramMappingsDto> createdMappings;
             using (new TransactionScopeWrapper())
             {
-                _ProgramMappingRepository.CreateProgramMapping(newProgramMapping, createdBy, createdAt);
-                createdMapping = _ProgramMappingRepository.GetProgramMappingByOriginalProgramName(newProgramMapping.OriginalProgramName);
+                _ProgramMappingRepository.CreateProgramMappings(new List<ProgramMappingsDto> { newProgramMapping }, createdBy, createdAt);
+                createdMappings = _ProgramMappingRepository.GetProgramMappingsByOriginalProgramNames(new List<string> { newProgramMapping.OriginalProgramName });
             }
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(createdMapping, _GetJsonSettings()));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(createdMappings, _GetJsonSettings()));
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void UpdateProgramMapping()
         {
-            var testProgramName = "testProgramName";
             var username = "testUser";
             var createdAt = new DateTime(2020, 10, 17, 8, 32, 12);
             var modifiedAt = new DateTime(2020, 10, 20, 8, 32, 12);
-            var genre = _GenreRepository.GetGenreByName("News", ProgramSourceEnum.Mapped);
-            var genreTwo = _GenreRepository.GetGenreByName("Reality", ProgramSourceEnum.Mapped);
-            var showType = _ShowTypeRepository.GetShowTypes().First();
-            var showTypeTwo = _ShowTypeRepository.GetShowTypes().Last();
-            var newProgramMapping = new ProgramMappingsDto
+            var newProgramMappings = new List<ProgramMappingsDto>
             {
-                OriginalProgramName = testProgramName,
-                OfficialProgramName = "TestOfficialProgramName",
-                OfficialGenre = genre,
-                OfficialShowType = new ShowTypeDto
+                new ProgramMappingsDto
                 {
-                    Id = showType.Id,
-                    Name = showType.Display
+                    OriginalProgramName = "Program A",
+                    OfficialProgramName = "Program A official",
+                    OfficialGenre = _GenreCache.GetMaestroGenreByName("News"),
+                    OfficialShowType = _ToShowTypeDto(_ShowTypeCache.GetShowTypeByName("Mini-Movie"))
+                },
+                new ProgramMappingsDto
+                {
+                    OriginalProgramName = "Program B",
+                    OfficialProgramName = "Program B official",
+                    OfficialGenre = _GenreCache.GetMaestroGenreByName("News"),
+                    OfficialShowType = _ToShowTypeDto(_ShowTypeCache.GetShowTypeByName("Mini-Movie"))
+                },
+                new ProgramMappingsDto
+                {
+                    OriginalProgramName = "Program C",
+                    OfficialProgramName = "Program C official",
+                    OfficialGenre = _GenreCache.GetMaestroGenreByName("News"),
+                    OfficialShowType = _ToShowTypeDto(_ShowTypeCache.GetShowTypeByName("Mini-Movie"))
+                },
+                new ProgramMappingsDto
+                {
+                    OriginalProgramName = "Program D",
+                    OfficialProgramName = "Program D official",
+                    OfficialGenre = _GenreCache.GetMaestroGenreByName("News"),
+                    OfficialShowType = _ToShowTypeDto(_ShowTypeCache.GetShowTypeByName("Mini-Movie"))
                 }
             };
-            var updatedProgramMapping = new ProgramMappingsDto
+            var updatedProgramMappings = new List<ProgramMappingsDto>
             {
-                OriginalProgramName = testProgramName,
-                OfficialProgramName = "TestOfficialProgramNameNowModified",
-                OfficialGenre = genreTwo,
-                OfficialShowType = new ShowTypeDto
+                // OfficialProgramName was changed
+                new ProgramMappingsDto
                 {
-                    Id = showTypeTwo.Id,
-                    Name = showTypeTwo.Display
-                }
-            };
+                    OriginalProgramName = "Program B",
+                    OfficialProgramName = "Program B official v1",
+                    OfficialGenre = _GenreCache.GetMaestroGenreByName("News"),
+                    OfficialShowType = _ToShowTypeDto(_ShowTypeCache.GetShowTypeByName("Mini-Movie"))
+                },
 
-            ProgramMappingsDto updatedMapping;
+                // OfficialGenre was changed
+                new ProgramMappingsDto
+                {
+                    OriginalProgramName = "Program C",
+                    OfficialProgramName = "Program C official",
+                    OfficialGenre = _GenreCache.GetMaestroGenreByName("Comedy"),
+                    OfficialShowType = _ToShowTypeDto(_ShowTypeCache.GetShowTypeByName("Mini-Movie"))
+                },
+
+                // OfficialShowType was changed
+                new ProgramMappingsDto
+                {
+                    OriginalProgramName = "Program D",
+                    OfficialProgramName = "Program D official",
+                    OfficialGenre = _GenreCache.GetMaestroGenreByName("News"),
+                    OfficialShowType = _ToShowTypeDto(_ShowTypeCache.GetShowTypeByName("Series"))
+                }
+            };
+            var createdPrograms = newProgramMappings.Select(x => x.OriginalProgramName);
+
+            List<ProgramMappingsDto> updatedMappings;
+
             using (new TransactionScopeWrapper())
             {
-                var id = _ProgramMappingRepository.CreateProgramMapping(newProgramMapping, username, createdAt);
-                updatedProgramMapping.Id = id;
-                _ProgramMappingRepository.UpdateProgramMapping(updatedProgramMapping, username, modifiedAt);
-                updatedMapping = _ProgramMappingRepository.GetProgramMappingByOriginalProgramName(testProgramName);
+                _ProgramMappingRepository.CreateProgramMappings(newProgramMappings, username, createdAt);
+
+                var programMappingIdByOriginalProgramName = _ProgramMappingRepository
+                    .GetProgramMappingsByOriginalProgramNames(createdPrograms)
+                    .ToDictionary(x => x.OriginalProgramName, x => x.Id);
+                updatedProgramMappings.ForEach(x => x.Id = programMappingIdByOriginalProgramName[x.OriginalProgramName]);
+
+                _ProgramMappingRepository.UpdateProgramMappings(updatedProgramMappings, username, modifiedAt);
+                updatedMappings = _ProgramMappingRepository.GetProgramMappingsByOriginalProgramNames(createdPrograms);
             }
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(updatedMapping, _GetJsonSettings()));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(updatedMappings, _GetJsonSettings()));
+        }
+
+        private ShowTypeDto _ToShowTypeDto(LookupDto lookup)
+        {
+            return new ShowTypeDto
+            {
+                Id = lookup.Id,
+                Name = lookup.Display
+            };
         }
 
         private JsonSerializerSettings _GetJsonSettings()

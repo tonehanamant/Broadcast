@@ -170,13 +170,6 @@ namespace Services.Broadcast.Repositories
         void UpdatePrimaryProgramsForManifestDayparts(IEnumerable<StationInventoryManifestDaypart> manifestDayparts);
 
         /// <summary>
-        /// Gets the manifest dayparts by program name.
-        /// </summary>
-        /// <param name="programName">Name of the program.</param> 
-        /// <returns>The station inventory manifest daypart</returns>
-        List<StationInventoryManifestDaypart> GetManifestDaypartsForProgramName(string programName);
-
-        /// <summary>
         /// For tests
         /// </summary>
         /// <param name="groupIds"></param>
@@ -1650,6 +1643,9 @@ namespace Services.Broadcast.Repositories
 
         public void DeleteInventoryPrograms(List<int> manifestIds, DateTime startDate, DateTime endDate)
         {
+            if (manifestIds.IsEmpty())
+                return;
+
             var manifestIdsCsv = string.Join(",", manifestIds);
             // gather first
             var sql = "SELECT p.id AS ProgramId, station_inventory_manifest_daypart_id AS DaypartId INTO #ProgramsIdsToDelete"
@@ -1674,6 +1670,9 @@ namespace Services.Broadcast.Repositories
 
         public void RemovePrimaryProgramFromManifestDayparts(List<int> manifestDaypartIds)
         {
+            if (manifestDaypartIds.IsEmpty())
+                return;
+
             var manifestDaypartIdsCsv = string.Join(",", manifestDaypartIds);
             // clear the primary program id
             var sql = "UPDATE d SET primary_program_id = NULL "
@@ -1689,6 +1688,9 @@ namespace Services.Broadcast.Repositories
 
         public void DeleteInventoryPrograms(List<int> manifestDaypartIds)
         {
+            if (manifestDaypartIds.IsEmpty())
+                return;
+
             var manifestDaypartIdsCsv = string.Join(",", manifestDaypartIds);
             // now can delete the programs
             var sql = 
@@ -1880,22 +1882,6 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public List<StationInventoryManifestDaypart> GetManifestDaypartsForProgramName(string programName)
-        {
-            return _InReadUncommitedTransaction(
-                context =>
-                {
-                    var manifestDayparts =
-                        context.station_inventory_manifest_dayparts
-                            .Include(md => md.daypart.timespan)
-                            .Where(md => md.program_name == programName).ToList();
-
-                    var manifestDaypartDtos = manifestDayparts.Select(_MapToManifestDaypart).ToList();
-
-                    return manifestDaypartDtos;
-                });
-        }
-
         private StationInventoryManifestDaypart _MapToManifestDaypart(station_inventory_manifest_dayparts entity)
         {
             var dto = new StationInventoryManifestDaypart()
@@ -1966,9 +1952,12 @@ namespace Services.Broadcast.Repositories
 				        + " FROM station_inventory_manifest_dayparts d"
 				        + " JOIN station_inventory_manifest_weeks w ON d.station_inventory_manifest_id = w.station_inventory_manifest_id"
 				        + " JOIN program_name_mappings m ON m.inventory_program_name = d.program_name"
+                        + " JOIN show_types st ON st.id = m.show_type_id"
                         + " LEFT OUTER JOIN station_inventory_manifest_daypart_programs p ON p.id = d.primary_program_id"
                         + " WHERE p.id is null " 
                         + " OR (p.id IS NOT NULL AND p.name <> m.official_program_name)"
+                        + " OR (p.id IS NOT NULL AND p.maestro_genre_id <> m.genre_id)"
+                        + " OR (p.id IS NOT NULL AND p.show_type <> st.name)"
                         + " ORDER BY d.id;";
                     
                     var manifestDaypartIds = context.Database.SqlQuery<int>(sqlQuery);

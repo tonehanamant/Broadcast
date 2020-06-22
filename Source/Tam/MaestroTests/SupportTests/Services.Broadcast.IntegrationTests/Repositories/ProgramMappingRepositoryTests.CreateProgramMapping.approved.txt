@@ -1,17 +1,19 @@
-{
-  "CreatedAt": "2020-10-17T08:32:12",
-  "CreatedBy": "testUser",
-  "ModifiedAt": null,
-  "ModifiedBy": null,
-  "OfficialGenre": {
-    "Id": 34,
-    "Name": "News",
-    "ProgramSourceId": 0
-  },
-  "OfficialProgramName": "TestOfficialProgramName",
-  "OfficialShowType": {
-    "Id": 1,
-    "Name": "Mini-Movie"
-  },
-  "OriginalProgramName": "TestOriginalProgramName"
-}
+[
+  {
+    "CreatedAt": "2020-10-17T08:32:12",
+    "CreatedBy": "testUser",
+    "ModifiedAt": null,
+    "ModifiedBy": null,
+    "OfficialGenre": {
+      "Id": 34,
+      "Name": "News",
+      "ProgramSourceId": 0
+    },
+    "OfficialProgramName": "TestOfficialProgramName",
+    "OfficialShowType": {
+      "Id": 1,
+      "Name": "Mini-Movie"
+    },
+    "OriginalProgramName": "TestOriginalProgramName"
+  }
+]

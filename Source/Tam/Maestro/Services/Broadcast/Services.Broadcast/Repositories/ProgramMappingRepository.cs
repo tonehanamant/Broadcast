@@ -10,18 +10,13 @@ using Services.Broadcast.Entities;
 using Common.Services.Extensions;
 using System;
 using Services.Broadcast.Extensions;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace Services.Broadcast.Repositories
 {
     public interface IProgramMappingRepository : IDataRepository
     {
-        /// <summary>
-        /// Gets the program mapping by original program name.
-        /// </summary>
-        /// <param name="originalProgramName">Name of the original program.</param>
-        /// <returns>The program mapping</returns>
-        ProgramMappingsDto GetProgramMappingByOriginalProgramName(string originalProgramName);
-
         List<ProgramMappingsDto> GetProgramMappingsByOriginalProgramNames(IEnumerable<string> originalProgramNames);
 
         /// <summary>
@@ -30,15 +25,9 @@ namespace Services.Broadcast.Repositories
         /// <returns></returns>
         List<ProgramMappingsDto> GetProgramMappings();
 
-        /// <summary>
-        /// Creates a new program mapping.
-        /// </summary>
-        int CreateProgramMapping(ProgramMappingsDto newProgramMapping, string createdBy, DateTime createdAt);
+        void CreateProgramMappings(IEnumerable<ProgramMappingsDto> newProgramMappings, string createdBy, DateTime createdAt);
 
-        /// <summary>
-        /// Updates the program mapping.
-        /// </summary>
-        void UpdateProgramMapping(ProgramMappingsDto programMapping, string updatedBy, DateTime updatedAt);
+        void UpdateProgramMappings(IEnumerable<ProgramMappingsDto> programMappings, string updatedBy, DateTime updatedAt);
     }
 
     public class ProgramMappingRepository : BroadcastRepositoryBase, IProgramMappingRepository
@@ -47,30 +36,6 @@ namespace Services.Broadcast.Repositories
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient configurationWebApiClient) 
             : base(pBroadcastContextFactory, pTransactionHelper, configurationWebApiClient)
         {
-        }
-
-        public ProgramMappingsDto GetProgramMappingByOriginalProgramName(string originalProgramName)
-        {
-            return _InReadUncommitedTransaction(
-                context =>
-                {
-                    return _MapToDto(context.program_name_mappings
-                        .Include(x => x.genre)
-                        .Include(x => x.show_types)
-                        .Single(x => x.inventory_program_name == originalProgramName, $"No program mapping found for name: {originalProgramName}"));
-                });
-        }
-
-        public ProgramMappingsDto GetProgramMappingOrDefaultByOriginalProgramName(string originalProgramName)
-        {
-            return _InReadUncommitedTransaction(
-                context =>
-                {
-                    return _MapToDto(context.program_name_mappings
-                        .Include(x => x.genre)
-                        .Include(x => x.show_types)
-                        .SingleOrDefault(x => x.inventory_program_name == originalProgramName));
-                });
         }
 
         public List<ProgramMappingsDto> GetProgramMappingsByOriginalProgramNames(IEnumerable<string> originalProgramNames)
@@ -98,39 +63,94 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc />
-        public int CreateProgramMapping(ProgramMappingsDto programMappingDto, string createdBy, DateTime createdAt)
+        public void CreateProgramMappings(IEnumerable<ProgramMappingsDto> newProgramMappings, string createdBy, DateTime createdAt)
         {
-            return _InReadUncommitedTransaction(context =>
+            var chunks = newProgramMappings.GetChunks(BroadcastConstants.DefaultDatabaseQueryChunkSize);
+
+            foreach (var chunk in chunks)
             {
-                var newProgramMapping = new program_name_mappings();
-                _MapFromDto(programMappingDto, newProgramMapping);
-                newProgramMapping.created_at = createdAt;
-                newProgramMapping.created_by = createdBy;
+                _InReadUncommitedTransaction(context =>
+                {
+                    var recordsToInsert = newProgramMappings
+                        .Select(x =>
+                        {
+                            var newProgramMapping = new program_name_mappings();
+                            _MapFromDto(x, newProgramMapping);
+                            newProgramMapping.created_at = createdAt;
+                            newProgramMapping.created_by = createdBy;
+                            return newProgramMapping;
+                        })
+                        .ToList();
 
-                context.program_name_mappings.Add(newProgramMapping);
-                context.SaveChanges();
-
-                programMappingDto.Id = newProgramMapping.id;
-
-                return newProgramMapping.id;
-            });
+                    BulkInsert(context, recordsToInsert, propertiesToIgnore: new List<string> { "id" });
+                });
+            }
         }
 
-        public void UpdateProgramMapping(ProgramMappingsDto programMappingDto, string updatedBy, DateTime updatedAt)
+        public void UpdateProgramMappings(IEnumerable<ProgramMappingsDto> programMappings, string updatedBy, DateTime updatedAt)
         {
-            _InReadUncommitedTransaction(context =>
+            var chunks = programMappings.GetChunks(BroadcastConstants.DefaultDatabaseQueryChunkSize);
+
+            foreach (var chunk in chunks)
             {
-                var programMapping = context.program_name_mappings.Single(x => x.id == programMappingDto.Id, $"Program mapping not found with id: {programMappingDto.Id}");
+                _InReadUncommitedTransaction(c =>
+                {
+                    var modified_at_param = new SqlParameter("modified_at", SqlDbType.DateTime) { Value = updatedAt };
+                    var modified_by_param = new SqlParameter("modified_by", SqlDbType.VarChar) { Value = updatedBy };
 
-                programMapping.official_program_name = programMappingDto.OfficialProgramName;
-                programMapping.genre_id = programMappingDto.OfficialGenre.Id;
-                programMapping.show_type_id = programMappingDto.OfficialShowType.Id;
-                
-                programMapping.modified_by = updatedBy;
-                programMapping.modified_at = updatedAt;
+                    var update_requests = new DataTable();
+                    update_requests.Columns.Add("program_name_mapping_id");
+                    update_requests.Columns.Add("official_program_name");
+                    update_requests.Columns.Add("genre_id");
+                    update_requests.Columns.Add("show_type_id");
 
-                context.SaveChanges();
-            });
+                    chunk.ForEach(x => update_requests.Rows.Add(
+                        x.Id,
+                        x.OfficialProgramName,
+                        x.OfficialGenre.Id,
+                        x.OfficialShowType.Id));
+
+                    var update_requests_param = new SqlParameter("update_requests", SqlDbType.Structured) { Value = update_requests, TypeName = "ProgramMappingUpdateRequests" };
+
+                    var storedProcedureName = "[dbo].[usp_UpdateProgramNameMappings]";
+
+                    var command = c.Database.Connection.CreateCommand();
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = storedProcedureName;
+                    command.Parameters.Add(modified_at_param);
+                    command.Parameters.Add(modified_by_param);
+                    command.Parameters.Add(update_requests_param);
+                    command.CommandTimeout = 0; // This makes it infinite
+
+                    command.ExecuteNonQuery();
+                });
+
+
+                // Plan B
+                /*
+                var mappingById = chunk.ToDictionary(x => x.Id, x => x);
+                var mappingIds = chunk.Select(x => x.Id).ToList();
+
+                _InReadUncommitedTransaction(context =>
+                {
+                    var dbMappings = context.program_name_mappings.Where(x => mappingIds.Contains(x.id)).ToList();
+
+                    foreach (var dbMapping in dbMappings)
+                    {
+                        var programMapping = mappingById[dbMapping.id];
+
+                        dbMapping.official_program_name = programMapping.OfficialProgramName;
+                        dbMapping.genre_id = programMapping.OfficialGenre.Id;
+                        dbMapping.show_type_id = programMapping.OfficialShowType.Id;
+
+                        dbMapping.modified_by = updatedBy;
+                        dbMapping.modified_at = updatedAt;
+                    }
+
+                    context.SaveChanges();
+                });
+                */
+            }
         }
 
         /// <inheritdoc />

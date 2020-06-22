@@ -116,25 +116,6 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetManifestDaypartsForProgramName()
-        {
-            const string testProgramName = "News 10 @ Noon";
-            const string emptyTestProgramName = "";
-            var repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-            
-            var testResult = repo.GetManifestDaypartsForProgramName(testProgramName);
-            var emptyTestResult = repo.GetManifestDaypartsForProgramName(emptyTestProgramName);
-
-            var verifiable = new
-            {
-                testResult,
-                emptyTestResult
-            };
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(verifiable));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void GetInventoryByFileIdForProgramsProcessing()
         {
@@ -418,7 +399,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
             using (new TransactionScopeWrapper())
 	        {
-		        _ProgramMappingRepository.CreateProgramMapping(newProgramMapping, createdBy, createdAt);
+		        _ProgramMappingRepository.CreateProgramMappings(new List<ProgramMappingsDto> { newProgramMapping }, createdBy, createdAt);
                 /*** Act ***/
                  result = repo.GetOrphanedManifestDayparts();
                 

@@ -1,24 +1,26 @@
 ﻿{
-  "createdProgramMapping": {
-    "CreatedAt": null,
-    "CreatedBy": null,
-    "ModifiedAt": null,
-    "ModifiedBy": null,
-    "OfficialGenre": {
-      "Id": 1,
-      "Name": "News",
-      "ProgramSourceId": 1
-    },
-    "OfficialProgramName": "10 NEWS",
-    "OfficialShowType": {
-      "Id": 1,
-      "Name": "News"
-    },
-    "OriginalProgramName": "10 NEWS 6PM"
-  },
-  "savedPrimaryPrograms": [
+  "createdProgramMappings": [
     [
-      1
+      {
+        "CreatedAt": null,
+        "CreatedBy": null,
+        "ModifiedAt": null,
+        "ModifiedBy": null,
+        "OfficialGenre": {
+          "Id": 1,
+          "Name": "News",
+          "ProgramSourceId": 1
+        },
+        "OfficialProgramName": "10 NEWS",
+        "OfficialShowType": {
+          "Id": 1,
+          "Name": "News"
+        },
+        "OriginalProgramName": "10 NEWS 6PM"
+      }
     ]
+  ],
+  "updatedProgramMappings": [
+    []
   ]
 }
