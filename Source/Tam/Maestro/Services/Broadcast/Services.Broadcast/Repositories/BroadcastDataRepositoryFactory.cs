@@ -88,6 +88,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IInventorySummaryRepository, InventorySummaryRepository>();
             instance.RegisterType<IProgramRepository, ProgramRepository>();
             instance.RegisterType<IProgramMappingRepository, ProgramMappingRepository>();
+            instance.RegisterType<IProgramNameExceptionsRepository, ProgramNameExceptionsRepository>();
             instance.RegisterType<ICampaignRepository, CampaignRepository>();
             instance.RegisterType<IInventoryLogoRepository, InventoryLogoRepository>();
             instance.RegisterType<IScxGenerationJobRepository, ScxGenerationJobRepository>();

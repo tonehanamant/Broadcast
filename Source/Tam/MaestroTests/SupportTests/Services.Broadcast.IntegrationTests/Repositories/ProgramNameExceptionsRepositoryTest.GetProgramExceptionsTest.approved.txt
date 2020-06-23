@@ -1,0 +1,506 @@
+[
+  {
+    "CustomProgramName": "ABC PRIME ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 5,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "ACCESS & PRIME ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 6,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "ACCESS ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 7,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "ANIMATION ROTATOR",
+    "GenreId": 109,
+    "GenreName": "Animation",
+    "Id": 8,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "BOYS BASKETBALL",
+    "GenreId": 44,
+    "GenreName": "Sports",
+    "Id": 9,
+    "ShowTypeId": 10,
+    "ShowTypeName": "Sports"
+  },
+  {
+    "CustomProgramName": "BOYS HOCKEY",
+    "GenreId": 44,
+    "GenreName": "Sports",
+    "Id": 10,
+    "ShowTypeId": 10,
+    "ShowTypeName": "Sports"
+  },
+  {
+    "CustomProgramName": "CBS NEWS OVERNIGHT ROTATOR",
+    "GenreId": 34,
+    "GenreName": "News",
+    "Id": 11,
+    "ShowTypeId": 4,
+    "ShowTypeName": "News"
+  },
+  {
+    "CustomProgramName": "CHILDREN ROTATOR",
+    "GenreId": 52,
+    "GenreName": "Children",
+    "Id": 12,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "COMEDY ROTATOR",
+    "GenreId": 9,
+    "GenreName": "Comedy",
+    "Id": 13,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "CRIME DAYTIME ROTATOR",
+    "GenreId": 11,
+    "GenreName": "Crime",
+    "Id": 14,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "CRIME EARLY FRINGE ROTATOR",
+    "GenreId": 11,
+    "GenreName": "Crime",
+    "Id": 15,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "CRIME LATE FRINGE ROTATOR",
+    "GenreId": 11,
+    "GenreName": "Crime",
+    "Id": 16,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "CRIME ROTATOR",
+    "GenreId": 11,
+    "GenreName": "Crime",
+    "Id": 17,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "DAYTIME & EARLY FRINGE ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 18,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "DAYTIME ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 19,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "DAYTIME-EARLY FRINGE ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 20,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "DIRECT RESPONSE ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 21,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "DRAMA ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 22,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "EARLY & LATE FRINGE ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 23,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "EARLY FRINGE ACCESS ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 24,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "EARLY FRINGE ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 25,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "EARLY MORNING & DAYTIME ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 26,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "EARLY MORNING ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 27,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "EARLY NEWS ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 28,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "EVENING NEWS ACCESS ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 29,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "EVENING NEWS ROTATOR",
+    "GenreId": 34,
+    "GenreName": "News",
+    "Id": 30,
+    "ShowTypeId": 4,
+    "ShowTypeName": "News"
+  },
+  {
+    "CustomProgramName": "FRINGE ACCESS ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 31,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "FRINGE ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 32,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "Golf",
+    "GenreId": 44,
+    "GenreName": "Sports",
+    "Id": 1,
+    "ShowTypeId": 10,
+    "ShowTypeName": "Sports"
+  },
+  {
+    "CustomProgramName": "HOLIDAY ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 33,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "HOME IMPROVEMENT ROTATOR",
+    "GenreId": 26,
+    "GenreName": "Informational",
+    "Id": 34,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "LATE FRING & ACCESS ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 35,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "LATE FRINGE ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 36,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "LATE NIGHT ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 37,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "MOVIE ROTATOR",
+    "GenreId": 113,
+    "GenreName": "Movie",
+    "Id": 38,
+    "ShowTypeId": 3,
+    "ShowTypeName": "Movie"
+  },
+  {
+    "CustomProgramName": "NBA",
+    "GenreId": 44,
+    "GenreName": "Sports",
+    "Id": 2,
+    "ShowTypeId": 10,
+    "ShowTypeName": "Sports"
+  },
+  {
+    "CustomProgramName": "NFL",
+    "GenreId": 44,
+    "GenreName": "Sports",
+    "Id": 4,
+    "ShowTypeId": 10,
+    "ShowTypeName": "Sports"
+  },
+  {
+    "CustomProgramName": "NHL",
+    "GenreId": 44,
+    "GenreName": "Sports",
+    "Id": 3,
+    "ShowTypeId": 10,
+    "ShowTypeName": "Sports"
+  },
+  {
+    "CustomProgramName": "OVERNIGHT ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 39,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "PAID PROGRAMMING ROTATOR",
+    "GenreId": 55,
+    "GenreName": "Paid Program",
+    "Id": 40,
+    "ShowTypeId": 6,
+    "ShowTypeName": "Paid Programming"
+  },
+  {
+    "CustomProgramName": "PRIME ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 41,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "RELIGIOUS ROTATOR",
+    "GenreId": 40,
+    "GenreName": "Religious",
+    "Id": 42,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "ROS ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 43,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "ROTATORS",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 44,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "SKATING",
+    "GenreId": 44,
+    "GenreName": "Sports",
+    "Id": 45,
+    "ShowTypeId": 10,
+    "ShowTypeName": "Sports"
+  },
+  {
+    "CustomProgramName": "SOAPS ROTATOR",
+    "GenreId": 14,
+    "GenreName": "Drama",
+    "Id": 46,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "SPANISH MOVIE",
+    "GenreId": 113,
+    "GenreName": "Movie",
+    "Id": 47,
+    "ShowTypeId": 3,
+    "ShowTypeName": "Movie"
+  },
+  {
+    "CustomProgramName": "SPORTS ROTATOR",
+    "GenreId": 44,
+    "GenreName": "Sports",
+    "Id": 48,
+    "ShowTypeId": 10,
+    "ShowTypeName": "Sports"
+  },
+  {
+    "CustomProgramName": "SYNDICATION ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 49,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "TALK ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 50,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "UNMATCHED",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 63,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "WEEKEND ACCESS ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 51,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "WEEKEND DAYTIME ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 52,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "WEEKEND EARLY FRINGE & ACCESS ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 53,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "WEEKEND EARLY FRINGE ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 54,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "WEEKEND EARLY MORNING ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 55,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "WEEKEND LATE FRINGE ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 56,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "WEEKEND MOVIE ROTATOR",
+    "GenreId": 113,
+    "GenreName": "Movie",
+    "Id": 57,
+    "ShowTypeId": 3,
+    "ShowTypeName": "Movie"
+  },
+  {
+    "CustomProgramName": "WEEKEND PRIME ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 58,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "WEEKEND ROS ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 59,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "WEEKEND SPORTS ROTATOR",
+    "GenreId": 44,
+    "GenreName": "Sports",
+    "Id": 60,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "WNBA",
+    "GenreId": 44,
+    "GenreName": "Sports",
+    "Id": 61,
+    "ShowTypeId": 10,
+    "ShowTypeName": "Sports"
+  },
+  {
+    "CustomProgramName": "XFL",
+    "GenreId": 44,
+    "GenreName": "Sports",
+    "Id": 62,
+    "ShowTypeId": 10,
+    "ShowTypeName": "Sports"
+  }
+]

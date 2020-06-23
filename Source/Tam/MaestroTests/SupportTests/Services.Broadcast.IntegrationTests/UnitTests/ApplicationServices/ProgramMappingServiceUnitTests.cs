@@ -13,9 +13,14 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using Services.Broadcast.Cache;
+using Services.Broadcast.Clients;
+using Services.Broadcast.Entities.DTO.Program;
+using Services.Broadcast.Entities.ProgramMapping;
 using Services.Broadcast.IntegrationTests.Stubs;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -30,6 +35,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IInventoryRepository> _InventoryRepositoryMock;
         private Mock<IShowTypeRepository> _ShowTypeRepositoryMock;
         private Mock<ISharedFolderService> _SharedFolderServiceMock;
+        private Mock<IProgramNameExceptionsRepository> _ProgramNameExceptionRepositoryMock;
+        private Mock<IProgramsSearchApiClient> _ProgramsSearchApiClientMock;
 
         private IGenreCache _GenreCache;
         private IShowTypeCache _ShowTypeCache;
@@ -48,11 +55,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _SharedFolderServiceMock = new Mock<ISharedFolderService>();
             _GenreCache = new GenreCacheStub();
             _ShowTypeCache = new ShowTypeCacheStub();
+            _ProgramNameExceptionRepositoryMock = new Mock<IProgramNameExceptionsRepository>();
+            _ProgramsSearchApiClientMock = new Mock<IProgramsSearchApiClient>();
 
             // Setup common mocks
             _DataRepositoryFactoryMock
                 .Setup(s => s.GetDataRepository<IProgramMappingRepository>())
                 .Returns(_ProgramMappingRepositoryMock.Object);
+            _DataRepositoryFactoryMock
+                .Setup(s => s.GetDataRepository<IProgramNameExceptionsRepository>())
+                .Returns(_ProgramNameExceptionRepositoryMock.Object);
             _DataRepositoryFactoryMock
                 .Setup(s => s.GetDataRepository<IInventoryRepository>())
                 .Returns(_InventoryRepositoryMock.Object);
@@ -78,15 +90,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Name = showTypeName
                     };
                 });
-
+            _ShowTypeCache.GetShowTypeByName("Mini-Movie");
             // Setup the actual Program Mapping Service
             _ProgramMappingService = new ProgramMappingServiceTestClass(
                 _BackgroundJobClientMock.Object,
                 _DataRepositoryFactoryMock.Object,
                 _SharedFolderServiceMock.Object,
-                null, 
-                _GenreCache, 
-                _ShowTypeCache);
+                null,
+                _GenreCache,
+                _ShowTypeCache, _ProgramsSearchApiClientMock.Object);
         }
 
         [Test]
@@ -112,7 +124,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 {
                     createdProgramMappings.Add(mappings);
                 });
-
+            var programExceptions = new List<ProgramNameExceptionDto>
+            {
+                new ProgramNameExceptionDto
+                {
+                    CustomProgramName = "10 NEWS", ShowTypeName = "News", GenreName = "News"
+                }
+            };
+            _ProgramNameExceptionRepositoryMock
+                .Setup(s => s.GetProgramExceptions())
+                .Returns(programExceptions);
             var updatedProgramMappings = new List<IEnumerable<ProgramMappingsDto>>();
             _ProgramMappingRepositoryMock
                 .Setup(s => s.UpdateProgramMappings(It.IsAny<IEnumerable<ProgramMappingsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
@@ -171,7 +192,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         }
                     }
                 });
-
+            var programExceptions = new List<ProgramNameExceptionDto>
+            {
+                new ProgramNameExceptionDto
+                {
+                    CustomProgramName = "10 NEWS", ShowTypeName = "News", GenreName = "News"
+                }
+            };
+            _ProgramNameExceptionRepositoryMock
+                .Setup(s => s.GetProgramExceptions())
+                .Returns(programExceptions);
             var createdProgramMappings = new List<IEnumerable<ProgramMappingsDto>>();
             _ProgramMappingRepositoryMock
                 .Setup(s => s.CreateProgramMappings(It.IsAny<IEnumerable<ProgramMappingsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
@@ -214,7 +244,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new ProgramMappingsFileRequestDto { OriginalProgramName = "NBC 4 NEWS AT 5P WKND", OfficialProgramName = "NBC4 NEWS", OfficialGenre = "News", OfficialShowType = "News" },
                 new ProgramMappingsFileRequestDto { OriginalProgramName = "WVLT NEWS SUN 6:30P", OfficialProgramName = "WVLT NEWS", OfficialGenre = "News", OfficialShowType = "News" },
             };
-
+            var programExceptions = new List<ProgramNameExceptionDto>
+            {
+                new ProgramNameExceptionDto
+                {
+                    CustomProgramName = "10 NEWS", ShowTypeName = "News", GenreName = "News"
+                }
+            };
+            _ProgramNameExceptionRepositoryMock
+                .Setup(s => s.GetProgramExceptions())
+                .Returns(programExceptions);
             _ProgramMappingRepositoryMock
                 .Setup(x => x.GetProgramMappingsByOriginalProgramNames(It.IsAny<IEnumerable<string>>()))
                 .Returns(new List<ProgramMappingsDto>());
@@ -274,7 +313,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IInventoryRepository>())
                 .Returns(inventoryRepository.Object);
 
-            var sut = new ProgramMappingService(null, broadcastDataRepositoryFactory.Object, null, null, null, null);
+            var sut = new ProgramMappingService(null, broadcastDataRepositoryFactory.Object, null, null, null, null, null);
 
             var reportData = sut.GenerateUnmappedProgramNameReport();
             _WriteStream(reportData);
@@ -294,5 +333,209 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         destinationFileStream.WriteByte((byte)reportOutput.Stream.ReadByte());
                 }
         }
+        [Test]
+        public void LoadShowTypeTest_ExceptionPopulateShowType()
+        {
+            // Arrange
+            var programMappings = new List<ProgramMappingsFileRequestDto>
+            {
+                new ProgramMappingsFileRequestDto
+                {
+                    OriginalProgramName = "10 NEWS 6PM", OfficialProgramName = "10 NEWS", OfficialGenre = "News",
+                    OfficialShowType = "NA"
+                }
+            };
+            var programExceptions = new List<ProgramNameExceptionDto>
+            {
+                new ProgramNameExceptionDto
+                {
+                    CustomProgramName = "10 NEWS", ShowTypeName = "NewsException", GenreName = "News"
+                }
+            };
+            _ProgramNameExceptionRepositoryMock
+                .Setup(s => s.GetProgramExceptions())
+                .Returns(programExceptions);
+
+            // Act
+            _ProgramMappingService.UT_LoadShowTypes(programMappings);
+
+
+            // Assert
+            Assert.IsNotNull(programMappings);
+            Assert.AreEqual("NewsException", programMappings.FirstOrDefault().OfficialShowType);
+        }
+        [TestCase("Star", "APIExactMatch")]
+        [TestCase("Star T", "Series")]
+        [TestCase("ABC", "Miscellaneous")]
+        public void LoadShowTypeTest_API_PopulateShowType(string officialProgramName, string expected)
+        {
+            // Arrange
+            var programMappings = new List<ProgramMappingsFileRequestDto>
+            {
+                new ProgramMappingsFileRequestDto
+                {
+                    OfficialProgramName = officialProgramName, OfficialGenre = "Non-News", OfficialShowType = "NA"
+                }
+            };
+            var programExceptions = new List<ProgramNameExceptionDto>
+            {
+                new ProgramNameExceptionDto
+                {
+                    CustomProgramName = "10 NEWS", ShowTypeName = "News", GenreName = "News"
+                }
+            };
+            _ProgramNameExceptionRepositoryMock
+                .Setup(s => s.GetProgramExceptions())
+                .Returns(programExceptions);
+
+            var showTypes = new List<LookupDto>
+            {   new LookupDto{Id=1, Display = "News"},
+                new LookupDto{Id=2, Display = "APINoMatch"},
+                new LookupDto{Id=3, Display = "APISeriesMatch"},
+                new LookupDto{Id=3, Display = "APIExactMatch"},
+                new LookupDto{Id=4, Display = "NewsException"},
+
+            };
+            _ShowTypeRepositoryMock.Setup(s => s.GetShowTypes())
+                .Returns(showTypes);
+
+
+            _ProgramMappingService.UT_EnableInternalProgramSearch = false;
+
+            _ProgramsSearchApiClientMock.Setup(api => api.GetPrograms(It.IsAny<SearchRequestProgramDto>()))
+                .Returns(_Programs);
+
+
+            // Act
+            _ProgramMappingService.UT_LoadShowTypes(programMappings);
+
+
+            // Assert
+            //  Assert.IsNotNull(result);
+            Assert.AreEqual(expected, programMappings.FirstOrDefault().OfficialShowType);
+        }
+
+        [TestCase("ABC", "FileShowType", "FileShowType", true)]
+        [TestCase("ABC", "", "Miscellaneous", true)]
+        public void LoadShowTypeTest_EnableInternalProgramSearch_PopulateShowType_FromFile(string officialProgramName, string officialShowType, string expected, bool enableInternalPrgmSearch)
+        {
+            // Arrange
+            var programMappings = new List<ProgramMappingsFileRequestDto>
+            {
+                new ProgramMappingsFileRequestDto
+                {
+                    OfficialProgramName = officialProgramName, OfficialGenre = "News", OfficialShowType = officialShowType
+                }
+            };
+            var programExceptions = new List<ProgramNameExceptionDto>
+            {
+                new ProgramNameExceptionDto
+                {
+                    CustomProgramName = "10 NEWS", ShowTypeName = "News", GenreName = "News"
+                }
+            };
+            _ProgramNameExceptionRepositoryMock
+                .Setup(s => s.GetProgramExceptions())
+                .Returns(programExceptions);
+
+            _ProgramMappingService.UT_EnableInternalProgramSearch = enableInternalPrgmSearch;
+
+            _ProgramsSearchApiClientMock.Setup(api => api.GetPrograms(It.IsAny<SearchRequestProgramDto>()))
+                .Returns(_Programs);
+
+
+            // Act
+            _ProgramMappingService.UT_LoadShowTypes(programMappings);
+
+
+            // Assert
+            Assert.IsNotNull(programMappings);
+            Assert.AreEqual(expected, programMappings.FirstOrDefault().OfficialShowType);
+        }
+
+
+
+        private List<SearchProgramDativaResponseDto> _Programs = new List<SearchProgramDativaResponseDto>
+        {
+            new SearchProgramDativaResponseDto
+            {
+                ProgramId = "1",
+                ProgramName = "Star Trek Series",
+                Genre = "Non-News",
+                ShowType = "Series"
+
+            },
+            new SearchProgramDativaResponseDto
+            {
+                ProgramId = "2",
+                ProgramName = "Star Trek",
+                Genre = "Non-News",
+                ShowType = "Movies"
+            },
+            new SearchProgramDativaResponseDto
+            {
+                ProgramId = "3",
+                ProgramName = "10",
+                GenreId = "33",
+                Genre = "News",
+                ShowType = "APIExactMatch"
+            },
+            new SearchProgramDativaResponseDto
+            {
+                ProgramId = "4",
+                ProgramName = "ABC",
+                Genre = "Crime",
+                ShowType = "Movie"
+            },
+            new SearchProgramDativaResponseDto
+            {
+                ProgramId = "5",
+                ProgramName = "1917",
+                GenreId = "3",
+                Genre = "Drama",
+                ShowType = "Movie",
+                MpaaRating = "R",
+                SyndicationType = "Public broadcasting syndication"
+            },
+            new SearchProgramDativaResponseDto
+            {
+                ProgramId = "6",
+                ProgramName = "Mr. Jones",
+                GenreId = "3",
+                Genre = "Drama",
+                ShowType = "Movie",
+                MpaaRating = "R",
+                SyndicationType = "Public broadcasting syndication"
+            },
+            new SearchProgramDativaResponseDto
+            {
+                ProgramId = "7",
+                ProgramName = "black-ish",
+                GenreId = "8",
+                Genre = "comedy",
+                ShowType = "Series",
+                MpaaRating = "",
+                SyndicationType = "Public broadcasting syndication"
+            },
+            new SearchProgramDativaResponseDto
+            {
+                ProgramId = "8",
+                ProgramName = "black-ish",
+                GenreId = "8",
+                Genre = "comedy",
+                ShowType = "Series",
+                MpaaRating = "",
+                SyndicationType = "Non-Public broadcasting syndication"
+            },
+            new SearchProgramDativaResponseDto
+            {
+                ProgramId = "9",
+                ProgramName = "Star",
+                GenreId = "33",
+                Genre = "Non-News",
+                ShowType = "APIExactMatch"
+            },
+        };
     }
 }
+

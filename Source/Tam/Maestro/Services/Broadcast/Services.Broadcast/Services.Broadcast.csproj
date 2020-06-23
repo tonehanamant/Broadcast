@@ -612,6 +612,7 @@
     <Compile Include="Repositories\PlanRepository.cs" />
     <Compile Include="Repositories\PlanSummaryRepository.cs" />
     <Compile Include="Repositories\ProgramMappingRepository.cs" />
+    <Compile Include="Repositories\ProgramNameExceptionsRepository.cs" />
     <Compile Include="Repositories\ScxGenerationJobRepository.cs" />
     <Compile Include="ApplicationServices\ScxGenerationService.cs" />
     <Compile Include="BusinessEngines\InventorySummaryRatesGapEngine.cs" />
