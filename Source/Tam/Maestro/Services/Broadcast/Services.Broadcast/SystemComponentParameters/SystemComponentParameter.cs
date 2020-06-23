@@ -261,6 +261,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.MediaMonthCruchCacheSlidingExpirationSeconds); }
         }
 	 
+		public static int NumberOfFallbackQuartersForPricing  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<int>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.NumberOfFallbackQuartersForPricing); }
+        }
+	 
 		public static string PlanPricingAllocationsUrl  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>

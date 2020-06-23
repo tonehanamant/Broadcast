@@ -10,8 +10,6 @@ namespace Services.Broadcast.BusinessEngines
     {
         QuarterDetailDto GetPlanQuarter(PlanDto plan);
 
-        QuarterDetailDto GetInventoryFallbackQuarter();
-
         List<DateRange> GetFallbackDateRanges(DateRange activeDateRange, QuarterDetailDto planQuarter, QuarterDetailDto fallbackQuarter);
     }
 
@@ -30,14 +28,6 @@ namespace Services.Broadcast.BusinessEngines
         public QuarterDetailDto GetPlanQuarter(PlanDto plan)
         {
             return _QuarterCalculationEngine.GetQuarterRangeByDate(plan.FlightStartDate.Value);
-        }
-
-        public QuarterDetailDto GetInventoryFallbackQuarter()
-        {
-            // the Fallback Quarter is the Previous Quarter from the Current Quarter.
-            var currentQuarter = _QuarterCalculationEngine.GetQuarterRangeByDate(_GetCurrentDateTime());
-            var previousQuarter = _QuarterCalculationEngine.GetQuarterRangeByDate(currentQuarter.StartDate.AddDays(-7));
-            return previousQuarter;
         }
 
         public List<DateRange> GetFallbackDateRanges(DateRange activeDateRange, QuarterDetailDto planQuarter, QuarterDetailDto fallbackQuarter)

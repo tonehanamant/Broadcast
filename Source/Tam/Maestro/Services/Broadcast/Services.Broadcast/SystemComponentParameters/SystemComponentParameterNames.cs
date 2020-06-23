@@ -227,6 +227,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "MediaMonthCruchCacheSlidingExpirationSeconds"; }
         }
 	 
+		public static string NumberOfFallbackQuartersForPricing  
+		{
+            get { return "NumberOfFallbackQuartersForPricing"; }
+        }
+	 
 		public static string PlanPricingAllocationsUrl  
 		{
             get { return "PlanPricingAllocationsUrl"; }

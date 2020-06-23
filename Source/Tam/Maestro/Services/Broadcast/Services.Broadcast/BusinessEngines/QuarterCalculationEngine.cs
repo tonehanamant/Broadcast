@@ -18,6 +18,7 @@ namespace Services.Broadcast.BusinessEngines
         QuarterDetailDto GetQuarterDetail(int quarter, int year);
         List<QuarterDetailDto> GetQuartersForDateRanges(List<DateRange> dateRanges);
         DateRange GetQuarterDateRange(int? quarter, int? year);
+        List<QuarterDetailDto> GetLastNQuarters(QuarterDto quarter, int numberOfQuarters);
     }
 
     public class QuarterCalculationEngine : IQuarterCalculationEngine
@@ -232,6 +233,31 @@ namespace Services.Broadcast.BusinessEngines
             }
 
             return new DateRange(start, end);
+        }
+
+        public List<QuarterDetailDto> GetLastNQuarters(QuarterDto quarter, int numberOfQuarters)
+        {
+            var result = new List<QuarterDto>();
+            var currentQuarter = quarter;
+            var remainingQuarters = numberOfQuarters;
+
+            while (remainingQuarters > 0)
+            {
+                var previousQuarter = _GetPreviousQuarter(currentQuarter);
+
+                result.Add(previousQuarter);
+                remainingQuarters--;
+                currentQuarter = previousQuarter;
+            }
+
+            return result.Select(x => GetQuarterDetail(x.Quarter, x.Year)).ToList();
+        }
+
+        private QuarterDto _GetPreviousQuarter(QuarterDto currentQuarter)
+        {
+            return currentQuarter.Quarter == 1 ?
+                new QuarterDto { Year = currentQuarter.Year - 1, Quarter = 4 } :
+                new QuarterDto { Year = currentQuarter.Year, Quarter = currentQuarter.Quarter - 1 };
         }
     }
 }

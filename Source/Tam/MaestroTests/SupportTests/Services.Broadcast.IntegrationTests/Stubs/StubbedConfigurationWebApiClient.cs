@@ -100,13 +100,12 @@ namespace Services.Broadcast.IntegrationTests.Stubs
             {
                 return result;
             }
-            else
-            {
-                result = string.Empty;
-            }
             
             switch (parameterId)
             {
+                case "NumberOfFallbackQuartersForPricing":
+                    result = "8";
+                    break;
                 case "BroadcastSharedFolder":
                     result = @"\\cadfs11\Broadcast\IntegrationTests";
                     break;

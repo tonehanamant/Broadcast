@@ -2,7 +2,6 @@
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
@@ -31,7 +30,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
         private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
         private Mock<IImpressionsCalculationEngine> _ImpressionsCalculationEngineMock;
-        private Mock<IGenreCache> _GenreCacheMock;
         private Mock<IDayRepository> _DayRepositoryMock;
         private Mock<INtiToNsiConversionRepository> _NtiToNsiConversionRepositoryMock;
         private Mock<IPlanPricingInventoryQuarterCalculatorEngine> _PlanPricingInventoryQuarterCalculatorEngineMock;
@@ -39,13 +37,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         private Mock<IStationProgramRepository> _StationProgramRepositoryMock;
         private Mock<IStationRepository> _StationRepositoryMock;
         private Mock<IDaypartCache> _DaypartCacheMock;
+        private Mock<IQuarterCalculationEngine> _QuarterCalculationEngineMock;
 
         [SetUp]
         public void SetUp()
         {
             _DataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
             _ImpressionsCalculationEngineMock = new Mock<IImpressionsCalculationEngine>();
-            _GenreCacheMock = new Mock<IGenreCache>();
             _DayRepositoryMock = new Mock<IDayRepository>();
             _NtiToNsiConversionRepositoryMock = new Mock<INtiToNsiConversionRepository>();
             _PlanPricingInventoryQuarterCalculatorEngineMock = new Mock<IPlanPricingInventoryQuarterCalculatorEngine>();
@@ -55,6 +53,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _StationProgramRepositoryMock = new Mock<IStationProgramRepository>();
             _StationRepositoryMock = new Mock<IStationRepository>();
             _DaypartCacheMock = new Mock<IDaypartCache>();
+            _QuarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
 
             _DayRepositoryMock
                 .Setup(x => x.GetDays())
@@ -87,10 +86,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _PlanPricingInventoryEngine = new PlanPricingInventoryEngineTestClass(
                 _DataRepositoryFactoryMock.Object,
                 _ImpressionsCalculationEngineMock.Object,
-                _GenreCacheMock.Object,
                 _PlanPricingInventoryQuarterCalculatorEngineMock.Object,
                 _MediaMonthAndWeekAggregateCache,
-                _DaypartCacheMock.Object);
+                _DaypartCacheMock.Object,
+                _QuarterCalculationEngineMock.Object);
         }
 
         [Test]
@@ -1015,12 +1014,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 StartDate = new DateTime(2020, 09, 25),
                 EndDate = new DateTime(2020, 12, 27)
             };
-            var fallbackQuarter = new QuarterDetailDto
+            var fallbackQuarters = new List<QuarterDetailDto>
             {
-                Quarter = 4,
-                Year = 2019,
-                StartDate = new DateTime(2020, 09, 25),
-                EndDate = new DateTime(2020, 12, 27)
+                new QuarterDetailDto
+                {
+                    Quarter = 4,
+                    Year = 2019,
+                    StartDate = new DateTime(2020, 09, 25),
+                    EndDate = new DateTime(2020, 12, 27)
+                }
             };
             var fallbackDateRanges = new List<DateRange>() { flightDateRanges[0] };
             var availableMarkets = new List<short> { 1,2,3,4,5 };
@@ -1029,7 +1031,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var inventory = availableStations.Select(s =>
                    new PlanPricingInventoryProgram
                    {
-                       Station = new DisplayBroadcastStation { LegacyCallLetters = s.LegacyCallLetters },
+                       Station = new DisplayBroadcastStation { Id = s.Id, LegacyCallLetters = s.LegacyCallLetters },
                        ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
                    })
                 .ToList();
@@ -1048,7 +1050,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             /*** Act ***/
             var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, spotLengthId, supportedInventorySourceTypes,
-                availableMarkets, planQuarter, fallbackQuarter);
+                availableMarkets, planQuarter, fallbackQuarters);
 
             /*** Assert ***/
             Assert.AreEqual(6, result.Count);
@@ -1089,12 +1091,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 StartDate = new DateTime(2020, 09, 25),
                 EndDate = new DateTime(2020, 12, 27)
             };
-            var fallbackQuarter = new QuarterDetailDto
+            var fallbackQuarters = new List<QuarterDetailDto>
             {
-                Quarter = 4,
-                Year = 2019,
-                StartDate = new DateTime(2019, 10, 1),
-                EndDate = new DateTime(2019, 12, 31)
+                new QuarterDetailDto
+                {
+                    Quarter = 4,
+                    Year = 2019,
+                    StartDate = new DateTime(2020, 09, 25),
+                    EndDate = new DateTime(2020, 12, 27)
+                }
             };
             var fallbackDateRanges = new List<DateRange>() { flightDateRanges[0] };
 
@@ -1105,7 +1110,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             {
                 new PlanPricingInventoryProgram
                 {
-                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[0].LegacyCallLetters },
+                    Station = new DisplayBroadcastStation { Id = 1, LegacyCallLetters = availableStations[0].LegacyCallLetters },
                     ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
                     {
                         new PlanPricingInventoryProgram.ManifestWeek
@@ -1116,7 +1121,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 },
                 new PlanPricingInventoryProgram
                 {
-                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[1].LegacyCallLetters },
+                    Station = new DisplayBroadcastStation { Id = 2, LegacyCallLetters = availableStations[1].LegacyCallLetters },
                     ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
                     {
                         new PlanPricingInventoryProgram.ManifestWeek
@@ -1127,7 +1132,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 },
                 new PlanPricingInventoryProgram
                 {
-                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[2].LegacyCallLetters },
+                    Station = new DisplayBroadcastStation { Id = 3, LegacyCallLetters = availableStations[2].LegacyCallLetters },
                     ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
                     {
                         new PlanPricingInventoryProgram.ManifestWeek
@@ -1141,7 +1146,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             {
                 new PlanPricingInventoryProgram
                 {
-                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[3].LegacyCallLetters },
+                    Station = new DisplayBroadcastStation { Id = 4, LegacyCallLetters = availableStations[3].LegacyCallLetters },
                     ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
                     {
                         new PlanPricingInventoryProgram.ManifestWeek
@@ -1152,7 +1157,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 },
                 new PlanPricingInventoryProgram
                 {
-                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[4].LegacyCallLetters },
+                    Station = new DisplayBroadcastStation { Id = 5, LegacyCallLetters = availableStations[4].LegacyCallLetters },
                     ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
                     {
                         new PlanPricingInventoryProgram.ManifestWeek
@@ -1163,7 +1168,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 },
                 new PlanPricingInventoryProgram
                 {
-                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[5].LegacyCallLetters },
+                    Station = new DisplayBroadcastStation { Id = 6, LegacyCallLetters = availableStations[5].LegacyCallLetters },
                     ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
                     {
                         new PlanPricingInventoryProgram.ManifestWeek
@@ -1189,7 +1194,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             /*** Act ***/
             var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, spotLengthId, supportedInventorySourceTypes,
-                availableMarkets, planQuarter, fallbackQuarter);
+                availableMarkets, planQuarter, fallbackQuarters);
 
             /*** Assert ***/
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -1232,12 +1237,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 StartDate = new DateTime(2020, 09, 25),
                 EndDate = new DateTime(2020, 12, 27)
             };
-            var fallbackQuarter = new QuarterDetailDto
+            var fallbackQuarters = new List<QuarterDetailDto>
             {
-                Quarter = 4,
-                Year = 2019,
-                StartDate = new DateTime(2019, 10, 1),
-                EndDate = new DateTime(2019, 12, 31)
+                new QuarterDetailDto
+                {
+                    Quarter = 4,
+                    Year = 2019,
+                    StartDate = new DateTime(2020, 09, 25),
+                    EndDate = new DateTime(2020, 12, 27)
+                }
             };
             var fallbackDateRanges = new List<DateRange>() { flightDateRanges[0] };
 
@@ -1248,7 +1256,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             {
                 new PlanPricingInventoryProgram
                 {
-                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[0].LegacyCallLetters },
+                    Station = new DisplayBroadcastStation { Id = 1, LegacyCallLetters = availableStations[0].LegacyCallLetters },
                     ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
                     {
                         new PlanPricingInventoryProgram.ManifestWeek
@@ -1259,7 +1267,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 },
                 new PlanPricingInventoryProgram
                 {
-                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[1].LegacyCallLetters },
+                    Station = new DisplayBroadcastStation { Id = 2, LegacyCallLetters = availableStations[1].LegacyCallLetters },
                     ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
                     {
                         new PlanPricingInventoryProgram.ManifestWeek
@@ -1270,7 +1278,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 },
                 new PlanPricingInventoryProgram
                 {
-                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[2].LegacyCallLetters },
+                    Station = new DisplayBroadcastStation { Id = 3, LegacyCallLetters = availableStations[2].LegacyCallLetters },
                     ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
                     {
                         new PlanPricingInventoryProgram.ManifestWeek
@@ -1284,7 +1292,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             {
                 new PlanPricingInventoryProgram
                 {
-                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[3].LegacyCallLetters },
+                    Station = new DisplayBroadcastStation { Id = 4, LegacyCallLetters = availableStations[3].LegacyCallLetters },
                     ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
                     {
                         new PlanPricingInventoryProgram.ManifestWeek
@@ -1295,7 +1303,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 },
                 new PlanPricingInventoryProgram
                 {
-                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[4].LegacyCallLetters },
+                    Station = new DisplayBroadcastStation { Id = 5, LegacyCallLetters = availableStations[4].LegacyCallLetters },
                     ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
                     {
                         new PlanPricingInventoryProgram.ManifestWeek
@@ -1306,7 +1314,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 },
                 new PlanPricingInventoryProgram
                 {
-                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[5].LegacyCallLetters },
+                    Station = new DisplayBroadcastStation { Id = 6, LegacyCallLetters = availableStations[5].LegacyCallLetters },
                     ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
                     {
                         new PlanPricingInventoryProgram.ManifestWeek
@@ -1322,8 +1330,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             _PlanPricingInventoryQuarterCalculatorEngineMock.Setup(s => s.GetPlanQuarter(It.IsAny<PlanDto>()))
                 .Returns(planQuarter);
-            _PlanPricingInventoryQuarterCalculatorEngineMock.Setup(s => s.GetInventoryFallbackQuarter())
-                .Returns(fallbackQuarter);
             _PlanPricingInventoryQuarterCalculatorEngineMock.Setup(s => s.GetFallbackDateRanges(It.IsAny<DateRange>(),
                     It.IsAny<QuarterDetailDto>(), It.IsAny<QuarterDetailDto>()))
                 .Returns(fallbackDateRanges);
@@ -1338,7 +1344,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             /*** Act ***/
             var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, spotLengthId, supportedInventorySourceTypes,
-                availableMarkets, planQuarter, fallbackQuarter);
+                availableMarkets, planQuarter, fallbackQuarters);
 
             /*** Assert ***/
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -1375,12 +1381,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 StartDate = new DateTime(2020, 09, 25),
                 EndDate = new DateTime(2020, 12, 27)
             };
-            var fallbackQuarter = new QuarterDetailDto
+            var fallbackQuarters = new List<QuarterDetailDto>
             {
-                Quarter = 4,
-                Year = 2019,
-                StartDate = new DateTime(2020, 09, 25),
-                EndDate = new DateTime(2020, 12, 27)
+                new QuarterDetailDto
+                {
+                    Quarter = 4,
+                    Year = 2019,
+                    StartDate = new DateTime(2020, 09, 25),
+                    EndDate = new DateTime(2020, 12, 27)
+                }
             };
             var fallbackDateRanges = new List<DateRange>() { flightDateRanges[0] };
             var availableMarkets = new List<short> { 1, 2, 3, 4, 5 };
@@ -1390,17 +1399,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             {
                 new PlanPricingInventoryProgram
                 {
-                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[0].LegacyCallLetters },
+                    Station = new DisplayBroadcastStation { Id = 1, LegacyCallLetters = availableStations[0].LegacyCallLetters },
                     ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
                 },
                 new PlanPricingInventoryProgram
                 {
-                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[1].LegacyCallLetters },
+                    Station = new DisplayBroadcastStation { Id = 2, LegacyCallLetters = availableStations[1].LegacyCallLetters },
                     ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
                 },
                 new PlanPricingInventoryProgram
                 {
-                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[2].LegacyCallLetters },
+                    Station = new DisplayBroadcastStation { Id = 3, LegacyCallLetters = availableStations[2].LegacyCallLetters },
                     ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
                 }
             };
@@ -1408,12 +1417,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             {
                 new PlanPricingInventoryProgram
                 {
-                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[3].LegacyCallLetters },
+                    Station = new DisplayBroadcastStation { Id = 4, LegacyCallLetters = availableStations[3].LegacyCallLetters },
                     ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
                 },
                 new PlanPricingInventoryProgram
                 {
-                    Station = new DisplayBroadcastStation { LegacyCallLetters = availableStations[4].LegacyCallLetters },
+                    Station = new DisplayBroadcastStation { Id = 5, LegacyCallLetters = availableStations[4].LegacyCallLetters },
                     ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
                 }
             };
@@ -1433,7 +1442,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             /*** Act ***/
             var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, spotLengthId, supportedInventorySourceTypes,
-                availableMarkets, planQuarter, fallbackQuarter);
+                availableMarkets, planQuarter, fallbackQuarters);
 
             /*** Assert ***/
             Assert.AreEqual(5, result.Count);
@@ -1454,7 +1463,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 for (var j = 1; j <= stationsPerMarket; j++)
                 {
                     var stationName = $"ST{(++stationId).ToString().PadLeft(2, '0')}";
-                    availableStations.Add(new DisplayBroadcastStation { LegacyCallLetters = stationName, MarketCode = j });
+                    availableStations.Add(new DisplayBroadcastStation { Id = stationId, LegacyCallLetters = stationName, MarketCode = j });
                 }
             }
 
@@ -1631,12 +1640,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     EndDate = new DateTime(2020, 3, 31)
                 });
 
-            _PlanPricingInventoryQuarterCalculatorEngineMock
-                .Setup(x => x.GetInventoryFallbackQuarter())
-                .Returns(new QuarterDetailDto
+            _QuarterCalculationEngineMock
+                .Setup(x => x.GetLastNQuarters(It.IsAny<QuarterDto>(), It.IsAny<int>()))
+                .Returns(new List<QuarterDetailDto>
                 {
-                    StartDate = new DateTime(2020, 4, 1),
-                    EndDate = new DateTime(2020, 6, 30)
+                    new QuarterDetailDto
+                    {
+                        StartDate = new DateTime(2020, 4, 1),
+                        EndDate = new DateTime(2020, 6, 30)
+                    }
                 });
 
             _StationRepositoryMock
@@ -1661,12 +1673,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Callback<IEnumerable<PlanPricingInventoryProgram>, ImpressionsRequestDto, int>((programs, request, audienceId) =>
                 {
                     // deep copy
-                    passedParameters = JsonConvert.DeserializeObject((JsonConvert.SerializeObject(new
+                    passedParameters = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(new
                     {
                         programs,
                         request,
                         audienceId
-                    })));
+                    }));
 
                     foreach (var program in programs)
                     {
@@ -1757,12 +1769,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     EndDate = new DateTime(2020, 3, 31)
                 });
 
-            _PlanPricingInventoryQuarterCalculatorEngineMock
-                .Setup(x => x.GetInventoryFallbackQuarter())
-                .Returns(new QuarterDetailDto
+            _QuarterCalculationEngineMock
+                .Setup(x => x.GetLastNQuarters(It.IsAny<QuarterDto>(), It.IsAny<int>()))
+                .Returns(new List<QuarterDetailDto>
                 {
-                    StartDate = new DateTime(2020, 4, 1),
-                    EndDate = new DateTime(2020, 6, 30)
+                    new QuarterDetailDto
+                    {
+                        StartDate = new DateTime(2020, 4, 1),
+                        EndDate = new DateTime(2020, 6, 30)
+                    }
                 });
 
             _StationRepositoryMock

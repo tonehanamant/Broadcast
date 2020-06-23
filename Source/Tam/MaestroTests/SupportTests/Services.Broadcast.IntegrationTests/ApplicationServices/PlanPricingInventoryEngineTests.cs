@@ -35,7 +35,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
-        public void RunNoDataTest()
+        public void GetsFallbackInventoryForPricing()
         {
             using (new TransactionScopeWrapper())
             {
@@ -56,7 +56,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        public void RunTest()
+        public void GetsInventoryForPricing()
         {
             using (new TransactionScopeWrapper())
             {

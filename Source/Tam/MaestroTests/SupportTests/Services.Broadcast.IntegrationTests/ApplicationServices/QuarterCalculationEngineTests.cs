@@ -1,6 +1,9 @@
-﻿using NUnit.Framework;
+﻿using ApprovalTests;
+using ApprovalTests.Reporters;
+using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using System;
 
@@ -42,6 +45,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Assert.AreEqual(quarterDetails.StartDate, new DateTime(2016, 12, 26));
             Assert.AreEqual(quarterDetails.EndDate, new DateTime(2017, 3, 26, 23, 59, 59));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetLastNQuartersTest()
+        {
+            var result = _Sut.GetLastNQuarters(new QuarterDto { Year = 2020, Quarter = 1 }, 8);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
     }
 }

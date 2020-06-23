@@ -221,32 +221,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Assert.AreEqual(2020, result.Year);
         }
 
-        /// <summary>
-        /// Test we get the expected fallback quarter for the 'current date';
-        /// </summary>
-        /// <remarks>
-        ///     Scenario : Current date is Q1 2020.
-        ///     Expected : Q4 2019 is returned.
-        /// </remarks>
-        [Test]
-        public void GetInventoryFallbackQuarter()
-        {
-            /*** Arrange ***/
-            var quartersData = _GetQuartersData();
-            _QuarterCalculationEngine.Setup(s => s.GetQuarterRangeByDate(It.IsAny<DateTime>()))
-                .Returns<DateTime>((d) => quartersData.First(s => d >= s.StartDate && d <= s.EndDate));
-
-            var engine = _GetEngine();
-            engine.UT_CurrentDateTime = new DateTime(2020, 1, 1);
-
-            /*** Act ***/
-            var result = engine.GetInventoryFallbackQuarter();
-
-            /*** Assert ***/
-            Assert.AreEqual(4, result.Quarter);
-            Assert.AreEqual(2019, result.Year);
-        }
-
         private PlanPricingInventoryQuarterCalculatorEngineTestClass _GetEngine()
         {
             var engine = new PlanPricingInventoryQuarterCalculatorEngineTestClass(_QuarterCalculationEngine.Object,

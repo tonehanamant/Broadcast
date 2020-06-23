@@ -15,17 +15,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         public PlanPricingInventoryEngineTestClass(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IImpressionsCalculationEngine impressionsCalculationEngine,
-            IGenreCache genreCache,
             IPlanPricingInventoryQuarterCalculatorEngine planPricingInventoryQuarterCalculatorEngine,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-            IDaypartCache daypartCache)
+            IDaypartCache daypartCache,
+            IQuarterCalculationEngine quarterCalculationEngine)
             : base(
                   broadcastDataRepositoryFactory, 
-                  impressionsCalculationEngine, 
-                  genreCache,
+                  impressionsCalculationEngine,
                   planPricingInventoryQuarterCalculatorEngine,
                   mediaMonthAndWeekAggregateCache,
-                  daypartCache)
+                  daypartCache,
+                  quarterCalculationEngine)
         {
         }
 
@@ -63,10 +63,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             ApplyNTIConversionToNSI(plan, programs, planDisplayDaypartDays);
         }
 
-        public List<PlanPricingInventoryProgram> UT_GetFullPrograms(List<DateRange> dateRanges, int spotLengthId,
-            List<int> supportedInventorySourceTypes, List<short> availableMarkets, QuarterDetailDto planQuarter, QuarterDetailDto fallbackQuarter)
+        public List<PlanPricingInventoryProgram> UT_GetFullPrograms(
+            List<DateRange> dateRanges, 
+            int spotLengthId,
+            List<int> supportedInventorySourceTypes, 
+            List<short> availableMarkets, 
+            QuarterDetailDto planQuarter, 
+            List<QuarterDetailDto> fallbackQuarters)
         {
-            return _GetFullPrograms(dateRanges, spotLengthId, supportedInventorySourceTypes, availableMarkets, planQuarter, fallbackQuarter);
+            return _GetFullPrograms(dateRanges, spotLengthId, supportedInventorySourceTypes, availableMarkets, planQuarter, fallbackQuarters);
         }
     }
 }
