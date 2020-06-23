@@ -112,5 +112,12 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPlanPricingDefaults());
         }
+
+        [HttpGet]
+        [Route("Stations/{planId}")]
+        public BaseResponse<PlanPricingStationResultDto> GetStations(int planId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetStations(planId));
+        }
     }
 }

@@ -22,9 +22,10 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="geographyNames">Geography names of markets</param>
         List<market> GetMarketsByGeographyNames(IEnumerable<string> geographyNames);
+        LookupDto GetMarket(int marketCode);
     }
 
-    public class MarketRepository: BroadcastRepositoryBase, IMarketRepository
+    public class MarketRepository : BroadcastRepositoryBase, IMarketRepository
     {
         public MarketRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
@@ -43,7 +44,7 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context => (
                     from m in context.markets
-                    select new LookupDto(){Display = m.geography_name, Id = m.market_code}).ToList());
+                    select new LookupDto() { Display = m.geography_name, Id = m.market_code }).ToList());
         }
 
         public List<market> GetMarketsByMarketCodes(List<int> marketCodes)
@@ -55,6 +56,12 @@ namespace Services.Broadcast.Repositories
                      select m).ToList());
         }
 
+        public LookupDto GetMarket(int marketCode)
+        {
+            return _ConvertToLookupDto(_InReadUncommitedTransaction(
+                context => context.markets.Single(m => m.market_code == marketCode)));
+        }
+
         public List<market> GetMarketsByGeographyNames(IEnumerable<string> geographyNames)
         {
             return _InReadUncommitedTransaction(
@@ -63,5 +70,14 @@ namespace Services.Broadcast.Repositories
                      where geographyNames.Contains(m.geography_name)
                      select m).ToList());
         }
-    }    
+
+        private LookupDto _ConvertToLookupDto(market market)
+        {
+            if (market == null)
+                return null;
+
+            return new LookupDto(market.market_code, market.geography_name);
+        }
+
+    }
 }

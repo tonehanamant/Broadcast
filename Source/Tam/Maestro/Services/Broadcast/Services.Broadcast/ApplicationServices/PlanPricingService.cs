@@ -1,6 +1,7 @@
 ﻿using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using EntityFrameworkMapping.Broadcast;
 using Hangfire;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Clients;
@@ -98,6 +99,8 @@ namespace Services.Broadcast.ApplicationServices
 
         PricingProgramsResultDto GetPrograms(int planId);
 
+        PlanPricingStationResultDto GetStations(int planId);
+
         PlanPricingBandDto GetPricingBands(int planId);
     }
 
@@ -121,6 +124,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
         private readonly IPlanPricingBandCalculationEngine _PlanPricingBandCalculationEngine;
+        private readonly IPlanPricingStationCalculationEngine _PlanPricingStationCalculationEngine;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -132,7 +136,8 @@ namespace Services.Broadcast.ApplicationServices
                                   IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
                                   IDateTimeEngine dateTimeEngine,
                                   IWeeklyBreakdownEngine weeklyBreakdownEngine,
-                                  IPlanPricingBandCalculationEngine planPricingBandCalculationEngine)
+                                  IPlanPricingBandCalculationEngine planPricingBandCalculationEngine,
+                                  IPlanPricingStationCalculationEngine planPricingStationCalculationEngine)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
@@ -152,6 +157,7 @@ namespace Services.Broadcast.ApplicationServices
             _DateTimeEngine = dateTimeEngine;
             _WeeklyBreakdownEngine = weeklyBreakdownEngine;
             _PlanPricingBandCalculationEngine = planPricingBandCalculationEngine;
+            _PlanPricingStationCalculationEngine = planPricingStationCalculationEngine;
         }
 
         public ReportOutput GeneratePricingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)
@@ -308,45 +314,45 @@ namespace Services.Broadcast.ApplicationServices
 
         public CurrentPricingExecution GetCurrentPricingExecution(int planId)
         {
-	        var job = _PlanRepository.GetLatestPricingJob(planId);
-	        CurrentPricingExecutionResultDto pricingExecutionResult = null;
+            var job = _PlanRepository.GetLatestPricingJob(planId);
+            CurrentPricingExecutionResultDto pricingExecutionResult = null;
 
-	        if (job != null && job.Status == BackgroundJobProcessingStatus.Failed)
-	        {
-		        //in case the error is comming from the Pricing Run model, the error message field will have better
-		        //message then the generic we construct here
-		        if (string.IsNullOrWhiteSpace(job.DiagnosticResult))
-			        throw new Exception(job.ErrorMessage);
-		        throw new Exception(
-			        "Error encountered while running Pricing Model, please contact a system administrator for help");
-	        }
+            if (job != null && job.Status == BackgroundJobProcessingStatus.Failed)
+            {
+                //in case the error is comming from the Pricing Run model, the error message field will have better
+                //message then the generic we construct here
+                if (string.IsNullOrWhiteSpace(job.DiagnosticResult))
+                    throw new Exception(job.ErrorMessage);
+                throw new Exception(
+                    "Error encountered while running Pricing Model, please contact a system administrator for help");
+            }
 
-	        if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
-	        {
-		        pricingExecutionResult = _PlanRepository.GetPricingResults(planId);
+            if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
+            {
+                pricingExecutionResult = _PlanRepository.GetPricingResults(planId);
 
-		        if (pricingExecutionResult != null)
-		        {
-			        pricingExecutionResult.Notes = pricingExecutionResult.GoalFulfilledByProprietary
-				        ? "Proprietary goals meet plan goals"
-				        : string.Empty;
-			        if (pricingExecutionResult.JobId.HasValue)
-			        {
-				        var goalCpm = _PlanRepository.GetGoalCpm(pricingExecutionResult.PlanVersionId,
-					        pricingExecutionResult.JobId.Value);
-				        pricingExecutionResult.CpmPercentage =
-					        CalculateCpmPercentage(pricingExecutionResult.OptimalCpm, goalCpm);
-			        }
-		        }
-	        }
+                if (pricingExecutionResult != null)
+                {
+                    pricingExecutionResult.Notes = pricingExecutionResult.GoalFulfilledByProprietary
+                        ? "Proprietary goals meet plan goals"
+                        : string.Empty;
+                    if (pricingExecutionResult.JobId.HasValue)
+                    {
+                        var goalCpm = _PlanRepository.GetGoalCpm(pricingExecutionResult.PlanVersionId,
+                            pricingExecutionResult.JobId.Value);
+                        pricingExecutionResult.CpmPercentage =
+                            CalculateCpmPercentage(pricingExecutionResult.OptimalCpm, goalCpm);
+                    }
+                }
+            }
 
-	        //pricingExecutionResult might be null when there is no pricing run for the latest version            
-	        return new CurrentPricingExecution
-	        {
-		        Job = job,
-		        Result = pricingExecutionResult ?? new CurrentPricingExecutionResultDto(),
-		        IsPricingModelRunning = IsPricingModelRunning(job)
-	        };
+            //pricingExecutionResult might be null when there is no pricing run for the latest version            
+            return new CurrentPricingExecution
+            {
+                Job = job,
+                Result = pricingExecutionResult ?? new CurrentPricingExecutionResultDto(),
+                IsPricingModelRunning = IsPricingModelRunning(job)
+            };
         }
         /// <summary>
         /// Goal CPM Percentage Indicator Calculation
@@ -356,7 +362,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns></returns>
         public int CalculateCpmPercentage(decimal optimalCpm, decimal goalCpm)
         {
-	        return (int) Math.Round(GeneralMath.ConvertFractionToPercentage(optimalCpm / goalCpm));
+            return (int)Math.Round(GeneralMath.ConvertFractionToPercentage(optimalCpm / goalCpm));
         }
 
         /// <inheritdoc />
@@ -385,12 +391,12 @@ namespace Services.Broadcast.ApplicationServices
                     _LogError($"Exception caught attempting to delete hangfire job '{job.HangfireJobId}'.", ex);
                 }
             }
-            
+
             job.Status = BackgroundJobProcessingStatus.Canceled;
             job.Completed = _GetCurrentDateTime();
 
             _PlanRepository.UpdatePlanPricingJob(job);
-       
+
             return new PlanPricingResponseDto
             {
                 Job = job,
@@ -433,7 +439,7 @@ namespace Services.Broadcast.ApplicationServices
 
                     if (program.SpotCost <= 0)
                         continue;
-                    
+
                     //filter out skipped weeks
                     var spots = program.ManifestWeeks
                         .Where(x => !skippedWeeksIds.Contains(x.ContractMediaWeekId))
@@ -492,7 +498,7 @@ namespace Services.Broadcast.ApplicationServices
                     SkippedWeeksIds.Add(mediaWeekId);
                     continue;
                 }
-                
+
                 var estimatesForWeek = proprietaryEstimates.Where(x => x.MediaWeekId == mediaWeekId);
                 var estimatedImpressions = estimatesForWeek.Sum(x => x.Impressions);
                 var estimatedCost = estimatesForWeek.Sum(x => x.Cost);
@@ -590,7 +596,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private MarketCoverageDto _GetTopMarkets(PricingMarketGroupEnum pricingMarketSovMinimum)
         {
-            switch(pricingMarketSovMinimum)
+            switch (pricingMarketSovMinimum)
             {
                 case PricingMarketGroupEnum.Top100:
                     return _MarketCoverageRepository.GetLatestTop100MarketCoverages();
@@ -730,7 +736,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 token.ThrowIfCancellationRequested();
 
-                var aggregateResultsTask = new Task<PlanPricingResultBaseDto>(() => 
+                var aggregateResultsTask = new Task<PlanPricingResultBaseDto>(() =>
                 {
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
                     var aggregatedResults = _AggregateResults(inventory, allocationResult, goalsFulfilledByProprietaryInventory);
@@ -746,8 +752,17 @@ namespace Services.Broadcast.ApplicationServices
                     return pricingBands;
                 });
 
+                var calculatePricingStationsTask = new Task<PlanPricingStationResultDto>(() =>
+                {
+                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_STATIONS);
+                    var pricingStations = _PlanPricingStationCalculationEngine.Calculate(inventory, allocationResult, planPricingParametersDto);
+                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_STATIONS);
+                    return pricingStations;
+                });
+
                 aggregateResultsTask.Start();
                 calculatePricingBandsTask.Start();
+                calculatePricingStationsTask.Start();
 
                 token.ThrowIfCancellationRequested();
 
@@ -756,6 +771,9 @@ namespace Services.Broadcast.ApplicationServices
 
                 calculatePricingBandsTask.Wait();
                 var calculatePricingBandTaskResult = calculatePricingBandsTask.Result;
+
+                calculatePricingStationsTask.Wait();
+                var calculatePricingStationTaskResult = calculatePricingStationsTask.Result;
 
                 using (var transaction = new TransactionScopeWrapper())
                 {
@@ -770,6 +788,11 @@ namespace Services.Broadcast.ApplicationServices
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_BANDS);
                     _PlanRepository.SavePlanPricingBands(calculatePricingBandTaskResult);
                     diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_BANDS);
+
+                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_STATIONS);
+                    _PlanRepository.SavePlanPricingStations(calculatePricingStationTaskResult);
+                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_STATIONS);
+
 
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
                     var pricingJob = _PlanRepository.GetPlanPricingJob(jobId);
@@ -1099,7 +1122,7 @@ namespace Services.Broadcast.ApplicationServices
                 throw new Exception(msg);
             }
         }
-        
+
         private PlanPricingResultBaseDto _AggregateResults(
             List<PlanPricingInventoryProgram> inventory,
             PlanPricingAllocationResult apiResponse,
@@ -1349,11 +1372,36 @@ namespace Services.Broadcast.ApplicationServices
             return results;
         }
 
+        public PlanPricingStationResultDto GetStations(int planId)
+        {
+            var job = _PlanRepository.GetLatestPricingJob(planId);
+            if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
+                return null;
+
+            var result = _PlanRepository.GetPricingStationsResult(planId);
+            if (result == null)
+                return null;
+
+            _ConvertPricingStationResultDtoToUserFormat(result);
+
+            return result;
+        }
+
+        private void _ConvertPricingStationResultDtoToUserFormat(PlanPricingStationResultDto results)
+        {
+            results.Totals.Impressions /= 1000;
+
+            foreach (var band in results.Stations)
+            {
+                band.Impressions /= 1000;
+            }
+        }
+
         private void _ConvertPricingBandImpressionsToUserFormat(PlanPricingBandDto results)
         {
             results.Totals.Impressions /= 1000;
 
-            foreach(var band in results.Bands)
+            foreach (var band in results.Bands)
             {
                 band.Impressions /= 1000;
                 band.ImpressionsPercentage *= 100;

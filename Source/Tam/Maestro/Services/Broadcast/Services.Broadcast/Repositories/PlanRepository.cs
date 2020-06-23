@@ -140,14 +140,18 @@ namespace Services.Broadcast.Repositories
 
         PlanPricingBandDto GetPlanPricingBand(int planId);
 
-        void SavePlanPricingBands(PlanPricingBandDto planPricingBandDto);        
-      /// <summary>
-      /// Get Goal CPM value
-      /// </summary>
-      /// <param name="planVersionId"></param>
-      /// <param name="jobId"></param>
-      /// <returns></returns>
+        void SavePlanPricingBands(PlanPricingBandDto planPricingBandDto);
+        /// <summary>
+        /// Get Goal CPM value
+        /// </summary>
+        /// <param name="planVersionId"></param>
+        /// <param name="jobId"></param>
+        /// <returns></returns>
         decimal GetGoalCpm(int planVersionId, int jobId);
+
+        PlanPricingStationResultDto GetPricingStationsResult(int planId);
+
+        void SavePlanPricingStations(PlanPricingStationResultDto planPricingStationResultDto);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -1460,7 +1464,7 @@ namespace Services.Broadcast.Repositories
                     {
                         Cpm = result.total_cpm,
                         Budget = result.total_budget,
-                        Impressions = result.total_impressions, 
+                        Impressions = result.total_impressions,
                         Spots = result.total_spots
                     },
                     Bands = result.plan_version_pricing_band_details.Select(r => new PlanPricingBandDetailDto
@@ -1493,7 +1497,7 @@ namespace Services.Broadcast.Repositories
                     total_spots = planPricingBandDto.Totals.Spots
                 };
 
-                foreach(var bandDto in planPricingBandDto.Bands)
+                foreach (var bandDto in planPricingBandDto.Bands)
                 {
                     var band = new plan_version_pricing_band_details
                     {
@@ -1511,6 +1515,43 @@ namespace Services.Broadcast.Repositories
                 }
 
                 context.plan_version_pricing_bands.Add(planPricingBand);
+
+                context.SaveChanges();
+            });
+        }
+
+        public void SavePlanPricingStations(PlanPricingStationResultDto planPricingStationResultDto)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var planVersionPricingStation = new plan_version_pricing_stations
+                {
+                    plan_version_id = planPricingStationResultDto.PlanVersionId,
+                    plan_version_pricing_job_id = planPricingStationResultDto.JobId,
+                    total_budget = planPricingStationResultDto.Totals.Budget,
+                    total_cpm = planPricingStationResultDto.Totals.Cpm,
+                    total_impressions = planPricingStationResultDto.Totals.Impressions,
+                    total_spots = planPricingStationResultDto.Totals.Spots,
+                    total_stations = planPricingStationResultDto.Totals.Station,
+                };
+
+                foreach (var stationDto in planPricingStationResultDto.Stations)
+                {
+                    var station = new plan_version_pricing_station_details
+                    {
+                        cpm = stationDto.Cpm,
+                        budget = stationDto.Budget,
+                        spots = stationDto.Spots,
+                        impressions = stationDto.Impressions,
+                        impressions_percentage = stationDto.ImpressionsPercentage,
+                        market = stationDto.Market,
+                        station = stationDto.Station,
+                    };
+
+                    planVersionPricingStation.plan_version_pricing_station_details.Add(station);
+                }
+
+                context.plan_version_pricing_stations.Add(planVersionPricingStation);
 
                 context.SaveChanges();
             });
@@ -1650,16 +1691,56 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        public PlanPricingStationResultDto GetPricingStationsResult(int planId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var plan = context.plans.Single(x => x.id == planId);
+                var planVersionId = plan.latest_version_id;
+
+                var result = context.plan_version_pricing_stations.Include(p => p.plan_version_pricing_station_details).Where(p => p.plan_version_id == planVersionId).OrderByDescending(p => p.id).FirstOrDefault();
+                if (result == null)
+                    return null;
+
+                return new PlanPricingStationResultDto
+                {
+                    Id = result.id,
+                    JobId = result.plan_version_pricing_job_id,
+                    PlanVersionId = result.plan_version_id,
+                    Totals = new PlanPricingStationTotalsDto
+                    {
+                        Budget = result.total_budget,
+                        Cpm = result.total_cpm,
+                        Impressions = result.total_impressions,
+                        ImpressionsPercentage = 100,
+                        Spots = result.total_spots,
+                        Station = result.total_stations
+                    },
+                    Stations = result.plan_version_pricing_station_details.Select(d => new PlanPricingStationDto
+                    {
+                        Budget = d.budget,
+                        Cpm = d.cpm,
+                        Impressions = d.impressions,
+                        Id = d.id,
+                        ImpressionsPercentage = d.impressions_percentage,
+                        Market = d.market,
+                        Spots = d.spots,
+                        Station = d.station
+                    }).OrderByDescending(p => p.ImpressionsPercentage).ToList()
+                };
+            });
+        }
+
         public decimal GetGoalCpm(int planVersionId, int jobId)
         {
-	        return _InReadUncommitedTransaction(context =>
-	        {
-		        var result = context.plan_version_pricing_parameters.Where(p =>
-				        p.plan_version_id == planVersionId && p.plan_version_pricing_job_id == jobId)
-			        .Select(p => p.cpm_goal).FirstOrDefault();
+            return _InReadUncommitedTransaction(context =>
+            {
+                var result = context.plan_version_pricing_parameters.Where(p =>
+                        p.plan_version_id == planVersionId && p.plan_version_pricing_job_id == jobId)
+                    .Select(p => p.cpm_goal).FirstOrDefault();
 
-		        return result;
-	        });
+                return result;
+            });
         }
         public void SavePlanPricingEstimates(int jobId, List<PricingEstimate> estimates)
         {

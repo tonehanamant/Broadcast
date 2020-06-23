@@ -1,0 +1,35 @@
+{
+  "Id": 0,
+  "JobId": 51,
+  "PlanVersionId": 15,
+  "Stations": [
+    {
+      "Budget": 77.5,
+      "Cpm": 31.000,
+      "Id": 0,
+      "Impressions": 2500.0,
+      "ImpressionsPercentage": 52.63157895,
+      "Market": "New York",
+      "Spots": 5,
+      "Station": "KOB"
+    },
+    {
+      "Budget": 29.97,
+      "Cpm": 13.32000,
+      "Id": 0,
+      "Impressions": 2250.0,
+      "ImpressionsPercentage": 47.36842105,
+      "Market": "Las Vegas",
+      "Spots": 3,
+      "Station": "KOTA"
+    }
+  ],
+  "Totals": {
+    "Budget": 107.47,
+    "Cpm": 22.625263157894736842105263200,
+    "Impressions": 4750.0,
+    "ImpressionsPercentage": 100.0,
+    "Spots": 8,
+    "Station": 2
+  }
+}

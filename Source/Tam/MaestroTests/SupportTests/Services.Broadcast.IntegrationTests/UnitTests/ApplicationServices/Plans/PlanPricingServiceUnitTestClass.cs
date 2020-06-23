@@ -20,7 +20,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                   IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
                                   IDateTimeEngine dateTimeEngine,
                                   IWeeklyBreakdownEngine weeklyBreakdownEngine,
-                                  IPlanPricingBandCalculationEngine planPricingBandCalculationEngine)
+                                  IPlanPricingBandCalculationEngine planPricingBandCalculationEngine,
+                                  IPlanPricingStationCalculationEngine planPricingStationCalculationEngine)
         : base(
             broadcastDataRepositoryFactory,
             spotLengthEngine,
@@ -32,8 +33,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             mediaMonthAndWeekAggregateCache,
             dateTimeEngine,
             weeklyBreakdownEngine,
-            planPricingBandCalculationEngine
-            )
+            planPricingBandCalculationEngine,
+            planPricingStationCalculationEngine)
         {
             
         }

@@ -1160,6 +1160,57 @@ END
 
 /*************************************** END BP1-678 *****************************************************/
 
+/*************************************** START - BP1-24 ****************************************************/
+IF OBJECT_ID('plan_version_pricing_stations') IS NULL
+BEGIN
+
+	CREATE TABLE [plan_version_pricing_stations] (
+		[id] INT NOT NULL IDENTITY(1,1),
+		[plan_version_id] INT NOT NULL,
+		[plan_version_pricing_job_id] INT NULL,
+		[total_spots] INT NOT NULL,
+		[total_impressions] FLOAT NOT NULL,
+		[total_cpm] MONEY NOT NULL,
+		[total_budget] MONEY NOT NULL,
+		[total_stations] INT NOT NULL,
+		CONSTRAINT [PK_plan_version_pricing_stations] PRIMARY KEY ([id])
+	)
+
+	ALTER TABLE [dbo].[plan_version_pricing_stations] WITH CHECK ADD CONSTRAINT [FK_plan_versions_plan_version_pricing_stations] FOREIGN KEY ([plan_version_id]) 
+	REFERENCES [dbo].[plan_versions]([id])
+	ALTER TABLE [dbo].[plan_version_pricing_stations] CHECK CONSTRAINT [FK_plan_versions_plan_version_pricing_stations]
+
+	ALTER TABLE [dbo].[plan_version_pricing_stations] WITH CHECK ADD CONSTRAINT [FK_plan_version_pricing_job_plan_version_pricing_stations] FOREIGN KEY ([plan_version_pricing_job_id]) 
+	REFERENCES [dbo].[plan_version_pricing_job]([id])
+	ALTER TABLE [dbo].[plan_version_pricing_stations] CHECK CONSTRAINT [FK_plan_version_pricing_job_plan_version_pricing_stations]
+
+END
+
+
+IF OBJECT_ID('plan_version_pricing_station_details') IS NULL
+BEGIN
+
+	CREATE TABLE [plan_version_pricing_station_details] (
+		[id] INT NOT NULL IDENTITY(1,1),
+		[plan_version_pricing_station_id] INT NOT NULL,
+		[station] VARCHAR(15) NOT NULL,
+		[market] VARCHAR(31) NOT NULL,
+		[spots] INT NOT NULL,
+		[impressions] FLOAT NOT NULL,
+		[cpm] MONEY NOT NULL,
+		[budget] MONEY NOT NULL,
+		[impressions_percentage] FLOAT NOT NULL,
+		CONSTRAINT [PK_plan_version_pricing_station_details] PRIMARY KEY ([id])
+	)
+
+	ALTER TABLE [dbo].[plan_version_pricing_station_details] WITH CHECK ADD CONSTRAINT [FK_plan_version_pricing_stations_plan_version_pricing_station_details] FOREIGN KEY ([plan_version_pricing_station_id]) 
+	REFERENCES [dbo].[plan_version_pricing_stations]([id]) ON DELETE CASCADE
+	ALTER TABLE [dbo].[plan_version_pricing_station_details] CHECK CONSTRAINT [FK_plan_version_pricing_stations_plan_version_pricing_station_details]
+	CREATE NONCLUSTERED  INDEX [IX_plan_version_pricing_station_details_plan_version_pricing_station_id] ON [dbo].[plan_version_pricing_station_details] ([plan_version_pricing_station_id])
+END
+/*************************************** END - BP1-24 ****************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

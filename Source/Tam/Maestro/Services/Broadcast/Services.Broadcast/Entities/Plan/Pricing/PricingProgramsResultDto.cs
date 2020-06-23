@@ -2,7 +2,6 @@
 
 namespace Services.Broadcast.Entities.Plan.Pricing
 {
-
     public class PricingProgramsResultDto
     {
         public PricingProgramsResultDto()

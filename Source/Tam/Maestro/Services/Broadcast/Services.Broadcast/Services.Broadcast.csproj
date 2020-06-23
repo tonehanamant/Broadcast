@@ -322,6 +322,7 @@
     <Compile Include="ApplicationServices\VpvhService.cs" />
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsRepairEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricingBandCalculationEngine.cs" />
+    <Compile Include="BusinessEngines\PlanPricingStationCalculationEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricingUnitCapImpressionsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\ProgramNameMappingsExportEngine.cs" />
     <Compile Include="BusinessEngines\VpvhExportEngine.cs" />
@@ -455,6 +456,7 @@
     <Compile Include="Entities\Nti\NtiUniverseHeader.cs" />
     <Compile Include="Entities\Plan\LengthMakeUpRequest.cs" />
     <Compile Include="Entities\Plan\LengthMakeUpTableRow.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingStationResultDto.cs" />
     <Compile Include="Entities\ProgramMapping\ProgramNameExceptionDto.cs" />
     <Compile Include="Entities\ProgramMapping\ProgramNameMappingDto.cs" />
     <Compile Include="Entities\ProgramMapping\UnMappedProgramNameReportData.cs" />

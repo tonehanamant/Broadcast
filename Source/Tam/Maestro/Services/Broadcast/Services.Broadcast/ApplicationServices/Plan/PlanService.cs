@@ -272,7 +272,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 // Running price job on plan creation/edits/saves its temporary disabled
                 _SetPlanPricingParameters(plan);
                 _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
-                //_PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate);
+                //_PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate, createdBy);
             }
 
             return plan.Id;
