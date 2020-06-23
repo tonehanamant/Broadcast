@@ -39,8 +39,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CalculatePlanWeeklyGoalBreakdown_Even_Success_Test()
-        {
+        public void PlanWeeklyGoalBreakdown_Even_Success_Test()
+        {//CalculatePlanWeeklyGoalBreakdown_Even_Success_Test
             //Arrange
             var request = _GetWeeklyBreakDownEvenRequest();
             var mockedListMediaWeeksByFlight = _GetDisplayMediaWeeks_Even();
@@ -57,8 +57,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CalculatePlanWeeklyGoalBreakdown_Custom_Updated_Impressions_Success_Test()
-        {
+        public void WeeklyBreakdown_UpdatedImpressions_Success()
+        {//CalculatePlanWeeklyGoalBreakdown_Custom_Updated_Impressions_Success_Test
             //Arrange
             var request = _GetWeeklyBreakDownRequest();
 
@@ -132,7 +132,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CalculatePlanWeeklyGoalBreakdown_Custom_Updated_Ratings_Success_Test()
+        public void PlanWeeklyBreakdown_UpdatedRatingsSuccess()
         {
             //Arrange
             var request = _GetWeeklyBreakDownRequest();
@@ -168,7 +168,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CalculatesInitialPlanWeeklyBreakdown_ForCustomByWeekByAdLengthDeliveryType()
+        public void InitialWeeklyBreakdown_ForCustomByWeekByAdLength()
         {
             //Arrange
             var request = _GetWeeklyBreakdownRequest_CustomByWeekByAdLengthDeliveryType();
@@ -189,7 +189,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RecalculatesPlanWeeklyBreakdown_ForCustomByWeekByAdLengthDeliveryType()
+        public void RecalculatesWeeklyBreakdown_CustomByAdLength()
         {
             //Arrange
             var request = _GetWeeklyBreakdownRequest_CustomByWeekByAdLengthDeliveryType();
@@ -256,7 +256,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void RecalculatesPlanWeeklyBreakdown_CustomByWeekByAdLengthDeliveryType()
+        public void WeeklyBreakdown_UpdatedFirstWeek()
         {
             //Arrange
             var request = _GetWeeklyBreakdownRequest_CustomByWeekByAdLengthDeliveryType();

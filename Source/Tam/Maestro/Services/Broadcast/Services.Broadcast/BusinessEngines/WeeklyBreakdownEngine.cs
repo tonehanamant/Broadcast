@@ -115,11 +115,15 @@ namespace Services.Broadcast.BusinessEngines
             {
                 if (request.Equivalized)
                 {
-                    double weekSpotLengthMultiplier = week.SpotLengthId.HasValue
-                        ? _SpotLengthMultiplier.Single(x => x.Key == week.SpotLengthId).Value
-                        : _CreativeLengthEngine.CalculateDeliveryMultipliers(request.CreativeLengths);
-
-                    week.WeeklyUnits = week.WeeklyImpressions / (request.ImpressionsPerUnit * weekSpotLengthMultiplier);
+                    if (week.SpotLengthId.HasValue)
+                    {
+                        week.WeeklyUnits = _CalculateUnitsForSingleSpotLength(request.ImpressionsPerUnit, week);
+                    }
+                    else
+                    {
+                        request.CreativeLengths = _CreativeLengthEngine.DistributeWeight(request.CreativeLengths);
+                        week.WeeklyUnits = _CalculateUnitsForMultipleSpotLengths(request, week);
+                    }
                 }
                 else
                 {
@@ -127,7 +131,6 @@ namespace Services.Broadcast.BusinessEngines
                 }
             }
         }
-
 
         private List<DateTime> _GetDaysOutsideOfTheFlight(DateTime flightStartDate, DateTime flightEndDate, List<DisplayMediaWeek> weeks)
         {
@@ -363,11 +366,14 @@ namespace Services.Broadcast.BusinessEngines
                     case WeeklyBreakdownCalculationFrom.Units:
                         if (request.Equivalized)
                         {
-                            double weekSpotLengthMultiplier = week.SpotLengthId.HasValue
-                                ? _SpotLengthMultiplier.Single(x => x.Key == week.SpotLengthId).Value
-                                : _CreativeLengthEngine.CalculateDeliveryMultipliers(request.CreativeLengths);
-
-                            week.WeeklyImpressions = week.WeeklyUnits * (request.ImpressionsPerUnit * weekSpotLengthMultiplier);
+                            if (week.SpotLengthId.HasValue)
+                            {
+                                week.WeeklyImpressions = _CalculateImpressionsForSingleSpotLength(request.ImpressionsPerUnit, week);
+                            }
+                            else
+                            {
+                                week.WeeklyImpressions = _CalculateImpressionsForMultipleSpotLengths(request, week);
+                            }
                         }
                         else
                         {
@@ -715,8 +721,8 @@ namespace Services.Broadcast.BusinessEngines
                         Impressions = weekImpressions,
                         Budget = allItems.Sum(x => x.WeeklyBudget),
                         Adu = (int)(allItems.Sum(x => x.AduImpressions) / BroadcastConstants.ImpressionsPerUnit),
-                        Units = unitsImpressions == 0 
-                            ? 0 
+                        Units = unitsImpressions == 0
+                            ? 0
                             : weekImpressions / unitsImpressions
                     };
                 }).ToList();
@@ -782,6 +788,35 @@ namespace Services.Broadcast.BusinessEngines
                     StadardDaypartId: x.DaypartCodeId,
                     WeightingGoalPercent: weightingGoalPercentByStandardDaypartIdDictionary[x.DaypartCodeId]))
                 .ToList();
+        }
+
+        private double _CalculateImpressionsForMultipleSpotLengths(WeeklyBreakdownRequest request, WeeklyBreakdownWeek week)
+        {
+            return request.CreativeLengths
+                .Sum(p => week.WeeklyUnits * _CalculateEquivalizedImpressionsPerUnit(request.ImpressionsPerUnit, p.SpotLengthId)
+                            * GeneralMath.ConvertPercentageToFraction(p.Weight.Value));
+        }
+
+        private double _CalculateImpressionsForSingleSpotLength(double impressionPerUnit, WeeklyBreakdownWeek week)
+        {
+            return week.WeeklyUnits * _CalculateEquivalizedImpressionsPerUnit(impressionPerUnit, week.SpotLengthId.Value);
+        }
+
+        private double _CalculateEquivalizedImpressionsPerUnit(double impressionPerUnit, int spotLengthId)
+        {
+            return impressionPerUnit * _SpotLengthMultiplier[spotLengthId];
+        }
+
+        private double _CalculateUnitsForMultipleSpotLengths(WeeklyBreakdownRequest request, WeeklyBreakdownWeek week)
+        {
+            return request.CreativeLengths
+                   .Sum(p => week.WeeklyImpressions * GeneralMath.ConvertPercentageToFraction(p.Weight.Value)
+                   / _CalculateEquivalizedImpressionsPerUnit(request.ImpressionsPerUnit, p.SpotLengthId));
+        }
+
+        private double _CalculateUnitsForSingleSpotLength(double impressionsPerUnit, WeeklyBreakdownWeek week)
+        {
+            return week.WeeklyImpressions / _CalculateEquivalizedImpressionsPerUnit(impressionsPerUnit, week.SpotLengthId.Value);
         }
     }
 }
