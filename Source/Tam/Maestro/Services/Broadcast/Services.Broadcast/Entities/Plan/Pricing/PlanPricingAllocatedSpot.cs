@@ -1,4 +1,5 @@
-﻿using Tam.Maestro.Data.Entities;
+﻿using System;
+using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.Entities.Plan.Pricing
 {
@@ -10,6 +11,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public MediaWeek ContractMediaWeek { get; set; }
         public double Impressions { get; set; }
         public decimal SpotCost { get; set; }
+        public decimal SpotCostWithMargin { get; set; }
         public int Spots { get; set; }
         public DaypartDefaultDto StandardDaypart { get; set; }
 
@@ -18,6 +20,14 @@ namespace Services.Broadcast.Entities.Plan.Pricing
             get
             {
                 return SpotCost * Spots;
+            }
+        }
+
+        public decimal TotalCostWithMargin
+        {
+            get
+            {
+                return SpotCostWithMargin * Spots;
             }
         }
 

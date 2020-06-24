@@ -25,6 +25,7 @@
           "IsDirty": true
         },
         "SpotCost": 50.0,
+        "SpotCostWithMargin": 62.5,
         "Spots": 1,
         "StandardDaypart": {
           "Code": "AMN",
@@ -34,6 +35,7 @@
         },
         "StationInventoryManifestId": 0,
         "TotalCost": 50.0,
+        "TotalCostWithMargin": 62.5,
         "TotalImpressions": 1000.0
       },
       {
@@ -56,6 +58,7 @@
           "IsDirty": true
         },
         "SpotCost": 50.0,
+        "SpotCostWithMargin": 62.5,
         "Spots": 2,
         "StandardDaypart": {
           "Code": "AMN",
@@ -65,6 +68,7 @@
         },
         "StationInventoryManifestId": 0,
         "TotalCost": 100.0,
+        "TotalCostWithMargin": 125.0,
         "TotalImpressions": 2000.0
       },
       {
@@ -87,6 +91,7 @@
           "IsDirty": true
         },
         "SpotCost": 60.0,
+        "SpotCostWithMargin": 75.0,
         "Spots": 3,
         "StandardDaypart": {
           "Code": "PMN",
@@ -96,6 +101,7 @@
         },
         "StationInventoryManifestId": 0,
         "TotalCost": 180.0,
+        "TotalCostWithMargin": 225.0,
         "TotalImpressions": 4500.0
       }
     ]

@@ -725,7 +725,7 @@ namespace Services.Broadcast.ApplicationServices
 
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_VALIDATING_AND_MAPPING_API_RESPONSE);
 
-                    allocationResult.Spots = _MapToResultSpots(apiAllocationResult, pricingApiRequest, inventory);
+                    allocationResult.Spots = _MapToResultSpots(apiAllocationResult, pricingApiRequest, inventory, programInventoryParameters);
                     allocationResult.RequestId = apiAllocationResult.RequestId;
                 }
 
@@ -1078,7 +1078,9 @@ namespace Services.Broadcast.ApplicationServices
         private List<PlanPricingAllocatedSpot> _MapToResultSpots(
             PlanPricingApiSpotsResponseDto apiSpotsResults,
             PlanPricingApiRequestDto pricingApiRequest,
-            List<PlanPricingInventoryProgram> inventoryPrograms)
+            List<PlanPricingInventoryProgram> inventoryPrograms,
+            ProgramInventoryOptionalParametersDto programInventoryParameters
+            )
         {
             var results = new List<PlanPricingAllocatedSpot>();
             var daypartDefaultsById = _DaypartDefaultRepository
@@ -1101,6 +1103,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     Id = originalSpot.Id,
                     SpotCost = originalSpot.Cost,
+                    SpotCostWithMargin = GeneralMath.CalculateCostWithMargin(originalSpot.Cost, programInventoryParameters.Margin),
                     StandardDaypart = daypartDefaultsById[originalSpot.DaypartId],
                     Impressions = originalSpot.Impressions,
                     ContractMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.ContractMediaWeekId),
@@ -1247,16 +1250,10 @@ namespace Services.Broadcast.ApplicationServices
             totalProgramSpots = 0;
 
             foreach (var apiProgram in allocatedProgramSpots)
-            {
-                var spots = apiProgram.Spots;
-                var spotCost = apiProgram.SpotCost;
-                var totalCost = spots * spotCost;
-                var impressionsPerSpot = apiProgram.Impressions;
-                var totalImpressions = spots * impressionsPerSpot;
-
-                totalProgramCost += totalCost;
-                totalProgramImpressions += totalImpressions;
-                totalProgramSpots += spots;
+            { 
+                totalProgramCost += apiProgram.TotalCostWithMargin;
+                totalProgramImpressions += apiProgram.TotalImpressions;
+                totalProgramSpots += apiProgram.Spots;
             }
         }
 

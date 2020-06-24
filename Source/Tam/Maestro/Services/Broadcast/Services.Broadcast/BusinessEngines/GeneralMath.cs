@@ -1,4 +1,6 @@
-﻿namespace Services.Broadcast.BusinessEngines
+﻿using System;
+
+namespace Services.Broadcast.BusinessEngines
 {
     public static class GeneralMath
     {
@@ -21,9 +23,17 @@
         {
             return fraction * 100;
         }
+
         public static decimal ConvertFractionToPercentage(decimal fraction)
         {
 	        return fraction * 100;
+        }
+
+        public static decimal CalculateCostWithMargin(decimal cost, double? margin)
+        {
+            if (!margin.HasValue)
+                return cost;
+            return cost / (decimal)(1.0 - (margin / 100.0));
         }
     }
 }

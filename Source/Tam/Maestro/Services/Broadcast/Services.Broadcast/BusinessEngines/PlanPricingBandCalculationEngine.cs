@@ -129,16 +129,12 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach(var spot in allocationResult.Spots)
             {
-                var inventoryProgram = inventory.Single(x => x.ManifestId == spot.Id);
-                var totalCost = spot.Spots * spot.SpotCost;                
-                var totalImpressions = spot.Spots * spot.Impressions;
-
                 var pricingProgram = new PlanPricingProgram
                 {
-                    AvgImpressions = ProposalMath.CalculateAvgImpressions(totalImpressions, spot.Spots),
-                    AvgCpm = ProposalMath.CalculateCpm(totalCost, totalImpressions),
-                    TotalImpressions = totalImpressions,
-                    TotalCost = totalCost,
+                    AvgImpressions = ProposalMath.CalculateAvgImpressions(spot.TotalImpressions, spot.Spots),
+                    AvgCpm = ProposalMath.CalculateCpm(spot.TotalCostWithMargin, spot.TotalImpressions),
+                    TotalImpressions = spot.TotalImpressions,
+                    TotalCost = spot.TotalCostWithMargin,
                     TotalSpots = spot.Spots
                 };
 

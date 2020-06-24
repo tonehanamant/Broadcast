@@ -523,7 +523,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
 
-                var result = _PlanPricingService.GetPricingBands(planPricingRequestDto.PlanId);
+                var bands = _PlanPricingService.GetPricingBands(planPricingRequestDto.PlanId);
+                var result = _PlanPricingService.GetCurrentPricingExecution(planPricingRequestDto.PlanId);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingBandDto), "Id");
@@ -535,7 +536,37 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ContractResolver = jsonResolver
                 };
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+                Assert.AreEqual(result.Result.OptimalCpm, bands.Totals.Cpm);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(bands, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetProgramsTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planPricingRequestDto = _GetPricingRequestDto();
+
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+
+                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+
+                var programs = _PlanPricingService.GetPrograms(planPricingRequestDto.PlanId);
+                var result = _PlanPricingService.GetCurrentPricingExecution(planPricingRequestDto.PlanId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingProgramProgramDto), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Assert.AreEqual(result.Result.OptimalCpm, programs.Totals.AvgCpm);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(programs, jsonSettings));
             }
         }
 
@@ -556,6 +587,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 UnitCaps = 10,
                 UnitCapsType = UnitCapEnum.PerDay,
                 MarketGroup = PricingMarketGroupEnum.None,
+                Margin = 20,
                 InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                     {
                         new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},

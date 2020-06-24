@@ -6,7 +6,7 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 0.5000,
+      "MaxBand": 0.0016,
       "MinBand": null,
       "Spots": 0
     },
@@ -16,8 +16,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 1.8571,
-      "MinBand": 0.5000,
+      "MaxBand": 0.0059,
+      "MinBand": 0.0016,
       "Spots": 0
     },
     {
@@ -26,8 +26,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 3.2142,
-      "MinBand": 1.8571,
+      "MaxBand": 0.0102,
+      "MinBand": 0.0059,
       "Spots": 0
     },
     {
@@ -36,8 +36,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 4.5714,
-      "MinBand": 3.2142,
+      "MaxBand": 0.0146,
+      "MinBand": 0.0102,
       "Spots": 0
     },
     {
@@ -46,8 +46,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 5.9285,
-      "MinBand": 4.5714,
+      "MaxBand": 0.0189,
+      "MinBand": 0.0146,
       "Spots": 0
     },
     {
@@ -56,8 +56,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 7.2857,
-      "MinBand": 5.9285,
+      "MaxBand": 0.0233,
+      "MinBand": 0.0189,
       "Spots": 0
     },
     {
@@ -66,8 +66,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 8.6428,
-      "MinBand": 7.2857,
+      "MaxBand": 0.0276,
+      "MinBand": 0.0233,
       "Spots": 0
     },
     {
@@ -76,25 +76,25 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 10.0000,
-      "MinBand": 8.6428,
+      "MaxBand": 0.0319,
+      "MinBand": 0.0276,
       "Spots": 0
     },
     {
       "AvailableInventoryPercent": 807.47126437,
-      "Budget": 18522.1500,
-      "Cpm": 15.5094,
+      "Budget": 23152.6875,
+      "Cpm": 19.3868,
       "Impressions": 1194.25,
       "ImpressionsPercentage": 10000.0,
       "MaxBand": null,
-      "MinBand": 10.0000,
+      "MinBand": 0.0320,
       "Spots": 45
     }
   ],
   "PlanVersionId": 0,
   "Totals": {
-    "Budget": 18522.1500,
-    "Cpm": 15.5094,
+    "Budget": 23152.6875,
+    "Cpm": 19.3868,
     "Impressions": 1194.25,
     "Spots": 45
   }

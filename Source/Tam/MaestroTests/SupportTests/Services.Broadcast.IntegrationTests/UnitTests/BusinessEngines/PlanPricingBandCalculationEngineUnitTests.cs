@@ -24,6 +24,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void CalculatePricingBandTest()
         {
             var inventory = _GetInventory();
@@ -41,13 +42,52 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         Id = 1,
                         Spots = 10,
                         Impressions = 5000,
-                        SpotCost = 50
+                        SpotCost = 50,
+                        SpotCostWithMargin = 50
                     }
                 }
             };
 
             var parameters = new PlanPricingParametersDto
             {
+                AdjustedCPM = 10,
+                UnitCaps = 10,
+                UnitCapsType = UnitCapEnum.PerHour
+            };
+
+            var bands = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(bands));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CalculatePricingBandTest_VerifyMarginUsage()
+        {
+            var inventory = _GetInventory();
+
+            var allocationResult = new PlanPricingAllocationResult()
+            {
+                JobId = 1,
+                PlanVersionId = 1,
+                PricingCpm = 10,
+                RequestId = "750f2c26-b011-4be9-b766-70a655c73a5e",
+                Spots = new List<PlanPricingAllocatedSpot>
+                {
+                    new PlanPricingAllocatedSpot
+                    {
+                        Id = 1,
+                        Spots = 10,
+                        Impressions = 5000,
+                        SpotCost = 50,
+                        SpotCostWithMargin = 51
+                    }
+                }
+            };
+
+            var parameters = new PlanPricingParametersDto
+            {
+                Margin = 2,
                 AdjustedCPM = 10,
                 UnitCaps = 10,
                 UnitCapsType = UnitCapEnum.PerHour
@@ -76,7 +116,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         Id = 1,
                         Spots = 10,
                         Impressions = 5000,
-                        SpotCost = 50
+                        SpotCost = 50,
+                        SpotCostWithMargin = 50
                     }
                 }
             };
@@ -111,7 +152,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         Id = 1,
                         Spots = 10,
                         Impressions = 5000,
-                        SpotCost = 50
+                        SpotCost = 50,
+                        SpotCostWithMargin = 50
                     }
                 }
             };
@@ -146,7 +188,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         Id = 1,
                         Spots = 10,
                         Impressions = 5000,
-                        SpotCost = 50
+                        SpotCost = 50,
+                        SpotCostWithMargin = 50
                     }
                 }
             };
@@ -181,7 +224,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         Id = 1,
                         Spots = 10,
                         Impressions = 1000,
-                        SpotCost = 50
+                        SpotCost = 50,
+                        SpotCostWithMargin = 50
                     }
                 }
             };
@@ -217,7 +261,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         Id = 1,
                         Spots = 1,
                         Impressions = 1000,
-                        SpotCost = 7
+                        SpotCost = 7,
+                        SpotCostWithMargin = 7
                     }
                 }
             };
@@ -253,7 +298,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         Id = 1,
                         Spots = 1,
                         Impressions = 1000,
-                        SpotCost = 7
+                        SpotCost = 7,
+                        SpotCostWithMargin = 7
                     }
                 }
             };

@@ -1,0 +1,38 @@
+{
+  "Programs": [
+    {
+      "AvgCpm": 19.0702,
+      "AvgImpressions": 47.43,
+      "Budget": 22612.5000,
+      "Genre": "Children",
+      "Impressions": 1185.75,
+      "ImpressionsPercentage": 99.28825623,
+      "MarketCount": 1,
+      "ProgramName": "Early news",
+      "Spots": 25,
+      "StationCount": 1
+    },
+    {
+      "AvgCpm": 63.5515,
+      "AvgImpressions": 0.425,
+      "Budget": 540.1875,
+      "Genre": "Comedy",
+      "Impressions": 8.5,
+      "ImpressionsPercentage": 0.71174377,
+      "MarketCount": 1,
+      "ProgramName": "Late news",
+      "Spots": 20,
+      "StationCount": 1
+    }
+  ],
+  "Totals": {
+    "AvgCpm": 19.3868,
+    "AvgImpressions": 26.53888889,
+    "Budget": 23152.6875,
+    "Impressions": 1194.25,
+    "ImpressionsPercentage": 100.0,
+    "MarketCount": 2,
+    "Spots": 45,
+    "StationCount": 2
+  }
+}

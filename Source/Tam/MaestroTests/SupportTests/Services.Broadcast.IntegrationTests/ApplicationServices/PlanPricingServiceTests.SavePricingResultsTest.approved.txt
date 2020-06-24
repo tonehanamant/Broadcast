@@ -22,6 +22,7 @@
         "IsDirty": true
       },
       "SpotCost": 753.7500,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -31,6 +32,7 @@
       },
       "StationInventoryManifestId": 287146,
       "TotalCost": 753.7500,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 58650.0
     },
     {
@@ -52,6 +54,7 @@
         "IsDirty": true
       },
       "SpotCost": 753.7500,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -61,6 +64,7 @@
       },
       "StationInventoryManifestId": 287146,
       "TotalCost": 753.7500,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 58650.0
     },
     {
@@ -82,6 +86,7 @@
         "IsDirty": true
       },
       "SpotCost": 753.7500,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -91,6 +96,7 @@
       },
       "StationInventoryManifestId": 287146,
       "TotalCost": 753.7500,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 58650.0
     },
     {
@@ -112,6 +118,7 @@
         "IsDirty": true
       },
       "SpotCost": 753.7500,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -121,6 +128,7 @@
       },
       "StationInventoryManifestId": 287146,
       "TotalCost": 753.7500,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 58650.0
     },
     {
@@ -142,6 +150,7 @@
         "IsDirty": true
       },
       "SpotCost": 753.7500,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -151,6 +160,7 @@
       },
       "StationInventoryManifestId": 287146,
       "TotalCost": 753.7500,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 58650.0
     },
     {
@@ -172,6 +182,7 @@
         "IsDirty": true
       },
       "SpotCost": 703.5000,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -181,6 +192,7 @@
       },
       "StationInventoryManifestId": 287147,
       "TotalCost": 703.5000,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 50320.0
     },
     {
@@ -202,6 +214,7 @@
         "IsDirty": true
       },
       "SpotCost": 703.5000,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -211,6 +224,7 @@
       },
       "StationInventoryManifestId": 287147,
       "TotalCost": 703.5000,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 50320.0
     },
     {
@@ -232,6 +246,7 @@
         "IsDirty": true
       },
       "SpotCost": 703.5000,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -241,6 +256,7 @@
       },
       "StationInventoryManifestId": 287147,
       "TotalCost": 703.5000,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 50320.0
     },
     {
@@ -262,6 +278,7 @@
         "IsDirty": true
       },
       "SpotCost": 703.5000,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -271,6 +288,7 @@
       },
       "StationInventoryManifestId": 287147,
       "TotalCost": 703.5000,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 50320.0
     },
     {
@@ -292,6 +310,7 @@
         "IsDirty": true
       },
       "SpotCost": 703.5000,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -301,6 +320,7 @@
       },
       "StationInventoryManifestId": 287147,
       "TotalCost": 703.5000,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 50320.0
     },
     {
@@ -322,6 +342,7 @@
         "IsDirty": true
       },
       "SpotCost": 804.0000,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -331,6 +352,7 @@
       },
       "StationInventoryManifestId": 287150,
       "TotalCost": 804.0000,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 51340.0
     },
     {
@@ -352,6 +374,7 @@
         "IsDirty": true
       },
       "SpotCost": 804.0000,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -361,6 +384,7 @@
       },
       "StationInventoryManifestId": 287150,
       "TotalCost": 804.0000,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 51340.0
     },
     {
@@ -382,6 +406,7 @@
         "IsDirty": true
       },
       "SpotCost": 804.0000,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -391,6 +416,7 @@
       },
       "StationInventoryManifestId": 287150,
       "TotalCost": 804.0000,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 51340.0
     },
     {
@@ -412,6 +438,7 @@
         "IsDirty": true
       },
       "SpotCost": 804.0000,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -421,6 +448,7 @@
       },
       "StationInventoryManifestId": 287150,
       "TotalCost": 804.0000,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 51340.0
     },
     {
@@ -442,6 +470,7 @@
         "IsDirty": true
       },
       "SpotCost": 804.0000,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -451,6 +480,7 @@
       },
       "StationInventoryManifestId": 287150,
       "TotalCost": 804.0000,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 51340.0
     },
     {
@@ -472,6 +502,7 @@
         "IsDirty": true
       },
       "SpotCost": 753.7500,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -481,6 +512,7 @@
       },
       "StationInventoryManifestId": 287151,
       "TotalCost": 753.7500,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 37060.0
     },
     {
@@ -502,6 +534,7 @@
         "IsDirty": true
       },
       "SpotCost": 753.7500,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -511,6 +544,7 @@
       },
       "StationInventoryManifestId": 287151,
       "TotalCost": 753.7500,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 37060.0
     },
     {
@@ -532,6 +566,7 @@
         "IsDirty": true
       },
       "SpotCost": 753.7500,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -541,6 +576,7 @@
       },
       "StationInventoryManifestId": 287151,
       "TotalCost": 753.7500,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 37060.0
     },
     {
@@ -562,6 +598,7 @@
         "IsDirty": true
       },
       "SpotCost": 753.7500,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -571,6 +608,7 @@
       },
       "StationInventoryManifestId": 287151,
       "TotalCost": 753.7500,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 37060.0
     },
     {
@@ -592,6 +630,7 @@
         "IsDirty": true
       },
       "SpotCost": 753.7500,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -601,6 +640,7 @@
       },
       "StationInventoryManifestId": 287151,
       "TotalCost": 753.7500,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 37060.0
     },
     {
@@ -622,6 +662,7 @@
         "IsDirty": true
       },
       "SpotCost": 603.0000,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -631,6 +672,7 @@
       },
       "StationInventoryManifestId": 287154,
       "TotalCost": 603.0000,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 39780.0
     },
     {
@@ -652,6 +694,7 @@
         "IsDirty": true
       },
       "SpotCost": 603.0000,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -661,6 +704,7 @@
       },
       "StationInventoryManifestId": 287154,
       "TotalCost": 603.0000,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 39780.0
     },
     {
@@ -682,6 +726,7 @@
         "IsDirty": true
       },
       "SpotCost": 603.0000,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -691,6 +736,7 @@
       },
       "StationInventoryManifestId": 287154,
       "TotalCost": 603.0000,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 39780.0
     },
     {
@@ -712,6 +758,7 @@
         "IsDirty": true
       },
       "SpotCost": 603.0000,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -721,6 +768,7 @@
       },
       "StationInventoryManifestId": 287154,
       "TotalCost": 603.0000,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 39780.0
     },
     {
@@ -742,6 +790,7 @@
         "IsDirty": true
       },
       "SpotCost": 603.0000,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -751,6 +800,7 @@
       },
       "StationInventoryManifestId": 287154,
       "TotalCost": 603.0000,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 39780.0
     },
     {
@@ -772,6 +822,7 @@
         "IsDirty": true
       },
       "SpotCost": 50.2500,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -781,6 +832,7 @@
       },
       "StationInventoryManifestId": 288692,
       "TotalCost": 50.2500,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 510.0
     },
     {
@@ -802,6 +854,7 @@
         "IsDirty": true
       },
       "SpotCost": 50.2500,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -811,6 +864,7 @@
       },
       "StationInventoryManifestId": 288692,
       "TotalCost": 50.2500,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 510.0
     },
     {
@@ -832,6 +886,7 @@
         "IsDirty": true
       },
       "SpotCost": 50.2500,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -841,6 +896,7 @@
       },
       "StationInventoryManifestId": 288692,
       "TotalCost": 50.2500,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 510.0
     },
     {
@@ -862,6 +918,7 @@
         "IsDirty": true
       },
       "SpotCost": 50.2500,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -871,6 +928,7 @@
       },
       "StationInventoryManifestId": 288692,
       "TotalCost": 50.2500,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 510.0
     },
     {
@@ -892,6 +950,7 @@
         "IsDirty": true
       },
       "SpotCost": 50.2500,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -901,6 +960,7 @@
       },
       "StationInventoryManifestId": 288692,
       "TotalCost": 50.2500,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 510.0
     },
     {
@@ -922,6 +982,7 @@
         "IsDirty": true
       },
       "SpotCost": 12.0600,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -931,6 +992,7 @@
       },
       "StationInventoryManifestId": 288693,
       "TotalCost": 12.0600,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 510.0
     },
     {
@@ -952,6 +1014,7 @@
         "IsDirty": true
       },
       "SpotCost": 12.0600,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -961,6 +1024,7 @@
       },
       "StationInventoryManifestId": 288693,
       "TotalCost": 12.0600,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 510.0
     },
     {
@@ -982,6 +1046,7 @@
         "IsDirty": true
       },
       "SpotCost": 12.0600,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -991,6 +1056,7 @@
       },
       "StationInventoryManifestId": 288693,
       "TotalCost": 12.0600,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 510.0
     },
     {
@@ -1012,6 +1078,7 @@
         "IsDirty": true
       },
       "SpotCost": 12.0600,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -1021,6 +1088,7 @@
       },
       "StationInventoryManifestId": 288693,
       "TotalCost": 12.0600,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 510.0
     },
     {
@@ -1042,6 +1110,7 @@
         "IsDirty": true
       },
       "SpotCost": 12.0600,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -1051,6 +1120,7 @@
       },
       "StationInventoryManifestId": 288693,
       "TotalCost": 12.0600,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 510.0
     },
     {
@@ -1072,6 +1142,7 @@
         "IsDirty": true
       },
       "SpotCost": 12.0600,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -1081,6 +1152,7 @@
       },
       "StationInventoryManifestId": 288694,
       "TotalCost": 12.0600,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 340.0
     },
     {
@@ -1102,6 +1174,7 @@
         "IsDirty": true
       },
       "SpotCost": 12.0600,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -1111,6 +1184,7 @@
       },
       "StationInventoryManifestId": 288694,
       "TotalCost": 12.0600,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 340.0
     },
     {
@@ -1132,6 +1206,7 @@
         "IsDirty": true
       },
       "SpotCost": 12.0600,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -1141,6 +1216,7 @@
       },
       "StationInventoryManifestId": 288694,
       "TotalCost": 12.0600,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 340.0
     },
     {
@@ -1162,6 +1238,7 @@
         "IsDirty": true
       },
       "SpotCost": 12.0600,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -1171,6 +1248,7 @@
       },
       "StationInventoryManifestId": 288694,
       "TotalCost": 12.0600,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 340.0
     },
     {
@@ -1192,6 +1270,7 @@
         "IsDirty": true
       },
       "SpotCost": 12.0600,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -1201,6 +1280,7 @@
       },
       "StationInventoryManifestId": 288694,
       "TotalCost": 12.0600,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 340.0
     },
     {
@@ -1222,6 +1302,7 @@
         "IsDirty": true
       },
       "SpotCost": 12.0600,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -1231,6 +1312,7 @@
       },
       "StationInventoryManifestId": 288695,
       "TotalCost": 12.0600,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 340.0
     },
     {
@@ -1252,6 +1334,7 @@
         "IsDirty": true
       },
       "SpotCost": 12.0600,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -1261,6 +1344,7 @@
       },
       "StationInventoryManifestId": 288695,
       "TotalCost": 12.0600,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 340.0
     },
     {
@@ -1282,6 +1366,7 @@
         "IsDirty": true
       },
       "SpotCost": 12.0600,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -1291,6 +1376,7 @@
       },
       "StationInventoryManifestId": 288695,
       "TotalCost": 12.0600,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 340.0
     },
     {
@@ -1312,6 +1398,7 @@
         "IsDirty": true
       },
       "SpotCost": 12.0600,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -1321,6 +1408,7 @@
       },
       "StationInventoryManifestId": 288695,
       "TotalCost": 12.0600,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 340.0
     },
     {
@@ -1342,6 +1430,7 @@
         "IsDirty": true
       },
       "SpotCost": 12.0600,
+      "SpotCostWithMargin": 0.0,
       "Spots": 1,
       "StandardDaypart": {
         "Code": "MDN",
@@ -1351,6 +1440,7 @@
       },
       "StationInventoryManifestId": 288695,
       "TotalCost": 12.0600,
+      "TotalCostWithMargin": 0.0,
       "TotalImpressions": 340.0
     }
   ]

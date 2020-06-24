@@ -6,9 +6,9 @@
     "PlanVersionId": 77,
     "Programs": [
       {
-        "AvgCpm": 50.00,
+        "AvgCpm": 62.5000,
         "AvgImpressions": 1000.0,
-        "Budget": 150.0,
+        "Budget": 187.5,
         "Genre": "Sport",
         "Id": 0,
         "Impressions": 3000.0,
@@ -19,9 +19,9 @@
         "StationCount": 1
       },
       {
-        "AvgCpm": 40.00,
+        "AvgCpm": 50.00,
         "AvgImpressions": 1500.0,
-        "Budget": 180.0,
+        "Budget": 225.0,
         "Genre": "News",
         "Id": 0,
         "Impressions": 4500.0,
@@ -33,9 +33,9 @@
       }
     ],
     "Totals": {
-      "AvgCpm": 44.000,
+      "AvgCpm": 55.000,
       "AvgImpressions": 1250.0,
-      "Budget": 330.0,
+      "Budget": 412.5,
       "Impressions": 7500.0,
       "ImpressionsPercentage": 0.0,
       "MarketCount": 2,
