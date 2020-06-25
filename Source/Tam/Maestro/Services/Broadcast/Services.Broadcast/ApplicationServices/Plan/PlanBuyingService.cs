@@ -30,6 +30,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <summary>
         /// Save the plan buying data.
         /// </summary>
+        /// <param name="planId">The id of the plan.</param>
         /// <param name="plan">Save The plan data.</param>
         /// <returns></returns>
         bool SavePlanBuying(int planId, PlanBuyingRequest plan);

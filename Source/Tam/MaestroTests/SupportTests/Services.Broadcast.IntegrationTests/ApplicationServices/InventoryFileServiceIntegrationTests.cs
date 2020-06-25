@@ -38,7 +38,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private static InventorySource _openMarketInventorySource;
         private InventoryFileTestHelper _InventoryFileTestHelper;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void SetUp()
         {
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(new FileServiceDataLakeStubb());

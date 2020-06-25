@@ -13,7 +13,7 @@ namespace Services.Broadcast.Entities.Nti
         public NtiRatingHeaderDto Header { get; set; }
 
         /// <summary>
-        /// Contains list of ratings with categories & subcategories from the rating document
+        /// Contains list of ratings with categories and subcategories from the rating document
         /// </summary>
         /// <value>
         /// The ratings.

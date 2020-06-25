@@ -21,7 +21,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     {
         private IProprietaryFileImporterFactory _ProprietaryFileImporterFactory;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void SetUp()
         {
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(new FileService());

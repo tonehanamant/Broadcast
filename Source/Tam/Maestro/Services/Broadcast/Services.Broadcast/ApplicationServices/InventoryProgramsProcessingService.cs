@@ -72,6 +72,9 @@ namespace Services.Broadcast.ApplicationServices
 
     public class InventoryProgramsProcessingService : BroadcastBaseClass,  IInventoryProgramsProcessingService
     {
+        // PRI-25264 : disabling sending the email
+        private bool _IsEmailEnabled = false;
+
         private readonly IBackgroundJobClient _BackgroundJobClient;
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IInventoryFileRepository _InventoryFileRepository;
@@ -366,10 +369,12 @@ namespace Services.Broadcast.ApplicationServices
             {
                 throw new InvalidOperationException($"Failed to send notification email.  Email addresses are not configured correctly.");
             }
-
-            // PRI-25264 : disabling sending the email
+            
             // the engine will send on error
-            //_EmailerService.QuickSend(false, body.ToString(), subject, priority, toEmails);
+            if (_IsEmailEnabled)
+            {
+                _EmailerService.QuickSend(false, body.ToString(), subject, priority, toEmails);
+            }
         }
 
         public int QueueRepairInventoryProgramsJob()

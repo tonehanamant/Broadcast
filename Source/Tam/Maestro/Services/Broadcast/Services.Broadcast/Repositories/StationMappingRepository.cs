@@ -274,7 +274,7 @@ namespace Services.Broadcast.Repositories
                     }
                 }catch(Exception e)
                 {
-                    throw new Exception($"Could not determine station for call letters {callLetters}");
+                    throw new Exception($"Could not determine station for call letters {callLetters}", e);
                 }
 
             });

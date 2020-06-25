@@ -19,9 +19,6 @@ using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
-using ApprovalTests.Reporters;
-using ApprovalTests;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.InventoryProgramsProcessing
 {

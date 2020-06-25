@@ -40,7 +40,7 @@ namespace Common.Services.Repositories
             BulkInsert(context, list, new List<string>());
         }
 
-        public new void BulkInsert<T>(DbContext context, List<T> list, List<string> propertiesToIgnore)
+        public void BulkInsert<T>(DbContext context, List<T> list, List<string> propertiesToIgnore)
         {
             string name1 = typeof(T).Name;
             if (!(context.Database.Connection is SqlConnection connection))

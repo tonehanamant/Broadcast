@@ -151,10 +151,10 @@ namespace Services.Broadcast.Converters.InventorySummary
         }
 
         /// <summary>
-        /// Loads the inventory summary data into InventorySummaryDto object for proprietary O\&O.
+        /// Loads the inventory summary data into InventorySummaryDto object for proprietary OandO.
         /// </summary>
         /// <param name="inventorySource">The inventory source.</param>
-        /// <param name="data">The data.</param>
+        /// <param name="proprietaryData">The data.</param>
         /// <param name="quarterDetail">Quarter detail data</param>
         /// <returns>InventorySummaryDto object</returns>
         public override InventorySummaryDto LoadInventorySummary(InventorySource inventorySource, InventoryQuarterSummary proprietaryData, QuarterDetailDto quarterDetail)

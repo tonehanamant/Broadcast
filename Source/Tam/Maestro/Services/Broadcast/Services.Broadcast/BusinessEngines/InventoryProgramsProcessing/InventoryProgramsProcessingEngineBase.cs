@@ -42,6 +42,9 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
     public abstract class InventoryProgramsProcessingEngineBase : BroadcastBaseClass, IInventoryProgramsProcessingEngine
     {
+        // PRI-25264 : disabling sending the email
+        private bool _IsEmailEnabled = false;
+
         protected const string EXPORT_FILE_NAME_SEED = "ProgramGuideExport";
         protected const string EXPORT_FILE_SUFFIX_TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss";
         protected const string EXPORT_FILE_NAME_DATE_FORMAT = "yyyyMMdd";
@@ -640,9 +643,11 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             {
                 throw new InvalidOperationException($"Failed to send notification email.  Email addresses are not configured correctly.");
             }
-
-            // PRI-25264 : disabling sending the email
-            // _EmailerService.QuickSend(false, body, subject, priority, toEmails);
+            
+            if (_IsEmailEnabled)
+            {
+                _EmailerService.QuickSend(false, body, subject, priority, toEmails);
+            }
         }
 
         private void _ReportNoInventoryToProcess(int jobId)
@@ -657,7 +662,10 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 throw new InvalidOperationException($"Failed to send notification email.  Email addresses are not configured correctly.");
             }
 
-            _EmailerService.QuickSend(false, body, subject, priority, toEmails);
+            if (_IsEmailEnabled)
+            {
+                _EmailerService.QuickSend(false, body, subject, priority, toEmails);
+            }
         }
 
         private void _ReportExportFileFailed(int jobId)
@@ -672,7 +680,10 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 throw new InvalidOperationException($"Failed to send notification email.  Email addresses are not configured correctly.");
             }
 
-            _EmailerService.QuickSend(false, body, subject, priority, toEmails);
+            if (_IsEmailEnabled)
+            {
+                _EmailerService.QuickSend(false, body, subject, priority, toEmails);
+            }
         }
 
         private List<GuideInterfaceExportElement> _MapToExport(StationInventoryManifestDaypart manifestDaypart, InventorySource inventorySource, StationInventoryManifest parentManifest,
@@ -1347,11 +1358,6 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             var raw = BroadcastServiceSystemParameter.InventoryProcessingNotificationEmails;
             var split = raw.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             return split;
-        }
-
-        protected virtual DateTime _GetCurrentDateTime()
-        {
-            return DateTime.Now;
         }
     }
 }

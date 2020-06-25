@@ -45,6 +45,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <summary>
         /// Save plan buying data
         /// </summary>
+        /// <param name="planId">The id of the plan.</param>
         /// <param name="plan">Plan data</param>
         /// <returns></returns>
         [HttpPost]

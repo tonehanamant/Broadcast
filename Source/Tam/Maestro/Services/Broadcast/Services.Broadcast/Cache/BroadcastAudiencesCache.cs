@@ -131,7 +131,7 @@ namespace Services.Broadcast.Cache
             return _Audiences.Any(x => x.Id == audienceId);
         }
 
-        ///</inheritdoc>
+        ///<inheritdoc/>
         public DisplayAudience GetDisplayAudienceByCode(string audienceCode)
         {
             var audience = GetBroadcastAudienceByCode(audienceCode);

@@ -55,6 +55,7 @@ namespace Services.Broadcast.ApplicationServices
 
         /// <summary>
         /// Gets the quarters.
+        /// </summary>
         /// <param name="planStatus">The status to filter quarter by</param>
         /// <param name="currentDate">The date for the default quarter.</param>
         /// <returns></returns>

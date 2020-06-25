@@ -13,7 +13,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
     public class DaytimeCleanupServiceTests
     {
         private DaypartCleanupService _daypartCleanupService;
-        private Mock<IDisplayDaypartRepository> _displayDaypartRespositoryMock;
 
         [SetUp]
         public void Init()

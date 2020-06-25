@@ -18,7 +18,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     {
         private IProgramGuideService _ProgramGuideService;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUpAttribute]
         public void SetUp()
         {
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IProgramGuideApiClient, ProgramGuideApiClientStub>();

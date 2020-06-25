@@ -357,8 +357,6 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// Goal CPM Percentage Indicator Calculation
         /// </summary>
-        /// <param name="targetCpm"></param>
-        /// <param name="optimalCpm"></param>
         /// <returns></returns>
         public int CalculateCpmPercentage(decimal optimalCpm, decimal goalCpm)
         {
@@ -1462,16 +1460,6 @@ namespace Services.Broadcast.ApplicationServices
             public PlanPricingInventoryProgram Program { get; set; }
 
             public PlanPricingInventoryProgram.ManifestWeek ManifestWeek { get; set; }
-        }
-
-        /// <summary>
-        /// Gets the current date time.
-        /// Virtual to assist unit tests.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual DateTime _GetCurrentDateTime()
-        {
-            return DateTime.Now;
         }
     }
 }

@@ -3,7 +3,6 @@
     /// <summary>
     /// A market available to a plan.
     /// </summary>
-    /// <seealso cref="Services.Broadcast.Entities.Plan.PlanMarketDto" />
     public class PlanAvailableMarketDto : PlanMarketDto
     {
         /// <summary>

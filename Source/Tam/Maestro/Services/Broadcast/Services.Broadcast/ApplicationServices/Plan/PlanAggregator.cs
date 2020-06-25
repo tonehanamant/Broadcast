@@ -33,6 +33,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// </summary>
         /// <param name="broadcastDataRepositoryFactory">The broadcast data repository factory.</param>
         /// <param name="quarterCalculationEngine">The quarter calculation engine.</param>
+        /// <param name="trafficApiCache">The api to the traffic app</param>
         public PlanAggregator(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IQuarterCalculationEngine quarterCalculationEngine
             , ITrafficApiCache trafficApiCache)

@@ -26,12 +26,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     public class ProprietaryInventoryServiceIntegrationTests
     {
         private IProprietaryInventoryService _ProprietaryService;
-        private IInventoryFileRepository _InventoryFileRepository;
         private IInventoryRepository _IInventoryRepository;
         private IProprietaryRepository _ProprietaryRepository;
         private IInventoryRatingsProcessingService _InventoryRatingsProcessingService;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUpAttribute]
         public void SetUp()
         {
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStub>();

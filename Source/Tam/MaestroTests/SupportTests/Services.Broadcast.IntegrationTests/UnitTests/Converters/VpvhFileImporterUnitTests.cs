@@ -38,8 +38,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters
         [Test]
         public void ReadVpvhs_Fail()
         {
-            const string filename = @".\Files\Vpvh\VPVH_invalidFile.xlsx";
-
             Assert.That(() => _VpvhFileImporter.ReadVpvhs(null)
                 , Throws.TypeOf<Exception>().With.Message.EqualTo("Invalid VPVH file."));
         }

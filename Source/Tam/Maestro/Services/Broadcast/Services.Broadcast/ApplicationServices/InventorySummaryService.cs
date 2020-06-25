@@ -531,7 +531,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        /// <inheritdoc 
+        /// <inheritdoc />
         public void AggregateInventorySummaryData(List<int> inventorySourceIds, DateTime? startDate, DateTime? endDate)
         {
             var houseHoldAudienceId = _AudiencesCache.GetDefaultAudience().Id;

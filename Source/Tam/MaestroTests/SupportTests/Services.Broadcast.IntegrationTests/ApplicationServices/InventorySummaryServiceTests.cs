@@ -36,7 +36,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private InventoryFileTestHelper _InventoryFileTestHelper;
         private int nbcOAndO_InventorySourceId = 0;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void Init()
         {
             try

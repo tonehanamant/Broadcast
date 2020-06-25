@@ -21,7 +21,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         private const string TEST_USERNAME = "TestUser";
 
-        [TestFixtureSetUp]
+        [OneTimeSetUpAttribute]
         public void SetUp()
         {
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IEmailerService, EmailerServiceStub>();
