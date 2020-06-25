@@ -581,7 +581,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             var startDate = new DateTime(2020, 01, 01);
             var endDate = new DateTime(2020, 01, 21);
             const int testManifestCount = 8;
-            const bool testOddDaypartsHaveMappedPrograms = false;
             var inventorySource = new InventorySource
             {
                 Id = 1,
@@ -595,7 +594,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 new DisplayMediaWeek {Id = 2},
                 new DisplayMediaWeek {Id = 3}
             };
-            var manifests = InventoryProgramsProcessingTestHelper.GetManifests(testManifestCount, testOddDaypartsHaveMappedPrograms);
+            var manifests = InventoryProgramsProcessingTestHelper.GetManifests(testManifestCount);
             var guideResponse = _GetGuideResponse();
 
             var GetInventoryBySourceForProgramsProcessingCalled = 0;
@@ -730,7 +729,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             var startDate = new DateTime(2020, 01, 01);
             var endDate = new DateTime(2020, 01, 21);
             const int testManifestCount = 8;
-            const bool testOddDaypartsHaveMappedPrograms = true;
             var inventorySource = new InventorySource
             {
                 Id = 1,
@@ -745,7 +743,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 new DisplayMediaWeek {Id = 3}
             };
             // odd manifests will have mapped programs and should not get exported
-            var manifests = InventoryProgramsProcessingTestHelper.GetManifests(testManifestCount, testOddDaypartsHaveMappedPrograms);
+            var manifests = InventoryProgramsProcessingTestHelper.GetManifests(testManifestCount, InventoryProgramsProcessingTestHelper.ProgramMappingsIndicator.Odd);
             var guideResponse = _GetGuideResponse();
 
             _InventoryRepo.Setup(r => r.GetInventoryBySourceForProgramsProcessing(It.IsAny<int>(), It.IsAny<List<int>>()))
@@ -930,6 +928,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
 
             var engine = _GetInventoryProgramsProcessingEngine();
             engine.UT_CurrentDateTime = new DateTime(2020, 03, 06, 14, 22, 35);
+            // enable sending of emails for the test.
+            engine.IsSuccessEmailEnabled = true;
 
             /*** Act ***/
             var results = engine.ProcessInventoryJob(jobId);

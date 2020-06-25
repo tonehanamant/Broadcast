@@ -46,7 +46,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             const int jobId = 13;
             const int fileId = 12;
             const int testManifestCount = 8;
-            const bool testOddDaypartsHaveMappedPrograms = false;
             var inventorySource = new InventorySource
             {
                 Id = 1,
@@ -54,7 +53,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 IsActive = true,
                 InventoryType = InventorySourceTypeEnum.OpenMarket
             };
-            var manifests = InventoryProgramsProcessingTestHelper.GetManifests(testManifestCount, testOddDaypartsHaveMappedPrograms);
+            var manifests = InventoryProgramsProcessingTestHelper.GetManifests(testManifestCount);
             var guideResponse = _GetGuideResponse();
 
             var getStationInventoryByFileIdForProgramsProcessingCalled = 0;
@@ -200,7 +199,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             const int jobId = 13;
             const int fileId = 12;
             const int testManifestCount = 8;
-            const bool testOddDaypartsHaveMappedPrograms = true;
             var inventorySource = new InventorySource
             {
                 Id = 1,
@@ -209,7 +207,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 InventoryType = InventorySourceTypeEnum.OpenMarket
             };
             // odd manifests will have mapped programs and should not get exported
-            var manifests = InventoryProgramsProcessingTestHelper.GetManifests(testManifestCount, testOddDaypartsHaveMappedPrograms);
+            var manifests = InventoryProgramsProcessingTestHelper.GetManifests(testManifestCount, InventoryProgramsProcessingTestHelper.ProgramMappingsIndicator.Odd);
             var guideResponse = _GetGuideResponse();
 
             // yes, I'm returning it twice... 
@@ -283,6 +281,94 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             Assert.AreEqual("ProgramGuideExport_FILE_12_20200306_142235.csv", Path.GetFileName(createdFiles[0].Item1));
             // odd manifests will have mapped programs and should not get exported
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(createdFiles[0].Item2));
+        }
+
+        [Test]
+        public void ByFileJob_AllProgramsAreMapped()
+        {
+            /*** Arrange ***/
+            const int jobId = 13;
+            const int fileId = 12;
+            const int testManifestCount = 8;
+            var inventorySource = new InventorySource
+            {
+                Id = 1,
+                Name = "NumberOneSource",
+                IsActive = true,
+                InventoryType = InventorySourceTypeEnum.OpenMarket
+            };
+            // odd manifests will have mapped programs and should not get exported
+            var manifests = InventoryProgramsProcessingTestHelper.GetManifests(testManifestCount, InventoryProgramsProcessingTestHelper.ProgramMappingsIndicator.All);
+            var guideResponse = _GetGuideResponse();
+
+            // yes, I'm returning it twice... 
+            // that's because the repo is mocked and not reflecting saved "add mapping program" changes.
+            _InventoryRepo.SetupSequence(r => r.GetInventoryByFileIdForProgramsProcessing(It.IsAny<int>()))
+                .Returns(manifests)
+                .Returns(manifests);
+
+            _InventoryRepo.Setup(r => r.DeleteInventoryPrograms(It.IsAny<List<int>>(),
+                It.IsAny<DateTime>(), It.IsAny<DateTime>()));
+
+            _InventoryRepo.Setup(r => r.CreateInventoryPrograms(
+                It.IsAny<List<StationInventoryManifestDaypartProgram>>(), It.IsAny<DateTime>()));
+
+            _InventoryFileRepo.Setup(r => r.GetInventoryFileById(It.IsAny<int>()))
+                .Returns(new InventoryFile
+                {
+                    Id = 21,
+                    FileName = "TestInventoryFileName",
+                    InventorySource = inventorySource
+                });
+
+            _InventoryProgramsByFileJobsRepo.Setup(r => r.GetJob(It.IsAny<int>()))
+                .Returns<int>((id) => new InventoryProgramsByFileJob
+                {
+                    Id = id,
+                    InventoryFileId = fileId,
+                    Status = InventoryProgramsJobStatus.Queued,
+                    QueuedAt = DateTime.Now,
+                    QueuedBy = "TestUser"
+                });
+
+            _InventoryProgramsByFileJobsRepo.Setup(r => r.SetJobCompleteSuccess(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()));
+            _InventoryProgramsByFileJobsRepo.Setup(r => r.SetJobCompleteError(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()));
+            _InventoryProgramsByFileJobsRepo.Setup(r => r.SetJobCompleteWarning(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<string>()));
+
+            _ProgramGuidClient.Setup(s => s.GetProgramsForGuide(It.IsAny<List<GuideRequestElementDto>>()))
+                .Returns(guideResponse);
+
+            var mappedStations = new List<StationMappingsDto>
+            {
+                new StationMappingsDto {StationId =  1, MapSet = StationMapSetNamesEnum.Sigma, MapValue = "SigmaMappedValue"},
+                new StationMappingsDto {StationId =  1, MapSet = StationMapSetNamesEnum.NSI, MapValue = "NSIMappedValue"},
+                new StationMappingsDto {StationId =  1, MapSet = StationMapSetNamesEnum.Extended, MapValue = "ExtendedMappedValue"},
+                new StationMappingsDto {StationId =  1, MapSet = StationMapSetNamesEnum.NSILegacy, MapValue = "NSILegacyMappedValue"}
+            };
+            _StationMappingService.Setup(s => s.GetStationMappingsByCadentCallLetter(It.IsAny<string>()))
+                .Returns(mappedStations);
+
+            var createdFiles = new List<Tuple<string, List<string>>>();
+            _FileService.Setup(s => s.CreateTextFile(It.IsAny<string>(), It.IsAny<List<string>>()))
+                .Callback<string, List<string>>((name, lines) => createdFiles.Add(new Tuple<string, List<string>>(name, lines)));
+
+            _FileService.Setup(s => s.CreateDirectory(It.IsAny<string>()));
+
+            // body, subject, priority, to_emails
+            _EmailerService.Setup(s => s.QuickSend(It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<string>(),
+                    It.IsAny<MailPriority>(), It.IsAny<string[]>(),
+                    It.IsAny<List<string>>()))
+                .Returns(true);
+
+            var engine = _GetInventoryProgramsProcessingEngine();
+            engine.UT_CurrentDateTime = new DateTime(2020, 03, 06, 14, 22, 35);
+
+            /*** Act ***/
+            engine.ProcessInventoryJob(jobId);
+
+            /*** Assert ***/
+            // verify the file was not exported at all
+            Assert.AreEqual(0, createdFiles.Count);
         }
 
         [Test]

@@ -43,7 +43,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
     public abstract class InventoryProgramsProcessingEngineBase : BroadcastBaseClass, IInventoryProgramsProcessingEngine
     {
         // PRI-25264 : disabling sending the email
-        private bool _IsEmailEnabled = false;
+        public bool IsSuccessEmailEnabled { get; set; } = false;
 
         protected const string EXPORT_FILE_NAME_SEED = "ProgramGuideExport";
         protected const string EXPORT_FILE_SUFFIX_TIMESTAMP_FORMAT = "yyyyMMdd_HHmmss";
@@ -587,28 +587,36 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             transformWarnings.Distinct().ToList().ForEach(w => jobsRepository.UpdateJobNotes(jobId, w));
 
             // export to file
-            var fileName = _GetExportFileName(jobId);
-
-            var filePath = Path.Combine(_GetProgramGuideInterfaceExportDirectoryPath(), fileName);
-            var headerLine = _GetProgramsExportFileHeaderLine();
-
-            processingDiags.RecordExportManifestsDetails(exportFileLines.Count, fileName);
-
-            var fileLines = new List<string>();
-            fileLines.Add(headerLine);
-            foreach (var lineItem in exportFileLines)
+            if (exportFileLines.Any())
             {
-                fileLines.Add(_GetProgramsExportFileItemLine(lineItem));
+                var fileName = _GetExportFileName(jobId);
+
+                var filePath = Path.Combine(_GetProgramGuideInterfaceExportDirectoryPath(), fileName);
+                var headerLine = _GetProgramsExportFileHeaderLine();
+
+                processingDiags.RecordExportManifestsDetails(exportFileLines.Count, fileName);
+
+                var fileLines = new List<string>();
+                fileLines.Add(headerLine);
+                foreach (var lineItem in exportFileLines)
+                {
+                    fileLines.Add(_GetProgramsExportFileItemLine(lineItem));
+                }
+
+                _CreateDirectoriesIfNotExist();
+                _FileService.CreateTextFile(filePath, fileLines);
+                processingDiags.RecordExportManifestStop();
+
+                // notify complete
+                jobsRepository.UpdateJobNotes(jobId, $"Notifying export completed.");
+                _ReportExportFileCompleted(jobId, filePath);
             }
-
-            _CreateDirectoriesIfNotExist();
-            _FileService.CreateTextFile(filePath, fileLines);
-
-            processingDiags.RecordExportManifestStop();
-
-            // notify complete
-            jobsRepository.UpdateJobNotes(jobId, $"Notifying export completed.");
-            _ReportExportFileCompleted(jobId, filePath);
+            else
+            {
+                // notify complete
+                jobsRepository.UpdateJobNotes(jobId, $"Notifying export completed.");
+                _ReportExportFileCompleted(jobId, "No File Generated because all programs were mapped.");
+            }
 
             if (transformWarnings.Any())
             {
@@ -644,7 +652,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 throw new InvalidOperationException($"Failed to send notification email.  Email addresses are not configured correctly.");
             }
             
-            if (_IsEmailEnabled)
+            if (IsSuccessEmailEnabled)
             {
                 _EmailerService.QuickSend(false, body, subject, priority, toEmails);
             }
@@ -662,10 +670,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 throw new InvalidOperationException($"Failed to send notification email.  Email addresses are not configured correctly.");
             }
 
-            if (_IsEmailEnabled)
-            {
-                _EmailerService.QuickSend(false, body, subject, priority, toEmails);
-            }
+            _EmailerService.QuickSend(false, body, subject, priority, toEmails);
         }
 
         private void _ReportExportFileFailed(int jobId)
@@ -680,10 +685,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 throw new InvalidOperationException($"Failed to send notification email.  Email addresses are not configured correctly.");
             }
 
-            if (_IsEmailEnabled)
-            {
-                _EmailerService.QuickSend(false, body, subject, priority, toEmails);
-            }
+            _EmailerService.QuickSend(false, body, subject, priority, toEmails);
         }
 
         private List<GuideInterfaceExportElement> _MapToExport(StationInventoryManifestDaypart manifestDaypart, InventorySource inventorySource, StationInventoryManifest parentManifest,

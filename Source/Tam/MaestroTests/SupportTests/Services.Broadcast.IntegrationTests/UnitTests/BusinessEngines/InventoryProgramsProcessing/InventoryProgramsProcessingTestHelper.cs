@@ -12,7 +12,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
 {
     public static class InventoryProgramsProcessingTestHelper
     {
-        public static List<StationInventoryManifest> GetManifests(int count, bool oddDaypartsHaveMappedPrograms = false)
+        public enum ProgramMappingsIndicator
+        {
+            None,
+            Odd,
+            All
+        }
+
+
+        public static List<StationInventoryManifest> GetManifests(int count, ProgramMappingsIndicator programMappingsIndicator = ProgramMappingsIndicator.None)
         {
             var daypartIdIndex = 1;
             var programIdIndex = 1;
@@ -70,7 +78,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                                     ProgramName = $"Program {programIdIndex}",
                                     ShowType = "AShow",
                                     SourceGenreId = (int)ProgramSourceEnum.Forecasted,
-                                    ProgramSourceId = _GetProgramSourceId(i, oddDaypartsHaveMappedPrograms),
+                                    ProgramSourceId = _GetProgramSourceId(i, programMappingsIndicator),
                                     MaestroGenreId = 12,
                                     StartDate = new DateTime(),
                                     EndDate = new DateTime(),
@@ -104,7 +112,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                                     ProgramName = $"Program {programIdIndex}",
                                     ShowType = "AShow",
                                     SourceGenreId = (int)ProgramSourceEnum.Forecasted,
-                                    ProgramSourceId = _GetProgramSourceId(i, oddDaypartsHaveMappedPrograms),
+                                    ProgramSourceId = _GetProgramSourceId(i, programMappingsIndicator),
                                     MaestroGenreId = 12,
                                     StartDate = new DateTime(),
                                     EndDate = new DateTime(),
@@ -177,13 +185,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             return result;
         }
 
-        private static int _GetProgramSourceId(int daypartId, bool oddDaypartsHaveMappedPrograms)
+        private static int _GetProgramSourceId(int daypartId, ProgramMappingsIndicator programMappingsIndicators)
         {
-            if (daypartId % 2 == 1 && oddDaypartsHaveMappedPrograms)
+            switch (programMappingsIndicators)
             {
-                return (int)ProgramSourceEnum.Mapped;
+                case ProgramMappingsIndicator.All:
+                    return (int)ProgramSourceEnum.Mapped;
+                case ProgramMappingsIndicator.Odd:
+                    if (daypartId % 2 == 1)
+                    {
+                        return (int)ProgramSourceEnum.Mapped;
+                    }
+                    return (int)ProgramSourceEnum.Forecasted;
+                default:
+                    return (int)ProgramSourceEnum.Forecasted;
             }
-            return (int)ProgramSourceEnum.Forecasted;
         }
 
         public static List<LookupDto> GetGenres()
