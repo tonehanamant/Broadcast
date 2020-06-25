@@ -1,0 +1,82 @@
+[
+  {
+    "JobId": 1,
+    "PlanVersionId": 0,
+    "PricingCpm": 57.352941176470588235294117600,
+    "RequestId": "AAA",
+    "Spots": [
+      {
+        "ContractMediaWeek": null,
+        "Id": 1,
+        "Impressions": 1000.0,
+        "InventoryMediaWeek": null,
+        "SpotCost": 50.0,
+        "SpotCostWithMargin": 55.555555555555555555555555556,
+        "Spots": 1,
+        "StandardDaypart": {
+          "Code": "AMN",
+          "FullName": "AM News",
+          "Id": 15
+        },
+        "StationInventoryManifestId": 0,
+        "TotalCost": 50.0,
+        "TotalCostWithMargin": 55.555555555555555555555555556,
+        "TotalImpressions": 1000.0
+      },
+      {
+        "ContractMediaWeek": null,
+        "Id": 1,
+        "Impressions": 1000.0,
+        "InventoryMediaWeek": null,
+        "SpotCost": 50.0,
+        "SpotCostWithMargin": 55.555555555555555555555555556,
+        "Spots": 2,
+        "StandardDaypart": {
+          "Code": "AMN",
+          "FullName": "AM News",
+          "Id": 15
+        },
+        "StationInventoryManifestId": 0,
+        "TotalCost": 100.0,
+        "TotalCostWithMargin": 111.11111111111111111111111111,
+        "TotalImpressions": 2000.0
+      },
+      {
+        "ContractMediaWeek": null,
+        "Id": 1,
+        "Impressions": 1000.0,
+        "InventoryMediaWeek": null,
+        "SpotCost": 50.0,
+        "SpotCostWithMargin": 55.555555555555555555555555556,
+        "Spots": 3,
+        "StandardDaypart": {
+          "Code": "AMN",
+          "FullName": "AM News",
+          "Id": 15
+        },
+        "StationInventoryManifestId": 0,
+        "TotalCost": 150.0,
+        "TotalCostWithMargin": 166.66666666666666666666666667,
+        "TotalImpressions": 3000.0
+      },
+      {
+        "ContractMediaWeek": null,
+        "Id": 2,
+        "Impressions": 1100.0,
+        "InventoryMediaWeek": null,
+        "SpotCost": 60.0,
+        "SpotCostWithMargin": 66.666666666666666666666666667,
+        "Spots": 4,
+        "StandardDaypart": {
+          "Code": "PMN",
+          "FullName": "PM News",
+          "Id": 16
+        },
+        "StationInventoryManifestId": 0,
+        "TotalCost": 240.0,
+        "TotalCostWithMargin": 266.66666666666666666666666667,
+        "TotalImpressions": 4400.0
+      }
+    ]
+  }
+]

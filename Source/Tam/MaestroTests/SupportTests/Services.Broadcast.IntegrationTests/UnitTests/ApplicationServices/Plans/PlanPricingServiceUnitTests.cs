@@ -7683,6 +7683,157 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(requests));
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void RunPricingJobTieredInventory()
+        {
+            // Arrange
+            const int jobId = 1;
+
+            var parameters = _GetPlanPricingParametersDto();
+            parameters.MarketGroup = PricingMarketGroupEnum.Top100;
+            parameters.Margin = 10;
+            parameters.JobId = jobId;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(It.IsAny<int>()))
+                .Returns(new PlanPricingJob());
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(_GetPlanTiered());
+
+            _PlanPricingInventoryEngineMock
+                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .Returns(_GetInventoryProgram())
+                .Returns(_GetInventoryProgram())
+                .Returns(_GetTieredInventory());
+
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetLatestMarketCoverages());
+
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestTop100MarketCoverages())
+                .Returns(_GetTop100Markets());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(_GetWeeklyBreakDownGroupTiered());
+
+            _WeeklyBreakdownEngineMock
+               .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+               .Returns(_GetWeeklyBreakDownWeeksTiered());
+
+            var requests = new List<PlanPricingApiRequestDto>();
+            _PricingApiClientMock
+                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
+                .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
+
+            var service = _GetService();
+
+            // Act
+            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(requests));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void RunPricingJobTieredInventoryWithAllocations()
+        {
+            // Arrange
+            const int jobId = 1;
+
+            var parameters = _GetPlanPricingParametersDto();
+            parameters.MarketGroup = PricingMarketGroupEnum.Top100;
+            parameters.Margin = 10;
+            parameters.JobId = jobId;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(It.IsAny<int>()))
+                .Returns(new PlanPricingJob());
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(_GetPlanTiered());
+
+            _PlanPricingInventoryEngineMock
+                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .Returns(_GetInventoryProgram())
+                .Returns(_GetInventoryProgram())
+                .Returns(_GetTieredInventory());
+
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetLatestMarketCoverages());
+
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestTop100MarketCoverages())
+                .Returns(_GetTop100Markets());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Returns(_GetWeeklyBreakDownGroupTiered());
+
+            _WeeklyBreakdownEngineMock
+               .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+               .Returns(_GetWeeklyBreakDownWeeksTiered());
+
+            _PricingApiClientMock
+                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
+                .Returns(_GetTieredAllocations());
+
+            var allocations = new List<PlanPricingAllocationResult>();
+            _PlanPricingBandCalculationEngine
+                .Setup(x => x.CalculatePricingBands(It.IsAny<List<PlanPricingInventoryProgram>>(), It.IsAny<PlanPricingAllocationResult>(), It.IsAny<PlanPricingParametersDto>()))
+                .Callback<List<PlanPricingInventoryProgram>, PlanPricingAllocationResult, PlanPricingParametersDto>((inventory, allocation, pricingParameters) => allocations.Add(allocation));
+
+            var service = _GetService();
+
+            // Act
+            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(allocations));
+        }
+
+        private PlanPricingApiSpotsResponseDto _GetTieredAllocations()
+        {
+            return new PlanPricingApiSpotsResponseDto
+            {
+                RequestId = "AAA",
+                Results = new List<PlanPricingApiSpotsResultDto>
+                {
+                    new PlanPricingApiSpotsResultDto
+                    {
+                        ManifestId = 1,
+                        MediaWeekId = 100,
+                        Frequency = 1
+                    },
+                    new PlanPricingApiSpotsResultDto
+                    {
+                        ManifestId = 1,
+                        MediaWeekId = 101,
+                        Frequency = 2
+                    },
+                    new PlanPricingApiSpotsResultDto
+                    {
+                        ManifestId = 1,
+                        MediaWeekId = 102,
+                        Frequency = 3
+                    },
+                    new PlanPricingApiSpotsResultDto
+                    {
+                        ManifestId = 1,
+                        MediaWeekId = 103,
+                        Frequency = 4
+                    }
+                }
+            };
+        }
+
         private List<WeeklyBreakdownByWeek> _GetWeeklyBreakDownGroup()
         {
             return new List<WeeklyBreakdownByWeek>
@@ -7708,6 +7859,37 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new WeeklyBreakdownByWeek
                     {
                         Impressions = 0,
+                        Budget = 15m,
+                        MediaWeekId = 103
+                    }
+                };
+        }
+
+        private List<WeeklyBreakdownByWeek> _GetWeeklyBreakDownGroupTiered()
+        {
+            return new List<WeeklyBreakdownByWeek>
+                {
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 150,
+                        Budget = 15,
+                        MediaWeekId = 100
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 250,
+                        Budget = 15m,
+                        MediaWeekId = 101
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 150,
+                        Budget = 15m,
+                        MediaWeekId = 102
+                    },
+                    new WeeklyBreakdownByWeek
+                    {
+                        Impressions = 200,
                         Budget = 15m,
                         MediaWeekId = 103
                     }
@@ -7746,6 +7928,40 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 }
             }; 
+        }
+
+        private WeeklyBreakdownResponseDto _GetWeeklyBreakDownWeeksTiered()
+        {
+            return new WeeklyBreakdownResponseDto
+            {
+                Weeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 150,
+                        WeeklyBudget = 15,
+                        MediaWeekId = 100
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 250,
+                        WeeklyBudget = 15m,
+                        MediaWeekId = 101
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 150,
+                        WeeklyBudget = 15m,
+                        MediaWeekId = 102
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 200,
+                        WeeklyBudget = 15m,
+                        MediaWeekId = 103
+                    }
+                }
+            };
         }
 
         [Test]
@@ -7917,6 +8133,255 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             {
                                 Spots = 1,
                                 ContractMediaWeekId = 100,
+                            }
+                        }
+                    }
+                };
+        }
+
+        private List<PlanPricingInventoryProgram> _GetTieredInventory()
+        {
+            return new List<PlanPricingInventoryProgram>
+                {
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 1,
+                        StandardDaypartId = 15,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 1000,
+                        ProjectedImpressions = 1000,
+                        SpotCost = 50,
+                        InventorySource = new InventorySource
+                        {
+                            Id = 1,
+                            InventoryType = InventorySourceTypeEnum.OpenMarket,
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 101,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                            }
+                        }
+                    },
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 2,
+                        StandardDaypartId = 16,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProjectedImpressions = 1100,
+                        SpotCost = 60,
+                        InventorySource = new InventorySource
+                        {
+                            Id = 1,
+                            InventoryType = InventorySourceTypeEnum.OpenMarket
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Wednesday = true,
+                                    Friday = true,
+                                    StartTime = 64800, // 6pm
+                                    EndTime = 71999 // 8pm
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 103,
+                            }
+                        }
+                    },
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 3,
+                        StandardDaypartId = 15,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 0,
+                        ProjectedImpressions = 0,
+                        SpotCost = 50,
+                        InventorySource = new InventorySource
+                        {
+                            Id = 1,
+                            InventoryType = InventorySourceTypeEnum.OpenMarket
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 104,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 105,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 106,
+                            }
+                        }
+                    },
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 4,
+                        StandardDaypartId = 15,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 6,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 1200,
+                        ProjectedImpressions = 1200,
+                        SpotCost = 0,
+                        InventorySource = new InventorySource
+                        {
+                            Id = 1,
+                            InventoryType = InventorySourceTypeEnum.OpenMarket
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 101,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
                             }
                         }
                     }
@@ -8234,6 +8699,75 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new WeeklyBreakdownWeek
                         {
                             WeeklyImpressions = 0,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 103
+                        }
+                    }
+            };
+        }
+
+        private PlanDto _GetPlanTiered()
+        {
+            return new PlanDto
+            {
+                CoverageGoalPercent = 80,
+                CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
+                AvailableMarkets = new List<PlanAvailableMarketDto>
+                    {
+                        new PlanAvailableMarketDto
+                        {
+                            Id = 5,
+                            MarketCode = 101,
+                            ShareOfVoicePercent = 12
+                        },
+                        new PlanAvailableMarketDto
+                        {
+                            Id = 6,
+                            MarketCode = 102,
+                            ShareOfVoicePercent = 13
+                        }
+                    },
+                Dayparts = new List<PlanDaypartDto>
+                    {
+                        new PlanDaypartDto
+                        {
+                            DaypartCodeId = 15,
+                            WeightingGoalPercent = 60
+                        },
+                        new PlanDaypartDto
+                        {
+                            DaypartCodeId = 16,
+                            WeightingGoalPercent = 40
+                        }
+                    },
+                PricingParameters = _GetPlanPricingParametersDto(),
+                FlightStartDate = new DateTime(2005, 11, 21),
+                FlightEndDate = new DateTime(2005, 12, 18),
+                FlightDays = new List<int>(),
+                TargetRatingPoints = 1000,
+                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 150,
+                            WeeklyBudget = 15,
+                            MediaWeekId = 100
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 250,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 101
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 150,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 102
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 200,
                             WeeklyBudget = 15m,
                             MediaWeekId = 103
                         }

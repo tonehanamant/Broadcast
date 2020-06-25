@@ -612,8 +612,8 @@ namespace Services.Broadcast.BusinessEngines
                 return true;
             }
 
-            var restrictedProgramNames = programRestrictions.Programs.Select(x => x.Name);
-            var primaryProgramName = programInventoryDaypart.ManifestDaypart.PrimaryProgram.Name;
+            var restrictedProgramNames = programRestrictions.Programs.Select(x => x.Name.ToLowerInvariant());
+            var primaryProgramName = programInventoryDaypart.ManifestDaypart.PrimaryProgram.Name.ToLowerInvariant();
             var isInTheList = restrictedProgramNames.Contains(primaryProgramName);
 
             if (programRestrictions.ContainType == ContainTypeEnum.Include)

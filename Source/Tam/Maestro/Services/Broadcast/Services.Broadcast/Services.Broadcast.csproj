@@ -457,6 +457,7 @@
     <Compile Include="Entities\Plan\LengthMakeUpRequest.cs" />
     <Compile Include="Entities\Plan\LengthMakeUpTableRow.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingStationResultDto.cs" />
+	<Compile Include="Entities\Plan\Pricing\PlanPricingInventoryGroup.cs" />
     <Compile Include="Entities\ProgramMapping\ProgramNameExceptionDto.cs" />
     <Compile Include="Entities\ProgramMapping\ProgramNameMappingDto.cs" />
     <Compile Include="Entities\ProgramMapping\UnMappedProgramNameReportData.cs" />
