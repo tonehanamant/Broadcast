@@ -11,7 +11,7 @@
   },
   {
     "Completed": "2020-02-04T15:31:27",
-    "DiagnosticResult": "System.Exception: Response from API contains manifest id not found in sent data\r\n   at Services.Broa",
+    "DiagnosticResult": "System.Exception: Couldn't find the program in grouped inventory\r\n   at Services.Broadcast.Applicati",
     "ErrorMessage": "Error attempting to run the pricing model",
     "HangfireJobId": null,
     "Id": 1,

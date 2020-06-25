@@ -16,7 +16,8 @@
         "StandardDaypart": {
           "Code": "AMN",
           "FullName": "AM News",
-          "Id": 15
+          "Id": 15,
+          "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 0,
         "TotalCost": 50.0,
@@ -34,7 +35,8 @@
         "StandardDaypart": {
           "Code": "AMN",
           "FullName": "AM News",
-          "Id": 15
+          "Id": 15,
+          "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 0,
         "TotalCost": 100.0,
@@ -52,7 +54,8 @@
         "StandardDaypart": {
           "Code": "AMN",
           "FullName": "AM News",
-          "Id": 15
+          "Id": 15,
+          "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 0,
         "TotalCost": 150.0,
@@ -70,7 +73,8 @@
         "StandardDaypart": {
           "Code": "PMN",
           "FullName": "PM News",
-          "Id": 16
+          "Id": 16,
+          "VpvhCalculationSourceType": 0
         },
         "StationInventoryManifestId": 0,
         "TotalCost": 240.0,

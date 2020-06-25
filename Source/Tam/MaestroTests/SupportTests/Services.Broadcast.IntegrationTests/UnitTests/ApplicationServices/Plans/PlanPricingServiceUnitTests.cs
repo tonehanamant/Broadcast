@@ -7786,7 +7786,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetTieredAllocations());
 
             var allocations = new List<PlanPricingAllocationResult>();
-            _PlanPricingBandCalculationEngine
+            _PlanPricingBandCalculationEngineMock
                 .Setup(x => x.CalculatePricingBands(It.IsAny<List<PlanPricingInventoryProgram>>(), It.IsAny<PlanPricingAllocationResult>(), It.IsAny<PlanPricingParametersDto>()))
                 .Callback<List<PlanPricingInventoryProgram>, PlanPricingAllocationResult, PlanPricingParametersDto>((inventory, allocation, pricingParameters) => allocations.Add(allocation));
 
