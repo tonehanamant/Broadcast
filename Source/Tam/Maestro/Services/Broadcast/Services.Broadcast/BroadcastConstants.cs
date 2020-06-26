@@ -26,8 +26,6 @@
 
         public const int DefaultDatabaseQueryChunkSize = 1000;
 
-        public const double ImpressionsPerUnit = 500000; // temporary hardcoded value
-
         public class FolderNames
         {
             public const string SCX_EXPORT_DIRECTORY = "ScxFiles";

@@ -516,7 +516,9 @@ namespace Services.Broadcast.Entities.Campaign
             var firstTable = tables.First();
             //check if we have an ADU table for this quarter
             var weeksStartDates = firstTable.WeeksStartDate.Select(w => Convert.ToDateTime(w));
-            var weeklyBreakdowns = plans.Select(x => _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(x.WeeklyBreakdownWeeks)).ToList();
+            var weeklyBreakdowns = plans.Select(x => 
+                _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(x.WeeklyBreakdownWeeks, x.ImpressionsPerUnit, x.CreativeLengths)
+                ).ToList();
 
             if (!weeklyBreakdowns.Any(x => x.Any(y => weeksStartDates.Contains(y.StartDate) && y.Adu > 0)))
             {
@@ -736,7 +738,7 @@ namespace Services.Broadcast.Entities.Campaign
             var plansAndweeklyBreakdowns = plans.Select(x => new
             {
                 Plan = x,
-                WeeklyBreakdown = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(x.WeeklyBreakdownWeeks)
+                WeeklyBreakdown = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(x.WeeklyBreakdownWeeks, x.ImpressionsPerUnit, x.CreativeLengths)
             }).ToList();
 
             if (!plansAndweeklyBreakdowns.Any(x => x.WeeklyBreakdown.Any(y => weeksStartDates.Contains(y.StartDate) && y.Adu > 0)))

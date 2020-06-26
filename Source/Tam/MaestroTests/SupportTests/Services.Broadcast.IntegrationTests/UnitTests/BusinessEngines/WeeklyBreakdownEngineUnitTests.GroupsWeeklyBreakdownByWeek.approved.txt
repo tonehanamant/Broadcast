@@ -1,7 +1,7 @@
 ﻿[
   {
     "ActiveDays": "M,Tu,W,Th,F",
-    "Adu": 4,
+    "Adu": 8,
     "Budget": 300.0,
     "EndDate": "2020-05-10T00:00:00",
     "Impressions": 2500.0,
@@ -25,7 +25,7 @@
   },
   {
     "ActiveDays": "M,Tu,W",
-    "Adu": 5,
+    "Adu": 12,
     "Budget": 90.0,
     "EndDate": "2020-04-26T00:00:00",
     "Impressions": 1500.0,

@@ -524,7 +524,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 if (parameters.Margin > 0)
                 {
-                    weeklyBudget = weeklyBudget * (decimal)(1.0 - (parameters.Margin / 100.0));
+                    weeklyBudget *= (decimal)(1.0 - (parameters.Margin / 100.0));
                 }
 
                 var cpmGoal = ProposalMath.CalculateCpm(weeklyBudget, impressionGoal);

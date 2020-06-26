@@ -1,7 +1,9 @@
 ﻿using Common.Services.ApplicationServices;
+using Common.Services.Extensions;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.spotcableXML;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Validators;
 using System;
@@ -13,8 +15,10 @@ namespace Services.Broadcast.BusinessEngines
 {
     public interface IWeeklyBreakdownEngine : IApplicationService
     {
-        List<WeeklyBreakdownByWeek> GroupWeeklyBreakdownByWeek(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown);
-        List<WeeklyBreakdownByWeekBySpotLength> GroupWeeklyBreakdownByWeekBySpotLength(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown);
+        List<WeeklyBreakdownByWeek> GroupWeeklyBreakdownByWeek(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown
+            , double impressionsPerUnit = 0, List<CreativeLength> creativeLengths = null, bool equivalized = false);
+        List<WeeklyBreakdownByWeekBySpotLength> GroupWeeklyBreakdownByWeekBySpotLength(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown
+            , double impressionsPerUnit, bool equivalized);
         Dictionary<int, int> GetWeekNumberByMediaWeekDictionary(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown);
 
         /// <summary>
@@ -39,6 +43,17 @@ namespace Services.Broadcast.BusinessEngines
         void RecalculatePercentageOfWeekBasedOnImpressions(List<WeeklyBreakdownWeek> weeks);
 
         void SetWeekNumber(IEnumerable<WeeklyBreakdownWeek> weeks);
+
+        /// <summary>
+        /// Calculates the adu Impressions
+        /// </summary>
+        /// <param name="week">Week object</param>
+        /// <param name="equivalized">Equivalized flag</param>
+        /// <param name="impressionsPerUnit">Impressions per unit value</param>
+        /// <param name="creativeLengths">List of creative lengths</param>
+        /// <returns>Number of adu impressions</returns>
+        double CalculateWeeklyADUImpressions(WeeklyBreakdownWeek week, bool equivalized
+            , double impressionsPerUnit, List<CreativeLength> creativeLengths);
     }
 
     public class WeeklyBreakdownEngine : IWeeklyBreakdownEngine
@@ -48,6 +63,8 @@ namespace Services.Broadcast.BusinessEngines
         private readonly ICreativeLengthEngine _CreativeLengthEngine;
         private readonly Dictionary<int, double> _SpotLengthMultiplier;
 
+        // this needs to be removed after all plans in production have a modified version greater then 20.07 release date
+        private const double _DefaultImpressionsPerUnitForOldPlans = 500000; 
         private const string _UnsupportedDeliveryTypeMessage = "Unsupported Delivery Type";
 
         public WeeklyBreakdownEngine(IPlanValidator planValidator,
@@ -117,12 +134,12 @@ namespace Services.Broadcast.BusinessEngines
                 {
                     if (week.SpotLengthId.HasValue)
                     {
-                        week.WeeklyUnits = _CalculateUnitsForSingleSpotLength(request.ImpressionsPerUnit, week);
+                        week.WeeklyUnits = _CalculateUnitsForSingleSpotLength(request.ImpressionsPerUnit, week.WeeklyImpressions, week.SpotLengthId.Value);
                     }
                     else
                     {
                         request.CreativeLengths = _CreativeLengthEngine.DistributeWeight(request.CreativeLengths);
-                        week.WeeklyUnits = _CalculateUnitsForMultipleSpotLengths(request, week);
+                        week.WeeklyUnits = _CalculateUnitsForMultipleSpotLengths(request.CreativeLengths, request.ImpressionsPerUnit, week.WeeklyImpressions);
                     }
                 }
                 else
@@ -368,11 +385,13 @@ namespace Services.Broadcast.BusinessEngines
                         {
                             if (week.SpotLengthId.HasValue)
                             {
-                                week.WeeklyImpressions = _CalculateImpressionsForSingleSpotLength(request.ImpressionsPerUnit, week);
+                                week.WeeklyImpressions = _CalculateUnitImpressionsForSingleSpotLength(request.ImpressionsPerUnit
+                                    , week.WeeklyUnits, week.SpotLengthId.Value);
                             }
                             else
                             {
-                                week.WeeklyImpressions = _CalculateImpressionsForMultipleSpotLengths(request, week);
+                                week.WeeklyImpressions = _CalculateUnitImpressionsForMultipleSpotLengths(request.CreativeLengths
+                                    , request.ImpressionsPerUnit, week.WeeklyUnits);
                             }
                         }
                         else
@@ -668,7 +687,8 @@ namespace Services.Broadcast.BusinessEngines
                 .ToDictionary(x => x.MediaWeekId, x => x.weekNumber);
         }
 
-        public List<WeeklyBreakdownByWeek> GroupWeeklyBreakdownByWeek(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown)
+        public List<WeeklyBreakdownByWeek> GroupWeeklyBreakdownByWeek(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown
+            , double impressionsPerUnit = 0, List<CreativeLength> creativeLengths = null, bool equivalied = false)
         {
             return weeklyBreakdown
                 .GroupBy(x => x.MediaWeekId)
@@ -679,7 +699,7 @@ namespace Services.Broadcast.BusinessEngines
                     double weeklyImpressions = allItems.Sum(x => x.WeeklyImpressions);
                     double unitsImpressions = allItems.Sum(x => x.UnitImpressions);
 
-                    return new WeeklyBreakdownByWeek
+                    var week = new WeeklyBreakdownByWeek
                     {
                         WeekNumber = first.WeekNumber,
                         MediaWeekId = first.MediaWeekId,
@@ -689,16 +709,21 @@ namespace Services.Broadcast.BusinessEngines
                         ActiveDays = first.ActiveDays,
                         Impressions = weeklyImpressions,
                         Budget = allItems.Sum(x => x.WeeklyBudget),
-                        Adu = (int)(allItems.Sum(x => x.AduImpressions) / BroadcastConstants.ImpressionsPerUnit),
                         Units = unitsImpressions == 0
                             ? 0
                             : weeklyImpressions / unitsImpressions
                     };
+                    if (!creativeLengths.IsNullOrEmpty())
+                    {
+                        week.Adu = _CalculateADU(impressionsPerUnit, allItems.Sum(x => x.AduImpressions), equivalied, null, creativeLengths);
+                    }
+                    return week;
                 })
                 .ToList();
         }
 
-        public List<WeeklyBreakdownByWeekBySpotLength> GroupWeeklyBreakdownByWeekBySpotLength(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown)
+        public List<WeeklyBreakdownByWeekBySpotLength> GroupWeeklyBreakdownByWeekBySpotLength(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown
+            , double impressionsPerUnit, bool equivalized)
         {
             return weeklyBreakdown
                 .GroupBy(x => new { x.MediaWeekId, x.SpotLengthId })
@@ -720,10 +745,9 @@ namespace Services.Broadcast.BusinessEngines
                         ActiveDays = first.ActiveDays,
                         Impressions = weekImpressions,
                         Budget = allItems.Sum(x => x.WeeklyBudget),
-                        Adu = (int)(allItems.Sum(x => x.AduImpressions) / BroadcastConstants.ImpressionsPerUnit),
-                        Units = unitsImpressions == 0
-                            ? 0
-                            : weekImpressions / unitsImpressions
+                        Adu = _CalculateADU(impressionsPerUnit
+                                , allItems.Sum(x => x.AduImpressions), equivalized, grouping.Key.SpotLengthId.Value),
+                        Units = unitsImpressions == 0 ? 0 : weekImpressions / unitsImpressions
                     };
                 }).ToList();
         }
@@ -790,33 +814,69 @@ namespace Services.Broadcast.BusinessEngines
                 .ToList();
         }
 
-        private double _CalculateImpressionsForMultipleSpotLengths(WeeklyBreakdownRequest request, WeeklyBreakdownWeek week)
-        {
-            return request.CreativeLengths
-                .Sum(p => week.WeeklyUnits * _CalculateEquivalizedImpressionsPerUnit(request.ImpressionsPerUnit, p.SpotLengthId)
+        private double _CalculateUnitImpressionsForMultipleSpotLengths(List<CreativeLength> creativeLengths
+            , double impressionsPerUnit, double units)
+            => creativeLengths
+                .Sum(p => units * _CalculateEquivalizedImpressionsPerUnit(impressionsPerUnit, p.SpotLengthId)
                             * GeneralMath.ConvertPercentageToFraction(p.Weight.Value));
-        }
 
-        private double _CalculateImpressionsForSingleSpotLength(double impressionPerUnit, WeeklyBreakdownWeek week)
-        {
-            return week.WeeklyUnits * _CalculateEquivalizedImpressionsPerUnit(impressionPerUnit, week.SpotLengthId.Value);
-        }
+        private double _CalculateUnitImpressionsForSingleSpotLength(double impressionPerUnit, double units, int spotLengthId)
+            => units * _CalculateEquivalizedImpressionsPerUnit(impressionPerUnit, spotLengthId);
 
         private double _CalculateEquivalizedImpressionsPerUnit(double impressionPerUnit, int spotLengthId)
+            => impressionPerUnit * _SpotLengthMultiplier[spotLengthId];
+
+        private double _CalculateUnitsForMultipleSpotLengths(List<CreativeLength> creativeLengths, double impressionsPerUnit, double impressions)
+            => creativeLengths
+                   .Sum(p => impressions * GeneralMath.ConvertPercentageToFraction(p.Weight.Value)
+                   / _CalculateEquivalizedImpressionsPerUnit(impressionsPerUnit, p.SpotLengthId));
+
+        private double _CalculateUnitsForSingleSpotLength(double impressionsPerUnit, double impressions, int spotLengthId)
+            => impressions / _CalculateEquivalizedImpressionsPerUnit(impressionsPerUnit, spotLengthId);
+
+        /// <inheritdoc/>
+        public double CalculateWeeklyADUImpressions(WeeklyBreakdownWeek week, bool equivalized
+            , double impressionsPerUnit, List<CreativeLength> creativeLengths)
         {
-            return impressionPerUnit * _SpotLengthMultiplier[spotLengthId];
+            if (equivalized)
+            {
+                if (week.SpotLengthId.HasValue)
+                {
+                    return _CalculateUnitImpressionsForSingleSpotLength(impressionsPerUnit, week.WeeklyAdu, week.SpotLengthId.Value);
+                }
+                else
+                {
+                    return _CalculateUnitImpressionsForMultipleSpotLengths(creativeLengths, impressionsPerUnit, week.WeeklyAdu);
+                }
+            }
+            else
+            {
+                return week.WeeklyAdu * impressionsPerUnit;
+            }
         }
 
-        private double _CalculateUnitsForMultipleSpotLengths(WeeklyBreakdownRequest request, WeeklyBreakdownWeek week)
+        private int _CalculateADU(double impressionsPerUnit, double aduImpressions
+            , bool equivalized, int? spotLengthId, List<CreativeLength> creativeLengths = null)
         {
-            return request.CreativeLengths
-                   .Sum(p => week.WeeklyImpressions * GeneralMath.ConvertPercentageToFraction(p.Weight.Value)
-                   / _CalculateEquivalizedImpressionsPerUnit(request.ImpressionsPerUnit, p.SpotLengthId));
-        }
-
-        private double _CalculateUnitsForSingleSpotLength(double impressionsPerUnit, WeeklyBreakdownWeek week)
-        {
-            return week.WeeklyImpressions / _CalculateEquivalizedImpressionsPerUnit(impressionsPerUnit, week.SpotLengthId.Value);
+            if(impressionsPerUnit == 0)
+            {   //for older plans, where the user did not set an impressions per unit value, we need to show the user the ADU value based on the old math
+                return (int)(aduImpressions / _DefaultImpressionsPerUnitForOldPlans);
+            }
+            if (equivalized)
+            {
+                if (spotLengthId.HasValue)
+                {
+                    return (int)_CalculateUnitsForSingleSpotLength(impressionsPerUnit, aduImpressions, spotLengthId.Value);
+                }
+                else
+                {
+                    return (int)_CalculateUnitsForMultipleSpotLengths(creativeLengths, impressionsPerUnit, aduImpressions);
+                }
+            }
+            else
+            {
+                return (int)(aduImpressions / impressionsPerUnit);
+            }
         }
     }
 }

@@ -35,6 +35,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 _PlanValidatorMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
                 _CreativeLengthEngineMock.Object, _SpotLengthEngine.Object);
+            _SpotLengthEngine.Setup(x => x.GetSpotLengthMultipliers())
+                .Returns(_SpotLengthMultiplier);
         }
 
         [Test]
@@ -54,7 +56,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             //Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void WeeklyBreakdown_UpdatedImpressions_Success()
@@ -117,7 +119,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             });
             request.WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Percentage;
             request.DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek;
-            
+
             var mockedListMediaWeeksByFlight = _GetDisplayMediaWeeks();
 
             _MediaMonthAndWeekAggregateCacheMock.Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
@@ -281,7 +283,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         [UseReporter(typeof(DiffReporter))]
         public void GroupsWeeklyBreakdownByWeek()
         {
-            var result = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(_WeeklyBreakdown);
+            var spotLengthEngine = new Mock<ISpotLengthEngine>();
+            spotLengthEngine.Setup(x => x.GetSpotLengthMultipliers())
+                .Returns(_SpotLengthMultiplier);
+            var weeklyBreakdownEngine = new WeeklyBreakdownEngine(
+                _PlanValidatorMock.Object,
+                _MediaMonthAndWeekAggregateCacheMock.Object,
+                _CreativeLengthEngineMock.Object, spotLengthEngine.Object);
+            var result = weeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(_WeeklyBreakdown, _ImpressionsPerUnit, _CreativeLengths);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
@@ -289,7 +298,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         [UseReporter(typeof(DiffReporter))]
         public void GroupsWeeklyBreakdownByWeekBySpotLength()
         {
-            var result = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeekBySpotLength(_WeeklyBreakdown);
+            var spotLengthEngine = new Mock<ISpotLengthEngine>();
+            spotLengthEngine.Setup(x => x.GetSpotLengthMultipliers())
+                .Returns(_SpotLengthMultiplier);
+            var weeklyBreakdownEngine = new WeeklyBreakdownEngine(
+                _PlanValidatorMock.Object,
+                _MediaMonthAndWeekAggregateCacheMock.Object,
+                _CreativeLengthEngineMock.Object, spotLengthEngine.Object);
+            var result = weeklyBreakdownEngine.GroupWeeklyBreakdownByWeekBySpotLength(_WeeklyBreakdown, _ImpressionsPerUnit, true);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
@@ -323,7 +339,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 WeeklyBudget = 100,
                 SpotLengthId = 1,
                 DaypartCodeId = 1,
-                AduImpressions = 1000000
+                AduImpressions = 1000
             },
             new WeeklyBreakdownWeek
             {
@@ -337,7 +353,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 WeeklyBudget = 200,
                 SpotLengthId = 2,
                 DaypartCodeId = 1,
-                AduImpressions = 1000000
+                AduImpressions = 1000
             },
             new WeeklyBreakdownWeek
             {
@@ -364,7 +380,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 WeeklyBudget = 30,
                 SpotLengthId = 1,
                 DaypartCodeId = 1,
-                AduImpressions = 1000000
+                AduImpressions = 1000
             },
             new WeeklyBreakdownWeek
             {
@@ -378,7 +394,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 WeeklyBudget = 30,
                 SpotLengthId = 1,
                 DaypartCodeId = 2,
-                AduImpressions = 500000
+                AduImpressions = 1000
             },
             new WeeklyBreakdownWeek
             {
@@ -392,7 +408,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 WeeklyBudget = 30,
                 SpotLengthId = 2,
                 DaypartCodeId = 2,
-                AduImpressions = 1000000
+                AduImpressions = 1000
             }
         };
 
@@ -400,31 +416,30 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         {
             _CreativeLengthEngineMock
                 .Setup(x => x.DistributeWeight(It.IsAny<List<CreativeLength>>()))
-                .Returns(new List<CreativeLength>
-                {
-                    new CreativeLength
-                    {
-                        SpotLengthId = 1,
-                        Weight = 30
-                    },
-                    new CreativeLength
-                    {
-                        SpotLengthId = 2,
-                        Weight = 13
-                    },
-                    new CreativeLength
-                    {
-                        SpotLengthId = 3,
-                        Weight = 57
-                    }
-                });
+                .Returns(_CreativeLengths);
         }
-        
-         private Dictionary<int, double> _SpotLengthMultiplier = new Dictionary<int, double>
+
+        private static List<CreativeLength> _CreativeLengths = new List<CreativeLength>
+        {
+            new CreativeLength
+            {
+                SpotLengthId = 1,
+                Weight = 55
+            },
+            new CreativeLength
+            {
+                SpotLengthId = 2,
+                Weight = 45
+            }
+        };
+
+
+        private Dictionary<int, double> _SpotLengthMultiplier = new Dictionary<int, double>
         {
             { 1,1}, { 2, 2}
         };
 
+        private readonly double _ImpressionsPerUnit = 250;
 
         private Dictionary<int, int> _GetWeekNumberByMediaWeekDictionary()
         {
@@ -684,7 +699,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 }
             };
         }
-        
+
         private WeeklyBreakdownRequest _GetWeeklyBreakDownRequest()
         {
             return new WeeklyBreakdownRequest

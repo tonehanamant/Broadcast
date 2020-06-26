@@ -312,11 +312,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 foreach (var breakdownItem in plan.WeeklyBreakdownWeeks.Where(x => x.MediaWeekId == week.MediaWeekId))
                 {
-                    var aduImpressionsForBreakdownItem = breakdownItem.WeeklyAdu * BroadcastConstants.ImpressionsPerUnit;
-                    var unitsImpressionsForBreakdownItem = breakdownItem.WeeklyImpressions / breakdownItem.WeeklyUnits;
+                    double aduImpressionsForBreakdownItem = _WeeklyBreakdownEngine.CalculateWeeklyADUImpressions(breakdownItem, plan.Equivalized
+                        , plan.ImpressionsPerUnit, plan.CreativeLengths);
+                    double unitsImpressionsForBreakdownItem = breakdownItem.WeeklyImpressions / breakdownItem.WeeklyUnits;
                     foreach (var (StadardDaypartId, WeightingGoalPercent) in standardDaypardWeightingGoals)
                     {
-                        var weighting = WeightingGoalPercent / 100;
+                        var weighting = GeneralMath.ConvertPercentageToFraction(WeightingGoalPercent);
 
                         var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
                         {
@@ -364,7 +365,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             foreach (var week in plan.WeeklyBreakdownWeeks)
             {
-                var weeklyAduImpressions = week.WeeklyAdu * BroadcastConstants.ImpressionsPerUnit;
+                var weeklyAduImpressions = _WeeklyBreakdownEngine.CalculateWeeklyADUImpressions(week, plan.Equivalized
+                    , plan.ImpressionsPerUnit, plan.CreativeLengths);
                 var unitsImpressions = week.WeeklyImpressions / week.WeeklyUnits;
                 foreach (var combination in allSpotLengthIdAndStandardDaypartIdCombinations)
                 {
@@ -557,7 +559,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             var result = new List<WeeklyBreakdownWeek>();
             var weeks = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(plan.WeeklyBreakdownWeeks);
-            var weeklyBreakdownByWeekBySpotLength = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeekBySpotLength(plan.WeeklyBreakdownWeeks);
+            var weeklyBreakdownByWeekBySpotLength = 
+                _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeekBySpotLength(plan.WeeklyBreakdownWeeks, plan.ImpressionsPerUnit, plan.Equivalized);
 
             foreach (var item in weeklyBreakdownByWeekBySpotLength)
             {
@@ -596,7 +599,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private List<WeeklyBreakdownWeek> _GroupWeeklyBreakdownWeeks_ByWeekDeliveryType(PlanDto plan)
         {
             var result = new List<WeeklyBreakdownWeek>();
-            var weeks = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(plan.WeeklyBreakdownWeeks);
+            var weeks = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(plan.WeeklyBreakdownWeeks, plan.ImpressionsPerUnit
+                , plan.CreativeLengths, plan.Equivalized);
 
             foreach (var week in weeks)
             {

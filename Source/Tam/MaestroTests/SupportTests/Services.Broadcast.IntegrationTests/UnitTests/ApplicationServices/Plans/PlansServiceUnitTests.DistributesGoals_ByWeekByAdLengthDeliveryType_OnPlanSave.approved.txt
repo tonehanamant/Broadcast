@@ -2,7 +2,7 @@
   [
     {
       "ActiveDays": "M,Tu,W,Th,F",
-      "AduImpressions": 600000.0,
+      "AduImpressions": 0.0,
       "DaypartCodeId": 2,
       "EndDate": "2020-05-17T00:00:00",
       "IsUpdated": false,
@@ -22,7 +22,7 @@
     },
     {
       "ActiveDays": "M,Tu,W,Th,F",
-      "AduImpressions": 400000.0,
+      "AduImpressions": 0.0,
       "DaypartCodeId": 11,
       "EndDate": "2020-05-17T00:00:00",
       "IsUpdated": false,
@@ -42,7 +42,7 @@
     },
     {
       "ActiveDays": "M,Tu,W,Th,F",
-      "AduImpressions": 600000.0,
+      "AduImpressions": 0.0,
       "DaypartCodeId": 2,
       "EndDate": "2020-05-17T00:00:00",
       "IsUpdated": false,
@@ -62,7 +62,7 @@
     },
     {
       "ActiveDays": "M,Tu,W,Th,F",
-      "AduImpressions": 400000.0,
+      "AduImpressions": 0.0,
       "DaypartCodeId": 11,
       "EndDate": "2020-05-17T00:00:00",
       "IsUpdated": false,
@@ -82,7 +82,7 @@
     },
     {
       "ActiveDays": "M,Tu,W,Th,F",
-      "AduImpressions": 600000.0,
+      "AduImpressions": 0.0,
       "DaypartCodeId": 2,
       "EndDate": "2020-05-17T00:00:00",
       "IsUpdated": false,
@@ -102,7 +102,7 @@
     },
     {
       "ActiveDays": "M,Tu,W,Th,F",
-      "AduImpressions": 400000.0,
+      "AduImpressions": 0.0,
       "DaypartCodeId": 11,
       "EndDate": "2020-05-17T00:00:00",
       "IsUpdated": false,

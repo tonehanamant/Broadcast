@@ -1521,7 +1521,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
 
             _WeeklyBreakdownEngineMock
-                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
+                        , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
                 .Returns(_GetWeeklyBreakdownByWeek());
             
             _CampaignRepositoryMock
@@ -1670,7 +1671,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
 
             _WeeklyBreakdownEngineMock
-                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
+                    , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
                 .Returns(_GetWeeklyBreakdownByWeek());
 
             _CampaignRepositoryMock
@@ -1850,7 +1852,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 SelectedPlans = new List<int> { planId }
             };
             _WeeklyBreakdownEngineMock
-                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
+                    , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
                 .Returns(_GetWeeklyBreakdownByWeek());
             _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(campaignId))
