@@ -158,18 +158,16 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _ExpireExistingInventoryManifestWeeks(InventoryFileBase inventoryFile)
         {
-
             var allManifests = inventoryFile.GetAllManifests();
 
-            var manifestsByMarketDaypart = allManifests.GroupBy(m => new { m.Station.MarketCode, m.ManifestDayparts.Single().Daypart})
+            var manifestsByMarketDaypart = allManifests.GroupBy(m => new { m.Station.MarketCode, StationId = m.Station.Id, m.ManifestDayparts.Single().Daypart})
                                             .Where(g => g.Key.MarketCode.HasValue).ToList();
             var count = manifestsByMarketDaypart.Count;
             foreach (var manifestGroup in manifestsByMarketDaypart)
             {
                 var weeks = manifestGroup.SelectMany(m => m.ManifestWeeks.Select(w => w.MediaWeek.Id)).Distinct().ToList();
                 _inventoryRepository.RemoveManifestWeeksByMarketAndDaypart
-                    (InventorySourceEnum.OpenMarket, weeks, manifestGroup.Key.MarketCode.Value, manifestGroup.Key.Daypart.Id);
-
+                    (InventorySourceEnum.OpenMarket, weeks, manifestGroup.Key.MarketCode.Value, manifestGroup.Key.Daypart.Id, manifestGroup.Key.StationId);
             }
         }
     }

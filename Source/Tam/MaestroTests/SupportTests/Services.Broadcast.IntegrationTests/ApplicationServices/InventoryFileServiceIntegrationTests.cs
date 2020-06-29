@@ -1902,5 +1902,69 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.AreEqual(5, numberOfWeeksSecondFile);
             }
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void OpenMarket_InventoryIsNotExpired()
+        {
+            // Two rate files are imported.
+            // Several programs from the files overlapped according to the old logic.
+            // The old logic checked overlaps by grouping by market and daypart.
+            // The new logic also checks by station.
+            // There are a few programs that are repeated in the second file, so the weeks from the first are removed.
+            // The thee number of weeks and programs that repeat are:
+            // 13 - Matter of Fact with Soledad O'Brien
+            // 8 - Chronicle
+            // 13 - Chronicle
+            // 13 - DAYBREAK
+            // 13 - INSIDE TEXAS POLITICS
+            // 13 - THIS WEEK - ABC
+            // 13 - ABC NIGHTLINE
+            // 13 - GMA SUNDAY
+            // 13 - GMA3
+            // 13 - GOOD MORNING AMERICA
+            // 13 - GOOD MORNING AMERICA SAT
+            // 13 - GN SPORTS
+            const string firstFileName = @"1-E320-ENT-NYC-ATL.xml";
+            const string secondFileName = @"1-N320-NEWS-NYC-ATL.xml";
+            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.OpenMarket, Name = "Open Market", Id = 1 };
+            var fileImporter = IntegrationTestApplicationServiceFactory.Instance.Resolve<IOpenMarketFileImporter>();
+
+            using (new TransactionScopeWrapper())
+            {
+                var now = new DateTime(2019, 02, 02);
+
+                var firstRequest = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\ImportingRateData\{firstFileName}", FileMode.Open, FileAccess.Read),
+                    FileName = firstFileName,
+                    InventorySource = "Open Market"
+                };
+
+                var firstResult = _InventoryService.SaveInventoryFile(firstRequest, "IntegrationTestUser", now);
+
+                var secondRequest = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream($@".\Files\ImportingRateData\{secondFileName}", FileMode.Open, FileAccess.Read),
+                    FileName = secondFileName,
+                    InventorySource = "Open Market"
+                };
+
+                var secondResult = _InventoryService.SaveInventoryFile(secondRequest, "IntegrationTestUser", now);
+
+                var firstFileManifests = _InventoryRepository.GetStationInventoryManifestsByFileId(firstResult.FileId);
+
+                var secondFileManifests = _InventoryRepository.GetStationInventoryManifestsByFileId(secondResult.FileId);
+
+                var numberOfWeeksFirstFile = firstFileManifests.Sum(x => x.ManifestWeeks.Count);
+
+                var numberOfWeeksSecondFile = secondFileManifests.Sum(x => x.ManifestWeeks.Count);
+
+                Assert.AreEqual(23332, numberOfWeeksFirstFile);
+
+                Assert.AreEqual(6871, numberOfWeeksSecondFile);
+            }
+        }
     }
 }

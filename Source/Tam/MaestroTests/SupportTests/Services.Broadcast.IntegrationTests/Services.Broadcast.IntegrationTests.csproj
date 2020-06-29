@@ -1329,6 +1329,12 @@
     <Content Include="Files\CNN.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\ImportingRateData\1-E320-ENT-NYC-ATL.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\ImportingRateData\1-N320-NEWS-NYC-ATL.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\ImportingRateData\1Q18 EMN Rates\Albany - WNYT - EM-NN - 1q18.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

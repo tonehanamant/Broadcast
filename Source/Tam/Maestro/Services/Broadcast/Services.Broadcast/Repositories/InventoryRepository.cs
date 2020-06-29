@@ -48,8 +48,8 @@ namespace Services.Broadcast.Repositories
         /// <param name="weeks">List of StationInventoryManifestWeek to remove</param>
         void RemoveManifestWeeks(List<StationInventoryManifestWeek> weeks);
 
-        void RemoveManifestWeeksByMarketAndDaypart(InventorySourceEnum inventorySource, List<int> mediaWeekIds, int stationId, int daypartId);
-
+        void RemoveManifestWeeksByMarketAndDaypart(InventorySourceEnum inventorySource, List<int> mediaWeekIds, int marketCode, int daypartId, int stationId);
+        
         List<StationInventoryGroup> GetInventoryBySourceAndName(InventorySource inventorySource, List<string> groupNames);
         List<StationInventoryManifest> GetStationManifestsBySourceAndStationCode(
                                             InventorySource rateSource, int stationCode);
@@ -1082,9 +1082,9 @@ namespace Services.Broadcast.Repositories
                     c.station_inventory_manifest_weeks.RemoveRange(dbWeeks);
                     c.SaveChanges();
                 });
-        }
+        }       
 
-        public void RemoveManifestWeeksByMarketAndDaypart(InventorySourceEnum inventorySource, List<int> mediaWeekIds, int marketCode, int daypartId)
+        public void RemoveManifestWeeksByMarketAndDaypart(InventorySourceEnum inventorySource, List<int> mediaWeekIds, int marketCode, int daypartId, int stationId)
         {
             _InReadUncommitedTransaction(
                 c =>
@@ -1097,23 +1097,13 @@ namespace Services.Broadcast.Repositories
                         where s.market_code = @marketCode
                         and m.inventory_source_id = @inventorySource
                         and d.daypart_id = @daypart
-                        and w.media_week_id in ({weekIdList})                       
-                    ";
-                    var marketParam = new System.Data.SqlClient.SqlParameter("@marketCode", marketCode);
-                    var inventorySourceParam = new System.Data.SqlClient.SqlParameter("@inventorySource", (int)inventorySource);
-                    var daypartParam = new System.Data.SqlClient.SqlParameter("@daypart", daypartId);
-                    c.Database.ExecuteSqlCommand(sql, marketParam, inventorySourceParam, daypartParam);
-                    /*
-                    var weeksToRemove = c.station_inventory_manifest_dayparts
-                       .Where(md => md.daypart_id == daypartId)
-                       .Select(md => md.station_inventory_manifest)
-                       .Where(m => m.inventory_source_id == (int) inventorySource && m.station.market_code == marketCode)
-                       .SelectMany(m => m.station_inventory_manifest_weeks)
-                       .Where(w => mediaWeekIds.Contains(w.media_week_id));
-
-                    c.station_inventory_manifest_weeks.RemoveRange(weeksToRemove);
-                    c.SaveChanges();
-                    */
+                        and s.id = @station
+                        and w.media_week_id in ({weekIdList})";
+                    var marketParam = new SqlParameter("@marketCode", marketCode);
+                    var inventorySourceParam = new SqlParameter("@inventorySource", (int)inventorySource);
+                    var daypartParam = new SqlParameter("@daypart", daypartId);
+                    var stationParam = new SqlParameter("@station", stationId);
+                    c.Database.ExecuteSqlCommand(sql, marketParam, inventorySourceParam, daypartParam, stationParam);
                 });
         }
 
