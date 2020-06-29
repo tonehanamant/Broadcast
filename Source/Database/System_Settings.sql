@@ -1,4 +1,4 @@
-﻿---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
 -- !!! If Executing from SQL Server Manager, please enable SQLCMD Mode!!! To enable option, select menu Query->Enable SQLCMD mode. --
 ---------------------------------------------------------------------------------------------------
 -- All scripts should be written in a way that they can be run multiple times
@@ -50,14 +50,12 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
--- a test query to establish that the build is running the correct script against the correct environment and database
-SELECT @@SERVERNAME AS ServerName, DB_Name() AS DbName, 'General' AS Environment
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
-SET parameter_value = '20.07.1' -- Current release version
+SET parameter_value = '20.08.1' -- Current release version
 WHERE parameter_key = 'SchemaVersion'
 GO
 
@@ -68,8 +66,8 @@ BEGIN
 	
 	IF EXISTS (SELECT TOP 1 * 
 		FROM #previous_version 
-		WHERE [version] = '20.06.1' -- Previous release version
-		OR [version] = '20.07.1') -- Current release version
+		WHERE [version] = '20.07.1' -- Previous release version
+		OR [version] = '20.08.1') -- Current release version
 	BEGIN
 		PRINT 'Database Successfully Updated'
 		COMMIT TRANSACTION
