@@ -1575,7 +1575,7 @@ namespace Services.Broadcast.Repositories
 
                 var dto = new PlanPricingResultMarketsDto
                 {
-                    MarketTotals = new PlanPricingResultMarketsTotalsDto
+                    Totals = new PlanPricingResultMarketsTotalsDto
                     {
                         Markets = entity.total_markets,
                         CoveragePercent = entity.total_coverage_percent,
@@ -1610,13 +1610,13 @@ namespace Services.Broadcast.Repositories
                 {
                     plan_version_id = dto.PlanVersionId,
                     plan_version_pricing_job_id = dto.PricingJobId,
-                    total_markets = dto.MarketTotals.Markets,
-                    total_coverage_percent = dto.MarketTotals.CoveragePercent,
-                    total_stations = dto.MarketTotals.Stations,
-                    total_spots = dto.MarketTotals.Spots,
-                    total_impressions = dto.MarketTotals.Impressions,
-                    total_cpm = Convert.ToDouble(dto.MarketTotals.Cpm),
-                    total_budget = Convert.ToDouble(dto.MarketTotals.Budget),
+                    total_markets = dto.Totals.Markets,
+                    total_coverage_percent = dto.Totals.CoveragePercent,
+                    total_stations = dto.Totals.Stations,
+                    total_spots = dto.Totals.Spots,
+                    total_impressions = dto.Totals.Impressions,
+                    total_cpm = Convert.ToDouble(dto.Totals.Cpm),
+                    total_budget = Convert.ToDouble(dto.Totals.Budget),
                     plan_version_pricing_market_details = dto.MarketDetails.Select(d => new plan_version_pricing_market_details
                     {
                         market_coverage_percent = d.MarketCoveragePercent,

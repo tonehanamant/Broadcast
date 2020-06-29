@@ -93,7 +93,7 @@ namespace Services.Broadcast.BusinessEngines.PlanPricing
             {
                 PlanVersionId = allocationResult.PlanVersionId,
                 PricingJobId = allocationResult.JobId,
-                MarketTotals = totals,
+                Totals = totals,
                 MarketDetails = details
             };
 

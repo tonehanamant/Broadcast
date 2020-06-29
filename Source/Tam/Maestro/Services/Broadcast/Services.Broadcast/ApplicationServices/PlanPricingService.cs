@@ -1497,7 +1497,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _ConvertPricingMarketResultsToUserFormat(PlanPricingResultMarketsDto results)
         {
-            results.MarketTotals.Impressions /= 1000;
+            results.Totals.Impressions /= 1000;
 
             foreach (var detail in results.MarketDetails)
             {

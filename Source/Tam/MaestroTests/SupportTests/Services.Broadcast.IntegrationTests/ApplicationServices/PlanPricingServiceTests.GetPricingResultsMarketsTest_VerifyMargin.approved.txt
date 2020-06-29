@@ -23,7 +23,9 @@
       "Stations": 1
     }
   ],
-  "MarketTotals": {
+  "PlanVersionId": 0,
+  "PricingJobId": null,
+  "Totals": {
     "Budget": 18522.15,
     "CoveragePercent": 10.328,
     "Cpm": 15.5094410718024,
@@ -31,7 +33,5 @@
     "Markets": 2,
     "Spots": 45,
     "Stations": 2
-  },
-  "PlanVersionId": 0,
-  "PricingJobId": null
+  }
 }
