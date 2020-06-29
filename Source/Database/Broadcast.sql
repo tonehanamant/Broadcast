@@ -1158,6 +1158,7 @@ BEGIN
     END CATCH
 END
 
+GO
 /*************************************** END BP1-678 *****************************************************/
 
 /*************************************** START - BP1-24 ****************************************************/
@@ -1210,6 +1211,76 @@ BEGIN
 END
 /*************************************** END - BP1-24 ****************************************************/
 
+GO
+/*************************************** START BP-371 *****************************************************/
+
+IF OBJECT_ID('plan_version_pricing_markets') IS NULL
+BEGIN
+	CREATE TABLE plan_version_pricing_markets
+	(
+		id INT IDENTITY(1,1) NOT NULL,
+		plan_version_id INT NOT NULL,
+		plan_version_pricing_job_id INT NULL,
+		total_markets INT NOT NULL,
+		total_coverage_percent FLOAT NOT NULL,
+		total_stations INT NOT NULL,
+		total_spots INT NOT NULL,
+		total_impressions FLOAT NOT NULL,
+		total_cpm FLOAT NOT NULL,
+		total_budget FLOAT NOT NULL,
+		CONSTRAINT [PK_plan_version_pricing_markets] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+
+	ALTER TABLE [dbo].[plan_version_pricing_markets]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_markets_pricing_job] FOREIGN KEY([plan_version_pricing_job_id])
+	REFERENCES [dbo].[plan_version_pricing_job] ([id])
+
+	ALTER TABLE [dbo].[plan_version_pricing_markets] CHECK CONSTRAINT [FK_plan_version_pricing_markets_pricing_job]
+
+	ALTER TABLE [dbo].[plan_version_pricing_markets]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_markets_plan_version] FOREIGN KEY([plan_version_id])
+		REFERENCES [dbo].[plan_versions] ([id])
+		ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[plan_version_pricing_markets] CHECK CONSTRAINT [FK_plan_version_pricing_markets_plan_version]
+
+END
+
+GO
+
+IF OBJECT_ID('plan_version_pricing_market_details') IS NULL
+BEGIN
+	CREATE TABLE plan_version_pricing_market_details
+	(
+		id INT IDENTITY(1,1) NOT NULL,
+		plan_version_pricing_market_id INT NOT NULL,
+		[rank] INT NOT NULL,
+		market_coverage_percent FLOAT NOT NULL,
+		stations INT NOT NULL,
+		spots INT NOT NULL,
+		impressions FLOAT NOT NULL,
+		cpm FLOAT NOT NULL,
+		budget FLOAT NOT NULL,
+		impressions_percentage FLOAT NOT NULL,
+		share_of_voice_goal_percentage FLOAT NULL,
+		CONSTRAINT [PK_plan_version_pricing_market_details] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_pricing_market_details]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_pricing_market_details_pricing_market] FOREIGN KEY([plan_version_pricing_market_id])
+	REFERENCES [dbo].[plan_version_pricing_markets] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[plan_version_pricing_market_details] CHECK CONSTRAINT [FK_plan_version_pricing_market_details_pricing_market]
+END
+
+GO
+
+/*************************************** END BP-371 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

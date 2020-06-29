@@ -40,10 +40,13 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public static string SW_KEY_AGGREGATING_ALLOCATION_RESULTS = "Aggregating allocation results";
         public static string SW_KEY_CALCULATING_PRICING_BANDS = "Calculating pricing bands";
         public static string SW_KEY_CALCULATING_PRICING_STATIONS = "Calculating pricing stations";
+        public static string SW_KEY_AGGREGATING_MARKET_RESULTS = "Aggregating market results";
+
         public static string SW_KEY_SAVING_ALLOCATION_RESULTS = "Saving allocation results";
         public static string SW_KEY_SAVING_AGGREGATION_RESULTS = "Saving aggregation results";
         public static string SW_KEY_SAVING_PRICING_BANDS = "Saving pricing bands";
         public static string SW_KEY_SAVING_PRICING_STATIONS = "Saving pricing stations";
+        public static string SW_KEY_SAVING_MARKET_RESULTS = "Saving market results";
         public static string SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED = "Setting job status to Succeeded";
 
         public void Start(string key)

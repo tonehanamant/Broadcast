@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.BusinessEngines.PlanPricing;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
@@ -58,6 +59,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IWeeklyBreakdownEngine> _WeeklyBreakdownEngineMock;
         private Mock<IPlanPricingBandCalculationEngine> _PlanPricingBandCalculationEngineMock;
         private Mock<IPlanPricingStationCalculationEngine> _PlanPricingStationCalculationEngineMock;
+        private Mock<IPlanPricingMarketResultsEngine> _PlanPricingMarketResultsEngine;
 
         [SetUp]
         public void SetUp()
@@ -81,6 +83,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _WeeklyBreakdownEngineMock = new Mock<IWeeklyBreakdownEngine>();
             _PlanPricingBandCalculationEngineMock = new Mock<IPlanPricingBandCalculationEngine>();
             _PlanPricingStationCalculationEngineMock = new Mock<IPlanPricingStationCalculationEngine>();
+            _PlanPricingMarketResultsEngine = new Mock<IPlanPricingMarketResultsEngine>();
 
             _DateTimeEngineMock
                 .Setup(x => x.GetCurrentMoment())
@@ -1090,7 +1093,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _DateTimeEngineMock.Object,
                 _WeeklyBreakdownEngineMock.Object,
                 _PlanPricingBandCalculationEngineMock.Object,
-                _PlanPricingStationCalculationEngineMock.Object);
+                _PlanPricingStationCalculationEngineMock.Object,
+                _PlanPricingMarketResultsEngine.Object);
         }
 
         [Test]

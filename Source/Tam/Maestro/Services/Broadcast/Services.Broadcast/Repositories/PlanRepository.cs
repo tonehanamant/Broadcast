@@ -141,6 +141,11 @@ namespace Services.Broadcast.Repositories
         PlanPricingBandDto GetPlanPricingBand(int planId);
 
         void SavePlanPricingBands(PlanPricingBandDto planPricingBandDto);
+
+        PlanPricingResultMarketsDto GetPlanPricingResultMarkets(int planId);
+
+        void SavePlanPricingMarketResults(PlanPricingResultMarketsDto dto);
+
         /// <summary>
         /// Get Goal CPM value
         /// </summary>
@@ -1552,6 +1557,79 @@ namespace Services.Broadcast.Repositories
                 }
 
                 context.plan_version_pricing_stations.Add(planVersionPricingStation);
+
+                context.SaveChanges();
+            });
+        }
+
+        public PlanPricingResultMarketsDto GetPlanPricingResultMarkets(int planId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var plan = context.plans.Single(x => x.id == planId);
+                var planVersionId = plan.latest_version_id;
+
+                var entity = context.plan_version_pricing_markets
+                    .Include(m => m.plan_version_pricing_market_details)
+                    .SingleOrDefault(m => m.plan_version_id.Equals(planVersionId));
+
+                var dto = new PlanPricingResultMarketsDto
+                {
+                    MarketTotals = new PlanPricingResultMarketsTotalsDto
+                    {
+                        Markets = entity.total_markets,
+                        CoveragePercent = entity.total_coverage_percent,
+                        Stations = entity.total_stations,
+                        Spots = entity.total_spots,
+                        Impressions = entity.total_impressions,
+                        Cpm = Convert.ToDecimal(entity.total_cpm),
+                        Budget = Convert.ToDecimal(entity.total_budget)
+                    },
+                    MarketDetails = entity.plan_version_pricing_market_details.Select(s => new PlanPricingResultMarketDetailsDto
+                    {
+                        Rank = s.rank,
+                        MarketCoveragePercent = s.market_coverage_percent,
+                        Stations = s.stations,
+                        Spots = s.spots,
+                        Impressions = s.impressions,
+                        Cpm = Convert.ToDecimal(s.cpm),
+                        Budget = Convert.ToDecimal(s.budget),
+                        ShareOfVoiceGoalPercentage = s.share_of_voice_goal_percentage,
+                        ImpressionsPercentage = s.impressions_percentage
+                    }).ToList()
+                };
+                return dto;
+            });
+        }
+
+        public void SavePlanPricingMarketResults(PlanPricingResultMarketsDto dto)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                context.plan_version_pricing_markets.Add(new plan_version_pricing_markets
+                {
+                    plan_version_id = dto.PlanVersionId,
+                    plan_version_pricing_job_id = dto.PricingJobId,
+                    total_markets = dto.MarketTotals.Markets,
+                    total_coverage_percent = dto.MarketTotals.CoveragePercent,
+                    total_stations = dto.MarketTotals.Stations,
+                    total_spots = dto.MarketTotals.Spots,
+                    total_impressions = dto.MarketTotals.Impressions,
+                    total_cpm = Convert.ToDouble(dto.MarketTotals.Cpm),
+                    total_budget = Convert.ToDouble(dto.MarketTotals.Budget),
+                    plan_version_pricing_market_details = dto.MarketDetails.Select(d => new plan_version_pricing_market_details
+                    {
+                        market_coverage_percent = d.MarketCoveragePercent,
+                        stations = d.Stations,
+                        spots = d.Spots,
+                        impressions = d.Impressions,
+                        cpm = Convert.ToDouble(d.Cpm),
+                        budget = Convert.ToDouble(d.Budget),
+                        impressions_percentage = d.ImpressionsPercentage,
+                        share_of_voice_goal_percentage = d.ShareOfVoiceGoalPercentage,
+                        rank = d.Rank
+                    }).ToList()
+                });
 
                 context.SaveChanges();
             });

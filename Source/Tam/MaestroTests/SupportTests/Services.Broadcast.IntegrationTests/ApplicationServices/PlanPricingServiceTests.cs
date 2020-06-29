@@ -570,6 +570,68 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetPricingResultsMarketsTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planPricingRequestDto = _GetPricingRequestDto();
+
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+
+                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+
+                var markets = _PlanPricingService.GetMarkets(planPricingRequestDto.PlanId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingBandDto), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingBandDto), "JobId");
+                jsonResolver.Ignore(typeof(PlanPricingBandDetailDto), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetPricingResultsMarketsTest_VerifyMargin()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planPricingRequestDto = _GetPricingRequestDto();
+                // the GetPricingResultsMarketsTest test has the Margin included.
+                // This test will null out Margin to see that that works
+                // and verified by eye that the counts are different between the tests.
+                planPricingRequestDto.Margin = null;
+
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+
+                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+
+                var markets = _PlanPricingService.GetMarkets(planPricingRequestDto.PlanId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingBandDto), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingBandDto), "JobId");
+                jsonResolver.Ignore(typeof(PlanPricingBandDetailDto), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets, jsonSettings));
+            }
+        }
+
         private static PlanPricingParametersDto _GetPricingRequestDto()
         {
             return new PlanPricingParametersDto

@@ -31,6 +31,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_weekly_breakdown = new HashSet<plan_version_weekly_breakdown>();
             this.plan_version_pricing_bands = new HashSet<plan_version_pricing_bands>();
             this.plan_version_audience_daypart_vpvh = new HashSet<plan_version_audience_daypart_vpvh>();
+            this.plan_version_pricing_markets = new HashSet<plan_version_pricing_markets>();
             this.plan_version_pricing_stations = new HashSet<plan_version_pricing_stations>();
         }
     
@@ -89,6 +90,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_weekly_breakdown> plan_version_weekly_breakdown { get; set; }
         public virtual ICollection<plan_version_pricing_bands> plan_version_pricing_bands { get; set; }
         public virtual ICollection<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
+        public virtual ICollection<plan_version_pricing_markets> plan_version_pricing_markets { get; set; }
         public virtual ICollection<plan_version_pricing_stations> plan_version_pricing_stations { get; set; }
     }
 }

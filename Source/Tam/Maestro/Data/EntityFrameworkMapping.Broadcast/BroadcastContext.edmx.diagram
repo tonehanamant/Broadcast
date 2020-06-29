@@ -447,6 +447,11 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_audience_daypart_vpvh_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_audience_daypart_vpvh_daypart_defaults" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_audience_daypart_vpvh_plan_versions" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_market_details" Width="1.5" PointX="19.375" PointY="58.625" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_markets" Width="1.5" PointX="17.125" PointY="0.75" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_markets_pricing_job" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_market_details_pricing_market" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_markets_plan_version" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_station_details" Width="1.5" PointX="19.375" PointY="58.625" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_stations" Width="1.5" PointX="17.125" PointY="0.75" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_job_plan_version_pricing_stations" />

@@ -4,6 +4,7 @@ using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Hangfire;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.BusinessEngines.PlanPricing;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
@@ -101,6 +102,11 @@ namespace Services.Broadcast.ApplicationServices
 
         PlanPricingStationResultDto GetStations(int planId);
 
+        /// <summary>
+        /// Retrieves the Pricing Results Markets Summary
+        /// </summary>
+        PlanPricingResultMarketsDto GetMarkets(int planId);
+
         PlanPricingBandDto GetPricingBands(int planId);
     }
 
@@ -125,6 +131,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
         private readonly IPlanPricingBandCalculationEngine _PlanPricingBandCalculationEngine;
         private readonly IPlanPricingStationCalculationEngine _PlanPricingStationCalculationEngine;
+        private readonly IPlanPricingMarketResultsEngine _PlanPricingMarketResultsEngine;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -137,7 +144,8 @@ namespace Services.Broadcast.ApplicationServices
                                   IDateTimeEngine dateTimeEngine,
                                   IWeeklyBreakdownEngine weeklyBreakdownEngine,
                                   IPlanPricingBandCalculationEngine planPricingBandCalculationEngine,
-                                  IPlanPricingStationCalculationEngine planPricingStationCalculationEngine)
+                                  IPlanPricingStationCalculationEngine planPricingStationCalculationEngine,
+                                  IPlanPricingMarketResultsEngine planPricingMarketResultsEngine)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
@@ -158,6 +166,7 @@ namespace Services.Broadcast.ApplicationServices
             _WeeklyBreakdownEngine = weeklyBreakdownEngine;
             _PlanPricingBandCalculationEngine = planPricingBandCalculationEngine;
             _PlanPricingStationCalculationEngine = planPricingStationCalculationEngine;
+            _PlanPricingMarketResultsEngine = planPricingMarketResultsEngine;
         }
 
         public ReportOutput GeneratePricingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)
@@ -768,9 +777,19 @@ namespace Services.Broadcast.ApplicationServices
                     return pricingStations;
                 });
 
+                var aggregateMarketResultsTask = new Task<PlanPricingResultMarketsDto>(() =>
+                {
+                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
+                    var marketCoverages = _MarketCoverageRepository.GetMarketsWithLatestCoverage();
+                    var pricingMarketResults = _PlanPricingMarketResultsEngine.Calculate(inventory, allocationResult, planPricingParametersDto, plan, marketCoverages);
+                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
+                    return pricingMarketResults;
+                });
+
                 aggregateResultsTask.Start();
                 calculatePricingBandsTask.Start();
                 calculatePricingStationsTask.Start();
+                aggregateMarketResultsTask.Start();
 
                 token.ThrowIfCancellationRequested();
 
@@ -782,6 +801,9 @@ namespace Services.Broadcast.ApplicationServices
 
                 calculatePricingStationsTask.Wait();
                 var calculatePricingStationTaskResult = calculatePricingStationsTask.Result;
+
+                aggregateMarketResultsTask.Wait();
+                var aggregateMarketResultsTaskResult = aggregateMarketResultsTask.Result;
 
                 using (var transaction = new TransactionScopeWrapper())
                 {
@@ -801,6 +823,9 @@ namespace Services.Broadcast.ApplicationServices
                     _PlanRepository.SavePlanPricingStations(calculatePricingStationTaskResult);
                     diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_PRICING_STATIONS);
 
+                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
+                    _PlanRepository.SavePlanPricingMarketResults(aggregateMarketResultsTaskResult);
+                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
 
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
                     var pricingJob = _PlanRepository.GetPlanPricingJob(jobId);
@@ -1411,6 +1436,28 @@ namespace Services.Broadcast.ApplicationServices
             return results;
         }
 
+        /// <inheritdoc />
+        public PlanPricingResultMarketsDto GetMarkets(int planId)
+        {
+            var job = _PlanRepository.GetLatestPricingJob(planId);
+
+            if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
+            {
+                return null;
+            }
+
+            var results = _PlanRepository.GetPlanPricingResultMarkets(planId);
+
+            if (results == null)
+            {
+                return null;
+            }
+
+            _ConvertPricingMarketResultsToUserFormat(results);
+
+            return results;
+        }
+
         public PlanPricingStationResultDto GetStations(int planId)
         {
             var job = _PlanRepository.GetLatestPricingJob(planId);
@@ -1445,6 +1492,16 @@ namespace Services.Broadcast.ApplicationServices
                 band.Impressions /= 1000;
                 band.ImpressionsPercentage *= 100;
                 band.AvailableInventoryPercent *= 100;
+            }
+        }
+
+        private void _ConvertPricingMarketResultsToUserFormat(PlanPricingResultMarketsDto results)
+        {
+            results.MarketTotals.Impressions /= 1000;
+
+            foreach (var detail in results.MarketDetails)
+            {
+                detail.Impressions /= 1000;
             }
         }
 

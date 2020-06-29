@@ -1,0 +1,125 @@
+{
+  "MarketDetails": [
+    {
+      "Budget": 20.0,
+      "Cpm": 100.0,
+      "Impressions": 200.0,
+      "ImpressionsPercentage": 10.0,
+      "MarketCoveragePercent": 10.0,
+      "Rank": 1,
+      "ShareOfVoiceGoalPercentage": 5.0,
+      "Spots": 2,
+      "Stations": 2
+    },
+    {
+      "Budget": 20.0,
+      "Cpm": 100.0,
+      "Impressions": 200.0,
+      "ImpressionsPercentage": 10.0,
+      "MarketCoveragePercent": 10.0,
+      "Rank": 2,
+      "ShareOfVoiceGoalPercentage": null,
+      "Spots": 2,
+      "Stations": 2
+    },
+    {
+      "Budget": 20.0,
+      "Cpm": 100.0,
+      "Impressions": 200.0,
+      "ImpressionsPercentage": 10.0,
+      "MarketCoveragePercent": 10.0,
+      "Rank": 3,
+      "ShareOfVoiceGoalPercentage": 5.0,
+      "Spots": 2,
+      "Stations": 2
+    },
+    {
+      "Budget": 20.0,
+      "Cpm": 100.0,
+      "Impressions": 200.0,
+      "ImpressionsPercentage": 10.0,
+      "MarketCoveragePercent": 10.0,
+      "Rank": 4,
+      "ShareOfVoiceGoalPercentage": null,
+      "Spots": 2,
+      "Stations": 2
+    },
+    {
+      "Budget": 20.0,
+      "Cpm": 100.0,
+      "Impressions": 200.0,
+      "ImpressionsPercentage": 10.0,
+      "MarketCoveragePercent": 10.0,
+      "Rank": 5,
+      "ShareOfVoiceGoalPercentage": 5.0,
+      "Spots": 2,
+      "Stations": 2
+    },
+    {
+      "Budget": 20.0,
+      "Cpm": 100.0,
+      "Impressions": 200.0,
+      "ImpressionsPercentage": 10.0,
+      "MarketCoveragePercent": 10.0,
+      "Rank": 6,
+      "ShareOfVoiceGoalPercentage": null,
+      "Spots": 2,
+      "Stations": 2
+    },
+    {
+      "Budget": 20.0,
+      "Cpm": 100.0,
+      "Impressions": 200.0,
+      "ImpressionsPercentage": 10.0,
+      "MarketCoveragePercent": 10.0,
+      "Rank": 7,
+      "ShareOfVoiceGoalPercentage": 5.0,
+      "Spots": 2,
+      "Stations": 2
+    },
+    {
+      "Budget": 20.0,
+      "Cpm": 100.0,
+      "Impressions": 200.0,
+      "ImpressionsPercentage": 10.0,
+      "MarketCoveragePercent": 10.0,
+      "Rank": 8,
+      "ShareOfVoiceGoalPercentage": null,
+      "Spots": 2,
+      "Stations": 2
+    },
+    {
+      "Budget": 20.0,
+      "Cpm": 100.0,
+      "Impressions": 200.0,
+      "ImpressionsPercentage": 10.0,
+      "MarketCoveragePercent": 10.0,
+      "Rank": 9,
+      "ShareOfVoiceGoalPercentage": 5.0,
+      "Spots": 2,
+      "Stations": 2
+    },
+    {
+      "Budget": 20.0,
+      "Cpm": 100.0,
+      "Impressions": 200.0,
+      "ImpressionsPercentage": 10.0,
+      "MarketCoveragePercent": 10.0,
+      "Rank": 10,
+      "ShareOfVoiceGoalPercentage": null,
+      "Spots": 2,
+      "Stations": 2
+    }
+  ],
+  "MarketTotals": {
+    "Budget": 200.0,
+    "CoveragePercent": 100.0,
+    "Cpm": 100.0,
+    "Impressions": 2000.0,
+    "Markets": 10,
+    "Spots": 20,
+    "Stations": 20
+  },
+  "PlanVersionId": 12,
+  "PricingJobId": 13
+}

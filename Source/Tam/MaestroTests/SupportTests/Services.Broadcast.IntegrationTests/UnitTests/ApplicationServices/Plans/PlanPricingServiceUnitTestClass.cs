@@ -5,6 +5,7 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Clients;
 using System;
+using Services.Broadcast.BusinessEngines.PlanPricing;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {
@@ -21,7 +22,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                   IDateTimeEngine dateTimeEngine,
                                   IWeeklyBreakdownEngine weeklyBreakdownEngine,
                                   IPlanPricingBandCalculationEngine planPricingBandCalculationEngine,
-                                  IPlanPricingStationCalculationEngine planPricingStationCalculationEngine)
+                                  IPlanPricingStationCalculationEngine planPricingStationCalculationEngine,
+                                  IPlanPricingMarketResultsEngine planPricingMarketResultsEngine)
         : base(
             broadcastDataRepositoryFactory,
             spotLengthEngine,
@@ -34,7 +36,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             dateTimeEngine,
             weeklyBreakdownEngine,
             planPricingBandCalculationEngine,
-            planPricingStationCalculationEngine)
+            planPricingStationCalculationEngine,
+            planPricingMarketResultsEngine
+            )
         {
             
         }

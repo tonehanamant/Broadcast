@@ -16,6 +16,7 @@ using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
+using Services.Broadcast.BusinessEngines.PlanPricing;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Converters;
@@ -254,6 +255,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPlanPricingBandCalculationEngine, PlanPricingBandCalculationEngine>();
             unityContainer.RegisterType<IPlanPricingUnitCapImpressionsCalculationEngine, PlanPricingUnitCapImpressionsCalculationEngine>();
             unityContainer.RegisterType<IPlanPricingStationCalculationEngine, PlanPricingStationCalculationEngine>();
+            unityContainer.RegisterType<IPlanPricingMarketResultsEngine, PlanPricingMarketResultsEngine>();
 
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();
