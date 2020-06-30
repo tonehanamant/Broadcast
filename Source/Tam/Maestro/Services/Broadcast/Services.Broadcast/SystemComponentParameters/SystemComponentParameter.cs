@@ -279,6 +279,30 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.PlanPricingFloorPricingUrl); }
         }
 	 
+		public static string PricingRequestLogAccessKeyId  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.PricingRequestLogAccessKeyId); }
+        }
+	 
+		public static string PricingRequestLogBucket  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.PricingRequestLogBucket); }
+        }
+	 
+		public static string PricingRequestLogBucketRegion  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.PricingRequestLogBucketRegion); }
+        }
+	 
+		public static string PricingRequestLogEncryptedAccessKey  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.PricingRequestLogEncryptedAccessKey); }
+        }
+	 
 		public static string ProgramGuideClientId  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
@@ -687,6 +711,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.DeliveryInsightUrl); }
         }
 	 
+		public static bool EnableIndexer  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.EnableIndexer); }
+        }
+	 
 		public static bool EnableTrafficIndexerFileBasedLogging  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<bool>
@@ -733,6 +763,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<bool>
 					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.SendCancellationToMarryWizard); }
+        }
+	 
+		public static bool SpotcapsToggle  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.SpotcapsToggle); }
         }
 	}
 	 

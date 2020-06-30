@@ -113,6 +113,12 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AWSSDK.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\AWSSDK.Core.3.3.107.11\lib\net45\AWSSDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.S3, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\AWSSDK.S3.3.3.111.12\lib\net45\AWSSDK.S3.dll</HintPath>
+    </Reference>
     <Reference Include="CadentLoggingStdCommon, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Cadent.Library.Logging.Standard.Common.0.0.1\lib\netstandard2.0\CadentLoggingStdCommon.dll</HintPath>
     </Reference>
@@ -332,6 +338,7 @@
     <Compile Include="BusinessEngines\InventoryExportEngine.cs" />
     <Compile Include="ApplicationServices\ProgramMappingService.cs" />
     <Compile Include="Cache\ShowTypeCache.cs" />
+    <Compile Include="Clients\PricingRequestLogClient.cs" />
     <Compile Include="Converters\VpvhFileImporter.cs" />
     <Compile Include="Entities\CreativeLength.cs" />
     <Compile Include="ApplicationServices\StationMappingService.cs" />
@@ -458,7 +465,7 @@
     <Compile Include="Entities\Plan\LengthMakeUpRequest.cs" />
     <Compile Include="Entities\Plan\LengthMakeUpTableRow.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingStationResultDto.cs" />
-	<Compile Include="Entities\Plan\Pricing\PlanPricingInventoryGroup.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingInventoryGroup.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultMarketDetailsDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultMarketsDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultMarketsTotalsDto.cs" />
@@ -581,6 +588,7 @@
     <Compile Include="Helpers\DaypartTimeHelper.cs" />
     <Compile Include="Helpers\FrequencyCapHelper.cs" />
     <Compile Include="Helpers\GroupHelper.cs" />
+    <Compile Include="Helpers\StreamHelper.cs" />
     <Compile Include="Helpers\WebUtilityHelper.cs" />
     <Compile Include="Helpers\KeyHelper.cs" />
     <Compile Include="BusinessEngines\PlanPricingInventoryQuarterCalculatorEngine.cs" />
@@ -1153,7 +1161,9 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Analyzer Include="..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\AWSSDK.S3.3.3.111.12\analyzers\dotnet\cs\AWSSDK.S3.CodeAnalysis.dll" />
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

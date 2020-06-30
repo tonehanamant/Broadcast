@@ -1065,7 +1065,7 @@ namespace Services.Broadcast.ApplicationServices
             request = new InboundFileSaveRequest
             {
                 FileName = fileName,
-                FileHash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(rawStream)),
+                FileHash = HashGenerator.ComputeHash(Tam.Maestro.Common.StreamHelper.ReadToEnd(rawStream)),
                 Source = (int)DeliveryFileSourceEnum.Strata
             };
 

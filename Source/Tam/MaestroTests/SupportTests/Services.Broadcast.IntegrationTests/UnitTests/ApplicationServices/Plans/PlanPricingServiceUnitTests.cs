@@ -3,7 +3,6 @@ using ApprovalTests.Reporters;
 using Common.Services;
 using Common.Services.Repositories;
 using Hangfire;
-using Hangfire.Common;
 using Hangfire.States;
 using Moq;
 using Newtonsoft.Json;
@@ -23,7 +22,6 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Tam.Maestro.Data.Entities;
@@ -60,6 +58,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IPlanPricingBandCalculationEngine> _PlanPricingBandCalculationEngineMock;
         private Mock<IPlanPricingStationCalculationEngine> _PlanPricingStationCalculationEngineMock;
         private Mock<IPlanPricingMarketResultsEngine> _PlanPricingMarketResultsEngine;
+        private Mock<IPricingRequestLogClient> _PricingRequestLogClient;
 
         [SetUp]
         public void SetUp()
@@ -84,6 +83,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanPricingBandCalculationEngineMock = new Mock<IPlanPricingBandCalculationEngine>();
             _PlanPricingStationCalculationEngineMock = new Mock<IPlanPricingStationCalculationEngine>();
             _PlanPricingMarketResultsEngine = new Mock<IPlanPricingMarketResultsEngine>();
+            _PricingRequestLogClient = new Mock<IPricingRequestLogClient>();
 
             _DateTimeEngineMock
                 .Setup(x => x.GetCurrentMoment())
@@ -124,6 +124,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IMarketRepository>())
                 .Returns(_MarketRepositoryMock.Object);
+
+            _PricingRequestLogClient
+                .Setup(x => x.SavePricingRequest(It.IsAny<PlanPricingApiRequestDto>()));
 
             var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
             SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
@@ -1094,7 +1097,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _WeeklyBreakdownEngineMock.Object,
                 _PlanPricingBandCalculationEngineMock.Object,
                 _PlanPricingStationCalculationEngineMock.Object,
-                _PlanPricingMarketResultsEngine.Object);
+                _PlanPricingMarketResultsEngine.Object,
+                _PricingRequestLogClient.Object);
         }
 
         [Test]
@@ -8027,6 +8031,62 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
                 .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
+                .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
+
+            var service = _GetService();
+
+            // Act
+            service.RunPricingJob(parameters, jobId, CancellationToken.None);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(requests));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void RunPricingSavePricingRequest()
+        {
+            // Arrange
+            const int jobId = 1;
+
+            var parameters = _GetPlanPricingParametersDto();
+            parameters.MarketGroup = PricingMarketGroupEnum.None;
+            parameters.Margin = 20;
+            parameters.JobId = jobId;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(It.IsAny<int>()))
+                .Returns(new PlanPricingJob());
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(_GetPlan());
+
+            _PlanPricingInventoryEngineMock
+                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .Returns(_GetInventoryProgram())
+                .Returns(_GetInventoryProgram())
+                .Returns(_GetMultipleInventoryPrograms());
+
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetLatestMarketCoverages());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
+                    , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
+                .Returns(_GetWeeklyBreakDownGroup());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+                .Returns(_GetWeeklyBreakDownWeeks());
+
+            var requests = new List<PlanPricingApiRequestDto>();
+            _PricingApiClientMock
+                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()));
+
+            _PricingRequestLogClient
+                .Setup(x => x.SavePricingRequest(It.IsAny<PlanPricingApiRequestDto>()))
                 .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
 
             var service = _GetService();

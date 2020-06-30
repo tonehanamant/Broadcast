@@ -23,7 +23,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                   IWeeklyBreakdownEngine weeklyBreakdownEngine,
                                   IPlanPricingBandCalculationEngine planPricingBandCalculationEngine,
                                   IPlanPricingStationCalculationEngine planPricingStationCalculationEngine,
-                                  IPlanPricingMarketResultsEngine planPricingMarketResultsEngine)
+                                  IPlanPricingMarketResultsEngine planPricingMarketResultsEngine,
+                                  IPricingRequestLogClient pricingApiRequestSerializerClient)
         : base(
             broadcastDataRepositoryFactory,
             spotLengthEngine,
@@ -37,8 +38,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             weeklyBreakdownEngine,
             planPricingBandCalculationEngine,
             planPricingStationCalculationEngine,
-            planPricingMarketResultsEngine
-            )
+            planPricingMarketResultsEngine,
+            pricingApiRequestSerializerClient)
         {
             
         }

@@ -132,6 +132,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IPlanPricingBandCalculationEngine _PlanPricingBandCalculationEngine;
         private readonly IPlanPricingStationCalculationEngine _PlanPricingStationCalculationEngine;
         private readonly IPlanPricingMarketResultsEngine _PlanPricingMarketResultsEngine;
+        private readonly IPricingRequestLogClient _PricingRequestLogClient;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -145,7 +146,8 @@ namespace Services.Broadcast.ApplicationServices
                                   IWeeklyBreakdownEngine weeklyBreakdownEngine,
                                   IPlanPricingBandCalculationEngine planPricingBandCalculationEngine,
                                   IPlanPricingStationCalculationEngine planPricingStationCalculationEngine,
-                                  IPlanPricingMarketResultsEngine planPricingMarketResultsEngine)
+                                  IPlanPricingMarketResultsEngine planPricingMarketResultsEngine,
+                                  IPricingRequestLogClient pricingRequestLogClient)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
@@ -167,6 +169,7 @@ namespace Services.Broadcast.ApplicationServices
             _PlanPricingBandCalculationEngine = planPricingBandCalculationEngine;
             _PlanPricingStationCalculationEngine = planPricingStationCalculationEngine;
             _PlanPricingMarketResultsEngine = planPricingMarketResultsEngine;
+            _PricingRequestLogClient = pricingRequestLogClient;
         }
 
         public ReportOutput GeneratePricingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)
@@ -727,6 +730,8 @@ namespace Services.Broadcast.ApplicationServices
 
                     token.ThrowIfCancellationRequested();
 
+                    _SaveApiRequest(pricingApiRequest);
+
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
                     var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
                     diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
@@ -873,6 +878,22 @@ namespace Services.Broadcast.ApplicationServices
                 });
 
             return grouped.ToList();
+        }
+
+        private void _SaveApiRequest(PlanPricingApiRequestDto pricingApiRequest)
+        {
+            // Send to S3 bucket.
+            Task.Run(() =>
+            {
+                try
+                {
+                    _PricingRequestLogClient.SavePricingRequest(pricingApiRequest);
+                }
+                catch (Exception exception)
+                {
+                    _LogError("Failed to save pricing API request", exception);
+                }
+            });
         }
 
         private void _SetPlanSpotLengthForBackwardsCompatibility(PlanDto plan)
