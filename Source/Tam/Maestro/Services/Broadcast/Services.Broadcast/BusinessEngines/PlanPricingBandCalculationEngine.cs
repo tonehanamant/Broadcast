@@ -35,7 +35,7 @@ namespace Services.Broadcast.BusinessEngines
                 JobId = allocationResult.JobId
             };
 
-            var allocatedInventory = _GetAllocatedInventory(inventory, allocationResult);
+            var allocatedInventory = _GetAllocatedInventory(allocationResult);
             var totalAllocatedCost = allocatedInventory.Sum(x => x.TotalCost);
             var totalAllocatedImpressions = allocatedInventory.Sum(x => x.TotalImpressions);
             var totalAllocatedSpots = allocatedInventory.Sum(x => x.TotalSpots);
@@ -121,9 +121,7 @@ namespace Services.Broadcast.BusinessEngines
             return bands;
         }
 
-        private List<PlanPricingProgram> _GetAllocatedInventory(
-            List<PlanPricingInventoryProgram> inventory,
-            PlanPricingAllocationResult allocationResult)
+        private List<PlanPricingProgram> _GetAllocatedInventory(PlanPricingAllocationResult allocationResult)
         {
             var result = new List<PlanPricingProgram>();
 

@@ -81,11 +81,11 @@
       "Spots": 0
     },
     {
-      "AvailableInventoryPercent": 807.47126437,
+      "AvailableInventoryPercent": 8.07471264,
       "Budget": 23152.6875,
       "Cpm": 19.3868,
       "Impressions": 1194.25,
-      "ImpressionsPercentage": 10000.0,
+      "ImpressionsPercentage": 100.0,
       "MaxBand": null,
       "MinBand": 0.0320,
       "Spots": 45

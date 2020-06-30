@@ -1490,8 +1490,6 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var band in results.Bands)
             {
                 band.Impressions /= 1000;
-                band.ImpressionsPercentage *= 100;
-                band.AvailableInventoryPercent *= 100;
             }
         }
 

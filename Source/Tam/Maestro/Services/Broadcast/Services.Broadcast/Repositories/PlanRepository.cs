@@ -1455,10 +1455,12 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var plan = context.plans.Single(x => x.id == planId);
-                var planVersionId = plan.latest_version_id;
-
-                var result = context.plan_version_pricing_bands.Where(p => p.plan_version_id == planVersionId).OrderByDescending(p => p.id).FirstOrDefault();
+                var result = (from bands in context.plan_version_pricing_bands
+                              from plans in context.plans
+                              where plans.id == planId && bands.plan_version_id == plans.latest_version_id
+                              select bands)
+                            .OrderByDescending(p => p.id)
+                            .FirstOrDefault();
 
                 if (result == null)
                     return null;
@@ -1492,34 +1494,27 @@ namespace Services.Broadcast.Repositories
         {
             _InReadUncommitedTransaction(context =>
             {
-                var planPricingBand = new plan_version_pricing_bands
+                context.plan_version_pricing_bands.Add(new plan_version_pricing_bands
                 {
                     plan_version_id = planPricingBandDto.PlanVersionId,
                     plan_version_pricing_job_id = planPricingBandDto.JobId,
                     total_budget = planPricingBandDto.Totals.Budget,
                     total_cpm = planPricingBandDto.Totals.Cpm,
                     total_impressions = planPricingBandDto.Totals.Impressions,
-                    total_spots = planPricingBandDto.Totals.Spots
-                };
-
-                foreach (var bandDto in planPricingBandDto.Bands)
-                {
-                    var band = new plan_version_pricing_band_details
-                    {
-                        cpm = bandDto.Cpm,
-                        max_band = bandDto.MaxBand,
-                        min_band = bandDto.MinBand,
-                        budget = bandDto.Budget,
-                        spots = bandDto.Spots,
-                        impressions = bandDto.Impressions,
-                        impressions_percentage = bandDto.ImpressionsPercentage,
-                        available_inventory_percentage = bandDto.AvailableInventoryPercent
-                    };
-
-                    planPricingBand.plan_version_pricing_band_details.Add(band);
-                }
-
-                context.plan_version_pricing_bands.Add(planPricingBand);
+                    total_spots = planPricingBandDto.Totals.Spots,
+                    plan_version_pricing_band_details = planPricingBandDto.Bands.Select(x =>
+                        new plan_version_pricing_band_details
+                        {
+                            cpm = x.Cpm,
+                            max_band = x.MaxBand,
+                            min_band = x.MinBand,
+                            budget = x.Budget,
+                            spots = x.Spots,
+                            impressions = x.Impressions,
+                            impressions_percentage = x.ImpressionsPercentage,
+                            available_inventory_percentage = x.AvailableInventoryPercent
+                        }).ToList()
+                });
 
                 context.SaveChanges();
             });
@@ -1529,7 +1524,8 @@ namespace Services.Broadcast.Repositories
         {
             _InReadUncommitedTransaction(context =>
             {
-                var planVersionPricingStation = new plan_version_pricing_stations
+
+                context.plan_version_pricing_stations.Add(new plan_version_pricing_stations
                 {
                     plan_version_id = planPricingStationResultDto.PlanVersionId,
                     plan_version_pricing_job_id = planPricingStationResultDto.JobId,
@@ -1538,25 +1534,18 @@ namespace Services.Broadcast.Repositories
                     total_impressions = planPricingStationResultDto.Totals.Impressions,
                     total_spots = planPricingStationResultDto.Totals.Spots,
                     total_stations = planPricingStationResultDto.Totals.Station,
-                };
-
-                foreach (var stationDto in planPricingStationResultDto.Stations)
-                {
-                    var station = new plan_version_pricing_station_details
-                    {
-                        cpm = stationDto.Cpm,
-                        budget = stationDto.Budget,
-                        spots = stationDto.Spots,
-                        impressions = stationDto.Impressions,
-                        impressions_percentage = stationDto.ImpressionsPercentage,
-                        market = stationDto.Market,
-                        station = stationDto.Station,
-                    };
-
-                    planVersionPricingStation.plan_version_pricing_station_details.Add(station);
-                }
-
-                context.plan_version_pricing_stations.Add(planVersionPricingStation);
+                    plan_version_pricing_station_details = planPricingStationResultDto.Stations
+                            .Select(stationDto => new plan_version_pricing_station_details
+                            {
+                                cpm = stationDto.Cpm,
+                                budget = stationDto.Budget,
+                                spots = stationDto.Spots,
+                                impressions = stationDto.Impressions,
+                                impressions_percentage = stationDto.ImpressionsPercentage,
+                                market = stationDto.Market,
+                                station = stationDto.Station,
+                            }).ToList()
+                });
 
                 context.SaveChanges();
             });
