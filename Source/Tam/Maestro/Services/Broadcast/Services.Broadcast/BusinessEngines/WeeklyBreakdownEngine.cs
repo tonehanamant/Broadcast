@@ -64,7 +64,7 @@ namespace Services.Broadcast.BusinessEngines
         private readonly Dictionary<int, double> _SpotLengthMultiplier;
 
         // this needs to be removed after all plans in production have a modified version greater then 20.07 release date
-        private const double _DefaultImpressionsPerUnitForOldPlans = 500000; 
+        private const double _DefaultImpressionsPerUnitForOldPlans = 500000;
         private const string _UnsupportedDeliveryTypeMessage = "Unsupported Delivery Type";
 
         public WeeklyBreakdownEngine(IPlanValidator planValidator,
@@ -375,10 +375,11 @@ namespace Services.Broadcast.BusinessEngines
                 switch (request.WeeklyBreakdownCalculationFrom)
                 {
                     case WeeklyBreakdownCalculationFrom.Ratings:
-                        week.WeeklyImpressions = request.TotalRatings <= 0 ? 0 : Math.Floor((week.WeeklyRatings / request.TotalRatings) * request.TotalImpressions);
+                        week.WeeklyImpressions = request.TotalRatings <= 0 ? 0 :
+                            ProposalMath.RoundDownWithDecimals((week.WeeklyRatings / request.TotalRatings) * request.TotalImpressions, 0);
                         break;
                     case WeeklyBreakdownCalculationFrom.Percentage:
-                        week.WeeklyImpressions = Math.Floor((week.WeeklyImpressionsPercentage / 100) * request.TotalImpressions);
+                        week.WeeklyImpressions = ProposalMath.RoundDownWithDecimals((week.WeeklyImpressionsPercentage / 100) * request.TotalImpressions, 0);
                         break;
                     case WeeklyBreakdownCalculationFrom.Units:
                         if (request.Equivalized)
@@ -412,7 +413,8 @@ namespace Services.Broadcast.BusinessEngines
                         break;
                 }
 
-                _UpdateGoalsForWeeklyBreakdownItem(request, week, week.WeeklyImpressions);
+                _UpdateGoalsForWeeklyBreakdownItem(request.TotalImpressions, request.TotalRatings
+                    , request.TotalBudget, week, week.WeeklyImpressions);
             }
         }
 
@@ -503,7 +505,8 @@ namespace Services.Broadcast.BusinessEngines
                     var adLengthFraction = breakdownItem.PercentageOfWeek.Value / 100;
                     var impressions = Math.Floor(impressionsForWeek * adLengthFraction);
 
-                    _UpdateGoalsForWeeklyBreakdownItem(request, breakdownItem, impressions);
+                    _UpdateGoalsForWeeklyBreakdownItem(request.TotalImpressions, request.TotalRatings
+                     , request.TotalBudget, breakdownItem, impressions);
                 }
 
                 _UpdateFirstWeekAndBudgetAdjustment(request, breakdownByAdLengthForWeek, impressionsForWeek);
@@ -523,7 +526,8 @@ namespace Services.Broadcast.BusinessEngines
             {
                 var impressions = impressionsByWeeks[breakdownItem.MediaWeekId];
 
-                _UpdateGoalsForWeeklyBreakdownItem(request, breakdownItem, impressions);
+                _UpdateGoalsForWeeklyBreakdownItem(request.TotalImpressions, request.TotalRatings
+                    , request.TotalBudget, breakdownItem, impressions);
             }
         }
 
@@ -537,7 +541,8 @@ namespace Services.Broadcast.BusinessEngines
             var roundedImpressionsDifference = totalImpressions - totalImpressionsRounded;
             var impressions = Math.Floor(firstWeek.WeeklyImpressions + roundedImpressionsDifference);
 
-            _UpdateGoalsForWeeklyBreakdownItem(request, firstWeek, impressions);
+            _UpdateGoalsForWeeklyBreakdownItem(request.TotalImpressions, request.TotalRatings
+                    , request.TotalBudget, firstWeek, impressions);
         }
 
         private void _AddNewCreativeLengthsToResult(
@@ -613,19 +618,6 @@ namespace Services.Broadcast.BusinessEngines
             var numberOfActiveDays = daysOfWeek.Where(x => x != null).Count();
             //number of active days this week is 7 minus number of hiatus days
             return numberOfActiveDays;
-        }
-
-        private void _UpdateGoalsForWeeklyBreakdownItem(
-            WeeklyBreakdownRequest request,
-            WeeklyBreakdownWeek breakdownItem,
-            double impressions)
-        {
-            _UpdateGoalsForWeeklyBreakdownItem(
-                request.TotalImpressions,
-                request.TotalRatings,
-                request.TotalBudget,
-                breakdownItem,
-                impressions);
         }
 
         private void _UpdateGoalsForWeeklyBreakdownItem(
@@ -744,6 +736,7 @@ namespace Services.Broadcast.BusinessEngines
                         NumberOfActiveDays = first.NumberOfActiveDays,
                         ActiveDays = first.ActiveDays,
                         Impressions = weekImpressions,
+                        RatingPoints = allItems.Sum(x => x.WeeklyRatings),
                         Budget = allItems.Sum(x => x.WeeklyBudget),
                         Adu = _CalculateADU(impressionsPerUnit
                                 , allItems.Sum(x => x.AduImpressions), equivalized, grouping.Key.SpotLengthId.Value),
@@ -858,7 +851,7 @@ namespace Services.Broadcast.BusinessEngines
         private int _CalculateADU(double impressionsPerUnit, double aduImpressions
             , bool equivalized, int? spotLengthId, List<CreativeLength> creativeLengths = null)
         {
-            if(impressionsPerUnit == 0)
+            if (impressionsPerUnit == 0)
             {   //for older plans, where the user did not set an impressions per unit value, we need to show the user the ADU value based on the old math
                 return (int)(aduImpressions / _DefaultImpressionsPerUnitForOldPlans);
             }

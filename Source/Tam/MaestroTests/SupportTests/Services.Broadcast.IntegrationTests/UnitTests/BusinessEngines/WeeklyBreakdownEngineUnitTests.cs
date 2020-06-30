@@ -336,6 +336,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 NumberOfActiveDays = 5,
                 ActiveDays = "M,Tu,W,Th,F",
                 WeeklyImpressions = 1000,
+                WeeklyRatings = 5,
                 WeeklyBudget = 100,
                 SpotLengthId = 1,
                 DaypartCodeId = 1,
@@ -351,6 +352,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 ActiveDays = "M,Tu,W,Th,F",
                 WeeklyImpressions = 1500,
                 WeeklyBudget = 200,
+                WeeklyRatings = 5,
                 SpotLengthId = 2,
                 DaypartCodeId = 1,
                 AduImpressions = 1000
@@ -365,6 +367,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 ActiveDays = "M,Tu,W,Th",
                 WeeklyImpressions = 800,
                 WeeklyBudget = 70,
+                WeeklyRatings = 5,
                 SpotLengthId = 1,
                 DaypartCodeId = 1,
             },
@@ -378,6 +381,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 ActiveDays = "M,Tu,W",
                 WeeklyImpressions = 500,
                 WeeklyBudget = 30,
+                WeeklyRatings = 5,
                 SpotLengthId = 1,
                 DaypartCodeId = 1,
                 AduImpressions = 1000
@@ -392,6 +396,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 ActiveDays = "M,Tu,W",
                 WeeklyImpressions = 500,
                 WeeklyBudget = 30,
+                WeeklyRatings = 5,
                 SpotLengthId = 1,
                 DaypartCodeId = 2,
                 AduImpressions = 1000
@@ -406,6 +411,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 ActiveDays = "M,Tu,W",
                 WeeklyImpressions = 500,
                 WeeklyBudget = 30,
+                WeeklyRatings = 5,
                 SpotLengthId = 2,
                 DaypartCodeId = 2,
                 AduImpressions = 1000

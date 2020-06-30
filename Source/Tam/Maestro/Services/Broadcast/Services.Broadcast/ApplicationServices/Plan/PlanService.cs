@@ -216,7 +216,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             else
             {
                 plan.CreativeLengths = _CreativeLengthEngine.DistributeWeight(plan.CreativeLengths);
-            } 
+            }
 
             DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
 
@@ -512,7 +512,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         public PlanDto GetPlan(int planId, int? versionId = null)
         {
             PlanDto plan = _PlanRepository.GetPlan(planId, versionId);
-            
+
             plan.IsPricingModelRunning = _PlanPricingService.IsPricingModelRunningForPlan(planId);
 
             _GroupWeeklyBreakdownWeeksBasedOnDeliveryType(plan);
@@ -558,13 +558,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private List<WeeklyBreakdownWeek> _GroupWeeklyBreakdownWeeks_ByWeekByAdLengthDeliveryType(PlanDto plan)
         {
             var result = new List<WeeklyBreakdownWeek>();
-            var weeks = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(plan.WeeklyBreakdownWeeks);
-            var weeklyBreakdownByWeekBySpotLength = 
+            var weeklyBreakdownByWeekBySpotLength =
                 _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeekBySpotLength(plan.WeeklyBreakdownWeeks, plan.ImpressionsPerUnit, plan.Equivalized);
 
             foreach (var item in weeklyBreakdownByWeekBySpotLength)
             {
-                var impressionsForWeek = weeks.Single(x => x.MediaWeekId == item.MediaWeekId).Impressions;
+                var impressionsForWeek = item.Impressions;
+                var weeklyRatio = impressionsForWeek / plan.TargetImpressions.Value;
+
                 var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
                 {
                     WeekNumber = item.WeekNumber,
@@ -575,16 +576,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     ActiveDays = item.ActiveDays,
                     SpotLengthId = item.SpotLengthId,
                     WeeklyAdu = item.Adu,
-                    WeeklyUnits = item.Units
+                    WeeklyUnits = item.Units,
+                    WeeklyImpressions = impressionsForWeek,
+                    WeeklyImpressionsPercentage = Math.Round(100 * weeklyRatio),
+                    WeeklyRatings = item.RatingPoints,
+                    WeeklyBudget = item.Budget
                 };
-
-                _UpdateGoalsForWeeklyBreakdownItem(
-                       plan.TargetImpressions.Value,
-                       plan.TargetRatingPoints.Value,
-                       plan.Budget.Value,
-                       newWeeklyBreakdownItem,
-                       item.Impressions);
-
                 result.Add(newWeeklyBreakdownItem);
             }
 
@@ -948,7 +945,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private double _CalculatePercentageOfWeek(double breakdownItemImpressions, double weeklyImpressions)
         {
             return weeklyImpressions > 0 ? Math.Round(100 * breakdownItemImpressions / weeklyImpressions) : 0;
-        }       
+        }
 
         // attribute has to be on the class instead of the interface because this is a recurring job.
         [AutomaticRetry(Attempts = 2, DelaysInSeconds = new int[] { 5 * 60 }, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
@@ -1130,7 +1127,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         private Dictionary<int, double> _GetAudienceImpressionsByStandardDaypart(
-            PlanDto plan, 
+            PlanDto plan,
             Dictionary<int, double> hhImpressionsByStandardDaypart,
             int audienceId)
         {
@@ -1165,8 +1162,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         private void _CalculateSecondaryAudiencesDeliveryData(
-            PlanDto plan, 
-            Dictionary<int, double> hhImpressionsByStandardDaypart, 
+            PlanDto plan,
+            Dictionary<int, double> hhImpressionsByStandardDaypart,
             double hhImpressions)
         {
             Parallel.ForEach(plan.SecondaryAudiences, (planAudience) =>

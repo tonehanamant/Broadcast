@@ -57,6 +57,7 @@ namespace Services.Broadcast.Entities.Plan
         public int NumberOfActiveDays { get; set; }
         public string ActiveDays { get; set; }
         public double Impressions { get; set; }
+        public double RatingPoints { get; set; }
         public decimal Budget { get; set; }
         public int SpotLengthId { get; set; }
         public int Adu { get; set; }

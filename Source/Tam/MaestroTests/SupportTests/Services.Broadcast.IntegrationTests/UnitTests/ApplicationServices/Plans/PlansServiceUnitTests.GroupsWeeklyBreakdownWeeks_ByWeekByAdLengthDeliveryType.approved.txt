@@ -12,10 +12,10 @@
     "StartDate": "2020-05-11T00:00:00",
     "UnitImpressions": 0.0,
     "WeeklyAdu": 50000,
-    "WeeklyBudget": 50.000,
+    "WeeklyBudget": 50.0,
     "WeeklyImpressions": 50.0,
     "WeeklyImpressionsPercentage": 50.0,
-    "WeeklyRatings": 25.0,
+    "WeeklyRatings": 0.0,
     "WeeklyUnits": 0.0,
     "WeekNumber": 1
   },
@@ -32,10 +32,10 @@
     "StartDate": "2020-05-11T00:00:00",
     "UnitImpressions": 0.0,
     "WeeklyAdu": 25000,
-    "WeeklyBudget": 25.000,
+    "WeeklyBudget": 25.0,
     "WeeklyImpressions": 25.0,
     "WeeklyImpressionsPercentage": 25.0,
-    "WeeklyRatings": 12.5,
+    "WeeklyRatings": 0.0,
     "WeeklyUnits": 0.0,
     "WeekNumber": 1
   },
@@ -52,10 +52,10 @@
     "StartDate": "2020-05-11T00:00:00",
     "UnitImpressions": 0.0,
     "WeeklyAdu": 100000,
-    "WeeklyBudget": 25.000,
+    "WeeklyBudget": 25.0,
     "WeeklyImpressions": 25.0,
     "WeeklyImpressionsPercentage": 25.0,
-    "WeeklyRatings": 12.5,
+    "WeeklyRatings": 0.0,
     "WeeklyUnits": 0.0,
     "WeekNumber": 1
   }
