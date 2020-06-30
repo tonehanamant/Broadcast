@@ -55,9 +55,55 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
-        private List<StationMonthDetailDto> _GetStationMonthDetails() =>
-            new List<StationMonthDetailDto>
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Calculate_SuccessNoStationMonthDetails()
+        {
+            _StationRepository.Setup(s => s.GetLatestStationMonthDetailsForStations(It.IsAny<List<int>>())).Returns(new List<StationMonthDetailDto>());
+            _StationRepository.Setup(s => s.GetBroadcastStationById(It.IsAny<int>())).Returns(_GetStationById());
+
+            _MarketRepository.Setup(m => m.GetMarket(100)).Returns(new Tam.Maestro.Data.Entities.DataTransferObjects.LookupDto(100, "New York"));
+            _MarketRepository.Setup(m => m.GetMarket(200)).Returns(new Tam.Maestro.Data.Entities.DataTransferObjects.LookupDto(200, "Las Vegas"));
+            _MarketRepository.Setup(m => m.GetMarket(300)).Returns(new Tam.Maestro.Data.Entities.DataTransferObjects.LookupDto(300, "Seattle"));
+
+            var planPricingParameters = _GetPlanPricingParametersDto();
+            var allocationResult = _GetPlanPricingAllocationResult();
+            var inventory = _GetPlanPricingInventoryPrograms();
+
+            var result = _PlanPricingStationCalculationEngine.Calculate(inventory, allocationResult, planPricingParameters);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Calculate_SuccessWithMargin()
+        {
+            _StationRepository.Setup(s => s.GetLatestStationMonthDetailsForStations(It.IsAny<List<int>>())).Returns(_GetStationMonthDetails());
+
+            _MarketRepository.Setup(m => m.GetMarket(100)).Returns(new Tam.Maestro.Data.Entities.DataTransferObjects.LookupDto(100, "New York"));
+            _MarketRepository.Setup(m => m.GetMarket(200)).Returns(new Tam.Maestro.Data.Entities.DataTransferObjects.LookupDto(200, "Las Vegas"));
+            _MarketRepository.Setup(m => m.GetMarket(300)).Returns(new Tam.Maestro.Data.Entities.DataTransferObjects.LookupDto(300, "Seattle"));
+
+            var planPricingParameters = _GetPlanPricingParametersDto();
+            var allocationResult = _GetPlanPricingAllocationResultWithMargin();
+            var inventory = _GetPlanPricingInventoryPrograms();
+
+            var result = _PlanPricingStationCalculationEngine.Calculate(inventory, allocationResult, planPricingParameters);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        private DisplayBroadcastStation _GetStationById() =>
+            new DisplayBroadcastStation
             {
+                Id = 30,
+                MarketCode = 100
+            };
+        
+        private List<StationMonthDetailDto> _GetStationMonthDetails() =>
+                new List<StationMonthDetailDto>
+                {
                 new StationMonthDetailDto
                 {
                     StationId = 30,
@@ -73,7 +119,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     StationId = 99,
                     MarketCode = 300
                 },
-            };
+                };
 
         private PlanPricingParametersDto _GetPlanPricingParametersDto() =>
             new PlanPricingParametersDto
@@ -89,17 +135,45 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 {
                     new PlanPricingAllocatedSpot
                     {
-                         Id = 5,
-                         SpotCost = 15.5m,
-                         Spots = 5,
-                         Impressions = 500
+                        Id = 5,
+                        SpotCost = 15.5m,
+                        SpotCostWithMargin = 15.5m,
+                        Spots = 5,
+                        Impressions = 500,
                     },
                     new PlanPricingAllocatedSpot
                     {
                         Id = 20,
-                         SpotCost = 9.99m,
-                         Spots = 3,
-                         Impressions = 750
+                        SpotCost = 9.99m,
+                        SpotCostWithMargin = 9.99m,
+                        Spots = 3,
+                        Impressions = 750
+                    }
+                }
+            };
+
+        private PlanPricingAllocationResult _GetPlanPricingAllocationResultWithMargin() =>
+            new PlanPricingAllocationResult
+            {
+                Spots = new List<PlanPricingAllocatedSpot>
+                {
+                    new PlanPricingAllocatedSpot
+                    {
+                        Id = 5,
+                        SpotCost = 15.5m,
+                        // 20% Margin
+                        SpotCostWithMargin = 19.375m,
+                        Spots = 5,
+                        Impressions = 500,
+                    },
+                    new PlanPricingAllocatedSpot
+                    {
+                        Id = 20,
+                        SpotCost = 9.99m,
+                        // 20% Margin
+                        SpotCostWithMargin = 12.4875m,
+                        Spots = 3,
+                        Impressions = 750
                     }
                 }
             };

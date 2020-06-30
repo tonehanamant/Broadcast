@@ -20,6 +20,8 @@ namespace Services.Broadcast.Repositories
         DisplayBroadcastStation GetBroadcastStationByCallLetters(string stationCallLetters);
         List<DisplayBroadcastStation> GetBroadcastStationListByLegacyCallLetters(List<string> stationNameList);
 
+        DisplayBroadcastStation GetBroadcastStationById(int id);
+
         List<DisplayBroadcastStation> GetBroadcastStationsByMarketCodes(List<short> marketCodes);
 
         /// <summary>
@@ -124,6 +126,24 @@ namespace Services.Broadcast.Repositories
                                 MarketCode = s.market_code,
                                 ModifiedDate = s.modified_date
                             }).Single("No station found with code: " + code));
+        }
+
+        public DisplayBroadcastStation GetBroadcastStationById(int id)
+        {
+            return _InReadUncommitedTransaction(
+                context => (from s in context.stations
+                            where s.id == id
+                            select new DisplayBroadcastStation
+                            {
+                                Id = s.id,
+                                Code = s.station_code,
+                                Affiliation = s.affiliation,
+                                CallLetters = s.station_call_letters,
+                                LegacyCallLetters = s.legacy_call_letters,
+                                OriginMarket = s.market == null ? null : s.market.geography_name,
+                                MarketCode = s.market_code,
+                                ModifiedDate = s.modified_date
+                            }).Single("No station found with id: " + id));
         }
 
         public List<DisplayBroadcastStation> GetBroadcastStationsByCodes(IEnumerable<int> codes)

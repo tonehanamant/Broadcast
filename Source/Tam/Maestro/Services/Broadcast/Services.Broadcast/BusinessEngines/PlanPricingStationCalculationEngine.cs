@@ -1,4 +1,5 @@
 ﻿using Common.Services.Repositories;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
@@ -34,46 +35,38 @@ namespace Services.Broadcast.BusinessEngines
             };
 
             var allocatedStationIds = _GetAllocatedStationIds(apiResponse, inventories);
-
             var stationMonthDetails = _StationRepository.GetLatestStationMonthDetailsForStations(allocatedStationIds);
-
             var inventoriesByStation = inventories.Where(i => allocatedStationIds.Contains(i.Station.Id)).GroupBy(i => i.Station.Id);
 
             int totalSpots = 0;
             double totalImpressions = 0;
             decimal totalBudget = 0;
+
             foreach (var inventoryByStation in inventoriesByStation)
             {
                 var inventoryItems = inventoryByStation.ToList();
-
                 var allocatedSpots = _GetAllocatedProgramSpots(apiResponse, inventoryItems);
 
                 int totalSpotsPerStation = 0;
                 double totalImpressionsPerStation = 0;
                 decimal totalBudgetPerStation = 0;
+
                 foreach (var allocatedSpot in allocatedSpots)
                 {
-                    var spots = allocatedSpot.Spots;
-                    var spotCost = allocatedSpot.SpotCost;
-                    var totalCost = spots * spotCost;
-                    var impressionsPerSpot = allocatedSpot.Impressions;
-                    var impressions = spots * impressionsPerSpot;
-
-                    totalSpotsPerStation += spots;
-                    totalImpressionsPerStation += impressions;
-                    totalBudgetPerStation += totalCost;
+                    totalSpotsPerStation += allocatedSpot.Spots;
+                    totalImpressionsPerStation += allocatedSpot.TotalImpressions;
+                    totalBudgetPerStation += allocatedSpot.TotalCostWithMargin;
                 }
 
-                var stationMonthDetail = stationMonthDetails.Single(s => s.StationId == inventoryByStation.Key);
-                var market = _MarketRepository.GetMarket(stationMonthDetail.MarketCode.GetValueOrDefault());
+                var marketDisplay = _GetMarketDisplay(stationMonthDetails, inventoryByStation);
 
-                var station = new PlanPricingStationDto
+                var pricingStationDto = new PlanPricingStationDto
                 {
                     Station = inventoryItems.First().Station.LegacyCallLetters,
                     Cpm = ProposalMath.CalculateCpm(totalBudgetPerStation, totalImpressionsPerStation),
                     Budget = totalBudgetPerStation,
                     Impressions = totalImpressionsPerStation,
-                    Market = market.Display,
+                    Market = marketDisplay,
                     Spots = totalSpotsPerStation
                 };
 
@@ -81,7 +74,7 @@ namespace Services.Broadcast.BusinessEngines
                 totalImpressions += totalImpressionsPerStation;
                 totalBudget += totalBudgetPerStation;
 
-                result.Stations.Add(station);
+                result.Stations.Add(pricingStationDto);
             }
 
             result.Totals.Station = result.Stations.Count;
@@ -94,6 +87,34 @@ namespace Services.Broadcast.BusinessEngines
             result.Stations.ForEach(s => s.ImpressionsPercentage = ProposalMath.CalculateImpressionsPercentage(s.Impressions, totalImpressions));
 
             return result;
+        }
+
+        private string _GetMarketDisplay(List<StationMonthDetailDto> stationMonthDetails, IGrouping<int, PlanPricingInventoryProgram> inventoryByStation)
+        {
+            var stationMonthDetail = stationMonthDetails.FirstOrDefault(s => s.StationId == inventoryByStation.Key);
+
+            int? marketCode;
+
+            if (stationMonthDetail == null)
+            {
+                var station = _StationRepository.GetBroadcastStationById(inventoryByStation.Key);
+                marketCode = station.MarketCode;
+            }
+            else
+            {
+                marketCode = stationMonthDetail.MarketCode;
+            }
+
+            var marketDisplay = string.Empty;
+
+            if (marketCode.HasValue)
+            {
+                var market = _MarketRepository.GetMarket(marketCode.Value);
+
+                marketDisplay = market?.Display;
+            }
+
+            return marketDisplay;
         }
 
         private List<int> _GetAllocatedStationIds(PlanPricingAllocationResult apiResponse, List<PlanPricingInventoryProgram> inventories)
