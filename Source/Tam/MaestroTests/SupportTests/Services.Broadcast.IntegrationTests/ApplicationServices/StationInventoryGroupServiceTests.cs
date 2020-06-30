@@ -30,7 +30,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private IInventoryWeekEngine _InventoryWeekEngine;
 
-        [OneTimeSetUp]
+        [SetUp]
         public void SetUp()
         {
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStub>();

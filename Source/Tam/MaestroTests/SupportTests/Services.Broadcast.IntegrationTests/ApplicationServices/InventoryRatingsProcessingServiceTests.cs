@@ -24,7 +24,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IInventoryRatingsProcessingService _InventoryRatingsProcessingService;
         private IInventoryFileRatingsJobsRepository _InventoryFileRatingsJobsRepository;
 
-        [OneTimeSetUp]
+        [SetUp]
         public void init()
         {
             try

@@ -30,7 +30,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IProprietaryRepository _ProprietaryRepository;
         private IInventoryRatingsProcessingService _InventoryRatingsProcessingService;
 
-        [OneTimeSetUpAttribute]
+        [SetUp]
         public void SetUp()
         {
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IImpersonateUser, ImpersonateUserStub>();
