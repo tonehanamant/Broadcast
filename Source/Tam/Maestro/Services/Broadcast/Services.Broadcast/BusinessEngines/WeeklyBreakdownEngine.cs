@@ -63,7 +63,7 @@ namespace Services.Broadcast.BusinessEngines
         private readonly ICreativeLengthEngine _CreativeLengthEngine;
         private readonly Dictionary<int, double> _SpotLengthMultiplier;
 
-        // this needs to be removed after all plans in production have a modified version greater then 20.07 release date
+        //TODO: this needs to be removed after all plans in production have a modified version greater then 20.07 release date
         private const double _DefaultImpressionsPerUnitForOldPlans = 500000;
         private const string _UnsupportedDeliveryTypeMessage = "Unsupported Delivery Type";
 
@@ -82,6 +82,12 @@ namespace Services.Broadcast.BusinessEngines
         public WeeklyBreakdownResponseDto CalculatePlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request)
         {
             _PlanValidator.ValidateWeeklyBreakdown(request);
+
+            if(request.ImpressionsPerUnit <= 0) //old plan
+            {
+                request.ImpressionsPerUnit = _DefaultImpressionsPerUnitForOldPlans;                    
+            }
+
             _PlanValidator.ValidateImpressionsPerUnit(request.ImpressionsPerUnit, request.TotalImpressions);
 
             //calculate flight weeks based on start/end date of the flight
