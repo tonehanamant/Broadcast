@@ -44,6 +44,7 @@ namespace BroadcastJobScheduler.JobQueueMonitors
                 "stationsupdate",
                 "inventorysummaryaggregation",
                 "programmappings",
+                "savepricingrequest",
                 "default"
             };
         }

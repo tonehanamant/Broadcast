@@ -108,6 +108,10 @@ namespace Services.Broadcast.ApplicationServices
         PlanPricingResultMarketsDto GetMarkets(int planId);
 
         PlanPricingBandDto GetPricingBands(int planId);
+
+        [Queue("savepricingrequest")]
+        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
+        void SavePricingRequest(PlanPricingApiRequestDto pricingApiRequest);
     }
 
     public class PlanPricingService : BroadcastBaseClass, IPlanPricingService
@@ -730,7 +734,7 @@ namespace Services.Broadcast.ApplicationServices
 
                     token.ThrowIfCancellationRequested();
 
-                    _SaveApiRequest(pricingApiRequest);
+                    _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.SavePricingRequest(pricingApiRequest));
 
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
                     var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
@@ -880,20 +884,16 @@ namespace Services.Broadcast.ApplicationServices
             return grouped.ToList();
         }
 
-        private void _SaveApiRequest(PlanPricingApiRequestDto pricingApiRequest)
+        public void SavePricingRequest(PlanPricingApiRequestDto pricingApiRequest)
         {
-            // Send to S3 bucket.
-            Task.Run(() =>
+            try
             {
-                try
-                {
-                    _PricingRequestLogClient.SavePricingRequest(pricingApiRequest);
-                }
-                catch (Exception exception)
-                {
-                    _LogError("Failed to save pricing API request", exception);
-                }
-            });
+                _PricingRequestLogClient.SavePricingRequest(pricingApiRequest);
+            }
+            catch(Exception exception)
+            {
+                _LogError("Failed to save pricing API request", exception);
+            }
         }
 
         private void _SetPlanSpotLengthForBackwardsCompatibility(PlanDto plan)
