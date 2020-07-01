@@ -126,29 +126,6 @@ namespace Services.Broadcast.BusinessEngines
             return response;
         }
 
-        private void _CalculateUnits(List<WeeklyBreakdownWeek> weeks, WeeklyBreakdownRequest request)
-        {
-            foreach (var week in weeks)
-            {
-                if (request.Equivalized)
-                {
-                    if (week.SpotLengthId.HasValue)
-                    {
-                        week.WeeklyUnits = _CalculateUnitsForSingleSpotLength(request.ImpressionsPerUnit, week.WeeklyImpressions, week.SpotLengthId.Value);
-                    }
-                    else
-                    {
-                        request.CreativeLengths = _CreativeLengthEngine.DistributeWeight(request.CreativeLengths);
-                        week.WeeklyUnits = _CalculateUnitsForMultipleSpotLengths(request.CreativeLengths, request.ImpressionsPerUnit, week.WeeklyImpressions);
-                    }
-                }
-                else
-                {
-                    week.WeeklyUnits = week.WeeklyImpressions / request.ImpressionsPerUnit;
-                }
-            }
-        }
-
         private List<DateTime> _GetDaysOutsideOfTheFlight(DateTime flightStartDate, DateTime flightEndDate, List<DisplayMediaWeek> weeks)
         {
             List<DateTime> result = new List<DateTime>();
@@ -386,13 +363,13 @@ namespace Services.Broadcast.BusinessEngines
                         {
                             if (week.SpotLengthId.HasValue)
                             {
-                                week.WeeklyImpressions = _CalculateUnitImpressionsForSingleSpotLength(request.ImpressionsPerUnit
-                                    , week.WeeklyUnits, week.SpotLengthId.Value);
+                                week.WeeklyImpressions = Math.Round(_CalculateUnitImpressionsForSingleSpotLength(request.ImpressionsPerUnit
+                                    , week.WeeklyUnits, week.SpotLengthId.Value));
                             }
                             else
                             {
-                                week.WeeklyImpressions = _CalculateUnitImpressionsForMultipleSpotLengths(request.CreativeLengths
-                                    , request.ImpressionsPerUnit, week.WeeklyUnits);
+                                week.WeeklyImpressions = Math.Round(_CalculateUnitImpressionsForMultipleSpotLengths(request.CreativeLengths
+                                    , request.ImpressionsPerUnit, week.WeeklyUnits));
                             }
                         }
                         else
@@ -807,25 +784,50 @@ namespace Services.Broadcast.BusinessEngines
                 .ToList();
         }
 
-        private double _CalculateUnitImpressionsForMultipleSpotLengths(List<CreativeLength> creativeLengths
-            , double impressionsPerUnit, double units)
-            => creativeLengths
-                .Sum(p => units * _CalculateEquivalizedImpressionsPerUnit(impressionsPerUnit, p.SpotLengthId)
-                            * GeneralMath.ConvertPercentageToFraction(p.Weight.Value));
+        private double _CalculateEquivalizedImpressionsPerUnit(double impressionPerUnit, int spotLengthId)
+            => impressionPerUnit * _SpotLengthMultiplier[spotLengthId];
 
         private double _CalculateUnitImpressionsForSingleSpotLength(double impressionPerUnit, double units, int spotLengthId)
             => units * _CalculateEquivalizedImpressionsPerUnit(impressionPerUnit, spotLengthId);
 
-        private double _CalculateEquivalizedImpressionsPerUnit(double impressionPerUnit, int spotLengthId)
-            => impressionPerUnit * _SpotLengthMultiplier[spotLengthId];
-
-        private double _CalculateUnitsForMultipleSpotLengths(List<CreativeLength> creativeLengths, double impressionsPerUnit, double impressions)
-            => creativeLengths
-                   .Sum(p => impressions * GeneralMath.ConvertPercentageToFraction(p.Weight.Value)
-                   / _CalculateEquivalizedImpressionsPerUnit(impressionsPerUnit, p.SpotLengthId));
+        private double _CalculateUnitImpressionsForMultipleSpotLengths(List<CreativeLength> creativeLengths
+            , double impressionsPerUnit, double units)
+            => units / creativeLengths.Sum(p => GeneralMath.ConvertPercentageToFraction(p.Weight.Value) 
+                / _CalculateEquivalizedImpressionsPerUnit(impressionsPerUnit, p.SpotLengthId));
 
         private double _CalculateUnitsForSingleSpotLength(double impressionsPerUnit, double impressions, int spotLengthId)
             => impressions / _CalculateEquivalizedImpressionsPerUnit(impressionsPerUnit, spotLengthId);
+
+        private double _CalculateUnitsForMultipleSpotLengths(List<CreativeLength> creativeLengths, double impressionsPerUnit, double impressions)
+            => creativeLengths
+                   .Sum(p => _CalculateUnitsForSingleSpotLength(impressionsPerUnit, impressions, p.SpotLengthId)
+                            * GeneralMath.ConvertPercentageToFraction(p.Weight.Value));
+
+        private void _CalculateUnits(List<WeeklyBreakdownWeek> weeks, WeeklyBreakdownRequest request)
+        {
+            foreach (var week in weeks)
+            {
+                if (request.Equivalized)
+                {
+                    if (week.SpotLengthId.HasValue)
+                    {
+                        week.WeeklyUnits = _CalculateUnitsForSingleSpotLength(request.ImpressionsPerUnit, week.WeeklyImpressions, week.SpotLengthId.Value);
+                    }
+                    else
+                    {
+                        if (request.CreativeLengths.Any(x => !x.Weight.HasValue))
+                        {
+                            request.CreativeLengths = _CreativeLengthEngine.DistributeWeight(request.CreativeLengths);
+                        }
+                        week.WeeklyUnits = _CalculateUnitsForMultipleSpotLengths(request.CreativeLengths, request.ImpressionsPerUnit, week.WeeklyImpressions);
+                    }
+                }
+                else
+                {
+                    week.WeeklyUnits = week.WeeklyImpressions / request.ImpressionsPerUnit;
+                }
+            }
+        }
 
         /// <inheritdoc/>
         public double CalculateWeeklyADUImpressions(WeeklyBreakdownWeek week, bool equivalized

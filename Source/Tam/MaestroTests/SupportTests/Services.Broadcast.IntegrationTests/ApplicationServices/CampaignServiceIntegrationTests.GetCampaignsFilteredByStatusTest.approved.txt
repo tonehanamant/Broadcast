@@ -2,6 +2,272 @@
   {
     "Advertiser": {
       "AgencyId": 1,
+      "Id": 1,
+      "Name": "Stub Advertiser"
+    },
+    "Agency": {
+      "Id": 1,
+      "Name": "Stub Agency"
+    },
+    "Budget": 1500.0,
+    "CampaignStatus": 4,
+    "FlightActiveDays": 26,
+    "FlightEndDate": "2019-08-30T00:00:00",
+    "FlightHiatusDays": 4,
+    "FlightStartDate": "2019-08-01T00:00:00",
+    "HasHiatus": true,
+    "HasPlans": true,
+    "HHCPM": 2500.0,
+    "HHImpressions": 5500.0,
+    "HHRatingPoints": 23.5,
+    "ModifiedBy": "integration_test",
+    "ModifiedDate": "2020-01-01T00:00:00",
+    "Name": "Test Campaign 1",
+    "Notes": null,
+    "Plans": [
+      {
+        "AudienceId": 31,
+        "AvailableMarketCount": 2,
+        "AvailableMarketsWithSovCount": 2,
+        "AvailableMarketTotalUsCoveragePercent": 80.5,
+        "BlackoutMarketCount": null,
+        "BlackoutMarketTotalUsCoveragePercent": null,
+        "Budget": 500.0000,
+        "Dayparts": [
+          "AMN",
+          "SPORTS"
+        ],
+        "DraftId": null,
+        "DraftModifiedBy": null,
+        "DraftModifiedDate": null,
+        "Equivalized": true,
+        "FlightEndDate": "2020-03-29T00:00:00",
+        "FlightStartDate": "2020-02-24T00:00:00",
+        "HasHiatus": false,
+        "HHCPM": 0.0837,
+        "HHImpressions": 5972222.0,
+        "ModifiedBy": "integration_test",
+        "ModifiedDate": "2020-01-01T00:00:00",
+        "Name": "New Plan",
+        "PlanSummaryQuarters": [
+          {
+            "Quarter": 1,
+            "Year": 2020
+          }
+        ],
+        "PostingType": 2,
+        "ProcessingStatus": 1,
+        "ProductName": "Product1",
+        "SpotLengthValues": [
+          30,
+          60
+        ],
+        "Status": 1,
+        "TargetCPM": 0.1000,
+        "TargetImpressions": 5000000.0,
+        "TotalActiveDays": 35,
+        "TotalHiatusDays": 0,
+        "TRP": 4.1
+      },
+      {
+        "AudienceId": 31,
+        "AvailableMarketCount": 2,
+        "AvailableMarketsWithSovCount": 2,
+        "AvailableMarketTotalUsCoveragePercent": 80.5,
+        "BlackoutMarketCount": null,
+        "BlackoutMarketTotalUsCoveragePercent": null,
+        "Budget": 500.0000,
+        "Dayparts": [
+          "AMN",
+          "SPORTS"
+        ],
+        "DraftId": null,
+        "DraftModifiedBy": null,
+        "DraftModifiedDate": null,
+        "Equivalized": true,
+        "FlightEndDate": "2020-03-29T00:00:00",
+        "FlightStartDate": "2020-02-24T00:00:00",
+        "HasHiatus": false,
+        "HHCPM": 0.0837,
+        "HHImpressions": 5972222.0,
+        "ModifiedBy": "integration_test",
+        "ModifiedDate": "2020-01-01T00:00:00",
+        "Name": "New Plan",
+        "PlanSummaryQuarters": [
+          {
+            "Quarter": 1,
+            "Year": 2020
+          }
+        ],
+        "PostingType": 2,
+        "ProcessingStatus": 1,
+        "ProductName": "Product1",
+        "SpotLengthValues": [
+          30,
+          60
+        ],
+        "Status": 1,
+        "TargetCPM": 0.1000,
+        "TargetImpressions": 5000000.0,
+        "TotalActiveDays": 35,
+        "TotalHiatusDays": 0,
+        "TRP": 4.1
+      },
+      {
+        "AudienceId": 31,
+        "AvailableMarketCount": 2,
+        "AvailableMarketsWithSovCount": 2,
+        "AvailableMarketTotalUsCoveragePercent": 80.5,
+        "BlackoutMarketCount": null,
+        "BlackoutMarketTotalUsCoveragePercent": null,
+        "Budget": 500.0000,
+        "Dayparts": [
+          "AMN",
+          "SPORTS"
+        ],
+        "DraftId": null,
+        "DraftModifiedBy": null,
+        "DraftModifiedDate": null,
+        "Equivalized": true,
+        "FlightEndDate": "2020-03-29T00:00:00",
+        "FlightStartDate": "2020-02-24T00:00:00",
+        "HasHiatus": false,
+        "HHCPM": 0.0837,
+        "HHImpressions": 5972222.0,
+        "ModifiedBy": "integration_test",
+        "ModifiedDate": "2020-01-01T00:00:00",
+        "Name": "New Plan",
+        "PlanSummaryQuarters": [
+          {
+            "Quarter": 1,
+            "Year": 2020
+          }
+        ],
+        "PostingType": 2,
+        "ProcessingStatus": 1,
+        "ProductName": "Product1",
+        "SpotLengthValues": [
+          30,
+          60
+        ],
+        "Status": 1,
+        "TargetCPM": 0.1000,
+        "TargetImpressions": 5000000.0,
+        "TotalActiveDays": 35,
+        "TotalHiatusDays": 0,
+        "TRP": 4.1
+      },
+      {
+        "AudienceId": 31,
+        "AvailableMarketCount": 2,
+        "AvailableMarketsWithSovCount": 2,
+        "AvailableMarketTotalUsCoveragePercent": 80.5,
+        "BlackoutMarketCount": null,
+        "BlackoutMarketTotalUsCoveragePercent": null,
+        "Budget": 500.0000,
+        "Dayparts": [
+          "AMN",
+          "SPORTS"
+        ],
+        "DraftId": null,
+        "DraftModifiedBy": null,
+        "DraftModifiedDate": null,
+        "Equivalized": true,
+        "FlightEndDate": "2020-03-29T00:00:00",
+        "FlightStartDate": "2020-02-24T00:00:00",
+        "HasHiatus": false,
+        "HHCPM": 0.0837,
+        "HHImpressions": 5972222.0,
+        "ModifiedBy": "integration_test",
+        "ModifiedDate": "2020-01-01T00:00:00",
+        "Name": "New Plan",
+        "PlanSummaryQuarters": [
+          {
+            "Quarter": 1,
+            "Year": 2020
+          }
+        ],
+        "PostingType": 2,
+        "ProcessingStatus": 1,
+        "ProductName": "Product",
+        "SpotLengthValues": [
+          30,
+          60
+        ],
+        "Status": 1,
+        "TargetCPM": 0.1000,
+        "TargetImpressions": 5000000.0,
+        "TotalActiveDays": 35,
+        "TotalHiatusDays": 0,
+        "TRP": 4.1
+      },
+      {
+        "AudienceId": 31,
+        "AvailableMarketCount": 2,
+        "AvailableMarketsWithSovCount": 2,
+        "AvailableMarketTotalUsCoveragePercent": 80.5,
+        "BlackoutMarketCount": null,
+        "BlackoutMarketTotalUsCoveragePercent": null,
+        "Budget": 500.0000,
+        "Dayparts": [
+          "AMN",
+          "SPORTS"
+        ],
+        "DraftId": null,
+        "DraftModifiedBy": null,
+        "DraftModifiedDate": null,
+        "Equivalized": true,
+        "FlightEndDate": "2020-03-29T00:00:00",
+        "FlightStartDate": "2020-02-24T00:00:00",
+        "HasHiatus": false,
+        "HHCPM": 0.0837,
+        "HHImpressions": 5972222.0,
+        "ModifiedBy": "integration_test",
+        "ModifiedDate": "2020-01-01T00:00:00",
+        "Name": "New Plan",
+        "PlanSummaryQuarters": [
+          {
+            "Quarter": 1,
+            "Year": 2020
+          }
+        ],
+        "PostingType": 2,
+        "ProcessingStatus": 1,
+        "ProductName": "Product",
+        "SpotLengthValues": [
+          30,
+          60
+        ],
+        "Status": 1,
+        "TargetCPM": 0.1000,
+        "TargetImpressions": 5000000.0,
+        "TotalActiveDays": 35,
+        "TotalHiatusDays": 0,
+        "TRP": 4.1
+      }
+    ],
+    "PlanStatuses": [
+      {
+        "Count": 1,
+        "PlanStatus": 1
+      },
+      {
+        "Count": 3,
+        "PlanStatus": 3
+      },
+      {
+        "Count": 1,
+        "PlanStatus": 5
+      },
+      {
+        "Count": 2,
+        "PlanStatus": 6
+      }
+    ]
+  },
+  {
+    "Advertiser": {
+      "AgencyId": 1,
       "Id": 4,
       "Name": "Stub Advertiser"
     },
@@ -171,184 +437,6 @@
         "TotalActiveDays": 210,
         "TotalHiatusDays": 2,
         "TRP": 6.0
-      }
-    ],
-    "PlanStatuses": [
-      {
-        "Count": 1,
-        "PlanStatus": 1
-      },
-      {
-        "Count": 3,
-        "PlanStatus": 3
-      },
-      {
-        "Count": 1,
-        "PlanStatus": 5
-      },
-      {
-        "Count": 2,
-        "PlanStatus": 6
-      }
-    ]
-  },
-  {
-    "Advertiser": {
-      "AgencyId": 1,
-      "Id": 1,
-      "Name": "Stub Advertiser"
-    },
-    "Agency": {
-      "Id": 1,
-      "Name": "Stub Agency"
-    },
-    "Budget": 1500.0,
-    "CampaignStatus": 4,
-    "FlightActiveDays": 26,
-    "FlightEndDate": "2019-08-30T00:00:00",
-    "FlightHiatusDays": 4,
-    "FlightStartDate": "2019-08-01T00:00:00",
-    "HasHiatus": true,
-    "HasPlans": true,
-    "HHCPM": 2500.0,
-    "HHImpressions": 5500.0,
-    "HHRatingPoints": 23.5,
-    "ModifiedBy": "integration_test",
-    "ModifiedDate": "2019-01-01T00:00:00",
-    "Name": "Test Campaign 1",
-    "Notes": null,
-    "Plans": [
-      {
-        "AudienceId": 31,
-        "AvailableMarketCount": 2,
-        "AvailableMarketsWithSovCount": 2,
-        "AvailableMarketTotalUsCoveragePercent": 80.5,
-        "BlackoutMarketCount": null,
-        "BlackoutMarketTotalUsCoveragePercent": null,
-        "Budget": 500.0000,
-        "Dayparts": [
-          "AMN",
-          "SPORTS"
-        ],
-        "DraftId": null,
-        "DraftModifiedBy": null,
-        "DraftModifiedDate": null,
-        "Equivalized": true,
-        "FlightEndDate": "2020-03-29T00:00:00",
-        "FlightStartDate": "2020-02-25T00:00:00",
-        "HasHiatus": true,
-        "HHCPM": 3.2754,
-        "HHImpressions": 152650.0,
-        "ModifiedBy": "integration_test",
-        "ModifiedDate": "2019-01-01T00:00:00",
-        "Name": "New Plan",
-        "PlanSummaryQuarters": [
-          {
-            "Quarter": 1,
-            "Year": 2020
-          }
-        ],
-        "PostingType": 2,
-        "ProcessingStatus": 1,
-        "ProductName": "Product1",
-        "SpotLengthValues": [
-          30,
-          60
-        ],
-        "Status": 1,
-        "TargetCPM": 12.0000,
-        "TargetImpressions": 213000.0,
-        "TotalActiveDays": 33,
-        "TotalHiatusDays": 1,
-        "TRP": 7.0
-      },
-      {
-        "AudienceId": 31,
-        "AvailableMarketCount": 2,
-        "AvailableMarketsWithSovCount": 2,
-        "AvailableMarketTotalUsCoveragePercent": 80.5,
-        "BlackoutMarketCount": null,
-        "BlackoutMarketTotalUsCoveragePercent": null,
-        "Budget": 500.0000,
-        "Dayparts": [
-          "AMN",
-          "SPORTS"
-        ],
-        "DraftId": null,
-        "DraftModifiedBy": null,
-        "DraftModifiedDate": null,
-        "Equivalized": true,
-        "FlightEndDate": "2020-03-29T00:00:00",
-        "FlightStartDate": "2020-02-25T00:00:00",
-        "HasHiatus": true,
-        "HHCPM": 3.2754,
-        "HHImpressions": 152650.0,
-        "ModifiedBy": "integration_test",
-        "ModifiedDate": "2019-01-01T00:00:00",
-        "Name": "New Plan",
-        "PlanSummaryQuarters": [
-          {
-            "Quarter": 1,
-            "Year": 2020
-          }
-        ],
-        "PostingType": 2,
-        "ProcessingStatus": 1,
-        "ProductName": "Product1",
-        "SpotLengthValues": [
-          30,
-          60
-        ],
-        "Status": 1,
-        "TargetCPM": 12.0000,
-        "TargetImpressions": 213000.0,
-        "TotalActiveDays": 33,
-        "TotalHiatusDays": 1,
-        "TRP": 7.0
-      },
-      {
-        "AudienceId": 31,
-        "AvailableMarketCount": 2,
-        "AvailableMarketsWithSovCount": 2,
-        "AvailableMarketTotalUsCoveragePercent": 80.5,
-        "BlackoutMarketCount": null,
-        "BlackoutMarketTotalUsCoveragePercent": null,
-        "Budget": 500.0000,
-        "Dayparts": [
-          "AMN",
-          "SPORTS"
-        ],
-        "DraftId": null,
-        "DraftModifiedBy": null,
-        "DraftModifiedDate": null,
-        "Equivalized": true,
-        "FlightEndDate": "2020-03-29T00:00:00",
-        "FlightStartDate": "2020-02-25T00:00:00",
-        "HasHiatus": true,
-        "HHCPM": 3.2754,
-        "HHImpressions": 152650.0,
-        "ModifiedBy": "integration_test",
-        "ModifiedDate": "2019-01-01T00:00:00",
-        "Name": "New Plan",
-        "PlanSummaryQuarters": [
-          {
-            "Quarter": 1,
-            "Year": 2020
-          }
-        ],
-        "PostingType": 2,
-        "ProcessingStatus": 1,
-        "ProductName": "Product",
-        "SpotLengthValues": [
-          30,
-          60
-        ],
-        "Status": 1,
-        "TargetCPM": 12.0000,
-        "TargetImpressions": 213000.0,
-        "TotalActiveDays": 33,
-        "TotalHiatusDays": 1,
-        "TRP": 7.0
       }
     ],
     "PlanStatuses": [
