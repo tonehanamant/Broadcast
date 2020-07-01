@@ -179,7 +179,7 @@ namespace Services.Broadcast.ApplicationServices
             DateTime createdDate,
             string username)
         {
-            _LoadShowTypes(programMappings);
+      
             var existingProgramMappingByOriginalProgramName = _GetExistingProgramMappings(programMappings);
 
 
@@ -305,6 +305,7 @@ namespace Services.Broadcast.ApplicationServices
             return BroadcastServiceSystemParameter.EnableInternalProgramSearch;
         }
 
+        //BP1-402 is pushed to next release so leaving this code for later use. Additional testing and coordination to point to the Dativa Search would be required.
         protected void _LoadShowTypes(List<ProgramMappingsFileRequestDto> mappings)
         {
             var programNameExceptions = _ProgramNameExceptionsRepository.GetProgramExceptions();
