@@ -602,6 +602,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
+        public void GetPricingResultsMarketsPricingExecutedTwiceTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planPricingRequestDto = _GetPricingRequestDto();
+
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+
+                _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
+
+                var secondJob = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+
+                _PlanPricingService.RunPricingJob(planPricingRequestDto, secondJob.Id, CancellationToken.None);
+
+                var markets = _PlanPricingService.GetMarkets(planPricingRequestDto.PlanId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingBandDto), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingBandDto), "JobId");
+                jsonResolver.Ignore(typeof(PlanPricingBandDetailDto), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void GetPricingResultsMarketsTest_VerifyMargin()
         {
             using (new TransactionScopeWrapper())

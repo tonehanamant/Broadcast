@@ -1555,12 +1555,15 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var plan = context.plans.Single(x => x.id == planId);
-                var planVersionId = plan.latest_version_id;
+                var entity = (from markets in context.plan_version_pricing_markets
+                              from plans in context.plans
+                              where plans.id == planId && markets.plan_version_id == plans.latest_version_id
+                              select markets)
+                            .OrderByDescending(p => p.id)
+                            .FirstOrDefault();
 
-                var entity = context.plan_version_pricing_markets
-                    .Include(m => m.plan_version_pricing_market_details)
-                    .SingleOrDefault(m => m.plan_version_id.Equals(planVersionId));
+                if (entity == null)
+                    return null;
 
                 var dto = new PlanPricingResultMarketsDto
                 {
