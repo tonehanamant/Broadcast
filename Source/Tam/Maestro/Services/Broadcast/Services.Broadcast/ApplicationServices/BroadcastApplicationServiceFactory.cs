@@ -257,6 +257,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPlanPricingUnitCapImpressionsCalculationEngine, PlanPricingUnitCapImpressionsCalculationEngine>();
             unityContainer.RegisterType<IPlanPricingStationCalculationEngine, PlanPricingStationCalculationEngine>();
             unityContainer.RegisterType<IPlanPricingMarketResultsEngine, PlanPricingMarketResultsEngine>();
+            unityContainer.RegisterType<IHealthService, HealthService>();
 
             //@todo This is temporary to control the daypart source for Broadcast
             var repoFactory = unityContainer.Resolve<IDataRepositoryFactory>();
@@ -272,6 +273,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IAwsCognitoClient, AwsCognitoClient>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IGenreCache, GenreCache>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IShowTypeCache, ShowTypeCache>(new ContainerControlledLifetimeManager());
+
         }
 
         public T GetApplicationService<T>() where T : class, IApplicationService

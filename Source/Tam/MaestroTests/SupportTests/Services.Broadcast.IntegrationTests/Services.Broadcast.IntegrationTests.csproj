@@ -426,6 +426,8 @@
     <Compile Include="ApplicationServices\ProgramScrubbingEngineTests.cs" />
     <Compile Include="Stubs\TrafficApiCacheStub.cs" />
     <Compile Include="Stubs\TrafficApiClientStub.cs" />
+    <Compile Include="UnitTests\ApplicationServices\HealthServiceUnitTests.cs" />
+    <Compile Include="UnitTests\ApplicationServices\HealthServiceUnitTestClass.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryExportServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryExportServiceUnitTestClass.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryProgramsProcessingServiceTestClass.cs" />
@@ -1313,6 +1315,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Files\1Chicago WLS Syn 4Q16.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\api_build.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Files\BCOP3666.txt">

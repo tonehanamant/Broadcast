@@ -325,6 +325,7 @@
     <Compile Include="ApplicationServices\BroadcastLockingManagerApplicationService.cs" />
     <Compile Include="ApplicationServices\CampaignAggregationJobTrigger.cs" />
     <Compile Include="ApplicationServices\CampaignAggregator.cs" />
+    <Compile Include="ApplicationServices\HealthService.cs" />
     <Compile Include="ApplicationServices\VpvhService.cs" />
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsRepairEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricingBandCalculationEngine.cs" />
@@ -418,6 +419,7 @@
     <Compile Include="Entities\Enums\PricingMarketGroupEnum.cs" />
     <Compile Include="Entities\Enums\StationMapSetNamesEnum.cs" />
     <Compile Include="Entities\Enums\VpvhOperationEnum.cs" />
+    <Compile Include="Entities\HealthResponseDto.cs" />
     <Compile Include="Entities\Inventory\InventoryExportAudienceDto.cs" />
     <Compile Include="Entities\Inventory\InventoryExportLineWeekDetail.cs" />
     <Compile Include="Entities\Inventory\InventoryExportReportData.cs" />
