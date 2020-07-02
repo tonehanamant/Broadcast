@@ -322,6 +322,18 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 case "EnableInternalProgramSearch":
 	                result = "False";
                     break;
+                case "PricingRequestLogBucket":
+                    result = "s3://ds-api-logs";
+                    break;
+                case "PricingRequestLogAccessKeyId":
+                    result = "AKIAQJ5IV4IZZV35MPAM";
+                    break;
+                case "PricingRequestLogEncryptedAccessKey":
+                    result = "8WBxyR8JMnMGgdIk6I2aJkurXbm2Hgkwz1SV/hTsOoUtZ6UYnfBGQvCMaqNnrxjh";
+                    break;
+                case "PricingRequestLogBucketRegion":
+                    result = "us-east-1";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }
