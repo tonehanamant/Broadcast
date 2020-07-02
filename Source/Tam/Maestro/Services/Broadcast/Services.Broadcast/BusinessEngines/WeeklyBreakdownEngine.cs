@@ -85,7 +85,10 @@ namespace Services.Broadcast.BusinessEngines
 
             if(request.ImpressionsPerUnit <= 0) //old plan
             {
-                request.ImpressionsPerUnit = _DefaultImpressionsPerUnitForOldPlans;                    
+                if (request.TotalImpressions < _DefaultImpressionsPerUnitForOldPlans)
+                    request.ImpressionsPerUnit = request.TotalImpressions;
+                else
+                    request.ImpressionsPerUnit = _DefaultImpressionsPerUnitForOldPlans;                    
             }
 
             _PlanValidator.ValidateImpressionsPerUnit(request.ImpressionsPerUnit, request.TotalImpressions);
