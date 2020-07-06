@@ -325,6 +325,14 @@ namespace Services.Broadcast.Validators
 
                 if (vpvhForAudience.StartingPoint == default)
                     throw new Exception("StartingPoint is a required property");
+
+                if (vpvhForAudience.VpvhType == VpvhTypeEnum.Custom)
+                {
+                    if (vpvhForAudience.Vpvh < 0.001 || vpvhForAudience.Vpvh > 10)
+                    {
+                        throw new Exception("VPVH must be between 0.001 and 10");
+                    }
+                }
             }
         }
 

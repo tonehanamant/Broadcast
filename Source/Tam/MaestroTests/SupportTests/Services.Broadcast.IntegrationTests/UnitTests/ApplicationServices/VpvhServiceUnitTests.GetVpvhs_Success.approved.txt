@@ -15,5 +15,39 @@
     "StandardDaypartId": 1,
     "StartingPoint": "2022-05-14T00:00:00",
     "VpvhDefaultValue": 2
+  },
+  {
+    "AudienceId": 4,
+    "FourBookAverageVpvh": null,
+    "LastYearQuarter": {
+      "Quarter": 2,
+      "Year": 2021
+    },
+    "LastYearVpvh": null,
+    "PreviousQuarter": {
+      "Quarter": 1,
+      "Year": 2022
+    },
+    "PreviousQuarterVpvh": null,
+    "StandardDaypartId": 1,
+    "StartingPoint": "2022-05-14T00:00:00",
+    "VpvhDefaultValue": 1
+  },
+  {
+    "AudienceId": 31,
+    "FourBookAverageVpvh": 1.0,
+    "LastYearQuarter": {
+      "Quarter": 2,
+      "Year": 2021
+    },
+    "LastYearVpvh": 1.0,
+    "PreviousQuarter": {
+      "Quarter": 1,
+      "Year": 2022
+    },
+    "PreviousQuarterVpvh": 1.0,
+    "StandardDaypartId": 1,
+    "StartingPoint": "2022-05-14T00:00:00",
+    "VpvhDefaultValue": 2
   }
 ]

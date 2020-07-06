@@ -76,6 +76,76 @@
       "StartingPoint": "2022-05-14T00:00:00",
       "Vpvh": 1.0,
       "VpvhType": 2
+    },
+    {
+      "AudienceId": 3,
+      "StandardDaypartId": 1,
+      "StartingPoint": "2022-05-14T00:00:00",
+      "Vpvh": 0.1,
+      "VpvhType": 2
+    },
+    {
+      "AudienceId": 3,
+      "StandardDaypartId": 3,
+      "StartingPoint": "2022-05-14T00:00:00",
+      "Vpvh": 0.2,
+      "VpvhType": 2
+    },
+    {
+      "AudienceId": 3,
+      "StandardDaypartId": 7,
+      "StartingPoint": "2022-05-14T00:00:00",
+      "Vpvh": 0.3,
+      "VpvhType": 2
+    },
+    {
+      "AudienceId": 3,
+      "StandardDaypartId": 17,
+      "StartingPoint": "2022-05-14T00:00:00",
+      "Vpvh": 0.4,
+      "VpvhType": 2
+    },
+    {
+      "AudienceId": 3,
+      "StandardDaypartId": 22,
+      "StartingPoint": "2022-05-14T00:00:00",
+      "Vpvh": 0.5,
+      "VpvhType": 2
+    },
+    {
+      "AudienceId": 4,
+      "StandardDaypartId": 1,
+      "StartingPoint": "2022-05-14T00:00:00",
+      "Vpvh": null,
+      "VpvhType": 1
+    },
+    {
+      "AudienceId": 4,
+      "StandardDaypartId": 3,
+      "StartingPoint": "2022-05-14T00:00:00",
+      "Vpvh": null,
+      "VpvhType": 1
+    },
+    {
+      "AudienceId": 4,
+      "StandardDaypartId": 7,
+      "StartingPoint": "2022-05-14T00:00:00",
+      "Vpvh": null,
+      "VpvhType": 1
+    },
+    {
+      "AudienceId": 4,
+      "StandardDaypartId": 17,
+      "StartingPoint": "2022-05-14T00:00:00",
+      "Vpvh": null,
+      "VpvhType": 1
+    },
+    {
+      "AudienceId": 4,
+      "StandardDaypartId": 22,
+      "StartingPoint": "2022-05-14T00:00:00",
+      "Vpvh": null,
+      "VpvhType": 1
     }
   ]
 }

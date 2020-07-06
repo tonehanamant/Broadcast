@@ -323,6 +323,7 @@ namespace Services.Broadcast.Entities.Campaign
         private static ProjectedPlan _GetEmptyWeek(MediaWeek mediaWeek, PlanDto plan, QuarterDetailDto quarter
             , List<MediaMonth> mediaMonths, LookupDto spotLength, PlanDaypartDto daypart)
         {
+            const string SpotLength30Seconds = "30";
             return new ProjectedPlan
             {
                 QuarterYear = quarter.Year,
@@ -337,7 +338,8 @@ namespace Services.Broadcast.Entities.Campaign
                 DaypartEndTime = DaypartTimeHelper.ConvertSecondsToFormattedTime(daypart.EndTimeSeconds, "hh:mmtt"),
                 SpotLengthId = spotLength.Id,
                 SpotLength = spotLength.Display,
-                Equivalized = plan.Equivalized,
+                //we set false for 30s on plans equivalized to group all the data together
+                Equivalized = spotLength.Display.Equals(SpotLength30Seconds) ? false : plan.Equivalized,
                 FlightDays = plan.FlightDays
             };
         }

@@ -1,5 +1,4 @@
-﻿using OfficeOpenXml;
-using Services.Broadcast.Entities.Enums;
+﻿using Services.Broadcast.Entities.Enums;
 using System;
 
 namespace Services.Broadcast.Entities.Vpvh
@@ -18,11 +17,11 @@ namespace Services.Broadcast.Entities.Vpvh
 
         public DateTime StartingPoint { get; set; }
 
-        public double FourBookAverageVpvh { get; set; }
+        public double? FourBookAverageVpvh { get; set; }
 
-        public double PreviousQuarterVpvh { get; set; }
+        public double? PreviousQuarterVpvh { get; set; }
 
-        public double LastYearVpvh { get; set; }
+        public double? LastYearVpvh { get; set; }
 
         public VpvhTypeEnum VpvhDefaultValue { get; set; }
 

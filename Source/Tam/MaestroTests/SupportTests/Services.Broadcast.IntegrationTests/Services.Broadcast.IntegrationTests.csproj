@@ -548,6 +548,7 @@
     <None Include="Files\BVS Load For Invalid Media Week right limit.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\Campaign export\CampaignExport_30SecEquivalizedAndNot.xlsx" />
     <None Include="Files\Campaign export\CampaignExport_ContractOnlyPlans.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

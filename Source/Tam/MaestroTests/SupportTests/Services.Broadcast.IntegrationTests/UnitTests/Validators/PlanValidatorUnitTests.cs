@@ -404,6 +404,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         }
 
         [Test]
+        [TestCase(0.0009)]
+        [TestCase(10.1)]
+        public void ValidatePlan_InvalidCustomVpvh(double vpvh)
+        {
+            _ConfigureSpotLengthEngineMockToReturnTrue();
+
+            var plan = _GetPlan();
+            plan.Dayparts[0].VpvhForAudiences.Add(new PlanDaypartVpvhForAudienceDto
+            {
+                AudienceId = 6,
+                Vpvh = vpvh,
+                VpvhType = VpvhTypeEnum.Custom,
+                StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+            });
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("VPVH must be between 0.001 and 10"));
+        }
+
+        [Test]
         public void ValidatePlan_WithWrongShowTypeRestrictionsContainType()
         {
             _ConfigureSpotLengthEngineMockToReturnTrue();
@@ -801,8 +821,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             {
                 new PlanAudienceDto
                 {
-                    AudienceId = 11,
-                    Vpvh = 0.35
+                    AudienceId = 11
                 }
             };
 
@@ -820,13 +839,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             {
                 new PlanAudienceDto
                 {
-                    AudienceId = 11,
-                    Vpvh = 0.18
+                    AudienceId = 11
                 },
                 new PlanAudienceDto
                 {
-                    AudienceId = 11,
-                    Vpvh = 0.18
+                    AudienceId = 11
                 }
             };
 

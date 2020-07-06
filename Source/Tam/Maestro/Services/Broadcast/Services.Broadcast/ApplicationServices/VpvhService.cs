@@ -99,29 +99,20 @@ namespace Services.Broadcast.ApplicationServices
         public List<VpvhDefaultResponse> GetVpvhDefaults(VpvhDefaultsRequest request)
         {
             var standardDayparts = _DaypartDefaultRepository.GetAllDaypartDefaults();
-
-            // default VPVH type is FourBookAverage (last 4 available quarter average, including future quarters)
-            var lastFourQuartersVpvhData = _GetLastFourQuartersVpvhData(request.AudienceIds);
-            var result = _CalculateFourBookAverageVpvhPerDaypartPerAudience(lastFourQuartersVpvhData, standardDayparts, request.AudienceIds);
-
-            return result;
+            return _GetFourBookAverage(request.AudienceIds, standardDayparts);
         }
 
-        private List<VpvhQuarter> _GetLastFourQuartersVpvhData(List<int> audienceIds)
+        private List<VpvhQuarter> _GetLastFourQuartersVpvhData()
         {
             var quarterWithVpvhData = _VpvhRepository.GetQuartersWithVpvhData();
-
-            if (quarterWithVpvhData.Count < 4)
-            {
-                throw new Exception("There must VPVH data for at least 4 quarters");
-            }
-
             var lastFourQuarters = quarterWithVpvhData.OrderByDescending(x => x.Year).ThenByDescending(x => x.Quarter).Take(4).ToList();
+
+            if (!lastFourQuarters.Any())
+                return new List<VpvhQuarter>();
+
             var years = lastFourQuarters.Select(x => x.Year).Distinct();
             var quartersVpvhData = _VpvhRepository.GetQuartersByYears(years);
             var lastFourQuartersVpvhData = quartersVpvhData.Where(x => lastFourQuarters.Any(q => x.Year == q.Year && x.Quarter == q.Quarter)).ToList();
-
-            _EnsureVpvhDataExistsForQuartersAndAudiences(lastFourQuartersVpvhData, lastFourQuarters, audienceIds);
 
             return lastFourQuartersVpvhData;
         }
@@ -155,9 +146,22 @@ namespace Services.Broadcast.ApplicationServices
 
                 foreach (var standardDaypart in standardDayparts)
                 {
-                    if (_VpvhValueExtractors.TryGetValue(standardDaypart.VpvhCalculationSourceType, out var vpvhValueExtractor))
+                    if (!quartersForAudience.Any())
                     {
-                        var averageVpvh = quartersForAudience.Select(vpvhValueExtractor).Sum() / 4;
+                        // if VPVH for audience has never been uploaded, the user has to enter VPVH manually
+                        result.Add(new VpvhDefaultResponse
+                        {
+                            StandardDaypartId = standardDaypart.Id,
+                            AudienceId = audienceId,
+                            Vpvh = null,
+                            VpvhType = VpvhTypeEnum.Custom,
+                            StartingPoint = currentDate
+                        });
+                    }
+                    else if (_VpvhValueExtractors.TryGetValue(standardDaypart.VpvhCalculationSourceType, out var vpvhValueExtractor))
+                    {
+                        // if there is data only for 3 quarters, we calculate an avarage of 3 quarters
+                        var averageVpvh = quartersForAudience.Select(vpvhValueExtractor).Average();
 
                         result.Add(new VpvhDefaultResponse
                         {
@@ -178,32 +182,6 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
-        private void _EnsureVpvhDataExistsForQuartersAndAudiences(
-            List<VpvhQuarter> vpvhQuarters,
-            List<QuarterDto> targetQuarters,
-            List<int> audienceIds)
-        {
-            foreach (var audienceId in audienceIds)
-            {
-                // there is no need to validate VPVH for HH, it`s always 1
-                if (audienceId == BroadcastConstants.HouseholdAudienceId)
-                    continue;
-
-                var vpvhDataForAudience = vpvhQuarters.Where(x => x.Audience.Id == audienceId).ToList();
-
-                foreach (var targetQuarter in targetQuarters)
-                {
-                    var numberOfRecordsForQuarter = vpvhDataForAudience.Count(x => x.Quarter == targetQuarter.Quarter && x.Year == targetQuarter.Year);
-
-                    if (numberOfRecordsForQuarter == 0)
-                        throw new Exception($"There is no VPVH data. Audience id: {audienceId}, quarter: Q{targetQuarter.Quarter} {targetQuarter.Year}");
-
-                    if (numberOfRecordsForQuarter > 1)
-                        throw new Exception($"More than one VPVH record exists. Audience id: {audienceId}, quarter: Q{targetQuarter.Quarter} {targetQuarter.Year}");
-                }
-            }
-        }
-
         public List<VpvhQuarter> GetQuarters(QuarterDto quarter)
         {
             return _VpvhRepository.GetQuarters(quarter);
@@ -213,7 +191,6 @@ namespace Services.Broadcast.ApplicationServices
         {
             return _VpvhRepository.GetQuarter(audienceId, quarter.Year, quarter.Quarter);
         }
-
 
         public void LoadVpvhs(Stream fileStream, string fileName, string userName, DateTime createdDate)
         {
@@ -396,47 +373,70 @@ namespace Services.Broadcast.ApplicationServices
             var lastYearQuarter = _QuarterCalculationEngine.GetQuarterRangeByDate(currentDate.AddYears(-1));
 
             var previousVpvhQuarters = _VpvhRepository.GetQuarters(previousQuarter.Year, previousQuarter.Quarter, request.AudienceIds);
-            if (!previousVpvhQuarters.Any())
-                throw new Exception($"There is no VPVH data. Quarter: Q{previousQuarter.Quarter} {previousQuarter.Year}");
             var lastYearVpvhQuarters = _VpvhRepository.GetQuarters(lastYearQuarter.Year, lastYearQuarter.Quarter, request.AudienceIds);
-            if (!lastYearVpvhQuarters.Any())
-                throw new Exception($"There is no VPVH data. Quarter: Q{lastYearQuarter.Quarter} {lastYearQuarter.Year}");
-
-            var fourBookAverages = _GetFourBookAverage(request.AudienceIds, daypartDefault);
+            var fourBookAverages = _GetFourBookAverage(request.AudienceIds, new List<DaypartDefaultDto> { daypartDefault });
 
             var response = new List<VpvhResponse>();
+
             foreach (var audienceId in request.AudienceIds)
             {
-                var previousVpvhQuarter = previousVpvhQuarters.Single(v => v.Year == previousQuarter.Year && v.Quarter == previousQuarter.Quarter && v.Audience.Id == audienceId, $"There is no VPVH data. Audience id: {audienceId}, quarter: Q{previousQuarter.Quarter} {previousQuarter.Year}");
-                var lastYearVpvhQuarter = lastYearVpvhQuarters.Single(v => v.Year == lastYearQuarter.Year && v.Quarter == lastYearQuarter.Quarter && v.Audience.Id == audienceId, $"There is no VPVH data. Audience id: {audienceId}, quarter: Q{lastYearQuarter.Quarter} {lastYearQuarter.Year}");
+                // VPVH for HH is always 1
+                if (audienceId == BroadcastConstants.HouseholdAudienceId)
+                {
+                    response.Add(new VpvhResponse
+                    {
+                        AudienceId = audienceId,
+                        StartingPoint = currentDate,
+                        StandardDaypartId = daypartDefault.Id,
+                        LastYearVpvh = 1,
+                        PreviousQuarterVpvh = 1,
+                        FourBookAverageVpvh = 1,
+                        VpvhDefaultValue = VpvhTypeEnum.FourBookAverage,
+                        PreviousQuarter = new QuarterDto(previousQuarter.Quarter, previousQuarter.Year),
+                        LastYearQuarter = new QuarterDto(lastYearQuarter.Quarter, lastYearQuarter.Year)
+                    });
 
-                response.Add(new VpvhResponse
+                    continue;
+                }
+
+                var previousVpvhQuarter = previousVpvhQuarters.SingleOrDefault(v => v.Year == previousQuarter.Year && v.Quarter == previousQuarter.Quarter && v.Audience.Id == audienceId);
+                var lastYearVpvhQuarter = lastYearVpvhQuarters.SingleOrDefault(v => v.Year == lastYearQuarter.Year && v.Quarter == lastYearQuarter.Quarter && v.Audience.Id == audienceId);
+                var vpvhResponseForAudience = new VpvhResponse
                 {
                     AudienceId = audienceId,
                     StartingPoint = currentDate,
                     StandardDaypartId = daypartDefault.Id,
                     LastYearVpvh = _GetVpvhValue(lastYearVpvhQuarter, daypartDefault.VpvhCalculationSourceType),
                     PreviousQuarterVpvh = _GetVpvhValue(previousVpvhQuarter, daypartDefault.VpvhCalculationSourceType),
-                    FourBookAverageVpvh = fourBookAverages.Single(v => v.AudienceId == audienceId).Vpvh,
-                    VpvhDefaultValue = VpvhTypeEnum.FourBookAverage,
-                    PreviousQuarter = new QuarterDto(previousVpvhQuarter.Quarter, previousVpvhQuarter.Year),
-                    LastYearQuarter = new QuarterDto(lastYearVpvhQuarter.Quarter, lastYearVpvhQuarter.Year)
-                });
+                    FourBookAverageVpvh = fourBookAverages.SingleOrDefault(v => v.AudienceId == audienceId)?.Vpvh,
+                    PreviousQuarter = new QuarterDto(previousQuarter.Quarter, previousQuarter.Year),
+                    LastYearQuarter = new QuarterDto(lastYearQuarter.Quarter, lastYearQuarter.Year)
+                };
+
+                // if VPVH for audience has never been uploaded, the user has to enter VPVH manually
+                vpvhResponseForAudience.VpvhDefaultValue = vpvhResponseForAudience.FourBookAverageVpvh.HasValue ?
+                    VpvhTypeEnum.FourBookAverage :
+                    VpvhTypeEnum.Custom;
+
+                response.Add(vpvhResponseForAudience);
             }
 
             return response;
         }
 
-        private List<VpvhDefaultResponse> _GetFourBookAverage(List<int> audienceIds, DaypartDefaultDto daypartDefault)
+        private List<VpvhDefaultResponse> _GetFourBookAverage(List<int> audienceIds, List<DaypartDefaultDto> daypartDefaults)
         {
-            var lastFourQuartersVpvhData = _GetLastFourQuartersVpvhData(audienceIds);
-            var result = _CalculateFourBookAverageVpvhPerDaypartPerAudience(lastFourQuartersVpvhData, new List<DaypartDefaultDto> { daypartDefault }, audienceIds);
-
+            // last 4 available quarter average (we use all available quarters if there are less than 4 available), including future quarters
+            var lastFourQuartersVpvhData = _GetLastFourQuartersVpvhData();
+            var result = _CalculateFourBookAverageVpvhPerDaypartPerAudience(lastFourQuartersVpvhData, daypartDefaults, audienceIds);
             return result;
         }
 
-        private double _GetVpvhValue(VpvhQuarter vpvhQuarter, VpvhCalculationSourceTypeEnum vpvhCalculationSourceType)
+        private double? _GetVpvhValue(VpvhQuarter vpvhQuarter, VpvhCalculationSourceTypeEnum vpvhCalculationSourceType)
         {
+            if (vpvhQuarter == null)
+                return null;
+
             _VpvhValueExtractors.TryGetValue(vpvhCalculationSourceType, out var vpvhValueExtractor);
 
             return vpvhValueExtractor.Invoke(vpvhQuarter);

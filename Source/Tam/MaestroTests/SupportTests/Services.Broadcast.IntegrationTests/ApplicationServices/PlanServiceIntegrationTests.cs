@@ -1220,8 +1220,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto newPlan = _GetNewPlan();
                 newPlan.SecondaryAudiences = new List<PlanAudienceDto>()
                 {
-                    new PlanAudienceDto {AudienceId = 7, Type = Entities.Enums.AudienceTypeEnum.Nielsen, Vpvh = 0.435},
-                    new PlanAudienceDto {AudienceId = 6, Type = Entities.Enums.AudienceTypeEnum.Nielsen, Vpvh = 0.635}
+                    new PlanAudienceDto { AudienceId = 7, Type = AudienceTypeEnum.Nielsen },
+                    new PlanAudienceDto { AudienceId = 6, Type = AudienceTypeEnum.Nielsen }
                 };
                 newPlan.Dayparts[0].VpvhForAudiences.Add(new PlanDaypartVpvhForAudienceDto
                 {

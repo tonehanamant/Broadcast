@@ -540,64 +540,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
         }
 
-        private static PlanDto _GetNewPlan()
-        {
-            return new PlanDto
-            {
-                CampaignId = 1,
-                Equivalized = true,
-                Name = "New Plan",
-                ProductId = 1,
-                CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 50 } },
-                Status = PlanStatusEnum.Working,
-                FlightStartDate = new DateTime(2019, 1, 1),
-                FlightEndDate = new DateTime(2019, 7, 31),
-                FlightNotes = "Sample notes",
-                FlightHiatusDays = new List<DateTime>
-                {
-                    new DateTime(2019,1,20),
-                    new DateTime(2019,4,15)
-                },
-                AudienceId = 31,        //HH
-                AudienceType = AudienceTypeEnum.Nielsen,
-                HUTBookId = 437,
-                PostingType = PostingTypeEnum.NTI,
-                ShareBookId = 437,
-                Budget = 100m,
-                TargetCPM = 12m,
-                TargetCPP = 200951583.9999m,
-                TargetImpressions = 100d,
-                TargetRatingPoints = 6d,
-                CoverageGoalPercent = 80.5,
-                Currency = PlanCurrenciesEnum.Impressions,
-                GoalBreakdownType = PlanGoalBreakdownTypeEnum.EvenDelivery,
-                AvailableMarkets = new List<PlanAvailableMarketDto>
-                {
-                    new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 48, Rank = 1, ShareOfVoicePercent = 22.2, Market = "Portland-Auburn"},
-                    new PlanAvailableMarketDto { MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUS = 32.5, Rank = 2, ShareOfVoicePercent = 34.5, Market = "New York"}
-                },
-                BlackoutMarkets = new List<PlanBlackoutMarketDto>
-                {
-                    new PlanBlackoutMarketDto {MarketCode = 123, MarketCoverageFileId = 1, PercentageOfUS = 5.5, Rank = 5, Market = "Burlington-Plattsburgh" },
-                    new PlanBlackoutMarketDto {MarketCode = 234, MarketCoverageFileId = 1, PercentageOfUS = 2.5, Rank = 8, Market = "Amarillo" },
-                },
-                ModifiedBy = "Integration test",
-                ModifiedDate = new DateTime(2019, 01, 12, 12, 30, 29),
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto{ DaypartCodeId = 2, StartTimeSeconds = 0, EndTimeSeconds = 2000, WeightingGoalPercent = 28.0 },
-                    new PlanDaypartDto{ DaypartCodeId = 11, StartTimeSeconds = 1500, EndTimeSeconds = 2788, WeightingGoalPercent = 33.2 }
-                },
-                Vpvh = 0.101,
-                HHUniverse = 1000000,
-                HHImpressions = 10000,
-                HHCPM = 0.01m,
-                HHRatingPoints = 1,
-                HHCPP = 10000,
-                TargetUniverse = 3000000,
-            };
-        }
-
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
@@ -987,6 +929,30 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ExportType = CampaignExportTypeEnum.Proposal,
                     SelectedPlans = new List<int> { 2541, 2579 }
                 });
+
+                Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void CampaignExport_30SecEquivalizedAndNot()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+
+                var reportData = _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
+                {
+                    CampaignId = 652,
+                    ExportType = CampaignExportTypeEnum.Proposal,
+                    SelectedPlans = new List<int> { 2191, 2192 }
+                });
+
+                _WriteFileToLocalFileSystem(reportData, "CampaignExport_30SecEquivalizedAndNot.xlsx");
 
                 Assert.IsTrue(DateTime.Now.ToString("MM/dd/yy").Equals(reportData.CreatedDate));
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(reportData, _GetJsonSettingsForCampaignExport()));

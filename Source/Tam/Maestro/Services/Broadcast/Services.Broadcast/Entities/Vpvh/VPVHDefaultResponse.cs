@@ -9,7 +9,7 @@ namespace Services.Broadcast.Entities.Vpvh
 
         public int AudienceId { get; set; }
 
-        public double Vpvh { get; set; }
+        public double? Vpvh { get; set; }
 
         public VpvhTypeEnum VpvhType { get; set; }
 
