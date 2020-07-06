@@ -170,7 +170,7 @@ namespace Services.Broadcast.Validators
                 throw new Exception("Total impressions must be more than zero");
             }
 
-            _ValidateWeeklyBreakdownDeliveryTypeAndWeeks(request.DeliveryType, request.Weeks);
+            _ValidateWeeklyBreakdownDeliveryTypeAndWeeks(request.DeliveryType, request.Weeks, request.Dayparts);
         }
 
         private void _ValidateFlightAndHiatus(PlanDto plan)
@@ -426,12 +426,28 @@ namespace Services.Broadcast.Validators
             }
             //We do not validate percentages or rating points since those are all derived from the impressions
 
-            _ValidateWeeklyBreakdownDeliveryTypeAndWeeks(plan.GoalBreakdownType, plan.WeeklyBreakdownWeeks);
+            _ValidateWeeklyBreakdownDeliveryTypeAndWeeks(plan.GoalBreakdownType, plan.WeeklyBreakdownWeeks, plan.Dayparts);
         }
 
-        private void _ValidateWeeklyBreakdownDeliveryTypeAndWeeks(PlanGoalBreakdownTypeEnum deliveryType, List<WeeklyBreakdownWeek> weeklyBreakdown)
+        private void _ValidateWeeklyBreakdownDeliveryTypeAndWeeks(PlanGoalBreakdownTypeEnum deliveryType, List<WeeklyBreakdownWeek> weeklyBreakdown, List<PlanDaypartDto> dayparts)
         {
-            if (deliveryType == PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength)
+            if (deliveryType == PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart)
+            {
+                if (dayparts?.Any() != true)
+                    throw new Exception("For the chosen delivery type, dayparts are required");
+
+                if (weeklyBreakdown.Any(x => !x.DaypartCodeId.HasValue))
+                    throw new Exception("For the chosen delivery type, each weekly breakdown row must have daypart associated with it");
+
+                var weeklyBreakdownHasSeveralRowsWithTheSameWeekAndDaypart = weeklyBreakdown
+                   .GroupBy(x => new { x.MediaWeekId, x.DaypartCodeId })
+                   .Select(x => x.Count())
+                   .Any(x => x > 1);
+
+                if (weeklyBreakdownHasSeveralRowsWithTheSameWeekAndDaypart)
+                    throw new Exception("For the chosen delivery type, each week and daypart combination must be unique");
+            }
+            else if (deliveryType == PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength)
             {
                 if (weeklyBreakdown.Any(x => !x.SpotLengthId.HasValue))
                     throw new Exception("For the chosen delivery type, each weekly breakdown row must have spot length associated with it");
@@ -486,7 +502,7 @@ namespace Services.Broadcast.Validators
 
         public void ValidateImpressionsPerUnit(double impressionsPerUnit, double totalImpressions)
         {
-            if(impressionsPerUnit <= 0 || impressionsPerUnit > totalImpressions)
+            if (impressionsPerUnit <= 0 || impressionsPerUnit > totalImpressions)
             {
                 throw new Exception(INVALID_IMPRESSIONS_PER_UNIT);
             }

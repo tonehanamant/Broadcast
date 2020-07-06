@@ -1,0 +1,494 @@
+{
+  "AudienceId": 31,
+  "AudienceType": 1,
+  "AvailableMarkets": [
+    {
+      "Market": "Portland-Auburn",
+      "MarketCode": 100,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 48.0,
+      "Rank": 1,
+      "ShareOfVoicePercent": 22.2
+    },
+    {
+      "Market": "New York",
+      "MarketCode": 101,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 32.5,
+      "Rank": 2,
+      "ShareOfVoicePercent": 34.5
+    }
+  ],
+  "AvailableMarketsWithSovCount": 2,
+  "BlackoutMarketCount": 2,
+  "BlackoutMarkets": [
+    {
+      "Market": "Burlington-Plattsburgh",
+      "MarketCode": 123,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 5.5,
+      "Rank": 5
+    },
+    {
+      "Market": "Amarillo",
+      "MarketCode": 234,
+      "MarketCoverageFileId": 1,
+      "PercentageOfUS": 2.5,
+      "Rank": 8
+    }
+  ],
+  "BlackoutMarketTotalUsCoveragePercent": 8.0,
+  "Budget": 500.0000,
+  "CampaignId": 1,
+  "CampaignName": "Test Campaign 1",
+  "CoverageGoalPercent": 80.5,
+  "CreativeLengths": [
+    {
+      "SpotLengthId": 1,
+      "Weight": 50
+    },
+    {
+      "SpotLengthId": 2,
+      "Weight": 50
+    }
+  ],
+  "Currency": 1,
+  "Dayparts": [
+    {
+      "DaypartCodeId": 15,
+      "DaypartTypeId": 2,
+      "EndTimeSeconds": 2000,
+      "IsEndTimeModified": true,
+      "IsStartTimeModified": true,
+      "Restrictions": {
+        "AffiliateRestrictions": {
+          "Affiliates": [
+            {
+              "Display": "FOX",
+              "Id": 20
+            }
+          ],
+          "ContainType": 2
+        },
+        "GenreRestrictions": {
+          "ContainType": 1,
+          "Genres": [
+            {
+              "Display": "Horror",
+              "Id": 25
+            }
+          ]
+        },
+        "ProgramRestrictions": {
+          "ContainType": 1,
+          "Programs": [
+            {
+              "ContentRating": "PG-13",
+              "Genre": {
+                "Display": "Horror",
+                "Id": 25
+              },
+              "Name": "Young Sheldon"
+            }
+          ]
+        },
+        "ShowTypeRestrictions": {
+          "ContainType": 2,
+          "ShowTypes": [
+            {
+              "Display": "Mini-Movie",
+              "Id": 1
+            }
+          ]
+        }
+      },
+      "StartTimeSeconds": 0,
+      "VpvhForAudiences": [
+        {
+          "AudienceId": 31,
+          "StartingPoint": "2019-01-12T12:30:29",
+          "Vpvh": 0.8,
+          "VpvhType": 2
+        }
+      ],
+      "WeightingGoalPercent": 40.0
+    },
+    {
+      "DaypartCodeId": 20,
+      "DaypartTypeId": 1,
+      "EndTimeSeconds": 2788,
+      "IsEndTimeModified": true,
+      "IsStartTimeModified": true,
+      "Restrictions": {
+        "AffiliateRestrictions": {
+          "Affiliates": [],
+          "ContainType": 2
+        },
+        "GenreRestrictions": {
+          "ContainType": 1,
+          "Genres": [
+            {
+              "Display": "Game Show",
+              "Id": 20
+            }
+          ]
+        },
+        "ProgramRestrictions": {
+          "ContainType": 2,
+          "Programs": [
+            {
+              "ContentRating": "G",
+              "Genre": {
+                "Display": "Horror",
+                "Id": 25
+              },
+              "Name": "Teletubbies"
+            }
+          ]
+        },
+        "ShowTypeRestrictions": {
+          "ContainType": 2,
+          "ShowTypes": [
+            {
+              "Display": "Miscellaneous",
+              "Id": 2
+            }
+          ]
+        }
+      },
+      "StartTimeSeconds": 1500,
+      "VpvhForAudiences": [
+        {
+          "AudienceId": 31,
+          "StartingPoint": "2019-01-12T12:30:29",
+          "Vpvh": 0.9,
+          "VpvhType": 4
+        }
+      ],
+      "WeightingGoalPercent": 33.0
+    }
+  ],
+  "Equivalized": true,
+  "FlightDays": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "FlightEndDate": "2020-03-29T00:00:00",
+  "FlightHiatusDays": [],
+  "FlightNotes": "Sample notes",
+  "FlightStartDate": "2020-02-24T00:00:00",
+  "GoalBreakdownType": 4,
+  "HHCPM": 0.0837,
+  "HHCPP": 102.0408,
+  "HHImpressions": 5972.222,
+  "HHRatingPoints": 4.9,
+  "HHUniverse": 120700000.0,
+  "HUTBookId": 437,
+  "ImpressionsPerUnit": 100.0,
+  "IsAduEnabled": true,
+  "IsDraft": false,
+  "IsPricingModelRunning": false,
+  "ModifiedBy": "integration_test",
+  "ModifiedDate": "2020-01-01T00:00:00",
+  "Name": "New Plan",
+  "PostingType": 2,
+  "PricingParameters": {
+    "AdjustedBudget": 400.0000,
+    "AdjustedCPM": 0.0800,
+    "Budget": 500.0000,
+    "CompetitionFactor": null,
+    "CPM": 0.1000,
+    "CPP": 12.0000,
+    "Currency": 1,
+    "DeliveryImpressions": 5000.0,
+    "DeliveryRatingPoints": 4.1,
+    "InflationFactor": null,
+    "InventorySourcePercentages": [
+      {
+        "Id": 10,
+        "Name": "ABC O&O",
+        "Percentage": 0
+      },
+      {
+        "Id": 5,
+        "Name": "CNN",
+        "Percentage": 0
+      },
+      {
+        "Id": 12,
+        "Name": "KATZ",
+        "Percentage": 0
+      },
+      {
+        "Id": 7,
+        "Name": "LilaMax",
+        "Percentage": 0
+      },
+      {
+        "Id": 11,
+        "Name": "NBC O&O",
+        "Percentage": 0
+      },
+      {
+        "Id": 6,
+        "Name": "Sinclair",
+        "Percentage": 0
+      },
+      {
+        "Id": 3,
+        "Name": "TVB",
+        "Percentage": 0
+      }
+    ],
+    "InventorySourceTypePercentages": [
+      {
+        "Id": 4,
+        "Name": "Syndication",
+        "Percentage": 0
+      },
+      {
+        "Id": 5,
+        "Name": "Diginet",
+        "Percentage": 0
+      }
+    ],
+    "JobId": null,
+    "Margin": 20.0,
+    "MarketGroup": 1,
+    "MaxCpm": null,
+    "MinCpm": null,
+    "ProprietaryBlend": 0.0,
+    "UnitCaps": 1,
+    "UnitCapsType": 1
+  },
+  "ProductId": 1,
+  "SecondaryAudiences": [],
+  "ShareBookId": 437,
+  "SpotLengthId": 1,
+  "Status": 1,
+  "TargetCPM": 0.1000,
+  "TargetCPP": 12.0000,
+  "TargetImpressions": 5000.0,
+  "TargetRatingPoints": 4.1,
+  "TargetUniverse": 111222.0,
+  "TotalActiveDays": 35,
+  "TotalHiatusDays": 0,
+  "TotalShareOfVoice": 100.0,
+  "VersionNumber": 1,
+  "Vpvh": 0.83720933,
+  "WeeklyBreakdownTotals": {
+    "TotalActiveDays": 35,
+    "TotalBudget": 500.0000,
+    "TotalImpressions": 5000.0,
+    "TotalImpressionsPercentage": 100.0,
+    "TotalRatingPoints": 4.1,
+    "TotalUnits": 50.0
+  },
+  "WeeklyBreakdownWeeks": [
+    {
+      "ActiveDays": "M-Su",
+      "AduImpressions": 0.0,
+      "DaypartCodeId": 15,
+      "EndDate": "2020-03-01T00:00:00",
+      "IsUpdated": false,
+      "MediaWeekId": 844,
+      "NumberOfActiveDays": 7,
+      "PercentageOfWeek": 60.0,
+      "SpotLengthId": null,
+      "StartDate": "2020-02-24T00:00:00",
+      "UnitImpressions": 0.0,
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 60.0000,
+      "WeeklyImpressions": 600.0,
+      "WeeklyImpressionsPercentage": 12.0,
+      "WeeklyRatings": 0.4,
+      "WeeklyUnits": 6.0,
+      "WeekNumber": 1
+    },
+    {
+      "ActiveDays": "M-Su",
+      "AduImpressions": 0.0,
+      "DaypartCodeId": 20,
+      "EndDate": "2020-03-01T00:00:00",
+      "IsUpdated": false,
+      "MediaWeekId": 844,
+      "NumberOfActiveDays": 7,
+      "PercentageOfWeek": 40.0,
+      "SpotLengthId": null,
+      "StartDate": "2020-02-24T00:00:00",
+      "UnitImpressions": 0.0,
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 40.0000,
+      "WeeklyImpressions": 400.0,
+      "WeeklyImpressionsPercentage": 8.0,
+      "WeeklyRatings": 0.3,
+      "WeeklyUnits": 4.0,
+      "WeekNumber": 1
+    },
+    {
+      "ActiveDays": "M-Su",
+      "AduImpressions": 0.0,
+      "DaypartCodeId": 15,
+      "EndDate": "2020-03-08T00:00:00",
+      "IsUpdated": false,
+      "MediaWeekId": 845,
+      "NumberOfActiveDays": 7,
+      "PercentageOfWeek": 60.0,
+      "SpotLengthId": null,
+      "StartDate": "2020-03-02T00:00:00",
+      "UnitImpressions": 0.0,
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 60.0000,
+      "WeeklyImpressions": 600.0,
+      "WeeklyImpressionsPercentage": 12.0,
+      "WeeklyRatings": 0.4,
+      "WeeklyUnits": 6.0,
+      "WeekNumber": 2
+    },
+    {
+      "ActiveDays": "M-Su",
+      "AduImpressions": 0.0,
+      "DaypartCodeId": 20,
+      "EndDate": "2020-03-08T00:00:00",
+      "IsUpdated": false,
+      "MediaWeekId": 845,
+      "NumberOfActiveDays": 7,
+      "PercentageOfWeek": 40.0,
+      "SpotLengthId": null,
+      "StartDate": "2020-03-02T00:00:00",
+      "UnitImpressions": 0.0,
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 40.0000,
+      "WeeklyImpressions": 400.0,
+      "WeeklyImpressionsPercentage": 8.0,
+      "WeeklyRatings": 0.3,
+      "WeeklyUnits": 4.0,
+      "WeekNumber": 2
+    },
+    {
+      "ActiveDays": "M-Su",
+      "AduImpressions": 0.0,
+      "DaypartCodeId": 15,
+      "EndDate": "2020-03-15T00:00:00",
+      "IsUpdated": false,
+      "MediaWeekId": 846,
+      "NumberOfActiveDays": 7,
+      "PercentageOfWeek": 60.0,
+      "SpotLengthId": null,
+      "StartDate": "2020-03-09T00:00:00",
+      "UnitImpressions": 0.0,
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 60.0000,
+      "WeeklyImpressions": 600.0,
+      "WeeklyImpressionsPercentage": 12.0,
+      "WeeklyRatings": 0.4,
+      "WeeklyUnits": 6.0,
+      "WeekNumber": 3
+    },
+    {
+      "ActiveDays": "M-Su",
+      "AduImpressions": 0.0,
+      "DaypartCodeId": 20,
+      "EndDate": "2020-03-15T00:00:00",
+      "IsUpdated": false,
+      "MediaWeekId": 846,
+      "NumberOfActiveDays": 7,
+      "PercentageOfWeek": 40.0,
+      "SpotLengthId": null,
+      "StartDate": "2020-03-09T00:00:00",
+      "UnitImpressions": 0.0,
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 40.0000,
+      "WeeklyImpressions": 400.0,
+      "WeeklyImpressionsPercentage": 8.0,
+      "WeeklyRatings": 0.3,
+      "WeeklyUnits": 4.0,
+      "WeekNumber": 3
+    },
+    {
+      "ActiveDays": "M-Su",
+      "AduImpressions": 0.0,
+      "DaypartCodeId": 15,
+      "EndDate": "2020-03-22T00:00:00",
+      "IsUpdated": false,
+      "MediaWeekId": 847,
+      "NumberOfActiveDays": 7,
+      "PercentageOfWeek": 60.0,
+      "SpotLengthId": null,
+      "StartDate": "2020-03-16T00:00:00",
+      "UnitImpressions": 0.0,
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 60.0000,
+      "WeeklyImpressions": 600.0,
+      "WeeklyImpressionsPercentage": 12.0,
+      "WeeklyRatings": 0.4,
+      "WeeklyUnits": 6.0,
+      "WeekNumber": 4
+    },
+    {
+      "ActiveDays": "M-Su",
+      "AduImpressions": 0.0,
+      "DaypartCodeId": 20,
+      "EndDate": "2020-03-22T00:00:00",
+      "IsUpdated": false,
+      "MediaWeekId": 847,
+      "NumberOfActiveDays": 7,
+      "PercentageOfWeek": 40.0,
+      "SpotLengthId": null,
+      "StartDate": "2020-03-16T00:00:00",
+      "UnitImpressions": 0.0,
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 40.0000,
+      "WeeklyImpressions": 400.0,
+      "WeeklyImpressionsPercentage": 8.0,
+      "WeeklyRatings": 0.3,
+      "WeeklyUnits": 4.0,
+      "WeekNumber": 4
+    },
+    {
+      "ActiveDays": "M-Su",
+      "AduImpressions": 0.0,
+      "DaypartCodeId": 15,
+      "EndDate": "2020-03-29T00:00:00",
+      "IsUpdated": false,
+      "MediaWeekId": 848,
+      "NumberOfActiveDays": 7,
+      "PercentageOfWeek": 60.0,
+      "SpotLengthId": null,
+      "StartDate": "2020-03-23T00:00:00",
+      "UnitImpressions": 0.0,
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 60.0000,
+      "WeeklyImpressions": 600.0,
+      "WeeklyImpressionsPercentage": 12.0,
+      "WeeklyRatings": 0.4,
+      "WeeklyUnits": 6.0,
+      "WeekNumber": 5
+    },
+    {
+      "ActiveDays": "M-Su",
+      "AduImpressions": 0.0,
+      "DaypartCodeId": 20,
+      "EndDate": "2020-03-29T00:00:00",
+      "IsUpdated": false,
+      "MediaWeekId": 848,
+      "NumberOfActiveDays": 7,
+      "PercentageOfWeek": 40.0,
+      "SpotLengthId": null,
+      "StartDate": "2020-03-23T00:00:00",
+      "UnitImpressions": 0.0,
+      "WeeklyAdu": 0,
+      "WeeklyBudget": 40.0000,
+      "WeeklyImpressions": 400.0,
+      "WeeklyImpressionsPercentage": 8.0,
+      "WeeklyRatings": 0.3,
+      "WeeklyUnits": 4.0,
+      "WeekNumber": 5
+    }
+  ]
+}

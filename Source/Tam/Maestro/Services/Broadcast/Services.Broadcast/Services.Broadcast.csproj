@@ -408,6 +408,7 @@
     <Compile Include="Entities\CampaignQuarterDto.cs" />
     <Compile Include="Entities\Day.cs" />
     <Compile Include="Entities\DaypartCleanupDto.cs" />
+    <Compile Include="Entities\DaypartDefaultWeightingGoal.cs" />
     <Compile Include="Entities\Enums\BroadcastDayOfWeek.cs" />
     <Compile Include="Entities\Enums\VpvhCalculationSourceTypeEnum.cs" />
     <Compile Include="Entities\Enums\VpvhTypeEnum.cs" />

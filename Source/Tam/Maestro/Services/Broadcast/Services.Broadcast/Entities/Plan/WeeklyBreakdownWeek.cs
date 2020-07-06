@@ -64,6 +64,21 @@ namespace Services.Broadcast.Entities.Plan
         public double Units { get; set; }
     }
 
+    public class WeeklyBreakdownByWeekByDaypart
+    {
+        public int WeekNumber { get; set; }
+        public int MediaWeekId { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public int NumberOfActiveDays { get; set; }
+        public string ActiveDays { get; set; }
+        public double Impressions { get; set; }
+        public decimal Budget { get; set; }
+        public int DaypartCodeId { get; set; }
+        public int Adu { get; set; }
+        public double Units { get; set; }
+    }
+
     public class WeeklyBreakdownByStandardDaypart
     {
         public double Impressions { get; set; }

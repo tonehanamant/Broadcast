@@ -1,0 +1,54 @@
+[
+  {
+    "ActiveDays": "M,Tu,W,Th,F",
+    "Adu": 6,
+    "Budget": 300.0,
+    "DaypartCodeId": 1,
+    "EndDate": "2020-05-10T00:00:00",
+    "Impressions": 2500.0,
+    "MediaWeekId": 502,
+    "NumberOfActiveDays": 5,
+    "StartDate": "2020-05-04T00:00:00",
+    "Units": 0.0,
+    "WeekNumber": 3
+  },
+  {
+    "ActiveDays": "M,Tu,W,Th",
+    "Adu": 0,
+    "Budget": 70.0,
+    "DaypartCodeId": 1,
+    "EndDate": "2020-05-03T00:00:00",
+    "Impressions": 800.0,
+    "MediaWeekId": 501,
+    "NumberOfActiveDays": 4,
+    "StartDate": "2020-04-27T00:00:00",
+    "Units": 0.0,
+    "WeekNumber": 2
+  },
+  {
+    "ActiveDays": "M,Tu,W",
+    "Adu": 3,
+    "Budget": 30.0,
+    "DaypartCodeId": 1,
+    "EndDate": "2020-04-26T00:00:00",
+    "Impressions": 500.0,
+    "MediaWeekId": 500,
+    "NumberOfActiveDays": 3,
+    "StartDate": "2020-04-20T00:00:00",
+    "Units": 0.0,
+    "WeekNumber": 1
+  },
+  {
+    "ActiveDays": "M,Tu,W",
+    "Adu": 6,
+    "Budget": 60.0,
+    "DaypartCodeId": 2,
+    "EndDate": "2020-04-26T00:00:00",
+    "Impressions": 1000.0,
+    "MediaWeekId": 500,
+    "NumberOfActiveDays": 3,
+    "StartDate": "2020-04-20T00:00:00",
+    "Units": 0.0,
+    "WeekNumber": 1
+  }
+]

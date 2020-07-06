@@ -184,6 +184,208 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void SavePlan_GoalBreakdownType_ByWeekByDaypart()
+        {
+            var newPlan = _GetNewPlan();
+            newPlan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart;
+            newPlan.FlightStartDate = new DateTime(2020, 2, 24);
+            newPlan.FlightEndDate = new DateTime(2020, 3, 29);
+            newPlan.FlightHiatusDays = new List<DateTime> { };
+            newPlan.FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            newPlan.Dayparts.RemoveAt(2);
+            newPlan.Dayparts[0].DaypartCodeId = 15;
+            newPlan.Dayparts[0].WeightingGoalPercent = 60;
+            newPlan.Dayparts[1].DaypartCodeId = 20;
+            newPlan.Dayparts[0].WeightingGoalPercent = 40;
+            newPlan.TargetImpressions = 5000;
+            newPlan.ImpressionsPerUnit = 100;
+            newPlan.TargetRatingPoints = 4.1;
+            newPlan.TargetCPM = 0.1m;
+            newPlan.Budget = 500;
+            newPlan.WeeklyBreakdownTotals = new WeeklyBreakdownTotals
+            {
+                TotalActiveDays = 35,
+                TotalBudget = 500,
+                TotalImpressions = 5000,
+                TotalImpressionsPercentage = 100,
+                TotalRatingPoints = 4.1,
+                TotalUnits = 50
+            };
+            newPlan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek
+                    {
+                        ActiveDays = "M-Su",
+                        DaypartCodeId = 15,
+                        EndDate = new DateTime(2020, 3, 1),
+                        MediaWeekId = 844,
+                        NumberOfActiveDays = 7,
+                        StartDate = new DateTime(2020,2,24),
+                        PercentageOfWeek = 60,
+                        WeeklyBudget = 60,
+                        WeeklyImpressions = 600,
+                        WeeklyImpressionsPercentage = 12,
+                        WeeklyRatings = 0.48,
+                        WeeklyUnits = 6,
+                        WeekNumber = 1
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        ActiveDays = "M-Su",
+                        DaypartCodeId = 20,
+                        EndDate = new DateTime(2020, 3, 1),
+                        MediaWeekId = 844,
+                        NumberOfActiveDays = 7,
+                        StartDate = new DateTime(2020,2,24),
+                        PercentageOfWeek = 40,
+                        WeeklyBudget = 40,
+                        WeeklyImpressions = 400,
+                        WeeklyImpressionsPercentage = 8,
+                        WeeklyRatings = 0.32,
+                        WeeklyUnits = 4,
+                        WeekNumber = 1
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        ActiveDays = "M-Su",
+                        DaypartCodeId = 15,
+                        EndDate = new DateTime(2020, 3, 8),
+                        MediaWeekId = 845,
+                        NumberOfActiveDays = 7,
+                        StartDate = new DateTime(2020,3,2),
+                        PercentageOfWeek = 60,
+                        WeeklyBudget = 60,
+                        WeeklyImpressions = 600,
+                        WeeklyImpressionsPercentage = 12,
+                        WeeklyRatings = 0.48,
+                        WeeklyUnits = 6,
+                        WeekNumber = 2
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        ActiveDays = "M-Su",
+                        DaypartCodeId = 20,
+                        EndDate = new DateTime(2020, 3, 8),
+                        MediaWeekId = 845,
+                        NumberOfActiveDays = 7,
+                        StartDate = new DateTime(2020,3,2),
+                        PercentageOfWeek = 40,
+                        WeeklyBudget = 40,
+                        WeeklyImpressions = 400,
+                        WeeklyImpressionsPercentage = 8,
+                        WeeklyRatings = 0.32,
+                        WeeklyUnits = 4,
+                        WeekNumber = 2
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        ActiveDays = "M-Su",
+                        DaypartCodeId = 15,
+                        EndDate = new DateTime(2020, 3, 15),
+                        MediaWeekId = 846,
+                        NumberOfActiveDays = 7,
+                        StartDate = new DateTime(2020,3,9),
+                        PercentageOfWeek = 60,
+                        WeeklyBudget = 60,
+                        WeeklyImpressions = 600,
+                        WeeklyImpressionsPercentage = 12,
+                        WeeklyRatings = 0.48,
+                        WeeklyUnits = 6,
+                        WeekNumber = 3
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        ActiveDays = "M-Su",
+                        DaypartCodeId = 20,
+                        EndDate = new DateTime(2020, 3, 15),
+                        MediaWeekId = 846,
+                        NumberOfActiveDays = 7,
+                        StartDate = new DateTime(2020,3,9),
+                        PercentageOfWeek = 40,
+                        WeeklyBudget = 40,
+                        WeeklyImpressions = 400,
+                        WeeklyImpressionsPercentage = 8,
+                        WeeklyRatings = 0.32,
+                        WeeklyUnits = 4,
+                        WeekNumber = 3
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        ActiveDays = "M-Su",
+                        DaypartCodeId = 15,
+                        EndDate = new DateTime(2020, 3, 22),
+                        MediaWeekId = 847,
+                        NumberOfActiveDays = 7,
+                        StartDate = new DateTime(2020,3,16),
+                        PercentageOfWeek = 60,
+                        WeeklyBudget = 60,
+                        WeeklyImpressions = 600,
+                        WeeklyImpressionsPercentage = 12,
+                        WeeklyRatings = 0.48,
+                        WeeklyUnits = 6,
+                        WeekNumber = 4
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        ActiveDays = "M-Su",
+                        DaypartCodeId = 20,
+                        EndDate = new DateTime(2020, 3, 22),
+                        MediaWeekId = 847,
+                        NumberOfActiveDays = 7,
+                        StartDate = new DateTime(2020,3,16),
+                        PercentageOfWeek = 40,
+                        WeeklyBudget = 40,
+                        WeeklyImpressions = 400,
+                        WeeklyImpressionsPercentage = 8,
+                        WeeklyRatings = 0.32,
+                        WeeklyUnits = 4,
+                        WeekNumber = 4
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        ActiveDays = "M-Su",
+                        DaypartCodeId = 15,
+                        EndDate = new DateTime(2020, 3, 29),
+                        MediaWeekId = 848,
+                        NumberOfActiveDays = 7,
+                        StartDate = new DateTime(2020,3,23),
+                       PercentageOfWeek = 60,
+                        WeeklyBudget = 60,
+                        WeeklyImpressions = 600,
+                        WeeklyImpressionsPercentage = 12,
+                        WeeklyRatings = 0.48,
+                        WeeklyUnits = 6,
+                        WeekNumber = 5
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        ActiveDays = "M-Su",
+                        DaypartCodeId = 20,
+                        EndDate = new DateTime(2020, 3, 29),
+                        MediaWeekId = 848,
+                        NumberOfActiveDays = 7,
+                        StartDate = new DateTime(2020,3,23),
+                       PercentageOfWeek = 40,
+                        WeeklyBudget = 40,
+                        WeeklyImpressions = 400,
+                        WeeklyImpressionsPercentage = 8,
+                        WeeklyRatings = 0.32,
+                        WeeklyUnits = 4,
+                        WeekNumber = 5
+                    },
+                };
+
+            var nowDate = new DateTime(2020, 01, 01);
+            var username = "integration_test";
+            var newPlanId = _PlanService.SavePlan(newPlan, username, nowDate);
+
+            var savedPlan = _PlanService.GetPlan(newPlanId);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedPlan, _GetJsonSettings()));
+        }
+
+        [Test]
         [Category("long_running")]
         public void DeleteDraft()
         {
@@ -290,7 +492,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 //save draft
                 PlanDto plan = _PlanService.GetPlan(newPlanId);
-                plan.IsDraft = true;                
+                plan.IsDraft = true;
                 _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01));
 
                 var planHistory = _PlanService.GetPlanHistory(newPlanId);
@@ -559,7 +761,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 PlanDto newPlan = _PlanService.GetPlan(2190);
                 newPlan.WeeklyBreakdownWeeks = newPlan.WeeklyBreakdownWeeks.OrderBy(x => x.WeekNumber).ToList();
-                
+
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(newPlan), _GetJsonSettings()));
             }
         }
@@ -1674,6 +1876,150 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
                     ImpressionsPerUnit = 100
                 });
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
+        [Test]
+        [Category("short_running")]
+        public void Plan_WeeklyBreakdown_CustomByWeekByDaypart_WithoutDayparts()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new WeeklyBreakdownRequest
+                {
+                    FlightEndDate = new DateTime(2019, 03, 05),
+                    FlightStartDate = new DateTime(2019, 02, 01),
+                    FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                    DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart,
+                    FlightHiatusDays = new List<DateTime>(),
+                    TotalImpressions = 10000,
+                    TotalRatings = 0.000907291831869388,
+                    WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                    ImpressionsPerUnit = 100
+                };
+
+                var exception = Assert.Throws<Exception>(() => _PlanService.CalculatePlanWeeklyGoalBreakdown(request));
+
+                Assert.That(exception.Message, Is.EqualTo("For the chosen delivery type, dayparts are required"));
+            }
+        }
+
+        [Test]
+        [Category("short_running")]
+        [UseReporter(typeof(DiffReporter))]
+        public void Plan_WeeklyBreakdown_CustomByWeekByDaypart_WithoutWeeks()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
+                {
+                    FlightEndDate = new DateTime(2019, 03, 05),
+                    FlightStartDate = new DateTime(2019, 02, 01),
+                    FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                    DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart,
+                    FlightHiatusDays = new List<DateTime>(),
+                    TotalImpressions = 10000,
+                    TotalRatings = 10,
+                    WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                    ImpressionsPerUnit = 100,
+                    Dayparts = new List<PlanDaypartDto>
+                    {
+                        new PlanDaypartDto{ DaypartCodeId = 1, WeightingGoalPercent = 60 },
+                        new PlanDaypartDto { DaypartCodeId = 2 }
+                    }
+                });
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
+        [Test]
+        [Category("short_running")]
+        [UseReporter(typeof(DiffReporter))]
+        public void Plan_WeeklyBreakdown_CustomByWeekByDaypart_WithWeeks()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new WeeklyBreakdownRequest
+                {
+                    FlightEndDate = new DateTime(2019, 03, 05),
+                    FlightStartDate = new DateTime(2019, 02, 01),
+                    FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                    DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart,
+                    FlightHiatusDays = new List<DateTime>(),
+                    TotalImpressions = 10000,
+                    TotalRatings = 10,
+                    WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                    ImpressionsPerUnit = 100,
+                    Dayparts = new List<PlanDaypartDto>
+                    {
+                        new PlanDaypartDto{ DaypartCodeId = 1, WeightingGoalPercent = 60 },
+                        new PlanDaypartDto { DaypartCodeId = 2 }
+                    },
+                    Weeks = new List<WeeklyBreakdownWeek>
+                    {
+                        new WeeklyBreakdownWeek
+                        {
+                            ActiveDays = "F-Su",
+                            DaypartCodeId = 1,
+                            EndDate = new DateTime(2019, 2, 3),
+                            MediaWeekId = 788,
+                            NumberOfActiveDays = 3,
+                            PercentageOfWeek = 0,
+                            StartDate = new DateTime(2019, 1, 28),
+                            WeeklyImpressions = 0,
+                            WeeklyImpressionsPercentage = 0,
+                            WeeklyUnits = 0,
+                            WeekNumber = 1
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            ActiveDays = "F-Su",
+                            DaypartCodeId = 2,
+                            EndDate = new DateTime(2019, 2, 3),
+                            MediaWeekId = 788,
+                            NumberOfActiveDays = 3,
+                            PercentageOfWeek = 0,
+                            StartDate = new DateTime(2019, 1, 28),
+                            WeeklyImpressions = 0,
+                            WeeklyImpressionsPercentage = 0,
+                            WeeklyUnits = 0,
+                            WeekNumber = 1
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            ActiveDays = "M-Su",
+                            DaypartCodeId = 1,
+                            EndDate = new DateTime(2019, 2, 10),
+                            MediaWeekId = 789,
+                            NumberOfActiveDays = 7,
+                            PercentageOfWeek = 60,
+                            StartDate = new DateTime(2019, 2, 4),
+                            WeeklyImpressions = 999.6,
+                            WeeklyImpressionsPercentage = 60,
+                            WeeklyRatings = 6,
+                            WeeklyUnits = 9.996,
+                            WeekNumber = 2
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            ActiveDays = "M-Su",
+                            DaypartCodeId = 2,
+                            EndDate = new DateTime(2019, 2, 10),
+                            MediaWeekId = 789,
+                            NumberOfActiveDays = 7,
+                            PercentageOfWeek = 40,
+                            StartDate = new DateTime(2019, 2, 4),
+                            WeeklyImpressions = 666.4,
+                            WeeklyImpressionsPercentage = 40,
+                            WeeklyUnits = 6.664,
+                            WeekNumber = 2,
+                            WeeklyRatings = 4
+                        }
+                    }
+                };
+
+                var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
         }

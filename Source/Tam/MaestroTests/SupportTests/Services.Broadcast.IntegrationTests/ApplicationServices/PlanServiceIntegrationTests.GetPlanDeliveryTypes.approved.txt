@@ -10,5 +10,9 @@
   {
     "Display": "CustomByWeekByAdLength",
     "Id": 3
+  },
+  {
+    "Display": "CustomByWeekByDaypart",
+    "Id": 4
   }
 ]
