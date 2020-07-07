@@ -2620,6 +2620,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        public void Plan_SaveNewPlan_FullWeekHiatus()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var newPlan = _GetNewPlan();
+                newPlan.FlightHiatusDays = new List<DateTime> { new DateTime(2019,1,7), new DateTime(2019, 1, 8) , new DateTime(2019, 1, 9),
+                    new DateTime(2019,1,10), new DateTime(2019,1,11), new DateTime(2019,1,12), new DateTime(2019,1,13)};
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+
+                Assert.IsTrue(newPlanId > 0);
+            }
+        }
+
         private static PlanDto _GetNewPlan()
         {
             return new PlanDto

@@ -425,7 +425,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 var weeklyAduImpressions = _WeeklyBreakdownEngine.CalculateWeeklyADUImpressions(week, plan.Equivalized
                     , plan.ImpressionsPerUnit, plan.CreativeLengths);
-                var unitsImpressions = week.WeeklyImpressions / week.WeeklyUnits;
+                var unitsImpressions = week.WeeklyUnits == 0 ? 0 : week.WeeklyImpressions / week.WeeklyUnits;
                 foreach (var combination in allSpotLengthIdAndStandardDaypartIdCombinations)
                 {
                     var newWeeklyBreakdownItem = new WeeklyBreakdownWeek

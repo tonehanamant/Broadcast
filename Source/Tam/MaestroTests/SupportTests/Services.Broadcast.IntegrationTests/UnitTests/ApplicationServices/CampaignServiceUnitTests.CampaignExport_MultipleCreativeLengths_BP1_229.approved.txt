@@ -39,20 +39,9 @@
           0,
           ":30s",
           0.0,
-          200000.00,
+          300000.00,
           0.0,
-          8000.0,
-          25.00
-        ],
-        [
-          "EF",
-          "3/9/2020",
-          0,
-          ":30s",
-          0.0,
-          100000.00,
-          0.0,
-          4000.0,
+          12000.0,
           25.00
         ],
         [
@@ -105,20 +94,9 @@
           0,
           ":30s",
           0.0,
-          200000.00,
+          300000.00,
           0.0,
-          8000.0,
-          25.00
-        ],
-        [
-          "EM",
-          "3/9/2020",
-          0,
-          ":30s",
-          0.0,
-          100000.00,
-          0.0,
-          4000.0,
+          12000.0,
           25.00
         ],
         [
@@ -171,20 +149,9 @@
           0,
           ":30s",
           0.0,
-          200000.00,
+          300000.00,
           0.0,
-          8000.0,
-          25.00
-        ],
-        [
-          "MDN",
-          "3/9/2020",
-          0,
-          ":30s",
-          0.0,
-          100000.00,
-          0.0,
-          4000.0,
+          12000.0,
           25.00
         ],
         [
@@ -237,20 +204,9 @@
           0,
           ":30s",
           0.0,
-          200000.00,
+          300000.00,
           0.0,
-          8000.0,
-          25.00
-        ],
-        [
-          "EF",
-          "3/16/2020",
-          0,
-          ":30s",
-          0.0,
-          100000.00,
-          0.0,
-          4000.0,
+          12000.0,
           25.00
         ],
         [
@@ -303,20 +259,9 @@
           0,
           ":30s",
           0.0,
-          200000.00,
+          300000.00,
           0.0,
-          8000.0,
-          25.00
-        ],
-        [
-          "EM",
-          "3/16/2020",
-          0,
-          ":30s",
-          0.0,
-          100000.00,
-          0.0,
-          4000.0,
+          12000.0,
           25.00
         ],
         [
@@ -369,20 +314,9 @@
           0,
           ":30s",
           0.0,
-          200000.00,
+          300000.00,
           0.0,
-          8000.0,
-          25.00
-        ],
-        [
-          "MDN",
-          "3/16/2020",
-          0,
-          ":30s",
-          0.0,
-          100000.00,
-          0.0,
-          4000.0,
+          12000.0,
           25.00
         ],
         [
@@ -435,20 +369,9 @@
           0,
           ":30s",
           0.0,
-          200000.00,
+          300000.00,
           0.0,
-          8000.0,
-          25.00
-        ],
-        [
-          "EF",
-          "3/23/2020",
-          0,
-          ":30s",
-          0.0,
-          100000.00,
-          0.0,
-          4000.0,
+          12000.0,
           25.00
         ],
         [
@@ -501,20 +424,9 @@
           0,
           ":30s",
           0.0,
-          200000.00,
+          300000.00,
           0.0,
-          8000.0,
-          25.00
-        ],
-        [
-          "EM",
-          "3/23/2020",
-          0,
-          ":30s",
-          0.0,
-          100000.00,
-          0.0,
-          4000.0,
+          12000.0,
           25.00
         ],
         [
@@ -567,20 +479,9 @@
           0,
           ":30s",
           0.0,
-          200000.00,
+          300000.00,
           0.0,
-          8000.0,
-          25.00
-        ],
-        [
-          "MDN",
-          "3/23/2020",
-          0,
-          ":30s",
-          0.0,
-          100000.00,
-          0.0,
-          4000.0,
+          12000.0,
           25.00
         ],
         [
@@ -649,20 +550,9 @@
           0,
           ":30s",
           0.0,
-          200000.00,
+          300000.00,
           0.0,
-          8000.0,
-          25.00
-        ],
-        [
-          "EF",
-          "3/30/2020",
-          0,
-          ":30s",
-          0.0,
-          100000.00,
-          0.0,
-          4000.0,
+          12000.0,
           25.00
         ],
         [
@@ -715,20 +605,9 @@
           0,
           ":30s",
           0.0,
-          200000.00,
+          300000.00,
           0.0,
-          8000.0,
-          25.00
-        ],
-        [
-          "EM",
-          "3/30/2020",
-          0,
-          ":30s",
-          0.0,
-          100000.00,
-          0.0,
-          4000.0,
+          12000.0,
           25.00
         ],
         [
@@ -781,20 +660,9 @@
           0,
           ":30s",
           0.0,
-          200000.00,
+          300000.00,
           0.0,
-          8000.0,
-          25.00
-        ],
-        [
-          "MDN",
-          "3/30/2020",
-          0,
-          ":30s",
-          0.0,
-          100000.00,
-          0.0,
-          4000.0,
+          12000.0,
           25.00
         ],
         [
@@ -847,20 +715,9 @@
           0,
           ":30s",
           0.0,
-          200000.00,
+          300000.00,
           0.0,
-          8000.0,
-          25.00
-        ],
-        [
-          "EF",
-          "4/6/2020",
-          0,
-          ":30s",
-          0.0,
-          100000.00,
-          0.0,
-          4000.0,
+          12000.0,
           25.00
         ],
         [
@@ -913,20 +770,9 @@
           0,
           ":30s",
           0.0,
-          200000.00,
+          300000.00,
           0.0,
-          8000.0,
-          25.00
-        ],
-        [
-          "EM",
-          "4/6/2020",
-          0,
-          ":30s",
-          0.0,
-          100000.00,
-          0.0,
-          4000.0,
+          12000.0,
           25.00
         ],
         [
@@ -979,20 +825,9 @@
           0,
           ":30s",
           0.0,
-          200000.00,
+          300000.00,
           0.0,
-          8000.0,
-          25.00
-        ],
-        [
-          "MDN",
-          "4/6/2020",
-          0,
-          ":30s",
-          0.0,
-          100000.00,
-          0.0,
-          4000.0,
+          12000.0,
           25.00
         ],
         [
@@ -1073,10 +908,10 @@
   "FlowChartQuarterTables": [
     {
       "CostValues": [
-        200000.00,
-        200000.00,
-        200000.00,
-        600000.00
+        300000.00,
+        300000.00,
+        300000.00,
+        900000.00
       ],
       "CPMValues": [
         25.00,
@@ -1086,10 +921,10 @@
       ],
       "DaypartCode": "EF",
       "DistributionPercentages": [
-        0.01481481,
-        0.01481481,
-        0.01481481,
-        0.04444444
+        0.02222222,
+        0.02222222,
+        0.02222222,
+        0.06666667
       ],
       "HiatusDays": [
         [],
@@ -1103,10 +938,10 @@
         null
       ],
       "ImpressionsValues": [
-        8000.0,
-        8000.0,
-        8000.0,
-        24000.0
+        12000.0,
+        12000.0,
+        12000.0,
+        36000.0
       ],
       "Months": [
         {
@@ -1232,64 +1067,6 @@
       ],
       "QuarterLabel": "1Q '20",
       "TableTitle": "1Q '20 EF :15s eq.",
-      "TotalWeeksInQuarter": 3,
-      "UnitsValues": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "WeeksStartDate": [
-        "2020-03-09T00:00:00",
-        "2020-03-16T00:00:00",
-        "2020-03-23T00:00:00"
-      ]
-    },
-    {
-      "CostValues": [
-        100000.00,
-        100000.00,
-        100000.00,
-        300000.00
-      ],
-      "CPMValues": [
-        25.00,
-        25.00,
-        25.00,
-        25.00
-      ],
-      "DaypartCode": "EF",
-      "DistributionPercentages": [
-        0.00740741,
-        0.00740741,
-        0.00740741,
-        0.02222222
-      ],
-      "HiatusDays": [
-        [],
-        [],
-        []
-      ],
-      "HiatusDaysFormattedValues": [
-        "",
-        "",
-        "",
-        null
-      ],
-      "ImpressionsValues": [
-        4000.0,
-        4000.0,
-        4000.0,
-        12000.0
-      ],
-      "Months": [
-        {
-          "Item1": "",
-          "Item2": 3
-        }
-      ],
-      "QuarterLabel": "1Q '20",
-      "TableTitle": "1Q '20 EF :30s",
       "TotalWeeksInQuarter": 3,
       "UnitsValues": [
         0,
@@ -1479,10 +1256,10 @@
     },
     {
       "CostValues": [
-        200000.00,
-        200000.00,
-        200000.00,
-        600000.00
+        300000.00,
+        300000.00,
+        300000.00,
+        900000.00
       ],
       "CPMValues": [
         25.00,
@@ -1492,10 +1269,10 @@
       ],
       "DaypartCode": "EM",
       "DistributionPercentages": [
-        0.01481481,
-        0.01481481,
-        0.01481481,
-        0.04444444
+        0.02222222,
+        0.02222222,
+        0.02222222,
+        0.06666667
       ],
       "HiatusDays": [
         [],
@@ -1509,10 +1286,10 @@
         null
       ],
       "ImpressionsValues": [
-        8000.0,
-        8000.0,
-        8000.0,
-        24000.0
+        12000.0,
+        12000.0,
+        12000.0,
+        36000.0
       ],
       "Months": [
         {
@@ -1638,64 +1415,6 @@
       ],
       "QuarterLabel": "1Q '20",
       "TableTitle": "1Q '20 EM :15s eq.",
-      "TotalWeeksInQuarter": 3,
-      "UnitsValues": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "WeeksStartDate": [
-        "2020-03-09T00:00:00",
-        "2020-03-16T00:00:00",
-        "2020-03-23T00:00:00"
-      ]
-    },
-    {
-      "CostValues": [
-        100000.00,
-        100000.00,
-        100000.00,
-        300000.00
-      ],
-      "CPMValues": [
-        25.00,
-        25.00,
-        25.00,
-        25.00
-      ],
-      "DaypartCode": "EM",
-      "DistributionPercentages": [
-        0.00740741,
-        0.00740741,
-        0.00740741,
-        0.02222222
-      ],
-      "HiatusDays": [
-        [],
-        [],
-        []
-      ],
-      "HiatusDaysFormattedValues": [
-        "",
-        "",
-        "",
-        null
-      ],
-      "ImpressionsValues": [
-        4000.0,
-        4000.0,
-        4000.0,
-        12000.0
-      ],
-      "Months": [
-        {
-          "Item1": "",
-          "Item2": 3
-        }
-      ],
-      "QuarterLabel": "1Q '20",
-      "TableTitle": "1Q '20 EM :30s",
       "TotalWeeksInQuarter": 3,
       "UnitsValues": [
         0,
@@ -1885,10 +1604,10 @@
     },
     {
       "CostValues": [
-        200000.00,
-        200000.00,
-        200000.00,
-        600000.00
+        300000.00,
+        300000.00,
+        300000.00,
+        900000.00
       ],
       "CPMValues": [
         25.00,
@@ -1898,10 +1617,10 @@
       ],
       "DaypartCode": "MDN",
       "DistributionPercentages": [
-        0.01481481,
-        0.01481481,
-        0.01481481,
-        0.04444444
+        0.02222222,
+        0.02222222,
+        0.02222222,
+        0.06666667
       ],
       "HiatusDays": [
         [],
@@ -1915,10 +1634,10 @@
         null
       ],
       "ImpressionsValues": [
-        8000.0,
-        8000.0,
-        8000.0,
-        24000.0
+        12000.0,
+        12000.0,
+        12000.0,
+        36000.0
       ],
       "Months": [
         {
@@ -2044,64 +1763,6 @@
       ],
       "QuarterLabel": "1Q '20",
       "TableTitle": "1Q '20 MDN :15s eq.",
-      "TotalWeeksInQuarter": 3,
-      "UnitsValues": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "WeeksStartDate": [
-        "2020-03-09T00:00:00",
-        "2020-03-16T00:00:00",
-        "2020-03-23T00:00:00"
-      ]
-    },
-    {
-      "CostValues": [
-        100000.00,
-        100000.00,
-        100000.00,
-        300000.00
-      ],
-      "CPMValues": [
-        25.00,
-        25.00,
-        25.00,
-        25.00
-      ],
-      "DaypartCode": "MDN",
-      "DistributionPercentages": [
-        0.00740741,
-        0.00740741,
-        0.00740741,
-        0.02222222
-      ],
-      "HiatusDays": [
-        [],
-        [],
-        []
-      ],
-      "HiatusDaysFormattedValues": [
-        "",
-        "",
-        "",
-        null
-      ],
-      "ImpressionsValues": [
-        4000.0,
-        4000.0,
-        4000.0,
-        12000.0
-      ],
-      "Months": [
-        {
-          "Item1": "",
-          "Item2": 3
-        }
-      ],
-      "QuarterLabel": "1Q '20",
-      "TableTitle": "1Q '20 MDN :30s",
       "TotalWeeksInQuarter": 3,
       "UnitsValues": [
         0,
@@ -2291,9 +1952,9 @@
     },
     {
       "CostValues": [
-        200000.00,
-        200000.00,
-        400000.00
+        300000.00,
+        300000.00,
+        600000.00
       ],
       "CPMValues": [
         25.00,
@@ -2302,9 +1963,9 @@
       ],
       "DaypartCode": "EF",
       "DistributionPercentages": [
-        0.01481481,
-        0.01481481,
-        0.02962963
+        0.02222222,
+        0.02222222,
+        0.04444444
       ],
       "HiatusDays": [
         [],
@@ -2316,9 +1977,9 @@
         null
       ],
       "ImpressionsValues": [
-        8000.0,
-        8000.0,
-        16000.0
+        12000.0,
+        12000.0,
+        24000.0
       ],
       "Months": [
         {
@@ -2428,56 +2089,6 @@
       ],
       "QuarterLabel": "2Q '20",
       "TableTitle": "2Q '20 EF :15s eq.",
-      "TotalWeeksInQuarter": 2,
-      "UnitsValues": [
-        0,
-        0,
-        0
-      ],
-      "WeeksStartDate": [
-        "2020-03-30T00:00:00",
-        "2020-04-06T00:00:00"
-      ]
-    },
-    {
-      "CostValues": [
-        100000.00,
-        100000.00,
-        200000.00
-      ],
-      "CPMValues": [
-        25.00,
-        25.00,
-        25.00
-      ],
-      "DaypartCode": "EF",
-      "DistributionPercentages": [
-        0.00740741,
-        0.00740741,
-        0.01481481
-      ],
-      "HiatusDays": [
-        [],
-        []
-      ],
-      "HiatusDaysFormattedValues": [
-        "",
-        "",
-        null
-      ],
-      "ImpressionsValues": [
-        4000.0,
-        4000.0,
-        8000.0
-      ],
-      "Months": [
-        {
-          "Item1": "",
-          "Item2": 2
-        }
-      ],
-      "QuarterLabel": "2Q '20",
-      "TableTitle": "2Q '20 EF :30s",
       "TotalWeeksInQuarter": 2,
       "UnitsValues": [
         0,
@@ -2641,9 +2252,9 @@
     },
     {
       "CostValues": [
-        200000.00,
-        200000.00,
-        400000.00
+        300000.00,
+        300000.00,
+        600000.00
       ],
       "CPMValues": [
         25.00,
@@ -2652,9 +2263,9 @@
       ],
       "DaypartCode": "EM",
       "DistributionPercentages": [
-        0.01481481,
-        0.01481481,
-        0.02962963
+        0.02222222,
+        0.02222222,
+        0.04444444
       ],
       "HiatusDays": [
         [],
@@ -2666,9 +2277,9 @@
         null
       ],
       "ImpressionsValues": [
-        8000.0,
-        8000.0,
-        16000.0
+        12000.0,
+        12000.0,
+        24000.0
       ],
       "Months": [
         {
@@ -2778,56 +2389,6 @@
       ],
       "QuarterLabel": "2Q '20",
       "TableTitle": "2Q '20 EM :15s eq.",
-      "TotalWeeksInQuarter": 2,
-      "UnitsValues": [
-        0,
-        0,
-        0
-      ],
-      "WeeksStartDate": [
-        "2020-03-30T00:00:00",
-        "2020-04-06T00:00:00"
-      ]
-    },
-    {
-      "CostValues": [
-        100000.00,
-        100000.00,
-        200000.00
-      ],
-      "CPMValues": [
-        25.00,
-        25.00,
-        25.00
-      ],
-      "DaypartCode": "EM",
-      "DistributionPercentages": [
-        0.00740741,
-        0.00740741,
-        0.01481481
-      ],
-      "HiatusDays": [
-        [],
-        []
-      ],
-      "HiatusDaysFormattedValues": [
-        "",
-        "",
-        null
-      ],
-      "ImpressionsValues": [
-        4000.0,
-        4000.0,
-        8000.0
-      ],
-      "Months": [
-        {
-          "Item1": "",
-          "Item2": 2
-        }
-      ],
-      "QuarterLabel": "2Q '20",
-      "TableTitle": "2Q '20 EM :30s",
       "TotalWeeksInQuarter": 2,
       "UnitsValues": [
         0,
@@ -2991,9 +2552,9 @@
     },
     {
       "CostValues": [
-        200000.00,
-        200000.00,
-        400000.00
+        300000.00,
+        300000.00,
+        600000.00
       ],
       "CPMValues": [
         25.00,
@@ -3002,9 +2563,9 @@
       ],
       "DaypartCode": "MDN",
       "DistributionPercentages": [
-        0.01481481,
-        0.01481481,
-        0.02962963
+        0.02222222,
+        0.02222222,
+        0.04444444
       ],
       "HiatusDays": [
         [],
@@ -3016,9 +2577,9 @@
         null
       ],
       "ImpressionsValues": [
-        8000.0,
-        8000.0,
-        16000.0
+        12000.0,
+        12000.0,
+        24000.0
       ],
       "Months": [
         {
@@ -3128,56 +2689,6 @@
       ],
       "QuarterLabel": "2Q '20",
       "TableTitle": "2Q '20 MDN :15s eq.",
-      "TotalWeeksInQuarter": 2,
-      "UnitsValues": [
-        0,
-        0,
-        0
-      ],
-      "WeeksStartDate": [
-        "2020-03-30T00:00:00",
-        "2020-04-06T00:00:00"
-      ]
-    },
-    {
-      "CostValues": [
-        100000.00,
-        100000.00,
-        200000.00
-      ],
-      "CPMValues": [
-        25.00,
-        25.00,
-        25.00
-      ],
-      "DaypartCode": "MDN",
-      "DistributionPercentages": [
-        0.00740741,
-        0.00740741,
-        0.01481481
-      ],
-      "HiatusDays": [
-        [],
-        []
-      ],
-      "HiatusDaysFormattedValues": [
-        "",
-        "",
-        null
-      ],
-      "ImpressionsValues": [
-        4000.0,
-        4000.0,
-        8000.0
-      ],
-      "Months": [
-        {
-          "Item1": "",
-          "Item2": 2
-        }
-      ],
-      "QuarterLabel": "2Q '20",
-      "TableTitle": "2Q '20 MDN :30s",
       "TotalWeeksInQuarter": 2,
       "UnitsValues": [
         0,
@@ -3898,52 +3409,23 @@
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 40000.0,
-            "TotalRatingPoints": 298.89200733,
+            "TotalImpressions": 60000.0,
+            "TotalRatingPoints": 448.33801099,
             "VPVH": 0.5
           },
           "HHData": {
             "CPM": 12.50,
-            "CPP": 13777.265000000003333891471025,
+            "CPP": 13777.265000000066604901764434,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 80000.0,
-            "TotalRatingPoints": 72.58334655,
+            "TotalImpressions": 120000.0,
+            "TotalRatingPoints": 108.87501982,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "30",
-          "TotalCost": 1000000.00,
-          "Units": 0,
-          "UnitsCost": 0.0
-        },
-        {
-          "DaypartCode": "EF",
-          "GuaranteedData": {
-            "CPM": 25.00,
-            "CPP": 3345.6900000000002205478848,
-            "DaypartCode": null,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "SpotLengthLabel": null,
-            "TotalImpressions": 20000.0,
-            "TotalRatingPoints": 149.44600366,
-            "VPVH": 0.5
-          },
-          "HHData": {
-            "CPM": 12.50,
-            "CPP": 13777.265000000003333891471025,
-            "DaypartCode": null,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "SpotLengthLabel": null,
-            "TotalImpressions": 40000.0,
-            "TotalRatingPoints": 36.29167327,
-            "VPVH": 0.0
-          },
-          "SpotLengthLabel": "30",
-          "TotalCost": 500000.00,
+          "TotalCost": 1500000.00,
           "Units": 0,
           "UnitsCost": 0.0
         },
@@ -4072,52 +3554,23 @@
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 40000.0,
-            "TotalRatingPoints": 298.89200733,
+            "TotalImpressions": 60000.0,
+            "TotalRatingPoints": 448.33801099,
             "VPVH": 0.5
           },
           "HHData": {
             "CPM": 12.50,
-            "CPP": 13777.265000000003333891471025,
+            "CPP": 13777.265000000066604901764434,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 80000.0,
-            "TotalRatingPoints": 72.58334655,
+            "TotalImpressions": 120000.0,
+            "TotalRatingPoints": 108.87501982,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "30",
-          "TotalCost": 1000000.00,
-          "Units": 0,
-          "UnitsCost": 0.0
-        },
-        {
-          "DaypartCode": "EM",
-          "GuaranteedData": {
-            "CPM": 25.00,
-            "CPP": 3345.6900000000002205478848,
-            "DaypartCode": null,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "SpotLengthLabel": null,
-            "TotalImpressions": 20000.0,
-            "TotalRatingPoints": 149.44600366,
-            "VPVH": 0.5
-          },
-          "HHData": {
-            "CPM": 12.50,
-            "CPP": 13777.265000000003333891471025,
-            "DaypartCode": null,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "SpotLengthLabel": null,
-            "TotalImpressions": 40000.0,
-            "TotalRatingPoints": 36.29167327,
-            "VPVH": 0.0
-          },
-          "SpotLengthLabel": "30",
-          "TotalCost": 500000.00,
+          "TotalCost": 1500000.00,
           "Units": 0,
           "UnitsCost": 0.0
         },
@@ -4246,52 +3699,23 @@
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 40000.0,
-            "TotalRatingPoints": 298.89200733,
+            "TotalImpressions": 60000.0,
+            "TotalRatingPoints": 448.33801099,
             "VPVH": 0.5
           },
           "HHData": {
             "CPM": 12.50,
-            "CPP": 13777.265000000003333891471025,
+            "CPP": 13777.265000000066604901764434,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 80000.0,
-            "TotalRatingPoints": 72.58334655,
+            "TotalImpressions": 120000.0,
+            "TotalRatingPoints": 108.87501982,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "30",
-          "TotalCost": 1000000.00,
-          "Units": 0,
-          "UnitsCost": 0.0
-        },
-        {
-          "DaypartCode": "MDN",
-          "GuaranteedData": {
-            "CPM": 25.00,
-            "CPP": 3345.6900000000002205478848,
-            "DaypartCode": null,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "SpotLengthLabel": null,
-            "TotalImpressions": 20000.0,
-            "TotalRatingPoints": 149.44600366,
-            "VPVH": 0.5
-          },
-          "HHData": {
-            "CPM": 12.50,
-            "CPP": 13777.265000000003333891471025,
-            "DaypartCode": null,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "SpotLengthLabel": null,
-            "TotalImpressions": 40000.0,
-            "TotalRatingPoints": 36.29167327,
-            "VPVH": 0.0
-          },
-          "SpotLengthLabel": "30",
-          "TotalCost": 500000.00,
+          "TotalCost": 1500000.00,
           "Units": 0,
           "UnitsCost": 0.0
         },
@@ -4456,52 +3880,23 @@
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 40000.0,
-            "TotalRatingPoints": 298.89200733,
+            "TotalImpressions": 60000.0,
+            "TotalRatingPoints": 448.33801099,
             "VPVH": 0.5
           },
           "HHData": {
             "CPM": 12.50,
-            "CPP": 13777.265000000003333891471025,
+            "CPP": 13777.265000000066604901764434,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 80000.0,
-            "TotalRatingPoints": 72.58334655,
+            "TotalImpressions": 120000.0,
+            "TotalRatingPoints": 108.87501982,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "30",
-          "TotalCost": 1000000.00,
-          "Units": 0,
-          "UnitsCost": 0.0
-        },
-        {
-          "DaypartCode": "EF",
-          "GuaranteedData": {
-            "CPM": 25.00,
-            "CPP": 3345.6900000000002205478848,
-            "DaypartCode": null,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "SpotLengthLabel": null,
-            "TotalImpressions": 20000.0,
-            "TotalRatingPoints": 149.44600366,
-            "VPVH": 0.5
-          },
-          "HHData": {
-            "CPM": 12.50,
-            "CPP": 13777.265000000003333891471025,
-            "DaypartCode": null,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "SpotLengthLabel": null,
-            "TotalImpressions": 40000.0,
-            "TotalRatingPoints": 36.29167327,
-            "VPVH": 0.0
-          },
-          "SpotLengthLabel": "30",
-          "TotalCost": 500000.00,
+          "TotalCost": 1500000.00,
           "Units": 0,
           "UnitsCost": 0.0
         },
@@ -4630,52 +4025,23 @@
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 40000.0,
-            "TotalRatingPoints": 298.89200733,
+            "TotalImpressions": 60000.0,
+            "TotalRatingPoints": 448.33801099,
             "VPVH": 0.5
           },
           "HHData": {
             "CPM": 12.50,
-            "CPP": 13777.265000000003333891471025,
+            "CPP": 13777.265000000066604901764434,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 80000.0,
-            "TotalRatingPoints": 72.58334655,
+            "TotalImpressions": 120000.0,
+            "TotalRatingPoints": 108.87501982,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "30",
-          "TotalCost": 1000000.00,
-          "Units": 0,
-          "UnitsCost": 0.0
-        },
-        {
-          "DaypartCode": "EM",
-          "GuaranteedData": {
-            "CPM": 25.00,
-            "CPP": 3345.6900000000002205478848,
-            "DaypartCode": null,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "SpotLengthLabel": null,
-            "TotalImpressions": 20000.0,
-            "TotalRatingPoints": 149.44600366,
-            "VPVH": 0.5
-          },
-          "HHData": {
-            "CPM": 12.50,
-            "CPP": 13777.265000000003333891471025,
-            "DaypartCode": null,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "SpotLengthLabel": null,
-            "TotalImpressions": 40000.0,
-            "TotalRatingPoints": 36.29167327,
-            "VPVH": 0.0
-          },
-          "SpotLengthLabel": "30",
-          "TotalCost": 500000.00,
+          "TotalCost": 1500000.00,
           "Units": 0,
           "UnitsCost": 0.0
         },
@@ -4804,52 +4170,23 @@
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 40000.0,
-            "TotalRatingPoints": 298.89200733,
+            "TotalImpressions": 60000.0,
+            "TotalRatingPoints": 448.33801099,
             "VPVH": 0.5
           },
           "HHData": {
             "CPM": 12.50,
-            "CPP": 13777.265000000003333891471025,
+            "CPP": 13777.265000000066604901764434,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 80000.0,
-            "TotalRatingPoints": 72.58334655,
+            "TotalImpressions": 120000.0,
+            "TotalRatingPoints": 108.87501982,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "30",
-          "TotalCost": 1000000.00,
-          "Units": 0,
-          "UnitsCost": 0.0
-        },
-        {
-          "DaypartCode": "MDN",
-          "GuaranteedData": {
-            "CPM": 25.00,
-            "CPP": 3345.6900000000002205478848,
-            "DaypartCode": null,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "SpotLengthLabel": null,
-            "TotalImpressions": 20000.0,
-            "TotalRatingPoints": 149.44600366,
-            "VPVH": 0.5
-          },
-          "HHData": {
-            "CPM": 12.50,
-            "CPP": 13777.265000000003333891471025,
-            "DaypartCode": null,
-            "Impressions": 0.0,
-            "RatingPoints": 0.0,
-            "SpotLengthLabel": null,
-            "TotalImpressions": 40000.0,
-            "TotalRatingPoints": 36.29167327,
-            "VPVH": 0.0
-          },
-          "SpotLengthLabel": "30",
-          "TotalCost": 500000.00,
+          "TotalCost": 1500000.00,
           "Units": 0,
           "UnitsCost": 0.0
         },
