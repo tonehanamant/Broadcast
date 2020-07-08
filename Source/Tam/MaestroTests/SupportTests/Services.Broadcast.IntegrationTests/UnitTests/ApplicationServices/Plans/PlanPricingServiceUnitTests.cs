@@ -22,6 +22,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Tam.Maestro.Data.Entities;
@@ -126,7 +127,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_MarketRepositoryMock.Object);
 
             _PricingRequestLogClient
-                .Setup(x => x.SavePricingRequest(It.IsAny<PlanPricingApiRequestDto>()));
+                .Setup(x => x.SavePricingRequest(It.IsAny<int>(), It.IsAny<PlanPricingApiRequestDto>()));
 
             var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
             SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
@@ -8085,17 +8086,29 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PricingApiClientMock
                 .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()));
 
-            _PricingRequestLogClient
-                .Setup(x => x.SavePricingRequest(It.IsAny<PlanPricingApiRequestDto>()))
-                .Callback<PlanPricingApiRequestDto>(request => requests.Add(request));
+            var passedParameters = new List<object>();
+            _BackgroundJobClientMock
+                .Setup(x => x.Create(It.IsAny<Job>(), It.IsAny<IState>()))
+                .Callback<Job, IState>((job, state) => passedParameters.Add(new { job, state }))
+                .Returns("hangfire job 35");
 
             var service = _GetService();
 
             // Act
             service.RunPricingJob(parameters, jobId, CancellationToken.None);
 
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(WaitHandle), "Handle");
+            jsonResolver.Ignore(typeof(Job), "Type");
+            jsonResolver.Ignore(typeof(Job), "Method");
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
             // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(requests));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters, settings));
         }
 
         private List<PlanPricingInventoryProgram> _GetInventoryProgram()

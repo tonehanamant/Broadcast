@@ -111,7 +111,7 @@ namespace Services.Broadcast.ApplicationServices
 
         [Queue("savepricingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void SavePricingRequest(PlanPricingApiRequestDto pricingApiRequest);
+        void SavePricingRequest(int planId, PlanPricingApiRequestDto pricingApiRequest);
     }
 
     public class PlanPricingService : BroadcastBaseClass, IPlanPricingService
@@ -734,7 +734,8 @@ namespace Services.Broadcast.ApplicationServices
 
                     token.ThrowIfCancellationRequested();
 
-                    _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.SavePricingRequest(pricingApiRequest));
+                    _BackgroundJobClient.Enqueue<IPlanPricingService>(
+                        x => x.SavePricingRequest(planPricingParametersDto.PlanId, pricingApiRequest));
 
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
                     var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
@@ -884,11 +885,11 @@ namespace Services.Broadcast.ApplicationServices
             return grouped.ToList();
         }
 
-        public void SavePricingRequest(PlanPricingApiRequestDto pricingApiRequest)
+        public void SavePricingRequest(int planId, PlanPricingApiRequestDto pricingApiRequest)
         {
             try
             {
-                _PricingRequestLogClient.SavePricingRequest(pricingApiRequest);
+                _PricingRequestLogClient.SavePricingRequest(planId ,pricingApiRequest);
             }
             catch(Exception exception)
             {

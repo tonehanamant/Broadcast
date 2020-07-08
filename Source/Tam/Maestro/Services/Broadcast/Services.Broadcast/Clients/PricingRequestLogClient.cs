@@ -13,7 +13,7 @@ namespace Services.Broadcast.Clients
 {
     public interface IPricingRequestLogClient
     {
-        void SavePricingRequest(PlanPricingApiRequestDto planPricingApiRequestDto);
+        void SavePricingRequest(int planId, PlanPricingApiRequestDto planPricingApiRequestDto);
     }
 
     public class PricingRequestLogClientAmazonS3 : IPricingRequestLogClient
@@ -31,29 +31,32 @@ namespace Services.Broadcast.Clients
             _BucketRegion = RegionEndpoint.GetBySystemName(BroadcastServiceSystemParameter.PricingRequestLogBucketRegion);
         }
 
-        public async void SavePricingRequest(PlanPricingApiRequestDto planPricingApiRequestDto)
+        public async void SavePricingRequest(int planId, PlanPricingApiRequestDto planPricingApiRequestDto)
         {
             _ValidateParameters();
 
-            var keyName = _GetKeyName();
-            var zipName = _GetZipName(keyName);
+            var fileName = _GetFileName(planId);
+            var keyName = _GetKeyName(fileName);
 
             using (var client = new AmazonS3Client(_AccessKeyId, _SecretAccessKey, _BucketRegion))
             {
-                using (var memoryStream = Helpers.StreamHelper.CreateStreamFromString(SerializationHelper.ConvertToJson(planPricingApiRequestDto)))
+                using (var pricingApiRequestMemoryStream = Helpers.StreamHelper.CreateStreamFromString(SerializationHelper.ConvertToJson(planPricingApiRequestDto)))
                 {
-                    using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, false))
+                    using (var fileMemoryStream = new MemoryStream())
                     {
-                        var fileInArchive = archive.CreateEntry(keyName, CompressionLevel.Optimal);
-
-                        using (var fileToCompressStream = new MemoryStream())
+                        using (var archive = new ZipArchive(fileMemoryStream, ZipArchiveMode.Create, true))
                         {
-                            fileToCompressStream.CopyTo(memoryStream);
+                            var fileInArchive = archive.CreateEntry(fileName, CompressionLevel.Optimal);
 
-                            var transferUtility = new TransferUtility(client);
-
-                            await transferUtility.UploadAsync(fileToCompressStream, _BucketName, zipName);
+                            using (var fileInArchiveStream = fileInArchive.Open())
+                            {
+                                pricingApiRequestMemoryStream.CopyTo(fileInArchiveStream);
+                            }
                         }
+
+                        var transferUtility = new TransferUtility(client);
+
+                        await transferUtility.UploadAsync(fileMemoryStream, _BucketName, keyName);
                     }
                 }
             }
@@ -70,18 +73,18 @@ namespace Services.Broadcast.Clients
             }
         }
 
-        private string _GetKeyName()
+        private string _GetFileName(int planId)
         {
-            const string keyNamePrefix = "broadcast-openmarket-allocations";
             var appSettings = new AppSettings();
             var environment = appSettings.Environment.ToString().ToLower();
             var ticks = DateTime.Now.Ticks;
-            return $"{keyNamePrefix}/{environment}-request-{ticks}.log";
+            return $"{environment}-request-{planId}-{ticks}.log";
         }
 
-        private string _GetZipName(string keyName)
+        private string _GetKeyName(string fileName)
         {
-            return $"{keyName}.zip";
+            const string keyNamePrefix = "broadcast-openmarket-allocations";
+            return $"{keyNamePrefix}/{fileName}.zip";
         }
     }
 }
