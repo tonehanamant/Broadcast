@@ -61,6 +61,17 @@ namespace Services.Broadcast.BusinessEngines
         /// </summary>
         List<WeeklyBreakdownByWeekByDaypart> GroupWeeklyBreakdownByWeekByDaypart(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown
             , double impressionsPerUnit, bool equivalized, List<CreativeLength> creativeLengths);
+
+        /// <summary>
+        /// Calculates the adu with decimals.
+        /// </summary>
+        /// <param name="impressionsPerUnit">The impressions per unit.</param>
+        /// <param name="aduImpressions">The adu impressions total.</param>
+        /// <param name="equivalized">Equivalized flag</param>
+        /// <param name="creativeLengths">Creative lengths of the plan.</param>
+        /// <returns>Adu number as double</returns>
+        double CalculateADUWithDecimals(double impressionsPerUnit, double aduImpressions
+            , bool equivalized, List<CreativeLength> creativeLengths = null);
     }
 
     public class WeeklyBreakdownEngine : IWeeklyBreakdownEngine
@@ -1036,6 +1047,24 @@ namespace Services.Broadcast.BusinessEngines
             else
             {
                 return (int)(aduImpressions / impressionsPerUnit);
+            }
+        }
+
+        /// <inheritdoc/>
+        public double CalculateADUWithDecimals(double impressionsPerUnit, double aduImpressions
+            , bool equivalized, List<CreativeLength> creativeLengths = null)
+        {
+            if (impressionsPerUnit == 0)
+            {   //for older plans, where the user did not set an impressions per unit value, we need to show the user the ADU value based on the old math
+                return (int)(aduImpressions / _DefaultImpressionsPerUnitForOldPlans);
+            }
+            if (equivalized)
+            {
+                return _CalculateUnitsForMultipleSpotLengths(creativeLengths, impressionsPerUnit, aduImpressions);
+            }
+            else
+            {
+                return (aduImpressions / impressionsPerUnit);
             }
         }
     }

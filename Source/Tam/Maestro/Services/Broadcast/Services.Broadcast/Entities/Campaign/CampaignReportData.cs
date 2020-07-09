@@ -74,7 +74,7 @@ namespace Services.Broadcast.Entities.Campaign
             _DaypartDefaultList = daypartDefaults;
             HasSecondaryAudiences = plans.Any(x => x.SecondaryAudiences.Any());
 
-            List<ProjectedPlan> projectedPlans = _ProjectPlansForProposalExport(plans);
+            List<PlanProjectionForCampaignExport> projectedPlans = _ProjectPlansForProposalExport(plans);
             _PopulateHeaderData(exportType, campaign, plans, agency, advertiser
                 , guaranteedDemos, orderedAudiences, dateTimeEngine);
 
@@ -126,9 +126,9 @@ namespace Services.Broadcast.Entities.Campaign
             }
         }
 
-        private void _PopulateDaypartsData(List<ProjectedPlan> projectedPlans)
+        private void _PopulateDaypartsData(List<PlanProjectionForCampaignExport> planProjections)
         {
-            DaypartsData = projectedPlans.Select(x => new DaypartData
+            DaypartsData = planProjections.Select(x => new DaypartData
             {
                 DaypartCodeId = x.DaypartCodeId,
                 DaypartCode = x.DaypartCode,
@@ -188,18 +188,18 @@ namespace Services.Broadcast.Entities.Campaign
             };
         }
 
-        private void _SetExportFileName(List<ProjectedPlan> projectedPlans, DateTime campaignModifiedDate)
+        private void _SetExportFileName(List<PlanProjectionForCampaignExport> planProjections, DateTime campaignModifiedDate)
         {
             CampaignExportFileName = string.Format(FILENAME_FORMAT
                 , ClientName
-                , string.Join(" ", projectedPlans.Select(x => x.DaypartCode).Distinct().OrderBy(x => x).ToList())
+                , string.Join(" ", planProjections.Select(x => x.DaypartCode).Distinct().OrderBy(x => x).ToList())
                 , (CampaignEndQuarter != CampaignStartQuarter ? $"{CampaignStartQuarter}-{CampaignEndQuarter}" : CampaignStartQuarter)
                 , campaignModifiedDate.ToString(DATE_FORMAT_FILENAME));
         }
 
-        private List<ProjectedPlan> _ProjectPlansForProposalExport(List<PlanDto> plans)
+        private List<PlanProjectionForCampaignExport> _ProjectPlansForProposalExport(List<PlanDto> plans)
         {
-            List<ProjectedPlan> result = new List<ProjectedPlan>();
+            List<PlanProjectionForCampaignExport> result = new List<PlanProjectionForCampaignExport>();
             plans.ForEach(plan =>
             {
                 List<QuarterDetailDto> planQuarters = _QuarterCalculationEngine.GetAllQuartersBetweenDates(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
@@ -234,28 +234,28 @@ namespace Services.Broadcast.Entities.Campaign
             return result;
         }
 
-        private static void _ProjectHHAudienceData(PlanDto plan, double factor, ProjectedPlan newProjectedPlan)
+        private static void _ProjectHHAudienceData(PlanDto plan, double factor, PlanProjectionForCampaignExport planProjections)
         {
-            newProjectedPlan.TotalHHImpressions = plan.HHImpressions * factor;
-            newProjectedPlan.TotalHHRatingPoints = plan.HHRatingPoints * factor;
+            planProjections.TotalHHImpressions = plan.HHImpressions * factor;
+            planProjections.TotalHHRatingPoints = plan.HHRatingPoints * factor;
         }
 
         private static void _ProjectGuaranteedAudienceDataByWeek(PlanDto plan, WeeklyBreakdownWeek planWeek
-            , ProjectedPlan projection)
+            , PlanProjectionForCampaignExport planProjections)
         {
-            projection.GuaranteedAudience.IsGuaranteedAudience = true;
-            projection.GuaranteedAudience.AudienceId = plan.AudienceId;
-            projection.GuaranteedAudience.WeightedPercentage = planWeek.WeeklyImpressions / plan.TargetImpressions.Value;
-            projection.GuaranteedAudience.TotalImpressions = planWeek.WeeklyImpressions;
-            projection.GuaranteedAudience.TotalRatingPoints = planWeek.WeeklyRatings;
+            planProjections.GuaranteedAudience.IsGuaranteedAudience = true;
+            planProjections.GuaranteedAudience.AudienceId = plan.AudienceId;
+            planProjections.GuaranteedAudience.WeightedPercentage = planWeek.WeeklyImpressions / plan.TargetImpressions.Value;
+            planProjections.GuaranteedAudience.TotalImpressions = planWeek.WeeklyImpressions;
+            planProjections.GuaranteedAudience.TotalRatingPoints = planWeek.WeeklyRatings;
         }
 
-        private static void _ProjectSecondaryAudiencesData(PlanDto plan, double multiplicationFactor, ProjectedPlan newProjectedPlan)
+        private static void _ProjectSecondaryAudiencesData(PlanDto plan, double multiplicationFactor, PlanProjectionForCampaignExport newProjectedPlan)
         {
             foreach (var audience in plan.SecondaryAudiences)
             {
                 newProjectedPlan.SecondaryAudiences.Add(
-                    new ProjectedPlan.Audience
+                    new PlanProjectionForCampaignExport.Audience
                     {
                         AudienceId = audience.AudienceId,
                         TotalImpressions = audience.Impressions.Value * multiplicationFactor,
@@ -265,9 +265,9 @@ namespace Services.Broadcast.Entities.Campaign
         }
 
         //flow chart and contract tabs
-        private List<ProjectedPlan> _ProjectPlansForQuarterExport(List<PlanDto> plans)
+        private List<PlanProjectionForCampaignExport> _ProjectPlansForQuarterExport(List<PlanDto> plans)
         {
-            List<ProjectedPlan> result = new List<ProjectedPlan>();
+            List<PlanProjectionForCampaignExport> result = new List<PlanProjectionForCampaignExport>();
 
             foreach (var plan in plans)
             {
@@ -307,10 +307,10 @@ namespace Services.Broadcast.Entities.Campaign
             return result;
         }
 
-        private List<ProjectedPlan> _AddEmptyWeeksForPlanSpotLengthDaypartCombinations(MediaWeek mediaWeek, PlanDto plan,
+        private List<PlanProjectionForCampaignExport> _AddEmptyWeeksForPlanSpotLengthDaypartCombinations(MediaWeek mediaWeek, PlanDto plan,
             QuarterDetailDto quarter, List<MediaMonth> mediaMonths)
         {
-            List<ProjectedPlan> result = new List<ProjectedPlan>();
+            List<PlanProjectionForCampaignExport> result = new List<PlanProjectionForCampaignExport>();
             foreach (var creativeLength in plan.CreativeLengths)
             {
                 result.AddRange(plan.Dayparts.Select(x => _GetEmptyWeek(mediaWeek, plan, quarter, mediaMonths,
@@ -320,11 +320,11 @@ namespace Services.Broadcast.Entities.Campaign
         }
 
         //Returns a ProjectedPlan object that will contain media and plan data without imps and cost data
-        private static ProjectedPlan _GetEmptyWeek(MediaWeek mediaWeek, PlanDto plan, QuarterDetailDto quarter
+        private static PlanProjectionForCampaignExport _GetEmptyWeek(MediaWeek mediaWeek, PlanDto plan, QuarterDetailDto quarter
             , List<MediaMonth> mediaMonths, LookupDto spotLength, PlanDaypartDto daypart)
         {
             const string SpotLength30Seconds = "30";
-            return new ProjectedPlan
+            return new PlanProjectionForCampaignExport
             {
                 QuarterYear = quarter.Year,
                 QuarterNumber = quarter.Quarter,
@@ -344,16 +344,16 @@ namespace Services.Broadcast.Entities.Campaign
             };
         }
 
-        private void _PopulateProposalQuarterTableData(List<ProjectedPlan> projectedPlans, List<PlanAudienceDisplay> audiences)
+        private void _PopulateProposalQuarterTableData(List<PlanProjectionForCampaignExport> planProjections, List<PlanAudienceDisplay> audiences)
         {
-            projectedPlans.GroupBy(x => new { x.QuarterNumber, x.QuarterYear })
+            planProjections.GroupBy(x => new { x.QuarterNumber, x.QuarterYear })
                 .OrderBy(x => x.Key.QuarterYear).ThenBy(x => x.Key.QuarterNumber)
                 .ToList()
                 .ForEach(quarterGroup =>
                 {
-                    List<ProjectedPlan.Audience> secondaryAudiences = quarterGroup
+                    List<PlanProjectionForCampaignExport.Audience> secondaryAudiences = quarterGroup
                         .SelectMany(x => x.SecondaryAudiences)
-                        .Distinct(new ProjectedPlan.AudienceEqualityComparer()).ToList();
+                        .Distinct(new PlanProjectionForCampaignExport.AudienceEqualityComparer()).ToList();
                     ProposalQuarterTableData newTable = new ProposalQuarterTableData
                     {
                         QuarterLabel = $"Q{quarterGroup.Key.QuarterNumber} {quarterGroup.Key.QuarterYear}"
@@ -510,7 +510,7 @@ namespace Services.Broadcast.Entities.Campaign
             FlowChartQuarterTables.Add(tableData);
         }
 
-        //this is the adu table for a quarter
+        //this is the adu table for a quarter in flow chart table
         private void _CalculateAduTableData(
             List<FlowChartQuarterTableData> tables,
             List<PlanDto> plans)
@@ -518,11 +518,14 @@ namespace Services.Broadcast.Entities.Campaign
             var firstTable = tables.First();
             //check if we have an ADU table for this quarter
             var weeksStartDates = firstTable.WeeksStartDate.Select(w => Convert.ToDateTime(w));
-            var weeklyBreakdowns = plans.Select(x => 
-                _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(x.WeeklyBreakdownWeeks, x.ImpressionsPerUnit, x.CreativeLengths)
-                ).ToList();
 
-            if (!weeklyBreakdowns.Any(x => x.Any(y => weeksStartDates.Contains(y.StartDate) && y.Adu > 0)))
+            var aduInQuarter = plans.Sum(x =>
+                _WeeklyBreakdownEngine.CalculateADUWithDecimals(x.ImpressionsPerUnit
+                     , x.WeeklyBreakdownWeeks.Where(y => weeksStartDates.Contains(y.StartDate)).Sum(y => y.AduImpressions)
+                                 , x.Equivalized, x.CreativeLengths));
+
+            //return if no week in the quarter has ADU
+            if (aduInQuarter <= 0)
             {
                 return;
             }
@@ -535,11 +538,11 @@ namespace Services.Broadcast.Entities.Campaign
             tableData.Months = firstTable.Months;
             for (int i = 0; i < firstTable.WeeksStartDate.Count; i++)
             {
-                int thisWeekADUUnits = weeklyBreakdowns
-                    .SelectMany(x => x)
-                    .Where(y => y.StartDate.Equals(Convert.ToDateTime(firstTable.WeeksStartDate[i])))
-                    .Sum(y => y.Adu);
-
+                var thisWeekADUUnits = plans.Sum(x =>
+                    _WeeklyBreakdownEngine.CalculateADUWithDecimals(x.ImpressionsPerUnit
+                        , x.WeeklyBreakdownWeeks.Where(w => w.StartDate.Equals(Convert.ToDateTime(firstTable.WeeksStartDate[i])))
+                                .Sum(y => y.AduImpressions)
+                        , x.Equivalized, x.CreativeLengths));
                 if (thisWeekADUUnits > 0)
                 {
                     tableData.DistributionPercentages.Add(EMPTY_CELL);
@@ -560,8 +563,7 @@ namespace Services.Broadcast.Entities.Campaign
                 hiatusDaysThisWeek = hiatusDaysThisWeek.Distinct().ToList();
 
                 tableData.HiatusDays.Add(hiatusDaysThisWeek);
-                tableData.HiatusDaysFormattedValues
-                .Add(_GetHiatusDaysFormattedForWeek(hiatusDaysThisWeek));
+                tableData.HiatusDaysFormattedValues.Add(_GetHiatusDaysFormattedForWeek(hiatusDaysThisWeek));
             }
 
             _CalculateTotalsForAduTable(tableData);
@@ -569,11 +571,11 @@ namespace Services.Broadcast.Entities.Campaign
         }
 
         private void _PopulateFlowChartQuarterTableData(
-            List<ProjectedPlan> projectedPlans,
+            List<PlanProjectionForCampaignExport> planProjections,
             List<PlanDto> plans)
         {
-            var totalNumberOfImpressionsForExportedPlans = projectedPlans.Sum(x => x.GuaranteedAudience.TotalImpressions);
-            projectedPlans.GroupBy(x => new { x.QuarterNumber, x.QuarterYear })
+            var totalNumberOfImpressionsForExportedPlans = planProjections.Sum(x => x.GuaranteedAudience.TotalImpressions);
+            planProjections.GroupBy(x => new { x.QuarterNumber, x.QuarterYear })
                 .OrderBy(x => x.Key.QuarterYear).ThenBy(x => x.Key.QuarterNumber)
                 .ToList()
                 .ForEach(quarterGroup =>
@@ -672,7 +674,7 @@ namespace Services.Broadcast.Entities.Campaign
         }
 
         private void _PopulateContractQuarterTableData(
-            List<ProjectedPlan> projectedPlans,
+            List<PlanProjectionForCampaignExport> projectedPlans,
             List<PlanDto> plans)
         {
             projectedPlans.GroupBy(x => new { x.QuarterNumber, x.QuarterYear })
@@ -729,6 +731,7 @@ namespace Services.Broadcast.Entities.Campaign
             _CalculateContractTabTotals();
         }
 
+        //ADU table data for contract tab
         private void _CalculateAduTableData(
             QuarterDetailDto quarter,
             List<PlanDto> plans)
@@ -737,13 +740,12 @@ namespace Services.Broadcast.Entities.Campaign
                 .GetMediaWeeksByFlight(quarter.StartDate, quarter.EndDate)
                 .Select(x => x.StartDate).ToList();
 
-            var plansAndweeklyBreakdowns = plans.Select(x => new
-            {
-                Plan = x,
-                WeeklyBreakdown = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(x.WeeklyBreakdownWeeks, x.ImpressionsPerUnit, x.CreativeLengths)
-            }).ToList();
-
-            if (!plansAndweeklyBreakdowns.Any(x => x.WeeklyBreakdown.Any(y => weeksStartDates.Contains(y.StartDate) && y.Adu > 0)))
+            var aduInQuarter = plans.Sum(x =>
+                _WeeklyBreakdownEngine.CalculateADUWithDecimals(x.ImpressionsPerUnit
+                     , x.WeeklyBreakdownWeeks.Where(y => weeksStartDates.Contains(y.StartDate)).Sum(y => y.AduImpressions)
+                                 , x.Equivalized, x.CreativeLengths));
+            //return if no week in the quarter has ADU
+            if (aduInQuarter <= 0)
             {
                 return;
             }
@@ -754,31 +756,39 @@ namespace Services.Broadcast.Entities.Campaign
                 IsAduTable = true
             };
 
-            List<string> distinctSpotLengthsList = plansAndweeklyBreakdowns
-                .SelectMany(x => x.Plan.CreativeLengths.Select(y => y.SpotLengthId))
+            var plansAndweeklyBreakdowns = plans.Select(x => new
+            {
+                Plan = x,
+                WeeklyBreakdown = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(x.WeeklyBreakdownWeeks, x.ImpressionsPerUnit, x.CreativeLengths)
+            }).ToList();
+            List<int> distinctSpotLengthIdsList = plans
+                .SelectMany(x => x.CreativeLengths.Select(y => y.SpotLengthId))
                 .Distinct()
-                .Select(x => _AllSpotLengths.Single(y => y.Id == x).Display)
-                .OrderBy(x => Convert.ToInt32(x))
                 .ToList();
             foreach (var startDate in weeksStartDates)
             {
-                if (!plansAndweeklyBreakdowns.Any(x => x.WeeklyBreakdown.Any(y => y.StartDate.Equals(startDate) && y.Adu > 0)))
+                //continue if this week does not have ADU
+                if (plans.SelectMany(x => x.WeeklyBreakdownWeeks.Where(y => y.StartDate.Equals(startDate))).Sum(x => x.AduImpressions) <= 0)
                 {
                     continue;
                 }
-                foreach (string spotlength in distinctSpotLengthsList)
+                foreach (int spotlengthId in distinctSpotLengthIdsList)
                 {
-                    plansAndweeklyBreakdowns
-                    .GroupBy(x => new { SpotLength = spotlength, x.Plan.Equivalized })
+                    plans.Select(x => new
+                    {
+                        Weeks = x.WeeklyBreakdownWeeks.Where(y => y.SpotLengthId == spotlengthId && y.StartDate == startDate),
+                        Adu = _WeeklyBreakdownEngine.CalculateADUWithDecimals(x.ImpressionsPerUnit
+                            , x.WeeklyBreakdownWeeks.Where(y => y.SpotLengthId == spotlengthId && y.StartDate == startDate).Sum(y => y.AduImpressions)
+                            , x.Equivalized, x.CreativeLengths),
+                        x.Equivalized
+                    })
+                    .GroupBy(x => new { SpotLength = _AllSpotLengths.Single(w => w.Id == spotlengthId).Display, x.Equivalized })
                     .OrderBy(x => Convert.ToInt32(x.Key.SpotLength))
                     .ThenByDescending(x => x.Key.Equivalized)
                     .ToList()
                     .ForEach(group =>
                     {
-                        int weeklyAdu = group
-                            .SelectMany(x => x.WeeklyBreakdown)
-                            .Where(y => y.StartDate.Equals(startDate))
-                            .Sum(y => y.Adu);
+                        double weeklyAdu = group.ToList().Sum(y => y.Adu);
 
                         if (weeklyAdu > 0)
                         {
@@ -798,7 +808,6 @@ namespace Services.Broadcast.Entities.Campaign
                         }
                     });
                 }
-
             }
             _CalculateTotalsForContractADUTable(table, quarter.ShortFormatQuarterNumberFirst());
             ContractQuarterTables.Add(table);
@@ -843,7 +852,7 @@ namespace Services.Broadcast.Entities.Campaign
         private void _CalculateTotalsForContractADUTable(ContractQuarterTableData quarterTable, string quarterLabel)
         {
             //units are the third value in the row
-            int totalUnits = quarterTable.Rows.Sum(x => Convert.ToInt32(x[2]));
+            double totalUnits = quarterTable.Rows.Sum(x => Convert.ToDouble(x[2]));
 
             quarterTable.TotalRow = new List<object>
             {
@@ -1069,7 +1078,7 @@ namespace Services.Broadcast.Entities.Campaign
             CampaignEndQuarter = maxEndDate != null ? _QuarterCalculationEngine.GetQuarterRangeByDate(maxEndDate).ShortFormat() : string.Empty;
         }
 
-        private class ProjectedPlan
+        private class PlanProjectionForCampaignExport
         {
             public int QuarterNumber { get; set; }
             public int QuarterYear { get; set; }
