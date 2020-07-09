@@ -5762,17 +5762,17 @@
           "SpotLengthLabel": null,
           "TotalImpressions": 2640.0,
           "TotalRatingPoints": 1.0,
-          "VPVH": 1.15632596
+          "VPVH": 1.161
         },
         "HHData": {
-          "CPM": 28.908149039546983865379143961,
-          "CPP": 34965.034965034965034965034965,
+          "CPM": 29.024999999999996371875,
+          "CPP": 35106.368743007034500192136989,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
-          "TotalImpressions": 2283.093252,
-          "TotalRatingPoints": 1.8876,
+          "TotalImpressions": 2273.90180879,
+          "TotalRatingPoints": 1.88000076,
           "VPVH": 0.0
         },
         "SpotLengthLabel": "15 eq.",
@@ -5791,17 +5791,17 @@
           "SpotLengthLabel": null,
           "TotalImpressions": 2720.0,
           "TotalRatingPoints": 1.0,
-          "VPVH": 1.15632596
+          "VPVH": 1.161
         },
         "HHData": {
-          "CPM": 28.908149039546983865379143961,
-          "CPP": 34965.034965034965034965034965,
+          "CPM": 29.025000000000037668474264706,
+          "CPP": 35106.368743006946624461205083,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
-          "TotalImpressions": 2352.277896,
-          "TotalRatingPoints": 1.9448,
+          "TotalImpressions": 2342.8079242,
+          "TotalRatingPoints": 1.93697048,
           "VPVH": 0.0
         },
         "SpotLengthLabel": "30",
@@ -5820,17 +5820,17 @@
           "SpotLengthLabel": null,
           "TotalImpressions": 8000.0,
           "TotalRatingPoints": 3.0,
-          "VPVH": 1.15632596
+          "VPVH": 1.161
         },
         "HHData": {
-          "CPM": 28.908149039546983865379143961,
-          "CPP": 34965.034965034965034965034965,
+          "CPM": 29.02500000000001041271875,
+          "CPP": 35106.368743007004622443620141,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
-          "TotalImpressions": 6918.4644,
-          "TotalRatingPoints": 5.72,
+          "TotalImpressions": 6890.61154177,
+          "TotalRatingPoints": 5.69697201,
           "VPVH": 0.0
         },
         "SpotLengthLabel": "45 eq.",
@@ -5849,17 +5849,17 @@
           "SpotLengthLabel": null,
           "TotalImpressions": 2640.0,
           "TotalRatingPoints": 1.0,
-          "VPVH": 1.15632596
+          "VPVH": 1.161
         },
         "HHData": {
-          "CPM": 28.908149039546983865379143961,
-          "CPP": 34965.034965034965034965034965,
+          "CPM": 29.024999999999996371875,
+          "CPP": 35106.368743007034500192136989,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
-          "TotalImpressions": 2283.093252,
-          "TotalRatingPoints": 1.8876,
+          "TotalImpressions": 2273.90180879,
+          "TotalRatingPoints": 1.88000076,
           "VPVH": 0.0
         },
         "SpotLengthLabel": "60 eq.",
@@ -5878,17 +5878,17 @@
           "SpotLengthLabel": null,
           "TotalImpressions": 2640.0,
           "TotalRatingPoints": 1.0,
-          "VPVH": 1.15632596
+          "VPVH": 1.161
         },
         "HHData": {
-          "CPM": 28.908149039546983865379143961,
-          "CPP": 34965.034965034965034965034965,
+          "CPM": 29.024999999999996371875,
+          "CPP": 35106.368743007034500192136989,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
-          "TotalImpressions": 2283.093252,
-          "TotalRatingPoints": 1.8876,
+          "TotalImpressions": 2273.90180879,
+          "TotalRatingPoints": 1.88000076,
           "VPVH": 0.0
         },
         "SpotLengthLabel": "15 eq.",
@@ -5907,17 +5907,17 @@
           "SpotLengthLabel": null,
           "TotalImpressions": 2720.0,
           "TotalRatingPoints": 1.0,
-          "VPVH": 1.15632596
+          "VPVH": 1.161
         },
         "HHData": {
-          "CPM": 28.908149039546983865379143961,
-          "CPP": 34965.034965034965034965034965,
+          "CPM": 29.025000000000037668474264706,
+          "CPP": 35106.368743006946624461205083,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
-          "TotalImpressions": 2352.277896,
-          "TotalRatingPoints": 1.9448,
+          "TotalImpressions": 2342.8079242,
+          "TotalRatingPoints": 1.93697048,
           "VPVH": 0.0
         },
         "SpotLengthLabel": "30",
@@ -5936,17 +5936,17 @@
           "SpotLengthLabel": null,
           "TotalImpressions": 8000.0,
           "TotalRatingPoints": 3.0,
-          "VPVH": 1.15632596
+          "VPVH": 1.161
         },
         "HHData": {
-          "CPM": 28.908149039546983865379143961,
-          "CPP": 34965.034965034965034965034965,
+          "CPM": 29.02500000000001041271875,
+          "CPP": 35106.368743007004622443620141,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
-          "TotalImpressions": 6918.4644,
-          "TotalRatingPoints": 5.72,
+          "TotalImpressions": 6890.61154177,
+          "TotalRatingPoints": 5.69697201,
           "VPVH": 0.0
         },
         "SpotLengthLabel": "45 eq.",
@@ -5965,17 +5965,17 @@
           "SpotLengthLabel": null,
           "TotalImpressions": 2640.0,
           "TotalRatingPoints": 1.0,
-          "VPVH": 1.15632596
+          "VPVH": 1.161
         },
         "HHData": {
-          "CPM": 28.908149039546983865379143961,
-          "CPP": 34965.034965034965034965034965,
+          "CPM": 29.024999999999996371875,
+          "CPP": 35106.368743007034500192136989,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
-          "TotalImpressions": 2283.093252,
-          "TotalRatingPoints": 1.8876,
+          "TotalImpressions": 2273.90180879,
+          "TotalRatingPoints": 1.88000076,
           "VPVH": 0.0
         },
         "SpotLengthLabel": "60 eq.",
@@ -5994,17 +5994,17 @@
           "SpotLengthLabel": null,
           "TotalImpressions": 1320.0,
           "TotalRatingPoints": 0.5,
-          "VPVH": 1.15632596
+          "VPVH": 1.138
         },
         "HHData": {
-          "CPM": 28.908149039546983865379143961,
-          "CPP": 34965.034965034965034965034965,
+          "CPM": 28.449999999999962497727272727,
+          "CPP": 34410.893737762222150865099985,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
-          "TotalImpressions": 1141.546626,
-          "TotalRatingPoints": 0.9438,
+          "TotalImpressions": 1159.92970123,
+          "TotalRatingPoints": 0.95899863,
           "VPVH": 0.0
         },
         "SpotLengthLabel": "15 eq.",
@@ -6023,17 +6023,17 @@
           "SpotLengthLabel": null,
           "TotalImpressions": 1360.0,
           "TotalRatingPoints": 0.5,
-          "VPVH": 1.15632596
+          "VPVH": 1.138
         },
         "HHData": {
-          "CPM": 28.908149039546983865379143961,
-          "CPP": 34965.034965034965034965034965,
+          "CPM": 28.450000000000070706617647059,
+          "CPP": 34410.893737762218984796629847,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
-          "TotalImpressions": 1176.138948,
-          "TotalRatingPoints": 0.9724,
+          "TotalImpressions": 1195.07908612,
+          "TotalRatingPoints": 0.9880592,
           "VPVH": 0.0
         },
         "SpotLengthLabel": "30",
@@ -6052,17 +6052,17 @@
           "SpotLengthLabel": null,
           "TotalImpressions": 4000.0,
           "TotalRatingPoints": 1.5,
-          "VPVH": 1.15632596
+          "VPVH": 1.138
         },
         "HHData": {
-          "CPM": 28.908149039546983865379143961,
-          "CPP": 34965.034965034965034965034965,
+          "CPM": 28.44999999999999928875,
+          "CPP": 34410.893737762232915497898454,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
-          "TotalImpressions": 3459.2322,
-          "TotalRatingPoints": 2.86,
+          "TotalImpressions": 3514.93848858,
+          "TotalRatingPoints": 2.90605646,
           "VPVH": 0.0
         },
         "SpotLengthLabel": "45 eq.",
@@ -6081,17 +6081,17 @@
           "SpotLengthLabel": null,
           "TotalImpressions": 1320.0,
           "TotalRatingPoints": 0.5,
-          "VPVH": 1.15632596
+          "VPVH": 1.138
         },
         "HHData": {
-          "CPM": 28.908149039546983865379143961,
-          "CPP": 34965.034965034965034965034965,
+          "CPM": 28.449999999999962497727272727,
+          "CPP": 34410.893737762222150865099985,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
-          "TotalImpressions": 1141.546626,
-          "TotalRatingPoints": 0.9438,
+          "TotalImpressions": 1159.92970123,
+          "TotalRatingPoints": 0.95899863,
           "VPVH": 0.0
         },
         "SpotLengthLabel": "60 eq.",
@@ -6115,14 +6115,14 @@
         "VPVH": 0.0
       },
       "HHData": {
-        "CPM": 28.908149039546983865379143961,
-        "CPP": 34965.034965034965034965034965,
+        "CPM": 28.908148083318771548000709303,
+        "CPP": 34965.033808456075227521480256,
         "DaypartCode": null,
         "Impressions": 0.0,
         "RatingPoints": 0.0,
         "SpotLengthLabel": null,
-        "TotalImpressions": 34592.322,
-        "TotalRatingPoints": 28.6,
+        "TotalImpressions": 34592.32314425,
+        "TotalRatingPoints": 28.60000095,
         "VPVH": 0.0
       },
       "SpotLengthLabel": null,
@@ -6147,17 +6147,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 1584.0,
             "TotalRatingPoints": 0.6,
-            "VPVH": 1.15632596
+            "VPVH": 1.161
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 29.024999999999953823863636364,
+            "CPP": 35106.368743006847764263906689,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 1369.8559512,
-            "TotalRatingPoints": 1.13256,
+            "TotalImpressions": 1364.34108527,
+            "TotalRatingPoints": 1.12800046,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "15 eq.",
@@ -6176,17 +6176,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 1632.0,
             "TotalRatingPoints": 0.6,
-            "VPVH": 1.15632596
+            "VPVH": 1.161
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 29.025000000000078965073529412,
+            "CPP": 35106.368743007067453591236453,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 1411.3667376,
-            "TotalRatingPoints": 1.16688,
+            "TotalImpressions": 1405.68475452,
+            "TotalRatingPoints": 1.16218229,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "30",
@@ -6205,17 +6205,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 4800.0,
             "TotalRatingPoints": 1.8,
-            "VPVH": 1.15632596
+            "VPVH": 1.161
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 29.024999999999996371875,
+            "CPP": 35106.368743007025163395725474,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 4151.07864,
-            "TotalRatingPoints": 3.432,
+            "TotalImpressions": 4134.36692506,
+            "TotalRatingPoints": 3.4181832,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "45 eq.",
@@ -6234,17 +6234,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 1584.0,
             "TotalRatingPoints": 0.6,
-            "VPVH": 1.15632596
+            "VPVH": 1.161
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 29.024999999999953823863636364,
+            "CPP": 35106.368743006847764263906689,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 1369.8559512,
-            "TotalRatingPoints": 1.13256,
+            "TotalImpressions": 1364.34108527,
+            "TotalRatingPoints": 1.12800046,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "60 eq.",
@@ -6263,17 +6263,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 1584.0,
             "TotalRatingPoints": 0.6,
-            "VPVH": 1.15632596
+            "VPVH": 1.161
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 29.024999999999953823863636364,
+            "CPP": 35106.368743006847764263906689,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 1369.8559512,
-            "TotalRatingPoints": 1.13256,
+            "TotalImpressions": 1364.34108527,
+            "TotalRatingPoints": 1.12800046,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "15 eq.",
@@ -6292,17 +6292,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 1632.0,
             "TotalRatingPoints": 0.6,
-            "VPVH": 1.15632596
+            "VPVH": 1.161
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 29.025000000000078965073529412,
+            "CPP": 35106.368743007067453591236453,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 1411.3667376,
-            "TotalRatingPoints": 1.16688,
+            "TotalImpressions": 1405.68475452,
+            "TotalRatingPoints": 1.16218229,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "30",
@@ -6321,17 +6321,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 4800.0,
             "TotalRatingPoints": 1.8,
-            "VPVH": 1.15632596
+            "VPVH": 1.161
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 29.024999999999996371875,
+            "CPP": 35106.368743007025163395725474,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 4151.07864,
-            "TotalRatingPoints": 3.432,
+            "TotalImpressions": 4134.36692506,
+            "TotalRatingPoints": 3.4181832,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "45 eq.",
@@ -6350,17 +6350,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 1584.0,
             "TotalRatingPoints": 0.6,
-            "VPVH": 1.15632596
+            "VPVH": 1.161
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 29.024999999999953823863636364,
+            "CPP": 35106.368743006847764263906689,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 1369.8559512,
-            "TotalRatingPoints": 1.13256,
+            "TotalImpressions": 1364.34108527,
+            "TotalRatingPoints": 1.12800046,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "60 eq.",
@@ -6379,17 +6379,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 792.0,
             "TotalRatingPoints": 0.3,
-            "VPVH": 1.15632596
+            "VPVH": 1.138
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 28.450000000000003376641414141,
+            "CPP": 34410.893737762222150865099985,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 684.9279756,
-            "TotalRatingPoints": 0.56628,
+            "TotalImpressions": 695.95782074,
+            "TotalRatingPoints": 0.57539918,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "15 eq.",
@@ -6408,17 +6408,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 816.0,
             "TotalRatingPoints": 0.3,
-            "VPVH": 1.15632596
+            "VPVH": 1.138
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 28.449999999999991353431372549,
+            "CPP": 34410.893737762253811549801364,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 705.6833688,
-            "TotalRatingPoints": 0.58344,
+            "TotalImpressions": 717.04745167,
+            "TotalRatingPoints": 0.59283552,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "30",
@@ -6437,17 +6437,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 2400.0,
             "TotalRatingPoints": 0.9,
-            "VPVH": 1.15632596
+            "VPVH": 1.138
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 28.44999999999999928875,
+            "CPP": 34410.893737762311856138420558,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 2075.53932,
-            "TotalRatingPoints": 1.716,
+            "TotalImpressions": 2108.96309315,
+            "TotalRatingPoints": 1.74363388,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "45 eq.",
@@ -6466,17 +6466,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 792.0,
             "TotalRatingPoints": 0.3,
-            "VPVH": 1.15632596
+            "VPVH": 1.138
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 28.450000000000003376641414141,
+            "CPP": 34410.893737762222150865099985,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 684.9279756,
-            "TotalRatingPoints": 0.56628,
+            "TotalImpressions": 695.95782074,
+            "TotalRatingPoints": 0.57539918,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "60 eq.",
@@ -6500,14 +6500,14 @@
           "VPVH": 0.0
         },
         "HHData": {
-          "CPM": 28.908149039546983865379143961,
-          "CPP": 34965.034965034965034965034965,
+          "CPM": 28.908148083318799404034896206,
+          "CPP": 34965.033808456034475735172706,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
-          "TotalImpressions": 20755.3932,
-          "TotalRatingPoints": 17.16,
+          "TotalImpressions": 20755.39388655,
+          "TotalRatingPoints": 17.16000057,
           "VPVH": 0.0
         },
         "SpotLengthLabel": null,
@@ -6531,17 +6531,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 1056.0,
             "TotalRatingPoints": 0.4,
-            "VPVH": 1.15632596
+            "VPVH": 1.161
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 29.024999999999996371875,
+            "CPP": 35106.368743006987816210079414,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 913.2373008,
-            "TotalRatingPoints": 0.75504,
+            "TotalImpressions": 909.56072351,
+            "TotalRatingPoints": 0.7520003,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "15 eq.",
@@ -6560,17 +6560,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 1088.0,
             "TotalRatingPoints": 0.4,
-            "VPVH": 1.15632596
+            "VPVH": 1.161
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 29.025000000000006696024816176,
+            "CPP": 35106.368743006991935384966847,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 940.9111584,
-            "TotalRatingPoints": 0.77792,
+            "TotalImpressions": 937.12316968,
+            "TotalRatingPoints": 0.77478819,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "30",
@@ -6589,17 +6589,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 3200.0,
             "TotalRatingPoints": 1.2,
-            "VPVH": 1.15632596
+            "VPVH": 1.161
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 29.025000000000031473984375,
+            "CPP": 35106.368743006973811015462141,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 2767.38576,
-            "TotalRatingPoints": 2.288,
+            "TotalImpressions": 2756.24461671,
+            "TotalRatingPoints": 2.2787888,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "45 eq.",
@@ -6618,17 +6618,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 1056.0,
             "TotalRatingPoints": 0.4,
-            "VPVH": 1.15632596
+            "VPVH": 1.161
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 29.024999999999996371875,
+            "CPP": 35106.368743006987816210079414,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 913.2373008,
-            "TotalRatingPoints": 0.75504,
+            "TotalImpressions": 909.56072351,
+            "TotalRatingPoints": 0.7520003,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "60 eq.",
@@ -6647,17 +6647,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 1056.0,
             "TotalRatingPoints": 0.4,
-            "VPVH": 1.15632596
+            "VPVH": 1.161
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 29.024999999999996371875,
+            "CPP": 35106.368743006987816210079414,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 913.2373008,
-            "TotalRatingPoints": 0.75504,
+            "TotalImpressions": 909.56072351,
+            "TotalRatingPoints": 0.7520003,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "15 eq.",
@@ -6676,17 +6676,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 1088.0,
             "TotalRatingPoints": 0.4,
-            "VPVH": 1.15632596
+            "VPVH": 1.161
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 29.025000000000006696024816176,
+            "CPP": 35106.368743006991935384966847,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 940.9111584,
-            "TotalRatingPoints": 0.77792,
+            "TotalImpressions": 937.12316968,
+            "TotalRatingPoints": 0.77478819,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "30",
@@ -6705,17 +6705,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 3200.0,
             "TotalRatingPoints": 1.2,
-            "VPVH": 1.15632596
+            "VPVH": 1.161
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 29.025000000000031473984375,
+            "CPP": 35106.368743006973811015462141,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 2767.38576,
-            "TotalRatingPoints": 2.288,
+            "TotalImpressions": 2756.24461671,
+            "TotalRatingPoints": 2.2787888,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "45 eq.",
@@ -6734,17 +6734,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 1056.0,
             "TotalRatingPoints": 0.4,
-            "VPVH": 1.15632596
+            "VPVH": 1.161
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 29.024999999999996371875,
+            "CPP": 35106.368743006987816210079414,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 913.2373008,
-            "TotalRatingPoints": 0.75504,
+            "TotalImpressions": 909.56072351,
+            "TotalRatingPoints": 0.7520003,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "60 eq.",
@@ -6763,17 +6763,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 528.0,
             "TotalRatingPoints": 0.2,
-            "VPVH": 1.15632596
+            "VPVH": 1.138
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 28.450000000000023816098484849,
+            "CPP": 34410.893737762222150865099985,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 456.6186504,
-            "TotalRatingPoints": 0.37752,
+            "TotalImpressions": 463.97188049,
+            "TotalRatingPoints": 0.38359945,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "15 eq.",
@@ -6792,17 +6792,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 544.0,
             "TotalRatingPoints": 0.2,
-            "VPVH": 1.15632596
+            "VPVH": 1.138
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 28.450000000000011191727941176,
+            "CPP": 34410.893737762253811549801364,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 470.4555792,
-            "TotalRatingPoints": 0.38896,
+            "TotalImpressions": 478.03163445,
+            "TotalRatingPoints": 0.39522368,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "30",
@@ -6821,17 +6821,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 1600.0,
             "TotalRatingPoints": 0.6,
-            "VPVH": 1.15632596
+            "VPVH": 1.138
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 28.44999999999999928875,
+            "CPP": 34410.893737762114504537115298,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 1383.69288,
-            "TotalRatingPoints": 1.144,
+            "TotalImpressions": 1405.97539543,
+            "TotalRatingPoints": 1.16242258,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "45 eq.",
@@ -6850,17 +6850,17 @@
             "SpotLengthLabel": null,
             "TotalImpressions": 528.0,
             "TotalRatingPoints": 0.2,
-            "VPVH": 1.15632596
+            "VPVH": 1.138
           },
           "HHData": {
-            "CPM": 28.908149039546983865379143961,
-            "CPP": 34965.034965034965034965034965,
+            "CPM": 28.450000000000023816098484849,
+            "CPP": 34410.893737762222150865099985,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
-            "TotalImpressions": 456.6186504,
-            "TotalRatingPoints": 0.37752,
+            "TotalImpressions": 463.97188049,
+            "TotalRatingPoints": 0.38359945,
             "VPVH": 0.0
           },
           "SpotLengthLabel": "60 eq.",
@@ -6884,14 +6884,14 @@
           "VPVH": 0.0
         },
         "HHData": {
-          "CPM": 28.908149039546983865379143961,
-          "CPP": 34965.034965034965034965034965,
+          "CPM": 28.908148083318729763949428949,
+          "CPP": 34965.033808456136355200941579,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
-          "TotalImpressions": 13836.9288,
-          "TotalRatingPoints": 11.44,
+          "TotalImpressions": 13836.9292577,
+          "TotalRatingPoints": 11.44000038,
           "VPVH": 0.0
         },
         "SpotLengthLabel": null,

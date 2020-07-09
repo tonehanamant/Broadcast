@@ -346,7 +346,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         plan.TargetRatingPoints.Value,
                         plan.Budget.Value,
                         newWeeklyBreakdownItem,
-                        impressions);
+                        impressions,
+                        roundRatings: false);
 
                     newWeeklyBreakdownItem.PercentageOfWeek = _CalculatePercentageOfWeek(impressions, week.Impressions);
 
@@ -398,7 +399,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             plan.TargetRatingPoints.Value,
                             plan.Budget.Value,
                             newWeeklyBreakdownItem,
-                            impressions);
+                            impressions,
+                            roundRatings: false);
 
                         newWeeklyBreakdownItem.PercentageOfWeek = _CalculatePercentageOfWeek(impressions, week.Impressions);
 
@@ -449,7 +451,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         plan.TargetRatingPoints.Value,
                         plan.Budget.Value,
                         newWeeklyBreakdownItem,
-                        impressions);
+                        impressions,
+                        roundRatings: false);
 
                     newWeeklyBreakdownItem.PercentageOfWeek = _CalculatePercentageOfWeek(impressions, week.WeeklyImpressions);
 
@@ -635,7 +638,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     ActiveDays = item.ActiveDays,
                     DaypartCodeId = item.DaypartCodeId,
                     WeeklyAdu = item.Adu,
-                    WeeklyUnits = item.Units
+                    WeeklyUnits = item.Units,
                 };
 
                 _UpdateGoalsForWeeklyBreakdownItem(
@@ -643,7 +646,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                        plan.TargetRatingPoints.Value,
                        plan.Budget.Value,
                        newWeeklyBreakdownItem,
-                       item.Impressions);
+                       item.Impressions,
+                       roundRatings: true);
 
                 result.Add(newWeeklyBreakdownItem);
             }
@@ -664,9 +668,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             foreach (var item in weeklyBreakdownByWeekBySpotLength)
             {
-                var impressionsForWeek = item.Impressions;
-                var weeklyRatio = impressionsForWeek / plan.TargetImpressions.Value;
-
                 var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
                 {
                     WeekNumber = item.WeekNumber,
@@ -678,11 +679,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     SpotLengthId = item.SpotLengthId,
                     WeeklyAdu = item.Adu,
                     WeeklyUnits = item.Units,
-                    WeeklyImpressions = impressionsForWeek,
-                    WeeklyImpressionsPercentage = Math.Round(100 * weeklyRatio),
-                    WeeklyRatings = item.RatingPoints,
-                    WeeklyBudget = item.Budget
                 };
+
+                _UpdateGoalsForWeeklyBreakdownItem(
+                    plan.TargetImpressions.Value,
+                    plan.TargetRatingPoints.Value,
+                    plan.Budget.Value,
+                    newWeeklyBreakdownItem,
+                    item.Impressions,
+                    roundRatings: true);
+
                 result.Add(newWeeklyBreakdownItem);
             }
 
@@ -719,7 +725,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                        plan.TargetRatingPoints.Value,
                        plan.Budget.Value,
                        newWeeklyBreakdownItem,
-                       week.Impressions);
+                       week.Impressions,
+                       roundRatings: true);
 
                 result.Add(newWeeklyBreakdownItem);
             }
@@ -1112,32 +1119,22 @@ namespace Services.Broadcast.ApplicationServices.Plan
         }
 
         private void _UpdateGoalsForWeeklyBreakdownItem(
-            WeeklyBreakdownRequest request,
-            WeeklyBreakdownWeek breakdownItem,
-            double impressions)
-        {
-            _UpdateGoalsForWeeklyBreakdownItem(
-                request.TotalImpressions,
-                request.TotalRatings,
-                request.TotalBudget,
-                breakdownItem,
-                impressions);
-        }
-
-        private void _UpdateGoalsForWeeklyBreakdownItem(
             double totalImpressions,
             double totalRatings,
             decimal totalBudget,
             WeeklyBreakdownWeek breakdownItem,
-            double impressions)
+            double impressions,
+            bool roundRatings)
         {
             var budgetPerOneImpression = totalBudget / (decimal)totalImpressions;
             var weeklyRatio = impressions / totalImpressions;
 
             breakdownItem.WeeklyImpressions = impressions;
             breakdownItem.WeeklyImpressionsPercentage = Math.Round(100 * weeklyRatio);
-            breakdownItem.WeeklyRatings = ProposalMath.RoundDownWithDecimals(totalRatings * weeklyRatio, 1);
             breakdownItem.WeeklyBudget = (decimal)impressions * budgetPerOneImpression;
+
+            var ratings = totalRatings * weeklyRatio;
+            breakdownItem.WeeklyRatings = roundRatings ? ProposalMath.RoundDownWithDecimals(ratings, 1) : ratings;
         }
 
         private void _DispatchPlanAggregation(PlanDto plan, bool aggregatePlanSynchronously)

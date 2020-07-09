@@ -2786,21 +2786,51 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         DaypartCodeId = 2,
                         WeightingGoalPercent = 20,
                         StartTimeSeconds = 39600,
-                        EndTimeSeconds = 46799
+                        EndTimeSeconds = 46799,
+                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                        {
+                            new PlanDaypartVpvhForAudienceDto
+                            {
+                                AudienceId = 1,
+                                Vpvh = 0.4,
+                                VpvhType = VpvhTypeEnum.FourBookAverage,
+                                StartingPoint = new DateTime(2020, 2, 10)
+                            }
+                        }
                     },
                     new PlanDaypartDto
                     {
                         DaypartCodeId = 6,
                         WeightingGoalPercent = 40,
                         StartTimeSeconds = 54000,
-                        EndTimeSeconds = 64799
+                        EndTimeSeconds = 64799,
+                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                        {
+                            new PlanDaypartVpvhForAudienceDto
+                            {
+                                AudienceId = 1,
+                                Vpvh = 0.5,
+                                VpvhType = VpvhTypeEnum.FourBookAverage,
+                                StartingPoint = new DateTime(2020, 2, 10)
+                            }
+                        }
                     },
                     new PlanDaypartDto
                     {
                         DaypartCodeId = 14,
                         WeightingGoalPercent = null,
                         StartTimeSeconds = 21600,
-                        EndTimeSeconds = 32399
+                        EndTimeSeconds = 32399,
+                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                        {
+                            new PlanDaypartVpvhForAudienceDto
+                            {
+                                AudienceId = 1,
+                                Vpvh = 0.6,
+                                VpvhType = VpvhTypeEnum.FourBookAverage,
+                                StartingPoint = new DateTime(2020, 2, 10)
+                            }
+                        }
                     }
                 }                
             };
