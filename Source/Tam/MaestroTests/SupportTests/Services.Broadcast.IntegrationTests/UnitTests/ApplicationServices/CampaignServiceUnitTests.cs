@@ -111,42 +111,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Arrange
             var agency = new AgencyDto { Id = 1, Name = "Name1" };
             var advertiser = new AdvertiserDto { Id = 2, Name = "Name2", AgencyId = 1 };
-            var getCampaignsReturn = new List<CampaignListItemDto>
-            {
-                new CampaignListItemDto
-                {
-                    Id = 1,
-                    Name = "CampaignOne",
-                    Agency = agency,
-                    Advertiser = advertiser,
-                    Notes = "Notes for CampaignOne.",
-                    ModifiedBy = "TestUser",
-                    ModifiedDate = new DateTime(2017,10,17)
-                },
-                new CampaignListItemDto
-                {
-                    Id = 2,
-                    Name = "CampaignTwo",
-                    Agency = agency,
-                    Advertiser = advertiser,
-                    Notes = "Notes for CampaignTwo.",
-                    ModifiedBy = "TestUser",
-                    ModifiedDate = new DateTime(2017,10,17)
-                },
-                new CampaignListItemDto
-                {
-                    Id = 3,
-                    Name = "CampaignThree",
-                    Agency = agency,
-                    Advertiser = advertiser,
-                    Notes = "Notes for CampaignThree.",
-                    ModifiedBy = "TestUser",
-                    ModifiedDate = new DateTime(2017,10,17)
-                }
-            };
 
-            _CampaignRepositoryMock.Setup(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<PlanStatusEnum>())).Returns(_GetCampaignWithsummeriesReturn(agency, advertiser));
-            _QuarterCalculationEngineMock.Setup(x => x.GetQuarterDateRange(2, 2019)).Returns(new DateRange(new DateTime(2008, 12, 29), new DateTime(2009, 3, 29)));
+            _CampaignRepositoryMock.Setup(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>()
+                , It.IsAny<PlanStatusEnum>())).Returns(_GetCampaignWithsummeriesReturn(agency, advertiser));
+            _QuarterCalculationEngineMock.Setup(x => x.GetQuarterDateRange(2, 2019)).Returns(new DateRange(new DateTime(2008, 12, 29)
+                , new DateTime(2009, 3, 29)));
 
             _TrafficApiCacheMock
                 .Setup(x => x.GetAgency(It.IsAny<int>()))
@@ -170,7 +139,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             }, _CurrentDate);
 
             // Assert
-            _CampaignRepositoryMock.Verify(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<PlanStatusEnum>()), Times.Once);
+            _CampaignRepositoryMock.Verify(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>()
+                , It.IsAny<PlanStatusEnum>()), Times.Once);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
@@ -181,47 +151,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Arrange
             var agency = new AgencyDto { Id = 1, Name = "Name1" };
             var advertiser = new AdvertiserDto { Id = 2, Name = "Name2", AgencyId = 1 };
-            var getCampaignsReturn = new List<CampaignListItemDto>
-            {
-                new CampaignListItemDto
-                {
-                    Id = 1,
-                    Name = "CampaignOne",
-                    Agency = agency,
-                    Advertiser = advertiser,
-                    Notes = "Notes for CampaignOne.",
-                    ModifiedBy = "TestUser",
-                    ModifiedDate = new DateTime(2017,10,17)
-                },
-                new CampaignListItemDto
-                {
-                    Id = 2,
-                    Name = "CampaignTwo",
-                    Agency = agency,
-                    Advertiser = advertiser,
-                    Notes = "Notes for CampaignTwo.",
-                    ModifiedBy = "TestUser",
-                    ModifiedDate = new DateTime(2017,10,17)
-                },
-                new CampaignListItemDto
-                {
-                    Id = 3,
-                    Name = "CampaignThree",
-                    Agency = agency,
-                    Advertiser = advertiser,
-                    Notes = "Notes for CampaignThree.",
-                    ModifiedBy = "TestUser",
-                    ModifiedDate = new DateTime(2017,10,17)
-                }
-            };
 
-            _CampaignRepositoryMock.Setup(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null)).Returns(_GetCampaignWithsummeriesReturn(agency, advertiser));
+            _CampaignRepositoryMock.Setup(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null))
+                .Returns(_GetCampaignWithsummeriesReturn(agency, advertiser));
             _QuarterCalculationEngineMock.Setup(x => x.GetQuarterRangeByDate(_CurrentDate)).Returns(new QuarterDetailDto
             {
                 Year = 2019,
                 Quarter = 2
             });
-            _QuarterCalculationEngineMock.Setup(x => x.GetQuarterDateRange(2, 2019)).Returns(new DateRange(new DateTime(2008, 12, 29), new DateTime(2009, 3, 29)));
+            _QuarterCalculationEngineMock.Setup(x => x.GetQuarterDateRange(2, 2019)).Returns(new DateRange(new DateTime(2008, 12, 29)
+                , new DateTime(2009, 3, 29)));
 
             _TrafficApiCacheMock
                 .Setup(x => x.GetAgency(It.IsAny<int>()))
@@ -239,95 +178,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert
             _CampaignRepositoryMock.Verify(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null), Times.Once);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-        }
-
-        private static List<CampaignWithSummary> _GetCampaignWithsummeriesReturn(AgencyDto agency, AdvertiserDto advertiser)
-        {
-            return new List<CampaignWithSummary>
-            {
-                new CampaignWithSummary
-                {
-                    Campaign = new CampaignDto
-                    {
-                        Id = 1,
-                        Name = "CampaignOne",
-                        AgencyId = agency.Id,
-                        AdvertiserId = advertiser.Id,
-                        Notes = "Notes for CampaignOne.",
-                        ModifiedBy = "TestUser",
-                        ModifiedDate = new DateTime(2017,10,17),
-                        CampaignStatus = PlanStatusEnum.Working
-                    },
-                },
-                new CampaignWithSummary
-                {
-                    Campaign = new CampaignDto
-                    {
-                        Id = 2,
-                        Name = "CampaignTwo",
-                        AgencyId = agency.Id,
-                        AdvertiserId = advertiser.Id,
-                        Notes = "Notes for CampaignTwo.",
-                        ModifiedBy = "TestUser",
-                        ModifiedDate = new DateTime(2017,10,17),
-                        CampaignStatus = PlanStatusEnum.Working
-                    }
-                },
-                new CampaignWithSummary
-                {
-                    Campaign = new CampaignDto
-                    {
-                        Id = 3,
-                        Name = "CampaignThree",
-                        AgencyId = agency.Id,
-                        AdvertiserId = advertiser.Id,
-                        Notes = "Notes for CampaignThree.",
-                        ModifiedBy = "TestUser",
-                        ModifiedDate = new DateTime(2017,10,17),
-                        CampaignStatus = PlanStatusEnum.Working
-                    }
-                }
-            };
-        }
-
-        private static List<CampaignListItemDto> _GetCampaignsReturn(AgencyDto agency, AdvertiserDto advertiser)
-        {
-            return new List<CampaignListItemDto>
-            {
-                new CampaignListItemDto
-                {
-                    Id = 1,
-                    Name = "CampaignOne",
-                    Agency = agency,
-                    Advertiser = advertiser,
-                    Notes = "Notes for CampaignOne.",
-                    ModifiedBy = "TestUser",
-                    ModifiedDate = new DateTime(2017,10,17),
-                    CampaignStatus = PlanStatusEnum.Working
-                },
-                new CampaignListItemDto
-                {
-                    Id = 2,
-                    Name = "CampaignTwo",
-                    Agency = agency,
-                    Advertiser = advertiser,
-                    Notes = "Notes for CampaignTwo.",
-                    ModifiedBy = "TestUser",
-                    ModifiedDate = new DateTime(2017,10,17),
-                    CampaignStatus = PlanStatusEnum.Working
-                },
-                new CampaignListItemDto
-                {
-                    Id = 3,
-                    Name = "CampaignThree",
-                    Agency = agency,
-                    Advertiser = advertiser,
-                    Notes = "Notes for CampaignThree.",
-                    ModifiedBy = "TestUser",
-                    ModifiedDate = new DateTime(2017,10,17),
-                    CampaignStatus = PlanStatusEnum.Working
-                }
-            };
         }
 
         [Test]
@@ -508,7 +358,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
             _CampaignRepositoryMock.Setup(x => x.GetCampaignsDateRanges(null)).Returns(getCampaignsDateRangesReturn);
 
-
             _QuarterCalculationEngineMock
                 .Setup(x => x.GetQuartersForDateRanges(It.IsAny<List<DateRange>>()))
                 .Returns(new List<QuarterDetailDto>
@@ -556,32 +405,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(3, campaignQuarters.Quarters.Count);
             Assert.AreEqual(3, campaignQuarters.DefaultQuarter.Quarter);
             Assert.AreEqual(2019, campaignQuarters.DefaultQuarter.Year);
-        }
-
-        [Test]
-        public void SaveDoesNotTriggersAggregation()
-        {
-            const int newCampaignId = 1;
-            var campaign = new SaveCampaignDto
-            {
-                Id = 0,
-                Name = "CampaignOne",
-                AdvertiserId = 1,
-                AgencyId = 1,
-                Notes = "Notes for CampaignOne."
-            };
-
-            _CampaignRepositoryMock
-                .Setup(x => x.CreateCampaign(It.IsAny<SaveCampaignDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
-                .Returns(newCampaignId);
-            _CampaignRepositoryMock.Setup(x => x.GetCampaignsDateRanges(It.IsAny<PlanStatusEnum?>())).Returns(new List<DateRange>());
-            _CampaignSummaryRepositoryMock.Setup(s => s.SaveSummary(It.IsAny<CampaignSummaryDto>())).Returns(1);
-
-            var tc = _BuildCampaignService();
-
-            tc.SaveCampaign(campaign, _User, _CurrentDate);
-
-            _CampaignAggregationJobTriggerMock.Verify(s => s.TriggerJob(newCampaignId, _User), Times.Never);
         }
 
         [Test]
@@ -634,11 +457,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual("Error from SaveSummary", caught.Message);
             _CampaignAggregatorMock.Verify(s => s.Aggregate(campaignId), Times.Once);
             _CampaignSummaryRepositoryMock.Verify(s => s.SaveSummary(It.IsAny<CampaignSummaryDto>()), Times.Once);
-            _CampaignSummaryRepositoryMock.Verify(s => s.SetSummaryProcessingStatusToError(campaignId, $"Exception caught during processing : Error from SaveSummary"), Times.Once);
+            _CampaignSummaryRepositoryMock.Verify(s => 
+                s.SetSummaryProcessingStatusToError(campaignId, $"Exception caught during processing : Error from SaveSummary"), Times.Once);
         }
 
         [Test]
-        public void CanNotGenerateReport_WhenCampaignIsLocked()
+        public void CanNotGenerateCampaignExport_WhenCampaignIsLocked()
         {
             // Arrange
             const int campaignId = 5;
@@ -800,7 +624,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        public void CanNotGenerateReport_WhenPlanIsLocked()
+        public void CanNotGenerateCampaignExport_WhenPlanIsLocked()
         {
             // Arrange
             const int campaignId = 5;
@@ -856,7 +680,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        public void CanNotGenerateReport_WhenPlanAggregation_IsInProgress()
+        public void CanNotGenerateCampaignExport_WhenPlanAggregation_IsInProgress()
         {
             // Arrange
             const int campaignId = 5;
@@ -904,7 +728,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        public void CanNotGenerateReport_WhenPlanAggregation_HasFailed()
+        public void CanNotGenerateCampaignExport_WhenPlanAggregation_HasFailed()
         {
             // Arrange
             const int campaignId = 5;
@@ -952,7 +776,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        public void ThrowsException_OnProgramLineupReportGeneration_WhenNoPlansSelected()
+        public void ThrowsException_ProgramLineup_WhenNoPlansSelected()
         {
             // Arrange
             var expectedMessage = $"Choose at least one plan";
@@ -971,7 +795,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        public void ThrowsException_OnProgramLineupReportGeneration_WhenNoPricingRunsDone()
+        public void ThrowsException_ProgramLineup_WhenNoPricingRunsDone()
         {
             // Arrange
             const string expectedMessage = "There are no completed pricing runs for the chosen plan. Please run pricing";
@@ -1004,7 +828,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         [TestCase(BackgroundJobProcessingStatus.Failed, "The latest pricing run was failed. Please run pricing again or contact the support")]
         [TestCase(BackgroundJobProcessingStatus.Queued, "There is a pricing run in progress right now. Please wait until it is completed")]
         [TestCase(BackgroundJobProcessingStatus.Processing, "There is a pricing run in progress right now. Please wait until it is completed")]
-        public void ThrowsException_OnProgramLineupReportGeneration_WhenPricingJobStatusIsNotAcceptable(
+        public void ThrowsException_ProgramLineup_PricingJobIsNotAcceptable(
             BackgroundJobProcessingStatus jobStatus,
             string expectedMessage)
         {
@@ -1042,7 +866,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void ReturnsData_ForProgramLineupReport_45spot_notEquivalized()
+        public void ReturnsData_ProgramLineupReport_45UnEquivalized()
         {
             // Arrange
             const int firstPlanId = 1;
@@ -1273,7 +1097,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void ReturnsData_ForProgramLineupReport_45spot_Equivalized()
+        public void ReturnsData_ProgramLineup_45Equivalized()
         {
             // Arrange
             const int firstPlanId = 1;
@@ -1351,7 +1175,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void ReturnsData_ForProgramLineupReport_30spot_Equivalized()
+        public void ReturnsData_ProgramLineup_30Equivalized()
         {
             // Arrange
             const int firstPlanId = 1;
@@ -1429,7 +1253,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void ProgramLineupReport_RollupStationSpecificNewsPrograms()
+        public void ProgramLineup_RollupStationSpecificNewsPrograms()
         {
             // Arrange
             const int firstPlanId = 1;
@@ -2915,6 +2739,55 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new LookupDto { Id = 9, Display = "10" },
                 new LookupDto { Id = 10, Display = "150" }
                 };
+        }
+
+        private static List<CampaignWithSummary> _GetCampaignWithsummeriesReturn(AgencyDto agency, AdvertiserDto advertiser)
+        {
+            return new List<CampaignWithSummary>
+            {
+                new CampaignWithSummary
+                {
+                    Campaign = new CampaignDto
+                    {
+                        Id = 1,
+                        Name = "CampaignOne",
+                        AgencyId = agency.Id,
+                        AdvertiserId = advertiser.Id,
+                        Notes = "Notes for CampaignOne.",
+                        ModifiedBy = "TestUser",
+                        ModifiedDate = new DateTime(2017,10,17),
+                        CampaignStatus = PlanStatusEnum.Working
+                    },
+                },
+                new CampaignWithSummary
+                {
+                    Campaign = new CampaignDto
+                    {
+                        Id = 2,
+                        Name = "CampaignTwo",
+                        AgencyId = agency.Id,
+                        AdvertiserId = advertiser.Id,
+                        Notes = "Notes for CampaignTwo.",
+                        ModifiedBy = "TestUser",
+                        ModifiedDate = new DateTime(2017,10,17),
+                        CampaignStatus = PlanStatusEnum.Working
+                    }
+                },
+                new CampaignWithSummary
+                {
+                    Campaign = new CampaignDto
+                    {
+                        Id = 3,
+                        Name = "CampaignThree",
+                        AgencyId = agency.Id,
+                        AdvertiserId = advertiser.Id,
+                        Notes = "Notes for CampaignThree.",
+                        ModifiedBy = "TestUser",
+                        ModifiedDate = new DateTime(2017,10,17),
+                        CampaignStatus = PlanStatusEnum.Working
+                    }
+                }
+            };
         }
     }
 }

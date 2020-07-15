@@ -42,30 +42,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IPlanRepository _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
         private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IWeeklyBreakdownEngine>();
         private static readonly bool WRITE_FILE_TO_DISK = false;
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        [Category("short_running")]
-        public void GetCampaignsTest()
-        {
-            using (new TransactionScopeWrapper())
-            {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
-                var campaigns = _CampaignService.GetCampaigns(new CampaignFilterDto
-                {
-                    Quarter = new QuarterDto
-                    {
-                        Quarter = 3,
-                        Year = 2019
-                    },
-                    PlanStatus = PlanStatusEnum.Contracted
-                }, new DateTime(2019, 04, 01));
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(campaigns, _GetJsonSettings()));
-            }
-        }
-
+                
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]

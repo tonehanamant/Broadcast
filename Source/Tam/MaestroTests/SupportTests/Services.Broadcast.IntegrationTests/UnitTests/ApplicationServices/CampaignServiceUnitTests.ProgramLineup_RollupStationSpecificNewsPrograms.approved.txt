@@ -1,79 +1,71 @@
-﻿{
+{
   "AccountExecutive": "",
   "AccuracyEstimateDate": "2/12/20",
   "Agency": "1st Image Marketing",
   "AllocationByDaypartViewRows": [
     {
       "FilterLabel": "LN",
-      "Weight": 0.8
+      "Weight": 0.4
     },
     {
       "FilterLabel": "EM",
-      "Weight": 0.13333333
+      "Weight": 0.4
     },
     {
       "FilterLabel": "EMN",
-      "Weight": 0.06666667
+      "Weight": 0.2
     }
   ],
   "AllocationByDMAViewRows": [
     {
       "FilterLabel": "NEW YORK",
-      "Weight": 0.8
+      "Weight": 0.4
     },
     {
       "FilterLabel": "MACON",
-      "Weight": 0.13333333
+      "Weight": 0.4
     },
     {
       "FilterLabel": "BINGHAMTON",
-      "Weight": 0.06666667
+      "Weight": 0.2
     }
   ],
   "AllocationByGenreViewRows": [
     {
-      "FilterLabel": "",
-      "Weight": 0.66666667
-    },
-    {
-      "FilterLabel": "MOVIE",
-      "Weight": 0.2
-    },
-    {
       "FilterLabel": "NEWS",
-      "Weight": 0.13333333
+      "Weight": 1.0
     }
   ],
   "Client": "PetMed Express, Inc",
   "ClientContact": "",
   "DefaultViewRows": [
     {
-      "Genre": "",
+      "Genre": "NEWS",
       "NoOfMarkets": 1,
       "NoOfStations": 1,
-      "Program": "FALLBACK PROGRAM",
-      "Weight": 0.66666667
+      "Program": "MIDDAY NEWS",
+      "Weight": 0.4
+    },
+    {
+      "Genre": "NEWS",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "MORNING NEWS",
+      "Weight": 0.2
+    },
+    {
+      "Genre": "NEWS",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "EVENING NEWS",
+      "Weight": 0.2
     },
     {
       "Genre": "NEWS",
       "NoOfMarkets": 1,
       "NoOfStations": 1,
       "Program": "LATE NEWS",
-      "Weight": 0.13333333
-    },
-    {
-      "Genre": "MOVIE",
-      "NoOfMarkets": 1,
-      "NoOfStations": 1,
-      "Program": "1917",
-      "Weight": 0.13333333
-    },
-    {
-      "Genre": "MOVIE",
-      "NoOfMarkets": 1,
-      "NoOfStations": 1,
-      "Program": "JOKER",
-      "Weight": 0.06666667
+      "Weight": 0.2
     }
   ],
   "DetailedViewRows": [
@@ -81,45 +73,45 @@
       "Daypart": "LN",
       "Days": "W-TH",
       "DMA": "NEW YORK",
-      "Genre": "",
-      "NetworkAffiliation": "CBS",
-      "Program": "FALLBACK PROGRAM",
-      "Rank": 1,
-      "Station": "WTTV",
-      "TimePeriods": "12:03AM-12:05AM"
-    },
-    {
-      "Daypart": "LN",
-      "Days": "W-TH",
-      "DMA": "NEW YORK",
       "Genre": "NEWS",
       "NetworkAffiliation": "CBS",
-      "Program": "LATE NEWS",
+      "Program": "KPLR 2001 MIDDAY NEWS",
       "Rank": 1,
       "Station": "WTTV",
-      "TimePeriods": "12:03AM-12:05AM"
+      "TimePeriods": "11AM-1PM"
     },
     {
       "Daypart": "EMN",
       "Days": "M-TU",
       "DMA": "BINGHAMTON",
-      "Genre": "MOVIE",
+      "Genre": "NEWS",
       "NetworkAffiliation": "ABC",
-      "Program": "JOKER",
+      "Program": "KPLR 1001 MORNING NEWS",
       "Rank": 2,
       "Station": "KSTP",
-      "TimePeriods": "12:01AM-12:03AM"
+      "TimePeriods": "4AM-10AM"
     },
     {
       "Daypart": "EM",
       "Days": "F,SU",
       "DMA": "MACON",
-      "Genre": "MOVIE",
+      "Genre": "NEWS",
       "NetworkAffiliation": "CBS",
-      "Program": "1917",
+      "Program": "KPLR 3001 EVENING NEWS",
       "Rank": 3,
       "Station": "KELO",
-      "TimePeriods": "12:05AM-12:06AM"
+      "TimePeriods": "4PM-7PM"
+    },
+    {
+      "Daypart": "EM",
+      "Days": "F,SU",
+      "DMA": "MACON",
+      "Genre": "NEWS",
+      "NetworkAffiliation": "CBS",
+      "Program": "KPLR 4001 LATE NEWS",
+      "Rank": 3,
+      "Station": "KELOW",
+      "TimePeriods": "8PM-12:05AM"
     }
   ],
   "ExportFileName": "Program_Lineup_Report_Brave Plan_10172017.xlsx",
@@ -129,5 +121,5 @@
   "PlanHeaderName": "Brave Plan | Program Lineup*",
   "PostingType": "NTI",
   "ReportGeneratedDate": "10/17/17",
-  "SpotLengths": ":45"
+  "SpotLengths": ":30"
 }

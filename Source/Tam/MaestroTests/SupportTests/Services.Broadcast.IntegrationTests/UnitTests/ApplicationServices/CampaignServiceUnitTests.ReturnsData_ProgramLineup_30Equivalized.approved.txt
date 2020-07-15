@@ -1,4 +1,4 @@
-﻿{
+{
   "AccountExecutive": "",
   "AccuracyEstimateDate": "2/12/20",
   "Agency": "1st Image Marketing",
@@ -129,5 +129,5 @@
   "PlanHeaderName": "Brave Plan | Program Lineup*",
   "PostingType": "NTI",
   "ReportGeneratedDate": "10/17/17",
-  "SpotLengths": ":45 eq."
+  "SpotLengths": ":30"
 }
