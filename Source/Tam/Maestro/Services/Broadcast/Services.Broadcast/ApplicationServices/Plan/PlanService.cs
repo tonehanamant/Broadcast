@@ -373,7 +373,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 {
                     double aduImpressionsForBreakdownItem = _WeeklyBreakdownEngine.CalculateWeeklyADUImpressions(breakdownItem, plan.Equivalized
                         , plan.ImpressionsPerUnit, plan.CreativeLengths);
-                    double unitsImpressionsForBreakdownItem = breakdownItem.WeeklyImpressions / breakdownItem.WeeklyUnits;
+                    double unitsImpressionsForBreakdownItem = breakdownItem.WeeklyUnits == 0 ? 0 : breakdownItem.WeeklyImpressions / breakdownItem.WeeklyUnits;
                     foreach (var item in standardDaypardWeightingGoals)
                     {
                         var weighting = GeneralMath.ConvertPercentageToFraction(item.WeightingGoalPercent);

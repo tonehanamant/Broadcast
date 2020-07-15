@@ -146,7 +146,10 @@ namespace Services.Broadcast.Entities.Campaign
                 foreach (var daypart in plan.Dayparts
                     .Where(x => x.Restrictions.GenreRestrictions != null && x.Restrictions.GenreRestrictions.Genres.Any()).ToList())
                 {
-                    var mappedDaypart = DaypartsData.Single(x => x.DaypartCodeId == daypart.DaypartCodeId && x.FlightDays.Equals(flightDaysString));
+                    var mappedDaypart = DaypartsData.Single(x => x.DaypartCodeId == daypart.DaypartCodeId
+                                            && x.FlightDays.Equals(flightDaysString)
+                                            && DaypartTimeHelper.ConvertFormattedTimeToSeconds(x.StartTime) == daypart.StartTimeSeconds
+                                            && DaypartTimeHelper.ConvertFormattedTimeToSeconds(x.EndTime) == daypart.EndTimeSeconds);
                     var planDaypart = plan.Dayparts.Single(x => x.DaypartCodeId == daypart.DaypartCodeId);
                     mappedDaypart.GenreRestrictions.Add(new DaypartRestrictionsData
                     {
@@ -158,7 +161,10 @@ namespace Services.Broadcast.Entities.Campaign
                 foreach (var daypart in plan.Dayparts
                     .Where(x => x.Restrictions.ProgramRestrictions != null && x.Restrictions.ProgramRestrictions.Programs.Any()).ToList())
                 {
-                    var mappedDaypart = DaypartsData.Single(x => x.DaypartCodeId == daypart.DaypartCodeId && x.FlightDays.Equals(flightDaysString));
+                    var mappedDaypart = DaypartsData.Single(x => x.DaypartCodeId == daypart.DaypartCodeId
+                                && x.FlightDays.Equals(flightDaysString)
+                                && DaypartTimeHelper.ConvertFormattedTimeToSeconds(x.StartTime) == daypart.StartTimeSeconds
+                                && DaypartTimeHelper.ConvertFormattedTimeToSeconds(x.EndTime) == daypart.EndTimeSeconds);
                     var planDaypart = plan.Dayparts.Single(x => x.DaypartCodeId == daypart.DaypartCodeId);
                     mappedDaypart.ProgramRestrictions.Add(new DaypartRestrictionsData
                     {
@@ -212,18 +218,19 @@ namespace Services.Broadcast.Entities.Campaign
                     var quarterPlanWeeks = plan.WeeklyBreakdownWeeks.Where(x => quarterTotalWeeksIdList.Contains(x.MediaWeekId));
                     foreach (var week in quarterPlanWeeks)
                     {
-                        var planProjections = _GetEmptyWeek(null, plan, quarter, null,
+                        var newProjectedPlan = _GetEmptyWeek(null, plan, quarter, null,
                             _AllSpotLengths.Single(x => x.Id == week.SpotLengthId),
                             plan.Dayparts.Where(x => x.DaypartCodeId == week.DaypartCodeId).Single());
 
-                        planProjections.TotalCost = week.WeeklyBudget;
-                        planProjections.Units = 0; //we have no value calculated and stored for this property at the moment
+                        newProjectedPlan.TotalCost = week.WeeklyBudget;
+                        newProjectedPlan.Units = 0; //we have no value calculated and stored for this property at the moment
 
-                        _ProjectGuaranteedAudienceDataByWeek(plan, week, planProjections);
-                        _ProjectHHAudienceData(plan, week, planProjections);
-                        _ProjectSecondaryAudiencesData(plan, week, planProjections, planProjections.TotalHHImpressions);
 
-                        result.Add(planProjections);
+                        _ProjectGuaranteedAudienceDataByWeek(plan, week, newProjectedPlan);
+                        _ProjectHHAudienceData(plan, week, newProjectedPlan);
+                        _ProjectSecondaryAudiencesData(plan, week, newProjectedPlan, newProjectedPlan.TotalHHImpressions);
+
+                        result.Add(newProjectedPlan);
                     }
                 }
             });
@@ -231,14 +238,14 @@ namespace Services.Broadcast.Entities.Campaign
             return result;
         }
 
-        private static void _ProjectHHAudienceData(PlanDto plan, WeeklyBreakdownWeek planWeek, PlanProjectionForCampaignExport planProjections)
+        private static void _ProjectHHAudienceData(PlanDto plan, WeeklyBreakdownWeek planWeek, PlanProjectionForCampaignExport planProjection)
         {
             var audienceImpressions = planWeek.WeeklyImpressions;
             var audienceVpvh = _GetVpvhByStandardDaypartAndAudience(plan, planWeek.DaypartCodeId.Value, plan.AudienceId);
-            planProjections.TotalHHImpressions = ProposalMath.CalculateHhImpressionsUsingVpvh(audienceImpressions, audienceVpvh);
+            planProjection.TotalHHImpressions = ProposalMath.CalculateHhImpressionsUsingVpvh(audienceImpressions, audienceVpvh);
 
-            var factor = planProjections.TotalHHImpressions / plan.HHImpressions;
-            planProjections.TotalHHRatingPoints = plan.HHRatingPoints * factor;
+            var factor = planProjection.TotalHHImpressions / plan.HHImpressions;
+            planProjection.TotalHHRatingPoints = plan.HHRatingPoints * factor;
         }
 
         private static double _GetVpvhByStandardDaypartAndAudience(PlanDto plan, int standardDaypartId, int audienceId)
@@ -246,17 +253,17 @@ namespace Services.Broadcast.Entities.Campaign
             return plan.Dayparts.Single(x => x.DaypartCodeId == standardDaypartId).VpvhForAudiences.Single(x => x.AudienceId == audienceId).Vpvh;
         }
 
-        private static void _ProjectGuaranteedAudienceDataByWeek(PlanDto plan, WeeklyBreakdownWeek planWeek, PlanProjectionForCampaignExport planProjections)
+        private static void _ProjectGuaranteedAudienceDataByWeek(PlanDto plan, WeeklyBreakdownWeek planWeek, PlanProjectionForCampaignExport projection)
         {
-            planProjections.GuaranteedAudience.IsGuaranteedAudience = true;
-            planProjections.GuaranteedAudience.AudienceId = plan.AudienceId;
-            planProjections.GuaranteedAudience.WeightedPercentage = planWeek.WeeklyImpressions / plan.TargetImpressions.Value;
-            planProjections.GuaranteedAudience.TotalImpressions = planWeek.WeeklyImpressions;
-            planProjections.GuaranteedAudience.TotalRatingPoints = planWeek.WeeklyRatings;
+            projection.GuaranteedAudience.IsGuaranteedAudience = true;
+            projection.GuaranteedAudience.AudienceId = plan.AudienceId;
+            projection.GuaranteedAudience.WeightedPercentage = planWeek.WeeklyImpressions / plan.TargetImpressions.Value;
+            projection.GuaranteedAudience.TotalImpressions = planWeek.WeeklyImpressions;
+            projection.GuaranteedAudience.TotalRatingPoints = planWeek.WeeklyRatings;
         }
 
         private static void _ProjectSecondaryAudiencesData(
-            PlanDto plan, 
+            PlanDto plan,
             WeeklyBreakdownWeek planWeek,
             PlanProjectionForCampaignExport newProjectedPlan,
             double hhImpressions)

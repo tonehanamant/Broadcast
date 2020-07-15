@@ -574,7 +574,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 WeeklyBudget = 25,
                 WeeklyAdu = 2,
                 SpotLengthId = 3,
-                WeeklyUnits = 0.65
+                WeeklyUnits = 0
             });
 
             _WeeklyBreakdownEngineMock
