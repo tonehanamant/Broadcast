@@ -318,7 +318,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 var aduImpressionsForBreakdownItem = _WeeklyBreakdownEngine.CalculateWeeklyADUImpressions(weeklyBreakdown, plan.Equivalized
                                             , plan.ImpressionsPerUnit, plan.CreativeLengths);
-                var unitsImpressionsForBreakdownItem = weeklyBreakdown.WeeklyImpressions / weeklyBreakdown.WeeklyUnits;
+                var unitsImpressionsForBreakdownItem = weeklyBreakdown.WeeklyUnits == 0 ? 0 : weeklyBreakdown.WeeklyImpressions / weeklyBreakdown.WeeklyUnits;
                 var week = weeks.Single(w => w.MediaWeekId == weeklyBreakdown.MediaWeekId);
 
                 // In save plan it's distributing goals for spot length, so it's not necessary to call it again
