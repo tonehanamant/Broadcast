@@ -2,6 +2,7 @@
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
+using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 
@@ -11,6 +12,10 @@ namespace Services.Broadcast.IntegrationTests.Stubs
     {
         public AdvertiserDto GetAdvertiser(int advertiserId)
         {
+            if(advertiserId == -1)
+            {
+                throw new InvalidOperationException(CampaignValidator.InvalidAdvertiserErrorMessage);
+            }
             return new AdvertiserDto { Id = advertiserId, AgencyId = 1, Name = "Stub Advertiser" };
         }
 

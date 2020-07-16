@@ -36,13 +36,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     {
         private const string IntegrationTestUser = "IntegrationTestUser";
         private readonly DateTime CreatedDate = new DateTime(2019, 5, 14);
-        private readonly ICampaignService _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-        private readonly IPlanPricingService _PlanPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
-        private readonly ICampaignSummaryRepository _CampaignSummaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
-        private readonly IPlanRepository _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
-        private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IWeeklyBreakdownEngine>();
+        private ICampaignService _CampaignService;
+        private ICampaignSummaryRepository _CampaignSummaryRepository;
+        private IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
         private static readonly bool WRITE_FILE_TO_DISK = false;
-                
+            
+        [SetUp]
+        public void SetUpCampaignServiceIntegrationTests()
+        {
+            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
+            _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
+            _CampaignSummaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
+            _WeeklyBreakdownEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IWeeklyBreakdownEngine>();
+        }
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
@@ -50,9 +57,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
                 var campaigns = _CampaignService.GetCampaigns(new CampaignFilterDto
                 {
                     PlanStatus = PlanStatusEnum.Contracted
@@ -290,7 +294,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var campaign = _GetValidCampaignForSave();
 
                 // Invalid advertiser id.
-                campaign.AdvertiserId = 666;
+                campaign.AdvertiserId = -1;
 
                 var exception = Assert.Throws<InvalidOperationException>(() => _CampaignService.SaveCampaign(campaign, IntegrationTestUser, CreatedDate));
 
@@ -349,9 +353,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
                 var filter = new CampaignFilterDto
                 {
                     PlanStatus = PlanStatusEnum.Contracted,
@@ -524,9 +525,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
                 var reportData = _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -548,9 +546,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
                 var reportData = _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -597,7 +592,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             //we don't care where the file is saved
 #else
             fileServiceMock.Verify(x => x.Create(
-                @"\\cadfs11\Broadcast\IntegrationTests\CampaignExportReports",
+                @"\\cadfs11\Broadcast\Dev\CampaignExportReports",
                 fileId + ".xlsx",
                 It.Is<Stream>(y => y != null && y.Length > 0)), Times.Once);
 #endif
@@ -638,9 +633,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
                 var reportData = _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -662,9 +654,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
                 var reportData = _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -685,9 +674,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
                 var exception = Assert.Throws<ApplicationException>(() =>
                 _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
@@ -705,9 +691,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
                 var exception = Assert.Throws<ApplicationException>(() =>
                 _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
@@ -725,9 +708,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
                 var exception = Assert.Throws<ApplicationException>(() =>
                 _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
@@ -745,9 +725,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
                 var exception = Assert.Throws<ApplicationException>(() =>
                 _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
@@ -765,9 +742,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
                 var exception = Assert.Throws<ApplicationException>(() =>
                 _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
@@ -785,9 +759,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
                 var exception = Assert.Throws<ApplicationException>(() =>
                 _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
@@ -805,9 +776,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
                 var exception = Assert.Throws<ApplicationException>(() =>
                 _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
@@ -826,9 +794,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
                 var reportData = _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -850,9 +815,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
                 var reportData = _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -874,9 +836,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
                 var reportData = _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -897,9 +856,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
                 var reportData = _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -919,9 +875,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
                 var reportData = _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -943,9 +896,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
                 var reportData = _CampaignService.GetAndValidateCampaignReportData(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -987,9 +937,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var planPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
             using (new TransactionScopeWrapper())
             {
-                IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ITrafficApiCache>(new TrafficApiCacheStub());
-                var _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
-
                 var planPricingRequestDto = new PlanPricingParametersDto
                 {
                     PlanId = planId,

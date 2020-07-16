@@ -26,7 +26,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 const string filename = @".\Files\Vpvh\VPVH_valid.xlsx";
 
-                _VpvhService.LoadVpvhs(new FileStream(filename, FileMode.Open, FileAccess.Read), "VPVH_valid.xlsx", IntegrationTestUser, CreatedDate);
+                _VpvhService.LoadVpvhs(new FileStream(filename, FileMode.Open, FileAccess.Read), "VPVH_valid.xlsx"
+                    , IntegrationTestUser, CreatedDate);
 
                 var quarters = _VpvhService.GetQuarters(new Entities.QuarterDto { Quarter = 1, Year = 2017 });
 
