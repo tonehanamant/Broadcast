@@ -188,32 +188,34 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("long_running")]
         public void SavePlan_GoalBreakdownType_ByWeekByDaypart()
         {
-            var newPlan = _GetNewPlan();
-            newPlan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart;
-            newPlan.FlightStartDate = new DateTime(2020, 2, 24);
-            newPlan.FlightEndDate = new DateTime(2020, 3, 29);
-            newPlan.FlightHiatusDays = new List<DateTime> { };
-            newPlan.FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            newPlan.Dayparts.RemoveAt(2);
-            newPlan.Dayparts[0].DaypartCodeId = 15;
-            newPlan.Dayparts[0].WeightingGoalPercent = 60;
-            newPlan.Dayparts[1].DaypartCodeId = 20;
-            newPlan.Dayparts[0].WeightingGoalPercent = 40;
-            newPlan.TargetImpressions = 5000;
-            newPlan.ImpressionsPerUnit = 100;
-            newPlan.TargetRatingPoints = 4.1;
-            newPlan.TargetCPM = 0.1m;
-            newPlan.Budget = 500;
-            newPlan.WeeklyBreakdownTotals = new WeeklyBreakdownTotals
+            using (new TransactionScopeWrapper())
             {
-                TotalActiveDays = 35,
-                TotalBudget = 500,
-                TotalImpressions = 5000,
-                TotalImpressionsPercentage = 100,
-                TotalRatingPoints = 4.1,
-                TotalUnits = 50
-            };
-            newPlan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                var newPlan = _GetNewPlan();
+                newPlan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart;
+                newPlan.FlightStartDate = new DateTime(2020, 2, 24);
+                newPlan.FlightEndDate = new DateTime(2020, 3, 29);
+                newPlan.FlightHiatusDays = new List<DateTime> { };
+                newPlan.FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+                newPlan.Dayparts.RemoveAt(2);
+                newPlan.Dayparts[0].DaypartCodeId = 15;
+                newPlan.Dayparts[0].WeightingGoalPercent = 60;
+                newPlan.Dayparts[1].DaypartCodeId = 20;
+                newPlan.Dayparts[0].WeightingGoalPercent = 40;
+                newPlan.TargetImpressions = 5000;
+                newPlan.ImpressionsPerUnit = 100;
+                newPlan.TargetRatingPoints = 4.1;
+                newPlan.TargetCPM = 0.1m;
+                newPlan.Budget = 500;
+                newPlan.WeeklyBreakdownTotals = new WeeklyBreakdownTotals
+                {
+                    TotalActiveDays = 35,
+                    TotalBudget = 500,
+                    TotalImpressions = 5000,
+                    TotalImpressionsPercentage = 100,
+                    TotalRatingPoints = 4.1,
+                    TotalUnits = 50
+                };
+                newPlan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
                 {
                     new WeeklyBreakdownWeek
                     {
@@ -377,12 +379,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     },
                 };
 
-            var nowDate = new DateTime(2020, 01, 01);
-            var username = "integration_test";
-            var newPlanId = _PlanService.SavePlan(newPlan, username, nowDate);
+                var nowDate = new DateTime(2020, 01, 01);
+                var username = "integration_test";
+                var newPlanId = _PlanService.SavePlan(newPlan, username, nowDate);
 
-            var savedPlan = _PlanService.GetPlan(newPlanId);
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedPlan, _GetJsonSettings()));
+                var savedPlan = _PlanService.GetPlan(newPlanId);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedPlan, _GetJsonSettings()));
+            }
         }
 
         [Test]

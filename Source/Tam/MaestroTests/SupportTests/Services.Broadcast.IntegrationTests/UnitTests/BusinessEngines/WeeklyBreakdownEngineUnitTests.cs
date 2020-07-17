@@ -349,7 +349,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CalculatePlanWeeklyGoalBreakdown_ByWeekByDaypart_InitialLoad()
+        public void WeeklyBreakdown_ByDaypartInitialLoad()
         {
             var request = _GetWeeklyBreakdownRequest_CustomByWeekByDaypart();
             request.Weeks.Clear();
@@ -365,8 +365,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CalculatePlanWeeklyGoalBreakdown_ByWeekByDaypart_WithoutDaypartWeightingGoalPercent()
-        {
+        public void WeeklyBreakdown_ByDaypartNoWeightingGoal()
+        {//CalculatePlanWeeklyGoalBreakdown_ByWeekByDaypart_WithoutDaypartWeightingGoalPercent
             var request = _GetWeeklyBreakdownRequest_CustomByWeekByDaypart();
             request.Weeks.Clear();
             request.Dayparts.ForEach(d => d.WeightingGoalPercent = null);
@@ -382,8 +382,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void CalculatePlanWeeklyGoalBreakdown_ByWeekByDaypart_ModifyDayparts()
-        {
+        public void WeeklyGoalBreakdown_ByDaypartModifyDayparts()
+        {//CalculatePlanWeeklyGoalBreakdown_ByWeekByDaypart_ModifyDayparts
             var request = _GetWeeklyBreakdownRequest_CustomByWeekByDaypart();
             request.Dayparts.RemoveAt(0);
             request.Dayparts.Add(new PlanDaypartDto { DaypartCodeId = 1 });
@@ -518,18 +518,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         };
 
         private readonly double _ImpressionsPerUnit = 250;
-
-        private Dictionary<int, int> _GetWeekNumberByMediaWeekDictionary()
-        {
-            return new Dictionary<int, int>
-            {
-                { 844, 1 },
-                { 845, 2 },
-                { 846, 3 },
-                { 847, 4 },
-                { 848, 5 }
-            };
-        }
 
         private WeeklyBreakdownRequest _GetWeeklyBreakdownRequest_CustomByWeekByDaypart()
         {

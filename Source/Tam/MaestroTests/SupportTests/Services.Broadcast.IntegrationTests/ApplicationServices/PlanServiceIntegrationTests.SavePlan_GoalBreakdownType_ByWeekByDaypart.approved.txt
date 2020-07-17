@@ -19,8 +19,8 @@
       "ShareOfVoicePercent": 34.5
     }
   ],
-  "AvailableMarketsWithSovCount": 2,
-  "BlackoutMarketCount": 2,
+  "AvailableMarketsWithSovCount": null,
+  "BlackoutMarketCount": null,
   "BlackoutMarkets": [
     {
       "Market": "Burlington-Plattsburgh",
@@ -37,7 +37,7 @@
       "Rank": 8
     }
   ],
-  "BlackoutMarketTotalUsCoveragePercent": 8.0,
+  "BlackoutMarketTotalUsCoveragePercent": null,
   "Budget": 500.0000,
   "CampaignId": 1,
   "CampaignName": "Test Campaign 1",
