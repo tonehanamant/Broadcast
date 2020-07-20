@@ -2,20 +2,17 @@
 using ApprovalTests.Reporters;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using EntityFrameworkMapping.Broadcast;
-using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Entities.Inventory;
 using Tam.Maestro.Common.DataLayer;
-using System.Diagnostics;
-using Services.Broadcast.Cache;
-using Microsoft.Practices.Unity;
+using Unity;
 
 namespace Services.Broadcast.IntegrationTests.Repositories
 {

@@ -206,7 +206,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         public string ImportInventoryProgramResults(Stream fileStream, string fileName)
         {
             const ProgramSourceEnum PROGRAM_SOURCE = ProgramSourceEnum.Forecasted;
-            var success = false;
+            //var success = false;
             var stopWatch = new Stopwatch();
             stopWatch.Start();
 
@@ -229,7 +229,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
                 if (parseResult.Success == false)
                 {
-                    success = false;
+                    //success = false;
                     _ImportResultsProcessingLogInfo($"Parsing attempt failed on {parseResult.Messages.Count} lines.", processingLog);
                     // Don't log them... it clouds the waters and takes a long time.
                     // maybe aggregate them and report that.
@@ -396,7 +396,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 _SetProgramData(manifests, (message) => processingLog.AppendLine(message));
 
                 _ImportResultsProcessingLogInfo($"Extracted and saved {totalProgramsExtracted} program records.", processingLog);
-                success = true;
+                //success = true;
                 _MoveImportFileFromInProgressToCompletedDirectory(fileName, processingLog);
 
                 stopWatch.Stop();
@@ -404,7 +404,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             }
             catch (Exception ex)
             {
-                success = false;
+                //success = false;
 
                 _ImportResultsProcessingLogError($"Error caught ingesting results file '{fileName}'.", ex, processingLog);
                 processingLog.AppendLine($"Error caught : {ex.Message}");

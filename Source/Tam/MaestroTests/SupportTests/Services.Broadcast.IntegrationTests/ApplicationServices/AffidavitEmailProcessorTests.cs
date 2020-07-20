@@ -13,13 +13,12 @@ using Services.Broadcast.Entities.Enums;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
-    [Ignore]
+    [Ignore("Not certain why this is ignored.")]
     public class AffidavitEmailProcessorTests
     {
         private readonly IWWTVEmailProcessorService _AffidavitEmailProcessorService;
         private readonly IFileTransferEmailHelper _EmailHelper;
         private readonly IAffidavitRepository _AffidavitRepository;
-        private const string _UserName = "Test User";
         
         public AffidavitEmailProcessorTests()
         {

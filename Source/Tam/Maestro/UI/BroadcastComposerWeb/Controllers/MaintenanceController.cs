@@ -1,6 +1,5 @@
 ﻿using Common.Services;
 using Common.Services.Repositories;
-using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using Services.Broadcast;
 using Services.Broadcast.ApplicationServices;
@@ -13,13 +12,13 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Net.Mail;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Security;
+using Unity;
 
 namespace BroadcastComposerWeb.Controllers
 {

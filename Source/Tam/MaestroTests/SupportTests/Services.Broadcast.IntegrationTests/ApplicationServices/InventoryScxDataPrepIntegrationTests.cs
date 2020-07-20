@@ -169,7 +169,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetInventoryScxDataAbcOAndOTest()

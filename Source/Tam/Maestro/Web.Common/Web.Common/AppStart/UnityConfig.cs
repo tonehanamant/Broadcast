@@ -1,6 +1,4 @@
 ﻿using Common.Services;
-using Common.Services.WebComponents;
-using Microsoft.Practices.Unity;
 using System.Net.Http.Formatting;
 using System.Web.Http.Controllers;
 using System.Web.Http.Dispatcher;
@@ -10,6 +8,8 @@ using System.Web.Http.Tracing;
 using System.Web.Http.Validation;
 using System.Web.Mvc;
 using System.Web.Mvc.Async;
+using Unity;
+using Unity.Injection;
 
 namespace Tam.Maestro.Web.Common.AppStart
 {
@@ -23,29 +23,31 @@ namespace Tam.Maestro.Web.Common.AppStart
             // TODO: Register your types here
             container.RegisterType<IConfiguration, FileBasedConfiguration>();
 
-            // null registrations to prevnent resolution failed exceptions from being thrown
-            container.RegisterType<ITraceManager>(new InjectionFactory((c) => null));
-            container.RegisterType<ITraceWriter>(new InjectionFactory((c) => null));
-            container.RegisterType<IHttpControllerSelector>(new InjectionFactory((c) => null));
-            container.RegisterType<IAssembliesResolver>(new InjectionFactory((c) => null));
-            container.RegisterType<IHttpControllerTypeResolver>(new InjectionFactory((c) => null));
-            container.RegisterType<IHttpActionSelector>(new InjectionFactory((c) => null));
-            container.RegisterType<IActionValueBinder>(new InjectionFactory((c) => null));
-            container.RegisterType<IBodyModelValidator>(new InjectionFactory((c) => null));
-            container.RegisterType<IHostBufferPolicySelector>(new InjectionFactory((c) => null));
-            container.RegisterType<IControllerFactory>(new InjectionFactory((c) => null));
-            container.RegisterType<IControllerActivator>(new InjectionFactory((c) => null));
-            container.RegisterType<ITempDataProviderFactory>(new InjectionFactory((c) => null));
-            container.RegisterType<ITempDataProvider>(new InjectionFactory((c) => null));
-            container.RegisterType<IAsyncActionInvokerFactory>(new InjectionFactory((c) => null));
-            container.RegisterType<IActionInvokerFactory>(new InjectionFactory((c) => null));
-            container.RegisterType<IAsyncActionInvoker>(new InjectionFactory((c) => null));
-            container.RegisterType<IActionInvoker>(new InjectionFactory((c) => null));
-            container.RegisterType<IViewPageActivator>(new InjectionFactory((c) => null));
-            container.RegisterType<IHttpControllerActivator>(new InjectionFactory((c) => null));
-            container.RegisterType<IHttpActionInvoker>(new InjectionFactory((c) => null));
-            container.RegisterType<IContentNegotiator>(new InjectionFactory((c) => null));
-            container.RegisterType<IExceptionHandler>(new InjectionFactory((c) => null));
+            // null registrations to prevent resolution failed exceptions from being thrown
+
+            container.RegisterFactory<ITraceManager>(c => null);
+            container.RegisterFactory<ITraceWriter>(c => null);
+            container.RegisterFactory<IHttpControllerSelector>(c => null);
+            container.RegisterFactory<IAssembliesResolver>(c => null);
+            container.RegisterFactory<IHttpControllerTypeResolver>(c => null);
+            container.RegisterFactory<IHttpActionSelector>(c => null);
+            container.RegisterFactory<IActionValueBinder>(c => null);
+            container.RegisterFactory<IBodyModelValidator>(c => null);
+            container.RegisterFactory<IHostBufferPolicySelector>(c => null);
+            container.RegisterFactory<IControllerFactory>(c => null);
+            container.RegisterFactory<IControllerActivator>(c => null);
+            container.RegisterFactory<ITempDataProviderFactory>(c => null);
+            container.RegisterFactory<ITempDataProvider>(c => null);
+            container.RegisterFactory<IAsyncActionInvokerFactory>(c => null);
+            container.RegisterFactory<IActionInvokerFactory>(c => null);
+            container.RegisterFactory<IAsyncActionInvoker>(c => null);
+            container.RegisterFactory<IActionInvoker>(c => null);
+            container.RegisterFactory<IViewPageActivator>(c => null);
+            container.RegisterFactory<IHttpControllerActivator>(c => null);
+            container.RegisterFactory<IHttpActionInvoker>(c => null);
+            container.RegisterFactory<IContentNegotiator>(c => null);
+            container.RegisterFactory<IExceptionHandler>(c => null);
+
             // these types will need some other type of handling
             //container.RegisterType<ModelMetadataProvider>(new InjectionFactory((c) => null));
             //container.RegisterType<IModelValidatorCache>(new InjectionFactory((c) => null));

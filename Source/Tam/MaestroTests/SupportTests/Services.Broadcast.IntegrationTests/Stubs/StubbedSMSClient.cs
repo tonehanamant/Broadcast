@@ -15,8 +15,8 @@ namespace Services.Broadcast.IntegrationTests
 {
     public class StubbedSMSClient : ISMSClient
     {
-        public event GenericEvent<TAMService, string> UriChanged;
-        public event GenericEvent<TAMResource, string> ResourceChanged;
+        //public event GenericEvent<TAMService, string> UriChanged;
+        //public event GenericEvent<TAMResource, string> ResourceChanged;
         public string TamEnvironment { get; private set; }
         public ServiceStatus GetStatus()
         {

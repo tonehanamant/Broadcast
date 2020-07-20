@@ -1,3 +1,4 @@
+using Common.Systems.DataTransferObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -5,8 +6,6 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Management.Automation;
 using System.ServiceModel;
-using Common.Systems.DataTransferObjects;
-using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.DatabaseDtos;
@@ -19,12 +18,12 @@ namespace Tam.Maestro.Services.Clients
     public class SMSClient : IDisposable, ISMSClient
     {
         private static volatile SMSClient _SMSClient = null;
-        private static object _SyncLock = new object();
-        private static object _ProxyLock = new object();
+        private static readonly object _SyncLock = new object();
+        private static readonly object _ProxyLock = new object();
         private Proxy<IServiceManagerContract> _SMSProxy;
         private bool disposed = false;
-        private Dictionary<TAMService, string> _UriConfigurationTable;
-        private Dictionary<string, string> _ResourceConfigurationTable;
+        private readonly Dictionary<TAMService, string> _UriConfigurationTable;
+        private readonly Dictionary<string, string> _ResourceConfigurationTable;
 
         public string TamEnvironment { get; private set; }
 
@@ -163,7 +162,7 @@ namespace Tam.Maestro.Services.Clients
 
         private string ResolveUri(TAMService tamService)
         {
-            string uri = "";
+            string uri;
             if (this._UriConfigurationTable.ContainsKey(tamService))
             {
                 uri = this._UriConfigurationTable[tamService].ToString();

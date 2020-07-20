@@ -699,6 +699,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.CancellationNotificationUri); }
         }
 	 
+		public static string ConstraintManagementApiUrl  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.ConstraintManagementApiUrl); }
+        }
+	 
 		public static string DeliveryInsightPrediction  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
@@ -769,6 +775,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<bool>
 					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.SpotcapsToggle); }
+        }
+	 
+		public static string TrafficPreBuyAllocationBaseUri  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(TrafficComposerWebSystemParameterNames.ComponentID , TrafficComposerWebSystemParameterNames.TrafficPreBuyAllocationBaseUri); }
         }
 	}
 	 

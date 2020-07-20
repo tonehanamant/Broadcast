@@ -1,6 +1,6 @@
 ﻿using Hangfire;
-using Microsoft.Practices.Unity;
 using System;
+using Unity;
 
 namespace BroadcastJobScheduler
 {

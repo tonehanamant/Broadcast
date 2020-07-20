@@ -298,7 +298,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore] // This was only used to introduce the mappings to the integration database
+        [Ignore("Not certain why we are ignoring this...")] // This was only used to introduce the mappings to the integration database
         public void UploadStationMappingsExcellFile()
         {
             var fileName = "CadentBroadcastStationList.xlsx";

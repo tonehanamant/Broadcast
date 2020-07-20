@@ -1,7 +1,6 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services;
-using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -16,6 +15,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
+using Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

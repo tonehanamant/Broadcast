@@ -37,7 +37,9 @@ namespace Services.Broadcast.Converters.Post
 
         protected DateTime GetDateValue(int row, int column, ExcelWorksheet excelWorksheet)
         {
-            return excelWorksheet.Cells[row, column].GetValue<DateTime>();
+            // EPP beyond 4.1.0 doesn't accept empty inline.
+            var value = excelWorksheet.Cells[row, column].GetValue<DateTime?>();
+            return value ?? DateTime.MinValue;
         }
 
         protected bool IsEmptyRow(int row, ExcelWorksheet excelWorksheet)

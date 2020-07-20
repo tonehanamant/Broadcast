@@ -1,7 +1,6 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services;
-using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -25,6 +24,7 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -367,7 +367,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void UpdateExistingStationContactDuringImport()
@@ -570,7 +570,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         // This test can be usefull to check if there is exceptions during saving all the XML files from specific folder
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadOpenMarketInventoryFile_CheckAllFilesInSpecificDirectories_ForExceptions()
         {
@@ -644,7 +644,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         public void CanLoadTVBFile()
         {
             using (new TransactionScopeWrapper())
@@ -673,7 +673,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void TVBFileHasStationProgramWithInvalidSpotLength()
@@ -711,7 +711,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         public void TVBFileHasValidAudienceValues()
         {
@@ -744,7 +744,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [UseReporter(typeof(DiffReporter))]
         public void TVBFileHasDuplicateStationProgram()
         {
@@ -782,7 +782,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void TVBFileHasInvalidStationProgramCPM()
@@ -831,7 +831,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void TVBFileHasInvalidDaypart()
@@ -867,7 +867,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "There are no valid dayparts in the file ", MatchType = MessageMatch.Contains)]
         public void TVBFileHasAllDaypartInvalid()
@@ -889,7 +889,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "There are no valid spot length in the file", MatchType = MessageMatch.Contains)]
         public void TVBFileHasAllSpotLengthInvalid()
         {
@@ -909,7 +909,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "Unable to parse any file records", MatchType = MessageMatch.Contains)]
         public void TVBFileHasAllEntriesInvalid()
@@ -928,7 +928,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [UseReporter(typeof(DiffReporter))]
         public void TVBFileHasInvalidAudience()
         {
@@ -963,7 +963,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void TVBFileHasInvalidAudienceAndStation()
@@ -999,7 +999,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void TVBFileHasInvalidDaypartCode()
@@ -1047,7 +1047,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanCalculateSpotCost()
@@ -1072,7 +1072,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "Daypart code", MatchType = MessageMatch.Contains)]
         public void TTWNThrowExceptionWhenMultipleFixedPriceForSameDaypart()
@@ -1102,7 +1102,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "Daypart code", MatchType = MessageMatch.Contains)]
         public void CNNThrowExceptionWhenMultipleFixedPriceForSameDaypart()
@@ -1132,7 +1132,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryDataException), ExpectedMessage = "Daypart code", MatchType = MessageMatch.Contains)]
         public void TVBThrowExceptionWhenMultipleFixedPriceForSameDaypart()
@@ -1162,7 +1162,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         public void TVBCanLoadFileWithSameSpotLengthDaypartAndStation()
         {
@@ -1192,7 +1192,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         public void TTWNCanLoadFileWithSameSpotLengthDaypartAndStation()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -1222,7 +1222,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         public void CNNCanLoadFileWithSameSpotLengthDaypartAndStation()
         {
             using (new TransactionScopeWrapper(IsolationLevel.ReadUncommitted))
@@ -1293,7 +1293,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Ignore] // This does not apply after PRI-22785
+        [Ignore("Not certain why we are ignoring this...")] // This does not apply after PRI-22785
         public void CanLoadOpenMarketInventoryFileWithUnknownStation()
         {
             using (new TransactionScopeWrapper())
@@ -1328,7 +1328,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Ignore] // This does not apply after PRI-22785
+        [Ignore("Not certain why we are ignoring this...")] // This does not apply after PRI-22785
         public void CanLoadOpenMarketInventoryFileWithUnknownStation_Contacts()
         {
             var contactQueryString = "Hanington, Jack";

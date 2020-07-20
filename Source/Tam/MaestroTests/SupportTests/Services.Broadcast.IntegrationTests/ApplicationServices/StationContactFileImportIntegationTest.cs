@@ -6,13 +6,13 @@ using Tam.Maestro.Common.DataLayer;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
-    [Ignore]
+    [Ignore("Not certain why we are ignoring this...")]
     public class StationContactFileImportIntegationTest
     {
         private IStationContactMasterFileImporter _stationContactMasterFileImporter = IntegrationTestApplicationServiceFactory.GetApplicationService<IStationContactMasterFileImporter>();
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         public void CanLoadStationContactsFromFile()
         {
             using (new TransactionScopeWrapper())

@@ -6,6 +6,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
+using Moq.AutoMock;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests
 {
@@ -52,13 +53,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         [Test]
         public void SavePostFile_Throws_When_FileName_Already_Exist()
         {
-            var mocker = new AutoMoq.AutoMoqer();
+            var mocker = new AutoMocker();
             var postRepository = mocker.GetMock<IPostPrePostingRepository>();
             postRepository.Setup(r => r.PostExist(It.IsAny<string>())).Returns(true);
             var broadcastDataRepository = mocker.GetMock<IDataRepositoryFactory>();
             broadcastDataRepository.Setup(r => r.GetDataRepository<IPostPrePostingRepository>()).Returns(postRepository.Object);
 
-            var sut = mocker.Create<PostPrePostingService>();
+            var sut = mocker.CreateInstance<PostPrePostingService>();
 
             var request = new PostRequest();
             request.FileName = "abc.xlsx";
@@ -109,13 +110,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         [Test]
         public void Edit_Throws_When_FileName_Already_Exist()
         {
-            var mocker = new AutoMoq.AutoMoqer();
+            var mocker = new AutoMocker();
             var postRepository = mocker.GetMock<IPostPrePostingRepository>();
+
             postRepository.Setup(r => r.PostExist(It.IsAny<string>())).Returns(true);
             var broadcastDataRepository = mocker.GetMock<IDataRepositoryFactory>();
+
             broadcastDataRepository.Setup(r => r.GetDataRepository<IPostPrePostingRepository>()).Returns(postRepository.Object);
 
-            var sut = mocker.Create<PostPrePostingService>();
+            var sut = mocker.CreateInstance<PostPrePostingService>();
 
             var request = new PostRequest();
             request.FileId = 5;

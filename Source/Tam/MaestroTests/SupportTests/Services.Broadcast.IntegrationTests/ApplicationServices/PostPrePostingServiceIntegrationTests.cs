@@ -8,7 +8,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [Category("long_running")] // marking as a long-running because we are currently not working in this area
     public class PostPrePostingServiceIntegrationTests
     {
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         public void GetPosts()
         {
@@ -16,7 +16,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(x.GetPosts()));
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         public void GetPost()
         {
