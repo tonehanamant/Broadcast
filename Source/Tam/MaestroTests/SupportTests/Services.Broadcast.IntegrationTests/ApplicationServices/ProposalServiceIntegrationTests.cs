@@ -20,7 +20,7 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
-    [Ignore("Not certain why we are ignoring this...")]
+    [Ignore]
     public class ProposalServiceIntegrationTests
     {
         private readonly IProposalService _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
@@ -346,7 +346,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         public void CanLoadInitialProposalData()
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
@@ -483,7 +483,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void EditProposal()
         {
@@ -1509,7 +1509,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
 
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadLastEditedProposalAsPrimary()
         {
@@ -1540,7 +1540,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void ProposalWithInventorySelectedIsNotSavedWithoutForceSave()
         {
@@ -1557,7 +1557,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void CanSaveUpdatedProposalWithInventoryAgainstIt()
         {
@@ -1588,7 +1588,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void UpdateProposalStatus_FromAgencyOnHoldToProposed_Has_Validation_Warning()
         {
@@ -1607,7 +1607,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void UpdateProposalStatus_FromAgencyOnHoldToProposed_Clears_InventoryAllocations_When_ForceSave()
         {
@@ -1629,7 +1629,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void SaveProposal_CannotSetStatusTo_AgencyOnHold_IfAnotherVersionisAgencyOnHold()
         {
@@ -1654,7 +1654,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void SaveProposal_CannotSetStatusTo_AgencyOnHold_IfAnotherVersionisAgencyOnHold_OtherThanPrimaryPrimary()
         {   // inspired by BCOP-1618
@@ -1676,7 +1676,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void SaveProposal_CannotSetStatusTo_AgencyOnHold_IfAnotherVersionisPrimary()
         {
@@ -1695,7 +1695,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void SaveProposal_CannotSetStatusTo_AgencyOnHold_IfAnotherVersionisContracted()
         {
@@ -1714,7 +1714,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanDeleteInventoryAllocationsForDetailQuarterWeekWhenUpdatingProposalDetail()
         {
@@ -1748,7 +1748,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void HasInventorySelectedWhenChangingWeekToHiatus()
         {
@@ -1765,7 +1765,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanDeleteInventoryAllocationsForDetailQuarterWeekWhenUpdatingWeekToHiatus()
@@ -1786,7 +1786,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanDeleteInventoryAllocationWhenProposalDetailSpotLengthIsChanged()
@@ -1830,7 +1830,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanDeleteInventoryAllocationWhenProposalDetailDaypartIsChanged()
         {
@@ -1873,7 +1873,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanDeleteInventoryAllocationWhenProposalMarketsInChanged()
@@ -1917,7 +1917,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void CanReturnHasInventorySelectedWhenProposalDetailDaypartIsChanged()
         {
@@ -1935,7 +1935,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void CanReturnHasInventorySelectedWhenProposalDetailSpotLengthIsChanged()
         {
@@ -1952,7 +1952,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void CanReturnHasInventorySelectedWhenProposalDetailQuarterCPMIsChanged()
         {
@@ -1969,7 +1969,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void CanReturnHasInventorySelectedWhenProposalDetailQuarterImpressionGoalIsChanged()
         {
@@ -1986,7 +1986,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [ExpectedException(typeof(Exception), ExpectedMessage = "Only one proposal version can be set to contracted per proposal", MatchType = MessageMatch.Contains)]
         public void CanOnlySaveOneContractedProposalVersion()
         {
@@ -2006,7 +2006,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot make new versions of the proposal", MatchType = MessageMatch.Contains)]
         public void CannotSaveProposalsWhenOneVersionIsContracted()
@@ -2022,7 +2022,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void CanUnorderProposal()
         {
@@ -2050,7 +2050,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanUnorderProposalAndAllocationsAreNotChanged()
@@ -2071,7 +2071,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         [ExpectedException(typeof(Exception), ExpectedMessage = "Only proposals in Contracted status can be unordered.", MatchType = MessageMatch.Contains)]
         public void CannotUnorderProposalInProposedStatus()
@@ -2087,7 +2087,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         [ExpectedException(typeof(Exception), ExpectedMessage = "Only proposals in Contracted status can be unordered.", MatchType = MessageMatch.Contains)]
         public void CannotUnorderProposalInAgencyOnHoldStatus()
@@ -2103,7 +2103,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot change the status of a Previously Contracted proposal.", MatchType = MessageMatch.Contains)]
         public void CannotChangeStatusOfProposalWithPreviouslyContractedStatus()
@@ -2131,7 +2131,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot edit a proposal in Previously Contracted status.", MatchType = MessageMatch.Contains)]
         public void CannotSetProposalStatusToPreviouslyContracted()
@@ -2144,7 +2144,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot edit a proposal in Previously Contracted status.", MatchType = MessageMatch.Contains)]
         public void CannotEditProposalWithPreviouslyContractedStatus()
@@ -2174,7 +2174,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot save proposal without specifying a valid username", MatchType = MessageMatch.Contains)]
         public void CannotSaveProposalWithInvalidUsername()
         {
@@ -2186,7 +2186,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void RecalculateTotalsAfterDeletingAllocations()
         {
@@ -2207,7 +2207,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [ExpectedException(typeof(Exception), ExpectedMessage = "The Proposal information you have entered [", MatchType = MessageMatch.Contains)]
         public void CanDeleteProposal()
         {

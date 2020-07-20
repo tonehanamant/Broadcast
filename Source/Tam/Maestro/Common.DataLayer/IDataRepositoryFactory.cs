@@ -1,4 +1,4 @@
-﻿using Unity;
+﻿using Microsoft.Practices.Unity;
 
 namespace Common.Services.Repositories
 {

@@ -1,15 +1,15 @@
-﻿using Common.Services;
-using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
-using Services.Broadcast.Clients;
+﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
-using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using System;
-using System.Collections.Generic;
 using System.IO;
+using Microsoft.Practices.Unity;
+using Services.Broadcast.Clients;
+using Services.Broadcast.IntegrationTests.Stubs;
 using System.Text;
-using Unity;
+using Common.Services;
+using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
+using System.Collections.Generic;
 
 namespace Services.Broadcast.IntegrationTests.Helpers
 {

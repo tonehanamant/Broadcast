@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Microsoft.Practices.Unity;
+using System;
 using System.Collections.Generic;
 using System.Web.Http.Dependencies;
-using Unity;
 
 namespace Tam.Maestro.Web.Common.AppStart
 {
     public class UnityWebApiResolver : IDependencyResolver
     {
-        private readonly IUnityContainer _container;
+        private IUnityContainer _container;
 
         public UnityWebApiResolver(IUnityContainer container)
         {

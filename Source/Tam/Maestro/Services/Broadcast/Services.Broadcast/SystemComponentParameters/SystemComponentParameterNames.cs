@@ -614,11 +614,6 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "CancellationNotificationUri"; }
         }
 	 
-		public static string ConstraintManagementApiUrl  
-		{
-            get { return "ConstraintManagementApiUrl"; }
-        }
-	 
 		public static string DeliveryInsightPrediction  
 		{
             get { return "DeliveryInsightPrediction"; }
@@ -677,11 +672,6 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string SpotcapsToggle  
 		{
             get { return "SpotcapsToggle"; }
-        }
-	 
-		public static string TrafficPreBuyAllocationBaseUri  
-		{
-            get { return "TrafficPreBuyAllocationBaseUri"; }
         }
 	}
 	 

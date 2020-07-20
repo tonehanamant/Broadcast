@@ -11,7 +11,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
     [UseReporter(typeof(DiffReporter))]
     public class ProposalInventoryRepositoryIntegrationTests
     {
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void GetSortedFilteredInventoryDetails_FiltersOutMarkets()
         {

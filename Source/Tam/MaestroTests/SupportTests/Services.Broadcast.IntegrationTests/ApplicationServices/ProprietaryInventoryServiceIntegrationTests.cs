@@ -1,6 +1,7 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -18,7 +19,6 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.ContractInterfaces.Common;
-using Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -135,7 +135,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Ignore("Not certain why we are ignoring this...")] // Does not apply after PRI-22785
+        [Ignore] // Does not apply after PRI-22785
         public void Barter_SavesManifests_WhenStationIsUnknown()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_ValidFormat_UnknownStation.xlsx";
@@ -623,7 +623,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         ///     - all the stations are loaded into the integration db.
         ///     - PRI-21025 resolves the way imports resolves the station records.
         /// </summary>
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavesDiginetInventoryFileManifests()
@@ -637,7 +637,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         ///     - all the stations are loaded into the integration db.
         ///     - PRI-21025 resolves the way imports resolves the station records.
         /// </summary>
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavesDiginetInventoryFileManifests_WithDaypartCodes()
@@ -660,7 +660,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         ///     - all the stations are loaded into the integration db.
         ///     - PRI-21025 resolves the way imports resolves the station records.
         /// </summary>
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SavesDiginetInventoryFileManifests_WithSpacesInDaypart()
@@ -1001,7 +1001,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         /// <summary>
         /// TODO: Bring this back once all the stations are loaded into the integration db.
         /// </summary>
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void Diginet_SaveProprietaryInventoryFile_Audience()

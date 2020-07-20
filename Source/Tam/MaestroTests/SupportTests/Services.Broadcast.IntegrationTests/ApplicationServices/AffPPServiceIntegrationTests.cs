@@ -1,6 +1,7 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -15,7 +16,6 @@ using System.Linq;
 using System.Net.Mail;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
-using Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -198,7 +198,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void PostPrePost_Report_Perf_Test()
@@ -413,7 +413,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [UseReporter(typeof(DiffReporter))]
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         // use for manual testing and not automated running 
         public void Test_ProcessErrorFiles_Empty() //Errors returned from WWTV
         {

@@ -22,7 +22,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         public void DefaultShareBookNotAvailable()
         {
             var dateTime = new DateTime(2005, 01, 1);

@@ -13,7 +13,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IInventoryService _inventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
 
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         public void RunBulkImport()
         {
             var sourcePath = @"C:\Users\mtrzcianowski\Documents\broadcast\SYN\";

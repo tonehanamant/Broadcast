@@ -16,7 +16,7 @@ using Tam.Maestro.Data.Entities.DataTransferObjects;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
-    [Ignore("Not certain why we are ignoring this...")]
+    [Ignore]
     public class PostLogServiceIntegrationTests
     {
         private readonly IPostLogRepository _PostLogRepository;

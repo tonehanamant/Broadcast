@@ -1,6 +1,7 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -11,7 +12,6 @@ using System;
 using System.IO;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities;
-using Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

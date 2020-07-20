@@ -1,7 +1,5 @@
-﻿using Unity;
-using Unity.Interception;
-using Unity.Interception.InterceptionBehaviors;
-using Unity.Interception.Interceptors.InstanceInterceptors.InterfaceInterception;
+﻿using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.InterceptionExtension;
 
 namespace Common.Services.Repositories
 {

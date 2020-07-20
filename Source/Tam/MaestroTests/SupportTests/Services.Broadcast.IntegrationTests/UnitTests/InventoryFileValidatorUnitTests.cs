@@ -83,7 +83,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
 
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         [ExpectedException(typeof(BroadcastInventoryFileValidationException), ExpectedMessage = "unknown stations", MatchType = MessageMatch.Contains)]
         public void ValidateInventoryFileWithUnknownStation()
@@ -201,7 +201,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             //Assert.AreEqual(1, validationResult.InvalidRates.Count);
 
         }
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void ValidateInventoryFileWithDuplicateRates()
         {

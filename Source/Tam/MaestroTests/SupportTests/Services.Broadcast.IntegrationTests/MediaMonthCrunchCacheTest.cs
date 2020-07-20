@@ -15,7 +15,7 @@ namespace Services.Broadcast.IntegrationTests
         {
             var dmy = IntegrationTestApplicationServiceFactory.Instance;
         }
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void MediaMonthCruchCache_Get_Test()

@@ -12,7 +12,7 @@ using Tam.Maestro.Common.DataLayer;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
-    [Ignore("Not certain why we are ignoring this...")]
+    [Ignore]
     public class SpotTrackerServiceIntegrationTests
     {
         private readonly ISpotTrackerService _SpotTrackerService;

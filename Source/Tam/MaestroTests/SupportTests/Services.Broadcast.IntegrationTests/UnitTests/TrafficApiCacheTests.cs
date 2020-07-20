@@ -4,6 +4,8 @@ using NUnit.Framework;
 using Services.Broadcast.Cache;
 using Services.Broadcast.IntegrationTests.Stubs;
 using System;
+using Microsoft.Practices.Unity;
+using Services.Broadcast.Clients;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests
 {

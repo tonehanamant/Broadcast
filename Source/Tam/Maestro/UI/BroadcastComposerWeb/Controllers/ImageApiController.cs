@@ -23,7 +23,7 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpGet]
-        [Route("logo_png")]
+        [Route("logo.png")]
         [CacheOutput(ClientTimeSpan = BroadcastConstants.LogoCachingDurationInSeconds, 
                      ServerTimeSpan = BroadcastConstants.LogoCachingDurationInSeconds)]
         public HttpResponseMessage GetLogo()

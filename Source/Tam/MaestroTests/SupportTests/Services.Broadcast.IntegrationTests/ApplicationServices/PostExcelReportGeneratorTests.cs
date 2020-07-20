@@ -22,7 +22,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IRatingForecastService _RatingForecastService = IntegrationTestApplicationServiceFactory.GetApplicationService<IRatingForecastService>();
 
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         public void GenerateReportFile()
         {
             using (new TransactionScopeWrapper())

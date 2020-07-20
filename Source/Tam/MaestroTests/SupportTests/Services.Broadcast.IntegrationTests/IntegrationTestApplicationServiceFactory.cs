@@ -2,6 +2,8 @@
 using Common.Services.Repositories;
 using ConfigurationService.Client;
 using Hangfire;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.InterceptionExtension;
 using Moq;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Cache;
@@ -13,11 +15,6 @@ using System;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Clients;
-using Unity;
-using Unity.Interception;
-using Unity.Interception.InterceptionBehaviors;
-using Unity.Interception.Interceptors.InstanceInterceptors.InterfaceInterception;
-using Unity.Lifetime;
 
 namespace Services.Broadcast.IntegrationTests
 {

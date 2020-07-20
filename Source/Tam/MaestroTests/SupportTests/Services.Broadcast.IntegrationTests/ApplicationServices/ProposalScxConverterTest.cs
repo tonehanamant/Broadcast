@@ -21,7 +21,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
 
         //[Test]
-        //[Ignore("Not certain why we are ignoring this...")]
+        //[Ignore]
         //public void Test_ProposalScx()
         //{ // inspired by BCOP-1675
         //    using (new TransactionScopeWrapper())
@@ -37,7 +37,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         //    }
         //}
 
-        //[Ignore("Not certain why we are ignoring this...")]
+        //[Ignore]
         //[Test]
         //public void Tester_Bester()
         //{

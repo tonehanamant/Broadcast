@@ -1,4 +1,10 @@
-﻿using Common.Services.Repositories;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Common.Services.Repositories;
+using Microsoft.Practices.ObjectBuilder2;
+using Services.Broadcast.Converters.RateImport;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Repositories;
 
 namespace Services.Broadcast.ApplicationServices

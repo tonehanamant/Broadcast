@@ -26,7 +26,7 @@ using static Services.Broadcast.Entities.OpenMarketInventory.ProposalVersionSnap
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
-    [Ignore("Not certain why we are ignoring this...")]
+    [Ignore]
     public class 
         ProposalOpenMarketInventoryServiceIntegrationTests
     {
@@ -68,7 +68,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadOpenMarketProposalInventory()
         {
@@ -102,7 +102,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         public void CanLoadOpenMarketProposalInventory_With_MinCpmRefinements()
         {
             using (new TransactionScopeWrapper())
@@ -141,7 +141,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadOpenMarketProposalInventory_With_MaxCpmRefinements()
@@ -183,7 +183,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanLoadOpenMarketProposalInventory_WithProgramNameRefinements()
         {
@@ -536,7 +536,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void CanCalculateTotalsForProposalOpenMarketDto()
         {
@@ -555,7 +555,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void CanEditPorposalInventorySlot()
         {
@@ -582,7 +582,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void CanVerifyMarginHasBeenAchieved()
         {
@@ -607,7 +607,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
 
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CanEditPorposalOpenMarketInventorySpotWithFilterOn()
         {
@@ -652,7 +652,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void OpenMarketInventorySetFlagToShowWarningOnHideProgramWithSpots()
         {
@@ -680,7 +680,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         public void OpenMarketInventoryOverrideFlagToShowWarningOnHideProgramWithSpots()
         {
             using (new TransactionScopeWrapper())
@@ -708,7 +708,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         public void OpenMarketInventoryOnFilterCPMSetFlagToShowWarning()
         {
             using (new TransactionScopeWrapper())
@@ -734,7 +734,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void OpenMarketInventoryFilterCPM()
         {
@@ -773,7 +773,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void RefineByProgramNameDontExcludePreviouslyAddedProgramNames()
         {
@@ -1248,7 +1248,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void ShouldRemoveProgram_ProgramName_Include()
         {
@@ -1261,7 +1261,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             //Assert.False(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void ShouldRemoveProgram_ProgramName_Include2()
         {
@@ -1274,7 +1274,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             //Assert.True(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void ShouldRemoveProgram_ProgramName_Exclude()
         {
@@ -1287,7 +1287,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             //Assert.True(ProposalOpenMarketInventoryService.FilterByGenreAndProgramNameCriteria(program, marketCriterion));
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void ShouldRemoveProgram_ProgramName_Exclude2()
         {
@@ -1383,7 +1383,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void CalculateProposalHeaderTotalsAfterInventoryIsSaved()
         {
@@ -1434,7 +1434,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         [ExpectedException(typeof(Exception), ExpectedMessage = "Cannot allocate spots that have zero impressions",
             MatchType = MessageMatch.Contains)]
@@ -1470,7 +1470,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void Proposal_Update_Delete_Allocation_Outside_Daypart_BCOP1932()
         {

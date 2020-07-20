@@ -1,6 +1,7 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -15,12 +16,11 @@ using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
-using Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
-    [Ignore("Not certain why we are ignoring this...")]
+    [Ignore]
     public class PricingGuideServiceIntegrationTests
     {
         private readonly IPricingGuideService _PricingGuideService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPricingGuideService>();

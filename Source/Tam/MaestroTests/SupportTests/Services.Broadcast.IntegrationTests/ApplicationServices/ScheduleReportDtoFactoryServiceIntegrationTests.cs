@@ -17,7 +17,7 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
-    [Ignore("Not certain why we are ignoring this...")]
+    [Ignore]
     public class ScheduleReportDtoFactoryServiceIntegrationTests
     {
         private readonly IScheduleAggregateFactoryService _scheduleAggregateFactoryService =
@@ -581,7 +581,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         /// (which would have been excluded with old logic) bvs records.
         /// </summary>
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void FullReport_GenerateScheduleReportDto_NTI_ClockDateAdjustment()
         {
@@ -650,7 +650,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         
         
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void FullReport_Market_Datepart_Restrictions_BB294()
         {
@@ -671,7 +671,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
  
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void Schedule_Upload_Case_Sensitive_ISCIs_BCOP1927()
         {

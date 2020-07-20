@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Microsoft.Practices.Unity;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using Unity;
 
 namespace Tam.Maestro.Web.Common.AppStart
 {
     public class UnityWebMvcResolver : IDependencyResolver
     {
-        private readonly UnityContainer _container;
+        UnityContainer _container;
 
         public UnityWebMvcResolver(UnityContainer container)
         {

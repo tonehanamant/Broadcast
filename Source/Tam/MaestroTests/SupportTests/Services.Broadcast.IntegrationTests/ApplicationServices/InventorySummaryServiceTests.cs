@@ -2,6 +2,7 @@
 using ApprovalTests.Namers;
 using ApprovalTests.Reporters;
 using Common.Services;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -19,7 +20,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Tam.Maestro.Common.DataLayer;
-using Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -740,7 +740,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         public void GetInventorySummariesWithCache()
         {
             const int inventorySourceId = 5;

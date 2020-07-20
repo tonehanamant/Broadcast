@@ -26,7 +26,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         }
 
         [Test]
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [UseReporter(typeof(DiffReporter))]
         public void GetDisplaySchedules_DateRange_null_Start()
         {

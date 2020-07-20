@@ -2,6 +2,7 @@
 using ApprovalTests.Reporters;
 using Common.Services;
 using Common.Services.Repositories;
+using Microsoft.Practices.Unity;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -27,7 +28,6 @@ using System.Linq;
 using System.Threading;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.ContractInterfaces;
-using Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

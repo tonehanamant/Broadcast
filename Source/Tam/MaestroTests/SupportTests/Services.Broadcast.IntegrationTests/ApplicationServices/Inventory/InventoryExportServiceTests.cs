@@ -1,6 +1,7 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services;
+using Microsoft.Practices.Unity;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices.Inventory;
 using Services.Broadcast.Entities;
@@ -15,7 +16,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
-using Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices.Inventory
 {
@@ -136,7 +136,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Inventory
             // and since these the content contains a timestamp we can't check by exact length
             // so we we will only check that it's at least X
             var resultLength = generatedFileContent.Length;
-            var expectedRange = new { floor = 8300, ceiling = 8400};
+            var expectedRange = new { floor = 8400, ceiling = 8500};
             Assert.IsTrue(resultLength > expectedRange.floor);
             Assert.IsTrue(resultLength < expectedRange.ceiling);
         }

@@ -13,7 +13,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         private readonly IProposalOpenMarketInventoryService _ProposalOpenMarketInventoryService =
             IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalOpenMarketInventoryService>();
 
-        [Ignore("Not certain why we are ignoring this...")]
+        [Ignore]
         [Test]
         public void CalculateOpenMarketsTotalsTest()
         {

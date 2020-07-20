@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Microsoft.Practices.Unity.InterceptionExtension;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using Tam.Maestro.Common.Utilities.Logging;
-using Unity.Interception.InterceptionBehaviors;
-using Unity.Interception.PolicyInjection.Pipeline;
 
 namespace Common.Services
 {

@@ -1,5 +1,6 @@
 ﻿using Common.Services;
 using Common.Services.Repositories;
+using Microsoft.Practices.ObjectBuilder2;
 using OfficeOpenXml;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
@@ -16,7 +17,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Tam.Maestro.Common;
 using static Services.Broadcast.Entities.ProprietaryInventory.ProprietaryInventoryFile;
 
 namespace Services.Broadcast.Converters.RateImport
