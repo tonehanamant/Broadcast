@@ -565,18 +565,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("long_running")]
         public void CampaignExport_GenerateCampaignReport()
         {
-            var user = "IntegrationTestsUser";
-
-            var fileServiceMock = new Mock<IFileService>();
-            fileServiceMock.Setup(x => x.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Stream>()));
-            var campaignService = _SetupCampaignService(fileServiceMock.Object);
-            var fileId = Guid.Empty;
-            var sharedFolderRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
-                .GetDataRepository<ISharedFolderFilesRepository>();
-            SharedFolderFile sharedFolderFile = null;
-
             using (new TransactionScopeWrapper())
             {
+                var user = "IntegrationTestsUser";
+
+                var fileServiceMock = new Mock<IFileService>();
+                fileServiceMock.Setup(x => x.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Stream>()));
+                var campaignService = _SetupCampaignService(fileServiceMock.Object);
+                var fileId = Guid.Empty;
+                var sharedFolderRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
+                    .GetDataRepository<ISharedFolderFilesRepository>();
+                SharedFolderFile sharedFolderFile = null;
+
                 fileId = campaignService.GenerateCampaignReport(new CampaignReportRequest
                 {
                     CampaignId = 652,
@@ -585,11 +585,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 }, user, "./Files/Excel templates");
 
                 sharedFolderFile = sharedFolderRepository.GetFileById(fileId);
-            }
-
-            Assert.AreNotEqual(Guid.Empty, fileId);
+                Assert.AreNotEqual(Guid.Empty, fileId);
 #if DEBUG
-            //we don't care where the file is saved
+                //we don't care where the file is saved
 #else
             fileServiceMock.Verify(x => x.Create(
                 @"\\cadfs11\Broadcast\Dev\CampaignExportReports",
@@ -597,7 +595,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 It.Is<Stream>(y => y != null && y.Length > 0)), Times.Once);
 #endif
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(sharedFolderFile, _GetJsonSettingsForCampaignExport()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(sharedFolderFile, _GetJsonSettingsForCampaignExport()));
+            }
         }
 
         private ICampaignService _SetupCampaignService(IFileService fileService)
@@ -930,13 +929,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
         public void ProgramLineupExport()
-        {
-            const int planId = 1197;
-            var now = new DateTime(2020, 4, 4);
-            IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPricingApiClient, PricingApiClientStub>();
-            var planPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
+        {           
             using (new TransactionScopeWrapper())
             {
+                const int planId = 1197;
+                var now = new DateTime(2020, 4, 4);
+                IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPricingApiClient, PricingApiClientStub>();
+                var planPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
                 var planPricingRequestDto = new PlanPricingParametersDto
                 {
                     PlanId = planId,

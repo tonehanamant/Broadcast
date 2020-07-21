@@ -5,6 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Caching;
 using Services.Broadcast.Entities.DTO;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using log4net;
+using BroadcastLogging;
 
 namespace Services.Broadcast.Cache
 {
@@ -24,7 +27,7 @@ namespace Services.Broadcast.Cache
 
     public class TrafficApiCache : ITrafficApiCache
     {
-        private const int CACHE_ITEM_TTL_SECONDS = 3600;
+        private readonly int CACHE_ITEM_TTL_SECONDS;
         private readonly ITrafficApiClient _TrafficApiClient;
 
         private const string CACHE_NAME_AGENCIES = "Agencies";
@@ -46,6 +49,19 @@ namespace Services.Broadcast.Cache
 
         public TrafficApiCache(ITrafficApiClient trafficApiClient)
         {
+            var log = LogManager.GetLogger(GetType());
+            if (BroadcastServiceSystemParameter.AABCacheExpirationSeconds < 0)
+            {
+                var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage("Parameter AABCacheExpirationSeconds does not have a value"
+                    , GetType(), string.Empty);
+                log.Warn(logMessage.ToJson());
+                CACHE_ITEM_TTL_SECONDS = 300; //default to 5 minutes
+            }
+            else
+            {
+                CACHE_ITEM_TTL_SECONDS = BroadcastServiceSystemParameter.AABCacheExpirationSeconds;
+            }
+
             _TrafficApiClient = trafficApiClient;
             BuildAgencyCache(null);
         }
