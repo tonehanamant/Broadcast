@@ -42,7 +42,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [UseReporter(typeof(DiffReporter))]
         public void GetNsiPostReportDataWithHiatusWeeks()
         {
@@ -169,7 +169,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         public void GenerateReportFile()
         {
             const int proposalId = 253;

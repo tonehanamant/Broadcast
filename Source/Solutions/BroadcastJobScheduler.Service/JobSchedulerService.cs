@@ -2,11 +2,11 @@
 using BroadcastLogging;
 using Hangfire;
 using log4net;
-using Microsoft.Practices.Unity;
 using Services.Broadcast.ApplicationServices;
 using System;
 using System.Runtime.CompilerServices;
 using System.ServiceProcess;
+using Unity;
 
 namespace BroadcastJobScheduler.Service
 {

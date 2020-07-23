@@ -15,7 +15,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [UseReporter(typeof(DiffReporter))]
     public class PostEngineIntegrationTests
     {
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         public void Post_Works_With_DuplicateDetails()
         {
@@ -47,7 +47,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         public void Post()
         {
@@ -76,7 +76,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         public void PostWithUnknownStation()
         {
@@ -109,7 +109,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         public void Post_Friday()
         {
@@ -140,7 +140,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         public void Post_Sunday()
         {

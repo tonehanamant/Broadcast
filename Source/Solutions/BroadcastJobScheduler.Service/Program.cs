@@ -1,11 +1,9 @@
-﻿using System.Runtime.CompilerServices;
-using System.ServiceProcess;
-using System.Threading;
-using BroadcastLogging;
+﻿using BroadcastLogging;
 using log4net;
 using Services.Broadcast.ApplicationServices;
-using Microsoft.Practices.Unity;
 using System;
+using System.Threading;
+using Unity;
 
 namespace BroadcastJobScheduler.Service
 {

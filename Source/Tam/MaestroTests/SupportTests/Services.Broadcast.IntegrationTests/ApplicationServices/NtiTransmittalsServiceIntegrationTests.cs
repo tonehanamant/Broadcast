@@ -14,7 +14,7 @@ using Tam.Maestro.Services.Cable.Entities;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
-    [Ignore]
+    [Ignore("Not certain why we are ignoring this...")]
     [UseReporter(typeof(DiffReporter))]
     public class NtiTransmittalsServiceIntegrationTests
     {

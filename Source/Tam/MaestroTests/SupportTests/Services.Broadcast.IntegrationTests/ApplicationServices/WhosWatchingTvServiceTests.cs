@@ -13,7 +13,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             IntegrationTestApplicationServiceFactory.GetApplicationService<IWhosWatchingTvService>();
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [UseReporter(typeof(DiffReporter))]
         public void FindSomething()
         {

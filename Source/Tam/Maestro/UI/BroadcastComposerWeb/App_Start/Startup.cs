@@ -1,10 +1,7 @@
-﻿using System.Runtime.CompilerServices;
-using BroadcastLogging;
+﻿using BroadcastLogging;
 using log4net;
 using Owin;
-using Microsoft.Practices.Unity;
-using Services.Broadcast.ApplicationServices.Plan;
-using Services.Broadcast.ApplicationServices;
+using System.Runtime.CompilerServices;
 
 namespace BroadcastComposerWeb
 {

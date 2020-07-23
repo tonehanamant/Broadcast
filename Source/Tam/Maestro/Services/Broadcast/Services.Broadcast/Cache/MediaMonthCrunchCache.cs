@@ -1,14 +1,12 @@
-﻿using Services.Broadcast.Repositories;
+﻿using Common.Services.Repositories;
+using Services.Broadcast;
+using Services.Broadcast.Entities;
+using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Transactions;
-using Common.Services.Repositories;
-using Microsoft.Practices.Unity;
-using Services.Broadcast;
-using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.Entities;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 

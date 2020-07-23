@@ -1,8 +1,6 @@
 ﻿using BroadcastLogging;
 using log4net;
-using Microsoft.Practices.Unity;
 using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.ApplicationServices.Plan;
 using System;
 using System.Runtime.CompilerServices;
 using System.Web.Configuration;
@@ -12,6 +10,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Tam.Maestro.Web.Common.AppStart;
+using Unity;
 
 namespace BroadcastComposerWeb
 {

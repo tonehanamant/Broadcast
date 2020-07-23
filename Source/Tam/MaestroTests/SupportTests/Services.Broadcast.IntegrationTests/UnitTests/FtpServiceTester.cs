@@ -14,7 +14,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
 
     class FtpServiceTester
     {
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         public void TestFileList()
         {

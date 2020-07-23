@@ -39,31 +39,6 @@ namespace Tam.Maestro.Services.Clients
             get { return MaestroEnvironmentSystemParameter.Environment; }
         }
 
-        public bool ClearSystemComponentParameterCache(string componentID, string parameterID)
-        {
-            if (ShouldUseSMSClient())
-            {
-                return _smsClient.ClearSystemComponentParameterCache(componentID, parameterID);
-            }
-            else
-            {
-                return ConfigurationWebApiClient.Handler.ClearSystemComponentParameterCache(componentID, parameterID);
-            }
-        }
-
-        public bool ClearSystemComponentParameterCache()
-        {
-            // we need this to get cleared regardless to avoid stale db connection strings
-            SMSClient.Handler.ClearSystemComponentParameterCache(null, null);
-
-            if (!ShouldUseSMSClient())
-            {
-                return ConfigurationWebApiClient.Handler.ClearSystemComponentParameterCache();
-            }
-
-            return true;
-        }
-
         public string GetResource(string resource)
         {
             // Note: The SMS Service and the Configuration API take slightly different strings as input

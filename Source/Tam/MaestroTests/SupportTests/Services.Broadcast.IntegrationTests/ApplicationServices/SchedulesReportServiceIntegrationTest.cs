@@ -50,7 +50,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         public void GenerateReportFile()
         {
             const int scheduleId = 975;
@@ -61,7 +61,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         public void Generate3rdPartReportFile()
         {
             const int scheduleId = 2365;

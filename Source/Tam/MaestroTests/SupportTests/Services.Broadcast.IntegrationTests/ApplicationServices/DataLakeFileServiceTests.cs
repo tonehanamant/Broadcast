@@ -1,7 +1,6 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services;
-using Microsoft.Practices.Unity;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -10,6 +9,7 @@ using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.Entities;
 using System.IO;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

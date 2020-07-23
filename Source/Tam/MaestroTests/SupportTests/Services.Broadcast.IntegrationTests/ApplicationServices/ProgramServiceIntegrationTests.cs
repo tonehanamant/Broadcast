@@ -1,6 +1,5 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -10,6 +9,7 @@ using Services.Broadcast.IntegrationTests.Stubs;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {

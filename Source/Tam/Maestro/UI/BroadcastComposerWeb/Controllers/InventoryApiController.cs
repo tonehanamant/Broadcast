@@ -1,5 +1,4 @@
-﻿using Microsoft.Practices.Unity;
-using Services.Broadcast.ApplicationServices;
+﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventorySummary;
@@ -15,6 +14,7 @@ using System.Web.Http;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Web.Common;
+using Unity;
 
 namespace BroadcastComposerWeb.Controllers
 {

@@ -4886,7 +4886,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// Serializes current demo object into an XML document
         /// </summary>
         /// <returns>string XML value</returns>
-        public virtual string Serialize(System.Text.Encoding encoding)
+        public override string Serialize(System.Text.Encoding encoding)
         {
             System.IO.StreamReader streamReader = null;
             System.IO.MemoryStream memoryStream = null;
@@ -4914,7 +4914,7 @@ namespace Services.Broadcast.Entities.spotcableXML
             }
         }
 
-        public virtual string Serialize()
+        public override string Serialize()
         {
             return Serialize(Encoding.UTF8);
         }
@@ -4948,7 +4948,7 @@ namespace Services.Broadcast.Entities.spotcableXML
             return Deserialize(xml, out obj, out exception);
         }
 
-        public static demo Deserialize(string xml)
+        public new static demo Deserialize(string xml)
         {
             System.IO.StringReader stringReader = null;
             try
@@ -4972,7 +4972,7 @@ namespace Services.Broadcast.Entities.spotcableXML
         /// <param name="encoding"></param>
         /// <param name="exception">output Exception value if failed</param>
         /// <returns>true if can serialize and save into file; otherwise, false</returns>
-        public virtual bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
+        public override bool SaveToFile(string fileName, System.Text.Encoding encoding, out System.Exception exception)
         {
             exception = null;
             try
@@ -4987,17 +4987,17 @@ namespace Services.Broadcast.Entities.spotcableXML
             }
         }
 
-        public virtual bool SaveToFile(string fileName, out System.Exception exception)
+        public override bool SaveToFile(string fileName, out System.Exception exception)
         {
             return SaveToFile(fileName, Encoding.UTF8, out exception);
         }
 
-        public virtual void SaveToFile(string fileName)
+        public override void SaveToFile(string fileName)
         {
             SaveToFile(fileName, Encoding.UTF8);
         }
 
-        public virtual void SaveToFile(string fileName, System.Text.Encoding encoding)
+        public override void SaveToFile(string fileName, System.Text.Encoding encoding)
         {
             System.IO.StreamWriter streamWriter = null;
             try
@@ -5051,12 +5051,12 @@ namespace Services.Broadcast.Entities.spotcableXML
             return LoadFromFile(fileName, out obj, out exception);
         }
 
-        public static demo LoadFromFile(string fileName)
+        public new static demo LoadFromFile(string fileName)
         {
             return LoadFromFile(fileName, Encoding.UTF8);
         }
 
-        public static demo LoadFromFile(string fileName, System.Text.Encoding encoding)
+        public new static demo LoadFromFile(string fileName, System.Text.Encoding encoding)
         {
             System.IO.FileStream file = null;
             System.IO.StreamReader sr = null;

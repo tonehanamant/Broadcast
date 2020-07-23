@@ -1,6 +1,5 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using Microsoft.Practices.Unity;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -19,6 +18,7 @@ using System.Transactions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -43,7 +43,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         public void CreateLeadInAndBlockTestData()
         {
             using (new TransactionScopeWrapper())
@@ -55,7 +55,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         public void CreateOverflowSpotAssignTestData()
         {
             using (new TransactionScopeWrapper())
@@ -67,7 +67,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         public void CreateStationMatchWithoutTimeMatch()
         {
             using (new TransactionScopeWrapper())
@@ -117,7 +117,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         public void DoIt()
         {
             _SutEngine.TrackDetectionByDetectionDetails(new List<int> { 8090 }, 3622);
@@ -307,7 +307,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [UseReporter(typeof(DiffReporter))]
         public void ScrubDetectionData()
         {
@@ -433,7 +433,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [UseReporter(typeof(DiffReporter))]
         public void ScrubDetectionData_WithNSIDateChanged()
         {
@@ -703,7 +703,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         public void LoadFtp()
         {
             // not part of auto-run test, only for manual testing
@@ -738,7 +738,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [UseReporter(typeof(DiffReporter))]
         public void GetScrubbingData()
         {
@@ -796,7 +796,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         public void CreateScrubbingMapping()
         {
             var scrub = new ScrubbingMap
@@ -897,7 +897,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore] //For loading data only - not for testing
+        [Ignore("Not certain why we are ignoring this...")] //For loading data only - not for testing
         public void LoadScheduleDataForTestClientReport()
         {
             try
@@ -942,7 +942,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore] //For loading data only - not for testing
+        [Ignore("Not certain why we are ignoring this...")] //For loading data only - not for testing
         public void LoadScheduleDetectionDataForTestingClientReport()
         {
 
@@ -958,7 +958,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _TrackerService.SaveDetectionFiles(detectionRequest, "User");
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void LoadDetection_Load_Assembly_Tracker()
@@ -1165,7 +1165,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [UseReporter(typeof(DiffReporter))]
         public void CreateBlankScheduleDataForClientReportTesting()
         {
@@ -1214,7 +1214,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         public void LoadDetection_Quickload()
         {
             var stream = new FileStream(@".\Files\BVS Quick Load.xlsx", FileMode.Open,
@@ -1233,7 +1233,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         /// The point of this test is to ensure the post logic of the second schedule does 
         /// not affect the first schedule.
         /// </summary>
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void CreateBlankSchedule_CheckPost()
@@ -1462,7 +1462,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore] //For loading data only - not for testing
+        [Ignore("Not certain why we are ignoring this...")] //For loading data only - not for testing
         [UseReporter(typeof(DiffReporter))]
         public void LoadScheduleSettingsTest()
         {
@@ -1540,7 +1540,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [UseReporter(typeof(DiffReporter))]
         public void LoadScheduleForUpdate()
         {
@@ -1798,7 +1798,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         /// 
         /// This test also covers BCOP-1679 which fails to show BVS out of spec records that fall outside the schedule's weeks.
         /// </summary>
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void Tracker_Days_Overnight_And_Lead_Ins()
@@ -1830,7 +1830,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void Tracker_Track_Schedule()
@@ -1866,7 +1866,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         public void Delete_BVS_File()
         {
             using (new TransactionScopeWrapper())
@@ -1887,7 +1887,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
 
@@ -1949,7 +1949,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         /// The idea of this test to to *not* include detection details as part of delivery counts for 
         /// detection records that are not in spec.
         /// </summary>
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void Remove_OutofSpec_Deliveries_BCOP_1873()
@@ -2017,7 +2017,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         /// The various tests.scx file has 3 audiences.  Upload it and post data will have data for all audiences.
         /// Then update schedule with only one audience, the post data should only have audiences for only the one.
         /// </summary>
-        [Ignore]
+        [Ignore("Not certain why we are ignoring this...")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void FullReport_GenerateScheduleReportDto_BCOP1900()

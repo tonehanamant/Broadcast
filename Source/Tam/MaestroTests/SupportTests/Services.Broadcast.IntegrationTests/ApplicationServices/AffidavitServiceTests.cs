@@ -1,7 +1,6 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services;
-using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -15,11 +14,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Assert = NUnit.Framework.Assert;
+using IgnoreAttribute = NUnit.Framework.IgnoreAttribute;
+using Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
-    [Ignore]
+    [Ignore("Not certain why this is ignored.")]
     public class AffidavitServiceTests
     {
         private const string ISCI1 = "DDDDDDDD";
@@ -51,7 +53,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _ProposalService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProposalService>();
         }
 
-        [Ignore]
+        [Ignore("Not certain why this is ignored.")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void SaveBigAffidaviteService()
@@ -712,7 +714,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Not certain why this is ignored.")]
         [UseReporter(typeof(DiffReporter))]
         public void Ensure_Correct_Scrubbing_Records_Following_Unmatched_Record()
         {
@@ -754,7 +756,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why this is ignored.")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void Affidavit_Station_Program_Scrub_inclusive()
@@ -784,7 +786,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
-        [Ignore]
+        [Ignore("Not certain why this is ignored.")]
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void Affidavit_Station_Program_Scrub_exclusive()

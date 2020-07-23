@@ -6,8 +6,6 @@ using Hangfire;
 using Hangfire.Client;
 using Hangfire.Common;
 using Hangfire.States;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.InterceptionExtension;
 using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.ApplicationServices.Inventory;
 using Services.Broadcast.ApplicationServices.Maintenance;
@@ -31,6 +29,12 @@ using Services.Broadcast.Validators;
 using Tam.Maestro.Common.Clients;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Services.Clients;
+using Unity;
+using Unity.Injection;
+using Unity.Interception;
+using Unity.Interception.InterceptionBehaviors;
+using Unity.Interception.Interceptors.InstanceInterceptors.InterfaceInterception;
+using Unity.Lifetime;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -52,9 +56,12 @@ namespace Services.Broadcast.ApplicationServices
                         _instance.RegisterInstance<ISMSClient>(SMSClient.Handler);
                         _instance.RegisterType<IBroadcastLockingManagerApplicationService, BroadcastLockingManagerApplicationService>(new ContainerControlledLifetimeManager());
                         _instance.RegisterInstance<IConfigurationWebApiClient>(ConfigurationClientSwitch.Handler);
+
                         _instance.RegisterType<IDataRepositoryFactory, BroadcastDataDataRepositoryFactory>();
 
-                        _instance.RegisterType<JobStorage>(new InjectionFactory(c => JobStorage.Current));
+                        // Upgrade to 4.7.2 and now this isn't needed.  Throws an error if included.
+                        //_instance.RegisterType<JobStorage>(new InjectionFactory(c => JobStorage.Current));
+
                         _instance.RegisterType<IJobFilterProvider, JobFilterAttributeFilterProvider>(new InjectionConstructor(true));
                         _instance.RegisterType<IBackgroundJobFactory, BackgroundJobFactory>();
                         _instance.RegisterType<IRecurringJobManager, RecurringJobManager>(new InjectionConstructor());
