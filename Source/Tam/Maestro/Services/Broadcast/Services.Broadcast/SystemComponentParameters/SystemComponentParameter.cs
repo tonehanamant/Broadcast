@@ -25,6 +25,15 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
         }
 	}
 	 
+	public static class BroadcastFeaturesSystemParameter 
+	{ 
+		public static bool EnablePricingInEdit  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(BroadcastFeaturesSystemParameterNames.ComponentID , BroadcastFeaturesSystemParameterNames.EnablePricingInEdit); }
+        }
+	}
+	 
 	public static class BroadcastServiceSystemParameter 
 	{ 
 		public static int AABCacheExpirationSeconds  
@@ -277,6 +286,18 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.PlanPricingAllocationsUrl); }
+        }
+	 
+		public static string PlanPricingAllocationsUrlV3  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.PlanPricingAllocationsUrlV3); }
+        }
+	 
+		public static string PlanPricingEndpointVersion  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.PlanPricingEndpointVersion); }
         }
 	 
 		public static string PlanPricingFloorPricingUrl  

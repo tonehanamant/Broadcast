@@ -25,6 +25,19 @@ namespace Tam.Maestro.Common.SystemComponentParameter
         }
 	}
 	 
+	public static class BroadcastFeaturesSystemParameterNames
+	{
+		public static string ComponentID
+        {
+            get { return "BroadcastFeatures" ; }
+        }
+	  
+		public static string EnablePricingInEdit  
+		{
+            get { return "EnablePricingInEdit"; }
+        }
+	}
+	 
 	public static class BroadcastServiceSystemParameterNames
 	{
 		public static string ComponentID
@@ -240,6 +253,16 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string PlanPricingAllocationsUrl  
 		{
             get { return "PlanPricingAllocationsUrl"; }
+        }
+	 
+		public static string PlanPricingAllocationsUrlV3  
+		{
+            get { return "PlanPricingAllocationsUrlV3"; }
+        }
+	 
+		public static string PlanPricingEndpointVersion  
+		{
+            get { return "PlanPricingEndpointVersion"; }
         }
 	 
 		public static string PlanPricingFloorPricingUrl  

@@ -8,5 +8,7 @@
         public bool DisplayBuyingLink { get; set; }
 
         public bool AllowMultipleCreativeLengths { get; set; }
+
+        public bool EnablePricingInEdit { get; set; }
     }
 }
