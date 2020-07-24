@@ -2,6 +2,7 @@
 using log4net;
 using Services.Broadcast.ApplicationServices;
 using System;
+using System.ServiceProcess;
 using System.Threading;
 using Unity;
 
