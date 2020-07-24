@@ -523,227 +523,99 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void CalculatePricingCpmTest()
+        [TestCase(false, true, false, 11.1957)]
+        [TestCase(false, true, true, 13.9946)]
+        [TestCase(true, true, false, 21.5957)]
+        [TestCase(true, true, true, 24.3351)] 
+        [TestCase(true, false, true, 500)] // Margin is not used without spots
+        [TestCase(true, false, false, 500)]
+        [TestCase(false, false, false, 0)]
+        public void CalculatePricingCpm(bool hasProprietary, bool hasSpots, bool hasMargin, decimal expectedCpmResult)
         {
+            // Arrange
+            var margin = hasMargin ? 20 : (double?)null;
+            var estimates = new List<PricingEstimate>();
+            if (hasProprietary)
+            {
+                estimates.Add(new PricingEstimate
+                {
+                    InventorySourceId = 3,
+                    InventorySourceType = InventorySourceTypeEnum.Barter,
+                    Cost = 5000,
+                    Impressions = 10000,
+                    MediaWeekId = 4
+                });
+            }
+
+            var spots = new List<PlanPricingAllocatedSpot>
+            {
+                new PlanPricingAllocatedSpot
+                {
+                    Id = 1,
+                    Spots = 2,
+                    SpotCost = 200,
+                    Impressions = 10000,
+                },
+                new PlanPricingAllocatedSpot
+                {
+                    Id = 2,
+                    Spots = 4,
+                    SpotCost = 300,
+                    Impressions = 50000,
+                },
+                new PlanPricingAllocatedSpot
+                {
+                    Id = 3,
+                    Spots = 3,
+                    SpotCost = 500,
+                    Impressions = 20000,
+                },
+                new PlanPricingAllocatedSpot
+                {
+                    Id = 4,
+                    Spots = 1,
+                    SpotCost = 100,
+                    Impressions = 30000,
+                },
+                new PlanPricingAllocatedSpot
+                {
+                    Id = 5,
+                    Spots = 3,
+                    SpotCost = 300,
+                    Impressions = 10000,
+                },
+                new PlanPricingAllocatedSpot
+                {
+                    Id = 6,
+                    Spots = 2,
+                    SpotCost = 400,
+                    Impressions = 50000,
+                },
+                new PlanPricingAllocatedSpot
+                {
+                    Id = 7,
+                    Spots = 1,
+                    SpotCost = 250,
+                    Impressions = 20000,
+                }
+            };
+
+            // apply the margin as the engine would, prior to the CPM calculation
+            spots.ForEach(s => s.SpotCostWithMargin = GeneralMath.CalculateCostWithMargin(s.SpotCost, margin));
+
             var allocationResult = new PlanPricingAllocationResult
             {
-                Spots = new List<PlanPricingAllocatedSpot>
-                {
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 1,
-                        Spots = 2,
-                        SpotCost = 200,
-                        Impressions = 10000,
-                    },
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 2,
-                        Spots = 4,
-                        SpotCost = 300,
-                        Impressions = 50000,
-                    },
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 3,
-                        Spots = 3,
-                        SpotCost = 500,
-                        Impressions = 20000,
-                    },
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 4,
-                        Spots = 1,
-                        SpotCost = 100,
-                        Impressions = 30000,
-                    },
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 5,
-                        Spots = 3,
-                        SpotCost = 300,
-                        Impressions = 10000,
-                    },
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 6,
-                        Spots = 2,
-                        SpotCost = 400,
-                        Impressions = 50000,
-                    },
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 7,
-                        Spots = 1,
-                        SpotCost = 250,
-                        Impressions = 20000,
-                    }
-                }
+                Spots = hasSpots ? spots : new List<PlanPricingAllocatedSpot>()
             };
 
-            var estimates = new List<PricingEstimate>
-            {
-                new PricingEstimate
-                {
-                    InventorySourceId = 3,
-                    InventorySourceType = InventorySourceTypeEnum.Barter,
-                    Cost = 5000,
-                    Impressions = 10000,
-                    MediaWeekId  = 4
-                }
-            };
-
+            // Act
             var service = _GetService();
+            var result = service._CalculatePricingCpm(allocationResult.Spots, estimates);
+            // round to 4 decimal points for the compare which is all that's needed for the FE usage
+            var roundedResult = decimal.Round(result, 4, MidpointRounding.AwayFromZero);
 
-            var result = service._CalculatePricingCpm(allocationResult.Spots, estimates, 20);
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void CalculatePricingCpmTestWithNullMargin()
-        {
-            var allocationResult = new PlanPricingAllocationResult
-            {
-                Spots = new List<PlanPricingAllocatedSpot>
-                {
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 1,
-                        Spots = 2,
-                        SpotCost = 200,
-                        Impressions = 10000,
-                    },
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 2,
-                        Spots = 4,
-                        SpotCost = 300,
-                        Impressions = 50000,
-                    },
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 3,
-                        Spots = 3,
-                        SpotCost = 500,
-                        Impressions = 20000,
-                    },
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 4,
-                        Spots = 1,
-                        SpotCost = 100,
-                        Impressions = 30000,
-                    },
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 5,
-                        Spots = 3,
-                        SpotCost = 300,
-                        Impressions = 10000,
-                    },
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 6,
-                        Spots = 2,
-                        SpotCost = 400,
-                        Impressions = 50000,
-                    },
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 7,
-                        Spots = 1,
-                        SpotCost = 250,
-                        Impressions = 20000,
-                    }
-                }
-            };
-
-            var estimates = new List<PricingEstimate>
-            {
-                new PricingEstimate
-                {
-                    InventorySourceId = 3,
-                    InventorySourceType = InventorySourceTypeEnum.Barter,
-                    Cost = 5000,
-                    Impressions = 10000,
-                    MediaWeekId  = 4
-                }
-            };
-
-            double? margin = null;
-
-            var service = _GetService();
-
-            var result = service._CalculatePricingCpm(allocationResult.Spots, estimates, margin);
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void CalculatePricingCpmTestMultipleSpots()
-        {
-            var allocationResult = new PlanPricingAllocationResult
-            {
-                Spots = new List<PlanPricingAllocatedSpot>
-                {
-                    new PlanPricingAllocatedSpot
-                    {
-                        Id = 1,
-                        Spots = 10,
-                        SpotCost = 200,                        
-                        // Total cost = 2000
-                        Impressions = 10000,
-                        // Total impressions = 100000
-                    },
-                }
-            };
-
-            var estimates = new List<PricingEstimate>
-            {
-                new PricingEstimate
-                {
-                    InventorySourceId = 3,
-                    InventorySourceType = InventorySourceTypeEnum.Barter,
-                    Cost = 5000,
-                    Impressions = 10000,
-                    MediaWeekId  = 4
-                }
-            };
-
-            // CPM = (2000 + 5000 /  10000 + 100000)  * 1000 = 63.636363...
-
-            var service = _GetService();
-
-            var result = service._CalculatePricingCpm(allocationResult.Spots, estimates, 0);
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void CalculatePricingCpmWithNoSpots()
-        {
-            var estimates = new List<PricingEstimate>
-            {
-                new PricingEstimate
-                {
-                    InventorySourceId = 3,
-                    InventorySourceType = InventorySourceTypeEnum.Barter,
-                    Cost = 5000,
-                    Impressions = 10000,
-                    MediaWeekId  = 4
-                }
-            };
-
-            var service = _GetService();
-
-            var result = service._CalculatePricingCpm(new List<PlanPricingAllocatedSpot>(), estimates, 0);
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            // Assert
+            Assert.AreEqual(expectedCpmResult, roundedResult);
         }
 
         [Test]

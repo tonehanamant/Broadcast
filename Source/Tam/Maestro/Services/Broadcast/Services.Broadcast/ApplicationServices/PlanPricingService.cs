@@ -756,7 +756,7 @@ namespace Services.Broadcast.ApplicationServices
                     allocationResult.RequestId = apiAllocationResult.RequestId;
                 }
 
-                allocationResult.PricingCpm = _CalculatePricingCpm(allocationResult.Spots, proprietaryEstimates, planPricingParametersDto.Margin);
+                allocationResult.PricingCpm = _CalculatePricingCpm(allocationResult.Spots, proprietaryEstimates);
 
                 _ValidateAllocationResult(allocationResult);
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_VALIDATING_AND_MAPPING_API_RESPONSE);
@@ -939,28 +939,18 @@ namespace Services.Broadcast.ApplicationServices
             _LogError($"Pricing model run ended with errors : {errorMessages}");
         }
 
-        internal decimal _CalculatePricingCpm(List<PlanPricingAllocatedSpot> spots, List<PricingEstimate> proprietaryEstimates
-            , double? margin)
+        internal decimal _CalculatePricingCpm(List<PlanPricingAllocatedSpot> spots, List<PricingEstimate> proprietaryEstimates)
         {
             var totalCost = proprietaryEstimates.Sum(x => x.Cost);
             var totalImpressions = proprietaryEstimates.Sum(x => x.Impressions);
 
             if (spots.Any())
             {
-                var allocatedTotalCost = spots.Sum(x => x.TotalCost);
+                var allocatedTotalCost = spots.Sum(x => x.TotalCostWithMargin);
                 var allocatedTotalImpressions = spots.Sum(x => x.TotalImpressions);
-
-                if (margin.HasValue)
-                {
-                    var marginAdjustedAllocatedTotalCost = allocatedTotalCost / (decimal)(1.0 - (margin / 100.0));
-                    totalCost = marginAdjustedAllocatedTotalCost + totalCost;
-                }
-                else
-                {
-                    totalCost = allocatedTotalCost;
-                }
-
-                totalImpressions = allocatedTotalImpressions + totalImpressions;
+                
+                totalCost += allocatedTotalCost;
+                totalImpressions += allocatedTotalImpressions;
             }
 
             var cpm = ProposalMath.CalculateCpm(totalCost, totalImpressions);

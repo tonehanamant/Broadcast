@@ -334,6 +334,9 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 case "PricingRequestLogBucketRegion":
                     result = "us-east-1";
                     break;
+                case "AABCacheExpirationSeconds":
+                    result = "300";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }
