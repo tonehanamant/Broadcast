@@ -20,12 +20,10 @@ namespace EntityFrameworkMapping.Broadcast
         }
     
         public int id { get; set; }
-        public int plan_version_id { get; set; }
         public decimal optimal_cpm { get; set; }
         public Nullable<int> plan_version_pricing_job_id { get; set; }
     
         public virtual ICollection<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
         public virtual plan_version_pricing_job plan_version_pricing_job { get; set; }
-        public virtual plan_versions plan_versions { get; set; }
     }
 }

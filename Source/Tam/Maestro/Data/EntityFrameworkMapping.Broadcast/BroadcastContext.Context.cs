@@ -142,7 +142,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_daypart_genre_restrictions> plan_version_daypart_genre_restrictions { get; set; }
         public virtual DbSet<plan_version_daypart_program_restrictions> plan_version_daypart_program_restrictions { get; set; }
         public virtual DbSet<plan_version_pricing_parameters_inventory_source_percentages> plan_version_pricing_parameters_inventory_source_percentages { get; set; }
-        public virtual DbSet<plan_version_pricing_api_results> plan_version_pricing_api_results { get; set; }
         public virtual DbSet<affiliate> affiliates { get; set; }
         public virtual DbSet<plan_version_daypart_affiliate_restrictions> plan_version_daypart_affiliate_restrictions { get; set; }
         public virtual DbSet<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
@@ -163,7 +162,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<detection_maps> detection_maps { get; set; }
         public virtual DbSet<detection_post_details> detection_post_details { get; set; }
         public virtual DbSet<plan_version_pricing_result_spots> plan_version_pricing_result_spots { get; set; }
-        public virtual DbSet<plan_version_pricing_results> plan_version_pricing_results { get; set; }
         public virtual DbSet<shared_folder_files> shared_folder_files { get; set; }
         public virtual DbSet<nti_universe_audience_mappings> nti_universe_audience_mappings { get; set; }
         public virtual DbSet<nti_universe_details> nti_universe_details { get; set; }
@@ -189,7 +187,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<vpvh_files> vpvh_files { get; set; }
         public virtual DbSet<vpvh> vpvhs { get; set; }
         public virtual DbSet<plan_version_pricing_band_details> plan_version_pricing_band_details { get; set; }
-        public virtual DbSet<plan_version_pricing_bands> plan_version_pricing_bands { get; set; }
         public virtual DbSet<program_sources> program_sources { get; set; }
         public virtual DbSet<genre> genres { get; set; }
         public virtual DbSet<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs { get; set; }
@@ -198,8 +195,11 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<program_name_exceptions> program_name_exceptions { get; set; }
         public virtual DbSet<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
         public virtual DbSet<plan_version_pricing_market_details> plan_version_pricing_market_details { get; set; }
-        public virtual DbSet<plan_version_pricing_markets> plan_version_pricing_markets { get; set; }
         public virtual DbSet<plan_version_pricing_station_details> plan_version_pricing_station_details { get; set; }
+        public virtual DbSet<plan_version_pricing_api_results> plan_version_pricing_api_results { get; set; }
+        public virtual DbSet<plan_version_pricing_bands> plan_version_pricing_bands { get; set; }
+        public virtual DbSet<plan_version_pricing_markets> plan_version_pricing_markets { get; set; }
+        public virtual DbSet<plan_version_pricing_results> plan_version_pricing_results { get; set; }
         public virtual DbSet<plan_version_pricing_stations> plan_version_pricing_stations { get; set; }
     }
 }

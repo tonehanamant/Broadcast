@@ -51,6 +51,62 @@ GO
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
 
+/*************************************** START BP-836 *****************************************************/
+-- DROP Foreign Keys 
+IF EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_plan_version_pricing_api_results_plan_versions' 
+				AND parent_object_id = OBJECT_ID('plan_version_pricing_api_results'))
+BEGIN
+	ALTER TABLE [plan_version_pricing_api_results] DROP [FK_plan_version_pricing_api_results_plan_versions]
+END
+IF EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_plan_version_pricing_bands_plan_versions' 
+				AND parent_object_id = OBJECT_ID('plan_version_pricing_bands'))
+BEGIN
+	ALTER TABLE [plan_version_pricing_bands] DROP [FK_plan_version_pricing_bands_plan_versions]
+END
+IF EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_plan_version_pricing_markets_plan_version' 
+				AND parent_object_id = OBJECT_ID('plan_version_pricing_markets'))
+BEGIN
+	ALTER TABLE [plan_version_pricing_markets] DROP [FK_plan_version_pricing_markets_plan_version]
+END
+IF EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_plan_version_pricing_results_plan_versions' 
+				AND parent_object_id = OBJECT_ID('plan_version_pricing_results'))
+BEGIN
+	ALTER TABLE [plan_version_pricing_results] DROP [FK_plan_version_pricing_results_plan_versions]
+END
+IF EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_plan_versions_plan_version_pricing_stations' 
+				AND parent_object_id = OBJECT_ID('plan_version_pricing_stations'))
+BEGIN
+	ALTER TABLE [plan_version_pricing_stations] DROP [FK_plan_versions_plan_version_pricing_stations]
+END
+
+-- DROP plan_version_id column
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'plan_version_id'
+				AND object_id = OBJECT_ID('plan_version_pricing_api_results'))
+BEGIN
+	ALTER TABLE [plan_version_pricing_api_results] DROP COLUMN [plan_version_id]
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'plan_version_id'
+				AND object_id = OBJECT_ID('plan_version_pricing_bands'))
+BEGIN
+	ALTER TABLE [plan_version_pricing_bands] DROP COLUMN [plan_version_id]
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'plan_version_id'
+				AND object_id = OBJECT_ID('plan_version_pricing_markets'))
+BEGIN
+	ALTER TABLE [plan_version_pricing_markets] DROP COLUMN [plan_version_id]
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'plan_version_id'
+				AND object_id = OBJECT_ID('plan_version_pricing_results'))
+BEGIN
+	ALTER TABLE [plan_version_pricing_results] DROP COLUMN [plan_version_id]
+END
+IF EXISTS(SELECT 1 FROM sys.columns WHERE name = 'plan_version_id'
+				AND object_id = OBJECT_ID('plan_version_pricing_stations'))
+BEGIN
+	ALTER TABLE [plan_version_pricing_stations] DROP COLUMN [plan_version_id]
+END
+/*************************************** END BP-836 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -20,7 +20,6 @@ namespace EntityFrameworkMapping.Broadcast
         }
     
         public int id { get; set; }
-        public int plan_version_id { get; set; }
         public decimal optimal_cpm { get; set; }
         public int total_market_count { get; set; }
         public int total_station_count { get; set; }
@@ -32,8 +31,7 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> plan_version_pricing_job_id { get; set; }
         public int total_spots { get; set; }
     
-        public virtual ICollection<plan_version_pricing_result_spots> plan_version_pricing_result_spots { get; set; }
         public virtual plan_version_pricing_job plan_version_pricing_job { get; set; }
-        public virtual plan_versions plan_versions { get; set; }
+        public virtual ICollection<plan_version_pricing_result_spots> plan_version_pricing_result_spots { get; set; }
     }
 }

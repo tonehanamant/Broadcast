@@ -100,7 +100,7 @@ namespace Services.Broadcast.IntegrationTests.Stubs
             {
                 return result;
             }
-            
+
             switch (parameterId)
             {
                 case "NumberOfFallbackQuartersForPricing":
@@ -320,7 +320,7 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                     result = @"\\cadfs11\Broadcast\Dev\";
                     break;
                 case "EnableInternalProgramSearch":
-	                result = "False";
+                    result = "False";
                     break;
                 case "PricingRequestLogBucket":
                     result = "s3://ds-api-logs";
@@ -333,6 +333,12 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                     break;
                 case "PricingRequestLogBucketRegion":
                     result = "us-east-1";
+                    break;
+                case "EnablePricingInEdit":
+                    result = "false";
+                    break;
+                case "AABCacheExpirationSeconds":
+                    result = "300";
                     break;
                 case "AABCacheExpirationSeconds":
                     result = "300";

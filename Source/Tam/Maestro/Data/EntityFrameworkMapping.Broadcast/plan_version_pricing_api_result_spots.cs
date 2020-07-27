@@ -27,7 +27,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual media_weeks inventory_media_week { get; set; }
         public virtual media_weeks contract_media_week { get; set; }
         public virtual daypart_defaults daypart_defaults { get; set; }
-        public virtual plan_version_pricing_api_results plan_version_pricing_api_results { get; set; }
         public virtual station_inventory_manifest station_inventory_manifest { get; set; }
+        public virtual plan_version_pricing_api_results plan_version_pricing_api_results { get; set; }
     }
 }

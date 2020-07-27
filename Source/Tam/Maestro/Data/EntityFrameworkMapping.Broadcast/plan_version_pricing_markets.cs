@@ -20,7 +20,6 @@ namespace EntityFrameworkMapping.Broadcast
         }
     
         public int id { get; set; }
-        public int plan_version_id { get; set; }
         public Nullable<int> plan_version_pricing_job_id { get; set; }
         public int total_markets { get; set; }
         public double total_coverage_percent { get; set; }
@@ -32,6 +31,5 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual plan_version_pricing_job plan_version_pricing_job { get; set; }
         public virtual ICollection<plan_version_pricing_market_details> plan_version_pricing_market_details { get; set; }
-        public virtual plan_versions plan_versions { get; set; }
     }
 }

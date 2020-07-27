@@ -1,5 +1,5 @@
 ﻿{
-  "PlanVersionId": 47,
+  "PlanVersionId": 0,
   "PricingCpm": 15.5094,
   "RequestId": null,
   "Spots": [

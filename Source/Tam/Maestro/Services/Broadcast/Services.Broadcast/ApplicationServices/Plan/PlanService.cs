@@ -1084,9 +1084,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
                         plan.Status = PlanStatusEnum.Complete;
                     }
 
+                    int oldPlanVersionId = plan.VersionId;
+
                     _SetPlanVersionNumber(plan);
                     _PlanRepository.SavePlan(plan, updatedBy, updatedDate);
-
+                    _PlanRepository.UpdatePlanPricingVersionId(plan.VersionId, oldPlanVersionId);
                     _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
                     _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, updatedBy);
                 }

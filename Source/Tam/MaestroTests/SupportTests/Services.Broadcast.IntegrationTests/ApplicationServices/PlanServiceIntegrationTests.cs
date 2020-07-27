@@ -1359,49 +1359,43 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Category("long_running")]
-        public void PlanAutomaticStatusTransition_ContractedToLive()
+        public void AutomaticStatusTransition_ContractedToLive()
         {
             using (new TransactionScopeWrapper())
             {
-                PlanDto testPlan = _GetNewPlan();
-                testPlan.Status = PlanStatusEnum.Contracted;
+                var newPlan = _PlanService.GetPlan(1852);
+                var transitionDateToLive = newPlan.FlightStartDate.Value;
+                var updatedDate  = newPlan.FlightStartDate.Value.AddDays(1);
+                Assert.AreEqual(newPlan.VersionNumber, 6);
 
-                var newPlanId = _PlanService.SavePlan(testPlan, "integration_test",
-                    new DateTime(2019, 01, 01));
+                _PlanService.AutomaticStatusTransitions(transitionDateToLive, "integration_test", updatedDate);
 
-                var newPlan = _PlanService.GetPlan(newPlanId);
-                Assert.AreEqual(newPlan.VersionNumber, 1);
-
-                _PlanService.AutomaticStatusTransitions(new DateTime(2019, 01, 01), "integration_test", new DateTime(2019, 01, 01));
-
-                var updatedPlan = _PlanService.GetPlan(newPlanId);
+                var updatedPlan = _PlanService.GetPlan(1852);
 
                 Assert.AreEqual(updatedPlan.Status, PlanStatusEnum.Live);
-                Assert.AreEqual(updatedPlan.VersionNumber, 2);
+                Assert.AreEqual(updatedPlan.VersionNumber, 7);
+                Assert.AreEqual(newPlan.PricingParameters.JobId, updatedPlan.PricingParameters.JobId);
             }
         }
 
         [Test]
         [Category("long_running")]
-        public void PlanAutomaticStatusTransition_LiveToComplete()
+        public void AutomaticStatusTransition_LiveToComplete()
         {
             using (new TransactionScopeWrapper())
             {
-                PlanDto testPlan = _GetNewPlan();
-                testPlan.Status = PlanStatusEnum.Live;
+                var newPlan = _PlanService.GetPlan(1853);
+                var transitionDateToComplete = newPlan.FlightEndDate.Value.AddDays(1);
+                var updatedDate = newPlan.FlightEndDate.Value;
+                Assert.AreEqual(newPlan.VersionNumber, 5);
 
-                var newPlanId = _PlanService.SavePlan(testPlan, "integration_test",
-                    new DateTime(2019, 01, 01));
+                _PlanService.AutomaticStatusTransitions(transitionDateToComplete, "integration_test", updatedDate);
 
-                var newPlan = _PlanService.GetPlan(newPlanId);
-                Assert.AreEqual(newPlan.VersionNumber, 1);
-
-                _PlanService.AutomaticStatusTransitions(new DateTime(2019, 02, 01), "integration_test", new DateTime(2019, 02, 01));
-
-                var updatedPlan = _PlanService.GetPlan(newPlanId);
+                var updatedPlan = _PlanService.GetPlan(1853);
 
                 Assert.AreEqual(updatedPlan.Status, PlanStatusEnum.Complete);
-                Assert.AreEqual(updatedPlan.VersionNumber, 2);
+                Assert.AreEqual(updatedPlan.VersionNumber, 6);
+                Assert.AreEqual(newPlan.PricingParameters.JobId, updatedPlan.PricingParameters.JobId);
             }
         }
 
