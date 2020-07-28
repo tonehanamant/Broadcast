@@ -68,10 +68,10 @@ namespace Services.Broadcast.BusinessEngines
         /// <param name="impressionsPerUnit">The impressions per unit.</param>
         /// <param name="aduImpressions">The adu impressions total.</param>
         /// <param name="equivalized">Equivalized flag</param>
-        /// <param name="creativeLengths">Creative lengths of the plan.</param>
+        /// <param name="spotLengthId">Spot length</param>
         /// <returns>Adu number as double</returns>
         double CalculateADUWithDecimals(double impressionsPerUnit, double aduImpressions
-            , bool equivalized, List<CreativeLength> creativeLengths = null);
+            , bool equivalized, int spotLengthId);
     }
 
     public class WeeklyBreakdownEngine : IWeeklyBreakdownEngine
@@ -100,12 +100,12 @@ namespace Services.Broadcast.BusinessEngines
         {
             _PlanValidator.ValidateWeeklyBreakdown(request);
 
-            if(request.ImpressionsPerUnit <= 0) //old plan
+            if (request.ImpressionsPerUnit <= 0) //old plan
             {
                 if (request.TotalImpressions < _DefaultImpressionsPerUnitForOldPlans)
                     request.ImpressionsPerUnit = request.TotalImpressions;
                 else
-                    request.ImpressionsPerUnit = _DefaultImpressionsPerUnitForOldPlans;                    
+                    request.ImpressionsPerUnit = _DefaultImpressionsPerUnitForOldPlans;
             }
 
             _PlanValidator.ValidateImpressionsPerUnit(request.ImpressionsPerUnit, request.TotalImpressions);
@@ -266,8 +266,8 @@ namespace Services.Broadcast.BusinessEngines
         /// <summary>
         /// Checks the weeks are missing dayparts in the request and add it
         /// </summary>
-        private void _AddNewDaypartsInTheExistingWeeks(WeeklyBreakdownRequest request, 
-            WeeklyBreakdownResponseDto response, 
+        private void _AddNewDaypartsInTheExistingWeeks(WeeklyBreakdownRequest request,
+            WeeklyBreakdownResponseDto response,
             List<DisplayMediaWeek> existingWeeks,
             List<DaypartDefaultWeightingGoal> daypartDefaults)
         {
@@ -542,9 +542,9 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         private void _AddNewWeeksByDaypartToWeeklyBreakdownResult(
-            WeeklyBreakdownResponseDto result, 
-            List<DisplayMediaWeek> weeks, 
-            WeeklyBreakdownRequest request, 
+            WeeklyBreakdownResponseDto result,
+            List<DisplayMediaWeek> weeks,
+            WeeklyBreakdownRequest request,
             List<DaypartDefaultWeightingGoal> daypartDefaults)
         {
             foreach (DisplayMediaWeek week in weeks)
@@ -956,7 +956,7 @@ namespace Services.Broadcast.BusinessEngines
 
             // to keep the original order
             return dayparts
-                .Select(x => new DaypartDefaultWeightingGoal(x.DaypartCodeId,weightingGoalPercentByStandardDaypartIdDictionary[x.DaypartCodeId]))
+                .Select(x => new DaypartDefaultWeightingGoal(x.DaypartCodeId, weightingGoalPercentByStandardDaypartIdDictionary[x.DaypartCodeId]))
                 .ToList();
         }
 
@@ -968,7 +968,7 @@ namespace Services.Broadcast.BusinessEngines
 
         private double _CalculateUnitImpressionsForMultipleSpotLengths(List<CreativeLength> creativeLengths
             , double impressionsPerUnit, double units)
-            => units / creativeLengths.Sum(p => GeneralMath.ConvertPercentageToFraction(p.Weight.Value) 
+            => units / creativeLengths.Sum(p => GeneralMath.ConvertPercentageToFraction(p.Weight.Value)
                 / _CalculateEquivalizedImpressionsPerUnit(impressionsPerUnit, p.SpotLengthId));
 
         private double _CalculateUnitsForSingleSpotLength(double impressionsPerUnit, double impressions, int spotLengthId)
@@ -1052,7 +1052,7 @@ namespace Services.Broadcast.BusinessEngines
 
         /// <inheritdoc/>
         public double CalculateADUWithDecimals(double impressionsPerUnit, double aduImpressions
-            , bool equivalized, List<CreativeLength> creativeLengths = null)
+            , bool equivalized, int spotLengthId)
         {
             if (impressionsPerUnit == 0)
             {   //for older plans, where the user did not set an impressions per unit value, we need to show the user the ADU value based on the old math
@@ -1060,7 +1060,7 @@ namespace Services.Broadcast.BusinessEngines
             }
             if (equivalized)
             {
-                return _CalculateUnitsForMultipleSpotLengths(creativeLengths, impressionsPerUnit, aduImpressions);
+                return _CalculateUnitsForSingleSpotLength(impressionsPerUnit, aduImpressions, spotLengthId);
             }
             else
             {

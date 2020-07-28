@@ -538,15 +538,10 @@ namespace Services.Broadcast.Entities.Campaign
             var firstTable = tables.First();
             //check if we have an ADU table for this quarter
             var weeksStartDates = firstTable.WeeksStartDate.Select(w => Convert.ToDateTime(w));
+            var aduImpressionsInQuarter = plans.Sum(x => x.WeeklyBreakdownWeeks.Where(y => weeksStartDates.Contains(y.StartDate)).Sum(y => y.AduImpressions));
 
-            var aduInQuarter = plans.Sum(x =>
-                _WeeklyBreakdownEngine.CalculateADUWithDecimals(x.ImpressionsPerUnit
-                     , x.WeeklyBreakdownWeeks.Where(y => weeksStartDates.Contains(y.StartDate)).Sum(y => y.AduImpressions)
-                                 , x.Equivalized, x.CreativeLengths));
-
-            //return if no week in the quarter has ADU
-            if (aduInQuarter <= 0)
-            {
+            if (aduImpressionsInQuarter <= 0)
+            {//return if no week in the quarter has ADU impressions
                 return;
             }
 
@@ -558,11 +553,22 @@ namespace Services.Broadcast.Entities.Campaign
             tableData.Months = firstTable.Months;
             for (int i = 0; i < firstTable.WeeksStartDate.Count; i++)
             {
-                var thisWeekADUUnits = plans.Sum(x =>
-                    _WeeklyBreakdownEngine.CalculateADUWithDecimals(x.ImpressionsPerUnit
-                        , x.WeeklyBreakdownWeeks.Where(w => w.StartDate.Equals(Convert.ToDateTime(firstTable.WeeksStartDate[i])))
-                                .Sum(y => y.AduImpressions)
-                        , x.Equivalized, x.CreativeLengths));
+                var thisWeekADUUnits = plans
+                    .Sum(plan =>
+                    {
+                        double sum = 0;
+                        plan.CreativeLengths.ForEach(createiveLength =>
+                        {
+                            sum += _WeeklyBreakdownEngine.CalculateADUWithDecimals(
+                            plan.ImpressionsPerUnit
+                            , plan.WeeklyBreakdownWeeks.Where(w => w.StartDate.Equals(Convert.ToDateTime(firstTable.WeeksStartDate[i])) 
+                                                             && w.SpotLengthId == createiveLength.SpotLengthId)
+                                                    .Sum(y => y.AduImpressions)
+                            , plan.Equivalized
+                            , createiveLength.SpotLengthId);
+                        });
+                        return sum;
+                    });
                 if (thisWeekADUUnits > 0)
                 {
                     tableData.DistributionPercentages.Add(EMPTY_CELL);
@@ -760,13 +766,9 @@ namespace Services.Broadcast.Entities.Campaign
                 .GetMediaWeeksByFlight(quarter.StartDate, quarter.EndDate)
                 .Select(x => x.StartDate).ToList();
 
-            var aduInQuarter = plans.Sum(x =>
-                _WeeklyBreakdownEngine.CalculateADUWithDecimals(x.ImpressionsPerUnit
-                     , x.WeeklyBreakdownWeeks.Where(y => weeksStartDates.Contains(y.StartDate)).Sum(y => y.AduImpressions)
-                                 , x.Equivalized, x.CreativeLengths));
-            //return if no week in the quarter has ADU
-            if (aduInQuarter <= 0)
-            {
+            var aduImpressionsInQuarter = plans.Sum(x => x.WeeklyBreakdownWeeks.Where(y => weeksStartDates.Contains(y.StartDate)).Sum(y => y.AduImpressions));
+            if (aduImpressionsInQuarter <= 0)
+            {//return if no week in the quarter has ADU
                 return;
             }
 
@@ -787,7 +789,7 @@ namespace Services.Broadcast.Entities.Campaign
                 .ToList();
             foreach (var startDate in weeksStartDates)
             {
-                //continue if this week does not have ADU
+                //continue if this week does not have ADU Impressions
                 if (plans.SelectMany(x => x.WeeklyBreakdownWeeks.Where(y => y.StartDate.Equals(startDate))).Sum(x => x.AduImpressions) <= 0)
                 {
                     continue;
@@ -796,10 +798,9 @@ namespace Services.Broadcast.Entities.Campaign
                 {
                     plans.Select(x => new
                     {
-                        Weeks = x.WeeklyBreakdownWeeks.Where(y => y.SpotLengthId == spotlengthId && y.StartDate == startDate),
                         Adu = _WeeklyBreakdownEngine.CalculateADUWithDecimals(x.ImpressionsPerUnit
                             , x.WeeklyBreakdownWeeks.Where(y => y.SpotLengthId == spotlengthId && y.StartDate == startDate).Sum(y => y.AduImpressions)
-                            , x.Equivalized, x.CreativeLengths),
+                            , x.Equivalized, spotlengthId),
                         x.Equivalized
                     })
                     .GroupBy(x => new { SpotLength = _AllSpotLengths.Single(w => w.Id == spotlengthId).Display, x.Equivalized })

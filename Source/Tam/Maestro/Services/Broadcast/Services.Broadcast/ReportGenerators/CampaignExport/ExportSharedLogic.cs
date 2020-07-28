@@ -181,7 +181,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
                     restrictionsText += $"{(groupByIncludeType.Key.Equals(ContainTypeEnum.Include) ? "Includes " : "Excludes ")}";
                     for (int i = 0; i < items.Count(); i++)
                     {
-                        restrictionsText += string.Join(", ", items[i].Restrictions);
+                        restrictionsText += string.Join(", ", items[i].Restrictions.OrderBy(x=>x));
                         restrictionsText += $" (Plan ID {items[i].PlanId})";
                         if (i < items.Count - 1)
                         {

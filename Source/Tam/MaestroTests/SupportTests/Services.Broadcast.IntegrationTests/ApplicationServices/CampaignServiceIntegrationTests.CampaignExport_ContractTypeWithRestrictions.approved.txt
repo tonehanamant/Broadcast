@@ -1490,9 +1490,53 @@
         ],
         [
           null,
+          "2020-03-30T00:00:00",
+          1.0,
+          "15 eq.",
+          "ADU",
+          "ADU",
+          "ADU",
+          "ADU",
+          "ADU"
+        ],
+        [
+          null,
+          "2020-03-30T00:00:00",
+          1.0,
+          "30",
+          "ADU",
+          "ADU",
+          "ADU",
+          "ADU",
+          "ADU"
+        ],
+        [
+          null,
+          "2020-03-30T00:00:00",
+          1.0,
+          "60 eq.",
+          "ADU",
+          "ADU",
+          "ADU",
+          "ADU",
+          "ADU"
+        ],
+        [
+          null,
           "2020-04-06T00:00:00",
           133.33333333,
           "45 eq.",
+          "ADU",
+          "ADU",
+          "ADU",
+          "ADU",
+          "ADU"
+        ],
+        [
+          null,
+          "2020-04-06T00:00:00",
+          9.0,
+          "60 eq.",
           "ADU",
           "ADU",
           "ADU",
@@ -1503,7 +1547,7 @@
       "Title": "Q2 2020",
       "TotalRow": [
         "2Q '20 Totals",
-        266.66666667,
+        278.66666667,
         "-",
         "-",
         "-",
@@ -1537,7 +1581,20 @@
       "EndTime": "06:00pm",
       "FlightDays": "W-SU",
       "GenreRestrictions": [],
-      "ProgramRestrictions": [],
+      "ProgramRestrictions": [
+        {
+          "ContainType": 1,
+          "PlanId": 1853,
+          "Restrictions": [
+            "CRIME DAYTIME ROTATOR",
+            "CRIME EARLY FRINGE ROTATOR",
+            "CRIME LATE FRINGE ROTATOR",
+            "CRIME ROTATOR",
+            "EARLY & LATE FRINGE ROTATOR",
+            "WEEKEND EARLY FRINGE & ACCESS ROTATOR"
+          ]
+        }
+      ],
       "StartTime": "03:00pm"
     },
     {
@@ -7977,8 +8034,8 @@
       "TableTitle": "2Q '20 ADU",
       "TotalWeeksInQuarter": 13,
       "UnitsValues": [
-        133.33333333,
-        133.33333333,
+        136.33333333,
+        142.33333333,
         null,
         null,
         null,
@@ -7990,7 +8047,7 @@
         null,
         null,
         null,
-        266
+        278
       ],
       "WeeksStartDate": [
         "2020-03-30T00:00:00",
@@ -8037,13 +8094,13 @@
         "DaypartCode": "EF",
         "GuaranteedData": {
           "CPM": 25.0000,
-          "CPP": 66000.0000,
+          "CPP": 60975.609756097560975609756098,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
           "TotalImpressions": 2640.0,
-          "TotalRatingPoints": 1.0,
+          "TotalRatingPoints": 1.0824,
           "VPVH": 1.161
         },
         "HHData": {
@@ -8066,13 +8123,13 @@
         "DaypartCode": "EF",
         "GuaranteedData": {
           "CPM": 25.0000,
-          "CPP": 68000.0000,
+          "CPP": 60975.609756097560975609756098,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
           "TotalImpressions": 2720.0,
-          "TotalRatingPoints": 1.0,
+          "TotalRatingPoints": 1.1152,
           "VPVH": 1.161
         },
         "HHData": {
@@ -8124,13 +8181,13 @@
         "DaypartCode": "EF",
         "GuaranteedData": {
           "CPM": 25.0000,
-          "CPP": 66000.0000,
+          "CPP": 60975.609756097560975609756098,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
           "TotalImpressions": 2640.0,
-          "TotalRatingPoints": 1.0,
+          "TotalRatingPoints": 1.0824,
           "VPVH": 1.161
         },
         "HHData": {
@@ -8182,13 +8239,13 @@
         "DaypartCode": "EM",
         "GuaranteedData": {
           "CPM": 25.0000,
-          "CPP": 66000.0000,
+          "CPP": 60975.609756097560975609756098,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
           "TotalImpressions": 2640.0,
-          "TotalRatingPoints": 1.0,
+          "TotalRatingPoints": 1.0824,
           "VPVH": 1.161
         },
         "HHData": {
@@ -8211,13 +8268,13 @@
         "DaypartCode": "EM",
         "GuaranteedData": {
           "CPM": 25.0000,
-          "CPP": 68000.0000,
+          "CPP": 60975.609756097560975609756098,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
           "TotalImpressions": 2720.0,
-          "TotalRatingPoints": 1.0,
+          "TotalRatingPoints": 1.1152,
           "VPVH": 1.161
         },
         "HHData": {
@@ -8269,13 +8326,13 @@
         "DaypartCode": "EM",
         "GuaranteedData": {
           "CPM": 25.0000,
-          "CPP": 66000.0000,
+          "CPP": 60975.609756097560975609756098,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
           "TotalImpressions": 2640.0,
-          "TotalRatingPoints": 1.0,
+          "TotalRatingPoints": 1.0824,
           "VPVH": 1.161
         },
         "HHData": {
@@ -8327,13 +8384,13 @@
         "DaypartCode": "MDN",
         "GuaranteedData": {
           "CPM": 25.0000,
-          "CPP": 66000.000,
+          "CPP": 60975.609756097560975609756098,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
           "TotalImpressions": 1320.0,
-          "TotalRatingPoints": 0.5,
+          "TotalRatingPoints": 0.5412,
           "VPVH": 1.138
         },
         "HHData": {
@@ -8356,13 +8413,13 @@
         "DaypartCode": "MDN",
         "GuaranteedData": {
           "CPM": 25.0000,
-          "CPP": 68000.000,
+          "CPP": 60975.609756097560975609756098,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
           "TotalImpressions": 1360.0,
-          "TotalRatingPoints": 0.5,
+          "TotalRatingPoints": 0.5576,
           "VPVH": 1.138
         },
         "HHData": {
@@ -8414,13 +8471,13 @@
         "DaypartCode": "MDN",
         "GuaranteedData": {
           "CPM": 25.0000,
-          "CPP": 66000.000,
+          "CPP": 60975.609756097560975609756098,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
           "TotalImpressions": 1320.0,
-          "TotalRatingPoints": 0.5,
+          "TotalRatingPoints": 0.5412,
           "VPVH": 1.138
         },
         "HHData": {
@@ -8503,13 +8560,13 @@
       "DaypartCode": null,
       "GuaranteedData": {
         "CPM": 25.0000,
-        "CPP": 71684.58781362007168458781362,
+        "CPP": 69930.06993006993006993006993,
         "DaypartCode": null,
         "Impressions": 0.0,
         "RatingPoints": 0.0,
         "SpotLengthLabel": null,
         "TotalImpressions": 80000.0,
-        "TotalRatingPoints": 27.9,
+        "TotalRatingPoints": 28.6,
         "VPVH": 0.0
       },
       "HHData": {
@@ -8538,13 +8595,13 @@
           "DaypartCode": "EF",
           "GuaranteedData": {
             "CPM": 25.0000,
-            "CPP": 66000.000,
+            "CPP": 60975.609756097560975609756098,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
             "TotalImpressions": 1584.0,
-            "TotalRatingPoints": 0.6,
+            "TotalRatingPoints": 0.64944,
             "VPVH": 1.161
           },
           "HHData": {
@@ -8567,13 +8624,13 @@
           "DaypartCode": "EF",
           "GuaranteedData": {
             "CPM": 25.0000,
-            "CPP": 68000.000,
+            "CPP": 60975.609756097560975609756098,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
             "TotalImpressions": 1632.0,
-            "TotalRatingPoints": 0.6,
+            "TotalRatingPoints": 0.66912,
             "VPVH": 1.161
           },
           "HHData": {
@@ -8625,13 +8682,13 @@
           "DaypartCode": "EF",
           "GuaranteedData": {
             "CPM": 25.0000,
-            "CPP": 66000.000,
+            "CPP": 60975.609756097560975609756098,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
             "TotalImpressions": 1584.0,
-            "TotalRatingPoints": 0.6,
+            "TotalRatingPoints": 0.64944,
             "VPVH": 1.161
           },
           "HHData": {
@@ -8683,13 +8740,13 @@
           "DaypartCode": "EM",
           "GuaranteedData": {
             "CPM": 25.0000,
-            "CPP": 66000.000,
+            "CPP": 60975.609756097560975609756098,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
             "TotalImpressions": 1584.0,
-            "TotalRatingPoints": 0.6,
+            "TotalRatingPoints": 0.64944,
             "VPVH": 1.161
           },
           "HHData": {
@@ -8712,13 +8769,13 @@
           "DaypartCode": "EM",
           "GuaranteedData": {
             "CPM": 25.0000,
-            "CPP": 68000.000,
+            "CPP": 60975.609756097560975609756098,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
             "TotalImpressions": 1632.0,
-            "TotalRatingPoints": 0.6,
+            "TotalRatingPoints": 0.66912,
             "VPVH": 1.161
           },
           "HHData": {
@@ -8770,13 +8827,13 @@
           "DaypartCode": "EM",
           "GuaranteedData": {
             "CPM": 25.0000,
-            "CPP": 66000.000,
+            "CPP": 60975.609756097560975609756098,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
             "TotalImpressions": 1584.0,
-            "TotalRatingPoints": 0.6,
+            "TotalRatingPoints": 0.64944,
             "VPVH": 1.161
           },
           "HHData": {
@@ -8828,13 +8885,13 @@
           "DaypartCode": "MDN",
           "GuaranteedData": {
             "CPM": 25.0000,
-            "CPP": 66000.000,
+            "CPP": 60975.609756097560975609756098,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
             "TotalImpressions": 792.0,
-            "TotalRatingPoints": 0.3,
+            "TotalRatingPoints": 0.32472,
             "VPVH": 1.138
           },
           "HHData": {
@@ -8857,13 +8914,13 @@
           "DaypartCode": "MDN",
           "GuaranteedData": {
             "CPM": 25.0000,
-            "CPP": 68000.000,
+            "CPP": 60975.609756097560975609756098,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
             "TotalImpressions": 816.0,
-            "TotalRatingPoints": 0.3,
+            "TotalRatingPoints": 0.33456,
             "VPVH": 1.138
           },
           "HHData": {
@@ -8915,13 +8972,13 @@
           "DaypartCode": "MDN",
           "GuaranteedData": {
             "CPM": 25.0000,
-            "CPP": 66000.000,
+            "CPP": 60975.609756097560975609756098,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
             "TotalImpressions": 792.0,
-            "TotalRatingPoints": 0.3,
+            "TotalRatingPoints": 0.32472,
             "VPVH": 1.138
           },
           "HHData": {
@@ -9004,13 +9061,13 @@
         "DaypartCode": null,
         "GuaranteedData": {
           "CPM": 25.0000,
-          "CPP": 70597.953216374269005847953216,
+          "CPP": 68905.536529680365296803652968,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
           "TotalImpressions": 48289.0,
-          "TotalRatingPoints": 17.1,
+          "TotalRatingPoints": 17.52,
           "VPVH": 0.0
         },
         "HHData": {
@@ -9038,13 +9095,13 @@
           "DaypartCode": "EF",
           "GuaranteedData": {
             "CPM": 25.0000,
-            "CPP": 66000.000,
+            "CPP": 60975.609756097560975609756098,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
             "TotalImpressions": 1056.0,
-            "TotalRatingPoints": 0.4,
+            "TotalRatingPoints": 0.43296,
             "VPVH": 1.161
           },
           "HHData": {
@@ -9067,13 +9124,13 @@
           "DaypartCode": "EF",
           "GuaranteedData": {
             "CPM": 25.0000,
-            "CPP": 68000.000,
+            "CPP": 60975.609756097560975609756098,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
             "TotalImpressions": 1088.0,
-            "TotalRatingPoints": 0.4,
+            "TotalRatingPoints": 0.44608,
             "VPVH": 1.161
           },
           "HHData": {
@@ -9125,13 +9182,13 @@
           "DaypartCode": "EF",
           "GuaranteedData": {
             "CPM": 25.0000,
-            "CPP": 66000.000,
+            "CPP": 60975.609756097560975609756098,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
             "TotalImpressions": 1056.0,
-            "TotalRatingPoints": 0.4,
+            "TotalRatingPoints": 0.43296,
             "VPVH": 1.161
           },
           "HHData": {
@@ -9183,13 +9240,13 @@
           "DaypartCode": "EM",
           "GuaranteedData": {
             "CPM": 25.0000,
-            "CPP": 66000.000,
+            "CPP": 60975.609756097560975609756098,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
             "TotalImpressions": 1056.0,
-            "TotalRatingPoints": 0.4,
+            "TotalRatingPoints": 0.43296,
             "VPVH": 1.161
           },
           "HHData": {
@@ -9212,13 +9269,13 @@
           "DaypartCode": "EM",
           "GuaranteedData": {
             "CPM": 25.0000,
-            "CPP": 68000.000,
+            "CPP": 60975.609756097560975609756098,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
             "TotalImpressions": 1088.0,
-            "TotalRatingPoints": 0.4,
+            "TotalRatingPoints": 0.44608,
             "VPVH": 1.161
           },
           "HHData": {
@@ -9270,13 +9327,13 @@
           "DaypartCode": "EM",
           "GuaranteedData": {
             "CPM": 25.0000,
-            "CPP": 66000.000,
+            "CPP": 60975.609756097560975609756098,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
             "TotalImpressions": 1056.0,
-            "TotalRatingPoints": 0.4,
+            "TotalRatingPoints": 0.43296,
             "VPVH": 1.161
           },
           "HHData": {
@@ -9328,13 +9385,13 @@
           "DaypartCode": "MDN",
           "GuaranteedData": {
             "CPM": 25.0000,
-            "CPP": 66000.000,
+            "CPP": 60975.609756097560975609756098,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
             "TotalImpressions": 528.0,
-            "TotalRatingPoints": 0.2,
+            "TotalRatingPoints": 0.21648,
             "VPVH": 1.138
           },
           "HHData": {
@@ -9357,13 +9414,13 @@
           "DaypartCode": "MDN",
           "GuaranteedData": {
             "CPM": 25.0000,
-            "CPP": 68000.000,
+            "CPP": 60975.609756097560975609756098,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
             "TotalImpressions": 544.0,
-            "TotalRatingPoints": 0.2,
+            "TotalRatingPoints": 0.22304,
             "VPVH": 1.138
           },
           "HHData": {
@@ -9415,13 +9472,13 @@
           "DaypartCode": "MDN",
           "GuaranteedData": {
             "CPM": 25.0000,
-            "CPP": 66000.000,
+            "CPP": 60975.609756097560975609756098,
             "DaypartCode": null,
             "Impressions": 0.0,
             "RatingPoints": 0.0,
             "SpotLengthLabel": null,
             "TotalImpressions": 528.0,
-            "TotalRatingPoints": 0.2,
+            "TotalRatingPoints": 0.21648,
             "VPVH": 1.138
           },
           "HHData": {
@@ -9504,13 +9561,13 @@
         "DaypartCode": null,
         "GuaranteedData": {
           "CPM": 25.0000,
-          "CPP": 73405.092592592592592592592593,
+          "CPP": 71550.090252707581227436823105,
           "DaypartCode": null,
           "Impressions": 0.0,
           "RatingPoints": 0.0,
           "SpotLengthLabel": null,
           "TotalImpressions": 31711.0,
-          "TotalRatingPoints": 10.8,
+          "TotalRatingPoints": 11.08,
           "VPVH": 0.0
         },
         "HHData": {
