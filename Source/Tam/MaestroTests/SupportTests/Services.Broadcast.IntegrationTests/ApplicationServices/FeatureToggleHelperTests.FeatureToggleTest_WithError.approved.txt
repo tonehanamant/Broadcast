@@ -1,0 +1,6 @@
+{
+  "ErrorMessages": [
+    "message='Error resolving toggle 'testToggle'.' | exception.Message='Throwing error per test configuration.' | memberName='IsToggleEnabled'"
+  ],
+  "result": false
+}

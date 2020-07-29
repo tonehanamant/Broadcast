@@ -422,6 +422,7 @@
     <Compile Include="ApplicationServices\AffidavitMatchingEngineTests.cs" />
     <Compile Include="ApplicationServices\BroadcastAudienceCacheIntegrationTests.cs" />
     <Compile Include="DaypartCacheTests.cs" />
+    <Compile Include="ApplicationServices\FeatureToggleHelperTests.cs" />
     <Compile Include="Helpers\ReflectionTestHelper.cs" />
     <Compile Include="Helpers\InventoryFileTestHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
@@ -450,6 +451,7 @@
     <Compile Include="Repositories\ScheduleRepositoryTests.cs" />
     <Compile Include="Repositories\DisplayDaypartRepositoryTests.cs" />
     <Compile Include="Stubs\EmailerServicedStub.cs" />
+    <Compile Include="Stubs\LaunchDarklyClientStub.cs" />
     <Compile Include="Stubs\PricingApiClientStub.cs" />
     <Compile Include="Stubs\ProgramGuideApiClientStub.cs" />
     <Compile Include="Stubs\ProgramsSearchApiClientStub.cs" />

@@ -116,8 +116,29 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Cadent.Library.Utilities.Standard.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Cadent.Library.Utilities.Standard.Common.1.0.0\lib\netstandard2.0\Cadent.Library.Utilities.Standard.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Common.Logging.3.4.1\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Common.Logging.Core.3.4.1\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
     <Reference Include="EPPlus, Version=4.5.3.3, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\EPPlus.4.5.3.3\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="LaunchDarkly.Cache, Version=1.0.2.0, Culture=neutral, PublicKeyToken=caeed01e3c7cd028, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\LaunchDarkly.Cache.1.0.2\lib\net45\LaunchDarkly.Cache.dll</HintPath>
+    </Reference>
+    <Reference Include="LaunchDarkly.CommonSdk.StrongName, Version=2.11.0.0, Culture=neutral, PublicKeyToken=45ef1738a929a7df, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\LaunchDarkly.CommonSdk.StrongName.2.11.0\lib\net45\LaunchDarkly.CommonSdk.StrongName.dll</HintPath>
+    </Reference>
+    <Reference Include="LaunchDarkly.EventSource, Version=3.3.0.0, Culture=neutral, PublicKeyToken=18e8c36453e3060f, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\LaunchDarkly.EventSource.3.3.0\lib\net45\LaunchDarkly.EventSource.dll</HintPath>
+    </Reference>
+    <Reference Include="LaunchDarkly.ServerSdk, Version=5.13.0.0, Culture=neutral, PublicKeyToken=f86add69004e6885, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\LaunchDarkly.ServerSdk.5.13.0\lib\net471\LaunchDarkly.ServerSdk.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <Private>True</Private>
@@ -353,6 +374,7 @@
     <Compile Include="BusinessEngines\InventoryExportEngine.cs" />
     <Compile Include="ApplicationServices\Inventory\ProgramMapping\ProgramMappingService.cs" />
     <Compile Include="Cache\ShowTypeCache.cs" />
+    <Compile Include="Clients\LaunchDarklyClient.cs" />
     <Compile Include="Clients\PricingRequestLogClient.cs" />
     <Compile Include="Converters\VpvhFileImporter.cs" />
     <Compile Include="Entities\CreativeLength.cs" />
@@ -603,6 +625,7 @@
     <Compile Include="BusinessEngines\CreativeLengthEngine.cs" />
     <Compile Include="Helpers\DaypartHelper.cs" />
     <Compile Include="Helpers\DaypartTimeHelper.cs" />
+    <Compile Include="Helpers\FeatureToggleHelper.cs" />
     <Compile Include="Helpers\FrequencyCapHelper.cs" />
     <Compile Include="Helpers\GroupHelper.cs" />
     <Compile Include="Helpers\StreamHelper.cs" />

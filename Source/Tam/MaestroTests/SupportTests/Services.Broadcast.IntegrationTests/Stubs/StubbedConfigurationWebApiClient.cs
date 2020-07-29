@@ -346,6 +346,9 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 case "EnableExportPreBuy":
                     result = "false";
                     break;
+                case "LaunchDarklySdkKey":
+                    result = "SecretKeyForLaunchDarklySdkKey";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }

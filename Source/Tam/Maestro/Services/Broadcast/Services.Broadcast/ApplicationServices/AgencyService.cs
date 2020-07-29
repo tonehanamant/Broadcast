@@ -18,7 +18,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             _TrafficApiCache = trafficApiCache;
         }
-        
+
         public List<AgencyDto> GetAgencies()
         {
             return _TrafficApiCache.GetAgencies();

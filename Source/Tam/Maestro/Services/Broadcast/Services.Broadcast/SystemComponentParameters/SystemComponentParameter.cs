@@ -276,6 +276,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.InventorySummaryCacheAbsoluteExpirationSeconds); }
         }
 	 
+		public static string LaunchDarklySdkKey  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<string>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.LaunchDarklySdkKey); }
+        }
+	 
 		public static string MediaMonthCruchCacheSlidingExpirationSeconds  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
