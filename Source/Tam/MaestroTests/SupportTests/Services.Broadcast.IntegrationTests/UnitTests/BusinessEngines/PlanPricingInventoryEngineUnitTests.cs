@@ -132,10 +132,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         }
 
         [Test]
-        public void DoesNotIncludeProgram_WhenDoesNotMatchDaypartTime()
+        [TestCase(46800, 50399, 0)] // 13pm-14pm
+        [TestCase(36000, 37739, 0)] // 10am-10:29am, 29 minutes intersection
+        [TestCase(36000, 37799, 1)] // 10am-10:30am, 30 minutes intersection
+        public void MatchingByDaypartTime(int startTime, int endTime, int expectedCount)
         {
-            const int expectedCount = 0;
-
             var plan = _GetPlan();
             var planFlightDays = _GetPlanFlightDays();
 
@@ -149,8 +150,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         {
                             Daypart = new DisplayDaypart
                             {
-                                StartTime = 46800, // 13pm
-                                EndTime = 50399, // 14pm
+                                StartTime = startTime,
+                                EndTime = endTime,
                                 Monday = true,
                                 Tuesday = true,
                                 Wednesday = true,

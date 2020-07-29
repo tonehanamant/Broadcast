@@ -340,6 +340,9 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 case "AABCacheExpirationSeconds":
                     result = "300";
                     break;
+                case "ThresholdInSecondsForProgramIntersectInPricing":
+                    result = "1800";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }

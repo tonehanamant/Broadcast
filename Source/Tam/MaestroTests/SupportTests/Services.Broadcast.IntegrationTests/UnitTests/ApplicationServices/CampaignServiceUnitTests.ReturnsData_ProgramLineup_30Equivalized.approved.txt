@@ -97,7 +97,7 @@
       "Program": "LATE NEWS",
       "Rank": 1,
       "Station": "WTTV",
-      "TimePeriods": "12:03AM-12:05AM"
+      "TimePeriods": "12:03AM-12:04AM"
     },
     {
       "Daypart": "EMN",
@@ -108,7 +108,7 @@
       "Program": "JOKER",
       "Rank": 2,
       "Station": "KSTP",
-      "TimePeriods": "12:01AM-12:03AM"
+      "TimePeriods": "12:01AM-12:02AM"
     },
     {
       "Daypart": "EM",

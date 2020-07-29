@@ -33,6 +33,8 @@ namespace Services.Broadcast.BusinessEngines
 
     public class PlanPricingInventoryEngine : BroadcastBaseClass, IPlanPricingInventoryEngine
     {
+        private readonly int ThresholdInSecondsForProgramIntersect;
+
         private readonly IStationProgramRepository _StationProgramRepository;
         private readonly IImpressionsCalculationEngine _ImpressionsCalculationEngine;
         private readonly INtiToNsiConversionRepository _NtiToNsiConversionRepository;
@@ -50,6 +52,8 @@ namespace Services.Broadcast.BusinessEngines
                                           IDaypartCache daypartCache,
                                           IQuarterCalculationEngine quarterCalculationEngine)
         {
+            ThresholdInSecondsForProgramIntersect = BroadcastServiceSystemParameter.ThresholdInSecondsForProgramIntersectInPricing;
+
             _StationProgramRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
             _ImpressionsCalculationEngine = impressionsCalculationEngine;
             _PlanPricingInventoryQuarterCalculatorEngine = planPricingInventoryQuarterCalculatorEngine;
@@ -493,7 +497,7 @@ namespace Services.Broadcast.BusinessEngines
         private ProgramInventoryDaypart _FindPlanDaypartWithMostIntersectingTime(List<ProgramInventoryDaypart> programInventoryDayparts)
         {
             return programInventoryDayparts
-                .OrderByDescending(x =>
+                .Select(x => 
                 {
                     var planDaypartTimeRange = new TimeRange
                     {
@@ -507,8 +511,15 @@ namespace Services.Broadcast.BusinessEngines
                         EndTime = x.ManifestDaypart.Daypart.EndTime
                     };
 
-                    return DaypartTimeHelper.GetIntersectingTotalTime(planDaypartTimeRange, inventoryDaypartTimeRange);
+                    return new
+                    {
+                        programInventoryDaypart = x,
+                        instersectionTime = DaypartTimeHelper.GetIntersectingTotalTime(planDaypartTimeRange, inventoryDaypartTimeRange)
+                    };
                 })
+                .Where(x => x.instersectionTime >= ThresholdInSecondsForProgramIntersect)
+                .OrderByDescending(x => x.instersectionTime)
+                .Select(x => x.programInventoryDaypart)
                 .FirstOrDefault();
         }
 

@@ -81,21 +81,21 @@
       "Spots": 0
     },
     {
-      "AvailableInventoryPercent": 8.07471264,
-      "Budget": 23152.6875,
-      "Cpm": 19.3868,
-      "Impressions": 1194.25,
+      "AvailableInventoryPercent": 5.1091954,
+      "Budget": 13969.5000,
+      "Cpm": 18.4867,
+      "Impressions": 755.65,
       "ImpressionsPercentage": 100.0,
       "MaxBand": null,
       "MinBand": 0.0320,
-      "Spots": 45
+      "Spots": 30
     }
   ],
   "PlanVersionId": 0,
   "Totals": {
-    "Budget": 23152.6875,
-    "Cpm": 19.3868,
-    "Impressions": 1194.25,
-    "Spots": 45
+    "Budget": 13969.5000,
+    "Cpm": 18.4867,
+    "Impressions": 755.65,
+    "Spots": 30
   }
 }

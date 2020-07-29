@@ -10,21 +10,21 @@
   "AllocationByDMAViewRows": [
     {
       "FilterLabel": "NEW YORK",
-      "Weight": 0.99288256
+      "Weight": 0.99100112
     },
     {
       "FilterLabel": "PORTLAND-AUBURN",
-      "Weight": 0.00711744
+      "Weight": 0.00899888
     }
   ],
   "AllocationByGenreViewRows": [
     {
       "FilterLabel": "CHILDREN",
-      "Weight": 0.99288256
+      "Weight": 0.99100112
     },
     {
       "FilterLabel": "COMEDY",
-      "Weight": 0.00711744
+      "Weight": 0.00899888
     }
   ],
   "Client": "Stub Advertiser",
@@ -35,14 +35,14 @@
       "NoOfMarkets": 1,
       "NoOfStations": 1,
       "Program": "EARLY NEWS",
-      "Weight": 0.99288256
+      "Weight": 0.99100112
     },
     {
       "Genre": "COMEDY",
       "NoOfMarkets": 1,
       "NoOfStations": 1,
       "Program": "LATE NEWS",
-      "Weight": 0.00711744
+      "Weight": 0.00899888
     }
   ],
   "DetailedViewRows": [
@@ -59,17 +59,6 @@
     },
     {
       "Daypart": "MDN",
-      "Days": "M-F",
-      "DMA": "NEW YORK",
-      "Genre": "CHILDREN",
-      "NetworkAffiliation": "CW",
-      "Program": "EARLY NEWS",
-      "Rank": 1,
-      "Station": "WPIX",
-      "TimePeriods": "12:30AM-1AM"
-    },
-    {
-      "Daypart": "MDN",
       "Days": "SA",
       "DMA": "NEW YORK",
       "Genre": "CHILDREN",
@@ -81,17 +70,6 @@
     },
     {
       "Daypart": "MDN",
-      "Days": "SA",
-      "DMA": "NEW YORK",
-      "Genre": "CHILDREN",
-      "NetworkAffiliation": "CW",
-      "Program": "EARLY NEWS",
-      "Rank": 1,
-      "Station": "WPIX",
-      "TimePeriods": "12:30AM-1AM"
-    },
-    {
-      "Daypart": "MDN",
       "Days": "SU",
       "DMA": "NEW YORK",
       "Genre": "CHILDREN",
@@ -99,7 +77,7 @@
       "Program": "EARLY NEWS",
       "Rank": 1,
       "Station": "WPIX",
-      "TimePeriods": "12AM-1AM"
+      "TimePeriods": "12AM-12:33AM"
     },
     {
       "Daypart": "MDN",
@@ -121,7 +99,7 @@
       "Program": "LATE NEWS",
       "Rank": 79,
       "Station": "WPFO",
-      "TimePeriods": "12AM-1AM"
+      "TimePeriods": "12AM-12:33AM"
     },
     {
       "Daypart": "MDN",
@@ -132,18 +110,7 @@
       "Program": "LATE NEWS",
       "Rank": 79,
       "Station": "WPFO",
-      "TimePeriods": "12AM-1AM"
-    },
-    {
-      "Daypart": "MDN",
-      "Days": "M-F",
-      "DMA": "PORTLAND-AUBURN",
-      "Genre": "COMEDY",
-      "NetworkAffiliation": "FOX",
-      "Program": "LATE NEWS",
-      "Rank": 79,
-      "Station": "WPFO",
-      "TimePeriods": "12:30AM-1AM"
+      "TimePeriods": "12AM-12:33AM"
     }
   ],
   "ExportFileName": "Program_Lineup_Report_Plan Pricing 2_04042020.xlsx",

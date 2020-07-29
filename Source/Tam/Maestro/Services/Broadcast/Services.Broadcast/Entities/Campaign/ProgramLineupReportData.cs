@@ -1,6 +1,7 @@
 ﻿using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +55,7 @@ namespace Services.Broadcast.Entities.Campaign
 
             _PopulateHeaderData(plan, planPricingJob, agency, advertiser, guaranteedDemo, spotLengths, currentDate);
             IEnumerable<DetailedViewRowData> detailedRowsData = _GetDetailedViewRowData(
+                plan,
                 allocatedSpots,
                 manifests,
                 marketCoverageByStation,
@@ -97,12 +99,14 @@ namespace Services.Broadcast.Entities.Campaign
         }
 
         private IEnumerable<DetailedViewRowData> _GetDetailedViewRowData(
+            PlanDto plan,
             List<PlanPricingAllocatedSpot> allocatedSpots,
             List<StationInventoryManifest> manifests,
             MarketCoverageByStation marketCoverageByStation,
             Dictionary<int, Program> primaryProgramsByManifestDaypartIds)
         {
             var dataRows = new List<DetailedViewRowData>();
+            var planDaypartById = plan.Dayparts.ToDictionary(x => x.DaypartCodeId, x => x);
 
             // we expect all records belong to the same daypart because it`s OpenMarket
             // So we can just group by StationInventoryManifestId for now
@@ -114,14 +118,28 @@ namespace Services.Broadcast.Entities.Campaign
 
             foreach (var manifest in manifests)
             {
+                if (!spotsByManifest.TryGetValue(manifest.Id.Value, out var allocatedSpotsForManifest))
+                    continue;
+
                 var coverage = marketCoverageByMarketCode[manifest.Station.MarketCode.Value];
 
                 // OpenMarket manifest has only one daypart
                 // This needs to be updated when we start passing other sources to pricing
+                var standardDaypart = allocatedSpotsForManifest.First().StandardDaypart;
                 var manifestDaypart = manifest.ManifestDayparts.Single();
-
-                if (!spotsByManifest.TryGetValue(manifest.Id.Value, out var allocatedSpotsForManifest))
-                    continue;
+                var planDaypart = planDaypartById[standardDaypart.Id];
+                var ranges = DaypartTimeHelper.GetIntersectingTimeRangesWithAdjustment(
+                    firstDaypart: new TimeRange { StartTime = manifestDaypart.Daypart.StartTime, EndTime = manifestDaypart.Daypart.EndTime },
+                    secondDaypart: new TimeRange { StartTime = planDaypart.StartTimeSeconds, EndTime = planDaypart.EndTimeSeconds });
+                var intersections = ranges
+                    .Select(x =>
+                    {
+                        var intersection = (DisplayDaypart)manifestDaypart.Daypart.Clone();
+                        intersection.StartTime = x.StartTime;
+                        intersection.EndTime = x.EndTime;
+                        return intersection;
+                    })
+                    .ToList();
 
                 var row = new DetailedViewRowData
                 {
@@ -129,11 +147,11 @@ namespace Services.Broadcast.Entities.Campaign
                     MarketGeographyName = coverage.MarketName,
                     StationLegacyCallLetters = manifest.Station.LegacyCallLetters,
                     StationAffiliation = manifest.Station.Affiliation,
-                    Daypart = manifestDaypart.Daypart,
+                    Dayparts = intersections,
                     TotalSpotsImpressions = allocatedSpotsForManifest.Sum(x => x.Impressions * x.Spots),
 
                     // they all should have the same code because only weeks differ. Appies only for OpenMarket
-                    DaypartCode = allocatedSpotsForManifest.First().StandardDaypart.Code
+                    DaypartCode = standardDaypart.Code
                 };
 
                 if (primaryProgramsByManifestDaypartIds.TryGetValue(manifestDaypart.Id.Value, out var primaryProgram))
@@ -160,8 +178,10 @@ namespace Services.Broadcast.Entities.Campaign
                     x.MarketGeographyName,
                     x.StationLegacyCallLetters,
                     x.StationAffiliation,
-                    Day = x.Daypart.ToDayString(),
-                    Time = x.Daypart.ToTimeString(),
+                    Day = x.Dayparts.First().ToDayString(),
+                    Time = x.Dayparts.First().ToTimeString(),
+                    Day2 = x.Dayparts.LastOrDefault()?.ToDayString(),
+                    Time2 = x.Dayparts.LastOrDefault()?.ToTimeString(),
                     x.ProgramName,
                     x.Genre,
                     x.DaypartCode
@@ -189,8 +209,8 @@ namespace Services.Broadcast.Entities.Campaign
                     DMA = x.MarketGeographyName.ToUpper(),
                     Station = x.StationLegacyCallLetters.ToUpper(),
                     NetworkAffiliation = x.StationAffiliation.ToUpper(),
-                    Days = x.Daypart.ToDayString().ToUpper(),
-                    TimePeriods = x.Daypart.ToTimeString().ToUpper(),
+                    Days = x.Dayparts.First().ToDayString().ToUpper(),
+                    TimePeriods = string.Join(", ", x.Dayparts.Select(y => y.ToTimeString().ToUpper())),
                     Program = x.ProgramName.ToUpper(),
                     Genre = x.Genre.ToUpper(),
                     Daypart = x.DaypartCode.ToUpper()
@@ -238,24 +258,26 @@ namespace Services.Broadcast.Entities.Campaign
 
             foreach (var row in dataRows.Where(x => x.Genre.Equals("News")))
             {
+                var daypart = row.Dayparts.First();
+
                 //we do the checking in reverse order because we don't want earlier news be labeled wrong
-                if (CheckDaypartForRollup(row.Daypart, PM8, AM12_05))
+                if (CheckDaypartForRollup(daypart, PM8, AM12_05))
                 {
                     row.ProgramName = LATE_NEWS;
                     continue;
                 }
 
-                if (CheckDaypartForRollup(row.Daypart, PM4, PM7))
+                if (CheckDaypartForRollup(daypart, PM4, PM7))
                 {
                     row.ProgramName = EVENING_NEWS;
                     continue;
                 }
-                if (CheckDaypartForRollup(row.Daypart, AM11, PM1))
+                if (CheckDaypartForRollup(daypart, AM11, PM1))
                 {
                     row.ProgramName = MIDDAY_NEWS;
                     continue;
                 }
-                if (CheckDaypartForRollup(row.Daypart, AM4, AM10))
+                if (CheckDaypartForRollup(daypart, AM4, AM10))
                 {
                     row.ProgramName = MORNING_NEWS;
                     continue;
@@ -365,7 +387,7 @@ namespace Services.Broadcast.Entities.Campaign
             public string MarketGeographyName { get; set; }
             public string StationLegacyCallLetters { get; set; }
             public string StationAffiliation { get; set; }
-            public DisplayDaypart Daypart { get; set; }
+            public List<DisplayDaypart> Dayparts { get; set; }
             public string ProgramName { get; set; }
             public string Genre { get; set; }
             public string DaypartCode { get; set; }

@@ -426,6 +426,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ScxGenerationParallelJobs); }
         }
 	 
+		public static int ThresholdInSecondsForProgramIntersectInPricing  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<int>
+					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.ThresholdInSecondsForProgramIntersectInPricing); }
+        }
+	 
 		public static bool UseMaestroDaypartRepo  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<bool>

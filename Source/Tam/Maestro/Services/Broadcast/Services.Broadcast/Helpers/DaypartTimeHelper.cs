@@ -110,12 +110,17 @@ namespace Services.Broadcast.Helpers
 
         public static int GetIntersectingTotalTime(TimeRange firstDaypart, TimeRange secondDaypart)
         {
+            var ranges = GetIntersectingTimeRangesWithAdjustment(firstDaypart, secondDaypart);
+
+            return ranges.Sum(GetTotalTimeInclusive);
+        }
+
+        public static List<TimeRange> GetIntersectingTimeRangesWithAdjustment(TimeRange firstDaypart, TimeRange secondDaypart)
+        {
             _AdjustTimeRange(firstDaypart);
             _AdjustTimeRange(secondDaypart);
 
-            var ranges = GetIntersectingTimeRanges(firstDaypart, secondDaypart);
-
-            return ranges.Sum(GetTotalTimeInclusive);
+            return GetIntersectingTimeRanges(firstDaypart, secondDaypart);
         }
 
         private static void _AdjustTimeRange(TimeRange range)

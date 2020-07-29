@@ -1,37 +1,37 @@
 {
   "MarketDetails": [
     {
-      "Budget": 18090.0,
-      "Cpm": 15.2561669829222,
-      "Impressions": 1185.75,
-      "ImpressionsPercentage": 99.28825623,
+      "Budget": 10803.75,
+      "Cpm": 14.4271215864325,
+      "Impressions": 748.85,
+      "ImpressionsPercentage": 99.10011249,
       "MarketCoveragePercent": 10.0,
       "Rank": 1,
       "ShareOfVoiceGoalPercentage": 34.5,
-      "Spots": 25,
+      "Spots": 15,
       "Stations": 1
     },
     {
-      "Budget": 432.15,
-      "Cpm": 50.8411764705882,
-      "Impressions": 8.5,
-      "ImpressionsPercentage": 0.71174377,
+      "Budget": 371.85,
+      "Cpm": 54.6838235294118,
+      "Impressions": 6.8,
+      "ImpressionsPercentage": 0.89988751,
       "MarketCoveragePercent": 0.328,
       "Rank": 79,
       "ShareOfVoiceGoalPercentage": 22.2,
-      "Spots": 20,
+      "Spots": 15,
       "Stations": 1
     }
   ],
   "PlanVersionId": 0,
   "PricingJobId": null,
   "Totals": {
-    "Budget": 18522.15,
+    "Budget": 11175.6,
     "CoveragePercent": 10.328,
-    "Cpm": 15.5094410718024,
-    "Impressions": 1194.25,
+    "Cpm": 14.78938662079,
+    "Impressions": 755.65,
     "Markets": 2,
-    "Spots": 45,
+    "Spots": 30,
     "Stations": 2
   }
 }

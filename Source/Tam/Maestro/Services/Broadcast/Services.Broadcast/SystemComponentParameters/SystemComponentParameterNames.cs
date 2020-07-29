@@ -370,6 +370,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "ScxGenerationParallelJobs"; }
         }
 	 
+		public static string ThresholdInSecondsForProgramIntersectInPricing  
+		{
+            get { return "ThresholdInSecondsForProgramIntersectInPricing"; }
+        }
+	 
 		public static string UseMaestroDaypartRepo  
 		{
             get { return "UseMaestroDaypartRepo"; }

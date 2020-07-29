@@ -19,6 +19,7 @@ using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces;
@@ -807,7 +808,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             _PlanRepositoryMock
                 .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
-                .Returns(new PlanDto());
+                .Returns(new PlanDto
+                { 
+                    Dayparts = _GetPlanDayparts()
+                });
 
             _LockingManagerApplicationServiceMock
                  .Setup(x => x.GetLockObject(It.IsAny<string>()))
@@ -840,7 +844,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             _PlanRepositoryMock
                 .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
-                .Returns(new PlanDto());
+                .Returns(new PlanDto
+                { 
+                    Dayparts = _GetPlanDayparts()
+                });
 
             _PlanRepositoryMock
                 .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
@@ -894,7 +901,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 8, Weight = 50 } },
                     Equivalized = false,
                     PostingType = PostingTypeEnum.NTI,
-                    TargetImpressions = 250
+                    TargetImpressions = 250,
+                    Dayparts = _GetPlanDayparts()
                 });
 
             _CampaignRepositoryMock
@@ -976,7 +984,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                     Equivalized = true,
                     PostingType = PostingTypeEnum.NTI,
-                    TargetImpressions = 250
+                    TargetImpressions = 250,
+                    Dayparts = _GetPlanDayparts()
                 });
 
             _CampaignRepositoryMock
@@ -1025,6 +1034,49 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
+        private List<PlanDaypartDto> _GetPlanDayparts()
+        {
+            return new List<PlanDaypartDto>
+            {
+                new PlanDaypartDto
+                {
+                    DaypartCodeId = 10001,
+                    StartTimeSeconds = 50,
+                    EndTimeSeconds = 150
+                },
+                new PlanDaypartDto
+                {
+                    DaypartCodeId = 20001,
+                    StartTimeSeconds = 230,
+                    EndTimeSeconds = 280
+                },
+                new PlanDaypartDto
+                {
+                    DaypartCodeId = 30002,
+                    StartTimeSeconds = 350,
+                    EndTimeSeconds = 450
+                },
+                new PlanDaypartDto
+                {
+                    DaypartCodeId = 40001,
+                    StartTimeSeconds = 100,
+                    EndTimeSeconds = 200
+                },
+                new PlanDaypartDto
+                {
+                    DaypartCodeId = 50001,
+                    StartTimeSeconds = 100,
+                    EndTimeSeconds = 200
+                },
+                new PlanDaypartDto
+                {
+                    DaypartCodeId = 60001,
+                    StartTimeSeconds = 200,
+                    EndTimeSeconds = 299
+                }
+            };
+        }
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void ProgramLineup_MultipleCreativeLengths_UnEquivalized()
@@ -1058,7 +1110,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                     Equivalized = false,
                     PostingType = PostingTypeEnum.NTI,
-                    TargetImpressions = 250
+                    TargetImpressions = 250,
+                    Dayparts = _GetPlanDayparts()
                 });
 
             _CampaignRepositoryMock
@@ -1125,7 +1178,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 8, Weight = 50 } },
                     Equivalized = true,
                     PostingType = PostingTypeEnum.NTI,
-                    TargetImpressions = 250
+                    TargetImpressions = 250,
+                    Dayparts = _GetPlanDayparts()
                 });
 
             _CampaignRepositoryMock
@@ -1203,7 +1257,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 50 } },
                     Equivalized = true,
                     PostingType = PostingTypeEnum.NTI,
-                    TargetImpressions = 250
+                    TargetImpressions = 250,
+                    Dayparts = _GetPlanDayparts()
                 });
 
             _CampaignRepositoryMock
@@ -1281,10 +1336,37 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 50 } },
                     Equivalized = true,
                     PostingType = PostingTypeEnum.NTI,
-                    TargetImpressions = 250
+                    TargetImpressions = 250,
+                    Dayparts = new List<PlanDaypartDto>
+                    {
+                        new PlanDaypartDto
+                        {
+                            DaypartCodeId = 30001,
+                            StartTimeSeconds = 57600,
+                            EndTimeSeconds = 68399
+                        },
+                        new PlanDaypartDto
+                        {
+                            DaypartCodeId = 10001,
+                            StartTimeSeconds = 14400,
+                            EndTimeSeconds = 35999
+                        },
+                        new PlanDaypartDto
+                        {
+                            DaypartCodeId = 20001,
+                            StartTimeSeconds = 39600,
+                            EndTimeSeconds = 46799
+                        },
+                        new PlanDaypartDto
+                        {
+                            DaypartCodeId = 40001,
+                            StartTimeSeconds = 72000,
+                            EndTimeSeconds = 299
+                        }
+                    }
                 });
 
-            _CampaignRepositoryMock
+        _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(It.IsAny<int>()))
                 .Returns(new CampaignDto
                 {
@@ -2723,7 +2805,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             return new PlanDto
             {
                 Id = planId,
-                CampaignId = campaignId
+                CampaignId = campaignId,
+                Dayparts = _GetPlanDayparts()
             };
         }
 
