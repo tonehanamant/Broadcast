@@ -33,16 +33,14 @@ namespace Services.Broadcast.ApplicationServices
 
         public EnvironmentDto GetEnvironmentInfo()
         {
-            var appSettings = new AppSettings();
-            var environment = appSettings.Environment.ToString();
-
             return new EnvironmentDto
             {
-                Environment = environment,
+                Environment = new AppSettings().Environment.ToString(),
                 DisplayCampaignLink = BroadcastServiceSystemParameter.DisplayCampaignLink,
                 DisplayBuyingLink = BroadcastServiceSystemParameter.DisplayBuyingLink,
                 AllowMultipleCreativeLengths = BroadcastServiceSystemParameter.AllowMultipleCreativeLengths,
-                EnablePricingInEdit = BroadcastFeaturesSystemParameter.EnablePricingInEdit
+                EnablePricingInEdit = BroadcastFeaturesSystemParameter.EnablePricingInEdit,
+                EnableExportPreBuy = BroadcastFeaturesSystemParameter.EnableExportPreBuy,
             };
         }
     }

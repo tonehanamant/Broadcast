@@ -12,7 +12,7 @@
   "Result": {
     "CpmPercentage": 0,
     "GoalFulfilledByProprietary": false,
-    "HasProgramResults": false,
+    "HasResults": false,
     "JobId": null,
     "Notes": null,
     "OptimalCpm": 0.0,

@@ -1779,7 +1779,7 @@ namespace Services.Broadcast.Repositories
                     JobId = result.pricing.plan_version_pricing_job_id,
                     PlanVersionId = result.planVersionId,
                     GoalFulfilledByProprietary = result.pricing.goal_fulfilled_by_proprietary,
-                    HasProgramResults = result.pricing.plan_version_pricing_result_spots.Any()
+                    HasResults = result.pricing.plan_version_pricing_result_spots.Any()
                 };
             });
         }

@@ -18,7 +18,7 @@
         public int PlanVersionId { get; set; }
         public bool GoalFulfilledByProprietary { get; set; }
         public string Notes { get; set; }
-        public bool HasProgramResults { get; set; }
+        public bool HasResults { get; set; }
         public int CpmPercentage { get; set; }
     }
 }

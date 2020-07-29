@@ -1366,15 +1366,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var newPlan = _PlanService.GetPlan(1852);
                 var transitionDateToLive = newPlan.FlightStartDate.Value;
                 var updatedDate  = newPlan.FlightStartDate.Value.AddDays(1);
-                Assert.AreEqual(newPlan.VersionNumber, 6);
+                Assert.AreEqual(6, newPlan.VersionNumber);
 
                 _PlanService.AutomaticStatusTransitions(transitionDateToLive, "integration_test", updatedDate);
 
                 var updatedPlan = _PlanService.GetPlan(1852);
 
-                Assert.AreEqual(updatedPlan.Status, PlanStatusEnum.Live);
-                Assert.AreEqual(updatedPlan.VersionNumber, 7);
-                Assert.AreEqual(newPlan.PricingParameters.JobId, updatedPlan.PricingParameters.JobId);
+                Assert.AreEqual(PlanStatusEnum.Live, updatedPlan.Status);
+                Assert.AreEqual(7, updatedPlan.VersionNumber);
+                Assert.AreEqual(updatedPlan.PricingParameters.JobId, newPlan.PricingParameters.JobId);
             }
         }
 
@@ -1385,17 +1385,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var newPlan = _PlanService.GetPlan(1853);
+
                 var transitionDateToComplete = newPlan.FlightEndDate.Value.AddDays(1);
                 var updatedDate = newPlan.FlightEndDate.Value;
-                Assert.AreEqual(newPlan.VersionNumber, 5);
+                Assert.AreEqual(6, newPlan.VersionNumber);
 
                 _PlanService.AutomaticStatusTransitions(transitionDateToComplete, "integration_test", updatedDate);
 
                 var updatedPlan = _PlanService.GetPlan(1853);
 
-                Assert.AreEqual(updatedPlan.Status, PlanStatusEnum.Complete);
-                Assert.AreEqual(updatedPlan.VersionNumber, 6);
-                Assert.AreEqual(newPlan.PricingParameters.JobId, updatedPlan.PricingParameters.JobId);
+                Assert.AreEqual(PlanStatusEnum.Complete, updatedPlan.Status);
+                Assert.AreEqual(7, updatedPlan.VersionNumber);
+                Assert.AreEqual(updatedPlan.PricingParameters.JobId, newPlan.PricingParameters.JobId);
             }
         }
 

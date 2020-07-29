@@ -13,7 +13,7 @@
   "Result": {
     "CpmPercentage": 74,
     "GoalFulfilledByProprietary": true,
-    "HasProgramResults": false,
+    "HasResults": false,
     "JobId": 12,
     "Notes": "Proprietary goals meet plan goals",
     "OptimalCpm": 5.0,

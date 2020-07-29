@@ -27,6 +27,12 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 	 
 	public static class BroadcastFeaturesSystemParameter 
 	{ 
+		public static bool EnableExportPreBuy  
+		{
+            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
+					(BroadcastFeaturesSystemParameterNames.ComponentID , BroadcastFeaturesSystemParameterNames.EnableExportPreBuy); }
+        }
+	 
 		public static bool EnablePricingInEdit  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<bool>

@@ -343,6 +343,9 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 case "ThresholdInSecondsForProgramIntersectInPricing":
                     result = "1800";
                     break;
+                case "EnableExportPreBuy":
+                    result = "false";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }

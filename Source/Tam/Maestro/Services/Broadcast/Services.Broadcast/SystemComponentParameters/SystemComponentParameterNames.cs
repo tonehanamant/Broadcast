@@ -32,6 +32,11 @@ namespace Tam.Maestro.Common.SystemComponentParameter
             get { return "BroadcastFeatures" ; }
         }
 	  
+		public static string EnableExportPreBuy  
+		{
+            get { return "EnableExportPreBuy"; }
+        }
+	 
 		public static string EnablePricingInEdit  
 		{
             get { return "EnablePricingInEdit"; }
