@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Common.Services.Repositories;
 using Hangfire;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
@@ -19,14 +20,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 			IProgramNameMappingsExportEngine programNameMappingsExportEngine,
 			IGenreCache genreCache,
 			IShowTypeCache showTypeCache,
-			IProgramsSearchApiClient programsSearchApiClient)
+			IProgramsSearchApiClient programsSearchApiClient,
+			IProgramMappingCleanupEngine programMappingCleanupEngine)
 			: base(backgroundJobClient,
 				broadcastDataRepositoryFactory,
 				sharedFolderService,
 				programNameMappingsExportEngine,
 				genreCache,
 				showTypeCache,
-				programsSearchApiClient)
+				programsSearchApiClient,
+				programMappingCleanupEngine)
 		{
 		}
 

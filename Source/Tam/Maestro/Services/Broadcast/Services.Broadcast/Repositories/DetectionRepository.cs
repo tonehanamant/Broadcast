@@ -63,7 +63,7 @@ namespace Services.Broadcast.Repositories
 
         private detection_files _MapToDetectionFile(TrackerFile<DetectionFileDetail> file)
         {
-            return new detection_files
+            var result =  new detection_files
             {
                 detection_file_details = _MapToDetectionFileDetail(file.FileDetails),
                 created_by = file.CreatedBy,
@@ -74,6 +74,7 @@ namespace Services.Broadcast.Repositories
                 name = file.Name,
                 start_date = file.StartDate
             };
+            return result;
         }
 
         public List<DetectionPostDetail> GetDetectionPostDetailsByEstimateId(int estimateId)

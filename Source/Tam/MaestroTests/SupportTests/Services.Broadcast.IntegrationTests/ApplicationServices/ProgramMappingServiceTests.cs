@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using ApprovalTests;
+using ApprovalTests.Reporters;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 
@@ -30,6 +33,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
             var hasContent = fileContent.Length > 0;
             Assert.IsTrue(hasContent);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProgramNameCleanup()
+        {
+            var input = new List<string>()
+            {
+                "FAB MORN NWS",
+                "*** SEINFELD (ENCORE)"
+            };
+
+            var result = _ProgramMappingService.GetCleanPrograms(input);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+
         }
     }
 }

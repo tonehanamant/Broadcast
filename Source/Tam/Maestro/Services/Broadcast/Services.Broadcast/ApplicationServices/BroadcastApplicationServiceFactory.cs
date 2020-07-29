@@ -8,6 +8,7 @@ using Hangfire.Common;
 using Hangfire.States;
 using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.ApplicationServices.Inventory;
+using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping;
 using Services.Broadcast.ApplicationServices.Maintenance;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.ApplicationServices.Security;
@@ -239,6 +240,7 @@ namespace Services.Broadcast.ApplicationServices
 
             unityContainer.RegisterType<IDaypartCleanupService, DaypartCleanupService>();
             unityContainer.RegisterType<IStationMappingService, StationMappingService>();
+            unityContainer.RegisterType<IProgramMappingCleanupEngine, ProgramMappingCleanupEngine>();
             unityContainer.RegisterType<IProgramMappingService, ProgramMappingService>();
             unityContainer.RegisterType<IProgramNameMappingsExportEngine, ProgramNameMappingsExportEngine>();
 

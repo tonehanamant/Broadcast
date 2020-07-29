@@ -21,6 +21,7 @@ using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.ProgramMapping;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -37,6 +38,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<ISharedFolderService> _SharedFolderServiceMock;
         private Mock<IProgramNameExceptionsRepository> _ProgramNameExceptionRepositoryMock;
         private Mock<IProgramsSearchApiClient> _ProgramsSearchApiClientMock;
+        private Mock<IProgramMappingCleanupEngine> _ProgramMappingCleanupEngine;
 
         private IGenreCache _GenreCache;
         private IShowTypeCache _ShowTypeCache;
@@ -57,6 +59,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _ShowTypeCache = new ShowTypeCacheStub();
             _ProgramNameExceptionRepositoryMock = new Mock<IProgramNameExceptionsRepository>();
             _ProgramsSearchApiClientMock = new Mock<IProgramsSearchApiClient>();
+            _ProgramMappingCleanupEngine = new Mock<IProgramMappingCleanupEngine>();
 
             // Setup common mocks
             _DataRepositoryFactoryMock
@@ -98,7 +101,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _SharedFolderServiceMock.Object,
                 null,
                 _GenreCache,
-                _ShowTypeCache, _ProgramsSearchApiClientMock.Object);
+                _ShowTypeCache, _ProgramsSearchApiClientMock.Object, _ProgramMappingCleanupEngine.Object);
         }
 
         [Test]
@@ -313,7 +316,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IInventoryRepository>())
                 .Returns(inventoryRepository.Object);
 
-            var sut = new ProgramMappingService(null, broadcastDataRepositoryFactory.Object, null, null, null, null, null);
+            var sut = new ProgramMappingService(null, broadcastDataRepositoryFactory.Object, null, null, null, null, null, null);
 
             var reportData = sut.GenerateUnmappedProgramNameReport();
             _WriteStream(reportData);

@@ -338,6 +338,8 @@
     <Compile Include="ApplicationServices\CampaignAggregationJobTrigger.cs" />
     <Compile Include="ApplicationServices\CampaignAggregator.cs" />
     <Compile Include="ApplicationServices\HealthService.cs" />
+    <Compile Include="ApplicationServices\Inventory\ProgramMapping\Entities\UnmappedProgram.cs" />
+    <Compile Include="ApplicationServices\Inventory\ProgramMapping\Engines\ProgramMappingCleanupEngine.cs" />
     <Compile Include="ApplicationServices\VpvhService.cs" />
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsRepairEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricingBandCalculationEngine.cs" />
@@ -349,7 +351,7 @@
     <Compile Include="BusinessEngines\WeeklyBreakdownEngine.cs" />
     <Compile Include="ApplicationServices\Inventory\InventoryExportService.cs" />
     <Compile Include="BusinessEngines\InventoryExportEngine.cs" />
-    <Compile Include="ApplicationServices\ProgramMappingService.cs" />
+    <Compile Include="ApplicationServices\Inventory\ProgramMapping\ProgramMappingService.cs" />
     <Compile Include="Cache\ShowTypeCache.cs" />
     <Compile Include="Clients\PricingRequestLogClient.cs" />
     <Compile Include="Converters\VpvhFileImporter.cs" />

@@ -21,6 +21,8 @@ using System.Threading;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.DTO.Program;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping.Entities;
+using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -56,6 +58,21 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <returns></returns>
         ReportOutput GenerateUnmappedProgramNameReport();
+
+        /// <summary>
+        /// Returns a list of programs that don't have an existing mapping in the database.
+        /// </summary>
+        /// <returns></returns>
+        List<String> GetUnmappedPrograms();
+
+        /// <summary>
+        /// Given a list of program names, it cleans the program names according to the rules and returns a clean list with the original values.
+        /// </summary>
+        /// <param name="programList"></param>
+        /// <returns></returns>
+        List<UnmappedProgram> GetCleanPrograms(List<string> programList);
+
+        
     }
 
     public class ProgramMappingService : BroadcastBaseClass, IProgramMappingService
@@ -69,6 +86,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IGenreCache _GenreCache;
         private readonly IShowTypeCache _ShowTypeCache;
         private readonly IProgramsSearchApiClient _ProgramsSearchApiClient;
+        private readonly IProgramMappingCleanupEngine _ProgramCleanupEngine;
         private const string MISC_SHOW_TYPE = "Miscellaneous";
         private const string UnmappedProgramReportFileName = "UnmappedProgramReport.xlsx";
 
@@ -79,7 +97,8 @@ namespace Services.Broadcast.ApplicationServices
             IProgramNameMappingsExportEngine programNameMappingsExportEngine,
             IGenreCache genreCache,
             IShowTypeCache showTypeCache,
-            IProgramsSearchApiClient programsSearchApiClient)
+            IProgramsSearchApiClient programsSearchApiClient,
+            IProgramMappingCleanupEngine programMappingCleanupEngine)
         {
             _BackgroundJobClient = backgroundJobClient;
             _ProgramMappingRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramMappingRepository>();
@@ -90,6 +109,7 @@ namespace Services.Broadcast.ApplicationServices
             _GenreCache = genreCache;
             _ShowTypeCache = showTypeCache;
             _ProgramsSearchApiClient = programsSearchApiClient;
+            _ProgramCleanupEngine = programMappingCleanupEngine;
         }
 
         /// <inheritdoc />
@@ -298,6 +318,36 @@ namespace Services.Broadcast.ApplicationServices
 
 
             return report;
+        }
+
+        public List<String> GetUnmappedPrograms()
+        {
+            _LogInfo("Started process to get unmapped programs.");
+            var durationSw = new Stopwatch();
+            durationSw.Start();
+
+            var programNames = _InventoryRepository.GetUnmappedPrograms();
+
+            durationSw.Stop();
+            _LogInfo($"Obtained unmapped programs with count {programNames.Count} in {durationSw.ElapsedMilliseconds} ms.");
+
+            return programNames;
+
+        }
+
+        public List<UnmappedProgram> GetCleanPrograms(List<string> programList)
+        {
+            var result = new List<UnmappedProgram>();
+
+           foreach(var programName in programList)
+            {
+                var program = new UnmappedProgram();
+                program.OriginalName = programName;
+                program.ProgramName = _ProgramCleanupEngine.GetCleanProgram(programName);
+                result.Add(program);
+            }
+
+            return result;
         }
 
         protected virtual bool _GetEnableInternalProgramSearch()
