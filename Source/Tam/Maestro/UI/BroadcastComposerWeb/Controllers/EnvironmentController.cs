@@ -1,16 +1,14 @@
-﻿using System.Web;
-using Common.Services.WebComponents;
+﻿using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO;
+using System.Collections.Generic;
+using System.Web;
 using System.Web.Http;
-using Tam.Maestro.Common.Systems.DataTransferObjects;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Web.Common;
-using Services.Broadcast.ApplicationServices;
-using System.Collections.Generic;
-using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.DTO;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -39,7 +37,7 @@ namespace BroadcastComposerWeb.Controllers
                 return null;
             }
 
-            var broadcastEmployee = (BroadcastEmployeeDto)employee.Employee;
+            var broadcastEmployee = new BroadcastEmployeeDto(employee.Employee);
             broadcastEmployee.LaunchDarklyClientHash = _ResolveLaunchDarklyCredentials(broadcastEmployee.Email);
 
             return _ConvertToBaseResponse(() => broadcastEmployee);
