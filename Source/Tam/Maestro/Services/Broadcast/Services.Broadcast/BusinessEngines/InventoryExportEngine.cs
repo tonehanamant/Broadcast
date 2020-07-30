@@ -75,7 +75,7 @@ namespace Services.Broadcast.BusinessEngines
         /// <inheritdoc />
         public string GetExportGeneratedTimestamp(DateTime generatedTimestamp)
         {
-            const string format = "dd/MM/yyyy HH:mm:ss";
+            const string format = "MM/dd/yyyy HH:mm:ss";
             var result = $"Generated : {generatedTimestamp.ToString(format)}";
             return result;
         }
