@@ -345,7 +345,7 @@ namespace Services.Broadcast.ApplicationServices
 
             if (job != null && job.Status == BackgroundJobProcessingStatus.Succeeded)
             {
-                pricingExecutionResult = _PlanRepository.GetPricingResults(planId);
+                pricingExecutionResult = _PlanRepository.GetPricingResultsByJobId(job.Id);
 
                 if (pricingExecutionResult != null)
                 {
@@ -1404,7 +1404,7 @@ namespace Services.Broadcast.ApplicationServices
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
-            var results = _PlanRepository.GetPricingProgramsResult(planId);
+            var results = _PlanRepository.GetPricingProgramsResultByJobId(job.Id);
 
             if (results == null)
                 return null;
@@ -1438,7 +1438,7 @@ namespace Services.Broadcast.ApplicationServices
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
-            var results = _PlanRepository.GetPlanPricingBand(planId);
+            var results = _PlanRepository.GetPlanPricingBandByJobId(job.Id);
 
             if (results == null)
                 return null;
@@ -1458,7 +1458,7 @@ namespace Services.Broadcast.ApplicationServices
                 return null;
             }
 
-            var results = _PlanRepository.GetPlanPricingResultMarkets(planId);
+            var results = _PlanRepository.GetPlanPricingResultMarketsByJobId(job.Id);
 
             if (results == null)
             {
@@ -1476,7 +1476,7 @@ namespace Services.Broadcast.ApplicationServices
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
-            var result = _PlanRepository.GetPricingStationsResult(planId);
+            var result = _PlanRepository.GetPricingStationsResultByJobId(job.Id);
             if (result == null)
                 return null;
 

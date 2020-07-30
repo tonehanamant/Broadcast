@@ -495,7 +495,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
 
-                var result = _PlanRepository.GetPricingApiResults(planPricingRequestDto.PlanId);
+                var result = _PlanRepository.GetPricingApiResultsByJobId(job.Id);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingAllocatedSpot), "Id");

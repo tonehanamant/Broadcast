@@ -120,9 +120,9 @@ namespace Services.Broadcast.Repositories
         PlanPricingJob GetLatestPricingJob(int planId);
         void SavePlanPricingParameters(PlanPricingParametersDto planPricingRequestDto);
         void SavePricingApiResults(PlanPricingAllocationResult result);
-        PlanPricingAllocationResult GetPricingApiResults(int planId);
+        PlanPricingAllocationResult GetPricingApiResultsByJobId(int jobId);
         void SavePricingAggregateResults(PlanPricingResultBaseDto result);
-        CurrentPricingExecutionResultDto GetPricingResults(int planId);
+        CurrentPricingExecutionResultDto GetPricingResultsByJobId(int jobId);
 
         PlanPricingJob GetPlanPricingJob(int jobId);
 
@@ -136,13 +136,13 @@ namespace Services.Broadcast.Repositories
 
         int GetPlanVersionIdByVersionNumber(int planId, int versionNumber);
 
-        PricingProgramsResultDto GetPricingProgramsResult(int planId);
+        PricingProgramsResultDto GetPricingProgramsResultByJobId(int jobId);
 
-        PlanPricingBandDto GetPlanPricingBand(int planId);
+        PlanPricingBandDto GetPlanPricingBandByJobId(int jobId);
 
         void SavePlanPricingBands(PlanPricingBandDto planPricingBandDto);
 
-        PlanPricingResultMarketsDto GetPlanPricingResultMarkets(int planId);
+        PlanPricingResultMarketsDto GetPlanPricingResultMarketsByJobId(int jobId);
 
         void SavePlanPricingMarketResults(PlanPricingResultMarketsDto dto);
 
@@ -154,7 +154,7 @@ namespace Services.Broadcast.Repositories
         /// <returns></returns>
         decimal GetGoalCpm(int planVersionId, int jobId);
 
-        PlanPricingStationResultDto GetPricingStationsResult(int planId);
+        PlanPricingStationResultDto GetPricingStationsResultByJobId(int jobId);
 
         void SavePlanPricingStations(PlanPricingStationResultDto planPricingStationResultDto);
 
@@ -1411,19 +1411,13 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PlanPricingAllocationResult GetPricingApiResults(int planId)
+        public PlanPricingAllocationResult GetPricingApiResultsByJobId(int jobId)
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var apiResult = (from apiResults in context.plan_version_pricing_api_results
-                                 from planVersion in context.plan_versions
-                                 from plan in context.plans
-                                 from job in context.plan_version_pricing_job
-                                 where planVersion.plan_id == planId 
-                                    && planVersion.id == plan.latest_version_id
-                                    && apiResults.plan_version_pricing_job_id == job.id
-                                 select apiResults)
+                var apiResult = context.plan_version_pricing_api_results
                     .Include(x => x.plan_version_pricing_api_result_spots)
+                    .Where(x => x.plan_version_pricing_job_id == jobId)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
 
@@ -1463,18 +1457,16 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PlanPricingBandDto GetPlanPricingBand(int planId)
+        public PlanPricingBandDto GetPlanPricingBandByJobId(int jobId)
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var result = (from bands in context.plan_version_pricing_bands
-                              from planVersions in context.plan_versions
-                              from job in context.plan_version_pricing_job
-                              where planVersions.plan_id == planId && bands.plan_version_pricing_job_id == job.id
-                              select bands)
-                            .OrderByDescending(p => p.id)
-                            .FirstOrDefault();
-
+                var result = context.plan_version_pricing_bands
+                    .Include(x => x.plan_version_pricing_band_details)
+                    .Where(x => x.plan_version_pricing_job_id == jobId)
+                    .OrderByDescending(p => p.id)
+                    .FirstOrDefault();
+                
                 if (result == null)
                     return null;
 
@@ -1562,21 +1554,16 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PlanPricingResultMarketsDto GetPlanPricingResultMarkets(int planId)
+        public PlanPricingResultMarketsDto GetPlanPricingResultMarketsByJobId(int jobId)
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var entity = (from market in context.plan_version_pricing_markets
-                              from planVersion in context.plan_versions
-                              from plan in context.plans
-                              from job in context.plan_version_pricing_job
-                              where planVersion.plan_id == planId
-                                 && planVersion.id == plan.latest_version_id
-                                 && market.plan_version_pricing_job_id == job.id
-                              select market)
-                            .OrderByDescending(p => p.id)
-                            .FirstOrDefault();
-
+                var entity = context.plan_version_pricing_markets
+                    .Include(x => x.plan_version_pricing_market_details)
+                    .Where(x => x.plan_version_pricing_job_id == jobId)
+                    .OrderByDescending(p => p.id)
+                    .FirstOrDefault();
+                
                 if (entity == null)
                     return null;
 
@@ -1707,20 +1694,16 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PricingProgramsResultDto GetPricingProgramsResult(int planId)
+        public PricingProgramsResultDto GetPricingProgramsResultByJobId(int jobId)
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var result = (from pricing in context.plan_version_pricing_results
-                              from planVersion in context.plan_versions
-                             from plan in context.plans
-                             from job in context.plan_version_pricing_job
-                             where plan.id == planId
-                                && planVersion.id == plan.latest_version_id
-                                && pricing.plan_version_pricing_job_id == job.id
-                             select pricing)
-                        .OrderByDescending(p => p.id)
-                        .FirstOrDefault();
+                var result = context.plan_version_pricing_results
+                    .Include(x => x.plan_version_pricing_result_spots)
+                    .Where(x => x.plan_version_pricing_job_id == jobId)
+                    .OrderByDescending(p => p.id)
+                    .FirstOrDefault();
+
                 if (result == null)
                     return null;
 
@@ -1756,67 +1739,58 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public CurrentPricingExecutionResultDto GetPricingResults(int planId)
+        public CurrentPricingExecutionResultDto GetPricingResultsByJobId(int jobId)
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var result = (from pricing in context.plan_version_pricing_results
-                              from planVersion in context.plan_versions
-                              from plan in context.plans
-                              from job in context.plan_version_pricing_job
-                              where plan.id == planId
-                                 && planVersion.id == plan.latest_version_id
-                                 && pricing.plan_version_pricing_job_id == job.id
-                              select new { pricing, planVersionId = planVersion.id })
-                .OrderByDescending(p => p.pricing.id).FirstOrDefault();
+                var result = context.plan_version_pricing_results
+                    .Include(x => x.plan_version_pricing_result_spots)
+                    .Where(x => x.plan_version_pricing_job_id == jobId)
+                    .OrderByDescending(p => p.id)
+                    .FirstOrDefault();
 
                 if (result == null)
                     return null;
 
                 return new CurrentPricingExecutionResultDto
                 {
-                    OptimalCpm = result.pricing.optimal_cpm,
-                    JobId = result.pricing.plan_version_pricing_job_id,
-                    PlanVersionId = result.planVersionId,
-                    GoalFulfilledByProprietary = result.pricing.goal_fulfilled_by_proprietary,
-                    HasResults = result.pricing.plan_version_pricing_result_spots.Any()
+                    OptimalCpm = result.optimal_cpm,
+                    JobId = result.plan_version_pricing_job_id,
+                    PlanVersionId = result.plan_version_pricing_job.plan_version_id,
+                    GoalFulfilledByProprietary = result.goal_fulfilled_by_proprietary,
+                    HasResults = result.plan_version_pricing_result_spots.Any()
                 };
             });
         }
 
-        public PlanPricingStationResultDto GetPricingStationsResult(int planId)
+        public PlanPricingStationResultDto GetPricingStationsResultByJobId(int jobId)
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var result = (from pricing in context.plan_version_pricing_stations
-                              from planVersion in context.plan_versions
-                              from plan in context.plans
-                              from job in context.plan_version_pricing_job
-                              where plan.id == planId
-                                 && planVersion.id == plan.latest_version_id
-                                 && pricing.plan_version_pricing_job_id == job.id
-                              select new { pricing, planVersionId = planVersion.id })
-                .Include(p => p.pricing.plan_version_pricing_station_details)
-                .OrderByDescending(p => p.pricing.id)
-                .FirstOrDefault();
+                var result = context.plan_version_pricing_stations
+                    .Include(p => p.plan_version_pricing_station_details)
+                    .Where(x => x.plan_version_pricing_job_id == jobId)
+                    .OrderByDescending(p => p.id)
+                    .FirstOrDefault();
+
                 if (result == null)
                     return null;
 
                 return new PlanPricingStationResultDto
                 {
-                    Id = result.pricing.id,
-                    JobId = result.pricing.plan_version_pricing_job_id,
-                    PlanVersionId = result.planVersionId,
+                    Id = result.id,
+                    JobId = result.plan_version_pricing_job_id,
+                    PlanVersionId = result.plan_version_pricing_job.plan_version_id,
                     Totals = new PlanPricingStationTotalsDto
                     {
-                        Budget = result.pricing.total_budget,
-                        Cpm = result.pricing.total_cpm,
-                        Impressions = result.pricing.total_impressions,
+                        Budget = result.total_budget,
+                        Cpm = result.total_cpm,
+                        Impressions = result.total_impressions,
                         ImpressionsPercentage = 100,
-                        Spots = result.pricing.total_spots,
-                        Station = result.pricing.total_stations
+                        Spots = result.total_spots,
+                        Station = result.total_stations
                     },
-                    Stations = result.pricing.plan_version_pricing_station_details.Select(d => new PlanPricingStationDto
+                    Stations = result.plan_version_pricing_station_details.Select(d => new PlanPricingStationDto
                     {
                         Budget = d.budget,
                         Cpm = d.cpm,
@@ -1868,13 +1842,12 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var apiResult = (from apiResults in context.plan_version_pricing_api_results
-                                 from planVersion in context.plan_versions
-                                 from plan in context.plans
-                                 from job in context.plan_version_pricing_job
-                                 where planVersion.plan_id == planId
-                                    && planVersion.id == plan.latest_version_id
-                                    && apiResults.plan_version_pricing_job_id == job.id
+                var plan = context.plans.Single(x => x.id == planId);
+                var planVersionId = plan.latest_version_id;
+
+                var apiResult = (from job in context.plan_version_pricing_job
+                                 from apiResults in job.plan_version_pricing_api_results
+                                 where job.plan_version_id == planVersionId
                                  select apiResults)
                     .Include(x => x.plan_version_pricing_api_result_spots)
                     .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.inventory_media_week))
@@ -1892,11 +1865,9 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var apiResult = (from apiResults in context.plan_version_pricing_api_results
-                                 from planVersion in context.plan_versions
-                                 from job in context.plan_version_pricing_job
-                                 where planVersion.id == planVersionId
-                                    && apiResults.plan_version_pricing_job_id == job.id
+                var apiResult = (from job in context.plan_version_pricing_job
+                                 from apiResults in job.plan_version_pricing_api_results
+                                 where job.plan_version_id == planVersionId
                                  select apiResults)
                     .Include(x => x.plan_version_pricing_api_result_spots)
                     .Include(x => x.plan_version_pricing_api_result_spots.Select(s => s.inventory_media_week))

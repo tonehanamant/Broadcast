@@ -6775,7 +6775,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPricingResults(planId))
+                .Setup(x => x.GetPricingResultsByJobId(It.IsAny<int>()))
                 .Returns(new CurrentPricingExecutionResultDto
                 {
                     OptimalCpm = 5,
@@ -6832,7 +6832,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPricingProgramsResult(planId))
+                .Setup(x => x.GetPricingProgramsResultByJobId(It.IsAny<int>()))
                 .Returns(new PricingProgramsResultDto
                 {
                     Programs = new List<PlanPricingProgramProgramDto>
@@ -7019,7 +7019,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanRepositoryMock
-                .Setup(x => x.GetPricingResults(planId))
+                .Setup(x => x.GetPricingResultsByJobId(It.IsAny<int>()))
                 .Returns(new CurrentPricingExecutionResultDto
                 {
                     OptimalCpm = 5,
