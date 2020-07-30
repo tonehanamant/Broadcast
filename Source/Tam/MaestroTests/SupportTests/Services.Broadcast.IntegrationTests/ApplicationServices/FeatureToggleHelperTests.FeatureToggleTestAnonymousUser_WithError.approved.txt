@@ -1,0 +1,6 @@
+{
+  "ErrorMessages": [
+    "message='Error resolving toggle 'testToggle' for anonymous user.' | exception.Message='Throwing error per test configuration.' | memberName='IsToggleEnabledUserAnonymous'"
+  ],
+  "result": false
+}

@@ -9,6 +9,7 @@ using Tam.Maestro.Services.Clients;
 using Tam.Maestro.Web.Common;
 using Services.Broadcast.ApplicationServices;
 using System.Collections.Generic;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 
 namespace BroadcastComposerWeb.Controllers
@@ -29,7 +30,7 @@ namespace BroadcastComposerWeb.Controllers
 
         // GET api/employee/
         [Route("employee")]
-        public BaseResponse<EmployeeDto> GetEmployee()
+        public BaseResponse<BroadcastEmployeeDto> GetEmployee()
         {
             var ssid = HttpContext.Current.Request.LogonUserIdentity.User.Value;
             var employee = SMSClient.Handler.GetEmployee(ssid, false);
@@ -37,7 +38,18 @@ namespace BroadcastComposerWeb.Controllers
             {
                 return null;
             }
-            return _ConvertToBaseResponse(() => employee.Employee );
+
+            var broadcastEmployee = (BroadcastEmployeeDto)employee.Employee;
+            broadcastEmployee.LaunchDarklyClientHash = _ResolveLaunchDarklyCredentials(broadcastEmployee.Email);
+
+            return _ConvertToBaseResponse(() => broadcastEmployee);
+        }
+
+        private string _ResolveLaunchDarklyCredentials(string username)
+        {
+            var clientHash = _ApplicationServiceFactory.GetApplicationService<IEnvironmentService>()
+                .AuthenticateUserAgainstLaunchDarkly(username);
+            return clientHash;
         }
 
         //GET api/environment

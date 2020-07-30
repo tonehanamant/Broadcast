@@ -1,0 +1,7 @@
+{
+  "ErrorMessages": [
+    "message='Error authenticating user 'testUser'.' | exception.Message='Username 'testUser' is not in the expected email address format.' | memberName='Authenticate'"
+  ],
+  "ExceptionMessage": "Error authenticating user 'testUser'.",
+  "InnerExceptionMessage": "Username 'testUser' is not in the expected email address format."
+}

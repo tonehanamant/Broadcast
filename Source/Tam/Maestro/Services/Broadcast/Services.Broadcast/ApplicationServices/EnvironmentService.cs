@@ -1,4 +1,5 @@
-﻿using Common.Services.ApplicationServices;
+﻿using System;
+using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Helpers;
@@ -13,8 +14,16 @@ namespace Services.Broadcast.ApplicationServices
     {
         Dictionary<string, string> GetDbInfo();
         EnvironmentDto GetEnvironmentInfo();
+
+        /// <summary>
+        /// Authenticates the given username against the Launch Darkly application.
+        /// Returns a client hash for the client to then use as the authenticated token when communicating with the Launch Darkly application directly.
+        /// </summary>
+        /// <param name="username">The username to authenticate.</param>
+        /// <returns>A client hash for the client to then use as the authenticated token when communicating with the Launch Darkly application directly.</returns>
+        string AuthenticateUserAgainstLaunchDarkly(string username);
     }
-    public class EnvironmentService: IEnvironmentService
+    public class EnvironmentService: BroadcastBaseClass, IEnvironmentService
     {
         private readonly IRatingsRepository _RatingsRepo;
         private readonly IInventoryFileRepository _InventoryFileRepo;
@@ -35,12 +44,24 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
+        /// <inheritdoc />
+        public string AuthenticateUserAgainstLaunchDarkly(string username)
+        {
+            try
+            {
+                var clientHash = _FeatureToggleHelper.Authenticate(username);
+                return clientHash;
+            }
+            catch (Exception ex)
+            {
+                _LogError($"Error authenticating user '{username}' against the Launch Darkly application.", ex);
+                return null;
+            }
+        }
+
         public EnvironmentDto GetEnvironmentInfo()
         {
-            // This should be the logged in user, but they're not logged in yet.
-            // This is ok for now.
             // As soon as FE implements LaunchDarkly hooks we can remove returning the toggles from here.
-            const string broadcastUserString = "broadcast_user";
             const string toggleKeyEnableAabNavigation = "broadcast-enable-aab-navigation";
 
             return new EnvironmentDto
@@ -51,7 +72,7 @@ namespace Services.Broadcast.ApplicationServices
                 AllowMultipleCreativeLengths = BroadcastServiceSystemParameter.AllowMultipleCreativeLengths,
                 EnablePricingInEdit = BroadcastFeaturesSystemParameter.EnablePricingInEdit,
                 EnableExportPreBuy = BroadcastFeaturesSystemParameter.EnableExportPreBuy,
-                EnableAabNavigation = _FeatureToggleHelper.IsToggleEnabled(toggleKeyEnableAabNavigation, broadcastUserString)
+                EnableAabNavigation = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(toggleKeyEnableAabNavigation)
             };
         }
     }

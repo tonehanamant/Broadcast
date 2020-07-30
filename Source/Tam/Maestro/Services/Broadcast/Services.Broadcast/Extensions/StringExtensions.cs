@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net.Mail;
 using System.Text;
 
 namespace Services.Broadcast.Extensions
@@ -66,6 +67,31 @@ namespace Services.Broadcast.Extensions
                 ));
 
             return decoded;
+        }
+
+        public static bool IsEmailAddressFormat(this string candidate)
+        {
+            if (string.IsNullOrWhiteSpace(candidate))
+            {
+                return false;
+            }
+
+            MailAddress address;
+            try
+            {
+                address = new MailAddress(candidate);
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+
+            if (!address.Address.Equals(candidate, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

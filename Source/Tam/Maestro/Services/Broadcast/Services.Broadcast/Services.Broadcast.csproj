@@ -377,6 +377,7 @@
     <Compile Include="Clients\LaunchDarklyClient.cs" />
     <Compile Include="Clients\PricingRequestLogClient.cs" />
     <Compile Include="Converters\VpvhFileImporter.cs" />
+    <Compile Include="Entities\BroadcastEmployeeDto.cs" />
     <Compile Include="Entities\CreativeLength.cs" />
     <Compile Include="ApplicationServices\StationMappingService.cs" />
     <Compile Include="ApplicationServices\NtiUniverseService.cs" />

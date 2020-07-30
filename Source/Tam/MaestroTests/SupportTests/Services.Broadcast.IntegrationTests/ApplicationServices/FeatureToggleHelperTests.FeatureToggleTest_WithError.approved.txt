@@ -1,6 +1,6 @@
 {
   "ErrorMessages": [
-    "message='Error resolving toggle 'testToggle'.' | exception.Message='Throwing error per test configuration.' | memberName='IsToggleEnabled'"
+    "message='Error resolving toggle 'testToggle' for user 'TestUser'.' | exception.Message='Username 'TestUser' is not in the expected email address format.' | memberName='IsToggleEnabled'"
   ],
   "result": false
 }

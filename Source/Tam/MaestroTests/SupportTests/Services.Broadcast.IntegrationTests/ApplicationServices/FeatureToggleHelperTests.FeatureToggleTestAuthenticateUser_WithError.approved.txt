@@ -1,0 +1,7 @@
+{
+  "ErrorMessages": [
+    "message='Error authenticating user 'testUser@cadent.tv'.' | exception.Message='Throwing error per test configuration.' | memberName='Authenticate'"
+  ],
+  "ExceptionMessage": "Error authenticating user 'testUser@cadent.tv'.",
+  "InnerExceptionMessage": "Throwing error per test configuration."
+}
