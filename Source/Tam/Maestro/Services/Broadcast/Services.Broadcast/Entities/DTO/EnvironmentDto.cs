@@ -13,5 +13,7 @@
         public bool EnablePricingInEdit { get; set; }
 
         public bool EnableExportPreBuy { get; set; }
+
+        public bool EnableAabNavigation { get; set; }
     }
 }
