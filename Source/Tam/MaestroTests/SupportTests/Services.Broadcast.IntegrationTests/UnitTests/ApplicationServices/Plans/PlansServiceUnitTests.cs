@@ -271,10 +271,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _SpotLengthEngineMock
                 .Setup(a => a.GetSpotLengths())
                 .Returns(new Dictionary<int, int> { { 30, 1 } });
+
             _WeeklyBreakdownEngineMock
-                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
-                    , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
+                .Setup(x => x.GroupWeeklyBreakdownByWeek(
+                    It.IsAny<IEnumerable<WeeklyBreakdownWeek>>(), 
+                    It.IsAny<double>(), 
+                    It.IsAny<List<CreativeLength>>(), 
+                    It.IsAny<bool>()))
                 .Returns(new List<WeeklyBreakdownByWeek>());
+
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(It.IsAny<PlanDto>()))
+                .Returns(new List<WeeklyBreakdownWeek>());
 
             // Act
             var result = _PlanService.GetPlan(1, 1);
@@ -843,150 +851,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GroupsWeeklyBreakdownWeeks_ByWeekDeliveryType()
-        {
-            // Arrange
-            PlanDto plan = _GetNewPlan();
-            plan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeek;
-            plan.TargetImpressions *= 1000;
-            plan.WeeklyBreakdownWeeks.Add(new WeeklyBreakdownWeek
-            {
-                ActiveDays = "M,Tu,W,Th,F",
-                NumberOfActiveDays = 5,
-                StartDate = new DateTime(2020, 5, 11),
-                EndDate = new DateTime(2020, 5, 17),
-                MediaWeekId = 401,
-                WeekNumber = 1,
-                AduImpressions = 900000,
-                DaypartCodeId = 2,
-                PercentageOfWeek = 30,
-                SpotLengthId = 1,
-                WeeklyBudget = 30,
-                WeeklyImpressions = 30000,
-                WeeklyImpressionsPercentage = 30,
-                WeeklyRatings = 15,
-                UnitImpressions = 20000
-            });
-            plan.WeeklyBreakdownWeeks.Add(new WeeklyBreakdownWeek
-            {
-                ActiveDays = "M,Tu,W,Th,F",
-                NumberOfActiveDays = 5,
-                StartDate = new DateTime(2020, 5, 11),
-                EndDate = new DateTime(2020, 5, 17),
-                MediaWeekId = 401,
-                WeekNumber = 1,
-                AduImpressions = 600000,
-                DaypartCodeId = 11,
-                PercentageOfWeek = 20,
-                SpotLengthId = 1,
-                WeeklyBudget = 20,
-                WeeklyImpressions = 20000,
-                WeeklyImpressionsPercentage = 20,
-                WeeklyRatings = 10,
-                UnitImpressions = 20000
-            });
-            plan.WeeklyBreakdownWeeks.Add(new WeeklyBreakdownWeek
-            {
-                ActiveDays = "M,Tu,W,Th,F",
-                NumberOfActiveDays = 5,
-                StartDate = new DateTime(2020, 5, 11),
-                EndDate = new DateTime(2020, 5, 17),
-                MediaWeekId = 401,
-                WeekNumber = 1,
-                AduImpressions = 450000,
-                DaypartCodeId = 2,
-                PercentageOfWeek = 15,
-                SpotLengthId = 2,
-                WeeklyBudget = 15,
-                WeeklyImpressions = 15000,
-                WeeklyImpressionsPercentage = 15,
-                WeeklyRatings = 7.5,
-                UnitImpressions = 20000
-            });
-            plan.WeeklyBreakdownWeeks.Add(new WeeklyBreakdownWeek
-            {
-                ActiveDays = "M,Tu,W,Th,F",
-                NumberOfActiveDays = 5,
-                StartDate = new DateTime(2020, 5, 11),
-                EndDate = new DateTime(2020, 5, 17),
-                MediaWeekId = 401,
-                WeekNumber = 1,
-                AduImpressions = 300000,
-                DaypartCodeId = 11,
-                PercentageOfWeek = 10,
-                SpotLengthId = 2,
-                WeeklyBudget = 10,
-                WeeklyImpressions = 10000,
-                WeeklyImpressionsPercentage = 10,
-                WeeklyRatings = 5,
-                UnitImpressions = 20000
-            });
-            plan.WeeklyBreakdownWeeks.Add(new WeeklyBreakdownWeek
-            {
-                ActiveDays = "M,Tu,W,Th,F",
-                NumberOfActiveDays = 5,
-                StartDate = new DateTime(2020, 5, 11),
-                EndDate = new DateTime(2020, 5, 17),
-                MediaWeekId = 401,
-                WeekNumber = 1,
-                AduImpressions = 450000,
-                DaypartCodeId = 2,
-                PercentageOfWeek = 15,
-                SpotLengthId = 3,
-                WeeklyBudget = 15,
-                WeeklyImpressions = 15000,
-                WeeklyImpressionsPercentage = 15,
-                WeeklyRatings = 7.5,
-                UnitImpressions = 20000
-            });
-            plan.WeeklyBreakdownWeeks.Add(new WeeklyBreakdownWeek
-            {
-                ActiveDays = "M,Tu,W,Th,F",
-                NumberOfActiveDays = 5,
-                StartDate = new DateTime(2020, 5, 11),
-                EndDate = new DateTime(2020, 5, 17),
-                MediaWeekId = 401,
-                WeekNumber = 1,
-                AduImpressions = 300000,
-                DaypartCodeId = 11,
-                PercentageOfWeek = 10,
-                SpotLengthId = 3,
-                WeeklyBudget = 10,
-                WeeklyImpressions = 10000,
-                WeeklyImpressionsPercentage = 10,
-                WeeklyRatings = 5,
-                UnitImpressions = 20000
-            });
-
-            _PlanRepositoryMock
-                .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
-                .Returns(plan);
-
-            _WeeklyBreakdownEngineMock
-                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<List<WeeklyBreakdownWeek>>()
-                    , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
-                .Returns<List<WeeklyBreakdownWeek>, double, List<CreativeLength>, bool>((p, q, r, s) => _GetWeeklyBreakdownWeeks(p, q, r, s));
-
-            _WeeklyBreakdownEngineMock
-                .Setup(x => x.GetWeekNumberByMediaWeekDictionary(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
-                .Returns(new Dictionary<int, int>
-                {
-                    { 401, 1 }
-                });
-
-            _SpotLengthEngineMock
-                .Setup(a => a.GetSpotLengths())
-                .Returns(new Dictionary<int, int> { { 30, 1 } });
-
-            // Act
-            var result = _PlanService.GetPlan(planId: 1);
-
-            // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.WeeklyBreakdownWeeks));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void GroupsWeeklyBreakdownWeeks_ByWeekByAdLengthDeliveryType()
         {
             // Arrange
@@ -1005,9 +869,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns<List<WeeklyBreakdownWeek>, double, List<CreativeLength>, bool>((p, q, r, s) => _GetWeeklyBreakdownWeeks(p, q, r, s));
 
             _WeeklyBreakdownEngineMock
-                .Setup(x => x.GroupWeeklyBreakdownByWeekBySpotLength(It.IsAny<List<WeeklyBreakdownWeek>>()
-                    , It.IsAny<double>(), It.IsAny<bool>()))
-                .Returns<List<WeeklyBreakdownWeek>, double, bool>((p, q, r) => _GetWeeklyBreakdownWeeks(p, q, r));
+                .Setup(x => x.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(It.IsAny<PlanDto>()))
+                .Returns(_GetWeeklyBreakdownWeeks().Take(2).ToList());
 
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GetWeekNumberByMediaWeekDictionary(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
@@ -1025,30 +888,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.WeeklyBreakdownWeeks));
-        }
-
-        private List<WeeklyBreakdownByWeekBySpotLength> _GetWeeklyBreakdownWeeks(List<WeeklyBreakdownWeek> p
-            , double impressionsPerUnit, bool equivalized)
-        {
-            return p.GroupBy(x => new { x.MediaWeekId, x.SpotLengthId })
-                        .Select(x => new WeeklyBreakdownByWeekBySpotLength
-                        {
-                            WeekNumber = x.First().WeekNumber,
-                            MediaWeekId = x.First().MediaWeekId,
-                            SpotLengthId = x.First().SpotLengthId.Value,
-                            StartDate = x.First().StartDate,
-                            EndDate = x.First().EndDate,
-                            NumberOfActiveDays = x.First().NumberOfActiveDays,
-                            ActiveDays = x.First().ActiveDays,
-                            Impressions = x.Sum(i => i.WeeklyImpressions),
-                            Budget = x.Sum(i => i.WeeklyBudget),
-                            Adu = (int)(x.Sum(i => i.AduImpressions) /
-                                (equivalized
-                                ? _CalculateEquivalizedImpressionsPerUnit(impressionsPerUnit, x.Key.SpotLengthId.Value)
-                                : impressionsPerUnit)),
-                            Units = x.Sum(i => i.UnitImpressions) / x.Sum(i => i.WeeklyImpressions)
-                        })
-                        .ToList();
         }
 
         private static List<WeeklyBreakdownWeek> _GetWeeklyBreakdownWeeks()

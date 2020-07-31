@@ -579,6 +579,8 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<WeeklyBreakdownWeek> _CalculatePlanWeeksWithPricingParameters(PlanDto plan)
         {
+            var weeks = _WeeklyBreakdownEngine.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(plan);
+
             var request = new WeeklyBreakdownRequest
             {
                 CreativeLengths = plan.CreativeLengths,
@@ -592,7 +594,7 @@ namespace Services.Broadcast.ApplicationServices
                 TotalImpressions = plan.PricingParameters.DeliveryImpressions * 1000,
                 FlightHiatusDays = plan.FlightHiatusDays,
                 TotalRatings = plan.TargetRatingPoints.Value,
-                Weeks = plan.WeeklyBreakdownWeeks,
+                Weeks = weeks,
                 ImpressionsPerUnit = plan.ImpressionsPerUnit,
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
             };
