@@ -1,6 +1,6 @@
 ﻿[
   {
-    "Cpm": 0.0,
+    "Cpm": 12.787723785166240409207161100,
     "Impressions": 58650.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
@@ -79,6 +79,12 @@
       }
     ],
     "ManifestId": 287146,
+    "ManifestRates": [
+      {
+        "Cost": 750.0000,
+        "SpotLengthId": 2
+      }
+    ],
     "ManifestWeeks": [
       {
         "ContractMediaWeekId": 771,
@@ -113,7 +119,7 @@
     ],
     "ProjectedImpressions": 70841.65625,
     "ProvidedImpressions": 58650.0,
-    "SpotCost": 750.0000,
+    "SpotLengthId": 1,
     "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "CW",
@@ -130,7 +136,7 @@
     "Unit": null
   },
   {
-    "Cpm": 0.0,
+    "Cpm": 98.03921568627450980392156860,
     "Impressions": 510.0,
     "InventoryPricingQuarterType": "Plan",
     "InventorySource": {
@@ -209,6 +215,12 @@
       }
     ],
     "ManifestId": 288692,
+    "ManifestRates": [
+      {
+        "Cost": 50.0000,
+        "SpotLengthId": 2
+      }
+    ],
     "ManifestWeeks": [
       {
         "ContractMediaWeekId": 771,
@@ -243,7 +255,7 @@
     ],
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": 510.0,
-    "SpotCost": 50.0000,
+    "SpotLengthId": 1,
     "StandardDaypartId": 2,
     "Station": {
       "Affiliation": "FOX",

@@ -1,6 +1,7 @@
 ﻿{
   "PlanVersionId": 0,
   "PricingCpm": 14.7893,
+  "PricingVersion": null,
   "RequestId": null,
   "Spots": [
     {
@@ -12,7 +13,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions": 58650.0,
+      "Impressions30sec": 58650.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
         "_Id": 771,
@@ -21,9 +22,14 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "SpotCost": 753.7500,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 753.7500,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -33,7 +39,8 @@
       "StationInventoryManifestId": 287146,
       "TotalCost": 753.7500,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 58650.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -44,7 +51,7 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "Impressions": 58650.0,
+      "Impressions30sec": 58650.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
         "_Id": 772,
@@ -53,9 +60,14 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "SpotCost": 753.7500,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 753.7500,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -65,7 +77,8 @@
       "StationInventoryManifestId": 287146,
       "TotalCost": 753.7500,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 58650.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -76,7 +89,7 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "Impressions": 58650.0,
+      "Impressions30sec": 58650.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
         "_Id": 773,
@@ -85,9 +98,14 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "SpotCost": 753.7500,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 753.7500,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -97,7 +115,8 @@
       "StationInventoryManifestId": 287146,
       "TotalCost": 753.7500,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 58650.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -108,7 +127,7 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "Impressions": 58650.0,
+      "Impressions30sec": 58650.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
         "_Id": 774,
@@ -117,9 +136,14 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "SpotCost": 753.7500,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 753.7500,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -129,7 +153,8 @@
       "StationInventoryManifestId": 287146,
       "TotalCost": 753.7500,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 58650.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -140,7 +165,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions": 58650.0,
+      "Impressions30sec": 58650.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
         "_Id": 775,
@@ -149,9 +174,14 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "SpotCost": 753.7500,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 753.7500,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -161,7 +191,8 @@
       "StationInventoryManifestId": 287146,
       "TotalCost": 753.7500,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 58650.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -172,7 +203,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions": 51340.0,
+      "Impressions30sec": 51340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
         "_Id": 771,
@@ -181,9 +212,14 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "SpotCost": 804.0000,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 804.0000,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -193,7 +229,8 @@
       "StationInventoryManifestId": 287150,
       "TotalCost": 804.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 51340.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -204,7 +241,7 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "Impressions": 51340.0,
+      "Impressions30sec": 51340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
         "_Id": 772,
@@ -213,9 +250,14 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "SpotCost": 804.0000,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 804.0000,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -225,7 +267,8 @@
       "StationInventoryManifestId": 287150,
       "TotalCost": 804.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 51340.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -236,7 +279,7 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "Impressions": 51340.0,
+      "Impressions30sec": 51340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
         "_Id": 773,
@@ -245,9 +288,14 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "SpotCost": 804.0000,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 804.0000,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -257,7 +305,8 @@
       "StationInventoryManifestId": 287150,
       "TotalCost": 804.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 51340.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -268,7 +317,7 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "Impressions": 51340.0,
+      "Impressions30sec": 51340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
         "_Id": 774,
@@ -277,9 +326,14 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "SpotCost": 804.0000,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 804.0000,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -289,7 +343,8 @@
       "StationInventoryManifestId": 287150,
       "TotalCost": 804.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 51340.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -300,7 +355,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions": 51340.0,
+      "Impressions30sec": 51340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
         "_Id": 775,
@@ -309,9 +364,14 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "SpotCost": 804.0000,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 804.0000,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -321,7 +381,8 @@
       "StationInventoryManifestId": 287150,
       "TotalCost": 804.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 51340.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -332,7 +393,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions": 39780.0,
+      "Impressions30sec": 39780.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
         "_Id": 771,
@@ -341,9 +402,14 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "SpotCost": 603.0000,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 603.0000,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -353,7 +419,8 @@
       "StationInventoryManifestId": 287154,
       "TotalCost": 603.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 39780.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -364,7 +431,7 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "Impressions": 39780.0,
+      "Impressions30sec": 39780.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
         "_Id": 772,
@@ -373,9 +440,14 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "SpotCost": 603.0000,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 603.0000,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -385,7 +457,8 @@
       "StationInventoryManifestId": 287154,
       "TotalCost": 603.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 39780.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -396,7 +469,7 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "Impressions": 39780.0,
+      "Impressions30sec": 39780.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
         "_Id": 773,
@@ -405,9 +478,14 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "SpotCost": 603.0000,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 603.0000,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -417,7 +495,8 @@
       "StationInventoryManifestId": 287154,
       "TotalCost": 603.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 39780.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -428,7 +507,7 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "Impressions": 39780.0,
+      "Impressions30sec": 39780.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
         "_Id": 774,
@@ -437,9 +516,14 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "SpotCost": 603.0000,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 603.0000,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -449,7 +533,8 @@
       "StationInventoryManifestId": 287154,
       "TotalCost": 603.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 39780.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -460,7 +545,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions": 39780.0,
+      "Impressions30sec": 39780.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
         "_Id": 775,
@@ -469,9 +554,14 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "SpotCost": 603.0000,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 603.0000,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -481,7 +571,8 @@
       "StationInventoryManifestId": 287154,
       "TotalCost": 603.0000,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 39780.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -492,7 +583,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions": 510.0,
+      "Impressions30sec": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
         "_Id": 771,
@@ -501,9 +592,14 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "SpotCost": 50.2500,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 50.2500,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -513,7 +609,8 @@
       "StationInventoryManifestId": 288692,
       "TotalCost": 50.2500,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 510.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -524,7 +621,7 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "Impressions": 510.0,
+      "Impressions30sec": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
         "_Id": 772,
@@ -533,9 +630,14 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "SpotCost": 50.2500,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 50.2500,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -545,7 +647,8 @@
       "StationInventoryManifestId": 288692,
       "TotalCost": 50.2500,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 510.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -556,7 +659,7 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "Impressions": 510.0,
+      "Impressions30sec": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
         "_Id": 773,
@@ -565,9 +668,14 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "SpotCost": 50.2500,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 50.2500,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -577,7 +685,8 @@
       "StationInventoryManifestId": 288692,
       "TotalCost": 50.2500,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 510.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -588,7 +697,7 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "Impressions": 510.0,
+      "Impressions30sec": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
         "_Id": 774,
@@ -597,9 +706,14 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "SpotCost": 50.2500,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 50.2500,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -609,7 +723,8 @@
       "StationInventoryManifestId": 288692,
       "TotalCost": 50.2500,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 510.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -620,7 +735,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions": 510.0,
+      "Impressions30sec": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
         "_Id": 775,
@@ -629,9 +744,14 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "SpotCost": 50.2500,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 50.2500,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -641,7 +761,8 @@
       "StationInventoryManifestId": 288692,
       "TotalCost": 50.2500,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 510.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -652,7 +773,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions": 510.0,
+      "Impressions30sec": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
         "_Id": 771,
@@ -661,9 +782,14 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "SpotCost": 12.0600,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 12.0600,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -673,7 +799,8 @@
       "StationInventoryManifestId": 288693,
       "TotalCost": 12.0600,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 510.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -684,7 +811,7 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "Impressions": 510.0,
+      "Impressions30sec": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
         "_Id": 772,
@@ -693,9 +820,14 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "SpotCost": 12.0600,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 12.0600,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -705,7 +837,8 @@
       "StationInventoryManifestId": 288693,
       "TotalCost": 12.0600,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 510.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -716,7 +849,7 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "Impressions": 510.0,
+      "Impressions30sec": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
         "_Id": 773,
@@ -725,9 +858,14 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "SpotCost": 12.0600,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 12.0600,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -737,7 +875,8 @@
       "StationInventoryManifestId": 288693,
       "TotalCost": 12.0600,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 510.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -748,7 +887,7 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "Impressions": 510.0,
+      "Impressions30sec": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
         "_Id": 774,
@@ -757,9 +896,14 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "SpotCost": 12.0600,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 12.0600,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -769,7 +913,8 @@
       "StationInventoryManifestId": 288693,
       "TotalCost": 12.0600,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 510.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -780,7 +925,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions": 510.0,
+      "Impressions30sec": 510.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
         "_Id": 775,
@@ -789,9 +934,14 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "SpotCost": 12.0600,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 12.0600,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -801,7 +951,8 @@
       "StationInventoryManifestId": 288693,
       "TotalCost": 12.0600,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 510.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -812,7 +963,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions": 340.0,
+      "Impressions30sec": 340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-07T00:00:00",
         "_Id": 771,
@@ -821,9 +972,14 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "SpotCost": 12.0600,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 12.0600,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -833,7 +989,8 @@
       "StationInventoryManifestId": 288694,
       "TotalCost": 12.0600,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 340.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -844,7 +1001,7 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "Impressions": 340.0,
+      "Impressions30sec": 340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-14T00:00:00",
         "_Id": 772,
@@ -853,9 +1010,14 @@
         "_WeekNumber": 2,
         "IsDirty": true
       },
-      "SpotCost": 12.0600,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 12.0600,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -865,7 +1027,8 @@
       "StationInventoryManifestId": 288694,
       "TotalCost": 12.0600,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 340.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -876,7 +1039,7 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "Impressions": 340.0,
+      "Impressions30sec": 340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-21T00:00:00",
         "_Id": 773,
@@ -885,9 +1048,14 @@
         "_WeekNumber": 3,
         "IsDirty": true
       },
-      "SpotCost": 12.0600,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 12.0600,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -897,7 +1065,8 @@
       "StationInventoryManifestId": 288694,
       "TotalCost": 12.0600,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 340.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -908,7 +1077,7 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "Impressions": 340.0,
+      "Impressions30sec": 340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-10-28T00:00:00",
         "_Id": 774,
@@ -917,9 +1086,14 @@
         "_WeekNumber": 4,
         "IsDirty": true
       },
-      "SpotCost": 12.0600,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 12.0600,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -929,7 +1103,8 @@
       "StationInventoryManifestId": 288694,
       "TotalCost": 12.0600,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 340.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     },
     {
       "ContractMediaWeek": {
@@ -940,7 +1115,7 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "Impressions": 340.0,
+      "Impressions30sec": 340.0,
       "InventoryMediaWeek": {
         "_EndDate": "2018-11-04T00:00:00",
         "_Id": 775,
@@ -949,9 +1124,14 @@
         "_WeekNumber": 1,
         "IsDirty": true
       },
-      "SpotCost": 12.0600,
-      "SpotCostWithMargin": 0.0,
-      "Spots": 1,
+      "SpotFrequencies": [
+        {
+          "SpotCost": 12.0600,
+          "SpotCostWithMargin": 0.0,
+          "SpotLengthId": 2,
+          "Spots": 1
+        }
+      ],
       "StandardDaypart": {
         "Code": "MDN",
         "FullName": "Midday News",
@@ -961,7 +1141,8 @@
       "StationInventoryManifestId": 288694,
       "TotalCost": 12.0600,
       "TotalCostWithMargin": 0.0,
-      "TotalImpressions": 340.0
+      "TotalImpressions": 0.0,
+      "TotalSpots": 1
     }
   ]
 }
