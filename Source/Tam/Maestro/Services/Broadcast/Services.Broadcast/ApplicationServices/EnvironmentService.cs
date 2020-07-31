@@ -61,9 +61,6 @@ namespace Services.Broadcast.ApplicationServices
 
         public EnvironmentDto GetEnvironmentInfo()
         {
-            // As soon as FE implements LaunchDarkly hooks we can remove returning the toggles from here.
-            const string toggleKeyEnableAabNavigation = "broadcast-enable-aab-navigation";
-
             return new EnvironmentDto
             {
                 Environment = new AppSettings().Environment.ToString(),
@@ -71,8 +68,7 @@ namespace Services.Broadcast.ApplicationServices
                 DisplayBuyingLink = BroadcastServiceSystemParameter.DisplayBuyingLink,
                 AllowMultipleCreativeLengths = BroadcastServiceSystemParameter.AllowMultipleCreativeLengths,
                 EnablePricingInEdit = BroadcastFeaturesSystemParameter.EnablePricingInEdit,
-                EnableExportPreBuy = BroadcastFeaturesSystemParameter.EnableExportPreBuy,
-                EnableAabNavigation = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(toggleKeyEnableAabNavigation)
+                EnableExportPreBuy = BroadcastFeaturesSystemParameter.EnableExportPreBuy
             };
         }
     }
