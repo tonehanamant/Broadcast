@@ -322,6 +322,32 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
+        [Test]
+        public void GetExportGeneratedTimestamp()
+        {
+            var engine = new InventoryExportEngine();
+
+            var result = engine.GetExportGeneratedTimestamp(new DateTime(2020, 3, 5, 13, 20, 30));
+
+            Assert.AreEqual("Generated : 05/03/2020 13:20:30", result);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetInventoryTableAudienceColumnHeaders()
+        {
+            var engine = new InventoryExportEngine();
+
+            var audiences = new List<LookupDto>() { 
+                new LookupDto(1, "A18+"),
+                new LookupDto(2, "W18+")
+            };
+
+            var result = engine.GetInventoryTableAudienceColumnHeaders(audiences);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
         private InventoryExportDto _GetInventoryExportDto(int inventoryId, int mediaWeekId, int stationId, int daypartId,
             int hhImpressions, int spotCost, string programNameSeed, string inventoryProgramNameSeed,
             ProgramSourceEnum? programSource, int? maestroGenreId)

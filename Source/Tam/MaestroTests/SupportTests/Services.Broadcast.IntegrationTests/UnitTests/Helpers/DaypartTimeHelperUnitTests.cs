@@ -66,24 +66,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
         }
 
         [Test]
-        [TestCase(3600, 7199, 1d)]
-        [TestCase(7200, 3599, 23d)]
-        [TestCase(7200, 7199, 24d)]
-        [TestCase(7200, 7200, 0.00027777777777777778d)]
-        public void GetOneDayHoursTest(int startTime, int endTime, double expectedHours)
-        {
-            var daypart = new DisplayDaypart
-            {
-                Monday = true,
-                Tuesday = true,
-                StartTime = startTime,
-                EndTime = endTime
-            };
-
-            Assert.AreEqual(expectedHours, daypart.GetDurationPerDayInHours());
-        }
-
-        [Test]
         // NO OVERNIGHTS:
         // 1. no intersections
         [TestCase(100, 199, 50, 99, 0)]

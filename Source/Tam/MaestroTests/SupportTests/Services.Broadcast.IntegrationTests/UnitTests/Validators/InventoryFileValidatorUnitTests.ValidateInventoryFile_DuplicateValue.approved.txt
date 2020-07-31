@@ -1,0 +1,7 @@
+[
+  {
+    "ProblemDescription": "Invalid data for Station AXW, duplicate entry for same spot length",
+    "ProgramName": null,
+    "StationLetters": null
+  }
+]

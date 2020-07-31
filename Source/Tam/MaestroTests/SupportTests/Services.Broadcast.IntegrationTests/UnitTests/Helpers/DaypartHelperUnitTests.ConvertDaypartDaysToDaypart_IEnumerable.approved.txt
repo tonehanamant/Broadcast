@@ -1,0 +1,17 @@
+{
+  "_Code": "",
+  "_EndTime": 0,
+  "_Friday": false,
+  "_Id": -1,
+  "_Is24Hour": false,
+  "_LastEndTime": 0,
+  "_LastStartTime": 0,
+  "_Monday": true,
+  "_Name": "",
+  "_Saturday": false,
+  "_StartTime": 0,
+  "_Sunday": false,
+  "_Thursday": false,
+  "_Tuesday": false,
+  "_Wednesday": false
+}

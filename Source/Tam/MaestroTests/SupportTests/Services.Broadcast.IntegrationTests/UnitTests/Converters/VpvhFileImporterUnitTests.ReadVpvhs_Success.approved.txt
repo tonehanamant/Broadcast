@@ -77,10 +77,10 @@
     "SynAll": 0.279
   },
   {
-    "AMNews": 0.285,
+    "AMNews": 0.286,
     "Audience": "M55+",
     "PMNews": 0.345,
     "Quarter": "1Q17",
-    "SynAll": 0.249
+    "SynAll": 0.25
   }
 ]

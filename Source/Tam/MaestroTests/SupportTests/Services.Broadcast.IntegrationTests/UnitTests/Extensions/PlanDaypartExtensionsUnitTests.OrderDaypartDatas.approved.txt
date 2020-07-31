@@ -1,0 +1,47 @@
+[
+  {
+    "DaypartCode": "AMN",
+    "DaypartCodeId": 0,
+    "EndTime": "9:00",
+    "FlightDays": "M-Su",
+    "GenreRestrictions": [],
+    "ProgramRestrictions": [],
+    "StartTime": "8:00"
+  },
+  {
+    "DaypartCode": "EMN",
+    "DaypartCodeId": 0,
+    "EndTime": "12:00",
+    "FlightDays": "M-F",
+    "GenreRestrictions": [],
+    "ProgramRestrictions": [],
+    "StartTime": "11:00"
+  },
+  {
+    "DaypartCode": "EMN",
+    "DaypartCodeId": 0,
+    "EndTime": "11:30",
+    "FlightDays": "M-F",
+    "GenreRestrictions": [],
+    "ProgramRestrictions": [],
+    "StartTime": "11:00"
+  },
+  {
+    "DaypartCode": "EMN",
+    "DaypartCodeId": 0,
+    "EndTime": "9:00",
+    "FlightDays": "W-F",
+    "GenreRestrictions": [],
+    "ProgramRestrictions": [],
+    "StartTime": "8:00"
+  },
+  {
+    "DaypartCode": "EMN",
+    "DaypartCodeId": 0,
+    "EndTime": "9:00",
+    "FlightDays": "F",
+    "GenreRestrictions": [],
+    "ProgramRestrictions": [],
+    "StartTime": "8:00"
+  }
+]

@@ -2,7 +2,7 @@
   "CreatedBy": "IntegrationTestUser",
   "CreatedDate": "2022-05-14T00:00:00",
   "ErrorMessage": null,
-  "FileHash": "B2-43-64-C4-8A-AF-08-9A-B4-F6-4A-C5-BA-7B-26-EA-0D-87-CE-AF",
+  "FileHash": "65-B1-C4-6D-73-5B-AE-7C-8B-91-1D-EF-CD-BA-0D-CE-B5-5B-3A-26",
   "FileName": "VPVH_valid.xlsx",
   "Items": [
     {

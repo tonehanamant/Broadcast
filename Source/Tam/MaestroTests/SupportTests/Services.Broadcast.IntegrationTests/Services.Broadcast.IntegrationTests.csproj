@@ -480,6 +480,7 @@
     <Compile Include="UnitTests\ApplicationServices\SharedFolderServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\VpvhServiceUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\CreativeLengthEngineUnitTests.cs" />
+    <Compile Include="UnitTests\BusinessEngines\GeneralMathUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\ImpressionsCalculationEngineUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\StationServiceUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryExportEngineUnitTests.cs" />
@@ -491,6 +492,7 @@
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsByFileProcessorTestClass.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsByFileProcessorUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\InventoryProgramsProcessing\InventoryProgramsProcessingTestHelper.cs" />
+    <Compile Include="UnitTests\BusinessEngines\InventoryWeekEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanBudgetDeliveryCalculatorUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingBandCalculationEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryEngineTestClass.cs" />
@@ -510,7 +512,20 @@
     <Compile Include="UnitTests\Converters\VpvhFileImporterUnitTests.cs" />
     <Compile Include="UnitTests\DaytimeCleanupServiceTests.cs" />
     <Compile Include="UnitTests\EntitiesUnitTests\ProgramLineupReportDataUnitTest.cs" />
+    <Compile Include="UnitTests\Extensions\AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsExtensionsUnitTests.cs" />
+    <Compile Include="UnitTests\Extensions\AudienceExtensionsUnitTests.cs" />
+    <Compile Include="UnitTests\Extensions\DateTimeExtensionsUnitTests.cs" />
+    <Compile Include="UnitTests\Extensions\DetectionExtensionsUnitTests.cs" />
+    <Compile Include="UnitTests\Extensions\DisplayDaypartExtensionsUnitTests.cs" />
+    <Compile Include="UnitTests\Extensions\ExcelWorksheetExtensionsUnitTests.cs" />
+    <Compile Include="UnitTests\Extensions\ListExtentionsUnitTest.cs" />
+    <Compile Include="UnitTests\Extensions\MediaMonthExtensionsUnitTests.cs" />
+    <Compile Include="UnitTests\Extensions\PlanDaypartExtensionsUnitTests.cs" />
+    <Compile Include="UnitTests\Extensions\QuarterDetailExtensionUnitTests.cs" />
+    <Compile Include="UnitTests\Extensions\StringExtensionsUnitTests.cs" />
+    <Compile Include="UnitTests\Helpers\DaypartHelperUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\FrequencyCapHelperUnitTests.cs" />
+    <Compile Include="UnitTests\Helpers\KeyHelperUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\WebUtilityHelperUnitTests.cs" />
     <Compile Include="UnitTests\InventoryRatingsProcessing\MediaMonthCrunchStatusTests.cs" />
     <Compile Include="UnitTests\ReportGenerator\UnMappedProgramNameReportGeneratorTest.cs" />
@@ -562,6 +577,7 @@
     <Compile Include="UnitTests\InventoryFileValidatorUnitTests.cs" />
     <Compile Include="UnitTests\ScxFileGeneration\ScxGenerationServiceUnitTestClass.cs" />
     <Compile Include="UnitTests\ScxFileGeneration\ScxGenerationServiceUnitTests.cs" />
+    <Compile Include="UnitTests\Validators\InventoryFileValidatorUnitTests.cs" />
     <Compile Include="UnitTests\Validators\PlanValidatorUnitTestClass.cs" />
     <Compile Include="UnitTests\Validators\PlanValidatorUnitTests.cs" />
   </ItemGroup>

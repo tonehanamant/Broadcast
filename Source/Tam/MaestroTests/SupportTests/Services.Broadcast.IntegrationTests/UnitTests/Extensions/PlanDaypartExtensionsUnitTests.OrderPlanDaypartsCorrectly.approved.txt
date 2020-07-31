@@ -1,0 +1,114 @@
+[
+  {
+    "DaypartCodeId": 2,
+    "DaypartTypeId": 0,
+    "EndTimeSeconds": 2788,
+    "IsEndTimeModified": false,
+    "IsStartTimeModified": false,
+    "Restrictions": {
+      "AffiliateRestrictions": null,
+      "GenreRestrictions": null,
+      "ProgramRestrictions": null,
+      "ShowTypeRestrictions": null
+    },
+    "StartTimeSeconds": 1500,
+    "VpvhForAudiences": [],
+    "WeightingGoalPercent": null
+  },
+  {
+    "DaypartCodeId": 3,
+    "DaypartTypeId": 0,
+    "EndTimeSeconds": 3500,
+    "IsEndTimeModified": false,
+    "IsStartTimeModified": false,
+    "Restrictions": {
+      "AffiliateRestrictions": null,
+      "GenreRestrictions": null,
+      "ProgramRestrictions": null,
+      "ShowTypeRestrictions": null
+    },
+    "StartTimeSeconds": 2788,
+    "VpvhForAudiences": [],
+    "WeightingGoalPercent": null
+  },
+  {
+    "DaypartCodeId": 1,
+    "DaypartTypeId": 0,
+    "EndTimeSeconds": 2000,
+    "IsEndTimeModified": false,
+    "IsStartTimeModified": false,
+    "Restrictions": {
+      "AffiliateRestrictions": null,
+      "GenreRestrictions": null,
+      "ProgramRestrictions": null,
+      "ShowTypeRestrictions": null
+    },
+    "StartTimeSeconds": 0,
+    "VpvhForAudiences": [],
+    "WeightingGoalPercent": null
+  },
+  {
+    "DaypartCodeId": 4,
+    "DaypartTypeId": 0,
+    "EndTimeSeconds": 3500,
+    "IsEndTimeModified": false,
+    "IsStartTimeModified": false,
+    "Restrictions": {
+      "AffiliateRestrictions": null,
+      "GenreRestrictions": null,
+      "ProgramRestrictions": null,
+      "ShowTypeRestrictions": null
+    },
+    "StartTimeSeconds": 1500,
+    "VpvhForAudiences": [],
+    "WeightingGoalPercent": null
+  },
+  {
+    "DaypartCodeId": 4,
+    "DaypartTypeId": 0,
+    "EndTimeSeconds": 3600,
+    "IsEndTimeModified": false,
+    "IsStartTimeModified": false,
+    "Restrictions": {
+      "AffiliateRestrictions": null,
+      "GenreRestrictions": null,
+      "ProgramRestrictions": null,
+      "ShowTypeRestrictions": null
+    },
+    "StartTimeSeconds": 3500,
+    "VpvhForAudiences": [],
+    "WeightingGoalPercent": null
+  },
+  {
+    "DaypartCodeId": 4,
+    "DaypartTypeId": 0,
+    "EndTimeSeconds": 2788,
+    "IsEndTimeModified": false,
+    "IsStartTimeModified": false,
+    "Restrictions": {
+      "AffiliateRestrictions": null,
+      "GenreRestrictions": null,
+      "ProgramRestrictions": null,
+      "ShowTypeRestrictions": null
+    },
+    "StartTimeSeconds": 1500,
+    "VpvhForAudiences": [],
+    "WeightingGoalPercent": null
+  },
+  {
+    "DaypartCodeId": 4,
+    "DaypartTypeId": 0,
+    "EndTimeSeconds": 2788,
+    "IsEndTimeModified": false,
+    "IsStartTimeModified": false,
+    "Restrictions": {
+      "AffiliateRestrictions": null,
+      "GenreRestrictions": null,
+      "ProgramRestrictions": null,
+      "ShowTypeRestrictions": null
+    },
+    "StartTimeSeconds": 1499,
+    "VpvhForAudiences": [],
+    "WeightingGoalPercent": null
+  }
+]

@@ -39,27 +39,27 @@
     "Year": 2017
   },
   {
-    "AMNews": 0.059,
+    "AMNews": 0.058,
     "Audience": {
       "AudienceString": "M50-54",
       "Id": 28
     },
     "PMNews": 0.053,
     "Quarter": 1,
-    "SynAll": 0.056,
+    "SynAll": 0.055,
     "Tdn": 0.056,
-    "Tdns": 0.056,
+    "Tdns": 0.055,
     "Year": 2017
   },
   {
-    "AMNews": 0.14,
+    "AMNews": 0.141,
     "Audience": {
       "AudienceString": "M55-64",
       "Id": 29
     },
     "PMNews": 0.142,
     "Quarter": 1,
-    "SynAll": 0.122,
+    "SynAll": 0.123,
     "Tdn": 0.141,
     "Tdns": 0.135,
     "Year": 2017
@@ -117,29 +117,29 @@
     "Year": 2017
   },
   {
-    "AMNews": 0.07,
+    "AMNews": 0.071,
     "Audience": {
       "AudienceString": "A25-34",
       "Id": 35
     },
     "PMNews": 0.079,
     "Quarter": 1,
-    "SynAll": 0.107,
+    "SynAll": 0.108,
     "Tdn": 0.075,
-    "Tdns": 0.085,
+    "Tdns": 0.086,
     "Year": 2017
   },
   {
-    "AMNews": 0.302,
+    "AMNews": 0.303,
     "Audience": {
       "AudienceString": "A25-49",
       "Id": 36
     },
     "PMNews": 0.295,
     "Quarter": 1,
-    "SynAll": 0.352,
-    "Tdn": 0.298,
-    "Tdns": 0.316,
+    "SynAll": 0.353,
+    "Tdn": 0.299,
+    "Tdns": 0.317,
     "Year": 2017
   },
   {
@@ -169,16 +169,16 @@
     "Year": 2017
   },
   {
-    "AMNews": 0.37,
+    "AMNews": 0.369,
     "Audience": {
       "AudienceString": "A35-54",
       "Id": 39
     },
     "PMNews": 0.338,
     "Quarter": 1,
-    "SynAll": 0.374,
-    "Tdn": 0.354,
-    "Tdns": 0.361,
+    "SynAll": 0.373,
+    "Tdn": 0.353,
+    "Tdns": 0.36,
     "Year": 2017
   },
   {
@@ -221,15 +221,15 @@
     "Year": 2017
   },
   {
-    "AMNews": 0.672,
+    "AMNews": 0.673,
     "Audience": {
       "AudienceString": "A55+",
       "Id": 43
     },
     "PMNews": 0.818,
     "Quarter": 1,
-    "SynAll": 0.639,
-    "Tdn": 0.745,
+    "SynAll": 0.64,
+    "Tdn": 0.746,
     "Tdns": 0.71,
     "Year": 2017
   },
@@ -273,16 +273,16 @@
     "Year": 2017
   },
   {
-    "AMNews": 0.192,
+    "AMNews": 0.191,
     "Audience": {
       "AudienceString": "M18-54",
       "Id": 50
     },
     "PMNews": 0.203,
     "Quarter": 1,
-    "SynAll": 0.222,
-    "Tdn": 0.198,
-    "Tdns": 0.206,
+    "SynAll": 0.221,
+    "Tdn": 0.197,
+    "Tdns": 0.205,
     "Year": 2017
   },
   {
@@ -299,14 +299,14 @@
     "Year": 2017
   },
   {
-    "AMNews": 0.151,
+    "AMNews": 0.15,
     "Audience": {
       "AudienceString": "M35-54",
       "Id": 52
     },
     "PMNews": 0.149,
     "Quarter": 1,
-    "SynAll": 0.157,
+    "SynAll": 0.156,
     "Tdn": 0.15,
     "Tdns": 0.152,
     "Year": 2017
@@ -442,67 +442,67 @@
     "Year": 2017
   },
   {
-    "AMNews": 0.466,
+    "AMNews": 0.465,
     "Audience": {
       "AudienceString": "A18-54",
       "Id": 247
     },
     "PMNews": 0.452,
     "Quarter": 1,
-    "SynAll": 0.522,
-    "Tdn": 0.459,
-    "Tdns": 0.48,
+    "SynAll": 0.521,
+    "Tdn": 0.458,
+    "Tdns": 0.479,
     "Year": 2017
   },
   {
-    "AMNews": 0.748,
+    "AMNews": 0.749,
     "Audience": {
       "AudienceString": "A25-64",
       "Id": 257
     },
     "PMNews": 0.728,
     "Quarter": 1,
-    "SynAll": 0.767,
+    "SynAll": 0.768,
     "Tdn": 0.738,
     "Tdns": 0.748,
     "Year": 2017
   },
   {
-    "AMNews": 1.112,
+    "AMNews": 1.113,
     "Audience": {
       "AudienceString": "A25+",
       "Id": 258
     },
     "PMNews": 1.235,
     "Quarter": 1,
-    "SynAll": 1.12,
-    "Tdn": 1.173,
+    "SynAll": 1.121,
+    "Tdn": 1.174,
     "Tdns": 1.156,
     "Year": 2017
   },
   {
-    "AMNews": 0.138,
+    "AMNews": 0.137,
     "Audience": {
       "AudienceString": "A50-54",
       "Id": 264
     },
     "PMNews": 0.122,
     "Quarter": 1,
-    "SynAll": 0.129,
+    "SynAll": 0.128,
     "Tdn": 0.13,
-    "Tdns": 0.13,
+    "Tdns": 0.129,
     "Year": 2017
   },
   {
-    "AMNews": 0.308,
+    "AMNews": 0.309,
     "Audience": {
       "AudienceString": "A55-64",
       "Id": 266
     },
     "PMNews": 0.311,
     "Quarter": 1,
-    "SynAll": 0.286,
-    "Tdn": 0.309,
+    "SynAll": 0.287,
+    "Tdn": 0.31,
     "Tdns": 0.302,
     "Year": 2017
   },
@@ -520,55 +520,55 @@
     "Year": 2017
   },
   {
-    "AMNews": 0.028,
+    "AMNews": 0.029,
     "Audience": {
       "AudienceString": "M25-34",
       "Id": 284
     },
     "PMNews": 0.037,
     "Quarter": 1,
-    "SynAll": 0.046,
-    "Tdn": 0.032,
-    "Tdns": 0.037,
+    "SynAll": 0.047,
+    "Tdn": 0.033,
+    "Tdns": 0.038,
     "Year": 2017
   },
   {
-    "AMNews": 0.12,
+    "AMNews": 0.121,
     "Audience": {
       "AudienceString": "M25-49",
       "Id": 286
     },
     "PMNews": 0.133,
     "Quarter": 1,
-    "SynAll": 0.147,
-    "Tdn": 0.126,
-    "Tdns": 0.133,
+    "SynAll": 0.148,
+    "Tdn": 0.127,
+    "Tdns": 0.134,
     "Year": 2017
   },
   {
-    "AMNews": 0.319,
+    "AMNews": 0.32,
     "Audience": {
       "AudienceString": "M25-64",
       "Id": 287
     },
     "PMNews": 0.328,
     "Quarter": 1,
-    "SynAll": 0.325,
-    "Tdn": 0.323,
-    "Tdns": 0.324,
+    "SynAll": 0.326,
+    "Tdn": 0.324,
+    "Tdns": 0.325,
     "Year": 2017
   },
   {
-    "AMNews": 0.464,
+    "AMNews": 0.465,
     "Audience": {
       "AudienceString": "M25+",
       "Id": 288
     },
     "PMNews": 0.531,
     "Quarter": 1,
-    "SynAll": 0.452,
-    "Tdn": 0.497,
-    "Tdns": 0.482,
+    "SynAll": 0.453,
+    "Tdn": 0.498,
+    "Tdns": 0.483,
     "Year": 2017
   },
   {
@@ -598,16 +598,16 @@
     "Year": 2017
   },
   {
-    "AMNews": 0.285,
+    "AMNews": 0.286,
     "Audience": {
       "AudienceString": "M55+",
       "Id": 296
     },
     "PMNews": 0.345,
     "Quarter": 1,
-    "SynAll": 0.249,
-    "Tdn": 0.315,
-    "Tdns": 0.293,
+    "SynAll": 0.25,
+    "Tdn": 0.316,
+    "Tdns": 0.294,
     "Year": 2017
   },
   {
@@ -702,16 +702,16 @@
     "Year": 2017
   },
   {
-    "AMNews": 0.026,
+    "AMNews": 0.025,
     "Audience": {
       "AudienceString": "A18-24",
       "Id": 420
     },
     "PMNews": 0.035,
     "Quarter": 1,
-    "SynAll": 0.041,
-    "Tdn": 0.031,
-    "Tdns": 0.034,
+    "SynAll": 0.04,
+    "Tdn": 0.03,
+    "Tdns": 0.033,
     "Year": 2017
   },
   {
@@ -741,14 +741,14 @@
     "Year": 2017
   },
   {
-    "AMNews": 0.013,
+    "AMNews": 0.012,
     "Audience": {
       "AudienceString": "M18-24",
       "Id": 423
     },
     "PMNews": 0.017,
     "Quarter": 1,
-    "SynAll": 0.019,
+    "SynAll": 0.018,
     "Tdn": 0.015,
     "Tdns": 0.016,
     "Year": 2017
