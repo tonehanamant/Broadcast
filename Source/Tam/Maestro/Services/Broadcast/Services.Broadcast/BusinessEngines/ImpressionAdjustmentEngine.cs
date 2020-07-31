@@ -47,7 +47,7 @@ namespace Services.Broadcast.BusinessEngines
 
         public ImpressionAdjustmentEngine(IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
-            _SpotLengthMultipliers = new Lazy<Dictionary<int, double>>(() => broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthMultipliers());
+            _SpotLengthMultipliers = new Lazy<Dictionary<int, double>>(() => broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetDeliveryMultipliersBySpotLength());
             _RatingAdjustments = new Lazy<Dictionary<int, RatingAdjustmentsDto>>(() => broadcastDataRepositoryFactory.GetDataRepository<IRatingAdjustmentsRepository>().GetRatingAdjustments().ToDictionary(ra => ra.MediaMonthId));
         }
 

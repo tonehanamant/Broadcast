@@ -42,17 +42,6 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 
         [JsonProperty("spot_hours")]
         public double SpotHours { get; set; }
-
-        // Not supported by Data Science API yet.
-
-        //[JsonProperty("unit")]
-        //public string Unit { get; set; }
-
-        //[JsonProperty("inventory_source")]
-        //public string InventorySource { get; set; }
-
-        //[JsonProperty("inventory_source_type")]
-        //public string InventorySourceType { get; set; }
     }
 
     public class PlanPricingApiRequestWeekDto

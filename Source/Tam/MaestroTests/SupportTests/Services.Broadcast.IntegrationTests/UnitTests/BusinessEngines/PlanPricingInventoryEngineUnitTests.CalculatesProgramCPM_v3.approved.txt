@@ -1,0 +1,28 @@
+[
+  {
+    "Cpm": 2.5000,
+    "Impressions": 10000.0,
+    "InventoryPricingQuarterType": 0,
+    "InventorySource": null,
+    "ManifestAudiences": null,
+    "ManifestDayparts": null,
+    "ManifestId": 0,
+    "ManifestRates": [
+      {
+        "Cost": 50.00,
+        "SpotLengthId": 2
+      },
+      {
+        "Cost": 25.00,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": null,
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": 10000.0,
+    "SpotLengthId": 0,
+    "StandardDaypartId": 0,
+    "Station": null,
+    "Unit": null
+  }
+]

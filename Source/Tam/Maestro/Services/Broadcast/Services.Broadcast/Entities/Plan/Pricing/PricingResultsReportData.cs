@@ -74,10 +74,10 @@ namespace Services.Broadcast.Entities.Plan.Pricing
                     Station = manifest.Station.LegacyCallLetters,
                     Market = marketsByCode[manifest.Station.MarketCode.Value],
                     DaypartCode = allocation.StandardDaypart.Code,
-                    Spots = allocation.Spots,
+                    Spots = allocation.TotalSpots,
                     TotalImpressions = allocation.TotalImpressions,
                     TotalCost = allocation.TotalCost,
-                    CPM = ProposalMath.CalculateCpm(allocation.SpotCost, allocation.Impressions),
+                    CPM = ProposalMath.CalculateCpm(allocation.TotalCost, allocation.TotalImpressions),
                     PlanWeekNumber = weekNumberByMediaWeek[allocation.ContractMediaWeek.Id],
                     StartDate = allocation.InventoryMediaWeek.StartDate,
                     EndDate = allocation.InventoryMediaWeek.EndDate,
@@ -96,7 +96,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 
             SpotAllocationTotals = new SpotAllocationTotals
             {
-                Spots = allocatedSpots.Sum(x => x.Spots),
+                Spots = allocatedSpots.Sum(x => x.TotalSpots),
                 Impressions = impressions,
                 Cost = cost,
                 CPM = ProposalMath.CalculateCpm(cost, impressions)

@@ -129,11 +129,11 @@ namespace Services.Broadcast.BusinessEngines
             {
                 var pricingProgram = new PlanPricingProgram
                 {
-                    AvgImpressions = ProposalMath.CalculateAvgImpressions(spot.TotalImpressions, spot.Spots),
+                    AvgImpressions = ProposalMath.CalculateAvgImpressions(spot.TotalImpressions, spot.TotalSpots),
                     AvgCpm = ProposalMath.CalculateCpm(spot.TotalCostWithMargin, spot.TotalImpressions),
                     TotalImpressions = spot.TotalImpressions,
                     TotalCost = spot.TotalCostWithMargin,
-                    TotalSpots = spot.Spots
+                    TotalSpots = spot.TotalSpots
                 };
 
                 result.Add(pricingProgram);

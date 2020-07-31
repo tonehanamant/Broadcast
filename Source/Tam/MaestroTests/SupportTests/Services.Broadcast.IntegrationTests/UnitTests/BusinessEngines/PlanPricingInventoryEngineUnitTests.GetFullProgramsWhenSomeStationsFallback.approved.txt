@@ -7,6 +7,7 @@
     "ManifestAudiences": null,
     "ManifestDayparts": null,
     "ManifestId": 0,
+    "ManifestRates": null,
     "ManifestWeeks": [
       {
         "ContractMediaWeekId": 0,
@@ -17,7 +18,7 @@
     ],
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
-    "SpotCost": 0.0,
+    "SpotLengthId": 0,
     "StandardDaypartId": 0,
     "Station": {
       "Affiliation": null,
@@ -41,6 +42,7 @@
     "ManifestAudiences": null,
     "ManifestDayparts": null,
     "ManifestId": 0,
+    "ManifestRates": null,
     "ManifestWeeks": [
       {
         "ContractMediaWeekId": 0,
@@ -51,7 +53,7 @@
     ],
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
-    "SpotCost": 0.0,
+    "SpotLengthId": 0,
     "StandardDaypartId": 0,
     "Station": {
       "Affiliation": null,
@@ -75,6 +77,7 @@
     "ManifestAudiences": null,
     "ManifestDayparts": null,
     "ManifestId": 0,
+    "ManifestRates": null,
     "ManifestWeeks": [
       {
         "ContractMediaWeekId": 0,
@@ -85,7 +88,7 @@
     ],
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
-    "SpotCost": 0.0,
+    "SpotLengthId": 0,
     "StandardDaypartId": 0,
     "Station": {
       "Affiliation": null,
@@ -109,6 +112,7 @@
     "ManifestAudiences": null,
     "ManifestDayparts": null,
     "ManifestId": 0,
+    "ManifestRates": null,
     "ManifestWeeks": [
       {
         "ContractMediaWeekId": 0,
@@ -119,7 +123,7 @@
     ],
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
-    "SpotCost": 0.0,
+    "SpotLengthId": 0,
     "StandardDaypartId": 0,
     "Station": {
       "Affiliation": null,
@@ -143,6 +147,7 @@
     "ManifestAudiences": null,
     "ManifestDayparts": null,
     "ManifestId": 0,
+    "ManifestRates": null,
     "ManifestWeeks": [
       {
         "ContractMediaWeekId": 0,
@@ -153,7 +158,7 @@
     ],
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
-    "SpotCost": 0.0,
+    "SpotLengthId": 0,
     "StandardDaypartId": 0,
     "Station": {
       "Affiliation": null,
@@ -177,6 +182,7 @@
     "ManifestAudiences": null,
     "ManifestDayparts": null,
     "ManifestId": 0,
+    "ManifestRates": null,
     "ManifestWeeks": [
       {
         "ContractMediaWeekId": 0,
@@ -187,7 +193,7 @@
     ],
     "ProjectedImpressions": 0.0,
     "ProvidedImpressions": null,
-    "SpotCost": 0.0,
+    "SpotLengthId": 0,
     "StandardDaypartId": 0,
     "Station": {
       "Affiliation": null,

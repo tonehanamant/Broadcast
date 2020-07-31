@@ -1,0 +1,27 @@
+{
+  "programs": [
+    {
+      "Cpm": 0.0,
+      "Impressions": 1500.0,
+      "InventoryPricingQuarterType": 0,
+      "InventorySource": null,
+      "ManifestAudiences": [
+        {
+          "AudienceId": 6,
+          "Impressions": 1000.0,
+          "IsReference": true
+        }
+      ],
+      "ManifestDayparts": null,
+      "ManifestId": 0,
+      "ManifestRates": null,
+      "ManifestWeeks": null,
+      "ProjectedImpressions": 0.0,
+      "ProvidedImpressions": 1500.0,
+      "SpotLengthId": 1,
+      "StandardDaypartId": 0,
+      "Station": null,
+      "Unit": null
+    }
+  ]
+}

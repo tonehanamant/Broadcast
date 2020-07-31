@@ -51,14 +51,6 @@ namespace Services.Broadcast.Entities.Plan
         public List<CreativeLength> CreativeLengths { get; set; }
 
         /// <summary>
-        /// Gets or sets the spot length identifier.
-        /// </summary>
-        /// <value>
-        /// The spot length identifier.
-        /// </value>
-        public int SpotLengthId { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether this <see cref="PlanDto"/> is equivalized.
         /// </summary>
         /// <value>

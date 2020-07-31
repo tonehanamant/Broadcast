@@ -3,6 +3,7 @@
     "JobId": 1,
     "PlanVersionId": 77,
     "PricingCpm": 54.699248120300751879699248100,
+    "PricingVersion": "2",
     "RequestId": "#q1w2e3",
     "Spots": [
       {
@@ -15,7 +16,7 @@
           "IsDirty": true
         },
         "Id": 1,
-        "Impressions": 1000.0,
+        "Impressions30sec": 1000.0,
         "InventoryMediaWeek": {
           "_EndDate": "0001-01-01T00:00:00",
           "_Id": 90,
@@ -24,9 +25,14 @@
           "_WeekNumber": 0,
           "IsDirty": true
         },
-        "SpotCost": 50.0,
-        "SpotCostWithMargin": 62.5,
-        "Spots": 1,
+        "SpotFrequencies": [
+          {
+            "SpotCost": 50.0,
+            "SpotCostWithMargin": 62.5,
+            "SpotLengthId": 0,
+            "Spots": 1
+          }
+        ],
         "StandardDaypart": {
           "Code": "AMN",
           "FullName": "AM News",
@@ -36,7 +42,8 @@
         "StationInventoryManifestId": 0,
         "TotalCost": 50.0,
         "TotalCostWithMargin": 62.5,
-        "TotalImpressions": 1000.0
+        "TotalImpressions": 1000.0,
+        "TotalSpots": 1
       },
       {
         "ContractMediaWeek": {
@@ -48,7 +55,7 @@
           "IsDirty": true
         },
         "Id": 1,
-        "Impressions": 1000.0,
+        "Impressions30sec": 1000.0,
         "InventoryMediaWeek": {
           "_EndDate": "0001-01-01T00:00:00",
           "_Id": 91,
@@ -57,9 +64,14 @@
           "_WeekNumber": 0,
           "IsDirty": true
         },
-        "SpotCost": 50.0,
-        "SpotCostWithMargin": 62.5,
-        "Spots": 2,
+        "SpotFrequencies": [
+          {
+            "SpotCost": 50.0,
+            "SpotCostWithMargin": 62.5,
+            "SpotLengthId": 0,
+            "Spots": 2
+          }
+        ],
         "StandardDaypart": {
           "Code": "AMN",
           "FullName": "AM News",
@@ -69,7 +81,8 @@
         "StationInventoryManifestId": 0,
         "TotalCost": 100.0,
         "TotalCostWithMargin": 125.0,
-        "TotalImpressions": 2000.0
+        "TotalImpressions": 2000.0,
+        "TotalSpots": 2
       },
       {
         "ContractMediaWeek": {
@@ -81,7 +94,7 @@
           "IsDirty": true
         },
         "Id": 2,
-        "Impressions": 1500.0,
+        "Impressions30sec": 1500.0,
         "InventoryMediaWeek": {
           "_EndDate": "0001-01-01T00:00:00",
           "_Id": 90,
@@ -90,9 +103,14 @@
           "_WeekNumber": 0,
           "IsDirty": true
         },
-        "SpotCost": 60.0,
-        "SpotCostWithMargin": 75.0,
-        "Spots": 3,
+        "SpotFrequencies": [
+          {
+            "SpotCost": 60.0,
+            "SpotCostWithMargin": 75.0,
+            "SpotLengthId": 0,
+            "Spots": 3
+          }
+        ],
         "StandardDaypart": {
           "Code": "PMN",
           "FullName": "PM News",
@@ -102,7 +120,8 @@
         "StationInventoryManifestId": 0,
         "TotalCost": 180.0,
         "TotalCostWithMargin": 225.0,
-        "TotalImpressions": 4500.0
+        "TotalImpressions": 4500.0,
+        "TotalSpots": 3
       }
     ]
   }

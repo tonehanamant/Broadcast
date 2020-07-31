@@ -1,6 +1,7 @@
 ﻿using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.Plan.Pricing;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.Broadcast.IntegrationTests.Stubs
 {
@@ -30,6 +31,34 @@ namespace Services.Broadcast.IntegrationTests.Stubs
             {
                 RequestId = "djj4j4399fmmf1m212",
                 Results = results
+            };
+        }
+
+        public PlanPricingApiSpotsResponseDto_v3 GetPricingSpotsResult(PlanPricingApiRequestDto_v3 request)
+        {
+            var results = new List<PlanPricingApiSpotsResultDto_v3>();
+
+            foreach (var spot in request.Spots)
+            {
+                var result = new PlanPricingApiSpotsResultDto_v3
+                {
+                    ManifestId = spot.Id,
+                    MediaWeekId = spot.MediaWeekId,
+                    Frequencies = spot.SpotCost
+                        .Select(x => new SpotFrequency 
+                        { 
+                            SpotLengthId = x.SpotLengthId, 
+                            Frequency = 1
+                        })
+                        .ToList()
+                };
+
+                results.Add(result);
+            }
+
+            return new PlanPricingApiSpotsResponseDto_v3
+            {
+                RequestId = "djj4j4399fmmf1m212",
             };
         }
     }

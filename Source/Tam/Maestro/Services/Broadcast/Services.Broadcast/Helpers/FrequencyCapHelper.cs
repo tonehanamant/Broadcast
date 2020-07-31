@@ -21,5 +21,26 @@ namespace Services.Broadcast.Helpers
 
             throw new ApplicationException("Unsupported unit cap type was discovered");
         }
+
+        public static int GetFrequencyCap(UnitCapEnum unitCap, int unitCaps)
+        {
+            int occurrencesPerHour;
+
+            switch (unitCap)
+            {
+                case UnitCapEnum.Per30Min:
+                    occurrencesPerHour = 2;
+                    break;
+
+                case UnitCapEnum.PerHour:
+                    occurrencesPerHour = 1;
+                    break;
+
+                default:
+                    throw new Exception("Unsupported unit cap type was discovered");
+            }
+
+            return occurrencesPerHour * unitCaps;
+        }
     }
 }

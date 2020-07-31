@@ -17,6 +17,8 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 
         public int PlanVersionId { get; set; }
 
+        public string PricingVersion { get; set; }
+
         public List<PlanPricingAllocatedSpot> Spots { get; set; }
     }
 }

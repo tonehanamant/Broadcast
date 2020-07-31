@@ -201,5 +201,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_pricing_markets> plan_version_pricing_markets { get; set; }
         public virtual DbSet<plan_version_pricing_results> plan_version_pricing_results { get; set; }
         public virtual DbSet<plan_version_pricing_stations> plan_version_pricing_stations { get; set; }
+        public virtual DbSet<plan_version_pricing_api_result_spot_frequencies> plan_version_pricing_api_result_spot_frequencies { get; set; }
     }
 }

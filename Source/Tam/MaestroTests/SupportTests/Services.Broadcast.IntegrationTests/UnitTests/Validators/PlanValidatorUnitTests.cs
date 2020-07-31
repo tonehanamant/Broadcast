@@ -8,6 +8,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
@@ -35,6 +36,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [SetUp]
         public void Init()
         {
+            var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
+            SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
+
             _creativeLengthEngineMock = new Mock<ICreativeLengthEngine>();
             _ratingForecastServiceMock = new Mock<IRatingForecastService>();
             _broadcastAudiencesCacheMock = new Mock<IBroadcastAudiencesCache>();
@@ -1524,7 +1528,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                 ShareBookId = SHARE_BOOK_ID,
                 HUTBookId = HUT_BOOK_ID,
                 Vpvh = 0.35,
-                SpotLengthId = 1,
                 CreativeLengths = _GetCreativeLengths(),
                 Equivalized = true,
                 Status = PlanStatusEnum.Scenario,

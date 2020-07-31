@@ -32,7 +32,7 @@ namespace Services.Broadcast.Repositories
         List<PlanPricingInventoryProgram> GetProgramsForPricingModel(
             DateTime startDate,
             DateTime endDate,
-            int spotLengthId,
+            List<int> spotLengthIds,
             IEnumerable<int> inventorySourceIds,
             List<int> stationIds);
 
@@ -123,7 +123,7 @@ namespace Services.Broadcast.Repositories
         public List<PlanPricingInventoryProgram> GetProgramsForPricingModel(
             DateTime startDate,
             DateTime endDate,
-            int spotLengthId,
+            List<int> spotLengthIds,
             IEnumerable<int> inventorySourceIds,
             List<int> stationIds)
         {
@@ -143,7 +143,7 @@ namespace Services.Broadcast.Repositories
                              where inventoryFileIds.Contains(manifest.file_id.Value) &&
                                    stationIds.Contains(manifest.station.id) &&
                                    manifestWeek.start_date <= endDate && manifestWeek.end_date >= startDate &&
-                                   manifestRate.spot_length_id == spotLengthId &&
+                                   spotLengthIds.Contains(manifestRate.spot_length_id) &&
                                    manifest.station_inventory_manifest_dayparts.Any(m => m.primary_program_id != null)
                              group manifest by manifest.id into manifestGroup
                              select manifestGroup.FirstOrDefault());
@@ -163,6 +163,7 @@ namespace Services.Broadcast.Repositories
                     .Select(x => new PlanPricingInventoryProgram
                     {
                         ManifestId = x.id,
+                        SpotLengthId = x.spot_length_id,
                         ManifestWeeks = x.station_inventory_manifest_weeks
                             .Where(w => w.start_date <= endDate && w.end_date >= startDate)
                             .Select(w => new PlanPricingInventoryProgram.ManifestWeek
@@ -172,7 +173,14 @@ namespace Services.Broadcast.Repositories
                                 Spots = w.spots
                             })
                             .ToList(),
-                        SpotCost = x.station_inventory_manifest_rates.FirstOrDefault(r => r.spot_length_id == spotLengthId).spot_cost,
+                        ManifestRates = x.station_inventory_manifest_rates
+                            .Where(r => spotLengthIds.Contains(r.spot_length_id))
+                            .Select(r => new PlanPricingInventoryProgram.ManifestRate
+                            { 
+                                SpotLengthId = r.spot_length_id,
+                                Cost = r.spot_cost
+                            })
+                            .ToList(),
                         Station = new DisplayBroadcastStation()
                         {
                             Id = x.station.id,
@@ -182,7 +190,6 @@ namespace Services.Broadcast.Repositories
                             LegacyCallLetters = x.station.legacy_call_letters,
                             MarketCode = x.station.market_code
                         },
-                        //Unit = x.station_inventory_group?.name,
                         InventorySource = new InventorySource
                         {
                             Id = x.inventory_sources.id,

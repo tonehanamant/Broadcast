@@ -136,18 +136,32 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     new PlanPricingAllocatedSpot
                     {
                         Id = 5,
-                        SpotCost = 15.5m,
-                        SpotCostWithMargin = 15.5m,
-                        Spots = 5,
-                        Impressions = 500,
+                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        {
+                            new PlanPricingAllocatedSpot.SpotFrequency
+                            {
+                                SpotCost = 15.5m,
+                                SpotCostWithMargin = 15.5m,
+                                Spots = 5
+                            }
+                        },
+                        Impressions30sec = 500,
+                        TotalImpressions = 2500
                     },
                     new PlanPricingAllocatedSpot
                     {
                         Id = 20,
-                        SpotCost = 9.99m,
-                        SpotCostWithMargin = 9.99m,
-                        Spots = 3,
-                        Impressions = 750
+                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        {
+                            new PlanPricingAllocatedSpot.SpotFrequency
+                            {
+                                SpotCost = 9.99m,
+                                SpotCostWithMargin = 9.99m,
+                                Spots = 3
+                            }
+                        },
+                        Impressions30sec = 750,
+                        TotalImpressions = 2250
                     }
                 }
             };
@@ -160,20 +174,34 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     new PlanPricingAllocatedSpot
                     {
                         Id = 5,
-                        SpotCost = 15.5m,
-                        // 20% Margin
-                        SpotCostWithMargin = 19.375m,
-                        Spots = 5,
-                        Impressions = 500,
+                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        {
+                            new PlanPricingAllocatedSpot.SpotFrequency
+                            {
+                                SpotCost = 15.5m,
+                                // 20% Margin
+                                SpotCostWithMargin = 19.375m,
+                                Spots = 5
+                            }
+                        },
+                        Impressions30sec = 500,
+                        TotalImpressions = 2500
                     },
                     new PlanPricingAllocatedSpot
                     {
                         Id = 20,
-                        SpotCost = 9.99m,
-                        // 20% Margin
-                        SpotCostWithMargin = 12.4875m,
-                        Spots = 3,
-                        Impressions = 750
+                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        {
+                            new PlanPricingAllocatedSpot.SpotFrequency
+                            {
+                                SpotCost =  9.99m,
+                                // 20% Margin
+                                SpotCostWithMargin = 12.4875m,
+                                Spots = 3
+                            }
+                        },
+                        Impressions30sec = 750,
+                        TotalImpressions = 2250
                     }
                 }
             };

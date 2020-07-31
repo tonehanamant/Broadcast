@@ -35,7 +35,8 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         Dictionary<int, int> GetSpotLengthAndIds();
         
-        Dictionary<int, double> GetSpotLengthMultipliers();
+        Dictionary<int, double> GetDeliveryMultipliersBySpotLength();
+        Dictionary<int, double> GetDeliveryMultipliersBySpotLengthId();
         Dictionary<int, double> GetSpotLengthIdsAndCostMultipliers();
     }
 
@@ -121,13 +122,23 @@ namespace Services.Broadcast.Repositories
             }
         }
 
-        public Dictionary<int, double> GetSpotLengthMultipliers()
+        public Dictionary<int, double> GetDeliveryMultipliersBySpotLength()
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
                 return _InReadUncommitedTransaction(
                     context => (from s in context.spot_lengths
                                 select s).ToDictionary(a => a.length, a => a.delivery_multiplier));
+            }
+        }
+
+        public Dictionary<int, double> GetDeliveryMultipliersBySpotLengthId()
+        {
+            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
+            {
+                return _InReadUncommitedTransaction(
+                    context => (from s in context.spot_lengths
+                                select s).ToDictionary(a => a.id, a => a.delivery_multiplier));
             }
         }
 

@@ -1,0 +1,141 @@
+{
+  "inventory": [
+    {
+      "Cpm": 6.6666666666666666666666667000,
+      "Impressions": 1500.0,
+      "InventoryPricingQuarterType": "Plan",
+      "InventorySource": null,
+      "ManifestAudiences": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 39599,
+            "_Friday": false,
+            "_Id": -1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 36000,
+            "_Sunday": false,
+            "_Thursday": false,
+            "_Tuesday": false,
+            "_Wednesday": false
+          },
+          "Id": 5,
+          "PrimaryProgram": null,
+          "PrimaryProgramId": null,
+          "ProgramName": null,
+          "Programs": null
+        }
+      ],
+      "ManifestId": 0,
+      "ManifestRates": [
+        {
+          "Cost": 10.0,
+          "SpotLengthId": 1
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "ContractMediaWeekId": 0,
+          "Id": 2,
+          "InventoryMediaWeekId": 0,
+          "Spots": 0
+        }
+      ],
+      "ProjectedImpressions": 0.0,
+      "ProvidedImpressions": 1500.0,
+      "SpotLengthId": 1,
+      "StandardDaypartId": 1,
+      "Station": {
+        "Affiliation": null,
+        "CallLetters": null,
+        "Code": null,
+        "Id": 0,
+        "LegacyCallLetters": "KOB",
+        "ManifestMaxEndDate": null,
+        "MarketCode": null,
+        "ModifiedDate": null,
+        "OriginMarket": null,
+        "RateDataThrough": null
+      },
+      "Unit": null
+    }
+  ],
+  "passedParameters": {
+    "programs": [
+      {
+        "ManifestId": 0,
+        "ProjectedImpressions": 0.0,
+        "ProvidedImpressions": null,
+        "Impressions": 0.0,
+        "Cpm": 0.0,
+        "Station": {
+          "Id": 0,
+          "Code": null,
+          "CallLetters": null,
+          "LegacyCallLetters": "KOB",
+          "OriginMarket": null,
+          "MarketCode": null,
+          "Affiliation": null,
+          "RateDataThrough": null,
+          "ModifiedDate": null,
+          "ManifestMaxEndDate": null
+        },
+        "Unit": null,
+        "InventorySource": null,
+        "InventoryPricingQuarterType": "Plan",
+        "StandardDaypartId": 1,
+        "SpotLengthId": 1,
+        "ManifestDayparts": [
+          {
+            "Id": 5,
+            "Daypart": {
+              "_Id": -1,
+              "_Code": "",
+              "_Name": "",
+              "_StartTime": 36000,
+              "_EndTime": 39599,
+              "_Monday": true,
+              "_Tuesday": false,
+              "_Wednesday": false,
+              "_Thursday": false,
+              "_Friday": false,
+              "_Saturday": false,
+              "_Sunday": false,
+              "_Is24Hour": false,
+              "_LastStartTime": 0,
+              "_LastEndTime": 0
+            },
+            "PrimaryProgram": null,
+            "PrimaryProgramId": null,
+            "Programs": null,
+            "ProgramName": null
+          }
+        ],
+        "ManifestAudiences": null,
+        "ManifestWeeks": [
+          {
+            "Id": 2,
+            "InventoryMediaWeekId": 0,
+            "ContractMediaWeekId": 0,
+            "Spots": 0
+          }
+        ],
+        "ManifestRates": [
+          {
+            "SpotLengthId": 1,
+            "Cost": 10.0
+          }
+        ]
+      }
+    ],
+    "audienceId": 25,
+    "spotLengthId": 5,
+    "equivalized": false
+  }
+}

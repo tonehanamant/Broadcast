@@ -53,7 +53,7 @@ namespace Services.Broadcast.BusinessEngines
 
                 foreach (var allocatedSpot in allocatedSpots)
                 {
-                    totalSpotsPerStation += allocatedSpot.Spots;
+                    totalSpotsPerStation += allocatedSpot.TotalSpots;
                     totalImpressionsPerStation += allocatedSpot.TotalImpressions;
                     totalBudgetPerStation += allocatedSpot.TotalCostWithMargin;
                 }

@@ -148,7 +148,7 @@ namespace Services.Broadcast.Entities.Campaign
                     StationLegacyCallLetters = manifest.Station.LegacyCallLetters,
                     StationAffiliation = manifest.Station.Affiliation,
                     Dayparts = intersections,
-                    TotalSpotsImpressions = allocatedSpotsForManifest.Sum(x => x.Impressions * x.Spots),
+                    TotalSpotsImpressions = allocatedSpotsForManifest.Sum(x => x.TotalImpressions),
 
                     // they all should have the same code because only weeks differ. Appies only for OpenMarket
                     DaypartCode = standardDaypart.Code

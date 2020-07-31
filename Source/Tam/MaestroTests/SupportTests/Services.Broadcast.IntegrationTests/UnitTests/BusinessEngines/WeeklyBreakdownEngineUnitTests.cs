@@ -37,7 +37,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 _CreativeLengthEngineMock.Object,
                 _SpotLengthEngineMock.Object);
 
-            _SpotLengthEngineMock.Setup(x => x.GetSpotLengthMultipliers())
+            _SpotLengthEngineMock.Setup(x => x.GetDeliveryMultipliersBySpotLengthId())
                 .Returns(_SpotLengthMultiplier);
         }
 
@@ -286,7 +286,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         public void GroupsWeeklyBreakdownByWeek()
         {
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
-            spotLengthEngine.Setup(x => x.GetSpotLengthMultipliers())
+            spotLengthEngine.Setup(x => x.GetDeliveryMultipliersBySpotLengthId())
                 .Returns(_SpotLengthMultiplier);
             var weeklyBreakdownEngine = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,
@@ -302,7 +302,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         public void GroupsWeeklyBreakdownByWeekBySpotLength()
         {
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
-            spotLengthEngine.Setup(x => x.GetSpotLengthMultipliers())
+            spotLengthEngine.Setup(x => x.GetDeliveryMultipliersBySpotLengthId())
                 .Returns(_SpotLengthMultiplier);
             var weeklyBreakdownEngine = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,
@@ -318,7 +318,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         public void GroupWeeklyBreakdownByWeekByDaypart()
         {
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
-            spotLengthEngine.Setup(x => x.GetSpotLengthMultipliers())
+            spotLengthEngine.Setup(x => x.GetDeliveryMultipliersBySpotLengthId())
                 .Returns(_SpotLengthMultiplier);
             var weeklyBreakdownEngine = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,

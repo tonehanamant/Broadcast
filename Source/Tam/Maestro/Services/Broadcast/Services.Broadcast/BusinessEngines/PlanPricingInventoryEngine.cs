@@ -28,7 +28,8 @@ namespace Services.Broadcast.BusinessEngines
             PlanDto plan,
             ProgramInventoryOptionalParametersDto parameters,
             IEnumerable<int> inventorySourceIds,
-            PlanPricingJobDiagnostic diagnostic);
+            PlanPricingJobDiagnostic diagnostic,
+            bool isProprietary);
     }
 
     public class PlanPricingInventoryEngine : BroadcastBaseClass, IPlanPricingInventoryEngine
@@ -44,13 +45,15 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IDaypartCache _DaypartCache;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
+        private readonly ISpotLengthEngine _SpotLengthEngine;
 
         public PlanPricingInventoryEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                           IImpressionsCalculationEngine impressionsCalculationEngine,
                                           IPlanPricingInventoryQuarterCalculatorEngine planPricingInventoryQuarterCalculatorEngine,
                                           IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
                                           IDaypartCache daypartCache,
-                                          IQuarterCalculationEngine quarterCalculationEngine)
+                                          IQuarterCalculationEngine quarterCalculationEngine,
+                                          ISpotLengthEngine spotLengthEngine)
         {
             ThresholdInSecondsForProgramIntersect = BroadcastServiceSystemParameter.ThresholdInSecondsForProgramIntersectInPricing;
 
@@ -64,13 +67,15 @@ namespace Services.Broadcast.BusinessEngines
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
             _DaypartCache = daypartCache;
             _QuarterCalculationEngine = quarterCalculationEngine;
+            _SpotLengthEngine = spotLengthEngine;
         }
 
         public List<PlanPricingInventoryProgram> GetInventoryForPlan(
             PlanDto plan,
             ProgramInventoryOptionalParametersDto parameters,
             IEnumerable<int> inventorySourceIds,
-            PlanPricingJobDiagnostic diagnostic)
+            PlanPricingJobDiagnostic diagnostic,
+            bool isProprietary)
         {
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_FLIGHT_DATE_RANGES_AND_FLIGHT_DAYS);
             var planFlightDateRanges = _GetPlanDateRanges(plan);
@@ -79,6 +84,11 @@ namespace Services.Broadcast.BusinessEngines
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FETCHING_INVENTORY_FROM_DB);
             var programs = _GetPrograms(plan, planFlightDateRanges, inventorySourceIds, diagnostic);
+
+            // we don't expect spots other than 30 length spots for OpenMarket
+            if (!isProprietary)
+                programs = programs.Where(x => x.SpotLengthId == BroadcastConstants.SpotLengthId30).ToList();
+
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FETCHING_INVENTORY_FROM_DB);
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_DAYPARTS_AND_ASSOCIATING_WITH_STANDARD_DAYPART);
@@ -95,19 +105,19 @@ namespace Services.Broadcast.BusinessEngines
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SETTING_INVENTORY_DAYS_BASED_ON_PLAN_DAYS);
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_APPLYING_PROJECTED_IMPRESSIONS);
-            _ApplyProjectedImpressions(programs, plan);
+            _ApplyProjectedImpressions(programs, plan, isProprietary);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_APPLYING_PROJECTED_IMPRESSIONS);
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_APPLYING_PROVIDED_IMPRESSIONS);
-            _ApplyProvidedImpressions(programs, plan);
+            _ApplyProvidedImpressions(programs, plan, isProprietary);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_APPLYING_PROVIDED_IMPRESSIONS);
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_APPLYING_NTI_CONVERSION_TO_NSI);
-            ApplyNTIConversionToNSI(plan, programs, planDisplayDaypartDays);
+            ApplyNTIConversionToNSI(plan, programs);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_APPLYING_NTI_CONVERSION_TO_NSI);
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM);
-            programs = CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, parameters?.MinCPM, parameters?.MaxCPM);
+            programs = CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, parameters?.MinCPM, parameters?.MaxCPM, isProprietary);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM);
 
             return programs;
@@ -165,17 +175,14 @@ namespace Services.Broadcast.BusinessEngines
             if (!inflationFactor.HasValue)
                 return;
 
-            var fallbackPrograms = programs.Where(p => p.InventoryPricingQuarterType == InventoryPricingQuarterType.Fallback);
-            if (fallbackPrograms.Any())
-            {
-                foreach (var program in fallbackPrograms)
-                    program.SpotCost = _CalculateInflationFactor(program.SpotCost, inflationFactor.Value);
-            }
-            else
-            {
-                foreach (var program in programs)
-                    program.SpotCost = _CalculateInflationFactor(program.SpotCost, inflationFactor.Value);
-            }
+            var programsToUpdate = programs.Where(p => p.InventoryPricingQuarterType == InventoryPricingQuarterType.Fallback);
+
+            if (!programsToUpdate.Any())
+                programsToUpdate = programs;
+
+            programsToUpdate
+                .SelectMany(x => x.ManifestRates)
+                .ForEach(x => x.Cost = _CalculateInflationFactor(x.Cost, inflationFactor.Value));
         }
 
         private decimal _CalculateInflationFactor(decimal spotCost, double inflationFactor) =>
@@ -189,7 +196,7 @@ namespace Services.Broadcast.BusinessEngines
         /// </remarks>
         protected List<PlanPricingInventoryProgram> _GetFullPrograms(
             List<DateRange> dateRanges, 
-            int spotLengthId,
+            List<int> spotLengthIds,
             IEnumerable<int> inventorySourceIds, 
             List<short> availableMarkets, 
             QuarterDetailDto planQuarter, 
@@ -205,8 +212,8 @@ namespace Services.Broadcast.BusinessEngines
                 // look for inventory from plan quarter
                 var planInventoryForDateRange = _StationProgramRepository.GetProgramsForPricingModel(
                     dateRange.Start.Value, 
-                    dateRange.End.Value, 
-                    spotLengthId, 
+                    dateRange.End.Value,
+                    spotLengthIds, 
                     inventorySourceIds,
                     ungatheredStationIds);
 
@@ -229,7 +236,7 @@ namespace Services.Broadcast.BusinessEngines
                             _StationProgramRepository.GetProgramsForPricingModel(
                                 fallbackDateRange.Start.Value,
                                 fallbackDateRange.End.Value,
-                                spotLengthId,
+                                spotLengthIds,
                                 inventorySourceIds,
                                 ungatheredStationIds))
                         .ToList();
@@ -332,6 +339,10 @@ namespace Services.Broadcast.BusinessEngines
             IEnumerable<int> inventorySourceIds,
             PlanPricingJobDiagnostic diagnostic)
         {
+            var spotLengthIds = BroadcastServiceSystemParameter.PlanPricingEndpointVersion == "2" ?
+                plan.CreativeLengths.Select(x => x.SpotLengthId).Take(1).ToList() :
+                plan.CreativeLengths.Select(x => x.SpotLengthId).ToList();
+
             var marketCodes = plan.AvailableMarkets.Select(m => m.MarketCode).ToList();
             var planQuarter = _PlanPricingInventoryQuarterCalculatorEngine.GetPlanQuarter(plan);
             var fallbackQuarters = _QuarterCalculationEngine.GetLastNQuarters(
@@ -339,7 +350,7 @@ namespace Services.Broadcast.BusinessEngines
                 BroadcastServiceSystemParameter.NumberOfFallbackQuartersForPricing);
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FETCHING_NOT_POPULATED_INVENTORY);
-            var programs = _GetFullPrograms(planFlightDateRanges, plan.SpotLengthId, inventorySourceIds, marketCodes, planQuarter, fallbackQuarters);
+            var programs = _GetFullPrograms(planFlightDateRanges, spotLengthIds, inventorySourceIds, marketCodes, planQuarter, fallbackQuarters);
 
             // so that programs are not repeated
             programs = programs.GroupBy(x => x.ManifestId).Select(x =>
@@ -525,8 +536,7 @@ namespace Services.Broadcast.BusinessEngines
 
         protected void ApplyNTIConversionToNSI(
             PlanDto plan,
-            List<PlanPricingInventoryProgram> programs,
-            DisplayDaypart planDisplayDaypartDays)
+            List<PlanPricingInventoryProgram> programs)
         {
             if (plan.PostingType != PostingTypeEnum.NTI)
                 return;
@@ -539,18 +549,57 @@ namespace Services.Broadcast.BusinessEngines
             {
                 var conversionRate = conversionRatesByDaypartCodeId[program.StandardDaypartId];
 
-                program.ProjectedImpressions = program.ProjectedImpressions * conversionRate;
+                program.ProjectedImpressions *= conversionRate;
 
                 if (program.ProvidedImpressions.HasValue)
-                    program.ProvidedImpressions = program.ProvidedImpressions * conversionRate;
+                    program.ProvidedImpressions *= conversionRate;
             }
         }
 
         protected List<PlanPricingInventoryProgram> CalculateProgramCpmAndFilterByMinAndMaxCpm(
             List<PlanPricingInventoryProgram> programs,
             decimal? minCPM,
-            decimal? maxCPM)
+            decimal? maxCPM,
+            bool isProprietary)
         {
+            foreach (var program in programs)
+            {
+                decimal cost;
+
+                // for Proprietary, there is always only 1 rate defined for inventory
+                if (isProprietary)
+                {
+                    cost = program.ManifestRates.Single().Cost;
+                }
+                // for pricing v2, there is always 1 spot length for inventory
+                else if (BroadcastServiceSystemParameter.PlanPricingEndpointVersion == "2")
+                {
+                    cost = program.ManifestRates.Single().Cost;
+                }
+                // for pricing v3, we use impressions for :30 and that`s why the cost must be for :30 as well
+                else
+                {
+                    var rate = program.ManifestRates.SingleOrDefault(x => x.SpotLengthId == BroadcastConstants.SpotLengthId30);
+
+                    if (rate != null)
+                    {
+                        cost = rate.Cost;
+                    }
+                    else
+                    {
+                        // if there is no rate for :30 in the plan, let`s calculate it
+                        // the formula that we use during inventory import is 
+                        // cost for spot length = cost for :30 * multiplier for the spot length
+                        // so, cost for :30 = cost for spot length / multiplier for the spot length
+
+                        rate = program.ManifestRates.First();
+                        cost = rate.Cost / (decimal)_SpotLengthEngine.GetSpotCostMultiplierBySpotLengthId(rate.SpotLengthId);
+                    }
+                }
+
+                program.Cpm = ProposalMath.CalculateCpm(cost, program.Impressions);
+            }
+
             if (!minCPM.HasValue && !maxCPM.HasValue)
             {
                 return programs;
@@ -560,13 +609,8 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach (var program in programs)
             {
-                program.Cpm =
-                    ProposalMath.CalculateCpm(
-                        program.SpotCost,
-                        program.ProvidedImpressions ?? program.ProjectedImpressions);
-
-                if (!(minCPM.HasValue && program.Cpm < minCPM.Value)
-                    && !(maxCPM.HasValue && program.Cpm > maxCPM.Value))
+                if (!(minCPM.HasValue && program.Cpm < minCPM.Value) &&
+                    !(maxCPM.HasValue && program.Cpm > maxCPM.Value))
                 {
                     result.Add(program);
                 }
@@ -760,24 +804,41 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
-        private void _ApplyProvidedImpressions(List<PlanPricingInventoryProgram> programs, PlanDto plan)
+        private void _ApplyProvidedImpressions(
+            List<PlanPricingInventoryProgram> programs, 
+            PlanDto plan,
+            bool isProprietary)
         {
-            _ImpressionsCalculationEngine.ApplyProvidedImpressions(programs, plan.AudienceId, plan.SpotLengthId, plan.Equivalized);
+            // we don`t want to equivalize impressions
+            // when PricingVersion == 3, because this is done by the pricing endpoint
+            // when isProprietary == true, because for proprietary, impressions are already converted to the spot length of inventory
+            var equivalized = isProprietary || BroadcastServiceSystemParameter.PlanPricingEndpointVersion == "3" ? false : plan.Equivalized;
+
+            // SpotLengthId does not matter for the pricing v3, so this code is for the v2
+            var spotLengthId = plan.CreativeLengths.First().SpotLengthId;
+
+            _ImpressionsCalculationEngine.ApplyProvidedImpressions(programs, plan.AudienceId, spotLengthId, equivalized);
         }
 
-        private void _ApplyProjectedImpressions(IEnumerable<PlanPricingInventoryProgram> programs, PlanDto plan)
+        private void _ApplyProjectedImpressions(
+            IEnumerable<PlanPricingInventoryProgram> programs,
+            PlanDto plan,
+            bool isProprietary)
         {
             var impressionsRequest = new ImpressionsRequestDto
             {
-                Equivalized = plan.Equivalized,
+                // we don`t want to equivalize impressions when PricingVersion == 3, because this is done by the pricing endpoint
+                Equivalized = isProprietary || BroadcastServiceSystemParameter.PlanPricingEndpointVersion == "2" ? plan.Equivalized : false,
                 HutProjectionBookId = plan.HUTBookId,
                 PlaybackType = ProposalPlaybackType.LivePlus3,
                 PostType = plan.PostingType,
                 ShareProjectionBookId = plan.ShareBookId,
-                SpotLengthId = plan.SpotLengthId
+
+                // SpotLengthId does not matter for the pricing v3, so this code is for the v2
+                SpotLengthId = plan.CreativeLengths.First().SpotLengthId
             };
 
-            _ImpressionsCalculationEngine.ApplyProjectedImpressions(programs, impressionsRequest, plan.AudienceId);
+            _ImpressionsCalculationEngine.ApplyProjectedImpressions(programs, impressionsRequest, plan.AudienceId, isProprietary);
         }
 
         private class ProgramInventoryDaypart

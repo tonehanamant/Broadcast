@@ -2019,7 +2019,6 @@
   "ProductId": 5575,
   "SecondaryAudiences": [],
   "ShareBookId": 455,
-  "SpotLengthId": 3,
   "Status": 1,
   "TargetCPM": 25.0000,
   "TargetCPP": 60975.6097,

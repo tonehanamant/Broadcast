@@ -18,6 +18,9 @@ using System.Linq;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.BusinessEngines.PlanPricingInventoryEngine;
+using Common.Services;
+using Newtonsoft.Json;
+using Services.Broadcast.IntegrationTests.Stubs;
 using Unity;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
@@ -38,6 +41,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         private Mock<IStationRepository> _StationRepositoryMock;
         private Mock<IDaypartCache> _DaypartCacheMock;
         private Mock<IQuarterCalculationEngine> _QuarterCalculationEngineMock;
+        private Mock<ISpotLengthEngine> _SpotLengthEngineMock;
 
         [SetUp]
         public void SetUp()
@@ -54,6 +58,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _StationRepositoryMock = new Mock<IStationRepository>();
             _DaypartCacheMock = new Mock<IDaypartCache>();
             _QuarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
+            _SpotLengthEngineMock = new Mock<ISpotLengthEngine>();
 
             _DayRepositoryMock
                 .Setup(x => x.GetDays())
@@ -89,7 +94,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 _PlanPricingInventoryQuarterCalculatorEngineMock.Object,
                 _MediaMonthAndWeekAggregateCache,
                 _DaypartCacheMock.Object,
-                _QuarterCalculationEngineMock.Object);
+                _QuarterCalculationEngineMock.Object,
+                _SpotLengthEngineMock.Object);
         }
 
         [Test]
@@ -770,32 +776,186 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             {
                 new PlanPricingInventoryProgram
                 {
-                    SpotCost = 350.00M,
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = 350.00M,
+                        }
+                    },
                     ProjectedImpressions = 33615.275,
                     ProvidedImpressions = 29600.0
                 },
                 new PlanPricingInventoryProgram
                 {
-                    SpotCost = 400.00M,
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = 400.00M,
+                        }
+                    },
                     ProjectedImpressions = 44998.25,
                     ProvidedImpressions = 30200.0
                 },
                 new PlanPricingInventoryProgram
                 {
-                    SpotCost = 375.00M,
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = 375.00M,
+                        }
+                    },
                     ProjectedImpressions = 30683.0,
                     ProvidedImpressions = 21800.0
                 },
                 new PlanPricingInventoryProgram
                 {
-                    SpotCost = 300.00M,
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = 300.00M,
+                        }
+                    },
                     ProjectedImpressions = 40034.6875,
                     ProvidedImpressions = 23400.0
                 }
             };
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, (decimal?)minCPM, (decimal?)maxCPM);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, (decimal?)minCPM, (decimal?)maxCPM, isProprietary: false);
 
             Assert.AreEqual(expectedCount, result.Count);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CalculatesProgramCPM_Proprietary()
+        {
+            var programs = new List<PlanPricingInventoryProgram>
+            {
+                new PlanPricingInventoryProgram
+                {
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = 50.00M,
+                        }
+                    },
+                    ProvidedImpressions = 10000
+                }
+            };
+
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, null, null, isProprietary: true);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CalculatesProgramCPM()
+        {
+            var programs = new List<PlanPricingInventoryProgram>
+            {
+                new PlanPricingInventoryProgram
+                {
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = 50.00M,
+                        }
+                    },
+                    ProvidedImpressions = 10000
+                }
+            };
+
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, null, null, isProprietary: false);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CalculatesProgramCPM_v3()
+        {
+            try
+            {
+                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "3";
+
+                var programs = new List<PlanPricingInventoryProgram>
+                {
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                        {
+                            new PlanPricingInventoryProgram.ManifestRate
+                            {
+                                SpotLengthId = 2,
+                                Cost = 50.00M,
+                            },
+                            new PlanPricingInventoryProgram.ManifestRate
+                            {
+                                SpotLengthId = 1,
+                                Cost = 25.00M,
+                            }
+                        },
+                        ProvidedImpressions = 10000
+                    }
+                };
+
+                var result = _PlanPricingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, null, null, isProprietary: false);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+            finally
+            {
+                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "2";
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void CalculatesProgramCPM_v3_NoRateFor30()
+        {
+            try
+            {
+                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "3";
+
+                var programs = new List<PlanPricingInventoryProgram>
+                {
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                        {
+                            new PlanPricingInventoryProgram.ManifestRate
+                            {
+                                SpotLengthId = 2,
+                                Cost = 50.00M,
+                            },
+                            new PlanPricingInventoryProgram.ManifestRate
+                            {
+                                SpotLengthId = 3,
+                                Cost = 30.00M,
+                            }
+                        },
+                        ProvidedImpressions = 10000
+                    }
+                };
+
+                _SpotLengthEngineMock
+                    .Setup(x => x.GetSpotCostMultiplierBySpotLengthId(It.IsAny<int>()))
+                    .Returns(0.5);
+
+                var result = _PlanPricingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, null, null, isProprietary: false);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+            finally
+            {
+                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "2";
+            }
         }
 
         [Test]
@@ -810,13 +970,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 new PlanPricingInventoryProgram
                 {
                     InventoryPricingQuarterType = InventoryPricingQuarterType.Plan,
-                    SpotCost = 300.00M,
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = 300.00M
+                        }
+                    }
                 }
             };
 
             _PlanPricingInventoryEngine.UT_ApplyInflationFactorToSpotCost(programs, inflationFactor);
 
-            Assert.AreEqual((decimal)expectedResult, programs.Single().SpotCost);
+            Assert.AreEqual((decimal)expectedResult, programs.Single().ManifestRates.Single().Cost);
         }
 
         [Test]
@@ -831,13 +997,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 new PlanPricingInventoryProgram
                 {
                     InventoryPricingQuarterType = InventoryPricingQuarterType.Fallback,
-                    SpotCost = 300.00M,
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = 300.00M
+                        }
+                    }
                 }
             };
 
             _PlanPricingInventoryEngine.UT_ApplyInflationFactorToSpotCost(programs, inflationFactor);
 
-            Assert.AreEqual((decimal)expectedResult, programs.Single().SpotCost);
+            Assert.AreEqual((decimal)expectedResult, programs.Single().ManifestRates.Single().Cost);
         }
 
         [Test]
@@ -853,19 +1025,31 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 new PlanPricingInventoryProgram
                 {
                     InventoryPricingQuarterType = InventoryPricingQuarterType.Fallback,
-                    SpotCost = defaultSpotCost,
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = defaultSpotCost
+                        }
+                    }
                 },
                 new PlanPricingInventoryProgram
                 {
                     InventoryPricingQuarterType = InventoryPricingQuarterType.Plan,
-                    SpotCost = defaultSpotCost
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = defaultSpotCost
+                        }
+                    }
                 }
             };
 
             _PlanPricingInventoryEngine.UT_ApplyInflationFactorToSpotCost(programs, inflationFactor);
 
-            Assert.AreEqual((decimal)expectedResult, programs.FirstOrDefault().SpotCost);
-            Assert.AreEqual(defaultSpotCost, programs.LastOrDefault().SpotCost);
+            Assert.AreEqual((decimal)expectedResult, programs.FirstOrDefault().ManifestRates.Single().Cost);
+            Assert.AreEqual(defaultSpotCost, programs.LastOrDefault().ManifestRates.Single().Cost);
         }
 
         [Test]
@@ -880,28 +1064,52 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             {
                 new PlanPricingInventoryProgram // CPM 11.8243
                 {
-                    SpotCost = 350.00M,
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = 350.00M
+                        }
+                    },
                     ProvidedImpressions = 29600.0
                 },
                 new PlanPricingInventoryProgram // CPM 13.2450
                 {
-                    SpotCost = 400.00M,
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = 400.00M
+                        }
+                    },
                     ProvidedImpressions = 30200.0
                 },
                 new PlanPricingInventoryProgram // CPM 17.2018
                 {
-                    SpotCost = 375.00M,
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = 375.00M
+                        }
+                    },
                     ProvidedImpressions = 21800.0
                 },
                 new PlanPricingInventoryProgram // CPM 12.8205
                 {
-                    SpotCost = 300.00M,
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = 300.00M
+                        }
+                    },
                     ProvidedImpressions = 23400.0
                 }
             };
 
             _PlanPricingInventoryEngine.UT_ApplyInflationFactorToSpotCost(programs, inflationFactor);
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, (decimal?)minCPM, (decimal?)maxCPM);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, (decimal?)minCPM, (decimal?)maxCPM, isProprietary: false);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -930,7 +1138,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         {
             var plan = _GetPlan();
             plan.PostingType = PostingTypeEnum.NSI;
-            var planFlightDays = _GetPlanFlightDays();
             var programs = new List<PlanPricingInventoryProgram>
             {
                 new PlanPricingInventoryProgram
@@ -940,7 +1147,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            _PlanPricingInventoryEngine.UT_ApplyNTIConversionToNSI(plan, programs, planFlightDays);
+            _PlanPricingInventoryEngine.UT_ApplyNTIConversionToNSI(plan, programs);
 
             Assert.AreEqual(1000, programs.Single().ProjectedImpressions);
             Assert.AreEqual(2000, programs.Single().ProvidedImpressions);
@@ -957,8 +1164,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 StartTimeSeconds = 32400, // 9am
                 EndTimeSeconds = 35999 // 10am
             });
-
-            var planFlightDays = _GetPlanFlightDays();
             var programs = new List<PlanPricingInventoryProgram>
             {
                 new PlanPricingInventoryProgram
@@ -982,7 +1187,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            _PlanPricingInventoryEngine.UT_ApplyNTIConversionToNSI(plan, programs, planFlightDays);
+            _PlanPricingInventoryEngine.UT_ApplyNTIConversionToNSI(plan, programs);
 
             Assert.AreEqual(850, programs.Single().ProjectedImpressions);
             Assert.AreEqual(1700, programs.Single().ProvidedImpressions);
@@ -1045,12 +1250,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Returns(fallbackDateRanges);
 
             _StationProgramRepositoryMock.Setup(s => s.GetProgramsForPricingModel(
-                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<int>(),
+                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<List<int>>(),
                     It.IsAny<List<int>>(), It.IsAny<List<int>>()))
                 .Returns(inventory);
 
             /*** Act ***/
-            var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, spotLengthId, supportedInventorySourceTypes,
+            var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, new List<int> { spotLengthId }, supportedInventorySourceTypes,
                 availableMarkets, planQuarter, fallbackQuarters);
 
             /*** Assert ***/
@@ -1188,13 +1393,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Returns(fallbackDateRanges);
 
             _StationProgramRepositoryMock.SetupSequence(s => s.GetProgramsForPricingModel(
-                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<int>(),
+                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<List<int>>(),
                     It.IsAny<List<int>>(), It.IsAny<List<int>>()))
                 .Returns(inventoryOne)
                 .Returns(inventoryTwo);
 
             /*** Act ***/
-            var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, spotLengthId, supportedInventorySourceTypes,
+            var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, new List<int> { spotLengthId }, supportedInventorySourceTypes,
                 availableMarkets, planQuarter, fallbackQuarters);
 
             /*** Assert ***/
@@ -1336,7 +1541,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Returns(fallbackDateRanges);
 
             _StationProgramRepositoryMock.SetupSequence(s => s.GetProgramsForPricingModel(
-                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<int>(),
+                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<List<int>>(),
                     It.IsAny<List<int>>(), It.IsAny<List<int>>()))
                 .Returns(inventoryOne)
                 .Returns(inventoryTwo)
@@ -1344,7 +1549,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Returns(inventoryTwo);
 
             /*** Act ***/
-            var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, spotLengthId, supportedInventorySourceTypes,
+            var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, new List<int> { spotLengthId }, supportedInventorySourceTypes,
                 availableMarkets, planQuarter, fallbackQuarters);
 
             /*** Assert ***/
@@ -1436,13 +1641,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Returns(fallbackDateRanges);
 
             _StationProgramRepositoryMock.SetupSequence(s => s.GetProgramsForPricingModel(
-                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<int>(),
+                    It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<List<int>>(),
                     It.IsAny<List<int>>(), It.IsAny<List<int>>()))
                 .Returns(inventoryOne)
                 .Returns(inventoryTwo);
 
             /*** Act ***/
-            var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, spotLengthId, supportedInventorySourceTypes,
+            var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, new List<int> { spotLengthId }, supportedInventorySourceTypes,
                 availableMarkets, planQuarter, fallbackQuarters);
 
             /*** Assert ***/
@@ -1585,7 +1790,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             plan.HUTBookId = null;
             plan.PostingType = PostingTypeEnum.NTI;
             plan.ShareBookId = 201;
-            plan.SpotLengthId = 5;
             plan.CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 5, Weight = 50 } };
             plan.AudienceId = 25;
 
@@ -1597,13 +1801,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Setup(x => x.GetProgramsForPricingModel(
                     It.IsAny<DateTime>(), 
                     It.IsAny<DateTime>(), 
-                    It.IsAny<int>(),
+                    It.IsAny<List<int>>(),
                     It.IsAny<List<int>>(), 
                     It.IsAny<List<int>>()))
                 .Returns(new List<PlanPricingInventoryProgram>
                 {
                     new PlanPricingInventoryProgram
                     {
+                        SpotLengthId = 1,
                         Station = new DisplayBroadcastStation
                         {
                             LegacyCallLetters = "KOB"
@@ -1621,6 +1826,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             {
                                 Id = 5,
                                 Daypart = new DisplayDaypart()
+                            }
+                        },
+                        ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                        {
+                            new PlanPricingInventoryProgram.ManifestRate
+                            {
+                                SpotLengthId = 1,
+                                Cost = 10
                             }
                         }
                     }
@@ -1670,15 +1883,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Setup(x => x.ApplyProjectedImpressions(
                     It.IsAny<IEnumerable<PlanPricingInventoryProgram>>(),
                     It.IsAny<ImpressionsRequestDto>(),
-                    It.IsAny<int>()))
-                .Callback<IEnumerable<PlanPricingInventoryProgram>, ImpressionsRequestDto, int>((programs, request, audienceId) =>
+                    It.IsAny<int>(),
+                    It.IsAny<bool>()))
+                .Callback<IEnumerable<PlanPricingInventoryProgram>, ImpressionsRequestDto, int, bool>((programs, request, audienceId, isProprietary) =>
                 {
                     // deep copy
                     passedParameters = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(new
                     {
                         programs,
                         request,
-                        audienceId
+                        audienceId,
+                        isProprietary
                     }));
 
                     foreach (var program in programs)
@@ -1688,7 +1903,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 });
 
             // Act
-            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, isProprietary: false);
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -1714,7 +1929,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             plan.HUTBookId = 202;
             plan.PostingType = PostingTypeEnum.NSI;
             plan.ShareBookId = 201;
-            plan.SpotLengthId = 5;
             plan.CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 5, Weight = 50 } };
             plan.AudienceId = 25;
 
@@ -1726,13 +1940,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Setup(x => x.GetProgramsForPricingModel(
                     It.IsAny<DateTime>(),
                     It.IsAny<DateTime>(),
-                    It.IsAny<int>(),
+                    It.IsAny<List<int>>(),
                     It.IsAny<List<int>>(),
                     It.IsAny<List<int>>()))
                 .Returns(new List<PlanPricingInventoryProgram>
                 {
                     new PlanPricingInventoryProgram
                     {
+                        SpotLengthId = 1,
                         Station = new DisplayBroadcastStation
                         {
                             LegacyCallLetters = "KOB"
@@ -1750,6 +1965,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             {
                                 Id = 5,
                                 Daypart = new DisplayDaypart()
+                            }
+                        },
+                        ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                        {
+                            new PlanPricingInventoryProgram.ManifestRate
+                            {
+                                SpotLengthId = 1,
+                                Cost = 10
                             }
                         }
                     }
@@ -1799,15 +2022,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Setup(x => x.ApplyProjectedImpressions(
                     It.IsAny<IEnumerable<PlanPricingInventoryProgram>>(),
                     It.IsAny<ImpressionsRequestDto>(),
-                    It.IsAny<int>()))
-                .Callback<IEnumerable<PlanPricingInventoryProgram>, ImpressionsRequestDto, int>((programs, request, audienceId) =>
+                    It.IsAny<int>(),
+                    It.IsAny<bool>()))
+                .Callback<IEnumerable<PlanPricingInventoryProgram>, ImpressionsRequestDto, int, bool>((programs, request, audienceId, isProprietary) =>
                 {
                     // deep copy
                     passedParameters = JsonConvert.DeserializeObject((JsonConvert.SerializeObject(new
                     {
                         programs,
                         request,
-                        audienceId
+                        audienceId,
+                        isProprietary
                     })));
 
                     foreach (var program in programs)
@@ -1817,7 +2042,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 });
 
             // Act
-            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, isProprietary: false);
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -1827,6 +2052,614 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             });
 
             Approvals.Verify(resultJson);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProjectsImpressions_WhenGatheringInventory_ForPricing_v3()
+        {
+            try
+            {
+                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "3";
+
+                // Arrange
+                var parameters = new ProgramInventoryOptionalParametersDto();
+                var inventorySourceIds = new List<int>();
+                var diagnostic = new PlanPricingJobDiagnostic();
+
+                var plan = _GetPlan();
+                plan.Equivalized = true;
+                plan.HUTBookId = 202;
+                plan.PostingType = PostingTypeEnum.NSI;
+                plan.ShareBookId = 201;
+                plan.CreativeLengths = new List<CreativeLength>
+                {
+                    new CreativeLength { SpotLengthId = 5, Weight = 50 },
+                    new CreativeLength { SpotLengthId = 2, Weight = 50 }
+                };
+                plan.AudienceId = 25;
+
+                _StationRepositoryMock
+                    .Setup(x => x.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
+                    .Returns(new List<DisplayBroadcastStation>());
+
+                _StationProgramRepositoryMock
+                    .Setup(x => x.GetProgramsForPricingModel(
+                        It.IsAny<DateTime>(),
+                        It.IsAny<DateTime>(),
+                        It.IsAny<List<int>>(),
+                        It.IsAny<List<int>>(),
+                        It.IsAny<List<int>>()))
+                    .Returns(new List<PlanPricingInventoryProgram>
+                    {
+                        new PlanPricingInventoryProgram
+                        {
+                            SpotLengthId = 1,
+                            Station = new DisplayBroadcastStation
+                            {
+                                LegacyCallLetters = "KOB"
+                            },
+                            ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
+                            {
+                                new PlanPricingInventoryProgram.ManifestWeek
+                                {
+                                    Id = 2
+                                }
+                            },
+                            ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
+                            {
+                                new PlanPricingInventoryProgram.ManifestDaypart
+                                {
+                                    Id = 5,
+                                    Daypart = new DisplayDaypart()
+                                }
+                            },
+                            ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                            {
+                                new PlanPricingInventoryProgram.ManifestRate
+                                {
+                                    SpotLengthId = 1,
+                                    Cost = 10
+                                }
+                            }
+                        }
+                    });
+
+                _PlanPricingInventoryQuarterCalculatorEngineMock
+                    .Setup(x => x.GetFallbackDateRanges(
+                        It.IsAny<DateRange>(),
+                        It.IsAny<QuarterDetailDto>(),
+                        It.IsAny<QuarterDetailDto>()))
+                    .Returns(new List<DateRange>());
+
+                _PlanPricingInventoryQuarterCalculatorEngineMock
+                    .Setup(x => x.GetPlanQuarter(It.IsAny<PlanDto>()))
+                    .Returns(new QuarterDetailDto
+                    {
+                        StartDate = new DateTime(2020, 1, 1),
+                        EndDate = new DateTime(2020, 3, 31)
+                    });
+
+                _QuarterCalculationEngineMock
+                    .Setup(x => x.GetLastNQuarters(It.IsAny<QuarterDto>(), It.IsAny<int>()))
+                    .Returns(new List<QuarterDetailDto>
+                    {
+                    new QuarterDetailDto
+                    {
+                        StartDate = new DateTime(2020, 4, 1),
+                        EndDate = new DateTime(2020, 6, 30)
+                    }
+                    });
+
+                _StationRepositoryMock
+                    .Setup(x => x.GetLatestStationMonthDetailsForStations(It.IsAny<List<int>>()))
+                    .Returns(new List<StationMonthDetailDto>());
+
+                _DaypartCacheMock
+                    .Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                    .Returns(new DisplayDaypart
+                    {
+                        Monday = true,
+                        StartTime = 36000, // 10am
+                    EndTime = 39599 // 11am
+                });
+
+                object passedParameters = null;
+                _ImpressionsCalculationEngineMock
+                    .Setup(x => x.ApplyProjectedImpressions(
+                        It.IsAny<IEnumerable<PlanPricingInventoryProgram>>(),
+                        It.IsAny<ImpressionsRequestDto>(),
+                        It.IsAny<int>(),
+                        It.IsAny<bool>()))
+                    .Callback<IEnumerable<PlanPricingInventoryProgram>, ImpressionsRequestDto, int, bool>((programs, request, audienceId, isProprietary) =>
+                    {
+                    // deep copy
+                    passedParameters = JsonConvert.DeserializeObject((JsonConvert.SerializeObject(new
+                        {
+                            programs,
+                            request,
+                            audienceId,
+                            isProprietary
+                        })));
+
+                        foreach (var program in programs)
+                        {
+                            program.ProjectedImpressions = 1500;
+                        }
+                    });
+
+                // Act
+                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, isProprietary: false);
+
+                // Assert
+                var resultJson = IntegrationTestHelper.ConvertToJson(new
+                {
+                    passedParameters,
+                    inventory
+                });
+
+                Approvals.Verify(resultJson);
+            }
+            finally
+            {
+                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "2";
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void ProjectsImpressions_WhenGatheringInventory_ForPricing_v3_Proprietary()
+        {
+            try
+            {
+                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "3";
+
+                // Arrange
+                var parameters = new ProgramInventoryOptionalParametersDto();
+                var inventorySourceIds = new List<int>();
+                var diagnostic = new PlanPricingJobDiagnostic();
+
+                var plan = _GetPlan();
+                plan.Equivalized = true;
+                plan.HUTBookId = 202;
+                plan.PostingType = PostingTypeEnum.NSI;
+                plan.ShareBookId = 201;
+                plan.CreativeLengths = new List<CreativeLength>
+                {
+                    new CreativeLength { SpotLengthId = 5, Weight = 50 },
+                    new CreativeLength { SpotLengthId = 2, Weight = 50 }
+                };
+                plan.AudienceId = 25;
+
+                _StationRepositoryMock
+                    .Setup(x => x.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
+                    .Returns(new List<DisplayBroadcastStation>());
+
+                _StationProgramRepositoryMock
+                    .Setup(x => x.GetProgramsForPricingModel(
+                        It.IsAny<DateTime>(),
+                        It.IsAny<DateTime>(),
+                        It.IsAny<List<int>>(),
+                        It.IsAny<List<int>>(),
+                        It.IsAny<List<int>>()))
+                    .Returns(new List<PlanPricingInventoryProgram>
+                    {
+                        new PlanPricingInventoryProgram
+                        {
+                            SpotLengthId = 1,
+                            Station = new DisplayBroadcastStation
+                            {
+                                LegacyCallLetters = "KOB"
+                            },
+                            ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
+                            {
+                                new PlanPricingInventoryProgram.ManifestWeek
+                                {
+                                    Id = 2
+                                }
+                            },
+                            ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
+                            {
+                                new PlanPricingInventoryProgram.ManifestDaypart
+                                {
+                                    Id = 5,
+                                    Daypart = new DisplayDaypart()
+                                }
+                            },
+                            ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                            {
+                                new PlanPricingInventoryProgram.ManifestRate
+                                {
+                                    SpotLengthId = 1,
+                                    Cost = 10
+                                }
+                            }
+                        }
+                    });
+
+                _PlanPricingInventoryQuarterCalculatorEngineMock
+                    .Setup(x => x.GetFallbackDateRanges(
+                        It.IsAny<DateRange>(),
+                        It.IsAny<QuarterDetailDto>(),
+                        It.IsAny<QuarterDetailDto>()))
+                    .Returns(new List<DateRange>());
+
+                _PlanPricingInventoryQuarterCalculatorEngineMock
+                    .Setup(x => x.GetPlanQuarter(It.IsAny<PlanDto>()))
+                    .Returns(new QuarterDetailDto
+                    {
+                        StartDate = new DateTime(2020, 1, 1),
+                        EndDate = new DateTime(2020, 3, 31)
+                    });
+
+                _QuarterCalculationEngineMock
+                    .Setup(x => x.GetLastNQuarters(It.IsAny<QuarterDto>(), It.IsAny<int>()))
+                    .Returns(new List<QuarterDetailDto>
+                    {
+                    new QuarterDetailDto
+                    {
+                        StartDate = new DateTime(2020, 4, 1),
+                        EndDate = new DateTime(2020, 6, 30)
+                    }
+                    });
+
+                _StationRepositoryMock
+                    .Setup(x => x.GetLatestStationMonthDetailsForStations(It.IsAny<List<int>>()))
+                    .Returns(new List<StationMonthDetailDto>());
+
+                _DaypartCacheMock
+                    .Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                    .Returns(new DisplayDaypart
+                    {
+                        Monday = true,
+                        StartTime = 36000, // 10am
+                        EndTime = 39599 // 11am
+                    });
+
+                object passedParameters = null;
+                _ImpressionsCalculationEngineMock
+                    .Setup(x => x.ApplyProjectedImpressions(
+                        It.IsAny<IEnumerable<PlanPricingInventoryProgram>>(),
+                        It.IsAny<ImpressionsRequestDto>(),
+                        It.IsAny<int>(),
+                        It.IsAny<bool>()))
+                    .Callback<IEnumerable<PlanPricingInventoryProgram>, ImpressionsRequestDto, int, bool>((programs, request, audienceId, isProprietary) =>
+                    {
+                        // deep copy
+                        passedParameters = JsonConvert.DeserializeObject((JsonConvert.SerializeObject(new
+                        {
+                            programs,
+                            request,
+                            audienceId,
+                            isProprietary
+                        })));
+
+                        foreach (var program in programs)
+                        {
+                            program.ProjectedImpressions = 1500;
+                        }
+                    });
+
+                // Act
+                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, isProprietary: true);
+
+                // Assert
+                var resultJson = IntegrationTestHelper.ConvertToJson(new
+                {
+                    passedParameters,
+                    inventory
+                });
+
+                Approvals.Verify(resultJson);
+            }
+            finally
+            {
+                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "2";
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AppliesProvidedImpressions_WhenGatheringInventory_ForPricing_v3()
+        {
+            try
+            {
+                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "3";
+
+                // Arrange
+                var parameters = new ProgramInventoryOptionalParametersDto();
+                var inventorySourceIds = new List<int>();
+                var diagnostic = new PlanPricingJobDiagnostic();
+
+                var plan = _GetPlan();
+                plan.Equivalized = true;
+                plan.HUTBookId = 202;
+                plan.PostingType = PostingTypeEnum.NSI;
+                plan.ShareBookId = 201;
+                plan.CreativeLengths = new List<CreativeLength>
+                {
+                    new CreativeLength { SpotLengthId = 5, Weight = 50 },
+                    new CreativeLength { SpotLengthId = 2, Weight = 50 }
+                };
+                plan.AudienceId = 25;
+
+                _StationRepositoryMock
+                    .Setup(x => x.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
+                    .Returns(new List<DisplayBroadcastStation>());
+
+                _StationProgramRepositoryMock
+                    .Setup(x => x.GetProgramsForPricingModel(
+                        It.IsAny<DateTime>(),
+                        It.IsAny<DateTime>(),
+                        It.IsAny<List<int>>(),
+                        It.IsAny<List<int>>(),
+                        It.IsAny<List<int>>()))
+                    .Returns(new List<PlanPricingInventoryProgram>
+                    {
+                        new PlanPricingInventoryProgram
+                        {
+                            SpotLengthId = 1,
+                            Station = new DisplayBroadcastStation
+                            {
+                                LegacyCallLetters = "KOB"
+                            },
+                            ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
+                            {
+                                new PlanPricingInventoryProgram.ManifestWeek
+                                {
+                                    Id = 2
+                                }
+                            },
+                            ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
+                            {
+                                new PlanPricingInventoryProgram.ManifestDaypart
+                                {
+                                    Id = 5,
+                                    Daypart = new DisplayDaypart()
+                                }
+                            },
+                            ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                            {
+                                new PlanPricingInventoryProgram.ManifestRate
+                                {
+                                    SpotLengthId = 1,
+                                    Cost = 10
+                                }
+                            }
+                        }
+                    });
+
+                _PlanPricingInventoryQuarterCalculatorEngineMock
+                    .Setup(x => x.GetFallbackDateRanges(
+                        It.IsAny<DateRange>(),
+                        It.IsAny<QuarterDetailDto>(),
+                        It.IsAny<QuarterDetailDto>()))
+                    .Returns(new List<DateRange>());
+
+                _PlanPricingInventoryQuarterCalculatorEngineMock
+                    .Setup(x => x.GetPlanQuarter(It.IsAny<PlanDto>()))
+                    .Returns(new QuarterDetailDto
+                    {
+                        StartDate = new DateTime(2020, 1, 1),
+                        EndDate = new DateTime(2020, 3, 31)
+                    });
+
+                _QuarterCalculationEngineMock
+                    .Setup(x => x.GetLastNQuarters(It.IsAny<QuarterDto>(), It.IsAny<int>()))
+                    .Returns(new List<QuarterDetailDto>
+                    {
+                    new QuarterDetailDto
+                    {
+                        StartDate = new DateTime(2020, 4, 1),
+                        EndDate = new DateTime(2020, 6, 30)
+                    }
+                    });
+
+                _StationRepositoryMock
+                    .Setup(x => x.GetLatestStationMonthDetailsForStations(It.IsAny<List<int>>()))
+                    .Returns(new List<StationMonthDetailDto>());
+
+                _DaypartCacheMock
+                    .Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                    .Returns(new DisplayDaypart
+                    {
+                        Monday = true,
+                        StartTime = 36000, // 10am
+                        EndTime = 39599 // 11am
+                    });
+
+                object passedParameters = null;
+                _ImpressionsCalculationEngineMock
+                    .Setup(x => x.ApplyProvidedImpressions(
+                        It.IsAny<List<PlanPricingInventoryProgram>>(),
+                        It.IsAny<int>(),
+                        It.IsAny<int>(),
+                        It.IsAny<bool>()))
+                    .Callback<List<PlanPricingInventoryProgram>, int, int, bool>((programs, audienceId, spotLengthId, equivalized) =>
+                    {
+                        // deep copy
+                        passedParameters = JsonConvert.DeserializeObject((JsonConvert.SerializeObject(new
+                        {
+                            programs,
+                            audienceId,
+                            spotLengthId,
+                            equivalized
+                        })));
+
+                        foreach (var program in programs)
+                        {
+                            program.ProvidedImpressions = 1500;
+                        }
+                    });
+
+                // Act
+                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, isProprietary: false);
+
+                // Assert
+                var resultJson = IntegrationTestHelper.ConvertToJson(new
+                {
+                    passedParameters,
+                    inventory
+                });
+
+                Approvals.Verify(resultJson);
+            }
+            finally
+            {
+                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "2";
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void AppliesProvidedImpressions_WhenGatheringInventory_ForPricing_v3_Proprietary()
+        {
+            try
+            {
+                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "3";
+
+                // Arrange
+                var parameters = new ProgramInventoryOptionalParametersDto();
+                var inventorySourceIds = new List<int>();
+                var diagnostic = new PlanPricingJobDiagnostic();
+
+                var plan = _GetPlan();
+                plan.Equivalized = true;
+                plan.HUTBookId = 202;
+                plan.PostingType = PostingTypeEnum.NSI;
+                plan.ShareBookId = 201;
+                plan.CreativeLengths = new List<CreativeLength>
+                {
+                    new CreativeLength { SpotLengthId = 5, Weight = 50 },
+                    new CreativeLength { SpotLengthId = 2, Weight = 50 }
+                };
+                plan.AudienceId = 25;
+
+                _StationRepositoryMock
+                    .Setup(x => x.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
+                    .Returns(new List<DisplayBroadcastStation>());
+
+                _StationProgramRepositoryMock
+                    .Setup(x => x.GetProgramsForPricingModel(
+                        It.IsAny<DateTime>(),
+                        It.IsAny<DateTime>(),
+                        It.IsAny<List<int>>(),
+                        It.IsAny<List<int>>(),
+                        It.IsAny<List<int>>()))
+                    .Returns(new List<PlanPricingInventoryProgram>
+                    {
+                        new PlanPricingInventoryProgram
+                        {
+                            SpotLengthId = 1,
+                            Station = new DisplayBroadcastStation
+                            {
+                                LegacyCallLetters = "KOB"
+                            },
+                            ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>
+                            {
+                                new PlanPricingInventoryProgram.ManifestWeek
+                                {
+                                    Id = 2
+                                }
+                            },
+                            ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
+                            {
+                                new PlanPricingInventoryProgram.ManifestDaypart
+                                {
+                                    Id = 5,
+                                    Daypart = new DisplayDaypart()
+                                }
+                            },
+                            ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                            {
+                                new PlanPricingInventoryProgram.ManifestRate
+                                {
+                                    SpotLengthId = 1,
+                                    Cost = 10
+                                }
+                            }
+                        }
+                    });
+
+                _PlanPricingInventoryQuarterCalculatorEngineMock
+                    .Setup(x => x.GetFallbackDateRanges(
+                        It.IsAny<DateRange>(),
+                        It.IsAny<QuarterDetailDto>(),
+                        It.IsAny<QuarterDetailDto>()))
+                    .Returns(new List<DateRange>());
+
+                _PlanPricingInventoryQuarterCalculatorEngineMock
+                    .Setup(x => x.GetPlanQuarter(It.IsAny<PlanDto>()))
+                    .Returns(new QuarterDetailDto
+                    {
+                        StartDate = new DateTime(2020, 1, 1),
+                        EndDate = new DateTime(2020, 3, 31)
+                    });
+
+                _QuarterCalculationEngineMock
+                    .Setup(x => x.GetLastNQuarters(It.IsAny<QuarterDto>(), It.IsAny<int>()))
+                    .Returns(new List<QuarterDetailDto>
+                    {
+                    new QuarterDetailDto
+                    {
+                        StartDate = new DateTime(2020, 4, 1),
+                        EndDate = new DateTime(2020, 6, 30)
+                    }
+                    });
+
+                _StationRepositoryMock
+                    .Setup(x => x.GetLatestStationMonthDetailsForStations(It.IsAny<List<int>>()))
+                    .Returns(new List<StationMonthDetailDto>());
+
+                _DaypartCacheMock
+                    .Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                    .Returns(new DisplayDaypart
+                    {
+                        Monday = true,
+                        StartTime = 36000, // 10am
+                        EndTime = 39599 // 11am
+                    });
+
+                object passedParameters = null;
+                _ImpressionsCalculationEngineMock
+                    .Setup(x => x.ApplyProvidedImpressions(
+                        It.IsAny<List<PlanPricingInventoryProgram>>(),
+                        It.IsAny<int>(),
+                        It.IsAny<int>(),
+                        It.IsAny<bool>()))
+                    .Callback<List<PlanPricingInventoryProgram>, int, int, bool>((programs, audienceId, spotLengthId, equivalized) =>
+                    {
+                        // deep copy
+                        passedParameters = JsonConvert.DeserializeObject((JsonConvert.SerializeObject(new
+                        {
+                            programs,
+                            audienceId,
+                            spotLengthId,
+                            equivalized
+                        })));
+
+                        foreach (var program in programs)
+                        {
+                            program.ProvidedImpressions = 1500;
+                        }
+                    });
+
+                // Act
+                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, isProprietary: true);
+
+                // Assert
+                var resultJson = IntegrationTestHelper.ConvertToJson(new
+                {
+                    passedParameters,
+                    inventory
+                });
+
+                Approvals.Verify(resultJson);
+            }
+            finally
+            {
+                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "2";
+            }
         }
     }
 }

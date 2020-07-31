@@ -14,6 +14,8 @@ namespace Services.Broadcast.Clients
     public interface IPricingRequestLogClient
     {
         void SavePricingRequest(int planId, PlanPricingApiRequestDto planPricingApiRequestDto);
+
+        void SavePricingRequest(int planId, PlanPricingApiRequestDto_v3 planPricingApiRequestDto);
     }
 
     public class PricingRequestLogClientAmazonS3 : IPricingRequestLogClient
@@ -32,6 +34,37 @@ namespace Services.Broadcast.Clients
         }
 
         public async void SavePricingRequest(int planId, PlanPricingApiRequestDto planPricingApiRequestDto)
+        {
+            _ValidateParameters();
+
+            var fileName = _GetFileName(planId);
+            var keyName = _GetKeyName(fileName);
+
+            using (var client = new AmazonS3Client(_AccessKeyId, _SecretAccessKey, _BucketRegion))
+            {
+                using (var pricingApiRequestMemoryStream = Helpers.StreamHelper.CreateStreamFromString(SerializationHelper.ConvertToJson(planPricingApiRequestDto)))
+                {
+                    using (var fileMemoryStream = new MemoryStream())
+                    {
+                        using (var archive = new ZipArchive(fileMemoryStream, ZipArchiveMode.Create, true))
+                        {
+                            var fileInArchive = archive.CreateEntry(fileName, CompressionLevel.Optimal);
+
+                            using (var fileInArchiveStream = fileInArchive.Open())
+                            {
+                                pricingApiRequestMemoryStream.CopyTo(fileInArchiveStream);
+                            }
+                        }
+
+                        var transferUtility = new TransferUtility(client);
+
+                        await transferUtility.UploadAsync(fileMemoryStream, _BucketName, keyName);
+                    }
+                }
+            }
+        }
+
+        public async void SavePricingRequest(int planId, PlanPricingApiRequestDto_v3 planPricingApiRequestDto)
         {
             _ValidateParameters();
 

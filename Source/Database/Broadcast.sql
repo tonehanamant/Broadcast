@@ -50,6 +50,98 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START - BP-90 ****************************************************/
+BEGIN TRAN
+BEGIN TRY
+
+IF OBJECT_ID('plan_version_pricing_api_result_spot_frequencies') IS NULL
+BEGIN 
+	CREATE TABLE [plan_version_pricing_api_result_spot_frequencies]
+	(
+		[id] INT IDENTITY(1,1) NOT NULL,
+		[plan_version_pricing_api_result_spot_id] INT NOT NULL,
+		[spot_length_id] INT NOT NULL,
+		[cost] MONEY NOT NULL,
+		[spots] INT NOT NULL
+
+		CONSTRAINT [PK_plan_version_pricing_api_result_spot_frequencies] PRIMARY KEY CLUSTERED 
+		(
+			[id] ASC
+		)
+	)
+
+	ALTER TABLE [dbo].[plan_version_pricing_api_result_spot_frequencies]
+	WITH CHECK ADD CONSTRAINT [FK_plan_version_pricing_api_result_spot_frequencies_plan_version_pricing_api_result_spots] 
+	FOREIGN KEY([plan_version_pricing_api_result_spot_id])
+	REFERENCES [dbo].[plan_version_pricing_api_result_spots] ([id])
+
+	ALTER TABLE [dbo].[plan_version_pricing_api_result_spot_frequencies] 
+	CHECK CONSTRAINT [FK_plan_version_pricing_api_result_spot_frequencies_plan_version_pricing_api_result_spots]
+
+
+	ALTER TABLE [dbo].[plan_version_pricing_api_result_spot_frequencies]
+	WITH CHECK ADD CONSTRAINT [FK_plan_version_pricing_api_result_spot_frequencies_spot_lengths]
+	FOREIGN KEY([spot_length_id])
+	REFERENCES [dbo].[spot_lengths] ([id])
+
+	ALTER TABLE [dbo].[plan_version_pricing_api_result_spot_frequencies]
+	CHECK CONSTRAINT [FK_plan_version_pricing_api_result_spot_frequencies_spot_lengths]
+
+	EXEC('
+		INSERT INTO plan_version_pricing_api_result_spot_frequencies(
+			plan_version_pricing_api_result_spot_id, 
+			spot_length_id, 
+			cost, 
+			spots)
+		select s.id as plan_version_pricing_api_result_spot_id, 
+			   pvcl.spot_length_id,
+			   s.cost,
+			   s.spots
+		from plan_version_pricing_api_result_spots as s
+		join plan_version_creative_lengths as pvcl
+		on pvcl.id = (select top 1 cl.id
+					  from plan_version_pricing_api_result_spots as rs
+					  join plan_version_pricing_api_results as r on rs.plan_version_pricing_api_results_id = r.id
+					  join plan_version_pricing_job as j on j.id = r.plan_version_pricing_job_id
+					  join plan_versions as v on j.plan_version_id = v.id
+					  join plan_version_creative_lengths as cl on cl.plan_version_id = v.id
+					  where rs.id = s.id)
+	')
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_api_result_spots') AND name = 'cost')
+BEGIN
+	EXEC('ALTER TABLE plan_version_pricing_api_result_spots DROP COLUMN cost')
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_api_result_spots') AND name = 'spots')
+BEGIN
+	EXEC('ALTER TABLE plan_version_pricing_api_result_spots DROP COLUMN spots')
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_api_result_spots') AND name = 'impressions')
+BEGIN
+	EXEC sp_rename 'dbo.plan_version_pricing_api_result_spots.impressions', 'impressions30sec', 'COLUMN';  
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_api_results') AND name = 'pricing_version')
+BEGIN
+	ALTER TABLE plan_version_pricing_api_results ADD pricing_version varchar(10) NULL
+	EXEC('update plan_version_pricing_api_results set pricing_version = ''2''')
+	ALTER TABLE plan_version_pricing_api_results ALTER COLUMN pricing_version varchar(10) NOT NULL
+END
+
+COMMIT TRAN
+END TRY
+BEGIN CATCH
+	IF (@@TRANCOUNT > 0)
+	BEGIN
+	  ROLLBACK TRAN;
+	END;
+	THROW
+END CATCH
+
+/*************************************** END - BP-90 ****************************************************/
 
 /*************************************** START BP-836 *****************************************************/
 -- DROP Foreign Keys 

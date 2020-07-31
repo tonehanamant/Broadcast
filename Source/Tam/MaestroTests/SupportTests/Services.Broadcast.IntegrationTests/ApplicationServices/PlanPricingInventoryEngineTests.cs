@@ -3,9 +3,11 @@ using ApprovalTests.Reporters;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.IntegrationTests.Helpers;
+using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,13 +43,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var diagnostic = new PlanPricingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1196);
-                //for backwards compatibility
-                plan.SpotLengthId = 2;
+                plan.CreativeLengths.First().SpotLengthId = 2;
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan, 
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic);
+                    diagnostic,
+                    isProprietary: false);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -58,41 +60,53 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("long_running")]
         public void GetsInventoryForPricing()
         {
-            using (new TransactionScopeWrapper())
+            try
             {
-                var diagnostic = new PlanPricingJobDiagnostic();
+                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "3";
 
-                _InventoryFileTestHelper.UploadProprietaryInventoryFile(
-                    "PricingModel_Barter.xlsx", 
-                    processInventoryRatings: true, 
-                    processInventoryProgramsJob: false);
-
-                _InventoryFileTestHelper.UploadProprietaryInventoryFile(
-                    "PricingModel_OAndO.xlsx", 
-                    processInventoryRatings: true, 
-                    processInventoryProgramsJob: false);
-
-                var plan = _PlanRepository.GetPlan(1198);
-                //for backwards compatibility
-                plan.SpotLengthId = 2;
-                var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
-                    plan, 
-                    new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
-                    _GetAvailableInventorySources(),
-                    diagnostic);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(PlanPricingInventoryProgram), "ManifestId");
-                jsonResolver.Ignore(typeof(ManifestDaypart), "Id");
-                jsonResolver.Ignore(typeof(ManifestWeek), "Id");
-                var jsonSettings = new JsonSerializerSettings()
+                using (new TransactionScopeWrapper())
                 {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-                var json = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+                    var diagnostic = new PlanPricingJobDiagnostic();
+                    var plan = _PlanRepository.GetPlan(1198);
 
-                Approvals.Verify(json);
+                    plan.CreativeLengths = new List<CreativeLength>
+                    {
+                        new CreativeLength
+                        {
+                            SpotLengthId = 1,
+                            Weight = 50
+                        },
+                        new CreativeLength
+                        {
+                            SpotLengthId = 2,
+                            Weight = 50
+                        }
+                    };
+
+                    var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
+                        plan,
+                        new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                        _GetAvailableInventorySources(),
+                        diagnostic,
+                        isProprietary: false);
+
+                    var jsonResolver = new IgnorableSerializerContractResolver();
+                    jsonResolver.Ignore(typeof(PlanPricingInventoryProgram), "ManifestId");
+                    jsonResolver.Ignore(typeof(ManifestDaypart), "Id");
+                    jsonResolver.Ignore(typeof(ManifestWeek), "Id");
+                    var jsonSettings = new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                        ContractResolver = jsonResolver
+                    };
+                    var json = IntegrationTestHelper.ConvertToJson(result, jsonSettings);
+
+                    Approvals.Verify(json);
+                }
+            }
+            finally
+            {
+                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "2";
             }
         }
 
@@ -105,13 +119,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var diagnostic = new PlanPricingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1199);
-                //for backwards compatibility
-                plan.SpotLengthId = 2;
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan, 
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic);
+                    diagnostic,
+                    isProprietary: false);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -129,13 +142,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var enhancements = new List<string>() { "SER", "Entertainment", "84900", "2100", "2020-01-04", "2020-01-05" };
                 _InventoryFileTestHelper.EnhanceProgramsForFileId(fileId, enhancements);
                 var plan = _PlanRepository.GetPlan(1197);
-                //for backwards compatibility
-                plan.SpotLengthId = plan.CreativeLengths.First().SpotLengthId;
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan,
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic);
+                    diagnostic,
+                    isProprietary: false);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingInventoryProgram), "ManifestId");
@@ -164,13 +176,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var diagnostic = new PlanPricingJobDiagnostic();
                 _InventoryFileTestHelper.UploadOpenMarketInventoryFile("Open Market Pricing Programs.xml", null, false);
                 var plan = _PlanRepository.GetPlan(1197);
-                //for backwards compatibility
-                plan.SpotLengthId = plan.CreativeLengths.First().SpotLengthId;
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan,
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic);
+                    diagnostic,
+                    isProprietary: false);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -185,13 +196,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var diagnostic = new PlanPricingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1197);
-                //for backwards compatibility
-                plan.SpotLengthId = 2;
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan, 
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic);
+                    diagnostic,
+                    isProprietary: false);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -206,8 +216,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var diagnostic = new PlanPricingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1197);
-                //for backwards compatibility
-                plan.SpotLengthId = 2;
                 plan.Dayparts[0].Restrictions.AffiliateRestrictions = new RestrictionsDto.AffiliateRestrictionsDto
                 {
                     Affiliates = new List<LookupDto>()
@@ -220,7 +228,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     plan,
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic);
+                    diagnostic,
+                    isProprietary: false);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -235,8 +244,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var diagnostic = new PlanPricingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1197);
-                //for backwards compatibility
-                plan.SpotLengthId = 2;
                 _StationRepository.SaveStationMonthDetails(new Entities.StationMonthDetailDto
                 {
                     Affiliation = "CW2",
@@ -258,7 +265,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     plan,
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic);
+                    diagnostic,
+                    isProprietary: false);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -276,14 +284,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 plan.FlightDays.Clear();
                 plan.FlightDays.Add(1);
                 plan.FlightDays.Add(5);
-                //for backwards compatibility
-                plan.SpotLengthId = plan.CreativeLengths.First().SpotLengthId;
                 _PlanRepository.SavePlan(plan, "IntegrationTestUser", new System.DateTime(2020, 2, 27));
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan,
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic);
+                    diagnostic,
+                    isProprietary: false);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -298,13 +305,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var diagnostic = new PlanPricingJobDiagnostic();
                 var plan = _PlanRepository.GetPlan(1200);
-                //for backwards compatibility
-                plan.SpotLengthId = 1;
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan, 
                     new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic);
+                    diagnostic,
+                    isProprietary: false);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }

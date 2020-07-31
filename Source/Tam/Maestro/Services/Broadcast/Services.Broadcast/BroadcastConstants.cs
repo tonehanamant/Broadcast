@@ -26,6 +26,8 @@
 
         public const int DefaultDatabaseQueryChunkSize = 1000;
 
+        public const int SpotLengthId30 = 1;
+
         public class FolderNames
         {
             public const string SCX_EXPORT_DIRECTORY = "ScxFiles";

@@ -6,11 +6,11 @@
         "daypart_weighting": [
           {
             "daypart_goal": 0.6,
-            "daypart_id": 15
+            "daypart_id": 1
           },
           {
             "daypart_goal": 0.4,
-            "daypart_id": 16
+            "daypart_id": 2
           }
         ],
         "frequency_cap_spots": 10,
@@ -51,11 +51,11 @@
         "daypart_weighting": [
           {
             "daypart_goal": 0.6,
-            "daypart_id": 15
+            "daypart_id": 1
           },
           {
             "daypart_goal": 0.4,
-            "daypart_id": 16
+            "daypart_id": 2
           }
         ],
         "frequency_cap_spots": 10,

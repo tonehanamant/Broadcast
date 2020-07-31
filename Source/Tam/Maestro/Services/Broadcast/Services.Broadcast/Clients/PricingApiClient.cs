@@ -1,7 +1,6 @@
 ﻿using Services.Broadcast.Entities.Plan.Pricing;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -10,21 +9,31 @@ namespace Services.Broadcast.Clients
     public interface IPricingApiClient
     {
         PlanPricingApiSpotsResponseDto GetPricingSpotsResult(PlanPricingApiRequestDto request);
+
+        PlanPricingApiSpotsResponseDto_v3 GetPricingSpotsResult(PlanPricingApiRequestDto_v3 request);
     }
 
     public class PricingApiClient : IPricingApiClient
     {
         private readonly string _OpenMarketSpotsAllocationUrl;
+        private readonly string _OpenMarketSpotsAllocationUrl_v3;
 
         public PricingApiClient()
         {
             _OpenMarketSpotsAllocationUrl = BroadcastServiceSystemParameter.PlanPricingAllocationsUrl;
+            _OpenMarketSpotsAllocationUrl_v3 = BroadcastServiceSystemParameter.PlanPricingAllocationsUrlV3;
         }          
 
         public PlanPricingApiSpotsResponseDto GetPricingSpotsResult(PlanPricingApiRequestDto request)
         {
             var url = $"{_OpenMarketSpotsAllocationUrl}";
             return _Post<PlanPricingApiSpotsResponseDto>(url, request);
+        }
+
+        public PlanPricingApiSpotsResponseDto_v3 GetPricingSpotsResult(PlanPricingApiRequestDto_v3 request)
+        {
+            var url = $"{_OpenMarketSpotsAllocationUrl_v3}";
+            return _Post<PlanPricingApiSpotsResponseDto_v3>(url, request);
         }
 
         protected virtual T _Post<T>(string url, object data)
@@ -85,6 +94,11 @@ namespace Services.Broadcast.Clients
                 RequestId = "djj4j4399fmmf1m212",
                 Results = results
             };
+        }
+
+        public PlanPricingApiSpotsResponseDto_v3 GetPricingSpotsResult(PlanPricingApiRequestDto_v3 request)
+        {
+            throw new NotImplementedException();
         }
     }
 }

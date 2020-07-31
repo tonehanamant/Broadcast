@@ -6,6 +6,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
@@ -38,7 +39,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 PlanVersionId = 12,
                 JobId = 13,
                 Spots = Enumerable.Range(1, 20)
-                    .Select(s => new PlanPricingAllocatedSpot { Id = s, Spots = 1, SpotCost = 10, SpotCostWithMargin = 10, Impressions = 100 })
+                    .Select(s => new PlanPricingAllocatedSpot 
+                    { 
+                        Id = s,
+                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        {
+                            new PlanPricingAllocatedSpot.SpotFrequency
+                            {
+                                SpotCost = 10,
+                                SpotCostWithMargin = 10,
+                                Spots = 1
+                            }
+                        },
+                        Impressions30sec = 100,
+                        TotalImpressions = 100
+                    })
                     .ToList()
             };
 
@@ -85,7 +100,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 PlanVersionId = 12,
                 JobId = 13,
                 Spots = Enumerable.Range(1, 20)
-                    .Select(s => new PlanPricingAllocatedSpot { Id = s, Spots = 1, SpotCost = 10, SpotCostWithMargin = 11, Impressions = 100 })
+                    .Select(s => new PlanPricingAllocatedSpot 
+                    {
+                        Id = s,
+                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        {
+                            new PlanPricingAllocatedSpot.SpotFrequency
+                            {
+                                SpotCost = 10,
+                                SpotCostWithMargin = 11,
+                                Spots = 1
+                            }
+                        },
+                        Impressions30sec = 100,
+                        TotalImpressions = 100
+                    })
                     .ToList()
             };
 
@@ -136,7 +165,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             {
                 PlanVersionId = 12,
                 Spots = Enumerable.Range(1, 20)
-                    .Select(s => new PlanPricingAllocatedSpot { Id = s, Spots = 1, SpotCost = 10, SpotCostWithMargin = 10, Impressions = 100 })
+                    .Select(s => new PlanPricingAllocatedSpot 
+                    { 
+                        Id = s,
+                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        {
+                            new PlanPricingAllocatedSpot.SpotFrequency
+                            {
+                                SpotCost = 10,
+                                SpotCostWithMargin = 10,
+                                Spots = 1
+                            }
+                        },
+                        Impressions30sec = 100,
+                        TotalImpressions = 100
+                    })
                     .ToList()
             };
 
@@ -183,7 +226,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 PlanVersionId = 12,
                 JobId = 13,
                 Spots = Enumerable.Range(1, 20)
-                    .Select(s => new PlanPricingAllocatedSpot { Id = s, Spots = 1, SpotCost = 10, SpotCostWithMargin = 10, Impressions = 100 })
+                    .Select(s => new PlanPricingAllocatedSpot 
+                    { 
+                        Id = s,
+                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        {
+                            new PlanPricingAllocatedSpot.SpotFrequency
+                            {
+                                SpotCost = 10,
+                                SpotCostWithMargin = 10,
+                                Spots = 1
+                            }
+                        },
+                        Impressions30sec = 100,
+                        TotalImpressions = 100
+                    })
                     .ToList()
             };
 

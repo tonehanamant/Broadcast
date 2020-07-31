@@ -4,6 +4,7 @@ using NUnit.Framework;
 using Services.Broadcast.Cache;
 using Services.Broadcast.IntegrationTests.Stubs;
 using System;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests
 {
@@ -11,6 +12,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
     [Category("short_running")]
     public class TrafficApiCacheTests
     {
+        [SetUp]
+        public void SetUp()
+        {
+            var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
+            SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
+        }
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetAgencies()

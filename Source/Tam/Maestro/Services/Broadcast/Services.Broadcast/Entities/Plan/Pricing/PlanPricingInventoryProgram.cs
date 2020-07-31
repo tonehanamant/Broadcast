@@ -10,8 +10,6 @@ namespace Services.Broadcast.Entities.Plan.Pricing
     {
         public int ManifestId { get; set; }
 
-        public decimal SpotCost { get; set; }
-
         public double ProjectedImpressions { get; set; }
 
         public double? ProvidedImpressions { get; set; }
@@ -37,11 +35,15 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 
         public int StandardDaypartId { get; set; }
 
+        public int SpotLengthId { get; set; }
+
         public List<ManifestDaypart> ManifestDayparts { get; set; }
 
         public List<ManifestAudience> ManifestAudiences { get; set; }
 
         public List<ManifestWeek> ManifestWeeks { get; set; }
+
+        public List<ManifestRate> ManifestRates { get; set; }
 
         public class ManifestWeek
         {
@@ -97,6 +99,13 @@ namespace Services.Broadcast.Entities.Plan.Pricing
             public double? Impressions { get; set; }
 
             public bool IsReference { get; set; }
+        }
+
+        public class ManifestRate
+        {
+            public int SpotLengthId { get; set; }
+
+            public decimal Cost { get; set; }
         }
     }
 }

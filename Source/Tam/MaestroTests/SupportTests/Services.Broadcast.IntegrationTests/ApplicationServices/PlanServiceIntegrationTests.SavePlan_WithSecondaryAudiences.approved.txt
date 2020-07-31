@@ -391,7 +391,6 @@
     }
   ],
   "ShareBookId": 437,
-  "SpotLengthId": 1,
   "Status": 1,
   "TargetCPM": 12.0000,
   "TargetCPP": 12.0000,

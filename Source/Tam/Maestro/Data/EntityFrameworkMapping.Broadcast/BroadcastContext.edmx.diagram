@@ -452,6 +452,9 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_market_details_pricing_market" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_result_spots_plan_version_pricing_results" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_stations_plan_version_pricing_station_details" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_api_result_spot_frequencies" Width="1.5" PointX="31.625" PointY="47.625" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_result_spot_frequencies_plan_version_pricing_api_result_spots" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_api_result_spot_frequencies_spot_lengths" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -14,6 +14,7 @@ using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Helpers;
+using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
@@ -104,6 +105,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IMarketCoverageRepository>())
                 .Returns(_MarketCoverageRepositoryMock.Object);
+
+            var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
+            SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
         }
 
         [Test]
@@ -2342,8 +2346,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 10001,
                         Code = "EMN"
                     },
-                    Spots = 1,
-                    Impressions = 10
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            Spots = 1
+                        }
+                    },
+                    Impressions30sec = 10
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -2353,8 +2363,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 10002,
                         Code = "EM"
                     },
-                    Spots = 1,
-                    Impressions = 10
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            Spots = 1
+                        }
+                    },
+                    Impressions30sec = 10
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -2364,8 +2380,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 20001,
                         Code = "LN"
                     },
-                    Spots = 1,
-                    Impressions = 20
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            Spots = 1
+                        }
+                    },
+                    Impressions30sec = 20
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -2375,8 +2397,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 20002,
                         Code = "EM"
                     },
-                    Spots = 1,
-                    Impressions = 20
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            Spots = 1
+                        }
+                    },
+                    Impressions30sec = 20
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -2386,8 +2414,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 30001,
                         Code = "EM"
                     },
-                    Spots = 1,
-                    Impressions = 10
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            Spots = 1
+                        }
+                    },
+                    Impressions30sec = 10
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -2397,8 +2431,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 30002,
                         Code = "EM"
                     },
-                    Spots = 1,
-                    Impressions = 10
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            Spots = 1
+                        }
+                    },
+                    Impressions30sec = 10
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -2408,8 +2448,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 40001,
                         Code = "EM"
                     },
-                    Spots = 1,
-                    Impressions = 10
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            Spots = 1
+                        }
+                    },
+                    Impressions30sec = 10
                 },new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 40,
@@ -2418,8 +2464,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 40002,
                         Code = "EM"
                     },
-                    Spots = 1,
-                    Impressions = 10
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            Spots = 1
+                        }
+                    },
+                    Impressions30sec = 10
                 }
             };
         }
@@ -2436,8 +2488,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 10001,
                         Code = "EMN"
                     },
-                    Spots = 1,
-                    Impressions = 10
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            Spots = 1
+                        }
+                    },
+                    Impressions30sec = 10
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -2447,8 +2505,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 20001,
                         Code = "LN"
                     },
-                    Spots = 1,
-                    Impressions = 20
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            Spots = 1
+                        }
+                    },
+                    Impressions30sec = 20
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -2458,8 +2522,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 30002,
                         Code = "EM"
                     },
-                    Spots = 2,
-                    Impressions = 10
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            Spots = 2
+                        }
+                    },
+                    Impressions30sec = 10
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -2469,8 +2539,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 40001,
                         Code = "EM"
                     },
-                    Spots = 1,
-                    Impressions = 10
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            Spots = 1
+                        }
+                    },
+                    Impressions30sec = 10
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -2480,8 +2556,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 50001,
                         Code = "LN"
                     },
-                    Spots = 5,
-                    Impressions = 10
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            Spots = 5
+                        }
+                    },
+                    Impressions30sec = 10
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -2491,8 +2573,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 60001,
                         Code = "LN"
                     },
-                    Spots = 5,
-                    Impressions = 10
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            Spots = 5
+                        }
+                    },
+                    Impressions30sec = 10
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -2502,8 +2590,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 60001,
                         Code = "LN"
                     },
-                    Spots = 5,
-                    Impressions = 10
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            Spots = 5
+                        }
+                    },
+                    Impressions30sec = 10
                 }
             };
         }

@@ -36,7 +36,9 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public static string SW_KEY_PREPARING_API_REQUEST = "Preparing API request";
         public static string SW_KEY_SAVING_PRICING_PARAMETERS = "Saving pricing parameters";
         public static string SW_KEY_CALLING_API = "Calling API";
-        public static string SW_KEY_VALIDATING_AND_MAPPING_API_RESPONSE = "Validating and mapping API response";
+        public static string SW_KEY_MAPPING_ALLOCATED_SPOTS = "Mapping allocated spots";
+        public static string SW_KEY_CALCULATING_PRICING_CPM = "Calculating pricing CPM";
+        public static string SW_KEY_VALIDATING_ALLOCATION_RESULT = "Validating and mapping API response";
         public static string SW_KEY_AGGREGATING_ALLOCATION_RESULTS = "Aggregating allocation results";
         public static string SW_KEY_CALCULATING_PRICING_BANDS = "Calculating pricing bands";
         public static string SW_KEY_CALCULATING_PRICING_STATIONS = "Calculating pricing stations";

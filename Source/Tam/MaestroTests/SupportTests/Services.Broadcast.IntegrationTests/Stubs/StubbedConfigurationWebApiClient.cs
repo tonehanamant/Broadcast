@@ -349,6 +349,9 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 case "LaunchDarklySdkKey":
                     result = "SecretKeyForLaunchDarklySdkKey";
                     break;
+                case "PlanPricingEndpointVersion":
+                    result = "2";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }

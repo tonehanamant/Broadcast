@@ -84,6 +84,22 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPricingApiRequestPrograms(planId, requestParameters));
         }
 
+        /// <summary>
+        /// Allows checking that correct inventory is used for pricing
+        /// </summary>
+        /// <param name="planId">Plan ID</param>
+        /// <param name="requestParameters">
+        /// InventorySourceIds
+        /// - pass InventorySourceIds only when you want to check what proprietary inventory could be potentially chosen
+        /// - DO NOT pass InventorySourceIds if you want to check what is sent to the pricing model
+        /// </param>
+        [HttpPost]
+        [Route("PricingApiRequestPrograms3")]
+        public BaseResponse<PlanPricingApiRequestDto_v3> GetPricingProgramApiRequest_v3(int planId, PricingInventoryGetRequestParametersDto requestParameters)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPricingApiRequestPrograms_v3(planId, requestParameters));
+        }
+
         [HttpPost]
         [Route("Inventory")]
         public BaseResponse<List<PlanPricingInventoryProgram>> GetPricingInventory(int planId, PricingInventoryGetRequestParametersDto requestParameters)

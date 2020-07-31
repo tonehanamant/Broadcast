@@ -1,0 +1,166 @@
+[
+  {
+    "JobId": 1,
+    "PlanVersionId": 0,
+    "PricingCpm": 74.341351660939289805269186700,
+    "PricingVersion": "3",
+    "RequestId": "djj4j4399fmmf1m212",
+    "Spots": [
+      {
+        "ContractMediaWeek": null,
+        "Id": 1,
+        "Impressions30sec": 1000.0,
+        "InventoryMediaWeek": null,
+        "SpotFrequencies": [
+          {
+            "SpotCost": 50.0,
+            "SpotCostWithMargin": 62.5,
+            "SpotLengthId": 1,
+            "Spots": 1
+          },
+          {
+            "SpotCost": 50.0,
+            "SpotCostWithMargin": 62.5,
+            "SpotLengthId": 2,
+            "Spots": 1
+          }
+        ],
+        "StandardDaypart": {
+          "Code": "AMN",
+          "FullName": "AM News",
+          "Id": 15,
+          "VpvhCalculationSourceType": 0
+        },
+        "StationInventoryManifestId": 0,
+        "TotalCost": 100.0,
+        "TotalCostWithMargin": 125.0,
+        "TotalImpressions": 1500.0,
+        "TotalSpots": 2
+      },
+      {
+        "ContractMediaWeek": null,
+        "Id": 1,
+        "Impressions30sec": 1000.0,
+        "InventoryMediaWeek": null,
+        "SpotFrequencies": [
+          {
+            "SpotCost": 50.0,
+            "SpotCostWithMargin": 62.5,
+            "SpotLengthId": 1,
+            "Spots": 1
+          },
+          {
+            "SpotCost": 50.0,
+            "SpotCostWithMargin": 62.5,
+            "SpotLengthId": 2,
+            "Spots": 1
+          }
+        ],
+        "StandardDaypart": {
+          "Code": "AMN",
+          "FullName": "AM News",
+          "Id": 15,
+          "VpvhCalculationSourceType": 0
+        },
+        "StationInventoryManifestId": 0,
+        "TotalCost": 100.0,
+        "TotalCostWithMargin": 125.0,
+        "TotalImpressions": 1500.0,
+        "TotalSpots": 2
+      },
+      {
+        "ContractMediaWeek": null,
+        "Id": 1,
+        "Impressions30sec": 1000.0,
+        "InventoryMediaWeek": null,
+        "SpotFrequencies": [
+          {
+            "SpotCost": 50.0,
+            "SpotCostWithMargin": 62.5,
+            "SpotLengthId": 1,
+            "Spots": 1
+          },
+          {
+            "SpotCost": 50.0,
+            "SpotCostWithMargin": 62.5,
+            "SpotLengthId": 2,
+            "Spots": 1
+          }
+        ],
+        "StandardDaypart": {
+          "Code": "AMN",
+          "FullName": "AM News",
+          "Id": 15,
+          "VpvhCalculationSourceType": 0
+        },
+        "StationInventoryManifestId": 0,
+        "TotalCost": 100.0,
+        "TotalCostWithMargin": 125.0,
+        "TotalImpressions": 1500.0,
+        "TotalSpots": 2
+      },
+      {
+        "ContractMediaWeek": null,
+        "Id": 1,
+        "Impressions30sec": 1000.0,
+        "InventoryMediaWeek": null,
+        "SpotFrequencies": [
+          {
+            "SpotCost": 50.0,
+            "SpotCostWithMargin": 62.5,
+            "SpotLengthId": 1,
+            "Spots": 1
+          },
+          {
+            "SpotCost": 50.0,
+            "SpotCostWithMargin": 62.5,
+            "SpotLengthId": 2,
+            "Spots": 1
+          }
+        ],
+        "StandardDaypart": {
+          "Code": "AMN",
+          "FullName": "AM News",
+          "Id": 15,
+          "VpvhCalculationSourceType": 0
+        },
+        "StationInventoryManifestId": 0,
+        "TotalCost": 100.0,
+        "TotalCostWithMargin": 125.0,
+        "TotalImpressions": 1500.0,
+        "TotalSpots": 2
+      },
+      {
+        "ContractMediaWeek": null,
+        "Id": 2,
+        "Impressions30sec": 1500.0,
+        "InventoryMediaWeek": null,
+        "SpotFrequencies": [
+          {
+            "SpotCost": 50.0,
+            "SpotCostWithMargin": 62.5,
+            "SpotLengthId": 1,
+            "Spots": 1
+          },
+          {
+            "SpotCost": 50.0,
+            "SpotCostWithMargin": 62.5,
+            "SpotLengthId": 2,
+            "Spots": 1
+          }
+        ],
+        "StandardDaypart": {
+          "Code": "PMN",
+          "FullName": "PM News",
+          "Id": 16,
+          "VpvhCalculationSourceType": 0
+        },
+        "StationInventoryManifestId": 0,
+        "TotalCost": 100.0,
+        "TotalCostWithMargin": 125.0,
+        "TotalImpressions": 2250.0,
+        "TotalSpots": 2
+      }
+    ]
+  }
+]

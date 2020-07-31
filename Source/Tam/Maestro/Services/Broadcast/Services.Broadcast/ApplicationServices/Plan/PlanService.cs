@@ -588,7 +588,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _SortPlanDayparts(plan);
             _SortProgramRestrictions(plan);
             _SortCreativeLengths(plan);
-            _SetSpotLengthForPlanBackwardCompatibility(plan);
             return plan;
         }
 
@@ -732,18 +731,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             return result;
-        }
-
-        private void _SetSpotLengthForPlanBackwardCompatibility(PlanDto plan)
-        {
-            if (plan.CreativeLengths == null)
-            {
-                plan.SpotLengthId = 1;
-            }
-            else
-            {
-                plan.SpotLengthId = plan.CreativeLengths.First().SpotLengthId;
-            }
         }
 
         private void _SortCreativeLengths(PlanDto plan)

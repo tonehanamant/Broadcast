@@ -709,7 +709,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 PlanDto newPlan = _GetNewPlan();
-                newPlan.SpotLengthId = 100;
                 newPlan.CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 100, Weight = 50 } };
                 var exception = Assert.Throws<ApplicationException>(() => _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01)));
 
@@ -2639,7 +2638,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Equivalized = true,
                 Name = "New Plan",
                 ProductId = 1,
-                SpotLengthId = 1,
                 CreativeLengths = new List<CreativeLength> {
                     new CreativeLength { SpotLengthId = 1, Weight = 50},
                     new CreativeLength{ SpotLengthId = 2}

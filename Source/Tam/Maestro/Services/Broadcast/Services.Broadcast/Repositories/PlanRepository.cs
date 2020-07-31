@@ -21,6 +21,7 @@ using Services.Broadcast.Entities;
 using static Services.Broadcast.Entities.Campaign.ProgramLineupReportData;
 using Tam.Maestro.Data.Entities;
 using Common.Services;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.Repositories
 {
@@ -1381,33 +1382,50 @@ namespace Services.Broadcast.Repositories
                 var planPricingApiResult = new plan_version_pricing_api_results
                 {
                     optimal_cpm = result.PricingCpm,
-                    plan_version_pricing_job_id = result.JobId
+                    plan_version_pricing_job_id = result.JobId,
+                    pricing_version = result.PricingVersion
                 };
 
                 context.plan_version_pricing_api_results.Add(planPricingApiResult);
 
                 context.SaveChanges();
 
+                var pkSpots = context.plan_version_pricing_api_result_spots.Any() ? context.plan_version_pricing_api_result_spots.Max(x => x.id) + 1 : 0;
+
                 var planPricingApiResultSpots = new List<plan_version_pricing_api_result_spots>();
+                var planPricingApiResultSpotFrequencies = new List<plan_version_pricing_api_result_spot_frequencies>();
 
                 foreach (var spot in result.Spots)
                 {
+                    var currentSpotId = pkSpots++;
+
                     var planPricingApiResultSpot = new plan_version_pricing_api_result_spots
                     {
+                        id = currentSpotId,
                         plan_version_pricing_api_results_id = planPricingApiResult.id,
                         station_inventory_manifest_id = spot.Id,
                         contract_media_week_id = spot.ContractMediaWeek.Id,
                         inventory_media_week_id = spot.InventoryMediaWeek.Id,
-                        impressions = spot.Impressions,
+                        impressions30sec = spot.Impressions30sec,
                         standard_daypart_id = spot.StandardDaypart.Id,
-                        cost = spot.SpotCost,
-                        spots = spot.Spots
                     };
 
+                    var frequencies = spot.SpotFrequencies
+                            .Select(x => new plan_version_pricing_api_result_spot_frequencies
+                            {
+                                plan_version_pricing_api_result_spot_id = currentSpotId,
+                                spot_length_id = x.SpotLengthId,
+                                cost = x.SpotCost,
+                                spots = x.Spots
+                            })
+                            .ToList();
+
                     planPricingApiResultSpots.Add(planPricingApiResultSpot);
+                    planPricingApiResultSpotFrequencies.AddRange(frequencies);
                 }
 
-                BulkInsert(context, planPricingApiResultSpots, propertiesToIgnore);
+                BulkInsert(context, planPricingApiResultSpots);
+                BulkInsert(context, planPricingApiResultSpotFrequencies, propertiesToIgnore);
             });
         }
 
@@ -1417,6 +1435,7 @@ namespace Services.Broadcast.Repositories
             {
                 var apiResult = context.plan_version_pricing_api_results
                     .Include(x => x.plan_version_pricing_api_result_spots)
+                    .Include(x => x.plan_version_pricing_api_result_spots.Select(y => y.plan_version_pricing_api_result_spot_frequencies))
                     .Where(x => x.plan_version_pricing_job_id == jobId)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
@@ -1432,9 +1451,14 @@ namespace Services.Broadcast.Repositories
                     {
                         Id = x.id,
                         StationInventoryManifestId = x.station_inventory_manifest_id,
-                        Impressions = x.impressions,
-                        SpotCost = x.cost,
-                        Spots = x.spots,
+                        // impressions are for :30 sec only for pricing v3
+                        Impressions30sec = x.impressions30sec,
+                        SpotFrequencies = x.plan_version_pricing_api_result_spot_frequencies.Select(y => new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            SpotLengthId = y.spot_length_id,
+                            SpotCost = y.cost,
+                            Spots = y.spots
+                        }).ToList(),
                         InventoryMediaWeek = new MediaWeek
                         {
                             Id = x.inventory_media_week.id,
@@ -1887,9 +1911,13 @@ namespace Services.Broadcast.Repositories
             {
                 Id = spot.id,
                 StationInventoryManifestId = spot.station_inventory_manifest_id,
-                Impressions = spot.impressions,
-                SpotCost = spot.cost,
-                Spots = spot.spots,
+                Impressions30sec = spot.impressions30sec,
+                SpotFrequencies = spot.plan_version_pricing_api_result_spot_frequencies.Select(x => new PlanPricingAllocatedSpot.SpotFrequency
+                {
+                    SpotLengthId = x.spot_length_id,
+                    SpotCost = x.cost,
+                    Spots = x.spots
+                }).ToList(),
                 InventoryMediaWeek = new MediaWeek
                 {
                     Id = spot.inventory_media_week.id,

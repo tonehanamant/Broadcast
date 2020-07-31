@@ -1,7 +1,7 @@
 ﻿{
   "inventory": [
     {
-      "Cpm": 0.0,
+      "Cpm": 8.888888888888888888888888900,
       "Impressions": 1125.0,
       "InventoryPricingQuarterType": "Plan",
       "InventorySource": null,
@@ -33,6 +33,12 @@
         }
       ],
       "ManifestId": 0,
+      "ManifestRates": [
+        {
+          "Cost": 10.0,
+          "SpotLengthId": 1
+        }
+      ],
       "ManifestWeeks": [
         {
           "ContractMediaWeekId": 0,
@@ -43,7 +49,7 @@
       ],
       "ProjectedImpressions": 1125.0,
       "ProvidedImpressions": null,
-      "SpotCost": 0.0,
+      "SpotLengthId": 1,
       "StandardDaypartId": 1,
       "Station": {
         "Affiliation": null,
@@ -64,7 +70,6 @@
     "programs": [
       {
         "ManifestId": 0,
-        "SpotCost": 0.0,
         "ProjectedImpressions": 0.0,
         "ProvidedImpressions": null,
         "Impressions": 0.0,
@@ -85,6 +90,7 @@
         "InventorySource": null,
         "InventoryPricingQuarterType": "Plan",
         "StandardDaypartId": 1,
+        "SpotLengthId": 1,
         "ManifestDayparts": [
           {
             "Id": 5,
@@ -119,6 +125,12 @@
             "ContractMediaWeekId": 0,
             "Spots": 0
           }
+        ],
+        "ManifestRates": [
+          {
+            "SpotLengthId": 1,
+            "Cost": 10.0
+          }
         ]
       }
     ],
@@ -130,6 +142,7 @@
       "SpotLengthId": 5,
       "PostType": 2
     },
-    "audienceId": 25
+    "audienceId": 25,
+    "isProprietary": false
   }
 }

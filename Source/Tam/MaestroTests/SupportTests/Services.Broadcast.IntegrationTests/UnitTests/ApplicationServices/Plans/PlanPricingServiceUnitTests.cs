@@ -1,5 +1,6 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
+using Castle.Components.DictionaryAdapter.Xml;
 using Common.Services;
 using Common.Services.Repositories;
 using Hangfire;
@@ -25,6 +26,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -310,9 +312,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 {
                     new PlanPricingAllocatedSpot
                     {
-                        Impressions = 1000,
-                        SpotCost = 10,
-                        Spots = 1,
+                        Impressions30sec = 1000,
+                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        {
+                            new PlanPricingAllocatedSpot.SpotFrequency
+                            {
+                                SpotCost = 10,
+                                Spots = 1
+                            }
+                        },
                         StationInventoryManifestId = 1,
                         StandardDaypart = new DaypartDefaultDto
                         {
@@ -330,9 +338,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     new PlanPricingAllocatedSpot
                     {
-                        Impressions = 800,
-                        SpotCost = 8,
-                        Spots = 2,
+                        Impressions30sec = 800,
+                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        {
+                            new PlanPricingAllocatedSpot.SpotFrequency
+                            {
+                                SpotCost = 8,
+                                Spots = 2
+                            }
+                        },
                         StationInventoryManifestId = 1,
                         StandardDaypart = new DaypartDefaultDto
                         {
@@ -350,9 +364,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     new PlanPricingAllocatedSpot
                     {
-                        Impressions = 500,
-                        SpotCost = 5,
-                        Spots = 3,
+                        Impressions30sec = 500,
+                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        {
+                            new PlanPricingAllocatedSpot.SpotFrequency
+                            {
+                                SpotCost = 5,
+                                Spots = 3
+                            }
+                        },
                         StationInventoryManifestId = 2,
                         StandardDaypart = new DaypartDefaultDto
                         {
@@ -370,9 +390,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     new PlanPricingAllocatedSpot
                     {
-                        Impressions = 400,
-                        SpotCost = 3,
-                        Spots = 4,
+                        Impressions30sec = 400,
+                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        {
+                            new PlanPricingAllocatedSpot.SpotFrequency
+                            {
+                                SpotCost = 3,
+                                Spots = 4
+                            }
+                        },
                         StationInventoryManifestId = 3,
                         StandardDaypart = new DaypartDefaultDto
                         {
@@ -552,56 +578,105 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingAllocatedSpot
                 {
                     Id = 1,
-                    Spots = 2,
-                    SpotCost = 200,
-                    Impressions = 10000,
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            SpotCost = 200,
+                            Spots = 2
+                        }
+                    },
+                    Impressions30sec = 10000,
+                    TotalImpressions = 20000
                 },
                 new PlanPricingAllocatedSpot
                 {
                     Id = 2,
-                    Spots = 4,
-                    SpotCost = 300,
-                    Impressions = 50000,
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            SpotCost = 300,
+                            Spots = 4
+                        }
+                    },
+                    Impressions30sec = 50000,
+                    TotalImpressions = 200000
                 },
                 new PlanPricingAllocatedSpot
                 {
                     Id = 3,
-                    Spots = 3,
-                    SpotCost = 500,
-                    Impressions = 20000,
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            SpotCost = 500,
+                            Spots = 3
+                        }
+                    },
+                    Impressions30sec = 20000,
+                    TotalImpressions = 60000
                 },
                 new PlanPricingAllocatedSpot
                 {
                     Id = 4,
-                    Spots = 1,
-                    SpotCost = 100,
-                    Impressions = 30000,
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            SpotCost = 100,
+                            Spots = 1
+                        }
+                    },
+                    Impressions30sec = 30000,
+                    TotalImpressions = 30000
                 },
                 new PlanPricingAllocatedSpot
                 {
                     Id = 5,
-                    Spots = 3,
-                    SpotCost = 300,
-                    Impressions = 10000,
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            SpotCost = 300,
+                            Spots = 3
+                        }
+                    },
+                    Impressions30sec = 10000,
+                    TotalImpressions = 30000
                 },
                 new PlanPricingAllocatedSpot
                 {
                     Id = 6,
-                    Spots = 2,
-                    SpotCost = 400,
-                    Impressions = 50000,
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            SpotCost = 400,
+                            Spots = 2
+                        }
+                    },
+                    Impressions30sec = 50000,
+                    TotalImpressions = 100000
                 },
                 new PlanPricingAllocatedSpot
                 {
                     Id = 7,
-                    Spots = 1,
-                    SpotCost = 250,
-                    Impressions = 20000,
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            SpotCost = 250,
+                            Spots = 1
+                        }
+                    },
+                    Impressions30sec = 20000,
+                    TotalImpressions = 20000
                 }
             };
 
             // apply the margin as the engine would, prior to the CPM calculation
-            spots.ForEach(s => s.SpotCostWithMargin = GeneralMath.CalculateCostWithMargin(s.SpotCost, margin));
+            spots.SelectMany(x => x.SpotFrequencies).ForEach(s => s.SpotCostWithMargin = GeneralMath.CalculateCostWithMargin(s.SpotCost, margin));
 
             var allocationResult = new PlanPricingAllocationResult
             {
@@ -806,7 +881,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(new List<PlanPricingInventoryProgram>
                 {
                     new PlanPricingInventoryProgram
@@ -821,7 +896,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -883,7 +964,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -993,7 +1080,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(_GetPlanPricingInventoryPrograms());
 
             List<PricingEstimate> passedParameters = null;
@@ -1016,14 +1103,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     It.IsAny<PlanDto>(),
                     It.IsAny<ProgramInventoryOptionalParametersDto>(),
                     It.Is<IEnumerable<int>>(list => list.SequenceEqual(new List<int> { 3, 5, 6, 7, 10, 11, 12 })),
-                    It.IsAny<PlanPricingJobDiagnostic>()), Times.Once);
+                    It.IsAny<PlanPricingJobDiagnostic>(), 
+                    It.IsAny<bool>()), Times.Once);
 
             _PlanPricingInventoryEngineMock
                 .Verify(x => x.GetInventoryForPlan(
                     It.IsAny<PlanDto>(),
                     It.IsAny<ProgramInventoryOptionalParametersDto>(),
                     It.Is<IEnumerable<int>>(list => list.SequenceEqual(new List<int> { 17, 18, 19, 20, 21, 22, 23, 24, 25 })),
-                    It.IsAny<PlanPricingJobDiagnostic>()), Times.Once);
+                    It.IsAny<PlanPricingJobDiagnostic>(), 
+                    It.IsAny<bool>()), Times.Once);
 
             _PlanRepositoryMock
                 .Verify(x => x.SavePlanPricingEstimates(jobId, It.IsAny<List<PricingEstimate>>()), Times.Once);
@@ -1230,7 +1319,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     ProvidedImpressions = 1000,
                     ProjectedImpressions = 1100,
-                    SpotCost = 50,
+                    ManifestRates = new List<ManifestRate>
+                    {
+                        new ManifestRate
+                        {
+                            Cost = 50
+                        }
+                    },
                     InventorySource = new InventorySource
                     {
                         Id = 3,
@@ -1283,7 +1378,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     ProvidedImpressions = 1000,
                     ProjectedImpressions = 1100,
-                    SpotCost = 50,
+                    ManifestRates = new List<ManifestRate>
+                    {
+                        new ManifestRate
+                        {
+                            Cost = 50
+                        }
+                    },
                     InventorySource = new InventorySource
                     {
                         Id = 5,
@@ -1331,7 +1432,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     ProvidedImpressions = 1000,
                     ProjectedImpressions = 1100,
-                    SpotCost = 50,
+                    ManifestRates = new List<ManifestRate>
+                    {
+                        new ManifestRate
+                        {
+                            Cost = 50
+                        }
+                    },
                     InventorySource = new InventorySource
                     {
                         Id = 7,
@@ -1379,7 +1486,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     ProvidedImpressions = 3000,
                     ProjectedImpressions = 2900,
-                    SpotCost = 130,
+                    ManifestRates = new List<ManifestRate>
+                    {
+                        new ManifestRate
+                        {
+                            Cost = 130
+                        }
+                    },
                     InventorySource = new InventorySource
                     {
                         Id = 10,
@@ -1503,7 +1616,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     ProvidedImpressions = null,
                     ProjectedImpressions = 700,
-                    SpotCost = 40,
+                    ManifestRates = new List<ManifestRate>
+                    {
+                        new ManifestRate
+                        {
+                            Cost = 40
+                        }
+                    },
                     InventorySource = new InventorySource
                     {
                         Id = 3,
@@ -1556,7 +1675,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     ProvidedImpressions = null,
                     ProjectedImpressions = 700,
-                    SpotCost = 40,
+                    ManifestRates = new List<ManifestRate>
+                    {
+                        new ManifestRate
+                        {
+                            Cost = 40
+                        }
+                    },
                     InventorySource = new InventorySource
                     {
                         Id = 18,
@@ -1604,7 +1729,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     },
                     ProvidedImpressions = null,
                     ProjectedImpressions = 700,
-                    SpotCost = 40,
+                    ManifestRates = new List<ManifestRate>
+                    {
+                        new ManifestRate
+                        {
+                            Cost = 40
+                        }
+                    },
                     InventorySource = new InventorySource
                     {
                         Id = 19,
@@ -1669,7 +1800,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(_GetPlanPricingInventoryPrograms());
 
             var jobUpdates = new List<PlanPricingJob>();
@@ -1727,8 +1858,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
                 var passedInventorySourceIds = new List<IEnumerable<int>>();
                 _PlanPricingInventoryEngineMock
-                    .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
-                    .Callback<PlanDto, ProgramInventoryOptionalParametersDto, IEnumerable<int>, PlanPricingJobDiagnostic>((p1, p2, p3, p4) =>
+                    .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
+                    .Callback<PlanDto, ProgramInventoryOptionalParametersDto, IEnumerable<int>, PlanPricingJobDiagnostic, bool>((p1, p2, p3, p4, p5) =>
                     {
                         passedInventorySourceIds.Add(p3);
                     })
@@ -1774,7 +1905,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(new List<PlanPricingInventoryProgram>());
 
             var jobUpdates = new List<PlanPricingJob>();
@@ -1870,7 +2001,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanPricingInventoryEngineMock
-                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .Setup(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(new List<PlanPricingInventoryProgram>
                 {
                     new PlanPricingInventoryProgram
@@ -1883,7 +2014,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -2074,7 +2211,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                .Returns(_GetWeeklyBreakDownWeeks());
 
             _PlanPricingInventoryEngineMock
-                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(new List<PlanPricingInventoryProgram>
                 {
                     new PlanPricingInventoryProgram
@@ -2089,7 +2226,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -2151,7 +2294,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -2208,7 +2357,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -2270,7 +2425,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -2327,7 +2488,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -2389,7 +2556,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -2443,7 +2616,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 0,
                         ProjectedImpressions = 0,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -2506,7 +2685,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 0,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 0
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -2692,7 +2877,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanPricingInventoryEngineMock
-                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(new List<PlanPricingInventoryProgram>
                 {
                     new PlanPricingInventoryProgram
@@ -2707,7 +2892,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -2769,7 +2960,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -2826,7 +3023,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -2888,7 +3091,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -2945,7 +3154,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -3007,7 +3222,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -3061,7 +3282,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 0,
                         ProjectedImpressions = 0,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -3124,7 +3351,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 0,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 0
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -3333,7 +3566,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanPricingInventoryEngineMock
-                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(new List<PlanPricingInventoryProgram>
                 {
                     new PlanPricingInventoryProgram
@@ -3348,7 +3581,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -3410,7 +3649,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -3467,7 +3712,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -3529,7 +3780,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -3586,7 +3843,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -3648,7 +3911,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -3702,7 +3971,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 0,
                         ProjectedImpressions = 0,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -3765,7 +4040,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 0,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 0
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -3975,7 +4256,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanPricingInventoryEngineMock
-                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(new List<PlanPricingInventoryProgram>
                 {
                     new PlanPricingInventoryProgram
@@ -3990,7 +4271,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -4052,7 +4339,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -4109,7 +4402,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -4171,7 +4470,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -4228,7 +4533,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -4290,7 +4601,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -4344,7 +4661,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 0,
                         ProjectedImpressions = 0,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -4407,7 +4730,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 0,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 0
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -4611,7 +4940,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanPricingInventoryEngineMock
-                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(new List<PlanPricingInventoryProgram>
                 {
                     new PlanPricingInventoryProgram
@@ -4626,7 +4955,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -4688,7 +5023,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -4745,7 +5086,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -4807,7 +5154,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -4864,7 +5217,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -4929,7 +5288,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -4984,7 +5349,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 0,
                         ProjectedImpressions = 0,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -5047,7 +5418,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 0,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 0
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -5277,7 +5654,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanPricingInventoryEngineMock
-                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(new List<PlanPricingInventoryProgram>
                 {
                     new PlanPricingInventoryProgram
@@ -5292,7 +5669,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -5354,7 +5737,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -5411,7 +5800,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -5473,7 +5868,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -5530,7 +5931,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -5595,7 +6002,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -5650,7 +6063,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 0,
                         ProjectedImpressions = 0,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -5713,7 +6132,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 0,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 0
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -7261,7 +7686,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetPlan());
 
             _PlanPricingInventoryEngineMock
-                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(_GetInventoryProgram())
                 .Returns(_GetInventoryProgram())
                 .Returns(_GetMultipleInventoryPrograms());
@@ -7318,7 +7743,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetPlan());
 
             _PlanPricingInventoryEngineMock
-                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(_GetInventoryProgram())
                 .Returns(_GetInventoryProgram())
                 .Returns(_GetMultipleInventoryPrograms());
@@ -7375,7 +7800,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetPlan());
 
             _PlanPricingInventoryEngineMock
-                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(_GetInventoryProgram())
                 .Returns(_GetInventoryProgram())
                 .Returns(_GetMultipleInventoryPrograms());
@@ -7432,7 +7857,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetPlan());
 
             _PlanPricingInventoryEngineMock
-                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(_GetInventoryProgram())
                 .Returns(_GetInventoryProgram())
                 .Returns(_GetMultipleInventoryPrograms());
@@ -7489,7 +7914,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetPlan());
 
             _PlanPricingInventoryEngineMock
-                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(_GetInventoryProgram())
                 .Returns(_GetInventoryProgram())
                 .Returns(_GetMultipleInventoryPrograms());
@@ -7547,7 +7972,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _PlanPricingInventoryEngineMock
                 .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>()
-                    , It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                    , It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(_GetInventoryProgram())
                 .Returns(_GetInventoryProgram())
                 .Returns(_GetMultipleInventoryPrograms());
@@ -7600,7 +8025,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetPlanTiered());
 
             _PlanPricingInventoryEngineMock
-                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(_GetInventoryProgram())
                 .Returns(_GetInventoryProgram())
                 .Returns(_GetTieredInventory());
@@ -7657,7 +8082,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetPlanTiered());
 
             _PlanPricingInventoryEngineMock
-                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(_GetInventoryProgram())
                 .Returns(_GetInventoryProgram())
                 .Returns(_GetTieredInventory());
@@ -7883,7 +8308,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetPlan());
 
             _PlanPricingInventoryEngineMock
-                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(_GetInventoryProgram())
                 .Returns(_GetInventoryProgram())
                 .Returns(_GetMultipleInventoryPrograms());
@@ -7936,7 +8361,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_GetPlan());
 
             _PlanPricingInventoryEngineMock
-                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>()))
+                .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
                 .Returns(_GetInventoryProgram())
                 .Returns(_GetInventoryProgram())
                 .Returns(_GetMultipleInventoryPrograms());
@@ -7983,6 +8408,503 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters, settings));
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void RunPricingSavePricingRequest_v3()
+        {
+            try
+            {
+                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "3";
+
+                // Arrange
+                const int jobId = 1;
+
+                var parameters = _GetPlanPricingParametersDto();
+                parameters.MarketGroup = PricingMarketGroupEnum.None;
+                parameters.Margin = 20;
+                parameters.JobId = jobId;
+
+                _PlanRepositoryMock
+                    .Setup(x => x.GetPlanPricingJob(It.IsAny<int>()))
+                    .Returns(new PlanPricingJob());
+
+                var plan = _GetPlan();
+                plan.Equivalized = true;
+                plan.CreativeLengths = new List<CreativeLength>
+                {
+                    new CreativeLength
+                    {
+                        SpotLengthId = 1,
+                        Weight = 50
+                    },
+                    new CreativeLength
+                    {
+                        SpotLengthId = 2,
+                        Weight = 50
+                    }
+                };
+                plan.PricingParameters.UnitCapsType = UnitCapEnum.Per30Min;
+                plan.PricingParameters.UnitCaps = 3;
+                plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                {
+                    // SpotLengthId = 1, DaypartCodeId = 1
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 40,
+                        WeeklyBudget = 2.5m,
+                        MediaWeekId = 100,
+                        SpotLengthId = 1,
+                        DaypartCodeId = 1
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 100,
+                        WeeklyBudget = 2.5m,
+                        MediaWeekId = 101,
+                        SpotLengthId = 1,
+                        DaypartCodeId = 1
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 25,
+                        WeeklyBudget = 2.5m,
+                        MediaWeekId = 102,
+                        SpotLengthId = 1,
+                        DaypartCodeId = 1
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 0,
+                        WeeklyBudget = 2.5m,
+                        MediaWeekId = 103,
+                        SpotLengthId = 1,
+                        DaypartCodeId = 1
+                    },
+
+                    // SpotLengthId = 2, DaypartCodeId = 1
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 35,
+                        WeeklyBudget = 5m,
+                        MediaWeekId = 100,
+                        SpotLengthId = 2,
+                        DaypartCodeId = 1
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 25,
+                        WeeklyBudget = 5m,
+                        MediaWeekId = 101,
+                        SpotLengthId = 2,
+                        DaypartCodeId = 1
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 25,
+                        WeeklyBudget = 5m,
+                        MediaWeekId = 102,
+                        SpotLengthId = 2,
+                        DaypartCodeId = 1
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 0,
+                        WeeklyBudget = 5m,
+                        MediaWeekId = 103,
+                        SpotLengthId = 2,
+                        DaypartCodeId = 1
+                    },
+
+                    // SpotLengthId = 1, DaypartCodeId = 2
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 40,
+                        WeeklyBudget = 2.5m,
+                        MediaWeekId = 100,
+                        SpotLengthId = 1,
+                        DaypartCodeId = 2
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 100,
+                        WeeklyBudget = 2.5m,
+                        MediaWeekId = 101,
+                        SpotLengthId = 1,
+                        DaypartCodeId = 2
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 25,
+                        WeeklyBudget = 2.5m,
+                        MediaWeekId = 102,
+                        SpotLengthId = 1,
+                        DaypartCodeId = 2
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 0,
+                        WeeklyBudget = 2.5m,
+                        MediaWeekId = 103,
+                        SpotLengthId = 1,
+                        DaypartCodeId = 2
+                    },
+
+                    // SpotLengthId = 2, DaypartCodeId = 2
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 35,
+                        WeeklyBudget = 5m,
+                        MediaWeekId = 100,
+                        SpotLengthId = 2,
+                        DaypartCodeId = 2
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 25,
+                        WeeklyBudget = 5m,
+                        MediaWeekId = 101,
+                        SpotLengthId = 2,
+                        DaypartCodeId = 2
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 25,
+                        WeeklyBudget = 5m,
+                        MediaWeekId = 102,
+                        SpotLengthId = 2,
+                        DaypartCodeId = 2
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 0,
+                        WeeklyBudget = 5m,
+                        MediaWeekId = 103,
+                        SpotLengthId = 2,
+                        DaypartCodeId = 2
+                    }
+                };
+
+                _PlanRepositoryMock
+                    .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                    .Returns(plan);
+
+                _PlanPricingInventoryEngineMock
+                    .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
+                    .Returns(_GetInventoryProgram())
+                    .Returns(_GetInventoryProgram())
+                    .Returns(_GetMultipleInventoryPrograms_v3());
+
+                _MarketCoverageRepositoryMock
+                    .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
+                    .Returns(_GetLatestMarketCoverages());
+
+                _WeeklyBreakdownEngineMock
+                    .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
+                        , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
+                    .Returns(_GetWeeklyBreakDownGroup());
+
+                _WeeklyBreakdownEngineMock
+                    .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+                    .Returns(_GetWeeklyBreakDownWeeks());
+
+                var requests = new List<PlanPricingApiRequestDto_v3>();
+                _PricingApiClientMock
+                    .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto_v3>()))
+                    .Returns(new PlanPricingApiSpotsResponseDto_v3
+                    {
+                        Error = null,
+                        RequestId = "qwedw121",
+                        Results = new List<PlanPricingApiSpotsResultDto_v3>()
+                    });
+
+                var passedParameters = new List<object>();
+                _BackgroundJobClientMock
+                    .Setup(x => x.Create(It.IsAny<Job>(), It.IsAny<IState>()))
+                    .Callback<Job, IState>((job, state) => passedParameters.Add(new { job, state }))
+                    .Returns("hangfire job 35");
+
+                _SpotLengthEngineMock
+                    .Setup(x => x.GetDeliveryMultiplierBySpotLengthId(It.IsAny<int>()))
+                    .Returns<int>(id => id == 1 ? 1 : 0.5);
+
+                var service = _GetService();
+
+                // Act
+                service.RunPricingJob(parameters, jobId, CancellationToken.None);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(WaitHandle), "Handle");
+                jsonResolver.Ignore(typeof(Job), "Type");
+                jsonResolver.Ignore(typeof(Job), "Method");
+                var settings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                // Assert
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters, settings));
+            }
+            finally
+            {
+                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "2";
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavesPricingApiResults_v3()
+        {
+            try
+            {
+                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "3";
+
+                // Arrange
+                const int jobId = 1;
+
+                var parameters = _GetPlanPricingParametersDto();
+                parameters.MarketGroup = PricingMarketGroupEnum.None;
+                parameters.Margin = 20;
+                parameters.JobId = jobId;
+
+                _PlanRepositoryMock
+                    .Setup(x => x.GetPlanPricingJob(It.IsAny<int>()))
+                    .Returns(new PlanPricingJob());
+
+                var plan = _GetPlan();
+                plan.Equivalized = true;
+                plan.CreativeLengths = new List<CreativeLength>
+                {
+                    new CreativeLength
+                    {
+                        SpotLengthId = 1,
+                        Weight = 50
+                    },
+                    new CreativeLength
+                    {
+                        SpotLengthId = 2,
+                        Weight = 50
+                    }
+                };
+                plan.PricingParameters.UnitCapsType = UnitCapEnum.Per30Min;
+                plan.PricingParameters.UnitCaps = 3;
+                plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                {
+                    // SpotLengthId = 1, DaypartCodeId = 1
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 40,
+                        WeeklyBudget = 2.5m,
+                        MediaWeekId = 100,
+                        SpotLengthId = 1,
+                        DaypartCodeId = 1
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 100,
+                        WeeklyBudget = 2.5m,
+                        MediaWeekId = 101,
+                        SpotLengthId = 1,
+                        DaypartCodeId = 1
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 25,
+                        WeeklyBudget = 2.5m,
+                        MediaWeekId = 102,
+                        SpotLengthId = 1,
+                        DaypartCodeId = 1
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 0,
+                        WeeklyBudget = 2.5m,
+                        MediaWeekId = 103,
+                        SpotLengthId = 1,
+                        DaypartCodeId = 1
+                    },
+
+                    // SpotLengthId = 2, DaypartCodeId = 1
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 35,
+                        WeeklyBudget = 5m,
+                        MediaWeekId = 100,
+                        SpotLengthId = 2,
+                        DaypartCodeId = 1
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 25,
+                        WeeklyBudget = 5m,
+                        MediaWeekId = 101,
+                        SpotLengthId = 2,
+                        DaypartCodeId = 1
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 25,
+                        WeeklyBudget = 5m,
+                        MediaWeekId = 102,
+                        SpotLengthId = 2,
+                        DaypartCodeId = 1
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 0,
+                        WeeklyBudget = 5m,
+                        MediaWeekId = 103,
+                        SpotLengthId = 2,
+                        DaypartCodeId = 1
+                    },
+
+                    // SpotLengthId = 1, DaypartCodeId = 2
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 40,
+                        WeeklyBudget = 2.5m,
+                        MediaWeekId = 100,
+                        SpotLengthId = 1,
+                        DaypartCodeId = 2
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 100,
+                        WeeklyBudget = 2.5m,
+                        MediaWeekId = 101,
+                        SpotLengthId = 1,
+                        DaypartCodeId = 2
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 25,
+                        WeeklyBudget = 2.5m,
+                        MediaWeekId = 102,
+                        SpotLengthId = 1,
+                        DaypartCodeId = 2
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 0,
+                        WeeklyBudget = 2.5m,
+                        MediaWeekId = 103,
+                        SpotLengthId = 1,
+                        DaypartCodeId = 2
+                    },
+
+                    // SpotLengthId = 2, DaypartCodeId = 2
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 35,
+                        WeeklyBudget = 5m,
+                        MediaWeekId = 100,
+                        SpotLengthId = 2,
+                        DaypartCodeId = 2
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 25,
+                        WeeklyBudget = 5m,
+                        MediaWeekId = 101,
+                        SpotLengthId = 2,
+                        DaypartCodeId = 2
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 25,
+                        WeeklyBudget = 5m,
+                        MediaWeekId = 102,
+                        SpotLengthId = 2,
+                        DaypartCodeId = 2
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 0,
+                        WeeklyBudget = 5m,
+                        MediaWeekId = 103,
+                        SpotLengthId = 2,
+                        DaypartCodeId = 2
+                    }
+                };
+
+                _PlanRepositoryMock
+                    .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                    .Returns(plan);
+
+                _PlanPricingInventoryEngineMock
+                    .SetupSequence(x => x.GetInventoryForPlan(It.IsAny<PlanDto>(), It.IsAny<ProgramInventoryOptionalParametersDto>(), It.IsAny<IEnumerable<int>>(), It.IsAny<PlanPricingJobDiagnostic>(), It.IsAny<bool>()))
+                    .Returns(_GetInventoryProgram())
+                    .Returns(_GetInventoryProgram())
+                    .Returns(_GetMultipleInventoryPrograms_v3());
+
+                _MarketCoverageRepositoryMock
+                    .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
+                    .Returns(_GetLatestMarketCoverages());
+
+                _WeeklyBreakdownEngineMock
+                    .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
+                        , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
+                    .Returns(_GetWeeklyBreakDownGroup());
+
+                _WeeklyBreakdownEngineMock
+                    .Setup(x => x.CalculatePlanWeeklyGoalBreakdown(It.IsAny<WeeklyBreakdownRequest>()))
+                    .Returns(_GetWeeklyBreakDownWeeks());
+
+                var requests = new List<PlanPricingApiRequestDto_v3>();
+                _PricingApiClientMock
+                    .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto_v3>()))
+                    .Returns<PlanPricingApiRequestDto_v3>((request) =>
+                    {
+                        var results = new List<PlanPricingApiSpotsResultDto_v3>();
+
+                        foreach (var spot in request.Spots)
+                        {
+                            var result = new PlanPricingApiSpotsResultDto_v3
+                            {
+                                ManifestId = spot.Id,
+                                MediaWeekId = spot.MediaWeekId,
+                                Frequencies = spot.SpotCost
+                                    .Select(x => new SpotFrequency
+                                    {
+                                        SpotLengthId = x.SpotLengthId,
+                                        Frequency = 1
+                                    })
+                                    .ToList()
+                            };
+
+                            results.Add(result);
+                        }
+
+                        return new PlanPricingApiSpotsResponseDto_v3
+                        {
+                            RequestId = "djj4j4399fmmf1m212",
+                            Results = results
+                        };
+                    });
+
+                _SpotLengthEngineMock
+                    .Setup(x => x.GetDeliveryMultiplierBySpotLengthId(It.IsAny<int>()))
+                    .Returns<int>(id => id == 1 ? 1 : 0.5);
+
+                var passedParameters = new List<PlanPricingAllocationResult>();
+                _PlanRepositoryMock
+                    .Setup(x => x.SavePricingApiResults(It.IsAny<PlanPricingAllocationResult>()))
+                    .Callback<PlanPricingAllocationResult>(p => passedParameters.Add(p));
+
+                var service = _GetService();
+
+                // Act
+                service.RunPricingJob(parameters, jobId, CancellationToken.None);
+
+                // Assert
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
+            }
+            finally
+            {
+                StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "2";
+            }
+        }
+
         private List<PlanPricingInventoryProgram> _GetInventoryProgram()
         {
             return new List<PlanPricingInventoryProgram>
@@ -7999,7 +8921,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -8061,7 +8989,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -8122,7 +9056,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1000,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 1,
@@ -8184,7 +9124,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 101,
                         },
                         ProjectedImpressions = 1100,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 1,
@@ -8238,7 +9184,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 0,
                         ProjectedImpressions = 0,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 1,
@@ -8301,7 +9253,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1200,
                         ProjectedImpressions = 1200,
-                        SpotCost = 0,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 0
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 1,
@@ -8371,7 +9329,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -8433,7 +9397,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCode = 100,
                         },
                         ProjectedImpressions = 1500,
-                        SpotCost = 60,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 60
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 4,
@@ -8487,7 +9457,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 0,
                         ProjectedImpressions = 0,
-                        SpotCost = 50,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 50
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -8550,7 +9526,310 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         },
                         ProvidedImpressions = 1000,
                         ProjectedImpressions = 1100,
-                        SpotCost = 0,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                Cost = 0
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 3,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 101,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                            }
+                        }
+                    }
+                };
+        }
+
+        private List<PlanPricingInventoryProgram> _GetMultipleInventoryPrograms_v3()
+        {
+            return new List<PlanPricingInventoryProgram>
+                {
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 1,
+                        StandardDaypartId = 15,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 1000,
+                        ProjectedImpressions = 1100,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                SpotLengthId = 1,
+                                Cost = 50
+                            },
+                            new ManifestRate
+                            {
+                                SpotLengthId = 2,
+                                Cost = 50
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 3,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 101,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                            }
+                        }
+                    },
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 2,
+                        StandardDaypartId = 16,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 6,
+                            LegacyCallLetters = "wabc",
+                            MarketCode = 100,
+                        },
+                        ProjectedImpressions = 1500,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                SpotLengthId = 1,
+                                Cost = 50
+                            },
+                            new ManifestRate
+                            {
+                                SpotLengthId = 2,
+                                Cost = 50
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 4,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Wednesday = true,
+                                    Friday = true,
+                                    StartTime = 64800, // 6pm
+                                    EndTime = 71999 // 8pm
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                            }
+                        }
+                    },
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 3,
+                        StandardDaypartId = 15,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 0,
+                        ProjectedImpressions = 0,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                SpotLengthId = 1,
+                                Cost = 50
+                            },
+                            new ManifestRate
+                            {
+                                SpotLengthId = 2,
+                                Cost = 50
+                            }
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = 3,
+                            InventoryType = InventorySourceTypeEnum.Barter
+                        },
+                        ManifestDayparts = new List<ManifestDaypart>
+                        {
+                            new ManifestDaypart
+                            {
+                                Daypart = new DisplayDaypart
+                                {
+                                    Id = 1,
+                                    Monday = true,
+                                    StartTime = 18000, // 5am
+                                    EndTime = 21599 // 6am
+                                },
+                                Programs = new List<Program>
+                                {
+                                    new Program
+                                    {
+                                        Name = "seinfeld",
+                                        Genre = "News"
+                                    }
+                                },
+                                PrimaryProgram = new Program
+                                {
+                                    Name = "seinfeld",
+                                    Genre = "News"
+                                }
+                            }
+                        },
+                        ManifestWeeks = new List<ManifestWeek>
+                        {
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 100,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 2,
+                                ContractMediaWeekId = 101,
+                            },
+                            new ManifestWeek
+                            {
+                                Spots = 1,
+                                ContractMediaWeekId = 102,
+                            }
+                        }
+                    },
+                    new PlanPricingInventoryProgram
+                    {
+                        ManifestId = 4,
+                        StandardDaypartId = 15,
+                        Station = new DisplayBroadcastStation
+                        {
+                            Id = 5,
+                            LegacyCallLetters = "wnbc",
+                            MarketCode = 101,
+                        },
+                        ProvidedImpressions = 1000,
+                        ProjectedImpressions = 1100,
+                        ManifestRates = new List<ManifestRate>
+                        {
+                            new ManifestRate
+                            {
+                                SpotLengthId = 1,
+                                Cost = 10
+                            },
+                            new ManifestRate
+                            {
+                                SpotLengthId = 2,
+                                Cost = 20
+                            }
+                        },
                         InventorySource = new InventorySource
                         {
                             Id = 3,
@@ -8608,6 +9887,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             return new PlanDto
             {
+                Id = 1197,
                 CoverageGoalPercent = 80,
                 CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
                 AvailableMarkets = new List<PlanAvailableMarketDto>
@@ -8629,12 +9909,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     {
                         new PlanDaypartDto
                         {
-                            DaypartCodeId = 15,
+                            DaypartCodeId = 1,
                             WeightingGoalPercent = 60
                         },
                         new PlanDaypartDto
                         {
-                            DaypartCodeId = 16,
+                            DaypartCodeId = 2,
                             WeightingGoalPercent = 40
                         }
                     },

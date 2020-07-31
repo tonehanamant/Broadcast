@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.Linq.Expressions;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
 {
@@ -20,6 +21,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
     [Category("short_running")]
     public class PlanAggregatorUnitTests
     {
+        [SetUp]
+        public void SetUp()
+        {
+            var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
+            SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
+        }
+
         [Test]
         public void ConstructorTest()
         {

@@ -93,7 +93,7 @@ namespace Services.Broadcast.BusinessEngines
             _PlanValidator = planValidator;
             _MediaWeekCache = mediaWeekCache;
             _CreativeLengthEngine = creativeLengthEngine;
-            _SpotLengthMultiplier = spotLengthEngine.GetSpotLengthMultipliers();
+            _SpotLengthMultiplier = spotLengthEngine.GetDeliveryMultipliersBySpotLengthId();
         }
 
         public WeeklyBreakdownResponseDto CalculatePlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request)

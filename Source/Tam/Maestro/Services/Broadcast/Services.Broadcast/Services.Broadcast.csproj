@@ -504,6 +504,8 @@
     <Compile Include="Entities\Nti\NtiUniverseHeader.cs" />
     <Compile Include="Entities\Plan\LengthMakeUpRequest.cs" />
     <Compile Include="Entities\Plan\LengthMakeUpTableRow.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingApiRequestDto_v3.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingApiSpotsResponseDto_v3.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingStationResultDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingInventoryGroup.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultMarketDetailsDto.cs" />

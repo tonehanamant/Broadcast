@@ -57,6 +57,11 @@ namespace Services.Broadcast.ApplicationServices
         /// <summary>
         /// For troubleshooting
         /// </summary>
+        PlanPricingApiRequestDto_v3 GetPricingApiRequestPrograms_v3(int planId, PricingInventoryGetRequestParametersDto requestParameters);
+
+        /// <summary>
+        /// For troubleshooting
+        /// </summary>
         List<PlanPricingInventoryProgram> GetPricingInventory(int planId, PricingInventoryGetRequestParametersDto requestParameters);
 
         /// <summary>
@@ -112,6 +117,10 @@ namespace Services.Broadcast.ApplicationServices
         [Queue("savepricingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void SavePricingRequest(int planId, PlanPricingApiRequestDto pricingApiRequest);
+
+        [Queue("savepricingrequest")]
+        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
+        void SavePricingRequest(int planId, PlanPricingApiRequestDto_v3 pricingApiRequest);
     }
 
     public class PlanPricingService : BroadcastBaseClass, IPlanPricingService
@@ -199,6 +208,10 @@ namespace Services.Broadcast.ApplicationServices
             var manifestDaypartIds = manifests.SelectMany(x => x.ManifestDayparts).Select(x => x.Id.Value);
             var primaryProgramsByManifestDaypartIds = _StationProgramRepository.GetPrimaryProgramsForManifestDayparts(manifestDaypartIds);
             var markets = _MarketRepository.GetMarketDtos();
+
+            // TODO remove this after setting up the correct behaviour for v3
+            if (BroadcastServiceSystemParameter.PlanPricingEndpointVersion == "2")
+                allocatedSpots.ForEach(x => x.TotalImpressions = x.SpotFrequencies.Sum(y => y.Spots * x.Impressions30sec));
 
             return new PricingResultsReportData(
                 plan,
@@ -437,7 +450,6 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<PlanPricingApiRequestSpotsDto> _GetPricingModelSpots(
             List<IGrouping<PlanPricingInventoryGroup, ProgramWithManifestDaypart>> groupedInventory,
-            List<PlanPricingInventoryProgram> programs,
             List<int> skippedWeeksIds)
         {
             var marketCoveragesByMarketCode = _MarketCoverageRepository.GetLatestMarketCoverages().MarketCoveragesByMarketCode;
@@ -452,12 +464,13 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     foreach (var daypart in program.ManifestDayparts)
                     {
-                        var impressions = program.ProvidedImpressions ?? program.ProjectedImpressions;
+                        var impressions = program.Impressions;
+                        var spotCost = program.ManifestRates.Single().Cost;
 
                         if (impressions <= 0)
                             continue;
 
-                        if (program.SpotCost <= 0)
+                        if (spotCost <= 0)
                             continue;
 
                         //filter out skipped weeks
@@ -469,17 +482,12 @@ namespace Services.Broadcast.ApplicationServices
                                 MediaWeekId = manifestWeek.ContractMediaWeekId,
                                 DaypartId = program.StandardDaypartId,
                                 Impressions = impressions,
-                                Cost = program.SpotCost,
+                                Cost = spotCost,
                                 StationId = program.Station.Id,
                                 MarketCode = program.Station.MarketCode.Value,
                                 PercentageOfUs = GeneralMath.ConvertPercentageToFraction(marketCoveragesByMarketCode[program.Station.MarketCode.Value]),
                                 SpotDays = daypart.Daypart.ActiveDays,
                                 SpotHours = daypart.Daypart.GetDurationPerDayInHours()
-
-                            // Data Science API does not yet handle these fields.
-                            //Unit = program.Unit,
-                            //InventorySource = program.InventorySource,
-                            //InventorySourceType = program.InventorySourceType
                         });
 
                         pricingModelSpots.AddRange(spots);
@@ -670,9 +678,7 @@ namespace Services.Broadcast.ApplicationServices
                 token.ThrowIfCancellationRequested();
 
                 diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FETCHING_PLAN_AND_PARAMETERS);
-                var goalsFulfilledByProprietaryInventory = true;
                 var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId);
-                _SetPlanSpotLengthForBackwardsCompatibility(plan);
                 var programInventoryParameters = new ProgramInventoryOptionalParametersDto
                 {
                     MinCPM = planPricingParametersDto.MinCpm,
@@ -703,63 +709,23 @@ namespace Services.Broadcast.ApplicationServices
                     plan,
                     programInventoryParameters,
                     inventorySourceIds,
-                    diagnostic);
+                    diagnostic,
+                    isProprietary: false);
+
+                _ValidateInventory(inventory);
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_GATHERING_INVENTORY);
 
                 token.ThrowIfCancellationRequested();
 
-                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
-                _ValidateInventory(inventory);
-
-                var pricingModelWeeks = _GetPricingModelWeeks(plan, proprietaryEstimates, programInventoryParameters, out List<int> skippedWeeksIds);
-                var allocationResult = new PlanPricingAllocationResult
-                {
-                    Spots = new List<PlanPricingAllocatedSpot>(),
-                    JobId = jobId,
-                    PlanVersionId = plan.VersionId
-                };
-
-                if (pricingModelWeeks != null && pricingModelWeeks.Any())
-                {
-                    goalsFulfilledByProprietaryInventory = false;
-
-                    var groupedInventory = _GroupInventory(inventory);
-
-                    var pricingApiRequest = new PlanPricingApiRequestDto
-                    {
-                        Weeks = pricingModelWeeks,
-                        Spots = _GetPricingModelSpots(groupedInventory, inventory, skippedWeeksIds)
-                    };
-                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
-
-                    token.ThrowIfCancellationRequested();
-
-                    _BackgroundJobClient.Enqueue<IPlanPricingService>(
-                        x => x.SavePricingRequest(planPricingParametersDto.PlanId, pricingApiRequest));
-
-                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
-                    var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
-                    diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
-
-                    token.ThrowIfCancellationRequested();
-
-                    if (apiAllocationResult.Error != null)
-                    {
-                        var errorMessage = $@"Pricing Model returned the following error: {apiAllocationResult.Error.Name} 
-                                -  {string.Join(",", apiAllocationResult.Error.Messages).Trim(',')}";
-                        throw new PricingModelException(errorMessage);
-                    }
-
-                    diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_VALIDATING_AND_MAPPING_API_RESPONSE);
-
-                    allocationResult.Spots = _MapToResultSpots(groupedInventory, apiAllocationResult, pricingApiRequest, inventory, programInventoryParameters);
-                    allocationResult.RequestId = apiAllocationResult.RequestId;
-                }
-
-                allocationResult.PricingCpm = _CalculatePricingCpm(allocationResult.Spots, proprietaryEstimates);
-
-                _ValidateAllocationResult(allocationResult);
-                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_VALIDATING_AND_MAPPING_API_RESPONSE);
+                var allocationResult = _SendPricingRequest(
+                    jobId,
+                    plan,
+                    inventory,
+                    proprietaryEstimates,
+                    programInventoryParameters,
+                    token,
+                    diagnostic,
+                    out var goalsFulfilledByProprietaryInventory);
 
                 token.ThrowIfCancellationRequested();
 
@@ -865,6 +831,359 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
+        private PlanPricingAllocationResult _SendPricingRequest(
+            int jobId,
+            PlanDto plan,
+            List<PlanPricingInventoryProgram> inventory,
+            List<PricingEstimate> proprietaryEstimates,
+            ProgramInventoryOptionalParametersDto programInventoryParameters,
+            CancellationToken token,
+            PlanPricingJobDiagnostic diagnostic,
+            out bool goalsFulfilledByProprietaryInventory)
+        {
+            goalsFulfilledByProprietaryInventory = false;
+            var allocationResult = new PlanPricingAllocationResult
+            {
+                Spots = new List<PlanPricingAllocatedSpot>(),
+                JobId = jobId,
+                PlanVersionId = plan.VersionId,
+                PricingVersion = BroadcastServiceSystemParameter.PlanPricingEndpointVersion
+            };
+
+            if (BroadcastServiceSystemParameter.PlanPricingEndpointVersion == "2")
+            {
+                _SendPricingRequest_v2(
+                    allocationResult,
+                    plan,
+                    inventory,
+                    proprietaryEstimates,
+                    programInventoryParameters,
+                    token,
+                    diagnostic,
+                    out goalsFulfilledByProprietaryInventory);
+            }
+            else if (BroadcastServiceSystemParameter.PlanPricingEndpointVersion == "3")
+            {
+                _SendPricingRequest_v3(
+                    allocationResult,
+                    plan,
+                    inventory,
+                    proprietaryEstimates,
+                    programInventoryParameters,
+                    token,
+                    diagnostic,
+                    out goalsFulfilledByProprietaryInventory);
+            }
+            else
+            {
+                throw new Exception("Unknown pricing API version was discovered");
+            }
+
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_CPM);
+            allocationResult.PricingCpm = _CalculatePricingCpm(allocationResult.Spots, proprietaryEstimates);
+            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_CPM);
+
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_VALIDATING_ALLOCATION_RESULT);
+            _ValidateAllocationResult(allocationResult);
+            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_VALIDATING_ALLOCATION_RESULT);
+
+            return allocationResult;
+        }
+
+        private void _SendPricingRequest_v2(
+            PlanPricingAllocationResult allocationResult,
+            PlanDto plan,
+            List<PlanPricingInventoryProgram> inventory,
+            List<PricingEstimate> proprietaryEstimates,
+            ProgramInventoryOptionalParametersDto programInventoryParameters,
+            CancellationToken token,
+            PlanPricingJobDiagnostic diagnostic,
+            out bool goalsFulfilledByProprietaryInventory)
+        {
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
+
+            var pricingModelWeeks = _GetPricingModelWeeks(plan, proprietaryEstimates, programInventoryParameters, out List<int> skippedWeeksIds);
+            goalsFulfilledByProprietaryInventory = pricingModelWeeks.IsEmpty();
+
+            var groupedInventory = _GroupInventory(inventory);
+            var spots = _GetPricingModelSpots(groupedInventory, skippedWeeksIds);
+            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
+
+            token.ThrowIfCancellationRequested();
+
+            if (!pricingModelWeeks.IsEmpty())
+            {
+                var pricingApiRequest = new PlanPricingApiRequestDto
+                {
+                    Weeks = pricingModelWeeks,
+                    Spots = spots
+                };
+
+                _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.SavePricingRequest(plan.Id, pricingApiRequest));
+
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
+                var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
+
+                token.ThrowIfCancellationRequested();
+
+                if (apiAllocationResult.Error != null)
+                {
+                    var errorMessage = $@"Pricing Model returned the following error: {apiAllocationResult.Error.Name} 
+                                -  {string.Join(",", apiAllocationResult.Error.Messages).Trim(',')}";
+                    throw new PricingModelException(errorMessage);
+                }
+
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_MAPPING_ALLOCATED_SPOTS);
+                allocationResult.Spots = _MapToResultSpots(groupedInventory, apiAllocationResult, pricingApiRequest, inventory, programInventoryParameters);
+                allocationResult.RequestId = apiAllocationResult.RequestId;
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_MAPPING_ALLOCATED_SPOTS);
+            }
+        }
+
+        private void _SendPricingRequest_v3(
+            PlanPricingAllocationResult allocationResult,
+            PlanDto plan,
+            List<PlanPricingInventoryProgram> inventory,
+            List<PricingEstimate> proprietaryEstimates,
+            ProgramInventoryOptionalParametersDto programInventoryParameters,
+            CancellationToken token,
+            PlanPricingJobDiagnostic diagnostic,
+            out bool goalsFulfilledByProprietaryInventory)
+        {
+            diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
+
+            var pricingModelWeeks = _GetPricingModelWeeks_v3(plan, proprietaryEstimates, programInventoryParameters, out List<int> skippedWeeksIds);
+            goalsFulfilledByProprietaryInventory = pricingModelWeeks.IsEmpty();
+
+            var groupedInventory = _GroupInventory(inventory);
+            var spots = _GetPricingModelSpots_v3(groupedInventory, skippedWeeksIds);
+            diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_PREPARING_API_REQUEST);
+
+            token.ThrowIfCancellationRequested();
+
+            if (!pricingModelWeeks.IsEmpty())
+            {
+                var pricingApiRequest = new PlanPricingApiRequestDto_v3
+                {
+                    Weeks = pricingModelWeeks,
+                    Spots = spots
+                };
+
+                _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.SavePricingRequest(plan.Id, pricingApiRequest));
+
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
+                var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
+
+                token.ThrowIfCancellationRequested();
+
+                if (apiAllocationResult.Error != null)
+                {
+                    var errorMessage = $@"Pricing Model returned the following error: {apiAllocationResult.Error.Name} 
+                                -  {string.Join(",", apiAllocationResult.Error.Messages).Trim(',')}";
+                    throw new PricingModelException(errorMessage);
+                }
+
+                diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_MAPPING_ALLOCATED_SPOTS);
+                allocationResult.Spots = _MapToResultSpots(groupedInventory, apiAllocationResult, pricingApiRequest, inventory, programInventoryParameters, plan);
+                allocationResult.RequestId = apiAllocationResult.RequestId;
+                diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_MAPPING_ALLOCATED_SPOTS);
+            }
+        }
+
+        private List<PlanPricingApiRequestSpotsDto_v3> _GetPricingModelSpots_v3(
+            List<IGrouping<PlanPricingInventoryGroup, ProgramWithManifestDaypart>> groupedInventory,
+            List<int> skippedWeeksIds)
+        {
+            var marketCoveragesByMarketCode = _MarketCoverageRepository.GetLatestMarketCoverages().MarketCoveragesByMarketCode;
+            var pricingModelSpots = new List<PlanPricingApiRequestSpotsDto_v3>();
+
+            foreach (var inventoryGroupping in groupedInventory)
+            {
+                var programsInGrouping = inventoryGroupping.Select(x => x.Program).ToList();
+                var manifestId = programsInGrouping.First().ManifestId;
+
+                foreach (var program in programsInGrouping)
+                {
+                    foreach (var daypart in program.ManifestDayparts)
+                    {
+                        var impressions = program.Impressions;
+
+                        if (impressions <= 0)
+                            continue;
+
+                        //filter out skipped weeks
+                        var spots = program.ManifestWeeks
+                            .Where(x => !skippedWeeksIds.Contains(x.ContractMediaWeekId))
+                            .Select(manifestWeek => new PlanPricingApiRequestSpotsDto_v3
+                            {
+                                Id = manifestId,
+                                MediaWeekId = manifestWeek.ContractMediaWeekId,
+                                Impressions30sec = impressions,
+                                StationId = program.Station.Id,
+                                MarketCode = program.Station.MarketCode.Value,
+                                DaypartId = program.StandardDaypartId,
+                                PercentageOfUs = GeneralMath.ConvertPercentageToFraction(marketCoveragesByMarketCode[program.Station.MarketCode.Value]),
+                                SpotDays = daypart.Daypart.ActiveDays,
+                                SpotHours = daypart.Daypart.GetDurationPerDayInHours(),
+                                SpotCost = program.ManifestRates.Select(x => new SpotCost_v3
+                                {
+                                    SpotLengthId = x.SpotLengthId,
+                                    SpotLengthCost = x.Cost
+                                }).ToList()
+                            });
+
+                        pricingModelSpots.AddRange(spots);
+                    }
+                }
+            }
+
+            return pricingModelSpots;
+        }
+
+        private List<PlanPricingApiRequestWeekDto_v3> _GetPricingModelWeeks_v3(
+            PlanDto plan,
+            List<PricingEstimate> proprietaryEstimates,
+            ProgramInventoryOptionalParametersDto parameters,
+            out List<int> SkippedWeeksIds)
+        {
+            SkippedWeeksIds = new List<int>();
+            var pricingModelWeeks = new List<PlanPricingApiRequestWeekDto_v3>();
+            var marketCoverageGoal = GeneralMath.ConvertPercentageToFraction(plan.CoverageGoalPercent.Value);
+            var topMarkets = _GetTopMarkets(parameters.MarketGroup);
+            var marketsWithSov = plan.AvailableMarkets.Where(x => x.ShareOfVoicePercent.HasValue);
+            var shareOfVoice = _GetShareOfVoice(topMarkets, marketsWithSov);
+            var daypartsWithWeighting = plan.Dayparts.Where(x => x.WeightingGoalPercent.HasValue);
+            var planPricingParameters = plan.PricingParameters;
+
+            var planWeeks = _CalculatePlanWeeksWithPricingParameters(plan);
+            var weeklyBreakdownByWeek = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(planWeeks);
+            var spotScaleFactorBySpotLengthId = _GetSpotScaleFactorBySpotLengthId(plan);
+
+            foreach (var week in weeklyBreakdownByWeek)
+            {
+                var mediaWeekId = week.MediaWeekId;
+                var planWeekImpressions = week.Impressions;
+                var planWeekBudget = week.Budget;
+
+                if (planWeekImpressions <= 0)
+                {
+                    SkippedWeeksIds.Add(mediaWeekId);
+                    continue;
+                }
+
+                var estimatesForWeek = proprietaryEstimates.Where(x => x.MediaWeekId == mediaWeekId);
+                var estimatedImpressions = estimatesForWeek.Sum(x => x.Impressions);
+                var estimatedCost = estimatesForWeek.Sum(x => x.Cost);
+
+                var impressionGoal = planWeekImpressions > estimatedImpressions ? planWeekImpressions - estimatedImpressions : 0;
+
+                if (impressionGoal == 0)
+                {
+                    // proprietary fulfills this week goal so we're not sending the week
+                    SkippedWeeksIds.Add(mediaWeekId);
+                    continue;
+                }
+
+                var weeklyBudget = planWeekBudget > estimatedCost ? planWeekBudget - estimatedCost : 0;
+
+                if (weeklyBudget == 0)
+                {   
+                    // proprietary fulfills this week goal so we're not sending the week
+                    SkippedWeeksIds.Add(mediaWeekId);
+                    continue;
+                }
+
+                if (parameters.Margin > 0)
+                {
+                    weeklyBudget *= (decimal)(1.0 - (parameters.Margin / 100.0));
+                }
+
+                var pricingWeek = new PlanPricingApiRequestWeekDto_v3
+                {
+                    MediaWeekId = mediaWeekId,
+                    ImpressionGoal = impressionGoal,
+                    CpmGoal = ProposalMath.CalculateCpm(weeklyBudget, impressionGoal),
+                    MarketCoverageGoal = marketCoverageGoal,
+                    FrequencyCap = FrequencyCapHelper.GetFrequencyCap(planPricingParameters.UnitCapsType, planPricingParameters.UnitCaps),
+                    ShareOfVoice = shareOfVoice,
+                    DaypartWeighting = _GetDaypartGoals(plan, mediaWeekId),
+                    SpotLengths = _GetSpotLengthGoals(plan, mediaWeekId, spotScaleFactorBySpotLengthId)
+                };
+
+                pricingModelWeeks.Add(pricingWeek);
+            }
+
+            return pricingModelWeeks;
+        }
+
+        private List<DaypartWeighting> _GetDaypartGoals(PlanDto plan, int mediaWeekId)
+        {
+            var breakdownForWeek = plan.WeeklyBreakdownWeeks.Where(x => x.MediaWeekId == mediaWeekId).ToList();
+            var impressionsForWeek = breakdownForWeek.Sum(x => x.WeeklyImpressions);
+
+            var daypartGoals = plan.Dayparts
+                .Select(x =>
+                {
+                    var impressionsForDaypart = breakdownForWeek
+                        .Where(y => y.DaypartCodeId == x.DaypartCodeId)
+                        .Sum(y => y.WeeklyImpressions);
+
+                    return new DaypartWeighting
+                    {
+                        DaypartId = x.DaypartCodeId,
+                        DaypartGoal = impressionsForDaypart / impressionsForWeek
+                    };
+                })
+                .ToList();
+
+            // add the remaining goal to the first daypart
+            var remainingGoal = 1 - daypartGoals.Sum(x => x.DaypartGoal);
+            daypartGoals.First().DaypartGoal += remainingGoal;
+
+            return daypartGoals;
+        }
+
+        private List<SpotLength_v3> _GetSpotLengthGoals(PlanDto plan, int mediaWeekId, Dictionary<int, double> spotScaleFactorBySpotLengthId)
+        {
+            var breakdownForWeek = plan.WeeklyBreakdownWeeks.Where(x => x.MediaWeekId == mediaWeekId).ToList();
+            var impressionsForWeek = breakdownForWeek.Sum(x => x.WeeklyImpressions);
+
+            var spotLengthGoalBySpotLengthId = plan.CreativeLengths
+                .ToDictionary(
+                    x => x.SpotLengthId,
+                    x =>
+                    {
+                        var impressionsForSpotLength = breakdownForWeek
+                            .Where(y => y.SpotLengthId == x.SpotLengthId)
+                            .Sum(y => y.WeeklyImpressions);
+
+                        return impressionsForSpotLength / impressionsForWeek;
+                    });
+
+
+            // add the remaining goal to the first spot length
+            var remainingGoal = 1 - spotLengthGoalBySpotLengthId.Sum(x => x.Value);
+            spotLengthGoalBySpotLengthId[plan.CreativeLengths.First().SpotLengthId] += remainingGoal;
+
+            return plan.CreativeLengths
+                .Select(x => new SpotLength_v3
+                {
+                    SpotLengthId = x.SpotLengthId,
+                    SpotScaleFactor = spotScaleFactorBySpotLengthId[x.SpotLengthId],
+                    SpotLengthGoal = spotLengthGoalBySpotLengthId[x.SpotLengthId]
+                })
+                .ToList();
+        }
+
+        private Dictionary<int, double> _GetSpotScaleFactorBySpotLengthId(PlanDto plan)
+        {
+            return plan.CreativeLengths.ToDictionary(
+                x => x.SpotLengthId,
+                x => plan.Equivalized ? _SpotLengthEngine.GetDeliveryMultiplierBySpotLengthId(x.SpotLengthId) : 1);
+        }
+
         private List<IGrouping<PlanPricingInventoryGroup, ProgramWithManifestDaypart>> _GroupInventory(List<PlanPricingInventoryProgram> inventory)
         {
             var flattedProgramsWithDayparts = inventory
@@ -897,11 +1216,15 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private void _SetPlanSpotLengthForBackwardsCompatibility(PlanDto plan)
+        public void SavePricingRequest(int planId, PlanPricingApiRequestDto_v3 pricingApiRequest)
         {
-            if (plan.CreativeLengths.Any())
+            try
             {
-                plan.SpotLengthId = plan.CreativeLengths.First().SpotLengthId;
+                _PricingRequestLogClient.SavePricingRequest(planId, pricingApiRequest);
+            }
+            catch (Exception exception)
+            {
+                _LogError("Failed to save pricing API request", exception);
             }
         }
 
@@ -992,7 +1315,8 @@ namespace Services.Broadcast.ApplicationServices
                     plan,
                     parameters,
                     inventorySourcePreferences.Select(x => x.Id),
-                    diagnostic);
+                    diagnostic,
+                    isProprietary: true);
 
             foreach (var preference in inventorySourcePreferences)
             {
@@ -1033,7 +1357,8 @@ namespace Services.Broadcast.ApplicationServices
                     plan,
                     parameters,
                     inventorySourceIds,
-                    diagnostic);
+                    diagnostic,
+                    isProprietary: true);
 
             foreach (var preference in inventorySourceTypePreferences)
             {
@@ -1098,9 +1423,11 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var program = programWithManifestWeek.Program;
                 var spots = programWithManifestWeek.ManifestWeek.Spots;
-                var impressionsPerSpot = program.ProvidedImpressions ?? program.ProjectedImpressions;
+                var impressionsPerSpot = program.Impressions;
                 var impressions = impressionsPerSpot * spots * percentageToUse / 100;
-                var cost = program.SpotCost * spots * percentageToUse / 100;
+
+                // for proprietary there is only one cost, we don`t calculate cost per each existing spot length
+                var cost = program.ManifestRates.Single().Cost * spots * percentageToUse / 100;
 
                 totalWeekImpressions += impressions;
                 totalWeekCost += cost;
@@ -1141,12 +1468,12 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         private List<PlanPricingAllocatedSpot> _MapToResultSpots(
-            List<IGrouping<PlanPricingInventoryGroup, ProgramWithManifestDaypart>> groupedInventory,
+            List<IGrouping<PlanPricingInventoryGroup, 
+            ProgramWithManifestDaypart>> groupedInventory,
             PlanPricingApiSpotsResponseDto apiSpotsResults,
             PlanPricingApiRequestDto pricingApiRequest,
             List<PlanPricingInventoryProgram> inventoryPrograms,
-            ProgramInventoryOptionalParametersDto programInventoryParameters
-            )
+            ProgramInventoryOptionalParametersDto programInventoryParameters)
         {
             var results = new List<PlanPricingAllocatedSpot>();
             var daypartDefaultsById = _DaypartDefaultRepository
@@ -1180,13 +1507,87 @@ namespace Services.Broadcast.ApplicationServices
                 var spotResult = new PlanPricingAllocatedSpot
                 {
                     Id = originalProgram.Program.ManifestId,
-                    SpotCost = originalSpot.Cost,
-                    SpotCostWithMargin = GeneralMath.CalculateCostWithMargin(originalSpot.Cost, programInventoryParameters.Margin),
+                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    {
+                        new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            SpotLengthId = program.ManifestRates.Single().SpotLengthId,
+                            SpotCost = originalSpot.Cost,
+                            SpotCostWithMargin = GeneralMath.CalculateCostWithMargin(originalSpot.Cost, programInventoryParameters.Margin),
+                            Spots = allocation.Frequency
+                        }
+                    },
                     StandardDaypart = daypartDefaultsById[originalSpot.DaypartId],
-                    Impressions = originalSpot.Impressions,
+                    Impressions30sec = originalSpot.Impressions,
+                    TotalImpressions = originalSpot.Impressions * allocation.Frequency,
                     ContractMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.ContractMediaWeekId),
-                    InventoryMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.InventoryMediaWeekId),
-                    Spots = allocation.Frequency
+                    InventoryMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.InventoryMediaWeekId)
+                };
+
+                results.Add(spotResult);
+            }
+
+            return results;
+        }
+
+        private List<PlanPricingAllocatedSpot> _MapToResultSpots(
+            List<IGrouping<PlanPricingInventoryGroup,
+            ProgramWithManifestDaypart>> groupedInventory,
+            PlanPricingApiSpotsResponseDto_v3 apiSpotsResults,
+            PlanPricingApiRequestDto_v3 pricingApiRequest,
+            List<PlanPricingInventoryProgram> inventoryPrograms,
+            ProgramInventoryOptionalParametersDto programInventoryParameters,
+            PlanDto plan)
+        {
+            var results = new List<PlanPricingAllocatedSpot>();
+            var daypartDefaultsById = _DaypartDefaultRepository
+                .GetAllDaypartDefaults()
+                .ToDictionary(x => x.Id, x => x);
+            var spotScaleFactorBySpotLengthId = _GetSpotScaleFactorBySpotLengthId(plan);
+
+            foreach (var allocation in apiSpotsResults.Results)
+            {
+                var originalProgramGroup = groupedInventory
+                    .FirstOrDefault(x => x.Any(y => y.Program.ManifestId == allocation.ManifestId));
+
+                if (originalProgramGroup == null)
+                    throw new Exception("Couldn't find the program in grouped inventory");
+
+                var originalProgram = originalProgramGroup
+                    .FirstOrDefault(x => x.Program.ManifestWeeks.Select(y => y.ContractMediaWeekId).Contains(allocation.MediaWeekId));
+
+                if (originalProgram == null)
+                    throw new Exception("Couldn't find the program and week combination from the allocation data");
+
+                var originalSpot = pricingApiRequest.Spots.FirstOrDefault(x =>
+                    x.Id == allocation.ManifestId &&
+                    x.MediaWeekId == allocation.MediaWeekId);
+
+                if (originalSpot == null)
+                    throw new Exception("Response from API contains manifest id not found in sent data");
+
+                var program = inventoryPrograms.Single(x => x.ManifestId == originalProgram.Program.ManifestId);
+                var inventoryWeek = program.ManifestWeeks.Single(x => x.ContractMediaWeekId == originalSpot.MediaWeekId);
+                var spotCostBySpotLengthId = originalSpot.SpotCost.ToDictionary(x => x.SpotLengthId, x => x.SpotLengthCost);
+                var frequencies = allocation.Frequencies.Where(x => x.Frequency > 0).ToList();
+
+                var spotResult = new PlanPricingAllocatedSpot
+                {
+                    Id = originalProgram.Program.ManifestId,
+                    SpotFrequencies = frequencies
+                        .Select(x => new PlanPricingAllocatedSpot.SpotFrequency
+                        {
+                            SpotLengthId = x.SpotLengthId,
+                            SpotCost = spotCostBySpotLengthId[x.SpotLengthId],
+                            SpotCostWithMargin = GeneralMath.CalculateCostWithMargin(spotCostBySpotLengthId[x.SpotLengthId], programInventoryParameters.Margin),
+                            Spots = x.Frequency
+                        })
+                        .ToList(),
+                    StandardDaypart = daypartDefaultsById[originalSpot.DaypartId],
+                    Impressions30sec = originalSpot.Impressions30sec,
+                    TotalImpressions = frequencies.Sum(x => x.Frequency * (originalSpot.Impressions30sec * spotScaleFactorBySpotLengthId[x.SpotLengthId])),
+                    ContractMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.ContractMediaWeekId),
+                    InventoryMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.InventoryMediaWeekId)
                 };
 
                 results.Add(spotResult);
@@ -1331,7 +1732,7 @@ namespace Services.Broadcast.ApplicationServices
             { 
                 totalProgramCost += apiProgram.TotalCostWithMargin;
                 totalProgramImpressions += apiProgram.TotalImpressions;
-                totalProgramSpots += apiProgram.Spots;
+                totalProgramSpots += apiProgram.TotalSpots;
             }
         }
 
@@ -1348,19 +1749,58 @@ namespace Services.Broadcast.ApplicationServices
             };
 
             var plan = _PlanRepository.GetPlan(planId);
-            _SetPlanSpotLengthForBackwardsCompatibility(plan);
             var inventorySourceIds = requestParameters.InventorySourceIds.IsEmpty() ?
                 _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes()) :
                 requestParameters.InventorySourceIds;
 
-            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, pricingParams, inventorySourceIds, diagnostic);
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(
+                plan, 
+                pricingParams, 
+                inventorySourceIds, 
+                diagnostic, 
+                isProprietary: !requestParameters.InventorySourceIds.IsEmpty());
             var groupedInventory = _GroupInventory(inventory);
             var proprietaryEstimates = _CalculateProprietaryInventorySourceEstimates(plan, pricingParams, diagnostic);
 
             var pricingApiRequest = new PlanPricingApiRequestDto
             {
                 Weeks = _GetPricingModelWeeks(plan, proprietaryEstimates, pricingParams, out List<int> skippedWeeksIds),
-                Spots = _GetPricingModelSpots(groupedInventory, inventory, skippedWeeksIds)
+                Spots = _GetPricingModelSpots(groupedInventory, skippedWeeksIds)
+            };
+
+            return pricingApiRequest;
+        }
+
+        public PlanPricingApiRequestDto_v3 GetPricingApiRequestPrograms_v3(int planId, PricingInventoryGetRequestParametersDto requestParameters)
+        {
+            var diagnostic = new PlanPricingJobDiagnostic();
+            var pricingParams = new ProgramInventoryOptionalParametersDto
+            {
+                MinCPM = requestParameters.MinCpm,
+                MaxCPM = requestParameters.MaxCpm,
+                InflationFactor = requestParameters.InflationFactor,
+                Margin = requestParameters.Margin,
+                MarketGroup = requestParameters.MarketGroup
+            };
+
+            var plan = _PlanRepository.GetPlan(planId);
+            var inventorySourceIds = requestParameters.InventorySourceIds.IsEmpty() ?
+                _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes()) :
+                requestParameters.InventorySourceIds;
+
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(
+                plan,
+                pricingParams,
+                inventorySourceIds,
+                diagnostic,
+                isProprietary: !requestParameters.InventorySourceIds.IsEmpty());
+            var groupedInventory = _GroupInventory(inventory);
+            var proprietaryEstimates = _CalculateProprietaryInventorySourceEstimates(plan, pricingParams, diagnostic);
+
+            var pricingApiRequest = new PlanPricingApiRequestDto_v3
+            {
+                Weeks = _GetPricingModelWeeks_v3(plan, proprietaryEstimates, pricingParams, out List<int> skippedWeeksIds),
+                Spots = _GetPricingModelSpots_v3(groupedInventory, skippedWeeksIds)
             };
 
             return pricingApiRequest;
@@ -1370,7 +1810,6 @@ namespace Services.Broadcast.ApplicationServices
         {
             var diagnostic = new PlanPricingJobDiagnostic();
             var plan = _PlanRepository.GetPlan(planId);
-            _SetPlanSpotLengthForBackwardsCompatibility(plan);
             var pricingParams = new ProgramInventoryOptionalParametersDto
             {
                 MinCPM = requestParameters.MinCpm,
@@ -1382,7 +1821,13 @@ namespace Services.Broadcast.ApplicationServices
                 _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes()) :
                 requestParameters.InventorySourceIds;
 
-            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, pricingParams, inventorySourceIds, diagnostic);
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(
+                plan, 
+                pricingParams, 
+                inventorySourceIds, 
+                diagnostic, 
+                isProprietary: !requestParameters.InventorySourceIds.IsEmpty());
+
             return inventory;
         }
 

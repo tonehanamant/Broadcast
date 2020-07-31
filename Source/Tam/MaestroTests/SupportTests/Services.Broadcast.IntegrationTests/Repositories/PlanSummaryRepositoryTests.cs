@@ -86,7 +86,6 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 Equivalized = true,
                 Name = "New Plan",
                 ProductId = 1,
-                SpotLengthId = 1,
                 CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 50 } },
                 AudienceType = AudienceTypeEnum.Nielsen,
                 AudienceId = 31,

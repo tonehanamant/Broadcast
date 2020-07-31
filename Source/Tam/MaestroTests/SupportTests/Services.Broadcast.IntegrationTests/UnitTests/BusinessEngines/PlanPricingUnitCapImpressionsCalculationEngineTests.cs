@@ -25,7 +25,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 {
                     ManifestId = 1,
                     InventoryPricingQuarterType = InventoryPricingQuarterType.Plan,
-                    SpotCost = 50,
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = 50
+                        }
+                    },
                     ProjectedImpressions = 5000,
                     ProvidedImpressions = 5000,
                     InventorySource = new InventorySource
@@ -90,7 +96,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 {
                     ManifestId = 1,
                     InventoryPricingQuarterType = InventoryPricingQuarterType.Plan,
-                    SpotCost = 50,
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = 50
+                        }
+                    },
                     ProjectedImpressions = 5000,
                     ProvidedImpressions = 5000,
                     InventorySource = new InventorySource
@@ -155,7 +167,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 {
                     ManifestId = 1,
                     InventoryPricingQuarterType = InventoryPricingQuarterType.Plan,
-                    SpotCost = 50,
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = 50
+                        }
+                    },
                     ProjectedImpressions = 5000,
                     ProvidedImpressions = 5000,
                     InventorySource = new InventorySource
@@ -197,7 +215,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 {
                     ManifestId = 1,
                     InventoryPricingQuarterType = InventoryPricingQuarterType.Plan,
-                    SpotCost = 50,
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = 50
+                        }
+                    },
                     ProjectedImpressions = 2000,
                     ProvidedImpressions = 2000,
                     InventorySource = new InventorySource
@@ -261,7 +285,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 {
                     ManifestId = 1,
                     InventoryPricingQuarterType = InventoryPricingQuarterType.Plan,
-                    SpotCost = 50,
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = 50
+                        }
+                    },
                     ProjectedImpressions = 5000,
                     ProvidedImpressions = 5000,
                     InventorySource = new InventorySource
@@ -337,7 +367,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 {
                     ManifestId = 1,
                     InventoryPricingQuarterType = InventoryPricingQuarterType.Plan,
-                    SpotCost = 50,
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = 50
+                        }
+                    },
                     ProjectedImpressions = 5000,
                     ProvidedImpressions = 5000,
                     InventorySource = new InventorySource
@@ -429,7 +465,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 {
                     ManifestId = 1,
                     InventoryPricingQuarterType = InventoryPricingQuarterType.Plan,
-                    SpotCost = 50,
+                    ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
+                    {
+                        new PlanPricingInventoryProgram.ManifestRate
+                        {
+                            Cost = 50
+                        }
+                    },
                     ProjectedImpressions = 5000,
                     ProvidedImpressions = 5000,
                     InventorySource = new InventorySource

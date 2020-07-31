@@ -691,7 +691,11 @@ namespace Services.Broadcast.ApplicationServices
             var marketCoverages = _MarketCoverageRepository.GetLatestMarketCoveragesWithStations();
             var manifestDaypartIds = manifests.SelectMany(x => x.ManifestDayparts).Select(x => x.Id.Value).Distinct();
             var primaryProgramsByManifestDaypartIds = _StationProgramRepository.GetPrimaryProgramsForManifestDayparts(manifestDaypartIds);
-            plan.SpotLengthId = plan.CreativeLengths.First().SpotLengthId;
+
+            // TODO remove this after setting up the correct behaviour for v3
+            if (BroadcastServiceSystemParameter.PlanPricingEndpointVersion == "2")
+                allocatedSpots.ForEach(x => x.TotalImpressions = x.SpotFrequencies.Sum(y => y.Spots * x.Impressions30sec));
+
             return new ProgramLineupReportData(
                 plan, 
                 pricingJob, 

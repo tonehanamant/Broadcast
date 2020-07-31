@@ -131,10 +131,11 @@
         }
       ],
       "ManifestId": 0,
+      "ManifestRates": null,
       "ManifestWeeks": null,
       "ProjectedImpressions": 3450.0,
       "ProvidedImpressions": null,
-      "SpotCost": 0.0,
+      "SpotLengthId": 0,
       "StandardDaypartId": 0,
       "Station": {
         "Affiliation": null,
@@ -183,10 +184,11 @@
         }
       ],
       "ManifestId": 0,
+      "ManifestRates": null,
       "ManifestWeeks": null,
       "ProjectedImpressions": 2100.0,
       "ProvidedImpressions": null,
-      "SpotCost": 0.0,
+      "SpotLengthId": 0,
       "StandardDaypartId": 0,
       "Station": {
         "Affiliation": null,

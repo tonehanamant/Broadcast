@@ -18,14 +18,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             IPlanPricingInventoryQuarterCalculatorEngine planPricingInventoryQuarterCalculatorEngine,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IDaypartCache daypartCache,
-            IQuarterCalculationEngine quarterCalculationEngine)
+            IQuarterCalculationEngine quarterCalculationEngine,
+            ISpotLengthEngine spotLengthEngine)
             : base(
                   broadcastDataRepositoryFactory, 
                   impressionsCalculationEngine,
                   planPricingInventoryQuarterCalculatorEngine,
                   mediaMonthAndWeekAggregateCache,
                   daypartCache,
-                  quarterCalculationEngine)
+                  quarterCalculationEngine,
+                  spotLengthEngine)
         {
         }
 
@@ -40,9 +42,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         public List<PlanPricingInventoryProgram> UT_FilterProgramsByMinAndMaxCPM(
             List<PlanPricingInventoryProgram> programs,
             decimal? minCPM,
-            decimal? maxCPM)
+            decimal? maxCPM,
+            bool isProprietary)
         {
-            return CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, minCPM, maxCPM);
+            return CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, minCPM, maxCPM, isProprietary);
         }
 
         public void UT_ApplyInflationFactorToSpotCost(List<PlanPricingInventoryProgram> programs, double? inflationFactor)
@@ -57,21 +60,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
         public void UT_ApplyNTIConversionToNSI(
             PlanDto plan,
-            List<PlanPricingInventoryProgram> programs,
-            DisplayDaypart planDisplayDaypartDays)
+            List<PlanPricingInventoryProgram> programs)
         {
-            ApplyNTIConversionToNSI(plan, programs, planDisplayDaypartDays);
+            ApplyNTIConversionToNSI(plan, programs);
         }
 
         public List<PlanPricingInventoryProgram> UT_GetFullPrograms(
             List<DateRange> dateRanges, 
-            int spotLengthId,
+            List<int> spotLengthIds,
             List<int> supportedInventorySourceTypes, 
             List<short> availableMarkets, 
             QuarterDetailDto planQuarter, 
             List<QuarterDetailDto> fallbackQuarters)
         {
-            return _GetFullPrograms(dateRanges, spotLengthId, supportedInventorySourceTypes, availableMarkets, planQuarter, fallbackQuarters);
+            return _GetFullPrograms(dateRanges, spotLengthIds, supportedInventorySourceTypes, availableMarkets, planQuarter, fallbackQuarters);
         }
     }
 }

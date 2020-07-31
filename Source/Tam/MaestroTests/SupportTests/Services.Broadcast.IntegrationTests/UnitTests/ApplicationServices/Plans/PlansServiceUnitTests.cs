@@ -1391,7 +1391,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 Equivalized = true,
                 Name = "New Plan",
                 ProductId = 1,
-                SpotLengthId = 1,
                 CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 50 } },
                 Status = Entities.Enums.PlanStatusEnum.Working,
                 FlightStartDate = new DateTime(2019, 1, 1),

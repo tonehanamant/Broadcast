@@ -33,7 +33,7 @@ namespace Services.Broadcast.BusinessEngines.PlanPricing
                     InventoryId = s.Id,
                     StationId = inventoryItem.Station?.Id ?? -1,
                     MarketCode = inventoryItem.Station?.MarketCode ?? -1,
-                    s.Spots,
+                    s.TotalSpots,
                     s.TotalCostWithMargin, 
                     s.TotalImpressions
                 };
@@ -60,7 +60,7 @@ namespace Services.Broadcast.BusinessEngines.PlanPricing
                     Rank = marketCoverage.Rank ?? -2,
                     MarketCoveragePercent = marketCoverage.PercentageOfUS,
                     Stations = marketGroup.Select(s => s.StationId).Distinct().Count(),
-                    Spots = marketGroup.Sum(k => k.Spots),
+                    Spots = marketGroup.Sum(k => k.TotalSpots),
                     Impressions = aggregatedImpressions,
                     Budget = aggregatedSpotCostWithMargin,
                     Cpm = ProposalMath.CalculateCpm(aggregatedSpotCostWithMargin, aggregatedImpressions),

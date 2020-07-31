@@ -1898,7 +1898,6 @@
   "ProductId": 5575,
   "SecondaryAudiences": [],
   "ShareBookId": 458,
-  "SpotLengthId": 1,
   "Status": 1,
   "TargetCPM": 2.4000,
   "TargetCPP": 2926.8292,

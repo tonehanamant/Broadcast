@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.Entities.Plan.Pricing
@@ -9,17 +10,17 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public int StationInventoryManifestId { get; set; }
         public MediaWeek InventoryMediaWeek { get; set; }
         public MediaWeek ContractMediaWeek { get; set; }
-        public double Impressions { get; set; }
-        public decimal SpotCost { get; set; }
-        public decimal SpotCostWithMargin { get; set; }
-        public int Spots { get; set; }
+        public double Impressions30sec { get; set; }
         public DaypartDefaultDto StandardDaypart { get; set; }
+        public List<SpotFrequency> SpotFrequencies { get;set; }
+
+        public double TotalImpressions { get; set; }
 
         public decimal TotalCost
         {
             get
             {
-                return SpotCost * Spots;
+                return SpotFrequencies.Sum(x => x.SpotCost * x.Spots);
             }
         }
 
@@ -27,16 +28,27 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         {
             get
             {
-                return SpotCostWithMargin * Spots;
+                return SpotFrequencies.Sum(x => x.SpotCostWithMargin * x.Spots);
             }
         }
 
-        public double TotalImpressions
+        public int TotalSpots
         {
             get
             {
-                return Impressions * Spots;
+                return SpotFrequencies.Sum(x => x.Spots);
             }
+        }
+
+        public class SpotFrequency
+        {
+            public int SpotLengthId { get; set; }
+
+            public decimal SpotCost { get; set; }
+
+            public decimal SpotCostWithMargin { get; set; }
+
+            public int Spots { get; set; }
         }
     }
 }
