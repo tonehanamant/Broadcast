@@ -230,7 +230,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _SetPlanVersionNumber(plan);
             _SetPlanFlightDays(plan);
 
-            if (plan.Status == PlanStatusEnum.Contracted && plan.GoalBreakdownType != PlanGoalBreakdownTypeEnum.CustomByWeek)
+            if (plan.Status == PlanStatusEnum.Contracted && plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.EvenDelivery)
             {
                 plan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeek;
             }

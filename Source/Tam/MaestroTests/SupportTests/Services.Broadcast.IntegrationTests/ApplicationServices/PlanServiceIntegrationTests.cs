@@ -69,6 +69,26 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("long_running")]
+        public void CreateNewPlan_ContractedPlan()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                PlanDto newPlan = _GetNewPlan();
+                newPlan.Status = PlanStatusEnum.Contracted;
+
+                DateTime nowDate = new DateTime(2019, 01, 01);
+                string username = "integration_test";
+                var newPlanId = _PlanService.SavePlan(newPlan, username, nowDate);
+                var plan = _PlanService.GetPlan(newPlanId);
+
+                Assert.IsTrue(newPlanId > 0);
+                Assert.AreEqual(plan.GoalBreakdownType, PlanGoalBreakdownTypeEnum.CustomByWeek);
+            }
+        }
+
+
+        [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
         public void CreateNewPlan_DefaultWeight()
