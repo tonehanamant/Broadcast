@@ -376,15 +376,5 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             return item;
         }
-
-        [Test]
-        public void GetExportGeneratedTimestamp()
-        {
-            var engine = new InventoryExportEngine();
-            
-            var result = engine.GetExportGeneratedTimestamp(new DateTime(2020,01,01, 10,10,10));
-
-            Assert.AreEqual("Generated : 01/01/2020 10:10:10", result);
-        }
     }
 }
