@@ -3,5 +3,7 @@
   "CallLetters": "KOCO-TV 5.2",
   "Code": 1378,
   "LegacyCallLetters": "OOCO",
-  "MarketCode": 250
+  "MarketCode": 250,
+  "OwnershipGroupName": null,
+  "SalesGroupName": null
 }

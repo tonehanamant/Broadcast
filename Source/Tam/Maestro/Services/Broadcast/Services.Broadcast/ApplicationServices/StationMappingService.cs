@@ -79,13 +79,51 @@ namespace Services.Broadcast.ApplicationServices
         {
             var stationMappings = _ReadStationMappingsFile(fileStream);
 
+            _PopulateIndependentStationsOwnershipGroupName(stationMappings);
+            _ProcessStationMappings(userName, createdDate, stationMappings);
+        }
+
+        private void _PopulateIndependentStationsOwnershipGroupName(List<StationMappingsFileRequestDto> stationMappings)
+        {
+            foreach (var mapping in stationMappings
+                .Where(x=> x.Affiliate != null && x.Affiliate.Equals("IND", StringComparison.OrdinalIgnoreCase)
+                            && string.IsNullOrWhiteSpace(x.OwnershipGroupName)))
+            {
+                mapping.OwnershipGroupName = mapping.CadentCallLetters;
+            }
+        }
+
+        private void _ProcessStationMappings(string userName, DateTime createdDate, List<StationMappingsFileRequestDto> stationMappings)
+        {
             var stationGroups = stationMappings.GroupBy(x => x.CadentCallLetters);
             foreach (var stationGroup in stationGroups)
             {
                 if (stationGroup.Key != null)
                 {
+                    _ValidateSalesAndOwnerGroupName(stationGroup.ToList());
                     SaveStationMappings(stationGroup, userName, createdDate);
                 }
+            }
+        }
+
+        private void _ValidateSalesAndOwnerGroupName(List<StationMappingsFileRequestDto> items)
+        {
+            string cadentCallLetters = items.First().CadentCallLetters;
+            if (items.Any(x => string.IsNullOrWhiteSpace(x.SalesGroupName)))
+            {
+                throw new ApplicationException($"Station {cadentCallLetters} does not have sales group populated");
+            }
+            if (items.Any(x => string.IsNullOrWhiteSpace(x.OwnershipGroupName)))
+            {
+                throw new ApplicationException($"Station {cadentCallLetters} does not have ownership group populated");
+            }
+            if (items.Select(x=>x.SalesGroupName.Trim()).Distinct().Count() > 1)
+            {
+                throw new ApplicationException($"Station {cadentCallLetters} cannot have multiple sales groups");
+            }
+            if (items.Select(x => x.OwnershipGroupName.Trim()).Distinct().Count() > 1)
+            {
+                throw new ApplicationException($"Station {cadentCallLetters} cannot have multiple ownership groups");
             }
         }
 
@@ -112,6 +150,7 @@ namespace Services.Broadcast.ApplicationServices
 
             // Get the station
             var station = _StationRepository.GetBroadcastStationByLegacyCallLetters(cadentCallLetters);
+            
             // If the station doesn't exist, create it
             if (station == null)
             {
@@ -121,10 +160,19 @@ namespace Services.Broadcast.ApplicationServices
                     Affiliation = stationGroup.First().Affiliate,
                     LegacyCallLetters = stationGroup.First().CadentCallLetters,
                     ModifiedDate = createdDate,
+                    SalesGroupName = stationGroup.Select(x => x.SalesGroupName).First(),
+                    OwnershipGroupName = stationGroup.Select(x => x.OwnershipGroupName).First()
                 };
 
                 var stationMediaMonthId = _StationRepository.GetLatestMediaMonthIdFromStationMonthDetailsList();
                 station = _StationRepository.CreateStationWithMonthDetails(stationDtoToSave, stationMediaMonthId, userName);
+            }
+            else
+            {                
+                _StationRepository.UpdateStation(
+                    stationGroup.Select(x => x.OwnershipGroupName).First()
+                    , stationGroup.Select(x => x.SalesGroupName).First()
+                    , station.Id, userName, createdDate);
             }
 
             // Since we allow multiple map sets for a station, remove the existing ones, and add the new ones, to avoid duplicate mappings

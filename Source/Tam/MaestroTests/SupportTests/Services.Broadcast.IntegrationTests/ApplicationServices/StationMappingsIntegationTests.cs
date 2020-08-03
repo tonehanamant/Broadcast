@@ -15,6 +15,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
     [Category("short_running")]
+    [UseReporter(typeof(DiffReporter))]
     public class StationMappingsIntegationTests
     {
         private readonly IStationMappingService _StationMappingService;
@@ -30,7 +31,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void CanSaveAndRetrieveStationMappings()
         {
             using (new TransactionScopeWrapper())
@@ -63,7 +63,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void CanSaveAndRetrieveStationMappingsWithOnlyExtendedCallLetters()
         {
             using (new TransactionScopeWrapper())
@@ -110,7 +109,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void CreateNewUnratedStation()
         {
             using (new TransactionScopeWrapper())
@@ -153,7 +151,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void CreateNewUnratedStationWithoutAffiliate()
         {
             using (new TransactionScopeWrapper())
@@ -298,11 +295,76 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Ignore("Not certain why we are ignoring this...")] // This was only used to introduce the mappings to the integration database
+        [Ignore("This was only used to introduce the mappings to the integration database")]
         public void UploadStationMappingsExcellFile()
         {
             var fileName = "CadentBroadcastStationList.xlsx";
-            _StationMappingService.LoadStationMappings(new FileStream($@".\Files\ImportStationMappings\{fileName}", FileMode.Open, FileAccess.Read), fileName, "integration_test", DateTime.Now);
+            _StationMappingService.LoadStationMappings(new FileStream($@".\Files\ImportStationMappings\{fileName}"
+                , FileMode.Open, FileAccess.Read), fileName, "integration_test", DateTime.Now);
+        }
+
+        [Test]
+        public void UploadStationMappingsExcellFile_EmptyOwnership()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var fileName = "CadentBroadcastStationList_EmptyOwnership.xlsx";
+                Assert.Throws<ApplicationException>(() => 
+                    _StationMappingService.LoadStationMappings(new FileStream($@".\Files\ImportStationMappings\{fileName}"
+                                , FileMode.Open, FileAccess.Read), fileName, "integration_test", DateTime.Now)
+                ,    "Station CW4 does not have ownership group populated");
+            }
+        }
+
+        [Test]
+        public void UploadStationMappingsExcellFile_EmptyOwnershipInd()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var fileName = "CadentBroadcastStationList_EmptyOwnershipInd.xlsx";
+                Assert.DoesNotThrow(() =>
+                    _StationMappingService.LoadStationMappings(new FileStream($@".\Files\ImportStationMappings\{fileName}"
+                                , FileMode.Open, FileAccess.Read), fileName, "integration_test", DateTime.Now));
+            }
+        }
+
+        [Test]
+        public void UploadStationMappingsExcellFile_EmptySalesGroup()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var fileName = "CadentBroadcastStationList_EmptySales.xlsx";
+                Assert.Throws<ApplicationException>(() =>
+                    _StationMappingService.LoadStationMappings(new FileStream($@".\Files\ImportStationMappings\{fileName}"
+                                , FileMode.Open, FileAccess.Read), fileName, "integration_test", DateTime.Now)
+                , "Station CLTV does not have sales group populated");
+            }
+        }
+
+        [Test]
+        public void UploadStationMappingsExcellFile_DifferentOwnership()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var fileName = "CadentBroadcastStationList_DifferentOwnership.xlsx";
+                Assert.Throws<ApplicationException>(() =>
+                    _StationMappingService.LoadStationMappings(new FileStream($@".\Files\ImportStationMappings\{fileName}"
+                                , FileMode.Open, FileAccess.Read), fileName, "integration_test", DateTime.Now)
+                , "Station CLTV cannot have multiple ownership groups");
+            }
+        }
+
+        [Test]
+        public void UploadStationMappingsExcellFile_DifferentSales()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var fileName = "CadentBroadcastStationList_DifferentSales.xlsx";
+                Assert.Throws<ApplicationException>(() =>
+                    _StationMappingService.LoadStationMappings(new FileStream($@".\Files\ImportStationMappings\{fileName}"
+                                , FileMode.Open, FileAccess.Read), fileName, "integration_test", DateTime.Now)
+                , "Station CLTV cannot have multiple sales groups");
+            }
         }
     }
 }

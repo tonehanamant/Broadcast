@@ -199,6 +199,19 @@ BEGIN
 END
 /*************************************** END BP-836 *****************************************************/
 
+/*************************************** START BP-814 *****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('stations')
+				 AND name = 'sales_group_name')
+BEGIN
+	ALTER TABLE [dbo].[stations] ADD [sales_group_name] VARCHAR(100) NULL
+END
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('stations')
+				 AND name = 'owner_name')
+BEGIN
+	ALTER TABLE [dbo].[stations] ADD [owner_name] VARCHAR(100) NULL
+END
+/*************************************** END BP-814 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

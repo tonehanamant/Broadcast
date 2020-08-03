@@ -102,6 +102,16 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="marketCodes">Market codes to the filter the stations</param>
         List<DisplayBroadcastStation> GetBroadcastStationsWithLatestDetailsByMarketCodes(List<short> marketCodes);
+
+        /// <summary>
+        /// Updates the station owner and sales group names.
+        /// </summary>
+        /// <param name="ownerName">Name of the owner.</param>
+        /// <param name="salesGroupName">Name of the sales group.</param>
+        /// <param name="stationId">Station id</param>
+        /// <param name="user">The user making the update.</param>
+        /// <param name="timeStamp">The time stamp when the update was done.</param>
+        void UpdateStation(string ownerName, string salesGroupName, int stationId, string user, DateTime timeStamp);
     }
 
     public class StationRepository : BroadcastRepositoryBase, IStationRepository
@@ -338,6 +348,20 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
+        public void UpdateStation(string ownerName, string salesGroupName, int stationId, string user, DateTime timeStamp)
+        {
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    var station = context.stations.First(s => s.id == stationId);
+                    station.modified_by = user;
+                    station.modified_date = timeStamp;
+                    station.owner_name = ownerName;
+                    station.sales_group_name = salesGroupName;
+                    context.SaveChanges();
+                });
+        }
+
         public void UpdateStationList(List<int> stationIds, string user, DateTime timeStamp, int inventorySourceId)
         {
             _InReadUncommitedTransaction(
@@ -486,7 +510,9 @@ namespace Services.Broadcast.Repositories
                 Affiliation = newStation.affiliation,
                 MarketCode = newStation.market_code,
                 LegacyCallLetters = newStation.legacy_call_letters,
-                ModifiedDate = newStation.modified_date
+                ModifiedDate = newStation.modified_date,
+                OwnershipGroupName = newStation.owner_name,
+                SalesGroupName = newStation.sales_group_name
             };
         }
 
@@ -500,7 +526,9 @@ namespace Services.Broadcast.Repositories
                 affiliation = station.Affiliation,
                 modified_date = station.ModifiedDate.Value,
                 market_code =  (short?)station.MarketCode,
-                modified_by = user
+                modified_by = user,
+                owner_name = station.OwnershipGroupName,
+                sales_group_name = station.SalesGroupName
             };
         }
 

@@ -16,5 +16,9 @@ namespace Services.Broadcast.Entities
         public string NSICallLetters { get; set; }
         [ExcelColumn(7)]
         public string Affiliate { get; set; }
+        [ExcelColumn(9)]
+        public string OwnershipGroupName { get; set; }
+        [ExcelColumn(10)]
+        public string SalesGroupName { get; set; }
     }
 }

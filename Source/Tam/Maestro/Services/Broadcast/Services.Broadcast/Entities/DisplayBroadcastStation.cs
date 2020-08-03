@@ -20,6 +20,8 @@ namespace Services.Broadcast.Entities
         public string RateDataThrough { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public DateTime? ManifestMaxEndDate { get; set; }
+        public string OwnershipGroupName { get; set; }
+        public string SalesGroupName { get; set; }
 
         public override string ToString()
         {

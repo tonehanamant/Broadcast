@@ -3,5 +3,7 @@
   "CallLetters": "KOB+",
   "Code": 30,
   "LegacyCallLetters": "KOB",
-  "MarketCode": 390
+  "MarketCode": 390,
+  "OwnershipGroupName": null,
+  "SalesGroupName": null
 }

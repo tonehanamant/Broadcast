@@ -2206,6 +2206,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventor
           <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="modified_date" Type="datetime" Nullable="false" />
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sales_group_name" Type="varchar" MaxLength="100" />
+          <Property Name="owner_name" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="system_component_parameters">
           <Key>
@@ -11601,6 +11603,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_spot_snapshots" Relationship="BroadcastModel.FK_station_inventory_spot_snapshots_stations" FromRole="station" ToRole="station_inventory_spot_snapshots" />
           <NavigationProperty Name="station_month_details" Relationship="BroadcastModel.FK_station_month_details_stations" FromRole="station" ToRole="station_month_details" />
           <NavigationProperty Name="station_mappings" Relationship="BroadcastModel.FK_station_mappings_stations" FromRole="station" ToRole="station_mappings" />
+          <Property Name="sales_group_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="owner_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_stations_markets">
           <End Type="BroadcastModel.market" Role="market" Multiplicity="0..1" />
@@ -15929,6 +15933,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="stations">
             <EntityTypeMapping TypeName="BroadcastModel.station">
               <MappingFragment StoreEntitySet="stations">
+                <ScalarProperty Name="owner_name" ColumnName="owner_name" />
+                <ScalarProperty Name="sales_group_name" ColumnName="sales_group_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />

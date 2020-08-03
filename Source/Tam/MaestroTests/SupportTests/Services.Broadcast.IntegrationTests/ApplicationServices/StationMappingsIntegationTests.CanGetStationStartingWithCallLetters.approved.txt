@@ -3,5 +3,7 @@
   "CallLetters": "TKOCO-TV 5.2",
   "Code": null,
   "LegacyCallLetters": "TOOCO",
-  "MarketCode": null
+  "MarketCode": null,
+  "OwnershipGroupName": null,
+  "SalesGroupName": null
 }

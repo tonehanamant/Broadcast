@@ -637,6 +637,21 @@
     <None Include="Files\ImportStationMappings\CadentBroadcastStationList.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ImportStationMappings\CadentBroadcastStationList_DifferentOwnership.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ImportStationMappings\CadentBroadcastStationList_DifferentSales.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ImportStationMappings\CadentBroadcastStationList_EmptyOwnership.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ImportStationMappings\CadentBroadcastStationList_EmptyOwnershipInd.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ImportStationMappings\CadentBroadcastStationList_EmptySales.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\InventoryDaypartParsing\CNN_dayparts_valid.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
