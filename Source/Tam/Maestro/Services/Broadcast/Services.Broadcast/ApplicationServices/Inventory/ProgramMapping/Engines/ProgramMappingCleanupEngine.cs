@@ -1,6 +1,7 @@
 ﻿using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -59,7 +60,15 @@ namespace Services.Broadcast.ApplicationServices.Inventory.ProgramMapping
 
             foreach (var pattern in filterPatterns)
             {
-                result = Regex.Replace(result, pattern, "", RegexOptions.IgnoreCase);
+                try
+                {
+                    result = Regex.Replace(result, pattern, "", RegexOptions.IgnoreCase);
+                }
+                catch(Exception e)
+                {
+                    result = result;
+                    Debug.WriteLine(e);
+                }
             }
 
             return result;

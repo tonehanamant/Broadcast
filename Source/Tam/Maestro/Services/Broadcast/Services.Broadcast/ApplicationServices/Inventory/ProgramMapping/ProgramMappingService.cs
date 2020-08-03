@@ -63,7 +63,7 @@ namespace Services.Broadcast.ApplicationServices
         /// Returns a list of programs that don't have an existing mapping in the database.
         /// </summary>
         /// <returns></returns>
-        List<String> GetUnmappedPrograms();
+        List<UnmappedProgram> GetUnmappedPrograms();
 
         /// <summary>
         /// Given a list of program names, it cleans the program names according to the rules and returns a clean list with the original values.
@@ -320,19 +320,46 @@ namespace Services.Broadcast.ApplicationServices
             return report;
         }
 
-        public List<String> GetUnmappedPrograms()
+        public List<UnmappedProgram> GetUnmappedPrograms()
         {
             _LogInfo("Started process to get unmapped programs.");
             var durationSw = new Stopwatch();
             durationSw.Start();
 
-            var programNames = _InventoryRepository.GetUnmappedPrograms();
+            var programNames = _InventoryRepository.GetUnmappedPrograms().Where(p => p != null).ToList();
 
             durationSw.Stop();
             _LogInfo($"Obtained unmapped programs with count {programNames.Count} in {durationSw.ElapsedMilliseconds} ms.");
 
-            return programNames;
+            var cleanPrograms = GetCleanPrograms(programNames);
 
+            var result = MatchExistingMappings(cleanPrograms).OrderByDescending(p => p.MatchConfidence).ToList();
+
+            return result;
+
+        }
+
+        private List<UnmappedProgram> MatchExistingMappings(List<UnmappedProgram> cleanPrograms)
+        {
+            var result = cleanPrograms;
+
+            var programMappings = _ProgramMappingRepository.GetProgramMappings();
+
+            foreach(var program in cleanPrograms)
+            {
+                var foundMapping = programMappings
+                    .Where(m => m.OriginalProgramName.Equals(program.ProgramName, StringComparison.InvariantCultureIgnoreCase))
+                    .SingleOrDefault();
+                if (foundMapping != null)
+                {
+                    program.MatchedName = foundMapping.OfficialProgramName;
+                    program.Genre = foundMapping.OfficialGenre.Name;
+                    program.ShowType = foundMapping.OfficialShowType.Name;
+                    program.MatchConfidence = 1; //Exact match found
+                }               
+            }
+
+            return result;
         }
 
         public List<UnmappedProgram> GetCleanPrograms(List<string> programList)

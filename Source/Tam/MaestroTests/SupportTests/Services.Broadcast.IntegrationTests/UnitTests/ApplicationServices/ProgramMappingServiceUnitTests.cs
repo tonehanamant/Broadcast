@@ -105,6 +105,44 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetUnmappedPrograms()
+        {
+            _InventoryRepositoryMock.Setup(s => s.GetUnmappedPrograms())
+                .Returns(new List<string>()
+                {
+                    "CHANNEL 9 NEWS 6PM", "FAMILY GUY (X2)", "SOME OTHER NEWS"
+                });
+
+            _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("CHANNEL 9 NEWS 6PM"))
+                .Returns("CHANNEL 9 NEWS");
+            _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("FAMILY GUY (X2)"))
+                .Returns("FAMILY GUY");
+
+            _ProgramMappingRepositoryMock.Setup(s => s.GetProgramMappings())
+                .Returns(new List<ProgramMappingsDto>()
+                {
+                    new ProgramMappingsDto()
+                    {
+                        OfficialProgramName = "NEWS",
+                        OriginalProgramName = "CHANNEL 9 NEWS",
+                        OfficialGenre = new Genre()
+                        {
+                             Name = "NEWS"
+                        },
+                        OfficialShowType = new ShowTypeDto()
+                        {
+                            Name = "SERIES"
+                        }
+                    }
+                });
+
+            var result = _ProgramMappingService.GetUnmappedPrograms();
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
         public void Construction()
         {
             Assert.IsNotNull(_ProgramMappingService);

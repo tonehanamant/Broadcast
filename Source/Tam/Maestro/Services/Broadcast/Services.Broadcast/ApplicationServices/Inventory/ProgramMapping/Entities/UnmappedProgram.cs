@@ -10,5 +10,10 @@ namespace Services.Broadcast.ApplicationServices.Inventory.ProgramMapping.Entiti
     {
         public string ProgramName { get; set; }
         public string OriginalName { get; set; }
+        public string MatchedName {get; set;}
+        public string Genre { get; set; }
+        public string ShowType { get; set; }
+
+        public float MatchConfidence { get; set; }
     }
 }
