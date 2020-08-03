@@ -329,7 +329,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             var result = engine.GetExportGeneratedTimestamp(new DateTime(2020, 3, 5, 13, 20, 30));
 
-            Assert.AreEqual("Generated : 05/03/2020 13:20:30", result);
+            Assert.AreEqual("Generated : 03/05/2020 13:20:30", result);
         }
 
         [Test]

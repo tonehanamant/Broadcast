@@ -1,10 +1,18 @@
 [
   {
+    "Genre": null,
+    "MatchConfidence": 0.0,
+    "MatchedName": null,
     "OriginalName": "FAB MORN NWS",
-    "ProgramName": "FAB MORNING NEWS"
+    "ProgramName": "FAB MORNING NEWS",
+    "ShowType": null
   },
   {
+    "Genre": null,
+    "MatchConfidence": 0.0,
+    "MatchedName": null,
     "OriginalName": "*** SEINFELD (ENCORE)",
-    "ProgramName": "SEINFELD"
+    "ProgramName": "SEINFELD",
+    "ShowType": null
   }
 ]

@@ -1172,11 +1172,11 @@ namespace Services.Broadcast.BusinessEngines
             {
                 if (spotLengthId.HasValue)
                 {
-                    return (int)_CalculateUnitsForSingleSpotLength(impressionsPerUnit, aduImpressions, spotLengthId.Value);
+                    return (int)Math.Round(_CalculateUnitsForSingleSpotLength(impressionsPerUnit, aduImpressions, spotLengthId.Value), 0);
                 }
                 else
                 {
-                    return (int)_CalculateUnitsForMultipleSpotLengths(creativeLengths, impressionsPerUnit, aduImpressions);
+                    return (int)Math.Round(_CalculateUnitsForMultipleSpotLengths(creativeLengths, impressionsPerUnit, aduImpressions), 0);
                 }
             }
             else

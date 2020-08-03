@@ -2510,8 +2510,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void AppliesProvidedImpressions_WhenGatheringInventory_ForPricing_v3_Proprietary()
-        {
+        public void ApplyProvidedImpressions()
+        {//AppliesProvidedImpressions_WhenGatheringInventory_ForPricing_v3_Proprietary
             try
             {
                 StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "3";
