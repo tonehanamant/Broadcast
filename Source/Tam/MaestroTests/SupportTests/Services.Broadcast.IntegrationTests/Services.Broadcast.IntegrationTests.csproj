@@ -358,6 +358,7 @@
     <Compile Include="ApplicationServices\CampaignServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\DaypartTypeServiceTests.cs" />
     <Compile Include="ApplicationServices\DetectionConverterTests.cs" />
+    <Compile Include="ApplicationServices\EnvironmentServiceTests.cs" />
     <Compile Include="ApplicationServices\GenreServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ImpressionsServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\InventoryProgramsProcessingServiceIntegrationTests.cs" />

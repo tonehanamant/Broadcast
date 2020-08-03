@@ -1,9 +1,9 @@
-﻿using System;
-using Common.Services.ApplicationServices;
+﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
+using System;
 using System.Collections.Generic;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
@@ -14,6 +14,10 @@ namespace Services.Broadcast.ApplicationServices
     {
         Dictionary<string, string> GetDbInfo();
         EnvironmentDto GetEnvironmentInfo();
+
+        bool IsFeatureToggleEnabled(string key, string username);
+
+        bool IsFeatureToggleEnabledUserAnonymous(string key);
 
         /// <summary>
         /// Authenticates the given username against the Launch Darkly application.
@@ -57,6 +61,16 @@ namespace Services.Broadcast.ApplicationServices
                 _LogError($"Error authenticating user '{username}' against the Launch Darkly application.", ex);
                 return null;
             }
+        }
+
+        public bool IsFeatureToggleEnabled(string key, string username)
+        {
+            return _FeatureToggleHelper.IsToggleEnabled(key, username);
+        }
+
+        public bool IsFeatureToggleEnabledUserAnonymous(string key)
+        {
+            return _FeatureToggleHelper.IsToggleEnabledUserAnonymous(key);
         }
 
         public EnvironmentDto GetEnvironmentInfo()

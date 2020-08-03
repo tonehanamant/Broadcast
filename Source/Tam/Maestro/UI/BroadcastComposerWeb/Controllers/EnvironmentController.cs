@@ -58,6 +58,39 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
+        /// Is the feature enabled for the logged in user?
+        /// The user making the call is used for this query.
+        /// </summary>
+        /// <remarks>
+        ///     For Testing only!!!
+        /// </remarks>
+        /// <param name="key">The feature toggle key.</param>
+        /// <returns>The value of the flag for the user.</returns>
+        [Route("TestIsFeatureToggleEnabled")]
+        public BaseResponse<bool> GetTestIsFeatureToggleEnabled(string key)
+        {
+            var ssid = HttpContext.Current.Request.LogonUserIdentity.User.Value;
+            var employee = SMSClient.Handler.GetEmployee(ssid, false);
+            var loggedInUsername = employee.Employee.Email;
+
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IEnvironmentService>().IsFeatureToggleEnabled(key, loggedInUsername));
+        }
+
+        /// <summary>
+        /// Is the feature enabled for the logged an anonymous user?
+        /// </summary>
+        /// <remarks>
+        ///     For Testing only!!!
+        /// </remarks>
+        /// <param name="key">The feature toggle key.</param>
+        /// <returns>The value of the flag for an anonymous user.</returns>
+        [Route("TestIsFeatureToggleEnabledUserAnonymous")]
+        public BaseResponse<bool> GetTestIsFeatureToggleEnabledUserAnonymous(string key)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IEnvironmentService>().IsFeatureToggleEnabledUserAnonymous(key));
+        }
+
+        /// <summary>
         /// Get environment information
         /// </summary>
         [Route("~/api/v1/environment")]
