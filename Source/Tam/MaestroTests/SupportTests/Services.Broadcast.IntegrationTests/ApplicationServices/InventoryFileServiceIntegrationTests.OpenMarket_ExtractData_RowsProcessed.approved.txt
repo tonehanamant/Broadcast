@@ -299,9 +299,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -596,9 +598,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -893,9 +897,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -1190,9 +1196,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -1487,9 +1495,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -1784,9 +1794,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -2081,9 +2093,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -2378,9 +2392,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -2675,9 +2691,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -2972,9 +2990,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -3269,9 +3289,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -3566,9 +3588,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -3863,9 +3887,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -4160,9 +4186,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -4457,9 +4485,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -4754,9 +4784,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -5051,9 +5083,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -5348,9 +5382,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -5645,9 +5681,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -5942,9 +5980,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -6239,9 +6279,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -6536,9 +6578,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -6833,9 +6877,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -7130,9 +7176,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -7427,9 +7475,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -7724,9 +7774,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -8021,9 +8073,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -8318,9 +8372,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -8615,9 +8671,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -8912,9 +8970,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -9209,9 +9269,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -9506,9 +9568,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -9803,9 +9867,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -10100,9 +10166,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -10397,9 +10465,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -10694,9 +10764,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -10991,9 +11063,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -11288,9 +11362,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -11585,9 +11661,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -11882,9 +11960,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -12179,9 +12259,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     },
     {
@@ -12476,9 +12558,11 @@
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2019-02-06T12:29:32.2666667",
+        "ModifiedDate": "2020-08-03T14:34:22.8533333",
         "OriginMarket": "Fresno-Visalia",
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       }
     }
   ],

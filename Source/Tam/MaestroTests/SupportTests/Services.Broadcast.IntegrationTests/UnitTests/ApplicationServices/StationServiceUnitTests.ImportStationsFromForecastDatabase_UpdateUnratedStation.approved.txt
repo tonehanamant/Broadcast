@@ -34,7 +34,9 @@
         "MarketCode": 123,
         "ModifiedDate": null,
         "OriginMarket": null,
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       },
       "Item2": "UnitTestUser",
       "Item3": "2020-04-11T01:36:26"
@@ -50,7 +52,9 @@
         "MarketCode": 123,
         "ModifiedDate": null,
         "OriginMarket": null,
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       },
       "Item2": "UnitTestUser",
       "Item3": "2020-04-11T01:36:26"
@@ -66,7 +70,9 @@
         "MarketCode": 123,
         "ModifiedDate": null,
         "OriginMarket": null,
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       },
       "Item2": "UnitTestUser",
       "Item3": "2020-04-11T01:36:26"

@@ -107,7 +107,9 @@
       "MarketCode": 373,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -218,7 +220,9 @@
       "MarketCode": null,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -329,7 +333,9 @@
       "MarketCode": 209,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -440,7 +446,9 @@
       "MarketCode": 403,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -551,7 +559,9 @@
       "MarketCode": 407,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -662,7 +672,9 @@
       "MarketCode": null,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -773,7 +785,9 @@
       "MarketCode": 216,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -884,7 +898,9 @@
       "MarketCode": 370,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -995,7 +1011,9 @@
       "MarketCode": 218,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1106,7 +1124,9 @@
       "MarketCode": 223,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1217,7 +1237,9 @@
       "MarketCode": 115,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1328,7 +1350,9 @@
       "MarketCode": 104,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1439,7 +1463,9 @@
       "MarketCode": 108,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1550,7 +1576,9 @@
       "MarketCode": 217,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1661,7 +1689,9 @@
       "MarketCode": 298,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1772,7 +1802,9 @@
       "MarketCode": 134,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1883,7 +1915,9 @@
       "MarketCode": 131,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1994,7 +2028,9 @@
       "MarketCode": 122,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -2105,7 +2141,9 @@
       "MarketCode": 141,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -2216,7 +2254,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -2327,7 +2367,9 @@
       "MarketCode": 101,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -2438,7 +2480,9 @@
       "MarketCode": 252,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -2549,7 +2593,9 @@
       "MarketCode": 160,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -2660,7 +2706,9 @@
       "MarketCode": 111,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -2771,7 +2819,9 @@
       "MarketCode": 176,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -2882,7 +2932,9 @@
       "MarketCode": 128,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -3021,7 +3073,9 @@
       "MarketCode": 373,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -3160,7 +3214,9 @@
       "MarketCode": null,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -3299,7 +3355,9 @@
       "MarketCode": 209,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -3438,7 +3496,9 @@
       "MarketCode": 403,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -3577,7 +3637,9 @@
       "MarketCode": 407,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -3716,7 +3778,9 @@
       "MarketCode": null,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -3855,7 +3919,9 @@
       "MarketCode": 216,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -3994,7 +4060,9 @@
       "MarketCode": 370,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -4133,7 +4201,9 @@
       "MarketCode": 218,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -4272,7 +4342,9 @@
       "MarketCode": 223,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -4411,7 +4483,9 @@
       "MarketCode": 115,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -4550,7 +4624,9 @@
       "MarketCode": 104,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -4689,7 +4765,9 @@
       "MarketCode": 108,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -4828,7 +4906,9 @@
       "MarketCode": 217,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -4967,7 +5047,9 @@
       "MarketCode": 298,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -5106,7 +5188,9 @@
       "MarketCode": 134,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -5245,7 +5329,9 @@
       "MarketCode": 131,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -5384,7 +5470,9 @@
       "MarketCode": 122,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -5523,7 +5611,9 @@
       "MarketCode": 141,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -5662,7 +5752,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -5801,7 +5893,9 @@
       "MarketCode": 101,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -5940,7 +6034,9 @@
       "MarketCode": 252,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -6079,7 +6175,9 @@
       "MarketCode": 160,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -6218,7 +6316,9 @@
       "MarketCode": 111,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -6357,7 +6457,9 @@
       "MarketCode": 176,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -6496,7 +6598,9 @@
       "MarketCode": 128,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   }
 ]

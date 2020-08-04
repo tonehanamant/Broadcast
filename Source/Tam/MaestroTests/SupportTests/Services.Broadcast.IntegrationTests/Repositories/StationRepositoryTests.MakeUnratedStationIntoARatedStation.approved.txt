@@ -7,5 +7,7 @@
   "MarketCode": 123,
   "ModifiedDate": "2020-04-11T01:34:26",
   "OriginMarket": "Burlington-Plattsburgh",
-  "RateDataThrough": null
+  "OwnershipGroupName": null,
+  "RateDataThrough": null,
+  "SalesGroupName": null
 }

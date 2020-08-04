@@ -101,7 +101,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": "Chicago",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -206,7 +208,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": "Chicago",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -311,7 +315,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": "Chicago",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -416,7 +422,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": "Chicago",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -521,7 +529,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": "Chicago",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -626,7 +636,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": "Chicago",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -731,7 +743,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": "Chicago",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -836,7 +850,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": "Chicago",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -941,7 +957,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": "Chicago",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1046,7 +1064,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": "Chicago",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1151,7 +1171,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": "Chicago",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1256,7 +1278,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": "Chicago",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1361,7 +1385,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": "Chicago",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1466,7 +1492,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": "Chicago",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1571,7 +1599,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": "Chicago",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1676,7 +1706,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": "Chicago",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1781,7 +1813,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": "Chicago",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1886,7 +1920,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": "Chicago",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1991,7 +2027,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": "Chicago",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -2096,7 +2134,9 @@
       "MarketCode": 202,
       "ModifiedDate": null,
       "OriginMarket": "Chicago",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   }
 ]

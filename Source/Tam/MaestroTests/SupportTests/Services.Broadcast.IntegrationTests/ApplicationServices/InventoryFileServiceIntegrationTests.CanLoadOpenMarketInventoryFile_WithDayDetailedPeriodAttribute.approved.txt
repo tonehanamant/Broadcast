@@ -158,7 +158,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -320,7 +322,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -482,7 +486,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -644,7 +650,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -806,7 +814,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -968,7 +978,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1130,7 +1142,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1292,7 +1306,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1454,7 +1470,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1616,7 +1634,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1778,7 +1798,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -1940,7 +1962,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -2102,7 +2126,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -2264,7 +2290,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -2426,7 +2454,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -2588,7 +2618,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -2750,7 +2782,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -2912,7 +2946,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -3074,7 +3110,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -3236,7 +3274,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -3398,7 +3438,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -3560,7 +3602,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -3722,7 +3766,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -3884,7 +3930,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -4046,7 +4094,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -4208,7 +4258,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -4370,7 +4422,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -4532,7 +4586,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -4694,7 +4750,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -4856,7 +4914,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -5018,7 +5078,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -5180,7 +5242,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -5342,7 +5406,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -5504,7 +5570,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -5609,7 +5677,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -5714,7 +5784,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -5819,7 +5891,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -5924,7 +5998,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -6029,7 +6105,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -6134,7 +6212,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -6239,7 +6319,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -6344,7 +6426,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -6449,7 +6533,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -6554,7 +6640,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -6659,7 +6747,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -6764,7 +6854,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -6869,7 +6961,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -6974,7 +7068,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -7079,7 +7175,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   },
   {
@@ -7184,7 +7282,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": "Albany-Schenectady-Troy",
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     }
   }
 ]

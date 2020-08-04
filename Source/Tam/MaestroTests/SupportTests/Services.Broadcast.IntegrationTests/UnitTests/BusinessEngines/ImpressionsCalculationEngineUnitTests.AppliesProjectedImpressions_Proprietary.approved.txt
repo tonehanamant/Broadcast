@@ -147,7 +147,9 @@
         "MarketCode": null,
         "ModifiedDate": null,
         "OriginMarket": null,
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       },
       "Unit": null
     },
@@ -200,7 +202,9 @@
         "MarketCode": null,
         "ModifiedDate": null,
         "OriginMarket": null,
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       },
       "Unit": null
     }
