@@ -4,7 +4,7 @@
     "ErrorMessage": null,
     "HangfireJobId": null,
     "Id": 0,
-    "PlanVersionId": 0,
+    "PlanVersionId": null,
     "Queued": "0001-01-01T00:00:00",
     "Status": 2
   },
@@ -13,7 +13,7 @@
     "ErrorMessage": "Running the pricing model was canceled",
     "HangfireJobId": null,
     "Id": 1,
-    "PlanVersionId": 0,
+    "PlanVersionId": null,
     "Queued": "0001-01-01T00:00:00",
     "Status": 5
   }

@@ -20,6 +20,7 @@ using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
+using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,6 +63,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IPlanPricingStationCalculationEngine> _PlanPricingStationCalculationEngineMock;
         private Mock<IPlanPricingMarketResultsEngine> _PlanPricingMarketResultsEngine;
         private Mock<IPricingRequestLogClient> _PricingRequestLogClient;
+        private Mock<IPlanValidator> _PlanValidatorMock;
 
         [SetUp]
         public void SetUp()
@@ -87,6 +89,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanPricingStationCalculationEngineMock = new Mock<IPlanPricingStationCalculationEngine>();
             _PlanPricingMarketResultsEngine = new Mock<IPlanPricingMarketResultsEngine>();
             _PricingRequestLogClient = new Mock<IPricingRequestLogClient>();
+            _PlanValidatorMock = new Mock<IPlanValidator>();
 
             _DateTimeEngineMock
                 .Setup(x => x.GetCurrentMoment())
@@ -552,7 +555,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [TestCase(false, true, false, 11.1957)]
         [TestCase(false, true, true, 13.9946)]
         [TestCase(true, true, false, 21.5957)]
-        [TestCase(true, true, true, 24.3351)] 
+        [TestCase(true, true, true, 24.3351)]
         [TestCase(true, false, true, 500)] // Margin is not used without spots
         [TestCase(true, false, false, 500)]
         [TestCase(false, false, false, 0)]
@@ -711,7 +714,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             var exception = Assert.Throws<Exception>(() => service.QueuePricingJob(
-                new PlanPricingParametersDto()
+                new PlanPricingParametersDto() { PlanId = 1 }
                 , new DateTime(2019, 10, 23)
                 , "test user"));
 
@@ -1058,7 +1061,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _PlanPricingBandCalculationEngineMock.Object,
                 _PlanPricingStationCalculationEngineMock.Object,
                 _PlanPricingMarketResultsEngine.Object,
-                _PricingRequestLogClient.Object);
+                _PricingRequestLogClient.Object,
+                _PlanValidatorMock.Object);
         }
 
         [Test]
@@ -6287,6 +6291,48 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
+        public void IsPricingModelRunningForJob_ReturnsFalse_WhenNoJobsFound()
+        {
+            // Arrange
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(It.IsAny<int>()))
+                .Returns((PlanPricingJob)null);
+
+            var service = _GetService();
+
+            // Act
+            var result = service.IsPricingModelRunningForJob(5);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        [TestCase(BackgroundJobProcessingStatus.Queued, true)]
+        [TestCase(BackgroundJobProcessingStatus.Processing, true)]
+        [TestCase(BackgroundJobProcessingStatus.Succeeded, false)]
+        [TestCase(BackgroundJobProcessingStatus.Failed, false)]
+        [TestCase(BackgroundJobProcessingStatus.Canceled, false)]
+        public void IsPricingModelRunningForJob_ChecksJobStatus(BackgroundJobProcessingStatus status, bool expectedResult)
+        {
+            // Arrange
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(It.IsAny<int>()))
+                .Returns(new PlanPricingJob
+                {
+                    Status = status
+                });
+
+            var service = _GetService();
+
+            // Act
+            var actualResult = service.IsPricingModelRunningForJob(5);
+
+            // Assert
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetPlanPricingDefaultsTest()
         {
@@ -6734,6 +6780,184 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             {
                 Assert.IsNull(caught);
             }
+        }
+
+        [Test]
+        [TestCase(null, false)]
+        [TestCase(12.0, false)]
+        [TestCase(.01, false)]
+        [TestCase(100.0, false)]
+        [TestCase(112.0, true)]
+        [TestCase(.001, true)]
+        public void QueuePricingWithoutPlan_ValidateMargin(double? testMargin, bool expectError)
+        {
+            // Arrange
+            const string user = "test user";
+
+            var now = new DateTime(2019, 10, 23);
+
+            var parameters = _GetPricingParametersWithoutPlanDto();
+            parameters.Margin = testMargin;
+
+            var service = _GetService();
+
+            Exception caught = null;
+
+            // Act
+            try
+            {
+                service.QueuePricingJob(parameters, now, user);
+            }
+            catch (Exception e)
+            {
+                caught = e;
+            }
+
+            // Assert
+            if (expectError)
+            {
+                Assert.IsNotNull(caught);
+            }
+            else
+            {
+                Assert.IsNull(caught);
+            }
+        }
+
+        [Test]
+        [TestCase(BackgroundJobProcessingStatus.Queued, true)]
+        [TestCase(BackgroundJobProcessingStatus.Processing, true)]
+        [TestCase(BackgroundJobProcessingStatus.Canceled, false)]
+        [TestCase(BackgroundJobProcessingStatus.Failed, false)]
+        [TestCase(BackgroundJobProcessingStatus.Succeeded, false)]
+        public void QueuePricingWithoutPlan_TryRunPricingThatIsRunning(BackgroundJobProcessingStatus jobStatus, bool expectError)
+        {
+            // Arrange
+            const string user = "test user";
+            const int jobId = 5;
+
+            var now = new DateTime(2019, 10, 23);
+
+            var parameters = _GetPricingParametersWithoutPlanDto();
+            parameters.JobId = jobId;
+
+            _PlanRepositoryMock.Setup(r => r.GetPlanPricingJob(jobId)).Returns(new PlanPricingJob { Id = jobId, Status = jobStatus });
+
+            var service = _GetService();
+
+            Exception caught = null;
+
+            // Act
+            try
+            {
+                service.QueuePricingJob(parameters, now, user);
+            }
+            catch (Exception e)
+            {
+                caught = e;
+            }
+
+            // Assert
+            if (expectError)
+            {
+                Assert.IsNotNull(caught);
+            }
+            else
+            {
+                Assert.IsNull(caught);
+            }
+        }
+
+        private PricingParametersWithoutPlanDto _GetPricingParametersWithoutPlanDto()
+        {
+            return new PricingParametersWithoutPlanDto
+            {
+                MaxCpm = 100m,
+                MinCpm = 1m,
+                Budget = 1000,
+                CompetitionFactor = 0.1,
+                CPM = 5m,
+                DeliveryImpressions = 50000,
+                InflationFactor = 0.5,
+                ProprietaryBlend = 0.2,
+                UnitCaps = 10,
+                UnitCapsType = UnitCapEnum.PerDay,
+                Currency = PlanCurrenciesEnum.Impressions,
+                CPP = 1.1m,
+                DeliveryRatingPoints = 1.3,
+                Margin = 10,
+                MarketGroup = PricingMarketGroupEnum.Top100,
+                InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                {
+                    new PlanPricingInventorySourceDto{ Id = 3, Percentage = 12 },
+                    new PlanPricingInventorySourceDto{ Id = 5, Percentage = 13 },
+                    new PlanPricingInventorySourceDto{ Id = 6, Percentage = 14 },
+                    new PlanPricingInventorySourceDto{ Id = 7, Percentage = 15 },
+                    new PlanPricingInventorySourceDto{ Id = 10, Percentage = 16 },
+                    new PlanPricingInventorySourceDto{ Id = 11, Percentage = 17 },
+                    new PlanPricingInventorySourceDto{ Id = 12, Percentage = 8 },
+                },
+                InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                {
+                    new PlanPricingInventorySourceTypeDto { Id = 5, Percentage = 3 }
+                },
+                AvailableMarkets = new List<PlanAvailableMarketDto>
+                    {
+                                    new PlanAvailableMarketDto
+                                    {
+                                        Id = 5,
+                                        MarketCode = 101,
+                                        ShareOfVoicePercent = 12
+                                    },
+                                    new PlanAvailableMarketDto
+                                    {
+                                        Id = 6,
+                                        MarketCode = 102,
+                                        ShareOfVoicePercent = 13
+                                    }
+                    },
+                Dayparts = new List<PlanDaypartDto>
+                    {
+                                    new PlanDaypartDto
+                                    {
+                                        DaypartCodeId = 15,
+                                        WeightingGoalPercent = 60
+                                    },
+                                    new PlanDaypartDto
+                                    {
+                                        DaypartCodeId = 16,
+                                        WeightingGoalPercent = 40
+                                    }
+                    },
+                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 150,
+                            WeeklyBudget = 15,
+                            MediaWeekId = 100
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 250,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 101
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 100,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 102
+                        },
+                        new WeeklyBreakdownWeek
+                        {
+                            WeeklyImpressions = 0,
+                            WeeklyBudget = 15m,
+                            MediaWeekId = 103
+                        }
+                    },
+                CoverageGoalPercent = 80,
+            };
         }
 
         [Test]
@@ -7210,14 +7434,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     CpmPercentage = 204
 
                 });
-             
+
 
             _PlanRepositoryMock
-				.Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>())).Returns(6.75M);
-					
-                
+                .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>())).Returns(6.75M);
 
-			var service = _GetService();
+
+
+            var service = _GetService();
 
             // Act
             var result = service.GetCurrentPricingExecution(planId);
@@ -7229,15 +7453,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [Test]
         public void CalculateCpmPercentageTest()
         {
-	        //Arrange
-	        var expected = 204M;
-	        var service = _GetService();
+            //Arrange
+            var expected = 204M;
+            var service = _GetService();
 
-	        // Act
-	        var actual = service.CalculateCpmPercentage(13.75M, 6.75M);
+            // Act
+            var actual = service.CalculateCpmPercentage(13.75M, 6.75M);
 
-	        //Assert
-	        Assert.AreEqual(expected, actual);
+            //Assert
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -7422,6 +7646,897 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.IsNull(result);
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetProgramsByJobId_Succeeded()
+        {
+            // Arrange
+            const int jobId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(jobId))
+                .Returns(new PlanPricingJob
+                {
+                    Id = jobId,
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingProgramsResultByJobId(jobId))
+                .Returns(new PricingProgramsResultDto
+                {
+                    Programs = new List<PlanPricingProgramProgramDto>
+                    {
+                        new PlanPricingProgramProgramDto
+                        {
+                            Id = 7,
+                            ProgramName = "1+1",
+                            Genre = "Comedy",
+                            MarketCount = 6,
+                            StationCount = 13,
+                            AvgCpm = 6m,
+                            AvgImpressions = 111000,
+                            Impressions = 200000,
+                            ImpressionsPercentage = 96,
+                            Budget = 1131,
+                            Spots = 3
+                        }
+                    },
+                    Totals = new PricingProgramsResultTotalsDto
+                    {
+                        MarketCount = 6,
+                        StationCount = 13,
+                        AvgCpm = 6m,
+                        AvgImpressions = 111000,
+                        ImpressionsPercentage = 100,
+                        Budget = 1131,
+                        Spots = 3,
+                        Impressions = 200000
+                    }
+                });
+
+            // Act
+            var result = service.GetProgramsByJobId(jobId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetProgramsByJobId_JobStatusFailed()
+        {
+            // Arrange
+            const int jobId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(jobId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Failed,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetProgramsByJobId(jobId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetProgramsByJobId_JobStatusCanceled()
+        {
+            // Arrange
+            const int jobId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(jobId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Canceled,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetProgramsByJobId(jobId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetProgramsByJobId_JobStatusProcessing()
+        {
+            // Arrange
+            const int jobId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(jobId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Processing,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetProgramsByJobId(jobId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetProgramsByJobId_JobStatusQueued()
+        {
+            // Arrange
+            const int jobId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(jobId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Queued,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetProgramsByJobId(jobId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetProgramsByJobId_JobNull()
+        {
+            // Arrange
+            const int jobId = 6;
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetProgramsByJobId(jobId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetProgramsByJobId_GetPricingProgramsResultReturnsNull()
+        {
+            // Arrange
+            const int jobId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(jobId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetProgramsByJobId(jobId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetStationsByJobId_Succeeded()
+        {
+            // Arrange
+            const int jobId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(jobId))
+                .Returns(new PlanPricingJob
+                {
+                    Id = jobId,
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingStationsResultByJobId(jobId))
+                .Returns(new PlanPricingStationResultDto
+                {
+                    JobId = jobId,
+                    Stations = new List<PlanPricingStationDto>
+                    {
+                         new PlanPricingStationDto
+                         {
+                            Id = 7,
+                            Cpm = 22,
+                            Market = "NY",
+                            Station = "ESPN",
+                            Impressions = 200000,
+                            ImpressionsPercentage = 96,
+                            Budget = 1131,
+                            Spots = 3
+                         }
+                    },
+                    Totals = new PlanPricingStationTotalsDto
+                    {
+                        ImpressionsPercentage = 100,
+                        Budget = 1131,
+                        Spots = 3,
+                        Impressions = 200000,
+                        Cpm = 22,
+                        Station = 1
+                    }
+                });
+
+            // Act
+            var result = service.GetStationsByJobId(jobId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [TestCase(BackgroundJobProcessingStatus.Failed)]
+        [TestCase(BackgroundJobProcessingStatus.Canceled)]
+        [TestCase(BackgroundJobProcessingStatus.Processing)]
+        [TestCase(BackgroundJobProcessingStatus.Queued)]
+        public void GetStationsByJobId_JobStatus(BackgroundJobProcessingStatus status)
+        {
+            // Arrange
+            const int jobId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(jobId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = status,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetStationsByJobId(jobId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetStationsByJobId_JobNull()
+        {
+            // Arrange
+            const int jobId = 6;
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetStationsByJobId(jobId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetStationsByJobId_ReturnsNull()
+        {
+            // Arrange
+            const int jobId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(jobId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetStationsByJobId(jobId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetStations_Succeeded()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Id = 5,
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPricingStationsResultByJobId(It.IsAny<int>()))
+                .Returns(new PlanPricingStationResultDto
+                {
+                    JobId = 5,
+                    PlanVersionId = 3,
+                    Stations = new List<PlanPricingStationDto>
+                    {
+                         new PlanPricingStationDto
+                         {
+                            Id = 7,
+                            Cpm = 22,
+                            Market = "NY",
+                            Station = "ESPN",
+                            Impressions = 200000,
+                            ImpressionsPercentage = 96,
+                            Budget = 1131,
+                            Spots = 3
+                         }
+                    },
+                    Totals = new PlanPricingStationTotalsDto
+                    {
+                        ImpressionsPercentage = 100,
+                        Budget = 1131,
+                        Spots = 3,
+                        Impressions = 200000,
+                        Cpm = 22,
+                        Station = 1
+                    }
+                });
+
+            // Act
+            var result = service.GetStations(planId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [TestCase(BackgroundJobProcessingStatus.Failed)]
+        [TestCase(BackgroundJobProcessingStatus.Canceled)]
+        [TestCase(BackgroundJobProcessingStatus.Processing)]
+        [TestCase(BackgroundJobProcessingStatus.Queued)]
+        public void GetStations_JobStatus(BackgroundJobProcessingStatus status)
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = status,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetStations(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetStations_JobNull()
+        {
+            // Arrange
+            const int planId = 6;
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetStations(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetStations_ReturnsNull()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetStations(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetMarketsByJobId_Succeeded()
+        {
+            // Arrange
+            const int jobId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(jobId))
+                .Returns(new PlanPricingJob
+                {
+                    Id = jobId,
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingResultMarketsByJobId(jobId))
+                .Returns(new PlanPricingResultMarketsDto
+                {
+                    MarketDetails = new List<PlanPricingResultMarketDetailsDto>
+                    {
+                         new PlanPricingResultMarketDetailsDto
+                         {
+                            Cpm = 22,
+                            Impressions = 200000,
+                            ImpressionsPercentage = 96,
+                            Budget = 1131,
+                            Spots = 3,
+                            MarketCoveragePercent = 70,
+                            Rank = 2,
+                            ShareOfVoiceGoalPercentage = 70,
+                            Stations = 5
+                         }
+                    },
+                    PricingJobId = jobId,
+                    PlanVersionId = 3,
+                    Totals = new PlanPricingResultMarketsTotalsDto
+                    {
+                        Budget = 1131,
+                        Spots = 3,
+                        Impressions = 200000,
+                        Cpm = 22,
+                        Stations = 5,
+                        CoveragePercent = 70,
+                        Markets = 1
+                    }
+                });
+
+            // Act
+            var result = service.GetMarketsByJobId(jobId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [TestCase(BackgroundJobProcessingStatus.Failed)]
+        [TestCase(BackgroundJobProcessingStatus.Canceled)]
+        [TestCase(BackgroundJobProcessingStatus.Processing)]
+        [TestCase(BackgroundJobProcessingStatus.Queued)]
+        public void GetMarketsByJobId_JobStatus(BackgroundJobProcessingStatus status)
+        {
+            // Arrange
+            const int jobId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(jobId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = status,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetMarketsByJobId(jobId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetMarketsByJobId_JobNull()
+        {
+            // Arrange
+            const int jobId = 6;
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetMarketsByJobId(jobId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetMarketsByJobId_ReturnsNull()
+        {
+            // Arrange
+            const int jobId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(jobId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetMarketsByJobId(jobId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetMarkets_Succeeded()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Id = 5,
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingResultMarketsByJobId(It.IsAny<int>()))
+                .Returns(new PlanPricingResultMarketsDto
+                {
+                    MarketDetails = new List<PlanPricingResultMarketDetailsDto>
+                    {
+                         new PlanPricingResultMarketDetailsDto
+                         {
+                            Cpm = 22,
+                            Impressions = 200000,
+                            ImpressionsPercentage = 96,
+                            Budget = 1131,
+                            Spots = 3,
+                            MarketCoveragePercent = 70,
+                            Rank = 2,
+                            ShareOfVoiceGoalPercentage = 70,
+                            Stations = 5
+                         }
+                    },
+                    PricingJobId = 2,
+                    PlanVersionId = 3,
+
+                    Totals = new PlanPricingResultMarketsTotalsDto
+                    {
+                        Budget = 1131,
+                        Spots = 3,
+                        Impressions = 200000,
+                        Cpm = 22,
+                        Stations = 5,
+                        CoveragePercent = 70,
+                        Markets = 1
+                    }
+                });
+
+            // Act
+            var result = service.GetMarkets(planId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [TestCase(BackgroundJobProcessingStatus.Failed)]
+        [TestCase(BackgroundJobProcessingStatus.Canceled)]
+        [TestCase(BackgroundJobProcessingStatus.Processing)]
+        [TestCase(BackgroundJobProcessingStatus.Queued)]
+        public void GetMarkets_JobStatus(BackgroundJobProcessingStatus status)
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = status,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetMarkets(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetMarkets_JobNull()
+        {
+            // Arrange
+            const int planId = 6;
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetMarkets(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetMarkets_ReturnsNull()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetMarkets(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingBandsByJobId_Succeeded()
+        {
+            // Arrange
+            const int jobId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(jobId))
+                .Returns(new PlanPricingJob
+                {
+                    Id = jobId,
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingBandByJobId(jobId))
+                .Returns(new PlanPricingBandDto
+                {
+                    PlanVersionId = 3,
+                    JobId = jobId,
+                    Bands = new List<PlanPricingBandDetailDto>
+                     {
+                         new PlanPricingBandDetailDto
+                         {
+                            Cpm = 22,
+                            Impressions = 200000,
+                            ImpressionsPercentage = 96,
+                            Budget = 1131,
+                            Spots = 3,
+                            AvailableInventoryPercent = 70,
+                            MaxBand = 5,
+                            MinBand = 1,
+                         }
+                     },
+                    Totals = new PlanPricingBandTotalsDto
+                    {
+                        Budget = 1131,
+                        Spots = 3,
+                        Impressions = 200000,
+                        Cpm = 22,
+                    }
+                });
+
+            // Act
+            var result = service.GetPricingBandsByJobId(jobId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [TestCase(BackgroundJobProcessingStatus.Failed)]
+        [TestCase(BackgroundJobProcessingStatus.Canceled)]
+        [TestCase(BackgroundJobProcessingStatus.Processing)]
+        [TestCase(BackgroundJobProcessingStatus.Queued)]
+        public void GetPricingBandsByJobId_JobStatus(BackgroundJobProcessingStatus status)
+        {
+            // Arrange
+            const int jobId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(jobId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = status,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPricingBandsByJobId(jobId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetPricingBandsByJobId_JobNull()
+        {
+            // Arrange
+            const int jobId = 6;
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPricingBandsByJobId(jobId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetPricingBandsByJobId_ReturnsNull()
+        {
+            // Arrange
+            const int jobId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingJob(jobId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPricingBandsByJobId(jobId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingBands_Succeeded()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Id = 5,
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetPlanPricingBandByJobId(It.IsAny<int>()))
+                .Returns(new PlanPricingBandDto
+                {
+                    PlanVersionId = 3,
+                    JobId = 5,
+                    Bands = new List<PlanPricingBandDetailDto>
+                     {
+                         new PlanPricingBandDetailDto
+                         {
+                            Cpm = 22,
+                            Impressions = 200000,
+                            ImpressionsPercentage = 96,
+                            Budget = 1131,
+                            Spots = 3,
+                            AvailableInventoryPercent = 70,
+                            MaxBand = 5,
+                            MinBand = 1,
+                         }
+                     },
+                    Totals = new PlanPricingBandTotalsDto
+                    {
+                        Budget = 1131,
+                        Spots = 3,
+                        Impressions = 200000,
+                        Cpm = 22,
+                    }
+                });
+
+            // Act
+            var result = service.GetPricingBands(planId);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [TestCase(BackgroundJobProcessingStatus.Failed)]
+        [TestCase(BackgroundJobProcessingStatus.Canceled)]
+        [TestCase(BackgroundJobProcessingStatus.Processing)]
+        [TestCase(BackgroundJobProcessingStatus.Queued)]
+        public void GetPricingBands_JobStatus(BackgroundJobProcessingStatus status)
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = status,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPricingBands(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetPricingBands_JobNull()
+        {
+            // Arrange
+            const int planId = 6;
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPricingBands(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetPricingBands_ReturnsNull()
+        {
+            // Arrange
+            const int planId = 6;
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetLatestPricingJob(planId))
+                .Returns(new PlanPricingJob
+                {
+                    Status = BackgroundJobProcessingStatus.Succeeded,
+                });
+
+            var service = _GetService();
+
+            // Act
+            var result = service.GetPricingBands(planId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -7453,8 +8568,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     JobId = 12
                 });
             _PlanRepositoryMock
-	            .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>()))
-	            .Returns(110.0M);
+                .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(110.0M);
             var service = _GetService();
 
             // Act
@@ -7592,11 +8707,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         throw new Exception("Null Job Id Exception");
                     }
 
-                    hanfgireJobUpdates.Add(new {jobId, state, expectedState});
+                    hanfgireJobUpdates.Add(new { jobId, state, expectedState });
                 });
 
             var service = _GetService();
-            service.UT_CurrentDateTime = new DateTime(2020, 2,4,15,32, 52);
+            service.UT_CurrentDateTime = new DateTime(2020, 2, 4, 15, 32, 52);
 
             // Act
             var cancelCurrentPricingExecutionResult = service.CancelCurrentPricingExecution(planId);
@@ -8250,7 +9365,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         MediaWeekId = 103
                     }
                 }
-            }; 
+            };
         }
 
         private WeeklyBreakdownResponseDto _GetWeeklyBreakDownWeeksTiered()

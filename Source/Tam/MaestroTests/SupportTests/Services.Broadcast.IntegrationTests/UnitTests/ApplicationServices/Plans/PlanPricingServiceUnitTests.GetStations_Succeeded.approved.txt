@@ -1,0 +1,25 @@
+{
+  "Id": 0,
+  "JobId": 5,
+  "PlanVersionId": 3,
+  "Stations": [
+    {
+      "Budget": 1131.0,
+      "Cpm": 22.0,
+      "Id": 7,
+      "Impressions": 200.0,
+      "ImpressionsPercentage": 96.0,
+      "Market": "NY",
+      "Spots": 3,
+      "Station": "ESPN"
+    }
+  ],
+  "Totals": {
+    "Budget": 1131.0,
+    "Cpm": 22.0,
+    "Impressions": 200.0,
+    "ImpressionsPercentage": 100.0,
+    "Spots": 3,
+    "Station": 1
+  }
+}

@@ -23,15 +23,15 @@ namespace EntityFrameworkMapping.Broadcast
         public int plan_version_pricing_api_results_id { get; set; }
         public int station_inventory_manifest_id { get; set; }
         public int inventory_media_week_id { get; set; }
-        public int standard_daypart_id { get; set; }
         public double impressions30sec { get; set; }
         public int contract_media_week_id { get; set; }
+        public int standard_daypart_id { get; set; }
     
+        public virtual daypart_defaults daypart_defaults { get; set; }
         public virtual media_weeks inventory_media_week { get; set; }
         public virtual media_weeks contract_media_week { get; set; }
-        public virtual daypart_defaults daypart_defaults { get; set; }
-        public virtual station_inventory_manifest station_inventory_manifest { get; set; }
         public virtual ICollection<plan_version_pricing_api_result_spot_frequencies> plan_version_pricing_api_result_spot_frequencies { get; set; }
         public virtual plan_version_pricing_api_results plan_version_pricing_api_results { get; set; }
+        public virtual station_inventory_manifest station_inventory_manifest { get; set; }
     }
 }

@@ -1,0 +1,24 @@
+{
+  "Bands": [
+    {
+      "AvailableInventoryPercent": 70.0,
+      "Budget": 1131.0,
+      "Cpm": 22.0,
+      "Id": 0,
+      "Impressions": 200.0,
+      "ImpressionsPercentage": 96.0,
+      "MaxBand": 5.0,
+      "MinBand": 1.0,
+      "Spots": 3
+    }
+  ],
+  "Id": 0,
+  "JobId": 5,
+  "PlanVersionId": 3,
+  "Totals": {
+    "Budget": 1131.0,
+    "Cpm": 22.0,
+    "Impressions": 200.0,
+    "Spots": 3
+  }
+}

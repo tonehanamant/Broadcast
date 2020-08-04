@@ -1,0 +1,31 @@
+{
+  "PlanVersionId": null,
+  "Stations": [
+    {
+      "Budget": 13504.6875,
+      "Cpm": 18.0339,
+      "Impressions": 748.85,
+      "ImpressionsPercentage": 99.10011249,
+      "Market": "New York",
+      "Spots": 15,
+      "Station": "WPIX"
+    },
+    {
+      "Budget": 464.8125,
+      "Cpm": 68.3547,
+      "Impressions": 6.8,
+      "ImpressionsPercentage": 0.89988751,
+      "Market": "Portland-Auburn",
+      "Spots": 15,
+      "Station": "WPFO"
+    }
+  ],
+  "Totals": {
+    "Budget": 13969.5000,
+    "Cpm": 18.4867,
+    "Impressions": 755.65,
+    "ImpressionsPercentage": 100.0,
+    "Spots": 30,
+    "Station": 2
+  }
+}

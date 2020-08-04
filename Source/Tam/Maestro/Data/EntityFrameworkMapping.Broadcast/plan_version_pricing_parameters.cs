@@ -21,7 +21,7 @@ namespace EntityFrameworkMapping.Broadcast
         }
     
         public int id { get; set; }
-        public int plan_version_id { get; set; }
+        public Nullable<int> plan_version_id { get; set; }
         public Nullable<decimal> min_cpm { get; set; }
         public Nullable<decimal> max_cpm { get; set; }
         public double coverage_goal { get; set; }

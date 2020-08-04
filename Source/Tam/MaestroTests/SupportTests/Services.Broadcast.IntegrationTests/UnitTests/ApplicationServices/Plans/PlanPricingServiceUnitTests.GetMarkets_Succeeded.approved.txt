@@ -1,0 +1,26 @@
+{
+  "MarketDetails": [
+    {
+      "Budget": 1131.0,
+      "Cpm": 22.0,
+      "Impressions": 200.0,
+      "ImpressionsPercentage": 96.0,
+      "MarketCoveragePercent": 70.0,
+      "Rank": 2,
+      "ShareOfVoiceGoalPercentage": 70.0,
+      "Spots": 3,
+      "Stations": 5
+    }
+  ],
+  "PlanVersionId": 3,
+  "PricingJobId": 2,
+  "Totals": {
+    "Budget": 1131.0,
+    "CoveragePercent": 70.0,
+    "Cpm": 22.0,
+    "Impressions": 200.0,
+    "Markets": 1,
+    "Spots": 3,
+    "Stations": 5
+  }
+}

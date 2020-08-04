@@ -34,6 +34,12 @@ namespace Services.Broadcast.Validators
         /// <param name="impressionsPerUnit">The impressions per unit.</param>
         /// <param name="totalImpressions">The total impressions.</param>
         void ValidateImpressionsPerUnit(double impressionsPerUnit, double totalImpressions);
+
+        /// <summary>
+        /// Validates the plan in pricing.
+        /// </summary>
+        /// <param name="plan">The plan.</param>
+        void ValidatePlanForPricing(PlanDto plan);
     }
 
     public class PlanValidator : IPlanValidator
@@ -127,6 +133,16 @@ namespace Services.Broadcast.Validators
             // PRI-14012 We'll use a stop word so QA can trigger an error 
             _ValidateStopWord(plan);
         }
+
+        public void ValidatePlanForPricing(PlanDto plan)
+        {
+            _ValidateFlightAndHiatus(plan);
+            _ValidateDayparts(plan);
+            _ValidatePrimaryAudience(plan);
+            //_ValidateWeeklyBreakdownWeeks(plan);
+            _ValidateMarkets(plan);
+        }
+
 
         private void _ValidateStopWord(PlanDto plan)
         {

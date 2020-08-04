@@ -155,6 +155,13 @@ namespace Services.Broadcast.Repositories
         /// <returns></returns>
         decimal GetGoalCpm(int planVersionId, int jobId);
 
+        /// <summary>
+        /// Get Goal CPM value
+        /// </summary>
+        /// <param name="jobId">The job identifier</param>
+        /// <returns></returns>
+        decimal GetGoalCpm(int jobId);
+
         PlanPricingStationResultDto GetPricingStationsResultByJobId(int jobId);
 
         void SavePlanPricingStations(PlanPricingStationResultDto planPricingStationResultDto);
@@ -1840,6 +1847,18 @@ namespace Services.Broadcast.Repositories
                 return result;
             });
         }
+
+        public decimal GetGoalCpm(int jobId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var result = context.plan_version_pricing_parameters.Where(p => p.plan_version_pricing_job_id == jobId)
+                    .Select(p => p.cpm_goal).FirstOrDefault();
+
+                return result;
+            });
+        }
+
         public void SavePlanPricingEstimates(int jobId, List<PricingEstimate> estimates)
         {
             _InReadUncommitedTransaction(context =>

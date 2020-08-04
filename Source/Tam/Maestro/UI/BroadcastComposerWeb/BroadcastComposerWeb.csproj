@@ -372,6 +372,7 @@
     <Compile Include="Controllers\PlanPricingApiController.cs" />
     <Compile Include="Controllers\PostingTypeApiController.cs" />
     <Compile Include="Controllers\PostingBooksApiController.cs" />
+    <Compile Include="Controllers\PricingApiController.cs" />
     <Compile Include="Controllers\ProductApiController.cs" />
     <Compile Include="Controllers\ProgramApiController.cs" />
     <Compile Include="Controllers\ProgramGuideController.cs" />

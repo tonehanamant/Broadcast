@@ -1,11 +1,13 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
+using ApprovalUtilities.CallStack;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
@@ -15,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Tam.Maestro.Common.DataLayer;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -66,6 +69,29 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
+        public void QueuePricingJob_WithoutPlanTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var parameters = _GetPricingParametersWithoutPlanDto();
+                var result = _PlanPricingService.QueuePricingJob(parameters, new DateTime(2019, 11, 4), "test user");
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingJob), "HangfireJobId");
+                var jsonSettings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetCurrentPricingExecutionTest()
         {
             using (new TransactionScopeWrapper())
@@ -79,6 +105,31 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 , "test user");
 
                 var result = _PlanPricingService.GetCurrentPricingExecution(1196);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingJob), "HangfireJobId");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
+        public void GetCurrentPricingExecutionByJobId()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var job = _PlanPricingService.QueuePricingJob(_GetPricingParametersWithoutPlanDto(), new DateTime(2019, 11, 4)
+                , "test user");
+
+                var result = _PlanPricingService.GetCurrentPricingExecutionByJobId(job.Id);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
@@ -116,6 +167,32 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 try
                 {
                     resultPayload = _PlanPricingService.GetCurrentPricingExecution(1196);
+                }
+                catch (Exception e)
+                {
+                    problems = e;
+                }
+
+                Assert.IsNotEmpty(problems.Message);
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
+        public void GetCurrentPricingExecutionByJobId_JobCancel()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _PlanPricingService.QueuePricingJob(_GetPricingParametersWithoutPlanDto(), new DateTime(2020, 3, 3)
+                , "test user");
+
+                _PlanPricingService.ForceCompletePlanPricingJob(result.Id, "Test User");
+
+                var problems = new Exception();
+                try
+                {
+                    var resultPayload = _PlanPricingService.GetCurrentPricingExecutionByJobId(result.Id);
                 }
                 catch (Exception e)
                 {
@@ -334,7 +411,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     InflationFactor = 0.5,
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
-                    UnitCapsType = UnitCapEnum.PerDay,                    
+                    UnitCapsType = UnitCapEnum.PerDay,
                     MarketGroup = PricingMarketGroupEnum.None,
                     InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                     {
@@ -392,7 +469,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = _PlanPricingService.GetPricingInventory(1197, new PricingInventoryGetRequestParametersDto());
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
-        
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
@@ -523,8 +600,39 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
 
-                var bands = _PlanPricingService.GetPricingBands(planPricingRequestDto.PlanId);
-                var result = _PlanPricingService.GetCurrentPricingExecution(planPricingRequestDto.PlanId);
+                var bands = _PlanPricingService.GetPricingBands(planPricingRequestDto.PlanId.Value);
+                var result = _PlanPricingService.GetCurrentPricingExecution(planPricingRequestDto.PlanId.Value);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingBandDto), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingBandDto), "JobId");
+                jsonResolver.Ignore(typeof(PlanPricingBandDetailDto), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Assert.AreEqual(result.Result.OptimalCpm, bands.Totals.Cpm);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(bands, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetPricingBandsByJobId()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var parameters = _GetPricingParametersWithoutPlanDto();
+
+                var job = _PlanPricingService.QueuePricingJob(parameters, new DateTime(2019, 11, 4), "test user");
+
+                _PlanPricingService.RunPricingWithoutPlanJob(parameters, job.Id, CancellationToken.None);
+
+                var bands = _PlanPricingService.GetPricingBandsByJobId(job.Id);
+                var result = _PlanPricingService.GetCurrentPricingExecutionByJobId(job.Id);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingBandDto), "Id");
@@ -554,8 +662,37 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
 
-                var programs = _PlanPricingService.GetPrograms(planPricingRequestDto.PlanId);
-                var result = _PlanPricingService.GetCurrentPricingExecution(planPricingRequestDto.PlanId);
+                var programs = _PlanPricingService.GetPrograms(planPricingRequestDto.PlanId.Value);
+                var result = _PlanPricingService.GetCurrentPricingExecution(planPricingRequestDto.PlanId.Value);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingProgramProgramDto), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Assert.AreEqual(result.Result.OptimalCpm, programs.Totals.AvgCpm);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(programs, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetProgramsByJobId()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var parameters = _GetPricingParametersWithoutPlanDto();
+
+                var job = _PlanPricingService.QueuePricingJob(parameters, new DateTime(2019, 11, 4), "test user");
+
+                _PlanPricingService.RunPricingWithoutPlanJob(parameters, job.Id, CancellationToken.None);
+
+                var programs = _PlanPricingService.GetProgramsByJobId(job.Id);
+                var result = _PlanPricingService.GetCurrentPricingExecutionByJobId(job.Id);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingProgramProgramDto), "Id");
@@ -583,7 +720,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
 
-                var markets = _PlanPricingService.GetMarkets(planPricingRequestDto.PlanId);
+                var markets = _PlanPricingService.GetMarkets(planPricingRequestDto.PlanId.Value);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingBandDto), "Id");
@@ -596,6 +733,64 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetMarketsByJobId()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var parameters = _GetPricingParametersWithoutPlanDto();
+
+                var job = _PlanPricingService.QueuePricingJob(parameters, new DateTime(2019, 11, 4), "test user");
+
+                _PlanPricingService.RunPricingWithoutPlanJob(parameters, job.Id, CancellationToken.None);
+
+                var markets = _PlanPricingService.GetMarketsByJobId(job.Id);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingBandDto), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingBandDto), "JobId");
+                jsonResolver.Ignore(typeof(PlanPricingBandDetailDto), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetStationsByJobId()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var parameters = _GetPricingParametersWithoutPlanDto();
+
+                var job = _PlanPricingService.QueuePricingJob(parameters, new DateTime(2019, 11, 4), "test user");
+
+                _PlanPricingService.RunPricingWithoutPlanJob(parameters, job.Id, CancellationToken.None);
+
+                var stations = _PlanPricingService.GetStationsByJobId(job.Id);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingStationResultDto), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingStationResultDto), "JobId");
+                jsonResolver.Ignore(typeof(PlanPricingStationDto), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(stations, jsonSettings));
             }
         }
 
@@ -616,7 +811,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _PlanPricingService.RunPricingJob(planPricingRequestDto, secondJob.Id, CancellationToken.None);
 
-                var markets = _PlanPricingService.GetMarkets(planPricingRequestDto.PlanId);
+                var markets = _PlanPricingService.GetMarkets(planPricingRequestDto.PlanId.Value);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingBandDto), "Id");
@@ -649,7 +844,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
 
-                var markets = _PlanPricingService.GetMarkets(planPricingRequestDto.PlanId);
+                var markets = _PlanPricingService.GetMarkets(planPricingRequestDto.PlanId.Value);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingBandDto), "Id");
@@ -663,42 +858,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets, jsonSettings));
             }
-        }
-
-        private static PlanPricingParametersDto _GetPricingRequestDto()
-        {
-            return new PlanPricingParametersDto
-            {
-                PlanId = 1197,
-                PlanVersionId = 47,
-                MaxCpm = 100m,
-                MinCpm = 1m,
-                Budget = 1000,
-                CompetitionFactor = 0.1,
-                CPM = 5m,
-                DeliveryImpressions = 50000,
-                InflationFactor = 0.5,
-                ProprietaryBlend = 0.2,
-                UnitCaps = 10,
-                UnitCapsType = UnitCapEnum.PerDay,
-                MarketGroup = PricingMarketGroupEnum.None,
-                Margin = 20,
-                InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
-                    {
-                        new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
-                        new PlanPricingInventorySourceDto{Id = 5, Percentage = 13},
-                        new PlanPricingInventorySourceDto{Id = 6, Percentage = 14},
-                        new PlanPricingInventorySourceDto{Id = 7, Percentage = 15},
-                        new PlanPricingInventorySourceDto{Id = 10, Percentage = 16},
-                        new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
-                        new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
-                    },
-                InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
-                    {
-                        new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
-                        new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
-                    }
-            };
         }
 
         [Test]
@@ -744,7 +903,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _PlanPricingService.RunPricingJob(planPricingRequestDto, job.Id, CancellationToken.None);
 
-                var result = _PlanRepository.GetPlanPricingRuns(planPricingRequestDto.PlanId);
+                var result = _PlanRepository.GetPlanPricingRuns(planPricingRequestDto.PlanId.Value);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingApiRequestParametersDto), "JobId");
@@ -865,6 +1024,181 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(request, jsonSettings));
             }
+        }
+
+        private static PlanPricingParametersDto _GetPricingRequestDto()
+        {
+            return new PlanPricingParametersDto
+            {
+                PlanId = 1197,
+                PlanVersionId = 47,
+                MaxCpm = 100m,
+                MinCpm = 1m,
+                Budget = 1000,
+                CompetitionFactor = 0.1,
+                CPM = 5m,
+                DeliveryImpressions = 50000,
+                InflationFactor = 0.5,
+                ProprietaryBlend = 0.2,
+                UnitCaps = 10,
+                UnitCapsType = UnitCapEnum.PerDay,
+                MarketGroup = PricingMarketGroupEnum.None,
+                Margin = 20,
+                InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                    {
+                        new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
+                        new PlanPricingInventorySourceDto{Id = 5, Percentage = 13},
+                        new PlanPricingInventorySourceDto{Id = 6, Percentage = 14},
+                        new PlanPricingInventorySourceDto{Id = 7, Percentage = 15},
+                        new PlanPricingInventorySourceDto{Id = 10, Percentage = 16},
+                        new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
+                        new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
+                    },
+                InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                    {
+                        new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
+                        new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
+                    }
+            };
+        }
+
+        private PricingParametersWithoutPlanDto _GetPricingParametersWithoutPlanDto()
+        {
+            return new PricingParametersWithoutPlanDto
+            {
+                MaxCpm = 100m,
+                MinCpm = 1m,
+                Budget = 1000,
+                CompetitionFactor = 0.1,
+                CPM = 5m,
+                DeliveryImpressions = 50000,
+                InflationFactor = 0.5,
+                ProprietaryBlend = 0.2,
+                UnitCaps = 10,
+                UnitCapsType = UnitCapEnum.PerDay,
+                MarketGroup = PricingMarketGroupEnum.None,
+                Margin = 20,
+                InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                    {
+                        new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
+                        new PlanPricingInventorySourceDto{Id = 5, Percentage = 13},
+                        new PlanPricingInventorySourceDto{Id = 6, Percentage = 14},
+                        new PlanPricingInventorySourceDto{Id = 7, Percentage = 15},
+                        new PlanPricingInventorySourceDto{Id = 10, Percentage = 16},
+                        new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
+                        new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
+                    },
+                InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                    {
+                        new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
+                        new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
+                    },
+                AudienceId = 31,
+                Equivalized = true,
+                CreativeLengths = new List<CreativeLength> {
+                    new CreativeLength { SpotLengthId = 2, Weight = 100}
+                },
+                FlightStartDate = new DateTime(2018, 10, 1),
+                FlightEndDate = new DateTime(2018, 10, 31),
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                FlightHiatusDays = new List<DateTime>(),
+                HUTBookId = 437,
+                PostingType = PostingTypeEnum.NTI,
+                ShareBookId = 437,
+                TargetRatingPoints = 100d,
+                CoverageGoalPercent = 80.5,
+                GoalBreakdownType = PlanGoalBreakdownTypeEnum.EvenDelivery,
+                AvailableMarkets = new List<PlanAvailableMarketDto>
+                {
+                    new PlanAvailableMarketDto {
+                        Id = 2557,
+                        MarketCode = 100,
+                        MarketCoverageFileId = 1,
+                        PercentageOfUS = 48,
+                        Rank = 1,
+                        ShareOfVoicePercent = 22.2,
+                        Market = "Portland-Auburn"
+                    },
+                    new PlanAvailableMarketDto {
+                        Id = 2558,
+                        MarketCode = 101,
+                        MarketCoverageFileId = 1,
+                        PercentageOfUS = 32.5,
+                        Rank = 2,
+                        ShareOfVoicePercent = 34.5,
+                        Market = "New York"
+                    }
+                },
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypartDto
+                    {
+                        DaypartCodeId = 2,
+                        DaypartTypeId = DaypartTypeEnum.EntertainmentNonNews,
+                        StartTimeSeconds = 0,
+                        EndTimeSeconds = 1999,
+                        WeightingGoalPercent = 100,
+                        IsEndTimeModified = true,
+                        IsStartTimeModified = true,
+                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>(),
+                        Restrictions = new PlanDaypartDto.RestrictionsDto()
+                    }
+                },
+                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 1, MediaWeekId = 784,
+                        StartDate = new DateTime(2018,12,31), EndDate = new DateTime(2019,01,06),
+                        NumberOfActiveDays = 6, ActiveDays = "Tu-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
+                        WeeklyRatings = .0123,
+                        WeeklyBudget = 20m,
+                        WeeklyAdu = 5,
+                        SpotLengthId = 1,
+                        DaypartCodeId = 1,
+                        PercentageOfWeek = 50,
+                        WeeklyUnits = 4
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 2, MediaWeekId = 785,
+                        StartDate = new DateTime(2019,01,07), EndDate = new DateTime(2019,01,13),
+                        NumberOfActiveDays = 7, ActiveDays = "M-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
+                        WeeklyRatings = .0123,
+                        WeeklyBudget = 20m,
+                        WeeklyUnits = 4
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 3, MediaWeekId = 786,
+                        StartDate = new DateTime(2019,01,14), EndDate = new DateTime(2019,01,20),
+                        NumberOfActiveDays = 6, ActiveDays = "M-Sa", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
+                        WeeklyRatings = .0123,
+                        WeeklyBudget = 20m,
+                        WeeklyUnits = 4
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 4, MediaWeekId = 787,
+                        StartDate = new DateTime(2019,01,21), EndDate = new DateTime(2019,01,27),
+                        NumberOfActiveDays = 6, ActiveDays = "M-W,F-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
+                        WeeklyRatings = .0123,
+                        WeeklyBudget = 20m,
+                        WeeklyUnits = 4
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 5, MediaWeekId = 788,
+                        StartDate = new DateTime(2019,01,28), EndDate = new DateTime(2019,02,03),
+                        NumberOfActiveDays = 4, ActiveDays = "M-Th", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
+                        WeeklyRatings = .0123,
+                        WeeklyBudget = 20m,
+                        WeeklyAdu = 30,
+                        WeeklyUnits = 4
+                    }
+                },
+                ImpressionsPerUnit = 5
+            };
         }
     }
 }

@@ -29,7 +29,7 @@ namespace EntityFrameworkMapping.Broadcast
         public double total_cpm { get; set; }
         public double total_budget { get; set; }
     
-        public virtual plan_version_pricing_job plan_version_pricing_job { get; set; }
         public virtual ICollection<plan_version_pricing_market_details> plan_version_pricing_market_details { get; set; }
+        public virtual plan_version_pricing_job plan_version_pricing_job { get; set; }
     }
 }

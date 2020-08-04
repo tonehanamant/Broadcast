@@ -3,6 +3,7 @@ using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Hangfire;
+using Newtonsoft.Json.Bson;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.PlanPricing;
 using Services.Broadcast.Clients;
@@ -10,11 +11,13 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Entities.PlanPricing;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.ReportGenerators.PricingResults;
 using Services.Broadcast.Repositories;
+using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +33,11 @@ namespace Services.Broadcast.ApplicationServices
     public interface IPlanPricingService : IApplicationService
     {
         PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate, string username);
+        PlanPricingJob QueuePricingJob(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto, DateTime currentDate, string username);
 
         CurrentPricingExecution GetCurrentPricingExecution(int planId);
+
+        CurrentPricingExecution GetCurrentPricingExecutionByJobId(int jobId);
 
         /// <summary>
         /// Cancels the current pricing execution.
@@ -40,9 +46,20 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>The PlanPricingResponseDto object</returns>
         PlanPricingResponseDto CancelCurrentPricingExecution(int planId);
 
+        /// <summary>
+        /// Cancels the current pricing execution.
+        /// </summary>
+        /// <param name="jobId">The job identifier.</param>
+        /// <returns>The PlanPricingResponseDto object</returns>
+        PlanPricingResponseDto CancelCurrentPricingExecutionByJobId(int jobId);
+
         [Queue("planpricing")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void RunPricingJob(PlanPricingParametersDto planPricingParametersDto, int jobId, CancellationToken token);
+
+        [Queue("planpricing")]
+        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
+        void RunPricingWithoutPlanJob(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto, int jobId, CancellationToken token);
 
         /// <summary>
         /// For troubleshooting
@@ -79,6 +96,7 @@ namespace Services.Broadcast.ApplicationServices
         PlanPricingDefaults GetPlanPricingDefaults();
 
         bool IsPricingModelRunningForPlan(int planId);
+        bool IsPricingModelRunningForJob(int jobId);
 
         /// <summary>
         /// For troubleshooting
@@ -105,14 +123,24 @@ namespace Services.Broadcast.ApplicationServices
 
         PricingProgramsResultDto GetPrograms(int planId);
 
+        PricingProgramsResultDto GetProgramsByJobId(int jobId);
+
         PlanPricingStationResultDto GetStations(int planId);
+
+        PlanPricingStationResultDto GetStationsByJobId(int jobId);
 
         /// <summary>
         /// Retrieves the Pricing Results Markets Summary
         /// </summary>
         PlanPricingResultMarketsDto GetMarkets(int planId);
 
+        /// <summary>
+        /// Retrieves the Pricing Results Markets Summary
+        /// </summary>
+        PlanPricingResultMarketsDto GetMarketsByJobId(int jobId);
+
         PlanPricingBandDto GetPricingBands(int planId);
+        PlanPricingBandDto GetPricingBandsByJobId(int jobId);
 
         [Queue("savepricingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
@@ -146,6 +174,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IPlanPricingStationCalculationEngine _PlanPricingStationCalculationEngine;
         private readonly IPlanPricingMarketResultsEngine _PlanPricingMarketResultsEngine;
         private readonly IPricingRequestLogClient _PricingRequestLogClient;
+        private readonly IPlanValidator _PlanValidator;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -160,7 +189,8 @@ namespace Services.Broadcast.ApplicationServices
                                   IPlanPricingBandCalculationEngine planPricingBandCalculationEngine,
                                   IPlanPricingStationCalculationEngine planPricingStationCalculationEngine,
                                   IPlanPricingMarketResultsEngine planPricingMarketResultsEngine,
-                                  IPricingRequestLogClient pricingRequestLogClient)
+                                  IPricingRequestLogClient pricingRequestLogClient,
+                                  IPlanValidator planValidator)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
@@ -183,6 +213,7 @@ namespace Services.Broadcast.ApplicationServices
             _PlanPricingStationCalculationEngine = planPricingStationCalculationEngine;
             _PlanPricingMarketResultsEngine = planPricingMarketResultsEngine;
             _PricingRequestLogClient = pricingRequestLogClient;
+            _PlanValidator = planValidator;
         }
 
         public ReportOutput GeneratePricingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)
@@ -222,21 +253,116 @@ namespace Services.Broadcast.ApplicationServices
                 _WeeklyBreakdownEngine);
         }
 
+        public PlanPricingJob QueuePricingJob(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto
+            , DateTime currentDate, string username)
+        {
+            if (pricingParametersWithoutPlanDto.JobId.HasValue && IsPricingModelRunningForJob(pricingParametersWithoutPlanDto.JobId.Value))
+            {
+                throw new Exception("The pricing model is already running");
+            }
+
+            var pricingParameters = _ConvertPricingWihtoutPlanParametersToPlanPricingParameters(pricingParametersWithoutPlanDto);
+
+            ValidateAndApplyMargin(pricingParameters);
+            pricingParametersWithoutPlanDto.AdjustedBudget = pricingParameters.AdjustedBudget;
+            pricingParametersWithoutPlanDto.AdjustedCPM = pricingParameters.AdjustedCPM;
+
+            _ValidatePlan(pricingParametersWithoutPlanDto);
+
+            var job = new PlanPricingJob
+            {
+                Status = BackgroundJobProcessingStatus.Queued,
+                Queued = currentDate
+            };
+            using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
+            {
+                _SavePricingJobAndParameters(job, pricingParameters);
+                pricingParametersWithoutPlanDto.JobId = job.Id;
+                transaction.Complete();
+            }
+
+            job.HangfireJobId = _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.RunPricingWithoutPlanJob(pricingParametersWithoutPlanDto, job.Id, CancellationToken.None));
+
+            _PlanRepository.UpdateJobHangfireId(job.Id, job.HangfireJobId);
+
+            return job;
+        }
+
+        private void _ValidatePlan(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto)
+        {
+            var plan = _ConvertPricingWihtoutPlanParametersToPlanDto(pricingParametersWithoutPlanDto);
+            _PlanValidator.ValidatePlanForPricing(plan);
+        }
+
+        private PlanPricingParametersDto _ConvertPricingWihtoutPlanParametersToPlanPricingParameters(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto)
+        {
+            return new PlanPricingParametersDto
+            {
+                AdjustedBudget = pricingParametersWithoutPlanDto.AdjustedBudget,
+                AdjustedCPM = pricingParametersWithoutPlanDto.AdjustedCPM,
+                Budget = pricingParametersWithoutPlanDto.Budget,
+                CompetitionFactor = pricingParametersWithoutPlanDto.CompetitionFactor,
+                CPM = pricingParametersWithoutPlanDto.CPM,
+                CPP = pricingParametersWithoutPlanDto.CPP,
+                Currency = pricingParametersWithoutPlanDto.Currency,
+                DeliveryImpressions = pricingParametersWithoutPlanDto.DeliveryImpressions,
+                DeliveryRatingPoints = pricingParametersWithoutPlanDto.DeliveryRatingPoints,
+                InflationFactor = pricingParametersWithoutPlanDto.InflationFactor,
+                InventorySourcePercentages = pricingParametersWithoutPlanDto.InventorySourcePercentages,
+                InventorySourceTypePercentages = pricingParametersWithoutPlanDto.InventorySourceTypePercentages,
+                JobId = pricingParametersWithoutPlanDto.JobId,
+                Margin = pricingParametersWithoutPlanDto.Margin,
+                MarketGroup = pricingParametersWithoutPlanDto.MarketGroup,
+                MaxCpm = pricingParametersWithoutPlanDto.MaxCpm,
+                MinCpm = pricingParametersWithoutPlanDto.MinCpm,
+                ProprietaryBlend = pricingParametersWithoutPlanDto.ProprietaryBlend,
+                UnitCaps = pricingParametersWithoutPlanDto.UnitCaps,
+                UnitCapsType = pricingParametersWithoutPlanDto.UnitCapsType
+            };
+        }
+
+        private PlanDto _ConvertPricingWihtoutPlanParametersToPlanDto(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto)
+        {
+            return new PlanDto
+            {
+                AudienceId = pricingParametersWithoutPlanDto.AudienceId,
+                AvailableMarkets = pricingParametersWithoutPlanDto.AvailableMarkets,
+                CoverageGoalPercent = pricingParametersWithoutPlanDto.CoverageGoalPercent,
+                CreativeLengths = pricingParametersWithoutPlanDto.CreativeLengths,
+                Dayparts = pricingParametersWithoutPlanDto.Dayparts,
+                Equivalized = pricingParametersWithoutPlanDto.Equivalized,
+                FlightDays = pricingParametersWithoutPlanDto.FlightDays,
+                FlightEndDate = pricingParametersWithoutPlanDto.FlightEndDate,
+                FlightHiatusDays = pricingParametersWithoutPlanDto.FlightHiatusDays,
+                FlightStartDate = pricingParametersWithoutPlanDto.FlightStartDate,
+                GoalBreakdownType = pricingParametersWithoutPlanDto.GoalBreakdownType,
+                HUTBookId = pricingParametersWithoutPlanDto.HUTBookId,
+                ImpressionsPerUnit = pricingParametersWithoutPlanDto.ImpressionsPerUnit,
+                PostingType = pricingParametersWithoutPlanDto.PostingType,
+                ShareBookId = pricingParametersWithoutPlanDto.ShareBookId,
+                TargetRatingPoints = pricingParametersWithoutPlanDto.TargetRatingPoints,
+                WeeklyBreakdownWeeks = pricingParametersWithoutPlanDto.WeeklyBreakdownWeeks,
+                PricingParameters = _ConvertPricingWihtoutPlanParametersToPlanPricingParameters(pricingParametersWithoutPlanDto),
+                TargetImpressions = pricingParametersWithoutPlanDto.DeliveryImpressions,
+                Budget = pricingParametersWithoutPlanDto.Budget
+            };
+        }
+
         public PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto
             , DateTime currentDate, string username)
         {
             // lock the plan so that two requests for the same plan can not get in this area concurrently
-            var key = KeyHelper.GetPlanLockingKey(planPricingParametersDto.PlanId);
+            var key = KeyHelper.GetPlanLockingKey(planPricingParametersDto.PlanId.Value);
             var lockObject = _LockingManagerApplicationService.GetNotUserBasedLockObjectForKey(key);
 
             lock (lockObject)
             {
-                if (IsPricingModelRunningForPlan(planPricingParametersDto.PlanId))
+                if (IsPricingModelRunningForPlan(planPricingParametersDto.PlanId.Value))
                 {
                     throw new Exception("The pricing model is already running for the plan");
                 }
 
-                var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId);
+                var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId.Value);
 
                 ValidateAndApplyMargin(planPricingParametersDto);
 
@@ -341,9 +467,15 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        public CurrentPricingExecution GetCurrentPricingExecution(int planId)
+        public CurrentPricingExecution GetCurrentPricingExecutionByJobId(int jobId)
         {
-            var job = _PlanRepository.GetLatestPricingJob(planId);
+            var job = _PlanRepository.GetPlanPricingJob(jobId);
+
+            return _GetCurrentPricingExecution(job, null);
+        }
+
+        private CurrentPricingExecution _GetCurrentPricingExecution(PlanPricingJob job, int? planId)
+        {
             CurrentPricingExecutionResultDto pricingExecutionResult = null;
 
             if (job != null && job.Status == BackgroundJobProcessingStatus.Failed)
@@ -367,8 +499,13 @@ namespace Services.Broadcast.ApplicationServices
                         : string.Empty;
                     if (pricingExecutionResult.JobId.HasValue)
                     {
-                        var goalCpm = _PlanRepository.GetGoalCpm(pricingExecutionResult.PlanVersionId,
-                            pricingExecutionResult.JobId.Value);
+                        decimal goalCpm;
+                        if (pricingExecutionResult.PlanVersionId.HasValue)
+                            goalCpm = _PlanRepository.GetGoalCpm(pricingExecutionResult.PlanVersionId.Value,
+                                pricingExecutionResult.JobId.Value);
+                        else
+                            goalCpm = _PlanRepository.GetGoalCpm(pricingExecutionResult.JobId.Value);
+
                         pricingExecutionResult.CpmPercentage =
                             CalculateCpmPercentage(pricingExecutionResult.OptimalCpm, goalCpm);
                     }
@@ -383,6 +520,14 @@ namespace Services.Broadcast.ApplicationServices
                 IsPricingModelRunning = IsPricingModelRunning(job)
             };
         }
+
+        public CurrentPricingExecution GetCurrentPricingExecution(int planId)
+        {
+            var job = _PlanRepository.GetLatestPricingJob(planId);
+
+            return _GetCurrentPricingExecution(job, planId);
+        }
+
         /// <summary>
         /// Goal CPM Percentage Indicator Calculation
         /// </summary>
@@ -393,10 +538,15 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         /// <inheritdoc />
-        public PlanPricingResponseDto CancelCurrentPricingExecution(int planId)
+        public PlanPricingResponseDto CancelCurrentPricingExecutionByJobId(int jobId)
         {
-            var job = _PlanRepository.GetLatestPricingJob(planId);
+            var job = _PlanRepository.GetPlanPricingJob(jobId);
 
+            return _CancelCurrentPricingExecution(job);
+        }
+
+        private PlanPricingResponseDto _CancelCurrentPricingExecution(PlanPricingJob job)
+        {
             if (job != null && job.Status == BackgroundJobProcessingStatus.Failed)
             {
                 throw new Exception("Error encountered while running Pricing Model, please contact a system administrator for help");
@@ -432,9 +582,23 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
+        /// <inheritdoc />
+        public PlanPricingResponseDto CancelCurrentPricingExecution(int planId)
+        {
+            var job = _PlanRepository.GetLatestPricingJob(planId);
+
+            return _CancelCurrentPricingExecution(job);
+        }
+
         public static bool IsPricingModelRunning(PlanPricingJob job)
         {
             return job != null && (job.Status == BackgroundJobProcessingStatus.Queued || job.Status == BackgroundJobProcessingStatus.Processing);
+        }
+
+        public bool IsPricingModelRunningForJob(int jobId)
+        {
+            var job = _PlanRepository.GetPlanPricingJob(jobId);
+            return IsPricingModelRunning(job);
         }
 
         public bool IsPricingModelRunningForPlan(int planId)
@@ -664,7 +828,7 @@ namespace Services.Broadcast.ApplicationServices
             return newJobId;
         }
 
-        public void RunPricingJob(PlanPricingParametersDto planPricingParametersDto, int jobId, CancellationToken token)
+        private void _RunPricingJob(PlanPricingParametersDto planPricingParametersDto, PlanDto plan, int jobId, CancellationToken token)
         {
             var diagnostic = new PlanPricingJobDiagnostic();
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_TOTAL_DURATION);
@@ -680,7 +844,7 @@ namespace Services.Broadcast.ApplicationServices
                 token.ThrowIfCancellationRequested();
 
                 diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FETCHING_PLAN_AND_PARAMETERS);
-                var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId);
+
                 var programInventoryParameters = new ProgramInventoryOptionalParametersDto
                 {
                     MinCPM = planPricingParametersDto.MinCpm,
@@ -1044,6 +1208,21 @@ namespace Services.Broadcast.ApplicationServices
             return pricingModelSpots;
         }
 
+        public void RunPricingWithoutPlanJob(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto, int jobId, CancellationToken token)
+        {
+            var pricingParameters = _ConvertPricingWihtoutPlanParametersToPlanPricingParameters(pricingParametersWithoutPlanDto);
+            var plan = _ConvertPricingWihtoutPlanParametersToPlanDto(pricingParametersWithoutPlanDto);
+
+            _RunPricingJob(pricingParameters, plan, jobId, token);
+        }
+
+        public void RunPricingJob(PlanPricingParametersDto planPricingParametersDto, int jobId, CancellationToken token)
+        {
+            var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId.Value);
+
+            _RunPricingJob(planPricingParametersDto, plan, jobId, token);
+        }
+
         private List<PlanPricingApiRequestWeekDto_v3> _GetPricingModelWeeks_v3(
             PlanDto plan,
             List<PricingEstimate> proprietaryEstimates,
@@ -1210,9 +1389,9 @@ namespace Services.Broadcast.ApplicationServices
         {
             try
             {
-                _PricingRequestLogClient.SavePricingRequest(planId ,pricingApiRequest);
+                _PricingRequestLogClient.SavePricingRequest(planId, pricingApiRequest);
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 _LogError("Failed to save pricing API request", exception);
             }
@@ -1273,7 +1452,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var allocatedTotalCost = spots.Sum(x => x.TotalCostWithMargin);
                 var allocatedTotalImpressions = spots.Sum(x => x.TotalImpressions);
-                
+
                 totalCost += allocatedTotalCost;
                 totalImpressions += allocatedTotalImpressions;
             }
@@ -1731,7 +1910,7 @@ namespace Services.Broadcast.ApplicationServices
             totalProgramSpots = 0;
 
             foreach (var apiProgram in allocatedProgramSpots)
-            { 
+            {
                 totalProgramCost += apiProgram.TotalCostWithMargin;
                 totalProgramImpressions += apiProgram.TotalImpressions;
                 totalProgramSpots += apiProgram.TotalSpots;
@@ -1844,10 +2023,15 @@ namespace Services.Broadcast.ApplicationServices
             return $"Job Id '{jobId}' has been forced to complete.";
         }
 
-        public PricingProgramsResultDto GetPrograms(int planId)
+        public PricingProgramsResultDto GetProgramsByJobId(int jobId)
         {
-            var job = _PlanRepository.GetLatestPricingJob(planId);
+            var job = _PlanRepository.GetPlanPricingJob(jobId);
 
+            return _GetPrograms(job, null);
+        }
+
+        private PricingProgramsResultDto _GetPrograms(PlanPricingJob job, int? planId)
+        {
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
@@ -1861,6 +2045,13 @@ namespace Services.Broadcast.ApplicationServices
             _ConvertImpressionsToUserFormat(results);
 
             return results;
+        }
+
+        public PricingProgramsResultDto GetPrograms(int planId)
+        {
+            var job = _PlanRepository.GetLatestPricingJob(planId);
+
+            return _GetPrograms(job, planId);
         }
 
         private void _ConvertImpressionsToUserFormat(PricingProgramsResultDto planPricingResult)
@@ -1878,10 +2069,15 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        public PlanPricingBandDto GetPricingBands(int planId)
+        public PlanPricingBandDto GetPricingBandsByJobId(int jobId)
         {
-            var job = _PlanRepository.GetLatestPricingJob(planId);
+            var job = _PlanRepository.GetPlanPricingJob(jobId);
 
+            return _GetPricingBands(job, null);
+        }
+
+        private PlanPricingBandDto _GetPricingBands(PlanPricingJob job, int? planId)
+        {
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
@@ -1895,11 +2091,23 @@ namespace Services.Broadcast.ApplicationServices
             return results;
         }
 
-        /// <inheritdoc />
-        public PlanPricingResultMarketsDto GetMarkets(int planId)
+        public PlanPricingBandDto GetPricingBands(int planId)
         {
             var job = _PlanRepository.GetLatestPricingJob(planId);
 
+            return _GetPricingBands(job, planId);
+        }
+
+        /// <inheritdoc />
+        public PlanPricingResultMarketsDto GetMarketsByJobId(int jobId)
+        {
+            var job = _PlanRepository.GetPlanPricingJob(jobId);
+
+            return _GetMarkets(job, null);
+        }
+
+        private PlanPricingResultMarketsDto _GetMarkets(PlanPricingJob job, int? planId)
+        {
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
             {
                 return null;
@@ -1917,9 +2125,22 @@ namespace Services.Broadcast.ApplicationServices
             return results;
         }
 
-        public PlanPricingStationResultDto GetStations(int planId)
+        /// <inheritdoc />
+        public PlanPricingResultMarketsDto GetMarkets(int planId)
         {
             var job = _PlanRepository.GetLatestPricingJob(planId);
+
+            return _GetMarkets(job, planId);
+        }
+
+        public PlanPricingStationResultDto GetStationsByJobId(int jobId)
+        {
+            var job = _PlanRepository.GetPlanPricingJob(jobId);
+            return _GetStations(job, null);
+        }
+
+        private PlanPricingStationResultDto _GetStations(PlanPricingJob job, int? planId)
+        {
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
@@ -1930,6 +2151,12 @@ namespace Services.Broadcast.ApplicationServices
             _ConvertPricingStationResultDtoToUserFormat(result);
 
             return result;
+        }
+
+        public PlanPricingStationResultDto GetStations(int planId)
+        {
+            var job = _PlanRepository.GetLatestPricingJob(planId);
+            return _GetStations(job, planId);
         }
 
         private void _ConvertPricingStationResultDtoToUserFormat(PlanPricingStationResultDto results)

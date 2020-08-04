@@ -17,6 +17,6 @@
     "JobId": null,
     "Notes": null,
     "OptimalCpm": 0.0,
-    "PlanVersionId": 0
+    "PlanVersionId": null
   }
 }

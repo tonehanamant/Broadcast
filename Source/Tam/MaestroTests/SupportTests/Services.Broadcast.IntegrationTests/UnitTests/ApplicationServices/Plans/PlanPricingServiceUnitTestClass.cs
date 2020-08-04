@@ -6,6 +6,7 @@ using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Clients;
 using System;
 using Services.Broadcast.BusinessEngines.PlanPricing;
+using Services.Broadcast.Validators;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {
@@ -24,7 +25,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                   IPlanPricingBandCalculationEngine planPricingBandCalculationEngine,
                                   IPlanPricingStationCalculationEngine planPricingStationCalculationEngine,
                                   IPlanPricingMarketResultsEngine planPricingMarketResultsEngine,
-                                  IPricingRequestLogClient pricingApiRequestSerializerClient)
+                                  IPricingRequestLogClient pricingApiRequestSerializerClient,
+                                  IPlanValidator planValidator)
         : base(
             broadcastDataRepositoryFactory,
             spotLengthEngine,
@@ -39,7 +41,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             planPricingBandCalculationEngine,
             planPricingStationCalculationEngine,
             planPricingMarketResultsEngine,
-            pricingApiRequestSerializerClient)
+            pricingApiRequestSerializerClient,
+            planValidator)
         {
             
         }

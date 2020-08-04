@@ -511,6 +511,7 @@
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultMarketDetailsDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultMarketsDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultMarketsTotalsDto.cs" />
+    <Compile Include="Entities\Plan\Pricing\PricingParametersWithoutPlanDto.cs" />
     <Compile Include="Entities\ProgramMapping\ProgramNameExceptionDto.cs" />
     <Compile Include="Entities\ProgramMapping\ProgramNameMappingDto.cs" />
     <Compile Include="Entities\ProgramMapping\UnMappedProgramNameReportData.cs" />

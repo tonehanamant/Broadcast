@@ -61,7 +61,9 @@
         "MarketCode": null,
         "ModifiedDate": null,
         "OriginMarket": null,
-        "RateDataThrough": null
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
       },
       "Unit": null
     }
@@ -84,7 +86,9 @@
           "Affiliation": null,
           "RateDataThrough": null,
           "ModifiedDate": null,
-          "ManifestMaxEndDate": null
+          "ManifestMaxEndDate": null,
+          "OwnershipGroupName": null,
+          "SalesGroupName": null
         },
         "Unit": null,
         "InventorySource": null,

@@ -12,7 +12,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 
         public int Id { get; set; }
         public int? JobId { get; set; }
-        public int PlanVersionId { get; set; }
+        public int? PlanVersionId { get; set; }
         public PlanPricingStationTotalsDto Totals { get; set; }
         public List<PlanPricingStationDto> Stations { get; set; }
     }

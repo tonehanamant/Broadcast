@@ -20,7 +20,7 @@ namespace EntityFrameworkMapping.Broadcast
         public decimal cost { get; set; }
         public int spots { get; set; }
     
-        public virtual spot_lengths spot_lengths { get; set; }
         public virtual plan_version_pricing_api_result_spots plan_version_pricing_api_result_spots { get; set; }
+        public virtual spot_lengths spot_lengths { get; set; }
     }
 }

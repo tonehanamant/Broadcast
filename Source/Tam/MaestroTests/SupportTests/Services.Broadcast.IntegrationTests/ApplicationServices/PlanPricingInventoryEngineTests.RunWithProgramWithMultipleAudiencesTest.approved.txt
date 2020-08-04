@@ -192,7 +192,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     },
     "Unit": null
   },
@@ -389,7 +391,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "RateDataThrough": null
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
     },
     "Unit": null
   }

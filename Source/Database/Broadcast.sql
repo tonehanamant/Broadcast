@@ -212,6 +212,20 @@ BEGIN
 END
 /*************************************** END BP-814 *****************************************************/
 
+/*************************************** END BP-897 *****************************************************/
+IF ((SELECT COLUMNPROPERTY(OBJECT_ID('plan_version_pricing_job', 'U'), 'plan_version_id', 'AllowsNull')) = 0)
+BEGIN
+	ALTER TABLE plan_version_pricing_job
+	ALTER COLUMN plan_version_id INT NULL
+END
+
+IF ((SELECT COLUMNPROPERTY(OBJECT_ID('plan_version_pricing_parameters', 'U'), 'plan_version_id', 'AllowsNull')) = 0)
+BEGIN
+	ALTER TABLE plan_version_pricing_parameters
+	ALTER COLUMN plan_version_id INT NULL
+END
+/*************************************** END BP-897 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
