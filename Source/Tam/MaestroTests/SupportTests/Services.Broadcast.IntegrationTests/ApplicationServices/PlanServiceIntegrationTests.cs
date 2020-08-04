@@ -1420,6 +1420,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [Category("long_running")]
+        public void AutomaticStatusTransition_RemainsLive()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var newPlan = _PlanService.GetPlan(1853);
+                
+                var transitionDateToComplete = newPlan.FlightEndDate.Value;
+                var updatedDate = newPlan.FlightEndDate.Value;
+                Assert.AreEqual(6, newPlan.VersionNumber);
+
+                _PlanService.AutomaticStatusTransitions(transitionDateToComplete, "integration_test", updatedDate);
+
+                var samePlan = _PlanService.GetPlan(1853);
+
+                Assert.AreEqual(PlanStatusEnum.Live, samePlan.Status);
+                Assert.AreEqual(6, samePlan.VersionNumber);
+                Assert.AreEqual(samePlan.PricingParameters.JobId, newPlan.PricingParameters.JobId);
+            }
+        }
+
+        [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void GetPlanCurrencies()

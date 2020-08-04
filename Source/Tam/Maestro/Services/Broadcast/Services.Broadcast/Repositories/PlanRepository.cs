@@ -452,7 +452,7 @@ namespace Services.Broadcast.Repositories
                                    plan.latest_version_id == planVersion.id &&
                                    (
                                     (planVersion.flight_start_date <= transitionDate && planVersion.status == (int)PlanStatusEnum.Contracted) ||
-                                    (planVersion.flight_end_date <= transitionDate && planVersion.status == (int)PlanStatusEnum.Live)
+                                    (planVersion.flight_end_date < transitionDate && planVersion.status == (int)PlanStatusEnum.Live)
                                    )
                                    select plan)
                         .Include(x => x.plan_versions)
