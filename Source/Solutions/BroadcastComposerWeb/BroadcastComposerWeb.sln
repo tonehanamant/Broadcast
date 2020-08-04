@@ -98,8 +98,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProgramGuideInterface", "Pr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy website", "Deploy website", "{EB7AB09B-CE8D-4C7E-B346-324FF3420221}"
 	ProjectSection(SolutionItems) = preProject
-		C:\Users\sroibu\Downloads\deploy-website-iis.ps1 = C:\Users\sroibu\Downloads\deploy-website-iis.ps1
-		C:\Users\sroibu\Downloads\re-deploy-existing-site-iis.ps1 = C:\Users\sroibu\Downloads\re-deploy-existing-site-iis.ps1
+		..\..\..\..\..\Users\sroibu\Downloads\deploy-website-iis.ps1 = ..\..\..\..\..\Users\sroibu\Downloads\deploy-website-iis.ps1
+		..\..\..\..\..\Users\sroibu\Downloads\re-deploy-existing-site-iis.ps1 = ..\..\..\..\..\Users\sroibu\Downloads\re-deploy-existing-site-iis.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PricingModelAnalysis", "PricingModelAnalysis", "{DC2698A8-B951-4482-B180-AF395FE71E5E}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Powershell\PricingModelAnalysis\Pricing-InputJsonToSql.ps1 = ..\..\Powershell\PricingModelAnalysis\Pricing-InputJsonToSql.ps1
 	EndProjectSection
 EndProject
 Global
@@ -1416,6 +1421,7 @@ Global
 		{72DBF983-79A6-4CE3-8517-4ECF97115C47} = {E97233B4-5064-40FD-9BED-ABB601ED054A}
 		{AB4580AA-CDB1-46C8-A528-2A57DEC2530A} = {B7BD734A-111A-486E-B613-7EBE65A8DE1F}
 		{EB7AB09B-CE8D-4C7E-B346-324FF3420221} = {B7BD734A-111A-486E-B613-7EBE65A8DE1F}
+		{DC2698A8-B951-4482-B180-AF395FE71E5E} = {B7BD734A-111A-486E-B613-7EBE65A8DE1F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4BC15B7E-D396-4ACC-BE2F-1CC4402A6C07}
