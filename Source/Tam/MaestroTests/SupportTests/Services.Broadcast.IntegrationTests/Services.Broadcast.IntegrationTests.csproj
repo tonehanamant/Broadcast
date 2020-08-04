@@ -509,6 +509,7 @@
     <Compile Include="UnitTests\BusinessEngines\TrackingEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\VpvhExportEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\WeeklyBreakdownEngineUnitTests.cs" />
+    <Compile Include="UnitTests\Converters\RateImport\BarterFileImporterUnitTests.cs" />
     <Compile Include="UnitTests\Converters\RateImport\DiginetFileImporterUnitTests.cs" />
     <Compile Include="UnitTests\Converters\VpvhFileImporterUnitTests.cs" />
     <Compile Include="UnitTests\DaytimeCleanupServiceTests.cs" />
@@ -743,6 +744,9 @@
     <None Include="Files\ProprietaryDataFiles\Barter_GetPendingBarterInventoryFile.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ProprietaryDataFiles\Barter_ImportStationValidation.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ProprietaryDataFiles\Barter_invalid1.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -756,6 +760,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\ProprietaryDataFiles\Barter_SingleDataColumn.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ProprietaryDataFiles\Barter_UnmappedStations.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\ProprietaryDataFiles\Barter_ValidFormat.xlsx">

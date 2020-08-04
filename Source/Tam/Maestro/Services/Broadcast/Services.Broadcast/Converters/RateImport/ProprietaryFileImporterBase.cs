@@ -77,12 +77,19 @@ namespace Services.Broadcast.Converters.RateImport
         protected readonly IStationMappingService _StationMappingService;
         private readonly IFileService _FileService;
 
-
         /// <summary>
         /// Indicates that a second worksheet needs to be processed.
         /// Override in your base class and return true to opt-in.
         /// </summary>
         public virtual bool HasSecondWorksheet { get; } = false;
+
+        /// <summary>
+        /// Override this to change the workflow behaviour.
+        ///
+        /// When true then if the file references an unknown station it will fail.
+        /// </summary>
+        protected virtual bool FailWhenStationNotFound { get; } = true;
+
         /// <summary>
         /// Constructor
         /// </summary>        
@@ -164,7 +171,7 @@ namespace Services.Broadcast.Converters.RateImport
                         throw new BroadcastDuplicateInventoryFileException($"Unable to load file. Expected a second worksheet that is not in the file.");
                     }
                 }
-                
+
                 LoadAndValidateDataLines(worksheet, proprietaryFile);
 
                 package.SaveAs(result);
@@ -173,15 +180,18 @@ namespace Services.Broadcast.Converters.RateImport
             return result;
         }
 
-        public virtual List<DisplayBroadcastStation> GetFileStations(ProprietaryInventoryFile proprietaryFile)
+        public List<DisplayBroadcastStation> GetFileStations(ProprietaryInventoryFile proprietaryFile)
         {
             var allStationNames = proprietaryFile.DataLines.Select(x => x.Station).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct();
             var stationsList = new List<DisplayBroadcastStation>();
 
             foreach (var stationName in allStationNames)
             {
-                var station = _StationMappingService.GetStationByCallLetters(stationName);
-                stationsList.Add(station);
+                var station = _StationMappingService.GetStationByCallLetters(stationName, throwIfNotFound:FailWhenStationNotFound);
+                if (station != null)
+                {
+                    stationsList.Add(station);
+                }
             }
 
             return stationsList;

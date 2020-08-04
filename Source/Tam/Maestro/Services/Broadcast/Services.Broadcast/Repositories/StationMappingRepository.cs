@@ -253,31 +253,23 @@ namespace Services.Broadcast.Repositories
         /// <inheritdoc />
         public DisplayBroadcastStation GetBroadcastStationStartingWithCallLetters(string callLetters, bool throwIfNotFound = true)
         {
-            return _InReadUncommitedTransaction(context =>
+            var result = _InReadUncommitedTransaction(context =>
+                {
+                    var query = context.stations
+                        .Include(x => x.station_mappings)
+                        .Include(x => x.market)
+                        .Where(station =>
+                            station.station_mappings.Any(mapping => mapping.mapped_call_letters.StartsWith(callLetters)));
+
+                    return _MapToDisplayBroadcastStationDto(query.SingleOrDefault());
+                });
+
+            if (result == null && throwIfNotFound)
             {
-                var query = context.stations
-                    .Include(x => x.station_mappings)
-                    .Include(x => x.market)
-                    .Where(station =>
-                        station.station_mappings.Any(mapping => mapping.mapped_call_letters.StartsWith(callLetters)));
-
-                try
-                {
-                    if (throwIfNotFound) {
-                        return _MapToDisplayBroadcastStationDto(
-                        query.Single());
-                    }
-                    else
-                    {
-                        return _MapToDisplayBroadcastStationDto(
-                        query.SingleOrDefault());
-                    }
-                }catch(Exception e)
-                {
-                    throw new Exception($"Could not determine station for call letters {callLetters}", e);
-                }
-
-            });
+                throw new Exception($"Could not determine station for call letters {callLetters}");
+            }
+            
+            return result;
         }
     }
 }

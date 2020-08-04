@@ -47,6 +47,8 @@ namespace Services.Broadcast.Converters.RateImport
 
         public override bool HasSecondWorksheet { get; } = true;
 
+        protected override bool FailWhenStationNotFound { get; } = false;
+
         public DiginetFileImporter(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IBroadcastAudiencesCache broadcastAudiencesCache,
@@ -292,23 +294,6 @@ namespace Services.Broadcast.Converters.RateImport
                 columnIndex = firstColumnIndex;
                 rowIndex++;
             }
-        }
-
-        public override List<DisplayBroadcastStation> GetFileStations(ProprietaryInventoryFile proprietaryFile)
-        {
-            var allStationNames = proprietaryFile.DataLines.Select(x => x.Station).Where(x => !string.IsNullOrWhiteSpace(x)).Distinct();
-            var stationsList = new List<DisplayBroadcastStation>();
-
-            foreach (var stationName in allStationNames)
-            {
-                var station = _StationMappingService.GetStationByCallLetters(stationName, throwIfNotFound: false);
-                if (station != null)
-                {
-                    stationsList.Add(station);
-                }
-            }
-
-            return stationsList;
         }
 
         private ProprietaryInventoryDataLine _ReadAndValidateDataLine(

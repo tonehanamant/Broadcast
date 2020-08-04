@@ -57,10 +57,23 @@ namespace Services.Broadcast.IntegrationTests
         {
             throw new NotImplementedException();
         }
+        
+        /// <summary>
+        /// Gets the list of Copy calls with the Stream parameter.
+        /// - Item1 = Stream inputStream
+        /// - Item2 = string destinationPath
+        /// - Item3 = bool overwriteExisting
+        /// </summary>
+        public List<Tuple<Stream, string, bool>> CopyStreamCalls { get; } = new List<Tuple<Stream, string, bool>>();
 
+        /// <summary>
+        /// Inputs are added to stub property CopyStreamCalls.
+        /// </summary>
+        /// <returns>destinationPath</returns>
         public virtual string Copy(Stream inputStream, string destinationPath, bool overwriteExisting = false)
         {
-            throw new NotImplementedException();
+            CopyStreamCalls.Add(new Tuple<Stream, string, bool>(inputStream, destinationPath, overwriteExisting));
+            return destinationPath;
         }
 
         public bool DirectoryExists(string filePath)

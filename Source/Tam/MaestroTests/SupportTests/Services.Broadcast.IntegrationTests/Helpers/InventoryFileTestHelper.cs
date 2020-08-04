@@ -36,7 +36,7 @@ namespace Services.Broadcast.IntegrationTests.Helpers
             _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         }
 
-        public void UploadProprietaryInventoryFile(
+        public InventoryFileSaveResult UploadProprietaryInventoryFile(
             string fileName, 
             DateTime? date = null, 
             bool processInventoryRatings = true,
@@ -49,7 +49,7 @@ namespace Services.Broadcast.IntegrationTests.Helpers
             };
 
             var now = date ?? new DateTime(2019, 02, 02);
-            _ProprietaryInventoryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
+            var result = _ProprietaryInventoryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
 
             if (processInventoryRatings)
             {
@@ -62,6 +62,8 @@ namespace Services.Broadcast.IntegrationTests.Helpers
                 var job = _InventoryProgramsByFileJobsRepository.GetLatestJob();
                 _InventoryProgramsProcessingService.ProcessInventoryProgramsByFileJob(job.Id);
             }
+
+            return result;
         }
 
         public int UploadOpenMarketInventoryFile(string fileName, DateTime? date = null, bool enhanceFilePrograms = false)

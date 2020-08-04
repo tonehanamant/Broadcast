@@ -249,6 +249,36 @@ namespace Services.Broadcast.Converters.RateImport
             proprietaryFile.ValidationProblems.AddRange(validationProblems);
         }
 
+        /// <summary>
+        /// Applies transformation rules on the given callsign
+        /// </summary>
+        /// <param name="rawCallSign">The raw callsign from the provider.</param>
+        /// <returns>The transformed callsign.</returns>
+        internal string _TransformStationCallsign(string rawCallSign)
+        {
+            if (string.IsNullOrWhiteSpace(rawCallSign))
+            {
+                return rawCallSign;
+            }
+
+            const int zeroIndex = 0;
+            // the tokens per the business rules.
+            string[] stripTokens = { "-TV", "-DT", "-LD", "-CD", "-LPTV" };
+
+            foreach (var stripToken in stripTokens)
+            {
+                if (!rawCallSign.Contains(stripToken, StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                var tokenIndex = rawCallSign.IndexOf(stripToken, StringComparison.OrdinalIgnoreCase);
+                var transformedResult = rawCallSign.Substring(zeroIndex, tokenIndex);
+                return transformedResult;
+            }
+            return rawCallSign;
+        }
+
         public override void LoadAndValidateDataLines(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
         {
             const int firstColumnIndex = 1;
@@ -273,9 +303,11 @@ namespace Services.Broadcast.Converters.RateImport
                 List<string> validationProblems = new List<string>();
                 // don`t simplify object initialization because line columns should be read with the current order 
                 var line = new ProprietaryInventoryDataLine();
-                line.Station = worksheet.Cells[rowIndex, columnIndex++].GetStringValue();
-                var daypartText = worksheet.Cells[rowIndex, columnIndex++].GetStringValue();
 
+                var rawStationCallSign = worksheet.Cells[rowIndex, columnIndex++].GetStringValue();
+                line.Station = _TransformStationCallsign(rawStationCallSign);
+
+                var daypartText = worksheet.Cells[rowIndex, columnIndex++].GetStringValue();
                 if (DaypartParsingEngine.TryParse(daypartText, out var dayparts))
                 {
                     line.Dayparts = dayparts;

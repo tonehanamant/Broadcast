@@ -1647,6 +1647,65 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
+        public void ProprietaryImportStationValidation()
+        {
+            // Arrange
+            const string fileName = "Barter_ImportStationValidation.xlsx";
+
+            using (new TransactionScopeWrapper())
+            {
+                // Act
+                var result = _InventoryFileTestHelper.UploadProprietaryInventoryFile(fileName, processInventoryRatings: false);
+
+                // Assert
+                var inventory = _InventoryRepository.GetStationInventoryManifestsByFileId(result.FileId);
+                
+                // validate the station list is what we think it should be.
+                // order should match
+                var inventoryStations = inventory.OrderBy(i => i.Id).Select(i => i.Station).ToList();
+                var toValidate = new { UploadResult = result, inventoryStations };
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
+                var serializer = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(toValidate, serializer));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void ProprietaryImportUnmappedStations()
+        {
+            // Arrange
+            const string fileName = "Barter_UnmappedStations.xlsx";
+
+            using (new TransactionScopeWrapper())
+            {
+                // Act
+                var result = _InventoryFileTestHelper.UploadProprietaryInventoryFile(fileName, processInventoryRatings: false);
+
+                // Assert
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(InventoryFileSaveResult), "FileId");
+
+                var serializer = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, serializer));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void CanGetDiginetUploadHistory()
         {
             var inventorySourceId = 20; // COZI
