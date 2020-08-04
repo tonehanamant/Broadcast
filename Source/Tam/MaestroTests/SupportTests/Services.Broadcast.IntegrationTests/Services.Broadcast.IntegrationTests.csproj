@@ -653,6 +653,18 @@
     <None Include="Files\ImportStationMappings\CadentBroadcastStationList_EmptySales.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ImportStationMappings\CadentBroadcastStationList_OwnershipMaxLength.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ImportStationMappings\CadentBroadcastStationList_OwnershipMaxLength2.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ImportStationMappings\CadentBroadcastStationList_SalesMaxLength.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ImportStationMappings\CadentBroadcastStationList_SalesMaxLength2.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\InventoryDaypartParsing\CNN_dayparts_valid.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

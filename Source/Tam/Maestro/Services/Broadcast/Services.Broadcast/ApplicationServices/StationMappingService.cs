@@ -79,8 +79,29 @@ namespace Services.Broadcast.ApplicationServices
         {
             var stationMappings = _ReadStationMappingsFile(fileStream);
 
+            _ValidateMaxLength(stationMappings);
             _PopulateIndependentStationsOwnershipGroupName(stationMappings);
             _ProcessStationMappings(userName, createdDate, stationMappings);
+        }
+
+        private void _ValidateMaxLength(List<StationMappingsFileRequestDto> stationMappings)
+        {
+            var exceedingLimit = stationMappings.Where(x => x.OwnershipGroupName != null && x.OwnershipGroupName.Length > 100)
+                .Select(x => x.CadentCallLetters);
+            if (exceedingLimit.Count() > 0)
+            {
+                bool multiple = exceedingLimit.Count() > 1;
+                throw new ApplicationException(
+                    $"Station{(multiple ? "s" : string.Empty)} {string.Join(",", exceedingLimit)} {(multiple ? "have" : "has")} ownership name greater than 100 chars.");
+            }
+            exceedingLimit = stationMappings.Where(x => x.SalesGroupName != null && x.SalesGroupName.Length > 100)
+                .Select(x => x.CadentCallLetters);
+            if (exceedingLimit.Count() > 0)
+            {
+                bool multiple = exceedingLimit.Count() > 1;
+                throw new ApplicationException(
+                    $"Station{(multiple ? "s" : string.Empty)} {string.Join(",", exceedingLimit)} {(multiple ? "have" : "has")} sales group name greater than 100 chars.");
+            }
         }
 
         private void _PopulateIndependentStationsOwnershipGroupName(List<StationMappingsFileRequestDto> stationMappings)

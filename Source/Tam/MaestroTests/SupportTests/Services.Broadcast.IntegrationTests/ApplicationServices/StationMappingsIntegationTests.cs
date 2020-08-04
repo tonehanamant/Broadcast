@@ -366,5 +366,57 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 , "Station CLTV cannot have multiple sales groups");
             }
         }
+
+        [Test]
+        public void UploadStationMappingsExcelFile_MaxOwnershipLength()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var fileName = "CadentBroadcastStationList_OwnershipMaxLength.xlsx";
+                Assert.Throws<ApplicationException>(() =>
+                    _StationMappingService.LoadStationMappings(new FileStream($@".\Files\ImportStationMappings\{fileName}"
+                                , FileMode.Open, FileAccess.Read), fileName, "integration_test", DateTime.Now)
+                , "Station CLTV has ownership name greater than 100 chars.");
+            }
+        }
+
+        [Test]
+        public void UploadStationMappingsExcelFile_MaxSalesLength()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var fileName = "CadentBroadcastStationList_SalesMaxLength.xlsx";
+                Assert.Throws<ApplicationException>(() =>
+                    _StationMappingService.LoadStationMappings(new FileStream($@".\Files\ImportStationMappings\{fileName}"
+                                , FileMode.Open, FileAccess.Read), fileName, "integration_test", DateTime.Now)
+                , "Station CLTV has sales group name greater than 100 chars.");
+            }
+        }
+
+        [Test]
+        public void UploadStationMappingsExcelFile_MaxOwnershipLength2()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var fileName = "CadentBroadcastStationList_OwnershipMaxLength2.xlsx";
+                Assert.Throws<ApplicationException>(() =>
+                    _StationMappingService.LoadStationMappings(new FileStream($@".\Files\ImportStationMappings\{fileName}"
+                                , FileMode.Open, FileAccess.Read), fileName, "integration_test", DateTime.Now)
+                , "Stations CLTV,CW4 have ownership name greater than 100 chars.");
+            }
+        }
+
+        [Test]
+        public void UploadStationMappingsExcelFile_MaxSalesLength2()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var fileName = "CadentBroadcastStationList_SalesMaxLength2.xlsx";
+                Assert.Throws<ApplicationException>(() =>
+                    _StationMappingService.LoadStationMappings(new FileStream($@".\Files\ImportStationMappings\{fileName}"
+                                , FileMode.Open, FileAccess.Read), fileName, "integration_test", DateTime.Now)
+                , "Stations CLTV,CW4 have sales group name greater than 100 chars.");
+            }
+        }
     }
 }
