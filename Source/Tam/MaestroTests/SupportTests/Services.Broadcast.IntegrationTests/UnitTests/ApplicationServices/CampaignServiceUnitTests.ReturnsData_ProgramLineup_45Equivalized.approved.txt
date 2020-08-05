@@ -22,12 +22,12 @@
       "Weight": 0.8
     },
     {
-      "FilterLabel": "MACON",
-      "Weight": 0.13333333
-    },
-    {
       "FilterLabel": "BINGHAMTON",
       "Weight": 0.06666667
+    },
+    {
+      "FilterLabel": "MACON",
+      "Weight": 0.13333333
     }
   ],
   "AllocationByGenreViewRows": [

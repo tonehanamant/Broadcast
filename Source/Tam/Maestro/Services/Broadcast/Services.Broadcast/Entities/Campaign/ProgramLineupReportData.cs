@@ -70,9 +70,7 @@ namespace Services.Broadcast.Entities.Campaign
             AllocationByGenreViewRows = _MapToAllocationViewRows(detailedRowsData, totalAllocatedImpressions
                 , x => x.Genre
                 , true);
-            AllocationByDMAViewRows = _MapToAllocationViewRows(detailedRowsData, totalAllocatedImpressions
-                , x => x.MarketGeographyName
-                , true);
+            AllocationByDMAViewRows = _MapDMAToAllocationViewRows(detailedRowsData, totalAllocatedImpressions);
         }
 
         private void _PopulateHeaderData(
@@ -329,6 +327,25 @@ namespace Services.Broadcast.Entities.Campaign
                    };
                })
                .OrderByDescending(x => x.Weight)
+               .ToList();
+        }
+
+        private List<AllocationViewRowDisplay> _MapDMAToAllocationViewRows(
+            IEnumerable<DetailedViewRowData> dataRows
+            , double totalAllocatedImpressions)
+        {
+            return dataRows
+                .GroupBy(x=>new { x.MarketGeographyName, x.Rank })
+                .OrderBy(x=>x.Key.Rank)
+               .Select(x =>
+               {
+                   var items = x.ToList();
+                   return new AllocationViewRowDisplay
+                   {
+                       FilterLabel = x.Key.MarketGeographyName.ToUpper(),
+                       Weight = _CalculateWeight(items.Sum(y => y.TotalSpotsImpressions), totalAllocatedImpressions)
+                   };
+               })
                .ToList();
         }
 
