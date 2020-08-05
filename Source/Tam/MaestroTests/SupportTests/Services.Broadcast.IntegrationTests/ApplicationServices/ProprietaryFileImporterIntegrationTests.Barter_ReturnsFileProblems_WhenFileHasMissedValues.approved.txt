@@ -158,7 +158,7 @@
       "Program": null,
       "RowIndex": 0,
       "SpotCost": null,
-      "Station": "KSWB-TV 69.2",
+      "Station": "KSWB",
       "Units": [
         {
           "ProprietaryInventoryUnit": {

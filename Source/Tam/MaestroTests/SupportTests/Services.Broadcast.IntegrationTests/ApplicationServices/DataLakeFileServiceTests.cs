@@ -85,6 +85,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         FileAccess.Read),
                 FileName = fileName
             };
+            fileService.ThrowOnCopyStreamCall = true;
 
             dataLakeFileService.Save(request);
 

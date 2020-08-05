@@ -260,7 +260,7 @@
       "Program": null,
       "RowIndex": 0,
       "SpotCost": null,
-      "Station": "KUON-TV 12.1",
+      "Station": "KUON",
       "Units": [
         {
           "ProprietaryInventoryUnit": {
@@ -320,7 +320,7 @@
       "Program": null,
       "RowIndex": 0,
       "SpotCost": null,
-      "Station": "KSWB-TV 69.2",
+      "Station": "KSWB",
       "Units": [
         {
           "ProprietaryInventoryUnit": {
