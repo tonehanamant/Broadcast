@@ -103,6 +103,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IDayRepository, DayRepository>();
             instance.RegisterType<IInventoryExportJobRepository, InventoryExportJobRepository>();
             instance.RegisterType<IVpvhRepository, VpvhRepository>();
+            instance.RegisterType<IInventoryProprietarySummaryRepository, InventoryProprietarySummaryRepository>();
             instance.RegisterType<IDataMaintenanceRepository, DataMaintenanceRepository>();
 
             WasRegistered = true;

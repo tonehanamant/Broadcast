@@ -1,0 +1,12 @@
+[
+  {
+    "Audiences": null,
+    "Cpm": 8.6000,
+    "DefaultDaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "Markets": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  }
+]

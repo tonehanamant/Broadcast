@@ -25,6 +25,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.nti_to_nsi_conversion_rates = new HashSet<nti_to_nsi_conversion_rates>();
             this.plan_version_weekly_breakdown = new HashSet<plan_version_weekly_breakdown>();
             this.plan_version_audience_daypart_vpvh = new HashSet<plan_version_audience_daypart_vpvh>();
+            this.inventory_proprietary_summary = new HashSet<inventory_proprietary_summary>();
             this.plan_version_pricing_api_result_spots = new HashSet<plan_version_pricing_api_result_spots>();
         }
     
@@ -45,6 +46,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<nti_to_nsi_conversion_rates> nti_to_nsi_conversion_rates { get; set; }
         public virtual ICollection<plan_version_weekly_breakdown> plan_version_weekly_breakdown { get; set; }
         public virtual ICollection<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
+        public virtual ICollection<inventory_proprietary_summary> inventory_proprietary_summary { get; set; }
         public virtual ICollection<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
     }
 }

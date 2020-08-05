@@ -362,6 +362,7 @@
     <Compile Include="ApplicationServices\GenreServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ImpressionsServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\InventoryProgramsProcessingServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\InventoryProprietarySummaryServiceTests.cs" />
     <Compile Include="ApplicationServices\Inventory\InventoryExportServiceTests.cs" />
     <Compile Include="ApplicationServices\NtiUniverseServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\PlanPricingInventoryEngineTests.cs" />
@@ -431,6 +432,7 @@
     <Compile Include="IntegrationTestHelper.cs" />
     <Compile Include="JsonTextWriterOptimized.cs" />
     <Compile Include="MediaMonthCrunchCacheTest.cs" />
+    <Compile Include="Repositories\InventoryProprietarySummaryRepositoryTests.cs" />
     <Compile Include="Repositories\InventoryExportRepositoryTests.cs" />
     <Compile Include="Repositories\InventoryFileRepositoryTests.cs" />
     <Compile Include="Repositories\InventoryRepositoryTests.cs" />
@@ -696,6 +698,9 @@
     <None Include="Files\ProprietaryDataFiles\Barter_A25-54_Q1 CNN.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ProprietaryDataFiles\Barter_CNN_Q1_2025_2.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ProprietaryDataFiles\Barter_DataLines file with invalid daypart.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -751,6 +756,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\ProprietaryDataFiles\Barter_invalid6.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\ProprietaryDataFiles\Barter_CNN_Q1_2025.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Files\ProprietaryDataFiles\Barter_Q1_2025.xlsx">

@@ -1,0 +1,2282 @@
+[
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  },
+  {
+    "Audiences": [
+      {
+        "AudienceId": 4,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 5,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 6,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 7,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 13,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 14,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 15,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 19,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 20,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 21,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 22,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 28,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 29,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 30,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 31,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 46,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 284,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 290,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 339,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 347,
+        "Impressions": 0.0
+      },
+      {
+        "AudienceId": 348,
+        "Impressions": 0.0
+      }
+    ],
+    "Cpm": 8.6000,
+    "DaypartId": 1,
+    "Id": 0,
+    "InventorySourceId": 5,
+    "ManifestsDto": null,
+    "Quarter": null,
+    "SlotNumber": 1
+  }
+]

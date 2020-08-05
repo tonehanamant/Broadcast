@@ -9,6 +9,7 @@ using Hangfire;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.Scx;
+using Services.Broadcast.Helpers;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.InventoryRatingsProcessing
 {
@@ -16,14 +17,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.InventoryRatingsProcessi
     {
         public InventoryRatingsProcessingServiceUnitTestClass(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
+            IInventoryProprietarySummaryService svc,
             IImpressionsService impressionsService,
             IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine,
             INsiPostingBookService nsiPostingBookService,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-            IBackgroundJobClient backgroundJobClient)
-            : base(broadcastDataRepositoryFactory,
+            IBackgroundJobClient backgroundJobClient, IFeatureToggleHelper featureToggleHelper
+            )
+            : base(broadcastDataRepositoryFactory,svc,
                 impressionsService, proprietarySpotCostCalculationEngine, nsiPostingBookService,
-                mediaMonthAndWeekAggregateCache, backgroundJobClient)
+                mediaMonthAndWeekAggregateCache, backgroundJobClient, featureToggleHelper)
         {
         }
     }

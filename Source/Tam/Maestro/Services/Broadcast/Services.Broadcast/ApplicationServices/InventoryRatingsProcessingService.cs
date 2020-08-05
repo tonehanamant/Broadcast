@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using Services.Broadcast.Helpers;
 using static Services.Broadcast.Entities.Enums.ProposalEnums;
 
 namespace Services.Broadcast.ApplicationServices
@@ -59,14 +60,17 @@ namespace Services.Broadcast.ApplicationServices
         private readonly INsiPostingBookService _NsiPostingBookService;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IBackgroundJobClient _BackgroundJobClient;
+        private readonly IInventoryProprietarySummaryService _InventoryProprietarySummaryService;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
         public InventoryRatingsProcessingService(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
+            IInventoryProprietarySummaryService svc,
             IImpressionsService impressionsService,
             IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine,
             INsiPostingBookService nsiPostingBookService,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
-            IBackgroundJobClient backgroundJobClient)
+            IBackgroundJobClient backgroundJobClient,  IFeatureToggleHelper featureToggleHelper)
         {
             _InventoryFileRatingsJobsRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRatingsJobsRepository>();
             _ProprietaryRepository = broadcastDataRepositoryFactory
@@ -78,6 +82,8 @@ namespace Services.Broadcast.ApplicationServices
             _NsiPostingBookService = nsiPostingBookService;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _BackgroundJobClient = backgroundJobClient;
+            _InventoryProprietarySummaryService = svc;
+            _FeatureToggleHelper = featureToggleHelper;
         }
 
         public List<InventoryFileRatingsProcessingJob> GetQueuedJobs(int limit)
@@ -113,8 +119,8 @@ namespace Services.Broadcast.ApplicationServices
 
             if (TemporalApplicationSettings.ProcessRatingsAutomatically)
             {
-                _BackgroundJobClient.Enqueue<IInventoryRatingsProcessingService>(x =>
-                    x.ProcessInventoryRatingsJob(jobId));
+                 _BackgroundJobClient.Enqueue<IInventoryRatingsProcessingService>(x => x.ProcessInventoryRatingsJob(jobId));
+              
             }
         }
 
@@ -151,7 +157,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc/>        
         public int ProcessInventoryRatingsJob(int jobId, bool ignoreStatus=false)
         {
-            const int manifestSaveChunkSize = 200;
+	        const int manifestSaveChunkSize = 200;
             const ProposalPlaybackType defaultOpenMarketPlaybackType = ProposalPlaybackType.LivePlus3;
 
             var job = _InventoryFileRatingsJobsRepository.GetJobById(jobId);
@@ -317,11 +323,16 @@ namespace Services.Broadcast.ApplicationServices
                 _InventoryFileRatingsJobsRepository.UpdateJob(job);
                 _AddJobNote(jobId, JsonConvert.SerializeObject(processDiagnostics));
 
-                if (_ShouldTriggerInventorySourceAggregation())
-                {
-                    _BackgroundJobClient.Enqueue<IInventorySummaryService>(x => x.AggregateInventorySummaryData(new List<int> { inventorySource.Id }, inventoryFile.EffectiveDate, inventoryFile.EndDate));
-                }
+				if (_ShouldTriggerInventorySourceAggregation())
+				{
 
+					_BackgroundJobClient.Enqueue<IInventorySummaryService>(x => x.AggregateInventorySummaryData(new List<int> { inventorySource.Id }, inventoryFile.EffectiveDate, inventoryFile.EndDate));
+				}
+
+				if (_ShouldTriggerInventoryProprietaryAggregration(inventorySource))
+				{
+					_BackgroundJobClient.Enqueue<IInventoryProprietarySummaryService>(x => x.AggregateInventoryProprietarySummary( inventorySource.Id , inventoryFile.EffectiveDate, inventoryFile.EndDate));
+				}
                 return inventoryFile.InventorySource.Id;
             }
             catch (Exception ex)
@@ -339,6 +350,20 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
+        private bool _ShouldTriggerInventoryProprietaryAggregration(InventorySource inventorySource)
+        {
+	        var valid = false;
+	        var toggleEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous("broadcast-enable-proprietary-inventory-summary");
+	        if (toggleEnabled)
+	        {
+		        if (inventorySource.InventoryType == InventorySourceTypeEnum.Barter && (inventorySource.Name.ToLower().Equals("cnn") || inventorySource.Name.ToLower().Equals("tvb")))
+		        {
+			        valid = true;
+		        }
+	        }
+
+	        return valid;
+        }
         private bool _ShouldTriggerInventorySourceAggregation()
         {
             const string configKeyTriggerInventorySourceAggregation = "TriggerInventorySourceAggregation";

@@ -198,6 +198,92 @@ BEGIN
 	ALTER TABLE [plan_version_pricing_stations] DROP COLUMN [plan_version_id]
 END
 /*************************************** END BP-836 *****************************************************/
+/*************************************** START BP-804 *****************************************************/
+/**************************Start inventory_proprietary_summary *************************************************/
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('inventory_proprietary_summary'))
+BEGIN
+CREATE TABLE inventory_proprietary_summary (
+id INT NOT NULL IDENTITY,
+inventory_source_id INT NOT NULL,
+daypart_default_id INT NOT NULL,
+quarter_number INT NOT NULL,
+quarter_year INT NOT NULL, 
+unit int NOT NULL, 
+cpm money  NULL,
+[created_by] [varchar](63) NOT NULL,
+[created_at] [datetime] NOT NULL,
+[modified_by] [varchar](63) NULL,
+[modified_at] [datetime] NULL,
+CONSTRAINT PK_inventory_proprietary_summary PRIMARY KEY (id)
+)
+END
+ALTER TABLE [dbo].inventory_proprietary_summary  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_inventory_sources] FOREIGN KEY([inventory_source_id])
+REFERENCES [dbo].[inventory_sources] ([id])
+GO
+ALTER TABLE [dbo].[inventory_proprietary_summary] CHECK CONSTRAINT [FK_inventory_proprietary_summary_inventory_sources]
+GO
+ALTER TABLE [dbo].[inventory_proprietary_summary]  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_daypart_defaults] FOREIGN KEY([daypart_default_id])
+REFERENCES [dbo].[daypart_defaults] ([id])
+GO
+ALTER TABLE [dbo].[inventory_proprietary_summary] CHECK CONSTRAINT [FK_inventory_proprietary_summary_daypart_defaults]
+GO
+/**************************End inventory_proprietary_summary *************************************************/
+/**************************start inventory_proprietary_summary_audiences *************************************************/
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('inventory_proprietary_summary_audiences'))
+BEGIN
+CREATE TABLE inventory_proprietary_summary_audiences (
+id INT NOT NULL IDENTITY,
+inventory_proprietary_summary_id INT NOT NULL,
+audience_id INT NOT NULL,
+impressions float  NULL,
+[created_by] [varchar](63) NOT NULL,
+[created_at] [datetime] NOT NULL,
+[modified_by] [varchar](63) NULL,
+[modified_at] [datetime] NULL,
+CONSTRAINT PK_inventory_proprietary_summary_audiences PRIMARY KEY (id)
+)
+END
+ALTER TABLE [dbo].[inventory_proprietary_summary_audiences]  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_audiences_audiences] FOREIGN KEY([audience_id])
+REFERENCES [dbo].[audiences] ([id])
+GO
+ALTER TABLE [dbo].[inventory_proprietary_summary_audiences] CHECK CONSTRAINT [FK_inventory_proprietary_summary_audiences_audiences]
+GO
+ALTER TABLE [dbo].[inventory_proprietary_summary_audiences]  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary] FOREIGN KEY(inventory_proprietary_summary_id)
+REFERENCES [dbo].[inventory_proprietary_summary] ([id])
+GO
+ALTER TABLE [dbo].[inventory_proprietary_summary_audiences] CHECK CONSTRAINT [FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary]
+GO
+/**************************end inventory_proprietary_summary_audiences *************************************************/
+/**************************start inventory_proprietary_summary_markets *************************************************/
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('inventory_proprietary_summary_markets'))
+BEGIN
+CREATE TABLE inventory_proprietary_summary_markets (
+id INT NOT NULL IDENTITY,
+inventory_proprietary_summary_id INT NOT NULL,
+market_code smallint NOT NULL,
+market_coverage float  NULL,
+[created_by] [varchar](63) NOT NULL,
+[created_at] [datetime] NOT NULL,
+[modified_by] [varchar](63) NULL,
+[modified_at] [datetime] NULL,
+CONSTRAINT PK_inventory_proprietary_summary_markets PRIMARY KEY (id)
+)
+END
+ALTER TABLE [dbo].[inventory_proprietary_summary_markets]  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_markets_markets] FOREIGN KEY([market_code])
+REFERENCES [dbo].[markets] ([market_code])
+GO
+ALTER TABLE [dbo].[inventory_proprietary_summary_markets] CHECK CONSTRAINT [FK_inventory_proprietary_summary_markets_markets]
+GO
+ALTER TABLE [dbo].[inventory_proprietary_summary_markets]  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_markets_inventory_proprietary_summary] FOREIGN KEY(inventory_proprietary_summary_id)
+REFERENCES [dbo].[inventory_proprietary_summary] ([id])
+GO
+ALTER TABLE [dbo].[inventory_proprietary_summary_markets] CHECK CONSTRAINT [FK_inventory_proprietary_summary_markets_inventory_proprietary_summary]
+GO
+/**************************end inventory_proprietary_summary_markets *************************************************/
+/*************************************** END BP-804 *****************************************************/
+
+/*************************************** END UPDATE SCRIPT *******************************************************/
+
 
 /*************************************** START BP-814 *****************************************************/
 IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('stations')

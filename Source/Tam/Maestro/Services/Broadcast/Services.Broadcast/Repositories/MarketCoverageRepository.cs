@@ -199,6 +199,7 @@ namespace Services.Broadcast.Repositories
                             Coverage = x.percentage_of_us,
                             Stations = x.market.stations.Select(s => new MarketCoverageByStation.Market.Station
                             {
+                                Id = s.id,
                                 LegacyCallLetters = s.legacy_call_letters
                             }).ToList()
                         }).ToList()
