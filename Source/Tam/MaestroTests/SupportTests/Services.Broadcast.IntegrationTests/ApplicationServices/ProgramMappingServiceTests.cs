@@ -42,7 +42,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var input = new List<string>()
             {
                 "FAB MORN NWS",
-                "*** SEINFELD (ENCORE)"
+                "*** SEINFELD (ENCORE)",
+                "Super Chess Arena AT 09:00AM-10:00AM",
+                "SUN The House of Poker SAT",
+                "10:30AM Ugreen Sytem",
+                "@ 09:00AM-10:00AM Chessmaster",
+                "FT. POP OS",
+                "GM TODAY",
+                "GD MORNING",
+                "PLAYING CHESS ON THE WKND",
+                "PLAYING W/ YOU"
             };
 
             var result = _ProgramMappingService.GetCleanPrograms(input);
