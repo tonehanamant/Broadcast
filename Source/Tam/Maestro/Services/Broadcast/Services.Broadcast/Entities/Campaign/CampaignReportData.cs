@@ -83,7 +83,7 @@ namespace Services.Broadcast.Entities.Campaign
 
             //proposal tab
             _PopulateProposalQuarterTableData(projectedPlans, orderedAudiences);
-            _PopulateCampaignTotalsTable();
+            _PopulateProposalTotalsTable();
 
             _PopulateMarketCoverate(plans);
             _PopulateDaypartsData(projectedPlans);
@@ -209,7 +209,8 @@ namespace Services.Broadcast.Entities.Campaign
             plans.ForEach(plan =>
             {
                 List<QuarterDetailDto> planQuarters = _QuarterCalculationEngine.GetAllQuartersBetweenDates(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
-
+                var allSpotLengthIdAndStandardDaypartIdCombinations =
+                     _WeeklyBreakdownEngine.GetWeeklyBreakdownCombinations(plan.CreativeLengths, plan.Dayparts);
                 foreach (var quarter in planQuarters)
                 {
                     //store the week ids from the current quarter in a list
@@ -223,8 +224,7 @@ namespace Services.Broadcast.Entities.Campaign
                             plan.Dayparts.Where(x => x.DaypartCodeId == week.DaypartCodeId).Single());
 
                         newProjectedPlan.TotalCost = week.WeeklyBudget;
-                        newProjectedPlan.Units = 0; //we have no value calculated and stored for this property at the moment
-
+                        newProjectedPlan.Units = _CalculateUnitsForWeek(week, allSpotLengthIdAndStandardDaypartIdCombinations);
 
                         _ProjectGuaranteedAudienceDataByWeek(plan, week, newProjectedPlan);
                         _ProjectHHAudienceData(plan, week, newProjectedPlan);
@@ -293,6 +293,8 @@ namespace Services.Broadcast.Entities.Campaign
             {
                 List<QuarterDetailDto> planQuarters = _QuarterCalculationEngine.GetAllQuartersBetweenDates(plan.FlightStartDate.Value
                     , plan.FlightEndDate.Value);
+                var allSpotLengthIdAndStandardDaypartIdCombinations =
+                     _WeeklyBreakdownEngine.GetWeeklyBreakdownCombinations(plan.CreativeLengths, plan.Dayparts);
 
                 foreach (var quarter in planQuarters)
                 {
@@ -312,7 +314,7 @@ namespace Services.Broadcast.Entities.Campaign
                                 , _AllSpotLengths.Single(x => x.Id == planWeek.SpotLengthId)
                                 , plan.Dayparts.Single(x => x.DaypartCodeId == planWeek.DaypartCodeId));
                             newProjectedPlan.TotalCost = planWeek.WeeklyBudget;
-                            newProjectedPlan.Units = 0; //we have no value calculated and stored for this property at the moment                            
+                            newProjectedPlan.Units = _CalculateUnitsForWeek(planWeek, allSpotLengthIdAndStandardDaypartIdCombinations);
 
                             //guaranteed audience data
                             _ProjectGuaranteedAudienceDataByWeek(plan, planWeek, newProjectedPlan);
@@ -325,6 +327,13 @@ namespace Services.Broadcast.Entities.Campaign
             }
 
             return result;
+        }
+
+        private static double _CalculateUnitsForWeek(WeeklyBreakdownWeek planWeek, List<WeeklyBreakdownCombination> combinations)
+        {
+            var combination = combinations.Where(x => x.DaypartCodeId == planWeek.DaypartCodeId && x.SpotLengthId == planWeek.SpotLengthId)
+                                .Single();
+            return planWeek.WeeklyImpressions / planWeek.UnitImpressions * combination.Weighting;
         }
 
         private List<PlanProjectionForCampaignExport> _AddEmptyWeeksForPlanSpotLengthDaypartCombinations(MediaWeek mediaWeek, PlanDto plan,
@@ -395,7 +404,7 @@ namespace Services.Broadcast.Entities.Campaign
                     .ForEach(daypartGroup =>
                     {
                         var items = daypartGroup.ToList();
-                        int unitsSum = items.Sum(x => x.Units);
+                        double unitsSum = items.Sum(x => x.Units);
                         decimal totalCost = items.Sum(x => x.TotalCost);
                         double totalRatingPoints = items.Sum(x => x.GuaranteedAudience.TotalRatingPoints);
                         double totalImpressions = items.Sum(x => x.GuaranteedAudience.TotalImpressions) / 1000;
@@ -407,7 +416,7 @@ namespace Services.Broadcast.Entities.Campaign
                             DaypartCode = daypartGroup.Key.DaypartCode,
                             SpotLengthLabel = spotLengthLabel,
                             Units = unitsSum,
-                            UnitsCost = (unitsSum == 0 ? 0 : totalCost / unitsSum),
+                            UnitsCost = _CalculateCost(unitsSum, totalCost),
                             TotalCost = totalCost,
 
                             //HH data
@@ -468,7 +477,7 @@ namespace Services.Broadcast.Entities.Campaign
         private void _CalculateTotalsForFlowChartTable(FlowChartQuarterTableData tableData)
         {
             tableData.DistributionPercentages.Add(tableData.DistributionPercentages.DoubleSumOrDefault());
-            tableData.UnitsValues.Add(tableData.UnitsValues.Sum(x => Convert.ToInt32(x)));
+            tableData.UnitsValues.Add(tableData.UnitsValues.Sum(x => Convert.ToDouble(x)));
             double impressions = tableData.ImpressionsValues.Sum(x => Convert.ToDouble(x));
             tableData.ImpressionsValues.Add(impressions);
             decimal cost = tableData.CostValues.Sum(x => Convert.ToDecimal(x));
@@ -494,7 +503,7 @@ namespace Services.Broadcast.Entities.Campaign
             tableData.HiatusDaysFormattedValues.Add(hiatusDaysCount == 0 ? (int?)null : hiatusDaysCount);
         }
 
-        //this is the total table
+        //this is the total quarter daypart table
         private void _CalculateTotalTableData(List<FlowChartQuarterTableData> tablesInQuarterDaypart
             , double totalImpressions)
         {
@@ -507,7 +516,7 @@ namespace Services.Broadcast.Entities.Campaign
             };
             for (int i = 0; i < tableData.TotalWeeksInQuarter; i++)
             {
-                tableData.UnitsValues.Add(tablesInQuarterDaypart.Sum(x => Convert.ToInt32(x.UnitsValues[i])));
+                tableData.UnitsValues.Add(tablesInQuarterDaypart.Sum(x => Convert.ToDouble(x.UnitsValues[i])));
                 double impressions = tablesInQuarterDaypart.Sum(x => Convert.ToDouble(x.ImpressionsValues[i]));
                 tableData.ImpressionsValues.Add(impressions);
                 decimal cost = tablesInQuarterDaypart.Sum(x => Convert.ToDecimal(x.CostValues[i]));
@@ -561,7 +570,7 @@ namespace Services.Broadcast.Entities.Campaign
                         {
                             sum += _WeeklyBreakdownEngine.CalculateADUWithDecimals(
                             plan.ImpressionsPerUnit
-                            , plan.WeeklyBreakdownWeeks.Where(w => w.StartDate.Equals(Convert.ToDateTime(firstTable.WeeksStartDate[i])) 
+                            , plan.WeeklyBreakdownWeeks.Where(w => w.StartDate.Equals(Convert.ToDateTime(firstTable.WeeksStartDate[i]))
                                                              && w.SpotLengthId == createiveLength.SpotLengthId)
                                                     .Sum(y => y.AduImpressions)
                             , plan.Equivalized
@@ -658,7 +667,7 @@ namespace Services.Broadcast.Entities.Campaign
                                                         : itemsThisWeek.Sum(y => y.GuaranteedAudience.TotalImpressions)
                                                                     / totalNumberOfImpressionsForExportedPlans; //do not multiply by 100. excel is doing that.
                                                     newTable.DistributionPercentages.Add(distributionPercentage);
-                                                    newTable.UnitsValues.Add(0);    //we don't have units calculated yet
+                                                    newTable.UnitsValues.Add(itemsThisWeek.Sum(y => y.Units));
                                                     var impressions = itemsThisWeek.Sum(y => y.GuaranteedAudience.TotalImpressions) / 1000;
                                                     newTable.ImpressionsValues.Add(impressions);
                                                     var cost = itemsThisWeek.Sum(y => y.TotalCost);
@@ -729,17 +738,17 @@ namespace Services.Broadcast.Entities.Campaign
                         {
                             return; //don't add empty weeks
                         }
-                        int units = items.Sum(y => y.Units);
+                        double unitsSum = items.Sum(y => y.Units);
 
                         List<object> tableRow = new List<object>
                         {
                             row.Key.DaypartCode,
                             row.Key.WeekStartDate.Value.ToShortDateString(),
-                            units,
+                            unitsSum,
                             $":{row.Key.SpotLength}s{_GetEquivalizedStatus(row.Key.Equivalized, row.Key.SpotLength)}",
-                            units == 0 ? 0 : totalCost / units,   //cost per unit
+                            _CalculateCost(unitsSum, totalCost),   //cost per unit
                             totalCost,
-                            units == 0 ? 0 : (totalImpressions / units),    //impressions per unit
+                            unitsSum == 0 ? 0 : (totalImpressions / unitsSum),    //impressions per unit
                             totalImpressions,
                             _CalculateCost(totalImpressions, totalCost)
                         };
@@ -841,7 +850,7 @@ namespace Services.Broadcast.Entities.Campaign
         {
             ContractTotals = new List<object>
             {
-                ContractQuarterTables.Where(x=>!x.IsAduTable).SelectMany(x=>x.Rows).Sum(x=>int.Parse(x[2].ToString())), //units
+                ContractQuarterTables.Where(x=>!x.IsAduTable).SelectMany(x=>x.Rows).Sum(x=>double.Parse(x[2].ToString())), //units
                 ContractQuarterTables.Where(x=>!x.IsAduTable).SelectMany(x=>x.Rows).Sum(x=>decimal.Parse(x[5].ToString())), //total cost
                 EMPTY_CELL,
                 ContractQuarterTables.Where(x=>!x.IsAduTable).SelectMany(x=>x.Rows).Sum(x=>double.Parse(x[7].ToString())), //total demo
@@ -860,7 +869,7 @@ namespace Services.Broadcast.Entities.Campaign
             quarterTable.TotalRow = new List<object>
             {
                 $"{quarterLabel} Totals",
-                quarterTable.Rows.Sum(x => Convert.ToInt32(x[2])),    //units
+                quarterTable.Rows.Sum(x => Convert.ToDouble(x[2])),    //units
                 NO_VALUE_CELL,
                 NO_VALUE_CELL,
                 totalCost,     //cost
@@ -899,7 +908,7 @@ namespace Services.Broadcast.Entities.Campaign
             return points == 0 ? 0 : cost / (decimal)points;
         }
 
-        private void _PopulateCampaignTotalsTable()
+        private void _PopulateProposalTotalsTable()
         {
             ProposalCampaignTotalsTable.QuarterLabel = "Campaign Totals";
 
@@ -909,7 +918,7 @@ namespace Services.Broadcast.Entities.Campaign
                 .ForEach(group =>
                 {
                     var items = group.ToList();
-                    int unitsSum = items.Sum(x => x.Units);
+                    double unitsSum = items.Sum(x => x.Units);
                     decimal totalCost = items.Sum(x => x.TotalCost);
                     double totalHHRatingPoints = items.Sum(x => x.HHData.TotalRatingPoints);
                     double totalHHImpressions = items.Sum(x => x.HHData.TotalImpressions);
@@ -921,6 +930,7 @@ namespace Services.Broadcast.Entities.Campaign
                         DaypartCode = group.Key.DaypartCode,
                         SpotLengthLabel = group.Key.SpotLength,
                         Units = unitsSum,
+                        UnitsCost = _CalculateCost(unitsSum, totalCost),
                         TotalCost = totalCost,
                         HHData = new AudienceData
                         {
@@ -966,7 +976,7 @@ namespace Services.Broadcast.Entities.Campaign
                     {
                         var quarterRows = ProposalQuarterTables
                             .SelectMany(x => x.Rows.Where(y => y.DaypartCode.Equals(row.Key.DaypartCode) && y.SpotLengthLabel.Equals(row.Key.SpotLengthLabel)));
-                        int unitsSum = quarterRows.Sum(x => x.Units);
+                        double unitsSum = quarterRows.Sum(x => x.Units);
                         decimal totalCost = quarterRows.Sum(x => x.TotalCost);
                         double totalHHImpressions = quarterRows.Sum(x => x.HHData.TotalImpressions);
 
@@ -1015,7 +1025,7 @@ namespace Services.Broadcast.Entities.Campaign
 
         private void _SetQuarterTableTotals(ProposalQuarterTableData table, decimal totalCost)
         {
-            int totalUnits = table.Rows.Sum(x => x.Units);
+            double totalUnits = table.Rows.Sum(x => x.Units);
             var totalHHImpressions = table.Rows.Sum(x => x.HHData.TotalImpressions);
             var totalHHRatingPoints = table.Rows.Sum(x => x.HHData.TotalRatingPoints);
             var totalImpressions = table.Rows.Sum(x => x.GuaranteedData.TotalImpressions);
@@ -1120,7 +1130,7 @@ namespace Services.Broadcast.Entities.Campaign
             public bool Equivalized { get; set; }
 
             public decimal TotalCost { get; set; }
-            public int Units { get; set; }
+            public double Units { get; set; }
 
             public double TotalHHRatingPoints { get; set; }
             public double TotalHHImpressions { get; set; }
@@ -1178,7 +1188,7 @@ namespace Services.Broadcast.Entities.Campaign
         {
             public string DaypartCode { get; set; }
             public string SpotLengthLabel { get; set; }
-            public int Units { get; set; }
+            public double Units { get; set; }
             public decimal UnitsCost { get; set; }
             public decimal TotalCost { get; set; }
             public AudienceData HHData { get; set; }

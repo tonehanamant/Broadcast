@@ -1435,7 +1435,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
                         , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
                 .Returns(_GetWeeklyBreakdownByWeek());
-            
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GetWeeklyBreakdownCombinations(It.IsAny<List<CreativeLength>>(), It.IsAny<List<PlanDaypartDto>>()))
+                .Returns(_GetWeeklyBreakdownCombinations());
             _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(campaignId))
                 .Returns(_GetCampaignForExport(campaignId, request.SelectedPlans));
@@ -1585,7 +1587,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
                     , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
                 .Returns(_GetWeeklyBreakdownByWeek());
-
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GetWeeklyBreakdownCombinations(It.IsAny<List<CreativeLength>>(), It.IsAny<List<PlanDaypartDto>>()))
+                .Returns(_GetWeeklyBreakdownCombinations());
             _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(campaignId))
                 .Returns(_GetCampaignForExport(campaignId, request.SelectedPlans));
@@ -1766,6 +1770,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
                     , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
                 .Returns(_GetWeeklyBreakdownByWeek());
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GetWeeklyBreakdownCombinations(It.IsAny<List<CreativeLength>>(), It.IsAny<List<PlanDaypartDto>>()))
+                .Returns(_GetWeeklyBreakdownCombinations());
             _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(campaignId))
                 .Returns(_GetCampaignForExport(campaignId, request.SelectedPlans));
@@ -1921,6 +1928,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
                     , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
                 .Returns(_GetWeeklyBreakdownByWeek());
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GetWeeklyBreakdownCombinations(It.IsAny<List<CreativeLength>>(), It.IsAny<List<PlanDaypartDto>>()))
+                .Returns(_GetWeeklyBreakdownCombinations());
             _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(campaignId))
                 .Returns(_GetCampaignForExport(campaignId, request.SelectedPlans));
@@ -2065,6 +2075,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var response = tc.GetAndValidateCampaignReportData(request);
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
+        }
+
+        private List<WeeklyBreakdownCombination> _GetWeeklyBreakdownCombinations()
+        {
+            return new List<WeeklyBreakdownCombination> {
+                    new WeeklyBreakdownCombination{ SpotLengthId = 1, DaypartCodeId = 2, Weighting = 0.3},
+                    new WeeklyBreakdownCombination{ SpotLengthId = 1, DaypartCodeId = 6, Weighting = 0.2},
+                    new WeeklyBreakdownCombination{ SpotLengthId = 1, DaypartCodeId = 14, Weighting = 0.2},
+                    new WeeklyBreakdownCombination{ SpotLengthId = 2, DaypartCodeId = 2, Weighting = 0.15},
+                    new WeeklyBreakdownCombination{ SpotLengthId = 2, DaypartCodeId = 6, Weighting = 0.1},
+                    new WeeklyBreakdownCombination{ SpotLengthId = 2, DaypartCodeId = 14, Weighting = 0.2},
+                    new WeeklyBreakdownCombination{ SpotLengthId = 3, DaypartCodeId = 2, Weighting = 0.15},
+                    new WeeklyBreakdownCombination{ SpotLengthId = 3, DaypartCodeId = 6, Weighting = 0.1},
+                    new WeeklyBreakdownCombination{ SpotLengthId = 3, DaypartCodeId = 14, Weighting = 0.2}
+                };
         }
 
         private static MediaWeek _GetMediaWeek(int id, string weekStartDate = null, string weekEndDate = null, int? mediaMonthId = null)
@@ -3021,7 +3046,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                             WeeklyAdu = 0,
                             WeeklyImpressions = 4000000,
                             WeeklyBudget = 100000.00M,
-                            WeeklyRatings = 29.8892007328832
+                            WeeklyRatings = 29.8892007328832,
+                            UnitImpressions = 2000000
                         });
                     }
                 }

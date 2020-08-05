@@ -40,7 +40,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private ICampaignSummaryRepository _CampaignSummaryRepository;
         private IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
         private static readonly bool WRITE_FILE_TO_DISK = false;
-            
+
         [SetUp]
         public void SetUpCampaignServiceIntegrationTests()
         {
