@@ -1964,7 +1964,8 @@ namespace Services.Broadcast.Repositories
             {
                 var job = (from j in context.plan_version_pricing_job
                             where j.plan_version_id == oldPlanVersionId
-                            select j).SingleOrDefault();
+                            orderby j.id descending
+                            select j).FirstOrDefault();
                 if(job != null)
                 {
                     job.plan_version_id = versionId;
