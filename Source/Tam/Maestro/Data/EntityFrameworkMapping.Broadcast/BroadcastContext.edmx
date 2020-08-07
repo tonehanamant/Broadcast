@@ -896,6 +896,8 @@
           <Property Name="genre_restrictions_contain_type" Type="int" />
           <Property Name="program_restrictions_contain_type" Type="int" />
           <Property Name="affiliate_restrictions_contain_type" Type="int" />
+          <Property Name="weekdays_weighting" Type="float" />
+          <Property Name="weekend_weighting" Type="float" />
         </EntityType>
         <EntityType Name="plan_version_flight_days">
           <Key>
@@ -12429,6 +12431,8 @@ warning 6002: The table/view 'Broadcast_local.dbo.vw_ccc_daypart' does not have 
           <NavigationProperty Name="plan_version_daypart_show_type_restrictions" Relationship="BroadcastModel.FK_plan_version_daypart_show_type_restrictions_plan_version_dayparts" FromRole="plan_version_dayparts" ToRole="plan_version_daypart_show_type_restrictions" />
           <NavigationProperty Name="daypart_defaults" Relationship="BroadcastModel.FK_plan_dayparts_daypart_codes" FromRole="plan_version_dayparts" ToRole="daypart_defaults" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_dayparts_plan_versions" FromRole="plan_version_dayparts" ToRole="plan_versions" />
+          <Property Name="weekdays_weighting" Type="Double" />
+          <Property Name="weekend_weighting" Type="Double" />
         </EntityType>
         <EntityType Name="scx_generation_job_files">
           <Key>
@@ -16567,6 +16571,8 @@ warning 6002: The table/view 'Broadcast_local.dbo.vw_ccc_daypart' does not have 
           <EntitySetMapping Name="plan_version_dayparts">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_dayparts">
               <MappingFragment StoreEntitySet="plan_version_dayparts">
+                <ScalarProperty Name="weekend_weighting" ColumnName="weekend_weighting" />
+                <ScalarProperty Name="weekdays_weighting" ColumnName="weekdays_weighting" />
                 <ScalarProperty Name="affiliate_restrictions_contain_type" ColumnName="affiliate_restrictions_contain_type" />
                 <ScalarProperty Name="program_restrictions_contain_type" ColumnName="program_restrictions_contain_type" />
                 <ScalarProperty Name="genre_restrictions_contain_type" ColumnName="genre_restrictions_contain_type" />

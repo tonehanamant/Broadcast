@@ -67,6 +67,16 @@ namespace Services.Broadcast.Entities.Plan
         /// </value>
         public double? WeightingGoalPercent { get; set; }
 
+        /// <summary>
+        /// Gets or sets the weighting goal percent for weekdays. WeekdaysWeighting and WeekendWeighting should sum up to 100
+        /// </summary>
+        public double? WeekdaysWeighting { get; set; }
+
+        /// <summary>
+        /// Gets or sets the weighting goal percent for weekend. WeekdaysWeighting and WeekendWeighting should sum up to 100
+        /// </summary>
+        public double? WeekendWeighting { get; set; }
+
         public List<PlanDaypartVpvhForAudienceDto> VpvhForAudiences { get; set; } = new List<PlanDaypartVpvhForAudienceDto>();
 
         public RestrictionsDto Restrictions { get; set; } = new RestrictionsDto();

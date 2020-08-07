@@ -35,6 +35,8 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> genre_restrictions_contain_type { get; set; }
         public Nullable<int> program_restrictions_contain_type { get; set; }
         public Nullable<int> affiliate_restrictions_contain_type { get; set; }
+        public Nullable<double> weekdays_weighting { get; set; }
+        public Nullable<double> weekend_weighting { get; set; }
     
         public virtual ICollection<plan_version_daypart_affiliate_restrictions> plan_version_daypart_affiliate_restrictions { get; set; }
         public virtual ICollection<plan_version_daypart_genre_restrictions> plan_version_daypart_genre_restrictions { get; set; }

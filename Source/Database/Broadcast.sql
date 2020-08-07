@@ -347,6 +347,20 @@ BEGIN
 END
 /*************************************** END BP-897 *****************************************************/
 
+/*************************************** START - BP-1077 ****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_dayparts') AND name = 'weekdays_weighting')
+BEGIN
+	ALTER TABLE plan_version_dayparts ADD weekdays_weighting float null
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_dayparts') AND name = 'weekend_weighting')
+BEGIN
+	ALTER TABLE plan_version_dayparts ADD weekend_weighting float null
+END
+
+/*************************************** END - BP-1077 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -29,5 +29,7 @@
   "ProgramContainType": 2,
   "ShowTypeContainType": 2,
   "Status": 1,
+  "WeekdaysWeighting": 70.0,
+  "WeekendWeighting": 30.0,
   "WeeklyBreakdownWeeks": []
 }

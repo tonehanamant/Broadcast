@@ -13,6 +13,8 @@
     },
     "StartTimeSeconds": 1500,
     "VpvhForAudiences": [],
+    "WeekdaysWeighting": null,
+    "WeekendWeighting": null,
     "WeightingGoalPercent": null
   },
   {
@@ -29,6 +31,8 @@
     },
     "StartTimeSeconds": 2788,
     "VpvhForAudiences": [],
+    "WeekdaysWeighting": null,
+    "WeekendWeighting": null,
     "WeightingGoalPercent": null
   },
   {
@@ -45,6 +49,8 @@
     },
     "StartTimeSeconds": 0,
     "VpvhForAudiences": [],
+    "WeekdaysWeighting": 60.0,
+    "WeekendWeighting": 40.0,
     "WeightingGoalPercent": null
   },
   {
@@ -61,6 +67,8 @@
     },
     "StartTimeSeconds": 1500,
     "VpvhForAudiences": [],
+    "WeekdaysWeighting": null,
+    "WeekendWeighting": null,
     "WeightingGoalPercent": null
   },
   {
@@ -77,6 +85,8 @@
     },
     "StartTimeSeconds": 3500,
     "VpvhForAudiences": [],
+    "WeekdaysWeighting": null,
+    "WeekendWeighting": null,
     "WeightingGoalPercent": null
   },
   {
@@ -93,6 +103,8 @@
     },
     "StartTimeSeconds": 1500,
     "VpvhForAudiences": [],
+    "WeekdaysWeighting": null,
+    "WeekendWeighting": null,
     "WeightingGoalPercent": null
   },
   {
@@ -109,6 +121,8 @@
     },
     "StartTimeSeconds": 1499,
     "VpvhForAudiences": [],
+    "WeekdaysWeighting": null,
+    "WeekendWeighting": null,
     "WeightingGoalPercent": null
   }
 ]

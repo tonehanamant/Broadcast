@@ -632,6 +632,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 IsStartTimeModified = x.IsStartTimeModified,
                 Restrictions = x.Restrictions,
                 WeightingGoalPercent = x.WeightingGoalPercent,
+                WeekdaysWeighting = x.WeekdaysWeighting,
+                WeekendWeighting = x.WeekendWeighting,
                 FlightDays = plan.FlightDays.ToList(),
                 VpvhForAudiences = x.VpvhForAudiences,
             }).ToList();
@@ -1041,6 +1043,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 ProgramContainType = ContainTypeEnum.Exclude,
                 AffiliateContainType = ContainTypeEnum.Exclude,
                 CoverageGoalPercent = 80d,
+                WeekdaysWeighting = 70d,
+                WeekendWeighting = 30d,
                 FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
             };
         }

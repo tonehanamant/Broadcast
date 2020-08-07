@@ -106,6 +106,8 @@
           "VpvhType": 2
         }
       ],
+      "WeekdaysWeighting": 60.0,
+      "WeekendWeighting": 40.0,
       "WeightingGoalPercent": 28.0
     },
     {
@@ -168,6 +170,8 @@
           "VpvhType": 3
         }
       ],
+      "WeekdaysWeighting": null,
+      "WeekendWeighting": null,
       "WeightingGoalPercent": null
     },
     {
@@ -222,6 +226,8 @@
           "VpvhType": 4
         }
       ],
+      "WeekdaysWeighting": null,
+      "WeekendWeighting": null,
       "WeightingGoalPercent": 33.0
     }
   ],

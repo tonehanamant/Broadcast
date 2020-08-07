@@ -780,6 +780,8 @@ namespace Services.Broadcast.Repositories
                 EndTimeSeconds = entity.end_time_seconds,
                 IsEndTimeModified = entity.is_end_time_modified,
                 WeightingGoalPercent = entity.weighting_goal_percent,
+                WeekdaysWeighting = entity.weekdays_weighting,
+                WeekendWeighting = entity.weekend_weighting,
                 VpvhForAudiences = planVersion.plan_version_audience_daypart_vpvh
                     .Where(x => x.daypart_default_id == entity.daypart_default_id)
                     .Select(x => new PlanDaypartVpvhForAudienceDto
@@ -888,7 +890,9 @@ namespace Services.Broadcast.Repositories
                     is_start_time_modified = daypart.IsStartTimeModified,
                     end_time_seconds = daypart.EndTimeSeconds,
                     is_end_time_modified = daypart.IsEndTimeModified,
-                    weighting_goal_percent = daypart.WeightingGoalPercent
+                    weighting_goal_percent = daypart.WeightingGoalPercent,
+                    weekdays_weighting = daypart.WeekdaysWeighting,
+                    weekend_weighting = daypart.WeekendWeighting
                 };
 
                 if (daypart.Restrictions != null)

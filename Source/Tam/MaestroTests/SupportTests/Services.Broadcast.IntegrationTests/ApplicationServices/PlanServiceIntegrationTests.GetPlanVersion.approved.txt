@@ -76,6 +76,8 @@
       },
       "StartTimeSeconds": 0,
       "VpvhForAudiences": [],
+      "WeekdaysWeighting": null,
+      "WeekendWeighting": null,
       "WeightingGoalPercent": 28.0
     },
     {
@@ -104,6 +106,8 @@
       },
       "StartTimeSeconds": 1500,
       "VpvhForAudiences": [],
+      "WeekdaysWeighting": null,
+      "WeekendWeighting": null,
       "WeightingGoalPercent": 33.2
     }
   ],

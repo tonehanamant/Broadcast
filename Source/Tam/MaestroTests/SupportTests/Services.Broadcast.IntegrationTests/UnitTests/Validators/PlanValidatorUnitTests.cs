@@ -14,6 +14,7 @@ using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
@@ -1562,6 +1563,37 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
                     new CreativeLength { SpotLengthId = 1, Weight = 50 },
                     new CreativeLength { SpotLengthId = 2, Weight = 50 }
                 };
+        }
+
+        [Test]
+        public void ValidatePlan_OnlyWeekdaysWeightingIsSet()
+        {
+            var plan = _GetPlan();
+            plan.Dayparts.First().WeekdaysWeighting = 50;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Weekdays weighting and weekend weighting must be either both set or both must be nulls"));
+        }
+
+        [Test]
+        public void ValidatePlan_OnlyWeekendWeightingIsSet()
+        {
+            var plan = _GetPlan();
+            plan.Dayparts.First().WeekendWeighting = 50;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Weekdays weighting and weekend weighting must be either both set or both must be nulls"));
+        }
+
+        [Test]
+        public void ValidatePlan_WeekdaysAndWeekendWeighting_DoNotSumUpTo100()
+        {
+            var plan = _GetPlan();
+            plan.Dayparts.First().WeekdaysWeighting = 50;
+            plan.Dayparts.First().WeekendWeighting = 40;
+
+            Assert.That(() => _planValidator.ValidatePlan(plan),
+                Throws.TypeOf<Exception>().With.Message.EqualTo("Weekdays weighting and weekend weighting must sum up to 100"));
         }
     }
 }

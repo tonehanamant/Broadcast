@@ -1924,6 +1924,8 @@
           "VpvhType": 2
         }
       ],
+      "WeekdaysWeighting": null,
+      "WeekendWeighting": null,
       "WeightingGoalPercent": null
     }
   ],

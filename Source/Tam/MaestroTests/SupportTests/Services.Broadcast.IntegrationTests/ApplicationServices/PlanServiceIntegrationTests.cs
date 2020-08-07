@@ -2729,6 +2729,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         StartTimeSeconds = 0,
                         EndTimeSeconds = 2000,
                         WeightingGoalPercent = 28.0,
+                        WeekdaysWeighting = 60,
+                        WeekendWeighting = 40,
                         VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
                         {
                             new PlanDaypartVpvhForAudienceDto

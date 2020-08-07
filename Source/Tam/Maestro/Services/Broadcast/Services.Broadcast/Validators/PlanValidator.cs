@@ -316,6 +316,19 @@ namespace Services.Broadcast.Validators
                     throw new Exception(INVALID_DAYPART_WEIGHTING_GOAL);
                 }
 
+                if ((daypart.WeekdaysWeighting.HasValue && !daypart.WeekendWeighting.HasValue) ||
+                    (!daypart.WeekdaysWeighting.HasValue && daypart.WeekendWeighting.HasValue))
+                {
+                    throw new Exception("Weekdays weighting and weekend weighting must be either both set or both must be nulls");
+                }
+
+                if (daypart.WeekdaysWeighting.HasValue && 
+                    daypart.WeekendWeighting.HasValue &&
+                    (daypart.WeekdaysWeighting.Value + daypart.WeekendWeighting.Value) != 100)
+                {
+                    throw new Exception("Weekdays weighting and weekend weighting must sum up to 100");
+                }
+
                 _ValidatePlanDaypartRestrictions(daypart);
                 _ValidatePlanDaypartAudienceVpvh(daypart);
             }
