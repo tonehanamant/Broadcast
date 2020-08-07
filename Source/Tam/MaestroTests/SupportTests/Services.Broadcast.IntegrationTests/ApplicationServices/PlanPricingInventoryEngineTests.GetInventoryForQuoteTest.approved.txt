@@ -1,0 +1,113 @@
+[
+  {
+    "DeliveryPerAudience": [
+      {
+        "AudienceId": 37,
+        "CPM": 21.048495734171531207903008500,
+        "Impressions": 44540.0,
+        "ProjectedImpressions": 60740.68125,
+        "ProvidedImpressions": 44540.0
+      },
+      {
+        "AudienceId": 33,
+        "CPM": 24.293858512568022803835190500,
+        "Impressions": 38590.0,
+        "ProjectedImpressions": 37990.1125,
+        "ProvidedImpressions": 38590.0
+      },
+      {
+        "AudienceId": 31,
+        "CPM": 15.984654731457800511508951400,
+        "Impressions": 58650.0,
+        "ProjectedImpressions": 70841.65625,
+        "ProvidedImpressions": 58650.0
+      }
+    ],
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 34500.0
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 22700.0
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 26200.0
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 20000.0
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 27900.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": true,
+          "_Id": 32941,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 358772,
+        "PrimaryProgram": {
+          "EndTime": 0,
+          "Genre": null,
+          "Id": 11245,
+          "Name": "Early news",
+          "ShowType": null,
+          "StartTime": 0
+        },
+        "PrimaryProgramId": 11245,
+        "ProgramName": null,
+        "Programs": [
+          {
+            "EndTime": 0,
+            "Genre": null,
+            "Id": 11245,
+            "Name": "Early news",
+            "ShowType": null,
+            "StartTime": 0
+          }
+        ]
+      }
+    ],
+    "ManifestId": 287146,
+    "ManifestRates": [
+      {
+        "Cost": 937.500,
+        "SpotLengthId": 2
+      }
+    ],
+    "StandardDaypartId": 1,
+    "Station": {
+      "Affiliation": "CW",
+      "CallLetters": "WPIX 11.1",
+      "Code": 5014,
+      "Id": 575,
+      "LegacyCallLetters": "WPIX",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
+    }
+  }
+]

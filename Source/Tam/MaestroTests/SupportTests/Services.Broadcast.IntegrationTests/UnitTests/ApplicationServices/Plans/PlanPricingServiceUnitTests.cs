@@ -19,6 +19,7 @@ using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
+using Services.Broadcast.IntegrationTests.TestData;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
@@ -32,6 +33,7 @@ using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.BusinessEngines.PlanPricingInventoryEngine;
+using static Services.Broadcast.Entities.Plan.Pricing.BasePlanPricingInventoryProgram;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram.ManifestDaypart;
 using Job = Hangfire.Common.Job;
@@ -50,7 +52,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
         private Mock<IPlanRepository> _PlanRepositoryMock;
         private Mock<IInventoryRepository> _InventoryRepositoryMock;
-        private Mock<IDaypartCache> _DaypartCacheMock;
         private Mock<IMarketCoverageRepository> _MarketCoverageRepositoryMock;
         private Mock<IMediaMonthAndWeekAggregateCache> _MediaMonthAndWeekAggregateCacheMock;
         private Mock<IStationProgramRepository> _StationProgramRepositoryMock;
@@ -64,6 +65,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IPlanPricingMarketResultsEngine> _PlanPricingMarketResultsEngine;
         private Mock<IPricingRequestLogClient> _PricingRequestLogClient;
         private Mock<IPlanValidator> _PlanValidatorMock;
+        private Mock<ISharedFolderService> _SharedFolderServiceMock;
 
         [SetUp]
         public void SetUp()
@@ -76,7 +78,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _BroadcastLockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
             _PlanRepositoryMock = new Mock<IPlanRepository>();
             _InventoryRepositoryMock = new Mock<IInventoryRepository>();
-            _DaypartCacheMock = new Mock<IDaypartCache>();
             _MarketCoverageRepositoryMock = new Mock<IMarketCoverageRepository>();
             _MediaMonthAndWeekAggregateCacheMock = new Mock<IMediaMonthAndWeekAggregateCache>();
             _StationProgramRepositoryMock = new Mock<IStationProgramRepository>();
@@ -90,6 +91,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanPricingMarketResultsEngine = new Mock<IPlanPricingMarketResultsEngine>();
             _PricingRequestLogClient = new Mock<IPricingRequestLogClient>();
             _PlanValidatorMock = new Mock<IPlanValidator>();
+            _SharedFolderServiceMock = new Mock<ISharedFolderService>();
 
             _DateTimeEngineMock
                 .Setup(x => x.GetCurrentMoment())
@@ -101,7 +103,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _InventoryRepositoryMock
                 .Setup(x => x.GetInventorySources())
-                .Returns(_GetInventorySources());
+                .Returns(InventoryTestData.GetInventorySources());
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<ICampaignRepository>())
@@ -735,22 +737,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             };
         }
 
-        private MarketCoverageDto _GetTop100Markets()
-        {
-            return new MarketCoverageDto
-            {
-                MarketCoverageFileId = 1,
-                MarketCoveragesByMarketCode = new Dictionary<int, double>
-                {
-                    { 101, 0.101d },
-                    { 100, 0.1d },
-                    { 302, 0.302d },
-                    { 403, 0.04743d },
-                    { 202, 0.02942d },
-                }
-            };
-        }
-
         private MarketCoverageDto _GetTop25Markets()
         {
             return new MarketCoverageDto
@@ -1054,7 +1040,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _BackgroundJobClientMock.Object,
                 _PlanPricingInventoryEngineMock.Object,
                 _BroadcastLockingManagerApplicationServiceMock.Object,
-                _DaypartCacheMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
                 _DateTimeEngineMock.Object,
                 _WeeklyBreakdownEngineMock.Object,
@@ -1062,7 +1047,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _PlanPricingStationCalculationEngineMock.Object,
                 _PlanPricingMarketResultsEngine.Object,
                 _PricingRequestLogClient.Object,
-                _PlanValidatorMock.Object);
+                _PlanValidatorMock.Object,
+                _SharedFolderServiceMock.Object);
         }
 
         [Test]
@@ -1154,157 +1140,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 {
                     new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
                     new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
-                }
-            };
-        }
-
-        private List<InventorySource> _GetInventorySources()
-        {
-            return new List<InventorySource>
-            {
-                new InventorySource
-                {
-                    Id = 1,
-                    Name = "Open Market",
-                    InventoryType = InventorySourceTypeEnum.OpenMarket
-                },
-                new InventorySource
-                {
-                    Id = 3,
-                    Name = "TVB",
-                    InventoryType = InventorySourceTypeEnum.Barter
-                },
-                new InventorySource
-                {
-                    Id = 4,
-                    Name = "TTWN",
-                    InventoryType = InventorySourceTypeEnum.Barter
-                },
-                new InventorySource
-                {
-                    Id = 5,
-                    Name = "CNN",
-                    InventoryType = InventorySourceTypeEnum.Barter
-                },
-                new InventorySource
-                {
-                    Id = 6,
-                    Name = "Sinclair",
-                    InventoryType = InventorySourceTypeEnum.ProprietaryOAndO
-                },
-                new InventorySource
-                {
-                    Id = 7,
-                    Name = "LilaMax",
-                    InventoryType = InventorySourceTypeEnum.Barter
-                },
-                new InventorySource
-                {
-                    Id = 8,
-                    Name = "MLB",
-                    InventoryType = InventorySourceTypeEnum.Barter
-                },
-                new InventorySource
-                {
-                    Id = 9,
-                    Name = "Ference Media",
-                    InventoryType = InventorySourceTypeEnum.Barter
-                },
-                new InventorySource
-                {
-                    Id = 10,
-                    Name = "ABC O&O",
-                    InventoryType = InventorySourceTypeEnum.ProprietaryOAndO
-                },
-                new InventorySource
-                {
-                    Id = 11,
-                    Name = "NBC O&O",
-                    InventoryType = InventorySourceTypeEnum.ProprietaryOAndO
-                },
-                new InventorySource
-                {
-                    Id = 12,
-                    Name = "KATZ",
-                    InventoryType = InventorySourceTypeEnum.ProprietaryOAndO
-                },
-                new InventorySource
-                {
-                    Id = 13,
-                    Name = "20th Century Fox (Twentieth Century)",
-                    InventoryType = InventorySourceTypeEnum.Syndication
-                },
-                new InventorySource
-                {
-                    Id = 14,
-                    Name = "CBS Synd",
-                    InventoryType = InventorySourceTypeEnum.Syndication
-                },
-                new InventorySource
-                {
-                    Id = 15,
-                    Name = "NBCU Syn",
-                    InventoryType = InventorySourceTypeEnum.Syndication
-                },
-                new InventorySource
-                {
-                    Id = 16,
-                    Name = "WB Syn",
-                    InventoryType = InventorySourceTypeEnum.Syndication
-                },
-                new InventorySource
-                {
-                    Id = 17,
-                    Name = "Antenna TV",
-                    InventoryType = InventorySourceTypeEnum.Diginet
-                },
-                new InventorySource
-                {
-                    Id = 18,
-                    Name = "Bounce",
-                    InventoryType = InventorySourceTypeEnum.Diginet
-                },
-                new InventorySource
-                {
-                    Id = 19,
-                    Name = "BUZZR",
-                    InventoryType = InventorySourceTypeEnum.Diginet
-                },
-                new InventorySource
-                {
-                    Id = 20,
-                    Name = "COZI",
-                    InventoryType = InventorySourceTypeEnum.Diginet
-                },
-                new InventorySource
-                {
-                    Id = 21,
-                    Name = "Escape",
-                    InventoryType = InventorySourceTypeEnum.Diginet
-                },
-                new InventorySource
-                {
-                    Id = 22,
-                    Name = "Grit",
-                    InventoryType = InventorySourceTypeEnum.Diginet
-                },
-                new InventorySource
-                {
-                    Id = 23,
-                    Name = "HITV",
-                    InventoryType = InventorySourceTypeEnum.Diginet
-                },
-                new InventorySource
-                {
-                    Id = 24,
-                    Name = "Laff",
-                    InventoryType = InventorySourceTypeEnum.Diginet
-                },
-                new InventorySource
-                {
-                    Id = 25,
-                    Name = "Me TV",
-                    InventoryType = InventorySourceTypeEnum.Diginet
                 }
             };
         }
@@ -8812,7 +8647,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestTop100MarketCoverages())
-                .Returns(_GetTop100Markets());
+                .Returns(MarketsTestData.GetTop100Markets());
 
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
@@ -8869,7 +8704,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestTop100MarketCoverages())
-                .Returns(_GetTop100Markets());
+                .Returns(MarketsTestData.GetTop100Markets());
 
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
@@ -8926,7 +8761,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestTop100MarketCoverages())
-                .Returns(_GetTop100Markets());
+                .Returns(MarketsTestData.GetTop100Markets());
 
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
@@ -9151,7 +8986,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestTop100MarketCoverages())
-                .Returns(_GetTop100Markets());
+                .Returns(MarketsTestData.GetTop100Markets());
 
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
@@ -9208,7 +9043,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestTop100MarketCoverages())
-                .Returns(_GetTop100Markets());
+                .Returns(MarketsTestData.GetTop100Markets());
 
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()

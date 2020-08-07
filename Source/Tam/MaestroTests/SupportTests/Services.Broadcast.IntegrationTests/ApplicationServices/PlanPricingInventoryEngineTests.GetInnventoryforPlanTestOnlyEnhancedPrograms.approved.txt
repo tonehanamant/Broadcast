@@ -12,28 +12,23 @@
     "ManifestAudiences": [
       {
         "AudienceId": 31,
-        "Impressions": 34500.0,
-        "IsReference": true
+        "Impressions": 34500.0
       },
       {
         "AudienceId": 33,
-        "Impressions": 22700.0,
-        "IsReference": true
+        "Impressions": 22700.0
       },
       {
         "AudienceId": 37,
-        "Impressions": 26200.0,
-        "IsReference": true
+        "Impressions": 26200.0
       },
       {
         "AudienceId": 39,
-        "Impressions": 20000.0,
-        "IsReference": true
+        "Impressions": 20000.0
       },
       {
         "AudienceId": 40,
-        "Impressions": 27900.0,
-        "IsReference": true
+        "Impressions": 27900.0
       }
     ],
     "ManifestDayparts": [
@@ -74,6 +69,7 @@
         ]
       }
     ],
+    "ManifestId": 287146,
     "ManifestRates": [
       {
         "Cost": 750.0000,
@@ -140,28 +136,23 @@
     "ManifestAudiences": [
       {
         "AudienceId": 31,
-        "Impressions": 30200.0,
-        "IsReference": true
+        "Impressions": 30200.0
       },
       {
         "AudienceId": 33,
-        "Impressions": 11300.0,
-        "IsReference": true
+        "Impressions": 11300.0
       },
       {
         "AudienceId": 37,
-        "Impressions": 11800.0,
-        "IsReference": true
+        "Impressions": 11800.0
       },
       {
         "AudienceId": 39,
-        "Impressions": 12100.0,
-        "IsReference": true
+        "Impressions": 12100.0
       },
       {
         "AudienceId": 40,
-        "Impressions": 21300.0,
-        "IsReference": true
+        "Impressions": 21300.0
       }
     ],
     "ManifestDayparts": [
@@ -202,6 +193,7 @@
         ]
       }
     ],
+    "ManifestId": 287150,
     "ManifestRates": [
       {
         "Cost": 800.0000,
@@ -268,28 +260,23 @@
     "ManifestAudiences": [
       {
         "AudienceId": 31,
-        "Impressions": 23400.0,
-        "IsReference": true
+        "Impressions": 23400.0
       },
       {
         "AudienceId": 33,
-        "Impressions": 11800.0,
-        "IsReference": true
+        "Impressions": 11800.0
       },
       {
         "AudienceId": 37,
-        "Impressions": 13300.0,
-        "IsReference": true
+        "Impressions": 13300.0
       },
       {
         "AudienceId": 39,
-        "Impressions": 12100.0,
-        "IsReference": true
+        "Impressions": 12100.0
       },
       {
         "AudienceId": 40,
-        "Impressions": 16900.0,
-        "IsReference": true
+        "Impressions": 16900.0
       }
     ],
     "ManifestDayparts": [
@@ -330,6 +317,7 @@
         ]
       }
     ],
+    "ManifestId": 287154,
     "ManifestRates": [
       {
         "Cost": 600.0000,
@@ -396,28 +384,23 @@
     "ManifestAudiences": [
       {
         "AudienceId": 31,
-        "Impressions": 300.0,
-        "IsReference": true
+        "Impressions": 300.0
       },
       {
         "AudienceId": 33,
-        "Impressions": 100.0,
-        "IsReference": true
+        "Impressions": 100.0
       },
       {
         "AudienceId": 37,
-        "Impressions": 100.0,
-        "IsReference": true
+        "Impressions": 100.0
       },
       {
         "AudienceId": 39,
-        "Impressions": 100.0,
-        "IsReference": true
+        "Impressions": 100.0
       },
       {
         "AudienceId": 40,
-        "Impressions": 300.0,
-        "IsReference": true
+        "Impressions": 300.0
       }
     ],
     "ManifestDayparts": [
@@ -458,6 +441,7 @@
         ]
       }
     ],
+    "ManifestId": 288692,
     "ManifestRates": [
       {
         "Cost": 50.0000,
@@ -524,28 +508,23 @@
     "ManifestAudiences": [
       {
         "AudienceId": 31,
-        "Impressions": 300.0,
-        "IsReference": true
+        "Impressions": 300.0
       },
       {
         "AudienceId": 33,
-        "Impressions": 100.0,
-        "IsReference": true
+        "Impressions": 100.0
       },
       {
         "AudienceId": 37,
-        "Impressions": 300.0,
-        "IsReference": true
+        "Impressions": 300.0
       },
       {
         "AudienceId": 39,
-        "Impressions": 300.0,
-        "IsReference": true
+        "Impressions": 300.0
       },
       {
         "AudienceId": 40,
-        "Impressions": 400.0,
-        "IsReference": true
+        "Impressions": 400.0
       }
     ],
     "ManifestDayparts": [
@@ -586,6 +565,7 @@
         ]
       }
     ],
+    "ManifestId": 288693,
     "ManifestRates": [
       {
         "Cost": 12.0000,
@@ -652,28 +632,23 @@
     "ManifestAudiences": [
       {
         "AudienceId": 31,
-        "Impressions": 200.0,
-        "IsReference": true
+        "Impressions": 200.0
       },
       {
         "AudienceId": 33,
-        "Impressions": 100.0,
-        "IsReference": true
+        "Impressions": 100.0
       },
       {
         "AudienceId": 37,
-        "Impressions": 100.0,
-        "IsReference": true
+        "Impressions": 100.0
       },
       {
         "AudienceId": 39,
-        "Impressions": 100.0,
-        "IsReference": true
+        "Impressions": 100.0
       },
       {
         "AudienceId": 40,
-        "Impressions": 200.0,
-        "IsReference": true
+        "Impressions": 200.0
       }
     ],
     "ManifestDayparts": [
@@ -714,6 +689,7 @@
         ]
       }
     ],
+    "ManifestId": 288694,
     "ManifestRates": [
       {
         "Cost": 12.0000,
@@ -780,113 +756,7 @@
     "ManifestAudiences": [
       {
         "AudienceId": 31,
-        "Impressions": null,
-        "IsReference": true
-      },
-      {
-        "AudienceId": 4,
-        "Impressions": 13.75,
-        "IsReference": false
-      },
-      {
-        "AudienceId": 5,
-        "Impressions": 18.491666666666667,
-        "IsReference": false
-      },
-      {
-        "AudienceId": 6,
-        "Impressions": 693.73333333333323,
-        "IsReference": false
-      },
-      {
-        "AudienceId": 7,
-        "Impressions": 648.40833333333342,
-        "IsReference": false
-      },
-      {
-        "AudienceId": 13,
-        "Impressions": 1285.8999999999999,
-        "IsReference": false
-      },
-      {
-        "AudienceId": 14,
-        "Impressions": 3409.6402777777771,
-        "IsReference": false
-      },
-      {
-        "AudienceId": 15,
-        "Impressions": 4361.0166666666673,
-        "IsReference": false
-      },
-      {
-        "AudienceId": 19,
-        "Impressions": 0.0,
-        "IsReference": false
-      },
-      {
-        "AudienceId": 20,
-        "Impressions": 13.4375,
-        "IsReference": false
-      },
-      {
-        "AudienceId": 21,
-        "Impressions": 209.32500000000002,
-        "IsReference": false
-      },
-      {
-        "AudienceId": 22,
-        "Impressions": 119.41666666666667,
-        "IsReference": false
-      },
-      {
-        "AudienceId": 28,
-        "Impressions": 1208.2749999999999,
-        "IsReference": false
-      },
-      {
-        "AudienceId": 29,
-        "Impressions": 3423.2875000000004,
-        "IsReference": false
-      },
-      {
-        "AudienceId": 30,
-        "Impressions": 1767.0249999999999,
-        "IsReference": false
-      },
-      {
-        "AudienceId": 31,
-        "Impressions": 25983.061111111107,
-        "IsReference": false
-      },
-      {
-        "AudienceId": 46,
-        "Impressions": 529.07916666666677,
-        "IsReference": false
-      },
-      {
-        "AudienceId": 284,
-        "Impressions": 2524.6458333333335,
-        "IsReference": false
-      },
-      {
-        "AudienceId": 290,
-        "Impressions": 2429.6833333333329,
-        "IsReference": false
-      },
-      {
-        "AudienceId": 339,
-        "Impressions": 298.16666666666669,
-        "IsReference": false
-      },
-      {
-        "AudienceId": 347,
-        "Impressions": 6333.7291666666661,
-        "IsReference": false
-      },
-      {
-        "AudienceId": 348,
-        "Impressions": 1380.8763888888889,
-        "IsReference": false
+        "Impressions": null
       }
     ],
     "ManifestDayparts": [
@@ -927,6 +797,7 @@
         ]
       }
     ],
+    "ManifestId": 518249,
     "ManifestRates": [
       {
         "Cost": 150.0000,

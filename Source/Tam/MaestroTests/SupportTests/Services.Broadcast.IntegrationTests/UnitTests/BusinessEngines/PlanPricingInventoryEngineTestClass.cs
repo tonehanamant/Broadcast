@@ -32,11 +32,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         }
 
         public List<PlanPricingInventoryProgram> UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(
-            PlanDto plan,
+            List<PlanDaypartDto> dayparts,
             List<PlanPricingInventoryProgram> programs,
             DisplayDaypart planDisplayDaypartDays)
         {
-            return FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan, programs, planDisplayDaypartDays);
+            return FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(dayparts, programs, planDisplayDaypartDays);
         }
 
         public List<PlanPricingInventoryProgram> UT_FilterProgramsByMinAndMaxCPM(
@@ -53,9 +53,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             ApplyInflationFactorToSpotCost(programs, inflationFactor);
         }
 
-        public DisplayDaypart UT_GetPlanDaypartDaysFromPlanFlight(PlanDto plan, List<DateRange> planFlightDateRanges)
+        public DisplayDaypart UT_GetPlanDaypartDaysFromPlanFlight(List<int> flightDays, List<DateRange> planFlightDateRanges)
         {
-            return GetPlanDaypartDaysFromPlanFlight(plan, planFlightDateRanges);
+            return GetDaypartDaysFromFlight(flightDays, planFlightDateRanges);
         }
 
         public void UT_ApplyNTIConversionToNSI(

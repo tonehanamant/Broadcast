@@ -1,0 +1,623 @@
+{
+  "inventory": [
+    {
+      "DeliveryPerAudience": [
+        {
+          "AudienceId": 13,
+          "CPM": 1.6233766233766233766233766000,
+          "Impressions": 11550.0,
+          "ProjectedImpressions": 10500.0,
+          "ProvidedImpressions": 11550.000000000002
+        },
+        {
+          "AudienceId": 12,
+          "CPM": 1.7482517482517482517482517000,
+          "Impressions": 10725.0,
+          "ProjectedImpressions": 9750.0,
+          "ProvidedImpressions": 10725.000000000002
+        },
+        {
+          "AudienceId": 31,
+          "CPM": 0.7102272727272727272727273000,
+          "Impressions": 26400.0,
+          "ProjectedImpressions": 24000.0,
+          "ProvidedImpressions": 26400.0
+        }
+      ],
+      "ManifestAudiences": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": false,
+            "_Tuesday": false,
+            "_Wednesday": true
+          },
+          "Id": 0,
+          "PrimaryProgram": {
+            "EndTime": 0,
+            "Genre": null,
+            "Id": 2,
+            "Name": "Program B",
+            "ShowType": null,
+            "StartTime": 0
+          },
+          "PrimaryProgramId": 2,
+          "ProgramName": null,
+          "Programs": [
+            {
+              "EndTime": 0,
+              "Genre": null,
+              "Id": 1,
+              "Name": "Program A",
+              "ShowType": null,
+              "StartTime": 0
+            },
+            {
+              "EndTime": 0,
+              "Genre": null,
+              "Id": 2,
+              "Name": "Program B",
+              "ShowType": null,
+              "StartTime": 0
+            }
+          ]
+        }
+      ],
+      "ManifestId": 1,
+      "ManifestRates": [
+        {
+          "Cost": 18.75,
+          "SpotLengthId": 0
+        }
+      ],
+      "StandardDaypartId": 1,
+      "Station": {
+        "Affiliation": "NBC latest",
+        "CallLetters": "KOB+",
+        "Code": 101,
+        "Id": 1,
+        "LegacyCallLetters": "KOB",
+        "ManifestMaxEndDate": null,
+        "MarketCode": 100,
+        "ModifiedDate": null,
+        "OriginMarket": null,
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
+      }
+    },
+    {
+      "DeliveryPerAudience": [
+        {
+          "AudienceId": 13,
+          "CPM": 1.3888888888888888888888889000,
+          "Impressions": 13500.0,
+          "ProjectedImpressions": 13500.0,
+          "ProvidedImpressions": null
+        },
+        {
+          "AudienceId": 12,
+          "CPM": 1.4705882352941176470588235000,
+          "Impressions": 12750.0,
+          "ProjectedImpressions": 12750.0,
+          "ProvidedImpressions": null
+        },
+        {
+          "AudienceId": 31,
+          "CPM": 0.6944444444444444444444444000,
+          "Impressions": 27000.0,
+          "ProjectedImpressions": 27000.0,
+          "ProvidedImpressions": null
+        }
+      ],
+      "ManifestAudiences": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 7199,
+            "_Friday": true,
+            "_Id": 1,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 3600,
+            "_Sunday": false,
+            "_Thursday": false,
+            "_Tuesday": false,
+            "_Wednesday": true
+          },
+          "Id": 0,
+          "PrimaryProgram": {
+            "EndTime": 0,
+            "Genre": null,
+            "Id": 1,
+            "Name": "Program B",
+            "ShowType": null,
+            "StartTime": 0
+          },
+          "PrimaryProgramId": 1,
+          "ProgramName": null,
+          "Programs": [
+            {
+              "EndTime": 0,
+              "Genre": null,
+              "Id": 1,
+              "Name": "Program B",
+              "ShowType": null,
+              "StartTime": 0
+            }
+          ]
+        }
+      ],
+      "ManifestId": 5,
+      "ManifestRates": [
+        {
+          "Cost": 18.75,
+          "SpotLengthId": 0
+        }
+      ],
+      "StandardDaypartId": 1,
+      "Station": {
+        "Affiliation": "ABC",
+        "CallLetters": "KSTP+",
+        "Code": 102,
+        "Id": 2,
+        "LegacyCallLetters": "KSTP",
+        "ManifestMaxEndDate": null,
+        "MarketCode": 2,
+        "ModifiedDate": null,
+        "OriginMarket": null,
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "SalesGroupName": null
+      }
+    }
+  ],
+  "parametersApplyProjectedImpressions": [
+    {
+      "programs": [
+        {
+          "DeliveryPerAudience": [],
+          "ManifestId": 1,
+          "StandardDaypartId": 1,
+          "Station": {
+            "Id": 1,
+            "Code": 101,
+            "CallLetters": "KOB+",
+            "LegacyCallLetters": "KOB",
+            "OriginMarket": null,
+            "MarketCode": 100,
+            "Affiliation": "NBC latest",
+            "RateDataThrough": null,
+            "ModifiedDate": null,
+            "ManifestMaxEndDate": null,
+            "OwnershipGroupName": null,
+            "SalesGroupName": null
+          },
+          "ManifestRates": [
+            {
+              "SpotLengthId": 0,
+              "Cost": 15.0
+            }
+          ],
+          "ManifestAudiences": null,
+          "ManifestDayparts": [
+            {
+              "Id": 0,
+              "Daypart": {
+                "_Id": 1,
+                "_Code": "",
+                "_Name": "",
+                "_StartTime": 3600,
+                "_EndTime": 7199,
+                "_Monday": true,
+                "_Tuesday": false,
+                "_Wednesday": true,
+                "_Thursday": false,
+                "_Friday": true,
+                "_Saturday": false,
+                "_Sunday": false,
+                "_Is24Hour": false,
+                "_LastStartTime": 0,
+                "_LastEndTime": 0
+              },
+              "PrimaryProgram": {
+                "Id": 2,
+                "Name": "Program B",
+                "ShowType": null,
+                "Genre": null,
+                "StartTime": 0,
+                "EndTime": 0
+              },
+              "PrimaryProgramId": 2,
+              "Programs": [
+                {
+                  "Id": 1,
+                  "Name": "Program A",
+                  "ShowType": null,
+                  "Genre": null,
+                  "StartTime": 0,
+                  "EndTime": 0
+                },
+                {
+                  "Id": 2,
+                  "Name": "Program B",
+                  "ShowType": null,
+                  "Genre": null,
+                  "StartTime": 0,
+                  "EndTime": 0
+                }
+              ],
+              "ProgramName": null
+            }
+          ]
+        },
+        {
+          "DeliveryPerAudience": [],
+          "ManifestId": 5,
+          "StandardDaypartId": 1,
+          "Station": {
+            "Id": 2,
+            "Code": 102,
+            "CallLetters": "KSTP+",
+            "LegacyCallLetters": "KSTP",
+            "OriginMarket": null,
+            "MarketCode": 2,
+            "Affiliation": "ABC",
+            "RateDataThrough": null,
+            "ModifiedDate": null,
+            "ManifestMaxEndDate": null,
+            "OwnershipGroupName": null,
+            "SalesGroupName": null
+          },
+          "ManifestRates": [
+            {
+              "SpotLengthId": 0,
+              "Cost": 15.0
+            }
+          ],
+          "ManifestAudiences": null,
+          "ManifestDayparts": [
+            {
+              "Id": 0,
+              "Daypart": {
+                "_Id": 1,
+                "_Code": "",
+                "_Name": "",
+                "_StartTime": 3600,
+                "_EndTime": 7199,
+                "_Monday": true,
+                "_Tuesday": false,
+                "_Wednesday": true,
+                "_Thursday": false,
+                "_Friday": true,
+                "_Saturday": false,
+                "_Sunday": false,
+                "_Is24Hour": false,
+                "_LastStartTime": 0,
+                "_LastEndTime": 0
+              },
+              "PrimaryProgram": {
+                "Id": 1,
+                "Name": "Program B",
+                "ShowType": null,
+                "Genre": null,
+                "StartTime": 0,
+                "EndTime": 0
+              },
+              "PrimaryProgramId": 1,
+              "Programs": [
+                {
+                  "Id": 1,
+                  "Name": "Program B",
+                  "ShowType": null,
+                  "Genre": null,
+                  "StartTime": 0,
+                  "EndTime": 0
+                }
+              ],
+              "ProgramName": null
+            }
+          ]
+        }
+      ],
+      "impressionsRequest": {
+        "PlaybackType": 4,
+        "ShareProjectionBookId": 102,
+        "HutProjectionBookId": 101,
+        "Equivalized": true,
+        "SpotLengthId": 2,
+        "PostType": 2
+      },
+      "audienceIds": [
+        13,
+        12,
+        31
+      ]
+    }
+  ],
+  "parametersApplyProvidedImpressions": [
+    {
+      "programs": [
+        {
+          "DeliveryPerAudience": [
+            {
+              "AudienceId": 13,
+              "ProjectedImpressions": 14000.0,
+              "ProvidedImpressions": null,
+              "CPM": 0.0,
+              "Impressions": 14000.0
+            },
+            {
+              "AudienceId": 12,
+              "ProjectedImpressions": 13000.0,
+              "ProvidedImpressions": null,
+              "CPM": 0.0,
+              "Impressions": 13000.0
+            },
+            {
+              "AudienceId": 31,
+              "ProjectedImpressions": 32000.0,
+              "ProvidedImpressions": null,
+              "CPM": 0.0,
+              "Impressions": 32000.0
+            }
+          ],
+          "ManifestId": 1,
+          "StandardDaypartId": 1,
+          "Station": {
+            "Id": 1,
+            "Code": 101,
+            "CallLetters": "KOB+",
+            "LegacyCallLetters": "KOB",
+            "OriginMarket": null,
+            "MarketCode": 100,
+            "Affiliation": "NBC latest",
+            "RateDataThrough": null,
+            "ModifiedDate": null,
+            "ManifestMaxEndDate": null,
+            "OwnershipGroupName": null,
+            "SalesGroupName": null
+          },
+          "ManifestRates": [
+            {
+              "SpotLengthId": 0,
+              "Cost": 15.0
+            }
+          ],
+          "ManifestAudiences": null,
+          "ManifestDayparts": [
+            {
+              "Id": 0,
+              "Daypart": {
+                "_Id": 1,
+                "_Code": "",
+                "_Name": "",
+                "_StartTime": 3600,
+                "_EndTime": 7199,
+                "_Monday": true,
+                "_Tuesday": false,
+                "_Wednesday": true,
+                "_Thursday": false,
+                "_Friday": true,
+                "_Saturday": false,
+                "_Sunday": false,
+                "_Is24Hour": false,
+                "_LastStartTime": 0,
+                "_LastEndTime": 0
+              },
+              "PrimaryProgram": {
+                "Id": 2,
+                "Name": "Program B",
+                "ShowType": null,
+                "Genre": null,
+                "StartTime": 0,
+                "EndTime": 0
+              },
+              "PrimaryProgramId": 2,
+              "Programs": [
+                {
+                  "Id": 1,
+                  "Name": "Program A",
+                  "ShowType": null,
+                  "Genre": null,
+                  "StartTime": 0,
+                  "EndTime": 0
+                },
+                {
+                  "Id": 2,
+                  "Name": "Program B",
+                  "ShowType": null,
+                  "Genre": null,
+                  "StartTime": 0,
+                  "EndTime": 0
+                }
+              ],
+              "ProgramName": null
+            }
+          ]
+        },
+        {
+          "DeliveryPerAudience": [
+            {
+              "AudienceId": 13,
+              "ProjectedImpressions": 18000.0,
+              "ProvidedImpressions": null,
+              "CPM": 0.0,
+              "Impressions": 18000.0
+            },
+            {
+              "AudienceId": 12,
+              "ProjectedImpressions": 17000.0,
+              "ProvidedImpressions": null,
+              "CPM": 0.0,
+              "Impressions": 17000.0
+            },
+            {
+              "AudienceId": 31,
+              "ProjectedImpressions": 36000.0,
+              "ProvidedImpressions": null,
+              "CPM": 0.0,
+              "Impressions": 36000.0
+            }
+          ],
+          "ManifestId": 5,
+          "StandardDaypartId": 1,
+          "Station": {
+            "Id": 2,
+            "Code": 102,
+            "CallLetters": "KSTP+",
+            "LegacyCallLetters": "KSTP",
+            "OriginMarket": null,
+            "MarketCode": 2,
+            "Affiliation": "ABC",
+            "RateDataThrough": null,
+            "ModifiedDate": null,
+            "ManifestMaxEndDate": null,
+            "OwnershipGroupName": null,
+            "SalesGroupName": null
+          },
+          "ManifestRates": [
+            {
+              "SpotLengthId": 0,
+              "Cost": 15.0
+            }
+          ],
+          "ManifestAudiences": null,
+          "ManifestDayparts": [
+            {
+              "Id": 0,
+              "Daypart": {
+                "_Id": 1,
+                "_Code": "",
+                "_Name": "",
+                "_StartTime": 3600,
+                "_EndTime": 7199,
+                "_Monday": true,
+                "_Tuesday": false,
+                "_Wednesday": true,
+                "_Thursday": false,
+                "_Friday": true,
+                "_Saturday": false,
+                "_Sunday": false,
+                "_Is24Hour": false,
+                "_LastStartTime": 0,
+                "_LastEndTime": 0
+              },
+              "PrimaryProgram": {
+                "Id": 1,
+                "Name": "Program B",
+                "ShowType": null,
+                "Genre": null,
+                "StartTime": 0,
+                "EndTime": 0
+              },
+              "PrimaryProgramId": 1,
+              "Programs": [
+                {
+                  "Id": 1,
+                  "Name": "Program B",
+                  "ShowType": null,
+                  "Genre": null,
+                  "StartTime": 0,
+                  "EndTime": 0
+                }
+              ],
+              "ProgramName": null
+            }
+          ]
+        }
+      ],
+      "spotLengthId": 2,
+      "equivalized": true
+    }
+  ],
+  "parametersGetBroadcastStationsWithLatestDetailsByMarketCodes": [
+    [
+      101,
+      100,
+      302,
+      403,
+      202
+    ]
+  ],
+  "parametersGetLatestStationMonthDetailsForStations": [
+    [
+      1,
+      2,
+      3
+    ]
+  ],
+  "parametersGetProgramsForQuoteReport": [
+    {
+      "startDate": "2020-01-01T00:00:00",
+      "endDate": "2020-01-04T00:00:00",
+      "spotLengthIds": [
+        2
+      ],
+      "inventorySourceIds": [
+        1
+      ],
+      "stationIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "startDate": "2020-01-06T00:00:00",
+      "endDate": "2020-01-09T00:00:00",
+      "spotLengthIds": [
+        2
+      ],
+      "inventorySourceIds": [
+        1
+      ],
+      "stationIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "startDate": "2020-01-11T00:00:00",
+      "endDate": "2020-01-14T00:00:00",
+      "spotLengthIds": [
+        2
+      ],
+      "inventorySourceIds": [
+        1
+      ],
+      "stationIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  ]
+}

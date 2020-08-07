@@ -4,16 +4,21 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Entities.QuoteReport;
 using Services.Broadcast.IntegrationTests.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using static Services.Broadcast.Entities.Plan.PlanDaypartDto;
+using static Services.Broadcast.Entities.Plan.Pricing.BasePlanPricingInventoryProgram;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -127,6 +132,80 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     isProprietary: false);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetInventoryForQuoteTest()
+        {
+            try
+            {
+                StubbedConfigurationWebApiClient.RunTimeParameters["ThresholdInSecondsForProgramIntersectInPricing"] = "100";
+
+                using (new TransactionScopeWrapper())
+                {
+                    var request = new QuoteRequestDto
+                    {
+                        FlightStartDate = new DateTime(2018, 10, 1),
+                        FlightEndDate = new DateTime(2018, 10, 7),
+                        FlightHiatusDays = new List<DateTime>(),
+                        FlightDays = new List<int> { 1, 5 },
+                        CreativeLengths = new List<CreativeLength>
+                        {
+                            new CreativeLength
+                            {
+                                SpotLengthId = 2
+                            }
+                        },
+                        Dayparts = new List<PlanDaypartDto>
+                        {
+                            new PlanDaypartDto
+                            {
+                                DaypartCodeId = 1,
+                                StartTimeSeconds = 10,
+                                EndTimeSeconds = 1699,
+                                Restrictions = new RestrictionsDto
+                                {
+                                    ProgramRestrictions = new RestrictionsDto.ProgramRestrictionDto
+                                    {
+                                        Programs = new List<ProgramDto>
+                                        {
+                                            new ProgramDto
+                                            {
+                                                Name = "Early news"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        Equivalized = true,
+                        PostingType = PostingTypeEnum.NTI,
+                        Margin = 20,
+                        HUTBookId = 437,
+                        ShareBookId = 437,
+                        AudienceId = 33,
+                        SecondaryAudiences = new List<PlanAudienceDto>
+                        {
+                            new PlanAudienceDto
+                            {
+                                AudienceId = 37
+                            }
+                        }
+                    };
+
+                    var planPricingInventoryEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingInventoryEngine>();
+
+                    var result = planPricingInventoryEngine.GetInventoryForQuote(request);
+
+                    Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+                }
+            }
+            finally
+            {
+                StubbedConfigurationWebApiClient.RunTimeParameters["ThresholdInSecondsForProgramIntersectInPricing"] = "1800";
             }
         }
 

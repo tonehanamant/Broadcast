@@ -3,6 +3,7 @@
     public enum SharedFolderFileUsage
     {
         CampaignExport = 1,
-        ProgramLineup = 2
+        ProgramLineup = 2,
+        Quote = 3
     }
 }

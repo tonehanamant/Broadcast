@@ -8,8 +8,7 @@
       "ManifestAudiences": [
         {
           "AudienceId": 6,
-          "Impressions": 1000.0,
-          "IsReference": true
+          "Impressions": 1000.0
         }
       ],
       "ManifestDayparts": null,

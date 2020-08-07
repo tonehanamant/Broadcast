@@ -506,6 +506,7 @@
     <Compile Include="Entities\Nti\NtiUniverseHeader.cs" />
     <Compile Include="Entities\Plan\LengthMakeUpRequest.cs" />
     <Compile Include="Entities\Plan\LengthMakeUpTableRow.cs" />
+    <Compile Include="Entities\Plan\Pricing\BasePlanPricingInventoryProgram.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiRequestDto_v3.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiSpotsResponseDto_v3.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingStationResultDto.cs" />
@@ -514,6 +515,9 @@
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultMarketsDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultMarketsTotalsDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PricingParametersWithoutPlanDto.cs" />
+    <Compile Include="Entities\QuoteReport\QuoteProgram.cs" />
+    <Compile Include="Entities\QuoteReport\QuoteReportData.cs" />
+    <Compile Include="Entities\QuoteReport\QuoteRequestDto.cs" />
     <Compile Include="Entities\ProgramMapping\ProgramNameExceptionDto.cs" />
     <Compile Include="Entities\ProgramMapping\ProgramNameMappingDto.cs" />
     <Compile Include="Entities\ProgramMapping\UnMappedProgramNameReportData.cs" />
@@ -655,6 +659,8 @@
     <Compile Include="ReportGenerators\ProgramLineup\DefaultViewReportGenerator.cs" />
     <Compile Include="ReportGenerators\ProgramLineup\DetailedViewReportGenerator.cs" />
     <Compile Include="ReportGenerators\ProgramMapping\UnMappedProgramNameReportGenerator.cs" />
+    <Compile Include="ReportGenerators\Quote\QuoteReportGenerator.cs" />
+    <Compile Include="ReportGenerators\Quote\RateDetailsReportGenerator.cs" />
     <Compile Include="Repositories\AffiliateRepository.cs" />
     <Compile Include="Repositories\CampaignSummaryRepository.cs" />
     <Compile Include="Repositories\DataMaintenanceRepository.cs" />

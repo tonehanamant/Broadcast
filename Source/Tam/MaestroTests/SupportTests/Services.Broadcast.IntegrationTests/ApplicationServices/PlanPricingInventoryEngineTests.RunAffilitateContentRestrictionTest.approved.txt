@@ -12,28 +12,23 @@
     "ManifestAudiences": [
       {
         "AudienceId": 31,
-        "Impressions": 300.0,
-        "IsReference": true
+        "Impressions": 300.0
       },
       {
         "AudienceId": 33,
-        "Impressions": 100.0,
-        "IsReference": true
+        "Impressions": 100.0
       },
       {
         "AudienceId": 37,
-        "Impressions": 100.0,
-        "IsReference": true
+        "Impressions": 100.0
       },
       {
         "AudienceId": 39,
-        "Impressions": 100.0,
-        "IsReference": true
+        "Impressions": 100.0
       },
       {
         "AudienceId": 40,
-        "Impressions": 300.0,
-        "IsReference": true
+        "Impressions": 300.0
       }
     ],
     "ManifestDayparts": [
@@ -150,28 +145,23 @@
     "ManifestAudiences": [
       {
         "AudienceId": 31,
-        "Impressions": 300.0,
-        "IsReference": true
+        "Impressions": 300.0
       },
       {
         "AudienceId": 33,
-        "Impressions": 100.0,
-        "IsReference": true
+        "Impressions": 100.0
       },
       {
         "AudienceId": 37,
-        "Impressions": 300.0,
-        "IsReference": true
+        "Impressions": 300.0
       },
       {
         "AudienceId": 39,
-        "Impressions": 300.0,
-        "IsReference": true
+        "Impressions": 300.0
       },
       {
         "AudienceId": 40,
-        "Impressions": 400.0,
-        "IsReference": true
+        "Impressions": 400.0
       }
     ],
     "ManifestDayparts": [
@@ -288,28 +278,23 @@
     "ManifestAudiences": [
       {
         "AudienceId": 31,
-        "Impressions": 200.0,
-        "IsReference": true
+        "Impressions": 200.0
       },
       {
         "AudienceId": 33,
-        "Impressions": 100.0,
-        "IsReference": true
+        "Impressions": 100.0
       },
       {
         "AudienceId": 37,
-        "Impressions": 100.0,
-        "IsReference": true
+        "Impressions": 100.0
       },
       {
         "AudienceId": 39,
-        "Impressions": 100.0,
-        "IsReference": true
+        "Impressions": 100.0
       },
       {
         "AudienceId": 40,
-        "Impressions": 200.0,
-        "IsReference": true
+        "Impressions": 200.0
       }
     ],
     "ManifestDayparts": [

@@ -2,6 +2,7 @@
 using Common.Services.Repositories;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Entities.QuoteReport;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,13 @@ namespace Services.Broadcast.BusinessEngines
             int audienceId, 
             bool isProprietary);
         void ApplyProvidedImpressions(List<PlanPricingInventoryProgram> programs, int audienceId, int spotLengthId, bool equivalized);
+
+        void ApplyProjectedImpressions(
+            IEnumerable<QuoteProgram> programs,
+            ImpressionsRequestDto impressionsRequest,
+            List<int> audienceIds);
+
+        void ApplyProvidedImpressions(List<QuoteProgram> programs, int spotLengthId, bool equivalized);
     }
 
     public class ImpressionsCalculationEngine : IImpressionsCalculationEngine
@@ -38,16 +46,35 @@ namespace Services.Broadcast.BusinessEngines
 
         public void ApplyProvidedImpressions(List<PlanPricingInventoryProgram> programs, int audienceId, int spotLengthId, bool equivalized)
         {
+            var spotLength = _SpotLengthEngine.GetSpotLengthValueById(spotLengthId);
+
             foreach (var program in programs)
             {
-                var manifestAudienceForProgram = program.ManifestAudiences.FirstOrDefault(x => x.AudienceId == audienceId && x.IsReference);
+                var manifestAudienceForProgram = program.ManifestAudiences.FirstOrDefault(x => x.AudienceId == audienceId);
                 var hasProvidedImpressions = manifestAudienceForProgram != null && manifestAudienceForProgram.Impressions.HasValue;
 
                 if (hasProvidedImpressions)
                 {
-                    var spotLength = _SpotLengthEngine.GetSpotLengthValueById(spotLengthId);
-
                     program.ProvidedImpressions = _ImpressionAdjustmentEngine.AdjustImpression(manifestAudienceForProgram.Impressions.Value, equivalized, spotLength);
+                }
+            }
+        }
+
+        public void ApplyProvidedImpressions(List<QuoteProgram> programs, int spotLengthId, bool equivalized)
+        {
+            var spotLength = _SpotLengthEngine.GetSpotLengthValueById(spotLengthId);
+
+            foreach (var program in programs)
+            {
+                foreach (var audience in program.DeliveryPerAudience)
+                {
+                    var manifestAudienceForProgram = program.ManifestAudiences.FirstOrDefault(x => x.AudienceId == audience.AudienceId);
+                    var hasProvidedImpressions = manifestAudienceForProgram != null && manifestAudienceForProgram.Impressions.HasValue;
+
+                    if (hasProvidedImpressions)
+                    {
+                        audience.ProvidedImpressions = _ImpressionAdjustmentEngine.AdjustImpression(manifestAudienceForProgram.Impressions.Value, equivalized, spotLength);
+                    }
                 }
             }
         }
@@ -110,6 +137,80 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
+        public void ApplyProjectedImpressions(
+            IEnumerable<QuoteProgram> programs,
+            ImpressionsRequestDto impressionsRequest,
+            List<int> audienceIds)
+        {
+            var impressionRequests = new List<ManifestDetailDaypart>();
+            var manifestDaypartImpressionsPerAudience = new Dictionary<int, Dictionary<int, double>>();
+
+            foreach (var program in programs)
+            {
+                foreach (var manifestDaypart in program.ManifestDayparts)
+                {
+                    var stationDaypart = new ManifestDetailDaypart
+                    {
+                        LegacyCallLetters = program.Station.LegacyCallLetters,
+                        Id = manifestDaypart.Id,
+                        DisplayDaypart = manifestDaypart.Daypart
+                    };
+
+                    impressionRequests.Add(stationDaypart);
+
+                    manifestDaypartImpressionsPerAudience[manifestDaypart.Id] = audienceIds.ToDictionary(x => x, x => 0.0d);
+                }
+            }
+
+            var maestroAudiencesByRatingsAudience = _BroadcastAudienceRepository
+                .GetRatingsAudiencesByMaestroAudience(audienceIds)
+                .GroupBy(x => x.rating_audience_id)
+                .Select(x => new
+                {
+                    rating_audience_id = x.Key,
+                    maestro_audience_ids = x.Select(y => y.custom_audience_id).ToList()
+                })
+                .ToDictionary(x => x.rating_audience_id, x => x.maestro_audience_ids);
+
+            var ratingAudiences = maestroAudiencesByRatingsAudience.Select(r => r.Key).ToList();
+
+            var programImpressions = _GetImpressions(impressionsRequest, ratingAudiences, impressionRequests);
+            _AdjustImpressions(impressionsRequest, programImpressions);
+
+            foreach (var programImpression in programImpressions)
+            {
+                var maestroAudiences = maestroAudiencesByRatingsAudience[programImpression.AudienceId];
+                var impressionsPerAudience = manifestDaypartImpressionsPerAudience[programImpression.Id];
+
+                foreach (var maestroAudience in maestroAudiences)
+                {
+                    impressionsPerAudience[maestroAudience] += programImpression.Impressions;
+                }
+            }
+
+            foreach (var program in programs)
+            {
+                var programManifestDaypartIds = program.ManifestDayparts.Select(d => d.Id).ToList();
+                var programDaypartImpressionsPerAudience = programManifestDaypartIds
+                    .Where(d => manifestDaypartImpressionsPerAudience.ContainsKey(d))
+                    .Select(d => manifestDaypartImpressionsPerAudience[d])
+                    .ToList();
+                var daypartCount = programManifestDaypartIds.Count;
+
+                if (daypartCount > 0)
+                {
+                    foreach (var audienceId in audienceIds)
+                    {
+                        program.DeliveryPerAudience.Add(new QuoteProgram.ImpressionsPerAudience
+                        {
+                            AudienceId = audienceId,
+                            ProjectedImpressions = programDaypartImpressionsPerAudience.Sum(x => x[audienceId]) / daypartCount
+                        });
+                    }
+                }
+            }
+        }
+
         private void _AdjustImpressions(
             ImpressionsRequestDto impressionsRequest,
             List<StationImpressionsWithAudience> programImpressions,
@@ -127,6 +228,25 @@ namespace Services.Broadcast.BusinessEngines
                 var spotLengthId = isProprietary ? programSpotLengthIds[program.Id] : impressionsRequest.SpotLengthId;
                 var spotLength = _SpotLengthEngine.GetSpotLengthValueById(spotLengthId);
 
+                program.Impressions = _ImpressionAdjustmentEngine.AdjustImpression(
+                    program.Impressions,
+                    impressionsRequest.Equivalized,
+                    spotLength,
+                    impressionsRequest.PostType,
+                    ratingAdjustmentMonth,
+                    applyAnnualAdjustment: false);
+            }
+        }
+
+        private void _AdjustImpressions(
+            ImpressionsRequestDto impressionsRequest,
+            List<StationImpressionsWithAudience> programImpressions)
+        {
+            var ratingAdjustmentMonth = impressionsRequest.HutProjectionBookId ?? impressionsRequest.ShareProjectionBookId.Value;
+            var spotLength = _SpotLengthEngine.GetSpotLengthValueById(impressionsRequest.SpotLengthId);
+
+            foreach (var program in programImpressions)
+            {
                 program.Impressions = _ImpressionAdjustmentEngine.AdjustImpression(
                     program.Impressions,
                     impressionsRequest.Equivalized,

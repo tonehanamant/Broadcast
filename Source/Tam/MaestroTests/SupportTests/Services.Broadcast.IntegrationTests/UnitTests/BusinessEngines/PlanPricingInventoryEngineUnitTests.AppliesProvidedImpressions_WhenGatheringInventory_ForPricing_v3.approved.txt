@@ -26,10 +26,26 @@
             "_Wednesday": false
           },
           "Id": 5,
-          "PrimaryProgram": null,
-          "PrimaryProgramId": null,
+          "PrimaryProgram": {
+            "EndTime": 0,
+            "Genre": null,
+            "Id": 2,
+            "Name": null,
+            "ShowType": null,
+            "StartTime": 0
+          },
+          "PrimaryProgramId": 2,
           "ProgramName": null,
-          "Programs": null
+          "Programs": [
+            {
+              "EndTime": 0,
+              "Genre": null,
+              "Id": 2,
+              "Name": null,
+              "ShowType": null,
+              "StartTime": 0
+            }
+          ]
         }
       ],
       "ManifestId": 0,
@@ -71,11 +87,24 @@
   "passedParameters": {
     "programs": [
       {
-        "ManifestId": 0,
         "ProjectedImpressions": 0.0,
         "ProvidedImpressions": null,
         "Impressions": 0.0,
         "Cpm": 0.0,
+        "Unit": null,
+        "InventorySource": null,
+        "InventoryPricingQuarterType": "Plan",
+        "SpotLengthId": 1,
+        "ManifestWeeks": [
+          {
+            "Id": 2,
+            "InventoryMediaWeekId": 0,
+            "ContractMediaWeekId": 0,
+            "Spots": 0
+          }
+        ],
+        "ManifestId": 0,
+        "StandardDaypartId": 1,
         "Station": {
           "Id": 0,
           "Code": null,
@@ -90,11 +119,13 @@
           "OwnershipGroupName": null,
           "SalesGroupName": null
         },
-        "Unit": null,
-        "InventorySource": null,
-        "InventoryPricingQuarterType": "Plan",
-        "StandardDaypartId": 1,
-        "SpotLengthId": 1,
+        "ManifestRates": [
+          {
+            "SpotLengthId": 1,
+            "Cost": 10.0
+          }
+        ],
+        "ManifestAudiences": null,
         "ManifestDayparts": [
           {
             "Id": 5,
@@ -115,25 +146,26 @@
               "_LastStartTime": 0,
               "_LastEndTime": 0
             },
-            "PrimaryProgram": null,
-            "PrimaryProgramId": null,
-            "Programs": null,
+            "PrimaryProgram": {
+              "Id": 2,
+              "Name": null,
+              "ShowType": null,
+              "Genre": null,
+              "StartTime": 0,
+              "EndTime": 0
+            },
+            "PrimaryProgramId": 2,
+            "Programs": [
+              {
+                "Id": 2,
+                "Name": null,
+                "ShowType": null,
+                "Genre": null,
+                "StartTime": 0,
+                "EndTime": 0
+              }
+            ],
             "ProgramName": null
-          }
-        ],
-        "ManifestAudiences": null,
-        "ManifestWeeks": [
-          {
-            "Id": 2,
-            "InventoryMediaWeekId": 0,
-            "ContractMediaWeekId": 0,
-            "Spots": 0
-          }
-        ],
-        "ManifestRates": [
-          {
-            "SpotLengthId": 1,
-            "Cost": 10.0
           }
         ]
       }

@@ -18,7 +18,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                   IBackgroundJobClient backgroundJobClient,
                                   IPlanPricingInventoryEngine planPricingInventoryEngine,
                                   IBroadcastLockingManagerApplicationService lockingManagerApplicationService,
-                                  IDaypartCache daypartCache,
                                   IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
                                   IDateTimeEngine dateTimeEngine,
                                   IWeeklyBreakdownEngine weeklyBreakdownEngine,
@@ -26,7 +25,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                   IPlanPricingStationCalculationEngine planPricingStationCalculationEngine,
                                   IPlanPricingMarketResultsEngine planPricingMarketResultsEngine,
                                   IPricingRequestLogClient pricingApiRequestSerializerClient,
-                                  IPlanValidator planValidator)
+                                  IPlanValidator planValidator,
+                                  ISharedFolderService sharedFolderService)
         : base(
             broadcastDataRepositoryFactory,
             spotLengthEngine,
@@ -34,7 +34,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             backgroundJobClient,
             planPricingInventoryEngine,
             lockingManagerApplicationService,
-            daypartCache,
             mediaMonthAndWeekAggregateCache,
             dateTimeEngine,
             weeklyBreakdownEngine,
@@ -42,9 +41,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             planPricingStationCalculationEngine,
             planPricingMarketResultsEngine,
             pricingApiRequestSerializerClient,
-            planValidator)
+            planValidator,
+            sharedFolderService)
         {
-            
         }
 
         public DateTime? UT_CurrentDateTime { get; set; }

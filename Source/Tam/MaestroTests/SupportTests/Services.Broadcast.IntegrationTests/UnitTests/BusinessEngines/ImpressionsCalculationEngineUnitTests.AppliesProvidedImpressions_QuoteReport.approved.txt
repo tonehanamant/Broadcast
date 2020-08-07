@@ -1,0 +1,33 @@
+{
+  "programs": [
+    {
+      "DeliveryPerAudience": [
+        {
+          "AudienceId": 1,
+          "CPM": 0.0,
+          "Impressions": 1500.0,
+          "ProjectedImpressions": 2000.0,
+          "ProvidedImpressions": 1500.0
+        },
+        {
+          "AudienceId": 2,
+          "CPM": 0.0,
+          "Impressions": 3000.0,
+          "ProjectedImpressions": 3000.0,
+          "ProvidedImpressions": null
+        }
+      ],
+      "ManifestAudiences": [
+        {
+          "AudienceId": 1,
+          "Impressions": 1000.0
+        }
+      ],
+      "ManifestDayparts": null,
+      "ManifestId": 0,
+      "ManifestRates": null,
+      "StandardDaypartId": 0,
+      "Station": null
+    }
+  ]
+}

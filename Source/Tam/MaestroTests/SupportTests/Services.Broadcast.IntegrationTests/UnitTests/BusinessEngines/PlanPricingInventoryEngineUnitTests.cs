@@ -11,15 +11,18 @@ using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
-using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
-using Unity;
 using static Services.Broadcast.BusinessEngines.PlanPricingInventoryEngine;
+using Services.Broadcast.IntegrationTests.Stubs;
+using Unity;
+using Services.Broadcast.Entities.QuoteReport;
+using Services.Broadcast.IntegrationTests.TestData;
+using ApprovalUtilities.Utilities;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 {
@@ -40,6 +43,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         private Mock<IDaypartCache> _DaypartCacheMock;
         private Mock<IQuarterCalculationEngine> _QuarterCalculationEngineMock;
         private Mock<ISpotLengthEngine> _SpotLengthEngineMock;
+        private Mock<IMarketCoverageRepository> _MarketCoverageRepositoryMock;
 
         [SetUp]
         public void SetUp()
@@ -57,6 +61,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _DaypartCacheMock = new Mock<IDaypartCache>();
             _QuarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
             _SpotLengthEngineMock = new Mock<ISpotLengthEngine>();
+            _MarketCoverageRepositoryMock = new Mock<IMarketCoverageRepository>();
 
             _DayRepositoryMock
                 .Setup(x => x.GetDays())
@@ -64,7 +69,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             _NtiToNsiConversionRepositoryMock
                 .Setup(x => x.GetLatestNtiToNsiConversionRates())
-                .Returns(_GetNtiToNsiConversionRates());
+                .Returns(ConversionTestData.GetNtiToNsiConversionRates());
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<INtiToNsiConversionRepository>())
@@ -85,6 +90,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IStationRepository>())
                 .Returns(_StationRepositoryMock.Object);
+
+            _DataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<IMarketCoverageRepository>())
+                .Returns(_MarketCoverageRepositoryMock.Object);
 
             _PlanPricingInventoryEngine = new PlanPricingInventoryEngineTestClass(
                 _DataRepositoryFactoryMock.Object,
@@ -130,7 +139,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan, programs, planFlightDays);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -170,7 +179,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan, programs, planFlightDays);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -209,7 +218,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan, programs, planFlightDays);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -288,7 +297,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan, programs, planFlightDays);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -365,7 +374,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan, programs, planFlightDays);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -442,7 +451,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan, programs, planFlightDays);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -518,7 +527,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan, programs, planFlightDays);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -589,7 +598,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 EndTimeSeconds = 39599 // 11am
             });
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan, programs, planFlightDays);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -758,7 +767,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan, programs, planFlightDays);
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -1121,12 +1130,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 Sunday = true
             };
             var planFlightDateRanges = _GetPlanFlightDateRanges();
-            var plan = new PlanDto
-            {
-                FlightDays = new List<int> { 1, 3, 5, 7 }
-            };
+            var flightDays = new List<int> { 1, 3, 5, 7 };
 
-            var result = _PlanPricingInventoryEngine.UT_GetPlanDaypartDaysFromPlanFlight(plan, planFlightDateRanges);
+            var result = _PlanPricingInventoryEngine.UT_GetPlanDaypartDaysFromPlanFlight(flightDays, planFlightDateRanges);
 
             Assert.AreEqual(expectedDaypart, result);
         }
@@ -1230,7 +1236,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             };
             var fallbackDateRanges = new List<DateRange>() { flightDateRanges[0] };
             var availableMarkets = new List<short> { 1,2,3,4,5 };
-            var availableStations = _GetAvailableStations(marketCount, stationPerMarketCount);
+            var availableStations = StationsTestData.GetStations(marketCount, stationPerMarketCount);
 
             var inventory = availableStations.Select(s =>
                    new PlanPricingInventoryProgram
@@ -1308,7 +1314,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var fallbackDateRanges = new List<DateRange>() { flightDateRanges[0] };
 
             var availableMarkets = new List<short> { 1, 2, 3, 4, 5 };
-            var availableStations = _GetAvailableStations(marketCount, stationPerMarketCount);
+            var availableStations = StationsTestData.GetStations(marketCount, stationPerMarketCount);
 
             var inventoryOne = new List<PlanPricingInventoryProgram>
             {
@@ -1454,7 +1460,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var fallbackDateRanges = new List<DateRange>() { flightDateRanges[0] };
 
             var availableMarkets = new List<short> { 1, 2, 3, 4, 5 };
-            var availableStations = _GetAvailableStations(marketCount, stationPerMarketCount);
+            var availableStations = StationsTestData.GetStations(marketCount, stationPerMarketCount);
 
             var inventoryOne = new List<PlanPricingInventoryProgram>
             {
@@ -1597,7 +1603,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             };
             var fallbackDateRanges = new List<DateRange>() { flightDateRanges[0] };
             var availableMarkets = new List<short> { 1, 2, 3, 4, 5 };
-            var availableStations = _GetAvailableStations(marketCount, stationPerMarketCount);
+            var availableStations = StationsTestData.GetStations(marketCount, stationPerMarketCount);
 
             var inventoryOne = new List<PlanPricingInventoryProgram>
             {
@@ -1655,23 +1661,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 var expectedCount = station.LegacyCallLetters == availableStations[5].LegacyCallLetters ? 0 : 1;
                 Assert.AreEqual(expectedCount, result.Count(i => i.Station.LegacyCallLetters == station.LegacyCallLetters));
             }
-        }
-
-        private List<DisplayBroadcastStation> _GetAvailableStations(int marketCount, int stationsPerMarket)
-        {
-            var availableStations = new List<DisplayBroadcastStation>();
-            var stationId = 0;
-
-            for (var i = 1; i <= marketCount; i++)
-            {
-                for (var j = 1; j <= stationsPerMarket; j++)
-                {
-                    var stationName = $"ST{(++stationId).ToString().PadLeft(2, '0')}";
-                    availableStations.Add(new DisplayBroadcastStation { Id = stationId, LegacyCallLetters = stationName, MarketCode = j });
-                }
-            }
-
-            return availableStations;
         }
 
         private PlanDto _GetPlan()
@@ -1756,23 +1745,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
         }
-        
-        private List<NtiToNsiConversionRate> _GetNtiToNsiConversionRates()
-        {
-            return new List<NtiToNsiConversionRate>
-            {
-                new NtiToNsiConversionRate
-                {
-                    DaypartDefaultId = 1,
-                    ConversionRate = 0.75
-                },
-                new NtiToNsiConversionRate
-                {
-                    DaypartDefaultId = 2,
-                    ConversionRate = 0.85
-                }
-            };
-        }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
@@ -1823,7 +1795,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             new PlanPricingInventoryProgram.ManifestDaypart
                             {
                                 Id = 5,
-                                Daypart = new DisplayDaypart()
+                                Daypart = new DisplayDaypart(),
+                                PrimaryProgramId = 0,
+                                Programs = new List<BasePlanPricingInventoryProgram.ManifestDaypart.Program>
+                                {
+                                    new BasePlanPricingInventoryProgram.ManifestDaypart.Program()
+                                }
                             }
                         },
                         ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
@@ -1962,7 +1939,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             new PlanPricingInventoryProgram.ManifestDaypart
                             {
                                 Id = 5,
-                                Daypart = new DisplayDaypart()
+                                Daypart = new DisplayDaypart(),
+                                PrimaryProgramId = 0,
+                                Programs = new List<BasePlanPricingInventoryProgram.ManifestDaypart.Program>
+                                {
+                                    new BasePlanPricingInventoryProgram.ManifestDaypart.Program()
+                                }
                             }
                         },
                         ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
@@ -2109,7 +2091,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 new PlanPricingInventoryProgram.ManifestDaypart
                                 {
                                     Id = 5,
-                                    Daypart = new DisplayDaypart()
+                                    Daypart = new DisplayDaypart(),
+                                    PrimaryProgramId = 0,
+                                    Programs = new List<BasePlanPricingInventoryProgram.ManifestDaypart.Program>
+                                    {
+                                        new BasePlanPricingInventoryProgram.ManifestDaypart.Program()
+                                    }
                                 }
                             },
                             ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
@@ -2261,7 +2248,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 new PlanPricingInventoryProgram.ManifestDaypart
                                 {
                                     Id = 5,
-                                    Daypart = new DisplayDaypart()
+                                    Daypart = new DisplayDaypart(),
+                                    PrimaryProgramId = 0,
+                                    Programs = new List<BasePlanPricingInventoryProgram.ManifestDaypart.Program>
+                                    {
+                                        new BasePlanPricingInventoryProgram.ManifestDaypart.Program()
+                                    }
                                 }
                             },
                             ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
@@ -2413,7 +2405,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 new PlanPricingInventoryProgram.ManifestDaypart
                                 {
                                     Id = 5,
-                                    Daypart = new DisplayDaypart()
+                                    Daypart = new DisplayDaypart(),
+                                    PrimaryProgramId = 2,
+                                    Programs = new List<BasePlanPricingInventoryProgram.ManifestDaypart.Program>
+                                    {
+                                        new BasePlanPricingInventoryProgram.ManifestDaypart.Program()
+                                        {
+                                            Id = 2
+                                        }
+                                    }
                                 }
                             },
                             ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
@@ -2565,7 +2565,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 new PlanPricingInventoryProgram.ManifestDaypart
                                 {
                                     Id = 5,
-                                    Daypart = new DisplayDaypart()
+                                    Daypart = new DisplayDaypart(),
+                                    PrimaryProgramId = 0,
+                                    Programs = new List<BasePlanPricingInventoryProgram.ManifestDaypart.Program> 
+                                    { 
+                                        new BasePlanPricingInventoryProgram.ManifestDaypart.Program() 
+                                    }
                                 }
                             },
                             ManifestRates = new List<PlanPricingInventoryProgram.ManifestRate>
@@ -2658,6 +2663,357 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             {
                 StubbedConfigurationWebApiClient.RunTimeParameters["PlanPricingEndpointVersion"] = "2";
             }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetsInventoryForQuoteFileGeneration()
+        {
+            // Arrange
+            var request = new QuoteRequestDto
+            {
+                Margin = 20,
+                Equivalized = true,
+                HUTBookId = 101,
+                ShareBookId = 102,
+                PostingType = PostingTypeEnum.NTI,
+                AudienceId = 12,
+                SecondaryAudiences = new List<PlanAudienceDto>
+                {
+                    new PlanAudienceDto
+                    {
+                        AudienceId = 13
+                    }
+                },
+                FlightStartDate = new DateTime(2020, 1, 1),
+                FlightEndDate = new DateTime(2020, 1, 14),
+                FlightHiatusDays = new List<DateTime> 
+                { 
+                    new DateTime(2020, 1, 5),
+                    new DateTime(2020, 1, 10)
+                },
+                CreativeLengths = new List<CreativeLength>
+                {
+                    new CreativeLength
+                    {
+                        SpotLengthId = 2
+                    },
+                    new CreativeLength
+                    {
+                        SpotLengthId = 3
+                    }
+                },
+                FlightDays = new List<int> { 1, 3, 5 },
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypartDto
+                    {
+                        DaypartCodeId = 1,
+                        StartTimeSeconds = 1800, // 12:30am
+                        EndTimeSeconds = 5399, // 1:30am
+                        Restrictions = new PlanDaypartDto.RestrictionsDto
+                        {
+                            ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                            {
+                                Programs = new List<ProgramDto>
+                                {
+                                    new ProgramDto
+                                    {
+                                        Name = "Program B"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    new PlanDaypartDto
+                    {
+                        DaypartCodeId = 2,
+                        StartTimeSeconds = 72000, // 8pm
+                        EndTimeSeconds = 79199, // 10pm
+                        Restrictions = new PlanDaypartDto.RestrictionsDto
+                        {
+                            ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                            {
+                                Programs = new List<ProgramDto>
+                                {
+                                    new ProgramDto
+                                    {
+                                        Name = "Program B"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            _InventoryRepositoryMock
+                .Setup(x => x.GetInventorySources())
+                .Returns(InventoryTestData.GetInventorySources());
+            
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestTop100MarketCoverages())
+                .Returns(MarketsTestData.GetTop100Markets());
+
+            var parametersGetBroadcastStationsWithLatestDetailsByMarketCodes = new List<object>();
+            _StationRepositoryMock
+                .Setup(x => x.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
+                .Returns(StationsTestData.GetStations(2, 3))
+                .Callback((List<short> marketCodes) => parametersGetBroadcastStationsWithLatestDetailsByMarketCodes.Add(marketCodes));
+
+            var parametersGetProgramsForQuoteReport = new List<object>();
+            _StationProgramRepositoryMock
+                .Setup(x => x.GetProgramsForQuoteReport(
+                    It.IsAny<DateTime>(),
+                    It.IsAny<DateTime>(),
+                    It.IsAny<List<int>>(),
+                    It.IsAny<IEnumerable<int>>(),
+                    It.IsAny<List<int>>()))
+                .Callback((DateTime startDate,
+                           DateTime endDate,
+                           List<int> spotLengthIds,
+                           IEnumerable<int> inventorySourceIds,
+                           List<int> stationIds) =>
+                {
+                    // deep copy
+                    parametersGetProgramsForQuoteReport.Add(JsonConvert.DeserializeObject(JsonConvert.SerializeObject(new
+                    {
+                        startDate,
+                        endDate,
+                        spotLengthIds,
+                        inventorySourceIds,
+                        stationIds
+                    })));
+                })
+                .Returns(new List<QuoteProgram>
+                {
+                    new QuoteProgram
+                    {
+                        ManifestId = 1,
+                        Station = StationsTestData.GetStation(1),
+                        ManifestDayparts = new List<QuoteProgram.ManifestDaypart>
+                        {
+                            new QuoteProgram.ManifestDaypart
+                            {
+                                PrimaryProgramId = 2,
+                                Daypart = new DisplayDaypart { Id = 1 },
+                                Programs = new List<QuoteProgram.ManifestDaypart.Program>
+                                {
+                                    new QuoteProgram.ManifestDaypart.Program
+                                    {
+                                        Id = 1,
+                                        Name = "Program A"
+                                    },
+                                    new QuoteProgram.ManifestDaypart.Program
+                                    {
+                                        Id = 2,
+                                        Name = "Program B"
+                                    }
+                                }
+                            }
+                        },
+                        ManifestRates = new List<QuoteProgram.ManifestRate>
+                        {
+                            new QuoteProgram.ManifestRate
+                            {
+                                Cost = 15
+                            }
+                        }
+                    },
+                    new QuoteProgram
+                    {
+                        ManifestId = 2,
+                        Station = StationsTestData.GetStation(2),
+                        ManifestDayparts = new List<QuoteProgram.ManifestDaypart>
+                        {
+                            new QuoteProgram.ManifestDaypart
+                            {
+                                PrimaryProgramId = 1,
+                                Daypart = new DisplayDaypart { Id = 2 },
+                                Programs = new List<QuoteProgram.ManifestDaypart.Program>
+                                {
+                                    new QuoteProgram.ManifestDaypart.Program
+                                    {
+                                        Id = 1,
+                                        Name = "Program C"
+                                    }
+                                }
+                            }
+                        },
+                        ManifestRates = new List<QuoteProgram.ManifestRate>
+                        {
+                            new QuoteProgram.ManifestRate
+                            {
+                                Cost = 15
+                            }
+                        }
+                    },
+                    new QuoteProgram
+                    {
+                        ManifestId = 3,
+                        Station = StationsTestData.GetStation(3),
+                        ManifestDayparts = new List<QuoteProgram.ManifestDaypart>
+                        {
+                            new QuoteProgram.ManifestDaypart
+                            {
+                                PrimaryProgramId = 1,
+                                Daypart = new DisplayDaypart { Id = 3 },
+                                Programs = new List<QuoteProgram.ManifestDaypart.Program>
+                                {
+                                    new QuoteProgram.ManifestDaypart.Program
+                                    {
+                                        Id = 1,
+                                        Name = "Program D"
+                                    }
+                                }
+                            }
+                        },
+                        ManifestRates = new List<QuoteProgram.ManifestRate>
+                        {
+                            new QuoteProgram.ManifestRate
+                            {
+                                Cost = 15
+                            }
+                        }
+                    },
+                    new QuoteProgram
+                    {
+                        ManifestId = 4,
+                        Station = StationsTestData.GetStation(3),
+                        ManifestDayparts = new List<QuoteProgram.ManifestDaypart>
+                        {
+                            new QuoteProgram.ManifestDaypart
+                            {
+                                PrimaryProgramId = 1,
+                                Daypart = new DisplayDaypart { Id = 4 },
+                                Programs = new List<QuoteProgram.ManifestDaypart.Program>
+                                {
+                                    new QuoteProgram.ManifestDaypart.Program
+                                    {
+                                        Id = 1,
+                                        Name = "Program D"
+                                    }
+                                }
+                            }
+                        },
+                        ManifestRates = new List<QuoteProgram.ManifestRate>
+                        {
+                            new QuoteProgram.ManifestRate
+                            {
+                                Cost = 15
+                            }
+                        }
+                    },
+                    new QuoteProgram
+                    {
+                        ManifestId = 5,
+                        Station = StationsTestData.GetStation(2),
+                        ManifestDayparts = new List<QuoteProgram.ManifestDaypart>
+                        {
+                            new QuoteProgram.ManifestDaypart
+                            {
+                                PrimaryProgramId = 1,
+                                Daypart = new DisplayDaypart { Id = 1 },
+                                Programs = new List<QuoteProgram.ManifestDaypart.Program>
+                                {
+                                    new QuoteProgram.ManifestDaypart.Program
+                                    {
+                                        Id = 1,
+                                        Name = "Program B"
+                                    }
+                                }
+                            }
+                        },
+                        ManifestRates = new List<QuoteProgram.ManifestRate>
+                        {
+                            new QuoteProgram.ManifestRate
+                            {
+                                Cost = 15
+                            }
+                        }
+                    },
+                });
+
+            _DaypartCacheMock
+                .Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                .Returns((int daypartId) => DaypartsTestData.GetDisplayDaypart(daypartId));
+
+            var parametersGetLatestStationMonthDetailsForStations = new List<object>();
+            _StationRepositoryMock
+                .Setup(x => x.GetLatestStationMonthDetailsForStations(It.IsAny<List<int>>()))
+                .Callback((List<int> stationsIds) => parametersGetLatestStationMonthDetailsForStations.Add(stationsIds))
+                .Returns(new List<StationMonthDetailDto>
+                {
+                    new StationMonthDetailDto
+                    {
+                        StationId = 1,
+                        Affiliation = "NBC latest",
+                        MarketCode = 100
+                    }
+                });
+
+            var parametersApplyProjectedImpressions = new List<object>();
+            _ImpressionsCalculationEngineMock
+                .Setup(x => x.ApplyProjectedImpressions(It.IsAny<IEnumerable<QuoteProgram>>(), It.IsAny<ImpressionsRequestDto>(), It.IsAny<List<int>>()))
+                .Callback((
+                    IEnumerable<QuoteProgram> programs,
+                    ImpressionsRequestDto impressionsRequest,
+                    List<int> audienceIds) =>
+                {
+                    // deep copy
+                    parametersApplyProjectedImpressions.Add(JsonConvert.DeserializeObject(JsonConvert.SerializeObject(new
+                    {
+                        programs,
+                        impressionsRequest,
+                        audienceIds
+                    })));
+
+                    foreach (var program in programs)
+                    {
+                        foreach (var audienceId in audienceIds)
+                        {
+                            program.DeliveryPerAudience.Add(new QuoteProgram.ImpressionsPerAudience
+                            {
+                                AudienceId = audienceId,
+                                ProjectedImpressions = (audienceId + program.ManifestId) * 1000
+                            });
+                        }
+                    }
+                });
+
+            var parametersApplyProvidedImpressions = new List<object>();
+            _ImpressionsCalculationEngineMock
+                .Setup(x => x.ApplyProvidedImpressions(It.IsAny<List<QuoteProgram>>(), It.IsAny<int>(), It.IsAny<bool>()))
+                .Callback((
+                    List<QuoteProgram> programs,
+                    int spotLengthId,
+                    bool equivalized) =>
+                {
+                    parametersApplyProvidedImpressions.Add(JsonConvert.DeserializeObject(JsonConvert.SerializeObject(new
+                    {
+                        programs,
+                        spotLengthId,
+                        equivalized
+                    })));
+
+                    programs.First().DeliveryPerAudience.ForEach(x => x.ProvidedImpressions = x.ProjectedImpressions * 1.1);
+                });
+
+            // Act
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForQuote(request);
+
+            // Assert
+            var resultJson = IntegrationTestHelper.ConvertToJson(new
+            {
+                inventory,
+                parametersGetBroadcastStationsWithLatestDetailsByMarketCodes,
+                parametersGetProgramsForQuoteReport,
+                parametersGetLatestStationMonthDetailsForStations,
+                parametersApplyProjectedImpressions,
+                parametersApplyProvidedImpressions
+            });
+
+            Approvals.Verify(resultJson);
         }
     }
 }

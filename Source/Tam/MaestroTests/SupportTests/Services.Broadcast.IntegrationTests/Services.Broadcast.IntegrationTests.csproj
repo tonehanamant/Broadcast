@@ -465,6 +465,11 @@
     <Compile Include="ApplicationServices\ProgramScrubbingEngineTests.cs" />
     <Compile Include="Stubs\TrafficApiCacheStub.cs" />
     <Compile Include="Stubs\TrafficApiClientStub.cs" />
+    <Compile Include="TestData\ConversionTestData.cs" />
+    <Compile Include="TestData\DaypartsTestData.cs" />
+    <Compile Include="TestData\InventoryTestData.cs" />
+    <Compile Include="TestData\MarketsTestData.cs" />
+    <Compile Include="TestData\StationsTestData.cs" />
     <Compile Include="UnitTests\ApplicationServices\HealthServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\HealthServiceUnitTestClass.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryExportServiceUnitTests.cs" />

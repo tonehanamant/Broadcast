@@ -1,5 +1,4 @@
-﻿using Common.Services.WebComponents;
-using Services.Broadcast.ApplicationServices;
+﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities.Plan.Pricing;
 using System;
 using System.Collections.Generic;
@@ -8,6 +7,9 @@ using Services.Broadcast.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Web.Common;
+using Tam.Maestro.Services.Cable.Security;
+using Tam.Maestro.Data.Entities;
+using Services.Broadcast.Entities.QuoteReport;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -141,6 +143,21 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<PlanPricingStationResultDto> GetStations(int planId)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetStations(planId));
+        }
+
+        /// <summary>
+        /// Generates the report with OpenMarket inventory prices.
+        /// </summary>
+        /// <returns>Identifier of the generated report</returns>
+        [HttpPost]
+        [Route("RunQuote")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
+        public BaseResponse<Guid> RunQuote([FromBody]QuoteRequestDto request)
+        {
+            var appDataPath = _GetAppDataPath();
+            var fullName = _GetCurrentUserFullName();
+
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().RunQuote(request, fullName, appDataPath));
         }
     }
 }

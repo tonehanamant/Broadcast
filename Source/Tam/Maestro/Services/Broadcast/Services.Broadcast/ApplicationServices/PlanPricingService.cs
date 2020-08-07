@@ -1,7 +1,5 @@
-﻿using Common.Services;
-using Common.Services.ApplicationServices;
+﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
-using EntityFrameworkMapping.Broadcast;
 using Hangfire;
 using Newtonsoft.Json.Bson;
 using Services.Broadcast.BusinessEngines;
@@ -12,14 +10,17 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.PlanPricing;
+using Services.Broadcast.Entities.QuoteReport;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.ReportGenerators.PricingResults;
+using Services.Broadcast.ReportGenerators.Quote;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -149,6 +150,8 @@ namespace Services.Broadcast.ApplicationServices
         [Queue("savepricingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void SavePricingRequest(int planId, PlanPricingApiRequestDto_v3 pricingApiRequest);
+
+        Guid RunQuote(QuoteRequestDto request, string userName, string templatesFilePath);
     }
 
     public class PlanPricingService : BroadcastBaseClass, IPlanPricingService
@@ -156,14 +159,12 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IPlanRepository _PlanRepository;
         private readonly IPlanPricingInventoryEngine _PlanPricingInventoryEngine;
         private readonly ISpotLengthEngine _SpotLengthEngine;
-        private readonly ISpotLengthRepository _SpotLengthRepository;
         private readonly IPricingApiClient _PricingApiClient;
         private readonly IInventoryRepository _InventoryRepository;
         private readonly ICampaignRepository _CampaignRepository;
         private readonly IBackgroundJobClient _BackgroundJobClient;
         private readonly IBroadcastLockingManagerApplicationService _LockingManagerApplicationService;
         private readonly IMarketCoverageRepository _MarketCoverageRepository;
-        private readonly IDaypartCache _DaypartCache;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
         private readonly IStationProgramRepository _StationProgramRepository;
@@ -175,6 +176,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IPlanPricingMarketResultsEngine _PlanPricingMarketResultsEngine;
         private readonly IPricingRequestLogClient _PricingRequestLogClient;
         private readonly IPlanValidator _PlanValidator;
+        private readonly ISharedFolderService _SharedFolderService;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -182,7 +184,6 @@ namespace Services.Broadcast.ApplicationServices
                                   IBackgroundJobClient backgroundJobClient,
                                   IPlanPricingInventoryEngine planPricingInventoryEngine,
                                   IBroadcastLockingManagerApplicationService lockingManagerApplicationService,
-                                  IDaypartCache daypartCache,
                                   IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
                                   IDateTimeEngine dateTimeEngine,
                                   IWeeklyBreakdownEngine weeklyBreakdownEngine,
@@ -190,10 +191,10 @@ namespace Services.Broadcast.ApplicationServices
                                   IPlanPricingStationCalculationEngine planPricingStationCalculationEngine,
                                   IPlanPricingMarketResultsEngine planPricingMarketResultsEngine,
                                   IPricingRequestLogClient pricingRequestLogClient,
-                                  IPlanValidator planValidator)
+                                  IPlanValidator planValidator,
+                                  ISharedFolderService sharedFolderService)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
-            _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _CampaignRepository = broadcastDataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _SpotLengthEngine = spotLengthEngine;
@@ -202,7 +203,6 @@ namespace Services.Broadcast.ApplicationServices
             _PlanPricingInventoryEngine = planPricingInventoryEngine;
             _LockingManagerApplicationService = lockingManagerApplicationService;
             _MarketCoverageRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
-            _DaypartCache = daypartCache;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
             _StationProgramRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
@@ -214,6 +214,38 @@ namespace Services.Broadcast.ApplicationServices
             _PlanPricingMarketResultsEngine = planPricingMarketResultsEngine;
             _PricingRequestLogClient = pricingRequestLogClient;
             _PlanValidator = planValidator;
+            _SharedFolderService = sharedFolderService;
+        }
+
+        public Guid RunQuote(QuoteRequestDto request, string userName, string templatesFilePath)
+        {
+            var quoteReportData = GetQuoteReportData(request);
+            var reportGenerator = new QuoteReportGenerator(templatesFilePath);
+            var report = reportGenerator.Generate(quoteReportData);
+
+            return _SharedFolderService.SaveFile(new SharedFolderFile
+            {
+                FolderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.QUOTE_REPORTS),
+                FileNameWithExtension = report.Filename,
+                FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                FileUsage = SharedFolderFileUsage.Quote,
+                CreatedDate = _DateTimeEngine.GetCurrentMoment(),
+                CreatedBy = userName,
+                FileContent = report.Stream
+            });
+        }
+
+        public QuoteReportData GetQuoteReportData(QuoteRequestDto request)
+        {
+            // this should be removed in the story that allows user to enter margin
+            const int defaultMargin = 20;
+
+            request.Margin = defaultMargin;
+
+            var programs = _PlanPricingInventoryEngine.GetInventoryForQuote(request);
+
+            return new QuoteReportData(
+                _DateTimeEngine.GetCurrentMoment());
         }
 
         public ReportOutput GeneratePricingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)
