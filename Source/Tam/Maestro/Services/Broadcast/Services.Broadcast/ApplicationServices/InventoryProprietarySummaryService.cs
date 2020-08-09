@@ -14,7 +14,7 @@ namespace Services.Broadcast.ApplicationServices
 {
 	public interface IInventoryProprietarySummaryService : IApplicationService
 	{
-		[Queue("AggregateInventoryProprietarySummary")]
+		[Queue("aggregateinventoryproprietarysummary")]
 		[AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
 		void AggregateInventoryProprietarySummary(int inventorySourceId, DateTime? startDate, DateTime? endDate);
 	}
