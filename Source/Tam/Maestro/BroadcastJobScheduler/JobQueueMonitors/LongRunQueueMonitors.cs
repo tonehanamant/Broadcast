@@ -43,6 +43,7 @@ namespace BroadcastJobScheduler.JobQueueMonitors
                 "scxfilegeneration",
                 "stationsupdate",
                 "inventorysummaryaggregation",
+                "aggregateinventoryproprietarysummary",
                 "programmappings",
                 "savepricingrequest",
                 "default"
