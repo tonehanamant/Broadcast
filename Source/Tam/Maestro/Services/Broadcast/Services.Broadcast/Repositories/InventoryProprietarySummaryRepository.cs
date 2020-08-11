@@ -154,12 +154,16 @@ namespace Services.Broadcast.Repositories
 						where week.start_date <= endDate && week.end_date >= startDate &&
 						      manifest.inventory_source_id == inventorySource.Id &&
 						      manifestGroup.slot_number == 1
-						group audiences by audiences.audience_id
+						group new { audiences, header } by new
+						{
+							audiences.audience_id,
+							header.daypart_default_id
+						}
 						into g
 						select new InventoryProprietarySummaryAudiencesDto
 						{
-							AudienceId = g.Key,
-							Impressions = g.Sum(a => a.impressions)
+							AudienceId = g.Key.audience_id,
+							Impressions = g.Sum(a => a.audiences.impressions)
 						};
 
 					return query.ToList();
