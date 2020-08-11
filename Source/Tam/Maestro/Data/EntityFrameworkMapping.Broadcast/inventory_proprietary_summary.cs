@@ -24,7 +24,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int inventory_source_id { get; set; }
         public int daypart_default_id { get; set; }
         public int quarter_number { get; set; }
-        public double quarter_year { get; set; }
+        public int quarter_year { get; set; }
         public int unit { get; set; }
         public Nullable<decimal> cpm { get; set; }
         public string created_by { get; set; }

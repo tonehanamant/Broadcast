@@ -23,7 +23,7 @@ namespace EntityFrameworkMapping.Broadcast
         public string modified_by { get; set; }
         public Nullable<System.DateTime> modified_at { get; set; }
     
-        public virtual inventory_proprietary_summary inventory_proprietary_summary { get; set; }
         public virtual market market { get; set; }
+        public virtual inventory_proprietary_summary inventory_proprietary_summary { get; set; }
     }
 }
