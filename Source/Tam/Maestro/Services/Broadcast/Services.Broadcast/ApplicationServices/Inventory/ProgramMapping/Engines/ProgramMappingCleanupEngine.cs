@@ -1,19 +1,15 @@
-﻿using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Services.Broadcast.ApplicationServices.Inventory.ProgramMapping
 {
-
     public interface IProgramMappingCleanupEngine
     {
         string GetCleanProgram(string programName);
     }
+
     public class ProgramMappingCleanupEngine : IProgramMappingCleanupEngine
     {
         public string GetCleanProgram(string programName)
@@ -22,6 +18,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory.ProgramMapping
 
             result = _ApplyRemoval(result);
             result = _ApplyReplacement(result);
+            result = _InvertPrepositions(result);
             result = result.Trim();
 
             return result;
@@ -107,6 +104,25 @@ namespace Services.Broadcast.ApplicationServices.Inventory.ProgramMapping
             return result;
 
 
+        }
+
+        private string _InvertPrepositions(string name)
+        {
+            if (!name.Contains(","))
+                return name;
+
+            var prepositions = new List<string> { ", a", ", an", ", the" };
+
+            foreach (var preposition in prepositions)
+            {
+                if (name.EndsWith(preposition, StringComparison.OrdinalIgnoreCase))
+                {
+                    var position = name.Length - preposition.Length;
+                    return name.Substring(position).Trim(',', ' ') + " " + name.Substring(0, position);
+                }
+            }
+
+            return name;
         }
     }
 }
