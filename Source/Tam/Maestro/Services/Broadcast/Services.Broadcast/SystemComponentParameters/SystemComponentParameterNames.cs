@@ -23,23 +23,10 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		{
             get { return "ImpressionStartOfDayForAdjustment"; }
         }
-	}
 	 
-	public static class BroadcastFeaturesSystemParameterNames
-	{
-		public static string ComponentID
-        {
-            get { return "BroadcastFeatures" ; }
-        }
-	  
-		public static string EnableExportPreBuy  
+		public static string UseDayByDayImpressions  
 		{
-            get { return "EnableExportPreBuy"; }
-        }
-	 
-		public static string EnablePricingInEdit  
-		{
-            get { return "EnablePricingInEdit"; }
+            get { return "UseDayByDayImpressions"; }
         }
 	}
 	 
@@ -63,11 +50,6 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string AgencyAdvertiserBrandApiUrl  
 		{
             get { return "AgencyAdvertiserBrandApiUrl"; }
-        }
-	 
-		public static string AllowMultipleCreativeLengths  
-		{
-            get { return "AllowMultipleCreativeLengths"; }
         }
 	 
 		public static string BroadcastAppFolder  
@@ -123,16 +105,6 @@ namespace Tam.Maestro.Common.SystemComponentParameter
 		public static string DefaultNtiConversionFactor  
 		{
             get { return "DefaultNtiConversionFactor"; }
-        }
-	 
-		public static string DisplayBuyingLink  
-		{
-            get { return "DisplayBuyingLink"; }
-        }
-	 
-		public static string DisplayCampaignLink  
-		{
-            get { return "DisplayCampaignLink"; }
         }
 	 
 		public static string EmailFrom  

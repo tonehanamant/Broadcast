@@ -5,6 +5,11 @@ namespace BroadcastComposerWeb.Controllers
 {
     public class HomeController : ViewControllerBase
     {
+        public HomeController(BroadcastApplicationServiceFactory applicationServiceFactory)
+            :base(applicationServiceFactory)
+        {
+        }
+
         public ActionResult Index()
         {
             return Redirect("/broadcastreact/inventory");

@@ -307,15 +307,6 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 case "InventoryProgramsEngineDeleteBatchSize":
                     result = "1000";
                     break;
-                case "DisplayCampaignLink":
-                    result = "True";
-                    break;
-                case "DisplayBuyingLink":
-                    result = "True";
-                    break;
-                case "AllowMultipleCreativeLengths":
-                    result = "False";
-                    break;
                 case "BroadcastAppFolder":
                     result = @"\\cadfs11\Broadcast\Dev\";
                     break;
@@ -334,17 +325,11 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 case "PricingRequestLogBucketRegion":
                     result = "us-east-1";
                     break;
-                case "EnablePricingInEdit":
-                    result = "false";
-                    break;
                 case "AABCacheExpirationSeconds":
                     result = "300";
                     break;
                 case "ThresholdInSecondsForProgramIntersectInPricing":
                     result = "1800";
-                    break;
-                case "EnableExportPreBuy":
-                    result = "false";
                     break;
                 case "LaunchDarklySdkKey":
                     result = "SecretKeyForLaunchDarklySdkKey";

@@ -23,20 +23,11 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
             get { return SystemComponentParameterHelper.GetPropertyValue<int>
 					(BroadcastComposerWebSystemParameterNames.ComponentID , BroadcastComposerWebSystemParameterNames.ImpressionStartOfDayForAdjustment); }
         }
-	}
 	 
-	public static class BroadcastFeaturesSystemParameter 
-	{ 
-		public static bool EnableExportPreBuy  
+		public static bool UseDayByDayImpressions  
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<bool>
-					(BroadcastFeaturesSystemParameterNames.ComponentID , BroadcastFeaturesSystemParameterNames.EnableExportPreBuy); }
-        }
-	 
-		public static bool EnablePricingInEdit  
-		{
-            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
-					(BroadcastFeaturesSystemParameterNames.ComponentID , BroadcastFeaturesSystemParameterNames.EnablePricingInEdit); }
+					(BroadcastComposerWebSystemParameterNames.ComponentID , BroadcastComposerWebSystemParameterNames.UseDayByDayImpressions); }
         }
 	}
 	 
@@ -58,12 +49,6 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<string>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.AgencyAdvertiserBrandApiUrl); }
-        }
-	 
-		public static bool AllowMultipleCreativeLengths  
-		{
-            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
-					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.AllowMultipleCreativeLengths); }
         }
 	 
 		public static string BroadcastAppFolder  
@@ -130,18 +115,6 @@ namespace Tam.Maestro.Services.Cable.SystemComponentParameters
 		{
             get { return SystemComponentParameterHelper.GetPropertyValue<float>
 					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.DefaultNtiConversionFactor); }
-        }
-	 
-		public static bool DisplayBuyingLink  
-		{
-            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
-					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.DisplayBuyingLink); }
-        }
-	 
-		public static bool DisplayCampaignLink  
-		{
-            get { return SystemComponentParameterHelper.GetPropertyValue<bool>
-					(BroadcastServiceSystemParameterNames.ComponentID , BroadcastServiceSystemParameterNames.DisplayCampaignLink); }
         }
 	 
 		public static string EmailFrom  

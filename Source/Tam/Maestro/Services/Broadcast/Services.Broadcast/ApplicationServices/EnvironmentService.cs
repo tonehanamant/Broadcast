@@ -5,7 +5,6 @@ using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Tam.Maestro.Services.Clients;
 
 namespace Services.Broadcast.ApplicationServices
@@ -73,16 +72,23 @@ namespace Services.Broadcast.ApplicationServices
             return _FeatureToggleHelper.IsToggleEnabledUserAnonymous(key);
         }
 
+        // TODO : Tech-Debt to remove these and have the FE got to LaunchDarkly directly
+        private const string FEATURE_TOGGLE_DISPLAY_CAMPAIGN_LINK = "broadcast-display-campaign-link";
+        private const string FEATURE_TOGGLE_DISPLAY_BUYING_LINK = "broadcast-display-buying-link";
+        private const string FEATURE_TOGGLE_ALLOW_MULTIPLE_CREATIVE_LENGTHS = "broadcast-allow-multiple-creative-lengths";
+        private const string FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT = "broadcast-enable-pricing-in-edit";
+        private const string FEATURE_TOGGLE_ENABLE_EXPORT_PRE_BUY = "broadcast-enable-export-pre-buy";
+
         public EnvironmentDto GetEnvironmentInfo()
         {
             return new EnvironmentDto
             {
                 Environment = new AppSettings().Environment.ToString(),
-                DisplayCampaignLink = BroadcastServiceSystemParameter.DisplayCampaignLink,
-                DisplayBuyingLink = BroadcastServiceSystemParameter.DisplayBuyingLink,
-                AllowMultipleCreativeLengths = BroadcastServiceSystemParameter.AllowMultipleCreativeLengths,
-                EnablePricingInEdit = BroadcastFeaturesSystemParameter.EnablePricingInEdit,
-                EnableExportPreBuy = BroadcastFeaturesSystemParameter.EnableExportPreBuy
+                DisplayCampaignLink = IsFeatureToggleEnabledUserAnonymous(FEATURE_TOGGLE_DISPLAY_CAMPAIGN_LINK),
+                DisplayBuyingLink = IsFeatureToggleEnabledUserAnonymous(FEATURE_TOGGLE_DISPLAY_BUYING_LINK),
+                AllowMultipleCreativeLengths = IsFeatureToggleEnabledUserAnonymous(FEATURE_TOGGLE_ALLOW_MULTIPLE_CREATIVE_LENGTHS),
+                EnablePricingInEdit = IsFeatureToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT),
+                EnableExportPreBuy = IsFeatureToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_EXPORT_PRE_BUY),
             };
         }
     }

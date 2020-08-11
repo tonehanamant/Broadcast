@@ -8,6 +8,11 @@ namespace BroadcastComposerWeb.Controllers
     [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
     public class TrafficController : ViewControllerBase
     {
+        public TrafficController(BroadcastApplicationServiceFactory applicationServiceFactory)
+            : base(applicationServiceFactory)
+        {
+        }
+
         public ActionResult Index()
         {
             return View();
