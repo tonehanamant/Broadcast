@@ -153,8 +153,8 @@ namespace Services.Broadcast.Repositories
 							.station_inventory_manifest_id
 						where week.start_date <= endDate && week.end_date >= startDate &&
 						      manifest.inventory_source_id == inventorySource.Id &&
-						      manifestGroup.slot_number == 1
-						group new { audiences, header } by new
+						      manifestGroup.slot_number == 1 && !audiences.is_reference
+								group new { audiences, header } by new
 						{
 							audiences.audience_id,
 							header.daypart_default_id

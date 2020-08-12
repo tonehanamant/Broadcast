@@ -60,10 +60,6 @@
     "Impressions": 0.0
   },
   {
-    "AudienceId": 37,
-    "Impressions": null
-  },
-  {
     "AudienceId": 46,
     "Impressions": 0.0
   },
