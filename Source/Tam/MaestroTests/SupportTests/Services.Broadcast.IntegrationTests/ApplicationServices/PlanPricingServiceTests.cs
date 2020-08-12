@@ -15,7 +15,12 @@ using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
+using Castle.Components.DictionaryAdapter;
+using Common.Services;
+using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities.QuoteReport;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Unity;
@@ -1024,6 +1029,157 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(request, jsonSettings));
             }
+        }
+
+        [Test]
+        [Category("long_running")]
+        public void RunQuote()
+        {
+            // Arrange
+            const string username = "RunQuoteTestUser";
+            const string templatePath = @".\Files\Excel templates";
+            var request = _GetQuoteRequest();
+
+            var dateTimeEngine = new DateTimeEngineStub();
+            dateTimeEngine.UT_CurrentMoment = new DateTime(2020, 8, 10, 14, 8, 45);
+            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IDateTimeEngine>(dateTimeEngine);
+
+            var fileService = new FileServiceStub();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(fileService);
+
+            var planPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
+
+            // Act
+            using (new TransactionScopeWrapper())
+            {
+                planPricingService.RunQuote(request, username, templatePath);
+            }
+
+            // Assert
+            var savedFile = fileService.CreatedFileStreams;
+            Assert.AreEqual(1, fileService.CreatedFileStreams.Count);
+            var savedContentLength = savedFile.First().Item3.Length;
+            Assert.IsTrue(savedContentLength > 7000);
+        }
+
+        [Test]
+        [Category("long_running")]
+        public void RunQuoteWithEmptyData()
+        {
+            // Arrange
+            const string username = "RunQuoteTestUser";
+            const string templatePath = @".\Files\Excel templates";
+            var request = _GetQuoteRequest();
+            request.FlightStartDate = new DateTime(2020, 9, 21);
+            request.FlightEndDate = new DateTime(2020, 09, 27);
+
+            var dateTimeEngine = new DateTimeEngineStub();
+            dateTimeEngine.UT_CurrentMoment = new DateTime(2020, 8, 10, 14, 8, 45);
+            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IDateTimeEngine>(dateTimeEngine);
+
+            var fileService = new FileServiceStub();
+            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(fileService);
+
+            var planPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
+
+            // Act
+            using (new TransactionScopeWrapper())
+            {
+                planPricingService.RunQuote(request, username, templatePath);
+            }
+
+            // Assert
+            var savedFile = fileService.CreatedFileStreams;
+            Assert.AreEqual(1, fileService.CreatedFileStreams.Count);
+            var savedContentLength = savedFile.First().Item3.Length;
+            Assert.IsTrue(savedContentLength > 6000);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetReportData()
+        {
+            // Arrange
+            var request = _GetQuoteRequest();
+
+            var dateTimeEngine = new DateTimeEngineStub();
+            dateTimeEngine.UT_CurrentMoment = new DateTime(2020, 8, 10, 14, 8, 45);
+            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IDateTimeEngine>(dateTimeEngine);
+
+            var planPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
+
+            // Act
+            var result = ((PlanPricingService)planPricingService).GetQuoteReportData(request);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetReportDataWithEmptyData()
+        {
+            // Arrange
+            var request = _GetQuoteRequest();
+            request.FlightStartDate = new DateTime(2020, 9, 21);
+            request.FlightEndDate = new DateTime(2020, 09, 27);
+
+            var dateTimeEngine = new DateTimeEngineStub();
+            dateTimeEngine.UT_CurrentMoment = new DateTime(2020, 8, 10, 14, 8, 45);
+            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IDateTimeEngine>(dateTimeEngine);
+
+            var planPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
+
+            // Act
+            var result = ((PlanPricingService) planPricingService).GetQuoteReportData(request);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        private static QuoteRequestDto _GetQuoteRequest()
+        {
+            var request = new QuoteRequestDto
+            {
+                FlightStartDate = new DateTime(2018,12,17),
+                FlightEndDate = new DateTime(2018,12,23),
+                FlightHiatusDays = new List<DateTime>(),
+                FlightDays = new List<int> {1,2,3,4,5,6,7},
+                CreativeLengths = new List<CreativeLength> {new CreativeLength {SpotLengthId = 1, Weight = 100 }},
+                Equivalized = true,
+                AudienceId = 31,
+                SecondaryAudiences = new List<PlanAudienceDto>
+                {
+                    new PlanAudienceDto { Type = AudienceTypeEnum.Nielsen, AudienceId = 287 },
+                    new PlanAudienceDto { Type = AudienceTypeEnum.Nielsen, AudienceId = 420 }
+                },
+                PostingType = PostingTypeEnum.NTI,
+                ShareBookId = 437,
+                HUTBookId = 434,
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypartDto
+                    {
+                        DaypartCodeId = 8,
+                        StartTimeSeconds = 0,
+                        EndTimeSeconds = 14400,
+                        Restrictions = new PlanDaypartDto.RestrictionsDto
+                        {
+                            ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto(),
+                            GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto(),
+                            AffiliateRestrictions = new PlanDaypartDto.RestrictionsDto.AffiliateRestrictionsDto(),
+                            ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                            {
+                                ContainType = ContainTypeEnum.Include,
+                                Programs = new List<ProgramDto> {new ProgramDto {Name = "Early news"}}
+                            }
+                        }
+                    }
+                }
+            };
+            return request;
         }
 
         private static PlanPricingParametersDto _GetPricingRequestDto()

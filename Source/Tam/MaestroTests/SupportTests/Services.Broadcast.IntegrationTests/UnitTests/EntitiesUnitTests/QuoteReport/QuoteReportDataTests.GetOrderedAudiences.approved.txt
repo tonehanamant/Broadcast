@@ -1,0 +1,17 @@
+[
+  {
+    "Code": "HH",
+    "Display": "Households",
+    "Id": 31
+  },
+  {
+    "Code": "M25-64",
+    "Display": "Men 25-64",
+    "Id": 287
+  },
+  {
+    "Code": "C2-11",
+    "Display": "Children 2-11",
+    "Id": 420
+  }
+]

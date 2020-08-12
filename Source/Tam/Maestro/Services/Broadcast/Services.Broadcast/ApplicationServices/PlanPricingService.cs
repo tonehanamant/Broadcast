@@ -1,7 +1,6 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Hangfire;
-using Newtonsoft.Json.Bson;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.PlanPricing;
 using Services.Broadcast.Clients;
@@ -9,7 +8,6 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
-using Services.Broadcast.Entities.PlanPricing;
 using Services.Broadcast.Entities.QuoteReport;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Extensions;
@@ -177,6 +175,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IPricingRequestLogClient _PricingRequestLogClient;
         private readonly IPlanValidator _PlanValidator;
         private readonly ISharedFolderService _SharedFolderService;
+        private readonly IAudienceService _AudienceService;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -192,7 +191,8 @@ namespace Services.Broadcast.ApplicationServices
                                   IPlanPricingMarketResultsEngine planPricingMarketResultsEngine,
                                   IPricingRequestLogClient pricingRequestLogClient,
                                   IPlanValidator planValidator,
-                                  ISharedFolderService sharedFolderService)
+                                  ISharedFolderService sharedFolderService,
+                                  IAudienceService audienceService)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -215,15 +215,18 @@ namespace Services.Broadcast.ApplicationServices
             _PricingRequestLogClient = pricingRequestLogClient;
             _PlanValidator = planValidator;
             _SharedFolderService = sharedFolderService;
+            _AudienceService = audienceService;
         }
 
         public Guid RunQuote(QuoteRequestDto request, string userName, string templatesFilePath)
         {
             var quoteReportData = GetQuoteReportData(request);
             var reportGenerator = new QuoteReportGenerator(templatesFilePath);
+
+            _LogInfo($"Starting to generate the file '{quoteReportData.ExportFileName}'....");
             var report = reportGenerator.Generate(quoteReportData);
 
-            return _SharedFolderService.SaveFile(new SharedFolderFile
+            var savedFileGuid = _SharedFolderService.SaveFile(new SharedFolderFile
             {
                 FolderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.QUOTE_REPORTS),
                 FileNameWithExtension = report.Filename,
@@ -233,19 +236,28 @@ namespace Services.Broadcast.ApplicationServices
                 CreatedBy = userName,
                 FileContent = report.Stream
             });
+
+            _LogInfo($"Saved file '{quoteReportData.ExportFileName}' with guid '{savedFileGuid}'");
+
+            return savedFileGuid;
         }
 
-        public QuoteReportData GetQuoteReportData(QuoteRequestDto request)
+        internal QuoteReportData GetQuoteReportData(QuoteRequestDto request)
         {
             // this should be removed in the story that allows user to enter margin
             const int defaultMargin = 20;
-
             request.Margin = defaultMargin;
 
+            var generatedTimeStamp = _DateTimeEngine.GetCurrentMoment();
+            var allAudiences = _AudienceService.GetAudiences();
+            var allMarkets = _MarketCoverageRepository.GetMarketsWithLatestCoverage();
+            
+            _LogInfo("Starting to gather inventory...");
             var programs = _PlanPricingInventoryEngine.GetInventoryForQuote(request);
-
-            return new QuoteReportData(
-                _DateTimeEngine.GetCurrentMoment());
+            _LogInfo($"Finished gather inventory.  Gathered {programs.Count} programs.");
+            
+            var reportData = new QuoteReportData(request, generatedTimeStamp, allAudiences, allMarkets, programs);
+            return reportData;
         }
 
         public ReportOutput GeneratePricingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)

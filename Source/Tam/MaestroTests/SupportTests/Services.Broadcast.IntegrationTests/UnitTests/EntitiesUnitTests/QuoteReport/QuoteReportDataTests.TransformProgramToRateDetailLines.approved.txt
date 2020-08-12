@@ -1,0 +1,34 @@
+[
+  {
+    "Affiliate": "PBS",
+    "DaypartName": "M-SU 12AM-1AM",
+    "MarketName": "New York",
+    "PlanAudiences": [
+      {
+        "AudienceId": 31,
+        "CPM": 10.5,
+        "Impressions": 2000.0,
+        "IsHouseHolds": true,
+        "IsPrimaryDemo": true
+      },
+      {
+        "AudienceId": 287,
+        "CPM": 20.5,
+        "Impressions": 4000.0,
+        "IsHouseHolds": false,
+        "IsPrimaryDemo": false
+      },
+      {
+        "AudienceId": 420,
+        "CPM": 30.5,
+        "Impressions": 6000.0,
+        "IsHouseHolds": false,
+        "IsPrimaryDemo": false
+      }
+    ],
+    "ProgramName": "Test Program",
+    "SpotCost": 37.5,
+    "SpotsAllocated": 1,
+    "StationCallsign": "WHYY"
+  }
+]

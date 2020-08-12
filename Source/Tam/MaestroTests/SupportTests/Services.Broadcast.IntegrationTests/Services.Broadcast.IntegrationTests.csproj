@@ -445,6 +445,7 @@
     <Compile Include="Repositories\PostRepositoryTests.cs" />
     <Compile Include="Repositories\StationRepositoryTests.cs" />
     <Compile Include="Stubs\DataLakeFileServiceStub.cs" />
+    <Compile Include="Stubs\DateTimeEngineStub.cs" />
     <Compile Include="Stubs\FileServiceStub.cs" />
     <Compile Include="Stubs\GenreCacheStub.cs" />
     <Compile Include="Stubs\ImpersonateUserStub.cs" />
@@ -465,6 +466,7 @@
     <Compile Include="ApplicationServices\ProgramScrubbingEngineTests.cs" />
     <Compile Include="Stubs\TrafficApiCacheStub.cs" />
     <Compile Include="Stubs\TrafficApiClientStub.cs" />
+    <Compile Include="TestData\AudienceTestData.cs" />
     <Compile Include="TestData\ConversionTestData.cs" />
     <Compile Include="TestData\DaypartsTestData.cs" />
     <Compile Include="TestData\InventoryTestData.cs" />
@@ -522,6 +524,7 @@
     <Compile Include="UnitTests\Converters\VpvhFileImporterUnitTests.cs" />
     <Compile Include="UnitTests\DaytimeCleanupServiceTests.cs" />
     <Compile Include="UnitTests\EntitiesUnitTests\ProgramLineupReportDataUnitTest.cs" />
+    <Compile Include="UnitTests\EntitiesUnitTests\QuoteReport\QuoteReportDataTests.cs" />
     <Compile Include="UnitTests\Extensions\AAAAMessageProposalAvailListAvailLineWithDetailedPeriodsPeriodsExtensionsUnitTests.cs" />
     <Compile Include="UnitTests\Extensions\AudienceExtensionsUnitTests.cs" />
     <Compile Include="UnitTests\Extensions\DateTimeExtensionsUnitTests.cs" />
@@ -641,6 +644,9 @@
     <None Include="Files\Excel templates\Template - Open Market inventory.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="Files\Excel templates\Template - PlanQuote.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Files\Excel templates\Template - Program Lineup.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

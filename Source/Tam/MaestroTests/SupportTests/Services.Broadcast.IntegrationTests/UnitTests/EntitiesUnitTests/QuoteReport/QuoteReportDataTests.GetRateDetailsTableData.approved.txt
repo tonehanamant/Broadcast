@@ -1,0 +1,19 @@
+[
+  [
+    "Test Program",
+    "M-SU 12AM-1AM",
+    "WHYY",
+    "New York",
+    "PBS",
+    10.5,
+    10.5,
+    20.5,
+    30.5,
+    1,
+    null,
+    null,
+    null,
+    37.5,
+    2000.0
+  ]
+]

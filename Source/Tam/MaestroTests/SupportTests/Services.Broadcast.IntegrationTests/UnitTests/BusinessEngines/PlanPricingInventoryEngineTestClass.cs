@@ -36,7 +36,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             List<PlanPricingInventoryProgram> programs,
             DisplayDaypart planDisplayDaypartDays)
         {
-            return FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(dayparts, programs, planDisplayDaypartDays);
+            return FilterProgramsByDaypartAndSetStandardDaypart(dayparts, programs, planDisplayDaypartDays);
         }
 
         public List<PlanPricingInventoryProgram> UT_FilterProgramsByMinAndMaxCPM(

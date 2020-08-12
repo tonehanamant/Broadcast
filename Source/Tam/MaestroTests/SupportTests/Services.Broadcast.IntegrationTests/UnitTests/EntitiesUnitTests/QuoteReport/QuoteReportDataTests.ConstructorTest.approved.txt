@@ -1,0 +1,30 @@
+{
+  "ExportFileName": "PlanQuote_08112020_152345.xlsx",
+  "GeneratedTimeStamp": "2020-08-11T15:23:45",
+  "RateDetailsTableAudienceHeaders": [
+    [
+      "Households CPM",
+      "Men 25-64 CPM",
+      "Children 2-11 CPM"
+    ]
+  ],
+  "RateDetailsTableData": [
+    [
+      "Test Program",
+      "M-SU 12AM-1AM",
+      "WHYY",
+      "New York",
+      "PBS",
+      10.5,
+      10.5,
+      20.5,
+      30.5,
+      1,
+      null,
+      null,
+      null,
+      37.5,
+      2000.0
+    ]
+  ]
+}

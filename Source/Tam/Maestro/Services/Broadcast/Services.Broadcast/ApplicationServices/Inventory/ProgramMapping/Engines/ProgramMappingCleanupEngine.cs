@@ -67,7 +67,6 @@ namespace Services.Broadcast.ApplicationServices.Inventory.ProgramMapping
                 }
                 catch(Exception e)
                 {
-                    result = result;
                     Debug.WriteLine(e);
                 }
             }

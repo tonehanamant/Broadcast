@@ -15,6 +15,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation.Internal;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -101,14 +102,14 @@ namespace Services.Broadcast.BusinessEngines
                 .Select(x => (short)x.Key)
                 .ToList();
 
-            var programs = _GetPrograms(
+            var foundPrograms = _GetPrograms(
                 flightDateRanges,
                 inventorySourceIds,
                 spotLengthIds,
                 marketCodes);
 
             _PrepareRestrictionsForQuote(request.Dayparts);
-            programs = FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(request.Dayparts, programs, daypartDays);
+            var programs = FilterProgramsByDaypartAndSetStandardDaypart(request.Dayparts, foundPrograms, daypartDays);
 
             _SetProgramsFlightDays(programs, request.FlightDays);
             _ApplyProjectedImpressions(programs, request);
@@ -170,7 +171,7 @@ namespace Services.Broadcast.BusinessEngines
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FETCHING_INVENTORY_FROM_DB);
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_DAYPARTS_AND_ASSOCIATING_WITH_STANDARD_DAYPART);
-            programs = FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan.Dayparts, programs, daypartDays);
+            programs = FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, daypartDays);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_DAYPARTS_AND_ASSOCIATING_WITH_STANDARD_DAYPART);
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_APPLYING_INFLATION_FACTOR);
@@ -203,11 +204,16 @@ namespace Services.Broadcast.BusinessEngines
 
         private void _SetProgramDayparts<T>(List<T> programs) where T: BasePlanPricingInventoryProgram
         {
+            var daypartIds = programs.SelectMany(p => p.ManifestDayparts)
+                .Select(m => m.Daypart.Id)
+                .Distinct().ToList();
+            var cachedDayparts = _DaypartCache.GetDisplayDayparts(daypartIds);
+            
             foreach (var program in programs)
             {
                 foreach (var programDaypart in program.ManifestDayparts)
                 {
-                    programDaypart.Daypart = _DaypartCache.GetDisplayDaypart(programDaypart.Daypart.Id);
+                    programDaypart.Daypart = cachedDayparts[programDaypart.Daypart.Id];
                 }
             }
         }
@@ -603,7 +609,7 @@ namespace Services.Broadcast.BusinessEngines
         /// When we start using other sources, the PlanPricingInventoryProgram model structure should be reviewed
         /// Other sources may have more than 1 daypart that this logic does not assume
         /// </summary>
-        protected List<T> FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart<T>(
+        protected List<T> FilterProgramsByDaypartAndSetStandardDaypart<T>(
             List<PlanDaypartDto> dayparts,
             List<T> programs,
             DisplayDaypart planDays) where T: BasePlanPricingInventoryProgram
@@ -612,10 +618,9 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach (var program in programs)
             {
-                var planDayparts = _GetPlanDaypartsThatMatchProgramByTimeAndDays(dayparts, planDays, program);
-                planDayparts = _GetPlanDaypartsThatMatchProgramByRestrictions(planDayparts, program);
-
-                var planDaypartWithMostIntersectingTime = _FindPlanDaypartWithMostIntersectingTime(planDayparts);
+                var planDaypartsMatchedByTimeAndDays = _GetPlanDaypartsThatMatchProgramByTimeAndDays(dayparts, planDays, program);
+                var planDaypartsMatchByRestrictions = _GetPlanDaypartsThatMatchProgramByRestrictions(planDaypartsMatchedByTimeAndDays, program);
+                var planDaypartWithMostIntersectingTime = _FindPlanDaypartWithMostIntersectingTime(planDaypartsMatchByRestrictions);
 
                 if (planDaypartWithMostIntersectingTime != null)
                 {
