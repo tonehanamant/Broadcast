@@ -75,17 +75,22 @@ namespace Services.Broadcast.ApplicationServices
         ///<inheritdoc/>
         public List<LookupDto> GetHUTBooks(int shareBookId)
         {
+            var MonthsInAYear = 12;
             var shareBookDate = _MediaMonths.Single(b => b.Id == shareBookId).StartDate;
 
-            var currentQuarter = _QuartersEngine.GetQuarterRangeByDate(shareBookDate);
-            var lastYearQuarter = _QuartersEngine.GetQuarterDetail(currentQuarter.Quarter, shareBookDate.Year - 1);
+            //var currentQuarter = _QuartersEngine.GetQuarterRangeByDate(shareBookDate);
+            //var lastYearQuarter = _QuartersEngine.GetQuarterDetail(currentQuarter.Quarter, shareBookDate.Year - 1);
 
-            var defaultHUTBook = _MediaMonths
-                .Where(x => x.EndDate <= lastYearQuarter.EndDate).First();
-            return _ToLookupDto(_MediaMonths.Where(x=>x.StartDate < shareBookDate)
-                .OrderByDescending(x=>x.Id == defaultHUTBook.Id));
+            //var defaultHUTBook = _MediaMonths
+            //    .Where(x => x.EndDate <= lastYearQuarter.EndDate).First();
+
+            var defaultHUTBook = _MediaMonths.Where(m => m.Id <= shareBookId - MonthsInAYear).OrderByDescending(m => m.Id).First();
+
+            return _ToLookupDto(_MediaMonths.Where(x => x.StartDate < shareBookDate)
+                .OrderByDescending(x => x.Id == defaultHUTBook.Id));
+
         }
-        
+
         ///<inheritdoc/>
         public int GetDefaultShareBookId(DateTime startDate) =>
            _GetSweepBooks()
