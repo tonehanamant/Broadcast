@@ -7,6 +7,8 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Repositories;
 using System.Collections.Generic;
 using Moq.AutoMock;
+using Services.Broadcast.Cache;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests
 {
@@ -44,7 +46,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
 
             var request = new PostRequest();
             request.FileName = "abc.xlsx";
-            request.Audiences = new List<int> { 1 };
+            request.Audiences = new List<int> { 31 };
             request.PlaybackType = (ProposalEnums.ProposalPlaybackType)'a';
 
             Assert.That(() => sut.SavePost(request), Throws.Exception.With.Message.EqualTo(string.Format(PostPrePostingService.InvalidPlaybackTypeErrorMessage, (char)request.PlaybackType)));
@@ -58,12 +60,25 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             postRepository.Setup(r => r.PostExist(It.IsAny<string>())).Returns(true);
             var broadcastDataRepository = mocker.GetMock<IDataRepositoryFactory>();
             broadcastDataRepository.Setup(r => r.GetDataRepository<IPostPrePostingRepository>()).Returns(postRepository.Object);
+            var audienceCache = mocker.GetMock<IBroadcastAudiencesCache>();
+            var audienceLookups = new List<LookupDto>
+            {
+                new LookupDto
+                {
+                    Id = 31,
+                },
+                new LookupDto
+                {
+                    Id = 18
+                }
+            };
+            audienceCache.Setup(m => m.GetAllLookups()).Returns(audienceLookups);
 
             var sut = mocker.CreateInstance<PostPrePostingService>();
 
             var request = new PostRequest();
             request.FileName = "abc.xlsx";
-            request.Audiences = new List<int> { 1 };
+            request.Audiences = new List<int> { 31 };
             request.PlaybackType = ProposalEnums.ProposalPlaybackType.Live;
 
             Assert.That(() => sut.SavePost(request), Throws.Exception.With.Message.EqualTo(string.Format(PostPrePostingService.DuplicateFileErrorMessage, request.FileName)));
@@ -83,6 +98,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
         }
 
         [Test]
+        public void EditPostFile_InvalidAudience()
+        {
+            var sut = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostPrePostingService>();
+
+            var request = new PostRequest();
+            request.FileId = 1;
+            request.FileName = "abc.xlsx";
+            request.Audiences = new List<int>(){ 31, -1, 18};
+
+            Assert.That(() => sut.EditPost(request), Throws.Exception.With.Message.EqualTo(PostPrePostingService.InvalidAudienceErrorMessage));
+        }
+
+        [Test]
         public void EditPostFile_Throws_When_Invalid_PlaybackType()
         {
             var sut = IntegrationTestApplicationServiceFactory.GetApplicationService<IPostPrePostingService>();
@@ -90,7 +118,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
             var request = new PostRequest();
             request.FileId = 1;
             request.FileName = "abc.xlsx";
-            request.Audiences = new List<int> { 1 };
+            request.Audiences = new List<int> { 31 };
             request.PlaybackType = (ProposalEnums.ProposalPlaybackType)'a';
 
             Assert.That(() => sut.EditPost(request), Throws.Exception.With.Message.EqualTo(string.Format(PostPrePostingService.InvalidPlaybackTypeErrorMessage, (char)request.PlaybackType)));
@@ -118,12 +146,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests
 
             broadcastDataRepository.Setup(r => r.GetDataRepository<IPostPrePostingRepository>()).Returns(postRepository.Object);
 
+            var audienceCache = mocker.GetMock<IBroadcastAudiencesCache>();
+            var audienceLookups = new List<LookupDto>
+            {
+                new LookupDto
+                {
+                    Id = 31,
+                },
+                new LookupDto
+                {
+                    Id = 18
+                }
+            };
+            audienceCache.Setup(m => m.GetAllLookups()).Returns(audienceLookups);
+
             var sut = mocker.CreateInstance<PostPrePostingService>();
 
             var request = new PostRequest();
             request.FileId = 5;
             request.FileName = "abc.xlsx";
-            request.Audiences = new List<int> { 1 };
+            request.Audiences = new List<int> { 31 };
             request.PlaybackType = ProposalEnums.ProposalPlaybackType.Live;
 
             Assert.That(() => sut.EditPost(request), Throws.Exception.With.Message.EqualTo(string.Format(PostPrePostingService.DuplicateFileErrorMessage, request.FileName)));

@@ -13,6 +13,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -28,7 +29,7 @@ namespace Services.Broadcast.ApplicationServices
         PostPrePostingDto GetInitialData();
     }
 
-    public class PostPrePostingService : IPostPrePostingService
+    public class PostPrePostingService : BroadcastBaseClass, IPostPrePostingService
     {
         private readonly IDataRepositoryFactory _BroadcastDataRepositoryFactory;
         private readonly IPostEngine _PostEngine;
@@ -39,6 +40,7 @@ namespace Services.Broadcast.ApplicationServices
         internal static readonly string InvalidPlaybackTypeErrorMessage = "PlaybackType {0} is not valid.";
         internal static readonly string FileNotExcelErroMessage = "File does not end with '.xlsx'.";
         internal static readonly string NoAudiencesErrorMessage = "Must have at least one Audience.";
+        internal static readonly string InvalidAudienceErrorMessage = "Invalid Audience Id provided.";
         internal static readonly string MissingId = "File missing Id.";
         internal static readonly string DuplicateFileErrorMessage = "Could not import file, it has been imported. Delete existing file if needed";
 
@@ -114,6 +116,17 @@ namespace Services.Broadcast.ApplicationServices
             if (request.Audiences == null || !request.Audiences.Any())
                 throw new ApplicationException(NoAudiencesErrorMessage);
 
+            var validAudiences = _AudiencesCache.GetAllLookups().Select(a => a.Id).ToList();
+            foreach(var audience in request.Audiences)
+            {
+                if (!validAudiences.Contains(audience))
+                {
+                    _LogError($"Invalid audience Id: {audience} found while validating post file {request.FileName}.");
+                    throw new ApplicationException(InvalidAudienceErrorMessage);
+                }
+            }
+
+
             if (request.PlaybackType != ProposalEnums.ProposalPlaybackType.Live &&
                 request.PlaybackType != ProposalEnums.ProposalPlaybackType.LivePlus1 &&
                 request.PlaybackType != ProposalEnums.ProposalPlaybackType.LivePlus3 &&
@@ -146,7 +159,24 @@ namespace Services.Broadcast.ApplicationServices
             var allDemos = _AudiencesCache.GetAllLookups().ToDictionary(l => l.Id);
 
             var postFiles = _BroadcastDataRepositoryFactory.GetDataRepository<IPostPrePostingRepository>().GetAllPostsList();
-            postFiles.ForEach(pf => pf.DemoLookups = pf.Demos.Select(d => allDemos[d]).ToList());
+
+            foreach( var pf in postFiles)
+            {
+                var demoLookups = new List<LookupDto>();
+                foreach(var demo in pf.Demos)
+                {
+                    var found = allDemos.TryGetValue(demo, out LookupDto lookup);
+                    if (found)
+                    {
+                        demoLookups.Add(lookup);
+                    }
+                    else
+                    {
+                        _LogWarning($"Invalid audience Id: {demo} found for file {pf.FileName} while loading posting file list.");
+                    }
+                }
+                pf.DemoLookups = demoLookups;
+            }
 
             return postFiles;
         }
