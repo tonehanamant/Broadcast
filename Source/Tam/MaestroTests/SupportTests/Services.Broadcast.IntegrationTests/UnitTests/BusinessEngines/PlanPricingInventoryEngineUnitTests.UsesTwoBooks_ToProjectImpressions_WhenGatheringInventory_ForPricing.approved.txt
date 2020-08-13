@@ -12,7 +12,7 @@
             "_Code": "",
             "_EndTime": 39599,
             "_Friday": false,
-            "_Id": -1,
+            "_Id": 5,
             "_Is24Hour": false,
             "_LastEndTime": 0,
             "_LastStartTime": 0,
@@ -130,7 +130,7 @@
           {
             "Id": 5,
             "Daypart": {
-              "_Id": -1,
+              "_Id": 5,
               "_Code": "",
               "_Name": "",
               "_StartTime": 36000,

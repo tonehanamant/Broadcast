@@ -1795,7 +1795,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             new PlanPricingInventoryProgram.ManifestDaypart
                             {
                                 Id = 5,
-                                Daypart = new DisplayDaypart(),
+                                Daypart = new DisplayDaypart { Id = 5 },
                                 PrimaryProgramId = 0,
                                 Programs = new List<BasePlanPricingInventoryProgram.ManifestDaypart.Program>
                                 {
@@ -1843,15 +1843,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _StationRepositoryMock
                 .Setup(x => x.GetLatestStationMonthDetailsForStations(It.IsAny<List<int>>()))
                 .Returns(new List<StationMonthDetailDto>());
-            
+
             _DaypartCacheMock
-                .Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
-                .Returns(new DisplayDaypart
-                {
-                    Monday = true,
-                    StartTime = 36000, // 10am
-                    EndTime = 39599 // 11am
-                });
+                .Setup(x => x.GetDisplayDayparts(It.IsAny<List<int>>()))
+                .Returns(DaypartsTestData.GetAllDisplayDayparts());
 
             object passedParameters = null;
             _ImpressionsCalculationEngineMock
@@ -1939,7 +1934,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             new PlanPricingInventoryProgram.ManifestDaypart
                             {
                                 Id = 5,
-                                Daypart = new DisplayDaypart(),
+                                Daypart = new DisplayDaypart { Id = 5 },
                                 PrimaryProgramId = 0,
                                 Programs = new List<BasePlanPricingInventoryProgram.ManifestDaypart.Program>
                                 {
@@ -1989,13 +1984,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Returns(new List<StationMonthDetailDto>());
 
             _DaypartCacheMock
-                .Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
-                .Returns(new DisplayDaypart
-                {
-                    Monday = true,
-                    StartTime = 36000, // 10am
-                    EndTime = 39599 // 11am
-                });
+                .Setup(x => x.GetDisplayDayparts(It.IsAny<List<int>>()))
+                .Returns(DaypartsTestData.GetAllDisplayDayparts());
 
             object passedParameters = null;
             _ImpressionsCalculationEngineMock
@@ -2091,7 +2081,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 new PlanPricingInventoryProgram.ManifestDaypart
                                 {
                                     Id = 5,
-                                    Daypart = new DisplayDaypart(),
+                                    Daypart = new DisplayDaypart {Id = 5},
                                     PrimaryProgramId = 0,
                                     Programs = new List<BasePlanPricingInventoryProgram.ManifestDaypart.Program>
                                     {
@@ -2141,13 +2131,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     .Returns(new List<StationMonthDetailDto>());
 
                 _DaypartCacheMock
-                    .Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
-                    .Returns(new DisplayDaypart
-                    {
-                        Monday = true,
-                        StartTime = 36000, // 10am
-                    EndTime = 39599 // 11am
-                });
+                    .Setup(x => x.GetDisplayDayparts(It.IsAny<List<int>>()))
+                    .Returns(DaypartsTestData.GetAllDisplayDayparts());
 
                 object passedParameters = null;
                 _ImpressionsCalculationEngineMock
@@ -2248,7 +2233,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 new PlanPricingInventoryProgram.ManifestDaypart
                                 {
                                     Id = 5,
-                                    Daypart = new DisplayDaypart(),
+                                    Daypart = new DisplayDaypart { Id = 5 },
                                     PrimaryProgramId = 0,
                                     Programs = new List<BasePlanPricingInventoryProgram.ManifestDaypart.Program>
                                     {
@@ -2298,13 +2283,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     .Returns(new List<StationMonthDetailDto>());
 
                 _DaypartCacheMock
-                    .Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
-                    .Returns(new DisplayDaypart
-                    {
-                        Monday = true,
-                        StartTime = 36000, // 10am
-                        EndTime = 39599 // 11am
-                    });
+                    .Setup(x => x.GetDisplayDayparts(It.IsAny<List<int>>()))
+                    .Returns(DaypartsTestData.GetAllDisplayDayparts());
 
                 object passedParameters = null;
                 _ImpressionsCalculationEngineMock
@@ -2405,7 +2385,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 new PlanPricingInventoryProgram.ManifestDaypart
                                 {
                                     Id = 5,
-                                    Daypart = new DisplayDaypart(),
+                                    Daypart = new DisplayDaypart { Id = 5 },
                                     PrimaryProgramId = 2,
                                     Programs = new List<BasePlanPricingInventoryProgram.ManifestDaypart.Program>
                                     {
@@ -2458,13 +2438,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     .Returns(new List<StationMonthDetailDto>());
 
                 _DaypartCacheMock
-                    .Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
-                    .Returns(new DisplayDaypart
-                    {
-                        Monday = true,
-                        StartTime = 36000, // 10am
-                        EndTime = 39599 // 11am
-                    });
+                    .Setup(x => x.GetDisplayDayparts(It.IsAny<List<int>>()))
+                    .Returns(DaypartsTestData.GetAllDisplayDayparts);
 
                 object passedParameters = null;
                 _ImpressionsCalculationEngineMock
@@ -2565,7 +2540,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 new PlanPricingInventoryProgram.ManifestDaypart
                                 {
                                     Id = 5,
-                                    Daypart = new DisplayDaypart(),
+                                    Daypart = new DisplayDaypart { Id = 1 },
                                     PrimaryProgramId = 0,
                                     Programs = new List<BasePlanPricingInventoryProgram.ManifestDaypart.Program> 
                                     { 
@@ -2614,14 +2589,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     .Setup(x => x.GetLatestStationMonthDetailsForStations(It.IsAny<List<int>>()))
                     .Returns(new List<StationMonthDetailDto>());
 
+                var testDaypartDict = new Dictionary<int, DisplayDaypart>();
+                testDaypartDict.Add(1, new DisplayDaypart
+                {
+                    Monday = true,
+                    StartTime = 36000, // 10am
+                    EndTime = 39599 // 11am
+                });
+
                 _DaypartCacheMock
-                    .Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
-                    .Returns(new DisplayDaypart
-                    {
-                        Monday = true,
-                        StartTime = 36000, // 10am
-                        EndTime = 39599 // 11am
-                    });
+                    .Setup(x => x.GetDisplayDayparts(It.IsAny<List<int>>()))
+                    .Returns(testDaypartDict);
 
                 object passedParameters = null;
                 _ImpressionsCalculationEngineMock
@@ -2933,10 +2911,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         }
                     },
                 });
-
+            
             _DaypartCacheMock
-                .Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
-                .Returns((int daypartId) => DaypartsTestData.GetDisplayDaypart(daypartId));
+                .Setup(x => x.GetDisplayDayparts(It.IsAny<List<int>>()))
+                .Returns(DaypartsTestData.GetAllDisplayDayparts());
 
             var parametersGetLatestStationMonthDetailsForStations = new List<object>();
             _StationRepositoryMock
