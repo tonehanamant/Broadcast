@@ -202,31 +202,26 @@ END
 /**************************Start inventory_proprietary_summary *************************************************/
 IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('inventory_proprietary_summary'))
 BEGIN
-CREATE TABLE inventory_proprietary_summary (
-id INT NOT NULL IDENTITY,
-inventory_source_id INT NOT NULL,
-daypart_default_id INT NOT NULL,
-quarter_number INT NOT NULL,
-quarter_year INT NOT NULL, 
-unit int NOT NULL, 
-cpm money  NULL,
-[created_by] [varchar](63) NOT NULL,
-[created_at] [datetime] NOT NULL,
-[modified_by] [varchar](63) NULL,
-[modified_at] [datetime] NULL,
-CONSTRAINT PK_inventory_proprietary_summary PRIMARY KEY (id)
-)
+	CREATE TABLE inventory_proprietary_summary (
+	id INT NOT NULL IDENTITY,
+	inventory_source_id INT NOT NULL,
+	daypart_default_id INT NOT NULL,
+	quarter_number INT NOT NULL,
+	quarter_year INT NOT NULL, 
+	unit int NOT NULL, 
+	cpm money  NULL,
+	[created_by] [varchar](63) NOT NULL,
+	[created_at] [datetime] NOT NULL,
+	[modified_by] [varchar](63) NULL,
+	[modified_at] [datetime] NULL,
+	CONSTRAINT PK_inventory_proprietary_summary PRIMARY KEY (id)
+	)
+	ALTER TABLE [dbo].inventory_proprietary_summary ADD CONSTRAINT [FK_inventory_proprietary_summary_inventory_sources] FOREIGN KEY([inventory_source_id])
+	REFERENCES [dbo].[inventory_sources] ([id])
+	ALTER TABLE [dbo].[inventory_proprietary_summary] ADD CONSTRAINT [FK_inventory_proprietary_summary_daypart_defaults] FOREIGN KEY([daypart_default_id])
+	REFERENCES [dbo].[daypart_defaults] ([id])
 END
-ALTER TABLE [dbo].inventory_proprietary_summary  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_inventory_sources] FOREIGN KEY([inventory_source_id])
-REFERENCES [dbo].[inventory_sources] ([id])
-GO
-ALTER TABLE [dbo].[inventory_proprietary_summary] CHECK CONSTRAINT [FK_inventory_proprietary_summary_inventory_sources]
-GO
-ALTER TABLE [dbo].[inventory_proprietary_summary]  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_daypart_defaults] FOREIGN KEY([daypart_default_id])
-REFERENCES [dbo].[daypart_defaults] ([id])
-GO
-ALTER TABLE [dbo].[inventory_proprietary_summary] CHECK CONSTRAINT [FK_inventory_proprietary_summary_daypart_defaults]
-GO
+
 /**************************End inventory_proprietary_summary *************************************************/
 /**************************start inventory_proprietary_summary_audiences *************************************************/
 IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('inventory_proprietary_summary_audiences'))
