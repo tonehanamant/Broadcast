@@ -12,6 +12,7 @@ using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using System;
@@ -31,8 +32,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private ICampaignService _CampaignService;
         private IPlanPricingService _PlanPricingService;
         private IPlanRepository _PlanRepository;
+        private IFeatureToggleHelper _FeatureToggleHelper;
 
         private const int AUDIENCE_ID = 31;
+        private const string FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT = "broadcast-enable-pricing-in-edit";
 
         [SetUp]
         public void SetUp()
@@ -42,6 +45,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
             _PlanPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
             _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
+
+            var clientStub = new LaunchDarklyClientStub();
+            clientStub.FeatureToggles.Add(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT, false);
+
+            _FeatureToggleHelper = new FeatureToggleHelper(clientStub);
         }
 
         [Test]
@@ -107,7 +115,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var newPlanId = _PlanService.SavePlan(newPlan, username, nowDate);
                 var savedPlan = _PlanService.GetPlan(newPlanId);
 
-                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, savedPlan.IsPricingModelRunning);
+                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), savedPlan.IsPricingModelRunning);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedPlan, _GetJsonSettings(true)));
             }
         }
@@ -127,7 +135,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsTrue(newPlanId > 0);
 
                 var planVersion = _PlanService.GetPlan(newPlanId);
-                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, planVersion.IsPricingModelRunning);
+                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), planVersion.IsPricingModelRunning);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(planVersion), _GetJsonSettings(true)));
             }
         }
@@ -145,7 +153,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var planVersion = _PlanService.GetPlan(newPlanId);
 
-                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, planVersion.IsPricingModelRunning);
+                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), planVersion.IsPricingModelRunning);
                 Assert.IsTrue(newPlanId > 0);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(planVersion), _GetJsonSettings(true)));
             }
@@ -412,7 +420,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var newPlanId = _PlanService.SavePlan(newPlan, username, nowDate);
 
                 var savedPlan = _PlanService.GetPlan(newPlanId);
-                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, savedPlan.IsPricingModelRunning);
+                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), savedPlan.IsPricingModelRunning);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedPlan, _GetJsonSettings(true)));
             }
         }
@@ -491,7 +499,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsTrue(newPlanId > 0);
                 PlanDto finalPlan = _PlanService.GetPlan(newPlanId);
 
-                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, finalPlan.IsPricingModelRunning);
+                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), finalPlan.IsPricingModelRunning);
                 Assert.AreEqual(PlanStatusEnum.Canceled, finalPlan.Status);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
             }
@@ -549,7 +557,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //get the plan
                 PlanDto plan = _PlanService.GetPlan(newPlanId);
 
-                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, plan.IsPricingModelRunning);
+                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), plan.IsPricingModelRunning);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(plan), _GetJsonSettings(true)));
             }
         }
@@ -730,7 +738,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsTrue(newPlanId > 0);
                 PlanDto finalPlan = _PlanService.GetPlan(newPlanId);
 
-                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, finalPlan.IsPricingModelRunning);
+                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), finalPlan.IsPricingModelRunning);
                 Assert.AreEqual(PlanStatusEnum.Rejected, finalPlan.Status);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
             }
@@ -1031,7 +1039,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, finalPlan.IsPricingModelRunning);
+                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), finalPlan.IsPricingModelRunning);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
             }
         }
@@ -1051,7 +1059,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, finalPlan.IsPricingModelRunning);
+                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), finalPlan.IsPricingModelRunning);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
             }
         }
@@ -1071,7 +1079,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, finalPlan.IsPricingModelRunning);
+                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), finalPlan.IsPricingModelRunning);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
             }
         }
@@ -1104,7 +1112,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, finalPlan.IsPricingModelRunning);
+                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), finalPlan.IsPricingModelRunning);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
             }
         }
@@ -1124,7 +1132,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, finalPlan.IsPricingModelRunning);
+                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), finalPlan.IsPricingModelRunning);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
             }
         }
@@ -1144,7 +1152,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, finalPlan.IsPricingModelRunning);
+                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), finalPlan.IsPricingModelRunning);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
             }
         }
@@ -1310,7 +1318,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
                 var finalPlan = _PlanService.GetPlan(planId);
                 Assert.IsTrue(planId > 0);
-                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, finalPlan.IsPricingModelRunning);
+                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), finalPlan.IsPricingModelRunning);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
             }
         }
@@ -2713,14 +2721,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var updatedJob = _PlanRepository.GetPlanPricingJob(job.Id);
 
-                if (BroadcastFeaturesSystemParameter.EnablePricingInEdit)
+                if (_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT))
                 {
                     Assert.AreEqual(job.Id, finalPlan.JobId);
                     Assert.AreEqual(job.Id, finalPlan.PricingParameters.JobId);
                     Assert.AreEqual(finalPlan.VersionId, finalPlan.PricingParameters.PlanVersionId);
                     Assert.AreEqual(finalPlan.VersionId, updatedJob.PlanVersionId);
                 }
-                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, finalPlan.IsPricingModelRunning);
+                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), finalPlan.IsPricingModelRunning);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
             }
         }

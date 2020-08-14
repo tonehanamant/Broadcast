@@ -165,9 +165,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IDaypartDefaultService _DaypartDefaultService;
         private readonly IDayRepository _DayRepository;
         private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
         private const string _DaypartDefaultNotFoundMessage = "Unable to find daypart default";
         private const string _UnsupportedDeliveryTypeMessage = "Unsupported Delivery Type";
+        private const string FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT = "broadcast-enable-pricing-in-edit";
 
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator
@@ -181,7 +183,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , IQuarterCalculationEngine quarterCalculationEngine
             , IDaypartDefaultService daypartDefaultService
             , IWeeklyBreakdownEngine weeklyBreakdownEngine
-            , ICreativeLengthEngine creativeLengthEngine)
+            , ICreativeLengthEngine creativeLengthEngine, IFeatureToggleHelper featureToggleHelper)
         {
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
             _PlanValidator = planValidator;
@@ -201,6 +203,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _DaypartDefaultService = daypartDefaultService;
             _WeeklyBreakdownEngine = weeklyBreakdownEngine;
             _CreativeLengthEngine = creativeLengthEngine;
+            _FeatureToggleHelper = featureToggleHelper;
         }
 
         ///<inheritdoc/>
@@ -242,7 +245,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 _PlanRepository.SaveNewPlan(plan, createdBy, createdDate);
 
-                if (BroadcastFeaturesSystemParameter.EnablePricingInEdit && plan.JobId.HasValue)
+                if (_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT) && plan.JobId.HasValue)
                     _PlanRepository.SetPricingPlanVersionId(plan.JobId.Value, plan.VersionId);
             }
             else
@@ -276,7 +279,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 _SetPlanPricingParameters(plan);
 
-                if (BroadcastFeaturesSystemParameter.EnablePricingInEdit)
+                if (_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT))
                 {
                     if (plan.VersionNumber == 1 && !plan.JobId.HasValue)
                     {

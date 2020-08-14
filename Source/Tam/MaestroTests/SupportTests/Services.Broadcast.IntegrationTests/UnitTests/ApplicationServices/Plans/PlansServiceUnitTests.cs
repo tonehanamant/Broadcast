@@ -14,6 +14,8 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Extensions;
+using Services.Broadcast.Helpers;
+using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
@@ -46,6 +48,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IDaypartDefaultService> _DaypartDefaultServiceMock;
         private Mock<IWeeklyBreakdownEngine> _WeeklyBreakdownEngineMock;
         private Mock<ICreativeLengthEngine> _CreativeLengthEngineMock;
+        private LaunchDarklyClientStub _LaunchDarklyClientStub;
 
         [SetUp]
         public void CreatePlanService()
@@ -139,21 +142,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 });
 
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
+            _LaunchDarklyClientStub.FeatureToggles.Add("FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT", true);
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
+
             _PlanService = new PlanService(
-                _DataRepositoryFactoryMock.Object,
-                _PlanValidatorMock.Object,
-                _PlanBudgetDeliveryCalculatorMock.Object,
-                _MediaMonthAndWeekAggregateCacheMock.Object,
-                _PlanAggregatorMock.Object,
-                _CampaignAggregationJobTriggerMock.Object,
-                _SpotLengthEngineMock.Object,
-                _BroadcastLockingManagerApplicationServiceMock.Object,
-                _PlanPricingServiceMock.Object,
-                _QuarterCalculationEngineMock.Object,
-                _DaypartDefaultServiceMock.Object,
-                _WeeklyBreakdownEngineMock.Object,
-                _CreativeLengthEngineMock.Object
-            );
+                    _DataRepositoryFactoryMock.Object,
+                    _PlanValidatorMock.Object,
+                    _PlanBudgetDeliveryCalculatorMock.Object,
+                    _MediaMonthAndWeekAggregateCacheMock.Object,
+                    _PlanAggregatorMock.Object,
+                    _CampaignAggregationJobTriggerMock.Object,
+                    _SpotLengthEngineMock.Object,
+                    _BroadcastLockingManagerApplicationServiceMock.Object,
+                    _PlanPricingServiceMock.Object,
+                    _QuarterCalculationEngineMock.Object,
+                    _DaypartDefaultServiceMock.Object,
+                    _WeeklyBreakdownEngineMock.Object,
+                    _CreativeLengthEngineMock.Object,
+                    featureToggleHelper
+                );
         }
 
         [Test]
@@ -274,9 +282,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(
-                    It.IsAny<IEnumerable<WeeklyBreakdownWeek>>(), 
-                    It.IsAny<double>(), 
-                    It.IsAny<List<CreativeLength>>(), 
+                    It.IsAny<IEnumerable<WeeklyBreakdownWeek>>(),
+                    It.IsAny<double>(),
+                    It.IsAny<List<CreativeLength>>(),
                     It.IsAny<bool>()))
                 .Returns(new List<WeeklyBreakdownByWeek>());
 
