@@ -247,22 +247,23 @@ END
 /**************************start inventory_proprietary_summary_markets *************************************************/
 IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('inventory_proprietary_summary_markets'))
 BEGIN
-CREATE TABLE inventory_proprietary_summary_markets (
-id INT NOT NULL IDENTITY,
-inventory_proprietary_summary_id INT NOT NULL,
-market_code smallint NOT NULL,
-market_coverage float  NULL,
-[created_by] [varchar](63) NOT NULL,
-[created_at] [datetime] NOT NULL,
-[modified_by] [varchar](63) NULL,
-[modified_at] [datetime] NULL,
-CONSTRAINT PK_inventory_proprietary_summary_markets PRIMARY KEY (id)
-)
+	CREATE TABLE inventory_proprietary_summary_markets (
+	id INT NOT NULL IDENTITY,
+	inventory_proprietary_summary_id INT NOT NULL,
+	market_code smallint NOT NULL,
+	market_coverage float  NULL,
+	[created_by] [varchar](63) NOT NULL,
+	[created_at] [datetime] NOT NULL,
+	[modified_by] [varchar](63) NULL,
+	[modified_at] [datetime] NULL,
+	CONSTRAINT PK_inventory_proprietary_summary_markets PRIMARY KEY (id)
+	)
+	ALTER TABLE [dbo].[inventory_proprietary_summary_markets] ADD CONSTRAINT [FK_inventory_proprietary_summary_markets_markets] FOREIGN KEY([market_code])
+	REFERENCES [dbo].[markets] ([market_code])
+	ALTER TABLE [dbo].[inventory_proprietary_summary_markets] ADD CONSTRAINT [FK_inventory_proprietary_summary_markets_inventory_proprietary_summary] FOREIGN KEY(inventory_proprietary_summary_id)
+	REFERENCES [dbo].[inventory_proprietary_summary] ([id])
 END
-ALTER TABLE [dbo].[inventory_proprietary_summary_markets]ADD CONSTRAINT [FK_inventory_proprietary_summary_markets_markets] FOREIGN KEY([market_code])
-REFERENCES [dbo].[markets] ([market_code])
-ALTER TABLE [dbo].[inventory_proprietary_summary_markets] ADD CONSTRAINT [FK_inventory_proprietary_summary_markets_inventory_proprietary_summary] FOREIGN KEY(inventory_proprietary_summary_id)
-REFERENCES [dbo].[inventory_proprietary_summary] ([id])
+
 /**************************end inventory_proprietary_summary_markets *************************************************/
 /*************************************** END BP-804 *****************************************************/
 
