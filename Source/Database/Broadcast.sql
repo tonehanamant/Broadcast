@@ -226,28 +226,23 @@ END
 /**************************start inventory_proprietary_summary_audiences *************************************************/
 IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('inventory_proprietary_summary_audiences'))
 BEGIN
-CREATE TABLE inventory_proprietary_summary_audiences (
-id INT NOT NULL IDENTITY,
-inventory_proprietary_summary_id INT NOT NULL,
-audience_id INT NOT NULL,
-impressions float  NULL,
-[created_by] [varchar](63) NOT NULL,
-[created_at] [datetime] NOT NULL,
-[modified_by] [varchar](63) NULL,
-[modified_at] [datetime] NULL,
-CONSTRAINT PK_inventory_proprietary_summary_audiences PRIMARY KEY (id)
-)
+	CREATE TABLE inventory_proprietary_summary_audiences (
+	id INT NOT NULL IDENTITY,
+	inventory_proprietary_summary_id INT NOT NULL,
+	audience_id INT NOT NULL,
+	impressions float  NULL,
+	[created_by] [varchar](63) NOT NULL,
+	[created_at] [datetime] NOT NULL,
+	[modified_by] [varchar](63) NULL,
+	[modified_at] [datetime] NULL,
+	CONSTRAINT PK_inventory_proprietary_summary_audiences PRIMARY KEY (id)
+	)
+	ALTER TABLE [dbo].[inventory_proprietary_summary_audiences]  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_audiences_audiences] FOREIGN KEY([audience_id])
+	REFERENCES [dbo].[audiences] ([id])
+	ALTER TABLE [dbo].[inventory_proprietary_summary_audiences] ADD  CONSTRAINT [FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary] FOREIGN KEY(inventory_proprietary_summary_id)
+	REFERENCES [dbo].[inventory_proprietary_summary] ([id])
 END
-ALTER TABLE [dbo].[inventory_proprietary_summary_audiences]  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_audiences_audiences] FOREIGN KEY([audience_id])
-REFERENCES [dbo].[audiences] ([id])
-GO
-ALTER TABLE [dbo].[inventory_proprietary_summary_audiences] CHECK CONSTRAINT [FK_inventory_proprietary_summary_audiences_audiences]
-GO
-ALTER TABLE [dbo].[inventory_proprietary_summary_audiences]  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary] FOREIGN KEY(inventory_proprietary_summary_id)
-REFERENCES [dbo].[inventory_proprietary_summary] ([id])
-GO
-ALTER TABLE [dbo].[inventory_proprietary_summary_audiences] CHECK CONSTRAINT [FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary]
-GO
+
 /**************************end inventory_proprietary_summary_audiences *************************************************/
 /**************************start inventory_proprietary_summary_markets *************************************************/
 IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('inventory_proprietary_summary_markets'))
@@ -264,16 +259,10 @@ market_coverage float  NULL,
 CONSTRAINT PK_inventory_proprietary_summary_markets PRIMARY KEY (id)
 )
 END
-ALTER TABLE [dbo].[inventory_proprietary_summary_markets]  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_markets_markets] FOREIGN KEY([market_code])
+ALTER TABLE [dbo].[inventory_proprietary_summary_markets]ADD CONSTRAINT [FK_inventory_proprietary_summary_markets_markets] FOREIGN KEY([market_code])
 REFERENCES [dbo].[markets] ([market_code])
-GO
-ALTER TABLE [dbo].[inventory_proprietary_summary_markets] CHECK CONSTRAINT [FK_inventory_proprietary_summary_markets_markets]
-GO
-ALTER TABLE [dbo].[inventory_proprietary_summary_markets]  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_markets_inventory_proprietary_summary] FOREIGN KEY(inventory_proprietary_summary_id)
+ALTER TABLE [dbo].[inventory_proprietary_summary_markets] ADD CONSTRAINT [FK_inventory_proprietary_summary_markets_inventory_proprietary_summary] FOREIGN KEY(inventory_proprietary_summary_id)
 REFERENCES [dbo].[inventory_proprietary_summary] ([id])
-GO
-ALTER TABLE [dbo].[inventory_proprietary_summary_markets] CHECK CONSTRAINT [FK_inventory_proprietary_summary_markets_inventory_proprietary_summary]
-GO
 /**************************end inventory_proprietary_summary_markets *************************************************/
 /*************************************** END BP-804 *****************************************************/
 
