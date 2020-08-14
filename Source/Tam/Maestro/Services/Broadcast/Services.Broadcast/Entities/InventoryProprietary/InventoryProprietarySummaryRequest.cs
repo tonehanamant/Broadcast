@@ -1,7 +1,6 @@
 ﻿using Services.Broadcast.Entities.Plan;
 using System;
 using System.Collections.Generic;
-using static Services.Broadcast.Entities.Plan.PlanBuying.PlanBuyingDetails;
 
 namespace Services.Broadcast.Entities.InventoryProprietary
 {
