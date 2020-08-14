@@ -51,6 +51,34 @@ namespace Services.Broadcast.Repositories
 		/// <param name="inventoryProprietaryQuarterSummaryDto"></param>
 		void SaveInventoryProprietarySummary(
 			InventoryProprietaryQuarterSummaryDto inventoryProprietaryQuarterSummaryDto);
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="quarterDetailDto"></param>
+		/// <param name="daypartIds"></param>
+		/// <returns></returns>
+		List<InventoryProprietarySummary> GetInventoryProprietarySummary(QuarterDetailDto quarterDetailDto,
+			List<int> daypartIds);
+	
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		double GetTotalMarketCoverageBySummaryId(int Id);
+		/// <summary>
+		/// Get Total Impressions By SummaryId And AudienceId
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="audienceIds"></param>
+		/// <returns></returns>
+		double GetTotalImpressionsBySummaryIdAndAudienceId(int Id, int audienceIds);
+		/// <summary>
+		/// Get DayPartIds from Proprietary Summary Table
+		/// </summary>
+		/// <param name="quarterDetailDto"></param>
+		/// <returns></returns>
+		List<int> GetDayPartIds(QuarterDetailDto quarterDetailDto);
 	}
 
 	public class InventoryProprietarySummaryRepository : BroadcastRepositoryBase, IInventoryProprietarySummaryRepository
@@ -233,5 +261,77 @@ namespace Services.Broadcast.Repositories
 			context.inventory_proprietary_summary.RemoveRange(context.inventory_proprietary_summary
 				.Where(s => idList.Contains(s.id)));
 		}
+		public List<InventoryProprietarySummary> GetInventoryProprietarySummary(QuarterDetailDto quarterDetailDto, List<int> defaultDaypartIds)
+		{
+			return _InReadUncommitedTransaction(
+				context =>
+				{
+					var query = from summary in context.inventory_proprietary_summary
+						join source in context.inventory_sources on summary.inventory_source_id equals source.id
+						join daypartDefault in context.daypart_defaults on summary.daypart_default_id equals daypartDefault.id
+						join daypart in context.dayparts on daypartDefault.daypart_id equals daypart.id
+						where defaultDaypartIds.Contains(daypartDefault.daypart_id)
+						      && summary.quarter_number == quarterDetailDto.Quarter && summary.quarter_year == quarterDetailDto.Year
+						   
+
+						select new InventoryProprietarySummary
+						{
+							DaypartName = daypart.daypart_text,
+							InventorySourceName = source.name,
+							DaypartDefaultCode = daypartDefault.code,
+							Cpm = summary.cpm ?? 0,
+							Id = summary.id
+						};
+
+					return query.Distinct().ToList();
+				});
+		}
+		public double GetTotalImpressionsBySummaryIdAndAudienceId(int id, int audienceId)
+		{
+			return _InReadUncommitedTransaction(
+				context =>
+				{
+					var query = context.inventory_proprietary_summary.Where(x => x.id == id)
+						.Select(x => x.inventory_proprietary_summary_audiences.Where(a=> a.audience_id ==audienceId)
+							.GroupBy(y => y.inventory_proprietary_summary_id)
+							.Select(y => y.Sum(z => z.impressions ?? 0))).FirstOrDefault();
+					var entities = query.ToList().FirstOrDefault();
+
+					return entities;
+				});
+
+		}
+		public double GetTotalMarketCoverageBySummaryId(int id)
+		{
+			return _InReadUncommitedTransaction(
+				context =>
+				{
+					var query = context.inventory_proprietary_summary.Where(x =>
+							x.id == id)
+						.Select(x => x.inventory_proprietary_summary_markets
+							.GroupBy(y => y.inventory_proprietary_summary_id)
+							.Select(y => y.Sum(z => z.market_coverage ?? 0))).FirstOrDefault();
+					var entities = query.ToList().FirstOrDefault();
+
+					return entities;
+				});
+
+		}
+		public List<int> GetDayPartIds(QuarterDetailDto quarterDetailDto)
+		{
+			return _InReadUncommitedTransaction(
+				   context =>
+				   {
+					   var query = context.inventory_proprietary_summary.Where(x =>
+							   x.quarter_number == quarterDetailDto.Quarter && x.quarter_year == quarterDetailDto.Year)
+						   .Select(x => x.daypart_defaults.daypart_id)
+							  .ToList();
+					   var entities = query.ToList();
+
+					   return entities;
+				   });
+
+		}
+		
 	}
 }

@@ -1,0 +1,14 @@
+{
+  "summaries": [
+    {
+      "Cpm": 8.6000,
+      "DaypartDefaultCode": "EMN",
+      "DaypartName": "M-SU 4AM-10AM",
+      "ImpressionsTotalPercentage": 0.0,
+      "InventorySourceName": "CNN",
+      "MarketCoverageTotal": 0.29,
+      "UnitName": "CNN EMN"
+    }
+  ],
+  "ValidationMessage": null
+}

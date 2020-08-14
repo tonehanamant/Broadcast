@@ -109,7 +109,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 				Approvals.Verify(IntegrationTestHelper.ConvertToJson(quarterSummary));
 			}
 		}
-
+		
 		private JsonSerializerSettings _GetJsonSettings()
 		{
 			var jsonResolver = new IgnorableSerializerContractResolver();
