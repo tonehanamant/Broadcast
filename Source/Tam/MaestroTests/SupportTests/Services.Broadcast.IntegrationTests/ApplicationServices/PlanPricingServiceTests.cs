@@ -524,6 +524,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var result = _PlanService.GetPlan(1849);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanDto), "JobId");
                 jsonResolver.Ignore(typeof(PlanPricingParametersDto), "JobId");
                 var jsonSettings = new JsonSerializerSettings()
                 {

@@ -20,6 +20,7 @@ using System.Linq;
 using System.ServiceModel.PeerResolvers;
 using System.Threading.Tasks;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {
@@ -240,6 +241,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (plan.VersionId == 0 || plan.Id == 0)
             {
                 _PlanRepository.SaveNewPlan(plan, createdBy, createdDate);
+
+                if (BroadcastFeaturesSystemParameter.EnablePricingInEdit && plan.JobId.HasValue)
+                    _PlanRepository.SetPricingPlanVersionId(plan.JobId.Value, plan.VersionId);
             }
             else
             {
@@ -270,10 +274,28 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
                 _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
 
-                // Running price job on plan creation/edits/saves its temporary disabled
                 _SetPlanPricingParameters(plan);
-                _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
-                //_PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate, createdBy);
+
+                if (BroadcastFeaturesSystemParameter.EnablePricingInEdit)
+                {
+                    if (plan.VersionNumber == 1 && !plan.JobId.HasValue)
+                    {
+                        _PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate, createdBy);
+                    }
+                    else if (plan.VersionNumber > 1)
+                    {
+                        // Running price job on plan edits/saves its temporary disabled
+                        _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
+                        //_PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate, createdBy);
+                    }
+                }
+                else
+                {
+                    // Running price job on plan edits/saves its temporary disabled
+                    _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
+                    //_PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate, createdBy);
+                }
+                
             }
 
             return plan.Id;

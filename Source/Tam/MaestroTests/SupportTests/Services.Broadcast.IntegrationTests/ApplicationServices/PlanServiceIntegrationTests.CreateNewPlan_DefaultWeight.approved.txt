@@ -259,7 +259,6 @@
   "ImpressionsPerUnit": 5.0,
   "IsAduEnabled": true,
   "IsDraft": false,
-  "IsPricingModelRunning": false,
   "ModifiedBy": "integration_test",
   "ModifiedDate": "2019-01-01T00:00:00",
   "Name": "New Plan",
@@ -324,7 +323,6 @@
         "Percentage": 0
       }
     ],
-    "JobId": null,
     "Margin": 20.0,
     "MarketGroup": 1,
     "MaxCpm": null,

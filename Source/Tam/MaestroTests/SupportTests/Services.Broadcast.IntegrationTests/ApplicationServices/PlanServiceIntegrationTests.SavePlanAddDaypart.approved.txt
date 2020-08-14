@@ -375,7 +375,6 @@
         "Percentage": 0
       }
     ],
-    "JobId": null,
     "Margin": 20.0,
     "MarketGroup": 1,
     "MaxCpm": null,

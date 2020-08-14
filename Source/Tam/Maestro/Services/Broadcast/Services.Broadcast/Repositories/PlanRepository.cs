@@ -112,6 +112,8 @@ namespace Services.Broadcast.Repositories
         int AddPlanPricingJob(PlanPricingJob planPricingJob);
         void UpdatePlanPricingJob(PlanPricingJob planPricingJob);
 
+        void SetPricingPlanVersionId(int jobId, int planVersionId);
+
         /// <summary>
         /// Updates the plan pricing job with hangfire job identifier.
         /// </summary>
@@ -553,6 +555,9 @@ namespace Services.Broadcast.Repositories
                 IsAduEnabled = latestPlanVersion.is_adu_enabled,
                 ImpressionsPerUnit = latestPlanVersion.impressions_per_unit ?? 0
             };
+
+            if (dto.PricingParameters != null)
+                dto.JobId = dto.PricingParameters.JobId;
 
             return dto;
         }
@@ -1165,6 +1170,23 @@ namespace Services.Broadcast.Repositories
                 context.SaveChanges();
 
                 return planPricingJobDb.id;
+            });
+        }
+
+        public void SetPricingPlanVersionId(int jobId, int planVersionId)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var job = context.plan_version_pricing_job.Single(x => x.id == jobId);
+
+                if(job != null)
+                    job.plan_version_id = planVersionId;
+
+                var parameters = context.plan_version_pricing_parameters.Single(x => x.plan_version_pricing_job_id == jobId);
+                if(parameters != null)
+                    parameters.plan_version_id = planVersionId;
+
+                context.SaveChanges();
             });
         }
 

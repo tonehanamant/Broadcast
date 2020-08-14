@@ -83,6 +83,7 @@
   "IsAduEnabled": false,
   "IsDraft": false,
   "IsPricingModelRunning": false,
+  "JobId": null,
   "ModifiedBy": "Test User",
   "ModifiedDate": "2019-01-12T12:30:29",
   "Name": "New Plan",

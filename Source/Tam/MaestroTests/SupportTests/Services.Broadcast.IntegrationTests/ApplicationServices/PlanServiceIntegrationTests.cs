@@ -1,5 +1,6 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
+using EntityFrameworkMapping.Broadcast;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -18,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -28,6 +30,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private IPlanService _PlanService;
         private ICampaignService _CampaignService;
         private IPlanPricingService _PlanPricingService;
+        private IPlanRepository _PlanRepository;
 
         private const int AUDIENCE_ID = 31;
 
@@ -38,6 +41,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
             _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
             _PlanPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
+            _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
         }
 
         [Test]
@@ -102,7 +106,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 string username = "integration_test";
                 var newPlanId = _PlanService.SavePlan(newPlan, username, nowDate);
                 var savedPlan = _PlanService.GetPlan(newPlanId);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedPlan, _GetJsonSettings()));
+
+                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, savedPlan.IsPricingModelRunning);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedPlan, _GetJsonSettings(true)));
             }
         }
 
@@ -119,8 +125,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
 
                 Assert.IsTrue(newPlanId > 0);
+
                 var planVersion = _PlanService.GetPlan(newPlanId);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(planVersion), _GetJsonSettings()));
+                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, planVersion.IsPricingModelRunning);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(planVersion), _GetJsonSettings(true)));
             }
         }
 
@@ -137,8 +145,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var planVersion = _PlanService.GetPlan(newPlanId);
 
+                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, planVersion.IsPricingModelRunning);
                 Assert.IsTrue(newPlanId > 0);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(planVersion), _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(planVersion), _GetJsonSettings(true)));
             }
         }
 
@@ -403,7 +412,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var newPlanId = _PlanService.SavePlan(newPlan, username, nowDate);
 
                 var savedPlan = _PlanService.GetPlan(newPlanId);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedPlan, _GetJsonSettings()));
+                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, savedPlan.IsPricingModelRunning);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedPlan, _GetJsonSettings(true)));
             }
         }
 
@@ -481,8 +491,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsTrue(newPlanId > 0);
                 PlanDto finalPlan = _PlanService.GetPlan(newPlanId);
 
+                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, finalPlan.IsPricingModelRunning);
                 Assert.AreEqual(PlanStatusEnum.Canceled, finalPlan.Status);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
             }
         }
 
@@ -538,7 +549,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //get the plan
                 PlanDto plan = _PlanService.GetPlan(newPlanId);
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(plan), _GetJsonSettings()));
+                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, plan.IsPricingModelRunning);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(plan), _GetJsonSettings(true)));
             }
         }
 
@@ -562,6 +574,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 plan.Budget = 222;
                 plan.WeeklyBreakdownWeeks.FirstOrDefault().WeeklyBudget = 142;
                 _PlanService.SavePlan(plan, "integration_test", new DateTime(2019, 01, 01));
+                _ForceCompletePlanPricingJob(newPlanId);
 
                 //get the plan again
                 plan = _PlanService.GetPlan(newPlanId);
@@ -717,8 +730,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsTrue(newPlanId > 0);
                 PlanDto finalPlan = _PlanService.GetPlan(newPlanId);
 
+                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, finalPlan.IsPricingModelRunning);
                 Assert.AreEqual(PlanStatusEnum.Rejected, finalPlan.Status);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
             }
         }
 
@@ -1017,7 +1031,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
+                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, finalPlan.IsPricingModelRunning);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
             }
         }
 
@@ -1036,7 +1051,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
+                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, finalPlan.IsPricingModelRunning);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
             }
         }
 
@@ -1055,7 +1071,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
+                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, finalPlan.IsPricingModelRunning);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
             }
         }
 
@@ -1087,7 +1104,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
+                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, finalPlan.IsPricingModelRunning);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
             }
         }
 
@@ -1106,7 +1124,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
+                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, finalPlan.IsPricingModelRunning);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
             }
         }
 
@@ -1125,7 +1144,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
+                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, finalPlan.IsPricingModelRunning);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
             }
         }
 
@@ -1288,8 +1308,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 });
 
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                var finalPlan = _PlanService.GetPlan(planId);
                 Assert.IsTrue(planId > 0);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(_PlanService.GetPlan(planId)), _GetJsonSettings()));
+                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, finalPlan.IsPricingModelRunning);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
             }
         }
 
@@ -1349,6 +1371,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var newPlan = _GetNewPlan();
                 var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                _ForceCompletePlanPricingJob(newPlanId);
                 var testPlan = _PlanService.GetPlan(newPlanId);
 
                 testPlan.FlightDays = null;
@@ -1367,6 +1390,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var newPlan = _GetNewPlan();
                 var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
+                _ForceCompletePlanPricingJob(newPlanId);
                 var testPlan = _PlanService.GetPlan(newPlanId);
 
                 testPlan.FlightDays = new List<int>();
@@ -1384,7 +1408,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var newPlan = _PlanService.GetPlan(1852);
                 var transitionDateToLive = newPlan.FlightStartDate.Value;
-                var updatedDate  = newPlan.FlightStartDate.Value.AddDays(1);
+                var updatedDate = newPlan.FlightStartDate.Value.AddDays(1);
                 Assert.AreEqual(6, newPlan.VersionNumber);
 
                 _PlanService.AutomaticStatusTransitions(transitionDateToLive, "integration_test", updatedDate);
@@ -1426,7 +1450,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var newPlan = _PlanService.GetPlan(1853);
-                
+
                 var transitionDateToComplete = newPlan.FlightEndDate.Value;
                 var updatedDate = newPlan.FlightEndDate.Value;
                 Assert.AreEqual(6, newPlan.VersionNumber);
@@ -2672,6 +2696,78 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlan_WithPricing()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var pricingParameters = _GetPricingParametersWithoutPlanDto();
+                var job = _PlanPricingService.QueuePricingJob(pricingParameters, new System.DateTime(2019, 01, 01), "integration_test");
+                _ForceCompletePlanPricingJobByJobId(job.Id);
+
+                var newPlan = _GetNewPlan();
+                newPlan.JobId = job.Id;
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                var finalPlan = _PlanService.GetPlan(newPlanId);
+
+                var updatedJob = _PlanRepository.GetPlanPricingJob(job.Id);
+
+                if (BroadcastFeaturesSystemParameter.EnablePricingInEdit)
+                {
+                    Assert.AreEqual(job.Id, finalPlan.JobId);
+                    Assert.AreEqual(job.Id, finalPlan.PricingParameters.JobId);
+                    Assert.AreEqual(finalPlan.VersionId, finalPlan.PricingParameters.PlanVersionId);
+                    Assert.AreEqual(finalPlan.VersionId, updatedJob.PlanVersionId);
+                }
+                Assert.AreEqual(BroadcastFeaturesSystemParameter.EnablePricingInEdit, finalPlan.IsPricingModelRunning);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
+            }
+        }
+
+        private PricingParametersWithoutPlanDto _GetPricingParametersWithoutPlanDto()
+        {
+            var plan = _GetNewPlan();
+
+            var pricingDefaults = _PlanPricingService.GetPlanPricingDefaults();
+            var pricingParameters = new PricingParametersWithoutPlanDto
+            {
+                AudienceId = plan.AudienceId,
+                AvailableMarkets = plan.AvailableMarkets,
+                Budget = Convert.ToDecimal(plan.Budget),
+                CPM = Convert.ToDecimal(plan.TargetCPM),
+                CPP = Convert.ToDecimal(plan.TargetCPP),
+                Currency = plan.Currency,
+                DeliveryImpressions = Convert.ToDouble(plan.TargetImpressions) / 1000,
+                DeliveryRatingPoints = Convert.ToDouble(plan.TargetRatingPoints),
+                UnitCaps = pricingDefaults.UnitCaps,
+                UnitCapsType = pricingDefaults.UnitCapType,
+                InventorySourcePercentages = pricingDefaults.InventorySourcePercentages,
+                InventorySourceTypePercentages = pricingDefaults.InventorySourceTypePercentages,
+                Margin = pricingDefaults.Margin,
+                MarketGroup = pricingDefaults.MarketGroup,
+                CoverageGoalPercent = plan.CoverageGoalPercent,
+                CreativeLengths = plan.CreativeLengths,
+                Dayparts = plan.Dayparts,
+                Equivalized = plan.Equivalized,
+                FlightDays = plan.FlightDays,
+                FlightEndDate = plan.FlightEndDate,
+                FlightStartDate = plan.FlightStartDate,
+                FlightHiatusDays = plan.FlightHiatusDays,
+                GoalBreakdownType = plan.GoalBreakdownType,
+                HUTBookId = plan.HUTBookId,
+                ImpressionsPerUnit = plan.ImpressionsPerUnit,
+                MaxCpm = 20,
+                MinCpm = 5,
+                PostingType = plan.PostingType,
+                ShareBookId = plan.ShareBookId,
+                TargetRatingPoints = plan.TargetRatingPoints,
+                WeeklyBreakdownWeeks = plan.WeeklyBreakdownWeeks
+            };
+
+            return pricingParameters;
+        }
+
         private static PlanDto _GetNewPlan()
         {
             return new PlanDto
@@ -3014,12 +3110,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
         }
 
-        private JsonSerializerSettings _GetJsonSettings()
+        private JsonSerializerSettings _GetJsonSettings(bool ignorePricingRunning = false)
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
 
             jsonResolver.Ignore(typeof(PlanDto), "Id");
             jsonResolver.Ignore(typeof(PlanDto), "VersionId");
+            jsonResolver.Ignore(typeof(PlanDto), "JobId");
             jsonResolver.Ignore(typeof(PlanDaypartDto), "Id");
             jsonResolver.Ignore(typeof(PlanMarketDto), "Id");
             jsonResolver.Ignore(typeof(PlanSummaryDto), "PlanId");
@@ -3027,8 +3124,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(PlanVersionDto), "VersionId");
             jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
             jsonResolver.Ignore(typeof(PlanPricingJob), "PlanVersionId");
+            jsonResolver.Ignore(typeof(PlanPricingParametersDto), "JobId");
             jsonResolver.Ignore(typeof(PlanPricingParametersDto), "PlanId");
             jsonResolver.Ignore(typeof(PlanPricingParametersDto), "PlanVersionId");
+
+            if (ignorePricingRunning)
+                jsonResolver.Ignore(typeof(PlanDto), "IsPricingModelRunning");
 
             return new JsonSerializerSettings
             {
@@ -3039,14 +3140,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         private void _ForceCompletePlanPricingJob(int planId)
         {
-            var planRepo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
-            var job = planRepo.GetLatestPricingJob(planId);
-            if (job != null)
-            {
-                job.Status = BackgroundJobProcessingStatus.Succeeded;
-                job.Completed = DateTime.Now;
-                planRepo.UpdatePlanPricingJob(job);
-            }
+            var job = _PlanRepository.GetLatestPricingJob(planId);
+            _ForceCompletePlanPricingJob(job);
+        }
+
+        private void _ForceCompletePlanPricingJob(PlanPricingJob job)
+        {
+            if (job == null)
+                return;
+
+            job.Status = BackgroundJobProcessingStatus.Succeeded;
+            job.Completed = DateTime.Now;
+            _PlanRepository.UpdatePlanPricingJob(job);
+        }
+
+        private void _ForceCompletePlanPricingJobByJobId(int jobId)
+        {
+            var job = _PlanRepository.GetPlanPricingJob(jobId);
+            _ForceCompletePlanPricingJob(job);
         }
     }
 }
