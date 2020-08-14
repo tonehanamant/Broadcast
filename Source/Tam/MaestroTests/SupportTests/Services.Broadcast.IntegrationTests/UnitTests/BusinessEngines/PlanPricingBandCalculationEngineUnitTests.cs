@@ -4,6 +4,7 @@ using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using System.Collections.Generic;
 using Tam.Maestro.Services.ContractInterfaces.Common;
@@ -40,9 +41,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     new PlanPricingAllocatedSpot
                     {
                         Id = 1,
-                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        SpotFrequencies = new List<SpotFrequency>
                         {
-                            new PlanPricingAllocatedSpot.SpotFrequency
+                            new SpotFrequency
                             {
                                 Spots = 10,
                                 SpotCost = 50,
@@ -84,9 +85,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     new PlanPricingAllocatedSpot
                     {
                         Id = 1,
-                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        SpotFrequencies = new List<SpotFrequency>
                         {
-                            new PlanPricingAllocatedSpot.SpotFrequency
+                            new SpotFrequency
                             {
                                 Spots = 10,
                                 SpotCost = 50,
@@ -128,9 +129,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     new PlanPricingAllocatedSpot
                     {
                         Id = 1,
-                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        SpotFrequencies = new List<SpotFrequency>
                         {
-                            new PlanPricingAllocatedSpot.SpotFrequency
+                            new SpotFrequency
                             {
                                 Spots = 10,
                                 SpotCost = 50,
@@ -170,9 +171,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     new PlanPricingAllocatedSpot
                     {
                         Id = 1,
-                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        SpotFrequencies = new List<SpotFrequency>
                         {
-                            new PlanPricingAllocatedSpot.SpotFrequency
+                            new SpotFrequency
                             {
                                 Spots = 10,
                                 SpotCost = 50,
@@ -212,9 +213,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     new PlanPricingAllocatedSpot
                     {
                         Id = 1,
-                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        SpotFrequencies = new List<SpotFrequency>
                         {
-                            new PlanPricingAllocatedSpot.SpotFrequency
+                            new SpotFrequency
                             {
                                 Spots = 10,
                                 SpotCost = 50,
@@ -254,9 +255,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     new PlanPricingAllocatedSpot
                     {
                         Id = 1,
-                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        SpotFrequencies = new List<SpotFrequency>
                         {
-                            new PlanPricingAllocatedSpot.SpotFrequency
+                            new SpotFrequency
                             {
                                 Spots = 10,
                                 SpotCost = 50,
@@ -297,9 +298,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     new PlanPricingAllocatedSpot
                     {
                         Id = 1,
-                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        SpotFrequencies = new List<SpotFrequency>
                         {
-                            new PlanPricingAllocatedSpot.SpotFrequency
+                            new SpotFrequency
                             {
                                 Spots = 1,
                                 SpotCost = 7,
@@ -341,9 +342,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     new PlanPricingAllocatedSpot
                     {
                         Id = 1,
-                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        SpotFrequencies = new List<SpotFrequency>
                         {
-                            new PlanPricingAllocatedSpot.SpotFrequency
+                            new SpotFrequency
                             {
                                 Spots = 1,
                                 SpotCost = 7,

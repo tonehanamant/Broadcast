@@ -1,11 +1,12 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.Plan.Pricing
 {
-    public class PlanPricingInventoryProgram : BasePlanPricingInventoryProgram
+    public class PlanPricingInventoryProgram : BasePlanInventoryProgram
     {
         public double ProjectedImpressions { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using Services.Broadcast.Entities.Plan.Pricing;
+﻿using Services.Broadcast.Entities.Plan.CommonPricingEntities;
+using Services.Broadcast.Entities.Plan.Pricing;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;

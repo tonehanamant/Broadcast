@@ -417,7 +417,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
-                    MarketGroup = PricingMarketGroupEnum.None,
+                    MarketGroup = MarketGroupEnum.None,
                     InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                     {
                         new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
@@ -499,7 +499,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     CPP = 14.6m,
                     Currency = PlanCurrenciesEnum.Impressions,
                     DeliveryRatingPoints = 1234,
-                    MarketGroup = PricingMarketGroupEnum.None,
+                    MarketGroup = MarketGroupEnum.None,
                     InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                     {
                         new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
@@ -556,7 +556,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
-                    MarketGroup = PricingMarketGroupEnum.None,
+                    MarketGroup = MarketGroupEnum.None,
                     InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                     {
                         new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
@@ -887,7 +887,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
-                    MarketGroup = PricingMarketGroupEnum.None,
+                    MarketGroup = MarketGroupEnum.None,
                     InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                     {
                         new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
@@ -951,7 +951,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
-                    MarketGroup = PricingMarketGroupEnum.Top25,
+                    MarketGroup = MarketGroupEnum.Top25,
                     InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                     {
                         new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
@@ -1011,7 +1011,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
-                    MarketGroup = PricingMarketGroupEnum.None
+                    MarketGroup = MarketGroupEnum.None
                 };
 
                 var job = planPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
@@ -1199,7 +1199,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ProprietaryBlend = 0.2,
                 UnitCaps = 10,
                 UnitCapsType = UnitCapEnum.PerDay,
-                MarketGroup = PricingMarketGroupEnum.None,
+                MarketGroup = MarketGroupEnum.None,
                 Margin = 20,
                 InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                     {
@@ -1233,7 +1233,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ProprietaryBlend = 0.2,
                 UnitCaps = 10,
                 UnitCapsType = UnitCapEnum.PerDay,
-                MarketGroup = PricingMarketGroupEnum.None,
+                MarketGroup = MarketGroupEnum.None,
                 Margin = 20,
                 InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                     {

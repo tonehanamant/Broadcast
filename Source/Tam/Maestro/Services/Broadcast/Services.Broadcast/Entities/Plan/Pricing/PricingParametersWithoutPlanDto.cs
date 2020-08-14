@@ -19,7 +19,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public int UnitCaps { get; set; }
         public UnitCapEnum UnitCapsType { get; set; }
         public PlanCurrenciesEnum Currency { get; set; }
-        public PricingMarketGroupEnum MarketGroup { get; set; }
+        public MarketGroupEnum MarketGroup { get; set; }
         public decimal CPP { get; set; }
         public double DeliveryRatingPoints { get; set; }
         public double? Margin { get; set; }

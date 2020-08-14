@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Services.Broadcast.Entities.Plan.CommonPricingEntities;
+using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Data.Entities;
 
@@ -38,17 +39,6 @@ namespace Services.Broadcast.Entities.Plan.Pricing
             {
                 return SpotFrequencies.Sum(x => x.Spots);
             }
-        }
-
-        public class SpotFrequency
-        {
-            public int SpotLengthId { get; set; }
-
-            public decimal SpotCost { get; set; }
-
-            public decimal SpotCostWithMargin { get; set; }
-
-            public int Spots { get; set; }
         }
     }
 }

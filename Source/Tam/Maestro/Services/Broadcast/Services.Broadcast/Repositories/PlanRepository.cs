@@ -22,6 +22,7 @@ using static Services.Broadcast.Entities.Campaign.ProgramLineupReportData;
 using Tam.Maestro.Data.Entities;
 using Common.Services;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 
 namespace Services.Broadcast.Repositories
 {
@@ -617,7 +618,7 @@ namespace Services.Broadcast.Repositories
                 PlanVersionId = arg.plan_version_id,
                 AdjustedCPM = arg.cpm_adjusted,
                 AdjustedBudget = arg.budget_adjusted,
-                MarketGroup = (PricingMarketGroupEnum)arg.market_group
+                MarketGroup = (MarketGroupEnum)arg.market_group
             };
         }
 
@@ -1329,7 +1330,7 @@ namespace Services.Broadcast.Repositories
                 PlanVersionId = entity.plan_version_id,
                 AdjustedBudget = entity.budget_adjusted,
                 AdjustedCPM = entity.cpm_adjusted,
-                MarketGroup = (PricingMarketGroupEnum)entity.market_group
+                MarketGroup = (MarketGroupEnum)entity.market_group
             };
             return dto;
         }
@@ -1486,7 +1487,7 @@ namespace Services.Broadcast.Repositories
                         StationInventoryManifestId = x.station_inventory_manifest_id,
                         // impressions are for :30 sec only for pricing v3
                         Impressions30sec = x.impressions30sec,
-                        SpotFrequencies = x.plan_version_pricing_api_result_spot_frequencies.Select(y => new PlanPricingAllocatedSpot.SpotFrequency
+                        SpotFrequencies = x.plan_version_pricing_api_result_spot_frequencies.Select(y => new SpotFrequency
                         {
                             SpotLengthId = y.spot_length_id,
                             SpotCost = y.cost,
@@ -1957,7 +1958,7 @@ namespace Services.Broadcast.Repositories
                 Id = spot.id,
                 StationInventoryManifestId = spot.station_inventory_manifest_id,
                 Impressions30sec = spot.impressions30sec,
-                SpotFrequencies = spot.plan_version_pricing_api_result_spot_frequencies.Select(x => new PlanPricingAllocatedSpot.SpotFrequency
+                SpotFrequencies = spot.plan_version_pricing_api_result_spot_frequencies.Select(x => new SpotFrequency
                 {
                     SpotLengthId = x.spot_length_id,
                     SpotCost = x.cost,

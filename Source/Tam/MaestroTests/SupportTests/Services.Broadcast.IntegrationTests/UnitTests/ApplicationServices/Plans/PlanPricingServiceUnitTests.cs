@@ -1,7 +1,5 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using Castle.Components.DictionaryAdapter.Xml;
-using Common.Services;
 using Common.Services.Repositories;
 using Hangfire;
 using Hangfire.States;
@@ -15,6 +13,7 @@ using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Helpers;
@@ -25,7 +24,6 @@ using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Tam.Maestro.Common;
@@ -33,7 +31,7 @@ using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using static Services.Broadcast.BusinessEngines.PlanPricingInventoryEngine;
-using static Services.Broadcast.Entities.Plan.Pricing.BasePlanPricingInventoryProgram;
+using static Services.Broadcast.Entities.Plan.CommonPricingEntities.BasePlanInventoryProgram;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram.ManifestDaypart;
 using Job = Hangfire.Common.Job;
@@ -320,9 +318,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new PlanPricingAllocatedSpot
                     {
                         Impressions30sec = 1000,
-                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        SpotFrequencies = new List<SpotFrequency>
                         {
-                            new PlanPricingAllocatedSpot.SpotFrequency
+                            new SpotFrequency
                             {
                                 SpotCost = 10,
                                 Spots = 1
@@ -346,9 +344,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new PlanPricingAllocatedSpot
                     {
                         Impressions30sec = 800,
-                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        SpotFrequencies = new List<SpotFrequency>
                         {
-                            new PlanPricingAllocatedSpot.SpotFrequency
+                            new SpotFrequency
                             {
                                 SpotCost = 8,
                                 Spots = 2
@@ -372,9 +370,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new PlanPricingAllocatedSpot
                     {
                         Impressions30sec = 500,
-                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        SpotFrequencies = new List<SpotFrequency>
                         {
-                            new PlanPricingAllocatedSpot.SpotFrequency
+                            new SpotFrequency
                             {
                                 SpotCost = 5,
                                 Spots = 3
@@ -398,9 +396,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new PlanPricingAllocatedSpot
                     {
                         Impressions30sec = 400,
-                        SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                        SpotFrequencies = new List<SpotFrequency>
                         {
-                            new PlanPricingAllocatedSpot.SpotFrequency
+                            new SpotFrequency
                             {
                                 SpotCost = 3,
                                 Spots = 4
@@ -585,9 +583,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingAllocatedSpot
                 {
                     Id = 1,
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             SpotCost = 200,
                             Spots = 2
@@ -599,9 +597,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingAllocatedSpot
                 {
                     Id = 2,
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             SpotCost = 300,
                             Spots = 4
@@ -613,9 +611,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingAllocatedSpot
                 {
                     Id = 3,
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             SpotCost = 500,
                             Spots = 3
@@ -627,9 +625,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingAllocatedSpot
                 {
                     Id = 4,
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             SpotCost = 100,
                             Spots = 1
@@ -641,9 +639,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingAllocatedSpot
                 {
                     Id = 5,
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             SpotCost = 300,
                             Spots = 3
@@ -655,9 +653,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingAllocatedSpot
                 {
                     Id = 6,
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             SpotCost = 400,
                             Spots = 2
@@ -669,9 +667,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new PlanPricingAllocatedSpot
                 {
                     Id = 7,
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             SpotCost = 250,
                             Spots = 1
@@ -1128,7 +1126,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 ProprietaryBlend = 0.2,
                 UnitCaps = 10,
                 UnitCapsType = UnitCapEnum.PerDay,
-                MarketGroup = PricingMarketGroupEnum.All,
+                MarketGroup = MarketGroupEnum.All,
                 InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                 {
                     new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
@@ -6356,7 +6354,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 CPP = 1.1m,
                 DeliveryRatingPoints = 1.3,
                 Margin = 14,
-                MarketGroup = PricingMarketGroupEnum.Top100,
+                MarketGroup = MarketGroupEnum.Top100,
                 InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                 {
                     new PlanPricingInventorySourceDto{ Id = 3, Percentage = 12 },
@@ -6496,7 +6494,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 CPP = 1.1m,
                 DeliveryRatingPoints = 1.3,
                 Margin = testMargin,
-                MarketGroup = PricingMarketGroupEnum.Top100,
+                MarketGroup = MarketGroupEnum.Top100,
                 InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                 {
                     new PlanPricingInventorySourceDto{ Id = 3, Percentage = 12 },
@@ -6724,7 +6722,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 CPP = 1.1m,
                 DeliveryRatingPoints = 1.3,
                 Margin = 10,
-                MarketGroup = PricingMarketGroupEnum.Top100,
+                MarketGroup = MarketGroupEnum.Top100,
                 InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                 {
                     new PlanPricingInventorySourceDto{ Id = 3, Percentage = 12 },
@@ -6962,7 +6960,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 CPP = 1.1m,
                 DeliveryRatingPoints = 1.3,
                 Margin = 14,
-                MarketGroup = PricingMarketGroupEnum.Top100,
+                MarketGroup = MarketGroupEnum.Top100,
                 InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
                 {
                     new PlanPricingInventorySourceDto{ Id = 3, Percentage = 12 },
@@ -8626,7 +8624,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int jobId = 1;
 
             var parameters = _GetPlanPricingParametersDto();
-            parameters.MarketGroup = PricingMarketGroupEnum.Top100;
+            parameters.MarketGroup = MarketGroupEnum.Top100;
             parameters.Margin = null;
             parameters.JobId = jobId;
 
@@ -8683,7 +8681,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int jobId = 1;
 
             var parameters = _GetPlanPricingParametersDto();
-            parameters.MarketGroup = PricingMarketGroupEnum.Top100;
+            parameters.MarketGroup = MarketGroupEnum.Top100;
             parameters.Margin = 10;
             parameters.JobId = jobId;
 
@@ -8740,7 +8738,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int jobId = 1;
 
             var parameters = _GetPlanPricingParametersDto();
-            parameters.MarketGroup = PricingMarketGroupEnum.Top100;
+            parameters.MarketGroup = MarketGroupEnum.Top100;
             parameters.Margin = 20;
             parameters.JobId = jobId;
 
@@ -8797,7 +8795,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int jobId = 1;
 
             var parameters = _GetPlanPricingParametersDto();
-            parameters.MarketGroup = PricingMarketGroupEnum.Top50;
+            parameters.MarketGroup = MarketGroupEnum.Top50;
             parameters.Margin = 20;
             parameters.JobId = jobId;
 
@@ -8854,7 +8852,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int jobId = 1;
 
             var parameters = _GetPlanPricingParametersDto();
-            parameters.MarketGroup = PricingMarketGroupEnum.Top25;
+            parameters.MarketGroup = MarketGroupEnum.Top25;
             parameters.Margin = 20;
             parameters.JobId = jobId;
 
@@ -8911,7 +8909,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int jobId = 1;
 
             var parameters = _GetPlanPricingParametersDto();
-            parameters.MarketGroup = PricingMarketGroupEnum.All;
+            parameters.MarketGroup = MarketGroupEnum.All;
             parameters.Margin = 20;
             parameters.JobId = jobId;
 
@@ -8965,7 +8963,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int jobId = 1;
 
             var parameters = _GetPlanPricingParametersDto();
-            parameters.MarketGroup = PricingMarketGroupEnum.Top100;
+            parameters.MarketGroup = MarketGroupEnum.Top100;
             parameters.Margin = 10;
             parameters.JobId = jobId;
 
@@ -9022,7 +9020,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int jobId = 1;
 
             var parameters = _GetPlanPricingParametersDto();
-            parameters.MarketGroup = PricingMarketGroupEnum.Top100;
+            parameters.MarketGroup = MarketGroupEnum.Top100;
             parameters.Margin = 10;
             parameters.JobId = jobId;
 
@@ -9248,7 +9246,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int jobId = 1;
 
             var parameters = _GetPlanPricingParametersDto();
-            parameters.MarketGroup = PricingMarketGroupEnum.None;
+            parameters.MarketGroup = MarketGroupEnum.None;
             parameters.Margin = 20;
             parameters.JobId = jobId;
 
@@ -9301,7 +9299,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int jobId = 1;
 
             var parameters = _GetPlanPricingParametersDto();
-            parameters.MarketGroup = PricingMarketGroupEnum.None;
+            parameters.MarketGroup = MarketGroupEnum.None;
             parameters.Margin = 20;
             parameters.JobId = jobId;
 
@@ -9373,7 +9371,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 const int jobId = 1;
 
                 var parameters = _GetPlanPricingParametersDto();
-                parameters.MarketGroup = PricingMarketGroupEnum.None;
+                parameters.MarketGroup = MarketGroupEnum.None;
                 parameters.Margin = 20;
                 parameters.JobId = jobId;
 
@@ -9616,7 +9614,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 const int jobId = 1;
 
                 var parameters = _GetPlanPricingParametersDto();
-                parameters.MarketGroup = PricingMarketGroupEnum.None;
+                parameters.MarketGroup = MarketGroupEnum.None;
                 parameters.Margin = 20;
                 parameters.JobId = jobId;
 
@@ -9817,7 +9815,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                 ManifestId = spot.Id,
                                 MediaWeekId = spot.MediaWeekId,
                                 Frequencies = spot.SpotCost
-                                    .Select(x => new SpotFrequency
+                                    .Select(x => new SpotFrequencyResponse
                                     {
                                         SpotLengthId = x.SpotLengthId,
                                         Frequency = 1

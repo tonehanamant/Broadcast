@@ -2,7 +2,7 @@
 
 namespace Services.Broadcast.Entities.Enums
 {
-    public enum PricingMarketGroupEnum
+    public enum MarketGroupEnum
     {
         [Description("Top 100 Markets")]
         Top100 = 1,

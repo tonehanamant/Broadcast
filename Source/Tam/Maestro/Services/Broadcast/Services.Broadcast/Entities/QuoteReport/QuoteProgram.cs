@@ -1,9 +1,9 @@
-﻿using Services.Broadcast.Entities.Plan.Pricing;
+﻿using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.QuoteReport
 {
-    public class QuoteProgram : BasePlanPricingInventoryProgram
+    public class QuoteProgram : BasePlanInventoryProgram
     {
         public List<ImpressionsPerAudience> DeliveryPerAudience { get; set; } = new List<ImpressionsPerAudience>();
 

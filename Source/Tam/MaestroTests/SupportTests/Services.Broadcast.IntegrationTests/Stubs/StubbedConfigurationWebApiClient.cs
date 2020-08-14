@@ -337,6 +337,9 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                 case "PlanPricingEndpointVersion":
                     result = "2";
                     break;
+                case "PlanPricingAllocationsUrlV3":
+                    result = "https://datascience-dev.cadent.tv/broadcast-openmarket-allocations/v3/allocation";
+                    break;
                 default:
                     throw new Exception("Unknown SystemComponentParameter: " + parameterId);
             }

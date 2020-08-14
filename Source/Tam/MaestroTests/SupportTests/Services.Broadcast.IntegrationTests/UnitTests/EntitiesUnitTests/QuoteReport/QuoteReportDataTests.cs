@@ -5,6 +5,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.QuoteReport;
 using Services.Broadcast.IntegrationTests.TestData;
@@ -245,21 +246,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests.QuoteR
                             CPM = 30.5m
                         }
                     },
-                    ManifestRates = new List<BasePlanPricingInventoryProgram.ManifestRate>
+                    ManifestRates = new List<BasePlanInventoryProgram.ManifestRate>
                     {
-                        new BasePlanPricingInventoryProgram.ManifestRate
+                        new BasePlanInventoryProgram.ManifestRate
                         {
                             Cost = 37.5m,
                             SpotLengthId = 1
                         }
                     },
-                    ManifestDayparts = new List<BasePlanPricingInventoryProgram.ManifestDaypart>
+                    ManifestDayparts = new List<BasePlanInventoryProgram.ManifestDaypart>
                     {
                         // there will be only one
-                        new BasePlanPricingInventoryProgram.ManifestDaypart
+                        new BasePlanInventoryProgram.ManifestDaypart
                         {
                             Daypart = new DisplayDaypart(1, 0, 3600, true, true, true, true, true, true, true),
-                            PrimaryProgram = new BasePlanPricingInventoryProgram.ManifestDaypart.Program
+                            PrimaryProgram = new BasePlanInventoryProgram.ManifestDaypart.Program
                             {
                                 Name = "Test Program"
                             }

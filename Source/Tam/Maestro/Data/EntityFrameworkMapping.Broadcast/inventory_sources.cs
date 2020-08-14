@@ -31,6 +31,8 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_pricing_job_inventory_source_estimates = new HashSet<plan_version_pricing_job_inventory_source_estimates>();
             this.inventory_export_jobs = new HashSet<inventory_export_jobs>();
             this.inventory_proprietary_summary = new HashSet<inventory_proprietary_summary>();
+            this.plan_version_buying_job_inventory_source_estimates = new HashSet<plan_version_buying_job_inventory_source_estimates>();
+            this.plan_version_buying_parameters_inventory_source_percentages = new HashSet<plan_version_buying_parameters_inventory_source_percentages>();
         }
     
         public int id { get; set; }
@@ -53,5 +55,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_pricing_job_inventory_source_estimates> plan_version_pricing_job_inventory_source_estimates { get; set; }
         public virtual ICollection<inventory_export_jobs> inventory_export_jobs { get; set; }
         public virtual ICollection<inventory_proprietary_summary> inventory_proprietary_summary { get; set; }
+        public virtual ICollection<plan_version_buying_job_inventory_source_estimates> plan_version_buying_job_inventory_source_estimates { get; set; }
+        public virtual ICollection<plan_version_buying_parameters_inventory_source_percentages> plan_version_buying_parameters_inventory_source_percentages { get; set; }
     }
 }

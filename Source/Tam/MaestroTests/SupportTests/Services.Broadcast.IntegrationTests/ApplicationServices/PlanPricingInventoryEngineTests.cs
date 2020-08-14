@@ -17,8 +17,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using static Services.Broadcast.Entities.Plan.CommonPricingEntities.BasePlanInventoryProgram;
 using static Services.Broadcast.Entities.Plan.PlanDaypartDto;
-using static Services.Broadcast.Entities.Plan.Pricing.BasePlanPricingInventoryProgram;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices

@@ -43,6 +43,7 @@
   ],
   "BlackoutMarketTotalUsCoveragePercent": null,
   "Budget": 100.0,
+  "BuyingParameters": null,
   "CampaignId": 1,
   "CampaignName": null,
   "CoverageGoalPercent": 80.5,

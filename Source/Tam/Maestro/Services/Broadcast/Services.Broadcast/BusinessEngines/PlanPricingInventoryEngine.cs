@@ -1,14 +1,12 @@
 ﻿using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
-using log4net;
-using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.QuoteReport;
-using Services.Broadcast.Entities.spotcableXML;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
@@ -202,7 +200,7 @@ namespace Services.Broadcast.BusinessEngines
             return programs;
         }
 
-        private void _SetProgramDayparts<T>(List<T> programs) where T: BasePlanPricingInventoryProgram
+        private void _SetProgramDayparts<T>(List<T> programs) where T: BasePlanInventoryProgram
         {
             var daypartIds = programs.SelectMany(p => p.ManifestDayparts)
                 .Select(m => m.Daypart.Id)
@@ -218,7 +216,7 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        private void _SetProgramsFlightDays<T>(List<T> programs, List<int> flightDays) where T: BasePlanPricingInventoryProgram
+        private void _SetProgramsFlightDays<T>(List<T> programs, List<int> flightDays) where T: BasePlanInventoryProgram
         {
             var days = _DayRepository.GetDays();
             var flightDayNames = days
@@ -519,7 +517,7 @@ namespace Services.Broadcast.BusinessEngines
             return programs;
         }
 
-        private void _SetProgramStationLatestMonthDetails<T>(List<T> programs) where T: BasePlanPricingInventoryProgram
+        private void _SetProgramStationLatestMonthDetails<T>(List<T> programs) where T: BasePlanInventoryProgram
         {
             var distinctIds = programs.Select(x => x.Station.Id).Distinct().ToList();
             var latestStationMonthDetails = _StationRepository.GetLatestStationMonthDetailsForStations(distinctIds);
@@ -536,7 +534,7 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        private void _SetPrimaryProgramForDayparts<T>(List<T> programs) where T: BasePlanPricingInventoryProgram
+        private void _SetPrimaryProgramForDayparts<T>(List<T> programs) where T: BasePlanInventoryProgram
         {
             foreach (var manifestDaypart in programs.SelectMany(x => x.ManifestDayparts))
             {
@@ -612,7 +610,7 @@ namespace Services.Broadcast.BusinessEngines
         protected List<T> FilterProgramsByDaypartAndSetStandardDaypart<T>(
             List<PlanDaypartDto> dayparts,
             List<T> programs,
-            DisplayDaypart planDays) where T: BasePlanPricingInventoryProgram
+            DisplayDaypart planDays) where T: BasePlanInventoryProgram
         {
             var result = new List<T>();
 
@@ -785,7 +783,7 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        private List<ProgramInventoryDaypart> _GetPlanDaypartsThatMatchProgramByRestrictions(List<ProgramInventoryDaypart> programInventoryDayparts, BasePlanPricingInventoryProgram program)
+        private List<ProgramInventoryDaypart> _GetPlanDaypartsThatMatchProgramByRestrictions(List<ProgramInventoryDaypart> programInventoryDayparts, BasePlanInventoryProgram program)
         {
             var result = new List<ProgramInventoryDaypart>();
 
@@ -809,7 +807,7 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
-        private bool _IsProgramAllowedByAffiliateRestrictions(ProgramInventoryDaypart programInventoryDaypart, BasePlanPricingInventoryProgram program)
+        private bool _IsProgramAllowedByAffiliateRestrictions(ProgramInventoryDaypart programInventoryDaypart, BasePlanInventoryProgram program)
         {
             var affiliateRestrictions = programInventoryDaypart.PlanDaypart.Restrictions.AffiliateRestrictions;
 
@@ -890,7 +888,7 @@ namespace Services.Broadcast.BusinessEngines
         private List<ProgramInventoryDaypart> _GetPlanDaypartsThatMatchProgramByTimeAndDays(
             List<PlanDaypartDto> planDayparts,
             DisplayDaypart planDisplayDaypart,
-            BasePlanPricingInventoryProgram program)
+            BasePlanInventoryProgram program)
         {
             var result = new List<ProgramInventoryDaypart>();
 
@@ -1043,7 +1041,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             public PlanDaypartDto PlanDaypart { get; set; }
 
-            public BasePlanPricingInventoryProgram.ManifestDaypart ManifestDaypart { get; set; }
+            public BasePlanInventoryProgram.ManifestDaypart ManifestDaypart { get; set; }
         }
 
         public class ProgramInventoryOptionalParametersDto
@@ -1056,7 +1054,7 @@ namespace Services.Broadcast.BusinessEngines
 
             public double? Margin { get; set; }
 
-            public PricingMarketGroupEnum MarketGroup { get; set; }
+            public MarketGroupEnum MarketGroup { get; set; }
         }
     }
 }

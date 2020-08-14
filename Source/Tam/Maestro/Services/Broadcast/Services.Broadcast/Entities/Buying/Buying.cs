@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Services.Broadcast.Entities.Plan
+namespace Services.Broadcast.Entities.Buying
 {
     /// <summary>
     /// Buying data for a plan

@@ -11,6 +11,6 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public List<PlanPricingInventorySourceDto> InventorySourcePercentages { get; set; }
         public List<PlanPricingInventorySourceTypeDto> InventorySourceTypePercentages { get; set; }
         public double Margin { get; set; }
-        public PricingMarketGroupEnum MarketGroup { get; set; }
+        public MarketGroupEnum MarketGroup { get; set; }
     }
 }

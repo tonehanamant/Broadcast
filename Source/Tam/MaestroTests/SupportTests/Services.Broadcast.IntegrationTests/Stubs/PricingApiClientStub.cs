@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.Clients;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +46,7 @@ namespace Services.Broadcast.IntegrationTests.Stubs
                     ManifestId = spot.Id,
                     MediaWeekId = spot.MediaWeekId,
                     Frequencies = spot.SpotCost
-                        .Select(x => new SpotFrequency 
+                        .Select(x => new SpotFrequencyResponse 
                         { 
                             SpotLengthId = x.SpotLengthId, 
                             Frequency = 1

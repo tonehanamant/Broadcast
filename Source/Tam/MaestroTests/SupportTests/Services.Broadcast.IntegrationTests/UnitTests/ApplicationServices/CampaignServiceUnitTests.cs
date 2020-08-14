@@ -11,6 +11,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Helpers;
@@ -2371,9 +2372,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 10001,
                         Code = "EMN"
                     },
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             Spots = 1
                         }
@@ -2388,9 +2389,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 10002,
                         Code = "EM"
                     },
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             Spots = 1
                         }
@@ -2405,9 +2406,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 20001,
                         Code = "LN"
                     },
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             Spots = 1
                         }
@@ -2422,9 +2423,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 20002,
                         Code = "EM"
                     },
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             Spots = 1
                         }
@@ -2439,9 +2440,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 30001,
                         Code = "EM"
                     },
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             Spots = 1
                         }
@@ -2456,9 +2457,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 30002,
                         Code = "EM"
                     },
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             Spots = 1
                         }
@@ -2473,9 +2474,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 40001,
                         Code = "EM"
                     },
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             Spots = 1
                         }
@@ -2489,9 +2490,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 40002,
                         Code = "EM"
                     },
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             Spots = 1
                         }
@@ -2513,9 +2514,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 10001,
                         Code = "EMN"
                     },
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             Spots = 1
                         }
@@ -2530,9 +2531,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 20001,
                         Code = "LN"
                     },
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             Spots = 1
                         }
@@ -2547,9 +2548,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 30002,
                         Code = "EM"
                     },
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             Spots = 2
                         }
@@ -2564,9 +2565,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 40001,
                         Code = "EM"
                     },
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             Spots = 1
                         }
@@ -2581,9 +2582,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 50001,
                         Code = "LN"
                     },
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             Spots = 5
                         }
@@ -2598,9 +2599,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 60001,
                         Code = "LN"
                     },
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             Spots = 5
                         }
@@ -2615,9 +2616,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Id = 60001,
                         Code = "LN"
                     },
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             Spots = 5
                         }

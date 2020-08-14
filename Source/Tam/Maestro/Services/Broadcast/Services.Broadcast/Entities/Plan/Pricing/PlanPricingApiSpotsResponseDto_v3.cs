@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.Plan.Pricing
@@ -24,16 +25,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public int ManifestId { get; set; }
 
         [JsonProperty("frequencies")]
-        public List<SpotFrequency> Frequencies { get; set; }
-    }
-
-    public class SpotFrequency
-    {
-        [JsonProperty("spot_length_id")]
-        public int SpotLengthId { get; set; }
-
-        [JsonProperty("frequency")]
-        public int Frequency { get; set; }
+        public List<SpotFrequencyResponse> Frequencies { get; set; }
     }
 
     public class PlanPricingApiSpotsErrorDto_v3

@@ -1,9 +1,9 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using NUnit.Framework;
-using Services.Broadcast.ApplicationServices.Plan;
+using Services.Broadcast.ApplicationServices.Buying;
+using Services.Broadcast.Entities.Buying;
 using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Entities.Plan;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -11,7 +11,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [Category("short_running")]
     public class PlanBuyingServiceIntegrationTests
     {
-        private readonly IPlanBuyingService _PlanBuyingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanBuyingService>();
+        private readonly IBuyingService _PlanBuyingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IBuyingService>();
         
         [Test]
         [UseReporter(typeof(DiffReporter))]

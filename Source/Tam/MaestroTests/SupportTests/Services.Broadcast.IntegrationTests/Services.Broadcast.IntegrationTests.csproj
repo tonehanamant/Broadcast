@@ -373,6 +373,8 @@
     <Compile Include="ApplicationServices\LogoServiceTests.cs" />
     <Compile Include="ApplicationServices\InventoryGapCalculationEngineTests.cs" />
     <Compile Include="ApplicationServices\AudienceServiceIntegrationTests.cs" />
+    <Compile Include="ApplicationServices\Plan\PlanBuying\PlanBuyingInventoryEngineTests.cs" />
+    <Compile Include="ApplicationServices\Plan\PlanBuying\PlanBuyingServiceTests.cs" />
     <Compile Include="ApplicationServices\PostingBookServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProgramGuideServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProgramMappingServiceTests.cs" />
@@ -456,6 +458,7 @@
     <Compile Include="Repositories\DisplayDaypartRepositoryTests.cs" />
     <Compile Include="Stubs\EmailerServicedStub.cs" />
     <Compile Include="Stubs\LaunchDarklyClientStub.cs" />
+    <Compile Include="Stubs\Plan\PlanBuyingApiClientStub.cs" />
     <Compile Include="Stubs\PricingApiClientStub.cs" />
     <Compile Include="Stubs\ProgramGuideApiClientStub.cs" />
     <Compile Include="Stubs\ProgramsSearchApiClientStub.cs" />

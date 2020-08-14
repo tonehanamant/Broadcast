@@ -205,5 +205,21 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<inventory_proprietary_summary_audiences> inventory_proprietary_summary_audiences { get; set; }
         public virtual DbSet<inventory_proprietary_summary_markets> inventory_proprietary_summary_markets { get; set; }
         public virtual DbSet<inventory_proprietary_summary> inventory_proprietary_summary { get; set; }
+        public virtual DbSet<plan_version_buying_api_result_spot_frequencies> plan_version_buying_api_result_spot_frequencies { get; set; }
+        public virtual DbSet<plan_version_buying_api_result_spots> plan_version_buying_api_result_spots { get; set; }
+        public virtual DbSet<plan_version_buying_api_results> plan_version_buying_api_results { get; set; }
+        public virtual DbSet<plan_version_buying_band_details> plan_version_buying_band_details { get; set; }
+        public virtual DbSet<plan_version_buying_bands> plan_version_buying_bands { get; set; }
+        public virtual DbSet<plan_version_buying_job> plan_version_buying_job { get; set; }
+        public virtual DbSet<plan_version_buying_job_inventory_source_estimates> plan_version_buying_job_inventory_source_estimates { get; set; }
+        public virtual DbSet<plan_version_buying_market_details> plan_version_buying_market_details { get; set; }
+        public virtual DbSet<plan_version_buying_markets> plan_version_buying_markets { get; set; }
+        public virtual DbSet<plan_version_buying_parameters> plan_version_buying_parameters { get; set; }
+        public virtual DbSet<plan_version_buying_parameters_inventory_source_percentages> plan_version_buying_parameters_inventory_source_percentages { get; set; }
+        public virtual DbSet<plan_version_buying_parameters_inventory_source_type_percentages> plan_version_buying_parameters_inventory_source_type_percentages { get; set; }
+        public virtual DbSet<plan_version_buying_result_spots> plan_version_buying_result_spots { get; set; }
+        public virtual DbSet<plan_version_buying_results> plan_version_buying_results { get; set; }
+        public virtual DbSet<plan_version_buying_station_details> plan_version_buying_station_details { get; set; }
+        public virtual DbSet<plan_version_buying_stations> plan_version_buying_stations { get; set; }
     }
 }

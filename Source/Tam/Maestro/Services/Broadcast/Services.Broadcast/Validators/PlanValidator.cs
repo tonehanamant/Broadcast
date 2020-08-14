@@ -40,6 +40,12 @@ namespace Services.Broadcast.Validators
         /// </summary>
         /// <param name="plan">The plan.</param>
         void ValidatePlanForPricing(PlanDto plan);
+
+        /// <summary>
+        /// Validates the plan for buying.
+        /// </summary>
+        /// <param name="plan">The plan.</param>
+        void ValidatePlanForBuying(PlanDto plan);
     }
 
     public class PlanValidator : IPlanValidator
@@ -107,6 +113,7 @@ namespace Services.Broadcast.Validators
                 .ToList();
         }
 
+        /// <inheritdoc/>
         public void ValidatePlan(PlanDto plan)
         {
             if (string.IsNullOrWhiteSpace(plan.Name) || plan.Name.Length > 255)
@@ -134,6 +141,7 @@ namespace Services.Broadcast.Validators
             _ValidateStopWord(plan);
         }
 
+        /// <inheritdoc/>
         public void ValidatePlanForPricing(PlanDto plan)
         {
             _ValidateFlightAndHiatus(plan);
@@ -143,6 +151,15 @@ namespace Services.Broadcast.Validators
             _ValidateMarkets(plan);
         }
 
+        /// <inheritdoc/>
+        public void ValidatePlanForBuying(PlanDto plan)
+        {
+            _ValidateFlightAndHiatus(plan);
+            _ValidateDayparts(plan);
+            _ValidatePrimaryAudience(plan);
+            //_ValidateWeeklyBreakdownWeeks(plan);
+            _ValidateMarkets(plan);
+        }
 
         private void _ValidateStopWord(PlanDto plan)
         {

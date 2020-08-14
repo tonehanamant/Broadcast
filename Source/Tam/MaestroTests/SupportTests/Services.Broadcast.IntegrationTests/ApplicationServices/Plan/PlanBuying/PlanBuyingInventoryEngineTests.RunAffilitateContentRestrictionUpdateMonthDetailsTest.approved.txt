@@ -1,0 +1,401 @@
+[
+  {
+    "Cpm": 12.787723785166240409207161100,
+    "Impressions": 58650.0,
+    "InventoryBuyingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 34500.0
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 22700.0
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 26200.0
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 20000.0
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 27900.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": true,
+          "_Id": 32941,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Id": 358772,
+        "PrimaryProgram": {
+          "EndTime": 7200,
+          "Genre": "Children",
+          "Id": 11245,
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
+        },
+        "PrimaryProgramId": 11245,
+        "ProgramName": "FRIENDS",
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Children",
+            "Id": 11245,
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
+      }
+    ],
+    "ManifestId": 287146,
+    "ManifestRates": [
+      {
+        "Cost": 750.0000,
+        "SpotLengthId": 2
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 771,
+        "Id": 1697537,
+        "InventoryMediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 772,
+        "Id": 1704819,
+        "InventoryMediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 773,
+        "Id": 1712148,
+        "InventoryMediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 774,
+        "Id": 1719502,
+        "InventoryMediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 775,
+        "Id": 1727234,
+        "InventoryMediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 66863.3375,
+    "ProvidedImpressions": 58650.0,
+    "SpotLengthId": 1,
+    "StandardDaypartId": 2,
+    "Station": {
+      "Affiliation": "CW2",
+      "CallLetters": "WPIX 11.1",
+      "Code": 5014,
+      "Id": 575,
+      "LegacyCallLetters": "WPIX",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
+    },
+    "Unit": null
+  },
+  {
+    "Cpm": 15.582391897156213478768991000,
+    "Impressions": 51340.0,
+    "InventoryBuyingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 30200.0
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 11300.0
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 11800.0
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 12100.0
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 21300.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": false,
+          "_Id": 32943,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "BRDCST DP362",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 358776,
+        "PrimaryProgram": {
+          "EndTime": 7200,
+          "Genre": "Children",
+          "Id": 11247,
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
+        },
+        "PrimaryProgramId": 11247,
+        "ProgramName": "FRIENDS",
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Children",
+            "Id": 11247,
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
+      }
+    ],
+    "ManifestId": 287150,
+    "ManifestRates": [
+      {
+        "Cost": 800.0000,
+        "SpotLengthId": 2
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 771,
+        "Id": 1697541,
+        "InventoryMediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 772,
+        "Id": 1704823,
+        "InventoryMediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 773,
+        "Id": 1712152,
+        "InventoryMediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 774,
+        "Id": 1719506,
+        "InventoryMediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 775,
+        "Id": 1727238,
+        "InventoryMediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 76497.025,
+    "ProvidedImpressions": 51340.0,
+    "SpotLengthId": 1,
+    "StandardDaypartId": 2,
+    "Station": {
+      "Affiliation": "CW2",
+      "CallLetters": "WPIX 11.1",
+      "Code": 5014,
+      "Id": 575,
+      "LegacyCallLetters": "WPIX",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
+    },
+    "Unit": null
+  },
+  {
+    "Cpm": 15.082956259426847662141779800,
+    "Impressions": 39780.0,
+    "InventoryBuyingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 23400.0
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 11800.0
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 13300.0
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 12100.0
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 16900.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": false,
+          "_Id": 29548,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 358780,
+        "PrimaryProgram": {
+          "EndTime": 7200,
+          "Genre": "Children",
+          "Id": 11249,
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
+        },
+        "PrimaryProgramId": 11249,
+        "ProgramName": "FRIENDS 2X",
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Children",
+            "Id": 11249,
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
+      }
+    ],
+    "ManifestId": 287154,
+    "ManifestRates": [
+      {
+        "Cost": 600.0000,
+        "SpotLengthId": 2
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 771,
+        "Id": 1697545,
+        "InventoryMediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 772,
+        "Id": 1704827,
+        "InventoryMediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 773,
+        "Id": 1712156,
+        "InventoryMediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 774,
+        "Id": 1719510,
+        "InventoryMediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 775,
+        "Id": 1727242,
+        "InventoryMediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 68058.96875,
+    "ProvidedImpressions": 39780.0,
+    "SpotLengthId": 1,
+    "StandardDaypartId": 2,
+    "Station": {
+      "Affiliation": "CW2",
+      "CallLetters": "WPIX 11.1",
+      "Code": 5014,
+      "Id": 575,
+      "LegacyCallLetters": "WPIX",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
+    },
+    "Unit": null
+  }
+]

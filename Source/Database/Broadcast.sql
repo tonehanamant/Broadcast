@@ -198,127 +198,89 @@ BEGIN
 	ALTER TABLE [plan_version_pricing_stations] DROP COLUMN [plan_version_id]
 END
 /*************************************** END BP-836 *****************************************************/
-
-/*************************************** START BP-804 *****************************************************/ 
+/*************************************** START BP-804 *****************************************************/
 /**************************Start inventory_proprietary_summary *************************************************/
-IF NOT EXISTS (SELECT 1 
-               FROM   sys.objects 
-               WHERE  object_id = Object_id('inventory_proprietary_summary')) 
-  BEGIN 
-      CREATE TABLE inventory_proprietary_summary 
-        ( 
-           id                  INT NOT NULL IDENTITY, 
-           inventory_source_id INT NOT NULL, 
-           daypart_default_id  INT NOT NULL, 
-           quarter_number      INT NOT NULL, 
-           quarter_year        INT NOT NULL, 
-           unit                INT NOT NULL, 
-           cpm                 MONEY NULL, 
-           [created_by]        [VARCHAR](63) NOT NULL, 
-           [created_at]        [DATETIME] NOT NULL, 
-           [modified_by]       [VARCHAR](63) NULL, 
-           [modified_at]       [DATETIME] NULL, 
-           CONSTRAINT pk_inventory_proprietary_summary PRIMARY KEY (id) 
-        )   
-
-	ALTER TABLE [dbo].inventory_proprietary_summary 
-	  WITH CHECK ADD CONSTRAINT [FK_inventory_proprietary_summary_inventory_sources] 
-	  FOREIGN KEY([inventory_source_id]) REFERENCES [dbo].[inventory_sources] ([id]) 
-
-	ALTER TABLE [dbo].[inventory_proprietary_summary] 
-	  CHECK CONSTRAINT [FK_inventory_proprietary_summary_inventory_sources] 
-
-	ALTER TABLE [dbo].[inventory_proprietary_summary] 
-	  WITH CHECK ADD CONSTRAINT [FK_inventory_proprietary_summary_daypart_defaults] 
-	  FOREIGN KEY([daypart_default_id]) REFERENCES [dbo].[daypart_defaults] ([id]) 
-
-	ALTER TABLE [dbo].[inventory_proprietary_summary] 
-	  CHECK CONSTRAINT [FK_inventory_proprietary_summary_daypart_defaults] 
-  END 
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('inventory_proprietary_summary'))
+BEGIN
+CREATE TABLE inventory_proprietary_summary (
+id INT NOT NULL IDENTITY,
+inventory_source_id INT NOT NULL,
+daypart_default_id INT NOT NULL,
+quarter_number INT NOT NULL,
+quarter_year INT NOT NULL, 
+unit int NOT NULL, 
+cpm money  NULL,
+[created_by] [varchar](63) NOT NULL,
+[created_at] [datetime] NOT NULL,
+[modified_by] [varchar](63) NULL,
+[modified_at] [datetime] NULL,
+CONSTRAINT PK_inventory_proprietary_summary PRIMARY KEY (id)
+)
+END
+ALTER TABLE [dbo].inventory_proprietary_summary  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_inventory_sources] FOREIGN KEY([inventory_source_id])
+REFERENCES [dbo].[inventory_sources] ([id])
 GO
-
+ALTER TABLE [dbo].[inventory_proprietary_summary] CHECK CONSTRAINT [FK_inventory_proprietary_summary_inventory_sources]
+GO
+ALTER TABLE [dbo].[inventory_proprietary_summary]  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_daypart_defaults] FOREIGN KEY([daypart_default_id])
+REFERENCES [dbo].[daypart_defaults] ([id])
+GO
+ALTER TABLE [dbo].[inventory_proprietary_summary] CHECK CONSTRAINT [FK_inventory_proprietary_summary_daypart_defaults]
+GO
 /**************************End inventory_proprietary_summary *************************************************/
 /**************************start inventory_proprietary_summary_audiences *************************************************/
-IF NOT EXISTS (SELECT 1 
-               FROM   sys.objects 
-               WHERE  object_id = 
-                      Object_id('inventory_proprietary_summary_audiences')) 
-  BEGIN 
-      CREATE TABLE inventory_proprietary_summary_audiences 
-        ( 
-           id                               INT NOT NULL IDENTITY, 
-           inventory_proprietary_summary_id INT NOT NULL, 
-           audience_id                      INT NOT NULL, 
-           impressions                      FLOAT NULL, 
-           [created_by]                     [VARCHAR](63) NOT NULL, 
-           [created_at]                     [DATETIME] NOT NULL, 
-           [modified_by]                    [VARCHAR](63) NULL, 
-           [modified_at]                    [DATETIME] NULL, 
-           CONSTRAINT pk_inventory_proprietary_summary_audiences PRIMARY KEY (id) 
-        ) 
-
-	ALTER TABLE [dbo].[inventory_proprietary_summary_audiences] 
-	  WITH CHECK ADD CONSTRAINT 
-	  [FK_inventory_proprietary_summary_audiences_audiences] FOREIGN KEY( 
-	  [audience_id]) REFERENCES [dbo].[audiences] ([id]) 
-
-	ALTER TABLE [dbo].[inventory_proprietary_summary_audiences] 
-	  CHECK CONSTRAINT [FK_inventory_proprietary_summary_audiences_audiences] 
-
-	ALTER TABLE [dbo].[inventory_proprietary_summary_audiences] 
-	  WITH CHECK ADD CONSTRAINT 
-	  [FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary] 
-	  FOREIGN KEY(inventory_proprietary_summary_id) REFERENCES 
-	  [dbo].[inventory_proprietary_summary] ([id]) 
-
-	ALTER TABLE [dbo].[inventory_proprietary_summary_audiences] 
-	  CHECK CONSTRAINT 
-	  [FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary] 
-  END 
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('inventory_proprietary_summary_audiences'))
+BEGIN
+CREATE TABLE inventory_proprietary_summary_audiences (
+id INT NOT NULL IDENTITY,
+inventory_proprietary_summary_id INT NOT NULL,
+audience_id INT NOT NULL,
+impressions float  NULL,
+[created_by] [varchar](63) NOT NULL,
+[created_at] [datetime] NOT NULL,
+[modified_by] [varchar](63) NULL,
+[modified_at] [datetime] NULL,
+CONSTRAINT PK_inventory_proprietary_summary_audiences PRIMARY KEY (id)
+)
+END
+ALTER TABLE [dbo].[inventory_proprietary_summary_audiences]  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_audiences_audiences] FOREIGN KEY([audience_id])
+REFERENCES [dbo].[audiences] ([id])
 GO
-
+ALTER TABLE [dbo].[inventory_proprietary_summary_audiences] CHECK CONSTRAINT [FK_inventory_proprietary_summary_audiences_audiences]
+GO
+ALTER TABLE [dbo].[inventory_proprietary_summary_audiences]  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary] FOREIGN KEY(inventory_proprietary_summary_id)
+REFERENCES [dbo].[inventory_proprietary_summary] ([id])
+GO
+ALTER TABLE [dbo].[inventory_proprietary_summary_audiences] CHECK CONSTRAINT [FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary]
+GO
 /**************************end inventory_proprietary_summary_audiences *************************************************/
 /**************************start inventory_proprietary_summary_markets *************************************************/
-IF NOT EXISTS (SELECT 1 
-               FROM   sys.objects 
-               WHERE  object_id = 
-                      Object_id('inventory_proprietary_summary_markets' 
-                      )) 
-  BEGIN 
-      CREATE TABLE inventory_proprietary_summary_markets 
-        ( 
-           id                               INT NOT NULL IDENTITY, 
-           inventory_proprietary_summary_id INT NOT NULL, 
-           market_code                      SMALLINT NOT NULL, 
-           market_coverage                  FLOAT NULL, 
-           [created_by]                     [VARCHAR](63) NOT NULL, 
-           [created_at]                     [DATETIME] NOT NULL, 
-           [modified_by]                    [VARCHAR](63) NULL, 
-           [modified_at]                    [DATETIME] NULL, 
-           CONSTRAINT pk_inventory_proprietary_summary_markets PRIMARY KEY (id) 
-        )   
-
-	ALTER TABLE [dbo].[inventory_proprietary_summary_markets] 
-	  WITH CHECK ADD CONSTRAINT [FK_inventory_proprietary_summary_markets_markets] 
-	  FOREIGN KEY([market_code]) REFERENCES [dbo].[markets] ([market_code]) 
-
-	ALTER TABLE [dbo].[inventory_proprietary_summary_markets] 
-	  CHECK CONSTRAINT [FK_inventory_proprietary_summary_markets_markets] 
-
-	ALTER TABLE [dbo].[inventory_proprietary_summary_markets] 
-	  WITH CHECK ADD CONSTRAINT 
-	  [FK_inventory_proprietary_summary_markets_inventory_proprietary_summary] 
-	  FOREIGN KEY(inventory_proprietary_summary_id) REFERENCES 
-	  [dbo].[inventory_proprietary_summary] ([id]) 
-
-	ALTER TABLE [dbo].[inventory_proprietary_summary_markets] 
-	  CHECK CONSTRAINT 
-	  [FK_inventory_proprietary_summary_markets_inventory_proprietary_summary] 
-
-  END 
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('inventory_proprietary_summary_markets'))
+BEGIN
+CREATE TABLE inventory_proprietary_summary_markets (
+id INT NOT NULL IDENTITY,
+inventory_proprietary_summary_id INT NOT NULL,
+market_code smallint NOT NULL,
+market_coverage float  NULL,
+[created_by] [varchar](63) NOT NULL,
+[created_at] [datetime] NOT NULL,
+[modified_by] [varchar](63) NULL,
+[modified_at] [datetime] NULL,
+CONSTRAINT PK_inventory_proprietary_summary_markets PRIMARY KEY (id)
+)
+END
+ALTER TABLE [dbo].[inventory_proprietary_summary_markets]  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_markets_markets] FOREIGN KEY([market_code])
+REFERENCES [dbo].[markets] ([market_code])
+GO
+ALTER TABLE [dbo].[inventory_proprietary_summary_markets] CHECK CONSTRAINT [FK_inventory_proprietary_summary_markets_markets]
+GO
+ALTER TABLE [dbo].[inventory_proprietary_summary_markets]  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_markets_inventory_proprietary_summary] FOREIGN KEY(inventory_proprietary_summary_id)
+REFERENCES [dbo].[inventory_proprietary_summary] ([id])
+GO
+ALTER TABLE [dbo].[inventory_proprietary_summary_markets] CHECK CONSTRAINT [FK_inventory_proprietary_summary_markets_inventory_proprietary_summary]
 GO
 /**************************end inventory_proprietary_summary_markets *************************************************/
-/*************************************** END BP-804 *****************************************************/ 
+/*************************************** END BP-804 *****************************************************/
 
 /*************************************** START BP-814 *****************************************************/
 IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('stations')
@@ -347,19 +309,392 @@ BEGIN
 END
 /*************************************** END BP-897 *****************************************************/
 
-/*************************************** START - BP-1077 ****************************************************/
-
-IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_dayparts') AND name = 'weekdays_weighting')
+/*************************************** START BP-1098 **************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_job'))
 BEGIN
-	ALTER TABLE plan_version_dayparts ADD weekdays_weighting float null
+	CREATE TABLE [dbo].[plan_version_buying_job](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_id] [int] NULL,
+		[status] [int] NOT NULL,
+		[queued_at] [datetime] NOT NULL,
+		[completed_at] [datetime] NULL,
+		[error_message] [nvarchar](max) NULL,
+		[diagnostic_result] [nvarchar](max) NULL,
+		[hangfire_job_id] [varchar](16) NULL,
+	 CONSTRAINT [PK_plan_version_buying_job] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+	
+	ALTER TABLE [dbo].[plan_version_buying_job]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_job_plan_versions] FOREIGN KEY([plan_version_id])
+	REFERENCES [dbo].[plan_versions] ([id])
 END
 
-IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_dayparts') AND name = 'weekend_weighting')
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_job_inventory_source_estimates'))
 BEGIN
-	ALTER TABLE plan_version_dayparts ADD weekend_weighting float null
+	CREATE TABLE [dbo].[plan_version_buying_job_inventory_source_estimates](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[media_week_id] [int] NOT NULL,
+		[inventory_source_id] [int] NULL,
+		[plan_version_buying_job_id] [int] NOT NULL,
+		[impressions] [float] NOT NULL,
+		[cost] [money] NOT NULL,
+		[inventory_source_type] [int] NULL,
+	 CONSTRAINT [PK_plan_version_buying_job_inventory_source_estimates] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_buying_job_inventory_source_estimates]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_job_inventory_source_estimates_inventory_sources] FOREIGN KEY([inventory_source_id])
+	REFERENCES [dbo].[inventory_sources] ([id])
+
+	ALTER TABLE [dbo].[plan_version_buying_job_inventory_source_estimates]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_job_inventory_source_estimates_media_weeks] FOREIGN KEY([media_week_id])
+	REFERENCES [dbo].[media_weeks] ([id])
+
+	ALTER TABLE [dbo].[plan_version_buying_job_inventory_source_estimates]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_job_inventory_source_estimates_plan_version_buying_job] FOREIGN KEY([plan_version_buying_job_id])
+	REFERENCES [dbo].[plan_version_buying_job] ([id])
 END
 
-/*************************************** END - BP-1077 ****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_bands'))
+BEGIN
+	CREATE TABLE [dbo].[plan_version_buying_bands](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_buying_job_id] [int] NULL,
+		[total_spots] [int] NOT NULL,
+		[total_impressions] [float] NOT NULL,
+		[total_cpm] [money] NOT NULL,
+		[total_budget] [money] NOT NULL,
+	 CONSTRAINT [PK_plan_version_buying_bands] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+	
+	ALTER TABLE [dbo].[plan_version_buying_bands]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_bands_plan_version_buying_job] FOREIGN KEY([plan_version_buying_job_id])
+	REFERENCES [dbo].[plan_version_buying_job] ([id])
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_band_details'))
+BEGIN
+	CREATE TABLE [dbo].[plan_version_buying_band_details](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_buying_band_id] [int] NOT NULL,
+		[min_band] [money] NULL,
+		[max_band] [money] NULL,
+		[spots] [int] NOT NULL,
+		[impressions] [float] NOT NULL,
+		[cpm] [money] NOT NULL,
+		[budget] [money] NOT NULL,
+		[impressions_percentage] [float] NOT NULL,
+		[available_inventory_percentage] [float] NOT NULL,
+	 CONSTRAINT [PK_plan_version_buying_band_details] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_buying_band_details]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_band_details_plan_version_buying_bands] FOREIGN KEY([plan_version_buying_band_id])
+	REFERENCES [dbo].[plan_version_buying_bands] ([id])
+	ON DELETE CASCADE
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_api_results'))
+BEGIN
+	CREATE TABLE [dbo].[plan_version_buying_api_results](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[optimal_cpm] [money] NOT NULL,
+		[plan_version_buying_job_id] [int] NULL,
+		[buying_version] [varchar](10) NOT NULL,
+	 CONSTRAINT [PK_plan_version_buying_api_results] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_buying_api_results]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_api_results_plan_version_buying_job] FOREIGN KEY([plan_version_buying_job_id])
+	REFERENCES [dbo].[plan_version_buying_job] ([id])
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_api_result_spots'))
+BEGIN
+	CREATE TABLE [dbo].[plan_version_buying_api_result_spots](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_buying_api_results_id] [int] NOT NULL,
+		[station_inventory_manifest_id] [int] NOT NULL,
+		[inventory_media_week_id] [int] NOT NULL,
+		[impressions30sec] [float] NOT NULL,
+		[contract_media_week_id] [int] NOT NULL,
+		[standard_daypart_id] [int] NOT NULL,
+	 CONSTRAINT [PK_plan_version_buying_api_result_spots] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_buying_api_result_spots]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_api_result_spots_daypart_defaults] FOREIGN KEY([standard_daypart_id])
+	REFERENCES [dbo].[daypart_defaults] ([id])
+
+	ALTER TABLE [dbo].[plan_version_buying_api_result_spots]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_api_result_spots_inventory_media_week] FOREIGN KEY([inventory_media_week_id])
+	REFERENCES [dbo].[media_weeks] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[plan_version_buying_api_result_spots]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_api_result_spots_contract_media_week] FOREIGN KEY([contract_media_week_id])
+	REFERENCES [dbo].[media_weeks] ([id])
+
+	ALTER TABLE [dbo].[plan_version_buying_api_result_spots]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_api_result_spots_plan_version_buying_api_results] FOREIGN KEY([plan_version_buying_api_results_id])
+	REFERENCES [dbo].[plan_version_buying_api_results] ([id])
+	ON DELETE CASCADE
+
+	ALTER TABLE [dbo].[plan_version_buying_api_result_spots]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_api_result_spots_station_inventory_manifest] FOREIGN KEY([station_inventory_manifest_id])
+	REFERENCES [dbo].[station_inventory_manifest] ([id])
+	ON DELETE CASCADE
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_api_result_spot_frequencies'))
+BEGIN
+	CREATE TABLE [dbo].[plan_version_buying_api_result_spot_frequencies](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_buying_api_result_spot_id] [int] NOT NULL,
+		[spot_length_id] [int] NOT NULL,
+		[cost] [money] NOT NULL,
+		[spots] [int] NOT NULL,
+	 CONSTRAINT [PK_plan_version_buying_api_result_spot_frequencies] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+	
+	ALTER TABLE [dbo].[plan_version_buying_api_result_spot_frequencies]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_api_result_spot_frequencies_plan_version_buying_api_result_spots] FOREIGN KEY([plan_version_buying_api_result_spot_id])
+	REFERENCES [dbo].[plan_version_buying_api_result_spots] ([id])
+	
+	ALTER TABLE [dbo].[plan_version_buying_api_result_spot_frequencies]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_api_result_spot_frequencies_spot_lengths] FOREIGN KEY([spot_length_id])
+	REFERENCES [dbo].[spot_lengths] ([id])
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_markets'))
+BEGIN
+	CREATE TABLE [dbo].[plan_version_buying_markets](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_buying_job_id] [int] NULL,
+		[total_markets] [int] NOT NULL,
+		[total_coverage_percent] [float] NOT NULL,
+		[total_stations] [int] NOT NULL,
+		[total_spots] [int] NOT NULL,
+		[total_impressions] [float] NOT NULL,
+		[total_cpm] [float] NOT NULL,
+		[total_budget] [float] NOT NULL,
+	 CONSTRAINT [PK_plan_version_buying_markets] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_buying_markets]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_markets_buying_job] FOREIGN KEY([plan_version_buying_job_id])
+	REFERENCES [dbo].[plan_version_buying_job] ([id])
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_market_details'))
+BEGIN
+	CREATE TABLE [dbo].[plan_version_buying_market_details](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_buying_market_id] [int] NOT NULL,
+		[rank] [int] NOT NULL,
+		[market_coverage_percent] [float] NOT NULL,
+		[stations] [int] NOT NULL,
+		[spots] [int] NOT NULL,
+		[impressions] [float] NOT NULL,
+		[cpm] [float] NOT NULL,
+		[budget] [float] NOT NULL,
+		[impressions_percentage] [float] NOT NULL,
+		[share_of_voice_goal_percentage] [float] NULL,
+	 CONSTRAINT [PK_plan_version_buying_market_details] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_buying_market_details]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_market_details_buying_market] FOREIGN KEY([plan_version_buying_market_id])
+	REFERENCES [dbo].[plan_version_buying_markets] ([id])
+	ON DELETE CASCADE
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_parameters'))
+BEGIN
+	CREATE TABLE [dbo].[plan_version_buying_parameters](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_id] [int] NULL,
+		[min_cpm] [money] NULL,
+		[max_cpm] [money] NULL,
+		[coverage_goal] [float] NOT NULL,
+		[impressions_goal] [float] NOT NULL,
+		[budget_goal] [money] NOT NULL,
+		[cpm_goal] [money] NOT NULL,
+		[proprietary_blend] [float] NOT NULL,
+		[competition_factor] [float] NULL,
+		[inflation_factor] [float] NULL,
+		[unit_caps_type] [int] NOT NULL,
+		[unit_caps] [int] NOT NULL,
+		[cpp] [money] NOT NULL,
+		[currency] [int] NOT NULL,
+		[rating_points] [float] NOT NULL,
+		[margin] [float] NULL,
+		[plan_version_buying_job_id] [int] NULL,
+		[budget_adjusted] [money] NOT NULL,
+		[cpm_adjusted] [money] NOT NULL,
+		[market_group] [int] NOT NULL,
+	 CONSTRAINT [PK_plan_version_buying_parameters] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_buying_parameters]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_parameters_plan_version_buying_job] FOREIGN KEY([plan_version_buying_job_id])
+	REFERENCES [dbo].[plan_version_buying_job] ([id])
+
+	ALTER TABLE [dbo].[plan_version_buying_parameters]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_parameters_plan_versions] FOREIGN KEY([plan_version_id])
+	REFERENCES [dbo].[plan_versions] ([id])
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_parameters_inventory_source_percentages'))
+BEGIN
+	CREATE TABLE [dbo].[plan_version_buying_parameters_inventory_source_percentages](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_buying_parameter_id] [int] NOT NULL,
+		[inventory_source_id] [int] NOT NULL,
+		[percentage] [int] NOT NULL,
+	 CONSTRAINT [PK_plan_version_buying_parameters_inventory_source_percentages] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_buying_parameters_inventory_source_percentages]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_parameters_inventory_source_percentages_inventory_sources] FOREIGN KEY([inventory_source_id])
+	REFERENCES [dbo].[inventory_sources] ([id])
+
+	ALTER TABLE [dbo].[plan_version_buying_parameters_inventory_source_percentages]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_parameters_inventory_source_percentages_plan_version_buying_parameters] FOREIGN KEY([plan_version_buying_parameter_id])
+	REFERENCES [dbo].[plan_version_buying_parameters] ([id])
+	ON DELETE CASCADE
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_parameters_inventory_source_type_percentages'))
+BEGIN
+	CREATE TABLE [dbo].[plan_version_buying_parameters_inventory_source_type_percentages](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_buying_parameter_id] [int] NOT NULL,
+		[inventory_source_type] [tinyint] NOT NULL,
+		[percentage] [int] NOT NULL,
+	 CONSTRAINT [PK_plan_version_buying_parameters_inventory_source_type_percentages] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY],
+	 CONSTRAINT [UQ_plan_version_buying_parameters_inventory_source_type_percentages_plan_version_buying_parameter_id_inventory_source_type] UNIQUE NONCLUSTERED 
+	(
+		[plan_version_buying_parameter_id] ASC,
+		[inventory_source_type] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_buying_parameters_inventory_source_type_percentages]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_parameters_inventory_source_type_percentages_plan_version_buying_parameters] FOREIGN KEY([plan_version_buying_parameter_id])
+	REFERENCES [dbo].[plan_version_buying_parameters] ([id])
+	ON DELETE CASCADE
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_results'))
+BEGIN
+	CREATE TABLE [dbo].[plan_version_buying_results](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[optimal_cpm] [money] NOT NULL,
+		[total_market_count] [int] NOT NULL,
+		[total_station_count] [int] NOT NULL,
+		[total_avg_cpm] [money] NOT NULL,
+		[total_avg_impressions] [float] NOT NULL,
+		[goal_fulfilled_by_proprietary] [bit] NOT NULL,
+		[total_impressions] [float] NOT NULL,
+		[total_budget] [money] NOT NULL,
+		[plan_version_buying_job_id] [int] NULL,
+		[total_spots] [int] NOT NULL,
+	 CONSTRAINT [PK_plan_version_buying_results] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_buying_results]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_results_plan_version_buying_job] FOREIGN KEY([plan_version_buying_job_id])
+	REFERENCES [dbo].[plan_version_buying_job] ([id])
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_result_spots'))
+BEGIN
+	CREATE TABLE [dbo].[plan_version_buying_result_spots](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_buying_result_id] [int] NOT NULL,
+		[program_name] [varchar](255) NOT NULL,
+		[genre] [varchar](500) NOT NULL,
+		[avg_impressions] [float] NOT NULL,
+		[avg_cpm] [money] NOT NULL,
+		[station_count] [int] NOT NULL,
+		[market_count] [int] NOT NULL,
+		[percentage_of_buy] [float] NOT NULL,
+		[budget] [money] NOT NULL,
+		[spots] [int] NOT NULL,
+		[impressions] [float] NOT NULL,
+	 CONSTRAINT [PK_plan_version_buying_result_spots] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_buying_result_spots]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_result_spots_plan_version_buying_results] FOREIGN KEY([plan_version_buying_result_id])
+	REFERENCES [dbo].[plan_version_buying_results] ([id])
+	ON DELETE CASCADE
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_stations'))
+BEGIN
+	CREATE TABLE [dbo].[plan_version_buying_stations](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_buying_job_id] [int] NULL,
+		[total_spots] [int] NOT NULL,
+		[total_impressions] [float] NOT NULL,
+		[total_cpm] [money] NOT NULL,
+		[total_budget] [money] NOT NULL,
+		[total_stations] [int] NOT NULL,
+	 CONSTRAINT [PK_plan_version_buying_stations] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_buying_stations]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_job_plan_version_buying_stations] FOREIGN KEY([plan_version_buying_job_id])
+	REFERENCES [dbo].[plan_version_buying_job] ([id])
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_station_details'))
+BEGIN
+	CREATE TABLE [dbo].[plan_version_buying_station_details](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_buying_station_id] [int] NOT NULL,
+		[station] [varchar](15) NOT NULL,
+		[market] [varchar](31) NOT NULL,
+		[spots] [int] NOT NULL,
+		[impressions] [float] NOT NULL,
+		[cpm] [money] NOT NULL,
+		[budget] [money] NOT NULL,
+		[impressions_percentage] [float] NOT NULL,
+	 CONSTRAINT [PK_plan_version_buying_station_details] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_buying_station_details]  WITH CHECK ADD  CONSTRAINT [FK_plan_version_buying_stations_plan_version_buying_station_details] FOREIGN KEY([plan_version_buying_station_id])
+	REFERENCES [dbo].[plan_version_buying_stations] ([id])
+	ON DELETE CASCADE
+END
+/*************************************** END BP-1098 *****************************************************/
+
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

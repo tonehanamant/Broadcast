@@ -1880,6 +1880,7 @@
   "BlackoutMarkets": [],
   "BlackoutMarketTotalUsCoveragePercent": null,
   "Budget": 500000.0000,
+  "BuyingParameters": null,
   "CampaignId": 652,
   "CampaignName": "Campaign with all types of plans",
   "CoverageGoalPercent": 80.0,

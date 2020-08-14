@@ -836,6 +836,221 @@
           <Property Name="percentage_of_us" Type="float" Nullable="false" />
           <Property Name="plan_version_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="plan_version_buying_api_result_spot_frequencies">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_buying_api_result_spot_id" Type="int" Nullable="false" />
+          <Property Name="spot_length_id" Type="int" Nullable="false" />
+          <Property Name="cost" Type="money" Nullable="false" />
+          <Property Name="spots" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_api_result_spots">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_buying_api_results_id" Type="int" Nullable="false" />
+          <Property Name="station_inventory_manifest_id" Type="int" Nullable="false" />
+          <Property Name="inventory_media_week_id" Type="int" Nullable="false" />
+          <Property Name="impressions30sec" Type="float" Nullable="false" />
+          <Property Name="contract_media_week_id" Type="int" Nullable="false" />
+          <Property Name="standard_daypart_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_api_results">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="optimal_cpm" Type="money" Nullable="false" />
+          <Property Name="plan_version_buying_job_id" Type="int" />
+          <Property Name="buying_version" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_band_details">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_buying_band_id" Type="int" Nullable="false" />
+          <Property Name="min_band" Type="money" />
+          <Property Name="max_band" Type="money" />
+          <Property Name="spots" Type="int" Nullable="false" />
+          <Property Name="impressions" Type="float" Nullable="false" />
+          <Property Name="cpm" Type="money" Nullable="false" />
+          <Property Name="budget" Type="money" Nullable="false" />
+          <Property Name="impressions_percentage" Type="float" Nullable="false" />
+          <Property Name="available_inventory_percentage" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_bands">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_buying_job_id" Type="int" />
+          <Property Name="total_spots" Type="int" Nullable="false" />
+          <Property Name="total_impressions" Type="float" Nullable="false" />
+          <Property Name="total_cpm" Type="money" Nullable="false" />
+          <Property Name="total_budget" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_job">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_id" Type="int" />
+          <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="queued_at" Type="datetime" Nullable="false" />
+          <Property Name="completed_at" Type="datetime" />
+          <Property Name="error_message" Type="nvarchar(max)" />
+          <Property Name="diagnostic_result" Type="nvarchar(max)" />
+          <Property Name="hangfire_job_id" Type="varchar" MaxLength="16" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_job_inventory_source_estimates">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="media_week_id" Type="int" Nullable="false" />
+          <Property Name="inventory_source_id" Type="int" />
+          <Property Name="plan_version_buying_job_id" Type="int" Nullable="false" />
+          <Property Name="impressions" Type="float" Nullable="false" />
+          <Property Name="cost" Type="money" Nullable="false" />
+          <Property Name="inventory_source_type" Type="int" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_market_details">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_buying_market_id" Type="int" Nullable="false" />
+          <Property Name="rank" Type="int" Nullable="false" />
+          <Property Name="market_coverage_percent" Type="float" Nullable="false" />
+          <Property Name="stations" Type="int" Nullable="false" />
+          <Property Name="spots" Type="int" Nullable="false" />
+          <Property Name="impressions" Type="float" Nullable="false" />
+          <Property Name="cpm" Type="float" Nullable="false" />
+          <Property Name="budget" Type="float" Nullable="false" />
+          <Property Name="impressions_percentage" Type="float" Nullable="false" />
+          <Property Name="share_of_voice_goal_percentage" Type="float" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_markets">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_buying_job_id" Type="int" />
+          <Property Name="total_markets" Type="int" Nullable="false" />
+          <Property Name="total_coverage_percent" Type="float" Nullable="false" />
+          <Property Name="total_stations" Type="int" Nullable="false" />
+          <Property Name="total_spots" Type="int" Nullable="false" />
+          <Property Name="total_impressions" Type="float" Nullable="false" />
+          <Property Name="total_cpm" Type="float" Nullable="false" />
+          <Property Name="total_budget" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_parameters">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_id" Type="int" />
+          <Property Name="min_cpm" Type="money" />
+          <Property Name="max_cpm" Type="money" />
+          <Property Name="coverage_goal" Type="float" Nullable="false" />
+          <Property Name="impressions_goal" Type="float" Nullable="false" />
+          <Property Name="budget_goal" Type="money" Nullable="false" />
+          <Property Name="cpm_goal" Type="money" Nullable="false" />
+          <Property Name="proprietary_blend" Type="float" Nullable="false" />
+          <Property Name="competition_factor" Type="float" />
+          <Property Name="inflation_factor" Type="float" />
+          <Property Name="unit_caps_type" Type="int" Nullable="false" />
+          <Property Name="unit_caps" Type="int" Nullable="false" />
+          <Property Name="cpp" Type="money" Nullable="false" />
+          <Property Name="currency" Type="int" Nullable="false" />
+          <Property Name="rating_points" Type="float" Nullable="false" />
+          <Property Name="margin" Type="float" />
+          <Property Name="plan_version_buying_job_id" Type="int" />
+          <Property Name="budget_adjusted" Type="money" Nullable="false" />
+          <Property Name="cpm_adjusted" Type="money" Nullable="false" />
+          <Property Name="market_group" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_parameters_inventory_source_percentages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_buying_parameter_id" Type="int" Nullable="false" />
+          <Property Name="inventory_source_id" Type="int" Nullable="false" />
+          <Property Name="percentage" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_parameters_inventory_source_type_percentages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_buying_parameter_id" Type="int" Nullable="false" />
+          <Property Name="inventory_source_type" Type="tinyint" Nullable="false" />
+          <Property Name="percentage" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_result_spots">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_buying_result_id" Type="int" Nullable="false" />
+          <Property Name="program_name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="genre" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="avg_impressions" Type="float" Nullable="false" />
+          <Property Name="avg_cpm" Type="money" Nullable="false" />
+          <Property Name="station_count" Type="int" Nullable="false" />
+          <Property Name="market_count" Type="int" Nullable="false" />
+          <Property Name="percentage_of_buy" Type="float" Nullable="false" />
+          <Property Name="budget" Type="money" Nullable="false" />
+          <Property Name="spots" Type="int" Nullable="false" />
+          <Property Name="impressions" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_results">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="optimal_cpm" Type="money" Nullable="false" />
+          <Property Name="total_market_count" Type="int" Nullable="false" />
+          <Property Name="total_station_count" Type="int" Nullable="false" />
+          <Property Name="total_avg_cpm" Type="money" Nullable="false" />
+          <Property Name="total_avg_impressions" Type="float" Nullable="false" />
+          <Property Name="goal_fulfilled_by_proprietary" Type="bit" Nullable="false" />
+          <Property Name="total_impressions" Type="float" Nullable="false" />
+          <Property Name="total_budget" Type="money" Nullable="false" />
+          <Property Name="plan_version_buying_job_id" Type="int" />
+          <Property Name="total_spots" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_station_details">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_buying_station_id" Type="int" Nullable="false" />
+          <Property Name="station" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="market" Type="varchar" MaxLength="31" Nullable="false" />
+          <Property Name="spots" Type="int" Nullable="false" />
+          <Property Name="impressions" Type="float" Nullable="false" />
+          <Property Name="cpm" Type="money" Nullable="false" />
+          <Property Name="budget" Type="money" Nullable="false" />
+          <Property Name="impressions_percentage" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_stations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_version_buying_job_id" Type="int" />
+          <Property Name="total_spots" Type="int" Nullable="false" />
+          <Property Name="total_impressions" Type="float" Nullable="false" />
+          <Property Name="total_cpm" Type="money" Nullable="false" />
+          <Property Name="total_budget" Type="money" Nullable="false" />
+          <Property Name="total_stations" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="plan_version_creative_lengths">
           <Key>
             <PropertyRef Name="id" />
@@ -2154,7 +2369,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -2322,7 +2537,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventor
           <Property Name="vpvh_file_id" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -3411,6 +3626,324 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_version_blackout_markets">
               <PropertyRef Name="plan_version_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_api_result_spot_frequencies_plan_version_buying_api_result_spots">
+          <End Role="plan_version_buying_api_result_spots" Type="Self.plan_version_buying_api_result_spots" Multiplicity="1" />
+          <End Role="plan_version_buying_api_result_spot_frequencies" Type="Self.plan_version_buying_api_result_spot_frequencies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_api_result_spots">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_api_result_spot_frequencies">
+              <PropertyRef Name="plan_version_buying_api_result_spot_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_api_result_spot_frequencies_spot_lengths">
+          <End Role="spot_lengths" Type="Self.spot_lengths" Multiplicity="1" />
+          <End Role="plan_version_buying_api_result_spot_frequencies" Type="Self.plan_version_buying_api_result_spot_frequencies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_api_result_spot_frequencies">
+              <PropertyRef Name="spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_api_result_spots_contract_media_week">
+          <End Role="media_weeks" Type="Self.media_weeks" Multiplicity="1" />
+          <End Role="plan_version_buying_api_result_spots" Type="Self.plan_version_buying_api_result_spots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_weeks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_api_result_spots">
+              <PropertyRef Name="contract_media_week_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_api_result_spots_daypart_defaults">
+          <End Role="daypart_defaults" Type="Self.daypart_defaults" Multiplicity="1" />
+          <End Role="plan_version_buying_api_result_spots" Type="Self.plan_version_buying_api_result_spots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart_defaults">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_api_result_spots">
+              <PropertyRef Name="standard_daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_api_result_spots_inventory_media_week">
+          <End Role="media_weeks" Type="Self.media_weeks" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plan_version_buying_api_result_spots" Type="Self.plan_version_buying_api_result_spots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_weeks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_api_result_spots">
+              <PropertyRef Name="inventory_media_week_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_api_result_spots_plan_version_buying_api_results">
+          <End Role="plan_version_buying_api_results" Type="Self.plan_version_buying_api_results" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plan_version_buying_api_result_spots" Type="Self.plan_version_buying_api_result_spots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_api_results">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_api_result_spots">
+              <PropertyRef Name="plan_version_buying_api_results_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_api_result_spots_station_inventory_manifest">
+          <End Role="station_inventory_manifest" Type="Self.station_inventory_manifest" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plan_version_buying_api_result_spots" Type="Self.plan_version_buying_api_result_spots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station_inventory_manifest">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_api_result_spots">
+              <PropertyRef Name="station_inventory_manifest_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_api_results_plan_version_buying_job">
+          <End Role="plan_version_buying_job" Type="Self.plan_version_buying_job" Multiplicity="0..1" />
+          <End Role="plan_version_buying_api_results" Type="Self.plan_version_buying_api_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_api_results">
+              <PropertyRef Name="plan_version_buying_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_band_details_plan_version_buying_bands">
+          <End Role="plan_version_buying_bands" Type="Self.plan_version_buying_bands" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plan_version_buying_band_details" Type="Self.plan_version_buying_band_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_bands">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_band_details">
+              <PropertyRef Name="plan_version_buying_band_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_bands_plan_version_buying_job">
+          <End Role="plan_version_buying_job" Type="Self.plan_version_buying_job" Multiplicity="0..1" />
+          <End Role="plan_version_buying_bands" Type="Self.plan_version_buying_bands" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_bands">
+              <PropertyRef Name="plan_version_buying_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_job_inventory_source_estimates_inventory_sources">
+          <End Role="inventory_sources" Type="Self.inventory_sources" Multiplicity="0..1" />
+          <End Role="plan_version_buying_job_inventory_source_estimates" Type="Self.plan_version_buying_job_inventory_source_estimates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_job_inventory_source_estimates">
+              <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_job_inventory_source_estimates_media_weeks">
+          <End Role="media_weeks" Type="Self.media_weeks" Multiplicity="1" />
+          <End Role="plan_version_buying_job_inventory_source_estimates" Type="Self.plan_version_buying_job_inventory_source_estimates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_weeks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_job_inventory_source_estimates">
+              <PropertyRef Name="media_week_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_job_inventory_source_estimates_plan_version_buying_job">
+          <End Role="plan_version_buying_job" Type="Self.plan_version_buying_job" Multiplicity="1" />
+          <End Role="plan_version_buying_job_inventory_source_estimates" Type="Self.plan_version_buying_job_inventory_source_estimates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_job_inventory_source_estimates">
+              <PropertyRef Name="plan_version_buying_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_job_plan_version_buying_stations">
+          <End Role="plan_version_buying_job" Type="Self.plan_version_buying_job" Multiplicity="0..1" />
+          <End Role="plan_version_buying_stations" Type="Self.plan_version_buying_stations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_stations">
+              <PropertyRef Name="plan_version_buying_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_job_plan_versions">
+          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="0..1" />
+          <End Role="plan_version_buying_job" Type="Self.plan_version_buying_job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_versions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_job">
+              <PropertyRef Name="plan_version_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_market_details_buying_market">
+          <End Role="plan_version_buying_markets" Type="Self.plan_version_buying_markets" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plan_version_buying_market_details" Type="Self.plan_version_buying_market_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_markets">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_market_details">
+              <PropertyRef Name="plan_version_buying_market_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_markets_buying_job">
+          <End Role="plan_version_buying_job" Type="Self.plan_version_buying_job" Multiplicity="0..1" />
+          <End Role="plan_version_buying_markets" Type="Self.plan_version_buying_markets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_markets">
+              <PropertyRef Name="plan_version_buying_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_parameters_inventory_source_percentages_inventory_sources">
+          <End Role="inventory_sources" Type="Self.inventory_sources" Multiplicity="1" />
+          <End Role="plan_version_buying_parameters_inventory_source_percentages" Type="Self.plan_version_buying_parameters_inventory_source_percentages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_parameters_inventory_source_percentages">
+              <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_parameters_inventory_source_percentages_plan_version_buying_parameters">
+          <End Role="plan_version_buying_parameters" Type="Self.plan_version_buying_parameters" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plan_version_buying_parameters_inventory_source_percentages" Type="Self.plan_version_buying_parameters_inventory_source_percentages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_parameters">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_parameters_inventory_source_percentages">
+              <PropertyRef Name="plan_version_buying_parameter_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_parameters_inventory_source_type_percentages_plan_version_buying_parameters">
+          <End Role="plan_version_buying_parameters" Type="Self.plan_version_buying_parameters" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plan_version_buying_parameters_inventory_source_type_percentages" Type="Self.plan_version_buying_parameters_inventory_source_type_percentages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_parameters">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_parameters_inventory_source_type_percentages">
+              <PropertyRef Name="plan_version_buying_parameter_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_parameters_plan_version_buying_job">
+          <End Role="plan_version_buying_job" Type="Self.plan_version_buying_job" Multiplicity="0..1" />
+          <End Role="plan_version_buying_parameters" Type="Self.plan_version_buying_parameters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_parameters">
+              <PropertyRef Name="plan_version_buying_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_parameters_plan_versions">
+          <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="0..1" />
+          <End Role="plan_version_buying_parameters" Type="Self.plan_version_buying_parameters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_versions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_parameters">
+              <PropertyRef Name="plan_version_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_result_spots_plan_version_buying_results">
+          <End Role="plan_version_buying_results" Type="Self.plan_version_buying_results" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plan_version_buying_result_spots" Type="Self.plan_version_buying_result_spots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_results">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_result_spots">
+              <PropertyRef Name="plan_version_buying_result_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_results_plan_version_buying_job">
+          <End Role="plan_version_buying_job" Type="Self.plan_version_buying_job" Multiplicity="0..1" />
+          <End Role="plan_version_buying_results" Type="Self.plan_version_buying_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_results">
+              <PropertyRef Name="plan_version_buying_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_stations_plan_version_buying_station_details">
+          <End Role="plan_version_buying_stations" Type="Self.plan_version_buying_stations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="plan_version_buying_station_details" Type="Self.plan_version_buying_station_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_stations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_station_details">
+              <PropertyRef Name="plan_version_buying_station_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5963,6 +6496,22 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="plan_version_audience_daypart_vpvh" EntityType="Self.plan_version_audience_daypart_vpvh" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_available_markets" EntityType="Self.plan_version_available_markets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_blackout_markets" EntityType="Self.plan_version_blackout_markets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_buying_api_result_spot_frequencies" EntityType="Self.plan_version_buying_api_result_spot_frequencies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_buying_api_result_spots" EntityType="Self.plan_version_buying_api_result_spots" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_buying_api_results" EntityType="Self.plan_version_buying_api_results" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_buying_band_details" EntityType="Self.plan_version_buying_band_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_buying_bands" EntityType="Self.plan_version_buying_bands" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_buying_job" EntityType="Self.plan_version_buying_job" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_buying_job_inventory_source_estimates" EntityType="Self.plan_version_buying_job_inventory_source_estimates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_buying_market_details" EntityType="Self.plan_version_buying_market_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_buying_markets" EntityType="Self.plan_version_buying_markets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_buying_parameters" EntityType="Self.plan_version_buying_parameters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_buying_parameters_inventory_source_percentages" EntityType="Self.plan_version_buying_parameters_inventory_source_percentages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_buying_parameters_inventory_source_type_percentages" EntityType="Self.plan_version_buying_parameters_inventory_source_type_percentages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_buying_result_spots" EntityType="Self.plan_version_buying_result_spots" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_buying_results" EntityType="Self.plan_version_buying_results" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_buying_station_details" EntityType="Self.plan_version_buying_station_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_version_buying_stations" EntityType="Self.plan_version_buying_stations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_creative_lengths" EntityType="Self.plan_version_creative_lengths" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_daypart_affiliate_restrictions" EntityType="Self.plan_version_daypart_affiliate_restrictions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="plan_version_daypart_genre_restrictions" EntityType="Self.plan_version_daypart_genre_restrictions" Schema="dbo" store:Type="Tables" />
@@ -6441,6 +6990,106 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_plan_version_blackout_markets_plan_versions" Association="Self.FK_plan_version_blackout_markets_plan_versions">
             <End Role="plan_versions" EntitySet="plan_versions" />
             <End Role="plan_version_blackout_markets" EntitySet="plan_version_blackout_markets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_api_result_spot_frequencies_plan_version_buying_api_result_spots" Association="Self.FK_plan_version_buying_api_result_spot_frequencies_plan_version_buying_api_result_spots">
+            <End Role="plan_version_buying_api_result_spots" EntitySet="plan_version_buying_api_result_spots" />
+            <End Role="plan_version_buying_api_result_spot_frequencies" EntitySet="plan_version_buying_api_result_spot_frequencies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_api_result_spot_frequencies_spot_lengths" Association="Self.FK_plan_version_buying_api_result_spot_frequencies_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="plan_version_buying_api_result_spot_frequencies" EntitySet="plan_version_buying_api_result_spot_frequencies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_api_result_spots_contract_media_week" Association="Self.FK_plan_version_buying_api_result_spots_contract_media_week">
+            <End Role="media_weeks" EntitySet="media_weeks" />
+            <End Role="plan_version_buying_api_result_spots" EntitySet="plan_version_buying_api_result_spots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_api_result_spots_daypart_defaults" Association="Self.FK_plan_version_buying_api_result_spots_daypart_defaults">
+            <End Role="daypart_defaults" EntitySet="daypart_defaults" />
+            <End Role="plan_version_buying_api_result_spots" EntitySet="plan_version_buying_api_result_spots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_api_result_spots_inventory_media_week" Association="Self.FK_plan_version_buying_api_result_spots_inventory_media_week">
+            <End Role="media_weeks" EntitySet="media_weeks" />
+            <End Role="plan_version_buying_api_result_spots" EntitySet="plan_version_buying_api_result_spots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_api_result_spots_plan_version_buying_api_results" Association="Self.FK_plan_version_buying_api_result_spots_plan_version_buying_api_results">
+            <End Role="plan_version_buying_api_results" EntitySet="plan_version_buying_api_results" />
+            <End Role="plan_version_buying_api_result_spots" EntitySet="plan_version_buying_api_result_spots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_api_result_spots_station_inventory_manifest" Association="Self.FK_plan_version_buying_api_result_spots_station_inventory_manifest">
+            <End Role="station_inventory_manifest" EntitySet="station_inventory_manifest" />
+            <End Role="plan_version_buying_api_result_spots" EntitySet="plan_version_buying_api_result_spots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_api_results_plan_version_buying_job" Association="Self.FK_plan_version_buying_api_results_plan_version_buying_job">
+            <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
+            <End Role="plan_version_buying_api_results" EntitySet="plan_version_buying_api_results" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_band_details_plan_version_buying_bands" Association="Self.FK_plan_version_buying_band_details_plan_version_buying_bands">
+            <End Role="plan_version_buying_bands" EntitySet="plan_version_buying_bands" />
+            <End Role="plan_version_buying_band_details" EntitySet="plan_version_buying_band_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_bands_plan_version_buying_job" Association="Self.FK_plan_version_buying_bands_plan_version_buying_job">
+            <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
+            <End Role="plan_version_buying_bands" EntitySet="plan_version_buying_bands" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_job_inventory_source_estimates_inventory_sources" Association="Self.FK_plan_version_buying_job_inventory_source_estimates_inventory_sources">
+            <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="plan_version_buying_job_inventory_source_estimates" EntitySet="plan_version_buying_job_inventory_source_estimates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_job_inventory_source_estimates_media_weeks" Association="Self.FK_plan_version_buying_job_inventory_source_estimates_media_weeks">
+            <End Role="media_weeks" EntitySet="media_weeks" />
+            <End Role="plan_version_buying_job_inventory_source_estimates" EntitySet="plan_version_buying_job_inventory_source_estimates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_job_inventory_source_estimates_plan_version_buying_job" Association="Self.FK_plan_version_buying_job_inventory_source_estimates_plan_version_buying_job">
+            <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
+            <End Role="plan_version_buying_job_inventory_source_estimates" EntitySet="plan_version_buying_job_inventory_source_estimates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_job_plan_version_buying_stations" Association="Self.FK_plan_version_buying_job_plan_version_buying_stations">
+            <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
+            <End Role="plan_version_buying_stations" EntitySet="plan_version_buying_stations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_job_plan_versions" Association="Self.FK_plan_version_buying_job_plan_versions">
+            <End Role="plan_versions" EntitySet="plan_versions" />
+            <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_market_details_buying_market" Association="Self.FK_plan_version_buying_market_details_buying_market">
+            <End Role="plan_version_buying_markets" EntitySet="plan_version_buying_markets" />
+            <End Role="plan_version_buying_market_details" EntitySet="plan_version_buying_market_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_markets_buying_job" Association="Self.FK_plan_version_buying_markets_buying_job">
+            <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
+            <End Role="plan_version_buying_markets" EntitySet="plan_version_buying_markets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_parameters_inventory_source_percentages_inventory_sources" Association="Self.FK_plan_version_buying_parameters_inventory_source_percentages_inventory_sources">
+            <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="plan_version_buying_parameters_inventory_source_percentages" EntitySet="plan_version_buying_parameters_inventory_source_percentages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_parameters_inventory_source_percentages_plan_version_buying_parameters" Association="Self.FK_plan_version_buying_parameters_inventory_source_percentages_plan_version_buying_parameters">
+            <End Role="plan_version_buying_parameters" EntitySet="plan_version_buying_parameters" />
+            <End Role="plan_version_buying_parameters_inventory_source_percentages" EntitySet="plan_version_buying_parameters_inventory_source_percentages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_parameters_inventory_source_type_percentages_plan_version_buying_parameters" Association="Self.FK_plan_version_buying_parameters_inventory_source_type_percentages_plan_version_buying_parameters">
+            <End Role="plan_version_buying_parameters" EntitySet="plan_version_buying_parameters" />
+            <End Role="plan_version_buying_parameters_inventory_source_type_percentages" EntitySet="plan_version_buying_parameters_inventory_source_type_percentages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_parameters_plan_version_buying_job" Association="Self.FK_plan_version_buying_parameters_plan_version_buying_job">
+            <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
+            <End Role="plan_version_buying_parameters" EntitySet="plan_version_buying_parameters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_parameters_plan_versions" Association="Self.FK_plan_version_buying_parameters_plan_versions">
+            <End Role="plan_versions" EntitySet="plan_versions" />
+            <End Role="plan_version_buying_parameters" EntitySet="plan_version_buying_parameters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_result_spots_plan_version_buying_results" Association="Self.FK_plan_version_buying_result_spots_plan_version_buying_results">
+            <End Role="plan_version_buying_results" EntitySet="plan_version_buying_results" />
+            <End Role="plan_version_buying_result_spots" EntitySet="plan_version_buying_result_spots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_results_plan_version_buying_job" Association="Self.FK_plan_version_buying_results_plan_version_buying_job">
+            <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
+            <End Role="plan_version_buying_results" EntitySet="plan_version_buying_results" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_stations_plan_version_buying_station_details" Association="Self.FK_plan_version_buying_stations_plan_version_buying_station_details">
+            <End Role="plan_version_buying_stations" EntitySet="plan_version_buying_stations" />
+            <End Role="plan_version_buying_station_details" EntitySet="plan_version_buying_station_details" />
           </AssociationSet>
           <AssociationSet Name="FK_plan_version_creative_lengths_plan_versions" Association="Self.FK_plan_version_creative_lengths_plan_versions">
             <End Role="plan_versions" EntitySet="plan_versions" />
@@ -8508,6 +9157,122 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
             <End Role="inventory_proprietary_summary_markets" EntitySet="inventory_proprietary_summary_markets" />
           </AssociationSet>
+          <EntitySet Name="plan_version_buying_api_result_spot_frequencies" EntityType="BroadcastModel.plan_version_buying_api_result_spot_frequencies" />
+          <EntitySet Name="plan_version_buying_api_result_spots" EntityType="BroadcastModel.plan_version_buying_api_result_spots" />
+          <EntitySet Name="plan_version_buying_api_results" EntityType="BroadcastModel.plan_version_buying_api_results" />
+          <EntitySet Name="plan_version_buying_band_details" EntityType="BroadcastModel.plan_version_buying_band_details" />
+          <EntitySet Name="plan_version_buying_bands" EntityType="BroadcastModel.plan_version_buying_bands" />
+          <EntitySet Name="plan_version_buying_job" EntityType="BroadcastModel.plan_version_buying_job" />
+          <EntitySet Name="plan_version_buying_job_inventory_source_estimates" EntityType="BroadcastModel.plan_version_buying_job_inventory_source_estimates" />
+          <EntitySet Name="plan_version_buying_market_details" EntityType="BroadcastModel.plan_version_buying_market_details" />
+          <EntitySet Name="plan_version_buying_markets" EntityType="BroadcastModel.plan_version_buying_markets" />
+          <EntitySet Name="plan_version_buying_parameters" EntityType="BroadcastModel.plan_version_buying_parameters" />
+          <EntitySet Name="plan_version_buying_parameters_inventory_source_percentages" EntityType="BroadcastModel.plan_version_buying_parameters_inventory_source_percentages" />
+          <EntitySet Name="plan_version_buying_parameters_inventory_source_type_percentages" EntityType="BroadcastModel.plan_version_buying_parameters_inventory_source_type_percentages" />
+          <EntitySet Name="plan_version_buying_result_spots" EntityType="BroadcastModel.plan_version_buying_result_spots" />
+          <EntitySet Name="plan_version_buying_results" EntityType="BroadcastModel.plan_version_buying_results" />
+          <EntitySet Name="plan_version_buying_station_details" EntityType="BroadcastModel.plan_version_buying_station_details" />
+          <EntitySet Name="plan_version_buying_stations" EntityType="BroadcastModel.plan_version_buying_stations" />
+          <AssociationSet Name="FK_plan_version_buying_api_result_spots_daypart_defaults" Association="BroadcastModel.FK_plan_version_buying_api_result_spots_daypart_defaults">
+            <End Role="daypart_defaults" EntitySet="daypart_defaults" />
+            <End Role="plan_version_buying_api_result_spots" EntitySet="plan_version_buying_api_result_spots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_job_inventory_source_estimates_inventory_sources" Association="BroadcastModel.FK_plan_version_buying_job_inventory_source_estimates_inventory_sources">
+            <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="plan_version_buying_job_inventory_source_estimates" EntitySet="plan_version_buying_job_inventory_source_estimates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_parameters_inventory_source_percentages_inventory_sources" Association="BroadcastModel.FK_plan_version_buying_parameters_inventory_source_percentages_inventory_sources">
+            <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="plan_version_buying_parameters_inventory_source_percentages" EntitySet="plan_version_buying_parameters_inventory_source_percentages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_api_result_spots_contract_media_week" Association="BroadcastModel.FK_plan_version_buying_api_result_spots_contract_media_week">
+            <End Role="media_weeks" EntitySet="media_weeks" />
+            <End Role="plan_version_buying_api_result_spots" EntitySet="plan_version_buying_api_result_spots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_api_result_spots_inventory_media_week" Association="BroadcastModel.FK_plan_version_buying_api_result_spots_inventory_media_week">
+            <End Role="media_weeks" EntitySet="media_weeks" />
+            <End Role="plan_version_buying_api_result_spots" EntitySet="plan_version_buying_api_result_spots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_job_inventory_source_estimates_media_weeks" Association="BroadcastModel.FK_plan_version_buying_job_inventory_source_estimates_media_weeks">
+            <End Role="media_weeks" EntitySet="media_weeks" />
+            <End Role="plan_version_buying_job_inventory_source_estimates" EntitySet="plan_version_buying_job_inventory_source_estimates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_api_result_spot_frequencies_plan_version_buying_api_result_spots" Association="BroadcastModel.FK_plan_version_buying_api_result_spot_frequencies_plan_version_buying_api_result_spots">
+            <End Role="plan_version_buying_api_result_spots" EntitySet="plan_version_buying_api_result_spots" />
+            <End Role="plan_version_buying_api_result_spot_frequencies" EntitySet="plan_version_buying_api_result_spot_frequencies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_api_result_spot_frequencies_spot_lengths" Association="BroadcastModel.FK_plan_version_buying_api_result_spot_frequencies_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="plan_version_buying_api_result_spot_frequencies" EntitySet="plan_version_buying_api_result_spot_frequencies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_api_result_spots_plan_version_buying_api_results" Association="BroadcastModel.FK_plan_version_buying_api_result_spots_plan_version_buying_api_results">
+            <End Role="plan_version_buying_api_results" EntitySet="plan_version_buying_api_results" />
+            <End Role="plan_version_buying_api_result_spots" EntitySet="plan_version_buying_api_result_spots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_api_result_spots_station_inventory_manifest" Association="BroadcastModel.FK_plan_version_buying_api_result_spots_station_inventory_manifest">
+            <End Role="station_inventory_manifest" EntitySet="station_inventory_manifest" />
+            <End Role="plan_version_buying_api_result_spots" EntitySet="plan_version_buying_api_result_spots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_api_results_plan_version_buying_job" Association="BroadcastModel.FK_plan_version_buying_api_results_plan_version_buying_job">
+            <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
+            <End Role="plan_version_buying_api_results" EntitySet="plan_version_buying_api_results" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_band_details_plan_version_buying_bands" Association="BroadcastModel.FK_plan_version_buying_band_details_plan_version_buying_bands">
+            <End Role="plan_version_buying_bands" EntitySet="plan_version_buying_bands" />
+            <End Role="plan_version_buying_band_details" EntitySet="plan_version_buying_band_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_bands_plan_version_buying_job" Association="BroadcastModel.FK_plan_version_buying_bands_plan_version_buying_job">
+            <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
+            <End Role="plan_version_buying_bands" EntitySet="plan_version_buying_bands" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_job_inventory_source_estimates_plan_version_buying_job" Association="BroadcastModel.FK_plan_version_buying_job_inventory_source_estimates_plan_version_buying_job">
+            <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
+            <End Role="plan_version_buying_job_inventory_source_estimates" EntitySet="plan_version_buying_job_inventory_source_estimates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_job_plan_version_buying_stations" Association="BroadcastModel.FK_plan_version_buying_job_plan_version_buying_stations">
+            <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
+            <End Role="plan_version_buying_stations" EntitySet="plan_version_buying_stations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_job_plan_versions" Association="BroadcastModel.FK_plan_version_buying_job_plan_versions">
+            <End Role="plan_versions" EntitySet="plan_versions" />
+            <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_markets_buying_job" Association="BroadcastModel.FK_plan_version_buying_markets_buying_job">
+            <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
+            <End Role="plan_version_buying_markets" EntitySet="plan_version_buying_markets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_parameters_plan_version_buying_job" Association="BroadcastModel.FK_plan_version_buying_parameters_plan_version_buying_job">
+            <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
+            <End Role="plan_version_buying_parameters" EntitySet="plan_version_buying_parameters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_results_plan_version_buying_job" Association="BroadcastModel.FK_plan_version_buying_results_plan_version_buying_job">
+            <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
+            <End Role="plan_version_buying_results" EntitySet="plan_version_buying_results" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_market_details_buying_market" Association="BroadcastModel.FK_plan_version_buying_market_details_buying_market">
+            <End Role="plan_version_buying_markets" EntitySet="plan_version_buying_markets" />
+            <End Role="plan_version_buying_market_details" EntitySet="plan_version_buying_market_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_parameters_inventory_source_percentages_plan_version_buying_parameters" Association="BroadcastModel.FK_plan_version_buying_parameters_inventory_source_percentages_plan_version_buying_parameters">
+            <End Role="plan_version_buying_parameters" EntitySet="plan_version_buying_parameters" />
+            <End Role="plan_version_buying_parameters_inventory_source_percentages" EntitySet="plan_version_buying_parameters_inventory_source_percentages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_parameters_inventory_source_type_percentages_plan_version_buying_parameters" Association="BroadcastModel.FK_plan_version_buying_parameters_inventory_source_type_percentages_plan_version_buying_parameters">
+            <End Role="plan_version_buying_parameters" EntitySet="plan_version_buying_parameters" />
+            <End Role="plan_version_buying_parameters_inventory_source_type_percentages" EntitySet="plan_version_buying_parameters_inventory_source_type_percentages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_parameters_plan_versions" Association="BroadcastModel.FK_plan_version_buying_parameters_plan_versions">
+            <End Role="plan_versions" EntitySet="plan_versions" />
+            <End Role="plan_version_buying_parameters" EntitySet="plan_version_buying_parameters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_result_spots_plan_version_buying_results" Association="BroadcastModel.FK_plan_version_buying_result_spots_plan_version_buying_results">
+            <End Role="plan_version_buying_results" EntitySet="plan_version_buying_results" />
+            <End Role="plan_version_buying_result_spots" EntitySet="plan_version_buying_result_spots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_stations_plan_version_buying_station_details" Association="BroadcastModel.FK_plan_version_buying_stations_plan_version_buying_station_details">
+            <End Role="plan_version_buying_stations" EntitySet="plan_version_buying_stations" />
+            <End Role="plan_version_buying_station_details" EntitySet="plan_version_buying_station_details" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -8651,6 +9416,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_weekly_breakdown" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_media_weeks" FromRole="media_weeks" ToRole="plan_version_weekly_breakdown" />
           <NavigationProperty Name="plan_version_pricing_api_result_spots" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_media_weeks" FromRole="media_weeks" ToRole="plan_version_pricing_api_result_spots" />
           <NavigationProperty Name="plan_version_pricing_api_result_spots1" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_media_weeks1" FromRole="media_weeks" ToRole="plan_version_pricing_api_result_spots" />
+          <NavigationProperty Name="plan_version_buying_api_result_spots" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spots_contract_media_week" FromRole="media_weeks" ToRole="plan_version_buying_api_result_spots" />
+          <NavigationProperty Name="plan_version_buying_api_result_spots1" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spots_inventory_media_week" FromRole="media_weeks" ToRole="plan_version_buying_api_result_spots" />
+          <NavigationProperty Name="plan_version_buying_job_inventory_source_estimates" Relationship="BroadcastModel.FK_plan_version_buying_job_inventory_source_estimates_media_weeks" FromRole="media_weeks" ToRole="plan_version_buying_job_inventory_source_estimates" />
         </EntityType>
         <EntityType Name="post_file_demos">
           <Key>
@@ -9365,6 +10133,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_pricing_job_inventory_source_estimates" Relationship="BroadcastModel.FK_plan_version_pricing_job_inventory_source_estimates_inventory_sources" FromRole="inventory_sources" ToRole="plan_version_pricing_job_inventory_source_estimates" />
           <NavigationProperty Name="inventory_export_jobs" Relationship="BroadcastModel.FK_inventory_export_jobs_inventory_source" FromRole="inventory_sources" ToRole="inventory_export_jobs" />
           <NavigationProperty Name="inventory_proprietary_summary" Relationship="BroadcastModel.FK_inventory_proprietary_summary_inventory_sources" FromRole="inventory_sources" ToRole="inventory_proprietary_summary" />
+          <NavigationProperty Name="plan_version_buying_job_inventory_source_estimates" Relationship="BroadcastModel.FK_plan_version_buying_job_inventory_source_estimates_inventory_sources" FromRole="inventory_sources" ToRole="plan_version_buying_job_inventory_source_estimates" />
+          <NavigationProperty Name="plan_version_buying_parameters_inventory_source_percentages" Relationship="BroadcastModel.FK_plan_version_buying_parameters_inventory_source_percentages_inventory_sources" FromRole="inventory_sources" ToRole="plan_version_buying_parameters_inventory_source_percentages" />
         </EntityType>
         <EntityType Name="station_inventory_group">
           <Key>
@@ -9449,6 +10219,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_creative_lengths" Relationship="BroadcastModel.FK_plan_version_creative_lengths_spot_lengths" FromRole="spot_lengths" ToRole="plan_version_creative_lengths" />
           <NavigationProperty Name="plan_version_weekly_breakdown" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_spot_lengths" FromRole="spot_lengths" ToRole="plan_version_weekly_breakdown" />
           <NavigationProperty Name="plan_version_pricing_api_result_spot_frequencies" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spot_frequencies_spot_lengths" FromRole="spot_lengths" ToRole="plan_version_pricing_api_result_spot_frequencies" />
+          <NavigationProperty Name="plan_version_buying_api_result_spot_frequencies" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spot_frequencies_spot_lengths" FromRole="spot_lengths" ToRole="plan_version_buying_api_result_spot_frequencies" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_audiences">
           <Key>
@@ -9542,6 +10313,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station" Relationship="BroadcastModel.FK_station_inventory_manifest_stations" FromRole="station_inventory_manifest" ToRole="station" />
           <NavigationProperty Name="station_inventory_manifest_dayparts" Relationship="BroadcastModel.FK_station_inventory_manifest_dayparts_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_dayparts" />
           <NavigationProperty Name="plan_version_pricing_api_result_spots" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="plan_version_pricing_api_result_spots" />
+          <NavigationProperty Name="plan_version_buying_api_result_spots" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spots_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="plan_version_buying_api_result_spots" />
         </EntityType>
         <Association Name="FK_station_inventory_manifest_inventory_sources">
           <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
@@ -12711,6 +13483,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="vpvh_calculation_source_type" Type="Int32" Nullable="false" />
           <NavigationProperty Name="plan_version_pricing_api_result_spots" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_daypart_defaults" FromRole="daypart_defaults" ToRole="plan_version_pricing_api_result_spots" />
           <NavigationProperty Name="inventory_proprietary_summary" Relationship="BroadcastModel.FK_inventory_proprietary_summary_daypart_defaults" FromRole="daypart_defaults" ToRole="inventory_proprietary_summary" />
+          <NavigationProperty Name="plan_version_buying_api_result_spots" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spots_daypart_defaults" FromRole="daypart_defaults" ToRole="plan_version_buying_api_result_spots" />
         </EntityType>
         <Association Name="FK_daypart_defaults_dayparts">
           <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
@@ -13542,6 +14315,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="impressions_per_unit" Type="Double" />
           <NavigationProperty Name="plan_version_pricing_job" Relationship="BroadcastModel.FK_plan_version_pricing_job_plan_versions" FromRole="plan_versions" ToRole="plan_version_pricing_job" />
           <NavigationProperty Name="plan_version_pricing_parameters" Relationship="BroadcastModel.FK_plan_version_pricing_parameters_plan_versions" FromRole="plan_versions" ToRole="plan_version_pricing_parameters" />
+          <NavigationProperty Name="plan_version_buying_job" Relationship="BroadcastModel.FK_plan_version_buying_job_plan_versions" FromRole="plan_versions" ToRole="plan_version_buying_job" />
+          <NavigationProperty Name="plan_version_buying_parameters" Relationship="BroadcastModel.FK_plan_version_buying_parameters_plan_versions" FromRole="plan_versions" ToRole="plan_version_buying_parameters" />
         </EntityType>
         <Association Name="FK_plan_versions_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -14885,6 +15660,579 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="inventory_proprietary_summary_markets">
               <PropertyRef Name="inventory_proprietary_summary_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="plan_version_buying_api_result_spot_frequencies">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_buying_api_result_spot_id" Type="Int32" Nullable="false" />
+          <Property Name="spot_length_id" Type="Int32" Nullable="false" />
+          <Property Name="cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="spots" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="plan_version_buying_api_result_spots" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spot_frequencies_plan_version_buying_api_result_spots" FromRole="plan_version_buying_api_result_spot_frequencies" ToRole="plan_version_buying_api_result_spots" />
+          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spot_frequencies_spot_lengths" FromRole="plan_version_buying_api_result_spot_frequencies" ToRole="spot_lengths" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_api_result_spots">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_buying_api_results_id" Type="Int32" Nullable="false" />
+          <Property Name="station_inventory_manifest_id" Type="Int32" Nullable="false" />
+          <Property Name="inventory_media_week_id" Type="Int32" Nullable="false" />
+          <Property Name="impressions30sec" Type="Double" Nullable="false" />
+          <Property Name="contract_media_week_id" Type="Int32" Nullable="false" />
+          <Property Name="standard_daypart_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="daypart_defaults" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spots_daypart_defaults" FromRole="plan_version_buying_api_result_spots" ToRole="daypart_defaults" />
+          <NavigationProperty Name="inventory_media_week" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spots_contract_media_week" FromRole="plan_version_buying_api_result_spots" ToRole="media_weeks" />
+          <NavigationProperty Name="contract_media_week" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spots_inventory_media_week" FromRole="plan_version_buying_api_result_spots" ToRole="media_weeks" />
+          <NavigationProperty Name="plan_version_buying_api_result_spot_frequencies" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spot_frequencies_plan_version_buying_api_result_spots" FromRole="plan_version_buying_api_result_spots" ToRole="plan_version_buying_api_result_spot_frequencies" />
+          <NavigationProperty Name="plan_version_buying_api_results" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spots_plan_version_buying_api_results" FromRole="plan_version_buying_api_result_spots" ToRole="plan_version_buying_api_results" />
+          <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spots_station_inventory_manifest" FromRole="plan_version_buying_api_result_spots" ToRole="station_inventory_manifest" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_api_results">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="optimal_cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="plan_version_buying_job_id" Type="Int32" />
+          <Property Name="buying_version" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="plan_version_buying_api_result_spots" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spots_plan_version_buying_api_results" FromRole="plan_version_buying_api_results" ToRole="plan_version_buying_api_result_spots" />
+          <NavigationProperty Name="plan_version_buying_job" Relationship="BroadcastModel.FK_plan_version_buying_api_results_plan_version_buying_job" FromRole="plan_version_buying_api_results" ToRole="plan_version_buying_job" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_band_details">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_buying_band_id" Type="Int32" Nullable="false" />
+          <Property Name="min_band" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="max_band" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="spots" Type="Int32" Nullable="false" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
+          <Property Name="cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="budget" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="impressions_percentage" Type="Double" Nullable="false" />
+          <Property Name="available_inventory_percentage" Type="Double" Nullable="false" />
+          <NavigationProperty Name="plan_version_buying_bands" Relationship="BroadcastModel.FK_plan_version_buying_band_details_plan_version_buying_bands" FromRole="plan_version_buying_band_details" ToRole="plan_version_buying_bands" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_bands">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_buying_job_id" Type="Int32" />
+          <Property Name="total_spots" Type="Int32" Nullable="false" />
+          <Property Name="total_impressions" Type="Double" Nullable="false" />
+          <Property Name="total_cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="total_budget" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="plan_version_buying_band_details" Relationship="BroadcastModel.FK_plan_version_buying_band_details_plan_version_buying_bands" FromRole="plan_version_buying_bands" ToRole="plan_version_buying_band_details" />
+          <NavigationProperty Name="plan_version_buying_job" Relationship="BroadcastModel.FK_plan_version_buying_bands_plan_version_buying_job" FromRole="plan_version_buying_bands" ToRole="plan_version_buying_job" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_job">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_id" Type="Int32" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="queued_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="completed_at" Type="DateTime" Precision="3" />
+          <Property Name="error_message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="diagnostic_result" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="hangfire_job_id" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="plan_version_buying_api_results" Relationship="BroadcastModel.FK_plan_version_buying_api_results_plan_version_buying_job" FromRole="plan_version_buying_job" ToRole="plan_version_buying_api_results" />
+          <NavigationProperty Name="plan_version_buying_bands" Relationship="BroadcastModel.FK_plan_version_buying_bands_plan_version_buying_job" FromRole="plan_version_buying_job" ToRole="plan_version_buying_bands" />
+          <NavigationProperty Name="plan_version_buying_job_inventory_source_estimates" Relationship="BroadcastModel.FK_plan_version_buying_job_inventory_source_estimates_plan_version_buying_job" FromRole="plan_version_buying_job" ToRole="plan_version_buying_job_inventory_source_estimates" />
+          <NavigationProperty Name="plan_version_buying_stations" Relationship="BroadcastModel.FK_plan_version_buying_job_plan_version_buying_stations" FromRole="plan_version_buying_job" ToRole="plan_version_buying_stations" />
+          <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_buying_job_plan_versions" FromRole="plan_version_buying_job" ToRole="plan_versions" />
+          <NavigationProperty Name="plan_version_buying_markets" Relationship="BroadcastModel.FK_plan_version_buying_markets_buying_job" FromRole="plan_version_buying_job" ToRole="plan_version_buying_markets" />
+          <NavigationProperty Name="plan_version_buying_parameters" Relationship="BroadcastModel.FK_plan_version_buying_parameters_plan_version_buying_job" FromRole="plan_version_buying_job" ToRole="plan_version_buying_parameters" />
+          <NavigationProperty Name="plan_version_buying_results" Relationship="BroadcastModel.FK_plan_version_buying_results_plan_version_buying_job" FromRole="plan_version_buying_job" ToRole="plan_version_buying_results" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_job_inventory_source_estimates">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="media_week_id" Type="Int32" Nullable="false" />
+          <Property Name="inventory_source_id" Type="Int32" />
+          <Property Name="plan_version_buying_job_id" Type="Int32" Nullable="false" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
+          <Property Name="cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="inventory_source_type" Type="Int32" />
+          <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_plan_version_buying_job_inventory_source_estimates_inventory_sources" FromRole="plan_version_buying_job_inventory_source_estimates" ToRole="inventory_sources" />
+          <NavigationProperty Name="media_weeks" Relationship="BroadcastModel.FK_plan_version_buying_job_inventory_source_estimates_media_weeks" FromRole="plan_version_buying_job_inventory_source_estimates" ToRole="media_weeks" />
+          <NavigationProperty Name="plan_version_buying_job" Relationship="BroadcastModel.FK_plan_version_buying_job_inventory_source_estimates_plan_version_buying_job" FromRole="plan_version_buying_job_inventory_source_estimates" ToRole="plan_version_buying_job" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_market_details">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_buying_market_id" Type="Int32" Nullable="false" />
+          <Property Name="rank" Type="Int32" Nullable="false" />
+          <Property Name="market_coverage_percent" Type="Double" Nullable="false" />
+          <Property Name="stations" Type="Int32" Nullable="false" />
+          <Property Name="spots" Type="Int32" Nullable="false" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
+          <Property Name="cpm" Type="Double" Nullable="false" />
+          <Property Name="budget" Type="Double" Nullable="false" />
+          <Property Name="impressions_percentage" Type="Double" Nullable="false" />
+          <Property Name="share_of_voice_goal_percentage" Type="Double" />
+          <NavigationProperty Name="plan_version_buying_markets" Relationship="BroadcastModel.FK_plan_version_buying_market_details_buying_market" FromRole="plan_version_buying_market_details" ToRole="plan_version_buying_markets" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_markets">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_buying_job_id" Type="Int32" />
+          <Property Name="total_markets" Type="Int32" Nullable="false" />
+          <Property Name="total_coverage_percent" Type="Double" Nullable="false" />
+          <Property Name="total_stations" Type="Int32" Nullable="false" />
+          <Property Name="total_spots" Type="Int32" Nullable="false" />
+          <Property Name="total_impressions" Type="Double" Nullable="false" />
+          <Property Name="total_cpm" Type="Double" Nullable="false" />
+          <Property Name="total_budget" Type="Double" Nullable="false" />
+          <NavigationProperty Name="plan_version_buying_job" Relationship="BroadcastModel.FK_plan_version_buying_markets_buying_job" FromRole="plan_version_buying_markets" ToRole="plan_version_buying_job" />
+          <NavigationProperty Name="plan_version_buying_market_details" Relationship="BroadcastModel.FK_plan_version_buying_market_details_buying_market" FromRole="plan_version_buying_markets" ToRole="plan_version_buying_market_details" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_parameters">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_id" Type="Int32" />
+          <Property Name="min_cpm" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="max_cpm" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="coverage_goal" Type="Double" Nullable="false" />
+          <Property Name="impressions_goal" Type="Double" Nullable="false" />
+          <Property Name="budget_goal" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="cpm_goal" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="proprietary_blend" Type="Double" Nullable="false" />
+          <Property Name="competition_factor" Type="Double" />
+          <Property Name="inflation_factor" Type="Double" />
+          <Property Name="unit_caps_type" Type="Int32" Nullable="false" />
+          <Property Name="unit_caps" Type="Int32" Nullable="false" />
+          <Property Name="cpp" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="currency" Type="Int32" Nullable="false" />
+          <Property Name="rating_points" Type="Double" Nullable="false" />
+          <Property Name="margin" Type="Double" />
+          <Property Name="plan_version_buying_job_id" Type="Int32" />
+          <Property Name="budget_adjusted" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="cpm_adjusted" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="market_group" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="plan_version_buying_job" Relationship="BroadcastModel.FK_plan_version_buying_parameters_plan_version_buying_job" FromRole="plan_version_buying_parameters" ToRole="plan_version_buying_job" />
+          <NavigationProperty Name="plan_version_buying_parameters_inventory_source_percentages" Relationship="BroadcastModel.FK_plan_version_buying_parameters_inventory_source_percentages_plan_version_buying_parameters" FromRole="plan_version_buying_parameters" ToRole="plan_version_buying_parameters_inventory_source_percentages" />
+          <NavigationProperty Name="plan_version_buying_parameters_inventory_source_type_percentages" Relationship="BroadcastModel.FK_plan_version_buying_parameters_inventory_source_type_percentages_plan_version_buying_parameters" FromRole="plan_version_buying_parameters" ToRole="plan_version_buying_parameters_inventory_source_type_percentages" />
+          <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_buying_parameters_plan_versions" FromRole="plan_version_buying_parameters" ToRole="plan_versions" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_parameters_inventory_source_percentages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_buying_parameter_id" Type="Int32" Nullable="false" />
+          <Property Name="inventory_source_id" Type="Int32" Nullable="false" />
+          <Property Name="percentage" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_plan_version_buying_parameters_inventory_source_percentages_inventory_sources" FromRole="plan_version_buying_parameters_inventory_source_percentages" ToRole="inventory_sources" />
+          <NavigationProperty Name="plan_version_buying_parameters" Relationship="BroadcastModel.FK_plan_version_buying_parameters_inventory_source_percentages_plan_version_buying_parameters" FromRole="plan_version_buying_parameters_inventory_source_percentages" ToRole="plan_version_buying_parameters" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_parameters_inventory_source_type_percentages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_buying_parameter_id" Type="Int32" Nullable="false" />
+          <Property Name="inventory_source_type" Type="Byte" Nullable="false" />
+          <Property Name="percentage" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="plan_version_buying_parameters" Relationship="BroadcastModel.FK_plan_version_buying_parameters_inventory_source_type_percentages_plan_version_buying_parameters" FromRole="plan_version_buying_parameters_inventory_source_type_percentages" ToRole="plan_version_buying_parameters" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_result_spots">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_buying_result_id" Type="Int32" Nullable="false" />
+          <Property Name="program_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="genre" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="avg_impressions" Type="Double" Nullable="false" />
+          <Property Name="avg_cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="station_count" Type="Int32" Nullable="false" />
+          <Property Name="market_count" Type="Int32" Nullable="false" />
+          <Property Name="percentage_of_buy" Type="Double" Nullable="false" />
+          <Property Name="budget" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="spots" Type="Int32" Nullable="false" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
+          <NavigationProperty Name="plan_version_buying_results" Relationship="BroadcastModel.FK_plan_version_buying_result_spots_plan_version_buying_results" FromRole="plan_version_buying_result_spots" ToRole="plan_version_buying_results" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_results">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="optimal_cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="total_market_count" Type="Int32" Nullable="false" />
+          <Property Name="total_station_count" Type="Int32" Nullable="false" />
+          <Property Name="total_avg_cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="total_avg_impressions" Type="Double" Nullable="false" />
+          <Property Name="goal_fulfilled_by_proprietary" Type="Boolean" Nullable="false" />
+          <Property Name="total_impressions" Type="Double" Nullable="false" />
+          <Property Name="total_budget" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="plan_version_buying_job_id" Type="Int32" />
+          <Property Name="total_spots" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="plan_version_buying_job" Relationship="BroadcastModel.FK_plan_version_buying_results_plan_version_buying_job" FromRole="plan_version_buying_results" ToRole="plan_version_buying_job" />
+          <NavigationProperty Name="plan_version_buying_result_spots" Relationship="BroadcastModel.FK_plan_version_buying_result_spots_plan_version_buying_results" FromRole="plan_version_buying_results" ToRole="plan_version_buying_result_spots" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_station_details">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_buying_station_id" Type="Int32" Nullable="false" />
+          <Property Name="station" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="market" Type="String" Nullable="false" MaxLength="31" FixedLength="false" Unicode="false" />
+          <Property Name="spots" Type="Int32" Nullable="false" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
+          <Property Name="cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="budget" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="impressions_percentage" Type="Double" Nullable="false" />
+          <NavigationProperty Name="plan_version_buying_stations" Relationship="BroadcastModel.FK_plan_version_buying_stations_plan_version_buying_station_details" FromRole="plan_version_buying_station_details" ToRole="plan_version_buying_stations" />
+        </EntityType>
+        <EntityType Name="plan_version_buying_stations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_buying_job_id" Type="Int32" />
+          <Property Name="total_spots" Type="Int32" Nullable="false" />
+          <Property Name="total_impressions" Type="Double" Nullable="false" />
+          <Property Name="total_cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="total_budget" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="total_stations" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="plan_version_buying_job" Relationship="BroadcastModel.FK_plan_version_buying_job_plan_version_buying_stations" FromRole="plan_version_buying_stations" ToRole="plan_version_buying_job" />
+          <NavigationProperty Name="plan_version_buying_station_details" Relationship="BroadcastModel.FK_plan_version_buying_stations_plan_version_buying_station_details" FromRole="plan_version_buying_stations" ToRole="plan_version_buying_station_details" />
+        </EntityType>
+        <Association Name="FK_plan_version_buying_api_result_spots_daypart_defaults">
+          <End Type="BroadcastModel.daypart_defaults" Role="daypart_defaults" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_buying_api_result_spots" Role="plan_version_buying_api_result_spots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart_defaults">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_api_result_spots">
+              <PropertyRef Name="standard_daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_job_inventory_source_estimates_inventory_sources">
+          <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="0..1" />
+          <End Type="BroadcastModel.plan_version_buying_job_inventory_source_estimates" Role="plan_version_buying_job_inventory_source_estimates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_job_inventory_source_estimates">
+              <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_parameters_inventory_source_percentages_inventory_sources">
+          <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_buying_parameters_inventory_source_percentages" Role="plan_version_buying_parameters_inventory_source_percentages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_parameters_inventory_source_percentages">
+              <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_api_result_spots_contract_media_week">
+          <End Type="BroadcastModel.media_weeks" Role="media_weeks" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_buying_api_result_spots" Role="plan_version_buying_api_result_spots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_weeks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_api_result_spots">
+              <PropertyRef Name="contract_media_week_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_api_result_spots_inventory_media_week">
+          <End Type="BroadcastModel.media_weeks" Role="media_weeks" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_buying_api_result_spots" Role="plan_version_buying_api_result_spots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_weeks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_api_result_spots">
+              <PropertyRef Name="inventory_media_week_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_job_inventory_source_estimates_media_weeks">
+          <End Type="BroadcastModel.media_weeks" Role="media_weeks" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_buying_job_inventory_source_estimates" Role="plan_version_buying_job_inventory_source_estimates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media_weeks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_job_inventory_source_estimates">
+              <PropertyRef Name="media_week_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_api_result_spot_frequencies_plan_version_buying_api_result_spots">
+          <End Type="BroadcastModel.plan_version_buying_api_result_spots" Role="plan_version_buying_api_result_spots" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_buying_api_result_spot_frequencies" Role="plan_version_buying_api_result_spot_frequencies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_api_result_spots">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_api_result_spot_frequencies">
+              <PropertyRef Name="plan_version_buying_api_result_spot_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_api_result_spot_frequencies_spot_lengths">
+          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_buying_api_result_spot_frequencies" Role="plan_version_buying_api_result_spot_frequencies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_api_result_spot_frequencies">
+              <PropertyRef Name="spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_api_result_spots_plan_version_buying_api_results">
+          <End Type="BroadcastModel.plan_version_buying_api_results" Role="plan_version_buying_api_results" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_buying_api_result_spots" Role="plan_version_buying_api_result_spots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_api_results">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_api_result_spots">
+              <PropertyRef Name="plan_version_buying_api_results_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_api_result_spots_station_inventory_manifest">
+          <End Type="BroadcastModel.station_inventory_manifest" Role="station_inventory_manifest" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_buying_api_result_spots" Role="plan_version_buying_api_result_spots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station_inventory_manifest">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_api_result_spots">
+              <PropertyRef Name="station_inventory_manifest_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_api_results_plan_version_buying_job">
+          <End Type="BroadcastModel.plan_version_buying_job" Role="plan_version_buying_job" Multiplicity="0..1" />
+          <End Type="BroadcastModel.plan_version_buying_api_results" Role="plan_version_buying_api_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_api_results">
+              <PropertyRef Name="plan_version_buying_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_band_details_plan_version_buying_bands">
+          <End Type="BroadcastModel.plan_version_buying_bands" Role="plan_version_buying_bands" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_buying_band_details" Role="plan_version_buying_band_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_bands">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_band_details">
+              <PropertyRef Name="plan_version_buying_band_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_bands_plan_version_buying_job">
+          <End Type="BroadcastModel.plan_version_buying_job" Role="plan_version_buying_job" Multiplicity="0..1" />
+          <End Type="BroadcastModel.plan_version_buying_bands" Role="plan_version_buying_bands" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_bands">
+              <PropertyRef Name="plan_version_buying_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_job_inventory_source_estimates_plan_version_buying_job">
+          <End Type="BroadcastModel.plan_version_buying_job" Role="plan_version_buying_job" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_buying_job_inventory_source_estimates" Role="plan_version_buying_job_inventory_source_estimates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_job_inventory_source_estimates">
+              <PropertyRef Name="plan_version_buying_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_job_plan_version_buying_stations">
+          <End Type="BroadcastModel.plan_version_buying_job" Role="plan_version_buying_job" Multiplicity="0..1" />
+          <End Type="BroadcastModel.plan_version_buying_stations" Role="plan_version_buying_stations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_stations">
+              <PropertyRef Name="plan_version_buying_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_job_plan_versions">
+          <End Type="BroadcastModel.plan_versions" Role="plan_versions" Multiplicity="0..1" />
+          <End Type="BroadcastModel.plan_version_buying_job" Role="plan_version_buying_job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_versions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_job">
+              <PropertyRef Name="plan_version_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_markets_buying_job">
+          <End Type="BroadcastModel.plan_version_buying_job" Role="plan_version_buying_job" Multiplicity="0..1" />
+          <End Type="BroadcastModel.plan_version_buying_markets" Role="plan_version_buying_markets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_markets">
+              <PropertyRef Name="plan_version_buying_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_parameters_plan_version_buying_job">
+          <End Type="BroadcastModel.plan_version_buying_job" Role="plan_version_buying_job" Multiplicity="0..1" />
+          <End Type="BroadcastModel.plan_version_buying_parameters" Role="plan_version_buying_parameters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_parameters">
+              <PropertyRef Name="plan_version_buying_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_results_plan_version_buying_job">
+          <End Type="BroadcastModel.plan_version_buying_job" Role="plan_version_buying_job" Multiplicity="0..1" />
+          <End Type="BroadcastModel.plan_version_buying_results" Role="plan_version_buying_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_results">
+              <PropertyRef Name="plan_version_buying_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_market_details_buying_market">
+          <End Type="BroadcastModel.plan_version_buying_markets" Role="plan_version_buying_markets" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_buying_market_details" Role="plan_version_buying_market_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_markets">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_market_details">
+              <PropertyRef Name="plan_version_buying_market_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_parameters_inventory_source_percentages_plan_version_buying_parameters">
+          <End Type="BroadcastModel.plan_version_buying_parameters" Role="plan_version_buying_parameters" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_buying_parameters_inventory_source_percentages" Role="plan_version_buying_parameters_inventory_source_percentages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_parameters">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_parameters_inventory_source_percentages">
+              <PropertyRef Name="plan_version_buying_parameter_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_parameters_inventory_source_type_percentages_plan_version_buying_parameters">
+          <End Type="BroadcastModel.plan_version_buying_parameters" Role="plan_version_buying_parameters" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_buying_parameters_inventory_source_type_percentages" Role="plan_version_buying_parameters_inventory_source_type_percentages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_parameters">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_parameters_inventory_source_type_percentages">
+              <PropertyRef Name="plan_version_buying_parameter_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_parameters_plan_versions">
+          <End Type="BroadcastModel.plan_versions" Role="plan_versions" Multiplicity="0..1" />
+          <End Type="BroadcastModel.plan_version_buying_parameters" Role="plan_version_buying_parameters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_versions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_parameters">
+              <PropertyRef Name="plan_version_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_result_spots_plan_version_buying_results">
+          <End Type="BroadcastModel.plan_version_buying_results" Role="plan_version_buying_results" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_buying_result_spots" Role="plan_version_buying_result_spots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_results">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_result_spots">
+              <PropertyRef Name="plan_version_buying_result_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_stations_plan_version_buying_station_details">
+          <End Type="BroadcastModel.plan_version_buying_stations" Role="plan_version_buying_stations" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_buying_station_details" Role="plan_version_buying_station_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_stations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_station_details">
+              <PropertyRef Name="plan_version_buying_station_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -17381,6 +18729,237 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="quarter_number" ColumnName="quarter_number" />
                 <ScalarProperty Name="daypart_default_id" ColumnName="daypart_default_id" />
                 <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_api_result_spot_frequencies">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_api_result_spot_frequencies">
+              <MappingFragment StoreEntitySet="plan_version_buying_api_result_spot_frequencies">
+                <ScalarProperty Name="spots" ColumnName="spots" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
+                <ScalarProperty Name="plan_version_buying_api_result_spot_id" ColumnName="plan_version_buying_api_result_spot_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_api_result_spots">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_api_result_spots">
+              <MappingFragment StoreEntitySet="plan_version_buying_api_result_spots">
+                <ScalarProperty Name="standard_daypart_id" ColumnName="standard_daypart_id" />
+                <ScalarProperty Name="contract_media_week_id" ColumnName="contract_media_week_id" />
+                <ScalarProperty Name="impressions30sec" ColumnName="impressions30sec" />
+                <ScalarProperty Name="inventory_media_week_id" ColumnName="inventory_media_week_id" />
+                <ScalarProperty Name="station_inventory_manifest_id" ColumnName="station_inventory_manifest_id" />
+                <ScalarProperty Name="plan_version_buying_api_results_id" ColumnName="plan_version_buying_api_results_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_api_results">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_api_results">
+              <MappingFragment StoreEntitySet="plan_version_buying_api_results">
+                <ScalarProperty Name="buying_version" ColumnName="buying_version" />
+                <ScalarProperty Name="plan_version_buying_job_id" ColumnName="plan_version_buying_job_id" />
+                <ScalarProperty Name="optimal_cpm" ColumnName="optimal_cpm" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_band_details">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_band_details">
+              <MappingFragment StoreEntitySet="plan_version_buying_band_details">
+                <ScalarProperty Name="available_inventory_percentage" ColumnName="available_inventory_percentage" />
+                <ScalarProperty Name="impressions_percentage" ColumnName="impressions_percentage" />
+                <ScalarProperty Name="budget" ColumnName="budget" />
+                <ScalarProperty Name="cpm" ColumnName="cpm" />
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="spots" ColumnName="spots" />
+                <ScalarProperty Name="max_band" ColumnName="max_band" />
+                <ScalarProperty Name="min_band" ColumnName="min_band" />
+                <ScalarProperty Name="plan_version_buying_band_id" ColumnName="plan_version_buying_band_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_bands">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_bands">
+              <MappingFragment StoreEntitySet="plan_version_buying_bands">
+                <ScalarProperty Name="total_budget" ColumnName="total_budget" />
+                <ScalarProperty Name="total_cpm" ColumnName="total_cpm" />
+                <ScalarProperty Name="total_impressions" ColumnName="total_impressions" />
+                <ScalarProperty Name="total_spots" ColumnName="total_spots" />
+                <ScalarProperty Name="plan_version_buying_job_id" ColumnName="plan_version_buying_job_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_job">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_job">
+              <MappingFragment StoreEntitySet="plan_version_buying_job">
+                <ScalarProperty Name="hangfire_job_id" ColumnName="hangfire_job_id" />
+                <ScalarProperty Name="diagnostic_result" ColumnName="diagnostic_result" />
+                <ScalarProperty Name="error_message" ColumnName="error_message" />
+                <ScalarProperty Name="completed_at" ColumnName="completed_at" />
+                <ScalarProperty Name="queued_at" ColumnName="queued_at" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="plan_version_id" ColumnName="plan_version_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_job_inventory_source_estimates">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_job_inventory_source_estimates">
+              <MappingFragment StoreEntitySet="plan_version_buying_job_inventory_source_estimates">
+                <ScalarProperty Name="inventory_source_type" ColumnName="inventory_source_type" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="plan_version_buying_job_id" ColumnName="plan_version_buying_job_id" />
+                <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
+                <ScalarProperty Name="media_week_id" ColumnName="media_week_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_market_details">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_market_details">
+              <MappingFragment StoreEntitySet="plan_version_buying_market_details">
+                <ScalarProperty Name="share_of_voice_goal_percentage" ColumnName="share_of_voice_goal_percentage" />
+                <ScalarProperty Name="impressions_percentage" ColumnName="impressions_percentage" />
+                <ScalarProperty Name="budget" ColumnName="budget" />
+                <ScalarProperty Name="cpm" ColumnName="cpm" />
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="spots" ColumnName="spots" />
+                <ScalarProperty Name="stations" ColumnName="stations" />
+                <ScalarProperty Name="market_coverage_percent" ColumnName="market_coverage_percent" />
+                <ScalarProperty Name="rank" ColumnName="rank" />
+                <ScalarProperty Name="plan_version_buying_market_id" ColumnName="plan_version_buying_market_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_markets">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_markets">
+              <MappingFragment StoreEntitySet="plan_version_buying_markets">
+                <ScalarProperty Name="total_budget" ColumnName="total_budget" />
+                <ScalarProperty Name="total_cpm" ColumnName="total_cpm" />
+                <ScalarProperty Name="total_impressions" ColumnName="total_impressions" />
+                <ScalarProperty Name="total_spots" ColumnName="total_spots" />
+                <ScalarProperty Name="total_stations" ColumnName="total_stations" />
+                <ScalarProperty Name="total_coverage_percent" ColumnName="total_coverage_percent" />
+                <ScalarProperty Name="total_markets" ColumnName="total_markets" />
+                <ScalarProperty Name="plan_version_buying_job_id" ColumnName="plan_version_buying_job_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_parameters">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_parameters">
+              <MappingFragment StoreEntitySet="plan_version_buying_parameters">
+                <ScalarProperty Name="market_group" ColumnName="market_group" />
+                <ScalarProperty Name="cpm_adjusted" ColumnName="cpm_adjusted" />
+                <ScalarProperty Name="budget_adjusted" ColumnName="budget_adjusted" />
+                <ScalarProperty Name="plan_version_buying_job_id" ColumnName="plan_version_buying_job_id" />
+                <ScalarProperty Name="margin" ColumnName="margin" />
+                <ScalarProperty Name="rating_points" ColumnName="rating_points" />
+                <ScalarProperty Name="currency" ColumnName="currency" />
+                <ScalarProperty Name="cpp" ColumnName="cpp" />
+                <ScalarProperty Name="unit_caps" ColumnName="unit_caps" />
+                <ScalarProperty Name="unit_caps_type" ColumnName="unit_caps_type" />
+                <ScalarProperty Name="inflation_factor" ColumnName="inflation_factor" />
+                <ScalarProperty Name="competition_factor" ColumnName="competition_factor" />
+                <ScalarProperty Name="proprietary_blend" ColumnName="proprietary_blend" />
+                <ScalarProperty Name="cpm_goal" ColumnName="cpm_goal" />
+                <ScalarProperty Name="budget_goal" ColumnName="budget_goal" />
+                <ScalarProperty Name="impressions_goal" ColumnName="impressions_goal" />
+                <ScalarProperty Name="coverage_goal" ColumnName="coverage_goal" />
+                <ScalarProperty Name="max_cpm" ColumnName="max_cpm" />
+                <ScalarProperty Name="min_cpm" ColumnName="min_cpm" />
+                <ScalarProperty Name="plan_version_id" ColumnName="plan_version_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_parameters_inventory_source_percentages">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_parameters_inventory_source_percentages">
+              <MappingFragment StoreEntitySet="plan_version_buying_parameters_inventory_source_percentages">
+                <ScalarProperty Name="percentage" ColumnName="percentage" />
+                <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
+                <ScalarProperty Name="plan_version_buying_parameter_id" ColumnName="plan_version_buying_parameter_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_parameters_inventory_source_type_percentages">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_parameters_inventory_source_type_percentages">
+              <MappingFragment StoreEntitySet="plan_version_buying_parameters_inventory_source_type_percentages">
+                <ScalarProperty Name="percentage" ColumnName="percentage" />
+                <ScalarProperty Name="inventory_source_type" ColumnName="inventory_source_type" />
+                <ScalarProperty Name="plan_version_buying_parameter_id" ColumnName="plan_version_buying_parameter_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_result_spots">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_result_spots">
+              <MappingFragment StoreEntitySet="plan_version_buying_result_spots">
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="spots" ColumnName="spots" />
+                <ScalarProperty Name="budget" ColumnName="budget" />
+                <ScalarProperty Name="percentage_of_buy" ColumnName="percentage_of_buy" />
+                <ScalarProperty Name="market_count" ColumnName="market_count" />
+                <ScalarProperty Name="station_count" ColumnName="station_count" />
+                <ScalarProperty Name="avg_cpm" ColumnName="avg_cpm" />
+                <ScalarProperty Name="avg_impressions" ColumnName="avg_impressions" />
+                <ScalarProperty Name="genre" ColumnName="genre" />
+                <ScalarProperty Name="program_name" ColumnName="program_name" />
+                <ScalarProperty Name="plan_version_buying_result_id" ColumnName="plan_version_buying_result_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_results">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_results">
+              <MappingFragment StoreEntitySet="plan_version_buying_results">
+                <ScalarProperty Name="total_spots" ColumnName="total_spots" />
+                <ScalarProperty Name="plan_version_buying_job_id" ColumnName="plan_version_buying_job_id" />
+                <ScalarProperty Name="total_budget" ColumnName="total_budget" />
+                <ScalarProperty Name="total_impressions" ColumnName="total_impressions" />
+                <ScalarProperty Name="goal_fulfilled_by_proprietary" ColumnName="goal_fulfilled_by_proprietary" />
+                <ScalarProperty Name="total_avg_impressions" ColumnName="total_avg_impressions" />
+                <ScalarProperty Name="total_avg_cpm" ColumnName="total_avg_cpm" />
+                <ScalarProperty Name="total_station_count" ColumnName="total_station_count" />
+                <ScalarProperty Name="total_market_count" ColumnName="total_market_count" />
+                <ScalarProperty Name="optimal_cpm" ColumnName="optimal_cpm" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_station_details">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_station_details">
+              <MappingFragment StoreEntitySet="plan_version_buying_station_details">
+                <ScalarProperty Name="impressions_percentage" ColumnName="impressions_percentage" />
+                <ScalarProperty Name="budget" ColumnName="budget" />
+                <ScalarProperty Name="cpm" ColumnName="cpm" />
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="spots" ColumnName="spots" />
+                <ScalarProperty Name="market" ColumnName="market" />
+                <ScalarProperty Name="station" ColumnName="station" />
+                <ScalarProperty Name="plan_version_buying_station_id" ColumnName="plan_version_buying_station_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_stations">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_stations">
+              <MappingFragment StoreEntitySet="plan_version_buying_stations">
+                <ScalarProperty Name="total_stations" ColumnName="total_stations" />
+                <ScalarProperty Name="total_budget" ColumnName="total_budget" />
+                <ScalarProperty Name="total_cpm" ColumnName="total_cpm" />
+                <ScalarProperty Name="total_impressions" ColumnName="total_impressions" />
+                <ScalarProperty Name="total_spots" ColumnName="total_spots" />
+                <ScalarProperty Name="plan_version_buying_job_id" ColumnName="plan_version_buying_job_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -369,6 +369,7 @@
     <Compile Include="Controllers\Inventory\InventoryExportApiController.cs" />
     <Compile Include="Controllers\MarketsApiController.cs" />
     <Compile Include="Controllers\PlanBuyingApiController.cs" />
+    <Compile Include="Controllers\BuyingApiController.cs" />
     <Compile Include="Controllers\PlanPricingApiController.cs" />
     <Compile Include="Controllers\PostingTypeApiController.cs" />
     <Compile Include="Controllers\PostingBooksApiController.cs" />

@@ -15,6 +15,6 @@ namespace Services.Broadcast.Entities
 
         public double Margin { get; set; }
 
-        public PricingMarketGroupEnum MarketGroup { get; set; }
+        public MarketGroupEnum MarketGroup { get; set; }
     }
 }

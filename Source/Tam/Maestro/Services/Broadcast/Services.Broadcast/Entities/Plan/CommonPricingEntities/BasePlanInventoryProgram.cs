@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
-namespace Services.Broadcast.Entities.Plan.Pricing
+namespace Services.Broadcast.Entities.Plan.CommonPricingEntities
 {
-    public class BasePlanPricingInventoryProgram
+    public class BasePlanInventoryProgram
     {
         public int ManifestId { get; set; }
 

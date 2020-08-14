@@ -27,6 +27,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_audience_daypart_vpvh = new HashSet<plan_version_audience_daypart_vpvh>();
             this.plan_version_pricing_api_result_spots = new HashSet<plan_version_pricing_api_result_spots>();
             this.inventory_proprietary_summary = new HashSet<inventory_proprietary_summary>();
+            this.plan_version_buying_api_result_spots = new HashSet<plan_version_buying_api_result_spots>();
         }
     
         public int id { get; set; }
@@ -48,5 +49,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
         public virtual ICollection<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
         public virtual ICollection<inventory_proprietary_summary> inventory_proprietary_summary { get; set; }
+        public virtual ICollection<plan_version_buying_api_result_spots> plan_version_buying_api_result_spots { get; set; }
     }
 }

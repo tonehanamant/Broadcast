@@ -1,0 +1,401 @@
+[
+  {
+    "Cpm": 98.03921568627450980392156860,
+    "Impressions": 510.0,
+    "InventoryBuyingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 300.0
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 100.0
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 100.0
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 100.0
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 300.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": true,
+          "_Id": 32941,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Id": 360318,
+        "PrimaryProgram": {
+          "EndTime": 7200,
+          "Genre": "Comedy",
+          "Id": 11250,
+          "Name": "Late news",
+          "ShowType": "Sports",
+          "StartTime": 3600
+        },
+        "PrimaryProgramId": 11250,
+        "ProgramName": "TWO & HALF MEN",
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Comedy",
+            "Id": 11250,
+            "Name": "Late news",
+            "ShowType": "Sports",
+            "StartTime": 3600
+          }
+        ]
+      }
+    ],
+    "ManifestId": 288692,
+    "ManifestRates": [
+      {
+        "Cost": 50.0000,
+        "SpotLengthId": 2
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 771,
+        "Id": 1698584,
+        "InventoryMediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 772,
+        "Id": 1705866,
+        "InventoryMediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 773,
+        "Id": 1713195,
+        "InventoryMediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 774,
+        "Id": 1720549,
+        "InventoryMediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 775,
+        "Id": 1728281,
+        "InventoryMediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 149.09,
+    "ProvidedImpressions": 510.0,
+    "SpotLengthId": 1,
+    "StandardDaypartId": 2,
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "Code": 8346,
+      "Id": 2106,
+      "LegacyCallLetters": "WPFO",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 100,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
+    },
+    "Unit": null
+  },
+  {
+    "Cpm": 23.529411764705882352941176500,
+    "Impressions": 510.0,
+    "InventoryBuyingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 300.0
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 100.0
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 300.0
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 300.0
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 400.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": false,
+          "_Id": 29555,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "BRDCST DP362",
+          "_Saturday": true,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 360319,
+        "PrimaryProgram": {
+          "EndTime": 7200,
+          "Genre": "Comedy",
+          "Id": 11251,
+          "Name": "Late news",
+          "ShowType": "Sports",
+          "StartTime": 3600
+        },
+        "PrimaryProgramId": 11251,
+        "ProgramName": "2.5 MEN X2",
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Comedy",
+            "Id": 11251,
+            "Name": "Late news",
+            "ShowType": "Sports",
+            "StartTime": 3600
+          }
+        ]
+      }
+    ],
+    "ManifestId": 288693,
+    "ManifestRates": [
+      {
+        "Cost": 12.0000,
+        "SpotLengthId": 2
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 771,
+        "Id": 1698585,
+        "InventoryMediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 772,
+        "Id": 1705867,
+        "InventoryMediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 773,
+        "Id": 1713196,
+        "InventoryMediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 774,
+        "Id": 1720550,
+        "InventoryMediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 775,
+        "Id": 1728282,
+        "InventoryMediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 369.43125,
+    "ProvidedImpressions": 510.0,
+    "SpotLengthId": 1,
+    "StandardDaypartId": 2,
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "Code": 8346,
+      "Id": 2106,
+      "LegacyCallLetters": "WPFO",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 100,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
+    },
+    "Unit": null
+  },
+  {
+    "Cpm": 35.294117647058823529411764700,
+    "Impressions": 340.0,
+    "InventoryBuyingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 200.0
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 100.0
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 100.0
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 100.0
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 200.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 3599,
+          "_Friday": false,
+          "_Id": 29548,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": false,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": true,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 360320,
+        "PrimaryProgram": {
+          "EndTime": 7200,
+          "Genre": "Comedy",
+          "Id": 11252,
+          "Name": "Late news",
+          "ShowType": "Sports",
+          "StartTime": 3600
+        },
+        "PrimaryProgramId": 11252,
+        "ProgramName": "SEINFELD X2",
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Comedy",
+            "Id": 11252,
+            "Name": "Late news",
+            "ShowType": "Sports",
+            "StartTime": 3600
+          }
+        ]
+      }
+    ],
+    "ManifestId": 288694,
+    "ManifestRates": [
+      {
+        "Cost": 12.0000,
+        "SpotLengthId": 2
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 771,
+        "Id": 1698586,
+        "InventoryMediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 772,
+        "Id": 1705868,
+        "InventoryMediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 773,
+        "Id": 1713197,
+        "InventoryMediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 774,
+        "Id": 1720551,
+        "InventoryMediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 775,
+        "Id": 1728283,
+        "InventoryMediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 493.0,
+    "ProvidedImpressions": 340.0,
+    "SpotLengthId": 1,
+    "StandardDaypartId": 2,
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "Code": 8346,
+      "Id": 2106,
+      "LegacyCallLetters": "WPFO",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 100,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
+    },
+    "Unit": null
+  }
+]

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.Plan.Pricing
@@ -72,23 +73,5 @@ namespace Services.Broadcast.Entities.Plan.Pricing
 
         [JsonProperty("daypart_weighting")]
         public List<DaypartWeighting> DaypartWeighting { get; set; }
-    }
-
-    public class ShareOfVoice
-    {
-        [JsonProperty("market_code")]
-        public int MarketCode { get; set; }
-
-        [JsonProperty("market_goal")]
-        public double MarketGoal { get; set; }
-    }
-
-    public class DaypartWeighting
-    {
-        [JsonProperty("daypart_id")]
-        public int DaypartId { get; set; }
-
-        [JsonProperty("daypart_goal")]
-        public double DaypartGoal { get; set; }
     }
 }

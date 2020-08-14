@@ -23,6 +23,7 @@ using Unity;
 using Services.Broadcast.Entities.QuoteReport;
 using Services.Broadcast.IntegrationTests.TestData;
 using ApprovalUtilities.Utilities;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 {
@@ -1797,9 +1798,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 Id = 5,
                                 Daypart = new DisplayDaypart { Id = 5 },
                                 PrimaryProgramId = 0,
-                                Programs = new List<BasePlanPricingInventoryProgram.ManifestDaypart.Program>
+                                Programs = new List<BasePlanInventoryProgram.ManifestDaypart.Program>
                                 {
-                                    new BasePlanPricingInventoryProgram.ManifestDaypart.Program()
+                                    new BasePlanInventoryProgram.ManifestDaypart.Program()
                                 }
                             }
                         },
@@ -1936,9 +1937,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 Id = 5,
                                 Daypart = new DisplayDaypart { Id = 5 },
                                 PrimaryProgramId = 0,
-                                Programs = new List<BasePlanPricingInventoryProgram.ManifestDaypart.Program>
+                                Programs = new List<BasePlanInventoryProgram.ManifestDaypart.Program>
                                 {
-                                    new BasePlanPricingInventoryProgram.ManifestDaypart.Program()
+                                    new BasePlanInventoryProgram.ManifestDaypart.Program()
                                 }
                             }
                         },
@@ -2083,9 +2084,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                     Id = 5,
                                     Daypart = new DisplayDaypart {Id = 5},
                                     PrimaryProgramId = 0,
-                                    Programs = new List<BasePlanPricingInventoryProgram.ManifestDaypart.Program>
+                                    Programs = new List<BasePlanInventoryProgram.ManifestDaypart.Program>
                                     {
-                                        new BasePlanPricingInventoryProgram.ManifestDaypart.Program()
+                                        new BasePlanInventoryProgram.ManifestDaypart.Program()
                                     }
                                 }
                             },
@@ -2235,9 +2236,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                     Id = 5,
                                     Daypart = new DisplayDaypart { Id = 5 },
                                     PrimaryProgramId = 0,
-                                    Programs = new List<BasePlanPricingInventoryProgram.ManifestDaypart.Program>
+                                    Programs = new List<BasePlanInventoryProgram.ManifestDaypart.Program>
                                     {
-                                        new BasePlanPricingInventoryProgram.ManifestDaypart.Program()
+                                        new BasePlanInventoryProgram.ManifestDaypart.Program()
                                     }
                                 }
                             },
@@ -2387,9 +2388,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                     Id = 5,
                                     Daypart = new DisplayDaypart { Id = 5 },
                                     PrimaryProgramId = 2,
-                                    Programs = new List<BasePlanPricingInventoryProgram.ManifestDaypart.Program>
+                                    Programs = new List<BasePlanInventoryProgram.ManifestDaypart.Program>
                                     {
-                                        new BasePlanPricingInventoryProgram.ManifestDaypart.Program()
+                                        new BasePlanInventoryProgram.ManifestDaypart.Program()
                                         {
                                             Id = 2
                                         }
@@ -2542,9 +2543,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                     Id = 5,
                                     Daypart = new DisplayDaypart { Id = 1 },
                                     PrimaryProgramId = 0,
-                                    Programs = new List<BasePlanPricingInventoryProgram.ManifestDaypart.Program> 
+                                    Programs = new List<BasePlanInventoryProgram.ManifestDaypart.Program> 
                                     { 
-                                        new BasePlanPricingInventoryProgram.ManifestDaypart.Program() 
+                                        new BasePlanInventoryProgram.ManifestDaypart.Program() 
                                     }
                                 }
                             },

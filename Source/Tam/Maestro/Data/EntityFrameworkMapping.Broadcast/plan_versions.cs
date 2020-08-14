@@ -28,6 +28,8 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_audience_daypart_vpvh = new HashSet<plan_version_audience_daypart_vpvh>();
             this.plan_version_pricing_job = new HashSet<plan_version_pricing_job>();
             this.plan_version_pricing_parameters = new HashSet<plan_version_pricing_parameters>();
+            this.plan_version_buying_job = new HashSet<plan_version_buying_job>();
+            this.plan_version_buying_parameters = new HashSet<plan_version_buying_parameters>();
         }
     
         public int id { get; set; }
@@ -82,5 +84,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
         public virtual ICollection<plan_version_pricing_job> plan_version_pricing_job { get; set; }
         public virtual ICollection<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
+        public virtual ICollection<plan_version_buying_job> plan_version_buying_job { get; set; }
+        public virtual ICollection<plan_version_buying_parameters> plan_version_buying_parameters { get; set; }
     }
 }

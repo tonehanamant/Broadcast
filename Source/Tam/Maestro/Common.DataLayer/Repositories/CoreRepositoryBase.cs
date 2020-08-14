@@ -68,7 +68,7 @@ namespace Common.Services.Repositories
         protected T _InReadUncommitedTransaction<T>(Func<CT, T> pFunc)
         {
             using (var context = CreateDBContext(false))
-            using (var trx = _TransactionHelper.BeginTransaction(context, System.Data.IsolationLevel.ReadUncommitted))
+            using (var trx = _TransactionHelper.BeginTransaction(context, IsolationLevel.ReadUncommitted))
             {
                 var trx2 = context.Database.BeginTransaction(IsolationLevel.ReadUncommitted);
 

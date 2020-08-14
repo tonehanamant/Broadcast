@@ -520,6 +520,54 @@
     <Compile Include="plan_version_blackout_markets.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="plan_version_buying_api_results.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_buying_api_result_spots.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_buying_api_result_spot_frequencies.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_buying_bands.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_buying_band_details.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_buying_job.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_buying_job_inventory_source_estimates.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_buying_markets.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_buying_market_details.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_buying_parameters.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_buying_parameters_inventory_source_percentages.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_buying_parameters_inventory_source_type_percentages.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_buying_results.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_buying_result_spots.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_buying_stations.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="plan_version_buying_station_details.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="plan_version_creative_lengths.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

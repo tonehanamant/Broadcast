@@ -6,6 +6,7 @@ using Hangfire;
 using Hangfire.Client;
 using Hangfire.Common;
 using Hangfire.States;
+using Services.Broadcast.ApplicationServices.Buying;
 using Services.Broadcast.ApplicationServices.Helpers;
 using Services.Broadcast.ApplicationServices.Inventory;
 using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping;
@@ -15,6 +16,7 @@ using Services.Broadcast.ApplicationServices.Security;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
+using Services.Broadcast.BusinessEngines.PlanBuying;
 using Services.Broadcast.BusinessEngines.PlanPricing;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
@@ -233,7 +235,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPostingBookService, PostingBookService>();
             unityContainer.RegisterType<IPlanBudgetDeliveryCalculator, PlanBudgetDeliveryCalculator>();
             unityContainer.RegisterType<IPlanAggregator, PlanAggregator>();
-            unityContainer.RegisterType<IPlanBuyingService, PlanBuyingService>();
+            unityContainer.RegisterType<IBuyingService, BuyingService>();
 
             unityContainer.RegisterType<IEnvironmentService, EnvironmentService>();
             unityContainer.RegisterType<IDaypartTypeService, DaypartTypeService>();
@@ -269,6 +271,18 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPlanPricingMarketResultsEngine, PlanPricingMarketResultsEngine>();
             unityContainer.RegisterType<IHealthService, HealthService>();
 
+            //plan buying tab
+            unityContainer.RegisterType<IPlanBuyingApiClient, PlanBuyingApiClient>();
+            unityContainer.RegisterType<IPlanBuyingRequestLogClient, PlanBuyingRequestLogClientAmazonS3>();
+            unityContainer.RegisterType<IPlanBuyingService, PlanBuyingService>();
+            unityContainer.RegisterType<IPlanBuyingInventoryEngine, PlanBuyingInventoryEngine>();
+            unityContainer.RegisterType<IPlanBuyingInventoryQuarterCalculatorEngine, PlanBuyingInventoryQuarterCalculatorEngine>();
+            unityContainer.RegisterType<IPlanBuyingBandCalculationEngine, PlanBuyingBandCalculationEngine>();
+            unityContainer.RegisterType<IPlanBuyingUnitCapImpressionsCalculationEngine, PlanBuyingUnitCapImpressionsCalculationEngine>();
+            unityContainer.RegisterType<IPlanBuyingStationCalculationEngine, PlanBuyingStationCalculationEngine>();
+            unityContainer.RegisterType<IPlanBuyingMarketResultsEngine, PlanBuyingMarketResultsEngine>();
+
+            //launch darkly
             unityContainer.RegisterType<ILaunchDarklyClient, LaunchDarklyClient>();
             unityContainer.RegisterType<IFeatureToggleHelper, FeatureToggleHelper>();
 

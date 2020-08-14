@@ -105,6 +105,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IVpvhRepository, VpvhRepository>();
             instance.RegisterType<IInventoryProprietarySummaryRepository, InventoryProprietarySummaryRepository>();
             instance.RegisterType<IDataMaintenanceRepository, DataMaintenanceRepository>();
+            instance.RegisterType<IPlanBuyingRepository, PlanBuyingRepository>();
 
             WasRegistered = true;
         }

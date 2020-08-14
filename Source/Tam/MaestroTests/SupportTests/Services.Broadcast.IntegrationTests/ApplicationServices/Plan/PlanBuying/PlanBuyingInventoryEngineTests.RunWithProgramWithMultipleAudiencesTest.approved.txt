@@ -1,0 +1,188 @@
+[
+  {
+    "Cpm": 4.1345387167508148658993376000,
+    "Impressions": 18139.87125,
+    "InventoryBuyingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": null
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 46799,
+          "_Friday": true,
+          "_Id": 1617,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 43200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Id": 576683,
+        "PrimaryProgram": {
+          "EndTime": 7200,
+          "Genre": "Children",
+          "Id": 14753,
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
+        },
+        "PrimaryProgramId": 14753,
+        "ProgramName": "News 10 @ Noon",
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Children",
+            "Id": 14753,
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
+      }
+    ],
+    "ManifestId": 469330,
+    "ManifestRates": [
+      {
+        "Cost": 75.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 744,
+        "Id": 2668533,
+        "InventoryMediaWeekId": 744,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 18139.87125,
+    "ProvidedImpressions": null,
+    "SpotLengthId": 1,
+    "StandardDaypartId": 2,
+    "Station": {
+      "Affiliation": "ABC",
+      "CallLetters": "WTEN 10.1",
+      "Code": 428,
+      "Id": 36,
+      "LegacyCallLetters": "WTEN",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 132,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
+    },
+    "Unit": null
+  },
+  {
+    "Cpm": 88.23529411764705882352941180,
+    "Impressions": 850.0,
+    "InventoryBuyingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 1000.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 46799,
+          "_Friday": true,
+          "_Id": 1617,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "Custom",
+          "_Saturday": false,
+          "_StartTime": 43200,
+          "_Sunday": false,
+          "_Thursday": true,
+          "_Tuesday": true,
+          "_Wednesday": true
+        },
+        "Id": 576685,
+        "PrimaryProgram": {
+          "EndTime": 7200,
+          "Genre": "Children",
+          "Id": 14754,
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
+        },
+        "PrimaryProgramId": 14754,
+        "ProgramName": "News 10 @ Noon",
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Children",
+            "Id": 14754,
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
+      }
+    ],
+    "ManifestId": 469332,
+    "ManifestRates": [
+      {
+        "Cost": 75.0000,
+        "SpotLengthId": 1
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 744,
+        "Id": 2668539,
+        "InventoryMediaWeekId": 744,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 18139.87125,
+    "ProvidedImpressions": 850.0,
+    "SpotLengthId": 1,
+    "StandardDaypartId": 2,
+    "Station": {
+      "Affiliation": "ABC",
+      "CallLetters": "WTEN 10.1",
+      "Code": 428,
+      "Id": 36,
+      "LegacyCallLetters": "WTEN",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 132,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
+    },
+    "Unit": null
+  }
+]

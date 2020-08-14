@@ -7,6 +7,7 @@ using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.QuoteReport;
 using Services.Broadcast.Exceptions;
@@ -483,8 +484,8 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<LookupDto> GetPricingMarketGroups()
         {
-            return Enum.GetValues(typeof(PricingMarketGroupEnum))
-                .Cast<PricingMarketGroupEnum>()
+            return Enum.GetValues(typeof(MarketGroupEnum))
+                .Cast<MarketGroupEnum>()
                 .Select(e => new LookupDto
                 {
                     Id = (int)e,
@@ -507,7 +508,7 @@ namespace Services.Broadcast.ApplicationServices
                 InventorySourcePercentages = PlanPricingInventorySourceSortEngine.GetSortedInventorySourcePercents(defaultPercent, allSources),
                 InventorySourceTypePercentages = PlanPricingInventorySourceSortEngine.GetSortedInventorySourceTypePercents(defaultPercent),
                 Margin = defaultMargin,
-                MarketGroup = PricingMarketGroupEnum.Top100
+                MarketGroup = MarketGroupEnum.Top100
             };
         }
 
@@ -833,17 +834,17 @@ namespace Services.Broadcast.ApplicationServices
             return topMarketsShareOfVoice;
         }
 
-        private MarketCoverageDto _GetTopMarkets(PricingMarketGroupEnum pricingMarketSovMinimum)
+        private MarketCoverageDto _GetTopMarkets(MarketGroupEnum pricingMarketSovMinimum)
         {
             switch (pricingMarketSovMinimum)
             {
-                case PricingMarketGroupEnum.Top100:
+                case MarketGroupEnum.Top100:
                     return _MarketCoverageRepository.GetLatestTop100MarketCoverages();
-                case PricingMarketGroupEnum.Top50:
+                case MarketGroupEnum.Top50:
                     return _MarketCoverageRepository.GetLatestTop50MarketCoverages();
-                case PricingMarketGroupEnum.Top25:
+                case MarketGroupEnum.Top25:
                     return _MarketCoverageRepository.GetLatestTop25MarketCoverages();
-                case PricingMarketGroupEnum.All:
+                case MarketGroupEnum.All:
                     return _MarketCoverageRepository.GetLatestMarketCoverages();
                 default:
                     return new MarketCoverageDto();
@@ -1732,9 +1733,9 @@ namespace Services.Broadcast.ApplicationServices
                 var spotResult = new PlanPricingAllocatedSpot
                 {
                     Id = originalProgram.Program.ManifestId,
-                    SpotFrequencies = new List<PlanPricingAllocatedSpot.SpotFrequency>
+                    SpotFrequencies = new List<SpotFrequency>
                     {
-                        new PlanPricingAllocatedSpot.SpotFrequency
+                        new SpotFrequency
                         {
                             SpotLengthId = program.ManifestRates.Single().SpotLengthId,
                             SpotCost = originalSpot.Cost,
@@ -1800,7 +1801,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     Id = originalProgram.Program.ManifestId,
                     SpotFrequencies = frequencies
-                        .Select(x => new PlanPricingAllocatedSpot.SpotFrequency
+                        .Select(x => new SpotFrequency
                         {
                             SpotLengthId = x.SpotLengthId,
                             SpotCost = spotCostBySpotLengthId[x.SpotLengthId],

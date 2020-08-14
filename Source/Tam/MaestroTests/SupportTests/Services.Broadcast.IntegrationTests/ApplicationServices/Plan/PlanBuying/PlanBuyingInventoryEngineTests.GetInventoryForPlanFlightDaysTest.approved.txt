@@ -1,0 +1,268 @@
+[
+  {
+    "Cpm": 12.787723785166240409207161100,
+    "Impressions": 58650.0,
+    "InventoryBuyingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 34500.0
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 22700.0
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 26200.0
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 20000.0
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 27900.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": true,
+          "_Id": 32941,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 358772,
+        "PrimaryProgram": {
+          "EndTime": 7200,
+          "Genre": "Children",
+          "Id": 11245,
+          "Name": "Early news",
+          "ShowType": "Mini-Movie",
+          "StartTime": 3600
+        },
+        "PrimaryProgramId": 11245,
+        "ProgramName": "FRIENDS",
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Children",
+            "Id": 11245,
+            "Name": "Early news",
+            "ShowType": "Mini-Movie",
+            "StartTime": 3600
+          }
+        ]
+      }
+    ],
+    "ManifestId": 287146,
+    "ManifestRates": [
+      {
+        "Cost": 750.0000,
+        "SpotLengthId": 2
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 771,
+        "Id": 1697537,
+        "InventoryMediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 772,
+        "Id": 1704819,
+        "InventoryMediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 773,
+        "Id": 1712148,
+        "InventoryMediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 774,
+        "Id": 1719502,
+        "InventoryMediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 775,
+        "Id": 1727234,
+        "InventoryMediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 70841.65625,
+    "ProvidedImpressions": 58650.0,
+    "SpotLengthId": 1,
+    "StandardDaypartId": 2,
+    "Station": {
+      "Affiliation": "CW",
+      "CallLetters": "WPIX 11.1",
+      "Code": 5014,
+      "Id": 575,
+      "LegacyCallLetters": "WPIX",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 101,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
+    },
+    "Unit": null
+  },
+  {
+    "Cpm": 98.03921568627450980392156860,
+    "Impressions": 510.0,
+    "InventoryBuyingQuarterType": "Plan",
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 1,
+      "IsActive": true,
+      "Name": "Open Market"
+    },
+    "ManifestAudiences": [
+      {
+        "AudienceId": 31,
+        "Impressions": 300.0
+      },
+      {
+        "AudienceId": 33,
+        "Impressions": 100.0
+      },
+      {
+        "AudienceId": 37,
+        "Impressions": 100.0
+      },
+      {
+        "AudienceId": 39,
+        "Impressions": 100.0
+      },
+      {
+        "AudienceId": 40,
+        "Impressions": 300.0
+      }
+    ],
+    "ManifestDayparts": [
+      {
+        "Daypart": {
+          "_Code": "CUS",
+          "_EndTime": 1799,
+          "_Friday": true,
+          "_Id": 32941,
+          "_Is24Hour": false,
+          "_LastEndTime": 0,
+          "_LastStartTime": 0,
+          "_Monday": true,
+          "_Name": "BRDCST DP362",
+          "_Saturday": false,
+          "_StartTime": 0,
+          "_Sunday": false,
+          "_Thursday": false,
+          "_Tuesday": false,
+          "_Wednesday": false
+        },
+        "Id": 360318,
+        "PrimaryProgram": {
+          "EndTime": 7200,
+          "Genre": "Comedy",
+          "Id": 11250,
+          "Name": "Late news",
+          "ShowType": "Sports",
+          "StartTime": 3600
+        },
+        "PrimaryProgramId": 11250,
+        "ProgramName": "TWO & HALF MEN",
+        "Programs": [
+          {
+            "EndTime": 7200,
+            "Genre": "Comedy",
+            "Id": 11250,
+            "Name": "Late news",
+            "ShowType": "Sports",
+            "StartTime": 3600
+          }
+        ]
+      }
+    ],
+    "ManifestId": 288692,
+    "ManifestRates": [
+      {
+        "Cost": 50.0000,
+        "SpotLengthId": 2
+      }
+    ],
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 771,
+        "Id": 1698584,
+        "InventoryMediaWeekId": 771,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 772,
+        "Id": 1705866,
+        "InventoryMediaWeekId": 772,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 773,
+        "Id": 1713195,
+        "InventoryMediaWeekId": 773,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 774,
+        "Id": 1720549,
+        "InventoryMediaWeekId": 774,
+        "Spots": 0
+      },
+      {
+        "ContractMediaWeekId": 775,
+        "Id": 1728281,
+        "InventoryMediaWeekId": 775,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": 510.0,
+    "SpotLengthId": 1,
+    "StandardDaypartId": 2,
+    "Station": {
+      "Affiliation": "FOX",
+      "CallLetters": "WPFO 23.1",
+      "Code": 8346,
+      "Id": 2106,
+      "LegacyCallLetters": "WPFO",
+      "ManifestMaxEndDate": null,
+      "MarketCode": 100,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "SalesGroupName": null
+    },
+    "Unit": null
+  }
+]
