@@ -19,6 +19,7 @@ namespace Services.Broadcast.ReportGenerators.Quote
 
         private const int TABLE_DATA_DYNAMIC_DEMOS_COLUMN_START = 7;
         private const int TABLE_COLUMN_HOUSEHOLD_CPM = 6;
+        private const int TABLE_TEMPLATE_EXISTING_ROW_COUNT = 2;
 
         public void PopulateTab(ExcelWorksheet worksheet, QuoteReportData reportData)
         {
@@ -85,12 +86,15 @@ namespace Services.Broadcast.ReportGenerators.Quote
                 ColumnCount = TABLE_BASE_COLUMN_COUNT + dynamicAudienceColumnCount
             };
 
-            // perform an insert to cascade the change into the header formulas
-            var insertRowStartIndex = TABLE_DATA_ROW_START + 1;
-            var copyStylesFromRowIndex = TABLE_DATA_ROW_START;
-            // subtract 2 for the rows before and after the rows we're inserting.
-            var insertRowCount = tableDimensions.RowCount - 2; 
-            worksheet.InsertRow(insertRowStartIndex, insertRowCount, copyStylesFromRowIndex);
+            if (tableDimensions.RowCount > TABLE_TEMPLATE_EXISTING_ROW_COUNT)
+            {
+                // perform an insert to cascade the change into the header formulas
+                var insertRowStartIndex = TABLE_DATA_ROW_START + 1;
+                var copyStylesFromRowIndex = TABLE_DATA_ROW_START;
+                // subtract 2 for the rows before and after the rows we're inserting.
+                var insertRowCount = tableDimensions.RowCount - TABLE_TEMPLATE_EXISTING_ROW_COUNT;
+                worksheet.InsertRow(insertRowStartIndex, insertRowCount, copyStylesFromRowIndex);
+            }
 
             // perform the extend to copy the table row column styles and formulas through the added rows
             var copyRowStartIndex = TABLE_DATA_ROW_START;
