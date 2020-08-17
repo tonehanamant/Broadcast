@@ -65,6 +65,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IPlanValidator> _PlanValidatorMock;
         private Mock<ISharedFolderService> _SharedFolderServiceMock;
         private Mock<IAudienceService> _AudienceServiceMock;
+        private Mock<ICreativeLengthEngine> _CreativeLengthEngineMock;
 
         [SetUp]
         public void SetUp()
@@ -92,6 +93,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanValidatorMock = new Mock<IPlanValidator>();
             _SharedFolderServiceMock = new Mock<ISharedFolderService>();
             _AudienceServiceMock = new Mock<IAudienceService>();
+            _CreativeLengthEngineMock = new Mock<ICreativeLengthEngine>();
 
             _DateTimeEngineMock
                 .Setup(x => x.GetCurrentMoment())
@@ -1049,7 +1051,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _PricingRequestLogClient.Object,
                 _PlanValidatorMock.Object,
                 _SharedFolderServiceMock.Object,
-                _AudienceServiceMock.Object);
+                _AudienceServiceMock.Object,
+                _CreativeLengthEngineMock.Object);
         }
 
         [Test]

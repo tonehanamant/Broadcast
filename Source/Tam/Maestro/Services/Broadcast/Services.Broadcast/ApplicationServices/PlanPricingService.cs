@@ -177,6 +177,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IPlanValidator _PlanValidator;
         private readonly ISharedFolderService _SharedFolderService;
         private readonly IAudienceService _AudienceService;
+        private readonly ICreativeLengthEngine _CreativeLengthEngine;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -193,7 +194,8 @@ namespace Services.Broadcast.ApplicationServices
                                   IPricingRequestLogClient pricingRequestLogClient,
                                   IPlanValidator planValidator,
                                   ISharedFolderService sharedFolderService,
-                                  IAudienceService audienceService)
+                                  IAudienceService audienceService,
+                                  ICreativeLengthEngine creativeLengthEngine)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -217,6 +219,7 @@ namespace Services.Broadcast.ApplicationServices
             _PlanValidator = planValidator;
             _SharedFolderService = sharedFolderService;
             _AudienceService = audienceService;
+            _CreativeLengthEngine = creativeLengthEngine;
         }
 
         public Guid RunQuote(QuoteRequestDto request, string userName, string templatesFilePath)
@@ -252,11 +255,11 @@ namespace Services.Broadcast.ApplicationServices
             var generatedTimeStamp = _DateTimeEngine.GetCurrentMoment();
             var allAudiences = _AudienceService.GetAudiences();
             var allMarkets = _MarketCoverageRepository.GetMarketsWithLatestCoverage();
-            
+
             _LogInfo("Starting to gather inventory...");
             var programs = _PlanPricingInventoryEngine.GetInventoryForQuote(request);
             _LogInfo($"Finished gather inventory.  Gathered {programs.Count} programs.");
-            
+
             var reportData = new QuoteReportData(request, generatedTimeStamp, allAudiences, allMarkets, programs);
             return reportData;
         }
@@ -368,12 +371,12 @@ namespace Services.Broadcast.ApplicationServices
 
         private PlanDto _ConvertPricingWihtoutPlanParametersToPlanDto(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto)
         {
-            return new PlanDto
+            var plan = new PlanDto
             {
                 AudienceId = pricingParametersWithoutPlanDto.AudienceId,
                 AvailableMarkets = pricingParametersWithoutPlanDto.AvailableMarkets,
                 CoverageGoalPercent = pricingParametersWithoutPlanDto.CoverageGoalPercent,
-                CreativeLengths = pricingParametersWithoutPlanDto.CreativeLengths,
+                CreativeLengths = _CreativeLengthEngine.DistributeWeight(pricingParametersWithoutPlanDto.CreativeLengths),
                 Dayparts = pricingParametersWithoutPlanDto.Dayparts,
                 Equivalized = pricingParametersWithoutPlanDto.Equivalized,
                 FlightDays = pricingParametersWithoutPlanDto.FlightDays,
@@ -391,6 +394,8 @@ namespace Services.Broadcast.ApplicationServices
                 TargetImpressions = pricingParametersWithoutPlanDto.DeliveryImpressions,
                 Budget = pricingParametersWithoutPlanDto.Budget
             };
+
+            return plan;
         }
 
         public PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto
@@ -697,7 +702,7 @@ namespace Services.Broadcast.ApplicationServices
                                 PercentageOfUs = GeneralMath.ConvertPercentageToFraction(marketCoveragesByMarketCode[program.Station.MarketCode.Value]),
                                 SpotDays = daypart.Daypart.ActiveDays,
                                 SpotHours = daypart.Daypart.GetDurationPerDayInHours()
-                        });
+                            });
 
                         pricingModelSpots.AddRange(spots);
                     }
@@ -1315,7 +1320,7 @@ namespace Services.Broadcast.ApplicationServices
                 var weeklyBudget = planWeekBudget > estimatedCost ? planWeekBudget - estimatedCost : 0;
 
                 if (weeklyBudget == 0)
-                {   
+                {
                     // proprietary fulfills this week goal so we're not sending the week
                     SkippedWeeksIds.Add(mediaWeekId);
                     continue;
@@ -1694,7 +1699,7 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         private List<PlanPricingAllocatedSpot> _MapToResultSpots(
-            List<IGrouping<PlanPricingInventoryGroup, 
+            List<IGrouping<PlanPricingInventoryGroup,
             ProgramWithManifestDaypart>> groupedInventory,
             PlanPricingApiSpotsResponseDto apiSpotsResults,
             PlanPricingApiRequestDto pricingApiRequest,
@@ -1980,10 +1985,10 @@ namespace Services.Broadcast.ApplicationServices
                 requestParameters.InventorySourceIds;
 
             var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(
-                plan, 
-                pricingParams, 
-                inventorySourceIds, 
-                diagnostic, 
+                plan,
+                pricingParams,
+                inventorySourceIds,
+                diagnostic,
                 isProprietary: !requestParameters.InventorySourceIds.IsEmpty());
             var groupedInventory = _GroupInventory(inventory);
             var proprietaryEstimates = _CalculateProprietaryInventorySourceEstimates(plan, pricingParams, diagnostic);
@@ -2048,10 +2053,10 @@ namespace Services.Broadcast.ApplicationServices
                 requestParameters.InventorySourceIds;
 
             var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(
-                plan, 
-                pricingParams, 
-                inventorySourceIds, 
-                diagnostic, 
+                plan,
+                pricingParams,
+                inventorySourceIds,
+                diagnostic,
                 isProprietary: !requestParameters.InventorySourceIds.IsEmpty());
 
             return inventory;

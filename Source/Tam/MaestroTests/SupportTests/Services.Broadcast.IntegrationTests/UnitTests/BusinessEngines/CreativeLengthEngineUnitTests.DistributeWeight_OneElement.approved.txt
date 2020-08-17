@@ -1,0 +1,6 @@
+[
+  {
+    "SpotLengthId": 1,
+    "Weight": 100
+  }
+]

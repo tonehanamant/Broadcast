@@ -122,6 +122,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void DistributeWeight_OneElement()
+        {
+            _SpotLengthEngineMock.Setup(s => s.SpotLengthIdExists(It.IsAny<int>())).Returns(true);
+
+            var creativeLengths = new List<CreativeLength>
+            {
+                new CreativeLength{ SpotLengthId = 1 }
+            };
+
+            var result = _CreativeLengthEngine.DistributeWeight(creativeLengths);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
         private List<CreativeLength> _GetCreativeLengths()
         {
             return new List<CreativeLength> {

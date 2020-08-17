@@ -27,7 +27,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                   IPricingRequestLogClient pricingApiRequestSerializerClient,
                                   IPlanValidator planValidator,
                                   ISharedFolderService sharedFolderService,
-                                  IAudienceService audienceService)
+                                  IAudienceService audienceService, 
+                                  ICreativeLengthEngine creativeLengthEngine)
         : base(
             broadcastDataRepositoryFactory,
             spotLengthEngine,
@@ -44,7 +45,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             pricingApiRequestSerializerClient,
             planValidator,
             sharedFolderService,
-            audienceService)
+            audienceService,
+            creativeLengthEngine)
         {
         }
 
