@@ -221,5 +221,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_buying_results> plan_version_buying_results { get; set; }
         public virtual DbSet<plan_version_buying_station_details> plan_version_buying_station_details { get; set; }
         public virtual DbSet<plan_version_buying_stations> plan_version_buying_stations { get; set; }
+        public virtual DbSet<program_name_mapping_keywords> program_name_mapping_keywords { get; set; }
     }
 }

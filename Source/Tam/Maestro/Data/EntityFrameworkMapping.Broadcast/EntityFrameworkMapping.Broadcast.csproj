@@ -709,6 +709,9 @@
     <Compile Include="program_name_mappings.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="program_name_mapping_keywords.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="program_sources.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

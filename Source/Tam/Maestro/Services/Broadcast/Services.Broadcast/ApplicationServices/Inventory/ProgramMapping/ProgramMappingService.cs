@@ -23,6 +23,7 @@ using Services.Broadcast.Entities.DTO.Program;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping.Entities;
 using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping;
+using Services.Broadcast.Entities.spotcableXML;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -72,7 +73,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns></returns>
         List<UnmappedProgram> GetCleanPrograms(List<string> programList);
 
-        
+
     }
 
     public class ProgramMappingService : BroadcastBaseClass, IProgramMappingService
@@ -87,8 +88,11 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IShowTypeCache _ShowTypeCache;
         private readonly IProgramsSearchApiClient _ProgramsSearchApiClient;
         private readonly IProgramMappingCleanupEngine _ProgramCleanupEngine;
+        private readonly IProgramNameMappingKeywordRepository _ProgramNameMappingKeywordRepository;
         private const string MISC_SHOW_TYPE = "Miscellaneous";
         private const string UnmappedProgramReportFileName = "UnmappedProgramReport.xlsx";
+        private const float MATCH_EXACT = 1;
+        private const float MATCH_NOT_FOUND = 0;
 
         public ProgramMappingService(
             IBackgroundJobClient backgroundJobClient,
@@ -104,6 +108,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProgramMappingRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramMappingRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _ProgramNameExceptionsRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramNameExceptionsRepository>();
+            _ProgramNameMappingKeywordRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramNameMappingKeywordRepository>();
             _SharedFolderService = sharedFolderService;
             _ProgramNameMappingsExportEngine = programNameMappingsExportEngine;
             _GenreCache = genreCache;
@@ -125,11 +130,11 @@ namespace Services.Broadcast.ApplicationServices
                 CreatedBy = userName,
                 FileContent = fileStream
             });
-         
+
             // Hand off to a background job
-              var hangfireJobId = _BackgroundJobClient.Enqueue<IProgramMappingService>(x => x.RunProgramMappingsProcessingJob(fileId, userName, createdDate));
-              return hangfireJobId;
-           
+            var hangfireJobId = _BackgroundJobClient.Enqueue<IProgramMappingService>(x => x.RunProgramMappingsProcessingJob(fileId, userName, createdDate));
+            return hangfireJobId;
+
         }
 
         public void RunProgramMappingsProcessingJob(Guid fileId, string userName, DateTime createdDate)
@@ -199,7 +204,7 @@ namespace Services.Broadcast.ApplicationServices
             DateTime createdDate,
             string username)
         {
-      
+
             var existingProgramMappingByOriginalProgramName = _GetExistingProgramMappings(programMappings);
 
 
@@ -333,19 +338,38 @@ namespace Services.Broadcast.ApplicationServices
 
             var cleanPrograms = GetCleanPrograms(programNames);
 
-            var result = MatchExistingMappings(cleanPrograms).OrderByDescending(p => p.MatchConfidence).ToList();
+            var result = _MatchExistingMappings(cleanPrograms).OrderByDescending(p => p.MatchConfidence).ToList();
+
+            _MatchProgramByKeyword(result);
 
             return result;
-
         }
 
-        private List<UnmappedProgram> MatchExistingMappings(List<UnmappedProgram> cleanPrograms)
+        private void _MatchProgramByKeyword(List<UnmappedProgram> programs)
+        {
+            var keywords = _ProgramNameMappingKeywordRepository.GetProgramNameMappingKeywords();
+
+            foreach(var program in programs.Where(p => p.MatchConfidence == MATCH_NOT_FOUND))
+            {
+                var keywordMatches = keywords.Where(k => program.ProgramName.Contains(k.Keyword, StringComparison.OrdinalIgnoreCase)).ToList();
+                if (keywordMatches.Any())
+                {
+                    var keyword = keywords.FirstOrDefault();
+                    program.MatchedName = keyword.ProgramName;
+                    program.Genre = keyword.Genre.Display;
+                    program.ShowType = keyword.ShowType.Display;
+                    program.MatchConfidence = MATCH_EXACT;
+                }
+            }
+        }
+
+        private List<UnmappedProgram> _MatchExistingMappings(List<UnmappedProgram> cleanPrograms)
         {
             var result = cleanPrograms;
 
             var programMappings = _ProgramMappingRepository.GetProgramMappings();
 
-            foreach(var program in cleanPrograms)
+            foreach (var program in cleanPrograms)
             {
                 var foundMapping = programMappings
                     .Where(m => m.OriginalProgramName.Equals(program.ProgramName, StringComparison.InvariantCultureIgnoreCase))
@@ -355,8 +379,8 @@ namespace Services.Broadcast.ApplicationServices
                     program.MatchedName = foundMapping.OfficialProgramName;
                     program.Genre = foundMapping.OfficialGenre.Name;
                     program.ShowType = foundMapping.OfficialShowType.Name;
-                    program.MatchConfidence = 1; //Exact match found
-                }               
+                    program.MatchConfidence = MATCH_EXACT; //Exact match found
+                }
             }
 
             return result;
@@ -366,7 +390,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var result = new List<UnmappedProgram>();
 
-           foreach(var programName in programList)
+            foreach (var programName in programList)
             {
                 var program = new UnmappedProgram();
                 program.OriginalName = programName;

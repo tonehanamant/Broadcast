@@ -6,22 +6,20 @@ using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping;
+using Services.Broadcast.Cache;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.DTO.Program;
+using Services.Broadcast.Entities.ProgramMapping;
 using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Tam.Maestro.Services.ContractInterfaces.Common;
-using Services.Broadcast.Cache;
-using Services.Broadcast.Clients;
-using Services.Broadcast.Entities.DTO.Program;
-using Services.Broadcast.Entities.ProgramMapping;
-using Services.Broadcast.IntegrationTests.Stubs;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -39,6 +37,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IProgramNameExceptionsRepository> _ProgramNameExceptionRepositoryMock;
         private Mock<IProgramsSearchApiClient> _ProgramsSearchApiClientMock;
         private Mock<IProgramMappingCleanupEngine> _ProgramMappingCleanupEngine;
+        private Mock<IProgramNameMappingKeywordRepository> _ProgramNameMappingKeywordRepositoryMock;
 
         private IGenreCache _GenreCache;
         private IShowTypeCache _ShowTypeCache;
@@ -60,6 +59,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _ProgramNameExceptionRepositoryMock = new Mock<IProgramNameExceptionsRepository>();
             _ProgramsSearchApiClientMock = new Mock<IProgramsSearchApiClient>();
             _ProgramMappingCleanupEngine = new Mock<IProgramMappingCleanupEngine>();
+            _ProgramNameMappingKeywordRepositoryMock = new Mock<IProgramNameMappingKeywordRepository>();
 
             // Setup common mocks
             _DataRepositoryFactoryMock
@@ -71,6 +71,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _DataRepositoryFactoryMock
                 .Setup(s => s.GetDataRepository<IInventoryRepository>())
                 .Returns(_InventoryRepositoryMock.Object);
+            _DataRepositoryFactoryMock.Setup(s => s.GetDataRepository<IProgramNameMappingKeywordRepository>())
+                .Returns(_ProgramNameMappingKeywordRepositoryMock.Object);
 
             _InventoryRepositoryMock
                 .Setup(s => s.GetDaypartProgramsForInventoryDayparts(It.IsAny<List<int>>()))
@@ -94,6 +96,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     };
                 });
             _ShowTypeCache.GetShowTypeByName("Mini-Movie");
+
+            _ProgramNameMappingKeywordRepositoryMock.Setup(k => k.GetProgramNameMappingKeywords()).Returns(new List<ProgramNameMappingKeyword>
+            {
+                new ProgramNameMappingKeyword{
+                     Genre = new LookupDto(44, "Sports"),
+                     ShowType = new LookupDto(44, "Sports"),
+                     ProgramName = "NFL",
+                     Keyword = "NFL"
+                }
+            });
+
             // Setup the actual Program Mapping Service
             _ProgramMappingService = new ProgramMappingServiceTestClass(
                 _BackgroundJobClientMock.Object,
@@ -118,6 +131,50 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns("CHANNEL 9 NEWS");
             _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("FAMILY GUY (X2)"))
                 .Returns("FAMILY GUY");
+            _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("SOME OTHER NEWS"))
+                .Returns("SOME OTHER NEWS");
+
+            _ProgramMappingRepositoryMock.Setup(s => s.GetProgramMappings())
+                .Returns(new List<ProgramMappingsDto>()
+                {
+                    new ProgramMappingsDto()
+                    {
+                        OfficialProgramName = "NEWS",
+                        OriginalProgramName = "CHANNEL 9 NEWS",
+                        OfficialGenre = new Genre()
+                        {
+                             Name = "NEWS"
+                        },
+                        OfficialShowType = new ShowTypeDto()
+                        {
+                            Name = "SERIES"
+                        }
+                    }
+                });
+
+            var result = _ProgramMappingService.GetUnmappedPrograms();
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetUnmappedPrograms_MatchByKeyword()
+        {
+            _InventoryRepositoryMock.Setup(s => s.GetUnmappedPrograms())
+               .Returns(new List<string>()
+               {
+                    "CHANNEL 9 NEWS 6PM", "FAMILY GUY (X2)", "SOME OTHER NEWS", "NFL Post Game Show, The"
+               });
+
+            _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("CHANNEL 9 NEWS 6PM"))
+                .Returns("CHANNEL 9 NEWS");
+            _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("FAMILY GUY (X2)"))
+                .Returns("FAMILY GUY");
+            _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("SOME OTHER NEWS"))
+                .Returns("SOME OTHER NEWS");
+            _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("NFL Post Game Show, The"))
+                .Returns("The NFL Post Game Show");
 
             _ProgramMappingRepositoryMock.Setup(s => s.GetProgramMappings())
                 .Returns(new List<ProgramMappingsDto>()

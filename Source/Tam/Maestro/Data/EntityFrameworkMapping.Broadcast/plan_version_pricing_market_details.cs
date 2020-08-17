@@ -25,6 +25,7 @@ namespace EntityFrameworkMapping.Broadcast
         public double budget { get; set; }
         public double impressions_percentage { get; set; }
         public Nullable<double> share_of_voice_goal_percentage { get; set; }
+        public string market_name { get; set; }
     
         public virtual plan_version_pricing_markets plan_version_pricing_markets { get; set; }
     }

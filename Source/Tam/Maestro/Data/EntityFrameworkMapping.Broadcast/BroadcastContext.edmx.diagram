@@ -505,6 +505,9 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_parameters_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_result_spots_plan_version_buying_results" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_stations_plan_version_buying_station_details" />
+        <EntityTypeShape EntityType="BroadcastModel.program_name_mapping_keywords" Width="1.5" PointX="33.25" PointY="50.875" />
+        <AssociationConnector Association="BroadcastModel.FK_program_name_mapping_keywords_genres" />
+        <AssociationConnector Association="BroadcastModel.FK_program_name_mapping_keywords_show_types" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

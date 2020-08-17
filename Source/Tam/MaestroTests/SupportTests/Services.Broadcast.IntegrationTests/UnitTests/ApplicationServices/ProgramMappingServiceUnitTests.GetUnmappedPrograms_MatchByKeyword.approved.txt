@@ -22,5 +22,13 @@
     "OriginalName": "SOME OTHER NEWS",
     "ProgramName": "SOME OTHER NEWS",
     "ShowType": null
+  },
+  {
+    "Genre": "Sports",
+    "MatchConfidence": 1.0,
+    "MatchedName": "NFL",
+    "OriginalName": "NFL Post Game Show, The",
+    "ProgramName": "The NFL Post Game Show",
+    "ShowType": "Sports"
   }
 ]

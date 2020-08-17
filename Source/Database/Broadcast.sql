@@ -681,6 +681,65 @@ END
 /*************************************** END BP-1098 *****************************************************/
 
 
+/*************************************** START - BP-797 ****************************************************/
+IF NOT EXISTS (SELECT 1 
+               FROM   sys.objects 
+               WHERE  object_id = 
+                      Object_id('program_name_mapping_keywords' 
+                      )) 
+BEGIN 
+	CREATE TABLE program_name_mapping_keywords (
+		id INT NOT NULL IDENTITY,
+		keyword VARCHAR(100) NOT NULL,
+		[program_name] VARCHAR(100) NOT NULL,
+		genre_id INT NOT NULL,
+		show_type_id INT NOT NULL,
+		CONSTRAINT PK_program_name_mapping_keywords PRIMARY KEY (id)
+	)
+
+	ALTER TABLE [dbo].[program_name_mapping_keywords] WITH CHECK ADD CONSTRAINT [FK_program_name_mapping_keywords_genres] FOREIGN KEY([genre_id])
+	REFERENCES [dbo].[genres] ([id])
+	ALTER TABLE [dbo].[program_name_mapping_keywords] CHECK CONSTRAINT [FK_program_name_mapping_keywords_genres]
+	CREATE INDEX IX_program_name_mapping_keywords_genre_id ON [program_name_mapping_keywords] ([genre_id])
+
+	ALTER TABLE [dbo].[program_name_mapping_keywords] WITH CHECK ADD CONSTRAINT [FK_program_name_mapping_keywords_show_types] FOREIGN KEY([show_type_id])
+	REFERENCES [dbo].[show_types] ([id])
+	ALTER TABLE [dbo].[program_name_mapping_keywords] CHECK CONSTRAINT [FK_program_name_mapping_keywords_show_types]
+	CREATE INDEX IX_program_name_mapping_keywords_show_type ON [program_name_mapping_keywords] ([show_type_id]) 
+
+	EXEC('INSERT INTO program_name_mapping_keywords (keyword, [program_name], genre_id, show_type_id)
+	VALUES (''golf'', ''Golf'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''Wells Fargo champ'', ''Golf'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''NFL'', ''NFL'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''NHL'', ''NHL'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''FUTBOL'', ''Soccer'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''HOCKEY'', ''NHL'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''US OPEN'', ''Golf'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''USA GYMNASTICS'', ''GYMNASTICS'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''US WOMENS OPEN'', ''Golf'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''US SENIOR OPEN'', ''Golf'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''TALLADEGA'', ''NASCAR'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''TENNIS'', ''Tennis'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''STANLEY CUP'', ''NHL'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''SENIOR OPEN'', ''Golf'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''SENIOR PGA'', ''Golf'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''PGA'', ''Golf'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''NBA'', ''NBA'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''YANKEES'', ''MLB'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''METS'', ''MLB'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''NASCAR'', ''NASCAR'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''LPGA'', ''Golf'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''KENTCKY DRBY'', ''Horse Racing'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''KENTUCKY DERBY'', ''Horse Racing'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''INDY 500'', ''NASCAR'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''INDIANAPOLIS 500'', ''NASCAR'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''HORSE RACING'', ''Horse Racing'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''FRENCH OPEN'', ''Tennis'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''AUGUSTA'', ''Golf'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
+	(''BOXING'', ''Boxing'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports''))')
+END
+/*************************************** END - BP-797 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

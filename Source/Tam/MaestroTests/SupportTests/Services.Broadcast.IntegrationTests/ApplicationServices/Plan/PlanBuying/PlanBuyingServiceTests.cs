@@ -412,6 +412,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanBuyingParametersDto), "JobId");
+                jsonResolver.Ignore(typeof(PlanDto), "JobId");
                 var jsonSettings = new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
