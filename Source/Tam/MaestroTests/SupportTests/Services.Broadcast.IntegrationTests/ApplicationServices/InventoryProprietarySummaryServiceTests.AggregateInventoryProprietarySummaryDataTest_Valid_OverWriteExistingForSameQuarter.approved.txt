@@ -10,7 +10,7 @@
       "UnitName": "CNN EMN"
     },
     {
-      "Cpm": 8.6000,
+      "Cpm": 8.9000,
       "DaypartDefaultCode": "LN",
       "DaypartName": "M-SU 8PM-12:05AM",
       "ImpressionsTotal": 0.0,

@@ -119,7 +119,9 @@ namespace Services.Broadcast.ApplicationServices
 		public bool IsValidQuarterSummary(List<InventoryProprietaryQuarterSummaryDto> quarterHeaderSummary)
 		{
 			_LogInfo("Running  job AggregateInventoryProprietarySummary to ValidateQuarterSummary. ");
-			if (quarterHeaderSummary.Select(q => q.Cpm).Distinct().Count() > 1)
+			var groupCount = quarterHeaderSummary.GroupBy(s => new {s.InventorySourceId, s.DefaultDaypartId,s.Cpm}).Select(g => g.Count()).ToList();
+			
+			if(groupCount.Any(c=>c>1))
 			{
 				var summary = quarterHeaderSummary.FirstOrDefault();
 				_LogInfo(
@@ -184,9 +186,9 @@ namespace Services.Broadcast.ApplicationServices
 				foreach (var invPropSummary in invPropSummaryList)
 				{
 
-					invPropSummary.ImpressionsTotal =
-						_InventoryProprietarySummaryRepository.GetTotalImpressionsBySummaryIdAndAudienceId(invPropSummary.Id,
-							inventoryProprietarySummaryRequest.AudienceId);
+					invPropSummary.ImpressionsTotal = Math.Round(
+						_InventoryProprietarySummaryRepository.GetTotalImpressionsBySummaryIdAndAudienceId(invPropSummary.Id, inventoryProprietarySummaryRequest.AudienceId)
+						);
 
 
 					invPropSummary.MarketCoverageTotal =	_InventoryProprietarySummaryRepository.GetTotalMarketCoverageBySummaryId(invPropSummary.Id);

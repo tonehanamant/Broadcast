@@ -248,7 +248,7 @@ namespace Services.Broadcast.Repositories
 		{
 			var idList = context.inventory_proprietary_summary
 				.Where(s => s.inventory_source_id.Equals(dto.InventorySourceId) &&
-				            s.quarter_year.Equals(dto.Quarter.Year) && s.quarter_number.Equals(dto.Quarter.Quarter))
+				            s.quarter_year.Equals(dto.Quarter.Year) && s.quarter_number.Equals(dto.Quarter.Quarter) && s.daypart_default_id == dto.DefaultDaypartId)
 				.Select(s => s.id).ToList();
 			var audianceToBeRemoved = context.inventory_proprietary_summary_audiences
 				.Where(a => idList.Contains(a.inventory_proprietary_summary_id)).ToList();

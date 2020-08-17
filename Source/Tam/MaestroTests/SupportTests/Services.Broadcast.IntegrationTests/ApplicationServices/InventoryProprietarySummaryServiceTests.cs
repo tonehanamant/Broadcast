@@ -110,7 +110,43 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 				Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
 			}
 		}
-		
+		[Test]
+		[Category("long_running")]
+		[UseReporter(typeof(DiffReporter))]
+		public void AggregateInventoryProprietarySummaryDataTest_Valid_OverWriteExistingForSameQuarter()
+		{
+			using (new TransactionScopeWrapper())
+			{
+				/*** Arrange ***/
+				DateTime StartDate = new DateTime(2025, 1, 1);
+				DateTime EndDate = new DateTime(2025, 3, 20);
+				List<int> DaypartIds = new List<int> { 59803 };
+				_InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025.xlsx",
+					processInventoryRatings: true);
+				_InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025_2.xlsx",
+					processInventoryRatings: false);
+				_InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025_3.xlsx",
+					processInventoryRatings: false);
+
+				_InventoryProprietarySummaryService = IntegrationTestApplicationServiceFactory
+					.GetApplicationService<IInventoryProprietarySummaryService>();
+				_InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(5, StartDate,
+					EndDate);
+				List<PlanDaypartRequest> planReqList = new List<PlanDaypartRequest>
+				{
+					new PlanDaypartRequest{DefaultDayPartId= 1, StartTimeSeconds= 14400, EndTimeSeconds=36000},
+					new PlanDaypartRequest{DefaultDayPartId= 2, StartTimeSeconds= 14400, EndTimeSeconds=36000}
+				};
+				InventoryProprietarySummaryRequest req = new InventoryProprietarySummaryRequest
+					{ FlightStartDate = StartDate, FlightEndDate = EndDate, PlanDaypartRequests = planReqList, AudienceId = 5 };
+
+				/*** Act ***/
+				var result = _InventoryProprietarySummaryService.GetInventoryProprietarySummaries(req);
+
+				/*** Assert ***/
+				Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
+			}
+		}
 		private JsonSerializerSettings _GetJsonSettings()
 		{
 			var jsonResolver = new IgnorableSerializerContractResolver();
