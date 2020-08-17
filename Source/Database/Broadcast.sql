@@ -738,6 +738,7 @@ BEGIN
 	(''AUGUSTA'', ''Golf'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports'')),
 	(''BOXING'', ''Boxing'', (SELECT TOP 1 Id FROM genres WHERE name = ''Sports'' ORDER BY 1), (SELECT id FROM show_types WHERE name = ''Sports''))')
 END
+GO
 /*************************************** END - BP-797 ****************************************************/
 
 /*************************************** START - BP-875 ****************************************************/
@@ -763,6 +764,32 @@ END
 
 /*************************************** END - BP-875 ****************************************************/
 
+
+GO
+/*************************************** START BP-1076 *****************************************************/
+-- Daypart for 'SA-SU 9AM-8PM'
+-- This ID is validated to be the same in all environments.
+-- It is an "older" daypart record, restored to all environments from prod.
+DECLARE @daypart_id INT = 1546
+	, @weekend_daypart_code VARCHAR(3) = 'WKD'
+IF NOT EXISTS (SELECT 1 FROM daypart_defaults WHERE code = @weekend_daypart_code)
+BEGIN		
+	INSERT INTO daypart_defaults (daypart_type, daypart_id, code, [name], vpvh_calculation_source_type)
+		VALUES(
+		2 -- non-news
+		, @daypart_id -- 'SA-SU 9AM-8PM'
+		, @weekend_daypart_code
+		, 'Weekend'
+		, 3 -- SYN_All
+	)
+	INSERT INTO nti_to_nsi_conversion_rates (conversion_rate, daypart_default_id, media_month_id)
+		SELECT 0.075, d.id, m.media_month_id
+		FROM daypart_defaults d, 
+		( SELECT DISTINCT media_month_id FROM nti_to_nsi_conversion_rates ) m
+		WHERE d.code = @weekend_daypart_code
+END 
+GO
+/*************************************** END BP-1076 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
