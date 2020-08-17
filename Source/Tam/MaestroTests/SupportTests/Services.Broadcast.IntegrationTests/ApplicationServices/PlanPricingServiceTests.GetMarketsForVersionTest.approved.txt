@@ -1,9 +1,9 @@
 {
   "MarketDetails": [
     {
-      "Budget": 10803.75,
-      "Cpm": 14.4271215864325,
-      "Impressions": 748.85,
+      "Budget": 5375.0,
+      "Cpm": 14.3553448621219,
+      "Impressions": 374.425,
       "ImpressionsPercentage": 99.10011249,
       "MarketCoveragePercent": 10.0,
       "MarketName": null,
@@ -13,9 +13,9 @@
       "Stations": 1
     },
     {
-      "Budget": 371.85,
-      "Cpm": 54.6838235294118,
-      "Impressions": 6.8,
+      "Budget": 185.0,
+      "Cpm": 54.4117647058824,
+      "Impressions": 3.4,
       "ImpressionsPercentage": 0.89988751,
       "MarketCoveragePercent": 0.328,
       "MarketName": null,
@@ -28,10 +28,10 @@
   "PlanVersionId": 0,
   "PricingJobId": null,
   "Totals": {
-    "Budget": 11175.6,
+    "Budget": 5560.0,
     "CoveragePercent": 10.328,
-    "Cpm": 14.78938662079,
-    "Impressions": 755.65,
+    "Cpm": 14.7158075828757,
+    "Impressions": 377.825,
     "Markets": 2,
     "Spots": 30,
     "Stations": 2

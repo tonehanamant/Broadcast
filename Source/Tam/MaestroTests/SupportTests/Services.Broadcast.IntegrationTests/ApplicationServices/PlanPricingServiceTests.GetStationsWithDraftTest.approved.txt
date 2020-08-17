@@ -1,0 +1,30 @@
+{
+  "Stations": [
+    {
+      "Budget": 5375.0000,
+      "Cpm": 14.3553,
+      "Impressions": 374.425,
+      "ImpressionsPercentage": 99.10011249,
+      "Market": "New York",
+      "Spots": 15,
+      "Station": "WPIX"
+    },
+    {
+      "Budget": 185.0000,
+      "Cpm": 54.4117,
+      "Impressions": 3.4,
+      "ImpressionsPercentage": 0.89988751,
+      "Market": "Portland-Auburn",
+      "Spots": 15,
+      "Station": "WPFO"
+    }
+  ],
+  "Totals": {
+    "Budget": 5560.0000,
+    "Cpm": 14.7158,
+    "Impressions": 377.825,
+    "ImpressionsPercentage": 100.0,
+    "Spots": 30,
+    "Station": 2
+  }
+}

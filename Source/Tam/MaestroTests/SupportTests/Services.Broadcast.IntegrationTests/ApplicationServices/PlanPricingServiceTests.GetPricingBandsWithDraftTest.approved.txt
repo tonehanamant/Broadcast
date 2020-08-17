@@ -1,0 +1,101 @@
+{
+  "Bands": [
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0000,
+      "Cpm": 0.0000,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MaxBand": 0.0000,
+      "MinBand": null,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0000,
+      "Cpm": 0.0000,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MaxBand": 0.0000,
+      "MinBand": 0.0000,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0000,
+      "Cpm": 0.0000,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MaxBand": 0.0000,
+      "MinBand": 0.0000,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0000,
+      "Cpm": 0.0000,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MaxBand": 0.0000,
+      "MinBand": 0.0000,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0000,
+      "Cpm": 0.0000,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MaxBand": 0.0000,
+      "MinBand": 0.0000,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0000,
+      "Cpm": 0.0000,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MaxBand": 0.0000,
+      "MinBand": 0.0000,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0000,
+      "Cpm": 0.0000,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MaxBand": 0.0000,
+      "MinBand": 0.0000,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0000,
+      "Cpm": 0.0000,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MaxBand": 0.0000,
+      "MinBand": 0.0000,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 2.5545977,
+      "Budget": 5560.0000,
+      "Cpm": 14.7158,
+      "Impressions": 377.825,
+      "ImpressionsPercentage": 100.0,
+      "MaxBand": null,
+      "MinBand": 0.0000,
+      "Spots": 30
+    }
+  ],
+  "PlanVersionId": 0,
+  "Totals": {
+    "Budget": 5560.0000,
+    "Cpm": 14.7158,
+    "Impressions": 377.825,
+    "Spots": 30
+  }
+}

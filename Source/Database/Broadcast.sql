@@ -740,6 +740,30 @@ BEGIN
 END
 /*************************************** END - BP-797 ****************************************************/
 
+/*************************************** START - BP-875 ****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_market_details') AND name = 'market_name')
+BEGIN
+	ALTER TABLE plan_version_pricing_market_details
+	ADD market_name varchar(31) NULL
+
+	EXEC('UPDATE d
+		  SET d.market_name = m.geography_name
+		  FROM plan_version_pricing_market_details d
+		  JOIN market_coverages mc on mc.percentage_of_us = d.market_coverage_percent and mc.rank = d.rank
+		  JOIN markets m on mc.market_code = m.market_code')
+
+	EXEC('UPDATE plan_version_pricing_market_details
+		  SET market_name = ''Unknown Market''
+		  WHERE market_name is NULL')
+
+    ALTER TABLE plan_version_pricing_market_details
+	ALTER COLUMN market_name varchar(31) NOT NULL
+END
+
+/*************************************** END - BP-875 ****************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

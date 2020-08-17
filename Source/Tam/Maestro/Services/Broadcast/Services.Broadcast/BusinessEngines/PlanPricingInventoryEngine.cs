@@ -1043,18 +1043,5 @@ namespace Services.Broadcast.BusinessEngines
 
             public BasePlanInventoryProgram.ManifestDaypart ManifestDaypart { get; set; }
         }
-
-        public class ProgramInventoryOptionalParametersDto
-        {
-            public decimal? MinCPM { get; set; }
-
-            public decimal? MaxCPM { get; set; }
-
-            public double? InflationFactor { get; set; }
-
-            public double? Margin { get; set; }
-
-            public MarketGroupEnum MarketGroup { get; set; }
-        }
     }
 }

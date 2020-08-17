@@ -57,6 +57,7 @@ namespace Services.Broadcast.BusinessEngines.PlanPricing
 
                 var agg = new PlanPricingResultMarketDetailsDto
                 {
+                    MarketName = marketCoverage.Market,
                     Rank = marketCoverage.Rank ?? -2,
                     MarketCoveragePercent = marketCoverage.PercentageOfUS,
                     Stations = marketGroup.Select(s => s.StationId).Distinct().Count(),

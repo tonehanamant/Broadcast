@@ -122,6 +122,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="hangfireJobId">The hangfire job identifier.</param>
         void UpdateJobHangfireId(int jobId, string hangfireJobId);
         PlanPricingJob GetLatestPricingJob(int planId);
+        PlanPricingJob GetLatestPricingJobForVersion(int planVersionId);
         void SavePlanPricingParameters(PlanPricingParametersDto planPricingRequestDto);
         void SavePricingApiResults(PlanPricingAllocationResult result);
         PlanPricingAllocationResult GetPricingApiResultsByJobId(int jobId);
@@ -175,6 +176,8 @@ namespace Services.Broadcast.Repositories
         /// <param name="versionId">Current version id</param>
         /// <param name="oldPlanVersionId">Previous version id</param>
         void UpdatePlanPricingVersionId(int versionId, int oldPlanVersionId);
+        PlanPricingParametersDto GetPricingParametersForVersion(int versionId);
+        PlanPricingParametersDto GetLatestPricingParameters(int planId);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -1225,7 +1228,40 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
             {
                 var latestJob = (from pvpj in context.plan_version_pricing_job
-                                 where pvpj.plan_versions.plan_id == planId && pvpj.plan_version_id == pvpj.plan_versions.plan.latest_version_id
+                                 where pvpj.plan_versions.plan_id == planId && 
+                                       pvpj.plan_version_id == pvpj.plan_versions.plan.latest_version_id
+                                 select pvpj)
+                                // ignore canceled runs
+                                .Where(x => x.status != (int)BackgroundJobProcessingStatus.Canceled)
+                                // take jobs with status Queued or Processing first
+                                .OrderByDescending(x => x.status == (int)BackgroundJobProcessingStatus.Queued || x.status == (int)BackgroundJobProcessingStatus.Processing)
+                                // then take latest completed
+                                .ThenByDescending(x => x.completed_at)
+                                .FirstOrDefault();
+
+                if (latestJob == null)
+                    return null;
+
+                return new PlanPricingJob
+                {
+                    Id = latestJob.id,
+                    HangfireJobId = latestJob.hangfire_job_id,
+                    PlanVersionId = latestJob.plan_version_id,
+                    Status = (BackgroundJobProcessingStatus)latestJob.status,
+                    Queued = latestJob.queued_at,
+                    Completed = latestJob.completed_at,
+                    ErrorMessage = latestJob.error_message,
+                    DiagnosticResult = latestJob.diagnostic_result
+                };
+            });
+        }
+
+        public PlanPricingJob GetLatestPricingJobForVersion(int planVersionId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var latestJob = (from pvpj in context.plan_version_pricing_job
+                                 where pvpj.plan_versions.id == planVersionId
                                  select pvpj)
                                 // ignore canceled runs
                                 .Where(x => x.status != (int)BackgroundJobProcessingStatus.Canceled)
@@ -1670,6 +1706,7 @@ namespace Services.Broadcast.Repositories
                     total_budget = Convert.ToDouble(dto.Totals.Budget),
                     plan_version_pricing_market_details = dto.MarketDetails.Select(d => new plan_version_pricing_market_details
                     {
+                        market_name = d.MarketName,
                         market_coverage_percent = d.MarketCoveragePercent,
                         stations = d.Stations,
                         spots = d.Spots,
@@ -2008,6 +2045,39 @@ namespace Services.Broadcast.Repositories
                     parameter.plan_version_id = versionId;
                     context.SaveChanges();
                 }
+            });
+        }
+
+        public PlanPricingParametersDto GetPricingParametersForVersion(int versionId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var entity = (from parameters in context.plan_version_pricing_parameters
+                              where parameters.plan_version_id == versionId
+                              orderby parameters.id descending
+                              select parameters)
+                        .Include(p => p.plan_version_pricing_parameters_inventory_source_percentages)
+                        .Include(p => p.plan_version_pricing_parameters_inventory_source_type_percentages)
+                        .Include(p => p.plan_version_pricing_parameters_inventory_source_percentages.Select(r => r.inventory_sources)); ;
+
+                return _MapPricingParameters(entity.FirstOrDefault());
+            });
+        }
+
+        public PlanPricingParametersDto GetLatestPricingParameters(int planId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var entity = (from parameters in context.plan_version_pricing_parameters
+                              where parameters.plan_versions.plan_id == planId &&
+                                    parameters.plan_version_id == parameters.plan_versions.plan.latest_version_id
+                              orderby parameters.id descending
+                              select parameters)
+                        .Include(p => p.plan_version_pricing_parameters_inventory_source_percentages)
+                        .Include(p => p.plan_version_pricing_parameters_inventory_source_type_percentages)
+                        .Include(p => p.plan_version_pricing_parameters_inventory_source_percentages.Select(r => r.inventory_sources));
+
+                return _MapPricingParameters(entity.FirstOrDefault());
             });
         }
     }

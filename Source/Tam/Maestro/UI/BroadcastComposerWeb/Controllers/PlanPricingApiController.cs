@@ -51,6 +51,13 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpGet]
+        [Route("Programs/{planId}/{planVersionId}")]
+        public BaseResponse<PricingProgramsResultDto> GetPrograms(int planId, int planVersionId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetProgramsForVersion(planId, planVersionId));
+        }
+
+        [HttpGet]
         [Route("Bands/{planId}")]
         public BaseResponse<PlanPricingBandDto> GetPricingBands(int planId)
         {
@@ -58,10 +65,24 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpGet]
+        [Route("Bands/{planId}/{planVersionId}")]
+        public BaseResponse<PlanPricingBandDto> GetPricingBands(int planId, int planVersionId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetPricingBandsForVersion(planId, planVersionId));
+        }
+
+        [HttpGet]
         [Route("Markets/{planId}")]
         public BaseResponse<PlanPricingResultMarketsDto> GetPricingMarkets(int planId)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetMarkets(planId));
+        }
+
+        [HttpGet]
+        [Route("Markets/{planId}/{planVersionId}")]
+        public BaseResponse<PlanPricingResultMarketsDto> GetPricingMarkets(int planId, int planVersionId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetMarketsForVersion(planId, planVersionId));
         }
 
         [HttpPost]
@@ -144,6 +165,13 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<PlanPricingStationResultDto> GetStations(int planId)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetStations(planId));
+        }
+
+        [HttpGet]
+        [Route("Stations/{planId}/{planVersionId}")]
+        public BaseResponse<PlanPricingStationResultDto> GetStationsForVersion(int planId, int planVersionId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetStationsForVersion(planId, planVersionId));
         }
 
         /// <summary>

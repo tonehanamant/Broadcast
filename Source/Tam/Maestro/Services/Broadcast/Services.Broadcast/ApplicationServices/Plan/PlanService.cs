@@ -1,7 +1,6 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
-using EntityFrameworkMapping.Broadcast;
 using Hangfire;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
@@ -17,7 +16,6 @@ using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.ServiceModel.PeerResolvers;
 using System.Threading.Tasks;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -271,13 +269,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             _UpdateCampaignLastModified(plan.CampaignId, createdDate, createdBy);
 
-            // We only aggregate data and run pricing for versions, not drafts.
+            _SetPlanPricingParameters(plan);
+            _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
+
+            // We only aggregate data for versions, not drafts.
             if (!plan.IsDraft)
             {
                 _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
                 _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
-
-                _SetPlanPricingParameters(plan);
 
                 if (_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT))
                 {
@@ -285,19 +284,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     {
                         _PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate, createdBy);
                     }
-                    else if (plan.VersionNumber > 1)
-                    {
-                        // Running price job on plan edits/saves its temporary disabled
-                        _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
-                        //_PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate, createdBy);
-                    }
-                }
-                else
-                {
-                    // Running price job on plan edits/saves its temporary disabled
-                    _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
-                    //_PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate, createdBy);
-                }
+                }                
                 
             }
 
@@ -605,6 +592,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             // we need to group them back based on the plan delivery type so that on UI the breakdown table looks like it looked before saving
             plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(plan);
 
+            _LoadPlanPricingParameters(plan, planId, versionId);
             _WeeklyBreakdownEngine.SetWeekNumber(plan.WeeklyBreakdownWeeks);
             _SetWeeklyBreakdownTotals(plan);
             DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
@@ -616,7 +604,33 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _SortPlanDayparts(plan);
             _SortProgramRestrictions(plan);
             _SortCreativeLengths(plan);
+
             return plan;
+        }
+
+        private void _LoadPlanPricingParameters(PlanDto plan, int planId, int? versionId)
+        {
+            if (versionId.HasValue)
+            {
+                // Load for a version.
+                plan.PricingParameters = _PlanRepository.GetPricingParametersForVersion(versionId.Value);
+            }
+            else if (plan.IsDraft)
+            {
+                // Load for previous published version if draft.
+                var planHistory = _PlanRepository.GetPlanHistory(planId);
+                var planHistorySorted = planHistory
+                    // Skip the draft.
+                    .Where(p => p.VersionNumber != null)
+                    .OrderByDescending(p => p.VersionNumber);
+                var previousPlan = planHistorySorted.First();
+                var previousPlanVersionId = previousPlan.VersionId;
+                plan.PricingParameters = _PlanRepository.GetLatestPricingParameters(previousPlanVersionId);
+            }
+            else
+            {
+                plan.PricingParameters = _PlanRepository.GetLatestPricingParameters(planId);
+            }
         }
 
         private void _SortCreativeLengths(PlanDto plan)

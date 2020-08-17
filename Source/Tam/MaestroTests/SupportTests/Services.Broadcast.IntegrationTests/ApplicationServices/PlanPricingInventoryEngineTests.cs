@@ -51,7 +51,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 plan.CreativeLengths.First().SpotLengthId = 2;
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan, 
-                    new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
                     diagnostic,
                     isProprietary: false);
@@ -90,7 +90,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                     var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                         plan,
-                        new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                        new ProgramInventoryOptionalParametersDto(),
                         _GetAvailableInventorySources(),
                         diagnostic,
                         isProprietary: false);
@@ -126,7 +126,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var plan = _PlanRepository.GetPlan(1199);
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan, 
-                    new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
                     diagnostic,
                     isProprietary: false);
@@ -223,7 +223,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var plan = _PlanRepository.GetPlan(1197);
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan,
-                    new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
                     diagnostic,
                     isProprietary: false);
@@ -257,7 +257,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var plan = _PlanRepository.GetPlan(1197);
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan,
-                    new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
                     diagnostic,
                     isProprietary: false);
@@ -277,7 +277,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var plan = _PlanRepository.GetPlan(1197);
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan, 
-                    new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
                     diagnostic,
                     isProprietary: false);
@@ -305,7 +305,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // Result has affiliates CW and FOX.
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan,
-                    new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
                     diagnostic,
                     isProprietary: false);
@@ -342,7 +342,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // Result has affiliates CW and FOX.
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan,
-                    new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
                     diagnostic,
                     isProprietary: false);
@@ -366,7 +366,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _PlanRepository.SavePlan(plan, "IntegrationTestUser", new System.DateTime(2020, 2, 27));
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan,
-                    new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
                     diagnostic,
                     isProprietary: false);
@@ -386,7 +386,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var plan = _PlanRepository.GetPlan(1200);
                 var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
                     plan, 
-                    new PlanPricingInventoryEngine.ProgramInventoryOptionalParametersDto(),
+                    new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
                     diagnostic,
                     isProprietary: false);

@@ -11,5 +11,6 @@
         public decimal Budget { get; set; }
         public double? ShareOfVoiceGoalPercentage { get; set; } // what's difference between this and MarketCoveragePercent?
         public double ImpressionsPercentage { get; set; }
+        public string MarketName { get; set; }
     }
 }

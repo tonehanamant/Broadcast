@@ -26,7 +26,6 @@ using System.Threading.Tasks;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
-using static Services.Broadcast.BusinessEngines.PlanPricingInventoryEngine;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -34,82 +33,65 @@ namespace Services.Broadcast.ApplicationServices
     {
         PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate, string username);
         PlanPricingJob QueuePricingJob(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto, DateTime currentDate, string username);
-
         CurrentPricingExecution GetCurrentPricingExecution(int planId);
-
         CurrentPricingExecution GetCurrentPricingExecutionByJobId(int jobId);
-
         /// <summary>
         /// Cancels the current pricing execution.
         /// </summary>
         /// <param name="planId">The plan identifier.</param>
         /// <returns>The PlanPricingResponseDto object</returns>
         PlanPricingResponseDto CancelCurrentPricingExecution(int planId);
-
         /// <summary>
         /// Cancels the current pricing execution.
         /// </summary>
         /// <param name="jobId">The job identifier.</param>
         /// <returns>The PlanPricingResponseDto object</returns>
         PlanPricingResponseDto CancelCurrentPricingExecutionByJobId(int jobId);
-
         [Queue("planpricing")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void RunPricingJob(PlanPricingParametersDto planPricingParametersDto, int jobId, CancellationToken token);
-
         [Queue("planpricing")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void RunPricingWithoutPlanJob(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto, int jobId, CancellationToken token);
-
         /// <summary>
         /// For troubleshooting
         /// </summary>
         List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId);
-
         /// <summary>
         /// For troubleshooting
         /// </summary>
         PlanPricingApiRequestDto GetPricingApiRequestPrograms(int planId, PricingInventoryGetRequestParametersDto requestParameters);
-
         /// <summary>
         /// For troubleshooting
         /// </summary>
         PlanPricingApiRequestDto_v3 GetPricingApiRequestPrograms_v3(int planId, PricingInventoryGetRequestParametersDto requestParameters);
-
         /// <summary>
         /// For troubleshooting
         /// </summary>
         List<PlanPricingInventoryProgram> GetPricingInventory(int planId, PricingInventoryGetRequestParametersDto requestParameters);
-
         /// <summary>
         /// Gets the unit caps.
         /// </summary>
         /// <returns>List of LookupDto objects</returns>
         List<LookupDto> GetUnitCaps();
-
         /// <summary>
         /// Gets the pricing market groups.
         /// </summary>
         /// <returns>List of LookupDto objects</returns>
         List<LookupDto> GetPricingMarketGroups();
-
         PlanPricingDefaults GetPlanPricingDefaults();
-
         bool IsPricingModelRunningForPlan(int planId);
         bool IsPricingModelRunningForJob(int jobId);
-
         /// <summary>
         /// For troubleshooting
         /// </summary>
         string ForceCompletePlanPricingJob(int jobId, string username);
-
         /// <summary>
         /// For troubleshooting.  This will bypass the queue to allow rerunning directly.
         /// </summary>
         /// <param name="jobId">The id of the job to rerun.</param>
         /// <returns>The new JobId</returns>
         int ReRunPricingJob(int jobId);
-
         /// <summary>
         /// For troubleshooting.  Generate a pricing results report for the chosen plan and version
         /// </summary>
@@ -118,38 +100,31 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="templatesFilePath">Base path of the file templates</param>
         /// <returns>ReportOutput which contains filename and MemoryStream which actually contains report data</returns>
         ReportOutput GeneratePricingResultsReport(int planId, int? planVersionNumber, string templatesFilePath);
-
         void ValidateAndApplyMargin(PlanPricingParametersDto parameters);
-
         PricingProgramsResultDto GetPrograms(int planId);
-
         PricingProgramsResultDto GetProgramsByJobId(int jobId);
-
+        PricingProgramsResultDto GetProgramsForVersion(int planId, int planVersionId);
         PlanPricingStationResultDto GetStations(int planId);
-
         PlanPricingStationResultDto GetStationsByJobId(int jobId);
-
+        PlanPricingStationResultDto GetStationsForVersion(int planId, int planVersionId);
         /// <summary>
         /// Retrieves the Pricing Results Markets Summary
         /// </summary>
         PlanPricingResultMarketsDto GetMarkets(int planId);
-
         /// <summary>
         /// Retrieves the Pricing Results Markets Summary
         /// </summary>
         PlanPricingResultMarketsDto GetMarketsByJobId(int jobId);
-
+        PlanPricingResultMarketsDto GetMarketsForVersion(int planId, int planVersionId);
         PlanPricingBandDto GetPricingBands(int planId);
         PlanPricingBandDto GetPricingBandsByJobId(int jobId);
-
+        PlanPricingBandDto GetPricingBandsForVersion(int planId, int planVersionId);
         [Queue("savepricingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void SavePricingRequest(int planId, PlanPricingApiRequestDto pricingApiRequest);
-
         [Queue("savepricingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void SavePricingRequest(int planId, PlanPricingApiRequestDto_v3 pricingApiRequest);
-
         Guid RunQuote(QuoteRequestDto request, string userName, string templatesFilePath);
     }
 
@@ -416,9 +391,18 @@ namespace Services.Broadcast.ApplicationServices
 
                 ValidateAndApplyMargin(planPricingParametersDto);
 
+                int planVersionId;
+
+                // For drafts, we use the plan version id sent as parameter.
+                // This is because a draft is not considered the latest version of a plan.s
+                if (planPricingParametersDto.PlanVersionId.HasValue)
+                    planVersionId = planPricingParametersDto.PlanVersionId.Value;
+                else
+                    planVersionId = plan.VersionId;
+
                 var job = new PlanPricingJob
                 {
-                    PlanVersionId = plan.VersionId,
+                    PlanVersionId = planVersionId,
                     Status = BackgroundJobProcessingStatus.Queued,
                     Queued = currentDate
                 };
@@ -2077,10 +2061,10 @@ namespace Services.Broadcast.ApplicationServices
         {
             var job = _PlanRepository.GetPlanPricingJob(jobId);
 
-            return _GetPrograms(job, null);
+            return _GetPrograms(job);
         }
 
-        private PricingProgramsResultDto _GetPrograms(PlanPricingJob job, int? planId)
+        private PricingProgramsResultDto _GetPrograms(PlanPricingJob job)
         {
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
@@ -2097,11 +2081,43 @@ namespace Services.Broadcast.ApplicationServices
             return results;
         }
 
+        private PlanPricingJob _GetLatestPricingJob(int planId)
+        {
+            var planDraftId = _PlanRepository.CheckIfDraftExists(planId);
+            var isDraft = planDraftId != 0;
+            PlanPricingJob job;
+
+            if (isDraft)
+            {
+                var planHistory = _PlanRepository.GetPlanHistory(planId);
+                var planHistorySorted = planHistory
+                    // Skip the draft.
+                    .Where(p => p.VersionNumber != null)
+                    .OrderByDescending(p => p.VersionNumber);
+                var plan = planHistorySorted.First();
+                var previousPlanVersionId = plan.VersionId;
+                job = _PlanRepository.GetLatestPricingJobForVersion(previousPlanVersionId);
+            }
+            else
+            {
+                job = _PlanRepository.GetLatestPricingJob(planId);
+            }
+
+            return job;
+        }
+
         public PricingProgramsResultDto GetPrograms(int planId)
         {
-            var job = _PlanRepository.GetLatestPricingJob(planId);
+            var job = _GetLatestPricingJob(planId);
 
-            return _GetPrograms(job, planId);
+            return _GetPrograms(job);
+        }
+
+        public PricingProgramsResultDto GetProgramsForVersion(int planId, int planVersionId)
+        {
+            var job = _PlanRepository.GetLatestPricingJobForVersion(planVersionId);
+
+            return _GetPrograms(job);
         }
 
         private void _ConvertImpressionsToUserFormat(PricingProgramsResultDto planPricingResult)
@@ -2123,10 +2139,10 @@ namespace Services.Broadcast.ApplicationServices
         {
             var job = _PlanRepository.GetPlanPricingJob(jobId);
 
-            return _GetPricingBands(job, null);
+            return _GetPricingBands(job);
         }
 
-        private PlanPricingBandDto _GetPricingBands(PlanPricingJob job, int? planId)
+        private PlanPricingBandDto _GetPricingBands(PlanPricingJob job)
         {
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
@@ -2143,9 +2159,16 @@ namespace Services.Broadcast.ApplicationServices
 
         public PlanPricingBandDto GetPricingBands(int planId)
         {
-            var job = _PlanRepository.GetLatestPricingJob(planId);
+            var job = _GetLatestPricingJob(planId);
 
-            return _GetPricingBands(job, planId);
+            return _GetPricingBands(job);
+        }
+
+        public PlanPricingBandDto GetPricingBandsForVersion(int planId, int planVersionId)
+        {
+            var job = _PlanRepository.GetLatestPricingJobForVersion(planVersionId);
+
+            return _GetPricingBands(job);
         }
 
         /// <inheritdoc />
@@ -2153,10 +2176,10 @@ namespace Services.Broadcast.ApplicationServices
         {
             var job = _PlanRepository.GetPlanPricingJob(jobId);
 
-            return _GetMarkets(job, null);
+            return _GetMarkets(job);
         }
 
-        private PlanPricingResultMarketsDto _GetMarkets(PlanPricingJob job, int? planId)
+        private PlanPricingResultMarketsDto _GetMarkets(PlanPricingJob job)
         {
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
             {
@@ -2178,23 +2201,32 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc />
         public PlanPricingResultMarketsDto GetMarkets(int planId)
         {
-            var job = _PlanRepository.GetLatestPricingJob(planId);
+            var job = _GetLatestPricingJob(planId);
 
-            return _GetMarkets(job, planId);
+            return _GetMarkets(job);
+        }
+
+        public PlanPricingResultMarketsDto GetMarketsForVersion(int planId, int planVersionId)
+        {
+            var job = _PlanRepository.GetLatestPricingJobForVersion(planVersionId);
+
+            return _GetMarkets(job);
         }
 
         public PlanPricingStationResultDto GetStationsByJobId(int jobId)
         {
             var job = _PlanRepository.GetPlanPricingJob(jobId);
-            return _GetStations(job, null);
+
+            return _GetStations(job);
         }
 
-        private PlanPricingStationResultDto _GetStations(PlanPricingJob job, int? planId)
+        private PlanPricingStationResultDto _GetStations(PlanPricingJob job)
         {
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
             var result = _PlanRepository.GetPricingStationsResultByJobId(job.Id);
+
             if (result == null)
                 return null;
 
@@ -2205,8 +2237,16 @@ namespace Services.Broadcast.ApplicationServices
 
         public PlanPricingStationResultDto GetStations(int planId)
         {
-            var job = _PlanRepository.GetLatestPricingJob(planId);
-            return _GetStations(job, planId);
+            var job = _GetLatestPricingJob(planId);
+
+            return _GetStations(job);
+        }
+
+        public PlanPricingStationResultDto GetStationsForVersion(int planId, int planVersionId)
+        {
+            var job = _PlanRepository.GetLatestPricingJobForVersion(planVersionId);
+
+            return _GetStations(job);
         }
 
         private void _ConvertPricingStationResultDtoToUserFormat(PlanPricingStationResultDto results)

@@ -1,6 +1,5 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using ApprovalUtilities.CallStack;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -17,7 +16,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Castle.Components.DictionaryAdapter;
 using Common.Services;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.QuoteReport;
@@ -1183,6 +1181,287 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             return request;
         }
 
+        private int SetupPlanWithOneVersionAndADraftWithPricingRuns()
+        {
+            var plan = _GetNewPlan();
+            var currentDate = new DateTime(2019, 01, 01);
+            var username = "integration_test";
+            var planId = _PlanService.SavePlan(plan, username, currentDate);
+            var pricingParameters = new PlanPricingParametersDto
+            {
+                PlanId = planId,
+                Budget = 5000,
+                DeliveryImpressions = 5000,
+                UnitCaps = 10,
+                UnitCapsType = UnitCapEnum.Per30Min
+            };
+            var job = _PlanPricingService.QueuePricingJob(pricingParameters, currentDate, username);
+
+            _PlanPricingService.RunPricingJob(pricingParameters, job.Id, CancellationToken.None);
+
+            plan.Id = planId;
+            plan.VersionId = 1;
+            plan.IsDraft = true;
+
+            var draftId = _PlanService.SavePlan(plan, username, currentDate);
+            var draftVersionId = _PlanService.CheckForDraft(planId);
+
+            pricingParameters.DeliveryImpressions = 2000;
+            pricingParameters.PlanVersionId = draftVersionId;
+
+            var draftJob = _PlanPricingService.QueuePricingJob(pricingParameters, currentDate, username);
+
+            _PlanPricingService.RunPricingJob(pricingParameters, draftJob.Id, CancellationToken.None);
+
+            return planId;
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetPricingBandsWithDraftTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+
+                var bands = _PlanPricingService.GetPricingBands(planId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingBandDto), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingBandDto), "JobId");
+                jsonResolver.Ignore(typeof(PlanPricingBandDetailDto), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(bands, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetMarketsWithDraftTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+
+                var markets = _PlanPricingService.GetMarkets(planId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingBandDto), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingBandDto), "JobId");
+                jsonResolver.Ignore(typeof(PlanPricingBandDetailDto), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetStationsWithDraftTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+
+                var stations = _PlanPricingService.GetStations(planId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingStationResultDto), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingStationResultDto), "JobId");
+                jsonResolver.Ignore(typeof(PlanPricingStationResultDto), "PlanVersionId");
+                jsonResolver.Ignore(typeof(PlanPricingStationDto), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(stations, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetProgramsWithDraftTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+
+                var programs = _PlanPricingService.GetPrograms(planId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingProgramProgramDto), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(programs, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetProgramsForVersionTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+
+                var plan = _PlanRepository.GetPlan(planId);
+
+                var programs = _PlanPricingService.GetProgramsForVersion(planId, plan.VersionId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingProgramProgramDto), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(programs, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetMarketsForVersionTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+
+                var plan = _PlanRepository.GetPlan(planId);
+
+                var markets = _PlanPricingService.GetMarkets(planId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingBandDto), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingBandDto), "JobId");
+                jsonResolver.Ignore(typeof(PlanPricingBandDetailDto), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetStationsForVersionTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+
+                var plan = _PlanRepository.GetPlan(planId);
+
+                var stations = _PlanPricingService.GetStations(planId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingStationResultDto), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingStationResultDto), "JobId");
+                jsonResolver.Ignore(typeof(PlanPricingStationResultDto), "PlanVersionId");
+                jsonResolver.Ignore(typeof(PlanPricingStationDto), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(stations, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetPricingBandsForVersionTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+
+                var plan = _PlanRepository.GetPlan(planId);
+
+                var bands = _PlanPricingService.GetPricingBands(planId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingBandDto), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingBandDto), "JobId");
+                jsonResolver.Ignore(typeof(PlanPricingBandDetailDto), "Id");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(bands, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetPricingParametersForDraftTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+
+                var plan = _PlanService.GetPlan(planId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingParametersDto), "PlanId");
+                jsonResolver.Ignore(typeof(PlanPricingParametersDto), "PlanVersionId");
+                jsonResolver.Ignore(typeof(PlanPricingParametersDto), "JobId");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(plan.PricingParameters, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetPricingParametersForPlanWithVersiontTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+                var planVersionId = _PlanService.CheckForDraft(planId);
+                var plan = _PlanService.GetPlan(planId, planVersionId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(plan.PricingParameters));
+            }
+        }
+
         private static PlanPricingParametersDto _GetPricingRequestDto()
         {
             return new PlanPricingParametersDto
@@ -1301,6 +1580,227 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         Restrictions = new PlanDaypartDto.RestrictionsDto()
                     }
                 },
+                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 1, MediaWeekId = 784,
+                        StartDate = new DateTime(2018,12,31), EndDate = new DateTime(2019,01,06),
+                        NumberOfActiveDays = 6, ActiveDays = "Tu-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
+                        WeeklyRatings = .0123,
+                        WeeklyBudget = 20m,
+                        WeeklyAdu = 5,
+                        SpotLengthId = 1,
+                        DaypartCodeId = 1,
+                        PercentageOfWeek = 50,
+                        WeeklyUnits = 4
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 2, MediaWeekId = 785,
+                        StartDate = new DateTime(2019,01,07), EndDate = new DateTime(2019,01,13),
+                        NumberOfActiveDays = 7, ActiveDays = "M-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
+                        WeeklyRatings = .0123,
+                        WeeklyBudget = 20m,
+                        WeeklyUnits = 4
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 3, MediaWeekId = 786,
+                        StartDate = new DateTime(2019,01,14), EndDate = new DateTime(2019,01,20),
+                        NumberOfActiveDays = 6, ActiveDays = "M-Sa", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
+                        WeeklyRatings = .0123,
+                        WeeklyBudget = 20m,
+                        WeeklyUnits = 4
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 4, MediaWeekId = 787,
+                        StartDate = new DateTime(2019,01,21), EndDate = new DateTime(2019,01,27),
+                        NumberOfActiveDays = 6, ActiveDays = "M-W,F-Su", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
+                        WeeklyRatings = .0123,
+                        WeeklyBudget = 20m,
+                        WeeklyUnits = 4
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeekNumber = 5, MediaWeekId = 788,
+                        StartDate = new DateTime(2019,01,28), EndDate = new DateTime(2019,02,03),
+                        NumberOfActiveDays = 4, ActiveDays = "M-Th", WeeklyImpressions = 20, WeeklyImpressionsPercentage  = 20,
+                        WeeklyRatings = .0123,
+                        WeeklyBudget = 20m,
+                        WeeklyAdu = 30,
+                        WeeklyUnits = 4
+                    }
+                },
+                ImpressionsPerUnit = 5
+            };
+        }
+
+        private static PlanDto _GetNewPlan()
+        {
+            const int AudienceID = 31;
+
+            return new PlanDto
+            {
+                CampaignId = 1,
+                Equivalized = true,
+                Name = "Plan with Draft Test",
+                ProductId = 1,
+                CreativeLengths = new List<CreativeLength> {
+                    new CreativeLength { SpotLengthId = 1, Weight = 50},
+                    new CreativeLength{ SpotLengthId = 2}
+                },
+                Status = PlanStatusEnum.Working,
+                FlightStartDate = new DateTime(2018, 10, 1),
+                FlightEndDate = new DateTime(2018, 10, 31),
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                FlightNotes = "Sample notes",
+                FlightHiatusDays = new List<DateTime>(),
+                AudienceId = AudienceID,       //HH
+                AudienceType = AudienceTypeEnum.Nielsen,
+                HUTBookId = 437,
+                PostingType = PostingTypeEnum.NTI,
+                ShareBookId = 437,
+                Budget = 100m,
+                TargetCPM = 12m,
+                TargetImpressions = 100d,
+                TargetCPP = 12m,
+                TargetUniverse = 111222d,
+                Currency = PlanCurrenciesEnum.Impressions,
+                TargetRatingPoints = 100d,
+                CoverageGoalPercent = 80.5,
+                GoalBreakdownType = PlanGoalBreakdownTypeEnum.EvenDelivery,
+                AvailableMarkets = new List<PlanAvailableMarketDto>
+                {
+                    new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 48, Rank = 1, ShareOfVoicePercent = 22.2, Market = "Portland-Auburn"},
+                    new PlanAvailableMarketDto { MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUS = 32.5, Rank = 2, ShareOfVoicePercent = 34.5, Market = "New York"}
+                },
+                BlackoutMarkets = new List<PlanBlackoutMarketDto>
+                {
+                    new PlanBlackoutMarketDto {MarketCode = 123, MarketCoverageFileId = 1, PercentageOfUS = 5.5, Rank = 5, Market = "Burlington-Plattsburgh" },
+                    new PlanBlackoutMarketDto {MarketCode = 234, MarketCoverageFileId = 1, PercentageOfUS = 2.5, Rank = 8, Market = "Amarillo" },
+                },
+                ModifiedBy = "Test User",
+                ModifiedDate = new DateTime(2019, 01, 12, 12, 30, 29),
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypartDto
+                    {
+                        DaypartCodeId = 2,
+                        DaypartTypeId = DaypartTypeEnum.EntertainmentNonNews,
+                        StartTimeSeconds = 0,
+                        EndTimeSeconds = 2000,
+                        WeightingGoalPercent = 28.0,
+                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                        {
+                            new PlanDaypartVpvhForAudienceDto
+                            {
+                                AudienceId = 31,
+                                Vpvh = 0.8,
+                                VpvhType = VpvhTypeEnum.FourBookAverage,
+                                StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                            }
+                        },
+                    },
+                    new PlanDaypartDto
+                    {
+                        DaypartCodeId = 11,
+                        DaypartTypeId = DaypartTypeEnum.News,
+                        StartTimeSeconds = 1500,
+                        EndTimeSeconds = 2788,
+                        WeightingGoalPercent = 33,
+                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                        {
+                            new PlanDaypartVpvhForAudienceDto
+                            {
+                                AudienceId = 31,
+                                Vpvh = 0.9,
+                                VpvhType = VpvhTypeEnum.LastYear,
+                                StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                            }
+                        },
+                        Restrictions = new PlanDaypartDto.RestrictionsDto
+                        {
+                            ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                ShowTypes = new List<LookupDto> { new LookupDto { Id = 2 } }
+                            },
+                            GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Include,
+                                Genres = new List<LookupDto> { new LookupDto { Id = 20 } }
+                            },
+                            ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                Programs = new List<ProgramDto>
+                                {
+                                    new ProgramDto
+                                    {
+                                        ContentRating = "G",
+                                        Genre = new LookupDto { Id = 25},
+                                        Name = "Teletubbies"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    new PlanDaypartDto
+                    {
+                        DaypartCodeId = 3,
+                        DaypartTypeId = DaypartTypeEnum.ROS,
+                        StartTimeSeconds = 57600,
+                        EndTimeSeconds = 68400,
+                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                        {
+                            new PlanDaypartVpvhForAudienceDto
+                            {
+                                AudienceId = 31,
+                                Vpvh = 0.7,
+                                VpvhType = VpvhTypeEnum.PreviousQuarter,
+                                StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                            }
+                        },
+                        Restrictions = new PlanDaypartDto.RestrictionsDto
+                        {
+                            ShowTypeRestrictions = new PlanDaypartDto.RestrictionsDto.ShowTypeRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Include,
+                                ShowTypes = new List<LookupDto>
+                                {
+                                    new LookupDto { Id = 9 },
+                                    new LookupDto { Id = 11 }
+                                }
+                            },
+                            GenreRestrictions = new PlanDaypartDto.RestrictionsDto.GenreRestrictionsDto
+                            {
+                                ContainType = ContainTypeEnum.Exclude,
+                                Genres = new List<LookupDto>
+                                {
+                                    new LookupDto { Id = 12 },
+                                    new LookupDto { Id = 14 }
+                                }
+                            },
+                            ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                            {
+                                ContainType = ContainTypeEnum.Include,
+                                Programs = new List<ProgramDto>
+                                {
+                                    new ProgramDto
+                                    {
+                                        ContentRating = "R",
+                                        Genre = new LookupDto { Id = 25},
+                                        Name = "Power Rangers"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                Vpvh = 0.012,
+                IsAduEnabled = true,
                 WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
                 {
                     new WeeklyBreakdownWeek
