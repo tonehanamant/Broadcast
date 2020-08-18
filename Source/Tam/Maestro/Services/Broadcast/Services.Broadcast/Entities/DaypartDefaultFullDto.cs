@@ -1,4 +1,5 @@
-﻿using Services.Broadcast.Entities.Enums;
+﻿using System.Collections.Generic;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Entities
 {

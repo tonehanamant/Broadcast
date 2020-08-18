@@ -1,15 +1,15 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
-using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
-using Services.Broadcast.Entities.spotcableXML;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Common.Services.Repositories;
+using Services.Broadcast.Repositories;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.BusinessEngines
@@ -87,15 +87,19 @@ namespace Services.Broadcast.BusinessEngines
         private const double _DefaultImpressionsPerUnitForOldPlans = 500000;
         private const string _UnsupportedDeliveryTypeMessage = "Unsupported Delivery Type";
 
+        private IDaypartDefaultRepository _DaypartDefaultRepository; 
+
         public WeeklyBreakdownEngine(IPlanValidator planValidator,
                                          IMediaMonthAndWeekAggregateCache mediaWeekCache,
                                          ICreativeLengthEngine creativeLengthEngine,
-                                         ISpotLengthEngine spotLengthEngine)
+                                         ISpotLengthEngine spotLengthEngine,
+                                         IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
             _PlanValidator = planValidator;
             _MediaWeekCache = mediaWeekCache;
             _CreativeLengthEngine = creativeLengthEngine;
             _SpotLengthMultiplier = spotLengthEngine.GetDeliveryMultipliersBySpotLengthId();
+            _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
         }
 
         public List<WeeklyBreakdownWeek> GroupWeeklyBreakdownWeeksBasedOnDeliveryType(PlanDto plan)
@@ -597,7 +601,7 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach (var week in weeksToUpdate)
             {
-                week.NumberOfActiveDays = _CalculateActiveDays(week.StartDate, week.EndDate, request.FlightDays, request.FlightHiatusDays, out string activeDaysString);
+                week.NumberOfActiveDays = _CalculateActiveDays(week.StartDate, week.EndDate, request.FlightDays, request.FlightHiatusDays, request.Dayparts, out string activeDaysString);
                 week.ActiveDays = activeDaysString;
 
                 if (week.NumberOfActiveDays < 1)
@@ -684,9 +688,10 @@ namespace Services.Broadcast.BusinessEngines
         {
             foreach (DisplayMediaWeek week in weeks)
             {
-                var activeDays = _CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, request.FlightDays, request.FlightHiatusDays, out string activeDaysString);
                 foreach (var item in daypartDefaults)
                 {
+                    var planDayparts = request.Dayparts.Where(d => d.DaypartCodeId == item.DaypartDefaultId).ToList();
+                    var activeDays = _CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, request.FlightDays, request.FlightHiatusDays, planDayparts, out string activeDaysString);
                     result.Weeks.Add(new WeeklyBreakdownWeek
                     {
                         ActiveDays = activeDaysString,
@@ -705,7 +710,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             foreach (DisplayMediaWeek week in weeks)
             {
-                var activeDays = _CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, request.FlightDays, request.FlightHiatusDays, out string activeDaysString);
+                var activeDays = _CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, request.FlightDays, request.FlightHiatusDays, request.Dayparts, out string activeDaysString);
 
                 result.Weeks.Add(new WeeklyBreakdownWeek
                 {
@@ -726,7 +731,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             foreach (DisplayMediaWeek week in weeks)
             {
-                var activeDays = _CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, request.FlightDays, request.FlightHiatusDays, out string activeDaysString);
+                var activeDays = _CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, request.FlightDays, request.FlightHiatusDays, request.Dayparts, out string activeDaysString);
 
                 foreach (var creativeLength in creativeLengths)
                 {
@@ -830,15 +835,37 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        private int _CalculateActiveDays(DateTime weekStartDate, DateTime weekEndDate, List<int> flightDays, List<DateTime> hiatusDays, out string activeDaysString)
+        private List<int> _GetDaypartDayIds(List<PlanDaypartDto> planDayparts)
+        {
+            // the FE sends with at least 1 empty daypart...
+            // look for valid dayparts for this calculation
+            var validDayparts = planDayparts?.Where(d => d.DaypartCodeId > 0).ToList();
+            if (validDayparts?.Any() != true)
+            {
+                return new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            }
+
+            var planDefaultDaypartIds = planDayparts.Select(d => d.DaypartCodeId).ToList();
+            var dayIds = _DaypartDefaultRepository.GetDayIdsFromDaypartDefaults(planDefaultDaypartIds);
+            return dayIds;
+        }
+
+        internal int _CalculateActiveDays(DateTime weekStartDate, DateTime weekEndDate, 
+            List<int> flightDays, List<DateTime> hiatusDays, List<PlanDaypartDto> planDayparts,
+            out string activeDaysString)
         {
             var daysOfWeek = new List<string> { "M", "Tu", "W", "Th", "F", "Sa", "Su" };
             activeDaysString = string.Empty;
             var hiatusDaysInWeek = hiatusDays.Where(x => weekStartDate <= x && weekEndDate >= x).ToList();
-            var days = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-            var daysToRemove = days.Except(flightDays);
 
-            foreach (var day in daysToRemove)
+            var days = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+            var planDaypartDayIds = _GetDaypartDayIds(planDayparts);
+            var nonPlanDaypartDays = days.Except(planDaypartDayIds);
+            
+            var nonFlightDays = days.Except(flightDays);
+
+            var toRemove = nonFlightDays.Union(nonPlanDaypartDays).Distinct();
+            foreach (var day in toRemove)
             {
                 daysOfWeek[day - 1] = null;
             }
@@ -1128,7 +1155,8 @@ namespace Services.Broadcast.BusinessEngines
                     {
                         if (request.CreativeLengths.Any(x => !x.Weight.HasValue))
                         {
-                            request.CreativeLengths = _CreativeLengthEngine.DistributeWeight(request.CreativeLengths);
+                            var creativeLengthsWithDistributedWeight = _CreativeLengthEngine.DistributeWeight(request.CreativeLengths);
+                            request.CreativeLengths = creativeLengthsWithDistributedWeight;
                         }
                         week.WeeklyUnits = _CalculateUnitsForMultipleSpotLengths(request.CreativeLengths, request.ImpressionsPerUnit, week.WeeklyImpressions);
                     }

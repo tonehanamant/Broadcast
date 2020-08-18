@@ -1,11 +1,11 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Repositories;
-using System.Collections.Generic;
 using Services.Broadcast.Helpers;
-using System.Linq;
+using Services.Broadcast.Repositories;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -22,13 +22,17 @@ namespace Services.Broadcast.ApplicationServices
 
     public class DaypartDefaultService : IDaypartDefaultService
     {
+        internal const string FEATURE_TOGGLE_KEY_ENABLE_DAYPART_WKD = "broadcast-enable-daypart-wkd";
         internal const string DEFAULT_DAYPART_CODE_WEEKEND = "WKD";
 
         private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
-        public DaypartDefaultService(IDataRepositoryFactory broadcastDataRepositoryFactory)
+        public DaypartDefaultService(IDataRepositoryFactory broadcastDataRepositoryFactory,
+            IFeatureToggleHelper featureToggleHelper)
         {
             _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
+            _FeatureToggleHelper = featureToggleHelper;
         }
 
         public List<DaypartDefaultDto> GetAllDaypartDefaults()
@@ -49,13 +53,13 @@ namespace Services.Broadcast.ApplicationServices
 
         private void AssertToggle_EnableDaypartWKD<T>(List<T> dayparts) where T : DaypartDefaultDto
         {
-            // BP-1076 - Part 1 : Filtering always is temporary.
-            // BP-1076 - Part 2 will implement a feature flag around this.
-            // This is here to allow dev of BP-1076 - Part 2.
-            var toRemove = dayparts.SingleOrDefault(d => d.Code.Equals(DEFAULT_DAYPART_CODE_WEEKEND, StringComparison.OrdinalIgnoreCase));
-            if (toRemove != null)
+            if (!_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_KEY_ENABLE_DAYPART_WKD))
             {
-                dayparts.Remove(toRemove);
+                var toRemove = dayparts.SingleOrDefault(d => d.Code.Equals(DEFAULT_DAYPART_CODE_WEEKEND, StringComparison.OrdinalIgnoreCase));
+                if (toRemove != null)
+                {
+                    dayparts.Remove(toRemove);
+                }
             }
         }
     }

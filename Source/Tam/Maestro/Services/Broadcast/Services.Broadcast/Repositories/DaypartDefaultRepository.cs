@@ -5,10 +5,10 @@ using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using System.Data.Entity;
 
 namespace Services.Broadcast.Repositories
 {
@@ -32,6 +32,13 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <returns>List of <see cref="DaypartDefaultFullDto"/></returns>
         List<DaypartDefaultFullDto> GetAllDaypartDefaultsWithAllData();
+
+        /// <summary>
+        /// Gets the distinct daypart ids related to the daypart defaults.
+        /// </summary>
+        /// <param name="daypartDefaultIds">The ids for the daypart_default records.</param>
+        /// <returns>A distinct list of daypart ids covered by the given parameters.</returns>
+        List<int> GetDayIdsFromDaypartDefaults(List<int> daypartDefaultIds);
     }
 
     public class DaypartDefaultRepository : BroadcastRepositoryBase, IDaypartDefaultRepository
@@ -108,6 +115,23 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        ///<inheritdoc/>
+        public List<int> GetDayIdsFromDaypartDefaults(List<int> daypartDefaultIds)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var dayIds = context.daypart_defaults
+                    .Include(d => d.daypart)
+                    .Include(d => d.daypart.days)
+                    .Where(d => daypartDefaultIds.Contains(d.id))
+                    .SelectMany(d => d.daypart.days.Select(s => s.id))
+                    .Distinct()
+                    .ToList();
+
+                return dayIds;
+            });
+        }
+
         private DaypartDefaultDto _MapToDaypartDefaultDto(daypart_defaults daypartDefault)
         {
             if (daypartDefault == null)
@@ -134,7 +158,7 @@ namespace Services.Broadcast.Repositories
                 FullName = daypartDefault.name,
                 DaypartType = (DaypartTypeEnum)daypartDefault.daypart_type,
                 DefaultStartTimeSeconds = daypartDefault.daypart.timespan.start_time,
-                DefaultEndTimeSeconds = daypartDefault.daypart.timespan.end_time,
+                DefaultEndTimeSeconds = daypartDefault.daypart.timespan.end_time
             };
         }
     }

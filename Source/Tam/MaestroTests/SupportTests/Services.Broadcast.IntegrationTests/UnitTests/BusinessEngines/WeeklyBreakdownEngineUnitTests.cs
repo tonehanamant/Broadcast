@@ -10,7 +10,12 @@ using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Configuration;
+using Castle.Components.DictionaryAdapter;
+using Common.Services.Repositories;
+using Services.Broadcast.IntegrationTests.TestData;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using Services.Broadcast.Repositories;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 {
@@ -31,14 +36,44 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             _CreativeLengthEngineMock = new Mock<ICreativeLengthEngine>();
             _SpotLengthEngineMock = new Mock<ISpotLengthEngine>();
 
+            var dataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            dataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
+                .Returns(_GetMockDaypartDefaultRepository().Object);
+
+            _SpotLengthEngineMock.Setup(x => x.GetDeliveryMultipliersBySpotLengthId())
+                .Returns(_SpotLengthMultiplier);
+
             _WeeklyBreakdownEngine = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
                 _CreativeLengthEngineMock.Object,
-                _SpotLengthEngineMock.Object);
+                _SpotLengthEngineMock.Object,
+                dataRepositoryFactory.Object);
+        }
 
-            _SpotLengthEngineMock.Setup(x => x.GetDeliveryMultipliersBySpotLengthId())
-                .Returns(_SpotLengthMultiplier);
+        private Mock<IDaypartDefaultRepository> _GetMockDaypartDefaultRepository()
+        {
+            var daypartDefaultRepository = new Mock<IDaypartDefaultRepository>();
+            
+            daypartDefaultRepository.Setup(s => s.GetAllDaypartDefaults())
+                .Returns(DaypartsTestData.GetAllDaypartDefaultsWithBaseData);
+            
+            daypartDefaultRepository.Setup(s => s.GetAllDaypartDefaultsWithAllData())
+                .Returns(DaypartsTestData.GetAllDaypartDefaultsWithFullData);
+
+            var testDefaultDays = DaypartsTestData.GetDayIdsFromDaypartDefaults();
+            daypartDefaultRepository.Setup(s => s.GetDayIdsFromDaypartDefaults(It.IsAny<List<int>>()))
+                .Returns<List<int>>((ids) =>
+                {
+                    var items = new List<int>();
+                    foreach (var id in ids)
+                    {
+                        items.AddRange(testDefaultDays[id]);
+                    }
+                    return items.Distinct().ToList();
+                });
+
+            return daypartDefaultRepository;
         }
 
         [Test]
@@ -51,6 +86,65 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
 
             _MediaMonthAndWeekAggregateCacheMock.Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(mockedListMediaWeeksByFlight);
+
+            //Act
+            var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
+
+            //Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void PlanWeeklyGoalBreakdown_CreatePlan_WithoutDaypart()
+        {
+            //Arrange
+            var request = new WeeklyBreakdownRequest
+            {
+                FlightDays = new List<int> { 1,2,3,4,5,6,7 },
+                FlightStartDate = new DateTime(2020, 09, 28, 0, 0, 0),
+                FlightEndDate = new DateTime(2020, 12, 27, 23, 59, 59),
+                FlightHiatusDays = new List<DateTime>(),
+                TotalImpressions = 70000,
+                TotalRatings = 58,
+                TotalBudget = 1070000,
+                DeliveryType = PlanGoalBreakdownTypeEnum.EvenDelivery,
+                Equivalized = true,
+                Weeks = new List<WeeklyBreakdownWeek>(),
+                CreativeLengths = new List<CreativeLength>
+                {
+                    new CreativeLength {SpotLengthId = 1}
+                },
+                ImpressionsPerUnit = 1,
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypart { WeekdaysWeighting = 70, WeekendWeighting = 30}
+                }, 
+                WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions
+            };
+            var mockedListMediaWeeksByFlight = new List<DisplayMediaWeek>
+            {
+                new DisplayMediaWeek { Id = 875, Week = 1, MediaMonthId = 469, Year = 2020, Month = 10, WeekStartDate = new DateTime(2020, 9, 28), WeekEndDate = new DateTime(2020, 10, 4), MonthStartDate = new DateTime(2020, 9, 28), MonthEndDate = new DateTime(2020, 10, 25) },
+                new DisplayMediaWeek { Id = 876, Week = 2, MediaMonthId = 469, Year = 2020, Month = 10, WeekStartDate = new DateTime(2020, 10, 5), WeekEndDate = new DateTime(2020, 10, 11), MonthStartDate = new DateTime(2020, 9, 28), MonthEndDate = new DateTime(2020, 10, 25) },
+                new DisplayMediaWeek { Id = 877, Week = 3, MediaMonthId = 469, Year = 2020, Month = 10, WeekStartDate = new DateTime(2020, 10, 12), WeekEndDate = new DateTime(2020, 10, 18), MonthStartDate = new DateTime(2020, 9, 28), MonthEndDate = new DateTime(2020, 10, 25) },
+                new DisplayMediaWeek { Id = 878, Week = 4, MediaMonthId = 469, Year = 2020, Month = 10, WeekStartDate = new DateTime(2020, 10, 19), WeekEndDate = new DateTime(2020, 10, 25), MonthStartDate = new DateTime(2020, 9, 28), MonthEndDate = new DateTime(2020, 10, 25) },
+                new DisplayMediaWeek { Id = 879, Week = 1, MediaMonthId = 470, Year = 2020, Month = 11, WeekStartDate = new DateTime(2020, 10, 26), WeekEndDate = new DateTime(2020, 11, 1), MonthStartDate = new DateTime(2020, 10, 26), MonthEndDate = new DateTime(2020, 11, 29) },
+                new DisplayMediaWeek { Id = 880, Week = 2, MediaMonthId = 470, Year = 2020, Month = 11, WeekStartDate = new DateTime(2020, 11, 2), WeekEndDate = new DateTime(2020, 11, 8), MonthStartDate = new DateTime(2020, 10, 26), MonthEndDate = new DateTime(2020, 11, 29) },
+                new DisplayMediaWeek { Id = 881, Week = 3, MediaMonthId = 470, Year = 2020, Month = 11, WeekStartDate = new DateTime(2020, 11, 9), WeekEndDate = new DateTime(2020, 11, 15), MonthStartDate = new DateTime(2020, 10, 26), MonthEndDate = new DateTime(2020, 11, 29) },
+                new DisplayMediaWeek { Id = 882, Week = 4, MediaMonthId = 470, Year = 2020, Month = 11, WeekStartDate = new DateTime(2020, 11, 16), WeekEndDate = new DateTime(2020, 11, 22), MonthStartDate = new DateTime(2020, 10, 26), MonthEndDate = new DateTime(2020, 11, 29) },
+                new DisplayMediaWeek { Id = 883, Week = 5, MediaMonthId = 470, Year = 2020, Month = 11, WeekStartDate = new DateTime(2020, 11, 23), WeekEndDate = new DateTime(2020, 11, 29), MonthStartDate = new DateTime(2020, 10, 26), MonthEndDate = new DateTime(2020, 11, 29) },
+                new DisplayMediaWeek { Id = 884, Week = 1, MediaMonthId = 471, Year = 2020, Month = 12, WeekStartDate = new DateTime(2020, 11, 30), WeekEndDate = new DateTime(2020, 12, 6), MonthStartDate = new DateTime(2020, 11, 30), MonthEndDate = new DateTime(2020, 12, 27) },
+                new DisplayMediaWeek { Id = 885, Week = 2, MediaMonthId = 471, Year = 2020, Month = 12, WeekStartDate = new DateTime(2020, 12, 7), WeekEndDate = new DateTime(2020, 12, 13), MonthStartDate = new DateTime(2020, 11, 30), MonthEndDate = new DateTime(2020, 12, 27) },
+                new DisplayMediaWeek { Id = 886, Week = 3, MediaMonthId = 471, Year = 2020, Month = 12, WeekStartDate = new DateTime(2020, 12, 14), WeekEndDate = new DateTime(2020, 12, 20), MonthStartDate = new DateTime(2020, 11, 30), MonthEndDate = new DateTime(2020, 12, 27) },
+                new DisplayMediaWeek { Id = 887, Week = 4, MediaMonthId = 471, Year = 2020, Month = 12, WeekStartDate = new DateTime(2020, 12, 21), WeekEndDate = new DateTime(2020, 12, 27), MonthStartDate = new DateTime(2020, 11, 30), MonthEndDate = new DateTime(2020, 12, 27) }
+            };
+
+            _MediaMonthAndWeekAggregateCacheMock.Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(mockedListMediaWeeksByFlight);
+
+            _CreativeLengthEngineMock
+                .Setup(x => x.DistributeWeight(It.IsAny<List<CreativeLength>>()))
+                .Returns(new List<CreativeLength> { new CreativeLength { SpotLengthId = 1, Weight = 100 }});
 
             //Act
             var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
@@ -285,6 +379,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         [UseReporter(typeof(DiffReporter))]
         public void GroupsWeeklyBreakdownByWeek()
         {
+            var dataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            dataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
+                .Returns(_GetMockDaypartDefaultRepository().Object);
+
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             spotLengthEngine.Setup(x => x.GetDeliveryMultipliersBySpotLengthId())
                 .Returns(_SpotLengthMultiplier);
@@ -292,7 +390,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 _PlanValidatorMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
                 _CreativeLengthEngineMock.Object,
-                spotLengthEngine.Object);
+                spotLengthEngine.Object,
+                dataRepositoryFactory.Object);
             var result = weeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(_WeeklyBreakdown, _ImpressionsPerUnit, _CreativeLengths);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -301,6 +400,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         [UseReporter(typeof(DiffReporter))]
         public void GroupsWeeklyBreakdownByWeekBySpotLength()
         {
+            var dataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            dataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
+                .Returns(_GetMockDaypartDefaultRepository().Object);
+
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             spotLengthEngine.Setup(x => x.GetDeliveryMultipliersBySpotLengthId())
                 .Returns(_SpotLengthMultiplier);
@@ -308,7 +411,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 _PlanValidatorMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
                 _CreativeLengthEngineMock.Object,
-                spotLengthEngine.Object);
+                spotLengthEngine.Object,
+                dataRepositoryFactory.Object);
             var result = weeklyBreakdownEngine.GroupWeeklyBreakdownByWeekBySpotLength(_WeeklyBreakdown, _ImpressionsPerUnit, true);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -317,6 +421,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         [UseReporter(typeof(DiffReporter))]
         public void GroupWeeklyBreakdownByWeekByDaypart()
         {
+            var dataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            dataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
+                .Returns(_GetMockDaypartDefaultRepository().Object);
+
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             spotLengthEngine.Setup(x => x.GetDeliveryMultipliersBySpotLengthId())
                 .Returns(_SpotLengthMultiplier);
@@ -324,7 +432,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 _PlanValidatorMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
                 _CreativeLengthEngineMock.Object,
-                spotLengthEngine.Object);
+                spotLengthEngine.Object,
+                dataRepositoryFactory.Object);
 
             var result = weeklyBreakdownEngine.GroupWeeklyBreakdownByWeekByDaypart(_WeeklyBreakdown, _ImpressionsPerUnit, true, _CreativeLengths);
 
@@ -395,6 +504,71 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        /// <summary>
+        /// Days are Monday(1) through Sunday(7)
+        /// </summary>
+        [Test]
+        [TestCase(1,7, true, true, 7, "M-Su")]
+        [TestCase(1, 7, true, false, 7, "M-Su")]
+        [TestCase(1, 7, false, true, 2, "Sa,Su")]
+        public void CalculateActiveDays_AllDaysCoveredByAllDayparts(
+            int weekStartDayId, int weekEndDayId, 
+            bool hasFullWeekDaypart, bool hasWeekendOnlyDaypart,
+            int expectedResult, string expectedResultActiveDayString)
+        {
+            // Arrange
+            var testDateMonday = new DateTime(2020, 8, 10);
+            var weekStartDate = testDateMonday.AddDays((weekStartDayId - 1));
+            var weekEndDate = testDateMonday.AddDays((weekEndDayId - 1));
+
+            // variance here is out of scope of this test.
+            var flightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 }; // active DOWs for the flight
+            var hiatusDays = new List<DateTime>();
+
+            var dayparts = new List<PlanDaypartDto>();
+
+            const string daypartCodeWeekend = "WKD";
+            var allDayparts = DaypartsTestData.GetAllDaypartDefaultsWithFullData();
+
+            if (hasFullWeekDaypart)
+            {
+                var foundDaypart = allDayparts.First(s => !s.Code.Equals(daypartCodeWeekend, StringComparison.OrdinalIgnoreCase));
+                var planDaypart = new PlanDaypartDto
+                {
+                    DaypartCodeId = foundDaypart.Id,
+                    DaypartTypeId = foundDaypart.DaypartType,
+                    StartTimeSeconds = foundDaypart.DefaultStartTimeSeconds,
+                    IsStartTimeModified = false,
+                    EndTimeSeconds = foundDaypart.DefaultEndTimeSeconds,
+                    IsEndTimeModified = false,
+                };
+                dayparts.Add(planDaypart);
+            }
+
+            if (hasWeekendOnlyDaypart)
+            {
+                var foundDaypart = allDayparts.First(s => s.Code.Equals(daypartCodeWeekend, StringComparison.OrdinalIgnoreCase));
+                var planDaypart = new PlanDaypartDto
+                {
+                    DaypartCodeId = foundDaypart.Id,
+                    DaypartTypeId = foundDaypart.DaypartType,
+                    StartTimeSeconds = foundDaypart.DefaultStartTimeSeconds,
+                    IsStartTimeModified = false,
+                    EndTimeSeconds = foundDaypart.DefaultEndTimeSeconds,
+                    IsEndTimeModified = false,
+                };
+                dayparts.Add(planDaypart);
+            }
+
+            // Act
+            string resultActiveDayString;
+            var result = ((WeeklyBreakdownEngine) _WeeklyBreakdownEngine)._CalculateActiveDays(weekStartDate, weekEndDate, flightDays, hiatusDays, dayparts, out resultActiveDayString);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+            Assert.AreEqual(expectedResultActiveDayString, resultActiveDayString);
         }
 
         private IEnumerable<WeeklyBreakdownWeek> _WeeklyBreakdown = new List<WeeklyBreakdownWeek>

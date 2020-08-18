@@ -475,6 +475,7 @@
     <Compile Include="TestData\InventoryTestData.cs" />
     <Compile Include="TestData\MarketsTestData.cs" />
     <Compile Include="TestData\StationsTestData.cs" />
+    <Compile Include="UnitTests\ApplicationServices\DaypartDefaultServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\HealthServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\HealthServiceUnitTestClass.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryExportServiceUnitTests.cs" />

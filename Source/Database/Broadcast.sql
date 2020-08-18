@@ -678,8 +678,8 @@ BEGIN
 	REFERENCES [dbo].[plan_version_buying_stations] ([id])
 	ON DELETE CASCADE
 END
+GO
 /*************************************** END BP-1098 *****************************************************/
-
 
 /*************************************** START - BP-797 ****************************************************/
 IF NOT EXISTS (SELECT 1 
@@ -761,11 +761,9 @@ BEGIN
     ALTER TABLE plan_version_pricing_market_details
 	ALTER COLUMN market_name varchar(31) NOT NULL
 END
-
+GO
 /*************************************** END - BP-875 ****************************************************/
 
-
-GO
 /*************************************** START BP-1076 *****************************************************/
 -- Daypart for 'SA-SU 9AM-8PM'
 -- This ID is validated to be the same in all environments.
