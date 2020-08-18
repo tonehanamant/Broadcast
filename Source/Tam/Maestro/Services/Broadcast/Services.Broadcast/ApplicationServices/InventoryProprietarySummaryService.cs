@@ -27,7 +27,7 @@ namespace Services.Broadcast.ApplicationServices
 		/// <param name="dto"></param>
 		/// <returns></returns>
 		InventoryProprietarySummaryResponse GetInventoryProprietarySummaries(InventoryProprietarySummaryRequest dto);
-	//	void Test();
+		//	void Test();
 	}
 
 	public class InventoryProprietarySummaryService : BroadcastBaseClass, IInventoryProprietarySummaryService
@@ -38,19 +38,21 @@ namespace Services.Broadcast.ApplicationServices
 		protected readonly IInventoryRepository InventoryRepository;
 		protected readonly IStationRepository _StationRepository;
 		protected readonly IMarketCoverageRepository _MarketCoverageRepository;
+		protected readonly IDaypartDefaultRepository _DaypartDefaultRepository;
 		public InventoryProprietarySummaryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
-			IQuarterCalculationEngine quarterCalculationEngine )
+			IQuarterCalculationEngine quarterCalculationEngine)
 		{
 			_QuarterCalculationEngine = quarterCalculationEngine;
 
 			_InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+			_DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
 
 			_InventoryProprietarySummaryRepository = broadcastDataRepositoryFactory
 				.GetDataRepository<IInventoryProprietarySummaryRepository>();
 
 			_MarketCoverageRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
 		}
-		
+
 		public void AggregateInventoryProprietarySummary(int inventorySourceId, DateTime? startDate, DateTime? endDate)
 		{
 			_LogInfo(
@@ -159,7 +161,7 @@ namespace Services.Broadcast.ApplicationServices
 			var datesTuple = _QuarterCalculationEngine.GetDatesForTimeframe(RatesTimeframe.THISQUARTER, currentDate);
 			return new DateRange(datesTuple.Item1, datesTuple.Item2);
 		}
-		
+
 		public InventoryProprietarySummaryResponse GetInventoryProprietarySummaries(
 			InventoryProprietarySummaryRequest inventoryProprietarySummaryRequest)
 		{
@@ -168,15 +170,11 @@ namespace Services.Broadcast.ApplicationServices
 				_QuarterCalculationEngine.GetAllQuartersBetweenDates(inventoryProprietarySummaryRequest.FlightStartDate, inventoryProprietarySummaryRequest.FlightEndDate);
 			if (QuarterDetails.Count() > 1)
 			{
-				response.ValidationMessage =
-					$"Invalid request. More than two quarters for start date: {inventoryProprietarySummaryRequest.FlightStartDate} and end date: {inventoryProprietarySummaryRequest.FlightEndDate}";
+				response.ValidationMessage = "Plan flight falls in more than one quarter, please update to select Units";
 			}
 			else
 			{
-				List<List<int>> dayPartIdsFinalList = new List<List<int>>();
-
-				// we need inventory proprietary summary day_part_ids and we are getting Plan day part info in request so we need following conversion
-				List<int> summaryDayPartIds = ConvertPlanDayPartIdsToInventoryDayPartIds(inventoryProprietarySummaryRequest, QuarterDetails.Single(), dayPartIdsFinalList);
+				HashSet<int> summaryDayPartIds = _ConvertPlanDayPartIdsToInventoryDayPartIds(inventoryProprietarySummaryRequest, QuarterDetails.Single());
 
 				var invPropSummaryList =
 					_InventoryProprietarySummaryRepository.GetInventoryProprietarySummary(
@@ -190,9 +188,7 @@ namespace Services.Broadcast.ApplicationServices
 						_InventoryProprietarySummaryRepository.GetTotalImpressionsBySummaryIdAndAudienceId(invPropSummary.Id, inventoryProprietarySummaryRequest.AudienceId)
 						);
 
-
-					invPropSummary.MarketCoverageTotal =	_InventoryProprietarySummaryRepository.GetTotalMarketCoverageBySummaryId(invPropSummary.Id);
-
+					invPropSummary.MarketCoverageTotal = _InventoryProprietarySummaryRepository.GetTotalMarketCoverageBySummaryId(invPropSummary.Id);
 				}
 
 				response.summaries = invPropSummaryList;
@@ -201,41 +197,41 @@ namespace Services.Broadcast.ApplicationServices
 			return response;
 		}
 
-		private List<int> ConvertPlanDayPartIdsToInventoryDayPartIds(InventoryProprietarySummaryRequest dto, QuarterDetailDto QuarterDetail, List<List<int>> dayPartIdsFinalList)
+		private HashSet<int> _ConvertPlanDayPartIdsToInventoryDayPartIds(InventoryProprietarySummaryRequest dto, QuarterDetailDto QuarterDetail)
 		{
-
-			List<DisplayDaypart> displayDayPartList = new List<DisplayDaypart>();
-
 			// First Get all Daypart Ids from InventoryProprietary Summary Service based on quarter
 			var inventoryDayPartIds = _InventoryProprietarySummaryRepository.GetDayPartIds(QuarterDetail);
 
 			// Get DisplayDayPart info based on Inventory dayPart Ids
 			var displayDayPartDictionary = DaypartCache.Instance.GetDisplayDayparts(inventoryDayPartIds);
-			//refactore this and add lambda
-			displayDayPartDictionary.ToList();
 
-			displayDayPartDictionary.ForEach(d => displayDayPartList.Add(d.Value));
+			// Get DisplayDayPart list from dictionary, which is needed in Intersecting logic
+			List<DisplayDaypart> inventoryDisplayDayParts = displayDayPartDictionary.Select(i => i.Value).ToList();
 
-			DisplayDaypart[] inventoryDayPartArrayList = displayDayPartList.ToArray();
-		
-			// For each PlanDayPart Request, get intersecting inventory day part id
-			foreach (var PlanDaypartReq in dto.PlanDaypartRequests)
+			//Get Intersecting daypart_id 
+			HashSet<int> dayPartIdsFinalList = _GetIntersectingDayPartIds(dto, inventoryDisplayDayParts);
+
+			return dayPartIdsFinalList;
+		}
+
+		private HashSet<int> _GetIntersectingDayPartIds(InventoryProprietarySummaryRequest dto, List<DisplayDaypart> inventoryDisplayDayParts)
+		{
+			HashSet<int> dayPartIdsFinalList = new HashSet<int>();
+			
+			foreach (var planDaypartReq in dto.PlanDaypartRequests)
 			{
-				// get daypart Id from default day part Id
-				var planDisplayDaypart = DaypartCache.Instance.GetDisplayDaypart(PlanDaypartReq.DefaultDayPartId);
+				var planDayPartId = _DaypartDefaultRepository.GetDayprtId(planDaypartReq.DefaultDayPartId);
 
-				//int i = 1;
-				//DisplayDaypart planDaypart = new DisplayDaypart(i, PlanDaypartReq.StartTimeSeconds, PlanDaypartReq.EndTimeSeconds, defaultDaypart.Monday, defaultDaypart.Tuesday, defaultDaypart.Wednesday, defaultDaypart.Thursday, defaultDaypart.Friday, defaultDaypart.Saturday, defaultDaypart.Sunday);
-				//i++;
+				var planDisplayDaypart = DaypartCache.Instance.GetDisplayDaypart(planDayPartId);
 
-				DisplayDaypart[] displayDayparts = DisplayDaypart.GetIntersectingDayparts(planDisplayDaypart, inventoryDayPartArrayList);
-				var IdList = displayDayparts.Select(d => d.Id);
-				dayPartIdsFinalList.Add(IdList.ToList());
+				DisplayDaypart[] displayDayparts =
+					DisplayDaypart.GetIntersectingDayparts(planDisplayDaypart, inventoryDisplayDayParts.ToArray());
 
+				displayDayparts.ForEach(dd => dayPartIdsFinalList.Add(dd.Id));
+				
 			}
 
-			List<int> summaryDayPartIds = dayPartIdsFinalList.SelectMany(x => x).Distinct().ToList();
-			return summaryDayPartIds;
+			return dayPartIdsFinalList;
 		}
 	}
 }

@@ -33,6 +33,8 @@ namespace Services.Broadcast.Repositories
         /// <returns>List of <see cref="DaypartDefaultFullDto"/></returns>
         List<DaypartDefaultFullDto> GetAllDaypartDefaultsWithAllData();
 
+        int GetDayprtId(int daypartDefaultId);
+
         /// <summary>
         /// Gets the distinct daypart ids related to the daypart defaults.
         /// </summary>
@@ -90,7 +92,12 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context => _MapToDaypartDefaultFullDto(context.daypart_defaults.Include(d => d.daypart).Include(d => d.daypart.timespan).Single(x => x.id == daypartDefaultId, DaypartDefaultNotFoundMessage)));
         }
-
+        public int GetDayprtId(int daypartDefaultId)
+        {
+            return _InReadUncommitedTransaction(context => (context.daypart_defaults
+                .Where(d => d.id.Equals(daypartDefaultId))
+                .Select(d => d.daypart_id).Single()));
+        }
         public List<DaypartDefaultDto> GetAllDaypartDefaults()
         {
             return _InReadUncommitedTransaction(context => {

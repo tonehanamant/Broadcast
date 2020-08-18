@@ -192,25 +192,16 @@ namespace BroadcastComposerWeb.Controllers
         /// <summary>
         /// Lists the Inventory Proprietary Summaries
         /// </summary>
-        /// <param name="req"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("ProprietarySummaries")]
         public BaseResponse<InventoryProprietarySummaryResponse> GetInventoryProprietarySummaries(InventoryProprietarySummaryRequest request)
         {
             var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProprietarySummaryService>();
-            return _ConvertToBaseResponse(() => _GetDummyResponse());
-          //  return _ConvertToBaseResponse(() => service.GetInventoryProprietarySummaries(request));
+
+	        return _ConvertToBaseResponse(() => service.GetInventoryProprietarySummaries(request));
         }
-        private InventoryProprietarySummaryResponse _GetDummyResponse()
-		{
-            InventoryProprietarySummaryResponse response = new InventoryProprietarySummaryResponse();
-            response.summaries = new List<InventoryProprietarySummary>()
-            {
-                new  InventoryProprietarySummary{Cpm= 9.60M,DaypartDefaultCode= "", DaypartName="M-SU 4:00AM-10:00AM", ImpressionsTotal= 10000, MarketCoverageTotal= 76.0, InventorySourceName="CNN"  },
-                new  InventoryProprietarySummary{Cpm= 8.60M,DaypartDefaultCode= "M-SU 4:00AM-10:00AM", DaypartName="M-SU 4:00AM-10:00AM", ImpressionsTotal= 20000, MarketCoverageTotal= 66.0, InventorySourceName="TVB"  }
-            };
-            return response;
-        }
+      
     }
 }

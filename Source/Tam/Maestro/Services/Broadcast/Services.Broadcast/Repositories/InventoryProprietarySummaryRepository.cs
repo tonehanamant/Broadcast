@@ -58,7 +58,7 @@ namespace Services.Broadcast.Repositories
 		/// <param name="daypartIds"></param>
 		/// <returns></returns>
 		List<InventoryProprietarySummary> GetInventoryProprietarySummary(QuarterDetailDto quarterDetailDto,
-			List<int> daypartIds);
+			HashSet<int> daypartIds);
 	
 		/// <summary>
 		/// 
@@ -261,7 +261,7 @@ namespace Services.Broadcast.Repositories
 			context.inventory_proprietary_summary.RemoveRange(context.inventory_proprietary_summary
 				.Where(s => idList.Contains(s.id)));
 		}
-		public List<InventoryProprietarySummary> GetInventoryProprietarySummary(QuarterDetailDto quarterDetailDto, List<int> defaultDaypartIds)
+		public List<InventoryProprietarySummary> GetInventoryProprietarySummary(QuarterDetailDto quarterDetailDto, HashSet<int> defaultDaypartIds)
 		{
 			return _InReadUncommitedTransaction(
 				context =>

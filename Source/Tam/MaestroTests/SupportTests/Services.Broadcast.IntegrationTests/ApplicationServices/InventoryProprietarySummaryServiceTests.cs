@@ -98,7 +98,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 				List<PlanDaypartRequest> planReqList = new List<PlanDaypartRequest>
 				{
 					new PlanDaypartRequest{DefaultDayPartId= 1, StartTimeSeconds= 14400, EndTimeSeconds=36000},
-					new PlanDaypartRequest{DefaultDayPartId= 2, StartTimeSeconds= 14400, EndTimeSeconds=36000}
+					new PlanDaypartRequest{DefaultDayPartId= 4, StartTimeSeconds= 14400, EndTimeSeconds=36000}
 				};
 				InventoryProprietarySummaryRequest req = new InventoryProprietarySummaryRequest
 				{ FlightStartDate = StartDate, FlightEndDate = EndDate, PlanDaypartRequests = planReqList, AudienceId = 5 };
@@ -135,7 +135,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 				List<PlanDaypartRequest> planReqList = new List<PlanDaypartRequest>
 				{
 					new PlanDaypartRequest{DefaultDayPartId= 1, StartTimeSeconds= 14400, EndTimeSeconds=36000},
-					new PlanDaypartRequest{DefaultDayPartId= 2, StartTimeSeconds= 14400, EndTimeSeconds=36000}
+					new PlanDaypartRequest{DefaultDayPartId= 4, StartTimeSeconds= 14400, EndTimeSeconds=36000}
 				};
 				InventoryProprietarySummaryRequest req = new InventoryProprietarySummaryRequest
 					{ FlightStartDate = StartDate, FlightEndDate = EndDate, PlanDaypartRequests = planReqList, AudienceId = 5 };
