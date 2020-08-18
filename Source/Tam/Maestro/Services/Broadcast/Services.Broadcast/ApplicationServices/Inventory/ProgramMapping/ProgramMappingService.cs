@@ -354,7 +354,7 @@ namespace Services.Broadcast.ApplicationServices
                 var keywordMatches = keywords.Where(k => program.ProgramName.Contains(k.Keyword, StringComparison.OrdinalIgnoreCase)).ToList();
                 if (keywordMatches.Any())
                 {
-                    var keyword = keywords.FirstOrDefault();
+                    var keyword = keywordMatches.FirstOrDefault();
                     program.MatchedName = keyword.ProgramName;
                     program.Genre = keyword.Genre.Display;
                     program.ShowType = keyword.ShowType.Display;

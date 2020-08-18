@@ -102,6 +102,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new ProgramNameMappingKeyword{
                      Genre = new LookupDto(44, "Sports"),
                      ShowType = new LookupDto(44, "Sports"),
+                     ProgramName = "Golf",
+                     Keyword = "golf"
+                },
+                new ProgramNameMappingKeyword{
+                     Genre = new LookupDto(44, "Sports"),
+                     ShowType = new LookupDto(44, "Sports"),
                      ProgramName = "NFL",
                      Keyword = "NFL"
                 }
