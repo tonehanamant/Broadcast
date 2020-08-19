@@ -21,89 +21,28 @@ namespace Services.Broadcast.Clients
     public class PlanBuyingRequestLogClientAmazonS3 : IPlanBuyingRequestLogClient
     {
         private readonly string _BucketName;
-        private readonly string _AccessKeyId;
-        private readonly string _SecretAccessKey;
-        private readonly RegionEndpoint _BucketRegion;
+        private readonly ILogToAmazonS3 _LogToAmazonS3;
 
-        public PlanBuyingRequestLogClientAmazonS3()
+        public PlanBuyingRequestLogClientAmazonS3(ILogToAmazonS3 requestLogClientAmazonS3)
         {
             _BucketName = BroadcastServiceSystemParameter.PricingRequestLogBucket;
-            _AccessKeyId = BroadcastServiceSystemParameter.PricingRequestLogAccessKeyId;
-            _SecretAccessKey = EncryptionHelper.DecryptString(BroadcastServiceSystemParameter.PricingRequestLogEncryptedAccessKey, EncryptionHelper.EncryptionKey);
-            _BucketRegion = RegionEndpoint.GetBySystemName(BroadcastServiceSystemParameter.PricingRequestLogBucketRegion);
+            _LogToAmazonS3 = requestLogClientAmazonS3;
         }
 
-        public async void SaveBuyingRequest(int planId, PlanBuyingApiRequestDto planBuyingApiRequestDto)
+        public void SaveBuyingRequest(int planId, PlanBuyingApiRequestDto planBuyingApiRequestDto)
         {
-            _ValidateParameters();
-
             var fileName = _GetFileName(planId);
             var keyName = _GetKeyName(fileName);
 
-            using (var client = new AmazonS3Client(_AccessKeyId, _SecretAccessKey, _BucketRegion))
-            {
-                using (var buyingApiRequestMemoryStream = Helpers.StreamHelper.CreateStreamFromString(SerializationHelper.ConvertToJson(planBuyingApiRequestDto)))
-                {
-                    using (var fileMemoryStream = new MemoryStream())
-                    {
-                        using (var archive = new ZipArchive(fileMemoryStream, ZipArchiveMode.Create, true))
-                        {
-                            var fileInArchive = archive.CreateEntry(fileName, CompressionLevel.Optimal);
-
-                            using (var fileInArchiveStream = fileInArchive.Open())
-                            {
-                                buyingApiRequestMemoryStream.CopyTo(fileInArchiveStream);
-                            }
-                        }
-
-                        var transferUtility = new TransferUtility(client);
-
-                        await transferUtility.UploadAsync(fileMemoryStream, _BucketName, keyName);
-                    }
-                }
-            }
+            _LogToAmazonS3.SaveRequest(_BucketName, keyName, fileName, planBuyingApiRequestDto);            
         }
 
-        public async void SaveBuyingRequest(int planId, PlanBuyingApiRequestDto_v3 planBuyingApiRequestDto)
+        public void SaveBuyingRequest(int planId, PlanBuyingApiRequestDto_v3 planBuyingApiRequestDto)
         {
-            _ValidateParameters();
-
             var fileName = _GetFileName(planId);
             var keyName = _GetKeyName(fileName);
 
-            using (var client = new AmazonS3Client(_AccessKeyId, _SecretAccessKey, _BucketRegion))
-            {
-                using (var buyingApiRequestMemoryStream = Helpers.StreamHelper.CreateStreamFromString(SerializationHelper.ConvertToJson(planBuyingApiRequestDto)))
-                {
-                    using (var fileMemoryStream = new MemoryStream())
-                    {
-                        using (var archive = new ZipArchive(fileMemoryStream, ZipArchiveMode.Create, true))
-                        {
-                            var fileInArchive = archive.CreateEntry(fileName, CompressionLevel.Optimal);
-
-                            using (var fileInArchiveStream = fileInArchive.Open())
-                            {
-                                buyingApiRequestMemoryStream.CopyTo(fileInArchiveStream);
-                            }
-                        }
-
-                        var transferUtility = new TransferUtility(client);
-
-                        await transferUtility.UploadAsync(fileMemoryStream, _BucketName, keyName);
-                    }
-                }
-            }
-        }
-
-        private void _ValidateParameters()
-        {
-            if (string.IsNullOrEmpty(_BucketName) ||
-                string.IsNullOrEmpty(_AccessKeyId) ||
-                string.IsNullOrEmpty(_SecretAccessKey) ||
-                _BucketRegion == null)
-            {
-                throw new Exception("Invalid parameters for buying request serialization.");
-            }
+            _LogToAmazonS3.SaveRequest(_BucketName, keyName, fileName, planBuyingApiRequestDto);
         }
 
         private string _GetFileName(int planId)
@@ -116,7 +55,7 @@ namespace Services.Broadcast.Clients
 
         private string _GetKeyName(string fileName)
         {
-            const string keyNamePrefix = "broadcast-openmarket-allocations";
+            const string keyNamePrefix = "broadcast_buying_allocations";
             return $"{keyNamePrefix}/{fileName}.zip";
         }
     }

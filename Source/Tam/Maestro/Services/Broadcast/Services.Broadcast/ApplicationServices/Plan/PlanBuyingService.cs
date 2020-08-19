@@ -32,8 +32,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 {
     public interface IPlanBuyingService : IApplicationService
     {
-        PlanBuyingJob QueueBuyingJob(PlanBuyingParametersDto PlanBuyingParametersDto, DateTime currentDate, string username);
-        PlanBuyingJob QueueBuyingJob(BuyingParametersWithoutPlanDto BuyingParametersWithoutPlanDto, DateTime currentDate, string username);
+        PlanBuyingJob QueueBuyingJob(PlanBuyingParametersDto planBuyingParametersDto, DateTime currentDate, string username);
+        PlanBuyingJob QueueBuyingJob(BuyingParametersWithoutPlanDto buyingParametersWithoutPlanDto, DateTime currentDate, string username);
 
         CurrentBuyingExecution GetCurrentBuyingExecution(int planId);
 
@@ -55,11 +55,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         [Queue("planbuying")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void RunBuyingJob(PlanBuyingParametersDto PlanBuyingParametersDto, int jobId, CancellationToken token);
+        void RunBuyingJob(PlanBuyingParametersDto planBuyingParametersDto, int jobId, CancellationToken token);
 
         [Queue("planbuying")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void RunBuyingWithoutPlanJob(BuyingParametersWithoutPlanDto BuyingParametersWithoutPlanDto, int jobId, CancellationToken token);
+        void RunBuyingWithoutPlanJob(BuyingParametersWithoutPlanDto buyingParametersWithoutPlanDto, int jobId, CancellationToken token);
 
         /// <summary>
         /// For troubleshooting
@@ -69,14 +69,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <summary>
         /// For troubleshooting
         /// </summary>
-        PlanBuyingApiRequestDto GetBuyingApiRequestPrograms(int planId, PlanBuyingParametersDto planBuyingParametersDto
-            , BuyingInventoryGetRequestParametersDto requestParameters);
+        PlanBuyingApiRequestDto GetBuyingApiRequestPrograms(int planId, BuyingInventoryGetRequestParametersDto requestParameters);
 
         /// <summary>
         /// For troubleshooting
         /// </summary>
-        PlanBuyingApiRequestDto_v3 GetBuyingApiRequestPrograms_v3(int planId, PlanBuyingParametersDto planBuyingParametersDto
-            , BuyingInventoryGetRequestParametersDto requestParameters);
+        PlanBuyingApiRequestDto_v3 GetBuyingApiRequestPrograms_v3(int planId, BuyingInventoryGetRequestParametersDto requestParameters);
 
         /// <summary>
         /// For troubleshooting
@@ -151,8 +149,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         [Queue("savebuyingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void SaveBuyingRequest(int planId, PlanBuyingApiRequestDto_v3 buyingApiRequest);
-
-        Guid RunQuote(QuoteRequestDto request, string userName, string templatesFilePath);
     }
     /// <summary>
     /// This is a temporary solution for running pricing inside plan
@@ -180,7 +176,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IPlanBuyingMarketResultsEngine _PlanBuyingMarketResultsEngine;
         private readonly IPlanBuyingRequestLogClient _BuyingRequestLogClient;
         private readonly IPlanValidator _PlanValidator;
-        private readonly ISharedFolderService _SharedFolderService;
 
         public PlanBuyingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -195,8 +190,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                   IPlanBuyingStationCalculationEngine planBuyingStationCalculationEngine,
                                   IPlanBuyingMarketResultsEngine planBuyingMarketResultsEngine,
                                   IPlanBuyingRequestLogClient buyingRequestLogClient,
-                                  IPlanValidator planValidator,
-                                  ISharedFolderService sharedFolderService)
+                                  IPlanValidator planValidator)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _PlanBuyingRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanBuyingRepository>();
@@ -219,37 +213,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanBuyingMarketResultsEngine = planBuyingMarketResultsEngine;
             _BuyingRequestLogClient = buyingRequestLogClient;
             _PlanValidator = planValidator;
-            _SharedFolderService = sharedFolderService;
-        }
-
-        public Guid RunQuote(QuoteRequestDto request, string userName, string templatesFilePath)
-        {
-            var quoteReportData = GetQuoteReportData(request);
-            var reportGenerator = new QuoteReportGenerator(templatesFilePath);
-            var report = reportGenerator.Generate(quoteReportData);
-
-            return _SharedFolderService.SaveFile(new SharedFolderFile
-            {
-                FolderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.QUOTE_REPORTS),
-                FileNameWithExtension = report.Filename,
-                FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                FileUsage = SharedFolderFileUsage.Quote,
-                CreatedDate = _DateTimeEngine.GetCurrentMoment(),
-                CreatedBy = userName,
-                FileContent = report.Stream
-            });
-        }
-
-        public QuoteReportData GetQuoteReportData(QuoteRequestDto request)
-        {
-            // this should be removed in the story that allows user to enter margin
-            const int defaultMargin = 20;
-
-            request.Margin = defaultMargin;
-
-            var programs = _PlanBuyingInventoryEngine.GetInventoryForQuote(request);
-
-            throw new ApplicationException("Not yet implemented");
         }
 
         public ReportOutput GenerateBuyingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)
@@ -297,7 +260,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 throw new Exception("The buying model is already running");
             }
 
-            var buyingParameters = _ConvertBuyingWihtoutPlanParametersToPlanBuyingParameters(buyingParametersWithoutPlanDto);
+            var buyingParameters = _ConvertBuyingWithoutPlanParametersToPlanBuyingParameters(buyingParametersWithoutPlanDto);
 
             ValidateAndApplyMargin(buyingParameters);
             buyingParametersWithoutPlanDto.AdjustedBudget = buyingParameters.AdjustedBudget;
@@ -312,7 +275,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             };
             using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
             {
-                _SaveBuyingJobAndParameters(job, buyingParameters);
+                job.Id = _SaveBuyingJobAndParameters(job, buyingParameters);
                 buyingParametersWithoutPlanDto.JobId = job.Id;
                 transaction.Complete();
             }
@@ -331,30 +294,30 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanValidator.ValidatePlanForBuying(plan);
         }
 
-        private PlanBuyingParametersDto _ConvertBuyingWihtoutPlanParametersToPlanBuyingParameters(BuyingParametersWithoutPlanDto BuyingParametersWithoutPlanDto)
+        private PlanBuyingParametersDto _ConvertBuyingWithoutPlanParametersToPlanBuyingParameters(BuyingParametersWithoutPlanDto buyingParametersWithoutPlanDto)
         {
             return new PlanBuyingParametersDto
             {
-                AdjustedBudget = BuyingParametersWithoutPlanDto.AdjustedBudget,
-                AdjustedCPM = BuyingParametersWithoutPlanDto.AdjustedCPM,
-                Budget = BuyingParametersWithoutPlanDto.Budget,
-                CompetitionFactor = BuyingParametersWithoutPlanDto.CompetitionFactor,
-                CPM = BuyingParametersWithoutPlanDto.CPM,
-                CPP = BuyingParametersWithoutPlanDto.CPP,
-                Currency = BuyingParametersWithoutPlanDto.Currency,
-                DeliveryImpressions = BuyingParametersWithoutPlanDto.DeliveryImpressions,
-                DeliveryRatingPoints = BuyingParametersWithoutPlanDto.DeliveryRatingPoints,
-                InflationFactor = BuyingParametersWithoutPlanDto.InflationFactor,
-                InventorySourcePercentages = BuyingParametersWithoutPlanDto.InventorySourcePercentages,
-                InventorySourceTypePercentages = BuyingParametersWithoutPlanDto.InventorySourceTypePercentages,
-                JobId = BuyingParametersWithoutPlanDto.JobId,
-                Margin = BuyingParametersWithoutPlanDto.Margin,
-                MarketGroup = BuyingParametersWithoutPlanDto.MarketGroup,
-                MaxCpm = BuyingParametersWithoutPlanDto.MaxCpm,
-                MinCpm = BuyingParametersWithoutPlanDto.MinCpm,
-                ProprietaryBlend = BuyingParametersWithoutPlanDto.ProprietaryBlend,
-                UnitCaps = BuyingParametersWithoutPlanDto.UnitCaps,
-                UnitCapsType = BuyingParametersWithoutPlanDto.UnitCapsType
+                AdjustedBudget = buyingParametersWithoutPlanDto.AdjustedBudget,
+                AdjustedCPM = buyingParametersWithoutPlanDto.AdjustedCPM,
+                Budget = buyingParametersWithoutPlanDto.Budget,
+                CompetitionFactor = buyingParametersWithoutPlanDto.CompetitionFactor,
+                CPM = buyingParametersWithoutPlanDto.CPM,
+                CPP = buyingParametersWithoutPlanDto.CPP,
+                Currency = buyingParametersWithoutPlanDto.Currency,
+                DeliveryImpressions = buyingParametersWithoutPlanDto.DeliveryImpressions,
+                DeliveryRatingPoints = buyingParametersWithoutPlanDto.DeliveryRatingPoints,
+                InflationFactor = buyingParametersWithoutPlanDto.InflationFactor,
+                InventorySourcePercentages = buyingParametersWithoutPlanDto.InventorySourcePercentages,
+                InventorySourceTypePercentages = buyingParametersWithoutPlanDto.InventorySourceTypePercentages,
+                JobId = buyingParametersWithoutPlanDto.JobId,
+                Margin = buyingParametersWithoutPlanDto.Margin,
+                MarketGroup = buyingParametersWithoutPlanDto.MarketGroup,
+                MaxCpm = buyingParametersWithoutPlanDto.MaxCpm,
+                MinCpm = buyingParametersWithoutPlanDto.MinCpm,
+                ProprietaryBlend = buyingParametersWithoutPlanDto.ProprietaryBlend,
+                UnitCaps = buyingParametersWithoutPlanDto.UnitCaps,
+                UnitCapsType = buyingParametersWithoutPlanDto.UnitCapsType
             };
         }
 
@@ -379,29 +342,29 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 ShareBookId = BuyingParametersWithoutPlanDto.ShareBookId,
                 TargetRatingPoints = BuyingParametersWithoutPlanDto.TargetRatingPoints,
                 WeeklyBreakdownWeeks = BuyingParametersWithoutPlanDto.WeeklyBreakdownWeeks,
-                BuyingParameters = _ConvertBuyingWihtoutPlanParametersToPlanBuyingParameters(BuyingParametersWithoutPlanDto),
+                BuyingParameters = _ConvertBuyingWithoutPlanParametersToPlanBuyingParameters(BuyingParametersWithoutPlanDto),
                 TargetImpressions = BuyingParametersWithoutPlanDto.DeliveryImpressions,
                 Budget = BuyingParametersWithoutPlanDto.Budget
             };
         }
 
-        public PlanBuyingJob QueueBuyingJob(PlanBuyingParametersDto PlanBuyingParametersDto
+        public PlanBuyingJob QueueBuyingJob(PlanBuyingParametersDto planBuyingParametersDto
             , DateTime currentDate, string username)
         {
             // lock the plan so that two requests for the same plan can not get in this area concurrently
-            var key = KeyHelper.GetPlanLockingKey(PlanBuyingParametersDto.PlanId.Value);
+            var key = KeyHelper.GetPlanLockingKey(planBuyingParametersDto.PlanId.Value);
             var lockObject = _LockingManagerApplicationService.GetNotUserBasedLockObjectForKey(key);
 
             lock (lockObject)
             {
-                if (IsBuyingModelRunningForPlan(PlanBuyingParametersDto.PlanId.Value))
+                if (IsBuyingModelRunningForPlan(planBuyingParametersDto.PlanId.Value))
                 {
                     throw new Exception("The buying model is already running for the plan");
                 }
 
-                var plan = _PlanRepository.GetPlan(PlanBuyingParametersDto.PlanId.Value);
+                var plan = _PlanRepository.GetPlan(planBuyingParametersDto.PlanId.Value);
 
-                ValidateAndApplyMargin(PlanBuyingParametersDto);
+                ValidateAndApplyMargin(planBuyingParametersDto);
 
                 var job = new PlanBuyingJob
                 {
@@ -411,13 +374,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 };
                 using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                 {
-                    PlanBuyingParametersDto.PlanVersionId = plan.VersionId;
-                    _SaveBuyingJobAndParameters(job, PlanBuyingParametersDto);
+                    planBuyingParametersDto.PlanVersionId = plan.VersionId;
+                   job.Id = _SaveBuyingJobAndParameters(job, planBuyingParametersDto);
                     _CampaignRepository.UpdateCampaignLastModified(plan.CampaignId, currentDate, username);
                     transaction.Complete();
                 }
 
-                job.HangfireJobId = _BackgroundJobClient.Enqueue<IPlanBuyingService>(x => x.RunBuyingJob(PlanBuyingParametersDto, job.Id, CancellationToken.None));
+                job.HangfireJobId = _BackgroundJobClient.Enqueue<IPlanBuyingService>(x => x.RunBuyingJob(planBuyingParametersDto, job.Id
+                    , CancellationToken.None));
 
                 _PlanBuyingRepository.UpdateJobHangfireId(job.Id, job.HangfireJobId);
 
@@ -425,12 +389,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        private int _SaveBuyingJobAndParameters(PlanBuyingJob job, PlanBuyingParametersDto PlanBuyingParametersDto)
+        private int _SaveBuyingJobAndParameters(PlanBuyingJob job, PlanBuyingParametersDto planBuyingParametersDto)
         {
             var jobId = _PlanBuyingRepository.AddPlanBuyingJob(job);
-            job.Id = jobId;
-            PlanBuyingParametersDto.JobId = jobId;
-            _PlanBuyingRepository.SavePlanBuyingParameters(PlanBuyingParametersDto);
+            planBuyingParametersDto.JobId = jobId;
+            _PlanBuyingRepository.SavePlanBuyingParameters(planBuyingParametersDto);
 
             return jobId;
         }
@@ -497,8 +460,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 UnitCaps = 1,
                 UnitCapType = UnitCapEnum.Per30Min,
-                InventorySourcePercentages = PlanBuyingInventorySourceSortEngine.GetSortedInventorySourcePercents(defaultPercent, allSources),
-                InventorySourceTypePercentages = PlanBuyingInventorySourceSortEngine.GetSortedInventorySourceTypePercents(defaultPercent),
+                InventorySourcePercentages = PlanInventorySourceSortEngine.GetSortedInventorySourcePercents(defaultPercent, allSources),
+                InventorySourceTypePercentages = PlanInventorySourceSortEngine.GetSortedInventorySourceTypePercents(defaultPercent),
                 Margin = defaultMargin,
                 MarketGroup = MarketGroupEnum.Top100
             };
@@ -895,7 +858,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 token.ThrowIfCancellationRequested();
 
                 diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_INVENTORY_SOURCE_ESTIMATES);
-                var proprietaryEstimates = _CalculateProprietaryInventorySourceEstimates(plan, planBuyingParametersDto, programInventoryParameters, diagnostic);
+                var proprietaryEstimates = _CalculateProprietaryInventorySourceEstimates(plan, programInventoryParameters, diagnostic);
                 diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_INVENTORY_SOURCE_ESTIMATES);
 
                 token.ThrowIfCancellationRequested();
@@ -1247,7 +1210,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         public void RunBuyingWithoutPlanJob(BuyingParametersWithoutPlanDto BuyingParametersWithoutPlanDto, int jobId, CancellationToken token)
         {
-            var buyingParameters = _ConvertBuyingWihtoutPlanParametersToPlanBuyingParameters(BuyingParametersWithoutPlanDto);
+            var buyingParameters = _ConvertBuyingWithoutPlanParametersToPlanBuyingParameters(BuyingParametersWithoutPlanDto);
             var plan = _ConvertBuyingWithoutPlanParametersToPlanDto(BuyingParametersWithoutPlanDto);
 
             _RunBuyingJob(buyingParameters, plan, jobId, token);
@@ -1501,21 +1464,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private List<PlanBuyingEstimate> _CalculateProprietaryInventorySourceEstimates(
             PlanDto plan,
-            PlanBuyingParametersDto planBuyingParametersDto,
             ProgramInventoryOptionalParametersDto parameters,
             PlanBuyingJobDiagnostic diagnostic)
         {
             var result = new List<PlanBuyingEstimate>();
 
-            result.AddRange(_GetBuyingEstimatesBasedOnInventorySourcePreferences(plan, planBuyingParametersDto, parameters, diagnostic));
-            result.AddRange(_GetBuyingEstimatesBasedOnInventorySourceTypePreferences(plan, planBuyingParametersDto, parameters, diagnostic));
+            result.AddRange(_GetBuyingEstimatesBasedOnInventorySourcePreferences(plan, parameters, diagnostic));
+            result.AddRange(_GetBuyingEstimatesBasedOnInventorySourceTypePreferences(plan, parameters, diagnostic));
 
             return result;
         }
 
         private List<PlanBuyingEstimate> _GetBuyingEstimatesBasedOnInventorySourcePreferences(
             PlanDto plan,
-            PlanBuyingParametersDto planBuyingParametersDto,
             ProgramInventoryOptionalParametersDto parameters,
             PlanBuyingJobDiagnostic diagnostic)
         {
@@ -1527,7 +1488,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 InventorySourceTypeEnum.ProprietaryOAndO
             });
 
-            var inventorySourcePreferences = planBuyingParametersDto.InventorySourcePercentages
+            var inventorySourcePreferences = plan.BuyingParameters.InventorySourcePercentages
                 .Where(x => x.Percentage > 0 && supportedInventorySourceIds.Contains(x.Id))
                 .ToList();
 
@@ -1557,7 +1518,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private List<PlanBuyingEstimate> _GetBuyingEstimatesBasedOnInventorySourceTypePreferences(
             PlanDto plan,
-            PlanBuyingParametersDto planBuyingParametersDto,
             ProgramInventoryOptionalParametersDto parameters,
             PlanBuyingJobDiagnostic diagnostic)
         {
@@ -1568,7 +1528,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 InventorySourceTypeEnum.Diginet
             };
 
-            var inventorySourceTypePreferences = planBuyingParametersDto.InventorySourceTypePercentages
+            var inventorySourceTypePreferences = plan.BuyingParameters.InventorySourceTypePercentages
                 .Where(x => x.Percentage > 0 && supportedInventorySourceTypes.Contains((InventorySourceTypeEnum)x.Id))
                 .ToList();
 
@@ -1958,8 +1918,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        public PlanBuyingApiRequestDto GetBuyingApiRequestPrograms(int planId, PlanBuyingParametersDto planBuyingParametersDto
-            ,  BuyingInventoryGetRequestParametersDto requestParameters)
+        public PlanBuyingApiRequestDto GetBuyingApiRequestPrograms(int planId,  BuyingInventoryGetRequestParametersDto requestParameters)
         {
             var diagnostic = new PlanBuyingJobDiagnostic();
             var buyingParams = new ProgramInventoryOptionalParametersDto
@@ -1983,7 +1942,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 diagnostic,
                 isProprietary: !requestParameters.InventorySourceIds.IsEmpty());
             var groupedInventory = _GroupInventory(inventory);
-            var proprietaryEstimates = _CalculateProprietaryInventorySourceEstimates(plan, planBuyingParametersDto, buyingParams, diagnostic);
+            var proprietaryEstimates = _CalculateProprietaryInventorySourceEstimates(plan, buyingParams, diagnostic);
 
             var buyingApiRequest = new PlanBuyingApiRequestDto
             {
@@ -1994,8 +1953,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return buyingApiRequest;
         }
 
-        public PlanBuyingApiRequestDto_v3 GetBuyingApiRequestPrograms_v3(int planId, PlanBuyingParametersDto planBuyingParametersDto
-            , BuyingInventoryGetRequestParametersDto requestParameters)
+        public PlanBuyingApiRequestDto_v3 GetBuyingApiRequestPrograms_v3(int planId, BuyingInventoryGetRequestParametersDto requestParameters)
         {
             var diagnostic = new PlanBuyingJobDiagnostic();
             var buyingParams = new ProgramInventoryOptionalParametersDto
@@ -2019,7 +1977,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 diagnostic,
                 isProprietary: !requestParameters.InventorySourceIds.IsEmpty());
             var groupedInventory = _GroupInventory(inventory);
-            var proprietaryEstimates = _CalculateProprietaryInventorySourceEstimates(plan, planBuyingParametersDto, buyingParams, diagnostic);
+            var proprietaryEstimates = _CalculateProprietaryInventorySourceEstimates(plan, buyingParams, diagnostic);
 
             var buyingApiRequest = new PlanBuyingApiRequestDto_v3
             {

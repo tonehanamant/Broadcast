@@ -23,6 +23,7 @@ using Tam.Maestro.Data.Entities;
 using Common.Services;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
+using Services.Broadcast.Entities.Plan.Buying;
 
 namespace Services.Broadcast.Repositories
 {
@@ -346,6 +347,10 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(y => y.plan_version_pricing_parameters_inventory_source_percentages)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(y => y.plan_version_pricing_parameters_inventory_source_type_percentages)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(y => y.plan_version_pricing_parameters_inventory_source_percentages.Select(r => r.inventory_sources))))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_buying_parameters))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_buying_parameters.Select(y => y.plan_version_buying_parameters_inventory_source_percentages)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_buying_parameters.Select(y => y.plan_version_buying_parameters_inventory_source_type_percentages)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_buying_parameters.Select(y => y.plan_version_buying_parameters_inventory_source_percentages.Select(r => r.inventory_sources))))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_audience_daypart_vpvh))
                         .Single(s => s.id == planId, "Invalid plan id.");
                     return _MapToDto(entity, markets, versionId);
@@ -557,13 +562,64 @@ namespace Services.Broadcast.Repositories
                 VersionNumber = latestPlanVersion.version_number,
                 VersionId = latestPlanVersion.id,
                 IsAduEnabled = latestPlanVersion.is_adu_enabled,
-                ImpressionsPerUnit = latestPlanVersion.impressions_per_unit ?? 0
+                ImpressionsPerUnit = latestPlanVersion.impressions_per_unit ?? 0,
+                BuyingParameters = _MapBuyingParameters(latestPlanVersion.plan_version_buying_parameters.OrderByDescending(p => p.id).FirstOrDefault()),
             };
 
             if (dto.PricingParameters != null)
                 dto.JobId = dto.PricingParameters.JobId;
 
             return dto;
+        }
+
+        private PlanBuyingParametersDto _MapBuyingParameters(plan_version_buying_parameters arg)
+        {
+            if (arg == null)
+                return null;
+
+            var sortedSourcePercents = PlanInventorySourceSortEngine.SortInventorySourcePercents(
+                arg.plan_version_buying_parameters_inventory_source_percentages.Select(i =>
+                new PlanInventorySourceDto
+                {
+                    Id = i.inventory_source_id,
+                    Name = i.inventory_sources.name,
+                    Percentage = i.percentage
+                }).ToList());
+
+            var sortedSourceTypePercents = PlanInventorySourceSortEngine.SortInventorySourceTypePercents(
+                arg.plan_version_buying_parameters_inventory_source_type_percentages.Select(i =>
+                    new PlanInventorySourceTypeDto
+                    {
+                        Id = i.inventory_source_type,
+                        Name = ((InventorySourceTypeEnum)i.inventory_source_type).GetDescriptionAttribute(),
+                        Percentage = i.percentage
+                }).ToList());
+
+            return new PlanBuyingParametersDto
+            {
+                PlanId = arg.plan_versions.plan_id,
+                Budget = arg.budget_goal,
+                CompetitionFactor = arg.competition_factor,
+                CPM = arg.cpm_goal,
+                DeliveryImpressions = arg.impressions_goal,
+                InflationFactor = arg.inflation_factor,
+                MaxCpm = arg.max_cpm,
+                MinCpm = arg.min_cpm,
+                ProprietaryBlend = arg.proprietary_blend,
+                CPP = arg.cpp,
+                Currency = (PlanCurrenciesEnum)arg.currency,
+                DeliveryRatingPoints = arg.rating_points,
+                InventorySourcePercentages = sortedSourcePercents,
+                InventorySourceTypePercentages = sortedSourceTypePercents,
+                UnitCaps = arg.unit_caps,
+                UnitCapsType = (UnitCapEnum)arg.unit_caps_type,
+                Margin = arg.margin,
+                JobId = arg.plan_version_buying_job_id,
+                PlanVersionId = arg.plan_version_id,
+                AdjustedCPM = arg.cpm_adjusted,
+                AdjustedBudget = arg.budget_adjusted,
+                MarketGroup = (MarketGroupEnum)arg.market_group
+            };
         }
 
         private CreativeLength _MapCreativeLengthsToDto(plan_version_creative_lengths x)
@@ -580,18 +636,18 @@ namespace Services.Broadcast.Repositories
             if (arg == null)
                 return null;
 
-            var sortedSourcePercents = PlanPricingInventorySourceSortEngine.SortInventorySourcePercents(
+            var sortedSourcePercents = PlanInventorySourceSortEngine.SortInventorySourcePercents(
                 arg.plan_version_pricing_parameters_inventory_source_percentages.Select(i =>
-                new PlanPricingInventorySourceDto
+                new PlanInventorySourceDto
                 {
                     Id = i.inventory_source_id,
                     Name = i.inventory_sources.name,
                     Percentage = i.percentage
                 }).ToList());
 
-            var sortedSourceTypePercents = PlanPricingInventorySourceSortEngine.SortInventorySourceTypePercents(
+            var sortedSourceTypePercents = PlanInventorySourceSortEngine.SortInventorySourceTypePercents(
                 arg.plan_version_pricing_parameters_inventory_source_type_percentages.Select(i =>
-                new PlanPricingInventorySourceTypeDto
+                new PlanInventorySourceTypeDto
                 {
                     Id = i.inventory_source_type,
                     Name = ((InventorySourceTypeEnum)i.inventory_source_type).GetDescriptionAttribute(),
@@ -1138,14 +1194,14 @@ namespace Services.Broadcast.Repositories
                     UnitCaps = e.unit_caps,
                     UnitCapType = (UnitCapEnum)e.unit_caps_type,
                     InventorySourcePercentages = e.plan_version_pricing_parameters_inventory_source_percentages.Select(
-                        s => new PlanPricingInventorySourceDto
+                        s => new PlanInventorySourceDto
                         {
                             Id = s.inventory_source_id,
                             Name = s.inventory_sources.name,
                             Percentage = s.percentage
                         }).ToList(),
                     InventorySourceTypePercentages = e.plan_version_pricing_parameters_inventory_source_type_percentages.Select(
-                        s => new PlanPricingInventorySourceTypeDto
+                        s => new PlanInventorySourceTypeDto
                         {
                             Id = s.inventory_source_type,
                             Name = ((InventorySourceTypeEnum)s.inventory_source_type).GetDescriptionAttribute(),
@@ -1183,11 +1239,11 @@ namespace Services.Broadcast.Repositories
             {
                 var job = context.plan_version_pricing_job.Single(x => x.id == jobId);
 
-                if(job != null)
+                if (job != null)
                     job.plan_version_id = planVersionId;
 
                 var parameters = context.plan_version_pricing_parameters.Single(x => x.plan_version_pricing_job_id == jobId);
-                if(parameters != null)
+                if (parameters != null)
                     parameters.plan_version_id = planVersionId;
 
                 context.SaveChanges();
@@ -1360,8 +1416,8 @@ namespace Services.Broadcast.Repositories
                 CPP = entity.cpp,
                 DeliveryRatingPoints = entity.rating_points,
                 Margin = entity.margin,
-                InventorySourcePercentages = entity.plan_version_pricing_parameters_inventory_source_percentages.Select(_MapPlanPricingInventorySourceDto).ToList(),
-                InventorySourceTypePercentages = entity.plan_version_pricing_parameters_inventory_source_type_percentages.Select(_MapPlanPricingInventorySourceTypeDto).ToList(),
+                InventorySourcePercentages = entity.plan_version_pricing_parameters_inventory_source_percentages.Select(_MapPlanInventorySourceDto).ToList(),
+                InventorySourceTypePercentages = entity.plan_version_pricing_parameters_inventory_source_type_percentages.Select(_MapPlanInventorySourceTypeDto).ToList(),
                 JobId = entity.plan_version_pricing_job_id,
                 PlanVersionId = entity.plan_version_id,
                 AdjustedBudget = entity.budget_adjusted,
@@ -1371,10 +1427,10 @@ namespace Services.Broadcast.Repositories
             return dto;
         }
 
-        private PlanPricingInventorySourceDto _MapPlanPricingInventorySourceDto(
+        private PlanInventorySourceDto _MapPlanInventorySourceDto(
             plan_version_pricing_parameters_inventory_source_percentages entity)
         {
-            var dto = new PlanPricingInventorySourceDto
+            var dto = new PlanInventorySourceDto
             {
                 Id = entity.inventory_source_id,
                 Name = entity.inventory_sources.name,
@@ -1384,10 +1440,10 @@ namespace Services.Broadcast.Repositories
             return dto;
         }
 
-        private PlanPricingInventorySourceTypeDto _MapPlanPricingInventorySourceTypeDto(
+        private PlanInventorySourceTypeDto _MapPlanInventorySourceTypeDto(
             plan_version_pricing_parameters_inventory_source_type_percentages entity)
         {
-            var dto = new PlanPricingInventorySourceTypeDto
+            var dto = new PlanInventorySourceTypeDto
             {
                 Id = entity.inventory_source_type,
                 Name = ((InventorySourceTypeEnum)entity.inventory_source_type).ToString(),
@@ -1560,7 +1616,7 @@ namespace Services.Broadcast.Repositories
                     .Where(x => x.plan_version_pricing_job_id == jobId)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
-                
+
                 if (result == null)
                     return null;
 
@@ -1657,7 +1713,7 @@ namespace Services.Broadcast.Repositories
                     .Where(x => x.plan_version_pricing_job_id == jobId)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
-                
+
                 if (entity == null)
                     return null;
 
@@ -2027,19 +2083,19 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(context =>
             {
                 var job = (from j in context.plan_version_pricing_job
-                            where j.plan_version_id == oldPlanVersionId
-                            orderby j.id descending
-                            select j).FirstOrDefault();
-                if(job != null)
+                           where j.plan_version_id == oldPlanVersionId
+                           orderby j.id descending
+                           select j).FirstOrDefault();
+                if (job != null)
                 {
                     job.plan_version_id = versionId;
                     context.SaveChanges();
                 }
 
                 var parameter = (from p in context.plan_version_pricing_parameters
-                           where p.plan_version_id == oldPlanVersionId
-                           orderby p.id descending
-                           select p).FirstOrDefault();
+                                 where p.plan_version_id == oldPlanVersionId
+                                 orderby p.id descending
+                                 select p).FirstOrDefault();
                 if (parameter != null)
                 {
                     parameter.plan_version_id = versionId;

@@ -262,6 +262,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPricingApiClient, PricingApiClient>();
             unityContainer.RegisterType<IPricingRequestLogClient, PricingRequestLogClientAmazonS3>();
             unityContainer.RegisterType<IImpressionsCalculationEngine, ImpressionsCalculationEngine>();
+            unityContainer.RegisterType<ILogToAmazonS3, LogToAmazonS3>();
 
             unityContainer.RegisterType<IPlanPricingInventoryEngine, PlanPricingInventoryEngine>();
             unityContainer.RegisterType<IPlanPricingInventoryQuarterCalculatorEngine, PlanPricingInventoryQuarterCalculatorEngine>();

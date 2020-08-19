@@ -1132,20 +1132,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 UnitCaps = 10,
                 UnitCapsType = UnitCapEnum.PerDay,
                 MarketGroup = MarketGroupEnum.All,
-                InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                InventorySourcePercentages = new List<PlanInventorySourceDto>
                 {
-                    new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
-                    new PlanPricingInventorySourceDto{Id = 5, Percentage = 13},
-                    new PlanPricingInventorySourceDto{Id = 6, Percentage = 14},
-                    new PlanPricingInventorySourceDto{Id = 7, Percentage = 15},
-                    new PlanPricingInventorySourceDto{Id = 10, Percentage = 16},
-                    new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
-                    new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
+                    new PlanInventorySourceDto{Id = 3, Percentage = 12},
+                    new PlanInventorySourceDto{Id = 5, Percentage = 13},
+                    new PlanInventorySourceDto{Id = 6, Percentage = 14},
+                    new PlanInventorySourceDto{Id = 7, Percentage = 15},
+                    new PlanInventorySourceDto{Id = 10, Percentage = 16},
+                    new PlanInventorySourceDto{Id = 11, Percentage = 17},
+                    new PlanInventorySourceDto{Id = 12, Percentage = 8},
                 },
-                InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>
                 {
-                    new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
-                    new PlanPricingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
+                    new PlanInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
+                    new PlanInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
                 }
             };
         }
@@ -6228,19 +6228,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 CPP = 1.1m,
                 DeliveryRatingPoints = 1.3,
                 Margin = 14,
-                InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                InventorySourcePercentages = new List<PlanInventorySourceDto>
                 {
-                    new PlanPricingInventorySourceDto{ Id = 3, Percentage = 12 },
-                    new PlanPricingInventorySourceDto{ Id = 5, Percentage = 13 },
-                    new PlanPricingInventorySourceDto{ Id = 6, Percentage = 14 },
-                    new PlanPricingInventorySourceDto{ Id = 7, Percentage = 15 },
-                    new PlanPricingInventorySourceDto{ Id = 10, Percentage = 16 },
-                    new PlanPricingInventorySourceDto{ Id = 11, Percentage = 17 },
-                    new PlanPricingInventorySourceDto{ Id = 12, Percentage = 8 },
+                    new PlanInventorySourceDto{ Id = 3, Percentage = 12 },
+                    new PlanInventorySourceDto{ Id = 5, Percentage = 13 },
+                    new PlanInventorySourceDto{ Id = 6, Percentage = 14 },
+                    new PlanInventorySourceDto{ Id = 7, Percentage = 15 },
+                    new PlanInventorySourceDto{ Id = 10, Percentage = 16 },
+                    new PlanInventorySourceDto{ Id = 11, Percentage = 17 },
+                    new PlanInventorySourceDto{ Id = 12, Percentage = 8 },
                 },
-                InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>
                 {
-                    new PlanPricingInventorySourceTypeDto { Id = 5, Percentage = 3 }
+                    new PlanInventorySourceTypeDto { Id = 5, Percentage = 3 }
                 }
             };
 
@@ -6360,19 +6360,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 DeliveryRatingPoints = 1.3,
                 Margin = 14,
                 MarketGroup = MarketGroupEnum.Top100,
-                InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                InventorySourcePercentages = new List<PlanInventorySourceDto>
                 {
-                    new PlanPricingInventorySourceDto{ Id = 3, Percentage = 12 },
-                    new PlanPricingInventorySourceDto{ Id = 5, Percentage = 13 },
-                    new PlanPricingInventorySourceDto{ Id = 6, Percentage = 14 },
-                    new PlanPricingInventorySourceDto{ Id = 7, Percentage = 15 },
-                    new PlanPricingInventorySourceDto{ Id = 10, Percentage = 16 },
-                    new PlanPricingInventorySourceDto{ Id = 11, Percentage = 17 },
-                    new PlanPricingInventorySourceDto{ Id = 12, Percentage = 8 },
+                    new PlanInventorySourceDto{ Id = 3, Percentage = 12 },
+                    new PlanInventorySourceDto{ Id = 5, Percentage = 13 },
+                    new PlanInventorySourceDto{ Id = 6, Percentage = 14 },
+                    new PlanInventorySourceDto{ Id = 7, Percentage = 15 },
+                    new PlanInventorySourceDto{ Id = 10, Percentage = 16 },
+                    new PlanInventorySourceDto{ Id = 11, Percentage = 17 },
+                    new PlanInventorySourceDto{ Id = 12, Percentage = 8 },
                 },
-                InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>
                 {
-                    new PlanPricingInventorySourceTypeDto { Id = 5, Percentage = 3 }
+                    new PlanInventorySourceTypeDto { Id = 5, Percentage = 3 }
                 }
             };
 
@@ -6500,19 +6500,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 DeliveryRatingPoints = 1.3,
                 Margin = testMargin,
                 MarketGroup = MarketGroupEnum.Top100,
-                InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                InventorySourcePercentages = new List<PlanInventorySourceDto>
                 {
-                    new PlanPricingInventorySourceDto{ Id = 3, Percentage = 12 },
-                    new PlanPricingInventorySourceDto{ Id = 5, Percentage = 13 },
-                    new PlanPricingInventorySourceDto{ Id = 6, Percentage = 14 },
-                    new PlanPricingInventorySourceDto{ Id = 7, Percentage = 15 },
-                    new PlanPricingInventorySourceDto{ Id = 10, Percentage = 16 },
-                    new PlanPricingInventorySourceDto{ Id = 11, Percentage = 17 },
-                    new PlanPricingInventorySourceDto{ Id = 12, Percentage = 8 },
+                    new PlanInventorySourceDto{ Id = 3, Percentage = 12 },
+                    new PlanInventorySourceDto{ Id = 5, Percentage = 13 },
+                    new PlanInventorySourceDto{ Id = 6, Percentage = 14 },
+                    new PlanInventorySourceDto{ Id = 7, Percentage = 15 },
+                    new PlanInventorySourceDto{ Id = 10, Percentage = 16 },
+                    new PlanInventorySourceDto{ Id = 11, Percentage = 17 },
+                    new PlanInventorySourceDto{ Id = 12, Percentage = 8 },
                 },
-                InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>
                 {
-                    new PlanPricingInventorySourceTypeDto { Id = 5, Percentage = 3 }
+                    new PlanInventorySourceTypeDto { Id = 5, Percentage = 3 }
                 }
             };
 
@@ -6728,19 +6728,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 DeliveryRatingPoints = 1.3,
                 Margin = 10,
                 MarketGroup = MarketGroupEnum.Top100,
-                InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                InventorySourcePercentages = new List<PlanInventorySourceDto>
                 {
-                    new PlanPricingInventorySourceDto{ Id = 3, Percentage = 12 },
-                    new PlanPricingInventorySourceDto{ Id = 5, Percentage = 13 },
-                    new PlanPricingInventorySourceDto{ Id = 6, Percentage = 14 },
-                    new PlanPricingInventorySourceDto{ Id = 7, Percentage = 15 },
-                    new PlanPricingInventorySourceDto{ Id = 10, Percentage = 16 },
-                    new PlanPricingInventorySourceDto{ Id = 11, Percentage = 17 },
-                    new PlanPricingInventorySourceDto{ Id = 12, Percentage = 8 },
+                    new PlanInventorySourceDto{ Id = 3, Percentage = 12 },
+                    new PlanInventorySourceDto{ Id = 5, Percentage = 13 },
+                    new PlanInventorySourceDto{ Id = 6, Percentage = 14 },
+                    new PlanInventorySourceDto{ Id = 7, Percentage = 15 },
+                    new PlanInventorySourceDto{ Id = 10, Percentage = 16 },
+                    new PlanInventorySourceDto{ Id = 11, Percentage = 17 },
+                    new PlanInventorySourceDto{ Id = 12, Percentage = 8 },
                 },
-                InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>
                 {
-                    new PlanPricingInventorySourceTypeDto { Id = 5, Percentage = 3 }
+                    new PlanInventorySourceTypeDto { Id = 5, Percentage = 3 }
                 },
                 AvailableMarkets = new List<PlanAvailableMarketDto>
                     {
@@ -6828,19 +6828,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 CPP = 1.1m,
                 DeliveryRatingPoints = 1.3,
                 Margin = 14,
-                InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                InventorySourcePercentages = new List<PlanInventorySourceDto>
                 {
-                    new PlanPricingInventorySourceDto{ Id = 3, Percentage = 12 },
-                    new PlanPricingInventorySourceDto{ Id = 5, Percentage = 13 },
-                    new PlanPricingInventorySourceDto{ Id = 6, Percentage = 14 },
-                    new PlanPricingInventorySourceDto{ Id = 7, Percentage = 15 },
-                    new PlanPricingInventorySourceDto{ Id = 10, Percentage = 16 },
-                    new PlanPricingInventorySourceDto{ Id = 11, Percentage = 17 },
-                    new PlanPricingInventorySourceDto{ Id = 12, Percentage = 8 },
+                    new PlanInventorySourceDto{ Id = 3, Percentage = 12 },
+                    new PlanInventorySourceDto{ Id = 5, Percentage = 13 },
+                    new PlanInventorySourceDto{ Id = 6, Percentage = 14 },
+                    new PlanInventorySourceDto{ Id = 7, Percentage = 15 },
+                    new PlanInventorySourceDto{ Id = 10, Percentage = 16 },
+                    new PlanInventorySourceDto{ Id = 11, Percentage = 17 },
+                    new PlanInventorySourceDto{ Id = 12, Percentage = 8 },
                 },
-                InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>
                 {
-                    new PlanPricingInventorySourceTypeDto { Id = 5, Percentage = 3 }
+                    new PlanInventorySourceTypeDto { Id = 5, Percentage = 3 }
                 }
             };
 
@@ -6966,19 +6966,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 DeliveryRatingPoints = 1.3,
                 Margin = 14,
                 MarketGroup = MarketGroupEnum.Top100,
-                InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                InventorySourcePercentages = new List<PlanInventorySourceDto>
                 {
-                    new PlanPricingInventorySourceDto{ Id = 3, Percentage = 12 },
-                    new PlanPricingInventorySourceDto{ Id = 5, Percentage = 13 },
-                    new PlanPricingInventorySourceDto{ Id = 6, Percentage = 14 },
-                    new PlanPricingInventorySourceDto{ Id = 7, Percentage = 15 },
-                    new PlanPricingInventorySourceDto{ Id = 10, Percentage = 16 },
-                    new PlanPricingInventorySourceDto{ Id = 11, Percentage = 17 },
-                    new PlanPricingInventorySourceDto{ Id = 12, Percentage = 8 },
+                    new PlanInventorySourceDto{ Id = 3, Percentage = 12 },
+                    new PlanInventorySourceDto{ Id = 5, Percentage = 13 },
+                    new PlanInventorySourceDto{ Id = 6, Percentage = 14 },
+                    new PlanInventorySourceDto{ Id = 7, Percentage = 15 },
+                    new PlanInventorySourceDto{ Id = 10, Percentage = 16 },
+                    new PlanInventorySourceDto{ Id = 11, Percentage = 17 },
+                    new PlanInventorySourceDto{ Id = 12, Percentage = 8 },
                 },
-                InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>
+                InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>
                 {
-                    new PlanPricingInventorySourceTypeDto { Id = 5, Percentage = 3 }
+                    new PlanInventorySourceTypeDto { Id = 5, Percentage = 3 }
                 }
             };
 

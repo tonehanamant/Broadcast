@@ -367,10 +367,10 @@
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsRepairEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingBandCalculationEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingMarketResultsEngine.cs" />
+    <Compile Include="BusinessEngines\PlanInventorySourceSortEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricingBandCalculationEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingInventoryEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingInventoryQuarterCalculatorEngine.cs" />
-    <Compile Include="BusinessEngines\PlanBuying\PlanBuyingInventorySourceSortEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingStationCalculationEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricingStationCalculationEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingUnitCapImpressionsCalculationEngine.cs" />
@@ -387,6 +387,7 @@
     <Compile Include="Clients\PlanBuyingApiClient.cs" />
     <Compile Include="Clients\PlanBuyingRequestLogClient.cs" />
     <Compile Include="Clients\PricingRequestLogClient.cs" />
+    <Compile Include="Clients\LogToAmazonS3.cs" />
     <Compile Include="Converters\VpvhFileImporter.cs" />
     <Compile Include="Entities\BroadcastEmployeeDto.cs" />
     <Compile Include="Entities\CreativeLength.cs" />
@@ -418,7 +419,6 @@
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsProcessorFactory.cs" />
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsRequestPackage.cs" />
     <Compile Include="BusinessEngines\PlanPricingInventoryEngine.cs" />
-    <Compile Include="BusinessEngines\PlanPricingInventorySourceSortEngine.cs" />
     <Compile Include="Clients\PricingApiClient.cs" />
     <Compile Include="Cache\GenreCache.cs" />
     <Compile Include="Clients\ProgramGuideApiClient.cs" />
@@ -520,6 +520,8 @@
     <Compile Include="Entities\Plan\Buying\BuyingInventoryGetRequestParametersDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingEstimate.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\DaypartWeighting.cs" />
+    <Compile Include="Entities\Plan\CommonPricingEntities\PlanInventorySourceDto.cs" />
+    <Compile Include="Entities\Plan\CommonPricingEntities\PlanInventorySourceTypeDto.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\ShareOfVoice.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\SpotCost_v3.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\SpotFrequency.cs" />
@@ -544,8 +546,6 @@
     <Compile Include="Entities\Plan\Buying\PlanBuyingDefaults.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingInventoryGroup.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingInventoryProgram.cs" />
-    <Compile Include="Entities\Plan\Buying\PlanBuyingInventorySourceDto.cs" />
-    <Compile Include="Entities\Plan\Buying\PlanBuyingInventorySourceTypeDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingJob.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingJobDiagnostic.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingManifestWithManifestDaypart.cs" />
@@ -597,8 +597,6 @@
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiResultDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingDefaults.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingInventoryProgram.cs" />
-    <Compile Include="Entities\Plan\Pricing\PlanPricingInventorySourceDto.cs" />
-    <Compile Include="Entities\Plan\Pricing\PlanPricingInventorySourceTypeDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingJobDiagnostic.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingJob.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingMarketDto.cs" />

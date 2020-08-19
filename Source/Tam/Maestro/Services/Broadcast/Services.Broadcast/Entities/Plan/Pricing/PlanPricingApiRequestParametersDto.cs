@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.PlanPricing;
 using System.Collections.Generic;
 
@@ -9,8 +10,8 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public PlanPricingApiRequestParametersDto()
         {
             Markets = new List<PlanPricingMarketDto>();
-            InventorySourcePercentages = new List<PlanPricingInventorySourceDto>();
-            InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>();
+            InventorySourcePercentages = new List<PlanInventorySourceDto>();
+            InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>();
         }
 
         public int PlanId { get; set; }
@@ -28,7 +29,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public double CoverageGoalPercent { get; set; }
         public double? Margin { get; set; }
         public int? JobId { get; set; }
-        public List<PlanPricingInventorySourceDto> InventorySourcePercentages { get; set; }
-        public List<PlanPricingInventorySourceTypeDto> InventorySourceTypePercentages { get; set; }
+        public List<PlanInventorySourceDto> InventorySourcePercentages { get; set; }
+        public List<PlanInventorySourceTypeDto> InventorySourceTypePercentages { get; set; }
     }
 }

@@ -232,14 +232,14 @@ namespace Services.Broadcast.Repositories
                     UnitCaps = e.unit_caps,
                     UnitCapType = (UnitCapEnum)e.unit_caps_type,
                     InventorySourcePercentages = e.plan_version_buying_parameters_inventory_source_percentages.Select(
-                        s => new PlanBuyingInventorySourceDto
+                        s => new PlanInventorySourceDto
                         {
                             Id = s.inventory_source_id,
                             Name = s.inventory_sources.name,
                             Percentage = s.percentage
                         }).ToList(),
                     InventorySourceTypePercentages = e.plan_version_buying_parameters_inventory_source_type_percentages.Select(
-                        s => new PlanBuyingInventorySourceTypeDto
+                        s => new PlanInventorySourceTypeDto
                         {
                             Id = s.inventory_source_type,
                             Name = ((InventorySourceTypeEnum)s.inventory_source_type).GetDescriptionAttribute(),
@@ -406,8 +406,8 @@ namespace Services.Broadcast.Repositories
                 CPP = entity.cpp,
                 DeliveryRatingPoints = entity.rating_points,
                 Margin = entity.margin,
-                InventorySourcePercentages = entity.plan_version_buying_parameters_inventory_source_percentages.Select(_MapPlanBuyingInventorySourceDto).ToList(),
-                InventorySourceTypePercentages = entity.plan_version_buying_parameters_inventory_source_type_percentages.Select(_MapPlanBuyingInventorySourceTypeDto).ToList(),
+                InventorySourcePercentages = entity.plan_version_buying_parameters_inventory_source_percentages.Select(_MapPlanInventorySourceDto).ToList(),
+                InventorySourceTypePercentages = entity.plan_version_buying_parameters_inventory_source_type_percentages.Select(_MapPlanInventorySourceTypeDto).ToList(),
                 JobId = entity.plan_version_buying_job_id,
                 PlanVersionId = entity.plan_version_id,
                 AdjustedBudget = entity.budget_adjusted,
@@ -417,10 +417,10 @@ namespace Services.Broadcast.Repositories
             return dto;
         }
 
-        private PlanBuyingInventorySourceDto _MapPlanBuyingInventorySourceDto(
+        private PlanInventorySourceDto _MapPlanInventorySourceDto(
             plan_version_buying_parameters_inventory_source_percentages entity)
         {
-            var dto = new PlanBuyingInventorySourceDto
+            var dto = new PlanInventorySourceDto
             {
                 Id = entity.inventory_source_id,
                 Name = entity.inventory_sources.name,
@@ -430,10 +430,10 @@ namespace Services.Broadcast.Repositories
             return dto;
         }
 
-        private PlanBuyingInventorySourceTypeDto _MapPlanBuyingInventorySourceTypeDto(
+        private PlanInventorySourceTypeDto _MapPlanInventorySourceTypeDto(
             plan_version_buying_parameters_inventory_source_type_percentages entity)
         {
-            var dto = new PlanBuyingInventorySourceTypeDto
+            var dto = new PlanInventorySourceTypeDto
             {
                 Id = entity.inventory_source_type,
                 Name = ((InventorySourceTypeEnum)entity.inventory_source_type).ToString(),

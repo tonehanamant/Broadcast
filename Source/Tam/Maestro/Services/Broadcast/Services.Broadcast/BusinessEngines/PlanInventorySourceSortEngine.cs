@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Services.Broadcast.Entities;
+﻿using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Helpers;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.Broadcast.BusinessEngines
 {
-    public static class PlanPricingInventorySourceSortEngine
+    public static class PlanInventorySourceSortEngine
     {
         private class OrderedString<T>
         {
@@ -16,7 +16,7 @@ namespace Services.Broadcast.BusinessEngines
         }
 
         // ids are different between environments so must go off the name
-        private static readonly OrderedString<string>[] _OrderedPricingSources =
+        private static readonly OrderedString<string>[] _OrderedSources =
         {
             new OrderedString<string> { OrderBy = 1, OrderedValue = "ABC O&O"},
             new OrderedString<string> { OrderBy = 2, OrderedValue = "CNN"},
@@ -27,16 +27,16 @@ namespace Services.Broadcast.BusinessEngines
             new OrderedString<string> { OrderBy = 7, OrderedValue = "TVB"}
         };
 
-        private static readonly OrderedString<InventorySourceTypeEnum>[] _OrderedPricingSourceTypes =
+        private static readonly OrderedString<InventorySourceTypeEnum>[] _OrderedSourceTypes =
         {
             new OrderedString<InventorySourceTypeEnum> { OrderBy = 1, OrderedValue = InventorySourceTypeEnum.Syndication},
             new OrderedString<InventorySourceTypeEnum> { OrderBy = 2, OrderedValue = InventorySourceTypeEnum.Diginet},
         };
 
-        public static List<PlanPricingInventorySourceDto> GetSortedInventorySourcePercents(int defaultPercent, List<InventorySource> allSources)
+        public static List<PlanInventorySourceDto> GetSortedInventorySourcePercents(int defaultPercent, List<InventorySource> allSources)
         {
-            return _OrderedPricingSources.OrderBy(sn => sn.OrderBy).Select(sn =>
-                new PlanPricingInventorySourceDto
+            return PlanInventorySourceSortEngine._OrderedSources.OrderBy(sn => sn.OrderBy).Select(sn =>
+                new PlanInventorySourceDto
                 {
                     Id = allSources.Single(s => s.Name.Equals(sn.OrderedValue)).Id,
                     Name = sn.OrderedValue,
@@ -44,10 +44,10 @@ namespace Services.Broadcast.BusinessEngines
                 }).ToList();
         }
 
-        public static List<PlanPricingInventorySourceTypeDto> GetSortedInventorySourceTypePercents(int defaultPercent)
+        public static List<PlanInventorySourceTypeDto> GetSortedInventorySourceTypePercents(int defaultPercent)
         {
-            return _OrderedPricingSourceTypes.OrderBy(st => st.OrderBy).Select(st =>
-                new PlanPricingInventorySourceTypeDto
+            return PlanInventorySourceSortEngine._OrderedSourceTypes.OrderBy(st => st.OrderBy).Select(st =>
+                new PlanInventorySourceTypeDto
                 {
                     Id = (int)st.OrderedValue,
                     Name = st.OrderedValue.GetDescriptionAttribute(),
@@ -55,11 +55,11 @@ namespace Services.Broadcast.BusinessEngines
                 }).ToList();
         }
 
-        public static List<PlanPricingInventorySourceDto> SortInventorySourcePercents(List<PlanPricingInventorySourceDto> toSort)
+        public static List<PlanInventorySourceDto> SortInventorySourcePercents(List<PlanInventorySourceDto> toSort)
         {
-            var sorted = new List<PlanPricingInventorySourceDto>();
+            var sorted = new List<PlanInventorySourceDto>();
 
-            foreach (var source in _OrderedPricingSources.OrderBy(s => s.OrderBy))
+            foreach (var source in PlanInventorySourceSortEngine._OrderedSources.OrderBy(s => s.OrderBy))
             {
                 var toAdd = toSort.SingleOrDefault(s => s.Name.Equals(source.OrderedValue));
 
@@ -72,15 +72,15 @@ namespace Services.Broadcast.BusinessEngines
             // add unknown items in the end of the list
             var unknownItems = toSort.Except(sorted);
             sorted.AddRange(unknownItems);
-            
+
             return sorted;
         }
 
-        public static List<PlanPricingInventorySourceTypeDto> SortInventorySourceTypePercents(List<PlanPricingInventorySourceTypeDto> toSort)
+        public static List<PlanInventorySourceTypeDto> SortInventorySourceTypePercents(List<PlanInventorySourceTypeDto> toSort)
         {
-            var sorted = new List<PlanPricingInventorySourceTypeDto>();
+            var sorted = new List<PlanInventorySourceTypeDto>();
 
-            foreach (var sourceType in _OrderedPricingSourceTypes.OrderBy(s => s.OrderBy))
+            foreach (var sourceType in PlanInventorySourceSortEngine._OrderedSourceTypes.OrderBy(s => s.OrderBy))
             {
                 var sourceTypeDescription = sourceType.OrderedValue.GetDescriptionAttribute();
                 var toAdd = toSort.SingleOrDefault(s => s.Name.Equals(sourceTypeDescription));

@@ -30,8 +30,6 @@ namespace Services.Broadcast.BusinessEngines
             IEnumerable<int> inventorySourceIds,
             PlanBuyingJobDiagnostic diagnostic,
             bool isProprietary);
-
-        List<QuoteProgram> GetInventoryForQuote(QuoteRequestDto request);
     }
 
     public class PlanBuyingInventoryEngine : BroadcastBaseClass, IPlanBuyingInventoryEngine
@@ -74,73 +72,6 @@ namespace Services.Broadcast.BusinessEngines
             _SpotLengthEngine = spotLengthEngine;
             _MarketCoverageRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-        }
-
-        public List<QuoteProgram> GetInventoryForQuote(QuoteRequestDto request)
-        {
-            var inventorySourceTypes = new List<InventorySourceTypeEnum> { InventorySourceTypeEnum.OpenMarket };
-            var inventorySourceIds = _InventoryRepository
-                .GetInventorySources()
-                .Where(x => inventorySourceTypes.Contains(x.InventoryType))
-                .Select(x => x.Id)
-                .ToList();
-
-            var flightDateRanges = _GetFlightDateRanges(
-                request.FlightStartDate,
-                request.FlightEndDate,
-                request.FlightHiatusDays);
-
-            var spotLengthIds = request.CreativeLengths.Select(x => x.SpotLengthId).Take(1).ToList();
-
-            var daypartDays = GetDaypartDaysFromFlight(request.FlightDays, flightDateRanges);
-
-            var marketCodes = _MarketCoverageRepository
-                .GetLatestTop100MarketCoverages().MarketCoveragesByMarketCode
-                .Select(x => (short)x.Key)
-                .ToList();
-
-            var programs = _GetPrograms(
-                flightDateRanges,
-                inventorySourceIds,
-                spotLengthIds,
-                marketCodes);
-
-            _PrepareRestrictionsForQuote(request.Dayparts);
-            programs = FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(request.Dayparts, programs, daypartDays);
-
-            _SetProgramsFlightDays(programs, request.FlightDays);
-            _ApplyProjectedImpressions(programs, request);
-            _ApplyProvidedImpressions(programs, request);
-            _ApplyNTIConversionToNSI(programs, request.PostingType);
-            _ApplyMargin(programs, request.Margin);
-            _CalculateProgramCpm(programs);
-
-            return programs;
-        }
-
-        private void _PrepareRestrictionsForQuote(List<PlanDaypartDto> dayparts)
-        {
-            foreach (var daypart in dayparts)
-            {
-                if (daypart.Restrictions == null)
-                    continue;
-
-                var restrictions = daypart.Restrictions;
-
-                // for quote report we only use program restrictions and they always has Include type
-                restrictions.AffiliateRestrictions = null;
-                restrictions.ShowTypeRestrictions = null;
-                restrictions.GenreRestrictions = null;
-
-                restrictions.ProgramRestrictions.ContainType = ContainTypeEnum.Include;
-            }
-        }
-
-        public void _ApplyMargin(List<QuoteProgram> programs, double margin)
-        {
-            programs
-                .SelectMany(x => x.ManifestRates)
-                .ForEach(x => x.Cost = GeneralMath.CalculateCostWithMargin(x.Cost, margin));
         }
 
         public List<PlanBuyingInventoryProgram> GetInventoryForPlan(

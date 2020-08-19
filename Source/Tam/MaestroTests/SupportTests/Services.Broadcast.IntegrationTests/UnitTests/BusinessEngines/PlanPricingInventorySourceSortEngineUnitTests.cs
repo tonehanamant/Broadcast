@@ -2,6 +2,7 @@
 using ApprovalTests.Reporters;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using System.Collections.Generic;
 
@@ -14,33 +15,33 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [UseReporter(typeof(DiffReporter))]
         public void GetSortInventorySourcePercentsTest()
         {
-            var toSort = new List<PlanPricingInventorySourceDto>
+            var toSort = new List<PlanInventorySourceDto>
             {
-                new PlanPricingInventorySourceDto
+                new PlanInventorySourceDto
                 {
                     Id = 3,
                     Name = "KATZ",
                     Percentage = 3
                 },
-                new PlanPricingInventorySourceDto
+                new PlanInventorySourceDto
                 {
                     Id = 20,
                     Name = "Stranger2",
                     Percentage = 20
                 },
-                new PlanPricingInventorySourceDto
+                new PlanInventorySourceDto
                 {
                     Id = 5,
                     Name = "NBC O&O",
                     Percentage = 5
                 },
-                new PlanPricingInventorySourceDto
+                new PlanInventorySourceDto
                 {
                     Id = 20,
                     Name = "Stranger",
                     Percentage = 20
                 },
-                new PlanPricingInventorySourceDto
+                new PlanInventorySourceDto
                 {
                     Id = 1,
                     Name = "ABC O&O",
@@ -48,7 +49,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 },
             };
 
-            var result = PlanPricingInventorySourceSortEngine.SortInventorySourcePercents(toSort);
+            var result = PlanInventorySourceSortEngine.SortInventorySourcePercents(toSort);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -57,27 +58,27 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [UseReporter(typeof(DiffReporter))]
         public void SortInventorySourceTypePercentsTest()
         {
-            var toSort = new List<PlanPricingInventorySourceTypeDto>
+            var toSort = new List<PlanInventorySourceTypeDto>
             {
-                new PlanPricingInventorySourceTypeDto
+                new PlanInventorySourceTypeDto
                 {
                     Id = 5,
                     Name = "Diginet",
                     Percentage = 5
                 },
-                new PlanPricingInventorySourceTypeDto
+                new PlanInventorySourceTypeDto
                 {
                     Id = 20,
                     Name = "Stranger2",
                     Percentage = 20
                 },
-                new PlanPricingInventorySourceTypeDto
+                new PlanInventorySourceTypeDto
                 {
                     Id = 4,
                     Name = "Syndication",
                     Percentage = 4
                 },
-                new PlanPricingInventorySourceTypeDto
+                new PlanInventorySourceTypeDto
                 {
                     Id = 20,
                     Name = "Stranger",
@@ -85,7 +86,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = PlanPricingInventorySourceSortEngine.SortInventorySourceTypePercents(toSort);
+            var result = PlanInventorySourceSortEngine.SortInventorySourceTypePercents(toSort);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }

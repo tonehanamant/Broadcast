@@ -494,8 +494,8 @@ namespace Services.Broadcast.ApplicationServices
             {
                 UnitCaps = 1,
                 UnitCapType = UnitCapEnum.Per30Min,
-                InventorySourcePercentages = PlanPricingInventorySourceSortEngine.GetSortedInventorySourcePercents(defaultPercent, allSources),
-                InventorySourceTypePercentages = PlanPricingInventorySourceSortEngine.GetSortedInventorySourceTypePercents(defaultPercent),
+                InventorySourcePercentages = PlanInventorySourceSortEngine.GetSortedInventorySourcePercents(defaultPercent, allSources),
+                InventorySourceTypePercentages = PlanInventorySourceSortEngine.GetSortedInventorySourceTypePercents(defaultPercent),
                 Margin = defaultMargin,
                 MarketGroup = MarketGroupEnum.Top100
             };

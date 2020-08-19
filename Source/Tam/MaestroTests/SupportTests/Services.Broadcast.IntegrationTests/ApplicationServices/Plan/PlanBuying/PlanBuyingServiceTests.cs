@@ -8,6 +8,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Buying;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.IntegrationTests.Stubs.Plan;
 using Services.Broadcast.Repositories;
 using System;
@@ -149,26 +150,26 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
-                    InventorySourcePercentages = new List<PlanBuyingInventorySourceDto>
+                    InventorySourcePercentages = new List<PlanInventorySourceDto>
                     {
-                        new PlanBuyingInventorySourceDto{Id = 3, Percentage = 12},
-                        new PlanBuyingInventorySourceDto{Id = 5, Percentage = 13},
-                        new PlanBuyingInventorySourceDto{Id = 6, Percentage = 14},
-                        new PlanBuyingInventorySourceDto{Id = 7, Percentage = 15},
-                        new PlanBuyingInventorySourceDto{Id = 10, Percentage = 16},
-                        new PlanBuyingInventorySourceDto{Id = 11, Percentage = 17},
-                        new PlanBuyingInventorySourceDto{Id = 12, Percentage = 8},
+                        new PlanInventorySourceDto{Id = 3, Percentage = 12},
+                        new PlanInventorySourceDto{Id = 5, Percentage = 13},
+                        new PlanInventorySourceDto{Id = 6, Percentage = 14},
+                        new PlanInventorySourceDto{Id = 7, Percentage = 15},
+                        new PlanInventorySourceDto{Id = 10, Percentage = 16},
+                        new PlanInventorySourceDto{Id = 11, Percentage = 17},
+                        new PlanInventorySourceDto{Id = 12, Percentage = 8},
                     },
-                    InventorySourceTypePercentages = new List<PlanBuyingInventorySourceTypeDto>
+                    InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>
                     {
-                        new PlanBuyingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
-                        new PlanBuyingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
+                        new PlanInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
+                        new PlanInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
                     }
                 };
 
                 var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "integration test user");
 
-                var result = _PlanBuyingService.GetBuyingApiRequestPrograms(1197, planBuyingRequestDto, new BuyingInventoryGetRequestParametersDto());
+                var result = _PlanBuyingService.GetBuyingApiRequestPrograms(1197, new BuyingInventoryGetRequestParametersDto());
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -305,20 +306,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
                     MarketGroup = MarketGroupEnum.None,
-                    InventorySourcePercentages = new List<PlanBuyingInventorySourceDto>
+                    InventorySourcePercentages = new List<PlanInventorySourceDto>
                     {
-                        new PlanBuyingInventorySourceDto{Id = 3, Percentage = 12},
-                        new PlanBuyingInventorySourceDto{Id = 5, Percentage = 13},
-                        new PlanBuyingInventorySourceDto{Id = 6, Percentage = 14},
-                        new PlanBuyingInventorySourceDto{Id = 7, Percentage = 15},
-                        new PlanBuyingInventorySourceDto{Id = 10, Percentage = 16},
-                        new PlanBuyingInventorySourceDto{Id = 11, Percentage = 17},
-                        new PlanBuyingInventorySourceDto{Id = 12, Percentage = 8},
+                        new PlanInventorySourceDto{Id = 3, Percentage = 12},
+                        new PlanInventorySourceDto{Id = 5, Percentage = 13},
+                        new PlanInventorySourceDto{Id = 6, Percentage = 14},
+                        new PlanInventorySourceDto{Id = 7, Percentage = 15},
+                        new PlanInventorySourceDto{Id = 10, Percentage = 16},
+                        new PlanInventorySourceDto{Id = 11, Percentage = 17},
+                        new PlanInventorySourceDto{Id = 12, Percentage = 8},
                     },
-                    InventorySourceTypePercentages = new List<PlanBuyingInventorySourceTypeDto>
+                    InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>
                     {
-                        new PlanBuyingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
-                        new PlanBuyingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
+                        new PlanInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
+                        new PlanInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
                     }
                 };
 
@@ -387,15 +388,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     Currency = PlanCurrenciesEnum.Impressions,
                     DeliveryRatingPoints = 1234,
                     MarketGroup = MarketGroupEnum.None,
-                    InventorySourcePercentages = new List<PlanBuyingInventorySourceDto>
+                    InventorySourcePercentages = new List<PlanInventorySourceDto>
                     {
-                        new PlanBuyingInventorySourceDto{Id = 3, Percentage = 12},
-                        new PlanBuyingInventorySourceDto{Id = 5, Percentage = 13},
-                        new PlanBuyingInventorySourceDto{Id = 6, Percentage = 14},
-                        new PlanBuyingInventorySourceDto{Id = 7, Percentage = 15},
-                        new PlanBuyingInventorySourceDto{Id = 10, Percentage = 16},
-                        new PlanBuyingInventorySourceDto{Id = 11, Percentage = 17},
-                        new PlanBuyingInventorySourceDto{Id = 12, Percentage = 8},
+                        new PlanInventorySourceDto{Id = 3, Percentage = 12},
+                        new PlanInventorySourceDto{Id = 5, Percentage = 13},
+                        new PlanInventorySourceDto{Id = 6, Percentage = 14},
+                        new PlanInventorySourceDto{Id = 7, Percentage = 15},
+                        new PlanInventorySourceDto{Id = 10, Percentage = 16},
+                        new PlanInventorySourceDto{Id = 11, Percentage = 17},
+                        new PlanInventorySourceDto{Id = 12, Percentage = 8},
                     }
                 };
 
@@ -445,20 +446,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
                     MarketGroup = MarketGroupEnum.None,
-                    InventorySourcePercentages = new List<PlanBuyingInventorySourceDto>
+                    InventorySourcePercentages = new List<PlanInventorySourceDto>
                     {
-                        new PlanBuyingInventorySourceDto{Id = 3, Percentage = 12},
-                        new PlanBuyingInventorySourceDto{Id = 5, Percentage = 13},
-                        new PlanBuyingInventorySourceDto{Id = 6, Percentage = 14},
-                        new PlanBuyingInventorySourceDto{Id = 7, Percentage = 15},
-                        new PlanBuyingInventorySourceDto{Id = 10, Percentage = 16},
-                        new PlanBuyingInventorySourceDto{Id = 11, Percentage = 17},
-                        new PlanBuyingInventorySourceDto{Id = 12, Percentage = 8},
+                        new PlanInventorySourceDto{Id = 3, Percentage = 12},
+                        new PlanInventorySourceDto{Id = 5, Percentage = 13},
+                        new PlanInventorySourceDto{Id = 6, Percentage = 14},
+                        new PlanInventorySourceDto{Id = 7, Percentage = 15},
+                        new PlanInventorySourceDto{Id = 10, Percentage = 16},
+                        new PlanInventorySourceDto{Id = 11, Percentage = 17},
+                        new PlanInventorySourceDto{Id = 12, Percentage = 8},
                     },
-                    InventorySourceTypePercentages = new List<PlanBuyingInventorySourceTypeDto>
+                    InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>
                     {
-                        new PlanBuyingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
-                        new PlanBuyingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
+                        new PlanInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
+                        new PlanInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
                     }
                 };
 
@@ -663,20 +664,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
                     MarketGroup = MarketGroupEnum.None,
-                    InventorySourcePercentages = new List<PlanBuyingInventorySourceDto>
+                    InventorySourcePercentages = new List<PlanInventorySourceDto>
                     {
-                        new PlanBuyingInventorySourceDto{Id = 3, Percentage = 12},
-                        new PlanBuyingInventorySourceDto{Id = 5, Percentage = 13},
-                        new PlanBuyingInventorySourceDto{Id = 6, Percentage = 10},
-                        new PlanBuyingInventorySourceDto{Id = 7, Percentage = 9},
-                        new PlanBuyingInventorySourceDto{Id = 10, Percentage = 8},
-                        new PlanBuyingInventorySourceDto{Id = 11, Percentage = 7},
-                        new PlanBuyingInventorySourceDto{Id = 12, Percentage = 8},
+                        new PlanInventorySourceDto{Id = 3, Percentage = 12},
+                        new PlanInventorySourceDto{Id = 5, Percentage = 13},
+                        new PlanInventorySourceDto{Id = 6, Percentage = 10},
+                        new PlanInventorySourceDto{Id = 7, Percentage = 9},
+                        new PlanInventorySourceDto{Id = 10, Percentage = 8},
+                        new PlanInventorySourceDto{Id = 11, Percentage = 7},
+                        new PlanInventorySourceDto{Id = 12, Percentage = 8},
                     },
-                    InventorySourceTypePercentages = new List<PlanBuyingInventorySourceTypeDto>
+                    InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>
                     {
-                        new PlanBuyingInventorySourceTypeDto { Id = 4, Name = "Syndication", Percentage = 11 },
-                        new PlanBuyingInventorySourceTypeDto { Id = 5, Name = "Diginet", Percentage = 22 }
+                        new PlanInventorySourceTypeDto { Id = 4, Name = "Syndication", Percentage = 11 },
+                        new PlanInventorySourceTypeDto { Id = 5, Name = "Diginet", Percentage = 22 }
                     }
                 };
 
@@ -728,20 +729,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
                     MarketGroup = MarketGroupEnum.Top25,
-                    InventorySourcePercentages = new List<PlanBuyingInventorySourceDto>
+                    InventorySourcePercentages = new List<PlanInventorySourceDto>
                     {
-                        new PlanBuyingInventorySourceDto{Id = 3, Percentage = 12},
-                        new PlanBuyingInventorySourceDto{Id = 5, Percentage = 13},
-                        new PlanBuyingInventorySourceDto{Id = 6, Percentage = 10},
-                        new PlanBuyingInventorySourceDto{Id = 7, Percentage = 9},
-                        new PlanBuyingInventorySourceDto{Id = 10, Percentage = 8},
-                        new PlanBuyingInventorySourceDto{Id = 11, Percentage = 7},
-                        new PlanBuyingInventorySourceDto{Id = 12, Percentage = 8},
+                        new PlanInventorySourceDto{Id = 3, Percentage = 12},
+                        new PlanInventorySourceDto{Id = 5, Percentage = 13},
+                        new PlanInventorySourceDto{Id = 6, Percentage = 10},
+                        new PlanInventorySourceDto{Id = 7, Percentage = 9},
+                        new PlanInventorySourceDto{Id = 10, Percentage = 8},
+                        new PlanInventorySourceDto{Id = 11, Percentage = 7},
+                        new PlanInventorySourceDto{Id = 12, Percentage = 8},
                     },
-                    InventorySourceTypePercentages = new List<PlanBuyingInventorySourceTypeDto>
+                    InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>
                     {
-                        new PlanBuyingInventorySourceTypeDto { Id = 4, Name = "Syndication", Percentage = 11 },
-                        new PlanBuyingInventorySourceTypeDto { Id = 5, Name = "Diginet", Percentage = 22 }
+                        new PlanInventorySourceTypeDto { Id = 4, Name = "Syndication", Percentage = 11 },
+                        new PlanInventorySourceTypeDto { Id = 5, Name = "Diginet", Percentage = 22 }
                     }
                 };
 
@@ -827,20 +828,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 UnitCapsType = UnitCapEnum.PerDay,
                 MarketGroup = MarketGroupEnum.None,
                 Margin = 20,
-                InventorySourcePercentages = new List<PlanBuyingInventorySourceDto>
+                InventorySourcePercentages = new List<PlanInventorySourceDto>
                     {
-                        new PlanBuyingInventorySourceDto{Id = 3, Percentage = 12},
-                        new PlanBuyingInventorySourceDto{Id = 5, Percentage = 13},
-                        new PlanBuyingInventorySourceDto{Id = 6, Percentage = 14},
-                        new PlanBuyingInventorySourceDto{Id = 7, Percentage = 15},
-                        new PlanBuyingInventorySourceDto{Id = 10, Percentage = 16},
-                        new PlanBuyingInventorySourceDto{Id = 11, Percentage = 17},
-                        new PlanBuyingInventorySourceDto{Id = 12, Percentage = 8},
+                        new PlanInventorySourceDto{Id = 3, Percentage = 12},
+                        new PlanInventorySourceDto{Id = 5, Percentage = 13},
+                        new PlanInventorySourceDto{Id = 6, Percentage = 14},
+                        new PlanInventorySourceDto{Id = 7, Percentage = 15},
+                        new PlanInventorySourceDto{Id = 10, Percentage = 16},
+                        new PlanInventorySourceDto{Id = 11, Percentage = 17},
+                        new PlanInventorySourceDto{Id = 12, Percentage = 8},
                     },
-                InventorySourceTypePercentages = new List<PlanBuyingInventorySourceTypeDto>
+                InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>
                     {
-                        new PlanBuyingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
-                        new PlanBuyingInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
+                        new PlanInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
+                        new PlanInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
                     }
             };
         }

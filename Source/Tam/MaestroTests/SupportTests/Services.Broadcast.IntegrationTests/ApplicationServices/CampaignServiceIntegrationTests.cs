@@ -13,6 +13,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.IntegrationTests.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
@@ -949,15 +950,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
-                    InventorySourcePercentages = new List<PlanPricingInventorySourceDto>
+                    InventorySourcePercentages = new List<PlanInventorySourceDto>
                     {
-                        new PlanPricingInventorySourceDto{Id = 3, Percentage = 12},
-                        new PlanPricingInventorySourceDto{Id = 5, Percentage = 13},
-                        new PlanPricingInventorySourceDto{Id = 6, Percentage = 14},
-                        new PlanPricingInventorySourceDto{Id = 7, Percentage = 15},
-                        new PlanPricingInventorySourceDto{Id = 10, Percentage = 16},
-                        new PlanPricingInventorySourceDto{Id = 11, Percentage = 17},
-                        new PlanPricingInventorySourceDto{Id = 12, Percentage = 8},
+                        new PlanInventorySourceDto{Id = 3, Percentage = 12},
+                        new PlanInventorySourceDto{Id = 5, Percentage = 13},
+                        new PlanInventorySourceDto{Id = 6, Percentage = 14},
+                        new PlanInventorySourceDto{Id = 7, Percentage = 15},
+                        new PlanInventorySourceDto{Id = 10, Percentage = 16},
+                        new PlanInventorySourceDto{Id = 11, Percentage = 17},
+                        new PlanInventorySourceDto{Id = 12, Percentage = 8},
                     }
                 };
 

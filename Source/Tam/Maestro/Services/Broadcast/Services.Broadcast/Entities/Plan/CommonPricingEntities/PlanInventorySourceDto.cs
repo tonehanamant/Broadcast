@@ -1,6 +1,6 @@
-﻿namespace Services.Broadcast.Entities.Plan.Pricing
+﻿namespace Services.Broadcast.Entities.Plan.CommonPricingEntities
 {
-    public class PlanPricingInventorySourceTypeDto
+    public class PlanInventorySourceDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -4,16 +4,14 @@ using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Moq;
 using NUnit.Framework;
-using OfficeOpenXml.ConditionalFormatting;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
-using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
@@ -21,7 +19,6 @@ using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
 using System.Threading;
 using Tam.Maestro.Services.ContractInterfaces;
 
@@ -1316,8 +1313,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             {
                 UnitCaps = 1,
                 UnitCapType = UnitCapEnum.Per30Min,
-                InventorySourcePercentages = new List<PlanPricingInventorySourceDto>(),
-                InventorySourceTypePercentages = new List<PlanPricingInventorySourceTypeDto>()
+                InventorySourcePercentages = new List<PlanInventorySourceDto>(),
+                InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>()
             };
         }
 
@@ -1333,7 +1330,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new CreativeLength{ SpotLengthId = 3, Weight = 30}
                 },
                 TotalImpressions = 100000,
-                Weeks = PlansServiceUnitTests._GetWeeklyBreakdownWeeks()
+                Weeks = _GetWeeklyBreakdownWeeks()
             };
 
             var distributeWeightCallCount = 0;
@@ -1364,7 +1361,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     new CreativeLength{ SpotLengthId = 3}
                 },
                 TotalImpressions = 100000,
-                Weeks = PlansServiceUnitTests._GetWeeklyBreakdownWeeks()
+                Weeks = _GetWeeklyBreakdownWeeks()
             };
 
             _CreativeLengthEngineMock

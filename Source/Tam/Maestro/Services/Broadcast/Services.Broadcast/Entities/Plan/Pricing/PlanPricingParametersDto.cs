@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.Plan.Pricing
@@ -25,7 +26,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public double DeliveryRatingPoints { get; set; }
         public double? Margin { get; set; }
         public int? JobId { get; set; }
-        public List<PlanPricingInventorySourceDto> InventorySourcePercentages { get; set; } = new List<PlanPricingInventorySourceDto>();
-        public List<PlanPricingInventorySourceTypeDto> InventorySourceTypePercentages { get; set; } = new List<PlanPricingInventorySourceTypeDto>();
+        public List<PlanInventorySourceDto> InventorySourcePercentages { get; set; } = new List<PlanInventorySourceDto>();
+        public List<PlanInventorySourceTypeDto> InventorySourceTypePercentages { get; set; } = new List<PlanInventorySourceTypeDto>();
     }
 }
