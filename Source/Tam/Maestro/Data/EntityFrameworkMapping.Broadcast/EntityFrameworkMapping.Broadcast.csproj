@@ -418,6 +418,9 @@
     <Compile Include="inventory_programs_by_source_job_notes.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="inventory_proprietary_program_names.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="inventory_proprietary_summary.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

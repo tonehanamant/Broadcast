@@ -789,6 +789,141 @@ END
 GO
 /*************************************** END BP-1076 *****************************************************/
 
+/*************************************** START BP-1088 *****************************************************/
+/***************************************  Create Table SQL and Seed Data *****************************************************/
+
+select * from  inventory_proprietary_program_names
+IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('inventory_proprietary_program_names'))
+BEGIN
+	CREATE TABLE inventory_proprietary_program_names (
+	id INT NOT NULL IDENTITY,
+	inventory_source_id INT NOT NULL,
+	daypart_default_id INT NOT NULL,
+    daypart_unit_code [varchar] (50) NOT NULL,
+	program_name [varchar](150) NOT NULL,    
+	[created_by] [varchar](63) NOT NULL,
+	[created_at] [datetime] NOT NULL,
+	[modified_by] [varchar](63) NULL,
+	[modified_at] [datetime] NULL,
+	CONSTRAINT PK_inventory_proprietary_program_names PRIMARY KEY (id)
+	)
+	ALTER TABLE [dbo].inventory_proprietary_program_names ADD CONSTRAINT [FK_inventory_proprietary_program_names_inventory_sources] FOREIGN KEY([inventory_source_id])
+	REFERENCES [dbo].[inventory_sources] ([id])
+	ALTER TABLE [dbo].inventory_proprietary_program_names ADD CONSTRAINT [FK_inventory_proprietary_program_names_daypart_defaults] FOREIGN KEY([daypart_default_id])
+	REFERENCES [dbo].[daypart_defaults] ([id])
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (5 ,1 ,'AM','Early Morning News','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (5 ,2,'AM','Early Morning News','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (5 , 15,'AM','Early Morning News','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (5 ,3,'PM','Evening/Late News','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (5 ,4,'PM','Evening/Late News','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (5 ,5,'PM','Evening/Late News','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (5 ,16,'PM', 'Evening/Late News','Admin',GETDATE(),'Admin',GETDATE())
+
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (3 ,1 ,'News' ,'Early Morning News','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (3 ,2,'News' ,'Early Morning News','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (3 ,3,'News' ,'Early Morning News','Admin',GETDATE(),'Admin',GETDATE())
+
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (3 ,5,'News' ,'Early Morning News','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (3 , 15,'News' ,'Early Morning News','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (3 ,16,'News' , 'Early Morning News','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (3 ,17,'News' ,'Early Morning News','Admin',GETDATE(),'Admin',GETDATE())
+
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (3 ,6 ,'Syndication', 'ROS Syndication','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (3 ,7,'Syndication','ROS Syndication','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (3 ,8,'Syndication','ROS Syndication','Admin',GETDATE(),'Admin',GETDATE())
+
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (3 ,9,'Syndication','ROS Syndication','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (3 , 10,'Syndication','ROS Syndication','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (3 ,11,'Syndication', 'ROS Syndication','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (3 ,12,'Syndication','ROS Syndication','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (3 ,14,'Syndication','ROS Syndication','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (3 ,19,'Syndication','ROS Syndication','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (3 ,20,'Syndication','ROS Syndication','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (3 ,21,'Syndication','ROS Syndication','Admin',GETDATE(),'Admin',GETDATE())
+
+INSERT INTO [dbo].[inventory_proprietary_program_names]
+           ([inventory_source_id] ,[daypart_default_id], [daypart_unit_code],[program_name],[created_by],[created_at],[modified_by],[modified_at])
+     VALUES (3 ,22,'Syndication','ROS Syndication','Admin',GETDATE(),'Admin',GETDATE())
+
+END
+
+/*************************************** END BP-1088 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

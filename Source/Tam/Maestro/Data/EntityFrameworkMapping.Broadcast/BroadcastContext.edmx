@@ -478,6 +478,20 @@
           <Property Name="job_group_id" Type="uniqueidentifier" />
           <Property Name="status_message" Type="varchar" MaxLength="200" />
         </EntityType>
+        <EntityType Name="inventory_proprietary_program_names">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inventory_source_id" Type="int" Nullable="false" />
+          <Property Name="daypart_default_id" Type="int" Nullable="false" />
+          <Property Name="daypart_unit_code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="program_name" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="modified_by" Type="varchar" MaxLength="63" />
+          <Property Name="modified_at" Type="datetime" />
+        </EntityType>
         <EntityType Name="inventory_proprietary_summary">
           <Key>
             <PropertyRef Name="id" />
@@ -2380,7 +2394,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_local.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -2548,7 +2562,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventor
           <Property Name="vpvh_file_id" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_local.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -2576,7 +2590,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="daypart_text" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="total_hours" Type="float" Nullable="false" />
         </EntityType>
-        <Association Name="FK__genre_map__maest__27114E05">
+        <Association Name="FK__genre_map__maest__67A95F59">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2588,7 +2602,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__genre_map__mappe__2805723E">
+        <Association Name="FK__genre_map__mappe__689D8392">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2600,7 +2614,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__plan_vers__genre__6CAFA246">
+        <Association Name="FK__plan_vers__genre__3B95D2F1">
           <End Role="genres" Type="Self.genres" Multiplicity="0..1" />
           <End Role="plan_version_daypart_program_restrictions" Type="Self.plan_version_daypart_program_restrictions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -3106,6 +3120,30 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="inventory_programs_by_source_jobs">
+              <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_proprietary_program_names_daypart_defaults">
+          <End Role="daypart_defaults" Type="Self.daypart_defaults" Multiplicity="1" />
+          <End Role="inventory_proprietary_program_names" Type="Self.inventory_proprietary_program_names" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart_defaults">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_proprietary_program_names">
+              <PropertyRef Name="daypart_default_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_proprietary_program_names_inventory_sources">
+          <End Role="inventory_sources" Type="Self.inventory_sources" Multiplicity="1" />
+          <End Role="inventory_proprietary_program_names" Type="Self.inventory_proprietary_program_names" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_proprietary_program_names">
               <PropertyRef Name="inventory_source_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -6499,6 +6537,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="inventory_programs_by_file_jobs" EntityType="Self.inventory_programs_by_file_jobs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_programs_by_source_job_notes" EntityType="Self.inventory_programs_by_source_job_notes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_programs_by_source_jobs" EntityType="Self.inventory_programs_by_source_jobs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="inventory_proprietary_program_names" EntityType="Self.inventory_proprietary_program_names" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_proprietary_summary" EntityType="Self.inventory_proprietary_summary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_proprietary_summary_audiences" EntityType="Self.inventory_proprietary_summary_audiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_proprietary_summary_markets" EntityType="Self.inventory_proprietary_summary_markets" Schema="dbo" store:Type="Tables" />
@@ -6691,15 +6730,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
     [vw_ccc_daypart].[total_hours] AS [total_hours]
     FROM [dbo].[vw_ccc_daypart] AS [vw_ccc_daypart]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__genre_map__maest__27114E05" Association="Self.FK__genre_map__maest__27114E05">
+          <AssociationSet Name="FK__genre_map__maest__67A95F59" Association="Self.FK__genre_map__maest__67A95F59">
             <End Role="genres" EntitySet="genres" />
             <End Role="genre_mappings" EntitySet="genre_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK__genre_map__mappe__2805723E" Association="Self.FK__genre_map__mappe__2805723E">
+          <AssociationSet Name="FK__genre_map__mappe__689D8392" Association="Self.FK__genre_map__mappe__689D8392">
             <End Role="genres" EntitySet="genres" />
             <End Role="genre_mappings" EntitySet="genre_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK__plan_vers__genre__6CAFA246" Association="Self.FK__plan_vers__genre__6CAFA246">
+          <AssociationSet Name="FK__plan_vers__genre__3B95D2F1" Association="Self.FK__plan_vers__genre__3B95D2F1">
             <End Role="genres" EntitySet="genres" />
             <End Role="plan_version_daypart_program_restrictions" EntitySet="plan_version_daypart_program_restrictions" />
           </AssociationSet>
@@ -6858,6 +6897,14 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_inventory_programs_by_source_jobs_inventory_source" Association="Self.FK_inventory_programs_by_source_jobs_inventory_source">
             <End Role="inventory_sources" EntitySet="inventory_sources" />
             <End Role="inventory_programs_by_source_jobs" EntitySet="inventory_programs_by_source_jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_proprietary_program_names_daypart_defaults" Association="Self.FK_inventory_proprietary_program_names_daypart_defaults">
+            <End Role="daypart_defaults" EntitySet="daypart_defaults" />
+            <End Role="inventory_proprietary_program_names" EntitySet="inventory_proprietary_program_names" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_proprietary_program_names_inventory_sources" Association="Self.FK_inventory_proprietary_program_names_inventory_sources">
+            <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="inventory_proprietary_program_names" EntitySet="inventory_proprietary_program_names" />
           </AssociationSet>
           <AssociationSet Name="FK_inventory_proprietary_summary_audiences_audiences" Association="Self.FK_inventory_proprietary_summary_audiences_audiences">
             <End Role="audiences" EntitySet="audiences" />
@@ -9326,6 +9373,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="show_types" EntitySet="show_types" />
             <End Role="program_name_mapping_keywords" EntitySet="program_name_mapping_keywords" />
           </AssociationSet>
+          <EntitySet Name="inventory_proprietary_program_names" EntityType="BroadcastModel.inventory_proprietary_program_names" />
+          <AssociationSet Name="FK_inventory_proprietary_program_names_daypart_defaults" Association="BroadcastModel.FK_inventory_proprietary_program_names_daypart_defaults">
+            <End Role="daypart_defaults" EntitySet="daypart_defaults" />
+            <End Role="inventory_proprietary_program_names" EntitySet="inventory_proprietary_program_names" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_proprietary_program_names_inventory_sources" Association="BroadcastModel.FK_inventory_proprietary_program_names_inventory_sources">
+            <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="inventory_proprietary_program_names" EntitySet="inventory_proprietary_program_names" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -10188,6 +10244,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="inventory_proprietary_summary" Relationship="BroadcastModel.FK_inventory_proprietary_summary_inventory_sources" FromRole="inventory_sources" ToRole="inventory_proprietary_summary" />
           <NavigationProperty Name="plan_version_buying_job_inventory_source_estimates" Relationship="BroadcastModel.FK_plan_version_buying_job_inventory_source_estimates_inventory_sources" FromRole="inventory_sources" ToRole="plan_version_buying_job_inventory_source_estimates" />
           <NavigationProperty Name="plan_version_buying_parameters_inventory_source_percentages" Relationship="BroadcastModel.FK_plan_version_buying_parameters_inventory_source_percentages_inventory_sources" FromRole="inventory_sources" ToRole="plan_version_buying_parameters_inventory_source_percentages" />
+          <NavigationProperty Name="inventory_proprietary_program_names" Relationship="BroadcastModel.FK_inventory_proprietary_program_names_inventory_sources" FromRole="inventory_sources" ToRole="inventory_proprietary_program_names" />
         </EntityType>
         <EntityType Name="station_inventory_group">
           <Key>
@@ -13538,6 +13595,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_pricing_api_result_spots" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_daypart_defaults" FromRole="daypart_defaults" ToRole="plan_version_pricing_api_result_spots" />
           <NavigationProperty Name="inventory_proprietary_summary" Relationship="BroadcastModel.FK_inventory_proprietary_summary_daypart_defaults" FromRole="daypart_defaults" ToRole="inventory_proprietary_summary" />
           <NavigationProperty Name="plan_version_buying_api_result_spots" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spots_daypart_defaults" FromRole="daypart_defaults" ToRole="plan_version_buying_api_result_spots" />
+          <NavigationProperty Name="inventory_proprietary_program_names" Relationship="BroadcastModel.FK_inventory_proprietary_program_names_daypart_defaults" FromRole="daypart_defaults" ToRole="inventory_proprietary_program_names" />
         </EntityType>
         <Association Name="FK_daypart_defaults_dayparts">
           <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
@@ -16328,6 +16386,46 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="inventory_proprietary_program_names">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventory_source_id" Type="Int32" Nullable="false" />
+          <Property Name="daypart_default_id" Type="Int32" Nullable="false" />
+          <Property Name="daypart_unit_code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="program_name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_by" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="modified_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="daypart_defaults" Relationship="BroadcastModel.FK_inventory_proprietary_program_names_daypart_defaults" FromRole="inventory_proprietary_program_names" ToRole="daypart_defaults" />
+          <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_inventory_proprietary_program_names_inventory_sources" FromRole="inventory_proprietary_program_names" ToRole="inventory_sources" />
+        </EntityType>
+        <Association Name="FK_inventory_proprietary_program_names_daypart_defaults">
+          <End Type="BroadcastModel.daypart_defaults" Role="daypart_defaults" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_proprietary_program_names" Role="inventory_proprietary_program_names" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart_defaults">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_proprietary_program_names">
+              <PropertyRef Name="daypart_default_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_proprietary_program_names_inventory_sources">
+          <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_proprietary_program_names" Role="inventory_proprietary_program_names" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_proprietary_program_names">
+              <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -19064,6 +19162,21 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="genre_id" ColumnName="genre_id" />
                 <ScalarProperty Name="program_name" ColumnName="program_name" />
                 <ScalarProperty Name="keyword" ColumnName="keyword" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventory_proprietary_program_names">
+            <EntityTypeMapping TypeName="BroadcastModel.inventory_proprietary_program_names">
+              <MappingFragment StoreEntitySet="inventory_proprietary_program_names">
+                <ScalarProperty Name="modified_at" ColumnName="modified_at" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="program_name" ColumnName="program_name" />
+                <ScalarProperty Name="daypart_unit_code" ColumnName="daypart_unit_code" />
+                <ScalarProperty Name="daypart_default_id" ColumnName="daypart_default_id" />
+                <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

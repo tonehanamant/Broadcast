@@ -270,7 +270,8 @@ namespace Services.Broadcast.Repositories
 						join source in context.inventory_sources on summary.inventory_source_id equals source.id
 						join daypartDefault in context.daypart_defaults on summary.daypart_default_id equals daypartDefault.id
 						join daypart in context.dayparts on daypartDefault.daypart_id equals daypart.id
-						where defaultDaypartIds.Contains(daypartDefault.daypart_id)
+						join programName in context.inventory_proprietary_program_names on new { summary.inventory_source_id, summary.daypart_default_id } equals new { programName.inventory_source_id, programName.daypart_default_id }
+								where defaultDaypartIds.Contains(daypartDefault.daypart_id)
 						      && summary.quarter_number == quarterDetailDto.Quarter && summary.quarter_year == quarterDetailDto.Year
 						   
 
@@ -278,7 +279,7 @@ namespace Services.Broadcast.Repositories
 						{
 							DaypartName = daypart.daypart_text,
 							InventorySourceName = source.name,
-							DaypartDefaultCode = daypartDefault.code,
+							DaypartUnitCode = programName.daypart_unit_code,
 							Cpm = summary.cpm ?? 0,
 							Id = summary.id
 						};

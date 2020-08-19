@@ -8,7 +8,7 @@
 		public string InventorySourceName { get; set; }
 		public double ImpressionsTotal { get; set; }
 		public double MarketCoverageTotal { get; set; }			
-		public string DaypartDefaultCode { get; set; }
-		public string UnitName=>$"{InventorySourceName} {DaypartDefaultCode}";
+		public string DaypartUnitCode { get; set; }
+		public string UnitName=>$"{InventorySourceName} {DaypartUnitCode}";
 	}
 }

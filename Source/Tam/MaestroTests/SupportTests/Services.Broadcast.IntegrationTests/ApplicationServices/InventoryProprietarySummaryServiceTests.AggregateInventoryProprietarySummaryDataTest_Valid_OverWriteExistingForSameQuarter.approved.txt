@@ -2,21 +2,21 @@
   "summaries": [
     {
       "Cpm": 8.6000,
-      "DaypartDefaultCode": "EMN",
       "DaypartName": "M-SU 4AM-10AM",
+      "DaypartUnitCode": "AM",
       "ImpressionsTotal": 0.0,
       "InventorySourceName": "CNN",
       "MarketCoverageTotal": 29.0,
-      "UnitName": "CNN EMN"
+      "UnitName": "CNN AM"
     },
     {
       "Cpm": 8.9000,
-      "DaypartDefaultCode": "LN",
       "DaypartName": "M-SU 8PM-12:05AM",
+      "DaypartUnitCode": "PM",
       "ImpressionsTotal": 0.0,
       "InventorySourceName": "CNN",
       "MarketCoverageTotal": 29.0,
-      "UnitName": "CNN LN"
+      "UnitName": "CNN PM"
     }
   ],
   "ValidationMessage": null
