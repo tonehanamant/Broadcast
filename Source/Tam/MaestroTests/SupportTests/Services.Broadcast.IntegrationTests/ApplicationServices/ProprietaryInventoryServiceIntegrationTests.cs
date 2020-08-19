@@ -820,7 +820,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var now = new DateTime(2019, 02, 02);
                 var result = _ProprietaryService.SaveProprietaryInventoryFile(request, "IntegrationTestUser", now);
-                var errorsFilePath = Path.Combine(BroadcastServiceSystemParameter.BroadcastAppFolder, "InventoryUpload", "Errors", 
+                var errorsFilePath = Path.Combine(IntegrationTestHelper.GetBroadcastAppFolder(), "InventoryUpload", "Errors", 
                     $"{result.FileId}_{fileName}");
                 var fileService = IntegrationTestApplicationServiceFactory.Instance.Resolve<IFileService>();
                 Assert.IsTrue(fileService.Exists(errorsFilePath));

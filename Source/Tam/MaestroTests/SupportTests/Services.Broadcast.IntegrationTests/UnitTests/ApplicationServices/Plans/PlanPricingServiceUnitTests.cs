@@ -7938,7 +7938,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCoveragePercent = 70,
                             Rank = 2,
                             ShareOfVoiceGoalPercentage = 70,
-                            Stations = 5
+                            Stations = 5,
+                            MarketName = "Chicago"
                          }
                     },
                     PricingJobId = jobId,
@@ -8058,7 +8059,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCoveragePercent = 70,
                             Rank = 2,
                             ShareOfVoiceGoalPercentage = 70,
-                            Stations = 5
+                            Stations = 5,
+                            MarketName = "Chicago"
                          }
                     },
                     PricingJobId = 2,

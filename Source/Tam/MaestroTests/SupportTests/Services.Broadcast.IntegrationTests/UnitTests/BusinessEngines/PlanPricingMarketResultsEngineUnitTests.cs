@@ -23,7 +23,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var parametersDto = new PlanPricingParametersDto();
             
             var marketCoverages = Enumerable.Range(1, 10)
-                .Select(s => new MarketCoverage {MarketCode = s, Rank = s, PercentageOfUS = 10})
+                .Select(s => new MarketCoverage { Market = $"Market {s}", MarketCode = s, Rank = s, PercentageOfUS = 10})
                 .ToList();
             
             var stations = Enumerable.Range(1, 20)
@@ -84,7 +84,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var parametersDto = new PlanPricingParametersDto { Margin = 10};
 
             var marketCoverages = Enumerable.Range(1, 10)
-                .Select(s => new MarketCoverage { MarketCode = s, Rank = s, PercentageOfUS = 10 })
+                .Select(s => new MarketCoverage { Market = $"Market {s}", MarketCode = s, Rank = s, PercentageOfUS = 10 })
                 .ToList();
 
             var stations = Enumerable.Range(1, 20)
@@ -145,7 +145,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var parametersDto = new PlanPricingParametersDto();
 
             var marketCoverages = Enumerable.Range(1, 10)
-                .Select(s => new MarketCoverage { MarketCode = s, Rank = s, PercentageOfUS = 10 })
+                .Select(s => new MarketCoverage { Market = $"Market {s}", MarketCode = s, Rank = s, PercentageOfUS = 10 })
                 .ToList();
             marketCoverages[0].Rank = null;
 
@@ -210,7 +210,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var parametersDto = new PlanPricingParametersDto();
 
             var marketCoverages = Enumerable.Range(1, 10)
-                .Select(s => new MarketCoverage { MarketCode = s, Rank = s, PercentageOfUS = 10 })
+                .Select(s => new MarketCoverage { Market = $"Market {s}", MarketCode = s, Rank = s, PercentageOfUS = 10 })
                 .ToList();
 
             var stations = Enumerable.Range(1, 20)

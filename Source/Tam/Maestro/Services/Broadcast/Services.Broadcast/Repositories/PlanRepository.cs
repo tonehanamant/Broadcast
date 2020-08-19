@@ -1731,6 +1731,7 @@ namespace Services.Broadcast.Repositories
                     },
                     MarketDetails = entity.plan_version_pricing_market_details.Select(s => new PlanPricingResultMarketDetailsDto
                     {
+                        MarketName = s.market_name,
                         Rank = s.rank,
                         MarketCoveragePercent = s.market_coverage_percent,
                         Stations = s.stations,

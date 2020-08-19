@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -38,6 +39,7 @@ namespace Services.Broadcast.IntegrationTests
             var json = sw.ToString();
             return json;
         }
+
         public static string ConvertToJsonMoreRounding(object obj, JsonSerializerSettings serializerSettings = null, int placesToRound = 5)
         {
             var jsonSerializer = Newtonsoft.Json.JsonSerializer.Create();
@@ -78,6 +80,15 @@ namespace Services.Broadcast.IntegrationTests
             };
 
             return jsonSettings;
+        }
+
+        public static string GetBroadcastAppFolder()
+        {
+#if DEBUG
+            return Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+#else
+            return BroadcastServiceSystemParameter.BroadcastAppFolder;
+#endif
         }
     }
 }
