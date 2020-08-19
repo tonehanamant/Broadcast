@@ -39,6 +39,7 @@ namespace Services.Broadcast.ApplicationServices
 		protected readonly IStationRepository _StationRepository;
 		protected readonly IMarketCoverageRepository _MarketCoverageRepository;
 		protected readonly IDaypartDefaultRepository _DaypartDefaultRepository;
+		protected readonly IBroadcastAudienceRepository _AudienceRepository;
 		public InventoryProprietarySummaryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
 			IQuarterCalculationEngine quarterCalculationEngine)
 		{
@@ -51,6 +52,7 @@ namespace Services.Broadcast.ApplicationServices
 				.GetDataRepository<IInventoryProprietarySummaryRepository>();
 
 			_MarketCoverageRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
+			_AudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
 		}
 
 		public void AggregateInventoryProprietarySummary(int inventorySourceId, DateTime? startDate, DateTime? endDate)
@@ -179,16 +181,17 @@ namespace Services.Broadcast.ApplicationServices
 				var invPropSummaryList =
 					_InventoryProprietarySummaryRepository.GetInventoryProprietarySummary(
 						QuarterDetails.FirstOrDefault(), summaryDayPartIds);
-
+			
+				var summaryAudianceIds = _AudienceRepository.GetRatingsAudiencesByMaestroAudience(new List<int> { inventoryProprietarySummaryRequest.AudienceId }).Select(am => am.rating_audience_id).Distinct().ToList();
 
 				foreach (var invPropSummary in invPropSummaryList)
 				{
 
 					invPropSummary.ImpressionsTotal = Math.Round(
-						_InventoryProprietarySummaryRepository.GetTotalImpressionsBySummaryIdAndAudienceId(invPropSummary.Id, inventoryProprietarySummaryRequest.AudienceId)
+						_InventoryProprietarySummaryRepository.GetTotalImpressionsBySummaryIdAndAudienceIds(invPropSummary.Id, summaryAudianceIds)
 						);
-
-					invPropSummary.MarketCoverageTotal = _InventoryProprietarySummaryRepository.GetTotalMarketCoverageBySummaryId(invPropSummary.Id);
+					var marketCoverage = _InventoryProprietarySummaryRepository.GetTotalMarketCoverageBySummaryId(invPropSummary.Id);
+					invPropSummary.MarketCoverageTotal = Math.Round(GeneralMath.ConvertFractionToPercentage(marketCoverage), 0); 
 				}
 
 				response.summaries = invPropSummaryList;

@@ -72,7 +72,7 @@ namespace Services.Broadcast.Repositories
 		/// <param name="id"></param>
 		/// <param name="audienceIds"></param>
 		/// <returns></returns>
-		double GetTotalImpressionsBySummaryIdAndAudienceId(int Id, int audienceIds);
+		double GetTotalImpressionsBySummaryIdAndAudienceIds(int Id, List<int> audienceIds);
 		/// <summary>
 		/// Get DayPartIds from Proprietary Summary Table
 		/// </summary>
@@ -286,13 +286,13 @@ namespace Services.Broadcast.Repositories
 					return query.Distinct().ToList();
 				});
 		}
-		public double GetTotalImpressionsBySummaryIdAndAudienceId(int id, int audienceId)
+		public double GetTotalImpressionsBySummaryIdAndAudienceIds(int id, List<int> audienceIds)
 		{
 			return _InReadUncommitedTransaction(
 				context =>
 				{
 					var query = context.inventory_proprietary_summary.Where(x => x.id == id)
-						.Select(x => x.inventory_proprietary_summary_audiences.Where(a=> a.audience_id ==audienceId)
+						.Select(x => x.inventory_proprietary_summary_audiences.Where(a=> audienceIds.Contains( a.audience_id))
 							.GroupBy(y => y.inventory_proprietary_summary_id)
 							.Select(y => y.Sum(z => z.impressions ?? 0))).FirstOrDefault();
 					var entities = query.ToList().FirstOrDefault();

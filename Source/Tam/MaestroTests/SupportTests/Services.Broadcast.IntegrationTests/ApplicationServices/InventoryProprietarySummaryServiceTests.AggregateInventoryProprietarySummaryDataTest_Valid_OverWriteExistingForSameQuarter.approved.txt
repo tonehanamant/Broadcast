@@ -6,7 +6,7 @@
       "DaypartName": "M-SU 4AM-10AM",
       "ImpressionsTotal": 0.0,
       "InventorySourceName": "CNN",
-      "MarketCoverageTotal": 0.294,
+      "MarketCoverageTotal": 29.0,
       "UnitName": "CNN EMN"
     },
     {
@@ -15,7 +15,7 @@
       "DaypartName": "M-SU 8PM-12:05AM",
       "ImpressionsTotal": 0.0,
       "InventorySourceName": "CNN",
-      "MarketCoverageTotal": 0.294,
+      "MarketCoverageTotal": 29.0,
       "UnitName": "CNN LN"
     }
   ],

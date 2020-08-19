@@ -55,7 +55,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
 
 				_InventoryProprietarySummaryService = IntegrationTestApplicationServiceFactory
-					.GetApplicationService<IInventoryProprietarySummaryService>();
+					.GetApplicationService<IInventoryProprietarySummaryService
+					>();
 				_InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(5, StartDate,
 					EndDate);
 				List<PlanDaypartRequest> planReqList = new List<PlanDaypartRequest>
@@ -101,7 +102,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 					new PlanDaypartRequest{DefaultDayPartId= 4, StartTimeSeconds= 14400, EndTimeSeconds=36000}
 				};
 				InventoryProprietarySummaryRequest req = new InventoryProprietarySummaryRequest
-				{ FlightStartDate = StartDate, FlightEndDate = EndDate, PlanDaypartRequests = planReqList, AudienceId = 5 };
+				{ FlightStartDate = StartDate, FlightEndDate = EndDate, PlanDaypartRequests = planReqList, AudienceId = 34 };
 
 				/*** Act ***/
 				var result = _InventoryProprietarySummaryService.GetInventoryProprietarySummaries(req);

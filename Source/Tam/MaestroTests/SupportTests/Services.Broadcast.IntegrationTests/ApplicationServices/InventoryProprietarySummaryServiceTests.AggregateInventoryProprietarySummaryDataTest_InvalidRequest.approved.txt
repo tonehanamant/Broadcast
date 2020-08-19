@@ -1,4 +1,4 @@
 {
   "summaries": null,
-  "ValidationMessage": "Invalid request. More than two quarters for start date: 1/1/2025 12:00:00 AM and end date: 3/31/2025 12:00:00 AM"
+  "ValidationMessage": "Plan flight falls in more than one quarter, please update to select Units"
 }
