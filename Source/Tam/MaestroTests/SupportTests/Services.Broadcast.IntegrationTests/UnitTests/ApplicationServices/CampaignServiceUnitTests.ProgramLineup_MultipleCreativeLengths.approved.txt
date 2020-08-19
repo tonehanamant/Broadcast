@@ -79,7 +79,7 @@
   "DetailedViewRows": [
     {
       "Daypart": "LN",
-      "Days": "W-TH",
+      "Days": "Sa-Su",
       "DMA": "NEW YORK",
       "Genre": "",
       "NetworkAffiliation": "CBS",
@@ -90,7 +90,18 @@
     },
     {
       "Daypart": "LN",
-      "Days": "W-TH",
+      "Days": "Sa-Su",
+      "DMA": "NEW YORK",
+      "Genre": "",
+      "NetworkAffiliation": "CBS",
+      "Program": "FALLBACK PROGRAM",
+      "Rank": 1,
+      "Station": "WTTV",
+      "TimePeriods": "12:03AM-12:05AM"
+    },
+    {
+      "Daypart": "LN",
+      "Days": "M-F",
       "DMA": "NEW YORK",
       "Genre": "NEWS",
       "NetworkAffiliation": "CBS",
@@ -101,7 +112,7 @@
     },
     {
       "Daypart": "EMN",
-      "Days": "M-TU",
+      "Days": "M-F",
       "DMA": "BINGHAMTON",
       "Genre": "MOVIE",
       "NetworkAffiliation": "ABC",
@@ -112,7 +123,7 @@
     },
     {
       "Daypart": "EM",
-      "Days": "F,SU",
+      "Days": "M-Su",
       "DMA": "MACON",
       "Genre": "MOVIE",
       "NetworkAffiliation": "CBS",

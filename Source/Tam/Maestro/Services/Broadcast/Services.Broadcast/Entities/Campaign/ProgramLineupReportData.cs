@@ -1,5 +1,6 @@
 ﻿using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Entities.spotcableXML;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Helpers;
 using System;
@@ -207,13 +208,31 @@ namespace Services.Broadcast.Entities.Campaign
                     DMA = x.MarketGeographyName.ToUpper(),
                     Station = x.StationLegacyCallLetters.ToUpper(),
                     NetworkAffiliation = x.StationAffiliation.ToUpper(),
-                    Days = x.Dayparts.First().ToDayString().ToUpper(),
+                    Days = _CalculateActiveDays(x.Dayparts.First().Days),
                     TimePeriods = string.Join(", ", x.Dayparts.Select(y => y.ToTimeString().ToUpper())),
                     Program = x.ProgramName.ToUpper(),
                     Genre = x.Genre.ToUpper(),
                     Daypart = x.DaypartCode.ToUpper()
                 })
                 .ToList();
+        }
+
+        private string _CalculateActiveDays(List<DayOfWeek> days)
+        {
+            if (!days.Contains(DayOfWeek.Saturday) && !days.Contains(DayOfWeek.Sunday))
+            {
+                return "M-F";
+            }
+            else
+            if (!days.Contains(DayOfWeek.Monday) && !days.Contains(DayOfWeek.Tuesday)
+                && !days.Contains(DayOfWeek.Wednesday) && !days.Contains(DayOfWeek.Thursday)
+                && !days.Contains(DayOfWeek.Friday))
+            {
+                return "Sa-Su";
+            }
+            else
+                return "M-Su";
+
         }
 
         private List<DefaultViewRowDisplay> _MapToDefaultViewRows(IEnumerable<DetailedViewRowData> dataRows, double totalAllocatedImpressions)
@@ -335,8 +354,8 @@ namespace Services.Broadcast.Entities.Campaign
             , double totalAllocatedImpressions)
         {
             return dataRows
-                .GroupBy(x=>new { x.MarketGeographyName, x.Rank })
-                .OrderBy(x=>x.Key.Rank)
+                .GroupBy(x => new { x.MarketGeographyName, x.Rank })
+                .OrderBy(x => x.Key.Rank)
                .Select(x =>
                {
                    var items = x.ToList();

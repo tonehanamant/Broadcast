@@ -59,7 +59,7 @@
     },
     {
       "Daypart": "MDN",
-      "Days": "SA",
+      "Days": "Sa-Su",
       "DMA": "NEW YORK",
       "Genre": "CHILDREN",
       "NetworkAffiliation": "CW",
@@ -70,7 +70,7 @@
     },
     {
       "Daypart": "MDN",
-      "Days": "SU",
+      "Days": "Sa-Su",
       "DMA": "NEW YORK",
       "Genre": "CHILDREN",
       "NetworkAffiliation": "CW",
@@ -92,7 +92,7 @@
     },
     {
       "Daypart": "MDN",
-      "Days": "SA",
+      "Days": "Sa-Su",
       "DMA": "PORTLAND-AUBURN",
       "Genre": "COMEDY",
       "NetworkAffiliation": "FOX",
@@ -103,7 +103,7 @@
     },
     {
       "Daypart": "MDN",
-      "Days": "SU",
+      "Days": "Sa-Su",
       "DMA": "PORTLAND-AUBURN",
       "Genre": "COMEDY",
       "NetworkAffiliation": "FOX",

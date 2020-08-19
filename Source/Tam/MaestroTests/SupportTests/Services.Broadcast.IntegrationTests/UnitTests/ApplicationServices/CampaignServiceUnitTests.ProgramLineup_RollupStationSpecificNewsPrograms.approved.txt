@@ -71,7 +71,7 @@
   "DetailedViewRows": [
     {
       "Daypart": "LN",
-      "Days": "W-TH",
+      "Days": "M-F",
       "DMA": "NEW YORK",
       "Genre": "NEWS",
       "NetworkAffiliation": "CBS",
@@ -82,7 +82,7 @@
     },
     {
       "Daypart": "EMN",
-      "Days": "M-TU",
+      "Days": "M-F",
       "DMA": "BINGHAMTON",
       "Genre": "NEWS",
       "NetworkAffiliation": "ABC",
@@ -93,7 +93,7 @@
     },
     {
       "Daypart": "EM",
-      "Days": "F,SU",
+      "Days": "M-Su",
       "DMA": "MACON",
       "Genre": "NEWS",
       "NetworkAffiliation": "CBS",
@@ -104,7 +104,7 @@
     },
     {
       "Daypart": "EM",
-      "Days": "F,SU",
+      "Days": "M-Su",
       "DMA": "MACON",
       "Genre": "NEWS",
       "NetworkAffiliation": "CBS",

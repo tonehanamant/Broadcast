@@ -2849,8 +2849,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                     Id = 60001,
                                     StartTime = 200,
                                     EndTime = 299,
-                                    Wednesday = true,
-                                    Thursday = true
+                                    Saturday = true
                                 }
                             }
                         }
@@ -2875,8 +2874,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                                     Id = 60001,
                                     StartTime = 200,
                                     EndTime = 299,
-                                    Wednesday = true,
-                                    Thursday = true
+                                    Saturday = true,
+                                    Sunday = true
                                 }
                             }
                         }
