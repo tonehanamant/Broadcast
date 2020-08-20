@@ -1,4 +1,5 @@
 ﻿
+using Common.Services.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +8,7 @@ using System.Linq;
 
 namespace Common.Services
 {
-    public interface IFileService
+    public interface IFileService : IApplicationService
     {
         /// <summary>
         /// Returns a list with the file paths contined in the folder

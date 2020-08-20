@@ -18,6 +18,7 @@ using System.Web;
 using System.Web.Mvc;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.Security;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Unity;
 
 namespace BroadcastComposerWeb.Controllers
@@ -809,5 +810,44 @@ namespace BroadcastComposerWeb.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        [Route("ImportMasterList")]
+        public ActionResult ImportMasterList(HttpPostedFileBase file)
+        {
+            if (file != null && file.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                try
+                {
+                    var service = _ApplicationServiceFactory.GetApplicationService<IFileService>();
+                    const string dirName = "ProgramMappingMasterList";
+                    var appFolderPath = BroadcastServiceSystemParameter.BroadcastAppFolder;;
+                    var completePath = Path.Combine(appFolderPath, dirName);
+                    if (!service.DirectoryExists(completePath))
+                        service.CreateDirectory(completePath);
+                    var pathWithFile = Path.Combine(completePath, fileName);
+                    if (service.Exists(pathWithFile))
+                        service.Delete(pathWithFile);
+                    service.Create(pathWithFile, file.InputStream);
+                }
+                catch (Exception exception)
+                {
+                    TempData["Message"] = exception.Message;
+
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                TempData["Message"] = "Invalid file";
+
+                return RedirectToAction("Index");
+            }
+
+            TempData["Message"] = "Upload sucessful!";
+
+            return RedirectToAction("Index");
+        }      
     }
 }
