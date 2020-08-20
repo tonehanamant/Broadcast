@@ -270,7 +270,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _UpdateCampaignLastModified(plan.CampaignId, createdDate, createdBy);
 
             _SetPlanPricingParameters(plan);
-            _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
 
             // We only aggregate data for versions, not drafts.
             if (!plan.IsDraft)
@@ -284,8 +283,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     {
                         _PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate, createdBy);
                     }
-                }                
-                
+                    else if (plan.VersionNumber > 1)
+                    {
+                        _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
+                    }
+                }
+                else
+                {
+                    _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
+                }
+            }
+            else
+            {
+                _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
             }
 
             return plan.Id;
