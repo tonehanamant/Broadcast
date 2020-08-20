@@ -792,7 +792,6 @@ GO
 /*************************************** START BP-1088 *****************************************************/
 /***************************************  Create Table SQL and Seed Data *****************************************************/
 
-select * from  inventory_proprietary_program_names
 IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE OBJECT_ID = OBJECT_ID('inventory_proprietary_program_names'))
 BEGIN
 	CREATE TABLE inventory_proprietary_program_names (
@@ -921,7 +920,7 @@ INSERT INTO [dbo].[inventory_proprietary_program_names]
      VALUES (3 ,22,'Syndication','ROS Syndication','Admin',GETDATE(),'Admin',GETDATE())
 
 END
-
+GO
 /*************************************** END BP-1088 *****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
