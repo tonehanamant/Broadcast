@@ -3,6 +3,8 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Text;
+// Don't remove this import, or it will fail in the build.
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.IntegrationTests
 {
