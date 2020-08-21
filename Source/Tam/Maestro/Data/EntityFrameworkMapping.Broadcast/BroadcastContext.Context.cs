@@ -224,5 +224,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<program_name_mapping_keywords> program_name_mapping_keywords { get; set; }
         public virtual DbSet<show_type_mappings> show_type_mappings { get; set; }
         public virtual DbSet<inventory_proprietary_program_names> inventory_proprietary_program_names { get; set; }
+        public virtual DbSet<show_type_mappings> show_type_mappings { get; set; }
     }
 }

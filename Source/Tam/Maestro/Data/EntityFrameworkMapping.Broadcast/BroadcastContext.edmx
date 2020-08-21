@@ -2154,6 +2154,18 @@
           <Property Name="created_date" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
         </EntityType>
+        <EntityType Name="show_type_mappings">
+          <Key>
+            <PropertyRef Name="maestro_show_type_id" />
+            <PropertyRef Name="mapped_show_type_id" />
+          </Key>
+          <Property Name="maestro_show_type_id" Type="int" Nullable="false" />
+          <Property Name="mapped_show_type_id" Type="int" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="modified_date" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="show_types">
           <Key>
             <PropertyRef Name="id" />
@@ -2164,6 +2176,7 @@
           <Property Name="created_date" Type="datetime" Nullable="false" />
           <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="modified_date" Type="datetime" Nullable="false" />
+          <Property Name="program_source_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="spot_length_cost_multipliers">
           <Key>
@@ -2394,7 +2407,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -2563,7 +2576,7 @@ warning 6002: The table/view 'broadcast.dbo.station_inventory_manifest_weeks_his
           <Property Name="vpvh_file_id" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -2591,7 +2604,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <Property Name="daypart_text" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="total_hours" Type="float" Nullable="false" />
         </EntityType>
-        <Association Name="FK__genre_map__maest__7E8CC4B1">
+        <Association Name="FK__genre_map__maest__27114E05">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2603,7 +2616,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__genre_map__mappe__7F80E8EA">
+        <Association Name="FK__genre_map__mappe__2805723E">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2615,7 +2628,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__plan_vers__genre__546180BB">
+        <Association Name="FK__plan_vers__genre__6CAFA246">
           <End Role="genres" Type="Self.genres" Multiplicity="0..1" />
           <End Role="plan_version_daypart_program_restrictions" Type="Self.plan_version_daypart_program_restrictions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -5765,6 +5778,30 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_show_type_mappings_show_types_maestro">
+          <End Role="show_types" Type="Self.show_types" Multiplicity="1" />
+          <End Role="show_type_mappings" Type="Self.show_type_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="show_types">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="show_type_mappings">
+              <PropertyRef Name="maestro_show_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_show_type_mappings_show_types_mapped">
+          <End Role="show_types" Type="Self.show_types" Multiplicity="1" />
+          <End Role="show_type_mappings" Type="Self.show_type_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="show_types">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="show_type_mappings">
+              <PropertyRef Name="mapped_show_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_spot_length_cost_multipliers_spot_lengths">
           <End Role="spot_lengths" Type="Self.spot_lengths" Multiplicity="1" />
           <End Role="spot_length_cost_multipliers" Type="Self.spot_length_cost_multipliers" Multiplicity="*" />
@@ -6670,6 +6707,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <EntitySet Name="scx_generation_job_units" EntityType="Self.scx_generation_job_units" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="scx_generation_jobs" EntityType="Self.scx_generation_jobs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="shared_folder_files" EntityType="Self.shared_folder_files" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="show_type_mappings" EntityType="Self.show_type_mappings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="show_types" EntityType="Self.show_types" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="spot_length_cost_multipliers" EntityType="Self.spot_length_cost_multipliers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="spot_lengths" EntityType="Self.spot_lengths" Schema="dbo" store:Type="Tables" />
@@ -6731,15 +6769,15 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
     [vw_ccc_daypart].[total_hours] AS [total_hours]
     FROM [dbo].[vw_ccc_daypart] AS [vw_ccc_daypart]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__genre_map__maest__7E8CC4B1" Association="Self.FK__genre_map__maest__7E8CC4B1">
+          <AssociationSet Name="FK__genre_map__maest__27114E05" Association="Self.FK__genre_map__maest__27114E05">
             <End Role="genres" EntitySet="genres" />
             <End Role="genre_mappings" EntitySet="genre_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK__genre_map__mappe__7F80E8EA" Association="Self.FK__genre_map__mappe__7F80E8EA">
+          <AssociationSet Name="FK__genre_map__mappe__2805723E" Association="Self.FK__genre_map__mappe__2805723E">
             <End Role="genres" EntitySet="genres" />
             <End Role="genre_mappings" EntitySet="genre_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK__plan_vers__genre__546180BB" Association="Self.FK__plan_vers__genre__546180BB">
+          <AssociationSet Name="FK__plan_vers__genre__6CAFA246" Association="Self.FK__plan_vers__genre__6CAFA246">
             <End Role="genres" EntitySet="genres" />
             <End Role="plan_version_daypart_program_restrictions" EntitySet="plan_version_daypart_program_restrictions" />
           </AssociationSet>
@@ -7722,6 +7760,14 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <AssociationSet Name="FK_scx_generation_jobs_inventory_sources" Association="Self.FK_scx_generation_jobs_inventory_sources">
             <End Role="inventory_sources" EntitySet="inventory_sources" />
             <End Role="scx_generation_jobs" EntitySet="scx_generation_jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_show_type_mappings_show_types_maestro" Association="Self.FK_show_type_mappings_show_types_maestro">
+            <End Role="show_types" EntitySet="show_types" />
+            <End Role="show_type_mappings" EntitySet="show_type_mappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_show_type_mappings_show_types_mapped" Association="Self.FK_show_type_mappings_show_types_mapped">
+            <End Role="show_types" EntitySet="show_types" />
+            <End Role="show_type_mappings" EntitySet="show_type_mappings" />
           </AssociationSet>
           <AssociationSet Name="FK_spot_length_cost_multipliers_spot_lengths" Association="Self.FK_spot_length_cost_multipliers_spot_lengths">
             <End Role="spot_lengths" EntitySet="spot_lengths" />
@@ -9383,6 +9429,15 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="inventory_sources" EntitySet="inventory_sources" />
             <End Role="inventory_proprietary_program_names" EntitySet="inventory_proprietary_program_names" />
           </AssociationSet>
+          <EntitySet Name="show_type_mappings" EntityType="BroadcastModel.show_type_mappings" />
+          <AssociationSet Name="FK_show_type_mappings_show_types_maestro" Association="BroadcastModel.FK_show_type_mappings_show_types_maestro">
+            <End Role="show_types" EntitySet="show_types" />
+            <End Role="show_type_mappings" EntitySet="show_type_mappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_show_type_mappings_show_types_mapped" Association="BroadcastModel.FK_show_type_mappings_show_types_mapped">
+            <End Role="show_types" EntitySet="show_types" />
+            <End Role="show_type_mappings" EntitySet="show_type_mappings" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -10726,6 +10781,9 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <NavigationProperty Name="program_name_mappings" Relationship="BroadcastModel.FK_program_name_mappings_show_types" FromRole="show_types" ToRole="program_name_mappings" />
           <NavigationProperty Name="program_name_exceptions" Relationship="BroadcastModel.FK_program_name_exceptions_show_types" FromRole="show_types" ToRole="program_name_exceptions" />
           <NavigationProperty Name="program_name_mapping_keywords" Relationship="BroadcastModel.FK_program_name_mapping_keywords_show_types" FromRole="show_types" ToRole="program_name_mapping_keywords" />
+          <Property Name="program_source_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="show_type_mappings" Relationship="BroadcastModel.FK_show_type_mappings_show_types_maestro" FromRole="show_types" ToRole="show_type_mappings" />
+          <NavigationProperty Name="show_type_mappings1" Relationship="BroadcastModel.FK_show_type_mappings_show_types_mapped" FromRole="show_types" ToRole="show_type_mappings" />
         </EntityType>
         <Association Name="FK_proposal_version_detail_criteria_show_types_show_types">
           <End Type="BroadcastModel.show_types" Role="show_types" Multiplicity="1">
@@ -16428,6 +16486,44 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="show_type_mappings">
+          <Key>
+            <PropertyRef Name="maestro_show_type_id" />
+            <PropertyRef Name="mapped_show_type_id" />
+          </Key>
+          <Property Name="maestro_show_type_id" Type="Int32" Nullable="false" />
+          <Property Name="mapped_show_type_id" Type="Int32" Nullable="false" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="maestro_show_types" Relationship="BroadcastModel.FK_show_type_mappings_show_types_maestro" FromRole="show_type_mappings" ToRole="show_types" />
+          <NavigationProperty Name="mapped_show_types" Relationship="BroadcastModel.FK_show_type_mappings_show_types_mapped" FromRole="show_type_mappings" ToRole="show_types" />
+        </EntityType>
+        <Association Name="FK_show_type_mappings_show_types_maestro">
+          <End Type="BroadcastModel.show_types" Role="show_types" Multiplicity="1" />
+          <End Type="BroadcastModel.show_type_mappings" Role="show_type_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="show_types">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="show_type_mappings">
+              <PropertyRef Name="maestro_show_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_show_type_mappings_show_types_mapped">
+          <End Type="BroadcastModel.show_types" Role="show_types" Multiplicity="1" />
+          <End Type="BroadcastModel.show_type_mappings" Role="show_type_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="show_types">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="show_type_mappings">
+              <PropertyRef Name="mapped_show_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -17083,6 +17179,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <EntitySetMapping Name="show_types">
             <EntityTypeMapping TypeName="BroadcastModel.show_types">
               <MappingFragment StoreEntitySet="show_types">
+                <ScalarProperty Name="program_source_id" ColumnName="program_source_id" />
                 <ScalarProperty Name="modified_date" ColumnName="modified_date" />
                 <ScalarProperty Name="modified_by" ColumnName="modified_by" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
@@ -19181,6 +19278,18 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
                 <ScalarProperty Name="daypart_default_id" ColumnName="daypart_default_id" />
                 <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="show_type_mappings">
+            <EntityTypeMapping TypeName="BroadcastModel.show_type_mappings">
+              <MappingFragment StoreEntitySet="show_type_mappings">
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="mapped_show_type_id" ColumnName="mapped_show_type_id" />
+                <ScalarProperty Name="maestro_show_type_id" ColumnName="maestro_show_type_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
