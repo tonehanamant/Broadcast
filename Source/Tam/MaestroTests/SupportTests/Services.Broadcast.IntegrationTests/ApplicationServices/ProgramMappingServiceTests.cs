@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using ApprovalTests;
 using ApprovalTests.Reporters;
 using NUnit.Framework;
@@ -57,7 +58,17 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = _ProgramMappingService.GetCleanPrograms(input);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetUnmappedProgramsTest()
+        {
+            var result = _ProgramMappingService.GetUnmappedPrograms();
+
+            // Take 100 programs only otherwise the result file is too big and the file comparer
+            // is not able to compare the results.
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Take(100)));
         }
     }
 }

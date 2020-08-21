@@ -1422,7 +1422,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>List of LookupDto objects</returns>
         public List<LookupDto> FindShowType(string showTypeSearchString)
         {
-            return _ShowTypeReporitory.FindShowType(showTypeSearchString);
+            return _ShowTypeReporitory.FindMaestroShowType(showTypeSearchString);
         }
 
         public List<LookupDto> FindPrograms(ProgramSearchRequest request, string requestUrl)

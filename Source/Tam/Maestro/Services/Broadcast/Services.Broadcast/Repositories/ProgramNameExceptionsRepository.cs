@@ -28,7 +28,7 @@ namespace Services.Broadcast.Repositories
 		/// <inheritdoc />
 		public List<ProgramNameExceptionDto> GetProgramExceptions()
 		{
-			const ProgramSourceEnum programSource = ProgramSourceEnum.Mapped;
+			const ProgramSourceEnum programSource = ProgramSourceEnum.Maestro;
 
 			return _InReadUncommitedTransaction(
 				context =>

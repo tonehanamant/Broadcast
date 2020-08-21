@@ -51,7 +51,7 @@ namespace Services.Broadcast.Cache
                     .ToDictionary(x => x.SourceGenreId, x => x.MaestroGenreId);
             }
 
-            _MaestroGenresByName = _GenresByNamesBySource[ProgramSourceEnum.Mapped];
+            _MaestroGenresByName = _GenresByNamesBySource[ProgramSourceEnum.Maestro];
 
             _GenresByIds = genres.ToDictionary(x => x.Id, x => x);
         }

@@ -14,7 +14,8 @@
         "OfficialProgramName": "10 NEWS",
         "OfficialShowType": {
           "Id": 1,
-          "Name": "News"
+          "Name": "News",
+          "ShowTypeSource": 1
         },
         "OriginalProgramName": "10 NEWS 6PM"
       }

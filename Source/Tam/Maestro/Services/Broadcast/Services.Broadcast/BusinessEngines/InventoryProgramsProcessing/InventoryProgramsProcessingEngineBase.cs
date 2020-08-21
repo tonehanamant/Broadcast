@@ -205,7 +205,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         public string ImportInventoryProgramResults(Stream fileStream, string fileName)
         {
-            const ProgramSourceEnum PROGRAM_SOURCE = ProgramSourceEnum.Forecasted;
+            const ProgramSourceEnum PROGRAM_SOURCE = ProgramSourceEnum.Master;
             //var success = false;
             var stopWatch = new Stopwatch();
             stopWatch.Start();
@@ -572,7 +572,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
                 foreach (var manifestDaypart in manifest.ManifestDayparts)
                 {
                     // does the manifest daypart have mapped programs?
-                    if (manifestDaypart.Programs.Any(p => p.ProgramSourceId.Equals((int)ProgramSourceEnum.Mapped)))
+                    if (manifestDaypart.Programs.Any(p => p.ProgramSourceId.Equals((int)ProgramSourceEnum.Maestro)))
                     {
                         alreadyMappedCount++;
                         continue;
@@ -984,7 +984,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         protected StationInventoryManifestDaypartProgram _MapProgramDto(GuideResponseProgramDto guideProgram, int manifestDaypartId,
             InventoryProgramsRequestPackage requestPackage)
         {
-            const ProgramSourceEnum PROGRAM_SOURCE = ProgramSourceEnum.Forecasted;
+            const ProgramSourceEnum PROGRAM_SOURCE = ProgramSourceEnum.Master;
 
             var sourceGenre = _GenreCache.GetSourceGenreByName(guideProgram.SourceGenre, PROGRAM_SOURCE);
             var maestroGenre = _GenreCache.GetMaestroGenreBySourceGenre(sourceGenre, PROGRAM_SOURCE);

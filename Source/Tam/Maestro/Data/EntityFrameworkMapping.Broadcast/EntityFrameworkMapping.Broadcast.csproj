@@ -816,6 +816,9 @@
     <Compile Include="show_types.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="show_type_mappings.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="spot_lengths.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

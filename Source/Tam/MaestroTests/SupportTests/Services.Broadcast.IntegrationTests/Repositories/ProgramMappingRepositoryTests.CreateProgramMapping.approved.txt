@@ -12,7 +12,8 @@
     "OfficialProgramName": "TestOfficialProgramName",
     "OfficialShowType": {
       "Id": 1,
-      "Name": "Mini-Movie"
+      "Name": "Mini-Movie",
+      "ShowTypeSource": 1
     },
     "OriginalProgramName": "TestOriginalProgramName"
   }

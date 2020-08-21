@@ -382,7 +382,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 	        var createdBy = "testUser";
 	        var createdAt = new DateTime(2020, 10, 17, 8, 32, 12);
 	        var genre = _GenreCache.GetMaestroGenreByName("News");
-	        var showType = _ShowTypeCache.GetShowTypeByName("Mini-Movie");
+	        var showType = _ShowTypeCache.GetMaestroShowTypeLookupDtoByName("Mini-Movie");
 	        var newProgramMapping = new ProgramMappingsDto
 	        {
 		        OriginalProgramName = "TestOriginalProgramName",

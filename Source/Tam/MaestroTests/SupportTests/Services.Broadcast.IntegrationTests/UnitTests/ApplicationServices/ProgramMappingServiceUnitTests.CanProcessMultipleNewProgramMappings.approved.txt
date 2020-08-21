@@ -14,7 +14,8 @@
         "OfficialProgramName": "10 NEWS",
         "OfficialShowType": {
           "Id": 1,
-          "Name": "News"
+          "Name": "News",
+          "ShowTypeSource": 1
         },
         "OriginalProgramName": "10 NEWS 6PM"
       },
@@ -31,7 +32,8 @@
         "OfficialProgramName": "NBC4 NEWS",
         "OfficialShowType": {
           "Id": 1,
-          "Name": "News"
+          "Name": "News",
+          "ShowTypeSource": 1
         },
         "OriginalProgramName": "NBC 4 NEWS AT 5P WKND"
       },
@@ -48,7 +50,8 @@
         "OfficialProgramName": "WVLT NEWS",
         "OfficialShowType": {
           "Id": 1,
-          "Name": "News"
+          "Name": "News",
+          "ShowTypeSource": 1
         },
         "OriginalProgramName": "WVLT NEWS SUN 6:30P"
       }

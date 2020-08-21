@@ -22,7 +22,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<LookupDto> GetShowTypes()
         {
-            return _ShowTypeRepository.GetShowTypes();
+            return _ShowTypeRepository.GetMaestroShowTypesLookupDto();
         }
     }
 }

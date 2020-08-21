@@ -118,20 +118,38 @@ namespace Services.Broadcast.Converters
     {
         private TextFieldParser _Parser;
         private string[] _CurrentRow;
+        private string[] _Delimiters = new string[] { "," };
+        private bool _ThrowExceptions = true;
+        private List<Exception> _Exceptions = new List<Exception>();
 
         public CsvFileReader(List<string> headers) : base()
         {
             _Headers = headers;
         }
 
+        public CsvFileReader(List<string> headers, string[] delimiters) : base()
+        {
+            _Headers = headers;
+            _Delimiters = delimiters;
+        }
+
+        public CsvFileReader(List<string> headers, string[] delimiters, bool throwExceptions) : base()
+        {
+            _Headers = headers;
+            _Delimiters = delimiters;
+            _ThrowExceptions = throwExceptions;
+        }
+
         public override IDisposable Initialize(Stream rawStream)
         {
             _Parser = new TextFieldParser(rawStream);
+
             if (_Parser.EndOfData)
             {
                 throw new Exception("Empty file not supported.");
             }
-            _Parser.SetDelimiters(new string[] { "," });
+
+            _Parser.SetDelimiters(_Delimiters);
 
             NextRow();  // point to header row
             _SetupHeadersValidateSheet();
@@ -156,7 +174,19 @@ namespace Services.Broadcast.Converters
 
         public override void NextRow()
         {
-            _CurrentRow = _Parser.ReadFields();
+            try
+            {
+                _CurrentRow = _Parser.ReadFields();
+                
+            }
+            catch (Exception exception)
+            {
+                _Exceptions.Add(exception);
+
+                if (_ThrowExceptions)
+                    throw;
+            }
+
             base.NextRow();
         }
 

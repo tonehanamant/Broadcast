@@ -28,16 +28,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var engine = new InventoryExportEngine();
             var items = new List<InventoryExportDto>();
             // item 1 - forecasted
-            items.Add(_GetInventoryExportDto(1, 1, 1, 1,  10000, 20, "One", "One", ProgramSourceEnum.Forecasted, 33));
-            items.Add(_GetInventoryExportDto(1, 2, 1, 1, 10000, 20, "One", "One", ProgramSourceEnum.Forecasted, 33));
-            items.Add(_GetInventoryExportDto(1, 3, 1, 1, 10000, 20, "One", "One", ProgramSourceEnum.Forecasted, 33));
+            items.Add(_GetInventoryExportDto(1, 1, 1, 1,  10000, 20, "One", "One", ProgramSourceEnum.Master, 33));
+            items.Add(_GetInventoryExportDto(1, 2, 1, 1, 10000, 20, "One", "One", ProgramSourceEnum.Master, 33));
+            items.Add(_GetInventoryExportDto(1, 3, 1, 1, 10000, 20, "One", "One", ProgramSourceEnum.Master, 33));
             // item 2 -  Mapped
-            items.Add(_GetInventoryExportDto(2, 1, 2, 2, 10000, 20, "Two", "Two", ProgramSourceEnum.Mapped, 33));
-            items.Add(_GetInventoryExportDto(2, 2, 2, 2, 10000, 20, "Two", "Two", ProgramSourceEnum.Mapped, 33));
-            items.Add(_GetInventoryExportDto(2, 3, 2, 2, 10000, 20, "Two", "Two", ProgramSourceEnum.Mapped, 33));
+            items.Add(_GetInventoryExportDto(2, 1, 2, 2, 10000, 20, "Two", "Two", ProgramSourceEnum.Maestro, 33));
+            items.Add(_GetInventoryExportDto(2, 2, 2, 2, 10000, 20, "Two", "Two", ProgramSourceEnum.Maestro, 33));
+            items.Add(_GetInventoryExportDto(2, 3, 2, 2, 10000, 20, "Two", "Two", ProgramSourceEnum.Maestro, 33));
             // item 3 - Doesn't have all three weeks
-            items.Add(_GetInventoryExportDto(3, 2, 3, 3, 10000, 20, "Three", "Three", ProgramSourceEnum.Mapped, 33));
-            items.Add(_GetInventoryExportDto(3, 3, 3, 3, 10000, 20, "Three", "Three", ProgramSourceEnum.Mapped, 33));
+            items.Add(_GetInventoryExportDto(3, 2, 3, 3, 10000, 20, "Three", "Three", ProgramSourceEnum.Maestro, 33));
+            items.Add(_GetInventoryExportDto(3, 3, 3, 3, 10000, 20, "Three", "Three", ProgramSourceEnum.Maestro, 33));
 
             var result = engine.Calculate(items);
 
@@ -150,23 +150,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             var testItems = new List<InventoryExportLineDetail>();
             // full and mapped
-            testItems.Add(_GetInventoryExportLineDetail(1, 1, 1, "one", "one", ProgramSourceEnum.Mapped, 33, manyAudiences, testWeeks));
+            testItems.Add(_GetInventoryExportLineDetail(1, 1, 1, "one", "one", ProgramSourceEnum.Maestro, 33, manyAudiences, testWeeks));
             // full and enriched
-            testItems.Add(_GetInventoryExportLineDetail(2, 2, 1, "two", "two", ProgramSourceEnum.Forecasted, 33, manyAudiences, testWeeks));
+            testItems.Add(_GetInventoryExportLineDetail(2, 2, 1, "two", "two", ProgramSourceEnum.Master, 33, manyAudiences, testWeeks));
             // full and not mapped
             testItems.Add(_GetInventoryExportLineDetail(3, 3, 1, "three", null, null, null, manyAudiences, testWeeks));
             // less audiences
-            testItems.Add(_GetInventoryExportLineDetail(4, 4, 1, "four", "four", ProgramSourceEnum.Mapped, 33, oneAudience, testWeeks));
+            testItems.Add(_GetInventoryExportLineDetail(4, 4, 1, "four", "four", ProgramSourceEnum.Maestro, 33, oneAudience, testWeeks));
             // less weeks
-            testItems.Add(_GetInventoryExportLineDetail(5, 5, 1, "five", "five", ProgramSourceEnum.Mapped, 33, manyAudiences, testWeeksSansLast));
-            testItems.Add(_GetInventoryExportLineDetail(6, 6, 1, "six", "six", ProgramSourceEnum.Mapped, 33, manyAudiences, testWeeksSansFirst));
-            testItems.Add(_GetInventoryExportLineDetail(7, 7, 1, "seven", "seven", ProgramSourceEnum.Mapped, 33, manyAudiences, testWeeksSansMiddle));
+            testItems.Add(_GetInventoryExportLineDetail(5, 5, 1, "five", "five", ProgramSourceEnum.Maestro, 33, manyAudiences, testWeeksSansLast));
+            testItems.Add(_GetInventoryExportLineDetail(6, 6, 1, "six", "six", ProgramSourceEnum.Maestro, 33, manyAudiences, testWeeksSansFirst));
+            testItems.Add(_GetInventoryExportLineDetail(7, 7, 1, "seven", "seven", ProgramSourceEnum.Maestro, 33, manyAudiences, testWeeksSansMiddle));
             // Market has comma
-            testItems.Add(_GetInventoryExportLineDetail(8, 8, 1, "eight", "eight", ProgramSourceEnum.Mapped, 33, manyAudiences, testWeeks));
+            testItems.Add(_GetInventoryExportLineDetail(8, 8, 1, "eight", "eight", ProgramSourceEnum.Maestro, 33, manyAudiences, testWeeks));
             // Market has quote
-            testItems.Add(_GetInventoryExportLineDetail(9, 9, 1, "nine", "nine", ProgramSourceEnum.Mapped, 33, manyAudiences, testWeeks));
+            testItems.Add(_GetInventoryExportLineDetail(9, 9, 1, "nine", "nine", ProgramSourceEnum.Maestro, 33, manyAudiences, testWeeks));
             // daypart has comma
-            testItems.Add(_GetInventoryExportLineDetail(10, 10, 2, "ten", "ten", ProgramSourceEnum.Mapped, 33, manyAudiences, testWeeks));
+            testItems.Add(_GetInventoryExportLineDetail(10, 10, 2, "ten", "ten", ProgramSourceEnum.Maestro, 33, manyAudiences, testWeeks));
 
             var stations = Enumerable.Range(1, 11).Select(i => new DisplayBroadcastStation {Id = i, LegacyCallLetters = $"Station{i}", MarketCode = i, Affiliation = $"AFF{i}"}).ToList();
 
@@ -225,11 +225,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             };
 
             var testItems = new List<InventoryExportLineDetail>();
-            testItems.Add(_GetInventoryExportLineDetail(1, 1, 1, "one", "one", ProgramSourceEnum.Mapped, 33, testAudiences, testWeeks));
+            testItems.Add(_GetInventoryExportLineDetail(1, 1, 1, "one", "one", ProgramSourceEnum.Maestro, 33, testAudiences, testWeeks));
             // Unknown Station
-            testItems.Add(_GetInventoryExportLineDetail(2, 4, 1, "two", "two", ProgramSourceEnum.Mapped, 33, testAudiences, testWeeks));
+            testItems.Add(_GetInventoryExportLineDetail(2, 4, 1, "two", "two", ProgramSourceEnum.Maestro, 33, testAudiences, testWeeks));
             // Unknown Market
-            testItems.Add(_GetInventoryExportLineDetail(3, 5, 1, "three", "three", ProgramSourceEnum.Mapped, 33, testAudiences, testWeeks));
+            testItems.Add(_GetInventoryExportLineDetail(3, 5, 1, "three", "three", ProgramSourceEnum.Maestro, 33, testAudiences, testWeeks));
 
             var stations = new List<DisplayBroadcastStation>
             {
@@ -286,9 +286,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             };
 
             var testItems = new List<InventoryExportLineDetail>();
-            testItems.Add(_GetInventoryExportLineDetail(1, 1, 1, "one", "one", ProgramSourceEnum.Mapped, 33, testAudiences, testWeeks));
+            testItems.Add(_GetInventoryExportLineDetail(1, 1, 1, "one", "one", ProgramSourceEnum.Maestro, 33, testAudiences, testWeeks));
             // unknown daypart
-            testItems.Add(_GetInventoryExportLineDetail(2, 1, 666, "two", "two", ProgramSourceEnum.Mapped, 33, testAudiences, testWeeks));
+            testItems.Add(_GetInventoryExportLineDetail(2, 1, 666, "two", "two", ProgramSourceEnum.Maestro, 33, testAudiences, testWeeks));
 
             var stations = new List<DisplayBroadcastStation>
             {

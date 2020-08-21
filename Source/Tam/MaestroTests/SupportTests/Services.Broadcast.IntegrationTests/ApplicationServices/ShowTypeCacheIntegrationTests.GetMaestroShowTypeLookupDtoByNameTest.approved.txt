@@ -1,0 +1,50 @@
+[
+  {
+    "Display": "Mini-Movie",
+    "Id": 1
+  },
+  {
+    "Display": "Miscellaneous",
+    "Id": 2
+  },
+  {
+    "Display": "Movie",
+    "Id": 3
+  },
+  {
+    "Display": "News",
+    "Id": 4
+  },
+  {
+    "Display": "Off Air",
+    "Id": 5
+  },
+  {
+    "Display": "Paid Programming",
+    "Id": 6
+  },
+  {
+    "Display": "Series",
+    "Id": 7
+  },
+  {
+    "Display": "Special",
+    "Id": 8
+  },
+  {
+    "Display": "Special Event",
+    "Id": 9
+  },
+  {
+    "Display": "Sports",
+    "Id": 10
+  },
+  {
+    "Display": "TBA Movie",
+    "Id": 11
+  },
+  {
+    "Display": "To Be Announced",
+    "Id": 12
+  }
+]

@@ -24,6 +24,7 @@ using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping.Entities;
 using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping;
 using Services.Broadcast.Entities.spotcableXML;
+using Services.Broadcast.Converters;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -89,6 +90,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProgramsSearchApiClient _ProgramsSearchApiClient;
         private readonly IProgramMappingCleanupEngine _ProgramCleanupEngine;
         private readonly IProgramNameMappingKeywordRepository _ProgramNameMappingKeywordRepository;
+        private readonly IMasterProgramListImporter _MasterProgramListImporter;
         private const string MISC_SHOW_TYPE = "Miscellaneous";
         private const string UnmappedProgramReportFileName = "UnmappedProgramReport.xlsx";
         private const float MATCH_EXACT = 1;
@@ -102,7 +104,8 @@ namespace Services.Broadcast.ApplicationServices
             IGenreCache genreCache,
             IShowTypeCache showTypeCache,
             IProgramsSearchApiClient programsSearchApiClient,
-            IProgramMappingCleanupEngine programMappingCleanupEngine)
+            IProgramMappingCleanupEngine programMappingCleanupEngine,
+            IMasterProgramListImporter masterListImporter)
         {
             _BackgroundJobClient = backgroundJobClient;
             _ProgramMappingRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramMappingRepository>();
@@ -115,6 +118,7 @@ namespace Services.Broadcast.ApplicationServices
             _ShowTypeCache = showTypeCache;
             _ProgramsSearchApiClient = programsSearchApiClient;
             _ProgramCleanupEngine = programMappingCleanupEngine;
+            _MasterProgramListImporter = masterListImporter;
         }
 
         /// <inheritdoc />
@@ -134,7 +138,6 @@ namespace Services.Broadcast.ApplicationServices
             // Hand off to a background job
             var hangfireJobId = _BackgroundJobClient.Enqueue<IProgramMappingService>(x => x.RunProgramMappingsProcessingJob(fileId, userName, createdDate));
             return hangfireJobId;
-
         }
 
         public void RunProgramMappingsProcessingJob(Guid fileId, string userName, DateTime createdDate)
@@ -204,9 +207,7 @@ namespace Services.Broadcast.ApplicationServices
             DateTime createdDate,
             string username)
         {
-
             var existingProgramMappingByOriginalProgramName = _GetExistingProgramMappings(programMappings);
-
 
             _FindNewAndUpdatedProgramMappings(
                 programMappings,
@@ -243,16 +244,16 @@ namespace Services.Broadcast.ApplicationServices
                 if (existingProgramMappingByOriginalProgramName.TryGetValue(mapping.OriginalProgramName, out var existingMapping))
                 {
                     var genre = _GenreCache.GetMaestroGenreByName(mapping.OfficialGenre);
-                    var showType = _ShowTypeCache.GetShowTypeByName(mapping.OfficialShowType);
+                    var showType = _ShowTypeCache.GetMaestroShowTypeByName(mapping.OfficialShowType);
 
                     // if there are changes for an existing mapping
                     if (existingMapping.OfficialProgramName != mapping.OfficialProgramName ||
                         existingMapping.OfficialGenre.Name != genre.Name ||
-                        existingMapping.OfficialShowType.Name != showType.Display)
+                        existingMapping.OfficialShowType.Name != showType.Name)
                     {
                         existingMapping.OfficialProgramName = mapping.OfficialProgramName;
                         existingMapping.OfficialGenre = genre;
-                        existingMapping.OfficialShowType = _MapToShowTypeDto(showType);
+                        existingMapping.OfficialShowType = showType;
 
                         updatedProgramMappings.Add(existingMapping);
                     }
@@ -264,7 +265,7 @@ namespace Services.Broadcast.ApplicationServices
                         OriginalProgramName = mapping.OriginalProgramName,
                         OfficialProgramName = mapping.OfficialProgramName,
                         OfficialGenre = _GenreCache.GetMaestroGenreByName(mapping.OfficialGenre),
-                        OfficialShowType = _MapToShowTypeDto(_ShowTypeCache.GetShowTypeByName(mapping.OfficialShowType))
+                        OfficialShowType = _ShowTypeCache.GetMaestroShowTypeByName(mapping.OfficialShowType)
                     };
 
                     newProgramMappings.Add(newProgramMapping);
@@ -293,7 +294,7 @@ namespace Services.Broadcast.ApplicationServices
                 .ToList();
         }
 
-        protected string _GetProgramMappingsDirectoryPath()
+        public string _GetProgramMappingsDirectoryPath()
         {
             const string dirName = "ProgramMappings";
             var appFolderPath = _GetBroadcastAppFolder();
@@ -321,7 +322,6 @@ namespace Services.Broadcast.ApplicationServices
             durationSw.Stop();
             _LogInfo($"Processing of the program mapping file {reportData.ExportFileName}, finished successfully with count {programNames.Count} in {durationSw.ElapsedMilliseconds} ms.");
 
-
             return report;
         }
 
@@ -338,11 +338,53 @@ namespace Services.Broadcast.ApplicationServices
 
             var cleanPrograms = GetCleanPrograms(programNames);
 
-            var result = _MatchExistingMappings(cleanPrograms).OrderByDescending(p => p.MatchConfidence).ToList();
+            var programsMatchedWithMapping = _MatchExistingMappings(cleanPrograms).OrderByDescending(p => p.MatchConfidence).ToList();
+
+            var result = _MatchAgainstMasterList(programsMatchedWithMapping);
 
             _MatchProgramByKeyword(result);
 
             return result;
+        }
+
+        private List<UnmappedProgram> _MatchAgainstMasterList(List<UnmappedProgram> programs)
+        {
+            var programMappings = GetMasterProgramList();
+
+            foreach (var program in programs.Where(p => p.MatchConfidence == MATCH_NOT_FOUND))
+            {
+                var foundMapping = programMappings
+                    .Where(m => m.OfficialProgramName.Equals(program.ProgramName, StringComparison.OrdinalIgnoreCase))
+                    .FirstOrDefault();
+
+                if (foundMapping != null)
+                {
+                    program.MatchedName = foundMapping.OfficialProgramName;
+                    program.Genre = foundMapping.OfficialGenre.Name;
+                    program.ShowType = foundMapping.OfficialShowType.Name;
+                    program.MatchConfidence = 1;
+                }
+            }
+
+            return programs;
+        }
+
+        private List<ProgramMappingsDto> GetMasterProgramList()
+        {
+            var appFolder = _GetBroadcastAppFolder();
+            const string masterListFolder = "ProgramMappingMasterList";
+            const string masterListFile = "MasterListWithWwtvTitles.txt";
+
+            var masterListPath = Path.Combine(
+                appFolder,
+                masterListFolder,
+                masterListFile);
+
+            var fileStream = File.OpenText(masterListPath);
+
+            var masterList = _MasterProgramListImporter.ImportMasterProgramList(fileStream.BaseStream);
+
+            return masterList;
         }
 
         private void _MatchProgramByKeyword(List<UnmappedProgram> programs)
@@ -372,7 +414,7 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var program in cleanPrograms)
             {
                 var foundMapping = programMappings
-                    .Where(m => m.OriginalProgramName.Equals(program.ProgramName, StringComparison.InvariantCultureIgnoreCase))
+                    .Where(m => m.OriginalProgramName.Equals(program.ProgramName, StringComparison.OrdinalIgnoreCase))
                     .SingleOrDefault();
                 if (foundMapping != null)
                 {
@@ -443,7 +485,7 @@ namespace Services.Broadcast.ApplicationServices
                                     p.Genre.Equals(mapping.OfficialGenre));
                                 if (matchedProgram != null)
                                 {
-                                    mapping.OfficialShowType = _ShowTypeCache.GetShowTypeByName(matchedProgram.ShowType)
+                                    mapping.OfficialShowType = _ShowTypeCache.GetMaestroShowTypeLookupDtoByName(matchedProgram.ShowType)
                                         .Display;
                                 }
                                 else
@@ -459,7 +501,7 @@ namespace Services.Broadcast.ApplicationServices
                                             ? seriesP.ShowType
                                             : matchingPrograms.FirstOrDefault().ShowType;
                                         mapping.OfficialShowType =
-                                            _ShowTypeCache.GetShowTypeByName(showType).Display;
+                                            _ShowTypeCache.GetMaestroShowTypeLookupDtoByName(showType).Display;
                                     }
                                     else
                                     {

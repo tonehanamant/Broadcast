@@ -192,7 +192,7 @@ namespace Services.Broadcast.BusinessEngines
             var daypartText = daypart == null ? unknownIndicator : daypart.Preview;
             
             var programSource = lineDetail.ProgramSource.HasValue
-                ? lineDetail.ProgramSource == ProgramSourceEnum.Forecasted ? "Dativa" : "Mapping"
+                ? lineDetail.ProgramSource == ProgramSourceEnum.Master ? "Dativa" : "Mapping"
                 : "None";
             var genre = genres.FirstOrDefault(g => g.Id.Equals(lineDetail.MaestroGenreId))?.Display;
 

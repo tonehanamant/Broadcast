@@ -32,7 +32,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                 OriginalProgramName = "TestOriginalProgramName",
                 OfficialProgramName = "TestOfficialProgramName",
                 OfficialGenre = _GenreCache.GetMaestroGenreByName("News"),
-                OfficialShowType = _ToShowTypeDto(_ShowTypeCache.GetShowTypeByName("Mini-Movie"))
+                OfficialShowType = _ShowTypeCache.GetMaestroShowTypeByName("Mini-Movie")
             };
 
             List<ProgramMappingsDto> createdMappings;
@@ -59,28 +59,28 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     OriginalProgramName = "Program A",
                     OfficialProgramName = "Program A official",
                     OfficialGenre = _GenreCache.GetMaestroGenreByName("News"),
-                    OfficialShowType = _ToShowTypeDto(_ShowTypeCache.GetShowTypeByName("Mini-Movie"))
+                    OfficialShowType = _ShowTypeCache.GetMaestroShowTypeByName("Mini-Movie")
                 },
                 new ProgramMappingsDto
                 {
                     OriginalProgramName = "Program B",
                     OfficialProgramName = "Program B official",
                     OfficialGenre = _GenreCache.GetMaestroGenreByName("News"),
-                    OfficialShowType = _ToShowTypeDto(_ShowTypeCache.GetShowTypeByName("Mini-Movie"))
+                    OfficialShowType = _ShowTypeCache.GetMaestroShowTypeByName("Mini-Movie")
                 },
                 new ProgramMappingsDto
                 {
                     OriginalProgramName = "Program C",
                     OfficialProgramName = "Program C official",
                     OfficialGenre = _GenreCache.GetMaestroGenreByName("News"),
-                    OfficialShowType = _ToShowTypeDto(_ShowTypeCache.GetShowTypeByName("Mini-Movie"))
+                    OfficialShowType = _ShowTypeCache.GetMaestroShowTypeByName("Mini-Movie")
                 },
                 new ProgramMappingsDto
                 {
                     OriginalProgramName = "Program D",
                     OfficialProgramName = "Program D official",
                     OfficialGenre = _GenreCache.GetMaestroGenreByName("News"),
-                    OfficialShowType = _ToShowTypeDto(_ShowTypeCache.GetShowTypeByName("Mini-Movie"))
+                    OfficialShowType = _ShowTypeCache.GetMaestroShowTypeByName("Mini-Movie")
                 }
             };
             var updatedProgramMappings = new List<ProgramMappingsDto>
@@ -91,7 +91,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     OriginalProgramName = "Program B",
                     OfficialProgramName = "Program B official v1",
                     OfficialGenre = _GenreCache.GetMaestroGenreByName("News"),
-                    OfficialShowType = _ToShowTypeDto(_ShowTypeCache.GetShowTypeByName("Mini-Movie"))
+                    OfficialShowType = _ShowTypeCache.GetMaestroShowTypeByName("Mini-Movie")
                 },
 
                 // OfficialGenre was changed
@@ -100,7 +100,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     OriginalProgramName = "Program C",
                     OfficialProgramName = "Program C official",
                     OfficialGenre = _GenreCache.GetMaestroGenreByName("Comedy"),
-                    OfficialShowType = _ToShowTypeDto(_ShowTypeCache.GetShowTypeByName("Mini-Movie"))
+                    OfficialShowType = _ShowTypeCache.GetMaestroShowTypeByName("Mini-Movie")
                 },
 
                 // OfficialShowType was changed
@@ -109,7 +109,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     OriginalProgramName = "Program D",
                     OfficialProgramName = "Program D official",
                     OfficialGenre = _GenreCache.GetMaestroGenreByName("News"),
-                    OfficialShowType = _ToShowTypeDto(_ShowTypeCache.GetShowTypeByName("Series"))
+                    OfficialShowType = _ShowTypeCache.GetMaestroShowTypeByName("Series")
                 }
             };
             var createdPrograms = newProgramMappings.Select(x => x.OriginalProgramName);
@@ -130,15 +130,6 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             }
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(updatedMappings, _GetJsonSettings()));
-        }
-
-        private ShowTypeDto _ToShowTypeDto(LookupDto lookup)
-        {
-            return new ShowTypeDto
-            {
-                Id = lookup.Id,
-                Name = lookup.Display
-            };
         }
 
         private JsonSerializerSettings _GetJsonSettings()

@@ -246,6 +246,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IProgramMappingCleanupEngine, ProgramMappingCleanupEngine>();
             unityContainer.RegisterType<IProgramMappingService, ProgramMappingService>();
             unityContainer.RegisterType<IProgramNameMappingsExportEngine, ProgramNameMappingsExportEngine>();
+            unityContainer.RegisterType<IMasterProgramListImporter, MasterProgramListImporter>();
 
             unityContainer.RegisterType<ITrafficApiClient, TrafficApiClient>();
             unityContainer.RegisterType<ICampaignAggregator, CampaignAggregator>();

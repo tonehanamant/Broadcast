@@ -62,8 +62,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                                     StationInventoryManifestDaypartId = daypartIdIndex,
                                     ProgramName = $"Program {programIdIndex}",
                                     ShowType = "AShow",
-                                    SourceGenreId = (int)ProgramSourceEnum.Forecasted,
-                                    ProgramSourceId = (int)ProgramSourceEnum.Forecasted,
+                                    SourceGenreId = (int)ProgramSourceEnum.Master,
+                                    ProgramSourceId = (int)ProgramSourceEnum.Master,
                                     MaestroGenreId = 12,
                                     StartDate = new DateTime(),
                                     EndDate = new DateTime(),
@@ -77,7 +77,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                                     StationInventoryManifestDaypartId = daypartIdIndex,
                                     ProgramName = $"Program {programIdIndex}",
                                     ShowType = "AShow",
-                                    SourceGenreId = (int)ProgramSourceEnum.Forecasted,
+                                    SourceGenreId = (int)ProgramSourceEnum.Master,
                                     ProgramSourceId = _GetProgramSourceId(i, programMappingsIndicator),
                                     MaestroGenreId = 12,
                                     StartDate = new DateTime(),
@@ -111,7 +111,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                                     StationInventoryManifestDaypartId = daypartIdIndex,
                                     ProgramName = $"Program {programIdIndex}",
                                     ShowType = "AShow",
-                                    SourceGenreId = (int)ProgramSourceEnum.Forecasted,
+                                    SourceGenreId = (int)ProgramSourceEnum.Master,
                                     ProgramSourceId = _GetProgramSourceId(i, programMappingsIndicator),
                                     MaestroGenreId = 12,
                                     StartDate = new DateTime(),
@@ -126,8 +126,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                                     StationInventoryManifestDaypartId = daypartIdIndex,
                                     ProgramName = $"Program {programIdIndex}",
                                     ShowType = "AShow",
-                                    SourceGenreId = (int)ProgramSourceEnum.Forecasted,
-                                    ProgramSourceId = (int)ProgramSourceEnum.Forecasted,
+                                    SourceGenreId = (int)ProgramSourceEnum.Master,
+                                    ProgramSourceId = (int)ProgramSourceEnum.Master,
                                     MaestroGenreId = 12,
                                     StartDate = new DateTime(),
                                     EndDate = new DateTime(),
@@ -190,15 +190,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             switch (programMappingsIndicators)
             {
                 case ProgramMappingsIndicator.All:
-                    return (int)ProgramSourceEnum.Mapped;
+                    return (int)ProgramSourceEnum.Maestro;
                 case ProgramMappingsIndicator.Odd:
                     if (daypartId % 2 == 1)
                     {
-                        return (int)ProgramSourceEnum.Mapped;
+                        return (int)ProgramSourceEnum.Maestro;
                     }
-                    return (int)ProgramSourceEnum.Forecasted;
+                    return (int)ProgramSourceEnum.Master;
                 default:
-                    return (int)ProgramSourceEnum.Forecasted;
+                    return (int)ProgramSourceEnum.Master;
             }
         }
 

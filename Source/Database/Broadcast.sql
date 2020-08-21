@@ -678,8 +678,8 @@ BEGIN
 	REFERENCES [dbo].[plan_version_buying_stations] ([id])
 	ON DELETE CASCADE
 END
-GO
 /*************************************** END BP-1098 *****************************************************/
+
 
 /*************************************** START - BP-797 ****************************************************/
 IF NOT EXISTS (SELECT 1 
@@ -761,9 +761,11 @@ BEGIN
     ALTER TABLE plan_version_pricing_market_details
 	ALTER COLUMN market_name varchar(31) NOT NULL
 END
-GO
+
 /*************************************** END - BP-875 ****************************************************/
 
+
+GO
 /*************************************** START BP-1076 *****************************************************/
 -- Daypart for 'SA-SU 9AM-8PM'
 -- This ID is validated to be the same in all environments.
@@ -936,6 +938,148 @@ END
 
 GO
 /*************************************** END BP-813 *****************************************************/
+
+/*************************************** START BP-943 *****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('show_types') AND name = 'program_source_id')
+BEGIN
+	ALTER TABLE show_types
+	ADD program_source_id int NULL
+
+	EXEC('UPDATE show_types
+		 SET program_source_id = 1')
+
+	ALTER TABLE show_types
+	ALTER COLUMN program_source_id int NOT NULL
+END
+
+GO
+
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('show_type_mappings'))
+BEGIN
+	CREATE TABLE [dbo].[show_type_mappings](
+		[maestro_show_type_id] [int] NOT NULL,
+		[mapped_show_type_id] [int] NOT NULL,
+		[created_by] [varchar](63) NOT NULL,
+		[created_date] [datetime] NOT NULL,
+		[modified_by] [varchar](63) NOT NULL,
+		[modified_date] [datetime] NOT NULL,
+	PRIMARY KEY CLUSTERED 
+	(
+		[maestro_show_type_id] ASC,
+		[mapped_show_type_id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[show_type_mappings]  WITH CHECK ADD CONSTRAINT FK_show_type_mappings_show_types_maestro FOREIGN KEY([maestro_show_type_id])
+	REFERENCES [dbo].[show_types] ([id])
+
+	ALTER TABLE [dbo].[show_type_mappings]  WITH CHECK ADD CONSTRAINT FK_show_type_mappings_show_types_mapped FOREIGN KEY([mapped_show_type_id])
+	REFERENCES [dbo].[show_types] ([id])
+
+	DECLARE @currentDate datetime
+	SET @currentDate = GETDATE()
+
+	INSERT INTO show_types
+	VALUES ('Minimov', 'BP-943', @currentDate, 'BP-943', @currentDate, 2)
+
+	INSERT INTO [show_type_mappings] ([maestro_show_type_id], [mapped_show_type_id], [created_by], [created_date], [modified_by], [modified_date])
+	SELECT a.id, b.id, 'BP-943', @currentDate, 'BP-943', @currentDate
+	FROM show_types as a, show_types as b
+	WHERE a.name = 'Mini-Movie' and a.program_source_id = 1 and b.name = 'Minimov' and b.program_source_id = 2
+
+	INSERT INTO show_types
+	VALUES ('Misc', 'BP-943', @currentDate, 'BP-943', @currentDate, 2)
+
+	INSERT INTO [show_type_mappings] ([maestro_show_type_id], [mapped_show_type_id], [created_by], [created_date], [modified_by], [modified_date])
+	SELECT a.id, b.id, 'BP-943', @currentDate, 'BP-943', @currentDate
+	FROM show_types as a, show_types as b
+	WHERE a.name = 'Miscellaneous' and a.program_source_id = 1 and b.name = 'Misc' and b.program_source_id = 2
+
+	INSERT INTO show_types
+	VALUES ('Mov', 'BP-943', @currentDate, 'BP-943', @currentDate, 2)
+
+	INSERT INTO [show_type_mappings] ([maestro_show_type_id], [mapped_show_type_id], [created_by], [created_date], [modified_by], [modified_date])
+	SELECT a.id, b.id, 'BP-943', @currentDate, 'BP-943', @currentDate
+	FROM show_types as a, show_types as b
+	WHERE a.name = 'Movie' and a.program_source_id = 1 and b.name = 'Mov' and b.program_source_id = 2
+
+	INSERT INTO show_types
+	VALUES ('News', 'BP-943', @currentDate, 'BP-943', @currentDate, 2)
+
+	INSERT INTO [show_type_mappings] ([maestro_show_type_id], [mapped_show_type_id], [created_by], [created_date], [modified_by], [modified_date])
+	SELECT a.id, b.id, 'BP-943', @currentDate, 'BP-943', @currentDate
+	FROM show_types as a, show_types as b
+	WHERE a.name = 'News' and a.program_source_id = 1 and b.name = 'News' and b.program_source_id = 2
+
+	INSERT INTO show_types
+	VALUES ('Offair', 'BP-943', @currentDate, 'BP-943', @currentDate, 2)
+
+	INSERT INTO [show_type_mappings] ([maestro_show_type_id], [mapped_show_type_id], [created_by], [created_date], [modified_by], [modified_date])
+	SELECT a.id, b.id, 'BP-943', @currentDate, 'BP-943', @currentDate
+	FROM show_types as a, show_types as b
+	WHERE a.name = 'Off Air' and a.program_source_id = 1 and b.name = 'Offair' and b.program_source_id = 2
+
+	INSERT INTO show_types
+	VALUES ('Paid', 'BP-943', @currentDate, 'BP-943', @currentDate, 2)
+
+	INSERT INTO [show_type_mappings] ([maestro_show_type_id], [mapped_show_type_id], [created_by], [created_date], [modified_by], [modified_date])
+	SELECT a.id, b.id, 'BP-943', @currentDate, 'BP-943', @currentDate
+	FROM show_types as a, show_types as b
+	WHERE a.name = 'Paid Programming' and a.program_source_id = 1 and b.name = 'Paid' and b.program_source_id = 2
+
+	INSERT INTO show_types
+	VALUES ('Ser', 'BP-943', @currentDate, 'BP-943', @currentDate, 2)
+
+	INSERT INTO [show_type_mappings] ([maestro_show_type_id], [mapped_show_type_id], [created_by], [created_date], [modified_by], [modified_date])
+	SELECT a.id, b.id, 'BP-943', @currentDate, 'BP-943', @currentDate
+	FROM show_types as a, show_types as b
+	WHERE a.name = 'Series' and a.program_source_id = 1 and b.name = 'Ser' and b.program_source_id = 2
+
+	INSERT INTO show_types
+	VALUES ('Special', 'BP-943', @currentDate, 'BP-943', @currentDate, 2)
+
+	INSERT INTO [show_type_mappings] ([maestro_show_type_id], [mapped_show_type_id], [created_by], [created_date], [modified_by], [modified_date])
+	SELECT a.id, b.id, 'BP-943', @currentDate, 'BP-943', @currentDate
+	FROM show_types as a, show_types as b
+	WHERE a.name = 'Special' and a.program_source_id = 1 and b.name = 'Special' and b.program_source_id = 2
+
+	INSERT INTO show_types
+	VALUES ('Event', 'BP-943', @currentDate, 'BP-943', @currentDate, 2)
+
+	INSERT INTO [show_type_mappings] ([maestro_show_type_id], [mapped_show_type_id], [created_by], [created_date], [modified_by], [modified_date])
+	SELECT a.id, b.id, 'BP-943', @currentDate, 'BP-943', @currentDate
+	FROM show_types as a, show_types as b
+	WHERE a.name = 'Special Event' and a.program_source_id = 1 and b.name = 'Event' and b.program_source_id = 2
+
+	INSERT INTO show_types
+	VALUES ('Spo', 'BP-943', @currentDate, 'BP-943', @currentDate, 2)
+
+	INSERT INTO [show_type_mappings] ([maestro_show_type_id], [mapped_show_type_id], [created_by], [created_date], [modified_by], [modified_date])
+	SELECT a.id, b.id, 'BP-943', @currentDate, 'BP-943', @currentDate
+	FROM show_types as a, show_types as b
+	WHERE a.name = 'Sports' and a.program_source_id = 1 and b.name = 'Spo' and b.program_source_id = 2
+
+	INSERT INTO show_types
+	VALUES ('Movtba', 'BP-943', @currentDate, 'BP-943', @currentDate, 2)
+
+	INSERT INTO [show_type_mappings] ([maestro_show_type_id], [mapped_show_type_id], [created_by], [created_date], [modified_by], [modified_date])
+	SELECT a.id, b.id, 'BP-943', @currentDate, 'BP-943', @currentDate
+	FROM show_types as a, show_types as b
+	WHERE a.name = 'TBA Movie' and a.program_source_id = 1 and b.name = 'Movtba' and b.program_source_id = 2
+
+	INSERT INTO show_types
+	VALUES ('TBA', 'BP-943', @currentDate, 'BP-943', @currentDate, 2)
+
+	INSERT INTO [show_type_mappings] ([maestro_show_type_id], [mapped_show_type_id], [created_by], [created_date], [modified_by], [modified_date])
+	SELECT a.id, b.id, 'BP-943', @currentDate, 'BP-943', @currentDate
+	FROM show_types as a, show_types as b
+	WHERE a.name = 'To Be Announced' and a.program_source_id = 1 and b.name = 'TBA' and b.program_source_id = 2
+
+END
+
+/*************************************** END BP-943 *****************************************************/
+
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

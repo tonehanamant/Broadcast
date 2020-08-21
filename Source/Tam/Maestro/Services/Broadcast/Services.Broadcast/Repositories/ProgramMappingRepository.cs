@@ -12,6 +12,7 @@ using System;
 using Services.Broadcast.Extensions;
 using System.Data;
 using System.Data.SqlClient;
+using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Repositories
 {
@@ -187,7 +188,8 @@ namespace Services.Broadcast.Repositories
                 OfficialShowType = new ShowTypeDto
                 {
                     Id = program_name_mappings.show_types.id,
-                    Name = program_name_mappings.show_types.name
+                    Name = program_name_mappings.show_types.name,
+                    ShowTypeSource = (ProgramSourceEnum)program_name_mappings.show_types.program_source_id
                 },
                 CreatedBy = program_name_mappings.created_by,
                 CreatedAt = program_name_mappings.created_at,

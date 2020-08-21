@@ -388,6 +388,7 @@
     <Compile Include="Clients\PlanBuyingRequestLogClient.cs" />
     <Compile Include="Clients\PricingRequestLogClient.cs" />
     <Compile Include="Clients\LogToAmazonS3.cs" />
+    <Compile Include="Converters\MasterProgramListImporter.cs" />
     <Compile Include="Converters\VpvhFileImporter.cs" />
     <Compile Include="Entities\BroadcastEmployeeDto.cs" />
     <Compile Include="Entities\CreativeLength.cs" />

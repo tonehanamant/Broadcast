@@ -12,7 +12,8 @@
     "OfficialProgramName": "Program A official",
     "OfficialShowType": {
       "Id": 1,
-      "Name": "Mini-Movie"
+      "Name": "Mini-Movie",
+      "ShowTypeSource": 1
     },
     "OriginalProgramName": "Program A"
   },
@@ -29,7 +30,8 @@
     "OfficialProgramName": "Program B official v1",
     "OfficialShowType": {
       "Id": 1,
-      "Name": "Mini-Movie"
+      "Name": "Mini-Movie",
+      "ShowTypeSource": 1
     },
     "OriginalProgramName": "Program B"
   },
@@ -46,7 +48,8 @@
     "OfficialProgramName": "Program C official",
     "OfficialShowType": {
       "Id": 1,
-      "Name": "Mini-Movie"
+      "Name": "Mini-Movie",
+      "ShowTypeSource": 1
     },
     "OriginalProgramName": "Program C"
   },
@@ -63,7 +66,8 @@
     "OfficialProgramName": "Program D official",
     "OfficialShowType": {
       "Id": 7,
-      "Name": "Series"
+      "Name": "Series",
+      "ShowTypeSource": 1
     },
     "OriginalProgramName": "Program D"
   }

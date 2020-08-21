@@ -508,7 +508,10 @@
         <EntityTypeShape EntityType="BroadcastModel.program_name_mapping_keywords" Width="1.5" PointX="33.25" PointY="50.875" />
         <AssociationConnector Association="BroadcastModel.FK_program_name_mapping_keywords_genres" />
         <AssociationConnector Association="BroadcastModel.FK_program_name_mapping_keywords_show_types" />
-        <EntityTypeShape EntityType="BroadcastModel.inventory_proprietary_program_names" Width="1.5" PointX="26.25" PointY="59" />
+        <EntityTypeShape EntityType="BroadcastModel.show_type_mappings" Width="1.5" PointX="26.25" PointY="67.375" />
+        <AssociationConnector Association="BroadcastModel.FK_show_type_mappings_show_types_maestro" />
+        <AssociationConnector Association="BroadcastModel.FK_show_type_mappings_show_types_mapped" />
+        <EntityTypeShape EntityType="BroadcastModel.inventory_proprietary_program_names" Width="1.5" PointX="26.25" PointY="58.625" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_program_names_daypart_defaults" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_program_names_inventory_sources" />
         </Diagram>

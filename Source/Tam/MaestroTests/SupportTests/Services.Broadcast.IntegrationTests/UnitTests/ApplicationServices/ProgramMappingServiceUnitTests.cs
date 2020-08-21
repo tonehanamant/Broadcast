@@ -1,5 +1,6 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
+using Common.Services;
 using Common.Services.Repositories;
 using Hangfire;
 using Moq;
@@ -9,6 +10,7 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
+using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.ProgramMapping;
@@ -38,7 +40,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IProgramsSearchApiClient> _ProgramsSearchApiClientMock;
         private Mock<IProgramMappingCleanupEngine> _ProgramMappingCleanupEngine;
         private Mock<IProgramNameMappingKeywordRepository> _ProgramNameMappingKeywordRepositoryMock;
+        private Mock<IMasterProgramListImporter> _MasterListImporterMock;
 
+        private IGenreCache _GenreCacheStub;
+        private IShowTypeCache _ShowTypeCacheStub;
+
+        private IMasterProgramListImporter _MasterListImporter;
         private IGenreCache _GenreCache;
         private IShowTypeCache _ShowTypeCache;
 
@@ -54,12 +61,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _InventoryRepositoryMock = new Mock<IInventoryRepository>();
             _ShowTypeRepositoryMock = new Mock<IShowTypeRepository>();
             _SharedFolderServiceMock = new Mock<ISharedFolderService>();
-            _GenreCache = new GenreCacheStub();
-            _ShowTypeCache = new ShowTypeCacheStub();
+            _GenreCacheStub = new GenreCacheStub();
+            _ShowTypeCacheStub = new ShowTypeCacheStub();
             _ProgramNameExceptionRepositoryMock = new Mock<IProgramNameExceptionsRepository>();
             _ProgramsSearchApiClientMock = new Mock<IProgramsSearchApiClient>();
             _ProgramMappingCleanupEngine = new Mock<IProgramMappingCleanupEngine>();
             _ProgramNameMappingKeywordRepositoryMock = new Mock<IProgramNameMappingKeywordRepository>();
+            _MasterListImporterMock = new Mock<IMasterProgramListImporter>();
+            _GenreCache = new GenreCache(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory);
+            _ShowTypeCache = new ShowTypeCache(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory);
+            _MasterListImporter = new MasterProgramListImporter(_GenreCache, _ShowTypeCache);
 
             // Setup common mocks
             _DataRepositoryFactoryMock
@@ -86,7 +97,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(_ShowTypeRepositoryMock.Object);
 
             _ShowTypeRepositoryMock
-                .Setup(s => s.GetShowTypeByName(It.IsAny<string>()))
+                .Setup(s => s.GetMaestroShowTypeByName(It.IsAny<string>()))
                 .Returns((string showTypeName) =>
                 {
                     return new ShowTypeDto
@@ -95,7 +106,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         Name = showTypeName
                     };
                 });
-            _ShowTypeCache.GetShowTypeByName("Mini-Movie");
+            _ShowTypeCacheStub.GetMaestroShowTypeLookupDtoByName("Mini-Movie");
 
             _ProgramNameMappingKeywordRepositoryMock.Setup(k => k.GetProgramNameMappingKeywords()).Returns(new List<ProgramNameMappingKeyword>
             {
@@ -113,14 +124,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 }
             });
 
+            _MasterListImporterMock.Setup(x => x.ImportMasterProgramList(It.IsAny<Stream>()))
+                .Returns(new List<ProgramMappingsDto>());
+
             // Setup the actual Program Mapping Service
             _ProgramMappingService = new ProgramMappingServiceTestClass(
                 _BackgroundJobClientMock.Object,
                 _DataRepositoryFactoryMock.Object,
                 _SharedFolderServiceMock.Object,
                 null,
-                _GenreCache,
-                _ShowTypeCache, _ProgramsSearchApiClientMock.Object, _ProgramMappingCleanupEngine.Object);
+                _GenreCacheStub,
+                _ShowTypeCacheStub, 
+                _ProgramsSearchApiClientMock.Object, 
+                _ProgramMappingCleanupEngine.Object,
+                _MasterListImporterMock.Object);
         }
 
         [Test]
@@ -201,6 +218,65 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 });
 
             var result = _ProgramMappingService.GetUnmappedPrograms();
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetUnmappedPrograms_MatchInMasterList()
+        {
+            var programMappingService = new ProgramMappingServiceTestClass(
+                _BackgroundJobClientMock.Object,
+                _DataRepositoryFactoryMock.Object,
+                _SharedFolderServiceMock.Object,
+                null,
+                _GenreCacheStub,
+                _ShowTypeCacheStub,
+                _ProgramsSearchApiClientMock.Object,
+                _ProgramMappingCleanupEngine.Object,
+                _MasterListImporter);
+
+            _InventoryRepositoryMock.Setup(s => s.GetUnmappedPrograms())
+               .Returns(new List<string>()
+               {
+                    "CHANNEL 9 NEWS 6PM",
+                   "FAMILY GUY (X2)",
+                   "SOME OTHER NEWS",
+                   "NFL Post Game Show, The",
+                   "AMERICA UNDERCOVER"
+               });
+
+            _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("CHANNEL 9 NEWS 6PM"))
+                .Returns("CHANNEL 9 NEWS");
+            _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("FAMILY GUY (X2)"))
+                .Returns("FAMILY GUY");
+            _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("SOME OTHER NEWS"))
+                .Returns("SOME OTHER NEWS");
+            _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("NFL Post Game Show, The"))
+                .Returns("The NFL Post Game Show");
+            _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("AMERICA UNDERCOVER"))
+                .Returns("AMERICA UNDERCOVER");
+
+            _ProgramMappingRepositoryMock.Setup(s => s.GetProgramMappings())
+                .Returns(new List<ProgramMappingsDto>()
+                {
+                    new ProgramMappingsDto()
+                    {
+                        OfficialProgramName = "NEWS",
+                        OriginalProgramName = "CHANNEL 9 NEWS",
+                        OfficialGenre = new Genre()
+                        {
+                             Name = "NEWS"
+                        },
+                        OfficialShowType = new ShowTypeDto()
+                        {
+                            Name = "SERIES"
+                        }
+                    }
+                });
+
+            var result = programMappingService.GetUnmappedPrograms();
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -417,7 +493,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IInventoryRepository>())
                 .Returns(inventoryRepository.Object);
 
-            var sut = new ProgramMappingService(null, broadcastDataRepositoryFactory.Object, null, null, null, null, null, null);
+            var sut = new ProgramMappingService(null, broadcastDataRepositoryFactory.Object, null, null, null, null, null, null, null);
 
             var reportData = sut.GenerateUnmappedProgramNameReport();
             _WriteStream(reportData);
@@ -500,7 +576,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new LookupDto{Id=4, Display = "NewsException"},
 
             };
-            _ShowTypeRepositoryMock.Setup(s => s.GetShowTypes())
+            _ShowTypeRepositoryMock.Setup(s => s.GetMaestroShowTypesLookupDto())
                 .Returns(showTypes);
 
 
@@ -509,13 +585,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _ProgramsSearchApiClientMock.Setup(api => api.GetPrograms(It.IsAny<SearchRequestProgramDto>()))
                 .Returns(_Programs);
 
-
             // Act
             _ProgramMappingService.UT_LoadShowTypes(programMappings);
 
-
             // Assert
-            //  Assert.IsNotNull(result);
+            // Assert.IsNotNull(result);
             Assert.AreEqual(expected, programMappings.FirstOrDefault().OfficialShowType);
         }
 
@@ -531,6 +605,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     OfficialProgramName = officialProgramName, OfficialGenre = "News", OfficialShowType = officialShowType
                 }
             };
+
             var programExceptions = new List<ProgramNameExceptionDto>
             {
                 new ProgramNameExceptionDto
@@ -538,6 +613,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     CustomProgramName = "10 NEWS", ShowTypeName = "News", GenreName = "News"
                 }
             };
+
             _ProgramNameExceptionRepositoryMock
                 .Setup(s => s.GetProgramExceptions())
                 .Returns(programExceptions);
@@ -547,7 +623,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _ProgramsSearchApiClientMock.Setup(api => api.GetPrograms(It.IsAny<SearchRequestProgramDto>()))
                 .Returns(_Programs);
 
-
             // Act
             _ProgramMappingService.UT_LoadShowTypes(programMappings);
 
@@ -556,8 +631,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.IsNotNull(programMappings);
             Assert.AreEqual(expected, programMappings.FirstOrDefault().OfficialShowType);
         }
-
-
 
         private List<SearchProgramDativaResponseDto> _Programs = new List<SearchProgramDativaResponseDto>
         {

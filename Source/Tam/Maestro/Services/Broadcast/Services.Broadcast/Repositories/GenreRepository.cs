@@ -37,7 +37,7 @@ namespace Services.Broadcast.Repositories
         public List<LookupDto> GetAllMaestroGenres()
         {
             return _InReadUncommitedTransaction(
-                context => context.genres.Where(g => g.program_source_id == (int)ProgramSourceEnum.Mapped).OrderBy(g => g.name).Select(_MapToDto).ToList());
+                context => context.genres.Where(g => g.program_source_id == (int)ProgramSourceEnum.Maestro).OrderBy(g => g.name).Select(_MapToDto).ToList());
         }
 
         public List<Genre> GetAllGenres()
@@ -49,7 +49,7 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(
                 context =>
-                     context.genres.Where(g => g.program_source_id == (int)ProgramSourceEnum.Mapped && g.name.ToLower().Contains(genreSearchString.ToLower())).Select(_MapToDto).ToList()
+                     context.genres.Where(g => g.program_source_id == (int)ProgramSourceEnum.Maestro && g.name.ToLower().Contains(genreSearchString.ToLower())).Select(_MapToDto).ToList()
                 );
         }
 

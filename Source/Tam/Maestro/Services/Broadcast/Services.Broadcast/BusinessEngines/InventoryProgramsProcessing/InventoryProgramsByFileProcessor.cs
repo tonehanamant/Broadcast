@@ -302,7 +302,7 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
             List<StationInventoryManifestDaypart> manifestDayparts,
             Dictionary<string, ProgramMappingsDto> programMappingByInventoryProgramName)
         {
-            var programSource = ProgramSourceEnum.Mapped;
+            var programSource = ProgramSourceEnum.Maestro;
             var updatedManifestDaypartIds = new List<int>();
             var newManifestDaypartPrograms = new List<StationInventoryManifestDaypartProgram>();
 

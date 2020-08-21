@@ -11,8 +11,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [Category("short_running")]
     public class GenreServiceIntegrationTests
     {
-        private const int MAESTRO_ID = (int)ProgramSourceEnum.Mapped;
-        private const int REDBEE_ID = (int)ProgramSourceEnum.Forecasted;
+        private const int MAESTRO_ID = (int)ProgramSourceEnum.Maestro;
+        private const int REDBEE_ID = (int)ProgramSourceEnum.Master;
         private IGenreService _GenreService;
 
         [SetUp]

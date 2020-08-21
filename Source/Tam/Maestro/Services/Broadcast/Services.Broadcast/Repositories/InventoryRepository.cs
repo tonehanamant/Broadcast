@@ -1904,7 +1904,7 @@ namespace Services.Broadcast.Repositories
 				        .Include(x=>x.station_inventory_manifest.station_inventory_manifest_weeks)
 				        .Where(x => x.station_inventory_manifest.station_inventory_manifest_weeks.Any() &&
 					        !x.station_inventory_manifest_daypart_programs.Any(s =>
-						        s.program_source_id.Equals((int)ProgramSourceEnum.Mapped)))
+						        s.program_source_id.Equals((int)ProgramSourceEnum.Maestro)))
 				        .OrderBy(x => x.program_name)
                         .Select(x =>
 					       x.program_name
@@ -1924,7 +1924,7 @@ namespace Services.Broadcast.Repositories
                     var manuallyMapped = context.station_inventory_manifest_dayparts
                         .Where(x =>
                             x.station_inventory_manifest_daypart_programs.Any(s =>
-                                s.program_source_id.Equals((int)ProgramSourceEnum.Mapped) &&
+                                s.program_source_id.Equals((int)ProgramSourceEnum.Maestro) &&
                                 inventoryDaypartIds.Contains(x.id)))
                         .Select(x => x.id)
                         .ToList();

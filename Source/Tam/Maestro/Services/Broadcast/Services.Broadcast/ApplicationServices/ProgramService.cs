@@ -103,7 +103,7 @@ namespace Services.Broadcast.ApplicationServices
 				try
 				{
 					var programGenre = _GenreCache.GetMaestroGenreBySourceGenreName(externalApiProgram.Genre,
-						ProgramSourceEnum.Forecasted);
+						ProgramSourceEnum.Master);
 
 					result.Add(new ProgramDto
 					{
@@ -132,7 +132,7 @@ namespace Services.Broadcast.ApplicationServices
                 result.Add(new ProgramDto
                 {
                     Name = internalProgram.OfficialProgramName,
-                    Genre = _GenreCache.GetGenreById(internalProgram.GenreId, ProgramSourceEnum.Mapped)
+                    Genre = _GenreCache.GetGenreById(internalProgram.GenreId, ProgramSourceEnum.Maestro)
                 });
             }
             return result;
@@ -149,7 +149,7 @@ namespace Services.Broadcast.ApplicationServices
 				result.Add(new ProgramDto
 				{
 					Name = exceptionProgram.CustomProgramName,
-					Genre = _GenreCache.GetGenreById(exceptionProgram.GenreId, ProgramSourceEnum.Mapped)
+					Genre = _GenreCache.GetGenreById(exceptionProgram.GenreId, ProgramSourceEnum.Maestro)
 
 				});
 			}
