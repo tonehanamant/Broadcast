@@ -10784,7 +10784,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="program_source_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="show_type_mappings" Relationship="BroadcastModel.FK_show_type_mappings_show_types_maestro" FromRole="show_types" ToRole="show_type_mappings" />
           <NavigationProperty Name="show_type_mappings1" Relationship="BroadcastModel.FK_show_type_mappings_show_types_mapped" FromRole="show_types" ToRole="show_type_mappings" />
-        </EntityType>
+          </EntityType>
         <Association Name="FK_proposal_version_detail_criteria_show_types_show_types">
           <End Type="BroadcastModel.show_types" Role="show_types" Multiplicity="1">
             <OnDelete Action="Cascade" />

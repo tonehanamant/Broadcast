@@ -222,7 +222,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_buying_station_details> plan_version_buying_station_details { get; set; }
         public virtual DbSet<plan_version_buying_stations> plan_version_buying_stations { get; set; }
         public virtual DbSet<program_name_mapping_keywords> program_name_mapping_keywords { get; set; }
-        public virtual DbSet<show_type_mappings> show_type_mappings { get; set; }
         public virtual DbSet<inventory_proprietary_program_names> inventory_proprietary_program_names { get; set; }
         public virtual DbSet<show_type_mappings> show_type_mappings { get; set; }
     }
