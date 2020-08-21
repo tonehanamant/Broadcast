@@ -1,6 +1,5 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using EntityFrameworkMapping.Broadcast;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -20,7 +19,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -2671,177 +2669,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(request);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-        }
-
-        [Test]
-        [Category("short_running")]
-        [UseReporter(typeof(DiffReporter))]
-        public void Plan_WeeklyBreakdown_CustomByWeekByDaypart_Weekend()
-        {
-            const int nonNewsWeekendDefaultDaypartId = 24;
-            using (new TransactionScopeWrapper())
-            {
-                var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
-                {
-                    FlightStartDate = new DateTime(2020, 08, 03),
-                    FlightEndDate = new DateTime(2020, 08, 27),
-                    FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
-                    DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart,
-                    FlightHiatusDays = new List<DateTime>(),
-                    TotalImpressions = 10000,
-                    TotalRatings = 10,
-                    WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
-                    ImpressionsPerUnit = 100,
-                    Dayparts = new List<PlanDaypartDto>
-                    {
-                        new PlanDaypartDto { DaypartCodeId = nonNewsWeekendDefaultDaypartId }
-                    }
-                });
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            }
-        }
-
-        [Test]
-        [Category("short_running")]
-        [UseReporter(typeof(DiffReporter))]
-        public void Plan_WeeklyBreakdown_CustomByWeekByDaypart_FullAndWeekend()
-        {
-            const int nonNewsWeekendDefaultDaypartId = 24;
-            using (new TransactionScopeWrapper())
-            {
-                var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
-                {
-                    FlightStartDate = new DateTime(2020, 08, 03),
-                    FlightEndDate = new DateTime(2020, 08, 27),
-                    FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
-                    DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart,
-                    FlightHiatusDays = new List<DateTime>(),
-                    TotalImpressions = 10000,
-                    TotalRatings = 10,
-                    WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
-                    ImpressionsPerUnit = 100,
-                    Dayparts = new List<PlanDaypartDto>
-                    {
-                         new PlanDaypartDto{ DaypartCodeId = 1, WeightingGoalPercent = 60 },
-                        new PlanDaypartDto { DaypartCodeId = nonNewsWeekendDefaultDaypartId }
-                    }
-                });
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            }
-        }
-
-        [Test]
-        [Category("short_running")]
-        [UseReporter(typeof(DiffReporter))]
-        public void Plan_WeeklyBreakdown_CustomByWeek_Weekend()
-        {
-            const int nonNewsWeekendDefaultDaypartId = 24;
-            using (new TransactionScopeWrapper())
-            {
-                var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
-                {
-                    FlightStartDate = new DateTime(2020, 08, 03),
-                    FlightEndDate = new DateTime(2020, 08, 27),
-                    FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
-                    DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek,
-                    FlightHiatusDays = new List<DateTime>(),
-                    TotalImpressions = 10000,
-                    TotalRatings = 10,
-                    WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
-                    ImpressionsPerUnit = 100,
-                    Dayparts = new List<PlanDaypartDto>
-                    {
-                        new PlanDaypartDto { DaypartCodeId = nonNewsWeekendDefaultDaypartId }
-                    }
-                });
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            }
-        }
-
-        [Test]
-        [Category("short_running")]
-        [UseReporter(typeof(DiffReporter))]
-        public void Plan_WeeklyBreakdown_CustomByWeek_FullAndWeekend()
-        {
-            const int nonNewsWeekendDefaultDaypartId = 24;
-            using (new TransactionScopeWrapper())
-            {
-                var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
-                {
-                    FlightStartDate = new DateTime(2020, 08, 03),
-                    FlightEndDate = new DateTime(2020, 08, 27),
-                    FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
-                    DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek,
-                    FlightHiatusDays = new List<DateTime>(),
-                    TotalImpressions = 10000,
-                    TotalRatings = 10,
-                    WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
-                    ImpressionsPerUnit = 100,
-                    Dayparts = new List<PlanDaypartDto>
-                    {
-                        new PlanDaypartDto{ DaypartCodeId = 1, WeightingGoalPercent = 60 },
-                        new PlanDaypartDto { DaypartCodeId = nonNewsWeekendDefaultDaypartId }
-                    }
-                });
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            }
-        }
-
-        [Test]
-        [Category("short_running")]
-        [UseReporter(typeof(DiffReporter))]
-        public void Plan_WeeklyBreakdown_CustomByWeekByAdLength_Weekend()
-        {
-            const int nonNewsWeekendDefaultDaypartId = 24;
-            using (new TransactionScopeWrapper())
-            {
-                var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
-                {
-                    FlightStartDate = new DateTime(2020, 08, 03),
-                    FlightEndDate = new DateTime(2020, 08, 27),
-                    FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
-                    DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength,
-                    FlightHiatusDays = new List<DateTime>(),
-                    TotalImpressions = 10000,
-                    TotalRatings = 10,
-                    WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
-                    ImpressionsPerUnit = 100,
-                    Dayparts = new List<PlanDaypartDto>
-                    {
-                        new PlanDaypartDto { DaypartCodeId = nonNewsWeekendDefaultDaypartId }
-                    }
-                });
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            }
-        }
-
-        [Test]
-        [Category("short_running")]
-        [UseReporter(typeof(DiffReporter))]
-        public void Plan_WeeklyBreakdown_CustomByWeekByAdLength_FullAndWeekend()
-        {
-            const int nonNewsWeekendDefaultDaypartId = 24;
-            using (new TransactionScopeWrapper())
-            {
-                var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
-                {
-                    FlightStartDate = new DateTime(2020, 08, 03),
-                    FlightEndDate = new DateTime(2020, 08, 27),
-                    FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
-                    DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength,
-                    FlightHiatusDays = new List<DateTime>(),
-                    TotalImpressions = 10000,
-                    TotalRatings = 10,
-                    WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
-                    ImpressionsPerUnit = 100,
-                    Dayparts = new List<PlanDaypartDto>
-                    {
-                        new PlanDaypartDto{ DaypartCodeId = 1, WeightingGoalPercent = 60 },
-                        new PlanDaypartDto { DaypartCodeId = nonNewsWeekendDefaultDaypartId }
-                    }
-                });
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            }
         }
 
         [Test]
