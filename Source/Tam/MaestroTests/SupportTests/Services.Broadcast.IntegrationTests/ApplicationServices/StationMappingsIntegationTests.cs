@@ -296,11 +296,59 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [Ignore("This was only used to introduce the mappings to the integration database")]
-        public void UploadStationMappingsExcellFile()
+        public void UploadStationMappingsExcelFile()
         {
             var fileName = "CadentBroadcastStationList.xlsx";
             _StationMappingService.LoadStationMappings(new FileStream($@".\Files\ImportStationMappings\{fileName}"
                 , FileMode.Open, FileAccess.Read), fileName, "integration_test", DateTime.Now);
+        }
+
+        [Test]
+        public void UploadStationMappingsExcelFile_TrueInd()
+        {
+            // Arrange
+            const string fileName = "CadentBroadcastStationList_TrueInd.xlsx";
+            // we know these are in the file.
+            var testCallsigns = new List<string> {"WONE", "TKFO", "WWTH", "KRON", "RASA", "YMYO", "KREX", "NOSA"};
+            
+            var after = new List<DisplayBroadcastStation>();
+
+            var before = new List<DisplayBroadcastStation>();
+            testCallsigns.ForEach(callsign =>
+            {
+                var station = _StationMappingService.GetStationByCallLetters(callsign, false);
+                if (station != null)
+                {
+                    before.Add(station);
+                }
+            });
+
+            using (new TransactionScopeWrapper())
+            {
+                // Act
+                _StationMappingService.LoadStationMappings(new FileStream($@".\Files\ImportStationMappings\{fileName}"
+                    , FileMode.Open, FileAccess.Read), fileName, "integration_test", DateTime.Now);
+
+                // Assert
+                testCallsigns.ForEach(callsign =>
+                {
+                    var station = _StationMappingService.GetStationByCallLetters(callsign, false);
+                    after.Add(station);
+                });
+            }
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
+            jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver,
+            };
+
+            var verifiable = new { testCallsigns, before, after};
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(verifiable, jsonSettings));
         }
 
         [Test]

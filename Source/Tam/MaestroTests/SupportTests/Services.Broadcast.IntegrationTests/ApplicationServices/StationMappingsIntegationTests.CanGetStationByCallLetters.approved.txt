@@ -2,6 +2,7 @@
   "Affiliation": "NBC",
   "CallLetters": "KOB+",
   "Code": 30,
+  "IsTrueInd": false,
   "LegacyCallLetters": "KOB",
   "MarketCode": 390,
   "OwnershipGroupName": null,

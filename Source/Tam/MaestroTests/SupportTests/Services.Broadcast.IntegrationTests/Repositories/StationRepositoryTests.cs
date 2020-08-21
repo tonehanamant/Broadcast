@@ -44,6 +44,21 @@ namespace Services.Broadcast.IntegrationTests.Repositories
             Assert.IsTrue(distinctMarkets.Contains(202));
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetBroadcastStationByCode()
+        {
+            // Arrange
+            const int testStationCode = 300;
+            var repo = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
+
+            // Act
+            var station = repo.GetBroadcastStationByCode(testStationCode);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(station, _GetJsonSettings()));
+        }
+
         /// <summary>
         /// Test updating an unrated station to make it a rated station.
         /// </summary>
@@ -85,6 +100,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
+            jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
             var jsonSettings = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

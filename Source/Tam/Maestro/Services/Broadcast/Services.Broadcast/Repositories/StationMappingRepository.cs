@@ -243,9 +243,8 @@ namespace Services.Broadcast.Repositories
                 var entity = context.stations
                     .Include(x => x.station_mappings)
                     .Include(x => x.market)
-                    .Where(station =>
-                        station.station_mappings.Any(mapping => mapping.mapped_call_letters == callLetters))
-                    .FirstOrDefault();
+                    .FirstOrDefault(station =>
+                        station.station_mappings.Any(mapping => mapping.mapped_call_letters == callLetters));
                 return _MapToDisplayBroadcastStationDto(entity);
             });
         }

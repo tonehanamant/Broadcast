@@ -36,6 +36,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int id { get; set; }
         public string sales_group_name { get; set; }
         public string owner_name { get; set; }
+        public bool is_true_ind { get; set; }
     
         public virtual market market { get; set; }
         public virtual ICollection<pricing_guide_distribution_open_market_inventory> pricing_guide_distribution_open_market_inventory { get; set; }

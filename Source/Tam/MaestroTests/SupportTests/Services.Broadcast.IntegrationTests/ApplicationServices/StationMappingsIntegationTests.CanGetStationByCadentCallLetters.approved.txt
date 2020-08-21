@@ -2,8 +2,9 @@
   "Affiliation": "MET",
   "CallLetters": "KOCO-TV 5.2",
   "Code": 1378,
+  "IsTrueInd": false,
   "LegacyCallLetters": "OOCO",
   "MarketCode": 250,
-  "OwnershipGroupName": null,
-  "SalesGroupName": null
+  "OwnershipGroupName": "Ownership group 3",
+  "SalesGroupName": "Sales group 3"
 }

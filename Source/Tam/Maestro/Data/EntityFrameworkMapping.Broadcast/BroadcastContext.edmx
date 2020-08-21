@@ -2394,7 +2394,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_local.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -2492,6 +2492,7 @@ warning 6002: The table/view 'broadcast_local.dbo.station_inventory_manifest_wee
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="sales_group_name" Type="varchar" MaxLength="100" />
           <Property Name="owner_name" Type="varchar" MaxLength="100" />
+          <Property Name="is_true_ind" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="system_component_parameters">
           <Key>
@@ -2562,7 +2563,7 @@ warning 6002: The table/view 'broadcast_local.dbo.station_inventory_manifest_wee
           <Property Name="vpvh_file_id" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_local.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -2590,7 +2591,7 @@ warning 6002: The table/view 'broadcast_local.dbo.vw_ccc_daypart' does not have 
           <Property Name="daypart_text" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="total_hours" Type="float" Nullable="false" />
         </EntityType>
-        <Association Name="FK__genre_map__maest__67A95F59">
+        <Association Name="FK__genre_map__maest__7E8CC4B1">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2602,7 +2603,7 @@ warning 6002: The table/view 'broadcast_local.dbo.vw_ccc_daypart' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__genre_map__mappe__689D8392">
+        <Association Name="FK__genre_map__mappe__7F80E8EA">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2614,7 +2615,7 @@ warning 6002: The table/view 'broadcast_local.dbo.vw_ccc_daypart' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__plan_vers__genre__3B95D2F1">
+        <Association Name="FK__plan_vers__genre__546180BB">
           <End Role="genres" Type="Self.genres" Multiplicity="0..1" />
           <End Role="plan_version_daypart_program_restrictions" Type="Self.plan_version_daypart_program_restrictions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -6730,15 +6731,15 @@ warning 6002: The table/view 'broadcast_local.dbo.vw_ccc_daypart' does not have 
     [vw_ccc_daypart].[total_hours] AS [total_hours]
     FROM [dbo].[vw_ccc_daypart] AS [vw_ccc_daypart]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__genre_map__maest__67A95F59" Association="Self.FK__genre_map__maest__67A95F59">
+          <AssociationSet Name="FK__genre_map__maest__7E8CC4B1" Association="Self.FK__genre_map__maest__7E8CC4B1">
             <End Role="genres" EntitySet="genres" />
             <End Role="genre_mappings" EntitySet="genre_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK__genre_map__mappe__689D8392" Association="Self.FK__genre_map__mappe__689D8392">
+          <AssociationSet Name="FK__genre_map__mappe__7F80E8EA" Association="Self.FK__genre_map__mappe__7F80E8EA">
             <End Role="genres" EntitySet="genres" />
             <End Role="genre_mappings" EntitySet="genre_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK__plan_vers__genre__3B95D2F1" Association="Self.FK__plan_vers__genre__3B95D2F1">
+          <AssociationSet Name="FK__plan_vers__genre__546180BB" Association="Self.FK__plan_vers__genre__546180BB">
             <End Role="genres" EntitySet="genres" />
             <End Role="plan_version_daypart_program_restrictions" EntitySet="plan_version_daypart_program_restrictions" />
           </AssociationSet>
@@ -12661,6 +12662,7 @@ warning 6002: The table/view 'broadcast_local.dbo.vw_ccc_daypart' does not have 
           <NavigationProperty Name="station_mappings" Relationship="BroadcastModel.FK_station_mappings_stations" FromRole="station" ToRole="station_mappings" />
           <Property Name="sales_group_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="owner_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="is_true_ind" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_stations_markets">
           <End Type="BroadcastModel.market" Role="market" Multiplicity="0..1" />
@@ -17769,6 +17771,7 @@ warning 6002: The table/view 'broadcast_local.dbo.vw_ccc_daypart' does not have 
           <EntitySetMapping Name="stations">
             <EntityTypeMapping TypeName="BroadcastModel.station">
               <MappingFragment StoreEntitySet="stations">
+                <ScalarProperty Name="is_true_ind" ColumnName="is_true_ind" />
                 <ScalarProperty Name="owner_name" ColumnName="owner_name" />
                 <ScalarProperty Name="sales_group_name" ColumnName="sales_group_name" />
                 <ScalarProperty Name="id" ColumnName="id" />

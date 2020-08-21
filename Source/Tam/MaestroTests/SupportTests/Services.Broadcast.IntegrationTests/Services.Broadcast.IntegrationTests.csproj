@@ -654,6 +654,9 @@
     <None Include="Files\Excel templates\Template - Program Lineup.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ImportStationMappings\CadentBroadcastStationList_TrueInd.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ImportStationMappings\CadentBroadcastStationList.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

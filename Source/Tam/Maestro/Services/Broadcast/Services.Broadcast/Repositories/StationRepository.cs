@@ -45,10 +45,6 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         void UpdateStation(DisplayBroadcastStation station, string user, DateTime updateDate);
 
-
-        short? GetStationCode(string stationName);
-        List<DisplayBroadcastStation> CreateStations(IEnumerable<DisplayBroadcastStation> stations, string user);
-
         /// <summary>
         /// Checks if a station exists for the given station call letters.
         /// </summary>
@@ -109,9 +105,10 @@ namespace Services.Broadcast.Repositories
         /// <param name="ownerName">Name of the owner.</param>
         /// <param name="salesGroupName">Name of the sales group.</param>
         /// <param name="stationId">Station id</param>
+        /// <param name="isTrueInd">True if the station is a 'True Independent' station.</param>
         /// <param name="user">The user making the update.</param>
         /// <param name="timeStamp">The time stamp when the update was done.</param>
-        void UpdateStation(string ownerName, string salesGroupName, int stationId, string user, DateTime timeStamp);
+        void UpdateStation(string ownerName, string salesGroupName, int stationId, bool isTrueInd, string user, DateTime timeStamp);
     }
 
     public class StationRepository : BroadcastRepositoryBase, IStationRepository
@@ -123,55 +120,41 @@ namespace Services.Broadcast.Repositories
         public DisplayBroadcastStation GetBroadcastStationByCode(int code)
         {
             return _InReadUncommitedTransaction(
-                context => (from s in context.stations
+                context =>
+                {
+                    var station = (from s in context.stations
                             where s.station_code == code
-                            select new DisplayBroadcastStation
-                            {
-                                Id = s.id,
-                                Code = s.station_code,
-                                Affiliation = s.affiliation,
-                                CallLetters = s.station_call_letters,
-                                LegacyCallLetters = s.legacy_call_letters,
-                                OriginMarket = s.market == null ? null : s.market.geography_name,
-                                MarketCode = s.market_code,
-                                ModifiedDate = s.modified_date
-                            }).Single("No station found with code: " + code));
+                            select s)
+                        .Single("No station found with code: " + code);
+
+                    return _MapToDto(station);
+                });
         }
 
         public DisplayBroadcastStation GetBroadcastStationById(int id)
         {
             return _InReadUncommitedTransaction(
-                context => (from s in context.stations
-                            where s.id == id
-                            select new DisplayBroadcastStation
-                            {
-                                Id = s.id,
-                                Code = s.station_code,
-                                Affiliation = s.affiliation,
-                                CallLetters = s.station_call_letters,
-                                LegacyCallLetters = s.legacy_call_letters,
-                                OriginMarket = s.market == null ? null : s.market.geography_name,
-                                MarketCode = s.market_code,
-                                ModifiedDate = s.modified_date
-                            }).Single("No station found with id: " + id));
+                context =>
+                {
+                    var station = (from s in context.stations
+                        where s.id == id
+                        select s).Single("No station found with id: " + id);
+
+                    return _MapToDto(station);
+                });
         }
 
         public List<DisplayBroadcastStation> GetBroadcastStationsByCodes(IEnumerable<int> codes)
         {
             return _InReadUncommitedTransaction(
-                context => (from s in context.stations
-                            where codes.Contains(s.station_code.Value)
-                            select new DisplayBroadcastStation
-                            {
-                                Id = s.id,
-                                Code = s.station_code,
-                                Affiliation = s.affiliation,
-                                CallLetters = s.station_call_letters,
-                                LegacyCallLetters = s.legacy_call_letters,
-                                OriginMarket = s.market == null ? null : s.market.geography_name,
-                                MarketCode = s.market_code,
-                                ModifiedDate = s.modified_date
-                            }).ToList());
+                context =>
+                {
+                    var stations =  (from s in context.stations
+                        where codes.Contains(s.station_code.Value)
+                        select s).ToList();
+
+                    return stations.Select(_MapToDto).ToList();
+                });
         }
 
         public DisplayBroadcastStation GetBroadcastStationByLegacyCallLetters(string callLetters)
@@ -179,38 +162,30 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    return (from s in context.stations
+                    var station = (from s in context.stations
                             where s.legacy_call_letters == callLetters
-                            select new DisplayBroadcastStation
-                            {
-                                Id = s.id,
-                                Code = s.station_code,
-                                Affiliation = s.affiliation,
-                                CallLetters = s.station_call_letters,
-                                LegacyCallLetters = s.legacy_call_letters,
-                                OriginMarket = s.market == null ? null : s.market.geography_name,
-                                ModifiedDate = s.modified_date,
-                                MarketCode = s.market_code
-                            }).FirstOrDefault();
+                            select s).FirstOrDefault();
+
+                    if (station == null)
+                    {
+                        return null;
+                    }
+
+                    return _MapToDto(station);
                 });
         }
 
         public DisplayBroadcastStation GetBroadcastStationByCallLetters(string stationCallLetters)
         {
             return _InReadUncommitedTransaction(
-                context => (from s in context.stations
-                            where s.station_call_letters == stationCallLetters
-                            select new DisplayBroadcastStation
-                            {
-                                Id = s.id,
-                                Code = s.station_code,
-                                Affiliation = s.affiliation,
-                                CallLetters = s.station_call_letters,
-                                LegacyCallLetters = s.legacy_call_letters,
-                                OriginMarket = s.market == null ? null : s.market.geography_name,
-                                MarketCode = s.market_code,
-                                ModifiedDate = s.modified_date
-                            }).FirstOrDefault());
+                context =>
+                {
+                    var station = (from s in context.stations
+                        where s.station_call_letters == stationCallLetters
+                        select s).FirstOrDefault();
+
+                    return _MapToDto(station);
+                });
         }
 
         public List<DisplayBroadcastStation> GetBroadcastStationListByLegacyCallLetters(List<string> stationNameList)
@@ -218,19 +193,11 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    return (from s in context.stations
+                    var stations= (from s in context.stations
                             where stationNameList.Contains(s.legacy_call_letters)
-                            select new DisplayBroadcastStation
-                            {
-                                Id = s.id,
-                                Code = s.station_code,
-                                Affiliation = s.affiliation,
-                                CallLetters = s.station_call_letters,
-                                LegacyCallLetters = s.legacy_call_letters,
-                                OriginMarket = s.market == null ? null : s.market.geography_name,
-                                MarketCode = s.market_code,
-                                ModifiedDate = s.modified_date
-                            }).ToList();
+                            select s).ToList();
+
+                    return stations.Select(_MapToDto).ToList();
                 });
         }
 
@@ -239,20 +206,12 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    return (from s in context.stations
+                    var stations = (from s in context.stations
                         where s.market_code.HasValue
                             && marketCodes.Contains(s.market_code.Value)
-                        select new DisplayBroadcastStation
-                        {
-                            Id = s.id,
-                            Code = s.station_code,
-                            Affiliation = s.affiliation,
-                            CallLetters = s.station_call_letters,
-                            LegacyCallLetters = s.legacy_call_letters,
-                            OriginMarket = s.market == null ? null : s.market.geography_name,
-                            MarketCode = s.market_code,
-                            ModifiedDate = s.modified_date
-                        }).ToList();
+                        select s).ToList();
+
+                    return stations.Select(_MapToDto).ToList();
                 });
         }
 
@@ -289,7 +248,8 @@ namespace Services.Broadcast.Repositories
                                     sd.market == null ? null : sd.market.geography_name :
                                     s.market == null ? null : s.market.geography_name,
                                 MarketCode = sd != null ? sd.market_code : s.market_code,
-                                ModifiedDate = s.modified_date
+                                ModifiedDate = s.modified_date,
+                                IsTrueInd = s.is_true_ind
                             }).ToList();
                 });
         }
@@ -298,37 +258,27 @@ namespace Services.Broadcast.Repositories
         public List<DisplayBroadcastStation> GetBroadcastStations()
         {
             return _InReadUncommitedTransaction(
-                context => (from s in context.stations
-                            select new DisplayBroadcastStation
-                            {
-                                Id = s.id,
-                                Code = s.station_code,
-                                Affiliation = s.affiliation,
-                                CallLetters = s.station_call_letters,
-                                LegacyCallLetters = s.legacy_call_letters,
-                                OriginMarket = s.market == null ? null : s.market.geography_name,
-                                MarketCode = s.market_code,
-                                ModifiedDate = s.modified_date
-                            }).ToList());
+                context =>
+                {
+                    var stations = (from s in context.stations
+                        select s).ToList();
+
+                    return stations.Select(_MapToDto).ToList();
+                });
         }
 
         /// <inheritdoc/>
         public List<DisplayBroadcastStation> GetUnratedBroadcastStations()
         {
             return _InReadUncommitedTransaction(
-                context => (from s in context.stations
-                            where s.station_code == null
-                            select new DisplayBroadcastStation
-                            {
-                                Id = s.id,
-                                Code = s.station_code,
-                                Affiliation = s.affiliation,
-                                CallLetters = s.station_call_letters,
-                                LegacyCallLetters = s.legacy_call_letters,
-                                OriginMarket = s.market == null ? null : s.market.geography_name,
-                                MarketCode = s.market_code,
-                                ModifiedDate = s.modified_date
-                            }).ToList());
+                context =>
+                {
+                    var stations = (from s in context.stations
+                        where s.station_code == null
+                        select s).ToList();
+
+                    return stations.Select(_MapToDto).ToList();
+                });
         }
 
         public void UpdateStation(int code, string user, DateTime timeStamp, int inventorySourceId)
@@ -348,7 +298,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public void UpdateStation(string ownerName, string salesGroupName, int stationId, string user, DateTime timeStamp)
+        public void UpdateStation(string ownerName, string salesGroupName, int stationId, bool isTrueInd, string user, DateTime timeStamp)
         {
             _InReadUncommitedTransaction(
                 context =>
@@ -358,6 +308,7 @@ namespace Services.Broadcast.Repositories
                     station.modified_date = timeStamp;
                     station.owner_name = ownerName;
                     station.sales_group_name = salesGroupName;
+                    station.is_true_ind = isTrueInd;
                     context.SaveChanges();
                 });
         }
@@ -395,54 +346,6 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        private readonly Dictionary<string, short> _StationCache = new Dictionary<string, short>();
-        public short? GetStationCode(string stationName)
-        {
-            short code;
-            if (_StationCache.TryGetValue(stationName, out code))
-                return code;
-
-            using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
-            {
-                return _InReadUncommitedTransaction(c =>
-                {
-                    var firstOrDefault = c.stations.FirstOrDefault(s => s.legacy_call_letters == stationName);
-                    if (firstOrDefault == null)
-                        return (short?)null;
-
-                    _StationCache[stationName] = (short)firstOrDefault.station_code.Value;
-                    return (short?)firstOrDefault.station_code;
-                });
-            }
-        }
-
-        public List<DisplayBroadcastStation> CreateStations(IEnumerable<DisplayBroadcastStation> stations, string user)
-        {
-            return _InReadUncommitedTransaction(
-                context =>
-                {
-                    var newStations = stations.Select(x => new station
-                    {
-                        station_call_letters = x.CallLetters,
-                        legacy_call_letters = x.LegacyCallLetters,
-                        modified_date = x.ModifiedDate.Value,
-                        modified_by = user
-                    }).ToList();
-
-                    context.stations.AddRange(newStations);
-                    context.SaveChanges();
-
-                    return newStations.Select(s => new DisplayBroadcastStation
-                    {
-                        Id = s.id,
-                        Code = s.station_code,
-                        CallLetters = s.station_call_letters,
-                        LegacyCallLetters = s.legacy_call_letters,
-                        ModifiedDate = s.modified_date
-                    }).ToList();
-                });
-        }
-
         /// <inheritdoc/>
         public DisplayBroadcastStation CreateStation(DisplayBroadcastStation station, string user)
         {
@@ -474,6 +377,7 @@ namespace Services.Broadcast.Repositories
                     existingStation.market_code = (short?)station.MarketCode;
                     existingStation.modified_by = user;
                     existingStation.modified_date = updateDate;
+                    existingStation.is_true_ind = station.IsTrueInd;
 
                     context.SaveChanges();
                 });
@@ -509,10 +413,12 @@ namespace Services.Broadcast.Repositories
                 CallLetters = newStation.station_call_letters,
                 Affiliation = newStation.affiliation,
                 MarketCode = newStation.market_code,
+                OriginMarket = newStation.market?.geography_name,
                 LegacyCallLetters = newStation.legacy_call_letters,
                 ModifiedDate = newStation.modified_date,
                 OwnershipGroupName = newStation.owner_name,
-                SalesGroupName = newStation.sales_group_name
+                SalesGroupName = newStation.sales_group_name,
+                IsTrueInd = newStation.is_true_ind
             };
         }
 
@@ -528,7 +434,8 @@ namespace Services.Broadcast.Repositories
                 market_code =  (short?)station.MarketCode,
                 modified_by = user,
                 owner_name = station.OwnershipGroupName,
-                sales_group_name = station.SalesGroupName
+                sales_group_name = station.SalesGroupName,
+                is_true_ind = station.IsTrueInd
             };
         }
 

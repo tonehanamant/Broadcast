@@ -1,0 +1,13 @@
+{
+  "Affiliation": "CBS",
+  "CallLetters": "KREX+",
+  "Code": 300,
+  "IsTrueInd": false,
+  "LegacyCallLetters": "KREX",
+  "ManifestMaxEndDate": null,
+  "MarketCode": 373,
+  "OriginMarket": "Grand Junction-Montrose",
+  "OwnershipGroupName": "Ownership group 3",
+  "RateDataThrough": null,
+  "SalesGroupName": "Sales group 3"
+}

@@ -923,6 +923,20 @@ END
 GO
 /*************************************** END BP-1088 *****************************************************/
 
+/*************************************** START BP-813 *****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('stations') AND name = 'is_true_ind')
+BEGIN
+	ALTER TABLE stations 
+		ADD is_true_ind BIT NULL
+
+	EXEC ('UPDATE stations SET is_true_ind = 0 WHERE is_true_ind IS NULL')
+	EXEC ('ALTER TABLE stations ALTER COLUMN is_true_ind BIT NOT NULL')
+END
+
+GO
+/*************************************** END BP-813 *****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

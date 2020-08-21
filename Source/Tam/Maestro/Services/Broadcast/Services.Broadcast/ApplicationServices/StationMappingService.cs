@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Amazon.S3.Model.Internal.MarshallTransformations;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -169,31 +170,31 @@ namespace Services.Broadcast.ApplicationServices
                 .Select(x => x.NSICallLetters)
                 .Distinct().ToList();
 
-            // Get the station
-            var station = _StationRepository.GetBroadcastStationByLegacyCallLetters(cadentCallLetters);
-            
+            // prep a record to save
+            var currentStationGroup = stationGroup.First();
+            var stationDtoToSave = new DisplayBroadcastStation
+            {
+                CallLetters = nsiCallLettersList.FirstOrDefault() ?? currentStationGroup.CadentCallLetters,
+                Affiliation = currentStationGroup.Affiliate,
+                LegacyCallLetters = currentStationGroup.CadentCallLetters,
+                ModifiedDate = createdDate,
+                IsTrueInd = _IsStationATrueInd(currentStationGroup),
+                SalesGroupName = currentStationGroup.SalesGroupName,
+                OwnershipGroupName = currentStationGroup.OwnershipGroupName
+            };
+
+            // look to update existing...
             // If the station doesn't exist, create it
+            var station = _StationRepository.GetBroadcastStationByLegacyCallLetters(cadentCallLetters);
             if (station == null)
             {
-                var stationDtoToSave = new DisplayBroadcastStation
-                {
-                    CallLetters = nsiCallLettersList.FirstOrDefault() ?? stationGroup.First().CadentCallLetters,
-                    Affiliation = stationGroup.First().Affiliate,
-                    LegacyCallLetters = stationGroup.First().CadentCallLetters,
-                    ModifiedDate = createdDate,
-                    SalesGroupName = stationGroup.Select(x => x.SalesGroupName).First(),
-                    OwnershipGroupName = stationGroup.Select(x => x.OwnershipGroupName).First()
-                };
-
                 var stationMediaMonthId = _StationRepository.GetLatestMediaMonthIdFromStationMonthDetailsList();
                 station = _StationRepository.CreateStationWithMonthDetails(stationDtoToSave, stationMediaMonthId, userName);
             }
             else
-            {                
-                _StationRepository.UpdateStation(
-                    stationGroup.Select(x => x.OwnershipGroupName).First()
-                    , stationGroup.Select(x => x.SalesGroupName).First()
-                    , station.Id, userName, createdDate);
+            {
+                _StationRepository.UpdateStation(stationDtoToSave.OwnershipGroupName,
+                    stationDtoToSave.SalesGroupName, station.Id, stationDtoToSave.IsTrueInd, userName, createdDate);
             }
 
             // Since we allow multiple map sets for a station, remove the existing ones, and add the new ones, to avoid duplicate mappings
@@ -241,6 +242,18 @@ namespace Services.Broadcast.ApplicationServices
             AddNewStationMappings(newMappings, userName, createdDate);
         }
 
+        private bool _IsStationATrueInd(StationMappingsFileRequestDto s)
+        {
+            var thisMeansYes = new List<string> { "YES" };
+
+            if (thisMeansYes.Contains(s.IsTrueInd?.Trim()?.ToUpper()))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         /// <inheritdoc />
         public List<StationMappingsDto> GetStationMappingsByCadentCallLetter(string cadentCallLetters)
         {
@@ -262,9 +275,10 @@ namespace Services.Broadcast.ApplicationServices
         {
             var package = new ExcelPackage(stream);
             var worksheet = package.Workbook.Worksheets[1];
-            var stationMappings = worksheet.ConvertSheetToObjects<StationMappingsFileRequestDto>();
-
-            return stationMappings.ToList();
+            var rawStationMappings = worksheet.ConvertSheetToObjects<StationMappingsFileRequestDto>();
+            // filter out the empty rows the above can pick up
+            var stationMappings = rawStationMappings.Where(s => s.CadentCallLetters != null).ToList();
+            return stationMappings;
         }
 
         /// <inheritdoc />

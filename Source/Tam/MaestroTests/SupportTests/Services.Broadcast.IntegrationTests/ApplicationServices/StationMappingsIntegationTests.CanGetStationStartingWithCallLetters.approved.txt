@@ -2,6 +2,7 @@
   "Affiliation": null,
   "CallLetters": "TKOCO-TV 5.2",
   "Code": null,
+  "IsTrueInd": false,
   "LegacyCallLetters": "TOOCO",
   "MarketCode": null,
   "OwnershipGroupName": null,
