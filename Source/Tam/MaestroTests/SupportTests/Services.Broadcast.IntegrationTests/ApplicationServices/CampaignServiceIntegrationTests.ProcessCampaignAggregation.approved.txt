@@ -67,57 +67,6 @@
       "TotalActiveDays": 210,
       "TotalHiatusDays": 2,
       "TRP": 6.0
-    },
-    {
-      "AudienceId": 31,
-      "AvailableMarketCount": 2,
-      "AvailableMarketsWithSovCount": null,
-      "AvailableMarketTotalUsCoveragePercent": 52.5,
-      "BlackoutMarketCount": null,
-      "BlackoutMarketTotalUsCoveragePercent": null,
-      "Budget": 100.0000,
-      "Dayparts": [
-        "MDN",
-        "OVN"
-      ],
-      "DraftId": null,
-      "DraftModifiedBy": null,
-      "DraftModifiedDate": null,
-      "Equivalized": true,
-      "FlightEndDate": "2019-07-31T00:00:00",
-      "FlightStartDate": "2019-01-01T00:00:00",
-      "HasHiatus": true,
-      "HHCPM": 10.0000,
-      "HHImpressions": 10000.0,
-      "ModifiedBy": "IntegrationTestUser",
-      "ModifiedDate": "2019-05-14T00:00:00",
-      "Name": "New Plan",
-      "PlanSummaryQuarters": [
-        {
-          "Quarter": 1,
-          "Year": 2019
-        },
-        {
-          "Quarter": 2,
-          "Year": 2019
-        },
-        {
-          "Quarter": 3,
-          "Year": 2019
-        }
-      ],
-      "PostingType": 2,
-      "ProcessingStatus": 1,
-      "ProductName": "Product1",
-      "SpotLengthValues": [
-        30
-      ],
-      "Status": 1,
-      "TargetCPM": 12.0000,
-      "TargetImpressions": 100.0,
-      "TotalActiveDays": 210,
-      "TotalHiatusDays": 2,
-      "TRP": 6.0
     }
   ],
   "PlanStatuses": [

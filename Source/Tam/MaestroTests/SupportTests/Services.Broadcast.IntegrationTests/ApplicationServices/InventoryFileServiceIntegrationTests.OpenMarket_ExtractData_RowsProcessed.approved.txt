@@ -296,14 +296,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -595,14 +596,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -894,14 +896,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -1193,14 +1196,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -1492,14 +1496,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -1791,14 +1796,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -2090,14 +2096,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -2389,14 +2396,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -2688,14 +2696,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -2987,14 +2996,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -3286,14 +3296,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -3585,14 +3596,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -3884,14 +3896,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -4183,14 +4196,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -4482,14 +4496,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -4781,14 +4796,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -5080,14 +5096,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -5379,14 +5396,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -5678,14 +5696,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -5977,14 +5996,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -6276,14 +6296,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -6575,14 +6596,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -6874,14 +6896,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -7173,14 +7196,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -7472,14 +7496,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -7771,14 +7796,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -8070,14 +8096,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -8369,14 +8396,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -8668,14 +8696,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -8967,14 +8996,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -9266,14 +9296,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -9565,14 +9596,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -9864,14 +9896,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -10163,14 +10196,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -10462,14 +10496,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -10761,14 +10796,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -11060,14 +11096,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -11359,14 +11396,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -11658,14 +11696,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -11957,14 +11996,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -12256,14 +12296,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     },
     {
@@ -12555,14 +12596,15 @@
         "CallLetters": "KMPH-TV 26.1",
         "Code": 5947,
         "Id": 1347,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KMPH",
         "ManifestMaxEndDate": null,
         "MarketCode": 466,
-        "ModifiedDate": "2020-08-03T14:34:22.8533333",
+        "ModifiedDate": "2020-08-03T14:34:22.853",
         "OriginMarket": "Fresno-Visalia",
-        "OwnershipGroupName": null,
+        "OwnershipGroupName": "Ownership group 3",
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "SalesGroupName": "Sales group 2"
       }
     }
   ],

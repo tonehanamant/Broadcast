@@ -72,6 +72,7 @@
         "CallLetters": null,
         "Code": null,
         "Id": 0,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KOB",
         "ManifestMaxEndDate": null,
         "MarketCode": null,
@@ -117,7 +118,8 @@
           "ModifiedDate": null,
           "ManifestMaxEndDate": null,
           "OwnershipGroupName": null,
-          "SalesGroupName": null
+          "SalesGroupName": null,
+          "IsTrueInd": false
         },
         "ManifestRates": [
           {

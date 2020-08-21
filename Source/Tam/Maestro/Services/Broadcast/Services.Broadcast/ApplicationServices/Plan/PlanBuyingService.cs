@@ -33,7 +33,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
     public interface IPlanBuyingService : IApplicationService
     {
         PlanBuyingJob QueueBuyingJob(PlanBuyingParametersDto planBuyingParametersDto, DateTime currentDate, string username);
-        PlanBuyingJob QueueBuyingJob(BuyingParametersWithoutPlanDto buyingParametersWithoutPlanDto, DateTime currentDate, string username);
 
         CurrentBuyingExecution GetCurrentBuyingExecution(int planId);
 
@@ -56,10 +55,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         [Queue("planbuying")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         void RunBuyingJob(PlanBuyingParametersDto planBuyingParametersDto, int jobId, CancellationToken token);
-
-        [Queue("planbuying")]
-        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        void RunBuyingWithoutPlanJob(BuyingParametersWithoutPlanDto buyingParametersWithoutPlanDto, int jobId, CancellationToken token);
 
         /// <summary>
         /// For troubleshooting
@@ -250,102 +245,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 primaryProgramsByManifestDaypartIds,
                 markets,
                 _WeeklyBreakdownEngine);
-        }
-
-        public PlanBuyingJob QueueBuyingJob(BuyingParametersWithoutPlanDto buyingParametersWithoutPlanDto
-            , DateTime currentDate, string username)
-        {
-            if (buyingParametersWithoutPlanDto.JobId.HasValue && IsBuyingModelRunningForJob(buyingParametersWithoutPlanDto.JobId.Value))
-            {
-                throw new Exception("The buying model is already running");
-            }
-
-            var buyingParameters = _ConvertBuyingWithoutPlanParametersToPlanBuyingParameters(buyingParametersWithoutPlanDto);
-
-            ValidateAndApplyMargin(buyingParameters);
-            buyingParametersWithoutPlanDto.AdjustedBudget = buyingParameters.AdjustedBudget;
-            buyingParametersWithoutPlanDto.AdjustedCPM = buyingParameters.AdjustedCPM;
-
-            _ValidatePlan(buyingParametersWithoutPlanDto);
-
-            var job = new PlanBuyingJob
-            {
-                Status = BackgroundJobProcessingStatus.Queued,
-                Queued = currentDate
-            };
-            using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
-            {
-                job.Id = _SaveBuyingJobAndParameters(job, buyingParameters);
-                buyingParametersWithoutPlanDto.JobId = job.Id;
-                transaction.Complete();
-            }
-
-            job.HangfireJobId = _BackgroundJobClient.Enqueue<IPlanBuyingService>(x => 
-                x.RunBuyingWithoutPlanJob(buyingParametersWithoutPlanDto, job.Id, CancellationToken.None));
-
-            _PlanBuyingRepository.UpdateJobHangfireId(job.Id, job.HangfireJobId);
-
-            return job;
-        }
-
-        private void _ValidatePlan(BuyingParametersWithoutPlanDto buyingParametersWithoutPlanDto)
-        {
-            var plan = _ConvertBuyingWithoutPlanParametersToPlanDto(buyingParametersWithoutPlanDto);
-            _PlanValidator.ValidatePlanForBuying(plan);
-        }
-
-        private PlanBuyingParametersDto _ConvertBuyingWithoutPlanParametersToPlanBuyingParameters(BuyingParametersWithoutPlanDto buyingParametersWithoutPlanDto)
-        {
-            return new PlanBuyingParametersDto
-            {
-                AdjustedBudget = buyingParametersWithoutPlanDto.AdjustedBudget,
-                AdjustedCPM = buyingParametersWithoutPlanDto.AdjustedCPM,
-                Budget = buyingParametersWithoutPlanDto.Budget,
-                CompetitionFactor = buyingParametersWithoutPlanDto.CompetitionFactor,
-                CPM = buyingParametersWithoutPlanDto.CPM,
-                CPP = buyingParametersWithoutPlanDto.CPP,
-                Currency = buyingParametersWithoutPlanDto.Currency,
-                DeliveryImpressions = buyingParametersWithoutPlanDto.DeliveryImpressions,
-                DeliveryRatingPoints = buyingParametersWithoutPlanDto.DeliveryRatingPoints,
-                InflationFactor = buyingParametersWithoutPlanDto.InflationFactor,
-                InventorySourcePercentages = buyingParametersWithoutPlanDto.InventorySourcePercentages,
-                InventorySourceTypePercentages = buyingParametersWithoutPlanDto.InventorySourceTypePercentages,
-                JobId = buyingParametersWithoutPlanDto.JobId,
-                Margin = buyingParametersWithoutPlanDto.Margin,
-                MarketGroup = buyingParametersWithoutPlanDto.MarketGroup,
-                MaxCpm = buyingParametersWithoutPlanDto.MaxCpm,
-                MinCpm = buyingParametersWithoutPlanDto.MinCpm,
-                ProprietaryBlend = buyingParametersWithoutPlanDto.ProprietaryBlend,
-                UnitCaps = buyingParametersWithoutPlanDto.UnitCaps,
-                UnitCapsType = buyingParametersWithoutPlanDto.UnitCapsType
-            };
-        }
-
-        private PlanDto _ConvertBuyingWithoutPlanParametersToPlanDto(BuyingParametersWithoutPlanDto BuyingParametersWithoutPlanDto)
-        {
-            return new PlanDto
-            {
-                AudienceId = BuyingParametersWithoutPlanDto.AudienceId,
-                AvailableMarkets = BuyingParametersWithoutPlanDto.AvailableMarkets,
-                CoverageGoalPercent = BuyingParametersWithoutPlanDto.CoverageGoalPercent,
-                CreativeLengths = BuyingParametersWithoutPlanDto.CreativeLengths,
-                Dayparts = BuyingParametersWithoutPlanDto.Dayparts,
-                Equivalized = BuyingParametersWithoutPlanDto.Equivalized,
-                FlightDays = BuyingParametersWithoutPlanDto.FlightDays,
-                FlightEndDate = BuyingParametersWithoutPlanDto.FlightEndDate,
-                FlightHiatusDays = BuyingParametersWithoutPlanDto.FlightHiatusDays,
-                FlightStartDate = BuyingParametersWithoutPlanDto.FlightStartDate,
-                GoalBreakdownType = BuyingParametersWithoutPlanDto.GoalBreakdownType,
-                HUTBookId = BuyingParametersWithoutPlanDto.HUTBookId,
-                ImpressionsPerUnit = BuyingParametersWithoutPlanDto.ImpressionsPerUnit,
-                PostingType = BuyingParametersWithoutPlanDto.PostingType,
-                ShareBookId = BuyingParametersWithoutPlanDto.ShareBookId,
-                TargetRatingPoints = BuyingParametersWithoutPlanDto.TargetRatingPoints,
-                WeeklyBreakdownWeeks = BuyingParametersWithoutPlanDto.WeeklyBreakdownWeeks,
-                BuyingParameters = _ConvertBuyingWithoutPlanParametersToPlanBuyingParameters(BuyingParametersWithoutPlanDto),
-                TargetImpressions = BuyingParametersWithoutPlanDto.DeliveryImpressions,
-                Budget = BuyingParametersWithoutPlanDto.Budget
-            };
         }
 
         public PlanBuyingJob QueueBuyingJob(PlanBuyingParametersDto planBuyingParametersDto
@@ -1206,14 +1105,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             return buyingModelSpots;
-        }
-
-        public void RunBuyingWithoutPlanJob(BuyingParametersWithoutPlanDto BuyingParametersWithoutPlanDto, int jobId, CancellationToken token)
-        {
-            var buyingParameters = _ConvertBuyingWithoutPlanParametersToPlanBuyingParameters(BuyingParametersWithoutPlanDto);
-            var plan = _ConvertBuyingWithoutPlanParametersToPlanDto(BuyingParametersWithoutPlanDto);
-
-            _RunBuyingJob(buyingParameters, plan, jobId, token);
         }
 
         public void RunBuyingJob(PlanBuyingParametersDto PlanBuyingParametersDto, int jobId, CancellationToken token)

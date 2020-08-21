@@ -1827,6 +1827,7 @@
   "HUTBookId": 447,
   "ImpressionsPerUnit": 2500.0,
   "IsAduEnabled": false,
+  "IsBuyingModelRunning": false,
   "IsDraft": false,
   "IsPricingModelRunning": false,
   "ModifiedBy": "Sebastian Roibu",

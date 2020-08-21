@@ -67,6 +67,7 @@
       "Affiliation": "ABC",
       "CallLetters": "WABC-TV 7.1",
       "Code": 5015,
+      "IsTrueInd": false,
       "LegacyCallLetters": "WABC",
       "ManifestMaxEndDate": null,
       "MarketCode": 101,

@@ -609,6 +609,7 @@
       "CallLetters": "WDCW 50.1",
       "Code": 6877,
       "Id": 1788,
+      "IsTrueInd": false,
       "LegacyCallLetters": "WDCW",
       "ManifestMaxEndDate": null,
       "MarketCode": 111,

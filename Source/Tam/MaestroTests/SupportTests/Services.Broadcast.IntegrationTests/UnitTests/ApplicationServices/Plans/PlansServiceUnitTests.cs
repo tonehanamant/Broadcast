@@ -10,6 +10,7 @@ using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Helpers;
@@ -41,6 +42,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<ISpotLengthEngine> _SpotLengthEngineMock;
         private Mock<IBroadcastLockingManagerApplicationService> _BroadcastLockingManagerApplicationServiceMock;
         private Mock<IPlanPricingService> _PlanPricingServiceMock;
+        private Mock<IPlanBuyingService> _PlanBuyingServiceMock;
         private Mock<IQuarterCalculationEngine> _QuarterCalculationEngineMock;
         private Mock<IDaypartDefaultService> _DaypartDefaultServiceMock;
         private Mock<IWeeklyBreakdownEngine> _WeeklyBreakdownEngineMock;
@@ -62,6 +64,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _CampaignAggregationJobTriggerMock = new Mock<ICampaignAggregationJobTrigger>();
             _BroadcastLockingManagerApplicationServiceMock = new Mock<IBroadcastLockingManagerApplicationService>();
             _PlanPricingServiceMock = new Mock<IPlanPricingService>();
+            _PlanBuyingServiceMock = new Mock<IPlanBuyingService>();
             _SpotLengthEngineMock = new Mock<ISpotLengthEngine>();
             _QuarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
             _DaypartDefaultServiceMock = new Mock<IDaypartDefaultService>();
@@ -113,6 +116,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(s => s.GetPlanPricingDefaults())
                 .Returns(_GetPlanPricingDefaults());
 
+            _PlanBuyingServiceMock
+                .Setup(s => s.GetPlanBuyingDefaults())
+                .Returns(GetPlanBuyingDefaults());
+
             _PlanBudgetDeliveryCalculatorMock
                 .Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
                 .Returns(_GetPlanDeliveryBudget());
@@ -153,6 +160,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     _SpotLengthEngineMock.Object,
                     _BroadcastLockingManagerApplicationServiceMock.Object,
                     _PlanPricingServiceMock.Object,
+                    _PlanBuyingServiceMock.Object,
                     _QuarterCalculationEngineMock.Object,
                     _DaypartDefaultServiceMock.Object,
                     _WeeklyBreakdownEngineMock.Object,
@@ -1310,6 +1318,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private static PlanPricingDefaults _GetPlanPricingDefaults()
         {
             return new PlanPricingDefaults
+            {
+                UnitCaps = 1,
+                UnitCapType = UnitCapEnum.Per30Min,
+                InventorySourcePercentages = new List<PlanInventorySourceDto>(),
+                InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>()
+            };
+        }
+
+        private static PlanBuyingDefaults GetPlanBuyingDefaults()
+        {
+            return new PlanBuyingDefaults
             {
                 UnitCaps = 1,
                 UnitCapType = UnitCapEnum.Per30Min,

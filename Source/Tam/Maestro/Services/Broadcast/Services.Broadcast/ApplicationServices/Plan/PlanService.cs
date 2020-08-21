@@ -159,6 +159,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IBroadcastLockingManagerApplicationService _LockingManagerApplicationService;
         private readonly IPlanPricingService _PlanPricingService;
+        private readonly IPlanBuyingService _PlanBuyingService;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly IDaypartDefaultService _DaypartDefaultService;
         private readonly IDayRepository _DayRepository;
@@ -178,6 +179,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , ISpotLengthEngine spotLengthEngine
             , IBroadcastLockingManagerApplicationService lockingManagerApplicationService
             , IPlanPricingService planPricingService
+            , IPlanBuyingService planBuyingService
             , IQuarterCalculationEngine quarterCalculationEngine
             , IDaypartDefaultService daypartDefaultService
             , IWeeklyBreakdownEngine weeklyBreakdownEngine
@@ -197,6 +199,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _SpotLengthEngine = spotLengthEngine;
             _LockingManagerApplicationService = lockingManagerApplicationService;
             _PlanPricingService = planPricingService;
+            _PlanBuyingService = planBuyingService;
             _QuarterCalculationEngine = quarterCalculationEngine;
             _DaypartDefaultService = daypartDefaultService;
             _WeeklyBreakdownEngine = weeklyBreakdownEngine;
@@ -597,17 +600,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
             PlanDto plan = _PlanRepository.GetPlan(planId, versionId);
 
             plan.IsPricingModelRunning = _PlanPricingService.IsPricingModelRunningForPlan(planId);
+            plan.IsBuyingModelRunning = _PlanBuyingService.IsBuyingModelRunningForPlan(planId);
 
             // Because in DB we store weekly breakdown split 'by week by ad length by daypart'
-            // we need to group them back based on the plan delivery type so that on UI the breakdown table looks like it looked before saving
+            // we need to group them back based on the plan delivery type
             plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(plan);
 
-            _LoadPlanPricingParameters(plan, planId, versionId);
             _WeeklyBreakdownEngine.SetWeekNumber(plan.WeeklyBreakdownWeeks);
             _SetWeeklyBreakdownTotals(plan);
             DaypartTimeHelper.AddOneSecondToEndTime(plan.Dayparts);
 
-            _SetPlanTotals(plan);
             _SetDefaultDaypartRestrictions(plan);
             _ConvertImpressionsToUserFormat(plan);
 
@@ -616,31 +618,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _SortCreativeLengths(plan);
 
             return plan;
-        }
-
-        private void _LoadPlanPricingParameters(PlanDto plan, int planId, int? versionId)
-        {
-            if (versionId.HasValue)
-            {
-                // Load for a version.
-                plan.PricingParameters = _PlanRepository.GetPricingParametersForVersion(versionId.Value);
-            }
-            else if (plan.IsDraft)
-            {
-                // Load for previous published version if draft.
-                var planHistory = _PlanRepository.GetPlanHistory(planId);
-                var planHistorySorted = planHistory
-                    // Skip the draft.
-                    .Where(p => p.VersionNumber != null)
-                    .OrderByDescending(p => p.VersionNumber);
-                var previousPlan = planHistorySorted.First();
-                var previousPlanVersionId = previousPlan.VersionId;
-                plan.PricingParameters = _PlanRepository.GetLatestPricingParameters(previousPlanVersionId);
-            }
-            else
-            {
-                plan.PricingParameters = _PlanRepository.GetLatestPricingParameters(planId);
-            }
         }
 
         private void _SortCreativeLengths(PlanDto plan)
@@ -850,13 +827,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     };
                 }
             }
-        }
-
-        private static void _SetPlanTotals(PlanDto plan)
-        {
-            plan.TotalActiveDays = plan.WeeklyBreakdownTotals.TotalActiveDays;
-            plan.TotalHiatusDays = plan.FlightHiatusDays.Count();
-            plan.TotalShareOfVoice = plan.WeeklyBreakdownTotals.TotalImpressionsPercentage;
         }
 
         ///<inheritdoc/>

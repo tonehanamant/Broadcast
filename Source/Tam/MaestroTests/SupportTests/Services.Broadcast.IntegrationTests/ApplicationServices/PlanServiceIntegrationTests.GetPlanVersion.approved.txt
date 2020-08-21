@@ -138,6 +138,7 @@
   "HUTBookId": 428,
   "ImpressionsPerUnit": 0.0,
   "IsAduEnabled": false,
+  "IsBuyingModelRunning": false,
   "IsDraft": false,
   "IsPricingModelRunning": false,
   "ModifiedBy": "IntegrationTestUser",

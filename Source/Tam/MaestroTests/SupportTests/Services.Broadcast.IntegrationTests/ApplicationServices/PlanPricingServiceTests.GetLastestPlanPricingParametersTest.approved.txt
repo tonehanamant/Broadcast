@@ -1954,6 +1954,7 @@
   "Id": 1849,
   "ImpressionsPerUnit": 1000.0,
   "IsAduEnabled": false,
+  "IsBuyingModelRunning": false,
   "IsDraft": false,
   "IsPricingModelRunning": true,
   "ModifiedBy": "Sebastian Roibu",

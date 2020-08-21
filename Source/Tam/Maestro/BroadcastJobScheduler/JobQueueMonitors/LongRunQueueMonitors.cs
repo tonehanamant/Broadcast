@@ -46,6 +46,8 @@ namespace BroadcastJobScheduler.JobQueueMonitors
                 "aggregateinventoryproprietarysummary",
                 "programmappings",
                 "savepricingrequest",
+                "planbuying",
+                "savebuyingrequest",
                 "default"
             };
         }

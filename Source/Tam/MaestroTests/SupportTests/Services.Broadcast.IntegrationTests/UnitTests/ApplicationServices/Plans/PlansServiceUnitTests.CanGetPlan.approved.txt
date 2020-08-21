@@ -82,6 +82,7 @@
   "Id": 1,
   "ImpressionsPerUnit": 20.0,
   "IsAduEnabled": false,
+  "IsBuyingModelRunning": false,
   "IsDraft": false,
   "IsPricingModelRunning": false,
   "JobId": null,

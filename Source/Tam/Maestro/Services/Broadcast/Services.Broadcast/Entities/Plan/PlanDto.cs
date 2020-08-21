@@ -98,7 +98,7 @@ namespace Services.Broadcast.Entities.Plan
         /// The flight end date.
         /// </value>
         public DateTime? FlightEndDate { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the flight notes.
         /// </summary>
@@ -121,7 +121,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The total number of Hiatus days in the flight.
         /// </value>
-        public int? TotalHiatusDays { get; set; }
+        public int? TotalHiatusDays { get { return FlightHiatusDays.Count; } }
 
         /// <summary>
         /// The total number of Active days in the flight.
@@ -129,7 +129,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The total number of Active days in the flight.
         /// </value>
-        public int? TotalActiveDays { get; set; }
+        public int? TotalActiveDays { get { return WeeklyBreakdownTotals.TotalActiveDays;  } }
 
         /// <summary>
         /// Gets or sets the audience identifier.
@@ -284,7 +284,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The total share of voice.
         /// </value>
-        public double TotalShareOfVoice { get; set; }
+        public double TotalShareOfVoice { get { return WeeklyBreakdownTotals.TotalImpressionsPercentage; } }
 
         /// <summary>
         /// Gets or sets the modified by.
@@ -381,7 +381,7 @@ namespace Services.Broadcast.Entities.Plan
         /// The count of available markets with sov.
         /// </value>
         public int? AvailableMarketsWithSovCount { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether this instance is draft.
         /// </summary>
@@ -420,6 +420,11 @@ namespace Services.Broadcast.Entities.Plan
         /// True - when there is a pricing model execution with status 'Queued' or 'Processing' in the DB
         /// </summary>
         public bool IsPricingModelRunning { get; set; }
+
+        /// <summary>
+        /// True - when there is a buying model execution with status 'Queued' or 'Processing' in the DB
+        /// </summary>
+        public bool IsBuyingModelRunning { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance has enable ADUs.

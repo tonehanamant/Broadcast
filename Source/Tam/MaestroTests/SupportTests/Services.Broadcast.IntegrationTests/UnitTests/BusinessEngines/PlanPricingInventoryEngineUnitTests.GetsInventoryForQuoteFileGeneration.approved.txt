@@ -88,6 +88,7 @@
         "CallLetters": "KOB+",
         "Code": 101,
         "Id": 1,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KOB",
         "ManifestMaxEndDate": null,
         "MarketCode": 100,
@@ -178,6 +179,7 @@
         "CallLetters": "KSTP+",
         "Code": 102,
         "Id": 2,
+        "IsTrueInd": false,
         "LegacyCallLetters": "KSTP",
         "ManifestMaxEndDate": null,
         "MarketCode": 2,
@@ -208,7 +210,8 @@
             "ModifiedDate": null,
             "ManifestMaxEndDate": null,
             "OwnershipGroupName": null,
-            "SalesGroupName": null
+            "SalesGroupName": null,
+            "IsTrueInd": false
           },
           "ManifestRates": [
             {
@@ -284,7 +287,8 @@
             "ModifiedDate": null,
             "ManifestMaxEndDate": null,
             "OwnershipGroupName": null,
-            "SalesGroupName": null
+            "SalesGroupName": null,
+            "IsTrueInd": false
           },
           "ManifestRates": [
             {
@@ -393,7 +397,8 @@
             "ModifiedDate": null,
             "ManifestMaxEndDate": null,
             "OwnershipGroupName": null,
-            "SalesGroupName": null
+            "SalesGroupName": null,
+            "IsTrueInd": false
           },
           "ManifestRates": [
             {
@@ -491,7 +496,8 @@
             "ModifiedDate": null,
             "ManifestMaxEndDate": null,
             "OwnershipGroupName": null,
-            "SalesGroupName": null
+            "SalesGroupName": null,
+            "IsTrueInd": false
           },
           "ManifestRates": [
             {
