@@ -2004,6 +2004,36 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [Category("short_running")]
         [UseReporter(typeof(DiffReporter))]
+        public void Plan_WeeklyBreakdown_CustomByWeekByDaypart_WKD()
+        {
+            const int daypartDefaultIdWKD = 23;
+
+            using (new TransactionScopeWrapper())
+            {
+                var result = _PlanService.CalculatePlanWeeklyGoalBreakdown(new WeeklyBreakdownRequest
+                {
+                    FlightEndDate = new DateTime(2019, 03, 05),
+                    FlightStartDate = new DateTime(2019, 02, 01),
+                    FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                    DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart,
+                    FlightHiatusDays = new List<DateTime>(),
+                    TotalImpressions = 10000,
+                    TotalRatings = 10,
+                    WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                    ImpressionsPerUnit = 100,
+                    Dayparts = new List<PlanDaypartDto>
+                    {
+                        new PlanDaypartDto{ DaypartCodeId = 1, WeightingGoalPercent = 60 },
+                        new PlanDaypartDto { DaypartCodeId = daypartDefaultIdWKD }
+                    }
+                });
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
+        [Test]
+        [Category("short_running")]
+        [UseReporter(typeof(DiffReporter))]
         public void Plan_WeeklyBreakdown_CustomByWeekByDaypart_WithWeeks()
         {
             using (new TransactionScopeWrapper())
