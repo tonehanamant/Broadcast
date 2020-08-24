@@ -33,14 +33,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("Execution")]
-        public BaseResponse<CurrentPricingExecution> GetCurrentPricingExecution(int planId)
-        {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetCurrentPricingExecution(planId));
-        }
-
-        [HttpPost]
-        [Route("Execution")]
-        public BaseResponse<CurrentPricingExecution> GetCurrentPricingExecution(int planId, int planVersionId)
+        public BaseResponse<CurrentPricingExecution> GetCurrentPricingExecution(int planId, int? planVersionId = null)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetCurrentPricingExecution(planId, planVersionId));
         }

@@ -34,7 +34,7 @@ namespace Services.Broadcast.ApplicationServices
         PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate, string username);
         PlanPricingJob QueuePricingJob(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto, DateTime currentDate, string username);
         CurrentPricingExecution GetCurrentPricingExecution(int planId);
-        CurrentPricingExecution GetCurrentPricingExecution(int planId, int planVersionId);
+        CurrentPricingExecution GetCurrentPricingExecution(int planId, int? planVersionId);
         CurrentPricingExecution GetCurrentPricingExecutionByJobId(int jobId);
         /// <summary>
         /// Cancels the current pricing execution.
@@ -559,14 +559,17 @@ namespace Services.Broadcast.ApplicationServices
 
         public CurrentPricingExecution GetCurrentPricingExecution(int planId)
         {
-            var job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
-
-            return _GetCurrentPricingExecution(job);
+            return GetCurrentPricingExecution(planId, null);
         }
 
-        public CurrentPricingExecution GetCurrentPricingExecution(int planId, int planVersionId)
+        public CurrentPricingExecution GetCurrentPricingExecution(int planId, int? planVersionId)
         {
-            var job = _PlanRepository.GetPricingJobForPlanVersion(planVersionId);
+            PlanPricingJob job;
+
+            if (planVersionId.HasValue)
+                job = _PlanRepository.GetPricingJobForPlanVersion(planVersionId.Value);
+            else
+                job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
 
             return _GetCurrentPricingExecution(job);
         }
