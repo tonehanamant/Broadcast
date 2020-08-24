@@ -1,0 +1,15 @@
+{
+  "IsPricingModelRunning": false,
+  "Job": {
+    "ErrorMessage": null,
+    "Queued": "2019-01-01T00:00:00",
+    "Status": 3
+  },
+  "Result": {
+    "CpmPercentage": 1472,
+    "GoalFulfilledByProprietary": false,
+    "HasResults": true,
+    "Notes": "",
+    "OptimalCpm": 14.7158
+  }
+}

@@ -710,7 +710,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const string expectedMessage = "The pricing model is already running for the plan";
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(It.IsAny<int>()))
                 .Returns(new PlanPricingJob { Status = status });
 
             _BroadcastLockingManagerApplicationServiceMock
@@ -6094,7 +6094,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             // Arrange
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(It.IsAny<int>()))
                 .Returns((PlanPricingJob)null);
 
             var service = _GetService();
@@ -6116,7 +6116,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             // Arrange
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(It.IsAny<int>()))
                 .Returns(new PlanPricingJob
                 {
                     Status = status
@@ -6310,7 +6310,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(It.IsAny<int>()))
                 .Returns(new PlanPricingJob { Status = BackgroundJobProcessingStatus.Succeeded });
 
             _BroadcastLockingManagerApplicationServiceMock
@@ -6442,7 +6442,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(It.IsAny<int>()))
                 .Returns(new PlanPricingJob { Status = BackgroundJobProcessingStatus.Succeeded });
 
             _BroadcastLockingManagerApplicationServiceMock
@@ -6582,7 +6582,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(It.IsAny<int>()))
                 .Returns(new PlanPricingJob { Status = BackgroundJobProcessingStatus.Succeeded });
 
             _BroadcastLockingManagerApplicationServiceMock
@@ -6910,7 +6910,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(It.IsAny<int>()))
                 .Returns(new PlanPricingJob { Status = BackgroundJobProcessingStatus.Succeeded });
 
             _BroadcastLockingManagerApplicationServiceMock
@@ -7048,7 +7048,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(It.IsAny<int>()))
                 .Returns(new PlanPricingJob { Status = BackgroundJobProcessingStatus.Succeeded });
 
             _BroadcastLockingManagerApplicationServiceMock
@@ -7101,7 +7101,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns((PlanPricingJob)null);
 
             var service = _GetService();
@@ -7121,7 +7121,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const string expectedMessage = "SomeErrorMessage";
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Failed,
@@ -7146,7 +7146,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const string expectedMessage = "Error encountered while running Pricing Model, please contact a system administrator for help";
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Failed,
@@ -7171,7 +7171,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Queued,
@@ -7198,7 +7198,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Processing,
@@ -7225,7 +7225,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Canceled,
@@ -7252,7 +7252,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Succeeded,
@@ -7313,7 +7313,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Succeeded,
@@ -7369,7 +7369,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Failed,
@@ -7391,7 +7391,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Canceled,
@@ -7413,7 +7413,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Processing,
@@ -7435,7 +7435,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Queued,
@@ -7472,7 +7472,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Succeeded,
@@ -7795,7 +7795,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Id = 5,
@@ -7853,7 +7853,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = status,
@@ -7890,7 +7890,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Succeeded,
@@ -8034,7 +8034,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Id = 5,
@@ -8096,7 +8096,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = status,
@@ -8133,7 +8133,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Succeeded,
@@ -8272,7 +8272,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Id = 5,
@@ -8328,7 +8328,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = status,
@@ -8365,7 +8365,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Succeeded,
@@ -8389,7 +8389,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const int planId = 6;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Succeeded,
@@ -8430,7 +8430,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const string expectedMessage = "Error encountered while running Pricing Model, please contact a system administrator for help";
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Failed
@@ -8453,7 +8453,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const string expectedMessage = "Error encountered while canceling Pricing Model, process is not running";
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Succeeded
@@ -8477,7 +8477,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const string hangfireJobId = "#w2e3r4";
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Processing,
@@ -8524,7 +8524,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const string hangfireJobId = null;
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Queued,
@@ -8582,7 +8582,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             const string hangfireJobId = "#w2e3r4";
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(planId))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(planId))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Queued,

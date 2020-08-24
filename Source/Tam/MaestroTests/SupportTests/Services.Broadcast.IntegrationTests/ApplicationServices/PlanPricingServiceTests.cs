@@ -1193,6 +1193,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanId = planId,
                 Budget = 5000,
                 DeliveryImpressions = 5000,
+                CPM = 1,
                 UnitCaps = 10,
                 UnitCapsType = UnitCapEnum.Per30Min
             };
@@ -1458,8 +1459,46 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
                 var planVersionId = _PlanService.CheckForDraft(planId);
                 var plan = _PlanService.GetPlan(planId, planVersionId);
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(PlanPricingParametersDto), "PlanId");
+                jsonResolver.Ignore(typeof(PlanPricingParametersDto), "PlanVersionId");
+                jsonResolver.Ignore(typeof(PlanPricingParametersDto), "JobId");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
 
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(plan.PricingParameters));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(plan.PricingParameters, jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetPricingExecutionForVersion()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planId = SetupPlanWithOneVersionAndADraftWithPricingRuns();
+                var planVersionId = _PlanService.CheckForDraft(planId);
+                var execution = _PlanPricingService.GetCurrentPricingExecution(planId, planVersionId);
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(CurrentPricingExecutionResultDto), "JobId");
+                jsonResolver.Ignore(typeof(CurrentPricingExecutionResultDto), "PlanVersionId");
+                jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
+                jsonResolver.Ignore(typeof(PlanPricingJob), "Completed");
+                jsonResolver.Ignore(typeof(PlanPricingJob), "DiagnosticResult");
+                jsonResolver.Ignore(typeof(PlanPricingJob), "HangfireJobId");
+                jsonResolver.Ignore(typeof(PlanPricingJob), "PlanVersionId");
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(execution, jsonSettings));
             }
         }
 

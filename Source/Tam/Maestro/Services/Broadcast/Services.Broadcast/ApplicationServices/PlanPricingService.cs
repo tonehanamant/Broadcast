@@ -34,6 +34,7 @@ namespace Services.Broadcast.ApplicationServices
         PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate, string username);
         PlanPricingJob QueuePricingJob(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto, DateTime currentDate, string username);
         CurrentPricingExecution GetCurrentPricingExecution(int planId);
+        CurrentPricingExecution GetCurrentPricingExecution(int planId, int planVersionId);
         CurrentPricingExecution GetCurrentPricingExecutionByJobId(int jobId);
         /// <summary>
         /// Cancels the current pricing execution.
@@ -394,7 +395,7 @@ namespace Services.Broadcast.ApplicationServices
                 int planVersionId;
 
                 // For drafts, we use the plan version id sent as parameter.
-                // This is because a draft is not considered the latest version of a plan.s
+                // This is because a draft is not considered the latest version of a plan.
                 if (planPricingParametersDto.PlanVersionId.HasValue)
                     planVersionId = planPricingParametersDto.PlanVersionId.Value;
                 else
@@ -406,9 +407,10 @@ namespace Services.Broadcast.ApplicationServices
                     Status = BackgroundJobProcessingStatus.Queued,
                     Queued = currentDate
                 };
+
                 using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                 {
-                    planPricingParametersDto.PlanVersionId = plan.VersionId;
+                    planPricingParametersDto.PlanVersionId = planVersionId;
                     _SavePricingJobAndParameters(job, planPricingParametersDto);
                     _CampaignRepository.UpdateCampaignLastModified(plan.CampaignId, currentDate, username);
                     transaction.Complete();
@@ -505,10 +507,10 @@ namespace Services.Broadcast.ApplicationServices
         {
             var job = _PlanRepository.GetPlanPricingJob(jobId);
 
-            return _GetCurrentPricingExecution(job, null);
+            return _GetCurrentPricingExecution(job);
         }
 
-        private CurrentPricingExecution _GetCurrentPricingExecution(PlanPricingJob job, int? planId)
+        private CurrentPricingExecution _GetCurrentPricingExecution(PlanPricingJob job)
         {
             CurrentPricingExecutionResultDto pricingExecutionResult = null;
 
@@ -557,9 +559,16 @@ namespace Services.Broadcast.ApplicationServices
 
         public CurrentPricingExecution GetCurrentPricingExecution(int planId)
         {
-            var job = _PlanRepository.GetLatestPricingJob(planId);
+            var job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
 
-            return _GetCurrentPricingExecution(job, planId);
+            return _GetCurrentPricingExecution(job);
+        }
+
+        public CurrentPricingExecution GetCurrentPricingExecution(int planId, int planVersionId)
+        {
+            var job = _PlanRepository.GetPricingJobForPlanVersion(planVersionId);
+
+            return _GetCurrentPricingExecution(job);
         }
 
         /// <summary>
@@ -619,7 +628,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc />
         public PlanPricingResponseDto CancelCurrentPricingExecution(int planId)
         {
-            var job = _PlanRepository.GetLatestPricingJob(planId);
+            var job = _GetLatestPricingJob(planId);
 
             return _CancelCurrentPricingExecution(job);
         }
@@ -637,8 +646,26 @@ namespace Services.Broadcast.ApplicationServices
 
         public bool IsPricingModelRunningForPlan(int planId)
         {
-            var job = _PlanRepository.GetLatestPricingJob(planId);
+            var job = _GetLatestPricingJob(planId);
             return IsPricingModelRunning(job);
+        }
+
+        public PlanPricingJob _GetLatestPricingJob(int planId)
+        {
+            var planDraftId = _PlanRepository.CheckIfDraftExists(planId);
+            var isDraft = planDraftId != 0;
+            PlanPricingJob job;
+
+            if (isDraft)
+            {
+                job = _PlanRepository.GetPricingJobForPlanVersion(planDraftId);
+            }
+            else
+            {
+                job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
+            }
+
+            return job;
         }
 
         public List<PlanPricingApiRequestParametersDto> GetPlanPricingRuns(int planId)
@@ -2081,41 +2108,16 @@ namespace Services.Broadcast.ApplicationServices
             return results;
         }
 
-        private PlanPricingJob _GetLatestPricingJob(int planId)
-        {
-            var planDraftId = _PlanRepository.CheckIfDraftExists(planId);
-            var isDraft = planDraftId != 0;
-            PlanPricingJob job;
-
-            if (isDraft)
-            {
-                var planHistory = _PlanRepository.GetPlanHistory(planId);
-                var planHistorySorted = planHistory
-                    // Skip the draft.
-                    .Where(p => p.VersionNumber != null)
-                    .OrderByDescending(p => p.VersionNumber);
-                var plan = planHistorySorted.First();
-                var previousPlanVersionId = plan.VersionId;
-                job = _PlanRepository.GetLatestPricingJobForVersion(previousPlanVersionId);
-            }
-            else
-            {
-                job = _PlanRepository.GetLatestPricingJob(planId);
-            }
-
-            return job;
-        }
-
         public PricingProgramsResultDto GetPrograms(int planId)
         {
-            var job = _GetLatestPricingJob(planId);
+            var job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
 
             return _GetPrograms(job);
         }
 
         public PricingProgramsResultDto GetProgramsForVersion(int planId, int planVersionId)
         {
-            var job = _PlanRepository.GetLatestPricingJobForVersion(planVersionId);
+            var job = _PlanRepository.GetPricingJobForPlanVersion(planVersionId);
 
             return _GetPrograms(job);
         }
@@ -2159,14 +2161,14 @@ namespace Services.Broadcast.ApplicationServices
 
         public PlanPricingBandDto GetPricingBands(int planId)
         {
-            var job = _GetLatestPricingJob(planId);
+            var job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
 
             return _GetPricingBands(job);
         }
 
         public PlanPricingBandDto GetPricingBandsForVersion(int planId, int planVersionId)
         {
-            var job = _PlanRepository.GetLatestPricingJobForVersion(planVersionId);
+            var job = _PlanRepository.GetPricingJobForPlanVersion(planVersionId);
 
             return _GetPricingBands(job);
         }
@@ -2201,14 +2203,14 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc />
         public PlanPricingResultMarketsDto GetMarkets(int planId)
         {
-            var job = _GetLatestPricingJob(planId);
+            var job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
 
             return _GetMarkets(job);
         }
 
         public PlanPricingResultMarketsDto GetMarketsForVersion(int planId, int planVersionId)
         {
-            var job = _PlanRepository.GetLatestPricingJobForVersion(planVersionId);
+            var job = _PlanRepository.GetPricingJobForPlanVersion(planVersionId);
 
             return _GetMarkets(job);
         }
@@ -2237,14 +2239,14 @@ namespace Services.Broadcast.ApplicationServices
 
         public PlanPricingStationResultDto GetStations(int planId)
         {
-            var job = _GetLatestPricingJob(planId);
+            var job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
 
             return _GetStations(job);
         }
 
         public PlanPricingStationResultDto GetStationsForVersion(int planId, int planVersionId)
         {
-            var job = _PlanRepository.GetLatestPricingJobForVersion(planVersionId);
+            var job = _PlanRepository.GetPricingJobForPlanVersion(planVersionId);
 
             return _GetStations(job);
         }

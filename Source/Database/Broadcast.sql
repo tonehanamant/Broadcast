@@ -1080,6 +1080,43 @@ END
 
 /*************************************** END BP-943 *****************************************************/
 
+GO
+
+/*************************************** START BP-1238 *****************************************************/
+
+IF NOT EXISTS(SELECT * FROM sys.foreign_keys 
+              WHERE name = 'FK_plan_version_pricing_parameters_plan_versions' AND
+			  delete_referential_action = 1)
+BEGIN
+	ALTER TABLE plan_version_pricing_parameters
+	DROP CONSTRAINT FK_plan_version_pricing_parameters_plan_versions
+
+	ALTER TABLE plan_version_pricing_parameters 
+	  ADD CONSTRAINT FK_plan_version_pricing_parameters_plan_versions 
+	  FOREIGN KEY (plan_version_id) 
+	  REFERENCES plan_versions(id) 
+	  ON DELETE CASCADE
+END
+
+GO
+
+IF NOT EXISTS(SELECT * FROM sys.foreign_keys 
+              WHERE name = 'FK_plan_version_pricing_markets_pricing_job' AND
+			  delete_referential_action = 1)
+BEGIN
+	ALTER TABLE plan_version_pricing_markets
+	DROP CONSTRAINT FK_plan_version_pricing_markets_pricing_job
+
+	ALTER TABLE plan_version_pricing_markets 
+	  ADD CONSTRAINT FK_plan_version_pricing_markets_pricing_job 
+	  FOREIGN KEY (plan_version_pricing_job_id) 
+	  REFERENCES plan_version_pricing_job(id) 
+	  ON DELETE CASCADE
+END
+
+/*************************************** END BP-1238 *****************************************************/
+
+GO
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

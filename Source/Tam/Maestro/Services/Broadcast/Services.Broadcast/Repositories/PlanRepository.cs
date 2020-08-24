@@ -122,8 +122,8 @@ namespace Services.Broadcast.Repositories
         /// <param name="jobId">The pricing job identifier.</param>
         /// <param name="hangfireJobId">The hangfire job identifier.</param>
         void UpdateJobHangfireId(int jobId, string hangfireJobId);
-        PlanPricingJob GetLatestPricingJob(int planId);
-        PlanPricingJob GetLatestPricingJobForVersion(int planVersionId);
+        PlanPricingJob GetPricingJobForLatestPlanVersion(int planId);
+        PlanPricingJob GetPricingJobForPlanVersion(int planVersionId);
         void SavePlanPricingParameters(PlanPricingParametersDto planPricingRequestDto);
         void SavePricingApiResults(PlanPricingAllocationResult result);
         PlanPricingAllocationResult GetPricingApiResultsByJobId(int jobId);
@@ -294,6 +294,8 @@ namespace Services.Broadcast.Repositories
                        _MapFromDto(planDto, context, plan, draftVersion);
 
                        context.SaveChanges();
+
+                       planDto.VersionId = draftVersion.id;
                    });
         }
 
@@ -1279,7 +1281,7 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public PlanPricingJob GetLatestPricingJob(int planId)
+        public PlanPricingJob GetPricingJobForLatestPlanVersion(int planId)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -1312,7 +1314,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public PlanPricingJob GetLatestPricingJobForVersion(int planVersionId)
+        public PlanPricingJob GetPricingJobForPlanVersion(int planVersionId)
         {
             return _InReadUncommitedTransaction(context =>
             {

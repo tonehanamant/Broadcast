@@ -3176,7 +3176,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         private void _ForceCompletePlanPricingJob(int planId)
         {
-            var job = _PlanRepository.GetLatestPricingJob(planId);
+            var job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
             _ForceCompletePlanPricingJob(job);
         }
 

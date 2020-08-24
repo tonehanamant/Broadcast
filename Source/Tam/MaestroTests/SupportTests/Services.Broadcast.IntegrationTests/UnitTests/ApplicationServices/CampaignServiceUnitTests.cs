@@ -537,7 +537,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                });
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(It.IsAny<int>()))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Succeeded
@@ -603,7 +603,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                });
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(It.IsAny<int>()))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Succeeded
@@ -855,7 +855,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 });
 
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(It.IsAny<int>()))
                 .Returns(new PlanPricingJob
                 {
                     Status = jobStatus
@@ -935,7 +935,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert
             _PlanRepositoryMock.Verify(x => x.GetPlan(firstPlanId, null), Times.Once);
             _CampaignRepositoryMock.Verify(x => x.GetCampaign(campaignId), Times.Once);
-            _PlanRepositoryMock.Verify(x => x.GetLatestPricingJob(firstPlanId), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetPricingJobForLatestPlanVersion(firstPlanId), Times.Once);
             _TrafficApiCacheMock.Verify(x => x.GetAgency(agencyId), Times.Once);
             _TrafficApiCacheMock.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
@@ -1018,7 +1018,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert
             _PlanRepositoryMock.Verify(x => x.GetPlan(firstPlanId, null), Times.Once);
             _CampaignRepositoryMock.Verify(x => x.GetCampaign(campaignId), Times.Once);
-            _PlanRepositoryMock.Verify(x => x.GetLatestPricingJob(firstPlanId), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetPricingJobForLatestPlanVersion(firstPlanId), Times.Once);
             _TrafficApiCacheMock.Verify(x => x.GetAgency(agencyId), Times.Once);
             _TrafficApiCacheMock.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
@@ -1212,7 +1212,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert
             _PlanRepositoryMock.Verify(x => x.GetPlan(firstPlanId, null), Times.Once);
             _CampaignRepositoryMock.Verify(x => x.GetCampaign(campaignId), Times.Once);
-            _PlanRepositoryMock.Verify(x => x.GetLatestPricingJob(firstPlanId), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetPricingJobForLatestPlanVersion(firstPlanId), Times.Once);
             _TrafficApiCacheMock.Verify(x => x.GetAgency(agencyId), Times.Once);
             _TrafficApiCacheMock.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
@@ -1291,7 +1291,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert
             _PlanRepositoryMock.Verify(x => x.GetPlan(firstPlanId, null), Times.Once);
             _CampaignRepositoryMock.Verify(x => x.GetCampaign(campaignId), Times.Once);
-            _PlanRepositoryMock.Verify(x => x.GetLatestPricingJob(firstPlanId), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetPricingJobForLatestPlanVersion(firstPlanId), Times.Once);
             _TrafficApiCacheMock.Verify(x => x.GetAgency(agencyId), Times.Once);
             _TrafficApiCacheMock.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
@@ -1396,7 +1396,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert
             _PlanRepositoryMock.Verify(x => x.GetPlan(firstPlanId, null), Times.Once);
             _CampaignRepositoryMock.Verify(x => x.GetCampaign(campaignId), Times.Once);
-            _PlanRepositoryMock.Verify(x => x.GetLatestPricingJob(firstPlanId), Times.Once);
+            _PlanRepositoryMock.Verify(x => x.GetPricingJobForLatestPlanVersion(firstPlanId), Times.Once);
             _TrafficApiCacheMock.Verify(x => x.GetAgency(agencyId), Times.Once);
             _TrafficApiCacheMock.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
@@ -2139,7 +2139,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private void _SetupBaseProgramLineupForRollupTestData()
         {
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(It.IsAny<int>()))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Succeeded,
@@ -2257,7 +2257,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private void _SetupBaseProgramLineupTestData()
         {
             _PlanRepositoryMock
-                .Setup(x => x.GetLatestPricingJob(It.IsAny<int>()))
+                .Setup(x => x.GetPricingJobForLatestPlanVersion(It.IsAny<int>()))
                 .Returns(new PlanPricingJob
                 {
                     Status = BackgroundJobProcessingStatus.Succeeded,

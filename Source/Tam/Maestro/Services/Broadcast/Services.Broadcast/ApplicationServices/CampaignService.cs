@@ -712,7 +712,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private PlanPricingJob _GetLatestPricingJob(int planId)
         {
-            var job = _PlanRepository.GetLatestPricingJob(planId);
+            var job = _PlanRepository.GetPricingJobForLatestPlanVersion(planId);
 
             if (job == null)
                 throw new ApplicationException("There are no completed pricing runs for the chosen plan. Please run pricing");

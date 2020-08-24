@@ -210,7 +210,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         ///<inheritdoc/>
         public int SavePlan(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously = false)
         {
-            if (plan.Id >= 0 && _PlanPricingService.IsPricingModelRunningForPlan(plan.Id))
+            if (plan.Id > 0 && _PlanPricingService.IsPricingModelRunningForPlan(plan.Id))
             {
                 throw new Exception("The pricing model is running for the plan");
             }

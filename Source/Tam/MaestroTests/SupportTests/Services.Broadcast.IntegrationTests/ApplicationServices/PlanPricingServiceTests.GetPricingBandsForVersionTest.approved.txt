@@ -6,7 +6,7 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 0.0000,
+      "MaxBand": 0.1000,
       "MinBand": null,
       "Spots": 0
     },
@@ -16,8 +16,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 0.0000,
-      "MinBand": 0.0000,
+      "MaxBand": 0.3714,
+      "MinBand": 0.1000,
       "Spots": 0
     },
     {
@@ -26,8 +26,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 0.0000,
-      "MinBand": 0.0000,
+      "MaxBand": 0.6428,
+      "MinBand": 0.3714,
       "Spots": 0
     },
     {
@@ -36,8 +36,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 0.0000,
-      "MinBand": 0.0000,
+      "MaxBand": 0.9142,
+      "MinBand": 0.6428,
       "Spots": 0
     },
     {
@@ -46,8 +46,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 0.0000,
-      "MinBand": 0.0000,
+      "MaxBand": 1.1857,
+      "MinBand": 0.9142,
       "Spots": 0
     },
     {
@@ -56,8 +56,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 0.0000,
-      "MinBand": 0.0000,
+      "MaxBand": 1.4571,
+      "MinBand": 1.1857,
       "Spots": 0
     },
     {
@@ -66,8 +66,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 0.0000,
-      "MinBand": 0.0000,
+      "MaxBand": 1.7285,
+      "MinBand": 1.4571,
       "Spots": 0
     },
     {
@@ -76,8 +76,8 @@
       "Cpm": 0.0000,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
-      "MaxBand": 0.0000,
-      "MinBand": 0.0000,
+      "MaxBand": 1.9999,
+      "MinBand": 1.7285,
       "Spots": 0
     },
     {
@@ -87,7 +87,7 @@
       "Impressions": 377.825,
       "ImpressionsPercentage": 100.0,
       "MaxBand": null,
-      "MinBand": 0.0000,
+      "MinBand": 2.0000,
       "Spots": 30
     }
   ],

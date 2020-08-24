@@ -271,9 +271,9 @@
   "Name": "New Plan",
   "PostingType": 2,
   "PricingParameters": {
-    "AdjustedBudget": 177.6000,
-    "AdjustedCPM": 1.7760,
-    "Budget": 222.0000,
+    "AdjustedBudget": 80.0000,
+    "AdjustedCPM": 0.8000,
+    "Budget": 100.0000,
     "CompetitionFactor": null,
     "CPM": 12.0000,
     "CPP": 12.0000,
