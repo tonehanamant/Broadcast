@@ -363,6 +363,7 @@
     <Compile Include="ApplicationServices\Inventory\ProgramMapping\Engines\ProgramMappingCleanupEngine.cs" />
     <Compile Include="ApplicationServices\InventoryProprietarySummaryService.cs" />
     <Compile Include="ApplicationServices\Plan\PlanBuyingService.cs" />
+    <Compile Include="ApplicationServices\Plan\PlanInventoryProprietarySummaryService.cs" />
     <Compile Include="ApplicationServices\VpvhService.cs" />
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsRepairEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingBandCalculationEngine.cs" />
@@ -564,6 +565,8 @@
     <Compile Include="Entities\Plan\Buying\BuyingProgramsResultDto.cs" />
     <Compile Include="Entities\Plan\Buying\BuyingResultsReportData.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\BasePlanInventoryProgram.cs" />
+    <Compile Include="Entities\Plan\PlanProprietarySummary\PlanInventoryProprietarySummaryRequest.cs" />
+    <Compile Include="Entities\Plan\PlanProprietarySummary\PlanInventoryProprietarySummaryResponse.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiRequestDto_v3.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiSpotsResponseDto_v3.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingStationResultDto.cs" />

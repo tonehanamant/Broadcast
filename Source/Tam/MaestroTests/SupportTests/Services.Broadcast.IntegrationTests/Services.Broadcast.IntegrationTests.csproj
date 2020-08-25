@@ -375,6 +375,7 @@
     <Compile Include="ApplicationServices\AudienceServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\Plan\PlanBuying\PlanBuyingInventoryEngineTests.cs" />
     <Compile Include="ApplicationServices\Plan\PlanBuying\PlanBuyingServiceTests.cs" />
+    <Compile Include="ApplicationServices\Plan\PlanInventoryProprietarySummaryServiceTests.cs" />
     <Compile Include="ApplicationServices\PostingBookServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProgramGuideServiceIntegrationTests.cs" />
     <Compile Include="ApplicationServices\ProgramMappingServiceTests.cs" />

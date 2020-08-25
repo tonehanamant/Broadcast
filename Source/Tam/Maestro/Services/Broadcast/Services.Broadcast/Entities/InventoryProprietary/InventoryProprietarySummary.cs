@@ -7,8 +7,9 @@
 		public int Id { get; set; }
 		public string InventorySourceName { get; set; }
 		public double ImpressionsTotal { get; set; }
-		public double MarketCoverageTotal { get; set; }			
+		public double MarketCoverageTotal { get; set; }
 		public string DaypartUnitCode { get; set; }
-		public string UnitName=>$"{InventorySourceName} {DaypartUnitCode}";
+		public string UnitName => $"{InventorySourceName} {DaypartUnitCode}";
+		public decimal Cost { get; set; }
 	}
 }

@@ -6,6 +6,7 @@ using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventoryProprietary;
+using Services.Broadcast.Entities.Plan;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 
@@ -51,34 +52,49 @@ namespace Services.Broadcast.Repositories
 		/// <param name="inventoryProprietaryQuarterSummaryDto"></param>
 		void SaveInventoryProprietarySummary(
 			InventoryProprietaryQuarterSummaryDto inventoryProprietaryQuarterSummaryDto);
+
 		/// <summary>
-		/// 
 		/// </summary>
 		/// <param name="quarterDetailDto"></param>
 		/// <param name="daypartIds"></param>
 		/// <returns></returns>
 		List<InventoryProprietarySummary> GetInventoryProprietarySummary(QuarterDetailDto quarterDetailDto,
 			HashSet<int> daypartIds);
-	
+
 		/// <summary>
-		/// 
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
 		double GetTotalMarketCoverageBySummaryId(int Id);
+
 		/// <summary>
-		/// Get Total Impressions By SummaryId And AudienceId
+		///     Get Total Impressions By SummaryId And AudienceId
 		/// </summary>
 		/// <param name="id"></param>
 		/// <param name="audienceIds"></param>
 		/// <returns></returns>
 		double GetTotalImpressionsBySummaryIdAndAudienceIds(int Id, List<int> audienceIds);
+
 		/// <summary>
-		/// Get DayPartIds from Proprietary Summary Table
+		///     Get DayPartIds from Proprietary Summary Table
 		/// </summary>
 		/// <param name="quarterDetailDto"></param>
 		/// <returns></returns>
 		List<int> GetDayPartIds(QuarterDetailDto quarterDetailDto);
+
+		/// <summary>
+		///     Get list of  Market code and market Coverage
+		/// </summary>
+		/// <param name="ids"></param>
+		/// <returns></returns>
+		List<PlanMarketDto> GetMarketDataBySummaryIds(List<int> ids);
+
+		/// <summary>
+		///     Get CPM
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		decimal? GetCPM(int id);
 	}
 
 	public class InventoryProprietarySummaryRepository : BroadcastRepositoryBase, IInventoryProprietarySummaryRepository
@@ -182,7 +198,7 @@ namespace Services.Broadcast.Repositories
 						where week.start_date <= endDate && week.end_date >= startDate &&
 						      manifest.inventory_source_id == inventorySource.Id &&
 						      manifestGroup.slot_number == 1 && !audiences.is_reference
-								group new { audiences, header } by new
+						group new {audiences, header} by new
 						{
 							audiences.audience_id,
 							header.daypart_default_id
@@ -248,7 +264,8 @@ namespace Services.Broadcast.Repositories
 		{
 			var idList = context.inventory_proprietary_summary
 				.Where(s => s.inventory_source_id.Equals(dto.InventorySourceId) &&
-				            s.quarter_year.Equals(dto.Quarter.Year) && s.quarter_number.Equals(dto.Quarter.Quarter) && s.daypart_default_id == dto.DefaultDaypartId)
+				            s.quarter_year.Equals(dto.Quarter.Year) && s.quarter_number.Equals(dto.Quarter.Quarter) &&
+				            s.daypart_default_id == dto.DefaultDaypartId)
 				.Select(s => s.id).ToList();
 			var audianceToBeRemoved = context.inventory_proprietary_summary_audiences
 				.Where(a => idList.Contains(a.inventory_proprietary_summary_id)).ToList();
@@ -261,20 +278,24 @@ namespace Services.Broadcast.Repositories
 			context.inventory_proprietary_summary.RemoveRange(context.inventory_proprietary_summary
 				.Where(s => idList.Contains(s.id)));
 		}
-		public List<InventoryProprietarySummary> GetInventoryProprietarySummary(QuarterDetailDto quarterDetailDto, HashSet<int> defaultDaypartIds)
+
+		public List<InventoryProprietarySummary> GetInventoryProprietarySummary(QuarterDetailDto quarterDetailDto,
+			HashSet<int> defaultDaypartIds)
 		{
 			return _InReadUncommitedTransaction(
 				context =>
 				{
 					var query = from summary in context.inventory_proprietary_summary
 						join source in context.inventory_sources on summary.inventory_source_id equals source.id
-						join daypartDefault in context.daypart_defaults on summary.daypart_default_id equals daypartDefault.id
+						join daypartDefault in context.daypart_defaults on summary.daypart_default_id equals
+							daypartDefault.id
 						join daypart in context.dayparts on daypartDefault.daypart_id equals daypart.id
-						join programName in context.inventory_proprietary_program_names on new { summary.inventory_source_id, summary.daypart_default_id } equals new { programName.inventory_source_id, programName.daypart_default_id }
-								where defaultDaypartIds.Contains(daypartDefault.daypart_id)
-						      && summary.quarter_number == quarterDetailDto.Quarter && summary.quarter_year == quarterDetailDto.Year
-						   
-
+						join programName in context.inventory_proprietary_program_names on new
+							{summary.inventory_source_id, summary.daypart_default_id} equals new
+							{programName.inventory_source_id, programName.daypart_default_id}
+						where defaultDaypartIds.Contains(daypartDefault.daypart_id)
+						      && summary.quarter_number == quarterDetailDto.Quarter &&
+						      summary.quarter_year == quarterDetailDto.Year
 						select new InventoryProprietarySummary
 						{
 							DaypartName = daypart.daypart_text,
@@ -287,21 +308,23 @@ namespace Services.Broadcast.Repositories
 					return query.Distinct().ToList();
 				});
 		}
+
 		public double GetTotalImpressionsBySummaryIdAndAudienceIds(int id, List<int> audienceIds)
 		{
 			return _InReadUncommitedTransaction(
 				context =>
 				{
 					var query = context.inventory_proprietary_summary.Where(x => x.id == id)
-						.Select(x => x.inventory_proprietary_summary_audiences.Where(a=> audienceIds.Contains( a.audience_id))
+						.Select(x => x.inventory_proprietary_summary_audiences
+							.Where(a => audienceIds.Contains(a.audience_id))
 							.GroupBy(y => y.inventory_proprietary_summary_id)
 							.Select(y => y.Sum(z => z.impressions ?? 0))).FirstOrDefault();
 					var entities = query.ToList().FirstOrDefault();
 
 					return entities;
 				});
-
 		}
+
 		public double GetTotalMarketCoverageBySummaryId(int id)
 		{
 			return _InReadUncommitedTransaction(
@@ -316,23 +339,49 @@ namespace Services.Broadcast.Repositories
 
 					return entities;
 				});
-
 		}
+
 		public List<int> GetDayPartIds(QuarterDetailDto quarterDetailDto)
 		{
 			return _InReadUncommitedTransaction(
-				   context =>
-				   {
-					   var query = context.inventory_proprietary_summary.Where(x =>
-							   x.quarter_number == quarterDetailDto.Quarter && x.quarter_year == quarterDetailDto.Year)
-						   .Select(x => x.daypart_defaults.daypart_id)
-							  .ToList();
-					   var entities = query.ToList();
+				context =>
+				{
+					var query = context.inventory_proprietary_summary.Where(x =>
+							x.quarter_number == quarterDetailDto.Quarter && x.quarter_year == quarterDetailDto.Year)
+						.Select(x => x.daypart_defaults.daypart_id)
+						.ToList();
+					var entities = query.ToList();
 
-					   return entities;
-				   });
-
+					return entities;
+				});
 		}
-		
+
+		public List<PlanMarketDto> GetMarketDataBySummaryIds(List<int> ids)
+		{
+			return _InReadUncommitedTransaction(
+				context =>
+				{
+					var query = context.inventory_proprietary_summary_markets
+						.Where(x =>
+							ids.Contains(x.inventory_proprietary_summary_id)).ToList()
+						.Select(i => new PlanMarketDto
+						{
+							MarketCode = i.market_code,
+							PercentageOfUS = i.market_coverage ?? 0
+						}).ToList();
+
+					return query;
+				});
+		}
+
+		public decimal? GetCPM(int id)
+		{
+			return _InReadUncommitedTransaction(
+				context =>
+				{
+					var query = context.inventory_proprietary_summary.Where(i => i.id.Equals(id)).ToList().Single();
+					return query.cpm;
+				});
+		}
 	}
 }

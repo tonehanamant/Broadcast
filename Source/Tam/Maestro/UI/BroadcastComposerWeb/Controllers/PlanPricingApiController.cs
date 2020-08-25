@@ -3,6 +3,7 @@ using Services.Broadcast.Entities.Plan.Pricing;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
@@ -11,6 +12,7 @@ using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Data.Entities;
 using Services.Broadcast.Entities.QuoteReport;
 using Services.Broadcast.Entities.InventoryProprietary;
+using Services.Broadcast.Entities.Plan;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -202,6 +204,18 @@ namespace BroadcastComposerWeb.Controllers
 
 	        return _ConvertToBaseResponse(() => service.GetInventoryProprietarySummaries(request));
         }
-      
+        /// <summary>
+        /// Lists the Inventory Proprietary Summaries
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("PlanProprietarySummary")]
+        public BaseResponse<PlanInventoryProprietarySummaryResponse> GetPlanProprietarySummaryAggregation(PlanInventoryProprietarySummaryRequest request)
+        {
+	        var service = _ApplicationServiceFactory.GetApplicationService<IPlanInventoryProprietarySummaryService>();
+
+	        return _ConvertToBaseResponse(() => service.GetPlanProprietarySummaryAggregation(request));
+        }
     }
 }
