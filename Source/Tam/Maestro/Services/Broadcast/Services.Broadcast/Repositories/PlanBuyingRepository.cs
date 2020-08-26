@@ -536,7 +536,8 @@ namespace Services.Broadcast.Repositories
                                 plan_version_buying_api_result_spot_id = currentSpotId,
                                 spot_length_id = x.SpotLengthId,
                                 cost = x.SpotCost,
-                                spots = x.Spots
+                                spots = x.Spots,
+                                impressions = x.Impressions
                             })
                             .ToList();
 
@@ -578,7 +579,8 @@ namespace Services.Broadcast.Repositories
                         {
                             SpotLengthId = y.spot_length_id,
                             SpotCost = y.cost,
-                            Spots = y.spots
+                            Spots = y.spots,
+                            Impressions = y.impressions
                         }).ToList(),
                         InventoryMediaWeek = new MediaWeek
                         {
@@ -1062,7 +1064,8 @@ namespace Services.Broadcast.Repositories
                 {
                     SpotLengthId = x.spot_length_id,
                     SpotCost = x.cost,
-                    Spots = x.spots
+                    Spots = x.spots,
+                    Impressions = x.impressions
                 }).ToList(),
                 InventoryMediaWeek = new MediaWeek
                 {

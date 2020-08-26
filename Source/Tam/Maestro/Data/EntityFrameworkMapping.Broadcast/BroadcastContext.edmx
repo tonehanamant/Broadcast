@@ -859,6 +859,7 @@
           <Property Name="spot_length_id" Type="int" Nullable="false" />
           <Property Name="cost" Type="money" Nullable="false" />
           <Property Name="spots" Type="int" Nullable="false" />
+          <Property Name="impressions" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_buying_api_result_spots">
           <Key>
@@ -1153,6 +1154,7 @@
           <Property Name="spot_length_id" Type="int" Nullable="false" />
           <Property Name="cost" Type="money" Nullable="false" />
           <Property Name="spots" Type="int" Nullable="false" />
+          <Property Name="impressions" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_api_result_spots">
           <Key>
@@ -15473,6 +15475,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="spots" Type="Int32" Nullable="false" />
           <NavigationProperty Name="plan_version_pricing_api_result_spots" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spot_frequencies_plan_version_pricing_api_result_spots" FromRole="plan_version_pricing_api_result_spot_frequencies" ToRole="plan_version_pricing_api_result_spots" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spot_frequencies_spot_lengths" FromRole="plan_version_pricing_api_result_spot_frequencies" ToRole="spot_lengths" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_api_result_spots">
           <Key>
@@ -15848,6 +15851,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="spots" Type="Int32" Nullable="false" />
           <NavigationProperty Name="plan_version_buying_api_result_spots" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spot_frequencies_plan_version_buying_api_result_spots" FromRole="plan_version_buying_api_result_spot_frequencies" ToRole="plan_version_buying_api_result_spots" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spot_frequencies_spot_lengths" FromRole="plan_version_buying_api_result_spot_frequencies" ToRole="spot_lengths" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_buying_api_result_spots">
           <Key>
@@ -18945,6 +18949,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_pricing_api_result_spot_frequencies">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_api_result_spot_frequencies">
               <MappingFragment StoreEntitySet="plan_version_pricing_api_result_spot_frequencies">
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
                 <ScalarProperty Name="spots" ColumnName="spots" />
                 <ScalarProperty Name="cost" ColumnName="cost" />
                 <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
@@ -19027,6 +19032,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_buying_api_result_spot_frequencies">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_api_result_spot_frequencies">
               <MappingFragment StoreEntitySet="plan_version_buying_api_result_spot_frequencies">
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
                 <ScalarProperty Name="spots" ColumnName="spots" />
                 <ScalarProperty Name="cost" ColumnName="cost" />
                 <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />

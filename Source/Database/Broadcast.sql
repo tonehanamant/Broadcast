@@ -51,6 +51,68 @@ GO
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
 
+/*************************************** START - BP-51 ****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_api_result_spot_frequencies') AND name = 'impressions')
+BEGIN
+	ALTER TABLE plan_version_pricing_api_result_spot_frequencies
+	ADD impressions float NULL
+
+	EXEC('UPDATE f
+	      SET f.impressions = s.impressions30sec
+	      FROM plan_version_pricing_api_result_spot_frequencies f
+	      JOIN plan_version_pricing_api_result_spots as s on f.plan_version_pricing_api_result_spot_id = s.id
+	      JOIN plan_version_pricing_api_results as r on s.plan_version_pricing_api_results_id = r.id
+	      WHERE r.pricing_version = ''2''')
+
+	EXEC('UPDATE f
+	      SET f.impressions = (s.impressions30sec * 
+		case pv.equivalized
+			when 0 then 1
+			when 1 then sl.delivery_multiplier
+		end)
+	      FROM plan_version_pricing_api_result_spot_frequencies as f
+		  JOIN plan_version_pricing_api_result_spots as s on f.plan_version_pricing_api_result_spot_id = s.id
+		  JOIN plan_version_pricing_api_results as r on s.plan_version_pricing_api_results_id = r.id
+		  JOIN plan_version_pricing_job as j on r.plan_version_pricing_job_id = j.id
+		  JOIN plan_versions as pv on j.plan_version_id = pv.id
+		  JOIN spot_lengths as sl on f.spot_length_id = sl.id
+		  WHERE r.pricing_version = ''3''')
+
+	ALTER TABLE plan_version_pricing_api_result_spot_frequencies
+	ALTER COLUMN impressions float NOT NULL
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_buying_api_result_spot_frequencies') AND name = 'impressions')
+BEGIN
+	ALTER TABLE plan_version_buying_api_result_spot_frequencies
+	ADD impressions float NULL
+
+	EXEC('UPDATE f
+		  SET f.impressions = s.impressions30sec
+		  FROM plan_version_buying_api_result_spot_frequencies f
+		  JOIN plan_version_buying_api_result_spots as s on f.plan_version_buying_api_result_spot_id = s.id
+		  JOIN plan_version_buying_api_results as r on s.plan_version_buying_api_results_id = r.id
+		  WHERE r.buying_version = ''2''')
+
+	EXEC('UPDATE f
+	      SET f.impressions = (s.impressions30sec * 
+		case pv.equivalized
+			when 0 then 1
+			when 1 then sl.delivery_multiplier
+		end)
+	      FROM plan_version_buying_api_result_spot_frequencies as f
+		  JOIN plan_version_buying_api_result_spots as s on f.plan_version_buying_api_result_spot_id = s.id
+		  JOIN plan_version_buying_api_results as r on s.plan_version_buying_api_results_id = r.id
+		  JOIN plan_version_buying_job as j on r.plan_version_buying_job_id = j.id
+		  JOIN plan_versions as pv on j.plan_version_id = pv.id
+		  JOIN spot_lengths as sl on f.spot_length_id = sl.id
+		  WHERE r.buying_version = ''3''')
+
+	ALTER TABLE plan_version_buying_api_result_spot_frequencies
+	ALTER COLUMN impressions float NOT NULL
+END
+/*************************************** END - BP-51 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

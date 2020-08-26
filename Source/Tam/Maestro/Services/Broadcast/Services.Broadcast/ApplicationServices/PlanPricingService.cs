@@ -264,10 +264,6 @@ namespace Services.Broadcast.ApplicationServices
             var primaryProgramsByManifestDaypartIds = _StationProgramRepository.GetPrimaryProgramsForManifestDayparts(manifestDaypartIds);
             var markets = _MarketRepository.GetMarketDtos();
 
-            // TODO remove this after setting up the correct behaviour for v3
-            if (BroadcastServiceSystemParameter.PlanPricingEndpointVersion == "2")
-                allocatedSpots.ForEach(x => x.TotalImpressions = x.SpotFrequencies.Sum(y => y.Spots * x.Impressions30sec));
-
             return new PricingResultsReportData(
                 plan,
                 allocatedSpots,
@@ -1759,12 +1755,12 @@ namespace Services.Broadcast.ApplicationServices
                             SpotLengthId = program.ManifestRates.Single().SpotLengthId,
                             SpotCost = originalSpot.Cost,
                             SpotCostWithMargin = GeneralMath.CalculateCostWithMargin(originalSpot.Cost, programInventoryParameters.Margin),
-                            Spots = allocation.Frequency
+                            Spots = allocation.Frequency,
+                            Impressions = originalSpot.Impressions,
                         }
                     },
                     StandardDaypart = daypartDefaultsById[originalSpot.DaypartId],
                     Impressions30sec = originalSpot.Impressions,
-                    TotalImpressions = originalSpot.Impressions * allocation.Frequency,
                     ContractMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.ContractMediaWeekId),
                     InventoryMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.InventoryMediaWeekId)
                 };
@@ -1825,12 +1821,12 @@ namespace Services.Broadcast.ApplicationServices
                             SpotLengthId = x.SpotLengthId,
                             SpotCost = spotCostBySpotLengthId[x.SpotLengthId],
                             SpotCostWithMargin = GeneralMath.CalculateCostWithMargin(spotCostBySpotLengthId[x.SpotLengthId], programInventoryParameters.Margin),
-                            Spots = x.Frequency
+                            Spots = x.Frequency,
+                            Impressions = originalSpot.Impressions30sec * spotScaleFactorBySpotLengthId[x.SpotLengthId]
                         })
                         .ToList(),
                     StandardDaypart = daypartDefaultsById[originalSpot.DaypartId],
                     Impressions30sec = originalSpot.Impressions30sec,
-                    TotalImpressions = frequencies.Sum(x => x.Frequency * (originalSpot.Impressions30sec * spotScaleFactorBySpotLengthId[x.SpotLengthId])),
                     ContractMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.ContractMediaWeekId),
                     InventoryMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.InventoryMediaWeekId)
                 };

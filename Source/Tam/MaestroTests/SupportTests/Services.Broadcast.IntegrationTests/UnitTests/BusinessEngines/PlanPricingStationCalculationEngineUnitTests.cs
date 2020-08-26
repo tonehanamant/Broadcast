@@ -143,11 +143,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             {
                                 SpotCost = 15.5m,
                                 SpotCostWithMargin = 15.5m,
-                                Spots = 5
+                                Spots = 5,
+                                Impressions = 500
                             }
                         },
-                        Impressions30sec = 500,
-                        TotalImpressions = 2500
+                        Impressions30sec = 500
                     },
                     new PlanPricingAllocatedSpot
                     {
@@ -158,11 +158,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             {
                                 SpotCost = 9.99m,
                                 SpotCostWithMargin = 9.99m,
-                                Spots = 3
+                                Spots = 3,
+                                Impressions = 750
                             }
                         },
-                        Impressions30sec = 750,
-                        TotalImpressions = 2250
+                        Impressions30sec = 750
                     }
                 }
             };
@@ -182,11 +182,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 SpotCost = 15.5m,
                                 // 20% Margin
                                 SpotCostWithMargin = 19.375m,
-                                Spots = 5
+                                Spots = 5,
+                                Impressions = 500
                             }
                         },
-                        Impressions30sec = 500,
-                        TotalImpressions = 2500
+                        Impressions30sec = 500
                     },
                     new PlanPricingAllocatedSpot
                     {
@@ -198,11 +198,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 SpotCost =  9.99m,
                                 // 20% Margin
                                 SpotCostWithMargin = 12.4875m,
-                                Spots = 3
+                                Spots = 3,
+                                Impressions = 750
                             }
                         },
-                        Impressions30sec = 750,
-                        TotalImpressions = 2250
+                        Impressions30sec = 750
                     }
                 }
             };

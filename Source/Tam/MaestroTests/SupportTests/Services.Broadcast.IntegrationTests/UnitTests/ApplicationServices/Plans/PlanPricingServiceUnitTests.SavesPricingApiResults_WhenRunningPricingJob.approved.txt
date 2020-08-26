@@ -27,6 +27,7 @@
         },
         "SpotFrequencies": [
           {
+            "Impressions": 1000.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 62.5,
             "SpotLengthId": 0,
@@ -66,6 +67,7 @@
         },
         "SpotFrequencies": [
           {
+            "Impressions": 1000.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 62.5,
             "SpotLengthId": 0,
@@ -105,6 +107,7 @@
         },
         "SpotFrequencies": [
           {
+            "Impressions": 1500.0,
             "SpotCost": 60.0,
             "SpotCostWithMargin": 75.0,
             "SpotLengthId": 0,

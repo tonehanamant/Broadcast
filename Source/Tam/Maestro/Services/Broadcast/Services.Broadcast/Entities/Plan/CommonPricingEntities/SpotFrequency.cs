@@ -11,5 +11,7 @@ namespace Services.Broadcast.Entities.Plan.CommonPricingEntities
         public decimal SpotCostWithMargin { get; set; }
 
         public int Spots { get; set; }
+
+        public double Impressions { get; set; }
     }
 }

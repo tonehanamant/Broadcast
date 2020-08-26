@@ -13,12 +13,14 @@
         "InventoryMediaWeek": null,
         "SpotFrequencies": [
           {
+            "Impressions": 1000.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 62.5,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
+            "Impressions": 500.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 62.5,
             "SpotLengthId": 2,
@@ -44,12 +46,14 @@
         "InventoryMediaWeek": null,
         "SpotFrequencies": [
           {
+            "Impressions": 1000.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 62.5,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
+            "Impressions": 500.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 62.5,
             "SpotLengthId": 2,
@@ -75,12 +79,14 @@
         "InventoryMediaWeek": null,
         "SpotFrequencies": [
           {
+            "Impressions": 1000.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 62.5,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
+            "Impressions": 500.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 62.5,
             "SpotLengthId": 2,
@@ -106,12 +112,14 @@
         "InventoryMediaWeek": null,
         "SpotFrequencies": [
           {
+            "Impressions": 1000.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 62.5,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
+            "Impressions": 500.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 62.5,
             "SpotLengthId": 2,
@@ -137,12 +145,14 @@
         "InventoryMediaWeek": null,
         "SpotFrequencies": [
           {
+            "Impressions": 1500.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 62.5,
             "SpotLengthId": 1,
             "Spots": 1
           },
           {
+            "Impressions": 750.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 62.5,
             "SpotLengthId": 2,

@@ -47,11 +47,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             {
                                 Spots = 10,
                                 SpotCost = 50,
-                                SpotCostWithMargin = 50
+                                SpotCostWithMargin = 50,
+                                Impressions = 5000
                             }
                         },
-                        Impressions30sec = 5000,
-                        TotalImpressions = 50000
+                        Impressions30sec = 5000
                     }
                 }
             };
@@ -91,11 +91,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             {
                                 Spots = 10,
                                 SpotCost = 50,
-                                SpotCostWithMargin = 51
+                                SpotCostWithMargin = 51,
+                                Impressions = 5000
                             }
                         },
-                        Impressions30sec = 5000,
-                        TotalImpressions = 50000
+                        Impressions30sec = 5000
                     }
                 }
             };
@@ -304,11 +304,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             {
                                 Spots = 1,
                                 SpotCost = 7,
-                                SpotCostWithMargin = 7
+                                SpotCostWithMargin = 7,
+                                Impressions = 1000
                             }
                         },
-                        Impressions30sec = 1000,
-                        TotalImpressions = 1000
+                        Impressions30sec = 1000
                     }
                 }
             };
@@ -348,11 +348,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             {
                                 Spots = 1,
                                 SpotCost = 7,
-                                SpotCostWithMargin = 7
+                                SpotCostWithMargin = 7,
+                                Impressions = 1000
                             }
                         },
-                        Impressions30sec = 1000,
-                        TotalImpressions = 1000
+                        Impressions30sec = 1000
                     }
                 }
             };

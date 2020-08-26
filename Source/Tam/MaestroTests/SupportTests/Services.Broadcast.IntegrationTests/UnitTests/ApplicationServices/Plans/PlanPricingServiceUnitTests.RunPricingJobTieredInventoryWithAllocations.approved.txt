@@ -13,6 +13,7 @@
         "InventoryMediaWeek": null,
         "SpotFrequencies": [
           {
+            "Impressions": 1000.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 55.555555555555555555555555556,
             "SpotLengthId": 0,
@@ -38,6 +39,7 @@
         "InventoryMediaWeek": null,
         "SpotFrequencies": [
           {
+            "Impressions": 1000.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 55.555555555555555555555555556,
             "SpotLengthId": 0,
@@ -63,6 +65,7 @@
         "InventoryMediaWeek": null,
         "SpotFrequencies": [
           {
+            "Impressions": 1000.0,
             "SpotCost": 50.0,
             "SpotCostWithMargin": 55.555555555555555555555555556,
             "SpotLengthId": 0,
@@ -88,6 +91,7 @@
         "InventoryMediaWeek": null,
         "SpotFrequencies": [
           {
+            "Impressions": 1100.0,
             "SpotCost": 60.0,
             "SpotCostWithMargin": 66.666666666666666666666666667,
             "SpotLengthId": 0,

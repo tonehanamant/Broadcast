@@ -327,7 +327,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             new SpotFrequency
                             {
                                 SpotCost = 10,
-                                Spots = 1
+                                Spots = 1,
+                                Impressions = 1000
                             }
                         },
                         StationInventoryManifestId = 1,
@@ -353,7 +354,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             new SpotFrequency
                             {
                                 SpotCost = 8,
-                                Spots = 2
+                                Spots = 2,
+                                Impressions = 800
                             }
                         },
                         StationInventoryManifestId = 1,
@@ -379,7 +381,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             new SpotFrequency
                             {
                                 SpotCost = 5,
-                                Spots = 3
+                                Spots = 3,
+                                Impressions = 500
                             }
                         },
                         StationInventoryManifestId = 2,
@@ -405,7 +408,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             new SpotFrequency
                             {
                                 SpotCost = 3,
-                                Spots = 4
+                                Spots = 4,
+                                Impressions = 400
                             }
                         },
                         StationInventoryManifestId = 3,
@@ -592,11 +596,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new SpotFrequency
                         {
                             SpotCost = 200,
-                            Spots = 2
+                            Spots = 2,
+                            Impressions = 10000
                         }
                     },
-                    Impressions30sec = 10000,
-                    TotalImpressions = 20000
+                    Impressions30sec = 10000
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -606,11 +610,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new SpotFrequency
                         {
                             SpotCost = 300,
-                            Spots = 4
+                            Spots = 4,
+                            Impressions = 50000
                         }
                     },
-                    Impressions30sec = 50000,
-                    TotalImpressions = 200000
+                    Impressions30sec = 50000
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -620,11 +624,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new SpotFrequency
                         {
                             SpotCost = 500,
-                            Spots = 3
+                            Spots = 3,
+                            Impressions = 20000
                         }
                     },
-                    Impressions30sec = 20000,
-                    TotalImpressions = 60000
+                    Impressions30sec = 20000
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -634,11 +638,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new SpotFrequency
                         {
                             SpotCost = 100,
-                            Spots = 1
+                            Spots = 1,
+                            Impressions = 30000
                         }
                     },
-                    Impressions30sec = 30000,
-                    TotalImpressions = 30000
+                    Impressions30sec = 30000
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -648,11 +652,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new SpotFrequency
                         {
                             SpotCost = 300,
-                            Spots = 3
+                            Spots = 3,
+                            Impressions = 10000
                         }
                     },
-                    Impressions30sec = 10000,
-                    TotalImpressions = 30000
+                    Impressions30sec = 10000
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -662,11 +666,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new SpotFrequency
                         {
                             SpotCost = 400,
-                            Spots = 2
+                            Spots = 2,
+                            Impressions = 50000
                         }
                     },
-                    Impressions30sec = 50000,
-                    TotalImpressions = 100000
+                    Impressions30sec = 50000
                 },
                 new PlanPricingAllocatedSpot
                 {
@@ -676,11 +680,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         new SpotFrequency
                         {
                             SpotCost = 250,
-                            Spots = 1
+                            Spots = 1,
+                            Impressions = 20000
                         }
                     },
-                    Impressions30sec = 20000,
-                    TotalImpressions = 20000
+                    Impressions30sec = 20000
                 }
             };
 

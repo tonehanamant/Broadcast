@@ -426,7 +426,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        [Ignore("There is no inventory loaded for this plan in broadcast_integration db")]
         public void SaveBuyingResultsTest()
         {
             using (new TransactionScopeWrapper())

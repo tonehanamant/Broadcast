@@ -2376,7 +2376,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         new SpotFrequency
                         {
-                            Spots = 1
+                            Spots = 1,
+                            Impressions = 10
                         }
                     },
                     Impressions30sec = 10
@@ -2393,7 +2394,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         new SpotFrequency
                         {
-                            Spots = 1
+                            Spots = 1,
+                            Impressions = 10
                         }
                     },
                     Impressions30sec = 10
@@ -2410,7 +2412,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         new SpotFrequency
                         {
-                            Spots = 1
+                            Spots = 1,
+                            Impressions = 20
                         }
                     },
                     Impressions30sec = 20
@@ -2427,7 +2430,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         new SpotFrequency
                         {
-                            Spots = 1
+                            Spots = 1,
+                            Impressions = 20
                         }
                     },
                     Impressions30sec = 20
@@ -2444,7 +2448,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         new SpotFrequency
                         {
-                            Spots = 1
+                            Spots = 1,
+                            Impressions = 10
                         }
                     },
                     Impressions30sec = 10
@@ -2461,7 +2466,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         new SpotFrequency
                         {
-                            Spots = 1
+                            Spots = 1,
+                            Impressions = 10
                         }
                     },
                     Impressions30sec = 10
@@ -2478,7 +2484,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         new SpotFrequency
                         {
-                            Spots = 1
+                            Spots = 1,
+                            Impressions = 10
                         }
                     },
                     Impressions30sec = 10
@@ -2494,7 +2501,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         new SpotFrequency
                         {
-                            Spots = 1
+                            Spots = 1,
+                            Impressions = 10
                         }
                     },
                     Impressions30sec = 10
@@ -2518,7 +2526,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         new SpotFrequency
                         {
-                            Spots = 1
+                            Spots = 1,
+                            Impressions = 10
                         }
                     },
                     Impressions30sec = 10
@@ -2535,7 +2544,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         new SpotFrequency
                         {
-                            Spots = 1
+                            Spots = 1,
+                            Impressions = 20
                         }
                     },
                     Impressions30sec = 20
@@ -2552,7 +2562,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         new SpotFrequency
                         {
-                            Spots = 2
+                            Spots = 2,
+                            Impressions = 10
                         }
                     },
                     Impressions30sec = 10
@@ -2569,7 +2580,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         new SpotFrequency
                         {
-                            Spots = 1
+                            Spots = 1,
+                            Impressions = 10
                         }
                     },
                     Impressions30sec = 10
@@ -2586,7 +2598,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         new SpotFrequency
                         {
-                            Spots = 5
+                            Spots = 5,
+                            Impressions = 10
                         }
                     },
                     Impressions30sec = 10
@@ -2603,7 +2616,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         new SpotFrequency
                         {
-                            Spots = 5
+                            Spots = 5,
+                            Impressions = 10
                         }
                     },
                     Impressions30sec = 10
@@ -2620,7 +2634,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         new SpotFrequency
                         {
-                            Spots = 5
+                            Spots = 5,
+                            Impressions = 10
                         }
                     },
                     Impressions30sec = 10

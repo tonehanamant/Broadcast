@@ -19,6 +19,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int spot_length_id { get; set; }
         public decimal cost { get; set; }
         public int spots { get; set; }
+        public double impressions { get; set; }
     
         public virtual plan_version_buying_api_result_spots plan_version_buying_api_result_spots { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }

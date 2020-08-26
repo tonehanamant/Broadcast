@@ -15,30 +15,12 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public DaypartDefaultDto StandardDaypart { get; set; }
         public List<SpotFrequency> SpotFrequencies { get;set; }
 
-        public double TotalImpressions { get; set; }
+        public double TotalImpressions => SpotFrequencies.Sum(x => x.Impressions* x.Spots);
 
-        public decimal TotalCost
-        {
-            get
-            {
-                return SpotFrequencies.Sum(x => x.SpotCost * x.Spots);
-            }
-        }
+        public decimal TotalCost => SpotFrequencies.Sum(x => x.SpotCost * x.Spots);
 
-        public decimal TotalCostWithMargin
-        {
-            get
-            {
-                return SpotFrequencies.Sum(x => x.SpotCostWithMargin * x.Spots);
-            }
-        }
+        public decimal TotalCostWithMargin => SpotFrequencies.Sum(x => x.SpotCostWithMargin * x.Spots);
 
-        public int TotalSpots
-        {
-            get
-            {
-                return SpotFrequencies.Sum(x => x.Spots);
-            }
-        }
+        public int TotalSpots => SpotFrequencies.Sum(x => x.Spots);
     }
 }

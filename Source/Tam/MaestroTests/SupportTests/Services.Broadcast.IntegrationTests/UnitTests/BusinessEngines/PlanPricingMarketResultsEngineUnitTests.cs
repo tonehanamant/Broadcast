@@ -49,11 +49,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             {
                                 SpotCost = 10,
                                 SpotCostWithMargin = 10,
-                                Spots = 1
+                                Spots = 1,
+                                Impressions = 100
                             }
                         },
-                        Impressions30sec = 100,
-                        TotalImpressions = 100
+                        Impressions30sec = 100
                     })
                     .ToList()
             };
@@ -110,11 +110,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             {
                                 SpotCost = 10,
                                 SpotCostWithMargin = 11,
-                                Spots = 1
+                                Spots = 1,
+                                Impressions = 100
                             }
                         },
-                        Impressions30sec = 100,
-                        TotalImpressions = 100
+                        Impressions30sec = 100
                     })
                     .ToList()
             };
@@ -175,11 +175,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             {
                                 SpotCost = 10,
                                 SpotCostWithMargin = 10,
-                                Spots = 1
+                                Spots = 1,
+                                Impressions = 100
                             }
                         },
-                        Impressions30sec = 100,
-                        TotalImpressions = 100
+                        Impressions30sec = 100
                     })
                     .ToList()
             };
@@ -236,11 +236,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                             {
                                 SpotCost = 10,
                                 SpotCostWithMargin = 10,
-                                Spots = 1
+                                Spots = 1,
+                                Impressions = 100
                             }
                         },
-                        Impressions30sec = 100,
-                        TotalImpressions = 100
+                        Impressions30sec = 100
                     })
                     .ToList()
             };
