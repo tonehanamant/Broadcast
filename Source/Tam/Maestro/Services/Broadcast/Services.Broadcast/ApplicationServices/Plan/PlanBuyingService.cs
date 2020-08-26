@@ -72,6 +72,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         PlanBuyingApiRequestDto_v3 GetBuyingApiRequestPrograms_v3(int planId, BuyingInventoryGetRequestParametersDto requestParameters);
 
         /// <summary>
+        /// Gets the buying ownership groups.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <returns>PlanBuyingResultOwnershipGroupDto object</returns>
+        PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroups(int planId);
+
+        /// <summary>
         /// For troubleshooting
         /// </summary>
         List<PlanBuyingInventoryProgram> GetBuyingInventory(int planId, BuyingInventoryGetRequestParametersDto requestParameters);
@@ -90,8 +97,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         PlanBuyingDefaults GetPlanBuyingDefaults();
 
-        bool IsBuyingModelRunningForPlan(int planId);
-        bool IsBuyingModelRunningForJob(int jobId);
+        /// <summary>
+        /// Checks if the buying model is running for the plan
+        /// </summary>
+        /// <param name="planId">Plan id to be checked</param>
+        /// <returns>True or False</returns>
+        bool IsBuyingModelRunning(int planId);
 
         /// <summary>
         /// For troubleshooting
@@ -118,24 +129,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         BuyingProgramsResultDto GetPrograms(int planId);
 
-        BuyingProgramsResultDto GetProgramsByJobId(int jobId);
-
         PlanBuyingStationResultDto GetStations(int planId);
-
-        PlanBuyingStationResultDto GetStationsByJobId(int jobId);
 
         /// <summary>
         /// Retrieves the Buying Results Markets Summary
         /// </summary>
         PlanBuyingResultMarketsDto GetMarkets(int planId);
 
-        /// <summary>
-        /// Retrieves the Buying Results Markets Summary
-        /// </summary>
-        PlanBuyingResultMarketsDto GetMarketsByJobId(int jobId);
-
         PlanBuyingBandsDto GetBuyingBands(int planId);
-        PlanBuyingBandsDto GetBuyingBandsByJobId(int jobId);
 
         [Queue("savebuyingrequest")]
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
@@ -167,8 +168,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
         private readonly IPlanBuyingBandCalculationEngine _PlanBuyingBandCalculationEngine;
-        private readonly IPlanBuyingStationCalculationEngine _PlanBuyingStationCalculationEngine;
+        private readonly IPlanBuyingStationEngine _PlanBuyingStationCalculationEngine;
+        private readonly IPlanBuyingProgramEngine _PlanBuyingProgramEngine;
         private readonly IPlanBuyingMarketResultsEngine _PlanBuyingMarketResultsEngine;
+        private readonly IPlanBuyingOwnershipGroupEngine _PlanBuyingOwnershipGroupEngine;
         private readonly IPlanBuyingRequestLogClient _BuyingRequestLogClient;
         private readonly IPlanValidator _PlanValidator;
 
@@ -182,10 +185,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                   IDateTimeEngine dateTimeEngine,
                                   IWeeklyBreakdownEngine weeklyBreakdownEngine,
                                   IPlanBuyingBandCalculationEngine planBuyingBandCalculationEngine,
-                                  IPlanBuyingStationCalculationEngine planBuyingStationCalculationEngine,
+                                  IPlanBuyingStationEngine planBuyingStationCalculationEngine,
+                                  IPlanBuyingProgramEngine planBuyingProgramEngine,
                                   IPlanBuyingMarketResultsEngine planBuyingMarketResultsEngine,
                                   IPlanBuyingRequestLogClient buyingRequestLogClient,
-                                  IPlanValidator planValidator)
+                                  IPlanValidator planValidator,
+                                  IPlanBuyingOwnershipGroupEngine planBuyingOwnershipGroupEngine)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _PlanBuyingRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanBuyingRepository>();
@@ -208,6 +213,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanBuyingMarketResultsEngine = planBuyingMarketResultsEngine;
             _BuyingRequestLogClient = buyingRequestLogClient;
             _PlanValidator = planValidator;
+            _PlanBuyingOwnershipGroupEngine = planBuyingOwnershipGroupEngine;
+            _PlanBuyingProgramEngine = planBuyingProgramEngine;
         }
 
         public ReportOutput GenerateBuyingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)
@@ -252,7 +259,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             lock (lockObject)
             {
-                if (IsBuyingModelRunningForPlan(planBuyingParametersDto.PlanId.Value))
+                if (IsBuyingModelRunning(planBuyingParametersDto.PlanId.Value))
                 {
                     throw new Exception("The buying model is already running for the plan");
                 }
@@ -270,7 +277,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
                 {
                     planBuyingParametersDto.PlanVersionId = plan.VersionId;
-                   job.Id = _SaveBuyingJobAndParameters(job, planBuyingParametersDto);
+                    job.Id = _SaveBuyingJobAndParameters(job, planBuyingParametersDto);
                     _CampaignRepository.UpdateCampaignLastModified(plan.CampaignId, currentDate, username);
                     transaction.Complete();
                 }
@@ -490,13 +497,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return job != null && (job.Status == BackgroundJobProcessingStatus.Queued || job.Status == BackgroundJobProcessingStatus.Processing);
         }
 
-        public bool IsBuyingModelRunningForJob(int jobId)
-        {
-            var job = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
-            return IsBuyingModelRunning(job);
-        }
-
-        public bool IsBuyingModelRunningForPlan(int planId)
+        /// <inheritdoc />
+        public bool IsBuyingModelRunning(int planId)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
             return IsBuyingModelRunning(job);
@@ -729,9 +731,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_TOTAL_DURATION);
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_PROCESSING);
-            var PlanBuyingJob = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
-            PlanBuyingJob.Status = BackgroundJobProcessingStatus.Processing;
-            _PlanBuyingRepository.UpdatePlanBuyingJob(PlanBuyingJob);
+            var planBuyingJob = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
+            planBuyingJob.Status = BackgroundJobProcessingStatus.Processing;
+            _PlanBuyingRepository.UpdatePlanBuyingJob(planBuyingJob);
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_PROCESSING);
 
             try
@@ -790,18 +792,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 token.ThrowIfCancellationRequested();
 
-                var aggregateResultsTask = new Task<PlanBuyingResultBaseDto>(() =>
+                var calculateBuyingProgramsTask = new Task<PlanBuyingResultBaseDto>(() =>
                 {
                     diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
-                    var aggregatedResults = _AggregateResults(inventory, allocationResult, goalsFulfilledByProprietaryInventory);
+                    var programResults = _PlanBuyingProgramEngine.Calculate(inventory, allocationResult, goalsFulfilledByProprietaryInventory);
                     diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
-                    return aggregatedResults;
+                    return programResults;
                 });
 
                 var calculateBuyingBandsTask = new Task<PlanBuyingBandsDto>(() =>
                 {
                     diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_BANDS);
-                    var buyingBands = _PlanBuyingBandCalculationEngine.CalculateBuyingBands(inventory, allocationResult, planBuyingParametersDto);
+                    var buyingBands = _PlanBuyingBandCalculationEngine.Calculate(inventory, allocationResult, planBuyingParametersDto);
                     diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_BUYING_BANDS);
                     return buyingBands;
                 });
@@ -818,29 +820,35 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 {
                     diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
                     var marketCoverages = _MarketCoverageRepository.GetMarketsWithLatestCoverage();
-                    var buyingMarketResults = _PlanBuyingMarketResultsEngine.Calculate(inventory, allocationResult, planBuyingParametersDto, plan, marketCoverages);
+                    var buyingMarketResults = _PlanBuyingMarketResultsEngine.Calculate(inventory, allocationResult, planBuyingParametersDto, plan
+                        , marketCoverages);
                     diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
                     return buyingMarketResults;
                 });
 
-                aggregateResultsTask.Start();
+                var aggregateOwnershipGroupResultsTask = new Task<PlanBuyingResultOwnershipGroupDto>(() =>
+                {
+                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_OWNERSHIP_GROUP_RESULTS);
+                    var buyingOwnershipGroupResults = _PlanBuyingOwnershipGroupEngine.Calculate(inventory, allocationResult
+                        , planBuyingParametersDto);
+                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_OWNERSHIP_GROUP_RESULTS);
+                    return buyingOwnershipGroupResults;
+                });
+
+                calculateBuyingProgramsTask.Start();
                 calculateBuyingBandsTask.Start();
                 calculateBuyingStationsTask.Start();
                 aggregateMarketResultsTask.Start();
+                aggregateOwnershipGroupResultsTask.Start();
 
                 token.ThrowIfCancellationRequested();
 
-                aggregateResultsTask.Wait();
-                var aggregateTaskResult = aggregateResultsTask.Result;
-
-                calculateBuyingBandsTask.Wait();
-                var calculateBuyingBandTaskResult = calculateBuyingBandsTask.Result;
-
-                calculateBuyingStationsTask.Wait();
-                var calculateBuyingStationTaskResult = calculateBuyingStationsTask.Result;
-
-                aggregateMarketResultsTask.Wait();
-                var aggregateMarketResultsTaskResult = aggregateMarketResultsTask.Result;
+                
+                var aggregateTaskResult = calculateBuyingProgramsTask.GetAwaiter().GetResult();
+                var calculateBuyingBandTaskResult = calculateBuyingBandsTask.GetAwaiter().GetResult();
+                var calculateBuyingStationTaskResult = calculateBuyingStationsTask.GetAwaiter().GetResult();
+                var aggregateMarketResultsTaskResult = aggregateMarketResultsTask.GetAwaiter().GetResult();
+                var aggregateOwnershipGroupResultsTaskResult = aggregateOwnershipGroupResultsTask.GetAwaiter().GetResult();
 
                 using (var transaction = new TransactionScopeWrapper())
                 {
@@ -863,6 +871,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
                     _PlanBuyingRepository.SavePlanBuyingMarketResults(aggregateMarketResultsTaskResult);
                     diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
+
+                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_OWNERSHIP_GROUP_RESULTS);
+                    _PlanBuyingRepository.SavePlanBuyingOwnershipGroupResults(aggregateOwnershipGroupResultsTaskResult);
+                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_OWNERSHIP_GROUP_RESULTS);
 
                     diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
                     var buyingJob = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
@@ -1673,139 +1685,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        private PlanBuyingResultBaseDto _AggregateResults(
-            List<PlanBuyingInventoryProgram> inventory,
-            PlanBuyingAllocationResult apiResponse,
-            bool goalsFulfilledByProprietaryInventory = false)
-        {
-            var result = new PlanBuyingResultBaseDto();
-            var programs = _GetPrograms(inventory, apiResponse);
-            var totalCostForAllPrograms = programs.Sum(x => x.TotalCost);
-            var totalImpressionsForAllPrograms = programs.Sum(x => x.TotalImpressions);
-            var totalSpotsForAllPrograms = programs.Sum(x => x.TotalSpots);
-
-            result.Programs.AddRange(programs.Select(x => new Entities.Plan.Buying.PlanBuyingProgramDto
-            {
-                ProgramName = x.ProgramName,
-                Genre = x.Genre,
-                StationCount = x.Stations.Count,
-                MarketCount = x.MarketCodes.Count,
-                AvgImpressions = x.AvgImpressions,
-                Impressions = x.TotalImpressions,
-                AvgCpm = x.AvgCpm,
-                PercentageOfBuy = ProposalMath.CalculateImpressionsPercentage(x.TotalImpressions, totalImpressionsForAllPrograms),
-                Budget = x.TotalCost,
-                Spots = x.TotalSpots
-            }));
-
-            result.Totals = new PlanBuyingProgramTotalsDto
-            {
-                MarketCount = programs.SelectMany(x => x.MarketCodes).Distinct().Count(),
-                StationCount = programs.SelectMany(x => x.Stations).Distinct().Count(),
-                AvgImpressions = ProposalMath.CalculateAvgImpressions(totalImpressionsForAllPrograms, totalSpotsForAllPrograms),
-                AvgCpm = ProposalMath.CalculateCpm(totalCostForAllPrograms, totalImpressionsForAllPrograms),
-                Budget = totalCostForAllPrograms,
-                Impressions = totalImpressionsForAllPrograms,
-                Spots = totalSpotsForAllPrograms,
-            };
-
-            result.GoalFulfilledByProprietary = goalsFulfilledByProprietaryInventory;
-            result.OptimalCpm = apiResponse.BuyingCpm;
-            result.JobId = apiResponse.JobId;
-            result.PlanVersionId = apiResponse.PlanVersionId;
-
-            return result;
-        }
-
-        private List<PlanBuyingProgram> _GetPrograms(
-            List<PlanBuyingInventoryProgram> inventory,
-            PlanBuyingAllocationResult apiResponse)
-        {
-            var result = new List<PlanBuyingProgram>();
-            var inventoryGroupedByProgramName = inventory
-                .SelectMany(x => x.ManifestDayparts.Select(d => new PlanBuyingManifestWithManifestDaypart
-                {
-                    Manifest = x,
-                    ManifestDaypart = d
-                }))
-                .GroupBy(x => x.ManifestDaypart.PrimaryProgram.Name);
-
-            foreach (var inventoryByProgramName in inventoryGroupedByProgramName)
-            {
-                var programInventory = inventoryByProgramName.ToList();
-                var allocatedStations = _GetAllocatedStations(apiResponse, programInventory);
-                var allocatedProgramSpots = _GetAllocatedProgramSpots(apiResponse, programInventory);
-
-                _CalculateProgramTotals(allocatedProgramSpots, out var programCost, out var programImpressions, out var programSpots);
-
-                if (programSpots == 0)
-                    continue;
-
-                var program = new PlanBuyingProgram
-                {
-                    ProgramName = inventoryByProgramName.Key,
-                    Genre = inventoryByProgramName.First().ManifestDaypart.PrimaryProgram.Genre, // we assume all programs with the same name have the same genre
-                    AvgImpressions = ProposalMath.CalculateAvgImpressions(programImpressions, programSpots),
-                    AvgCpm = ProposalMath.CalculateCpm(programCost, programImpressions),
-                    TotalImpressions = programImpressions,
-                    TotalCost = programCost,
-                    TotalSpots = programSpots,
-                    Stations = allocatedStations.Select(s => s.LegacyCallLetters).Distinct().ToList(),
-                    MarketCodes = allocatedStations.Select(s => s.MarketCode.Value).Distinct().ToList()
-                };
-
-                result.Add(program);
-            };
-
-            return result;
-        }
-
-        private List<DisplayBroadcastStation> _GetAllocatedStations(PlanBuyingAllocationResult apiResponse, List<PlanBuyingManifestWithManifestDaypart> programInventory)
-        {
-            var manifestIds = apiResponse.Spots.Select(s => s.Id).Distinct();
-            var result = new List<PlanBuyingManifestWithManifestDaypart>();
-            return programInventory.Where(p => manifestIds.Contains(p.Manifest.ManifestId)).Select(p => p.Manifest.Station).ToList();
-        }
-
-        private List<PlanBuyingAllocatedSpot> _GetAllocatedProgramSpots(PlanBuyingAllocationResult apiResponse
-            , List<PlanBuyingManifestWithManifestDaypart> programInventory)
-        {
-            var result = new List<PlanBuyingAllocatedSpot>();
-
-            foreach (var spot in apiResponse.Spots)
-            {
-                // until we use only OpenMarket inventory it`s fine
-                // this needs to be updated when we start using inventory that can have more than one daypart
-                // we should match spots by some unique value which represents a combination of a manifest week and a manifest daypart
-                // and not by manifest id as it is done now
-                if (programInventory.Any(x => x.Manifest.ManifestId == spot.Id))
-                {
-                    result.Add(spot);
-                }
-            }
-
-            return result;
-        }
-
-        private void _CalculateProgramTotals(
-            IEnumerable<PlanBuyingAllocatedSpot> allocatedProgramSpots,
-            out decimal totalProgramCost,
-            out double totalProgramImpressions,
-            out int totalProgramSpots)
-        {
-            totalProgramCost = 0;
-            totalProgramImpressions = 0;
-            totalProgramSpots = 0;
-
-            foreach (var apiProgram in allocatedProgramSpots)
-            {
-                totalProgramCost += apiProgram.TotalCostWithMargin;
-                totalProgramImpressions += apiProgram.TotalImpressions;
-                totalProgramSpots += apiProgram.TotalSpots;
-            }
-        }
-
-        public PlanBuyingApiRequestDto GetBuyingApiRequestPrograms(int planId,  BuyingInventoryGetRequestParametersDto requestParameters)
+        public PlanBuyingApiRequestDto GetBuyingApiRequestPrograms(int planId, BuyingInventoryGetRequestParametersDto requestParameters)
         {
             var diagnostic = new PlanBuyingJobDiagnostic();
             var buyingParams = new ProgramInventoryOptionalParametersDto
@@ -1911,15 +1791,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return $"Job Id '{jobId}' has been forced to complete.";
         }
 
-        public BuyingProgramsResultDto GetProgramsByJobId(int jobId)
+        public BuyingProgramsResultDto GetPrograms(int planId)
         {
-            var job = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
+            var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
 
-            return _GetPrograms(job, null);
-        }
-
-        private BuyingProgramsResultDto _GetPrograms(PlanBuyingJob job, int? planId)
-        {
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
@@ -1928,44 +1803,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (results == null)
                 return null;
 
-            results.Totals.ImpressionsPercentage = 100;
-
-            _ConvertImpressionsToUserFormat(results);
+            _PlanBuyingProgramEngine.ConvertImpressionsToUserFormat(results);
 
             return results;
         }
 
-        public BuyingProgramsResultDto GetPrograms(int planId)
+        /// <inheritdoc />
+        public PlanBuyingBandsDto GetBuyingBands(int planId)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
 
-            return _GetPrograms(job, planId);
-        }
-
-        private void _ConvertImpressionsToUserFormat(BuyingProgramsResultDto planBuyingResult)
-        {
-            if (planBuyingResult == null)
-                return;
-
-            planBuyingResult.Totals.AvgImpressions /= 1000;
-            planBuyingResult.Totals.Impressions /= 1000;
-
-            foreach (var program in planBuyingResult.Programs)
-            {
-                program.AvgImpressions /= 1000;
-                program.Impressions /= 1000;
-            }
-        }
-
-        public PlanBuyingBandsDto GetBuyingBandsByJobId(int jobId)
-        {
-            var job = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
-
-            return _GetBuyingBands(job, null);
-        }
-
-        private PlanBuyingBandsDto _GetBuyingBands(PlanBuyingJob job, int? planId)
-        {
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
@@ -1974,28 +1821,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (results == null)
                 return null;
 
-            _ConvertBuyingBandImpressionsToUserFormat(results);
+            _PlanBuyingBandCalculationEngine.ConvertImpressionsToUserFormat(results);
 
             return results;
         }
 
-        public PlanBuyingBandsDto GetBuyingBands(int planId)
+        /// <inheritdoc />
+        public PlanBuyingResultMarketsDto GetMarkets(int planId)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
 
-            return _GetBuyingBands(job, planId);
-        }
-
-        /// <inheritdoc />
-        public PlanBuyingResultMarketsDto GetMarketsByJobId(int jobId)
-        {
-            var job = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
-
-            return _GetMarkets(job, null);
-        }
-
-        private PlanBuyingResultMarketsDto _GetMarkets(PlanBuyingJob job, int? planId)
-        {
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
             {
                 return null;
@@ -2008,27 +1843,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return null;
             }
 
-            _ConvertBuyingMarketResultsToUserFormat(results);
+            _PlanBuyingMarketResultsEngine.ConvertImprssionsToUserFormat(results);
 
             return results;
         }
 
         /// <inheritdoc />
-        public PlanBuyingResultMarketsDto GetMarkets(int planId)
+        public PlanBuyingStationResultDto GetStations(int planId)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
-
-            return _GetMarkets(job, planId);
-        }
-
-        public PlanBuyingStationResultDto GetStationsByJobId(int jobId)
-        {
-            var job = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
-            return _GetStations(job, null);
-        }
-
-        private PlanBuyingStationResultDto _GetStations(PlanBuyingJob job, int? planId)
-        {
             if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
                 return null;
 
@@ -2036,45 +1859,31 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (result == null)
                 return null;
 
-            _ConvertBuyingStationResultDtoToUserFormat(result);
+            _PlanBuyingStationCalculationEngine.ConvertImpressionsToUserFormat(result);
 
             return result;
         }
 
-        public PlanBuyingStationResultDto GetStations(int planId)
+        /// <inheritdoc />
+        public PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroups(int planId)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
-            return _GetStations(job, planId);
-        }
 
-        private void _ConvertBuyingStationResultDtoToUserFormat(PlanBuyingStationResultDto results)
-        {
-            results.Totals.Impressions /= 1000;
-
-            foreach (var band in results.Stations)
+            if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
             {
-                band.Impressions /= 1000;
+                return null;
             }
-        }
 
-        private void _ConvertBuyingBandImpressionsToUserFormat(PlanBuyingBandsDto results)
-        {
-            results.Totals.Impressions /= 1000;
+            PlanBuyingResultOwnershipGroupDto results = _PlanBuyingRepository.GetBuyingOwnershipGroupsByJobId(job.Id);
 
-            foreach (var band in results.Bands)
+            if (results == null)
             {
-                band.Impressions /= 1000;
+                return null;
             }
-        }
 
-        private void _ConvertBuyingMarketResultsToUserFormat(PlanBuyingResultMarketsDto results)
-        {
-            results.Totals.Impressions /= 1000;
+            _PlanBuyingOwnershipGroupEngine.ConvertImpressionsToUserFormat(results);
 
-            foreach (var detail in results.MarketDetails)
-            {
-                detail.Impressions /= 1000;
-            }
+            return results;
         }
 
         private class ProgramWithManifestDaypart

@@ -1,0 +1,105 @@
+{
+  "Details": [
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0000,
+      "Cpm": 0.0000,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MaxBand": 0.0016,
+      "MinBand": null,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0000,
+      "Cpm": 0.0000,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MaxBand": 0.0059,
+      "MinBand": 0.0016,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0000,
+      "Cpm": 0.0000,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MaxBand": 0.0102,
+      "MinBand": 0.0059,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0000,
+      "Cpm": 0.0000,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MaxBand": 0.0146,
+      "MinBand": 0.0102,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0000,
+      "Cpm": 0.0000,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MaxBand": 0.0189,
+      "MinBand": 0.0146,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0000,
+      "Cpm": 0.0000,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MaxBand": 0.0233,
+      "MinBand": 0.0189,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0000,
+      "Cpm": 0.0000,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MaxBand": 0.0276,
+      "MinBand": 0.0233,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0000,
+      "Cpm": 0.0000,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MaxBand": 0.0319,
+      "MinBand": 0.0276,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 5.1091954,
+      "Budget": 13969.5000,
+      "Cpm": 18.4867,
+      "Impressions": 755.65,
+      "ImpressionsPercentage": 100.0,
+      "MaxBand": null,
+      "MinBand": 0.0320,
+      "Spots": 30
+    }
+  ],
+  "Totals": {
+    "AvgCpm": 18.4867,
+    "AvgImpressions": 0.0,
+    "Budget": 13969.5000,
+    "Impressions": 755.65,
+    "ImpressionsPercentage": 100.0,
+    "MarketCount": 0,
+    "MarketCoveragePercent": 0.0,
+    "Spots": 30,
+    "StationCount": 0
+  }
+}

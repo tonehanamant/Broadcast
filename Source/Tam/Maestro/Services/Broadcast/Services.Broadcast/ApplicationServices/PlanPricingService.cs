@@ -632,17 +632,20 @@ namespace Services.Broadcast.ApplicationServices
             return _CancelCurrentPricingExecution(job);
         }
 
+        /// <inheritdoc />
         public static bool IsPricingModelRunning(PlanPricingJob job)
         {
             return job != null && (job.Status == BackgroundJobProcessingStatus.Queued || job.Status == BackgroundJobProcessingStatus.Processing);
         }
 
+        /// <inheritdoc />
         public bool IsPricingModelRunningForJob(int jobId)
         {
             var job = _PlanRepository.GetPlanPricingJob(jobId);
             return IsPricingModelRunning(job);
         }
 
+        /// <inheritdoc />
         public bool IsPricingModelRunningForPlan(int planId)
         {
             var job = _GetLatestPricingJob(planId);

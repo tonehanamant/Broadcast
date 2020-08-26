@@ -20,6 +20,8 @@ using Unity;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuying
 {
     [TestFixture]
+    [UseReporter(typeof(DiffReporter))]
+
     public class PlanBuyingServiceTests
     {
         private readonly IPlanBuyingService _PlanBuyingService;
@@ -37,7 +39,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void QueueBuyingJobTest()
         {
@@ -66,7 +67,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void GetCurrentBuyingExecutionTest()
         {
@@ -96,7 +96,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void GetCurrentProcessingBuyingExecution_WithCompletedJobs()
         {
@@ -130,9 +129,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        [Ignore("Test returns null because there are no buying parameters set to the plan")]
         public void GetBuyingRequestTest()
         {
             using (new TransactionScopeWrapper())
@@ -176,7 +173,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void GetLatestProcessingBuyingExecution_WithCanceledJobs()
         {
@@ -210,7 +206,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void GetCurrentQueuedBuyingExecution_WithCompletedJobs()
         {
@@ -271,7 +266,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void GetPlanBuyingRunsTest()
         {
@@ -284,9 +278,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        [Ignore("There is no inventory loaded for this plan in broadcast_integration db")]
         public void RunBuyingJobTwiceOnSamePlanTest()
         {
             using (new TransactionScopeWrapper())
@@ -334,7 +326,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
                 _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job2.Id, CancellationToken.None);
 
-                var result = _PlanBuyingService.GetCurrentBuyingExecution(1849);
+                var result = _PlanBuyingService.GetCurrentBuyingExecution(1197);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanBuyingJob), "Id");
@@ -355,7 +347,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
         public void GetBuyingInventoryTest()
         {
@@ -364,7 +355,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
         public void GetLastestPlanBuyingParametersTest()
         {
@@ -424,7 +414,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
         public void SaveBuyingResultsTest()
         {
@@ -482,9 +471,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        [Ignore("No buying")]
         public void GetBuyingBandsTest()
         {
             using (new TransactionScopeWrapper())
@@ -497,26 +484,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
                 var bands = _PlanBuyingService.GetBuyingBands(planBuyingRequestDto.PlanId.Value);
                 var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(PlanBuyingBandsDto), "Id");
-                jsonResolver.Ignore(typeof(PlanBuyingBandsDto), "JobId");
-                jsonResolver.Ignore(typeof(PlanBuyingBandDetailDto), "Id");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
-                Assert.AreEqual(result.Result.OptimalCpm, bands.Totals.Cpm);
+                JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingBandsDto>();
+                Assert.AreEqual(result.Result.OptimalCpm, bands.Totals.AvgCpm);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(bands, jsonSettings));
             }
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        [Ignore("Test returns null because there are no buying parameters set to the plan")]
         public void GetProgramsTest()
         {
             using (new TransactionScopeWrapper())
@@ -530,23 +505,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 var programs = _PlanBuyingService.GetPrograms(planBuyingRequestDto.PlanId.Value);
                 var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value);
 
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(PlanBuyingProgramProgramDto), "Id");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
+                JsonSerializerSettings jsonSettings = _GetJsonSettings<BuyingProgramsResultDto>();
                 Assert.AreEqual(result.Result.OptimalCpm, programs.Totals.AvgCpm);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(programs, jsonSettings));
             }
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        [Ignore("Test returns null because there are no buying parameters set to the plan")]
         public void GetBuyingResultsMarketsTest()
         {
             using (new TransactionScopeWrapper())
@@ -558,25 +524,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 var markets = _PlanBuyingService.GetMarkets(planBuyingRequestDto.PlanId.Value);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(PlanBuyingBandsDto), "Id");
-                jsonResolver.Ignore(typeof(PlanBuyingBandsDto), "JobId");
-                jsonResolver.Ignore(typeof(PlanBuyingBandDetailDto), "Id");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
+                JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingResultMarketsDto>();
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets, jsonSettings));
             }
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        [Ignore("Test returns null because there are no buying parameters set to the plan")]
         public void GetBuyingResultsMarketsBuyingExecutedTwiceTest()
         {
             using (new TransactionScopeWrapper())
@@ -593,24 +547,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
 
                 var markets = _PlanBuyingService.GetMarkets(planBuyingRequestDto.PlanId.Value);
 
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(PlanBuyingBandsDto), "Id");
-                jsonResolver.Ignore(typeof(PlanBuyingBandsDto), "JobId");
-                jsonResolver.Ignore(typeof(PlanBuyingBandDetailDto), "Id");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
+                JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingResultMarketsDto>();
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets, jsonSettings));
             }
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        [Ignore("Test returns null because there are no buying parameters set to the plan")]
         public void GetBuyingResultsMarketsTest_VerifyMargin()
         {
             using (new TransactionScopeWrapper())
@@ -626,19 +569,40 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
 
                 var markets = _PlanBuyingService.GetMarkets(planBuyingRequestDto.PlanId.Value);
-
-                var jsonResolver = new IgnorableSerializerContractResolver();
-                jsonResolver.Ignore(typeof(PlanBuyingBandsDto), "Id");
-                jsonResolver.Ignore(typeof(PlanBuyingBandsDto), "JobId");
-                jsonResolver.Ignore(typeof(PlanBuyingBandDetailDto), "Id");
-                var jsonSettings = new JsonSerializerSettings()
-                {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    ContractResolver = jsonResolver
-                };
-
+                JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingResultMarketsDto>();
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets, jsonSettings));
             }
+        }
+
+        [Test]
+        [Category("long_running")]
+        public void GetBuyingResultsOwnershipGroupsTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var planBuyingRequestDto = _GetBuyingRequestDto();
+                var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
+
+                _PlanBuyingService.RunBuyingJob(planBuyingRequestDto, job.Id, CancellationToken.None);
+
+                var markets = _PlanBuyingService.GetBuyingOwnershipGroups(planBuyingRequestDto.PlanId.Value);
+                JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingResultOwnershipGroupDto>();
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(markets, jsonSettings));
+            }
+        }
+
+        private static JsonSerializerSettings _GetJsonSettings<T>()
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(T), "Id");
+            jsonResolver.Ignore(typeof(T), "BuyingJobId");
+            jsonResolver.Ignore(typeof(T), "PlanVersionId");
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+            return jsonSettings;
         }
 
         [Test]
@@ -701,7 +665,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        [Ignore("Test returns null because there are no buying parameters set to the plan")]
         public void MarketCoveragesAreSentDividedBy100ToBuyingApiTest()
         {
             using (new TransactionScopeWrapper())
@@ -766,7 +729,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
-        [Ignore("There is no inventory loaded for this plan in broadcast_integration db")]
         public void WeeklyValuesAreUpdatedForBuyingRequest()
         {
             using (new TransactionScopeWrapper())

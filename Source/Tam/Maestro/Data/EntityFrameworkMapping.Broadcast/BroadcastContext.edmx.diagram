@@ -466,20 +466,17 @@
         <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_summary_markets_inventory_proprietary_summary" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_api_result_spot_frequencies" Width="1.5" PointX="27.5" PointY="51.375" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_api_result_spots" Width="1.5" PointX="24.25" PointY="62.625" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_api_results" Width="1.5" PointX="17" PointY="98.75" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_api_results" Width="1.5" PointX="16.75" PointY="95" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_band_details" Width="1.5" PointX="19.25" PointY="94.875" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_bands" Width="1.5" PointX="17" PointY="95.125" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_job" Width="1.5" PointX="14.75" PointY="91.625" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_job_inventory_source_estimates" Width="1.5" PointX="24" PointY="58.25" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_market_details" Width="1.5" PointX="19.25" PointY="109.625" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_markets" Width="1.5" PointX="17" PointY="109.75" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_market_details" Width="1.5" PointX="2.625" PointY="93.25" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_parameters" Width="1.5" PointX="23" PointY="51.5" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_parameters_inventory_source_percentages" Width="1.5" PointX="25.25" PointY="51.25" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_parameters_inventory_source_type_percentages" Width="1.5" PointX="25.25" PointY="55.375" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_result_spots" Width="1.5" PointX="19.25" PointY="105.375" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_results" Width="1.5" PointX="17" PointY="105.375" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_station_details" Width="1.5" PointX="19.25" PointY="101.625" />
-        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_stations" Width="1.5" PointX="17" PointY="101.75" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_result_spots" Width="1.5" PointX="7.625" PointY="92.75" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_results" Width="1.5" PointX="5.375" PointY="92.75" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_station_details" Width="1.5" PointX="21.5" PointY="95" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_api_result_spots_daypart_defaults" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_job_inventory_source_estimates_inventory_sources" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_parameters_inventory_source_percentages_inventory_sources" />
@@ -491,20 +488,14 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_api_result_spots_plan_version_buying_api_results" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_api_result_spots_station_inventory_manifest" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_api_results_plan_version_buying_job" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_details_plan_version_buying_bands" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_bands_plan_version_buying_job" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_job_inventory_source_estimates_plan_version_buying_job" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_job_plan_version_buying_stations" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_job_plan_versions" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_markets_buying_job" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_parameters_plan_version_buying_job" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_results_plan_version_buying_job" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_market_details_buying_market" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_parameters_inventory_source_percentages_plan_version_buying_parameters" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_parameters_inventory_source_type_percentages_plan_version_buying_parameters" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_parameters_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_result_spots_plan_version_buying_results" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_stations_plan_version_buying_station_details" />
         <EntityTypeShape EntityType="BroadcastModel.program_name_mapping_keywords" Width="1.5" PointX="33.25" PointY="50.875" />
         <AssociationConnector Association="BroadcastModel.FK_program_name_mapping_keywords_genres" />
         <AssociationConnector Association="BroadcastModel.FK_program_name_mapping_keywords_show_types" />
@@ -514,6 +505,11 @@
         <EntityTypeShape EntityType="BroadcastModel.show_type_mappings" Width="1.5" PointX="26.25" PointY="67.375" />
         <AssociationConnector Association="BroadcastModel.FK_show_type_mappings_show_types_maestro" />
         <AssociationConnector Association="BroadcastModel.FK_show_type_mappings_show_types_mapped" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_band_details_plan_version_buying_results" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_market_details_plan_version_buying_results" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_station_details_plan_version_buying_results" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_ownership_group_details" Width="1.5" PointX="10" PointY="93" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_ownership_group_details_plan_version_buying_results" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

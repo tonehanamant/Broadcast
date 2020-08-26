@@ -282,8 +282,10 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPlanBuyingInventoryQuarterCalculatorEngine, PlanBuyingInventoryQuarterCalculatorEngine>();
             unityContainer.RegisterType<IPlanBuyingBandCalculationEngine, PlanBuyingBandCalculationEngine>();
             unityContainer.RegisterType<IPlanBuyingUnitCapImpressionsCalculationEngine, PlanBuyingUnitCapImpressionsCalculationEngine>();
-            unityContainer.RegisterType<IPlanBuyingStationCalculationEngine, PlanBuyingStationCalculationEngine>();
-            unityContainer.RegisterType<IPlanBuyingMarketResultsEngine, PlanBuyingMarketResultsEngine>();
+            unityContainer.RegisterType<IPlanBuyingStationEngine, PlanBuyingStationEngine>();
+            unityContainer.RegisterType<IPlanBuyingProgramEngine, PlanBuyingProgramEngine>();
+            unityContainer.RegisterType<IPlanBuyingOwnershipGroupEngine, PlanBuyingOwnershipGroupEngine>();
+            unityContainer.RegisterType<IPlanBuyingMarketResultsEngine, PlanBuyingMarketEngine>();
 
             //launch darkly
             unityContainer.RegisterType<ILaunchDarklyClient, LaunchDarklyClient>();

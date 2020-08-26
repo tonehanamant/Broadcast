@@ -24,9 +24,15 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
             PlanBuyingParametersDto parametersDto,
             PlanDto plan,
             List<MarketCoverage> marketCoverages);
+
+        /// <summary>
+        /// Converts the buying market impressions to user format.
+        /// </summary>
+        /// <param name="results">The buying market results.</param>
+        void ConvertImprssionsToUserFormat(PlanBuyingResultMarketsDto results);
     }
 
-    public class PlanBuyingMarketResultsEngine : IPlanBuyingMarketResultsEngine
+    public class PlanBuyingMarketEngine : IPlanBuyingMarketResultsEngine
     {
         /// <inheritdoc/>
         public PlanBuyingResultMarketsDto Calculate(List<PlanBuyingInventoryProgram> inventory,
@@ -82,20 +88,13 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
 
             // calculate our totals
             var totalImpressions = details.Sum(d => d.Impressions);
-            var totalBudget = details.Sum(d => d.Budget);
-            var totals = new PlanBuyingResultMarketsTotalsDto
+            var totals = new PlanBuyingProgramTotalsDto
             {
-                Markets = relevantMarketCodes.Count,
-                CoveragePercent = details.Sum(d => d.MarketCoveragePercent),
-                Stations = details.Sum(d => d.Stations),
-                Spots = details.Sum(d => d.Spots),
-                Impressions = totalImpressions,
-                Cpm = ProposalMath.CalculateCpm(totalBudget, totalImpressions),
-                Budget = totalBudget
+                MarketCoveragePercent = details.Sum(d => d.MarketCoveragePercent),
             };
 
             // determine percentage of totals
-            details.ForEach(d => d.ImpressionsPercentage = (d.Impressions / totals.Impressions) * 100);
+            details.ForEach(d => d.ImpressionsPercentage = (d.Impressions / totalImpressions) * 100);
 
             // enforce the ordering here for output readability
             details = details.OrderBy(s => s.Rank).ToList();
@@ -109,6 +108,17 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
             };
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        public void ConvertImprssionsToUserFormat(PlanBuyingResultMarketsDto results)
+        {
+            results.Totals.Impressions /= 1000;
+
+            foreach (var detail in results.MarketDetails)
+            {
+                detail.Impressions /= 1000;
+            }
         }
     }
 }

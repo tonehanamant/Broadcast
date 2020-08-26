@@ -15,7 +15,6 @@ namespace EntityFrameworkMapping.Broadcast
     public partial class plan_version_buying_station_details
     {
         public int id { get; set; }
-        public int plan_version_buying_station_id { get; set; }
         public string station { get; set; }
         public string market { get; set; }
         public int spots { get; set; }
@@ -23,7 +22,8 @@ namespace EntityFrameworkMapping.Broadcast
         public decimal cpm { get; set; }
         public decimal budget { get; set; }
         public double impressions_percentage { get; set; }
+        public int plan_version_buying_result_id { get; set; }
     
-        public virtual plan_version_buying_stations plan_version_buying_stations { get; set; }
+        public virtual plan_version_buying_results plan_version_buying_results { get; set; }
     }
 }

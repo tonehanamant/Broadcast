@@ -188,6 +188,19 @@ namespace Services.Broadcast.Repositories
         /// <param name="versionId">The version identifier.</param>
         /// <param name="oldPlanVersionId">The old plan version identifier.</param>
         void UpdatePlanBuyingVersionId(int versionId, int oldPlanVersionId);
+
+        /// <summary>
+        /// Saves the plan buying ownership group results.
+        /// </summary>
+        /// <param name="aggregateOwnershipGroupResultsTaskResult">The aggregate ownership group results task result.</param>
+        void SavePlanBuyingOwnershipGroupResults(PlanBuyingResultOwnershipGroupDto aggregateOwnershipGroupResultsTaskResult);
+
+        /// <summary>
+        /// Gets the buying ownership groups by job identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>PlanBuyingResultOwnershipGroupDto object</returns>
+        PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroupsByJobId(int id);
     }
 
     public class PlanBuyingRepository : BroadcastRepositoryBase, IPlanBuyingRepository
@@ -609,7 +622,7 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var result = context.plan_version_buying_bands
+                var result = context.plan_version_buying_results
                     .Include(x => x.plan_version_buying_band_details)
                     .Where(x => x.plan_version_buying_job_id == jobId)
                     .OrderByDescending(p => p.id)
@@ -620,16 +633,15 @@ namespace Services.Broadcast.Repositories
 
                 return new PlanBuyingBandsDto
                 {
-                    Totals = new PlanBuyingBandTotalsDto
+                    Totals = new PlanBuyingProgramTotalsDto
                     {
-                        Cpm = result.total_cpm,
+                        AvgCpm = result.total_avg_cpm,
                         Budget = result.total_budget,
                         Impressions = result.total_impressions,
                         Spots = result.total_spots
                     },
-                    Bands = result.plan_version_buying_band_details.Select(r => new PlanBuyingBandDetailDto
+                    Details = result.plan_version_buying_band_details.Select(r => new PlanBuyingBandDetailDto
                     {
-                        Id = r.id,
                         MinBand = r.min_band,
                         MaxBand = r.max_band,
                         Spots = r.spots,
@@ -644,18 +656,15 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public void SavePlanBuyingBands(PlanBuyingBandsDto planBuyingBandDto)
+        public void SavePlanBuyingBands(PlanBuyingBandsDto dto)
         {
             _InReadUncommitedTransaction(context =>
             {
-                context.plan_version_buying_bands.Add(new plan_version_buying_bands
-                {
-                    plan_version_buying_job_id = planBuyingBandDto.JobId,
-                    total_budget = planBuyingBandDto.Totals.Budget,
-                    total_cpm = planBuyingBandDto.Totals.Cpm,
-                    total_impressions = planBuyingBandDto.Totals.Impressions,
-                    total_spots = planBuyingBandDto.Totals.Spots,
-                    plan_version_buying_band_details = planBuyingBandDto.Bands.Select(x =>
+                var buyingResults = context.plan_version_buying_results
+                    .Where(x => x.plan_version_buying_job_id == dto.BuyingJobId)
+                    .Single();
+
+                buyingResults.plan_version_buying_band_details = dto.Details.Select(x =>
                         new plan_version_buying_band_details
                         {
                             cpm = x.Cpm,
@@ -666,27 +675,22 @@ namespace Services.Broadcast.Repositories
                             impressions = x.Impressions,
                             impressions_percentage = x.ImpressionsPercentage,
                             available_inventory_percentage = x.AvailableInventoryPercent
-                        }).ToList()
-                });
+                        }).ToList();
 
                 context.SaveChanges();
             });
         }
 
         /// <inheritdoc/>
-        public void SavePlanBuyingStations(PlanBuyingStationResultDto planBuyingStationResultDto)
+        public void SavePlanBuyingStations(PlanBuyingStationResultDto dto)
         {
             _InReadUncommitedTransaction(context =>
             {
-                context.plan_version_buying_stations.Add(new plan_version_buying_stations
-                {
-                    plan_version_buying_job_id = planBuyingStationResultDto.JobId,
-                    total_budget = planBuyingStationResultDto.Totals.Budget,
-                    total_cpm = planBuyingStationResultDto.Totals.Cpm,
-                    total_impressions = planBuyingStationResultDto.Totals.Impressions,
-                    total_spots = planBuyingStationResultDto.Totals.Spots,
-                    total_stations = planBuyingStationResultDto.Totals.Station,
-                    plan_version_buying_station_details = planBuyingStationResultDto.Stations
+                var buyingResults = context.plan_version_buying_results
+                    .Where(x => x.plan_version_buying_job_id == dto.BuyingJobId)
+                    .Single();
+
+                buyingResults.plan_version_buying_station_details = dto.Details
                             .Select(stationDto => new plan_version_buying_station_details
                             {
                                 cpm = stationDto.Cpm,
@@ -696,8 +700,7 @@ namespace Services.Broadcast.Repositories
                                 impressions_percentage = stationDto.ImpressionsPercentage,
                                 market = stationDto.Market,
                                 station = stationDto.Station,
-                            }).ToList()
-                });
+                            }).ToList();
 
                 context.SaveChanges();
             });
@@ -708,7 +711,7 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var entity = context.plan_version_buying_markets
+                var entity = context.plan_version_buying_results
                     .Include(x => x.plan_version_buying_market_details)
                     .Where(x => x.plan_version_buying_job_id == jobId)
                     .OrderByDescending(p => p.id)
@@ -719,14 +722,16 @@ namespace Services.Broadcast.Repositories
 
                 var dto = new PlanBuyingResultMarketsDto
                 {
-                    Totals = new PlanBuyingResultMarketsTotalsDto
+                    BuyingJobId = entity.plan_version_buying_job_id,
+                    PlanVersionId = entity.plan_version_buying_job.plan_version_id.Value,
+                    Totals = new PlanBuyingProgramTotalsDto
                     {
-                        Markets = entity.total_markets,
-                        CoveragePercent = entity.total_coverage_percent,
-                        Stations = entity.total_stations,
+                        MarketCount = entity.total_market_count,
+                        MarketCoveragePercent = entity.total_market_coverage_percent,
+                        StationCount = entity.total_station_count,
                         Spots = entity.total_spots,
                         Impressions = entity.total_impressions,
-                        Cpm = Convert.ToDecimal(entity.total_cpm),
+                        AvgCpm = Convert.ToDecimal(entity.total_avg_cpm),
                         Budget = Convert.ToDecimal(entity.total_budget)
                     },
                     MarketDetails = entity.plan_version_buying_market_details.Select(s => new PlanBuyingResultMarketDetailsDto
@@ -751,29 +756,25 @@ namespace Services.Broadcast.Repositories
         {
             _InReadUncommitedTransaction(context =>
             {
-                context.plan_version_buying_markets.Add(new plan_version_buying_markets
+                var buyingResults = context.plan_version_buying_results
+                    .Where(x => x.plan_version_buying_job_id == dto.BuyingJobId)
+                    .Single();
+
+                //we only need to populate the coverage. the other totals are saved on the programs call
+                buyingResults.total_market_coverage_percent = dto.Totals.MarketCoveragePercent;
+
+                buyingResults.plan_version_buying_market_details = dto.MarketDetails.Select(d => new plan_version_buying_market_details
                 {
-                    plan_version_buying_job_id = dto.BuyingJobId,
-                    total_markets = dto.Totals.Markets,
-                    total_coverage_percent = dto.Totals.CoveragePercent,
-                    total_stations = dto.Totals.Stations,
-                    total_spots = dto.Totals.Spots,
-                    total_impressions = dto.Totals.Impressions,
-                    total_cpm = Convert.ToDouble(dto.Totals.Cpm),
-                    total_budget = Convert.ToDouble(dto.Totals.Budget),
-                    plan_version_buying_market_details = dto.MarketDetails.Select(d => new plan_version_buying_market_details
-                    {
-                        market_coverage_percent = d.MarketCoveragePercent,
-                        stations = d.Stations,
-                        spots = d.Spots,
-                        impressions = d.Impressions,
-                        cpm = Convert.ToDouble(d.Cpm),
-                        budget = Convert.ToDouble(d.Budget),
-                        impressions_percentage = d.ImpressionsPercentage,
-                        share_of_voice_goal_percentage = d.ShareOfVoiceGoalPercentage,
-                        rank = d.Rank
-                    }).ToList()
-                });
+                    market_coverage_percent = d.MarketCoveragePercent,
+                    stations = d.Stations,
+                    spots = d.Spots,
+                    impressions = d.Impressions,
+                    cpm = Convert.ToDouble(d.Cpm),
+                    budget = Convert.ToDouble(d.Budget),
+                    impressions_percentage = d.ImpressionsPercentage,
+                    share_of_voice_goal_percentage = d.ShareOfVoiceGoalPercentage,
+                    rank = d.Rank
+                }).ToList();                
 
                 context.SaveChanges();
             });
@@ -810,7 +811,8 @@ namespace Services.Broadcast.Repositories
                     total_impressions = buyingResult.Totals.Impressions,
                     plan_version_buying_job_id = buyingResult.JobId,
                     goal_fulfilled_by_proprietary = buyingResult.GoalFulfilledByProprietary,
-                    total_spots = buyingResult.Totals.Spots
+                    total_spots = buyingResult.Totals.Spots,
+                    total_market_coverage_percent = buyingResult.Totals.MarketCoveragePercent
                 };
 
                 context.plan_version_buying_results.Add(planBuyingResult);
@@ -872,9 +874,8 @@ namespace Services.Broadcast.Repositories
                         Spots = result.total_spots,
                         Impressions = result.total_impressions
                     },
-                    Programs = result.plan_version_buying_result_spots.Select(r => new PlanBuyingProgramProgramDto
+                    Details = result.plan_version_buying_result_spots.Select(r => new PlanBuyingProgramProgramDto
                     {
-                        Id = r.id,
                         ProgramName = r.program_name,
                         Genre = r.genre,
                         AvgCpm = r.avg_cpm,
@@ -922,7 +923,7 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var result = context.plan_version_buying_stations
+                var result = context.plan_version_buying_results
                     .Include(p => p.plan_version_buying_station_details)
                     .Where(x => x.plan_version_buying_job_id == jobId)
                     .OrderByDescending(p => p.id)
@@ -934,23 +935,21 @@ namespace Services.Broadcast.Repositories
                 return new PlanBuyingStationResultDto
                 {
                     Id = result.id,
-                    JobId = result.plan_version_buying_job_id,
+                    BuyingJobId = result.plan_version_buying_job_id,
                     PlanVersionId = result.plan_version_buying_job.plan_version_id,
-                    Totals = new PlanBuyingStationTotalsDto
+                    Totals = new PlanBuyingProgramTotalsDto
                     {
                         Budget = result.total_budget,
-                        Cpm = result.total_cpm,
+                        AvgCpm = result.total_avg_cpm,
                         Impressions = result.total_impressions,
-                        ImpressionsPercentage = 100,
                         Spots = result.total_spots,
-                        Station = result.total_stations
+                        StationCount = result.total_station_count
                     },
-                    Stations = result.plan_version_buying_station_details.Select(d => new PlanBuyingStationDto
+                    Details = result.plan_version_buying_station_details.Select(d => new PlanBuyingStationDto
                     {
                         Budget = d.budget,
                         Cpm = d.cpm,
                         Impressions = d.impressions,
-                        Id = d.id,
                         ImpressionsPercentage = d.impressions_percentage,
                         Market = d.market,
                         Spots = d.spots,
@@ -1111,6 +1110,68 @@ namespace Services.Broadcast.Repositories
                     parameter.plan_version_id = versionId;
                     context.SaveChanges();
                 }
+            });
+        }
+
+        /// <inheritdoc/>
+        public void SavePlanBuyingOwnershipGroupResults(PlanBuyingResultOwnershipGroupDto dto)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var buyingResults = context.plan_version_buying_results
+                    .Where(x => x.plan_version_buying_job_id == dto.BuyingJobId)
+                    .Single();
+                buyingResults.plan_version_buying_ownership_group_details = dto.Details.Select(d => new plan_version_buying_ownership_group_details
+                    {
+                        stations = d.Stations,
+                        spots = d.Spots,
+                        impressions = d.Impressions,
+                        cpm = d.Cpm,
+                        budget = d.Budget,
+                        impressions_percentage = d.ImpressionsPercentage,
+                        ownership_group_name = d.OwnershipGroupName
+                    }).ToList();
+
+                context.SaveChanges();
+            });
+        }
+
+        /// <inheritdoc/>
+        public PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroupsByJobId(int jobId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var result = context.plan_version_buying_results
+                    .Include(p => p.plan_version_buying_ownership_group_details)
+                    .Where(x => x.plan_version_buying_job_id == jobId)
+                    .OrderByDescending(p => p.id)
+                    .FirstOrDefault();
+
+                if (result == null)
+                    return null;
+
+                return new PlanBuyingResultOwnershipGroupDto
+                {
+                    BuyingJobId = result.plan_version_buying_job_id,
+                    PlanVersionId = result.plan_version_buying_job.plan_version_id.Value,
+                    Totals = new PlanBuyingProgramTotalsDto
+                    {
+                        Budget = result.total_budget,
+                        AvgCpm = result.total_avg_cpm,
+                        Impressions = result.total_impressions
+                    },
+                    Details = result.plan_version_buying_ownership_group_details.Select(d => new PlanBuyingResultOwnershipGroupDetailsDto
+                    {
+                        Budget = d.budget,
+                        Cpm = d.cpm ,
+                        Impressions = d.impressions,
+                        ImpressionsPercentage = d.impressions_percentage,
+                        Markets = d.markets,
+                        Spots = d.spots,
+                        Stations = d.stations,
+                        OwnershipGroupName = d.ownership_group_name
+                    }).OrderByDescending(p => p.ImpressionsPercentage).ThenByDescending(p=>p.Budget).ToList()
+                };
             });
         }
     }

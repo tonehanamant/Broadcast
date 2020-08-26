@@ -12,18 +12,18 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class plan_version_buying_band_details
+    public partial class plan_version_buying_ownership_group_details
     {
         public int id { get; set; }
-        public Nullable<decimal> min_band { get; set; }
-        public Nullable<decimal> max_band { get; set; }
+        public int plan_version_buying_result_id { get; set; }
+        public string ownership_group_name { get; set; }
+        public int markets { get; set; }
+        public int stations { get; set; }
         public int spots { get; set; }
         public double impressions { get; set; }
         public decimal cpm { get; set; }
         public decimal budget { get; set; }
         public double impressions_percentage { get; set; }
-        public double available_inventory_percentage { get; set; }
-        public int plan_version_buying_result_id { get; set; }
     
         public virtual plan_version_buying_results plan_version_buying_results { get; set; }
     }

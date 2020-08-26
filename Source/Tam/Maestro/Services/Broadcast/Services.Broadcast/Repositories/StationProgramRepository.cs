@@ -399,7 +399,9 @@ namespace Services.Broadcast.Repositories
                             Code = x.station.station_code,
                             CallLetters = x.station.station_call_letters,
                             LegacyCallLetters = x.station.legacy_call_letters,
-                            MarketCode = x.station.market_code
+                            MarketCode = x.station.market_code,
+                            OwnershipGroupName = x.station.owner_name,
+                            SalesGroupName = x.station.sales_group_name
                         },
                         InventorySource = new InventorySource
                         {

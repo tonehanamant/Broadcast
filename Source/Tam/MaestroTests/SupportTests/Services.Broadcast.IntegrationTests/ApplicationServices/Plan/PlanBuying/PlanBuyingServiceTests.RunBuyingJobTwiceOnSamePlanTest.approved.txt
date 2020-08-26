@@ -1,0 +1,17 @@
+{
+  "IsBuyingModelRunning": false,
+  "Job": {
+    "ErrorMessage": null,
+    "PlanVersionId": 47,
+    "Queued": "2019-11-04T00:00:00",
+    "Status": 3
+  },
+  "Result": {
+    "CpmPercentage": 296,
+    "GoalFulfilledByProprietary": false,
+    "HasResults": true,
+    "Notes": "",
+    "OptimalCpm": 14.7893,
+    "PlanVersionId": 47
+  }
+}

@@ -8,20 +8,33 @@ using System.Linq;
 
 namespace Services.Broadcast.BusinessEngines
 {
-    public interface IPlanBuyingStationCalculationEngine
+    public interface IPlanBuyingStationEngine
     {
+        /// <summary>
+        /// Aggregate data by station
+        /// </summary>
+        /// <param name="inventories">List of PlanBuyingInventoryProgram objects</param>
+        /// <param name="apiResponse">PlanBuyingAllocationResult object</param>
+        /// <param name="parametersDto">PlanBuyingParametersDto object</param>
+        /// <returns>PlanBuyingStationResultDto object</returns>
         PlanBuyingStationResultDto Calculate(
             List<PlanBuyingInventoryProgram> inventories,
             PlanBuyingAllocationResult apiResponse,
             PlanBuyingParametersDto parametersDto);
+
+        /// <summary>
+        /// Converts the buying station impressions to user format.
+        /// </summary>
+        /// <param name="results">The buying ownership group results.</param>
+        void ConvertImpressionsToUserFormat(PlanBuyingStationResultDto results);
     }
 
-    public class PlanBuyingStationCalculationEngine : IPlanBuyingStationCalculationEngine
+    public class PlanBuyingStationEngine : IPlanBuyingStationEngine
     {
         private readonly IMarketRepository _MarketRepository;
         private readonly IStationRepository _StationRepository;
 
-        public PlanBuyingStationCalculationEngine(IDataRepositoryFactory broadcastDataRepositoryFactory)
+        public PlanBuyingStationEngine(IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
             _MarketRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>();
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
@@ -32,7 +45,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             var result = new PlanBuyingStationResultDto()
             {
-                JobId = parametersDto.JobId,
+                BuyingJobId = parametersDto.JobId,
                 PlanVersionId = parametersDto.PlanVersionId,
             };
 
@@ -40,9 +53,7 @@ namespace Services.Broadcast.BusinessEngines
             var stationMonthDetails = _StationRepository.GetLatestStationMonthDetailsForStations(allocatedStationIds);
             var inventoriesByStation = inventories.Where(i => allocatedStationIds.Contains(i.Station.Id)).GroupBy(i => i.Station.Id);
 
-            int totalSpots = 0;
             double totalImpressions = 0;
-            decimal totalBudget = 0;
 
             foreach (var inventoryByStation in inventoriesByStation)
             {
@@ -72,21 +83,12 @@ namespace Services.Broadcast.BusinessEngines
                     Spots = totalSpotsPerStation
                 };
 
-                totalSpots += totalSpotsPerStation;
                 totalImpressions += totalImpressionsPerStation;
-                totalBudget += totalBudgetPerStation;
 
-                result.Stations.Add(buyingStationDto);
+                result.Details.Add(buyingStationDto);
             }
 
-            result.Totals.Station = result.Stations.Count;
-            result.Totals.Spots = totalSpots;
-            result.Totals.Impressions = totalImpressions;
-            result.Totals.ImpressionsPercentage = 100;
-            result.Totals.Cpm = ProposalMath.CalculateCpm(totalBudget, totalImpressions);
-            result.Totals.Budget = totalBudget;
-
-            result.Stations.ForEach(s => s.ImpressionsPercentage = ProposalMath.CalculateImpressionsPercentage(s.Impressions, totalImpressions));
+            result.Details.ForEach(s => s.ImpressionsPercentage = ProposalMath.CalculateImpressionsPercentage(s.Impressions, totalImpressions));
 
             return result;
         }
@@ -146,6 +148,16 @@ namespace Services.Broadcast.BusinessEngines
             }
 
             return result;
+        }
+
+        public void ConvertImpressionsToUserFormat(PlanBuyingStationResultDto results)
+        {
+            results.Totals.Impressions /= 1000;
+
+            foreach (var detail in results.Details)
+            {
+                detail.Impressions /= 1000;
+            }
         }
     }
 }

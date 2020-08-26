@@ -35,12 +35,13 @@ namespace Services.Broadcast.Entities.Plan.Buying
     public class PlanBuyingProgramTotalsDto
     {
         public int MarketCount { get; set; }
+        public double MarketCoveragePercent { get; set; }
         public int StationCount { get; set; }
         public decimal AvgCpm { get; set; }
         public double AvgImpressions { get; set; }
         public double Impressions { get; set; }
         public decimal Budget { get; set; }
         public int Spots { get; set; }
-        public decimal ImpressionsPercentage { get; set; }
+        public decimal ImpressionsPercentage { get; set; } = 100;
     }
 }

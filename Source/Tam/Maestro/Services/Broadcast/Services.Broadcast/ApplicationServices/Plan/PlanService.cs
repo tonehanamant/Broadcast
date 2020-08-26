@@ -600,7 +600,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             PlanDto plan = _PlanRepository.GetPlan(planId, versionId);
 
             plan.IsPricingModelRunning = _PlanPricingService.IsPricingModelRunningForPlan(planId);
-            plan.IsBuyingModelRunning = _PlanBuyingService.IsBuyingModelRunningForPlan(planId);
+            plan.IsBuyingModelRunning = _PlanBuyingService.IsBuyingModelRunning(planId);
 
             // Because in DB we store weekly breakdown split 'by week by ad length by daypart'
             // we need to group them back based on the plan delivery type

@@ -5,7 +5,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
     public class BuyingProgramsResultDto
     {
         public BuyingProgramsResultTotalsDto Totals { get; set; } = new BuyingProgramsResultTotalsDto();
-        public List<PlanBuyingProgramProgramDto> Programs { get; set; } = new List<PlanBuyingProgramProgramDto>();
+        public List<PlanBuyingProgramProgramDto> Details { get; set; } = new List<PlanBuyingProgramProgramDto>();
     }
 
     public class BuyingProgramsResultTotalsDto
@@ -22,7 +22,6 @@ namespace Services.Broadcast.Entities.Plan.Buying
 
     public class PlanBuyingProgramProgramDto
     {
-        public int Id { get; set; }
         public string ProgramName { get; set; }
         public string Genre { get; set; }
         public int MarketCount { get; set; }

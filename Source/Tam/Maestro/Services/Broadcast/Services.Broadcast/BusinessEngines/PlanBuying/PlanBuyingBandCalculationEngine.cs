@@ -8,10 +8,23 @@ namespace Services.Broadcast.BusinessEngines
 {
     public interface IPlanBuyingBandCalculationEngine
     {
-        PlanBuyingBandsDto CalculateBuyingBands(
+        /// <summary>
+        /// Calculates the specified inventory.
+        /// </summary>
+        /// <param name="inventory">The inventory.</param>
+        /// <param name="allocationResult">The allocation result.</param>
+        /// <param name="parametersDto">The parameters dto.</param>
+        /// <returns>PlanBuyingBandsDto object</returns>
+        PlanBuyingBandsDto Calculate(
             List<PlanBuyingInventoryProgram> inventory,
             PlanBuyingAllocationResult allocationResult,
             PlanBuyingParametersDto parametersDto);
+
+        /// <summary>
+        /// Converts the impressions to user format.
+        /// </summary>
+        /// <param name="results">The results.</param>
+        void ConvertImpressionsToUserFormat(PlanBuyingBandsDto results);
     }
 
     public class PlanBuyingBandCalculationEngine : IPlanBuyingBandCalculationEngine
@@ -24,24 +37,23 @@ namespace Services.Broadcast.BusinessEngines
             _PlanBuyingUnitCapImpressionsCalculationEngine = planBuyingUnitCapImpressionsCalculationEngine;
         }
 
-        public PlanBuyingBandsDto CalculateBuyingBands(
+        /// <inheritdoc/>
+        public PlanBuyingBandsDto Calculate(
             List<PlanBuyingInventoryProgram> inventory,
             PlanBuyingAllocationResult allocationResult,
             PlanBuyingParametersDto parametersDto)
         {
             var buyingBandDto = new PlanBuyingBandsDto
             {
-                Bands = _CreateBandsForBuying(parametersDto.AdjustedCPM),
+                Details = _CreateBandsForBuying(parametersDto.AdjustedCPM),
                 PlanVersionId = allocationResult.PlanVersionId,
-                JobId = allocationResult.JobId
+                BuyingJobId = allocationResult.JobId
             };
 
             var allocatedInventory = _GetAllocatedInventory(allocationResult);
-            var totalAllocatedCost = allocatedInventory.Sum(x => x.TotalCost);
             var totalAllocatedImpressions = allocatedInventory.Sum(x => x.TotalImpressions);
-            var totalAllocatedSpots = allocatedInventory.Sum(x => x.TotalSpots);
 
-            foreach (var band in buyingBandDto.Bands)
+            foreach (var band in buyingBandDto.Details)
             {
                 var minBand = 0m;
 
@@ -67,59 +79,7 @@ namespace Services.Broadcast.BusinessEngines
                     0 : (band.Impressions / totalInventoryImpressions)  * 100;
             }
 
-            buyingBandDto.Totals = new PlanBuyingBandTotalsDto
-            {
-                Spots = totalAllocatedSpots,
-                Impressions = totalAllocatedImpressions,
-                Budget = totalAllocatedCost,
-                Cpm = ProposalMath.CalculateCpm(totalAllocatedCost, totalAllocatedImpressions),
-            };
-
             return buyingBandDto;
-        }
-
-        private List<PlanPricingBandDetailDto> _CreateBands(decimal pricingCpm)
-        {
-            const decimal minBandMultiplier = 0.1m;
-            const decimal maxBandMultiplier = 2;
-            // The number of bands between the first and last band that are fixed.
-            // Amounts to 9 bands.
-            const decimal numberOfIntermediateBands = 7;
-
-            var firstBand = pricingCpm * minBandMultiplier;
-            var lastBand = pricingCpm * maxBandMultiplier;
-            var bandDifference = lastBand - firstBand;
-            var bandIncrement = bandDifference / numberOfIntermediateBands;
-
-            var bands = new List<PlanPricingBandDetailDto>()
-            {
-                new PlanPricingBandDetailDto
-                {
-                    MaxBand = firstBand
-                }
-            };
-
-            decimal? previousBand = firstBand;
-
-            for (var index = 0; index < numberOfIntermediateBands; index++)
-            {
-                var band = new PlanPricingBandDetailDto
-                {
-                    MinBand = previousBand,
-                    MaxBand = previousBand + bandIncrement
-                };
-
-                bands.Add(band);
-
-                previousBand = band.MaxBand;
-            }
-
-            bands.Add(new PlanPricingBandDetailDto
-            {
-                MinBand = lastBand
-            });
-
-            return bands;
         }
 
         private List<PlanBuyingBandDetailDto> _CreateBandsForBuying(decimal buyingCpm)
@@ -185,6 +145,17 @@ namespace Services.Broadcast.BusinessEngines
             }
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        public void ConvertImpressionsToUserFormat(PlanBuyingBandsDto results)
+        {
+            results.Totals.Impressions /= 1000;
+
+            foreach (var detail in results.Details)
+            {
+                detail.Impressions /= 1000;
+            }
         }
     }
 }

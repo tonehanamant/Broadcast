@@ -17,6 +17,10 @@ namespace EntityFrameworkMapping.Broadcast
         public plan_version_buying_results()
         {
             this.plan_version_buying_result_spots = new HashSet<plan_version_buying_result_spots>();
+            this.plan_version_buying_band_details = new HashSet<plan_version_buying_band_details>();
+            this.plan_version_buying_market_details = new HashSet<plan_version_buying_market_details>();
+            this.plan_version_buying_station_details = new HashSet<plan_version_buying_station_details>();
+            this.plan_version_buying_ownership_group_details = new HashSet<plan_version_buying_ownership_group_details>();
         }
     
         public int id { get; set; }
@@ -30,8 +34,13 @@ namespace EntityFrameworkMapping.Broadcast
         public decimal total_budget { get; set; }
         public Nullable<int> plan_version_buying_job_id { get; set; }
         public int total_spots { get; set; }
+        public double total_market_coverage_percent { get; set; }
     
         public virtual plan_version_buying_job plan_version_buying_job { get; set; }
         public virtual ICollection<plan_version_buying_result_spots> plan_version_buying_result_spots { get; set; }
+        public virtual ICollection<plan_version_buying_band_details> plan_version_buying_band_details { get; set; }
+        public virtual ICollection<plan_version_buying_market_details> plan_version_buying_market_details { get; set; }
+        public virtual ICollection<plan_version_buying_station_details> plan_version_buying_station_details { get; set; }
+        public virtual ICollection<plan_version_buying_ownership_group_details> plan_version_buying_ownership_group_details { get; set; }
     }
 }

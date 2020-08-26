@@ -64,6 +64,13 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetMarkets(planId));
         }
 
+        [HttpGet]
+        [Route("ownershipgroups/{planId}")]
+        public BaseResponse<PlanBuyingResultOwnershipGroupDto> GetBuyingOwnershipGroups(int planId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetBuyingOwnershipGroups(planId));
+        }
+
         [HttpPost]
         [Route("cancelexecution")]
         public BaseResponse<PlanBuyingResponseDto> CancelCurrentBuyingExecution(int planId)

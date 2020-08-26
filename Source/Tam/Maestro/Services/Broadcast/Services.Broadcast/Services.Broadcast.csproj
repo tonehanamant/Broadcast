@@ -367,12 +367,14 @@
     <Compile Include="ApplicationServices\VpvhService.cs" />
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsRepairEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingBandCalculationEngine.cs" />
-    <Compile Include="BusinessEngines\PlanBuying\PlanBuyingMarketResultsEngine.cs" />
+    <Compile Include="BusinessEngines\PlanBuying\PlanBuyingMarketEngine.cs" />
+    <Compile Include="BusinessEngines\PlanBuying\PlanBuyingOwnershipGroupEngine.cs" />
+    <Compile Include="BusinessEngines\PlanBuying\PlanBuyingProgramEngine.cs" />
     <Compile Include="BusinessEngines\PlanInventorySourceSortEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricingBandCalculationEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingInventoryEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingInventoryQuarterCalculatorEngine.cs" />
-    <Compile Include="BusinessEngines\PlanBuying\PlanBuyingStationCalculationEngine.cs" />
+    <Compile Include="BusinessEngines\PlanBuying\PlanBuyingStationEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricingStationCalculationEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingUnitCapImpressionsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricing\PlanPricingMarketResultsEngine.cs" />
@@ -521,6 +523,7 @@
     <Compile Include="Entities\Nti\NtiUniverseHeader.cs" />
     <Compile Include="Entities\Plan\Buying\BuyingInventoryGetRequestParametersDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingEstimate.cs" />
+    <Compile Include="Entities\Plan\Buying\PlanBuyingResultOwnershipGroupDto.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\DaypartWeighting.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\PlanInventorySourceDto.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\PlanInventorySourceTypeDto.cs" />
@@ -542,9 +545,7 @@
     <Compile Include="Entities\Plan\Buying\PlanBuyingApiResultDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingApiSpotsResponseDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingApiSpotsResponseDto_v3.cs" />
-    <Compile Include="Entities\Plan\Buying\PlanBuyingBandDetailDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingBandsDto.cs" />
-    <Compile Include="Entities\Plan\Buying\PlanBuyingBandTotalsDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingDefaults.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingInventoryGroup.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingInventoryProgram.cs" />
@@ -557,9 +558,7 @@
     <Compile Include="Entities\Plan\Buying\PlanBuyingProgramDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingResponseDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingResultDto.cs" />
-    <Compile Include="Entities\Plan\Buying\PlanBuyingResultMarketDetailsDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingResultMarketsDto.cs" />
-    <Compile Include="Entities\Plan\Buying\PlanBuyingResultMarketsTotalsDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingStationResultDto.cs" />
     <Compile Include="Entities\Plan\Buying\BuyingParametersWithoutPlanDto.cs" />
     <Compile Include="Entities\Plan\Buying\BuyingProgramsResultDto.cs" />
