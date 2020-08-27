@@ -331,6 +331,10 @@ namespace Services.Broadcast.Entities.Campaign
 
         private static double _CalculateUnitsForWeek(WeeklyBreakdownWeek planWeek, List<WeeklyBreakdownCombination> combinations)
         {
+            if(planWeek.WeeklyImpressions == 0)
+            {//this is a hiatus week
+                return 0;
+            }
             var combination = combinations.Where(x => x.DaypartCodeId == planWeek.DaypartCodeId && x.SpotLengthId == planWeek.SpotLengthId)
                                 .Single();
             return planWeek.WeeklyImpressions / planWeek.UnitImpressions * combination.Weighting;

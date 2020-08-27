@@ -3,7 +3,5 @@
   "FileContent": null,
   "FileExtension": ".xlsx",
   "FileMediaType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-  "FileName": "Stub Advertiser EF EM MDN Q1'20-Q2'20 Plan Rev - 07-28",
-  "FileNameWithExtension": "Stub Advertiser EF EM MDN Q1'20-Q2'20 Plan Rev - 07-28.xlsx",
   "FileUsage": 1
 }

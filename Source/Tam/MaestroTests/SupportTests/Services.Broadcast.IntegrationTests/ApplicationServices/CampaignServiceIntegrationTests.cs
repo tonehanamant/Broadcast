@@ -33,6 +33,7 @@ using Unity;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
+    [UseReporter(typeof(DiffReporter))]
     public class CampaignServiceIntegrationTests
     {
         private const string IntegrationTestUser = "IntegrationTestUser";
@@ -52,7 +53,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void GetCampaignsFilteredByStatusTest()
         {
@@ -109,7 +109,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void GetCampaignById()
         {
@@ -124,7 +123,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void GetCampaignById_WithoutPlans()
         {
@@ -139,7 +137,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void CreateCampaignValidCampaignTest()
         {
@@ -193,7 +190,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void CreateCampaignNameMaxLengthTest()
         {
@@ -209,7 +205,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void CreateCampaignNotesMaxLengthTest()
         {
@@ -225,7 +220,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void UpdateCampaignTest()
         {
@@ -286,7 +280,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void CreateCampaignInvalidAdvertiserIdTest()
         {
@@ -304,7 +297,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void GetQuartersTest()
         {
@@ -316,7 +308,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void GetQuartersWithPlanStatusTest()
         {
@@ -331,7 +322,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [TestCase("")]
         [TestCase("      ")]
         [TestCase("\t")]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void CreateCampaignInvalidCampaignNameTest(string campaignName)
         {
@@ -348,7 +338,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void GetCampaignsWithFilters()
         {
@@ -371,7 +360,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void GetStatuses()
         {
@@ -383,7 +371,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void GetStatuses_CampaignWithoutSummary()
         {
@@ -398,7 +385,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void GetStatuses_WithoutParams()
         {
@@ -410,7 +396,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void GetStatuses_WithCampaignStatusNull()
         {
@@ -430,7 +415,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void TriggerCampaignAggregation()
         {
@@ -446,7 +430,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void ProcessCampaignAggregation()
         {
@@ -462,7 +445,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void ProcessCampaignAggregation_WithoutPlans()
         {
@@ -479,7 +461,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void ProcessAggregation_WithError()
         {
@@ -520,7 +501,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
         public void CampaignExport_ContractOnlyPlans()
         {
@@ -541,7 +521,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
         public void CampaignExport_ContractOnlyPlansWithDaypartsSorting()
         {
@@ -562,7 +541,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
         public void CampaignExport_GenerateCampaignReport()
         {
@@ -627,7 +605,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void CampaignExport_ReservedPlanWithConstraints()
         {
@@ -648,7 +625,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void CampaignExport_ContractTypeWithRestrictions()
         {
@@ -788,7 +764,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void CampaignExport_SecondaryAudiences_SinglePlan()
         {
@@ -809,7 +784,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void CampaignExport_SecondaryAudiences_MultiplePlans()
         {
@@ -830,7 +804,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void CampaignExport_PlansWith13And14Weeks()
         {
@@ -850,7 +823,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void CampaignExport_DuplicateHiatusDaysOnFlowChart()
         {
@@ -869,7 +841,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
         public void CampaignExport_30SecEquivalizedAndNot()
         {
@@ -890,7 +861,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
         public void CampaignExport_ProposalTab_DataBasedOnImpressions()
         {
@@ -915,6 +885,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(CampaignReportData), "CreatedDate");
             jsonResolver.Ignore(typeof(CampaignReportData), "CampaignExportFileName");
             jsonResolver.Ignore(typeof(SharedFolderFile), "Id");
+            jsonResolver.Ignore(typeof(SharedFolderFile), "FileName");
+            jsonResolver.Ignore(typeof(SharedFolderFile), "FileNameWithExtension");
             jsonResolver.Ignore(typeof(SharedFolderFile), "CreatedDate");
             jsonResolver.Ignore(typeof(SharedFolderFile), "SharedFolderFile");
             jsonResolver.Ignore(typeof(SharedFolderFile), "FolderPath");
@@ -927,7 +899,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
         public void ProgramLineupExport()
         {           
