@@ -84,6 +84,7 @@
   "IsAduEnabled": false,
   "IsBuyingModelRunning": false,
   "IsDraft": false,
+  "IsOutOfSync": false,
   "IsPricingModelRunning": false,
   "JobId": null,
   "ModifiedBy": "Test User",

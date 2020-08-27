@@ -78,6 +78,7 @@ namespace Services.Broadcast.ApplicationServices
         private const string FEATURE_TOGGLE_ALLOW_MULTIPLE_CREATIVE_LENGTHS = "broadcast-allow-multiple-creative-lengths";
         private const string FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT = "broadcast-enable-pricing-in-edit";
         private const string FEATURE_TOGGLE_ENABLE_EXPORT_PRE_BUY = "broadcast-enable-export-pre-buy";
+        private const string FEATURE_TOGGLE_RUN_PRICING_AUTOMATICALLY = "broadcast-enable-run-pricing-automatically";
 
         public EnvironmentDto GetEnvironmentInfo()
         {
@@ -89,6 +90,7 @@ namespace Services.Broadcast.ApplicationServices
                 AllowMultipleCreativeLengths = IsFeatureToggleEnabledUserAnonymous(FEATURE_TOGGLE_ALLOW_MULTIPLE_CREATIVE_LENGTHS),
                 EnablePricingInEdit = IsFeatureToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT),
                 EnableExportPreBuy = IsFeatureToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_EXPORT_PRE_BUY),
+                EnableRunPricingAutomaticaly = IsFeatureToggleEnabledUserAnonymous(FEATURE_TOGGLE_RUN_PRICING_AUTOMATICALLY)
             };
         }
     }

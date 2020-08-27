@@ -169,6 +169,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private const string _DaypartDefaultNotFoundMessage = "Unable to find daypart default";
         private const string _UnsupportedDeliveryTypeMessage = "Unsupported Delivery Type";
         private const string FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT = "broadcast-enable-pricing-in-edit";
+        private const string FEATURE_TOGGLE_RUN_PRICING_AUTOMATICALLY = "broadcast-enable-run-pricing-automatically";
 
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator
@@ -279,27 +280,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
                 _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
+            }
 
-                if (_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT))
+            if (_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_RUN_PRICING_AUTOMATICALLY))
+            {
+                if((plan.VersionNumber == 1 && !plan.JobId.HasValue) || plan.IsOutOfSync)
                 {
-                    if (plan.VersionNumber == 1 && !plan.JobId.HasValue)
-                    {
-                        _PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate, createdBy);
-                    }
-                    else if (plan.VersionNumber > 1)
-                    {
-                        _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
-                    }
-                }
-                else
-                {
-                    _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
+                    _PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate, createdBy);
                 }
             }
             else
-            {
                 _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
-            }
 
             return plan.Id;
         }

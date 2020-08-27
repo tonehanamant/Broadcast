@@ -140,6 +140,7 @@
   "IsAduEnabled": false,
   "IsBuyingModelRunning": false,
   "IsDraft": false,
+  "IsOutOfSync": false,
   "IsPricingModelRunning": false,
   "ModifiedBy": "IntegrationTestUser",
   "ModifiedDate": "2019-05-14T00:00:00",

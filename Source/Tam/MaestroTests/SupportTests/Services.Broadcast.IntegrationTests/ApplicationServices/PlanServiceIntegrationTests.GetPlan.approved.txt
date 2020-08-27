@@ -1829,6 +1829,7 @@
   "IsAduEnabled": false,
   "IsBuyingModelRunning": false,
   "IsDraft": false,
+  "IsOutOfSync": false,
   "IsPricingModelRunning": false,
   "ModifiedBy": "Sebastian Roibu",
   "ModifiedDate": "2020-06-19T02:21:37.64",

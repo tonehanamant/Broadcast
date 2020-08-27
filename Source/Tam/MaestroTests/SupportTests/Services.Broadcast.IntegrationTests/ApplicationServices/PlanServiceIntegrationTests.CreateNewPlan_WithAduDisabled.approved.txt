@@ -265,6 +265,8 @@
   "IsAduEnabled": false,
   "IsBuyingModelRunning": false,
   "IsDraft": false,
+  "IsOutOfSync": false,
+  "IsPricingModelRunning": false,
   "ModifiedBy": "integration_test",
   "ModifiedDate": "2019-01-01T00:00:00",
   "Name": "New Plan",

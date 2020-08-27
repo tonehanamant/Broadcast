@@ -449,5 +449,13 @@ namespace Services.Broadcast.Entities.Plan
         /// The pricing job id.
         /// </value>
         public int? JobId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the out of sync status.
+        /// </summary>
+        /// <value>
+        /// The out of sync status.
+        /// </value>
+        public bool IsOutOfSync { get; set; }
     }
 }

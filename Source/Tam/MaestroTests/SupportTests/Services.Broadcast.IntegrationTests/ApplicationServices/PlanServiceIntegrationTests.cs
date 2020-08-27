@@ -30,24 +30,34 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private ICampaignService _CampaignService;
         private IPlanPricingService _PlanPricingService;
         private IPlanRepository _PlanRepository;
-        private IFeatureToggleHelper _FeatureToggleHelper;
+        private LaunchDarklyClientStub _LaunchDarklyClientStub;
 
         private const int AUDIENCE_ID = 31;
         private const string FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT = "broadcast-enable-pricing-in-edit";
+        private const string FEATURE_TOGGLE_RUN_PRICING_AUTOMATICALLY = "broadcast-enable-run-pricing-automatically";
 
         [SetUp]
         public void SetUp()
         {
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
+            _LaunchDarklyClientStub.FeatureToggles.Add(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT, false);
+            _LaunchDarklyClientStub.FeatureToggles.Add(FEATURE_TOGGLE_RUN_PRICING_AUTOMATICALLY, false);
+            // register our stub instance so it is used to instantiate the service
+            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<ILaunchDarklyClient>(_LaunchDarklyClientStub);
+
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPricingApiClient, PricingApiClientStub>();
             _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
             _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
             _PlanPricingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingService>();
             _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
+        }
 
-            var clientStub = new LaunchDarklyClientStub();
-            clientStub.FeatureToggles.Add(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT, false);
-
-            _FeatureToggleHelper = new FeatureToggleHelper(clientStub);
+        private void _SetFeatureToggle(string feature, bool activate)
+        {
+            if (_LaunchDarklyClientStub.FeatureToggles.ContainsKey(feature))
+                _LaunchDarklyClientStub.FeatureToggles[feature] = activate;
+            else
+                _LaunchDarklyClientStub.FeatureToggles.Add(feature, activate);
         }
 
         [Test]
@@ -113,8 +123,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var newPlanId = _PlanService.SavePlan(newPlan, username, nowDate);
                 var savedPlan = _PlanService.GetPlan(newPlanId);
 
-                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), savedPlan.IsPricingModelRunning);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedPlan, _GetJsonSettings(true)));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedPlan, _GetJsonSettings()));
             }
         }
 
@@ -133,8 +142,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsTrue(newPlanId > 0);
 
                 var planVersion = _PlanService.GetPlan(newPlanId);
-                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), planVersion.IsPricingModelRunning);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(planVersion), _GetJsonSettings(true)));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(planVersion), _GetJsonSettings()));
             }
         }
 
@@ -151,9 +159,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var planVersion = _PlanService.GetPlan(newPlanId);
 
-                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), planVersion.IsPricingModelRunning);
                 Assert.IsTrue(newPlanId > 0);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(planVersion), _GetJsonSettings(true)));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(planVersion), _GetJsonSettings()));
             }
         }
 
@@ -418,8 +425,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var newPlanId = _PlanService.SavePlan(newPlan, username, nowDate);
 
                 var savedPlan = _PlanService.GetPlan(newPlanId);
-                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), savedPlan.IsPricingModelRunning);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedPlan, _GetJsonSettings(true)));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(savedPlan, _GetJsonSettings()));
             }
         }
 
@@ -497,9 +503,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsTrue(newPlanId > 0);
                 PlanDto finalPlan = _PlanService.GetPlan(newPlanId);
 
-                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), finalPlan.IsPricingModelRunning);
                 Assert.AreEqual(PlanStatusEnum.Canceled, finalPlan.Status);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -555,8 +560,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 //get the plan
                 PlanDto plan = _PlanService.GetPlan(newPlanId);
 
-                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), plan.IsPricingModelRunning);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(plan), _GetJsonSettings(true)));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(plan), _GetJsonSettings()));
             }
         }
 
@@ -736,9 +740,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 Assert.IsTrue(newPlanId > 0);
                 PlanDto finalPlan = _PlanService.GetPlan(newPlanId);
 
-                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), finalPlan.IsPricingModelRunning);
                 Assert.AreEqual(PlanStatusEnum.Rejected, finalPlan.Status);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -1037,8 +1040,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), finalPlan.IsPricingModelRunning);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -1057,8 +1059,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), finalPlan.IsPricingModelRunning);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -1077,8 +1078,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), finalPlan.IsPricingModelRunning);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -1110,8 +1110,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), finalPlan.IsPricingModelRunning);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -1130,8 +1129,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), finalPlan.IsPricingModelRunning);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -1150,8 +1148,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 PlanDto finalPlan = _PlanService.GetPlan(planId);
 
                 Assert.AreEqual(3, finalPlan.Dayparts.Count);
-                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), finalPlan.IsPricingModelRunning);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -1316,8 +1313,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var planId = _PlanService.SavePlan(newPlan, "integration_test", new DateTime(2019, 01, 01));
                 var finalPlan = _PlanService.GetPlan(planId);
                 Assert.IsTrue(planId > 0);
-                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), finalPlan.IsPricingModelRunning);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -2738,6 +2734,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
+                _SetFeatureToggle(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT, true);
+                _SetFeatureToggle(FEATURE_TOGGLE_RUN_PRICING_AUTOMATICALLY, true);
+
                 var pricingParameters = _GetPricingParametersWithoutPlanDto();
                 var job = _PlanPricingService.QueuePricingJob(pricingParameters, new System.DateTime(2019, 01, 01), "integration_test");
                 _ForceCompletePlanPricingJobByJobId(job.Id);
@@ -2749,15 +2748,141 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 var updatedJob = _PlanRepository.GetPlanPricingJob(job.Id);
 
-                if (_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT))
-                {
-                    Assert.AreEqual(job.Id, finalPlan.JobId);
-                    Assert.AreEqual(job.Id, finalPlan.PricingParameters.JobId);
-                    Assert.AreEqual(finalPlan.VersionId, finalPlan.PricingParameters.PlanVersionId);
-                    Assert.AreEqual(finalPlan.VersionId, updatedJob.PlanVersionId);
-                }
-                Assert.AreEqual(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT), finalPlan.IsPricingModelRunning);
-                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings(true)));
+                Assert.AreEqual(job.Id, finalPlan.JobId);
+                Assert.AreEqual(job.Id, finalPlan.PricingParameters.JobId);
+                Assert.AreEqual(finalPlan.VersionId, finalPlan.PricingParameters.PlanVersionId);
+                Assert.AreEqual(finalPlan.VersionId, updatedJob.PlanVersionId);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlan_VersionOutOfSync_EnablePricingInEdit()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                _SetFeatureToggle(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT, true);
+                _SetFeatureToggle(FEATURE_TOGGLE_RUN_PRICING_AUTOMATICALLY, true);
+
+                var newPlan = _GetNewPlan();
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                _ForceCompletePlanPricingJob(newPlanId);
+
+                var editPlan = _PlanService.GetPlan(newPlanId);
+                editPlan.IsOutOfSync = true;
+                var editPlanId = _PlanService.SavePlan(editPlan, "integration_test", new System.DateTime(2019, 01, 01));
+
+                var finalPlan = _PlanService.GetPlan(newPlanId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlan_VersionOutOfSync_DisablePricingInEdit()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                _SetFeatureToggle(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT, false);
+                _SetFeatureToggle(FEATURE_TOGGLE_RUN_PRICING_AUTOMATICALLY, false);
+
+                var newPlan = _GetNewPlan();
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+
+                var editPlan = _PlanService.GetPlan(newPlanId);
+                editPlan.IsOutOfSync = true;
+                var editPlanId = _PlanService.SavePlan(editPlan, "integration_test", new System.DateTime(2019, 01, 01));
+
+                var finalPlan = _PlanService.GetPlan(newPlanId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlan_DraftOutOfSync_EnablePricingInEdit()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                _SetFeatureToggle(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT, true);
+                _SetFeatureToggle(FEATURE_TOGGLE_RUN_PRICING_AUTOMATICALLY, true);
+
+                var newPlan = _GetNewPlan();
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+                _ForceCompletePlanPricingJob(newPlanId);
+
+                var editPlan = _PlanService.GetPlan(newPlanId);
+                editPlan.IsDraft = true;
+                editPlan.IsOutOfSync = true;
+                var editPlanId = _PlanService.SavePlan(editPlan, "integration_test", new System.DateTime(2019, 01, 01));
+
+                var finalPlan = _PlanService.GetPlan(newPlanId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlan_DraftOutOfSync_DisablePricingInEdit()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                _SetFeatureToggle(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT, false);
+                _SetFeatureToggle(FEATURE_TOGGLE_RUN_PRICING_AUTOMATICALLY, false);
+
+                var newPlan = _GetNewPlan();
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+
+                var editPlan = _PlanService.GetPlan(newPlanId);
+                editPlan.IsDraft = true;
+                editPlan.IsOutOfSync = true;
+                var editPlanId = _PlanService.SavePlan(editPlan, "integration_test", new System.DateTime(2019, 01, 01));
+
+                var finalPlan = _PlanService.GetPlan(newPlanId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlan_NewPlanOutOfSync_EnablePricingInEdit()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                _SetFeatureToggle(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT, true);
+                _SetFeatureToggle(FEATURE_TOGGLE_RUN_PRICING_AUTOMATICALLY, true);
+
+                var newPlan = _GetNewPlan();
+                newPlan.IsOutOfSync = true;
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+
+                var finalPlan = _PlanService.GetPlan(newPlanId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void SavePlan_NewPlanOutOfSync_DisablePricingInEdit()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                _SetFeatureToggle(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT, false);
+                _SetFeatureToggle(FEATURE_TOGGLE_RUN_PRICING_AUTOMATICALLY, false);
+
+                var newPlan = _GetNewPlan();
+                newPlan.IsOutOfSync = true;
+                var newPlanId = _PlanService.SavePlan(newPlan, "integration_test", new System.DateTime(2019, 01, 01));
+
+                var finalPlan = _PlanService.GetPlan(newPlanId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(_OrderPlanData(finalPlan), _GetJsonSettings()));
             }
         }
 
@@ -3146,7 +3271,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             };
         }
 
-        private JsonSerializerSettings _GetJsonSettings(bool ignorePricingRunning = false)
+        private JsonSerializerSettings _GetJsonSettings()
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
 
@@ -3163,9 +3288,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(PlanPricingParametersDto), "JobId");
             jsonResolver.Ignore(typeof(PlanPricingParametersDto), "PlanId");
             jsonResolver.Ignore(typeof(PlanPricingParametersDto), "PlanVersionId");
-
-            if (ignorePricingRunning)
-                jsonResolver.Ignore(typeof(PlanDto), "IsPricingModelRunning");
 
             return new JsonSerializerSettings
             {

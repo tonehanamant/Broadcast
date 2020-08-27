@@ -1,4 +1,4 @@
-﻿{
+{
   "AudienceId": 31,
   "AudienceType": 1,
   "AvailableMarkets": [
@@ -181,53 +181,6 @@
       "WeightingGoalPercent": null
     },
     {
-      "DaypartCodeId": 9,
-      "DaypartTypeId": 2,
-      "EndTimeSeconds": 64799,
-      "IsEndTimeModified": true,
-      "IsStartTimeModified": true,
-      "Restrictions": {
-        "AffiliateRestrictions": {
-          "Affiliates": [],
-          "ContainType": 2
-        },
-        "GenreRestrictions": {
-          "ContainType": 2,
-          "Genres": [
-            {
-              "Display": "Documentary",
-              "Id": 12
-            }
-          ]
-        },
-        "ProgramRestrictions": {
-          "ContainType": 2,
-          "Programs": []
-        },
-        "ShowTypeRestrictions": {
-          "ContainType": 1,
-          "ShowTypes": [
-            {
-              "Display": "Off Air",
-              "Id": 5
-            }
-          ]
-        }
-      },
-      "StartTimeSeconds": 54000,
-      "VpvhForAudiences": [
-        {
-          "AudienceId": 31,
-          "StartingPoint": "2019-01-12T12:30:29",
-          "Vpvh": 0.8,
-          "VpvhType": 2
-        }
-      ],
-      "WeekdaysWeighting": null,
-      "WeekendWeighting": null,
-      "WeightingGoalPercent": 13.8
-    },
-    {
       "DaypartCodeId": 11,
       "DaypartTypeId": 1,
       "EndTimeSeconds": 2788,
@@ -302,20 +255,19 @@
   "FlightNotes": "Sample notes",
   "FlightStartDate": "2019-01-01T00:00:00",
   "GoalBreakdownType": 1,
-  "HHCPM": 0.8005,
+  "HHCPM": 0.7850,
   "HHCPP": 1000.0000,
-  "HHImpressions": 124.916,
+  "HHImpressions": 127.38,
   "HHRatingPoints": 0.1,
   "HHUniverse": 120700000.0,
   "HUTBookId": 437,
   "ImpressionsPerUnit": 5.0,
   "IsAduEnabled": true,
-  "IsBuyingModelRunning": false,
   "IsDraft": false,
   "IsOutOfSync": false,
-  "IsPricingModelRunning": false,
+  "IsPricingModelRunning": true,
   "ModifiedBy": "integration_test",
-  "ModifiedDate": "2019-01-15T00:00:00",
+  "ModifiedDate": "2019-01-01T00:00:00",
   "Name": "New Plan",
   "PostingType": 2,
   "PricingParameters": {
@@ -398,8 +350,8 @@
   "TotalActiveDays": 29,
   "TotalHiatusDays": 2,
   "TotalShareOfVoice": 100.0,
-  "VersionNumber": 2,
-  "Vpvh": 0.80053796,
+  "VersionNumber": 1,
+  "Vpvh": 0.7850526,
   "WeeklyBreakdownTotals": {
     "TotalActiveDays": 29,
     "TotalBudget": 100.0000,
