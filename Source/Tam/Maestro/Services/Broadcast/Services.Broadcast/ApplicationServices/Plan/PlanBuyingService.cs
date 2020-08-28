@@ -651,8 +651,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 FlightEndDate = plan.FlightEndDate.Value,
                 FlightDays = plan.FlightDays,
                 // Use parameter values for budget and impressions.
-                TotalBudget = plan.Budget.Value,
-                TotalImpressions = plan.TargetImpressions.Value * 1000,
+                TotalBudget = plan.BuyingParameters.Budget,
+                TotalImpressions = plan.BuyingParameters.DeliveryImpressions * 1000,
                 FlightHiatusDays = plan.FlightHiatusDays,
                 TotalRatings = plan.TargetRatingPoints.Value,
                 Weeks = weeks,
