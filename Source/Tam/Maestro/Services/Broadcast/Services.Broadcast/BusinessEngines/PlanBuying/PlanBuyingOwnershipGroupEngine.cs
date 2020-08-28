@@ -63,7 +63,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
 
                 var agg = new PlanBuyingResultOwnershipGroupDetailsDto
                 {
-                    OwnershipGroupName = ownershipNameGroup.Key,
+                    OwnershipGroupName = ownershipNameGroup.Key ?? string.Empty,
                     Markets = ownershipItems.Select(x=>x.MarketCode).Distinct().Count(),
                     Stations = ownershipItems.Select(s => s.StationId).Distinct().Count(),
                     Spots = ownershipItems.Sum(k => k.TotalSpots),
