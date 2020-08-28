@@ -1,30 +1,30 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using F23.StringSimilarity;
 using Hangfire;
 using OfficeOpenXml;
+using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping;
+using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping.Entities;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Cache;
+using Services.Broadcast.Clients;
+using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.ProgramMapping;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
+using Services.Broadcast.ReportGenerators.ProgramMapping;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using Services.Broadcast.Entities.ProgramMapping;
-using Services.Broadcast.ReportGenerators.ProgramMapping;
-using Services.Broadcast.Cache;
-using Tam.Maestro.Data.Entities.DataTransferObjects;
 using System.Threading;
-using Services.Broadcast.Clients;
-using Services.Broadcast.Entities.DTO.Program;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
-using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping.Entities;
-using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping;
-using Services.Broadcast.Entities.spotcableXML;
-using Services.Broadcast.Converters;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -340,20 +340,48 @@ namespace Services.Broadcast.ApplicationServices
 
             var programsMatchedWithMapping = _MatchExistingMappings(cleanPrograms).OrderByDescending(p => p.MatchConfidence).ToList();
 
-            var result = _MatchAgainstMasterList(programsMatchedWithMapping);
+            if (programsMatchedWithMapping.All(p => p.MatchConfidence == MATCH_EXACT))
+                return programsMatchedWithMapping;
+
+            var masterProgramList = GetMasterProgramList();
+
+            var result = _MatchAgainstMasterList(programsMatchedWithMapping, masterProgramList);
 
             _MatchProgramByKeyword(result);
+
+            _MatchBySimilarity(result, masterProgramList);
 
             return result;
         }
 
-        private List<UnmappedProgram> _MatchAgainstMasterList(List<UnmappedProgram> programs)
+        private void _MatchBySimilarity(List<UnmappedProgram> programs, List<ProgramMappingsDto> masterProgramList)
         {
-            var programMappings = GetMasterProgramList();
+            var unmatchedPrograms = programs.Where(p => p.MatchConfidence != MATCH_EXACT);
+            if (!unmatchedPrograms.Any())
+                return;
 
+            var jaroWinkler = new JaroWinkler();
+            foreach (var masterProgramListItem in masterProgramList)
+            {
+                foreach (var unmatchedProgram in unmatchedPrograms)
+                {
+                    var similarity = jaroWinkler.Similarity(unmatchedProgram.ProgramName, masterProgramListItem.OfficialProgramName);
+                    if (similarity > unmatchedProgram.MatchConfidence)
+                    {
+                        unmatchedProgram.MatchConfidence = (float)similarity;
+                        unmatchedProgram.Genre = masterProgramListItem.OfficialGenre.Name;
+                        unmatchedProgram.MatchedName = masterProgramListItem.OfficialProgramName;
+                        unmatchedProgram.ShowType = masterProgramListItem.OfficialShowType.Name;
+                    }
+                }
+            }
+        }
+
+        private List<UnmappedProgram> _MatchAgainstMasterList(List<UnmappedProgram> programs, List<ProgramMappingsDto> masterProgramList)
+        {
             foreach (var program in programs.Where(p => p.MatchConfidence == MATCH_NOT_FOUND))
             {
-                var foundMapping = programMappings
+                var foundMapping = masterProgramList
                     .Where(m => m.OfficialProgramName.Equals(program.ProgramName, StringComparison.OrdinalIgnoreCase))
                     .FirstOrDefault();
 
@@ -362,7 +390,7 @@ namespace Services.Broadcast.ApplicationServices
                     program.MatchedName = foundMapping.OfficialProgramName;
                     program.Genre = foundMapping.OfficialGenre.Name;
                     program.ShowType = foundMapping.OfficialShowType.Name;
-                    program.MatchConfidence = 1;
+                    program.MatchConfidence = MATCH_EXACT;
                 }
             }
 
@@ -391,7 +419,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var keywords = _ProgramNameMappingKeywordRepository.GetProgramNameMappingKeywords();
 
-            foreach(var program in programs.Where(p => p.MatchConfidence == MATCH_NOT_FOUND))
+            foreach (var program in programs.Where(p => p.MatchConfidence == MATCH_NOT_FOUND))
             {
                 var keywordMatches = keywords.Where(k => program.ProgramName.Contains(k.Keyword, StringComparison.OrdinalIgnoreCase)).ToList();
                 if (keywordMatches.Any())

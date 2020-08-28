@@ -16,12 +16,12 @@
     "ShowType": "Series"
   },
   {
-    "Genre": null,
-    "MatchConfidence": 0.0,
-    "MatchedName": null,
+    "Genre": "Documentary",
+    "MatchConfidence": 0.75555557,
+    "MatchedName": "METH",
     "OriginalName": "SOME OTHER NEWS",
     "ProgramName": "SOME OTHER NEWS",
-    "ShowType": null
+    "ShowType": "Movie"
   },
   {
     "Genre": "Sports",
