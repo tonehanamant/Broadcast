@@ -1,5 +1,5 @@
 {
-  "MarketDetails": [
+  "Details": [
     {
       "Budget": 13504.6875,
       "Cpm": 18.0339019830407,

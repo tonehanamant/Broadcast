@@ -45,7 +45,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns>Programs from the lastest pricing execution</returns>
         [HttpGet]
         [Route("programs/{planId}")]
-        public BaseResponse<BuyingProgramsResultDto> GetPrograms(int planId)
+        public BaseResponse<PlanBuyingResultProgramsDto> GetPrograms(int planId)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetPrograms(planId));
         }

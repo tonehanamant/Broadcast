@@ -127,7 +127,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         void ValidateAndApplyMargin(PlanBuyingParametersDto parameters);
 
-        BuyingProgramsResultDto GetPrograms(int planId);
+        PlanBuyingResultProgramsDto GetPrograms(int planId);
 
         PlanBuyingStationResultDto GetStations(int planId);
 
@@ -1791,7 +1791,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return $"Job Id '{jobId}' has been forced to complete.";
         }
 
-        public BuyingProgramsResultDto GetPrograms(int planId)
+        public PlanBuyingResultProgramsDto GetPrograms(int planId)
         {
             var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
 

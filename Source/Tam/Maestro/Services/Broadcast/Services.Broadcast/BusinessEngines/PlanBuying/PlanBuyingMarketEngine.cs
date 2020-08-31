@@ -104,7 +104,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
                 PlanVersionId = allocationResult.PlanVersionId,
                 BuyingJobId = allocationResult.JobId,
                 Totals = totals,
-                MarketDetails = details
+                Details = details
             };
 
             return result;
@@ -115,7 +115,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
         {
             results.Totals.Impressions /= 1000;
 
-            foreach (var detail in results.MarketDetails)
+            foreach (var detail in results.Details)
             {
                 detail.Impressions /= 1000;
             }

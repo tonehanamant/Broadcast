@@ -688,7 +688,7 @@
     <Compile Include="Entities\Plan\Buying\PlanBuyingResultMarketsDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingStationResultDto.cs" />
     <Compile Include="Entities\Plan\Buying\BuyingParametersWithoutPlanDto.cs" />
-    <Compile Include="Entities\Plan\Buying\BuyingProgramsResultDto.cs" />
+    <Compile Include="Entities\Plan\Buying\PlanBuyingResultProgramsDto.cs" />
     <Compile Include="Entities\Plan\Buying\BuyingResultsReportData.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\BasePlanInventoryProgram.cs" />
     <Compile Include="Entities\Plan\PlanProprietarySummary\PlanInventoryProprietarySummaryRequest.cs" />

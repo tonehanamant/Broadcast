@@ -22,7 +22,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
         /// Converts the impressions to user format.
         /// </summary>
         /// <param name="planBuyingResult">The plan buying result.</param>
-        void ConvertImpressionsToUserFormat(BuyingProgramsResultDto planBuyingResult);
+        void ConvertImpressionsToUserFormat(PlanBuyingResultProgramsDto planBuyingResult);
     }
 
     public class PlanBuyingProgramEngine : IPlanBuyingProgramEngine
@@ -51,7 +51,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
                 PercentageOfBuy = ProposalMath.CalculateImpressionsPercentage(x.TotalImpressions, totalImpressionsForAllPrograms),
                 Budget = x.TotalCost,
                 Spots = x.TotalSpots
-            }));
+            }).ToList());
 
             result.Totals = new PlanBuyingProgramTotalsDto
             {
@@ -62,7 +62,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
                 AvgCpm = ProposalMath.CalculateCpm(totalCostForAllPrograms, totalImpressionsForAllPrograms),
                 Budget = totalCostForAllPrograms,
                 Impressions = totalImpressionsForAllPrograms,
-                Spots = totalSpotsForAllPrograms,
+                Spots = totalSpotsForAllPrograms
             };
 
             result.GoalFulfilledByProprietary = goalsFulfilledByProprietaryInventory;
@@ -163,7 +163,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
         }
 
         /// <inheritdoc/>
-        public void ConvertImpressionsToUserFormat(BuyingProgramsResultDto planBuyingResult)
+        public void ConvertImpressionsToUserFormat(PlanBuyingResultProgramsDto planBuyingResult)
         {
             if (planBuyingResult == null)
                 return;

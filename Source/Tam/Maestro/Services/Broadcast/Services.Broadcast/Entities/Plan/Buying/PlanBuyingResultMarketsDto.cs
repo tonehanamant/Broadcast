@@ -7,7 +7,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public int PlanVersionId { get; set; }
         public int? BuyingJobId { get; set; }
         public PlanBuyingProgramTotalsDto Totals { get; set; } = new PlanBuyingProgramTotalsDto();
-        public List<PlanBuyingResultMarketDetailsDto> MarketDetails { get; set; } = new List<PlanBuyingResultMarketDetailsDto>();
+        public List<PlanBuyingResultMarketDetailsDto> Details { get; set; } = new List<PlanBuyingResultMarketDetailsDto>();
     }
 
     public class PlanBuyingResultMarketDetailsDto

@@ -505,7 +505,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 var programs = _PlanBuyingService.GetPrograms(planBuyingRequestDto.PlanId.Value);
                 var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value);
 
-                JsonSerializerSettings jsonSettings = _GetJsonSettings<BuyingProgramsResultDto>();
+                JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingResultProgramsDto>();
                 Assert.AreEqual(result.Result.OptimalCpm, programs.Totals.AvgCpm);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(programs, jsonSettings));
             }

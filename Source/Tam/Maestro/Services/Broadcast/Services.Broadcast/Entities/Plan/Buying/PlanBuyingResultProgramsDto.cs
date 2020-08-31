@@ -2,22 +2,10 @@
 
 namespace Services.Broadcast.Entities.Plan.Buying
 {
-    public class BuyingProgramsResultDto
+    public class PlanBuyingResultProgramsDto
     {
-        public BuyingProgramsResultTotalsDto Totals { get; set; } = new BuyingProgramsResultTotalsDto();
+        public PlanBuyingProgramTotalsDto Totals { get; set; } = new PlanBuyingProgramTotalsDto();
         public List<PlanBuyingProgramProgramDto> Details { get; set; } = new List<PlanBuyingProgramProgramDto>();
-    }
-
-    public class BuyingProgramsResultTotalsDto
-    {
-        public int MarketCount { get; set; }
-        public int Spots { get; set; }
-        public int StationCount { get; set; }
-        public double AvgImpressions { get; set; }
-        public double Impressions { get; set; }
-        public decimal AvgCpm { get; set; }
-        public decimal Budget { get; set; }
-        public double ImpressionsPercentage { get; set; }
     }
 
     public class PlanBuyingProgramProgramDto

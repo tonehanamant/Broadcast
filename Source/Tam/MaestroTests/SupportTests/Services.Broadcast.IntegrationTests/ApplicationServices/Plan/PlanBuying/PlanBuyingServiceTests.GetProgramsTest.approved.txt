@@ -1,5 +1,5 @@
 {
-  "Programs": [
+  "Details": [
     {
       "AvgCpm": 18.0339,
       "AvgImpressions": 49.92333333,
@@ -30,8 +30,9 @@
     "AvgImpressions": 25.18833333,
     "Budget": 13969.5000,
     "Impressions": 755.65,
-    "ImpressionsPercentage": 0.0,
+    "ImpressionsPercentage": 100.0,
     "MarketCount": 2,
+    "MarketCoveragePercent": 0.0,
     "Spots": 30,
     "StationCount": 2
   }

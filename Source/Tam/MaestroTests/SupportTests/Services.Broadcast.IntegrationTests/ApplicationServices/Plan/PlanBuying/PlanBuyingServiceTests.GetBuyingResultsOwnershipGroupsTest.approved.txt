@@ -5,7 +5,7 @@
       "Cpm": 18.4867,
       "Impressions": 755.65,
       "ImpressionsPercentage": 100.0,
-      "Markets": 0,
+      "Markets": 2,
       "OwnershipGroupName": "Ownership group 3",
       "Spots": 30,
       "Stations": 2
