@@ -1,14 +1,11 @@
 ﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.Entities.Plan.Buying;
-using Services.Broadcast.Entities.QuoteReport;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
-using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.Entities;
-using Tam.Maestro.Services.Cable.Security;
 using Tam.Maestro.Web.Common;
 
 namespace BroadcastComposerWeb.Controllers
@@ -69,6 +66,13 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<PlanBuyingResultOwnershipGroupDto> GetBuyingOwnershipGroups(int planId)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetBuyingOwnershipGroups(planId));
+        }
+
+        [HttpGet]
+        [Route("repfirms/{planId}")]
+        public BaseResponse<PlanBuyingResultRepFirmDto> GetBuyingRepFirms(int planId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GetBuyingRepFirms(planId));
         }
 
         [HttpPost]

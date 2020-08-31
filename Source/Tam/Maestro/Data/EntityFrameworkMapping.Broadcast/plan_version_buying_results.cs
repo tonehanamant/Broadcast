@@ -21,6 +21,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_buying_market_details = new HashSet<plan_version_buying_market_details>();
             this.plan_version_buying_station_details = new HashSet<plan_version_buying_station_details>();
             this.plan_version_buying_ownership_group_details = new HashSet<plan_version_buying_ownership_group_details>();
+            this.plan_version_buying_rep_firm_details = new HashSet<plan_version_buying_rep_firm_details>();
         }
     
         public int id { get; set; }
@@ -42,5 +43,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_buying_market_details> plan_version_buying_market_details { get; set; }
         public virtual ICollection<plan_version_buying_station_details> plan_version_buying_station_details { get; set; }
         public virtual ICollection<plan_version_buying_ownership_group_details> plan_version_buying_ownership_group_details { get; set; }
+        public virtual ICollection<plan_version_buying_rep_firm_details> plan_version_buying_rep_firm_details { get; set; }
     }
 }

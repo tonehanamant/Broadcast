@@ -28,7 +28,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public double AvgImpressions { get; set; }
         public double Impressions { get; set; }
         public double PercentageOfBuy { get; set; }
-        public int Spots { get; set; }
+        public int SpotCount { get; set; }
         public decimal Budget { get; set; }
     }
 
@@ -41,7 +41,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public double AvgImpressions { get; set; }
         public double Impressions { get; set; }
         public decimal Budget { get; set; }
-        public int Spots { get; set; }
+        public int SpotCount { get; set; }
         public decimal ImpressionsPercentage { get; set; } = 100;
     }
 }

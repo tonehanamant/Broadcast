@@ -401,7 +401,7 @@ namespace Services.Broadcast.Repositories
                             LegacyCallLetters = x.station.legacy_call_letters,
                             MarketCode = x.station.market_code,
                             OwnershipGroupName = x.station.owner_name,
-                            SalesGroupName = x.station.sales_group_name
+                            RepFirmName = x.station.rep_firm_name
                         },
                         InventorySource = new InventorySource
                         {

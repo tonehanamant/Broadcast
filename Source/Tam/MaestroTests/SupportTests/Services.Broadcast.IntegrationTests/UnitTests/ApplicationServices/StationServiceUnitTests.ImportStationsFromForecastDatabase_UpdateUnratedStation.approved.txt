@@ -37,7 +37,7 @@
         "OriginMarket": null,
         "OwnershipGroupName": null,
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "RepFirmName": null
       },
       "Item2": "UnitTestUser",
       "Item3": "2020-04-11T01:36:26"
@@ -56,7 +56,7 @@
         "OriginMarket": null,
         "OwnershipGroupName": null,
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "RepFirmName": null
       },
       "Item2": "UnitTestUser",
       "Item3": "2020-04-11T01:36:26"
@@ -75,7 +75,7 @@
         "OriginMarket": null,
         "OwnershipGroupName": null,
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "RepFirmName": null
       },
       "Item2": "UnitTestUser",
       "Item3": "2020-04-11T01:36:26"

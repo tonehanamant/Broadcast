@@ -21,7 +21,7 @@ namespace Services.Broadcast.Entities
         public DateTime? ModifiedDate { get; set; }
         public DateTime? ManifestMaxEndDate { get; set; }
         public string OwnershipGroupName { get; set; }
-        public string SalesGroupName { get; set; }
+        public string RepFirmName { get; set; }
         public bool IsTrueInd { get; set; }
 
         public override string ToString()

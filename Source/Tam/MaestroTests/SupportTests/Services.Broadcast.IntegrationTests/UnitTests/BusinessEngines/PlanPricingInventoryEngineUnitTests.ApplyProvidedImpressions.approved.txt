@@ -80,7 +80,7 @@
         "OriginMarket": null,
         "OwnershipGroupName": null,
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "RepFirmName": null
       },
       "Unit": null
     }
@@ -118,7 +118,7 @@
           "ModifiedDate": null,
           "ManifestMaxEndDate": null,
           "OwnershipGroupName": null,
-          "SalesGroupName": null,
+          "RepFirmName": null,
           "IsTrueInd": false
         },
         "ManifestRates": [

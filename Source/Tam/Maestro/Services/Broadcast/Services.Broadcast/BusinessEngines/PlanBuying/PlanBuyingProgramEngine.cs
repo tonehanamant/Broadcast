@@ -50,7 +50,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
                 AvgCpm = x.AvgCpm,
                 PercentageOfBuy = ProposalMath.CalculateImpressionsPercentage(x.TotalImpressions, totalImpressionsForAllPrograms),
                 Budget = x.TotalCost,
-                Spots = x.TotalSpots
+                SpotCount = x.TotalSpots
             }).ToList());
 
             result.Totals = new PlanBuyingProgramTotalsDto
@@ -62,7 +62,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
                 AvgCpm = ProposalMath.CalculateCpm(totalCostForAllPrograms, totalImpressionsForAllPrograms),
                 Budget = totalCostForAllPrograms,
                 Impressions = totalImpressionsForAllPrograms,
-                Spots = totalSpotsForAllPrograms
+                SpotCount = totalSpotsForAllPrograms
             };
 
             result.GoalFulfilledByProprietary = goalsFulfilledByProprietaryInventory;

@@ -2,17 +2,17 @@
 
 namespace Services.Broadcast.Entities.Plan.Buying
 {
-    public class PlanBuyingResultOwnershipGroupDto
+    public class PlanBuyingResultRepFirmDto
     {
         public int PlanVersionId { get; set; }
         public int? BuyingJobId { get; set; }
         public PlanBuyingProgramTotalsDto Totals { get; set; } = new PlanBuyingProgramTotalsDto();
-        public List<PlanBuyingResultOwnershipGroupDetailsDto> Details { get; set; } = new List<PlanBuyingResultOwnershipGroupDetailsDto>();
+        public List<PlanBuyingResultRepFirmDetailsDto> Details { get; set; } = new List<PlanBuyingResultRepFirmDetailsDto>();
     }
 
-    public class PlanBuyingResultOwnershipGroupDetailsDto
+    public class PlanBuyingResultRepFirmDetailsDto
     {
-        public string OwnershipGroupName { get; set; }
+        public string RepFirmName { get; set; }
         public int MarketCount { get; set; }
         public int StationCount { get; set; }
         public int SpotCount { get; set; }

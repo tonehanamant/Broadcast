@@ -161,7 +161,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -326,7 +326,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -491,7 +491,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -656,7 +656,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -821,7 +821,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -986,7 +986,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -1151,7 +1151,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -1316,7 +1316,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -1481,7 +1481,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -1646,7 +1646,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -1811,7 +1811,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -1976,7 +1976,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -2141,7 +2141,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -2306,7 +2306,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -2471,7 +2471,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -2636,7 +2636,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -2801,7 +2801,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -2966,7 +2966,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -3131,7 +3131,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -3296,7 +3296,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -3461,7 +3461,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -3626,7 +3626,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -3791,7 +3791,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -3956,7 +3956,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -4121,7 +4121,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -4286,7 +4286,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -4451,7 +4451,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -4616,7 +4616,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -4781,7 +4781,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -4946,7 +4946,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -5111,7 +5111,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -5276,7 +5276,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -5441,7 +5441,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -5606,7 +5606,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -5714,7 +5714,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -5822,7 +5822,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -5930,7 +5930,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -6038,7 +6038,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -6146,7 +6146,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -6254,7 +6254,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -6362,7 +6362,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -6470,7 +6470,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -6578,7 +6578,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -6686,7 +6686,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -6794,7 +6794,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -6902,7 +6902,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -7010,7 +7010,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -7118,7 +7118,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -7226,7 +7226,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   },
   {
@@ -7334,7 +7334,7 @@
       "OriginMarket": "Albany-Schenectady-Troy",
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   }
 ]

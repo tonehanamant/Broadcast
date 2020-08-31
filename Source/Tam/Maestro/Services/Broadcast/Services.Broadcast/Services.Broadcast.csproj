@@ -496,6 +496,7 @@
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingBandCalculationEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingMarketEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingOwnershipGroupEngine.cs" />
+    <Compile Include="BusinessEngines\PlanBuying\PlanBuyingRepFirmEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingProgramEngine.cs" />
     <Compile Include="BusinessEngines\PlanInventorySourceSortEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricingBandCalculationEngine.cs" />
@@ -650,6 +651,7 @@
     <Compile Include="Entities\Nti\NtiUniverseHeader.cs" />
     <Compile Include="Entities\Plan\Buying\BuyingInventoryGetRequestParametersDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingEstimate.cs" />
+    <Compile Include="Entities\Plan\Buying\PlanBuyingResultRepFirmDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingResultOwnershipGroupDto.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\DaypartWeighting.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\PlanInventorySourceDto.cs" />

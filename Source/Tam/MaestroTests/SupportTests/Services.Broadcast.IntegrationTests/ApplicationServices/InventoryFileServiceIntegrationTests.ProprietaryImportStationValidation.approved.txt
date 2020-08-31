@@ -13,7 +13,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     },
     {
       "Affiliation": "FOX",
@@ -28,7 +28,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     },
     {
       "Affiliation": "IND",
@@ -43,7 +43,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     },
     {
       "Affiliation": "CBS",
@@ -58,7 +58,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     },
     {
       "Affiliation": "ABC",
@@ -73,7 +73,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     },
     {
       "Affiliation": "IND",
@@ -88,7 +88,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     },
     {
       "Affiliation": "ABC",
@@ -103,7 +103,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     },
     {
       "Affiliation": "PBS",
@@ -118,7 +118,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     },
     {
       "Affiliation": "FOX",
@@ -133,7 +133,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     },
     {
       "Affiliation": "PBS",
@@ -148,7 +148,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     },
     {
       "Affiliation": "PBS",
@@ -163,7 +163,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     },
     {
       "Affiliation": "PBS",
@@ -178,7 +178,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     },
     {
       "Affiliation": "ABC",
@@ -193,7 +193,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     },
     {
       "Affiliation": "UMA",
@@ -208,7 +208,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     },
     {
       "Affiliation": "FOX",
@@ -223,7 +223,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     },
     {
       "Affiliation": "IND",
@@ -238,7 +238,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   ],
   "UploadResult": {

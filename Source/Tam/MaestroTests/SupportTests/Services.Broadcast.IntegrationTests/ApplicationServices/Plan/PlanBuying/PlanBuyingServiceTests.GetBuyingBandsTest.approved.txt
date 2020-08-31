@@ -99,7 +99,7 @@
     "ImpressionsPercentage": 100.0,
     "MarketCount": 0,
     "MarketCoveragePercent": 0.0,
-    "Spots": 30,
+    "SpotCount": 30,
     "StationCount": 0
   }
 }

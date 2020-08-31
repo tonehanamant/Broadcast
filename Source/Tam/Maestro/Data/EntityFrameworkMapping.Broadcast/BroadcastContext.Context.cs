@@ -222,5 +222,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<inventory_proprietary_program_names> inventory_proprietary_program_names { get; set; }
         public virtual DbSet<show_type_mappings> show_type_mappings { get; set; }
         public virtual DbSet<plan_version_buying_ownership_group_details> plan_version_buying_ownership_group_details { get; set; }
+        public virtual DbSet<plan_version_buying_rep_firm_details> plan_version_buying_rep_firm_details { get; set; }
     }
 }

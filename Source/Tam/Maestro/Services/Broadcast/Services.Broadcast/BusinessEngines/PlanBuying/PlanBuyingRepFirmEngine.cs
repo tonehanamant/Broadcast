@@ -1,15 +1,10 @@
-﻿using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.Plan;
-using Services.Broadcast.Entities.Plan.Buying;
-using System;
+﻿using Services.Broadcast.Entities.Plan.Buying;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Broadcast.BusinessEngines.PlanBuying
 {
-    public interface IPlanBuyingOwnershipGroupEngine
+    public interface IPlanBuyingRepFirmEngine
     {
         /// <summary>
         /// Calculates the specified inventory.
@@ -17,8 +12,8 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
         /// <param name="inventory">The inventory.</param>
         /// <param name="allocationResult">The allocation result.</param>
         /// <param name="parametersDto">The parameters dto.</param>
-        /// <returns>PlanBuyingResultOwnershipGroupDto object</returns>
-        PlanBuyingResultOwnershipGroupDto Calculate(List<PlanBuyingInventoryProgram> inventory,
+        /// <returns>PlanBuyingResultRepFirmDto object</returns>
+        PlanBuyingResultRepFirmDto Calculate(List<PlanBuyingInventoryProgram> inventory,
             PlanBuyingAllocationResult allocationResult,
             PlanBuyingParametersDto parametersDto);
 
@@ -26,13 +21,13 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
         /// Converts the buying ownership group impressions to user format.
         /// </summary>
         /// <param name="results">The buying ownership group results.</param>
-        void ConvertImpressionsToUserFormat(PlanBuyingResultOwnershipGroupDto results);
+        void ConvertImpressionsToUserFormat(PlanBuyingResultRepFirmDto results);
     }
 
-    public class PlanBuyingOwnershipGroupEngine : IPlanBuyingOwnershipGroupEngine
+    public class PlanBuyingRepFirmEngine : IPlanBuyingRepFirmEngine
     {
         /// <inheritdoc/>
-        public PlanBuyingResultOwnershipGroupDto Calculate(List<PlanBuyingInventoryProgram> inventory, PlanBuyingAllocationResult allocationResult
+        public PlanBuyingResultRepFirmDto Calculate(List<PlanBuyingInventoryProgram> inventory, PlanBuyingAllocationResult allocationResult
             , PlanBuyingParametersDto parametersDto)
         {
             var inventoryDictionary = inventory.ToDictionary(x => x.ManifestId, x => x);
@@ -48,25 +43,25 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
                     s.TotalSpots,
                     s.TotalCostWithMargin,
                     s.TotalImpressions,
-                    inventoryItem.Station.OwnershipGroupName
+                    inventoryItem.Station.RepFirmName
                 };
                 return item;
             }).ToList();
 
             // perform the main aggregation
-            var details = new List<PlanBuyingResultOwnershipGroupDetailsDto>();
-            foreach (var ownershipNameGroup in flatSpots.GroupBy(x=>x.OwnershipGroupName))
+            var details = new List<PlanBuyingResultRepFirmDetailsDto>();
+            foreach (var repFirmGroup in flatSpots.GroupBy(x => x.RepFirmName))
             {
-                var ownershipItems = ownershipNameGroup.ToList();
-                var aggregatedSpotCostWithMargin = ownershipItems.Sum(s => s.TotalCostWithMargin);
-                var aggregatedImpressions = ownershipItems.Sum(s => s.TotalImpressions);
+                var repFirmItems = repFirmGroup.ToList();
+                var aggregatedSpotCostWithMargin = repFirmItems.Sum(s => s.TotalCostWithMargin);
+                var aggregatedImpressions = repFirmItems.Sum(s => s.TotalImpressions);
 
-                var agg = new PlanBuyingResultOwnershipGroupDetailsDto
+                var agg = new PlanBuyingResultRepFirmDetailsDto
                 {
-                    OwnershipGroupName = ownershipNameGroup.Key ?? string.Empty,
-                    MarketCount = ownershipItems.Select(x=>x.MarketCode).Distinct().Count(),
-                    StationCount = ownershipItems.Select(s => s.StationId).Distinct().Count(),
-                    SpotCount = ownershipItems.Sum(k => k.TotalSpots),
+                    RepFirmName = repFirmGroup.Key ?? string.Empty,
+                    MarketCount = repFirmItems.Select(x => x.MarketCode).Distinct().Count(),
+                    StationCount = repFirmItems.Select(s => s.StationId).Distinct().Count(),
+                    SpotCount = repFirmItems.Sum(k => k.TotalSpots),
                     Impressions = aggregatedImpressions,
                     Budget = aggregatedSpotCostWithMargin,
                     Cpm = ProposalMath.CalculateCpm(aggregatedSpotCostWithMargin, aggregatedImpressions),
@@ -81,9 +76,9 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
             details.ForEach(d => d.ImpressionsPercentage = (d.Impressions / totalImpressions) * 100);
 
             // enforce the ordering here for output readability
-            details = details.OrderByDescending(s => s.ImpressionsPercentage).ThenByDescending(x=>x.Budget).ToList();
+            details = details.OrderByDescending(s => s.ImpressionsPercentage).ThenByDescending(x => x.Budget).ToList();
 
-            var result = new PlanBuyingResultOwnershipGroupDto
+            var result = new PlanBuyingResultRepFirmDto
             {
                 PlanVersionId = allocationResult.PlanVersionId,
                 BuyingJobId = allocationResult.JobId,
@@ -94,7 +89,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
         }
 
         /// <inheritdoc/>
-        public void ConvertImpressionsToUserFormat(PlanBuyingResultOwnershipGroupDto results)
+        public void ConvertImpressionsToUserFormat(PlanBuyingResultRepFirmDto results)
         {
             results.Totals.Impressions /= 1000;
 

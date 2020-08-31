@@ -9,17 +9,13 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
-using Services.Broadcast.Entities.QuoteReport;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.ReportGenerators.BuyingResults;
-using Services.Broadcast.ReportGenerators.Quote;
 using Services.Broadcast.Repositories;
-using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -77,6 +73,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="planId">The plan identifier.</param>
         /// <returns>PlanBuyingResultOwnershipGroupDto object</returns>
         PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroups(int planId);
+
+        /// <summary>
+        /// Gets the buying rep firms.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <returns>PlanBuyingResultRepFirmDto object</returns>
+        PlanBuyingResultRepFirmDto GetBuyingRepFirms(int planId);
 
         /// <summary>
         /// For troubleshooting
@@ -172,8 +175,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IPlanBuyingProgramEngine _PlanBuyingProgramEngine;
         private readonly IPlanBuyingMarketResultsEngine _PlanBuyingMarketResultsEngine;
         private readonly IPlanBuyingOwnershipGroupEngine _PlanBuyingOwnershipGroupEngine;
+        private readonly IPlanBuyingRepFirmEngine _PlanBuyingRepFirmEngine;
         private readonly IPlanBuyingRequestLogClient _BuyingRequestLogClient;
-        private readonly IPlanValidator _PlanValidator;
 
         public PlanBuyingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -189,8 +192,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                   IPlanBuyingProgramEngine planBuyingProgramEngine,
                                   IPlanBuyingMarketResultsEngine planBuyingMarketResultsEngine,
                                   IPlanBuyingRequestLogClient buyingRequestLogClient,
-                                  IPlanValidator planValidator,
-                                  IPlanBuyingOwnershipGroupEngine planBuyingOwnershipGroupEngine)
+                                  IPlanBuyingOwnershipGroupEngine planBuyingOwnershipGroupEngine,
+                                  IPlanBuyingRepFirmEngine planBuyingRepFirmEngine)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _PlanBuyingRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanBuyingRepository>();
@@ -212,9 +215,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanBuyingStationCalculationEngine = planBuyingStationCalculationEngine;
             _PlanBuyingMarketResultsEngine = planBuyingMarketResultsEngine;
             _BuyingRequestLogClient = buyingRequestLogClient;
-            _PlanValidator = planValidator;
             _PlanBuyingOwnershipGroupEngine = planBuyingOwnershipGroupEngine;
             _PlanBuyingProgramEngine = planBuyingProgramEngine;
+            _PlanBuyingRepFirmEngine = planBuyingRepFirmEngine;
         }
 
         public ReportOutput GenerateBuyingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)
@@ -835,11 +838,21 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     return buyingOwnershipGroupResults;
                 });
 
+                var aggregateRepFirmResultsTask = new Task<PlanBuyingResultRepFirmDto>(() =>
+                {
+                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_OWNERSHIP_GROUP_RESULTS);
+                    var buyingOwnershipGroupResults = _PlanBuyingRepFirmEngine.Calculate(inventory, allocationResult
+                        , planBuyingParametersDto);
+                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_AGGREGATING_OWNERSHIP_GROUP_RESULTS);
+                    return buyingOwnershipGroupResults;
+                });
+
                 calculateBuyingProgramsTask.Start();
                 calculateBuyingBandsTask.Start();
                 calculateBuyingStationsTask.Start();
                 aggregateMarketResultsTask.Start();
                 aggregateOwnershipGroupResultsTask.Start();
+                aggregateRepFirmResultsTask.Start();
 
                 token.ThrowIfCancellationRequested();
 
@@ -849,6 +862,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 var calculateBuyingStationTaskResult = calculateBuyingStationsTask.GetAwaiter().GetResult();
                 var aggregateMarketResultsTaskResult = aggregateMarketResultsTask.GetAwaiter().GetResult();
                 var aggregateOwnershipGroupResultsTaskResult = aggregateOwnershipGroupResultsTask.GetAwaiter().GetResult();
+                var aggregateRepFirmResultsTaskResult = aggregateRepFirmResultsTask.GetAwaiter().GetResult();
 
                 using (var transaction = new TransactionScopeWrapper())
                 {
@@ -875,6 +889,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_OWNERSHIP_GROUP_RESULTS);
                     _PlanBuyingRepository.SavePlanBuyingOwnershipGroupResults(aggregateOwnershipGroupResultsTaskResult);
                     diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_OWNERSHIP_GROUP_RESULTS);
+
+                    diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_REP_FIRM_RESULTS);
+                    _PlanBuyingRepository.SavePlanBuyingRepFirmResults(aggregateRepFirmResultsTaskResult);
+                    diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_REP_FIRM_RESULTS);
 
                     diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
                     var buyingJob = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
@@ -1843,7 +1861,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return null;
             }
 
-            _PlanBuyingMarketResultsEngine.ConvertImprssionsToUserFormat(results);
+            _PlanBuyingMarketResultsEngine.ConvertImpressionsToUserFormat(results);
 
             return results;
         }
@@ -1882,6 +1900,28 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             _PlanBuyingOwnershipGroupEngine.ConvertImpressionsToUserFormat(results);
+
+            return results;
+        }
+
+        /// <inheritdoc />
+        public PlanBuyingResultRepFirmDto GetBuyingRepFirms(int planId)
+        {
+            var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
+
+            if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
+            {
+                return null;
+            }
+
+            PlanBuyingResultRepFirmDto results = _PlanBuyingRepository.GetBuyingRepFirmsByJobId(job.Id);
+
+            if (results == null)
+            {
+                return null;
+            }
+
+            _PlanBuyingRepFirmEngine.ConvertImpressionsToUserFormat(results);
 
             return results;
         }

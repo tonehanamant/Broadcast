@@ -103,12 +103,12 @@ namespace Services.Broadcast.Repositories
         /// Updates the station owner and sales group names.
         /// </summary>
         /// <param name="ownerName">Name of the owner.</param>
-        /// <param name="salesGroupName">Name of the sales group.</param>
+        /// <param name="repFirmName">Name of the sales group.</param>
         /// <param name="stationId">Station id</param>
         /// <param name="isTrueInd">True if the station is a 'True Independent' station.</param>
         /// <param name="user">The user making the update.</param>
         /// <param name="timeStamp">The time stamp when the update was done.</param>
-        void UpdateStation(string ownerName, string salesGroupName, int stationId, bool isTrueInd, string user, DateTime timeStamp);
+        void UpdateStation(string ownerName, string repFirmName, int stationId, bool isTrueInd, string user, DateTime timeStamp);
     }
 
     public class StationRepository : BroadcastRepositoryBase, IStationRepository
@@ -298,7 +298,7 @@ namespace Services.Broadcast.Repositories
                 });
         }
 
-        public void UpdateStation(string ownerName, string salesGroupName, int stationId, bool isTrueInd, string user, DateTime timeStamp)
+        public void UpdateStation(string ownerName, string repFirmName, int stationId, bool isTrueInd, string user, DateTime timeStamp)
         {
             _InReadUncommitedTransaction(
                 context =>
@@ -307,7 +307,7 @@ namespace Services.Broadcast.Repositories
                     station.modified_by = user;
                     station.modified_date = timeStamp;
                     station.owner_name = ownerName;
-                    station.sales_group_name = salesGroupName;
+                    station.rep_firm_name = repFirmName;
                     station.is_true_ind = isTrueInd;
                     context.SaveChanges();
                 });
@@ -417,7 +417,7 @@ namespace Services.Broadcast.Repositories
                 LegacyCallLetters = newStation.legacy_call_letters,
                 ModifiedDate = newStation.modified_date,
                 OwnershipGroupName = newStation.owner_name,
-                SalesGroupName = newStation.sales_group_name,
+                RepFirmName = newStation.rep_firm_name,
                 IsTrueInd = newStation.is_true_ind
             };
         }
@@ -434,7 +434,7 @@ namespace Services.Broadcast.Repositories
                 market_code =  (short?)station.MarketCode,
                 modified_by = user,
                 owner_name = station.OwnershipGroupName,
-                sales_group_name = station.SalesGroupName,
+                rep_firm_name = station.RepFirmName,
                 is_true_ind = station.IsTrueInd
             };
         }

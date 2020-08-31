@@ -617,7 +617,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": null,
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": null
     }
   }
 ]

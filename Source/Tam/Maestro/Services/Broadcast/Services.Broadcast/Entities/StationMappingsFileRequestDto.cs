@@ -21,6 +21,6 @@ namespace Services.Broadcast.Entities
         [ExcelColumn(9)]
         public string OwnershipGroupName { get; set; }
         [ExcelColumn(10)]
-        public string SalesGroupName { get; set; }
+        public string RepFirmName { get; set; }
     }
 }

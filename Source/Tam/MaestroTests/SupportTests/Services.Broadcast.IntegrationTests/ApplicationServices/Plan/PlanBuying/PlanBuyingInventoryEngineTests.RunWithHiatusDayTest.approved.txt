@@ -103,9 +103,9 @@
       "MarketCode": 101,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "OwnershipGroupName": null,
+      "OwnershipGroupName": "Ownership group 3",
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": "Sales group 4"
     },
     "Unit": null
   },
@@ -213,9 +213,9 @@
       "MarketCode": 100,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "OwnershipGroupName": null,
+      "OwnershipGroupName": "Ownership group 3",
       "RateDataThrough": null,
-      "SalesGroupName": null
+      "RepFirmName": "Sales group 4"
     },
     "Unit": null
   }

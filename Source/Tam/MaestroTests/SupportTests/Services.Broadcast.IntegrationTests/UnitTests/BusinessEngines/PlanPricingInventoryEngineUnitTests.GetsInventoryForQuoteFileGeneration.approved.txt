@@ -96,7 +96,7 @@
         "OriginMarket": null,
         "OwnershipGroupName": null,
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "RepFirmName": null
       }
     },
     {
@@ -187,7 +187,7 @@
         "OriginMarket": null,
         "OwnershipGroupName": null,
         "RateDataThrough": null,
-        "SalesGroupName": null
+        "RepFirmName": null
       }
     }
   ],
@@ -210,7 +210,7 @@
             "ModifiedDate": null,
             "ManifestMaxEndDate": null,
             "OwnershipGroupName": null,
-            "SalesGroupName": null,
+            "RepFirmName": null,
             "IsTrueInd": false
           },
           "ManifestRates": [
@@ -287,7 +287,7 @@
             "ModifiedDate": null,
             "ManifestMaxEndDate": null,
             "OwnershipGroupName": null,
-            "SalesGroupName": null,
+            "RepFirmName": null,
             "IsTrueInd": false
           },
           "ManifestRates": [
@@ -397,7 +397,7 @@
             "ModifiedDate": null,
             "ManifestMaxEndDate": null,
             "OwnershipGroupName": null,
-            "SalesGroupName": null,
+            "RepFirmName": null,
             "IsTrueInd": false
           },
           "ManifestRates": [
@@ -496,7 +496,7 @@
             "ModifiedDate": null,
             "ManifestMaxEndDate": null,
             "OwnershipGroupName": null,
-            "SalesGroupName": null,
+            "RepFirmName": null,
             "IsTrueInd": false
           },
           "ManifestRates": [

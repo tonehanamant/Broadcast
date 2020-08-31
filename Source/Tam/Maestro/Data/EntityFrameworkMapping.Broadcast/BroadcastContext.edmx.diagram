@@ -510,6 +510,8 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_station_details_plan_version_buying_results" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_ownership_group_details" Width="1.5" PointX="10" PointY="93" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_ownership_group_details_plan_version_buying_results" />
+        <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_rep_firm_details" Width="1.5" PointX="7.625" PointY="97.5" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_rep_firm_details_plan_version_buying_results" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

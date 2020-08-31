@@ -6,5 +6,5 @@
   "LegacyCallLetters": "KOB",
   "MarketCode": 390,
   "OwnershipGroupName": null,
-  "SalesGroupName": null
+  "RepFirmName": null
 }

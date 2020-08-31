@@ -5,10 +5,10 @@
       "Cpm": 18.4867,
       "Impressions": 755.65,
       "ImpressionsPercentage": 100.0,
-      "Markets": 2,
+      "MarketCount": 2,
       "OwnershipGroupName": "Ownership group 3",
-      "Spots": 30,
-      "Stations": 2
+      "SpotCount": 30,
+      "StationCount": 2
     }
   ],
   "Totals": {
@@ -19,7 +19,7 @@
     "ImpressionsPercentage": 100.0,
     "MarketCount": 0,
     "MarketCoveragePercent": 0.0,
-    "Spots": 0,
+    "SpotCount": 0,
     "StationCount": 0
   }
 }

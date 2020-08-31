@@ -287,6 +287,51 @@ BEGIN
 END
 /*************************************** END BP-894 *******************************************************/
 
+/*************************************** START BP-898 *******************************************************/
+IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_rep_firm_details'))
+BEGIN
+	CREATE TABLE [dbo].[plan_version_buying_rep_firm_details](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_buying_result_id] [int] NOT NULL,	
+		[rep_firm_name] [NVARCHAR] (100) NOT NULL,
+		[markets] [int] NOT NULL,
+		[stations] [int] NOT NULL,
+		[spots] [int] NOT NULL,
+		[impressions] [float] NOT NULL,
+		[cpm] [money] NOT NULL,
+		[budget] [money] NOT NULL,
+		[impressions_percentage] [float] NOT NULL,
+	 CONSTRAINT [PK_plan_version_buying_rep_firm_details] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+	ALTER TABLE [dbo].[plan_version_buying_rep_firm_details] ADD CONSTRAINT [FK_plan_version_buying_rep_firm_details_plan_version_buying_results] FOREIGN KEY([plan_version_buying_result_id])
+	REFERENCES [dbo].[plan_version_buying_results] ([id])
+END
+
+IF EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('stations') AND name = 'sales_group_name')
+BEGIN
+	EXEC sp_rename [dbo.stations.sales_group_name], [rep_firm_name], 'COLUMN'
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_buying_market_details') AND name = 'market_name')
+BEGIN
+	ALTER TABLE plan_version_buying_market_details
+	ADD market_name varchar(31) NULL
+	EXEC('UPDATE d
+		  SET d.market_name = m.geography_name
+		  FROM plan_version_buying_market_details d
+		  JOIN market_coverages mc on mc.percentage_of_us = d.market_coverage_percent and mc.rank = d.rank
+		  JOIN markets m on mc.market_code = m.market_code')
+	EXEC('UPDATE plan_version_buying_market_details
+		  SET market_name = ''Unknown Market''
+		  WHERE market_name is NULL')
+    ALTER TABLE plan_version_buying_market_details
+	ALTER COLUMN market_name varchar(31) NOT NULL
+END
+/*************************************** END BP-898 *******************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

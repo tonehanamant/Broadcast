@@ -6,5 +6,5 @@
   "LegacyCallLetters": "OOCO",
   "MarketCode": 250,
   "OwnershipGroupName": "Ownership group 3",
-  "SalesGroupName": "Sales group 3"
+  "RepFirmName": "Sales group 3"
 }

@@ -11,7 +11,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": "Ownership group 1",
       "RateDataThrough": null,
-      "SalesGroupName": "Sales group 1"
+      "RepFirmName": "Sales group 1"
     },
     {
       "Affiliation": "IND",
@@ -24,7 +24,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": "Ownership group 2",
       "RateDataThrough": null,
-      "SalesGroupName": "Sales group 2"
+      "RepFirmName": "Sales group 2"
     },
     {
       "Affiliation": "IND",
@@ -37,7 +37,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": "Ownership group 3",
       "RateDataThrough": null,
-      "SalesGroupName": "Sales group 3"
+      "RepFirmName": "Sales group 3"
     },
     {
       "Affiliation": "IND",
@@ -50,7 +50,7 @@
       "OriginMarket": "San Francisco-Oak-San Jose",
       "OwnershipGroupName": "KRON",
       "RateDataThrough": null,
-      "SalesGroupName": "Sales group 2"
+      "RepFirmName": "Sales group 2"
     },
     {
       "Affiliation": "IND",
@@ -63,7 +63,7 @@
       "OriginMarket": "Albuquerque-Santa Fe",
       "OwnershipGroupName": "Ownership group 3",
       "RateDataThrough": null,
-      "SalesGroupName": "Sales group 3"
+      "RepFirmName": "Sales group 3"
     },
     {
       "Affiliation": "IND",
@@ -76,7 +76,7 @@
       "OriginMarket": "Louisville",
       "OwnershipGroupName": "YMYO",
       "RateDataThrough": null,
-      "SalesGroupName": "Sales group 5"
+      "RepFirmName": "Sales group 5"
     },
     {
       "Affiliation": "CBS",
@@ -89,7 +89,7 @@
       "OriginMarket": "Grand Junction-Montrose",
       "OwnershipGroupName": "Ownership group 3",
       "RateDataThrough": null,
-      "SalesGroupName": "Sales group 3"
+      "RepFirmName": "Sales group 3"
     },
     {
       "Affiliation": "IND",
@@ -102,7 +102,7 @@
       "OriginMarket": "Odessa-Midland",
       "OwnershipGroupName": "Ownership group 3",
       "RateDataThrough": null,
-      "SalesGroupName": "Sales group 3"
+      "RepFirmName": "Sales group 3"
     }
   ],
   "before": [
@@ -117,20 +117,20 @@
       "OriginMarket": "San Francisco-Oak-San Jose",
       "OwnershipGroupName": "KRON",
       "RateDataThrough": null,
-      "SalesGroupName": "Sales group 2"
+      "RepFirmName": "Sales group 2"
     },
     {
       "Affiliation": "IND",
       "CallLetters": "KASA-TV 29.1",
       "Code": 11800,
-      "IsTrueInd": true,
+      "IsTrueInd": false,
       "LegacyCallLetters": "RASA",
       "ManifestMaxEndDate": null,
       "MarketCode": 390,
       "OriginMarket": "Albuquerque-Santa Fe",
-      "OwnershipGroupName": "Ownership group 3",
+      "OwnershipGroupName": "Ramar Communications",
       "RateDataThrough": null,
-      "SalesGroupName": "Sales group 3"
+      "RepFirmName": "Direct"
     },
     {
       "Affiliation": "IND",
@@ -141,9 +141,9 @@
       "ManifestMaxEndDate": null,
       "MarketCode": 129,
       "OriginMarket": "Louisville",
-      "OwnershipGroupName": "YMYO",
+      "OwnershipGroupName": "BLOCK COMMUNICATIONS INC",
       "RateDataThrough": null,
-      "SalesGroupName": "Sales group 5"
+      "RepFirmName": "Cox"
     },
     {
       "Affiliation": "CBS",
@@ -156,7 +156,7 @@
       "OriginMarket": "Grand Junction-Montrose",
       "OwnershipGroupName": "Ownership group 3",
       "RateDataThrough": null,
-      "SalesGroupName": "Sales group 3"
+      "RepFirmName": "Sales group 3"
     },
     {
       "Affiliation": "IND",
@@ -169,7 +169,7 @@
       "OriginMarket": "Odessa-Midland",
       "OwnershipGroupName": "Ownership group 3",
       "RateDataThrough": null,
-      "SalesGroupName": "Sales group 3"
+      "RepFirmName": "Sales group 3"
     }
   ],
   "testCallsigns": [

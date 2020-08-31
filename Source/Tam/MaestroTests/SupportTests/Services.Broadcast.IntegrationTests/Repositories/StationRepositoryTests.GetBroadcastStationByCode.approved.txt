@@ -9,5 +9,5 @@
   "OriginMarket": "Grand Junction-Montrose",
   "OwnershipGroupName": "Ownership group 3",
   "RateDataThrough": null,
-  "SalesGroupName": "Sales group 3"
+  "RepFirmName": "Sales group 3"
 }

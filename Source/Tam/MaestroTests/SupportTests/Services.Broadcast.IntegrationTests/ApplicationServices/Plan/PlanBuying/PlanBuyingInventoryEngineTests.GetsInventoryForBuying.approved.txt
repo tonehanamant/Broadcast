@@ -123,7 +123,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": "Ownership group 3",
       "RateDataThrough": null,
-      "SalesGroupName": "Sales group 4"
+      "RepFirmName": "Sales group 4"
     },
     "Unit": null
   },
@@ -251,7 +251,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": "Ownership group 3",
       "RateDataThrough": null,
-      "SalesGroupName": "Sales group 4"
+      "RepFirmName": "Sales group 4"
     },
     "Unit": null
   },
@@ -379,7 +379,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": "Ownership group 3",
       "RateDataThrough": null,
-      "SalesGroupName": "Sales group 4"
+      "RepFirmName": "Sales group 4"
     },
     "Unit": null
   },
@@ -507,7 +507,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": "Ownership group 3",
       "RateDataThrough": null,
-      "SalesGroupName": "Sales group 4"
+      "RepFirmName": "Sales group 4"
     },
     "Unit": null
   },
@@ -635,7 +635,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": "Ownership group 3",
       "RateDataThrough": null,
-      "SalesGroupName": "Sales group 4"
+      "RepFirmName": "Sales group 4"
     },
     "Unit": null
   },
@@ -763,7 +763,7 @@
       "OriginMarket": null,
       "OwnershipGroupName": "Ownership group 3",
       "RateDataThrough": null,
-      "SalesGroupName": "Sales group 4"
+      "RepFirmName": "Sales group 4"
     },
     "Unit": null
   }

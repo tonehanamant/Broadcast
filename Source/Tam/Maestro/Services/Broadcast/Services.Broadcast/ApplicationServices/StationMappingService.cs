@@ -95,7 +95,7 @@ namespace Services.Broadcast.ApplicationServices
                 throw new ApplicationException(
                     $"Station{(multiple ? "s" : string.Empty)} {string.Join(",", exceedingLimit)} {(multiple ? "have" : "has")} ownership name greater than 100 chars.");
             }
-            exceedingLimit = stationMappings.Where(x => x.SalesGroupName != null && x.SalesGroupName.Length > 100)
+            exceedingLimit = stationMappings.Where(x => x.RepFirmName != null && x.RepFirmName.Length > 100)
                 .Select(x => x.CadentCallLetters);
             if (exceedingLimit.Count() > 0)
             {
@@ -131,7 +131,7 @@ namespace Services.Broadcast.ApplicationServices
         private void _ValidateSalesAndOwnerGroupName(List<StationMappingsFileRequestDto> items)
         {
             string cadentCallLetters = items.First().CadentCallLetters;
-            if (items.Any(x => string.IsNullOrWhiteSpace(x.SalesGroupName)))
+            if (items.Any(x => string.IsNullOrWhiteSpace(x.RepFirmName)))
             {
                 throw new ApplicationException($"Station {cadentCallLetters} does not have sales group populated");
             }
@@ -139,7 +139,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 throw new ApplicationException($"Station {cadentCallLetters} does not have ownership group populated");
             }
-            if (items.Select(x=>x.SalesGroupName.Trim()).Distinct().Count() > 1)
+            if (items.Select(x=>x.RepFirmName.Trim()).Distinct().Count() > 1)
             {
                 throw new ApplicationException($"Station {cadentCallLetters} cannot have multiple sales groups");
             }
@@ -179,7 +179,7 @@ namespace Services.Broadcast.ApplicationServices
                 LegacyCallLetters = currentStationGroup.CadentCallLetters,
                 ModifiedDate = createdDate,
                 IsTrueInd = _IsStationATrueInd(currentStationGroup),
-                SalesGroupName = currentStationGroup.SalesGroupName,
+                RepFirmName = currentStationGroup.RepFirmName,
                 OwnershipGroupName = currentStationGroup.OwnershipGroupName
             };
 
@@ -194,7 +194,7 @@ namespace Services.Broadcast.ApplicationServices
             else
             {
                 _StationRepository.UpdateStation(stationDtoToSave.OwnershipGroupName,
-                    stationDtoToSave.SalesGroupName, station.Id, stationDtoToSave.IsTrueInd, userName, createdDate);
+                    stationDtoToSave.RepFirmName, station.Id, stationDtoToSave.IsTrueInd, userName, createdDate);
             }
 
             // Since we allow multiple map sets for a station, remove the existing ones, and add the new ones, to avoid duplicate mappings

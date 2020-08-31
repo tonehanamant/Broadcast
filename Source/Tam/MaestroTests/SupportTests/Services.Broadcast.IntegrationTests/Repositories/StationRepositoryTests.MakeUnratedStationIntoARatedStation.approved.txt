@@ -9,5 +9,5 @@
   "OriginMarket": "Burlington-Plattsburgh",
   "OwnershipGroupName": "Ownership group 3",
   "RateDataThrough": null,
-  "SalesGroupName": "Sales group 2"
+  "RepFirmName": "Sales group 2"
 }

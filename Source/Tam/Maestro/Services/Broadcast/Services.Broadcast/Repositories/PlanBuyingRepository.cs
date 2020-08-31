@@ -201,6 +201,19 @@ namespace Services.Broadcast.Repositories
         /// <param name="id">The identifier.</param>
         /// <returns>PlanBuyingResultOwnershipGroupDto object</returns>
         PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroupsByJobId(int id);
+
+        /// <summary>
+        /// Saves the plan buying rep firm results.
+        /// </summary>
+        /// <param name="dto">The dto.</param>
+        void SavePlanBuyingRepFirmResults(PlanBuyingResultRepFirmDto dto);
+
+        /// <summary>
+        /// Gets the buying rep firms by job identifier.
+        /// </summary>
+        /// <param name="jobId">The job identifier.</param>
+        /// <returns>PlanBuyingResultRepFirmDto object</returns>
+        PlanBuyingResultRepFirmDto GetBuyingRepFirmsByJobId(int jobId);
     }
 
     public class PlanBuyingRepository : BroadcastRepositoryBase, IPlanBuyingRepository
@@ -638,7 +651,7 @@ namespace Services.Broadcast.Repositories
                         AvgCpm = result.total_avg_cpm,
                         Budget = result.total_budget,
                         Impressions = result.total_impressions,
-                        Spots = result.total_spots
+                        SpotCount = result.total_spots
                     },
                     Details = result.plan_version_buying_band_details.Select(r => new PlanBuyingBandDetailDto
                     {
@@ -729,7 +742,7 @@ namespace Services.Broadcast.Repositories
                         MarketCount = entity.total_market_count,
                         MarketCoveragePercent = entity.total_market_coverage_percent,
                         StationCount = entity.total_station_count,
-                        Spots = entity.total_spots,
+                        SpotCount = entity.total_spots,
                         Impressions = entity.total_impressions,
                         AvgCpm = Convert.ToDecimal(entity.total_avg_cpm),
                         Budget = Convert.ToDecimal(entity.total_budget)
@@ -738,13 +751,14 @@ namespace Services.Broadcast.Repositories
                     {
                         Rank = s.rank,
                         MarketCoveragePercent = s.market_coverage_percent,
-                        Stations = s.stations,
-                        Spots = s.spots,
+                        StationCount = s.stations,
+                        SpotCount = s.spots,
                         Impressions = s.impressions,
                         Cpm = Convert.ToDecimal(s.cpm),
                         Budget = Convert.ToDecimal(s.budget),
                         ShareOfVoiceGoalPercentage = s.share_of_voice_goal_percentage,
-                        ImpressionsPercentage = s.impressions_percentage
+                        ImpressionsPercentage = s.impressions_percentage,
+                        MarketName = s.market_name
                     }).ToList()
                 };
                 return dto;
@@ -766,14 +780,15 @@ namespace Services.Broadcast.Repositories
                 buyingResults.plan_version_buying_market_details = dto.Details.Select(d => new plan_version_buying_market_details
                 {
                     market_coverage_percent = d.MarketCoveragePercent,
-                    stations = d.Stations,
-                    spots = d.Spots,
+                    stations = d.StationCount,
+                    spots = d.SpotCount,
                     impressions = d.Impressions,
                     cpm = Convert.ToDouble(d.Cpm),
                     budget = Convert.ToDouble(d.Budget),
                     impressions_percentage = d.ImpressionsPercentage,
                     share_of_voice_goal_percentage = d.ShareOfVoiceGoalPercentage,
-                    rank = d.Rank
+                    rank = d.Rank,
+                    market_name = d.MarketName
                 }).ToList();
 
                 context.SaveChanges();
@@ -811,7 +826,7 @@ namespace Services.Broadcast.Repositories
                     total_impressions = buyingResult.Totals.Impressions,
                     plan_version_buying_job_id = buyingResult.JobId,
                     goal_fulfilled_by_proprietary = buyingResult.GoalFulfilledByProprietary,
-                    total_spots = buyingResult.Totals.Spots,
+                    total_spots = buyingResult.Totals.SpotCount,
                     total_market_coverage_percent = buyingResult.Totals.MarketCoveragePercent
                 };
 
@@ -834,7 +849,7 @@ namespace Services.Broadcast.Repositories
                         market_count = program.MarketCount,
                         station_count = program.StationCount,
                         budget = program.Budget,
-                        spots = program.Spots,
+                        spots = program.SpotCount,
                         impressions = program.Impressions
                     };
 
@@ -871,7 +886,7 @@ namespace Services.Broadcast.Repositories
                         AvgCpm = result.total_avg_cpm,
                         AvgImpressions = result.total_avg_impressions,
                         Budget = result.total_budget,
-                        Spots = result.total_spots,
+                        SpotCount = result.total_spots,
                         Impressions = result.total_impressions
                     },
                     Details = result.plan_version_buying_result_spots.Select(r => new PlanBuyingProgramProgramDto
@@ -942,7 +957,7 @@ namespace Services.Broadcast.Repositories
                         Budget = result.total_budget,
                         AvgCpm = result.total_avg_cpm,
                         Impressions = result.total_impressions,
-                        Spots = result.total_spots,
+                        SpotCount = result.total_spots,
                         StationCount = result.total_station_count
                     },
                     Details = result.plan_version_buying_station_details.Select(d => new PlanBuyingStationDto
@@ -1123,14 +1138,14 @@ namespace Services.Broadcast.Repositories
                     .Single();
                 buyingResults.plan_version_buying_ownership_group_details = dto.Details.Select(d => new plan_version_buying_ownership_group_details
                 {
-                    stations = d.Stations,
-                    spots = d.Spots,
+                    stations = d.StationCount,
+                    spots = d.SpotCount,
                     impressions = d.Impressions,
                     cpm = d.Cpm,
                     budget = d.Budget,
                     impressions_percentage = d.ImpressionsPercentage,
                     ownership_group_name = d.OwnershipGroupName,
-                    markets = d.Markets
+                    markets = d.MarketCount
                 }).ToList();
 
                 context.SaveChanges();
@@ -1167,10 +1182,73 @@ namespace Services.Broadcast.Repositories
                         Cpm = d.cpm,
                         Impressions = d.impressions,
                         ImpressionsPercentage = d.impressions_percentage,
-                        Markets = d.markets,
-                        Spots = d.spots,
-                        Stations = d.stations,
+                        MarketCount = d.markets,
+                        SpotCount = d.spots,
+                        StationCount = d.stations,
                         OwnershipGroupName = d.ownership_group_name
+                    }).OrderByDescending(p => p.ImpressionsPercentage).ThenByDescending(p => p.Budget).ToList()
+                };
+            });
+        }
+
+        /// <inheritdoc/>
+        public void SavePlanBuyingRepFirmResults(PlanBuyingResultRepFirmDto dto)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var buyingResults = context.plan_version_buying_results
+                    .Where(x => x.plan_version_buying_job_id == dto.BuyingJobId)
+                    .Single();
+                buyingResults.plan_version_buying_rep_firm_details = dto.Details.Select(d => new plan_version_buying_rep_firm_details
+                {
+                    stations = d.StationCount,
+                    spots = d.SpotCount,
+                    impressions = d.Impressions,
+                    cpm = d.Cpm,
+                    budget = d.Budget,
+                    impressions_percentage = d.ImpressionsPercentage,
+                    rep_firm_name = d.RepFirmName,
+                    markets = d.MarketCount
+                }).ToList();
+
+                context.SaveChanges();
+            });
+        }
+
+        /// <inheritdoc/>
+        public PlanBuyingResultRepFirmDto GetBuyingRepFirmsByJobId(int jobId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var result = context.plan_version_buying_results
+                    .Include(p => p.plan_version_buying_rep_firm_details)
+                    .Where(x => x.plan_version_buying_job_id == jobId)
+                    .OrderByDescending(p => p.id)
+                    .FirstOrDefault();
+
+                if (result == null)
+                    return null;
+
+                return new PlanBuyingResultRepFirmDto
+                {
+                    BuyingJobId = result.plan_version_buying_job_id,
+                    PlanVersionId = result.plan_version_buying_job.plan_version_id.Value,
+                    Totals = new PlanBuyingProgramTotalsDto
+                    {
+                        Budget = result.total_budget,
+                        AvgCpm = result.total_avg_cpm,
+                        Impressions = result.total_impressions
+                    },
+                    Details = result.plan_version_buying_rep_firm_details.Select(d => new PlanBuyingResultRepFirmDetailsDto
+                    {
+                        Budget = d.budget,
+                        Cpm = d.cpm,
+                        Impressions = d.impressions,
+                        ImpressionsPercentage = d.impressions_percentage,
+                        MarketCount = d.markets,
+                        SpotCount = d.spots,
+                        StationCount = d.stations,
+                        RepFirmName = d.rep_firm_name
                     }).OrderByDescending(p => p.ImpressionsPercentage).ThenByDescending(p => p.Budget).ToList()
                 };
             });

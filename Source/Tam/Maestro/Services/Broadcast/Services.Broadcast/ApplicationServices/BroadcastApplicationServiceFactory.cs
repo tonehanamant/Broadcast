@@ -286,6 +286,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPlanBuyingProgramEngine, PlanBuyingProgramEngine>();
             unityContainer.RegisterType<IPlanBuyingOwnershipGroupEngine, PlanBuyingOwnershipGroupEngine>();
             unityContainer.RegisterType<IPlanBuyingMarketResultsEngine, PlanBuyingMarketEngine>();
+            unityContainer.RegisterType<IPlanBuyingRepFirmEngine, PlanBuyingRepFirmEngine>();
 
             //launch darkly
             unityContainer.RegisterType<ILaunchDarklyClient, LaunchDarklyClient>();

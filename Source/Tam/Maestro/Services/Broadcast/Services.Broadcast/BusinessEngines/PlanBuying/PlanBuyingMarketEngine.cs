@@ -29,7 +29,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
         /// Converts the buying market impressions to user format.
         /// </summary>
         /// <param name="results">The buying market results.</param>
-        void ConvertImprssionsToUserFormat(PlanBuyingResultMarketsDto results);
+        void ConvertImpressionsToUserFormat(PlanBuyingResultMarketsDto results);
     }
 
     public class PlanBuyingMarketEngine : IPlanBuyingMarketResultsEngine
@@ -74,10 +74,11 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
 
                 var agg = new PlanBuyingResultMarketDetailsDto
                 {
+                    MarketName = marketCoverage.Market,
                     Rank = marketCoverage.Rank ?? -2,
                     MarketCoveragePercent = marketCoverage.PercentageOfUS,
-                    Stations = marketGroup.Select(s => s.StationId).Distinct().Count(),
-                    Spots = marketGroup.Sum(k => k.TotalSpots),
+                    StationCount = marketGroup.Select(s => s.StationId).Distinct().Count(),
+                    SpotCount = marketGroup.Sum(k => k.TotalSpots),
                     Impressions = aggregatedImpressions,
                     Budget = aggregatedSpotCostWithMargin,
                     Cpm = ProposalMath.CalculateCpm(aggregatedSpotCostWithMargin, aggregatedImpressions),
@@ -111,7 +112,7 @@ namespace Services.Broadcast.BusinessEngines.PlanBuying
         }
 
         /// <inheritdoc/>
-        public void ConvertImprssionsToUserFormat(PlanBuyingResultMarketsDto results)
+        public void ConvertImpressionsToUserFormat(PlanBuyingResultMarketsDto results)
         {
             results.Totals.Impressions /= 1000;
 

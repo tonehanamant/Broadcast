@@ -6,5 +6,5 @@
   "LegacyCallLetters": "TOOCO",
   "MarketCode": null,
   "OwnershipGroupName": null,
-  "SalesGroupName": null
+  "RepFirmName": null
 }

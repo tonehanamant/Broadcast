@@ -6,10 +6,11 @@
       "Impressions": 748.85,
       "ImpressionsPercentage": 99.10011249,
       "MarketCoveragePercent": 10.0,
+      "MarketName": "New York",
       "Rank": 1,
       "ShareOfVoiceGoalPercentage": 34.5,
-      "Spots": 15,
-      "Stations": 1
+      "SpotCount": 15,
+      "StationCount": 1
     },
     {
       "Budget": 464.8125,
@@ -17,10 +18,11 @@
       "Impressions": 6.8,
       "ImpressionsPercentage": 0.89988751,
       "MarketCoveragePercent": 0.328,
+      "MarketName": "Portland-Auburn",
       "Rank": 79,
       "ShareOfVoiceGoalPercentage": 22.2,
-      "Spots": 15,
-      "Stations": 1
+      "SpotCount": 15,
+      "StationCount": 1
     }
   ],
   "Totals": {
@@ -31,7 +33,7 @@
     "ImpressionsPercentage": 100.0,
     "MarketCount": 2,
     "MarketCoveragePercent": 10.328,
-    "Spots": 30,
+    "SpotCount": 30,
     "StationCount": 2
   }
 }

@@ -556,6 +556,9 @@
     <Compile Include="plan_version_buying_parameters_inventory_source_type_percentages.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="plan_version_buying_rep_firm_details.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="plan_version_buying_results.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

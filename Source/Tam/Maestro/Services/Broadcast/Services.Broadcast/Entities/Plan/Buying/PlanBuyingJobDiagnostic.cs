@@ -51,6 +51,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public static string SW_KEY_SAVING_BUYING_STATIONS = "Saving buying stations";
         public static string SW_KEY_SAVING_MARKET_RESULTS = "Saving market results";
         public static string SW_KEY_SAVING_OWNERSHIP_GROUP_RESULTS = "Saving ownership group results";
+        public static string SW_KEY_SAVING_REP_FIRM_RESULTS = "Saving rep firm results";
         public static string SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED = "Setting job status to Succeeded";
 
         public void Start(string key)
