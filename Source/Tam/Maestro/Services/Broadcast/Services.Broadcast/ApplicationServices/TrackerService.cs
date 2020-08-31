@@ -50,7 +50,7 @@ namespace Services.Broadcast.ApplicationServices
         List<DetectionTrackingDetail> GetDetectionDetailsWithAdjustedImpressions(int estimateId, ScheduleDTO schedule);       
     }
 
-    public class TrackerService : ITrackerService
+    public class TrackerService : BroadcastBaseClass, ITrackerService
     {
         private const int MaxFTPFailuresAllow = 1; // 1 for now, maybe more in the future
 
@@ -446,14 +446,21 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     hasErrors = true;
                     errorMessage += string.Format("<br /> Error processing file '{0}'. <br />Message:<br />{1}<br />{2}<br />", requestDetectionFile.FileName, e.Message, e.StackTrace);
-                    if(e.InnerException != null)
+
+                    _LogError("Error caught attempt to save the file.", e);
+
+                    var innerEx = e.InnerException;
+                    var level = 1;
+                    while (innerEx != null)
                     {
-                        errorMessage += string.Format("Inner Exception Details: {0}<br />{1}<br />", e.InnerException.Message, e.InnerException.StackTrace);
+                        errorMessage += string.Format("\r\nInner Exception Details: {0}<br />{1}<br />", innerEx.Message, innerEx.StackTrace);
+                        _LogError($"Inner Exception Level {level}", innerEx);
+                        level++;
+                        innerEx = innerEx.InnerException;
                     }
                 }
             }
-
-
+            
             var estimateIds = _BroadcastDataRepositoryFactory.GetDataRepository<IDetectionRepository>().GetEstimateIdsWithSchedulesByFileIds(bvsIds);
             foreach (var estimateId in estimateIds)
             {
