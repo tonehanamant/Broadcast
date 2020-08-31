@@ -445,7 +445,11 @@ namespace Services.Broadcast.ApplicationServices
                 catch (Exception e)
                 {
                     hasErrors = true;
-                    errorMessage += string.Format("<br /> Error processing file '{0}'. <br />Message:<br />{1}<br />", requestDetectionFile.FileName, e.Message);
+                    errorMessage += string.Format("<br /> Error processing file '{0}'. <br />Message:<br />{1}<br />{2}<br />", requestDetectionFile.FileName, e.Message, e.StackTrace);
+                    if(e.InnerException != null)
+                    {
+                        errorMessage += string.Format("Inner Exception Details: {0}<br />{1}<br />", e.InnerException.Message, e.InnerException.StackTrace);
+                    }
                 }
             }
 
