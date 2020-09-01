@@ -1174,7 +1174,11 @@ namespace Services.Broadcast.Repositories
                     {
                         Budget = result.total_budget,
                         AvgCpm = result.total_avg_cpm,
-                        Impressions = result.total_impressions
+                        Impressions = result.total_impressions,
+                        MarketCount = result.total_market_count,
+                        StationCount = result.total_station_count,
+                        SpotCount = result.total_spots,
+                        MarketCoveragePercent = result.total_market_coverage_percent
                     },
                     Details = result.plan_version_buying_ownership_group_details.Select(d => new PlanBuyingResultOwnershipGroupDetailsDto
                     {
@@ -1237,7 +1241,11 @@ namespace Services.Broadcast.Repositories
                     {
                         Budget = result.total_budget,
                         AvgCpm = result.total_avg_cpm,
-                        Impressions = result.total_impressions
+                        Impressions = result.total_impressions,
+                        MarketCount = result.total_market_count,
+                        StationCount = result.total_station_count,
+                        SpotCount = result.total_spots,
+                        MarketCoveragePercent = result.total_market_coverage_percent
                     },
                     Details = result.plan_version_buying_rep_firm_details.Select(d => new PlanBuyingResultRepFirmDetailsDto
                     {
