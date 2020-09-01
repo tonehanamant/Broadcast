@@ -9867,6 +9867,69 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             }
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetPricingModelSpots_V3_FilterOutZeroCostSpots()
+        {
+            // Arrange
+            var inventory = new List<PlanPricingInventoryProgram>
+            {
+                _GetInventoryProgram()[0],
+                _GetInventoryProgram()[0],
+                _GetInventoryProgram()[0],
+                _GetInventoryProgram()[0]
+            };
+            inventory[0].ManifestRates = new List<ManifestRate>
+            {
+                new ManifestRate { SpotLengthId = 1, Cost = 50 },
+                new ManifestRate { SpotLengthId = 2, Cost = 25 },
+            };
+            inventory[1].ManifestRates = new List<ManifestRate>
+            {
+                new ManifestRate { SpotLengthId = 1, Cost = 0 },
+                new ManifestRate { SpotLengthId = 2, Cost = 25 },
+            };
+            inventory[2].ManifestRates = new List<ManifestRate>
+            {
+                new ManifestRate { SpotLengthId = 1, Cost = 50 },
+                new ManifestRate { SpotLengthId = 2, Cost = 0 },
+            };
+            inventory[3].ManifestRates = new List<ManifestRate>
+            {
+                new ManifestRate { SpotLengthId = 1, Cost = 0 },
+                new ManifestRate { SpotLengthId = 2, Cost = 0 },
+            };
+
+            var flattedProgramsWithDayparts = inventory
+                .SelectMany(x => x.ManifestDayparts.Select(d => new PlanPricingService.ProgramWithManifestDaypart
+                {
+                    Program = x,
+                    ManifestDaypart = d
+                })).ToList();
+
+            var groupedInventory = flattedProgramsWithDayparts.GroupBy(x =>
+                new PlanPricingInventoryGroup
+                {
+                    StationId = x.Program.Station.Id,
+                    DaypartId = x.ManifestDaypart.Daypart.Id,
+                    PrimaryProgramName = x.ManifestDaypart.PrimaryProgram.Name
+                }).ToList();
+
+            var skippedWeekIds = new List<int>();
+
+            _MarketCoverageRepositoryMock
+                .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetLatestMarketCoverages());
+
+            var service = _GetService();
+
+            // Act
+            var result = service._GetPricingModelSpots_v3(groupedInventory, skippedWeekIds);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
         private List<PlanPricingInventoryProgram> _GetInventoryProgram()
         {
             return new List<PlanPricingInventoryProgram>

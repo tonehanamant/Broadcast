@@ -1221,7 +1221,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private List<PlanPricingApiRequestSpotsDto_v3> _GetPricingModelSpots_v3(
+        internal List<PlanPricingApiRequestSpotsDto_v3> _GetPricingModelSpots_v3(
             List<IGrouping<PlanPricingInventoryGroup, ProgramWithManifestDaypart>> groupedInventory,
             List<int> skippedWeeksIds)
         {
@@ -2290,7 +2290,7 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private class ProgramWithManifestDaypart
+        internal class ProgramWithManifestDaypart
         {
             public PlanPricingInventoryProgram Program { get; set; }
 
