@@ -1228,13 +1228,24 @@ namespace Services.Broadcast.ApplicationServices
             var marketCoveragesByMarketCode = _MarketCoverageRepository.GetLatestMarketCoverages().MarketCoveragesByMarketCode;
             var pricingModelSpots = new List<PlanPricingApiRequestSpotsDto_v3>();
 
-            foreach (var inventoryGroupping in groupedInventory)
+            foreach (var inventoryGrouping in groupedInventory)
             {
-                var programsInGrouping = inventoryGroupping.Select(x => x.Program).ToList();
+                var programsInGrouping = inventoryGrouping.Select(x => x.Program).ToList();
                 var manifestId = programsInGrouping.First().ManifestId;
 
                 foreach (var program in programsInGrouping)
                 {
+                    // filter out the zero spot costs
+                    var validSpotCosts = program.ManifestRates.Where(s => s.Cost > 0).Select(x => new SpotCost_v3
+                    {
+                        SpotLengthId = x.SpotLengthId,
+                        SpotLengthCost = x.Cost
+                    }).ToList();
+                    if (!validSpotCosts.Any())
+                    {
+                        continue;
+                    }
+
                     foreach (var daypart in program.ManifestDayparts)
                     {
                         var impressions = program.Impressions;
@@ -1256,11 +1267,7 @@ namespace Services.Broadcast.ApplicationServices
                                 PercentageOfUs = GeneralMath.ConvertPercentageToFraction(marketCoveragesByMarketCode[program.Station.MarketCode.Value]),
                                 SpotDays = daypart.Daypart.ActiveDays,
                                 SpotHours = daypart.Daypart.GetDurationPerDayInHours(),
-                                SpotCost = program.ManifestRates.Select(x => new SpotCost_v3
-                                {
-                                    SpotLengthId = x.SpotLengthId,
-                                    SpotLengthCost = x.Cost
-                                }).ToList()
+                                SpotCost = validSpotCosts
                             });
 
                         pricingModelSpots.AddRange(spots);
