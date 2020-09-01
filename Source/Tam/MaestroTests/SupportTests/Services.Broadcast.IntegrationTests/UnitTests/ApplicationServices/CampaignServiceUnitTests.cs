@@ -2377,7 +2377,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         new SpotFrequency
                         {
                             Spots = 1,
-                            Impressions = 10
+                            Impressions = 10,
+                            SpotLengthId = 1
                         }
                     },
                     Impressions30sec = 10
@@ -2395,7 +2396,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         new SpotFrequency
                         {
                             Spots = 1,
-                            Impressions = 10
+                            Impressions = 10,
+                            SpotLengthId = 1
                         }
                     },
                     Impressions30sec = 10
@@ -2413,7 +2415,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         new SpotFrequency
                         {
                             Spots = 1,
-                            Impressions = 20
+                            Impressions = 20,
+                            SpotLengthId = 1
                         }
                     },
                     Impressions30sec = 20
@@ -2431,7 +2434,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         new SpotFrequency
                         {
                             Spots = 1,
-                            Impressions = 20
+                            Impressions = 20,
+                            SpotLengthId = 1
                         }
                     },
                     Impressions30sec = 20
@@ -2449,7 +2453,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         new SpotFrequency
                         {
                             Spots = 1,
-                            Impressions = 10
+                            Impressions = 10,
+                            SpotLengthId = 1
                         }
                     },
                     Impressions30sec = 10
@@ -2467,7 +2472,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         new SpotFrequency
                         {
                             Spots = 1,
-                            Impressions = 10
+                            Impressions = 10,
+                            SpotLengthId = 1
                         }
                     },
                     Impressions30sec = 10
@@ -2485,7 +2491,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         new SpotFrequency
                         {
                             Spots = 1,
-                            Impressions = 10
+                            Impressions = 10,
+                            SpotLengthId = 1
                         }
                     },
                     Impressions30sec = 10
@@ -2502,7 +2509,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         new SpotFrequency
                         {
                             Spots = 1,
-                            Impressions = 10
+                            Impressions = 10,
+                            SpotLengthId = 1
                         }
                     },
                     Impressions30sec = 10
@@ -2527,7 +2535,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         new SpotFrequency
                         {
                             Spots = 1,
-                            Impressions = 10
+                            Impressions = 10,
+                            SpotLengthId = 1
+                        },
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 10,
+                            SpotLengthId = 2
+                        },
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 10,
+                            SpotLengthId = 3
                         }
                     },
                     Impressions30sec = 10
@@ -2545,7 +2566,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         new SpotFrequency
                         {
                             Spots = 1,
-                            Impressions = 20
+                            Impressions = 20,
+                            SpotLengthId = 1
+                        },
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 20,
+                            SpotLengthId = 2
+                        },
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 20,
+                            SpotLengthId = 3
                         }
                     },
                     Impressions30sec = 20
@@ -2563,7 +2597,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         new SpotFrequency
                         {
                             Spots = 2,
-                            Impressions = 10
+                            Impressions = 10,
+                            SpotLengthId = 1
+                        },
+                        new SpotFrequency
+                        {
+                            Spots = 2,
+                            Impressions = 10,
+                            SpotLengthId = 2
+                        },
+                        new SpotFrequency
+                        {
+                            Spots = 2,
+                            Impressions = 10,
+                            SpotLengthId = 3
                         }
                     },
                     Impressions30sec = 10
@@ -2581,7 +2628,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         new SpotFrequency
                         {
                             Spots = 1,
-                            Impressions = 10
+                            Impressions = 10,
+                            SpotLengthId = 1
+                        },
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 10,
+                            SpotLengthId = 2
+                        },
+                        new SpotFrequency
+                        {
+                            Spots = 1,
+                            Impressions = 10,
+                            SpotLengthId = 3
                         }
                     },
                     Impressions30sec = 10
@@ -2599,7 +2659,20 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         new SpotFrequency
                         {
                             Spots = 5,
-                            Impressions = 10
+                            Impressions = 10,
+                            SpotLengthId = 1
+                        },
+                        new SpotFrequency
+                        {
+                            Spots = 5,
+                            Impressions = 10,
+                            SpotLengthId = 2
+                        },
+                        new SpotFrequency
+                        {
+                            Spots = 5,
+                            Impressions = 10,
+                            SpotLengthId = 3
                         }
                     },
                     Impressions30sec = 10
@@ -2617,7 +2690,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         new SpotFrequency
                         {
                             Spots = 5,
-                            Impressions = 10
+                            Impressions = 10,
+                            SpotLengthId = 1
                         }
                     },
                     Impressions30sec = 10
@@ -2635,7 +2709,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         new SpotFrequency
                         {
                             Spots = 5,
-                            Impressions = 10
+                            Impressions = 10,
+                            SpotLengthId = 1
                         }
                     },
                     Impressions30sec = 10

@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-
+﻿
 namespace Services.Broadcast.Entities.Plan.CommonPricingEntities
 {
     public class SpotFrequency

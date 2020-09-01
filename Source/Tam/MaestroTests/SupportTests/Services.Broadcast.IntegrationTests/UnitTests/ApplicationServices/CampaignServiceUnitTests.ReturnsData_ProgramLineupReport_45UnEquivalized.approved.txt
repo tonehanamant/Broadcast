@@ -5,43 +5,57 @@
   "AllocationByDaypartViewRows": [
     {
       "FilterLabel": "LN",
-      "Weight": 0.8
+      "Weight": 0.64
     },
     {
       "FilterLabel": "EM",
-      "Weight": 0.13333333
+      "Weight": 0.24
     },
     {
       "FilterLabel": "EMN",
-      "Weight": 0.06666667
+      "Weight": 0.12
     }
   ],
   "AllocationByDMAViewRows": [
     {
       "FilterLabel": "NEW YORK",
-      "Weight": 0.8
+      "Weight": 0.64
     },
     {
       "FilterLabel": "BINGHAMTON",
-      "Weight": 0.06666667
+      "Weight": 0.12
     },
     {
       "FilterLabel": "MACON",
-      "Weight": 0.13333333
+      "Weight": 0.24
     }
   ],
   "AllocationByGenreViewRows": [
     {
       "FilterLabel": "",
-      "Weight": 0.66666667
+      "Weight": 0.4
     },
     {
       "FilterLabel": "MOVIE",
-      "Weight": 0.2
+      "Weight": 0.36
     },
     {
       "FilterLabel": "NEWS",
-      "Weight": 0.13333333
+      "Weight": 0.24
+    }
+  ],
+  "AllocationBySpotLengthViewRows": [
+    {
+      "FilterLabel": ":15",
+      "Weight": 0.44
+    },
+    {
+      "FilterLabel": ":30",
+      "Weight": 0.84
+    },
+    {
+      "FilterLabel": ":60",
+      "Weight": 0.44
     }
   ],
   "Client": "PetMed Express, Inc",
@@ -52,28 +66,28 @@
       "NoOfMarkets": 1,
       "NoOfStations": 1,
       "Program": "FALLBACK PROGRAM",
-      "Weight": 0.66666667
+      "Weight": 0.4
     },
     {
       "Genre": "NEWS",
       "NoOfMarkets": 1,
       "NoOfStations": 1,
       "Program": "LATE NEWS",
-      "Weight": 0.13333333
+      "Weight": 0.24
     },
     {
       "Genre": "MOVIE",
       "NoOfMarkets": 1,
       "NoOfStations": 1,
       "Program": "1917",
-      "Weight": 0.13333333
+      "Weight": 0.24
     },
     {
       "Genre": "MOVIE",
       "NoOfMarkets": 1,
       "NoOfStations": 1,
       "Program": "JOKER",
-      "Weight": 0.06666667
+      "Weight": 0.12
     }
   ],
   "DetailedViewRows": [

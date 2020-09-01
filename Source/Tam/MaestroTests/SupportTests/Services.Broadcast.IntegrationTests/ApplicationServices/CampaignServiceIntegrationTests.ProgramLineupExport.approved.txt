@@ -27,6 +27,12 @@
       "Weight": 0.00899888
     }
   ],
+  "AllocationBySpotLengthViewRows": [
+    {
+      "FilterLabel": ":60 eq.",
+      "Weight": 1.0
+    }
+  ],
   "Client": "Stub Advertiser",
   "ClientContact": "",
   "DefaultViewRows": [

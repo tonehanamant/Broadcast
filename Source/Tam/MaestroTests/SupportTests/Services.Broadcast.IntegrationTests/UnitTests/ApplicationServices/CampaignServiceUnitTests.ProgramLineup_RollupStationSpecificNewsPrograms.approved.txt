@@ -36,6 +36,12 @@
       "Weight": 1.0
     }
   ],
+  "AllocationBySpotLengthViewRows": [
+    {
+      "FilterLabel": ":30",
+      "Weight": 1.0
+    }
+  ],
   "Client": "PetMed Express, Inc",
   "ClientContact": "",
   "DefaultViewRows": [

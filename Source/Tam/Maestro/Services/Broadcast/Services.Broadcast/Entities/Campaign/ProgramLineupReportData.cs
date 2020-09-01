@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.spotcableXML;
 using Services.Broadcast.Entities.StationInventory;
@@ -32,6 +33,7 @@ namespace Services.Broadcast.Entities.Campaign
         public List<AllocationViewRowDisplay> AllocationByDaypartViewRows { get; set; }
         public List<AllocationViewRowDisplay> AllocationByGenreViewRows { get; set; }
         public List<AllocationViewRowDisplay> AllocationByDMAViewRows { get; set; }
+        public List<AllocationViewRowDisplay> AllocationBySpotLengthViewRows { get; set; }
 
         private const string FILENAME_FORMAT = "Program_Lineup_Report_{0}_{1}.xlsx";
         private const string PLAN_HEADER_NAME_FORMAT = "{0} | Program Lineup*";
@@ -72,6 +74,39 @@ namespace Services.Broadcast.Entities.Campaign
                 , x => x.Genre
                 , true);
             AllocationByDMAViewRows = _MapDMAToAllocationViewRows(detailedRowsData, totalAllocatedImpressions);
+
+            AllocationBySpotLengthViewRows = _MapSpotLengthToAllocationViewRows(allocatedSpots, totalAllocatedImpressions, spotLengths, plan.Equivalized);
+        }
+
+        private List<AllocationViewRowDisplay> _MapSpotLengthToAllocationViewRows(List<PlanPricingAllocatedSpot> allocatedSpots
+            , double totalAllocatedImpressions, List<LookupDto> spotLengths, bool equivalized)
+        {
+            Dictionary<int, double> data = new Dictionary<int, double>();
+            allocatedSpots.ForEach(spot =>
+            {
+                spot.SpotFrequencies.ForEach(frequency =>
+               {
+                   if (data.ContainsKey(frequency.SpotLengthId)){
+                       data[frequency.SpotLengthId] += frequency.Spots * frequency.Impressions;
+                   }
+                   else
+                   {
+                       data.Add(frequency.SpotLengthId, frequency.Spots * frequency.Impressions);
+                   }
+               });
+            });
+            return data
+                .OrderBy(x=> int.Parse(spotLengths.Single(w => w.Id == x.Key).Display))
+                .Select(x =>
+                {
+                    var spotLengthDisplay = spotLengths.Single(w => w.Id == x.Key).Display;
+                    return new AllocationViewRowDisplay
+                    {
+                        FilterLabel = $":{spotLengthDisplay}{_GetEquivalizedStatus(equivalized, spotLengthDisplay)}",
+                        Weight = _CalculateWeight(x.Value, totalAllocatedImpressions)
+                    };
+                })
+                .ToList();
         }
 
         private void _PopulateHeaderData(
