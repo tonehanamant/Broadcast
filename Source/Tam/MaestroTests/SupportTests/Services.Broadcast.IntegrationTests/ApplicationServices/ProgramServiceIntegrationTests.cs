@@ -15,6 +15,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
     [Category("short_running")]
+    [UseReporter(typeof(DiffReporter))]
     public class ProgramServiceIntegrationTests
     {
         private readonly IProgramService _ProgramService;
@@ -26,7 +27,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void GetPrograms()
         {
             var searchRequest = new SearchRequestProgramDto
@@ -40,7 +40,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void GetPrograms_Limited()
         {
             var searchRequest = new SearchRequestProgramDto
@@ -56,7 +55,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void GetPrograms_IgnorePrograms()
         {
             var searchRequest = new SearchRequestProgramDto
@@ -87,7 +85,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void GetPrograms_DeDup()
         {
             var searchRequest = new SearchRequestProgramDto
@@ -99,8 +96,21 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             _VerifyPrograms(programs);
         }
+
         [Test]
-        [UseReporter(typeof(DiffReporter))]
+        public void GetPrograms_VariousUnmatched()
+        {
+            var searchRequest = new SearchRequestProgramDto
+            {
+                ProgramName = "mat"
+            };
+
+            var programs = _ProgramService.GetPrograms(searchRequest, "IntegrationTestsUser");
+
+            _VerifyPrograms(programs);
+        }
+
+        [Test]
         public void GetExceptionProgramsTest()
         {
 	        var searchRequest = new SearchRequestProgramDto
@@ -112,8 +122,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
 	        _VerifyPrograms(programs);
         }
-        [Test]
-      
+
+        [Test]      
         public void GetExceptionProgramsTest_SpecialCharacter()
         {
 	        var searchRequest = new SearchRequestProgramDto
@@ -125,6 +135,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
 	       Assert.IsEmpty(programs);
         }
+
         private static void _VerifyPrograms(List<ProgramDto> programs)
         {
             var jsonResolver = new IgnorableSerializerContractResolver();
@@ -137,7 +148,5 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(programs, jsonSettings));
         }
-
-     
     }
 }

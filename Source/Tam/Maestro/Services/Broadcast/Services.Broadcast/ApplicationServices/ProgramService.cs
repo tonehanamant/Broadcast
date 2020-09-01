@@ -11,6 +11,7 @@ using System.Linq;
 using Common.Services.Repositories;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
+using System;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -69,8 +70,8 @@ namespace Services.Broadcast.ApplicationServices
 			        result.Add(externalResult);
 		        }
 	        }
-
-
+			
+			_RemoveVariousAndUnmatched(result);
 	        var sortedResults = result
 		        .Distinct(new ProgramEqualityComparer())
 		        .OrderBy(x => x.Name)
@@ -85,6 +86,12 @@ namespace Services.Broadcast.ApplicationServices
 	        return sortedResults;
         }
 
+		private void _RemoveVariousAndUnmatched(List<ProgramDto> result)
+		{
+			result.RemoveAll(x => x.Genre.Display.Equals("Various", StringComparison.OrdinalIgnoreCase) 
+					|| x.Name.Equals("Unmatched", StringComparison.OrdinalIgnoreCase));
+		}
+
 		protected virtual bool _GetEnableInternalProgramSearch()
 		{
 			return BroadcastServiceSystemParameter.EnableInternalProgramSearch;
@@ -93,7 +100,6 @@ namespace Services.Broadcast.ApplicationServices
 		{
 			var result = new List<ProgramDto>();
 			var externalApiPrograms = _ProgramsSearchApiClient.GetPrograms(searchRequest);
-
 
 			foreach (var externalApiProgram in externalApiPrograms)
 			{
