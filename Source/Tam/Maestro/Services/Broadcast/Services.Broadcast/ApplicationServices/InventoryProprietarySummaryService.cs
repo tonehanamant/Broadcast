@@ -191,7 +191,7 @@ namespace Services.Broadcast.ApplicationServices
 						_InventoryProprietarySummaryRepository.GetTotalImpressionsBySummaryIdAndAudienceIds(invPropSummary.Id, summaryAudianceIds)
 						);
 					var marketCoverage = _InventoryProprietarySummaryRepository.GetTotalMarketCoverageBySummaryId(invPropSummary.Id);
-					invPropSummary.MarketCoverageTotal = Math.Round(GeneralMath.ConvertFractionToPercentage(marketCoverage), 0); 
+					invPropSummary.MarketCoverageTotal = Math.Round(marketCoverage, 0); 
 				}
 
 				response.summaries = invPropSummaryList;

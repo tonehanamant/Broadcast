@@ -7,7 +7,7 @@
       "DaypartUnitCode": "AM",
       "ImpressionsTotal": 0.0,
       "InventorySourceName": "CNN",
-      "MarketCoverageTotal": 29.0,
+      "MarketCoverageTotal": 0.0,
       "UnitName": "CNN AM"
     },
     {
@@ -17,7 +17,7 @@
       "DaypartUnitCode": "PM",
       "ImpressionsTotal": 0.0,
       "InventorySourceName": "CNN",
-      "MarketCoverageTotal": 29.0,
+      "MarketCoverageTotal": 0.0,
       "UnitName": "CNN PM"
     }
   ],

@@ -98,7 +98,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 		{
 			var marketData = _InventoryProprietarySummaryRepository.GetMarketDataBySummaryIds(summaryIds);
 			var marketCoverage = marketData.GroupBy(i => i.MarketCode).Select(i => i.First().PercentageOfUS).Sum();
-			return Math.Round(GeneralMath.ConvertFractionToPercentage(marketCoverage), 0);
+			return Math.Round(marketCoverage, 0);
 		}
 
 		private double GetTotalImpressions(int id, int planPrimaryAudienceId)
