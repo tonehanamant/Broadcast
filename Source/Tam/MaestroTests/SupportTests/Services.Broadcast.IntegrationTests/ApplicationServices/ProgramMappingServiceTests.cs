@@ -1,10 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ApprovalTests;
 using ApprovalTests.Reporters;
+using Common.Services;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
+using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
@@ -62,6 +67,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
         public void GetUnmappedProgramsTest()
         {
             var result = _ProgramMappingService.GetUnmappedPrograms();
@@ -69,6 +75,107 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             // Take 100 programs only otherwise the result file is too big and the file comparer
             // is not able to compare the results.
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Take(100)));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void ProgramMappingsTestNoError()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var sharedFolderServiceFake = IntegrationTestApplicationServiceFactory.GetApplicationService<ISharedFolderService>();
+                var fileStream = File.Open(@".\Files\Program Mapping\ProgramMappings.xlsx", FileMode.Open);
+                var sharedFolderFile = new SharedFolderFile
+                {
+                    FolderPath = Path.GetTempPath(),
+                    FileNameWithExtension = "ProgramMappings.xlsx",
+                    FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    FileUsage = SharedFolderFileUsage.ProgramLineup,
+                    CreatedDate = new DateTime(2020, 8, 28),
+                    CreatedBy = "IntegrationTestUser",
+                    FileContent = fileStream
+                };
+                var fileGuid = sharedFolderServiceFake.SaveFile(sharedFolderFile);
+                _ProgramMappingService.RunProgramMappingsProcessingJob(fileGuid, "IntegrationTestUser", new DateTime(2020, 8, 28));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void ProgramMappingsTestProgramNotInMasterList()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var sharedFolderServiceFake = IntegrationTestApplicationServiceFactory.GetApplicationService<ISharedFolderService>();
+                var fileStream = File.Open(@".\Files\Program Mapping\ProgramMappingsNotInMasterList.xlsx", FileMode.Open);
+                var sharedFolderFile = new SharedFolderFile
+                {
+                    FolderPath = Path.GetTempPath(),
+                    FileNameWithExtension = "ProgramMapNotInMasterList.xlsx",
+                    FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    FileUsage = SharedFolderFileUsage.ProgramLineup,
+                    CreatedDate = new DateTime(2020, 8, 28),
+                    CreatedBy = "IntegrationTestUser",
+                    FileContent = fileStream
+                };
+                var fileGuid = sharedFolderServiceFake.SaveFile(sharedFolderFile);
+                
+                var exception = Assert.Throws<Exception>(() => _ProgramMappingService.RunProgramMappingsProcessingJob(fileGuid, "IntegrationTestUser", new DateTime(2020, 8, 28)));
+                Assert.That(exception.Message, Is.EqualTo("Error parsing program ABBABAB: Program not found in master list or exception list\r\n"));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void ProgramMappingsTestInvalidGenre()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var sharedFolderServiceFake = IntegrationTestApplicationServiceFactory.GetApplicationService<ISharedFolderService>();
+                var fileStream = File.Open(@".\Files\Program Mapping\ProgramMappingsInvalidGenre.xlsx", FileMode.Open);
+                var sharedFolderFile = new SharedFolderFile
+                {
+                    FolderPath = Path.GetTempPath(),
+                    FileNameWithExtension = "ProgramMappingsInvalidGenre.xlsx",
+                    FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    FileUsage = SharedFolderFileUsage.ProgramLineup,
+                    CreatedDate = new DateTime(2020, 8, 28),
+                    CreatedBy = "IntegrationTestUser",
+                    FileContent = fileStream
+                };
+                var fileGuid = sharedFolderServiceFake.SaveFile(sharedFolderFile);
+
+                var exception = Assert.Throws<Exception>(() => _ProgramMappingService.RunProgramMappingsProcessingJob(fileGuid, "IntegrationTestUser", new DateTime(2020, 8, 28)));
+                Assert.That(exception.Message, Is.EqualTo("Error parsing program America Undercover: Genre not found: Dramatic\r\n"));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void ProgramMappingTestProgramInExceptionList()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var sharedFolderServiceFake = IntegrationTestApplicationServiceFactory.GetApplicationService<ISharedFolderService>();
+                var fileStream = File.Open(@".\Files\Program Mapping\ProgramMappingsException.xlsx", FileMode.Open);
+                var sharedFolderFile = new SharedFolderFile
+                {
+                    FolderPath = Path.GetTempPath(),
+                    FileNameWithExtension = "ProgramMappingsException.xlsx",
+                    FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    FileUsage = SharedFolderFileUsage.ProgramLineup,
+                    CreatedDate = new DateTime(2020, 8, 28),
+                    CreatedBy = "IntegrationTestUser",
+                    FileContent = fileStream
+                };
+                var fileGuid = sharedFolderServiceFake.SaveFile(sharedFolderFile);
+
+                _ProgramMappingService.RunProgramMappingsProcessingJob(fileGuid, "IntegrationTestUser", new DateTime(2020, 8, 28));
+            }
         }
     }
 }

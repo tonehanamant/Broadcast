@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -153,7 +154,17 @@ namespace Services.Broadcast.ApplicationServices
             _LogInfo($"The selected program mapping file has {programMappings.Count} rows, unique mappings: {uniqueProgramMappings.Count}");
 
             WebUtilityHelper.HtmlDecodeProgramNames(uniqueProgramMappings);
+
+            var programMappingErrors = _ValidateProgramMappings(uniqueProgramMappings);
+
+            if (programMappingErrors.Any())
+            {
+                _SharedFolderService.RemoveFile(fileId);
+                throw new Exception(_GetErrorMessage(programMappingErrors));
+            }
+
             _ProcessProgramMappings(uniqueProgramMappings, createdDate, userName);
+
             _SharedFolderService.RemoveFile(fileId);
 
             durationSw.Stop();
@@ -162,6 +173,64 @@ namespace Services.Broadcast.ApplicationServices
 
             var hangfireId = _BackgroundJobClient.Enqueue<IInventoryProgramsProcessingService>(x => x.PerformRepairInventoryPrograms(CancellationToken.None));
             _LogInfo($"RepairInventoryPrograms job has been queued, hangfire id: {hangfireId}");
+        }
+
+        private string _GetErrorMessage(List<ProgramMappingValidationErrorDto> programMappingErrors)
+        {
+            var fullErrorMessage = new StringBuilder();
+
+            foreach(var programMappingError in programMappingErrors)
+            {
+                fullErrorMessage.AppendLine(
+                    $"Error parsing program {programMappingError.OfficialProgramName}: {programMappingError.ErrorMessage}");
+            }
+
+            return fullErrorMessage.ToString();
+        }
+
+        private List<ProgramMappingValidationErrorDto> _ValidateProgramMappings(List<ProgramMappingsFileRequestDto> uniqueProgramMappings)
+        {
+            var masterListPrograms = GetMasterProgramList();
+            var programNameExceptions = _ProgramNameExceptionsRepository.GetProgramExceptions();
+            var programMappingValidationErrors = new List<ProgramMappingValidationErrorDto>();
+
+            foreach (var programMapping in uniqueProgramMappings)
+            {
+                var masterListProgram = masterListPrograms.FirstOrDefault(p => 
+                            p.OfficialProgramName.Equals(programMapping.OfficialProgramName, 
+                                                         StringComparison.OrdinalIgnoreCase));
+
+                if (masterListProgram == null)
+                {
+                    var programNameException = programNameExceptions.FirstOrDefault(p =>
+                            p.CustomProgramName.Equals(programMapping.OfficialProgramName,
+                                                         StringComparison.OrdinalIgnoreCase));
+
+                    if (programNameException == null)
+                    {
+                        programMappingValidationErrors.Add(new ProgramMappingValidationErrorDto
+                        {
+                            OfficialProgramName = programMapping.OfficialProgramName,
+                            ErrorMessage = "Program not found in master list or exception list"
+                        });
+                    }
+                }
+
+                try
+                {
+                    var genre = _GenreCache.GetMaestroGenreByName(programMapping.OfficialGenre);
+                }
+                catch
+                {
+                    programMappingValidationErrors.Add(new ProgramMappingValidationErrorDto
+                    {
+                        OfficialProgramName = programMapping.OfficialProgramName,
+                        ErrorMessage = $"Genre not found: {programMapping.OfficialGenre}"
+                    });
+                }
+            }
+
+            return programMappingValidationErrors;
         }
 
         private List<ProgramMappingsFileRequestDto> _RemoveDuplicateMappings(List<ProgramMappingsFileRequestDto> programMappings)

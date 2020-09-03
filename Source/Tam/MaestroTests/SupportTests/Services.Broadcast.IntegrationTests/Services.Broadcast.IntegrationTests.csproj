@@ -715,6 +715,18 @@
     <None Include="Files\Program lineup\ProgramLineupExport.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\Program Mapping\ProgramMappingsException.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Program Mapping\ProgramMappingsInvalidGenre.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Program Mapping\ProgramMappingsNotInMasterList.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Files\Program Mapping\ProgramMappings.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ProprietaryDataFiles\Barter_A25-54_Q1 CNN.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

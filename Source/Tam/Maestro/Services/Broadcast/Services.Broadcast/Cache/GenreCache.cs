@@ -14,11 +14,8 @@ namespace Services.Broadcast.Cache
     public interface IGenreCache
     {
         LookupDto GetMaestroGenreBySourceGenreName(string sourceGenreName, ProgramSourceEnum programSource);
-
         LookupDto GetMaestroGenreBySourceGenre(LookupDto sourceGenre, ProgramSourceEnum programSource);
-
         Genre GetMaestroGenreByName(string genreName);
-
         LookupDto GetSourceGenreByName(string genreName, ProgramSourceEnum programSource);
         LookupDto GetGenreById(int genreId, ProgramSourceEnum programSource);
     }
