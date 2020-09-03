@@ -486,6 +486,7 @@
     <Compile Include="UnitTests\ApplicationServices\InventoryServiceUnitTestClass.cs" />
     <Compile Include="UnitTests\ApplicationServices\Inventory\ProgramMapping\Engines\ProgramMappingCleanupEngineUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\NtiUniverseServiceUnitTests.cs" />
+    <Compile Include="UnitTests\ApplicationServices\Plans\PlanBuyingServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\Plans\PlanPricingServiceUnitTestClass.cs" />
     <Compile Include="UnitTests\ApplicationServices\Plans\PlanPricingServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\InventoryServiceUnitTests.cs" />
