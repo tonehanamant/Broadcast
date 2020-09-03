@@ -353,10 +353,10 @@ namespace Services.Broadcast.ApplicationServices
         private bool _ShouldTriggerInventoryProprietaryAggregration(InventorySource inventorySource)
         {
 	        var valid = false;
-	        var toggleEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous("broadcast-enable-proprietary-inventory-summary");
-	        if (toggleEnabled)
+	        if (_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PROPRIETARY_INVENTORY_SUMMARY))
 	        {
-		        if (inventorySource.InventoryType == InventorySourceTypeEnum.Barter && (inventorySource.Name.ToLower().Equals("cnn") || inventorySource.Name.ToLower().Equals("tvb")))
+		        if (inventorySource.InventoryType == InventorySourceTypeEnum.Barter 
+                    && (inventorySource.Name.ToLower().Equals("cnn") || inventorySource.Name.ToLower().Equals("tvb")))
 		        {
 			        valid = true;
 		        }

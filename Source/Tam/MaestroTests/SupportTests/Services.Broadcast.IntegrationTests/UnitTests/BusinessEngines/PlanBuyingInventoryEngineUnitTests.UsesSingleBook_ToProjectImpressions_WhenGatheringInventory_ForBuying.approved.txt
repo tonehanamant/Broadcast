@@ -1,0 +1,16 @@
+{
+  "inventory": [],
+  "passedParameters": {
+    "programs": [],
+    "request": {
+      "PlaybackType": 4,
+      "ShareProjectionBookId": 201,
+      "HutProjectionBookId": null,
+      "Equivalized": true,
+      "SpotLengthId": 5,
+      "PostType": 2
+    },
+    "audienceId": 25,
+    "isProprietary": false
+  }
+}

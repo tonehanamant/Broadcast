@@ -39,4 +39,13 @@
             public const string QUOTE_REPORTS = "QuoteReports";
         }
     }
+
+    public static class FeatureToggles
+    {
+        public static string USE_TRUE_INDEPENDENT_STATIONS = "broadcast-use-true-independent-stations";
+        public static string ENABLE_DAYPART_WKD = "broadcast-enable-daypart-wkd";
+        public static string ENABLE_PROPRIETARY_INVENTORY_SUMMARY = "broadcast-enable-proprietary-inventory-summary";
+        public static string ENABLE_PRICING_IN_EDIT = "broadcast-enable-pricing-in-edit";
+        public static string RUN_PRICING_AUTOMATICALLY = "broadcast-enable-run-pricing-automatically";
+    }
 }

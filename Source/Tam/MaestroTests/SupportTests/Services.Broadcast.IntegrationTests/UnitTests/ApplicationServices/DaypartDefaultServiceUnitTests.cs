@@ -21,7 +21,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         {
             // setup feature flags
             var launchDarklyClientStub = new LaunchDarklyClientStub();
-            launchDarklyClientStub.FeatureToggles.Add(DaypartDefaultService.FEATURE_TOGGLE_KEY_ENABLE_DAYPART_WKD, enableDaypartWKD);
+            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_DAYPART_WKD, enableDaypartWKD);
             var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
 
             // setup data repos

@@ -168,9 +168,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private const string _DaypartDefaultNotFoundMessage = "Unable to find daypart default";
         private const string _UnsupportedDeliveryTypeMessage = "Unsupported Delivery Type";
-        private const string FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT = "broadcast-enable-pricing-in-edit";
-        private const string FEATURE_TOGGLE_RUN_PRICING_AUTOMATICALLY = "broadcast-enable-run-pricing-automatically";
-
+        
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator
             , IPlanBudgetDeliveryCalculator planBudgetDeliveryCalculator
@@ -247,7 +245,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 _PlanRepository.SaveNewPlan(plan, createdBy, createdDate);
 
-                if (_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT) && plan.JobId.HasValue)
+                if (_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_IN_EDIT) && plan.JobId.HasValue)
                     _PlanRepository.SetPricingPlanVersionId(plan.JobId.Value, plan.VersionId);
             }
             else
@@ -282,7 +280,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
             }
 
-            if (_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_RUN_PRICING_AUTOMATICALLY))
+            if (_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.RUN_PRICING_AUTOMATICALLY))
             {
                 if((plan.VersionNumber == 1 && !plan.JobId.HasValue) || plan.IsOutOfSync)
                 {

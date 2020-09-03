@@ -511,7 +511,9 @@
     <Compile Include="UnitTests\BusinessEngines\InventoryWeekEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanBudgetDeliveryCalculatorUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingBandCalculationEngineUnitTests.cs" />
+    <Compile Include="UnitTests\BusinessEngines\PlanBuyingInventoryEngineTestClass.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryEngineTestClass.cs" />
+    <Compile Include="UnitTests\BusinessEngines\PlanBuyingInventoryEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryQuarterCalculatorEngineTestClass.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryQuarterCalculatorEngineUnitTests.cs" />

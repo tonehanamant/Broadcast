@@ -1,22 +1,21 @@
 ﻿using Common.Services;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Plan;
-using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Helpers;
 using System.Collections.Generic;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 {
-    public class PlanPricingInventoryEngineTestClass : PlanPricingInventoryEngine
+    public class PlanBuyingInventoryEngineTestClass : PlanBuyingInventoryEngine
     {
-        public PlanPricingInventoryEngineTestClass(
+        public PlanBuyingInventoryEngineTestClass(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IImpressionsCalculationEngine impressionsCalculationEngine,
-            IPlanPricingInventoryQuarterCalculatorEngine planPricingInventoryQuarterCalculatorEngine,
+            IPlanBuyingInventoryQuarterCalculatorEngine planBuyingInventoryQuarterCalculatorEngine,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IDaypartCache daypartCache,
             IQuarterCalculationEngine quarterCalculationEngine,
@@ -25,7 +24,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             : base(
                   broadcastDataRepositoryFactory, 
                   impressionsCalculationEngine,
-                  planPricingInventoryQuarterCalculatorEngine,
+                  planBuyingInventoryQuarterCalculatorEngine,
                   mediaMonthAndWeekAggregateCache,
                   daypartCache,
                   quarterCalculationEngine,
@@ -34,16 +33,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         {
         }
 
-        public List<PlanPricingInventoryProgram> UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(
+        public List<PlanBuyingInventoryProgram> UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(
             List<PlanDaypartDto> dayparts,
-            List<PlanPricingInventoryProgram> programs,
+            List<PlanBuyingInventoryProgram> programs,
             DisplayDaypart planDisplayDaypartDays)
         {
-            return FilterProgramsByDaypartAndSetStandardDaypart(dayparts, programs, planDisplayDaypartDays);
+            return FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(dayparts, programs, planDisplayDaypartDays);
         }
 
-        public List<PlanPricingInventoryProgram> UT_FilterProgramsByMinAndMaxCPM(
-            List<PlanPricingInventoryProgram> programs,
+        public List<PlanBuyingInventoryProgram> UT_FilterProgramsByMinAndMaxCPM(
+            List<PlanBuyingInventoryProgram> programs,
             decimal? minCPM,
             decimal? maxCPM,
             bool isProprietary)
@@ -51,7 +50,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             return CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, minCPM, maxCPM, isProprietary);
         }
 
-        public void UT_ApplyInflationFactorToSpotCost(List<PlanPricingInventoryProgram> programs, double? inflationFactor)
+        public void UT_ApplyInflationFactorToSpotCost(List<PlanBuyingInventoryProgram> programs, double? inflationFactor)
         {
             ApplyInflationFactorToSpotCost(programs, inflationFactor);
         }
@@ -63,12 +62,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
         public void UT_ApplyNTIConversionToNSI(
             PlanDto plan,
-            List<PlanPricingInventoryProgram> programs)
+            List<PlanBuyingInventoryProgram> programs)
         {
             ApplyNTIConversionToNSI(plan, programs);
         }
 
-        public List<PlanPricingInventoryProgram> UT_GetFullPrograms(
+        public List<PlanBuyingInventoryProgram> UT_GetFullPrograms(
             List<DateRange> dateRanges, 
             List<int> spotLengthIds,
             List<int> supportedInventorySourceTypes, 

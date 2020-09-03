@@ -1,0 +1,9 @@
+{
+  "inventory": [],
+  "passedParameters": {
+    "programs": [],
+    "audienceId": 25,
+    "spotLengthId": 5,
+    "equivalized": false
+  }
+}

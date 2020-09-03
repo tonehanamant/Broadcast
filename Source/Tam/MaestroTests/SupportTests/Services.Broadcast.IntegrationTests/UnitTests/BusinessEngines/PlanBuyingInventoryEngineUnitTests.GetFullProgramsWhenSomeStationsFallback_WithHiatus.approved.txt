@@ -1,0 +1,458 @@
+[
+  {
+    "Cpm": 0.0,
+    "Impressions": 0.0,
+    "InventoryBuyingQuarterType": "Plan",
+    "InventorySource": null,
+    "ManifestAudiences": null,
+    "ManifestDayparts": null,
+    "ManifestId": 0,
+    "ManifestRates": null,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 0,
+        "Id": 0,
+        "InventoryMediaWeekId": 826,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": null,
+    "SpotLengthId": 0,
+    "StandardDaypartId": 0,
+    "Station": {
+      "Affiliation": null,
+      "CallLetters": null,
+      "Code": null,
+      "Id": 1,
+      "IsTrueInd": false,
+      "LegacyCallLetters": "ST01",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "RepFirmName": null
+    },
+    "Unit": null
+  },
+  {
+    "Cpm": 0.0,
+    "Impressions": 0.0,
+    "InventoryBuyingQuarterType": "Plan",
+    "InventorySource": null,
+    "ManifestAudiences": null,
+    "ManifestDayparts": null,
+    "ManifestId": 0,
+    "ManifestRates": null,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 0,
+        "Id": 0,
+        "InventoryMediaWeekId": 826,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": null,
+    "SpotLengthId": 0,
+    "StandardDaypartId": 0,
+    "Station": {
+      "Affiliation": null,
+      "CallLetters": null,
+      "Code": null,
+      "Id": 2,
+      "IsTrueInd": false,
+      "LegacyCallLetters": "ST02",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "RepFirmName": null
+    },
+    "Unit": null
+  },
+  {
+    "Cpm": 0.0,
+    "Impressions": 0.0,
+    "InventoryBuyingQuarterType": "Plan",
+    "InventorySource": null,
+    "ManifestAudiences": null,
+    "ManifestDayparts": null,
+    "ManifestId": 0,
+    "ManifestRates": null,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 0,
+        "Id": 0,
+        "InventoryMediaWeekId": 826,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": null,
+    "SpotLengthId": 0,
+    "StandardDaypartId": 0,
+    "Station": {
+      "Affiliation": null,
+      "CallLetters": null,
+      "Code": null,
+      "Id": 3,
+      "IsTrueInd": false,
+      "LegacyCallLetters": "ST03",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "RepFirmName": null
+    },
+    "Unit": null
+  },
+  {
+    "Cpm": 0.0,
+    "Impressions": 0.0,
+    "InventoryBuyingQuarterType": "Fallback",
+    "InventorySource": null,
+    "ManifestAudiences": null,
+    "ManifestDayparts": null,
+    "ManifestId": 0,
+    "ManifestRates": null,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 0,
+        "Id": 0,
+        "InventoryMediaWeekId": 826,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": null,
+    "SpotLengthId": 0,
+    "StandardDaypartId": 0,
+    "Station": {
+      "Affiliation": null,
+      "CallLetters": null,
+      "Code": null,
+      "Id": 4,
+      "IsTrueInd": false,
+      "LegacyCallLetters": "ST04",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "RepFirmName": null
+    },
+    "Unit": null
+  },
+  {
+    "Cpm": 0.0,
+    "Impressions": 0.0,
+    "InventoryBuyingQuarterType": "Fallback",
+    "InventorySource": null,
+    "ManifestAudiences": null,
+    "ManifestDayparts": null,
+    "ManifestId": 0,
+    "ManifestRates": null,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 0,
+        "Id": 0,
+        "InventoryMediaWeekId": 826,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": null,
+    "SpotLengthId": 0,
+    "StandardDaypartId": 0,
+    "Station": {
+      "Affiliation": null,
+      "CallLetters": null,
+      "Code": null,
+      "Id": 5,
+      "IsTrueInd": false,
+      "LegacyCallLetters": "ST05",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "RepFirmName": null
+    },
+    "Unit": null
+  },
+  {
+    "Cpm": 0.0,
+    "Impressions": 0.0,
+    "InventoryBuyingQuarterType": "Fallback",
+    "InventorySource": null,
+    "ManifestAudiences": null,
+    "ManifestDayparts": null,
+    "ManifestId": 0,
+    "ManifestRates": null,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 0,
+        "Id": 0,
+        "InventoryMediaWeekId": 826,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": null,
+    "SpotLengthId": 0,
+    "StandardDaypartId": 0,
+    "Station": {
+      "Affiliation": null,
+      "CallLetters": null,
+      "Code": null,
+      "Id": 6,
+      "IsTrueInd": false,
+      "LegacyCallLetters": "ST06",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "RepFirmName": null
+    },
+    "Unit": null
+  },
+  {
+    "Cpm": 0.0,
+    "Impressions": 0.0,
+    "InventoryBuyingQuarterType": "Plan",
+    "InventorySource": null,
+    "ManifestAudiences": null,
+    "ManifestDayparts": null,
+    "ManifestId": 0,
+    "ManifestRates": null,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 0,
+        "Id": 0,
+        "InventoryMediaWeekId": 826,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": null,
+    "SpotLengthId": 0,
+    "StandardDaypartId": 0,
+    "Station": {
+      "Affiliation": null,
+      "CallLetters": null,
+      "Code": null,
+      "Id": 1,
+      "IsTrueInd": false,
+      "LegacyCallLetters": "ST01",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "RepFirmName": null
+    },
+    "Unit": null
+  },
+  {
+    "Cpm": 0.0,
+    "Impressions": 0.0,
+    "InventoryBuyingQuarterType": "Plan",
+    "InventorySource": null,
+    "ManifestAudiences": null,
+    "ManifestDayparts": null,
+    "ManifestId": 0,
+    "ManifestRates": null,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 0,
+        "Id": 0,
+        "InventoryMediaWeekId": 826,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": null,
+    "SpotLengthId": 0,
+    "StandardDaypartId": 0,
+    "Station": {
+      "Affiliation": null,
+      "CallLetters": null,
+      "Code": null,
+      "Id": 2,
+      "IsTrueInd": false,
+      "LegacyCallLetters": "ST02",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "RepFirmName": null
+    },
+    "Unit": null
+  },
+  {
+    "Cpm": 0.0,
+    "Impressions": 0.0,
+    "InventoryBuyingQuarterType": "Plan",
+    "InventorySource": null,
+    "ManifestAudiences": null,
+    "ManifestDayparts": null,
+    "ManifestId": 0,
+    "ManifestRates": null,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 0,
+        "Id": 0,
+        "InventoryMediaWeekId": 826,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": null,
+    "SpotLengthId": 0,
+    "StandardDaypartId": 0,
+    "Station": {
+      "Affiliation": null,
+      "CallLetters": null,
+      "Code": null,
+      "Id": 3,
+      "IsTrueInd": false,
+      "LegacyCallLetters": "ST03",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "RepFirmName": null
+    },
+    "Unit": null
+  },
+  {
+    "Cpm": 0.0,
+    "Impressions": 0.0,
+    "InventoryBuyingQuarterType": "Fallback",
+    "InventorySource": null,
+    "ManifestAudiences": null,
+    "ManifestDayparts": null,
+    "ManifestId": 0,
+    "ManifestRates": null,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 0,
+        "Id": 0,
+        "InventoryMediaWeekId": 826,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": null,
+    "SpotLengthId": 0,
+    "StandardDaypartId": 0,
+    "Station": {
+      "Affiliation": null,
+      "CallLetters": null,
+      "Code": null,
+      "Id": 4,
+      "IsTrueInd": false,
+      "LegacyCallLetters": "ST04",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "RepFirmName": null
+    },
+    "Unit": null
+  },
+  {
+    "Cpm": 0.0,
+    "Impressions": 0.0,
+    "InventoryBuyingQuarterType": "Fallback",
+    "InventorySource": null,
+    "ManifestAudiences": null,
+    "ManifestDayparts": null,
+    "ManifestId": 0,
+    "ManifestRates": null,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 0,
+        "Id": 0,
+        "InventoryMediaWeekId": 826,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": null,
+    "SpotLengthId": 0,
+    "StandardDaypartId": 0,
+    "Station": {
+      "Affiliation": null,
+      "CallLetters": null,
+      "Code": null,
+      "Id": 5,
+      "IsTrueInd": false,
+      "LegacyCallLetters": "ST05",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "RepFirmName": null
+    },
+    "Unit": null
+  },
+  {
+    "Cpm": 0.0,
+    "Impressions": 0.0,
+    "InventoryBuyingQuarterType": "Fallback",
+    "InventorySource": null,
+    "ManifestAudiences": null,
+    "ManifestDayparts": null,
+    "ManifestId": 0,
+    "ManifestRates": null,
+    "ManifestWeeks": [
+      {
+        "ContractMediaWeekId": 0,
+        "Id": 0,
+        "InventoryMediaWeekId": 826,
+        "Spots": 0
+      }
+    ],
+    "ProjectedImpressions": 0.0,
+    "ProvidedImpressions": null,
+    "SpotLengthId": 0,
+    "StandardDaypartId": 0,
+    "Station": {
+      "Affiliation": null,
+      "CallLetters": null,
+      "Code": null,
+      "Id": 6,
+      "IsTrueInd": false,
+      "LegacyCallLetters": "ST06",
+      "ManifestMaxEndDate": null,
+      "MarketCode": null,
+      "ModifiedDate": null,
+      "OriginMarket": null,
+      "OwnershipGroupName": null,
+      "RateDataThrough": null,
+      "RepFirmName": null
+    },
+    "Unit": null
+  }
+]

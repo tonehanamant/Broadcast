@@ -17,9 +17,9 @@
     "Budget": 13969.5000,
     "Impressions": 755.65,
     "ImpressionsPercentage": 100.0,
-    "MarketCount": 0,
-    "MarketCoveragePercent": 0.0,
-    "SpotCount": 0,
-    "StationCount": 0
+    "MarketCount": 2,
+    "MarketCoveragePercent": 10.328,
+    "SpotCount": 30,
+    "StationCount": 2
   }
 }

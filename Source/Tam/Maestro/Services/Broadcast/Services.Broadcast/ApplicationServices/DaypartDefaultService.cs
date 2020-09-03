@@ -21,8 +21,7 @@ namespace Services.Broadcast.ApplicationServices
     }
 
     public class DaypartDefaultService : IDaypartDefaultService
-    {
-        internal const string FEATURE_TOGGLE_KEY_ENABLE_DAYPART_WKD = "broadcast-enable-daypart-wkd";
+    {        
         internal const string DEFAULT_DAYPART_CODE_WEEKEND = "WKD";
 
         private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
@@ -53,7 +52,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private void AssertToggle_EnableDaypartWKD<T>(List<T> dayparts) where T : DaypartDefaultDto
         {
-            if (!_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FEATURE_TOGGLE_KEY_ENABLE_DAYPART_WKD))
+            if (!_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_DAYPART_WKD))
             {
                 var toRemove = dayparts.SingleOrDefault(d => d.Code.Equals(DEFAULT_DAYPART_CODE_WEEKEND, StringComparison.OrdinalIgnoreCase));
                 if (toRemove != null)

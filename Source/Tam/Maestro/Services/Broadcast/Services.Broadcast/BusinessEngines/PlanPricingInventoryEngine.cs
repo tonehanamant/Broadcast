@@ -51,6 +51,7 @@ namespace Services.Broadcast.BusinessEngines
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IMarketCoverageRepository _MarketCoverageRepository;
         private readonly IInventoryRepository _InventoryRepository;
+        private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
         public PlanPricingInventoryEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                           IImpressionsCalculationEngine impressionsCalculationEngine,
@@ -58,7 +59,8 @@ namespace Services.Broadcast.BusinessEngines
                                           IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
                                           IDaypartCache daypartCache,
                                           IQuarterCalculationEngine quarterCalculationEngine,
-                                          ISpotLengthEngine spotLengthEngine)
+                                          ISpotLengthEngine spotLengthEngine,
+                                          IFeatureToggleHelper featureToggleHelper)
         {
             ThresholdInSecondsForProgramIntersect = BroadcastServiceSystemParameter.ThresholdInSecondsForProgramIntersectInPricing;
 
@@ -75,6 +77,7 @@ namespace Services.Broadcast.BusinessEngines
             _SpotLengthEngine = spotLengthEngine;
             _MarketCoverageRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
+            _FeatureToggleHelper = featureToggleHelper;
         }
 
         public List<QuoteProgram> GetInventoryForQuote(QuoteRequestDto request)
@@ -815,7 +818,16 @@ namespace Services.Broadcast.BusinessEngines
                 return true;
 
             var restrictedAffiliates = affiliateRestrictions.Affiliates.Select(x => x.Display);
-            var hasIntersections = restrictedAffiliates.Contains(program.Station.Affiliation);
+            bool hasIntersections;
+            if (restrictedAffiliates.Any(x => x.Equals("IND")) 
+                && _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS))
+            {
+                hasIntersections = program.Station.IsTrueInd == true;
+            }
+            else
+            {
+                hasIntersections = restrictedAffiliates.Contains(program.Station.Affiliation);
+            }
 
             return affiliateRestrictions.ContainType == ContainTypeEnum.Include ?
                  hasIntersections :
