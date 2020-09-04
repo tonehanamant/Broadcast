@@ -516,7 +516,7 @@ IF NOT EXISTS(SELECT 1 FROM sys.columns
 			  WHERE object_id = OBJECT_ID('inventory_proprietary_summary') AND 
 			        name = 'inventory_proprietary_daypart_program_mappings_id')
 BEGIN
-	DELETE FROM TABLE [inventory_proprietary_summary]
+	DELETE FROM [inventory_proprietary_summary]
 	
 	ALTER TABLE [inventory_proprietary_summary] ADD [inventory_proprietary_daypart_program_mappings_id] INT NOT NULL	
 
