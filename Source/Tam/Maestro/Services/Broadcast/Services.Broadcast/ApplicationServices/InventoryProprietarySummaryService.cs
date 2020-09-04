@@ -179,10 +179,10 @@ namespace Services.Broadcast.ApplicationServices
 			InventoryProprietarySummaryRequest inventoryProprietarySummaryRequest)
 		{
 			var response = new InventoryProprietarySummaryResponse();
-			var QuarterDetails =
+			var quarters =
 				_QuarterCalculationEngine.GetAllQuartersBetweenDates(inventoryProprietarySummaryRequest.FlightStartDate, inventoryProprietarySummaryRequest.FlightEndDate);
 
-			response.ValidationMessage = Validate(inventoryProprietarySummaryRequest, QuarterDetails);
+			response.ValidationMessage = Validate(inventoryProprietarySummaryRequest, quarters);
 
 			if (string.IsNullOrEmpty(response.ValidationMessage))
 			{
@@ -192,7 +192,7 @@ namespace Services.Broadcast.ApplicationServices
 
             var firstQuarter = quarters.First();
 
-            var summaryDaypartIds = _ConvertPlanDayPartIdsToInventoryDayPartIds(inventoryProprietarySummaryRequest, quarters.Single());
+            var summaryDaypartIds = _ConvertPlanDayPartIdsToInventoryDayPartIds(inventoryProprietarySummaryRequest, firstQuarter);
 
 			var proprietarySummaries =
 				_InventoryProprietarySummaryRepository.GetInventoryProprietarySummary(firstQuarter, summaryDaypartIds);
@@ -201,17 +201,11 @@ namespace Services.Broadcast.ApplicationServices
 
 			foreach (var proprietarySummary in proprietarySummaries)
 			{
-				proprietarySummary.ImpressionsTotal = Math.Round(_InventoryProprietarySummaryRepository.GetTotalImpressionsBySummaryIdAndAudienceIds(proprietarySummary.Id, summaryAudienceIds));
+                proprietarySummary.ImpressionsTotal = GetImpressions(inventoryProprietarySummaryRequest, proprietarySummary.Id, summaryAudienceIds);
                 proprietarySummary.Cpm = ProposalMath.CalculateCpm(proprietarySummary.UnitCost, proprietarySummary.ImpressionsTotal);
 				var marketCoverage = _InventoryProprietarySummaryRepository.GetTotalMarketCoverageBySummaryId(proprietarySummary.Id);
                 proprietarySummary.MarketCoverageTotal = marketCoverage;
             }
-
-					invPropSummary.ImpressionsTotal=  GetImpressions(inventoryProprietarySummaryRequest, invPropSummary.Id, summaryAudienceIds);
-
-					invPropSummary.MarketCoverageTotal = Math.Round(_InventoryProprietarySummaryRepository.GetTotalMarketCoverageBySummaryId(invPropSummary.Id), 0); 
-				}
-
 
             return response;
 		}
