@@ -287,6 +287,8 @@ BEGIN
 END
 /*************************************** END BP-894 *******************************************************/
 
+GO
+
 /*************************************** START BP-898 *******************************************************/
 IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_rep_firm_details'))
 BEGIN
@@ -331,6 +333,229 @@ BEGIN
 	ALTER COLUMN market_name varchar(31) NOT NULL
 END
 /*************************************** END BP-898 *******************************************************/
+
+GO
+
+/******************************** START BP-1088-2 *********************************************************/
+
+-- Drop existing table inventory_proprietary_program_names as we are splitting it into two tables
+IF EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('inventory_proprietary_program_names'))
+BEGIN
+	DROP TABLE dbo.inventory_proprietary_program_names
+END
+  
+-- Create table inventory_proprietary_lookup
+IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('inventory_proprietary_daypart_programs'))
+BEGIN
+	CREATE TABLE [dbo].[inventory_proprietary_daypart_programs]
+	(
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[unit_type] [varchar](50) NOT NULL,
+		[program_name] [varchar](150) NOT NULL,
+		[created_by] [varchar](63) NOT NULL,
+		[created_at] [datetime] NOT NULL,
+		[modified_by] [varchar](63) NULL,
+		[modified_at] [datetime] NULL,
+		CONSTRAINT [PK_inventory_proprietary_daypart_programs] PRIMARY KEY CLUSTERED 
+		(
+		[id] ASC
+		)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	 ) ON [PRIMARY]	
+	 
+	-- Seed data for inventory_proprietary_daypart_programs
+	
+	INSERT INTO [dbo].[inventory_proprietary_daypart_programs]([unit_type], [program_name], [created_by], [created_at], [modified_by], [modified_at])
+	VALUES('AM', 'Early Morning News', 'Admin', GETDATE(), 'Admin', GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_programs]([unit_type], [program_name], [created_by], [created_at], [modified_by], [modified_at])
+	VALUES('PM', 'Evening/Late News', 'Admin', GETDATE(), 'Admin', GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_programs]([unit_type], [program_name], [created_by], [created_at], [modified_by], [modified_at])
+	VALUES('News', 'Early Morning News','Admin', GETDATE(), 'Admin', GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_programs]([unit_type], [program_name], [created_by], [created_at], [modified_by], [modified_at])
+	VALUES('Syndication', 'ROS Syndication', 'Admin', GETDATE(), 'Admin', GETDATE())
+END
+
+-- Create table inventory_proprietary_daypart_program_mappings
+IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('inventory_proprietary_daypart_program_mappings'))
+BEGIN
+	CREATE TABLE [dbo].[inventory_proprietary_daypart_program_mappings]
+	(
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[inventory_source_id] [int] NOT NULL,
+		[daypart_default_id] [int] NOT NULL,
+		[inventory_proprietary_daypart_programs_id] [int] NOT NULL,	       
+		[created_by] [varchar](63) NOT NULL,
+		[created_at] [datetime] NOT NULL,
+		[modified_by] [varchar](63) NULL,
+		[modified_at] [datetime] NULL,
+		CONSTRAINT [PK_inventory_proprietary_daypart_program_mappings] PRIMARY KEY CLUSTERED 
+		(
+		[id] ASC
+		)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	 ) ON [PRIMARY]	
+	 
+	ALTER TABLE [dbo].[inventory_proprietary_daypart_program_mappings] ADD CONSTRAINT [FK_inventory_proprietary_daypart_program_mappings_inventory_proprietary_daypart_programs] FOREIGN KEY([inventory_proprietary_daypart_programs_id])
+	REFERENCES [dbo].[inventory_proprietary_daypart_programs] ([id])
+	
+	ALTER TABLE [dbo].[inventory_proprietary_daypart_program_mappings]  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_daypart_program_mappings_daypart_defaults] FOREIGN KEY([daypart_default_id])
+	REFERENCES [dbo].[daypart_defaults] ([id])
+	
+	ALTER TABLE [dbo].[inventory_proprietary_daypart_program_mappings]  WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_daypart_program_mappings_inventory_sources] FOREIGN KEY([inventory_source_id])
+	REFERENCES [dbo].[inventory_sources] ([id])
+	
+	-- Seed data for [inventory_proprietary_daypart_program_mappings]
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (5,1,1,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (5,2,1,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (5,15,1,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (5,3,2,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (5,4,2,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (5,5,2,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (5,16,2,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (3,1,3,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (3,2,3,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES(3,3,3,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (3,5,3,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (3,15,3,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (3,16,3,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (3,17,3,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (3,6,4,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (3,7,4,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES(3,8,4,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (3,9,4,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (3,10,4,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (3,11,4,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (3,12,4,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (3,14,4,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (3,19,4,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (3,20,4,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (3,21,4,'Admin',GETDATE(),'Admin',GETDATE())
+
+	INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings] 
+	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
+	VALUES (3,22,4,'Admin',GETDATE(),'Admin',GETDATE())
+ END
+ 
+ -- Add mapping table id into inventory_proprietary_summary table
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+			  WHERE object_id = OBJECT_ID('inventory_proprietary_summary') AND 
+			        name = 'inventory_proprietary_daypart_program_mappings_id')
+BEGIN
+	ALTER TABLE [inventory_proprietary_summary] ADD [inventory_proprietary_daypart_program_mappings_id] INT NOT NULL
+
+	DELETE FROM [inventory_proprietary_summary]
+
+	ALTER TABLE [inventory_proprietary_summary] WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings] FOREIGN KEY([inventory_proprietary_daypart_program_mappings_id])
+	REFERENCES [dbo].inventory_proprietary_daypart_program_mappings ([id])
+END
+	
+-- Add new column spot_cost into inventory_proprietary_summary table
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+		      WHERE object_id = OBJECT_ID('inventory_proprietary_summary') AND 
+				    name = 'unit_cost')
+BEGIN
+	ALTER TABLE [inventory_proprietary_summary] ADD [unit_cost] money NOT NULL
+END
+	
+-- Remove foreign key for default_daypart from inventory_proprietary_summary table as we are dropping that column
+IF EXISTS (SELECT 1 FROM sys.foreign_keys 
+		   WHERE parent_object_id = OBJECT_ID('inventory_proprietary_summary') AND 
+		         name = 'FK_inventory_proprietary_summary_daypart_defaults')
+BEGIN
+	ALTER TABLE [inventory_proprietary_summary] DROP [FK_inventory_proprietary_summary_daypart_defaults]
+END
+
+IF EXISTS (SELECT 1 FROM sys.columns 
+		   WHERE object_id = OBJECT_ID('inventory_proprietary_summary') AND 
+			     name = 'daypart_default_id')
+BEGIN
+	ALTER TABLE [inventory_proprietary_summary] DROP COLUMN [daypart_default_id]
+END
+	
+IF EXISTS (SELECT 1 FROM sys.columns 
+		   WHERE object_id = OBJECT_ID('inventory_proprietary_summary') AND 
+		         name = 'cpm')
+BEGIN
+	ALTER TABLE [inventory_proprietary_summary] DROP COLUMN [cpm]
+END
+
+GO
+/********************************END BP-1088-2********************************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

@@ -1,6 +1,6 @@
 {
   "Cpm": 9.000,
   "Impressions": 100000.0,
-  "MarketCoverage": 46.0,
+  "MarketCoverage": 0.465,
   "PercentageOfPlanImpressions": 11.0
 }

@@ -44,22 +44,25 @@ namespace Services.Broadcast.ApplicationServices.Plan
 		{
 			var response = new PlanInventoryProprietarySummaryResponse();
 			var summaryList = new List<InventoryProprietarySummary>();
-
 			var summaryIds = request.InventoryProprietarySummaryIds;
+
 			foreach (var summaryId in summaryIds)
 			{
-				var summary = new InventoryProprietarySummary();
-				summary.Cpm = GetCpm(summaryId);
-				summary.ImpressionsTotal = GetTotalImpressions(summaryId, request.PlanPrimaryAudienceId);
+                var summary = new InventoryProprietarySummary
+                {
+                    UnitCost = GetUnitCost(summaryId),
+                    ImpressionsTotal = GetTotalImpressions(summaryId, request.PlanPrimaryAudienceId)
+                };
 
-				summaryList.Add(summary);
+                summary.Cpm = ProposalMath.CalculateCpm(summary.UnitCost, summary.ImpressionsTotal);
+
+                summaryList.Add(summary);
 			}
 
 			var totalImpressions = summaryList.Select(i => i.ImpressionsTotal).Sum();
-			response.Impressions = Math.Round(totalImpressions);
 
+            response.Impressions = totalImpressions;
 			response.MarketCoverage = GetTotalMarketCoverage(summaryIds);
-
 			response.Cpm = GetTotalCpm(summaryList);
 
 			response.PercentageOfPlanImpressions =
@@ -74,20 +77,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
 				0);
 		}
 
-		private decimal GetCpm(int id)
+		private decimal GetUnitCost(int id)
 		{
-			var cpm = _InventoryProprietarySummaryRepository.GetCPM(id);
-			return cpm ?? 0;
+			var unitCost = _InventoryProprietarySummaryRepository.GetProprietarySummaryUnitCost(id);
+			return unitCost ?? 0;
 		}
 
 		private decimal GetTotalCpm(List<InventoryProprietarySummary> inventoryProprietarySummaries)
 		{
-			var totalCost = 0.0M;
-			double totalImpressions = 0;
+			var totalCost = 0m;
+			var totalImpressions = 0d;
+
 			foreach (var summary in inventoryProprietarySummaries)
 			{
-				summary.Cost = ProposalMath.CalculateCost(summary.Cpm, summary.ImpressionsTotal);
-				totalCost += summary.Cost;
+				totalCost += summary.UnitCost;
 				totalImpressions += summary.ImpressionsTotal;
 			}
 
@@ -97,8 +100,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 		private double GetTotalMarketCoverage(List<int> summaryIds)
 		{
 			var marketData = _InventoryProprietarySummaryRepository.GetMarketDataBySummaryIds(summaryIds);
-			var marketCoverage = marketData.GroupBy(i => i.MarketCode).Select(i => i.First().PercentageOfUS).Sum();
-			return Math.Round(marketCoverage, 0);
+			return marketData.GroupBy(i => i.MarketCode).Select(i => i.First().PercentageOfUS).Sum();
 		}
 
 		private double GetTotalImpressions(int id, int planPrimaryAudienceId)
@@ -107,12 +109,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
 				.GetRatingsAudiencesByMaestroAudience(new List<int> {planPrimaryAudienceId})
 				.Select(am => am.rating_audience_id).Distinct().ToList();
 
-
 			var impressionsTotal = Math.Round(
 				_InventoryProprietarySummaryRepository.GetTotalImpressionsBySummaryIdAndAudienceIds(id,
-					summaryAudienceIds)
-			);
-
+					summaryAudienceIds));
 
 			return impressionsTotal;
 		}

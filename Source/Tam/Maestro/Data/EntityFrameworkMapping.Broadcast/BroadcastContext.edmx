@@ -478,14 +478,25 @@
           <Property Name="job_group_id" Type="uniqueidentifier" />
           <Property Name="status_message" Type="varchar" MaxLength="200" />
         </EntityType>
-        <EntityType Name="inventory_proprietary_program_names">
+        <EntityType Name="inventory_proprietary_daypart_program_mappings">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="inventory_source_id" Type="int" Nullable="false" />
           <Property Name="daypart_default_id" Type="int" Nullable="false" />
-          <Property Name="daypart_unit_code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="inventory_proprietary_daypart_programs_id" Type="int" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="modified_by" Type="varchar" MaxLength="63" />
+          <Property Name="modified_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="inventory_proprietary_daypart_programs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="unit_type" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="program_name" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="created_at" Type="datetime" Nullable="false" />
@@ -498,15 +509,15 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="inventory_source_id" Type="int" Nullable="false" />
-          <Property Name="daypart_default_id" Type="int" Nullable="false" />
           <Property Name="quarter_number" Type="int" Nullable="false" />
           <Property Name="quarter_year" Type="int" Nullable="false" />
           <Property Name="unit" Type="int" Nullable="false" />
-          <Property Name="cpm" Type="money" />
           <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="created_at" Type="datetime" Nullable="false" />
           <Property Name="modified_by" Type="varchar" MaxLength="63" />
           <Property Name="modified_at" Type="datetime" />
+          <Property Name="inventory_proprietary_daypart_program_mappings_id" Type="int" Nullable="false" />
+          <Property Name="unit_cost" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="inventory_proprietary_summary_audiences">
           <Key>
@@ -3135,26 +3146,38 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_inventory_proprietary_program_names_daypart_defaults">
+        <Association Name="FK_inventory_proprietary_daypart_program_mappings_daypart_defaults">
           <End Role="daypart_defaults" Type="Self.daypart_defaults" Multiplicity="1" />
-          <End Role="inventory_proprietary_program_names" Type="Self.inventory_proprietary_program_names" Multiplicity="*" />
+          <End Role="inventory_proprietary_daypart_program_mappings" Type="Self.inventory_proprietary_daypart_program_mappings" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="daypart_defaults">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="inventory_proprietary_program_names">
+            <Dependent Role="inventory_proprietary_daypart_program_mappings">
               <PropertyRef Name="daypart_default_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_inventory_proprietary_program_names_inventory_sources">
+        <Association Name="FK_inventory_proprietary_daypart_program_mappings_inventory_proprietary_daypart_programs">
+          <End Role="inventory_proprietary_daypart_programs" Type="Self.inventory_proprietary_daypart_programs" Multiplicity="1" />
+          <End Role="inventory_proprietary_daypart_program_mappings" Type="Self.inventory_proprietary_daypart_program_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_proprietary_daypart_programs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_proprietary_daypart_program_mappings">
+              <PropertyRef Name="inventory_proprietary_daypart_programs_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_proprietary_daypart_program_mappings_inventory_sources">
           <End Role="inventory_sources" Type="Self.inventory_sources" Multiplicity="1" />
-          <End Role="inventory_proprietary_program_names" Type="Self.inventory_proprietary_program_names" Multiplicity="*" />
+          <End Role="inventory_proprietary_daypart_program_mappings" Type="Self.inventory_proprietary_daypart_program_mappings" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="inventory_sources">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="inventory_proprietary_program_names">
+            <Dependent Role="inventory_proprietary_daypart_program_mappings">
               <PropertyRef Name="inventory_source_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -3183,15 +3206,15 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_inventory_proprietary_summary_daypart_defaults">
-          <End Role="daypart_defaults" Type="Self.daypart_defaults" Multiplicity="1" />
+        <Association Name="FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings">
+          <End Role="inventory_proprietary_daypart_program_mappings" Type="Self.inventory_proprietary_daypart_program_mappings" Multiplicity="1" />
           <End Role="inventory_proprietary_summary" Type="Self.inventory_proprietary_summary" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="daypart_defaults">
+            <Principal Role="inventory_proprietary_daypart_program_mappings">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="inventory_proprietary_summary">
-              <PropertyRef Name="daypart_default_id" />
+              <PropertyRef Name="inventory_proprietary_daypart_program_mappings_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6558,7 +6581,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="inventory_programs_by_file_jobs" EntityType="Self.inventory_programs_by_file_jobs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_programs_by_source_job_notes" EntityType="Self.inventory_programs_by_source_job_notes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_programs_by_source_jobs" EntityType="Self.inventory_programs_by_source_jobs" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="inventory_proprietary_program_names" EntityType="Self.inventory_proprietary_program_names" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="inventory_proprietary_daypart_program_mappings" EntityType="Self.inventory_proprietary_daypart_program_mappings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="inventory_proprietary_daypart_programs" EntityType="Self.inventory_proprietary_daypart_programs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_proprietary_summary" EntityType="Self.inventory_proprietary_summary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_proprietary_summary_audiences" EntityType="Self.inventory_proprietary_summary_audiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_proprietary_summary_markets" EntityType="Self.inventory_proprietary_summary_markets" Schema="dbo" store:Type="Tables" />
@@ -6919,13 +6943,17 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="inventory_sources" EntitySet="inventory_sources" />
             <End Role="inventory_programs_by_source_jobs" EntitySet="inventory_programs_by_source_jobs" />
           </AssociationSet>
-          <AssociationSet Name="FK_inventory_proprietary_program_names_daypart_defaults" Association="Self.FK_inventory_proprietary_program_names_daypart_defaults">
+          <AssociationSet Name="FK_inventory_proprietary_daypart_program_mappings_daypart_defaults" Association="Self.FK_inventory_proprietary_daypart_program_mappings_daypart_defaults">
             <End Role="daypart_defaults" EntitySet="daypart_defaults" />
-            <End Role="inventory_proprietary_program_names" EntitySet="inventory_proprietary_program_names" />
+            <End Role="inventory_proprietary_daypart_program_mappings" EntitySet="inventory_proprietary_daypart_program_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK_inventory_proprietary_program_names_inventory_sources" Association="Self.FK_inventory_proprietary_program_names_inventory_sources">
+          <AssociationSet Name="FK_inventory_proprietary_daypart_program_mappings_inventory_proprietary_daypart_programs" Association="Self.FK_inventory_proprietary_daypart_program_mappings_inventory_proprietary_daypart_programs">
+            <End Role="inventory_proprietary_daypart_programs" EntitySet="inventory_proprietary_daypart_programs" />
+            <End Role="inventory_proprietary_daypart_program_mappings" EntitySet="inventory_proprietary_daypart_program_mappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_proprietary_daypart_program_mappings_inventory_sources" Association="Self.FK_inventory_proprietary_daypart_program_mappings_inventory_sources">
             <End Role="inventory_sources" EntitySet="inventory_sources" />
-            <End Role="inventory_proprietary_program_names" EntitySet="inventory_proprietary_program_names" />
+            <End Role="inventory_proprietary_daypart_program_mappings" EntitySet="inventory_proprietary_daypart_program_mappings" />
           </AssociationSet>
           <AssociationSet Name="FK_inventory_proprietary_summary_audiences_audiences" Association="Self.FK_inventory_proprietary_summary_audiences_audiences">
             <End Role="audiences" EntitySet="audiences" />
@@ -6935,8 +6963,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
             <End Role="inventory_proprietary_summary_audiences" EntitySet="inventory_proprietary_summary_audiences" />
           </AssociationSet>
-          <AssociationSet Name="FK_inventory_proprietary_summary_daypart_defaults" Association="Self.FK_inventory_proprietary_summary_daypart_defaults">
-            <End Role="daypart_defaults" EntitySet="daypart_defaults" />
+          <AssociationSet Name="FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings" Association="Self.FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings">
+            <End Role="inventory_proprietary_daypart_program_mappings" EntitySet="inventory_proprietary_daypart_program_mappings" />
             <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
           </AssociationSet>
           <AssociationSet Name="FK_inventory_proprietary_summary_inventory_sources" Association="Self.FK_inventory_proprietary_summary_inventory_sources">
@@ -8605,35 +8633,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="station_inventory_manifest" EntitySet="station_inventory_manifest" />
             <End Role="station_inventory_manifest_weeks" EntitySet="station_inventory_manifest_weeks" />
           </AssociationSet>
-          <EntitySet Name="stations" EntityType="BroadcastModel.station" />
-          <AssociationSet Name="FK_stations_markets" Association="BroadcastModel.FK_stations_markets">
-            <End Role="market" EntitySet="markets" />
-            <End Role="station" EntitySet="stations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_pricing_guide_distribution_open_market_inventory_stations" Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_stations">
-            <End Role="station" EntitySet="stations" />
-            <End Role="pricing_guide_distribution_open_market_inventory" EntitySet="pricing_guide_distribution_open_market_inventory" />
-          </AssociationSet>
-          <AssociationSet Name="FK_proposal_buy_file_details_stations" Association="BroadcastModel.FK_proposal_buy_file_details_stations">
-            <End Role="station" EntitySet="stations" />
-            <End Role="proposal_buy_file_details" EntitySet="proposal_buy_file_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_contacts_stations" Association="BroadcastModel.FK_station_contacts_stations">
-            <End Role="station" EntitySet="stations" />
-            <End Role="station_contacts" EntitySet="station_contacts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_inventory_loaded_stations" Association="BroadcastModel.FK_station_inventory_loaded_stations">
-            <End Role="station" EntitySet="stations" />
-            <End Role="station_inventory_loaded" EntitySet="station_inventory_loaded" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_inventory_manifest_stations" Association="BroadcastModel.FK_station_inventory_manifest_stations">
-            <End Role="station" EntitySet="stations" />
-            <End Role="station_inventory_manifest" EntitySet="station_inventory_manifest" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_inventory_spot_snapshots_stations" Association="BroadcastModel.FK_station_inventory_spot_snapshots_stations">
-            <End Role="station" EntitySet="stations" />
-            <End Role="station_inventory_spot_snapshots" EntitySet="station_inventory_spot_snapshots" />
-          </AssociationSet>
           <EntitySet Name="inventory_file_ratings_jobs" EntityType="BroadcastModel.inventory_file_ratings_jobs" />
           <AssociationSet Name="FK_inventory_file_ratings_jobs_inventory_files" Association="BroadcastModel.FK_inventory_file_ratings_jobs_inventory_files">
             <End Role="inventory_files" EntitySet="inventory_files" />
@@ -8943,14 +8942,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="media_months" EntitySet="media_months" />
             <End Role="station_month_details" EntitySet="station_month_details" />
           </AssociationSet>
-          <AssociationSet Name="FK_station_month_details_stations" Association="BroadcastModel.FK_station_month_details_stations">
-            <End Role="station" EntitySet="stations" />
-            <End Role="station_month_details" EntitySet="station_month_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_station_mappings_stations" Association="BroadcastModel.FK_station_mappings_stations">
-            <End Role="station" EntitySet="stations" />
-            <End Role="station_mappings" EntitySet="station_mappings" />
-          </AssociationSet>
           <EntitySet Name="plan_version_pricing_job_inventory_source_estimates" EntityType="BroadcastModel.plan_version_pricing_job_inventory_source_estimates" />
           <AssociationSet Name="FK_plan_version_pricing_job_inventory_source_estimates_inventory_sources" Association="BroadcastModel.FK_plan_version_pricing_job_inventory_source_estimates_inventory_sources">
             <End Role="inventory_sources" EntitySet="inventory_sources" />
@@ -9256,35 +9247,16 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="market" EntitySet="markets" />
             <End Role="inventory_proprietary_summary_markets" EntitySet="inventory_proprietary_summary_markets" />
           </AssociationSet>
-          <EntitySet Name="inventory_proprietary_summary" EntityType="BroadcastModel.inventory_proprietary_summary" />
-          <AssociationSet Name="FK_inventory_proprietary_summary_daypart_defaults" Association="BroadcastModel.FK_inventory_proprietary_summary_daypart_defaults">
-            <End Role="daypart_defaults" EntitySet="daypart_defaults" />
-            <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
-          </AssociationSet>
-          <AssociationSet Name="FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary" Association="BroadcastModel.FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary">
-            <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
-            <End Role="inventory_proprietary_summary_audiences" EntitySet="inventory_proprietary_summary_audiences" />
-          </AssociationSet>
-          <AssociationSet Name="FK_inventory_proprietary_summary_inventory_sources" Association="BroadcastModel.FK_inventory_proprietary_summary_inventory_sources">
-            <End Role="inventory_sources" EntitySet="inventory_sources" />
-            <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
-          </AssociationSet>
-          <AssociationSet Name="FK_inventory_proprietary_summary_markets_inventory_proprietary_summary" Association="BroadcastModel.FK_inventory_proprietary_summary_markets_inventory_proprietary_summary">
-            <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
-            <End Role="inventory_proprietary_summary_markets" EntitySet="inventory_proprietary_summary_markets" />
-          </AssociationSet>
           <EntitySet Name="plan_version_buying_api_result_spot_frequencies" EntityType="BroadcastModel.plan_version_buying_api_result_spot_frequencies" />
           <EntitySet Name="plan_version_buying_api_result_spots" EntityType="BroadcastModel.plan_version_buying_api_result_spots" />
           <EntitySet Name="plan_version_buying_api_results" EntityType="BroadcastModel.plan_version_buying_api_results" />
           <EntitySet Name="plan_version_buying_band_details" EntityType="BroadcastModel.plan_version_buying_band_details" />
           <EntitySet Name="plan_version_buying_job" EntityType="BroadcastModel.plan_version_buying_job" />
           <EntitySet Name="plan_version_buying_job_inventory_source_estimates" EntityType="BroadcastModel.plan_version_buying_job_inventory_source_estimates" />
-          <EntitySet Name="plan_version_buying_market_details" EntityType="BroadcastModel.plan_version_buying_market_details" />
           <EntitySet Name="plan_version_buying_parameters" EntityType="BroadcastModel.plan_version_buying_parameters" />
           <EntitySet Name="plan_version_buying_parameters_inventory_source_percentages" EntityType="BroadcastModel.plan_version_buying_parameters_inventory_source_percentages" />
           <EntitySet Name="plan_version_buying_parameters_inventory_source_type_percentages" EntityType="BroadcastModel.plan_version_buying_parameters_inventory_source_type_percentages" />
           <EntitySet Name="plan_version_buying_result_spots" EntityType="BroadcastModel.plan_version_buying_result_spots" />
-          <EntitySet Name="plan_version_buying_results" EntityType="BroadcastModel.plan_version_buying_results" />
           <EntitySet Name="plan_version_buying_station_details" EntityType="BroadcastModel.plan_version_buying_station_details" />
           <AssociationSet Name="FK_plan_version_buying_api_result_spots_daypart_defaults" Association="BroadcastModel.FK_plan_version_buying_api_result_spots_daypart_defaults">
             <End Role="daypart_defaults" EntitySet="daypart_defaults" />
@@ -9342,10 +9314,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
             <End Role="plan_version_buying_parameters" EntitySet="plan_version_buying_parameters" />
           </AssociationSet>
-          <AssociationSet Name="FK_plan_version_buying_results_plan_version_buying_job" Association="BroadcastModel.FK_plan_version_buying_results_plan_version_buying_job">
-            <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
-            <End Role="plan_version_buying_results" EntitySet="plan_version_buying_results" />
-          </AssociationSet>
           <AssociationSet Name="FK_plan_version_buying_parameters_inventory_source_percentages_plan_version_buying_parameters" Association="BroadcastModel.FK_plan_version_buying_parameters_inventory_source_percentages_plan_version_buying_parameters">
             <End Role="plan_version_buying_parameters" EntitySet="plan_version_buying_parameters" />
             <End Role="plan_version_buying_parameters_inventory_source_percentages" EntitySet="plan_version_buying_parameters_inventory_source_percentages" />
@@ -9358,10 +9326,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="plan_versions" EntitySet="plan_versions" />
             <End Role="plan_version_buying_parameters" EntitySet="plan_version_buying_parameters" />
           </AssociationSet>
-          <AssociationSet Name="FK_plan_version_buying_result_spots_plan_version_buying_results" Association="BroadcastModel.FK_plan_version_buying_result_spots_plan_version_buying_results">
-            <End Role="plan_version_buying_results" EntitySet="plan_version_buying_results" />
-            <End Role="plan_version_buying_result_spots" EntitySet="plan_version_buying_result_spots" />
-          </AssociationSet>
           <EntitySet Name="program_name_mapping_keywords" EntityType="BroadcastModel.program_name_mapping_keywords" />
           <AssociationSet Name="FK_program_name_mapping_keywords_genres" Association="BroadcastModel.FK_program_name_mapping_keywords_genres">
             <End Role="genre" EntitySet="genres" />
@@ -9370,15 +9334,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_program_name_mapping_keywords_show_types" Association="BroadcastModel.FK_program_name_mapping_keywords_show_types">
             <End Role="show_types" EntitySet="show_types" />
             <End Role="program_name_mapping_keywords" EntitySet="program_name_mapping_keywords" />
-          </AssociationSet>
-          <EntitySet Name="inventory_proprietary_program_names" EntityType="BroadcastModel.inventory_proprietary_program_names" />
-          <AssociationSet Name="FK_inventory_proprietary_program_names_daypart_defaults" Association="BroadcastModel.FK_inventory_proprietary_program_names_daypart_defaults">
-            <End Role="daypart_defaults" EntitySet="daypart_defaults" />
-            <End Role="inventory_proprietary_program_names" EntitySet="inventory_proprietary_program_names" />
-          </AssociationSet>
-          <AssociationSet Name="FK_inventory_proprietary_program_names_inventory_sources" Association="BroadcastModel.FK_inventory_proprietary_program_names_inventory_sources">
-            <End Role="inventory_sources" EntitySet="inventory_sources" />
-            <End Role="inventory_proprietary_program_names" EntitySet="inventory_proprietary_program_names" />
           </AssociationSet>
           <EntitySet Name="show_type_mappings" EntityType="BroadcastModel.show_type_mappings" />
           <AssociationSet Name="FK_show_type_mappings_show_types_maestro" Association="BroadcastModel.FK_show_type_mappings_show_types_maestro">
@@ -9389,27 +9344,105 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="show_types" EntitySet="show_types" />
             <End Role="show_type_mappings" EntitySet="show_type_mappings" />
           </AssociationSet>
+          <EntitySet Name="plan_version_buying_ownership_group_details" EntityType="BroadcastModel.plan_version_buying_ownership_group_details" />
+          <EntitySet Name="inventory_proprietary_daypart_program_mappings" EntityType="BroadcastModel.inventory_proprietary_daypart_program_mappings" />
+          <AssociationSet Name="FK_inventory_proprietary_daypart_program_mappings_daypart_defaults" Association="BroadcastModel.FK_inventory_proprietary_daypart_program_mappings_daypart_defaults">
+            <End Role="daypart_defaults" EntitySet="daypart_defaults" />
+            <End Role="inventory_proprietary_daypart_program_mappings" EntitySet="inventory_proprietary_daypart_program_mappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_proprietary_daypart_program_mappings_inventory_sources" Association="BroadcastModel.FK_inventory_proprietary_daypart_program_mappings_inventory_sources">
+            <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="inventory_proprietary_daypart_program_mappings" EntitySet="inventory_proprietary_daypart_program_mappings" />
+          </AssociationSet>
+          <EntitySet Name="plan_version_buying_results" EntityType="BroadcastModel.plan_version_buying_results" />
           <AssociationSet Name="FK_plan_version_buying_band_details_plan_version_buying_results" Association="BroadcastModel.FK_plan_version_buying_band_details_plan_version_buying_results">
             <End Role="plan_version_buying_results" EntitySet="plan_version_buying_results" />
             <End Role="plan_version_buying_band_details" EntitySet="plan_version_buying_band_details" />
           </AssociationSet>
-          <AssociationSet Name="FK_plan_version_buying_market_details_plan_version_buying_results" Association="BroadcastModel.FK_plan_version_buying_market_details_plan_version_buying_results">
+          <AssociationSet Name="FK_plan_version_buying_results_plan_version_buying_job" Association="BroadcastModel.FK_plan_version_buying_results_plan_version_buying_job">
+            <End Role="plan_version_buying_job" EntitySet="plan_version_buying_job" />
             <End Role="plan_version_buying_results" EntitySet="plan_version_buying_results" />
-            <End Role="plan_version_buying_market_details" EntitySet="plan_version_buying_market_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_ownership_group_details_plan_version_buying_results" Association="BroadcastModel.FK_plan_version_buying_ownership_group_details_plan_version_buying_results">
+            <End Role="plan_version_buying_results" EntitySet="plan_version_buying_results" />
+            <End Role="plan_version_buying_ownership_group_details" EntitySet="plan_version_buying_ownership_group_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_version_buying_result_spots_plan_version_buying_results" Association="BroadcastModel.FK_plan_version_buying_result_spots_plan_version_buying_results">
+            <End Role="plan_version_buying_results" EntitySet="plan_version_buying_results" />
+            <End Role="plan_version_buying_result_spots" EntitySet="plan_version_buying_result_spots" />
           </AssociationSet>
           <AssociationSet Name="FK_plan_version_buying_station_details_plan_version_buying_results" Association="BroadcastModel.FK_plan_version_buying_station_details_plan_version_buying_results">
             <End Role="plan_version_buying_results" EntitySet="plan_version_buying_results" />
             <End Role="plan_version_buying_station_details" EntitySet="plan_version_buying_station_details" />
           </AssociationSet>
-          <EntitySet Name="plan_version_buying_ownership_group_details" EntityType="BroadcastModel.plan_version_buying_ownership_group_details" />
-          <AssociationSet Name="FK_plan_version_buying_ownership_group_details_plan_version_buying_results" Association="BroadcastModel.FK_plan_version_buying_ownership_group_details_plan_version_buying_results">
-            <End Role="plan_version_buying_results" EntitySet="plan_version_buying_results" />
-            <End Role="plan_version_buying_ownership_group_details" EntitySet="plan_version_buying_ownership_group_details" />
-          </AssociationSet>
           <EntitySet Name="plan_version_buying_rep_firm_details" EntityType="BroadcastModel.plan_version_buying_rep_firm_details" />
           <AssociationSet Name="FK_plan_version_buying_rep_firm_details_plan_version_buying_results" Association="BroadcastModel.FK_plan_version_buying_rep_firm_details_plan_version_buying_results">
             <End Role="plan_version_buying_results" EntitySet="plan_version_buying_results" />
             <End Role="plan_version_buying_rep_firm_details" EntitySet="plan_version_buying_rep_firm_details" />
+          </AssociationSet>
+          <EntitySet Name="plan_version_buying_market_details" EntityType="BroadcastModel.plan_version_buying_market_details" />
+          <AssociationSet Name="FK_plan_version_buying_market_details_plan_version_buying_results" Association="BroadcastModel.FK_plan_version_buying_market_details_plan_version_buying_results">
+            <End Role="plan_version_buying_results" EntitySet="plan_version_buying_results" />
+            <End Role="plan_version_buying_market_details" EntitySet="plan_version_buying_market_details" />
+          </AssociationSet>
+          <EntitySet Name="stations" EntityType="BroadcastModel.station" />
+          <AssociationSet Name="FK_stations_markets" Association="BroadcastModel.FK_stations_markets">
+            <End Role="market" EntitySet="markets" />
+            <End Role="station" EntitySet="stations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pricing_guide_distribution_open_market_inventory_stations" Association="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_stations">
+            <End Role="station" EntitySet="stations" />
+            <End Role="pricing_guide_distribution_open_market_inventory" EntitySet="pricing_guide_distribution_open_market_inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proposal_buy_file_details_stations" Association="BroadcastModel.FK_proposal_buy_file_details_stations">
+            <End Role="station" EntitySet="stations" />
+            <End Role="proposal_buy_file_details" EntitySet="proposal_buy_file_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_contacts_stations" Association="BroadcastModel.FK_station_contacts_stations">
+            <End Role="station" EntitySet="stations" />
+            <End Role="station_contacts" EntitySet="station_contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_inventory_loaded_stations" Association="BroadcastModel.FK_station_inventory_loaded_stations">
+            <End Role="station" EntitySet="stations" />
+            <End Role="station_inventory_loaded" EntitySet="station_inventory_loaded" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_inventory_manifest_stations" Association="BroadcastModel.FK_station_inventory_manifest_stations">
+            <End Role="station" EntitySet="stations" />
+            <End Role="station_inventory_manifest" EntitySet="station_inventory_manifest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_inventory_spot_snapshots_stations" Association="BroadcastModel.FK_station_inventory_spot_snapshots_stations">
+            <End Role="station" EntitySet="stations" />
+            <End Role="station_inventory_spot_snapshots" EntitySet="station_inventory_spot_snapshots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_mappings_stations" Association="BroadcastModel.FK_station_mappings_stations">
+            <End Role="station" EntitySet="stations" />
+            <End Role="station_mappings" EntitySet="station_mappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_station_month_details_stations" Association="BroadcastModel.FK_station_month_details_stations">
+            <End Role="station" EntitySet="stations" />
+            <End Role="station_month_details" EntitySet="station_month_details" />
+          </AssociationSet>
+          <EntitySet Name="inventory_proprietary_daypart_programs" EntityType="BroadcastModel.inventory_proprietary_daypart_programs" />
+          <EntitySet Name="inventory_proprietary_summary" EntityType="BroadcastModel.inventory_proprietary_summary" />
+          <AssociationSet Name="FK_inventory_proprietary_daypart_program_mappings_inventory_proprietary_daypart_programs" Association="BroadcastModel.FK_inventory_proprietary_daypart_program_mappings_inventory_proprietary_daypart_programs">
+            <End Role="inventory_proprietary_daypart_programs" EntitySet="inventory_proprietary_daypart_programs" />
+            <End Role="inventory_proprietary_daypart_program_mappings" EntitySet="inventory_proprietary_daypart_program_mappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings" Association="BroadcastModel.FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings">
+            <End Role="inventory_proprietary_daypart_program_mappings" EntitySet="inventory_proprietary_daypart_program_mappings" />
+            <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary" Association="BroadcastModel.FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary">
+            <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
+            <End Role="inventory_proprietary_summary_audiences" EntitySet="inventory_proprietary_summary_audiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_proprietary_summary_inventory_sources" Association="BroadcastModel.FK_inventory_proprietary_summary_inventory_sources">
+            <End Role="inventory_sources" EntitySet="inventory_sources" />
+            <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_proprietary_summary_markets_inventory_proprietary_summary" Association="BroadcastModel.FK_inventory_proprietary_summary_markets_inventory_proprietary_summary">
+            <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
+            <End Role="inventory_proprietary_summary_markets" EntitySet="inventory_proprietary_summary_markets" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -10270,10 +10303,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="inventory_programs_by_source_jobs" Relationship="BroadcastModel.FK_inventory_programs_by_source_jobs_inventory_source" FromRole="inventory_sources" ToRole="inventory_programs_by_source_jobs" />
           <NavigationProperty Name="plan_version_pricing_job_inventory_source_estimates" Relationship="BroadcastModel.FK_plan_version_pricing_job_inventory_source_estimates_inventory_sources" FromRole="inventory_sources" ToRole="plan_version_pricing_job_inventory_source_estimates" />
           <NavigationProperty Name="inventory_export_jobs" Relationship="BroadcastModel.FK_inventory_export_jobs_inventory_source" FromRole="inventory_sources" ToRole="inventory_export_jobs" />
-          <NavigationProperty Name="inventory_proprietary_summary" Relationship="BroadcastModel.FK_inventory_proprietary_summary_inventory_sources" FromRole="inventory_sources" ToRole="inventory_proprietary_summary" />
           <NavigationProperty Name="plan_version_buying_job_inventory_source_estimates" Relationship="BroadcastModel.FK_plan_version_buying_job_inventory_source_estimates_inventory_sources" FromRole="inventory_sources" ToRole="plan_version_buying_job_inventory_source_estimates" />
           <NavigationProperty Name="plan_version_buying_parameters_inventory_source_percentages" Relationship="BroadcastModel.FK_plan_version_buying_parameters_inventory_source_percentages_inventory_sources" FromRole="inventory_sources" ToRole="plan_version_buying_parameters_inventory_source_percentages" />
-          <NavigationProperty Name="inventory_proprietary_program_names" Relationship="BroadcastModel.FK_inventory_proprietary_program_names_inventory_sources" FromRole="inventory_sources" ToRole="inventory_proprietary_program_names" />
+          <NavigationProperty Name="inventory_proprietary_daypart_program_mappings" Relationship="BroadcastModel.FK_inventory_proprietary_daypart_program_mappings_inventory_sources" FromRole="inventory_sources" ToRole="inventory_proprietary_daypart_program_mappings" />
+          <NavigationProperty Name="inventory_proprietary_summary" Relationship="BroadcastModel.FK_inventory_proprietary_summary_inventory_sources" FromRole="inventory_sources" ToRole="inventory_proprietary_summary" />
         </EntityType>
         <EntityType Name="station_inventory_group">
           <Key>
@@ -10449,10 +10482,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_manifest_rates" Relationship="BroadcastModel.FK_station_inventory_manifest_rates_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_rates" />
           <NavigationProperty Name="station_inventory_manifest_weeks" Relationship="BroadcastModel.FK_station_inventory_manifest_weeks_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_weeks" />
           <Property Name="station_id" Type="Int32" />
-          <NavigationProperty Name="station" Relationship="BroadcastModel.FK_station_inventory_manifest_stations" FromRole="station_inventory_manifest" ToRole="station" />
           <NavigationProperty Name="station_inventory_manifest_dayparts" Relationship="BroadcastModel.FK_station_inventory_manifest_dayparts_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="station_inventory_manifest_dayparts" />
           <NavigationProperty Name="plan_version_pricing_api_result_spots" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="plan_version_pricing_api_result_spots" />
           <NavigationProperty Name="plan_version_buying_api_result_spots" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spots_station_inventory_manifest" FromRole="station_inventory_manifest" ToRole="plan_version_buying_api_result_spots" />
+          <NavigationProperty Name="station" Relationship="BroadcastModel.FK_station_inventory_manifest_stations" FromRole="station_inventory_manifest" ToRole="station" />
         </EntityType>
         <Association Name="FK_station_inventory_manifest_inventory_sources">
           <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
@@ -12507,11 +12540,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="proposal_version_markets" Relationship="BroadcastModel.FK_proposal_version_markets_markets" FromRole="market" ToRole="proposal_version_markets" />
           <NavigationProperty Name="station_inventory_spot_snapshots" Relationship="BroadcastModel.FK_station_inventory_spot_snapshots_markets" FromRole="market" ToRole="station_inventory_spot_snapshots" />
           <NavigationProperty Name="schedules" Relationship="BroadcastModel.schedule_restriction_markets" FromRole="market" ToRole="schedule" />
-          <NavigationProperty Name="stations" Relationship="BroadcastModel.FK_stations_markets" FromRole="market" ToRole="station" />
           <NavigationProperty Name="plan_version_available_markets" Relationship="BroadcastModel.FK_plan_available_markets_markets" FromRole="market" ToRole="plan_version_available_markets" />
           <NavigationProperty Name="plan_version_blackout_markets" Relationship="BroadcastModel.FK_plan_blackout_markets_markets" FromRole="market" ToRole="plan_version_blackout_markets" />
           <NavigationProperty Name="station_month_details" Relationship="BroadcastModel.FK_station_month_details_markets" FromRole="market" ToRole="station_month_details" />
           <NavigationProperty Name="inventory_proprietary_summary_markets" Relationship="BroadcastModel.FK_inventory_proprietary_summary_markets_markets" FromRole="market" ToRole="inventory_proprietary_summary_markets" />
+          <NavigationProperty Name="stations" Relationship="BroadcastModel.FK_stations_markets" FromRole="market" ToRole="station" />
         </EntityType>
         <Association Name="FK_market_coverages_markets">
           <End Type="BroadcastModel.market" Role="market" Multiplicity="1" />
@@ -12667,115 +12700,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="station_inventory_manifest_weeks">
               <PropertyRef Name="station_inventory_manifest_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="station">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="station_code" Type="Int32" />
-          <Property Name="station_call_letters" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="affiliation" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="market_code" Type="Int16" />
-          <Property Name="legacy_call_letters" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="market" Relationship="BroadcastModel.FK_stations_markets" FromRole="station" ToRole="market" />
-          <NavigationProperty Name="pricing_guide_distribution_open_market_inventory" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_stations" FromRole="station" ToRole="pricing_guide_distribution_open_market_inventory" />
-          <NavigationProperty Name="proposal_buy_file_details" Relationship="BroadcastModel.FK_proposal_buy_file_details_stations" FromRole="station" ToRole="proposal_buy_file_details" />
-          <NavigationProperty Name="station_contacts" Relationship="BroadcastModel.FK_station_contacts_stations" FromRole="station" ToRole="station_contacts" />
-          <NavigationProperty Name="station_inventory_loaded" Relationship="BroadcastModel.FK_station_inventory_loaded_stations" FromRole="station" ToRole="station_inventory_loaded" />
-          <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_stations" FromRole="station" ToRole="station_inventory_manifest" />
-          <NavigationProperty Name="station_inventory_spot_snapshots" Relationship="BroadcastModel.FK_station_inventory_spot_snapshots_stations" FromRole="station" ToRole="station_inventory_spot_snapshots" />
-          <NavigationProperty Name="station_month_details" Relationship="BroadcastModel.FK_station_month_details_stations" FromRole="station" ToRole="station_month_details" />
-          <NavigationProperty Name="station_mappings" Relationship="BroadcastModel.FK_station_mappings_stations" FromRole="station" ToRole="station_mappings" />
-          <Property Name="owner_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="is_true_ind" Type="Boolean" Nullable="false" />
-          <Property Name="rep_firm_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <Association Name="FK_stations_markets">
-          <End Type="BroadcastModel.market" Role="market" Multiplicity="0..1" />
-          <End Type="BroadcastModel.station" Role="station" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="market">
-              <PropertyRef Name="market_code" />
-            </Principal>
-            <Dependent Role="station">
-              <PropertyRef Name="market_code" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_pricing_guide_distribution_open_market_inventory_stations">
-          <End Type="BroadcastModel.station" Role="station" Multiplicity="1" />
-          <End Type="BroadcastModel.pricing_guide_distribution_open_market_inventory" Role="pricing_guide_distribution_open_market_inventory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="station">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="pricing_guide_distribution_open_market_inventory">
-              <PropertyRef Name="station_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_proposal_buy_file_details_stations">
-          <End Type="BroadcastModel.station" Role="station" Multiplicity="1" />
-          <End Type="BroadcastModel.proposal_buy_file_details" Role="proposal_buy_file_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="station">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="proposal_buy_file_details">
-              <PropertyRef Name="station_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_contacts_stations">
-          <End Type="BroadcastModel.station" Role="station" Multiplicity="1" />
-          <End Type="BroadcastModel.station_contacts" Role="station_contacts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="station">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_contacts">
-              <PropertyRef Name="station_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_inventory_loaded_stations">
-          <End Type="BroadcastModel.station" Role="station" Multiplicity="1" />
-          <End Type="BroadcastModel.station_inventory_loaded" Role="station_inventory_loaded" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="station">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_inventory_loaded">
-              <PropertyRef Name="station_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_inventory_manifest_stations">
-          <End Type="BroadcastModel.station" Role="station" Multiplicity="0..1" />
-          <End Type="BroadcastModel.station_inventory_manifest" Role="station_inventory_manifest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="station">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_inventory_manifest">
-              <PropertyRef Name="station_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_inventory_spot_snapshots_stations">
-          <End Type="BroadcastModel.station" Role="station" Multiplicity="1" />
-          <End Type="BroadcastModel.station_inventory_spot_snapshots" Role="station_inventory_spot_snapshots" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="station">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_inventory_spot_snapshots">
-              <PropertyRef Name="station_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -13626,9 +13550,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_audience_daypart_vpvh" Relationship="BroadcastModel.FK_plan_version_audience_daypart_vpvh_daypart_defaults" FromRole="daypart_defaults" ToRole="plan_version_audience_daypart_vpvh" />
           <Property Name="vpvh_calculation_source_type" Type="Int32" Nullable="false" />
           <NavigationProperty Name="plan_version_pricing_api_result_spots" Relationship="BroadcastModel.FK_plan_version_pricing_api_result_spots_daypart_defaults" FromRole="daypart_defaults" ToRole="plan_version_pricing_api_result_spots" />
-          <NavigationProperty Name="inventory_proprietary_summary" Relationship="BroadcastModel.FK_inventory_proprietary_summary_daypart_defaults" FromRole="daypart_defaults" ToRole="inventory_proprietary_summary" />
           <NavigationProperty Name="plan_version_buying_api_result_spots" Relationship="BroadcastModel.FK_plan_version_buying_api_result_spots_daypart_defaults" FromRole="daypart_defaults" ToRole="plan_version_buying_api_result_spots" />
-          <NavigationProperty Name="inventory_proprietary_program_names" Relationship="BroadcastModel.FK_inventory_proprietary_program_names_daypart_defaults" FromRole="daypart_defaults" ToRole="inventory_proprietary_program_names" />
+          <NavigationProperty Name="inventory_proprietary_daypart_program_mappings" Relationship="BroadcastModel.FK_inventory_proprietary_daypart_program_mappings_daypart_defaults" FromRole="daypart_defaults" ToRole="inventory_proprietary_daypart_program_mappings" />
         </EntityType>
         <Association Name="FK_daypart_defaults_dayparts">
           <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
@@ -14301,8 +14224,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="created_date" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
           <Property Name="station_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="station" Relationship="BroadcastModel.FK_station_mappings_stations" FromRole="station_mappings" ToRole="station" />
           <Property Name="map_set" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="station" Relationship="BroadcastModel.FK_station_mappings_stations" FromRole="station_mappings" ToRole="station" />
         </EntityType>
         <EntityType Name="station_month_details">
           <Key>
@@ -14339,30 +14262,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="station_month_details">
               <PropertyRef Name="media_month_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_month_details_stations">
-          <End Type="BroadcastModel.station" Role="station" Multiplicity="1" />
-          <End Type="BroadcastModel.station_month_details" Role="station_month_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="station">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_month_details">
-              <PropertyRef Name="station_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_station_mappings_stations">
-          <End Type="BroadcastModel.station" Role="station" Multiplicity="1" />
-          <End Type="BroadcastModel.station_mappings" Role="station_mappings" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="station">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="station_mappings">
-              <PropertyRef Name="station_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -15743,74 +15642,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="inventory_proprietary_summary">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="inventory_source_id" Type="Int32" Nullable="false" />
-          <Property Name="daypart_default_id" Type="Int32" Nullable="false" />
-          <Property Name="quarter_number" Type="Int32" Nullable="false" />
-          <Property Name="quarter_year" Type="Int32" Nullable="false" />
-          <Property Name="unit" Type="Int32" Nullable="false" />
-          <Property Name="cpm" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="modified_by" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="modified_at" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="daypart_defaults" Relationship="BroadcastModel.FK_inventory_proprietary_summary_daypart_defaults" FromRole="inventory_proprietary_summary" ToRole="daypart_defaults" />
-          <NavigationProperty Name="inventory_proprietary_summary_audiences" Relationship="BroadcastModel.FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary" FromRole="inventory_proprietary_summary" ToRole="inventory_proprietary_summary_audiences" />
-          <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_inventory_proprietary_summary_inventory_sources" FromRole="inventory_proprietary_summary" ToRole="inventory_sources" />
-          <NavigationProperty Name="inventory_proprietary_summary_markets" Relationship="BroadcastModel.FK_inventory_proprietary_summary_markets_inventory_proprietary_summary" FromRole="inventory_proprietary_summary" ToRole="inventory_proprietary_summary_markets" />
-        </EntityType>
-        <Association Name="FK_inventory_proprietary_summary_daypart_defaults">
-          <End Type="BroadcastModel.daypart_defaults" Role="daypart_defaults" Multiplicity="1" />
-          <End Type="BroadcastModel.inventory_proprietary_summary" Role="inventory_proprietary_summary" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="daypart_defaults">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_proprietary_summary">
-              <PropertyRef Name="daypart_default_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary">
-          <End Type="BroadcastModel.inventory_proprietary_summary" Role="inventory_proprietary_summary" Multiplicity="1" />
-          <End Type="BroadcastModel.inventory_proprietary_summary_audiences" Role="inventory_proprietary_summary_audiences" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="inventory_proprietary_summary">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_proprietary_summary_audiences">
-              <PropertyRef Name="inventory_proprietary_summary_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_inventory_proprietary_summary_inventory_sources">
-          <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
-          <End Type="BroadcastModel.inventory_proprietary_summary" Role="inventory_proprietary_summary" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="inventory_sources">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_proprietary_summary">
-              <PropertyRef Name="inventory_source_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_inventory_proprietary_summary_markets_inventory_proprietary_summary">
-          <End Type="BroadcastModel.inventory_proprietary_summary" Role="inventory_proprietary_summary" Multiplicity="1" />
-          <End Type="BroadcastModel.inventory_proprietary_summary_markets" Role="inventory_proprietary_summary_markets" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="inventory_proprietary_summary">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_proprietary_summary_markets">
-              <PropertyRef Name="inventory_proprietary_summary_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="plan_version_buying_api_result_spot_frequencies">
           <Key>
             <PropertyRef Name="id" />
@@ -15902,24 +15733,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="media_weeks" Relationship="BroadcastModel.FK_plan_version_buying_job_inventory_source_estimates_media_weeks" FromRole="plan_version_buying_job_inventory_source_estimates" ToRole="media_weeks" />
           <NavigationProperty Name="plan_version_buying_job" Relationship="BroadcastModel.FK_plan_version_buying_job_inventory_source_estimates_plan_version_buying_job" FromRole="plan_version_buying_job_inventory_source_estimates" ToRole="plan_version_buying_job" />
         </EntityType>
-        <EntityType Name="plan_version_buying_market_details">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="rank" Type="Int32" Nullable="false" />
-          <Property Name="market_coverage_percent" Type="Double" Nullable="false" />
-          <Property Name="stations" Type="Int32" Nullable="false" />
-          <Property Name="spots" Type="Int32" Nullable="false" />
-          <Property Name="impressions" Type="Double" Nullable="false" />
-          <Property Name="cpm" Type="Double" Nullable="false" />
-          <Property Name="budget" Type="Double" Nullable="false" />
-          <Property Name="impressions_percentage" Type="Double" Nullable="false" />
-          <Property Name="share_of_voice_goal_percentage" Type="Double" />
-          <Property Name="plan_version_buying_result_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="plan_version_buying_results" Relationship="BroadcastModel.FK_plan_version_buying_market_details_plan_version_buying_results" FromRole="plan_version_buying_market_details" ToRole="plan_version_buying_results" />
-          <Property Name="market_name" Type="String" Nullable="false" MaxLength="31" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="plan_version_buying_parameters">
           <Key>
             <PropertyRef Name="id" />
@@ -15988,30 +15801,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="spots" Type="Int32" Nullable="false" />
           <Property Name="impressions" Type="Double" Nullable="false" />
           <NavigationProperty Name="plan_version_buying_results" Relationship="BroadcastModel.FK_plan_version_buying_result_spots_plan_version_buying_results" FromRole="plan_version_buying_result_spots" ToRole="plan_version_buying_results" />
-        </EntityType>
-        <EntityType Name="plan_version_buying_results">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="optimal_cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="total_market_count" Type="Int32" Nullable="false" />
-          <Property Name="total_station_count" Type="Int32" Nullable="false" />
-          <Property Name="total_avg_cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="total_avg_impressions" Type="Double" Nullable="false" />
-          <Property Name="goal_fulfilled_by_proprietary" Type="Boolean" Nullable="false" />
-          <Property Name="total_impressions" Type="Double" Nullable="false" />
-          <Property Name="total_budget" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="plan_version_buying_job_id" Type="Int32" />
-          <Property Name="total_spots" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="plan_version_buying_job" Relationship="BroadcastModel.FK_plan_version_buying_results_plan_version_buying_job" FromRole="plan_version_buying_results" ToRole="plan_version_buying_job" />
-          <NavigationProperty Name="plan_version_buying_result_spots" Relationship="BroadcastModel.FK_plan_version_buying_result_spots_plan_version_buying_results" FromRole="plan_version_buying_results" ToRole="plan_version_buying_result_spots" />
-          <Property Name="total_market_coverage_percent" Type="Double" Nullable="false" />
-          <NavigationProperty Name="plan_version_buying_band_details" Relationship="BroadcastModel.FK_plan_version_buying_band_details_plan_version_buying_results" FromRole="plan_version_buying_results" ToRole="plan_version_buying_band_details" />
-          <NavigationProperty Name="plan_version_buying_market_details" Relationship="BroadcastModel.FK_plan_version_buying_market_details_plan_version_buying_results" FromRole="plan_version_buying_results" ToRole="plan_version_buying_market_details" />
-          <NavigationProperty Name="plan_version_buying_station_details" Relationship="BroadcastModel.FK_plan_version_buying_station_details_plan_version_buying_results" FromRole="plan_version_buying_results" ToRole="plan_version_buying_station_details" />
-          <NavigationProperty Name="plan_version_buying_ownership_group_details" Relationship="BroadcastModel.FK_plan_version_buying_ownership_group_details_plan_version_buying_results" FromRole="plan_version_buying_results" ToRole="plan_version_buying_ownership_group_details" />
-          <NavigationProperty Name="plan_version_buying_rep_firm_details" Relationship="BroadcastModel.FK_plan_version_buying_rep_firm_details_plan_version_buying_results" FromRole="plan_version_buying_results" ToRole="plan_version_buying_rep_firm_details" />
         </EntityType>
         <EntityType Name="plan_version_buying_station_details">
           <Key>
@@ -16202,18 +15991,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_plan_version_buying_results_plan_version_buying_job">
-          <End Type="BroadcastModel.plan_version_buying_job" Role="plan_version_buying_job" Multiplicity="0..1" />
-          <End Type="BroadcastModel.plan_version_buying_results" Role="plan_version_buying_results" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan_version_buying_job">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_buying_results">
-              <PropertyRef Name="plan_version_buying_job_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_plan_version_buying_parameters_inventory_source_percentages_plan_version_buying_parameters">
           <End Type="BroadcastModel.plan_version_buying_parameters" Role="plan_version_buying_parameters" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -16254,20 +16031,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_plan_version_buying_result_spots_plan_version_buying_results">
-          <End Type="BroadcastModel.plan_version_buying_results" Role="plan_version_buying_results" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="BroadcastModel.plan_version_buying_result_spots" Role="plan_version_buying_result_spots" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan_version_buying_results">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_buying_result_spots">
-              <PropertyRef Name="plan_version_buying_result_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="program_name_mapping_keywords">
           <Key>
             <PropertyRef Name="id" />
@@ -16301,46 +16064,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="program_name_mapping_keywords">
               <PropertyRef Name="show_type_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="inventory_proprietary_program_names">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="inventory_source_id" Type="Int32" Nullable="false" />
-          <Property Name="daypart_default_id" Type="Int32" Nullable="false" />
-          <Property Name="daypart_unit_code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="program_name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="modified_by" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
-          <Property Name="modified_at" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="daypart_defaults" Relationship="BroadcastModel.FK_inventory_proprietary_program_names_daypart_defaults" FromRole="inventory_proprietary_program_names" ToRole="daypart_defaults" />
-          <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_inventory_proprietary_program_names_inventory_sources" FromRole="inventory_proprietary_program_names" ToRole="inventory_sources" />
-        </EntityType>
-        <Association Name="FK_inventory_proprietary_program_names_daypart_defaults">
-          <End Type="BroadcastModel.daypart_defaults" Role="daypart_defaults" Multiplicity="1" />
-          <End Type="BroadcastModel.inventory_proprietary_program_names" Role="inventory_proprietary_program_names" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="daypart_defaults">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_proprietary_program_names">
-              <PropertyRef Name="daypart_default_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_inventory_proprietary_program_names_inventory_sources">
-          <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
-          <End Type="BroadcastModel.inventory_proprietary_program_names" Role="inventory_proprietary_program_names" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="inventory_sources">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_proprietary_program_names">
-              <PropertyRef Name="inventory_source_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -16382,42 +16105,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_plan_version_buying_band_details_plan_version_buying_results">
-          <End Type="BroadcastModel.plan_version_buying_results" Role="plan_version_buying_results" Multiplicity="1" />
-          <End Type="BroadcastModel.plan_version_buying_band_details" Role="plan_version_buying_band_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan_version_buying_results">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_buying_band_details">
-              <PropertyRef Name="plan_version_buying_result_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plan_version_buying_market_details_plan_version_buying_results">
-          <End Type="BroadcastModel.plan_version_buying_results" Role="plan_version_buying_results" Multiplicity="1" />
-          <End Type="BroadcastModel.plan_version_buying_market_details" Role="plan_version_buying_market_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan_version_buying_results">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_buying_market_details">
-              <PropertyRef Name="plan_version_buying_result_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plan_version_buying_station_details_plan_version_buying_results">
-          <End Type="BroadcastModel.plan_version_buying_results" Role="plan_version_buying_results" Multiplicity="1" />
-          <End Type="BroadcastModel.plan_version_buying_station_details" Role="plan_version_buying_station_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan_version_buying_results">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_buying_station_details">
-              <PropertyRef Name="plan_version_buying_result_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="plan_version_buying_ownership_group_details">
           <Key>
             <PropertyRef Name="id" />
@@ -16434,6 +16121,95 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="impressions_percentage" Type="Double" Nullable="false" />
           <NavigationProperty Name="plan_version_buying_results" Relationship="BroadcastModel.FK_plan_version_buying_ownership_group_details_plan_version_buying_results" FromRole="plan_version_buying_ownership_group_details" ToRole="plan_version_buying_results" />
         </EntityType>
+        <EntityType Name="inventory_proprietary_daypart_program_mappings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventory_source_id" Type="Int32" Nullable="false" />
+          <Property Name="daypart_default_id" Type="Int32" Nullable="false" />
+          <Property Name="inventory_proprietary_daypart_programs_id" Type="Int32" Nullable="false" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_by" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="modified_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="daypart_defaults" Relationship="BroadcastModel.FK_inventory_proprietary_daypart_program_mappings_daypart_defaults" FromRole="inventory_proprietary_daypart_program_mappings" ToRole="daypart_defaults" />
+          <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_inventory_proprietary_daypart_program_mappings_inventory_sources" FromRole="inventory_proprietary_daypart_program_mappings" ToRole="inventory_sources" />
+          <NavigationProperty Name="inventory_proprietary_daypart_programs" Relationship="BroadcastModel.FK_inventory_proprietary_daypart_program_mappings_inventory_proprietary_daypart_programs" FromRole="inventory_proprietary_daypart_program_mappings" ToRole="inventory_proprietary_daypart_programs" />
+          <NavigationProperty Name="inventory_proprietary_summary" Relationship="BroadcastModel.FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings" FromRole="inventory_proprietary_daypart_program_mappings" ToRole="inventory_proprietary_summary" />
+        </EntityType>
+        <Association Name="FK_inventory_proprietary_daypart_program_mappings_daypart_defaults">
+          <End Type="BroadcastModel.daypart_defaults" Role="daypart_defaults" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_proprietary_daypart_program_mappings" Role="inventory_proprietary_daypart_program_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart_defaults">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_proprietary_daypart_program_mappings">
+              <PropertyRef Name="daypart_default_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_proprietary_daypart_program_mappings_inventory_sources">
+          <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_proprietary_daypart_program_mappings" Role="inventory_proprietary_daypart_program_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_proprietary_daypart_program_mappings">
+              <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="plan_version_buying_results">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="optimal_cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="total_market_count" Type="Int32" Nullable="false" />
+          <Property Name="total_station_count" Type="Int32" Nullable="false" />
+          <Property Name="total_avg_cpm" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="total_avg_impressions" Type="Double" Nullable="false" />
+          <Property Name="goal_fulfilled_by_proprietary" Type="Boolean" Nullable="false" />
+          <Property Name="total_impressions" Type="Double" Nullable="false" />
+          <Property Name="total_budget" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="plan_version_buying_job_id" Type="Int32" />
+          <Property Name="total_spots" Type="Int32" Nullable="false" />
+          <Property Name="total_market_coverage_percent" Type="Double" Nullable="false" />
+          <NavigationProperty Name="plan_version_buying_band_details" Relationship="BroadcastModel.FK_plan_version_buying_band_details_plan_version_buying_results" FromRole="plan_version_buying_results" ToRole="plan_version_buying_band_details" />
+          <NavigationProperty Name="plan_version_buying_job" Relationship="BroadcastModel.FK_plan_version_buying_results_plan_version_buying_job" FromRole="plan_version_buying_results" ToRole="plan_version_buying_job" />
+          <NavigationProperty Name="plan_version_buying_ownership_group_details" Relationship="BroadcastModel.FK_plan_version_buying_ownership_group_details_plan_version_buying_results" FromRole="plan_version_buying_results" ToRole="plan_version_buying_ownership_group_details" />
+          <NavigationProperty Name="plan_version_buying_result_spots" Relationship="BroadcastModel.FK_plan_version_buying_result_spots_plan_version_buying_results" FromRole="plan_version_buying_results" ToRole="plan_version_buying_result_spots" />
+          <NavigationProperty Name="plan_version_buying_station_details" Relationship="BroadcastModel.FK_plan_version_buying_station_details_plan_version_buying_results" FromRole="plan_version_buying_results" ToRole="plan_version_buying_station_details" />
+          <NavigationProperty Name="plan_version_buying_rep_firm_details" Relationship="BroadcastModel.FK_plan_version_buying_rep_firm_details_plan_version_buying_results" FromRole="plan_version_buying_results" ToRole="plan_version_buying_rep_firm_details" />
+          <NavigationProperty Name="plan_version_buying_market_details" Relationship="BroadcastModel.FK_plan_version_buying_market_details_plan_version_buying_results" FromRole="plan_version_buying_results" ToRole="plan_version_buying_market_details" />
+        </EntityType>
+        <Association Name="FK_plan_version_buying_band_details_plan_version_buying_results">
+          <End Type="BroadcastModel.plan_version_buying_results" Role="plan_version_buying_results" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_buying_band_details" Role="plan_version_buying_band_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_results">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_band_details">
+              <PropertyRef Name="plan_version_buying_result_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_results_plan_version_buying_job">
+          <End Type="BroadcastModel.plan_version_buying_job" Role="plan_version_buying_job" Multiplicity="0..1" />
+          <End Type="BroadcastModel.plan_version_buying_results" Role="plan_version_buying_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_job">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_results">
+              <PropertyRef Name="plan_version_buying_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_plan_version_buying_ownership_group_details_plan_version_buying_results">
           <End Type="BroadcastModel.plan_version_buying_results" Role="plan_version_buying_results" Multiplicity="1" />
           <End Type="BroadcastModel.plan_version_buying_ownership_group_details" Role="plan_version_buying_ownership_group_details" Multiplicity="*" />
@@ -16442,6 +16218,32 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="plan_version_buying_ownership_group_details">
+              <PropertyRef Name="plan_version_buying_result_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_result_spots_plan_version_buying_results">
+          <End Type="BroadcastModel.plan_version_buying_results" Role="plan_version_buying_results" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BroadcastModel.plan_version_buying_result_spots" Role="plan_version_buying_result_spots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_results">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_result_spots">
+              <PropertyRef Name="plan_version_buying_result_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_version_buying_station_details_plan_version_buying_results">
+          <End Type="BroadcastModel.plan_version_buying_results" Role="plan_version_buying_results" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_buying_station_details" Role="plan_version_buying_station_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_results">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_station_details">
               <PropertyRef Name="plan_version_buying_result_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -16471,6 +16273,262 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_version_buying_rep_firm_details">
               <PropertyRef Name="plan_version_buying_result_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="plan_version_buying_market_details">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rank" Type="Int32" Nullable="false" />
+          <Property Name="market_coverage_percent" Type="Double" Nullable="false" />
+          <Property Name="stations" Type="Int32" Nullable="false" />
+          <Property Name="spots" Type="Int32" Nullable="false" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
+          <Property Name="cpm" Type="Double" Nullable="false" />
+          <Property Name="budget" Type="Double" Nullable="false" />
+          <Property Name="impressions_percentage" Type="Double" Nullable="false" />
+          <Property Name="share_of_voice_goal_percentage" Type="Double" />
+          <Property Name="plan_version_buying_result_id" Type="Int32" Nullable="false" />
+          <Property Name="market_name" Type="String" Nullable="false" MaxLength="31" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="plan_version_buying_results" Relationship="BroadcastModel.FK_plan_version_buying_market_details_plan_version_buying_results" FromRole="plan_version_buying_market_details" ToRole="plan_version_buying_results" />
+        </EntityType>
+        <Association Name="FK_plan_version_buying_market_details_plan_version_buying_results">
+          <End Type="BroadcastModel.plan_version_buying_results" Role="plan_version_buying_results" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_buying_market_details" Role="plan_version_buying_market_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan_version_buying_results">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_buying_market_details">
+              <PropertyRef Name="plan_version_buying_result_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="station">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="station_code" Type="Int32" />
+          <Property Name="station_call_letters" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="affiliation" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="market_code" Type="Int16" />
+          <Property Name="legacy_call_letters" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rep_firm_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="owner_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="is_true_ind" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="market" Relationship="BroadcastModel.FK_stations_markets" FromRole="station" ToRole="market" />
+          <NavigationProperty Name="pricing_guide_distribution_open_market_inventory" Relationship="BroadcastModel.FK_pricing_guide_distribution_open_market_inventory_stations" FromRole="station" ToRole="pricing_guide_distribution_open_market_inventory" />
+          <NavigationProperty Name="proposal_buy_file_details" Relationship="BroadcastModel.FK_proposal_buy_file_details_stations" FromRole="station" ToRole="proposal_buy_file_details" />
+          <NavigationProperty Name="station_contacts" Relationship="BroadcastModel.FK_station_contacts_stations" FromRole="station" ToRole="station_contacts" />
+          <NavigationProperty Name="station_inventory_loaded" Relationship="BroadcastModel.FK_station_inventory_loaded_stations" FromRole="station" ToRole="station_inventory_loaded" />
+          <NavigationProperty Name="station_inventory_manifest" Relationship="BroadcastModel.FK_station_inventory_manifest_stations" FromRole="station" ToRole="station_inventory_manifest" />
+          <NavigationProperty Name="station_inventory_spot_snapshots" Relationship="BroadcastModel.FK_station_inventory_spot_snapshots_stations" FromRole="station" ToRole="station_inventory_spot_snapshots" />
+          <NavigationProperty Name="station_mappings" Relationship="BroadcastModel.FK_station_mappings_stations" FromRole="station" ToRole="station_mappings" />
+          <NavigationProperty Name="station_month_details" Relationship="BroadcastModel.FK_station_month_details_stations" FromRole="station" ToRole="station_month_details" />
+        </EntityType>
+        <Association Name="FK_stations_markets">
+          <End Type="BroadcastModel.market" Role="market" Multiplicity="0..1" />
+          <End Type="BroadcastModel.station" Role="station" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="market">
+              <PropertyRef Name="market_code" />
+            </Principal>
+            <Dependent Role="station">
+              <PropertyRef Name="market_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pricing_guide_distribution_open_market_inventory_stations">
+          <End Type="BroadcastModel.station" Role="station" Multiplicity="1" />
+          <End Type="BroadcastModel.pricing_guide_distribution_open_market_inventory" Role="pricing_guide_distribution_open_market_inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pricing_guide_distribution_open_market_inventory">
+              <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proposal_buy_file_details_stations">
+          <End Type="BroadcastModel.station" Role="station" Multiplicity="1" />
+          <End Type="BroadcastModel.proposal_buy_file_details" Role="proposal_buy_file_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="proposal_buy_file_details">
+              <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_contacts_stations">
+          <End Type="BroadcastModel.station" Role="station" Multiplicity="1" />
+          <End Type="BroadcastModel.station_contacts" Role="station_contacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_contacts">
+              <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_inventory_loaded_stations">
+          <End Type="BroadcastModel.station" Role="station" Multiplicity="1" />
+          <End Type="BroadcastModel.station_inventory_loaded" Role="station_inventory_loaded" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_inventory_loaded">
+              <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_inventory_manifest_stations">
+          <End Type="BroadcastModel.station" Role="station" Multiplicity="0..1" />
+          <End Type="BroadcastModel.station_inventory_manifest" Role="station_inventory_manifest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_inventory_manifest">
+              <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_inventory_spot_snapshots_stations">
+          <End Type="BroadcastModel.station" Role="station" Multiplicity="1" />
+          <End Type="BroadcastModel.station_inventory_spot_snapshots" Role="station_inventory_spot_snapshots" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_inventory_spot_snapshots">
+              <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_mappings_stations">
+          <End Type="BroadcastModel.station" Role="station" Multiplicity="1" />
+          <End Type="BroadcastModel.station_mappings" Role="station_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_mappings">
+              <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_station_month_details_stations">
+          <End Type="BroadcastModel.station" Role="station" Multiplicity="1" />
+          <End Type="BroadcastModel.station_month_details" Role="station_month_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="station_month_details">
+              <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="inventory_proprietary_daypart_programs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="unit_type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="program_name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_by" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="modified_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="inventory_proprietary_daypart_program_mappings" Relationship="BroadcastModel.FK_inventory_proprietary_daypart_program_mappings_inventory_proprietary_daypart_programs" FromRole="inventory_proprietary_daypart_programs" ToRole="inventory_proprietary_daypart_program_mappings" />
+        </EntityType>
+        <EntityType Name="inventory_proprietary_summary">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventory_source_id" Type="Int32" Nullable="false" />
+          <Property Name="quarter_number" Type="Int32" Nullable="false" />
+          <Property Name="quarter_year" Type="Int32" Nullable="false" />
+          <Property Name="unit" Type="Int32" Nullable="false" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_by" Type="String" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="modified_at" Type="DateTime" Precision="3" />
+          <Property Name="inventory_proprietary_daypart_program_mappings_id" Type="Int32" Nullable="false" />
+          <Property Name="unit_cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="inventory_proprietary_daypart_program_mappings" Relationship="BroadcastModel.FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings" FromRole="inventory_proprietary_summary" ToRole="inventory_proprietary_daypart_program_mappings" />
+          <NavigationProperty Name="inventory_proprietary_summary_audiences" Relationship="BroadcastModel.FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary" FromRole="inventory_proprietary_summary" ToRole="inventory_proprietary_summary_audiences" />
+          <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_inventory_proprietary_summary_inventory_sources" FromRole="inventory_proprietary_summary" ToRole="inventory_sources" />
+          <NavigationProperty Name="inventory_proprietary_summary_markets" Relationship="BroadcastModel.FK_inventory_proprietary_summary_markets_inventory_proprietary_summary" FromRole="inventory_proprietary_summary" ToRole="inventory_proprietary_summary_markets" />
+        </EntityType>
+        <Association Name="FK_inventory_proprietary_daypart_program_mappings_inventory_proprietary_daypart_programs">
+          <End Type="BroadcastModel.inventory_proprietary_daypart_programs" Role="inventory_proprietary_daypart_programs" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_proprietary_daypart_program_mappings" Role="inventory_proprietary_daypart_program_mappings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_proprietary_daypart_programs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_proprietary_daypart_program_mappings">
+              <PropertyRef Name="inventory_proprietary_daypart_programs_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings">
+          <End Type="BroadcastModel.inventory_proprietary_daypart_program_mappings" Role="inventory_proprietary_daypart_program_mappings" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_proprietary_summary" Role="inventory_proprietary_summary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_proprietary_daypart_program_mappings">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_proprietary_summary">
+              <PropertyRef Name="inventory_proprietary_daypart_program_mappings_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary">
+          <End Type="BroadcastModel.inventory_proprietary_summary" Role="inventory_proprietary_summary" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_proprietary_summary_audiences" Role="inventory_proprietary_summary_audiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_proprietary_summary">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_proprietary_summary_audiences">
+              <PropertyRef Name="inventory_proprietary_summary_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_proprietary_summary_inventory_sources">
+          <End Type="BroadcastModel.inventory_sources" Role="inventory_sources" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_proprietary_summary" Role="inventory_proprietary_summary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_proprietary_summary">
+              <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_proprietary_summary_markets_inventory_proprietary_summary">
+          <End Type="BroadcastModel.inventory_proprietary_summary" Role="inventory_proprietary_summary" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_proprietary_summary_markets" Role="inventory_proprietary_summary_markets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_proprietary_summary">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_proprietary_summary_markets">
+              <PropertyRef Name="inventory_proprietary_summary_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -17815,23 +17873,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="stations">
-            <EntityTypeMapping TypeName="BroadcastModel.station">
-              <MappingFragment StoreEntitySet="stations">
-                <ScalarProperty Name="rep_firm_name" ColumnName="rep_firm_name" />
-                <ScalarProperty Name="is_true_ind" ColumnName="is_true_ind" />
-                <ScalarProperty Name="owner_name" ColumnName="owner_name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="legacy_call_letters" ColumnName="legacy_call_letters" />
-                <ScalarProperty Name="market_code" ColumnName="market_code" />
-                <ScalarProperty Name="affiliation" ColumnName="affiliation" />
-                <ScalarProperty Name="station_call_letters" ColumnName="station_call_letters" />
-                <ScalarProperty Name="station_code" ColumnName="station_code" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="inventory_file_ratings_jobs">
             <EntityTypeMapping TypeName="BroadcastModel.inventory_file_ratings_jobs">
               <MappingFragment StoreEntitySet="inventory_file_ratings_jobs">
@@ -18958,23 +18999,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="inventory_proprietary_summary">
-            <EntityTypeMapping TypeName="BroadcastModel.inventory_proprietary_summary">
-              <MappingFragment StoreEntitySet="inventory_proprietary_summary">
-                <ScalarProperty Name="modified_at" ColumnName="modified_at" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="cpm" ColumnName="cpm" />
-                <ScalarProperty Name="unit" ColumnName="unit" />
-                <ScalarProperty Name="quarter_year" ColumnName="quarter_year" />
-                <ScalarProperty Name="quarter_number" ColumnName="quarter_number" />
-                <ScalarProperty Name="daypart_default_id" ColumnName="daypart_default_id" />
-                <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="plan_version_buying_api_result_spot_frequencies">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_api_result_spot_frequencies">
               <MappingFragment StoreEntitySet="plan_version_buying_api_result_spot_frequencies">
@@ -19053,24 +19077,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="plan_version_buying_market_details">
-            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_market_details">
-              <MappingFragment StoreEntitySet="plan_version_buying_market_details">
-                <ScalarProperty Name="market_name" ColumnName="market_name" />
-                <ScalarProperty Name="plan_version_buying_result_id" ColumnName="plan_version_buying_result_id" />
-                <ScalarProperty Name="share_of_voice_goal_percentage" ColumnName="share_of_voice_goal_percentage" />
-                <ScalarProperty Name="impressions_percentage" ColumnName="impressions_percentage" />
-                <ScalarProperty Name="budget" ColumnName="budget" />
-                <ScalarProperty Name="cpm" ColumnName="cpm" />
-                <ScalarProperty Name="impressions" ColumnName="impressions" />
-                <ScalarProperty Name="spots" ColumnName="spots" />
-                <ScalarProperty Name="stations" ColumnName="stations" />
-                <ScalarProperty Name="market_coverage_percent" ColumnName="market_coverage_percent" />
-                <ScalarProperty Name="rank" ColumnName="rank" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="plan_version_buying_parameters">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_parameters">
               <MappingFragment StoreEntitySet="plan_version_buying_parameters">
@@ -19136,24 +19142,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="plan_version_buying_results">
-            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_results">
-              <MappingFragment StoreEntitySet="plan_version_buying_results">
-                <ScalarProperty Name="total_market_coverage_percent" ColumnName="total_market_coverage_percent" />
-                <ScalarProperty Name="total_spots" ColumnName="total_spots" />
-                <ScalarProperty Name="plan_version_buying_job_id" ColumnName="plan_version_buying_job_id" />
-                <ScalarProperty Name="total_budget" ColumnName="total_budget" />
-                <ScalarProperty Name="total_impressions" ColumnName="total_impressions" />
-                <ScalarProperty Name="goal_fulfilled_by_proprietary" ColumnName="goal_fulfilled_by_proprietary" />
-                <ScalarProperty Name="total_avg_impressions" ColumnName="total_avg_impressions" />
-                <ScalarProperty Name="total_avg_cpm" ColumnName="total_avg_cpm" />
-                <ScalarProperty Name="total_station_count" ColumnName="total_station_count" />
-                <ScalarProperty Name="total_market_count" ColumnName="total_market_count" />
-                <ScalarProperty Name="optimal_cpm" ColumnName="optimal_cpm" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="plan_version_buying_station_details">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_station_details">
               <MappingFragment StoreEntitySet="plan_version_buying_station_details">
@@ -19176,21 +19164,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="genre_id" ColumnName="genre_id" />
                 <ScalarProperty Name="program_name" ColumnName="program_name" />
                 <ScalarProperty Name="keyword" ColumnName="keyword" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="inventory_proprietary_program_names">
-            <EntityTypeMapping TypeName="BroadcastModel.inventory_proprietary_program_names">
-              <MappingFragment StoreEntitySet="inventory_proprietary_program_names">
-                <ScalarProperty Name="modified_at" ColumnName="modified_at" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="program_name" ColumnName="program_name" />
-                <ScalarProperty Name="daypart_unit_code" ColumnName="daypart_unit_code" />
-                <ScalarProperty Name="daypart_default_id" ColumnName="daypart_default_id" />
-                <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -19223,6 +19196,38 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="inventory_proprietary_daypart_program_mappings">
+            <EntityTypeMapping TypeName="BroadcastModel.inventory_proprietary_daypart_program_mappings">
+              <MappingFragment StoreEntitySet="inventory_proprietary_daypart_program_mappings">
+                <ScalarProperty Name="modified_at" ColumnName="modified_at" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="inventory_proprietary_daypart_programs_id" ColumnName="inventory_proprietary_daypart_programs_id" />
+                <ScalarProperty Name="daypart_default_id" ColumnName="daypart_default_id" />
+                <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_results">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_results">
+              <MappingFragment StoreEntitySet="plan_version_buying_results">
+                <ScalarProperty Name="total_market_coverage_percent" ColumnName="total_market_coverage_percent" />
+                <ScalarProperty Name="total_spots" ColumnName="total_spots" />
+                <ScalarProperty Name="plan_version_buying_job_id" ColumnName="plan_version_buying_job_id" />
+                <ScalarProperty Name="total_budget" ColumnName="total_budget" />
+                <ScalarProperty Name="total_impressions" ColumnName="total_impressions" />
+                <ScalarProperty Name="goal_fulfilled_by_proprietary" ColumnName="goal_fulfilled_by_proprietary" />
+                <ScalarProperty Name="total_avg_impressions" ColumnName="total_avg_impressions" />
+                <ScalarProperty Name="total_avg_cpm" ColumnName="total_avg_cpm" />
+                <ScalarProperty Name="total_station_count" ColumnName="total_station_count" />
+                <ScalarProperty Name="total_market_count" ColumnName="total_market_count" />
+                <ScalarProperty Name="optimal_cpm" ColumnName="optimal_cpm" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="plan_version_buying_rep_firm_details">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_rep_firm_details">
               <MappingFragment StoreEntitySet="plan_version_buying_rep_firm_details">
@@ -19235,6 +19240,71 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="markets" ColumnName="markets" />
                 <ScalarProperty Name="rep_firm_name" ColumnName="rep_firm_name" />
                 <ScalarProperty Name="plan_version_buying_result_id" ColumnName="plan_version_buying_result_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_buying_market_details">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_market_details">
+              <MappingFragment StoreEntitySet="plan_version_buying_market_details">
+                <ScalarProperty Name="market_name" ColumnName="market_name" />
+                <ScalarProperty Name="plan_version_buying_result_id" ColumnName="plan_version_buying_result_id" />
+                <ScalarProperty Name="share_of_voice_goal_percentage" ColumnName="share_of_voice_goal_percentage" />
+                <ScalarProperty Name="impressions_percentage" ColumnName="impressions_percentage" />
+                <ScalarProperty Name="budget" ColumnName="budget" />
+                <ScalarProperty Name="cpm" ColumnName="cpm" />
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="spots" ColumnName="spots" />
+                <ScalarProperty Name="stations" ColumnName="stations" />
+                <ScalarProperty Name="market_coverage_percent" ColumnName="market_coverage_percent" />
+                <ScalarProperty Name="rank" ColumnName="rank" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="stations">
+            <EntityTypeMapping TypeName="BroadcastModel.station">
+              <MappingFragment StoreEntitySet="stations">
+                <ScalarProperty Name="is_true_ind" ColumnName="is_true_ind" />
+                <ScalarProperty Name="owner_name" ColumnName="owner_name" />
+                <ScalarProperty Name="rep_firm_name" ColumnName="rep_firm_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="legacy_call_letters" ColumnName="legacy_call_letters" />
+                <ScalarProperty Name="market_code" ColumnName="market_code" />
+                <ScalarProperty Name="affiliation" ColumnName="affiliation" />
+                <ScalarProperty Name="station_call_letters" ColumnName="station_call_letters" />
+                <ScalarProperty Name="station_code" ColumnName="station_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventory_proprietary_daypart_programs">
+            <EntityTypeMapping TypeName="BroadcastModel.inventory_proprietary_daypart_programs">
+              <MappingFragment StoreEntitySet="inventory_proprietary_daypart_programs">
+                <ScalarProperty Name="modified_at" ColumnName="modified_at" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="program_name" ColumnName="program_name" />
+                <ScalarProperty Name="unit_type" ColumnName="unit_type" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventory_proprietary_summary">
+            <EntityTypeMapping TypeName="BroadcastModel.inventory_proprietary_summary">
+              <MappingFragment StoreEntitySet="inventory_proprietary_summary">
+                <ScalarProperty Name="unit_cost" ColumnName="unit_cost" />
+                <ScalarProperty Name="inventory_proprietary_daypart_program_mappings_id" ColumnName="inventory_proprietary_daypart_program_mappings_id" />
+                <ScalarProperty Name="modified_at" ColumnName="modified_at" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="unit" ColumnName="unit" />
+                <ScalarProperty Name="quarter_year" ColumnName="quarter_year" />
+                <ScalarProperty Name="quarter_number" ColumnName="quarter_number" />
+                <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

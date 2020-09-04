@@ -8,6 +8,6 @@
     "ProprietaryDaypartProgramMappingId": 1,
     "Quarter": null,
     "SlotNumber": 1,
-    "UnitCost": 0.0
+    "UnitCost": 708.5560
   }
 ]

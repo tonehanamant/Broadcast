@@ -2,14 +2,14 @@
 {
 	public class InventoryProprietarySummary
 	{
-		public decimal Cpm { get; set; }
+        public int Id { get; set; }
+        public decimal UnitCost { get; set; }
 		public string DaypartName { get; set; }
-		public int Id { get; set; }
 		public string InventorySourceName { get; set; }
 		public double ImpressionsTotal { get; set; }
 		public double MarketCoverageTotal { get; set; }
-		public string DaypartUnitCode { get; set; }
-		public string UnitName => $"{InventorySourceName} {DaypartUnitCode}";
-		public decimal Cost { get; set; }
-	}
+		public string UnitType { get; set; }
+		public string UnitName => $"{InventorySourceName} {UnitType}";
+        public decimal Cpm { get; set; }
+    }
 }

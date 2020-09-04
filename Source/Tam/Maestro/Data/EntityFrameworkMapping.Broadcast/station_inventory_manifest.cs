@@ -49,9 +49,9 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
         public virtual ICollection<station_inventory_manifest_rates> station_inventory_manifest_rates { get; set; }
         public virtual ICollection<station_inventory_manifest_weeks> station_inventory_manifest_weeks { get; set; }
-        public virtual station station { get; set; }
         public virtual ICollection<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
         public virtual ICollection<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
         public virtual ICollection<plan_version_buying_api_result_spots> plan_version_buying_api_result_spots { get; set; }
+        public virtual station station { get; set; }
     }
 }

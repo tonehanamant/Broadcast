@@ -1,0 +1,15 @@
+{
+  "summaries": [
+    {
+      "Cpm": 654.85767097966728280961182990,
+      "DaypartName": "M-SU 4AM-10AM",
+      "ImpressionsTotal": 1082.0,
+      "InventorySourceName": "CNN",
+      "MarketCoverageTotal": 1.573,
+      "UnitCost": 708.5560,
+      "UnitName": "CNN AM",
+      "UnitType": "AM"
+    }
+  ],
+  "ValidationMessage": null
+}

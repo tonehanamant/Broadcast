@@ -1,27 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using ApprovalTests;
+﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities.InventoryProprietary;
 using Services.Broadcast.IntegrationTests.Helpers;
-using Services.Broadcast.Repositories;
+using System;
+using System.Collections.Generic;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
-	[TestFixture]
+    [TestFixture]
 	public class InventoryProprietarySummaryServiceTests
 	{
 		private InventoryFileTestHelper _InventoryFileTestHelper;
 		private IInventoryProprietarySummaryService _InventoryProprietarySummaryService;
-
-		//private readonly IInventoryProprietarySummaryRepository _InventoryProprietarySummaryRepository =
-		//	IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
-		//		.GetDataRepository<IInventoryProprietarySummaryRepository>();
-	
 
 		[SetUp]
 		public void Init()
@@ -45,31 +39,47 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 			using (new TransactionScopeWrapper())
 			{
 				/*** Arrange ***/
+				var startDate = new DateTime(2025, 1, 1);
+				var endDate = new DateTime(2025, 3, 31);
+				var daypartIds = new List<int> { 59803 };
 
-				;DateTime StartDate = new DateTime(2025, 1, 1);
-				DateTime EndDate = new DateTime(2025, 3, 31);
-				List<int> DaypartIds = new List<int> { 59803 };
-				_InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025.xlsx",
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025.xlsx",
 					processInventoryRatings: true);
 				_InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025_2.xlsx",
 					processInventoryRatings: false);
 
+                _InventoryProprietarySummaryService = IntegrationTestApplicationServiceFactory
+					.GetApplicationService<IInventoryProprietarySummaryService>();
 
-				_InventoryProprietarySummaryService = IntegrationTestApplicationServiceFactory
-					.GetApplicationService<IInventoryProprietarySummaryService
-					>();
-				_InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(5, StartDate,
-					EndDate);
-				List<PlanDaypartRequest> planReqList = new List<PlanDaypartRequest>
+                _InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(5, startDate,
+					endDate);
+
+                var planDaypartRequests = new List<PlanDaypartRequest>
 				{
-					new PlanDaypartRequest{DefaultDayPartId= 15, StartTimeSeconds= 36000, EndTimeSeconds=84600},
-					new PlanDaypartRequest{DefaultDayPartId= 16, StartTimeSeconds= 36000, EndTimeSeconds=84600}
+					new PlanDaypartRequest
+                    {
+                        DefaultDayPartId = 15,
+                        StartTimeSeconds = 36000,
+                        EndTimeSeconds = 84600
+                    },
+					new PlanDaypartRequest
+                    {
+                        DefaultDayPartId = 16,
+                        StartTimeSeconds = 36000,
+                        EndTimeSeconds = 84600
+                    }
 				};
-				InventoryProprietarySummaryRequest req = new InventoryProprietarySummaryRequest
-				{ FlightStartDate = StartDate, FlightEndDate = EndDate, PlanDaypartRequests = planReqList, AudienceId = 5, SpotLengthIds = new List<int>{2,6}};
+
+				var request = new InventoryProprietarySummaryRequest
+				{
+                    FlightStartDate = startDate,
+                    FlightEndDate = endDate,
+                    PlanDaypartRequests = planDaypartRequests,
+                    AudienceId = 5
+                };
 
 				/*** Act ***/
-				var result = _InventoryProprietarySummaryService.GetInventoryProprietarySummaries(req);
+				var result = _InventoryProprietarySummaryService.GetInventoryProprietarySummaries(request);
 
 				/*** Assert ***/
 				Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -84,26 +94,44 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 			using (new TransactionScopeWrapper())
 			{
 				/*** Arrange ***/
-				DateTime StartDate = new DateTime(2025, 1, 1);
-				DateTime EndDate = new DateTime(2025, 3, 20);
-				List<int> DaypartIds = new List<int> { 59803 };
-				_InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025.xlsx",
+				var startDate = new DateTime(2025, 1, 1);
+				var EndDate = new DateTime(2025, 3, 20);
+				var daypartIds = new List<int> { 59803 };
+
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025.xlsx",
 					processInventoryRatings: true);
 				_InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025_2.xlsx",
 					processInventoryRatings: false);
 
-
 				_InventoryProprietarySummaryService = IntegrationTestApplicationServiceFactory
 					.GetApplicationService<IInventoryProprietarySummaryService>();
-				_InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(5, StartDate,
+
+				_InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(5, startDate,
 					EndDate);
-				List<PlanDaypartRequest> planReqList = new List<PlanDaypartRequest>
+
+				var planDaypartRequest = new List<PlanDaypartRequest>
 				{
-					new PlanDaypartRequest{DefaultDayPartId= 1, StartTimeSeconds= 14400, EndTimeSeconds=36000},
-					new PlanDaypartRequest{DefaultDayPartId= 4, StartTimeSeconds= 14400, EndTimeSeconds=36000}
+					new PlanDaypartRequest
+                    {
+                        DefaultDayPartId = 1,
+                        StartTimeSeconds = 14400,
+                        EndTimeSeconds = 36000
+                    },
+					new PlanDaypartRequest
+                    {
+                        DefaultDayPartId = 4,
+                        StartTimeSeconds = 14400,
+                        EndTimeSeconds = 36000
+                    }
 				};
-				InventoryProprietarySummaryRequest req = new InventoryProprietarySummaryRequest
-				{ FlightStartDate = StartDate, FlightEndDate = EndDate, PlanDaypartRequests = planReqList, AudienceId = 34, SpotLengthIds = new List<int> { 3 } };
+
+				var req = new InventoryProprietarySummaryRequest
+                {
+                    FlightStartDate = startDate,
+                    FlightEndDate = EndDate,
+                    PlanDaypartRequests = planDaypartRequest,
+                    AudienceId = 34
+                };
 
 				/*** Act ***/
 				var result = _InventoryProprietarySummaryService.GetInventoryProprietarySummaries(req);
@@ -112,6 +140,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 				Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
 			}
 		}
+
 		[Test]
 		[Category("long_running")]
 		[UseReporter(typeof(DiffReporter))]
@@ -120,9 +149,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 			using (new TransactionScopeWrapper())
 			{
 				/*** Arrange ***/
-				DateTime StartDate = new DateTime(2025, 1, 1);
-				DateTime EndDate = new DateTime(2025, 3, 20);
-				List<int> DaypartIds = new List<int> { 59803 };
+				var startDate = new DateTime(2025, 1, 1);
+				var endDate = new DateTime(2025, 3, 20);
+				var daypartIds = new List<int> { 59803 };
+
 				_InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025.xlsx",
 					processInventoryRatings: true);
 				_InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025_2.xlsx",
@@ -132,24 +162,203 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
 				_InventoryProprietarySummaryService = IntegrationTestApplicationServiceFactory
 					.GetApplicationService<IInventoryProprietarySummaryService>();
-				_InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(5, StartDate,
-					EndDate);
-				List<PlanDaypartRequest> planReqList = new List<PlanDaypartRequest>
+
+				_InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(5, startDate, endDate);
+
+				var planDaypartRequests = new List<PlanDaypartRequest>
 				{
-					new PlanDaypartRequest{DefaultDayPartId= 1, StartTimeSeconds= 14400, EndTimeSeconds=36000},
-					new PlanDaypartRequest{DefaultDayPartId= 4, StartTimeSeconds= 14400, EndTimeSeconds=36000}
+					new PlanDaypartRequest
+                    {
+                        DefaultDayPartId = 1,
+                        StartTimeSeconds = 14400,
+                        EndTimeSeconds = 36000
+                    },
+					new PlanDaypartRequest
+                    {
+                        DefaultDayPartId = 4,
+                        StartTimeSeconds = 14400,
+                        EndTimeSeconds = 36000
+                    }
 				};
-				InventoryProprietarySummaryRequest req = new InventoryProprietarySummaryRequest
-					{ FlightStartDate = StartDate, FlightEndDate = EndDate, PlanDaypartRequests = planReqList, AudienceId = 5, SpotLengthIds = new List<int> { 1,3 } };
+
+				var request = new InventoryProprietarySummaryRequest
+                {
+                    FlightStartDate = startDate,
+                    FlightEndDate = endDate,
+                    PlanDaypartRequests = planDaypartRequests,
+                    AudienceId = 5
+                };
 
 				/*** Act ***/
-				var result = _InventoryProprietarySummaryService.GetInventoryProprietarySummaries(req);
+				var result = _InventoryProprietarySummaryService.GetInventoryProprietarySummaries(request);
 
 				/*** Assert ***/
 				Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
 			}
 		}
-		private JsonSerializerSettings _GetJsonSettings()
+
+        [Test]
+        [Category("long_running")]
+        [UseReporter(typeof(DiffReporter))]
+        public void AggregateInventoryProprietarySummaryDataTest_ValidWithUnitCost()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                /*** Arrange ***/
+                var startDate = new DateTime(2018, 1, 1);
+                var endDate = new DateTime(2018, 3, 20);
+                var daypartIds = new List<int> { 6724 };
+
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN.xlsx",
+                    processInventoryRatings: true);                
+
+                _InventoryProprietarySummaryService = IntegrationTestApplicationServiceFactory
+                    .GetApplicationService<IInventoryProprietarySummaryService>();
+
+                _InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(5, startDate, endDate);
+
+                var planDaypartRequests = new List<PlanDaypartRequest>
+                {
+                    new PlanDaypartRequest
+                    {
+                        DefaultDayPartId = 1,
+                        StartTimeSeconds = 14400,
+                        EndTimeSeconds = 36000
+                    },
+                    new PlanDaypartRequest
+                    {
+                        DefaultDayPartId = 4,
+                        StartTimeSeconds = 14400,
+                        EndTimeSeconds = 36000
+                    }
+                };
+
+                var request = new InventoryProprietarySummaryRequest
+                {
+                    FlightStartDate = startDate,
+                    FlightEndDate = endDate,
+                    PlanDaypartRequests = planDaypartRequests,
+                    AudienceId = 5
+                };
+
+                /*** Act ***/
+                var result = _InventoryProprietarySummaryService.GetInventoryProprietarySummaries(request);
+
+                /*** Assert ***/
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [Category("long_running")]
+        [UseReporter(typeof(DiffReporter))]
+        public void AggregateInventoryProprietarySummaryDataTest_ValidWithUnitCostMultipleSpots()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                /*** Arrange ***/
+                var startDate = new DateTime(2018, 1, 1);
+                var endDate = new DateTime(2018, 3, 20);
+                var daypartIds = new List<int> { 6724 };
+
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_2.xlsx",
+                    processInventoryRatings: true);
+
+                _InventoryProprietarySummaryService = IntegrationTestApplicationServiceFactory
+                    .GetApplicationService<IInventoryProprietarySummaryService>();
+
+                _InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(5, startDate, endDate);
+
+                var planDaypartRequests = new List<PlanDaypartRequest>
+                {
+                    new PlanDaypartRequest
+                    {
+                        DefaultDayPartId = 1,
+                        StartTimeSeconds = 14400,
+                        EndTimeSeconds = 36000
+                    },
+                    new PlanDaypartRequest
+                    {
+                        DefaultDayPartId = 4,
+                        StartTimeSeconds = 14400,
+                        EndTimeSeconds = 36000
+                    }
+                };
+
+                var request = new InventoryProprietarySummaryRequest
+                {
+                    FlightStartDate = startDate,
+                    FlightEndDate = endDate,
+                    PlanDaypartRequests = planDaypartRequests,
+                    AudienceId = 5
+                };
+
+                /*** Act ***/
+                var result = _InventoryProprietarySummaryService.GetInventoryProprietarySummaries(request);
+
+                /*** Assert ***/
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
+            }
+        }
+
+        [Test]
+        [Category("long_running")]
+        [UseReporter(typeof(DiffReporter))]
+        public void AggregateInventoryProprietarySummaryDataTest_SameProgramName()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                using (new TransactionScopeWrapper())
+                {
+                    /*** Arrange ***/
+                    var startDate = new DateTime(2025, 1, 1);
+                    var endDate = new DateTime(2025, 3, 20);
+                    var daypartIds = new List<int> { 59803 };
+
+                    _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025.xlsx",
+                        processInventoryRatings: true);
+                    _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025_4.xlsx",
+                        processInventoryRatings: true);
+
+                    _InventoryProprietarySummaryService = IntegrationTestApplicationServiceFactory
+                        .GetApplicationService<IInventoryProprietarySummaryService>();
+
+                    _InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(5, startDate, endDate);
+
+                    var planDaypartRequests = new List<PlanDaypartRequest>
+                {
+                    new PlanDaypartRequest
+                    {
+                        DefaultDayPartId = 1,
+                        StartTimeSeconds = 14400,
+                        EndTimeSeconds = 36000
+                    },
+                    new PlanDaypartRequest
+                    {
+                        DefaultDayPartId = 2,
+                        StartTimeSeconds = 14400,
+                        EndTimeSeconds = 36000
+                    }
+                };
+
+                    var request = new InventoryProprietarySummaryRequest
+                    {
+                        FlightStartDate = startDate,
+                        FlightEndDate = endDate,
+                        PlanDaypartRequests = planDaypartRequests,
+                        AudienceId = 5
+                    };
+
+                    /*** Act ***/
+                    var result = _InventoryProprietarySummaryService.GetInventoryProprietarySummaries(request);
+
+                    /*** Assert ***/
+                    Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
+                }
+            }
+        }
+
+        private JsonSerializerSettings _GetJsonSettings()
 		{
 			var jsonResolver = new IgnorableSerializerContractResolver();
 		
@@ -162,6 +371,5 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 			};
 			return jsonSettings;
 		}
-
 	}
 }

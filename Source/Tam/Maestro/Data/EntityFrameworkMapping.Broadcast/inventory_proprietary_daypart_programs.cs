@@ -12,19 +12,21 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class inventory_proprietary_program_names
+    public partial class inventory_proprietary_daypart_programs
     {
+        public inventory_proprietary_daypart_programs()
+        {
+            this.inventory_proprietary_daypart_program_mappings = new HashSet<inventory_proprietary_daypart_program_mappings>();
+        }
+    
         public int id { get; set; }
-        public int inventory_source_id { get; set; }
-        public int daypart_default_id { get; set; }
-        public string daypart_unit_code { get; set; }
+        public string unit_type { get; set; }
         public string program_name { get; set; }
         public string created_by { get; set; }
         public System.DateTime created_at { get; set; }
         public string modified_by { get; set; }
         public Nullable<System.DateTime> modified_at { get; set; }
     
-        public virtual daypart_defaults daypart_defaults { get; set; }
-        public virtual inventory_sources inventory_sources { get; set; }
+        public virtual ICollection<inventory_proprietary_daypart_program_mappings> inventory_proprietary_daypart_program_mappings { get; set; }
     }
 }

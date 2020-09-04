@@ -21,11 +21,11 @@ namespace EntityFrameworkMapping.Broadcast
             this.proposal_version_markets = new HashSet<proposal_version_markets>();
             this.station_inventory_spot_snapshots = new HashSet<station_inventory_spot_snapshots>();
             this.schedules = new HashSet<schedule>();
-            this.stations = new HashSet<station>();
             this.plan_version_available_markets = new HashSet<plan_version_available_markets>();
             this.plan_version_blackout_markets = new HashSet<plan_version_blackout_markets>();
             this.station_month_details = new HashSet<station_month_details>();
             this.inventory_proprietary_summary_markets = new HashSet<inventory_proprietary_summary_markets>();
+            this.stations = new HashSet<station>();
         }
     
         public short market_code { get; set; }
@@ -37,10 +37,10 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<proposal_version_markets> proposal_version_markets { get; set; }
         public virtual ICollection<station_inventory_spot_snapshots> station_inventory_spot_snapshots { get; set; }
         public virtual ICollection<schedule> schedules { get; set; }
-        public virtual ICollection<station> stations { get; set; }
         public virtual ICollection<plan_version_available_markets> plan_version_available_markets { get; set; }
         public virtual ICollection<plan_version_blackout_markets> plan_version_blackout_markets { get; set; }
         public virtual ICollection<station_month_details> station_month_details { get; set; }
         public virtual ICollection<inventory_proprietary_summary_markets> inventory_proprietary_summary_markets { get; set; }
+        public virtual ICollection<station> stations { get; set; }
     }
 }

@@ -121,7 +121,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station_inventory_manifest_audiences> station_inventory_manifest_audiences { get; set; }
         public virtual DbSet<station_inventory_manifest_rates> station_inventory_manifest_rates { get; set; }
         public virtual DbSet<station_inventory_manifest_weeks> station_inventory_manifest_weeks { get; set; }
-        public virtual DbSet<station> stations { get; set; }
         public virtual DbSet<inventory_file_ratings_jobs> inventory_file_ratings_jobs { get; set; }
         public virtual DbSet<station_inventory_manifest_weeks_history> station_inventory_manifest_weeks_history { get; set; }
         public virtual DbSet<inventory_source_logos> inventory_source_logos { get; set; }
@@ -204,24 +203,26 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
         public virtual DbSet<inventory_proprietary_summary_audiences> inventory_proprietary_summary_audiences { get; set; }
         public virtual DbSet<inventory_proprietary_summary_markets> inventory_proprietary_summary_markets { get; set; }
-        public virtual DbSet<inventory_proprietary_summary> inventory_proprietary_summary { get; set; }
         public virtual DbSet<plan_version_buying_api_result_spot_frequencies> plan_version_buying_api_result_spot_frequencies { get; set; }
         public virtual DbSet<plan_version_buying_api_result_spots> plan_version_buying_api_result_spots { get; set; }
         public virtual DbSet<plan_version_buying_api_results> plan_version_buying_api_results { get; set; }
         public virtual DbSet<plan_version_buying_band_details> plan_version_buying_band_details { get; set; }
         public virtual DbSet<plan_version_buying_job> plan_version_buying_job { get; set; }
         public virtual DbSet<plan_version_buying_job_inventory_source_estimates> plan_version_buying_job_inventory_source_estimates { get; set; }
-        public virtual DbSet<plan_version_buying_market_details> plan_version_buying_market_details { get; set; }
         public virtual DbSet<plan_version_buying_parameters> plan_version_buying_parameters { get; set; }
         public virtual DbSet<plan_version_buying_parameters_inventory_source_percentages> plan_version_buying_parameters_inventory_source_percentages { get; set; }
         public virtual DbSet<plan_version_buying_parameters_inventory_source_type_percentages> plan_version_buying_parameters_inventory_source_type_percentages { get; set; }
         public virtual DbSet<plan_version_buying_result_spots> plan_version_buying_result_spots { get; set; }
-        public virtual DbSet<plan_version_buying_results> plan_version_buying_results { get; set; }
         public virtual DbSet<plan_version_buying_station_details> plan_version_buying_station_details { get; set; }
         public virtual DbSet<program_name_mapping_keywords> program_name_mapping_keywords { get; set; }
-        public virtual DbSet<inventory_proprietary_program_names> inventory_proprietary_program_names { get; set; }
         public virtual DbSet<show_type_mappings> show_type_mappings { get; set; }
         public virtual DbSet<plan_version_buying_ownership_group_details> plan_version_buying_ownership_group_details { get; set; }
+        public virtual DbSet<inventory_proprietary_daypart_program_mappings> inventory_proprietary_daypart_program_mappings { get; set; }
+        public virtual DbSet<plan_version_buying_results> plan_version_buying_results { get; set; }
         public virtual DbSet<plan_version_buying_rep_firm_details> plan_version_buying_rep_firm_details { get; set; }
+        public virtual DbSet<plan_version_buying_market_details> plan_version_buying_market_details { get; set; }
+        public virtual DbSet<station> stations { get; set; }
+        public virtual DbSet<inventory_proprietary_daypart_programs> inventory_proprietary_daypart_programs { get; set; }
+        public virtual DbSet<inventory_proprietary_summary> inventory_proprietary_summary { get; set; }
     }
 }

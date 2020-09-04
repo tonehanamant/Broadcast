@@ -48,8 +48,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan
 					new audience_audiences {rating_audience_id = 9}
 				});
 
-			_InventoryProprietarySummaryRepository.Setup(x => x.GetCPM(1))
-				.Returns(9.00M);
+			_InventoryProprietarySummaryRepository.Setup(x => x.GetProprietarySummaryUnitCost(1))
+				.Returns(900);
 
 			_InventoryProprietarySummaryRepository
 				.Setup(x => x.GetTotalImpressionsBySummaryIdAndAudienceIds(1, It.IsAny<List<int>>()))
@@ -93,10 +93,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan
 					new audience_audiences {rating_audience_id = 9}
 				});
 
-			_InventoryProprietarySummaryRepository.Setup(x => x.GetCPM(1))
-				.Returns(9.00M);
-			_InventoryProprietarySummaryRepository.Setup(x => x.GetCPM(2))
-				.Returns(5.00M);
+			_InventoryProprietarySummaryRepository.Setup(x => x.GetProprietarySummaryUnitCost(1))
+				.Returns(900);
+			_InventoryProprietarySummaryRepository.Setup(x => x.GetProprietarySummaryUnitCost(2))
+				.Returns(1000);
 			_InventoryProprietarySummaryRepository
 				.Setup(x => x.GetTotalImpressionsBySummaryIdAndAudienceIds(1, It.IsAny<List<int>>()))
 				.Returns(100000);
@@ -145,12 +145,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan
 					new audience_audiences {rating_audience_id = 9}
 				});
 
-			_InventoryProprietarySummaryRepository.Setup(x => x.GetCPM(1))
-				.Returns(9.00M);
-			_InventoryProprietarySummaryRepository.Setup(x => x.GetCPM(2))
-				.Returns(5.00M);
-			_InventoryProprietarySummaryRepository.Setup(x => x.GetCPM(3))
-				.Returns(6.00M);
+			_InventoryProprietarySummaryRepository.Setup(x => x.GetProprietarySummaryUnitCost(1))
+				.Returns(900);
+			_InventoryProprietarySummaryRepository.Setup(x => x.GetProprietarySummaryUnitCost(2))
+				.Returns(1000);
+			_InventoryProprietarySummaryRepository.Setup(x => x.GetProprietarySummaryUnitCost(3))
+				.Returns(600);
 
 			_InventoryProprietarySummaryRepository
 				.Setup(x => x.GetTotalImpressionsBySummaryIdAndAudienceIds(1, It.IsAny<List<int>>()))
@@ -204,14 +204,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan
 					new audience_audiences {rating_audience_id = 9}
 				});
 
-			_InventoryProprietarySummaryRepository.Setup(x => x.GetCPM(1))
-				.Returns(9.00M);
-			_InventoryProprietarySummaryRepository.Setup(x => x.GetCPM(2))
-				.Returns(5.00M);
-			_InventoryProprietarySummaryRepository.Setup(x => x.GetCPM(3))
-				.Returns(6.00M);
-			_InventoryProprietarySummaryRepository.Setup(x => x.GetCPM(4))
-				.Returns(8.00M);
+			_InventoryProprietarySummaryRepository.Setup(x => x.GetProprietarySummaryUnitCost(1))
+				.Returns(900);
+			_InventoryProprietarySummaryRepository.Setup(x => x.GetProprietarySummaryUnitCost(2))
+				.Returns(1000);
+			_InventoryProprietarySummaryRepository.Setup(x => x.GetProprietarySummaryUnitCost(3))
+				.Returns(600);
+			_InventoryProprietarySummaryRepository.Setup(x => x.GetProprietarySummaryUnitCost(4))
+				.Returns(1600);
 			_InventoryProprietarySummaryRepository
 				.Setup(x => x.GetTotalImpressionsBySummaryIdAndAudienceIds(1, It.IsAny<List<int>>()))
 				.Returns(100000);

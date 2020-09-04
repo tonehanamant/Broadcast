@@ -1,24 +1,24 @@
 {
   "summaries": [
     {
-      "Cost": 0.0,
-      "Cpm": 8.6000,
+      "Cpm": 0.0,
       "DaypartName": "M-SU 4AM-10AM",
-      "DaypartUnitCode": "AM",
       "ImpressionsTotal": 0.0,
       "InventorySourceName": "CNN",
-      "MarketCoverageTotal": 0.0,
-      "UnitName": "CNN AM"
+      "MarketCoverageTotal": 0.294,
+      "UnitCost": 0.0000,
+      "UnitName": "CNN AM",
+      "UnitType": "AM"
     },
     {
-      "Cost": 0.0,
-      "Cpm": 8.9000,
+      "Cpm": 0.0,
       "DaypartName": "M-SU 8PM-12:05AM",
-      "DaypartUnitCode": "PM",
       "ImpressionsTotal": 0.0,
       "InventorySourceName": "CNN",
-      "MarketCoverageTotal": 0.0,
-      "UnitName": "CNN PM"
+      "MarketCoverageTotal": 0.294,
+      "UnitCost": 0.0000,
+      "UnitName": "CNN PM",
+      "UnitType": "PM"
     }
   ],
   "ValidationMessage": ""

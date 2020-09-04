@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using EntityFrameworkMapping.Broadcast;
 
 namespace Services.Broadcast.Entities.InventoryProprietary
 {
@@ -9,14 +10,12 @@ namespace Services.Broadcast.Entities.InventoryProprietary
 		public int InventorySourceId { get; set; }
 		public QuarterDto Quarter { get; internal set; }
 		public int? DefaultDaypartId { get; set; }
-		public decimal? Cpm { get; set; }
-		public int SlotNumber { get; set; }
-
-		public List<InventoryProprietarySummaryAudiencesDto> Audiences { get; set; }
-
+        public decimal UnitCost { get; set; }
+        public int SlotNumber { get; set; }
+        public int ProprietaryDaypartProgramMappingId { get; set; }
+        public List<InventoryProprietarySummaryAudiencesDto> Audiences { get; set; }
 		public List<InventoryProprietarySummaryMarketDto> Markets { get; set; }
-	}
-
+    }
 
 	public class InventoryProprietarySummaryMarketDto
 	{
