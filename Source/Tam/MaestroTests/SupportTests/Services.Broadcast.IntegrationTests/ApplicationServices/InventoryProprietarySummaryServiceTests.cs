@@ -75,7 +75,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FlightStartDate = startDate,
                     FlightEndDate = endDate,
                     PlanDaypartRequests = planDaypartRequests,
-                    AudienceId = 5
+                    AudienceId = 5,
+                    SpotLengthIds = new List<int> { 2, 6 }
                 };
 
 				/*** Act ***/
@@ -130,7 +131,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FlightStartDate = startDate,
                     FlightEndDate = EndDate,
                     PlanDaypartRequests = planDaypartRequest,
-                    AudienceId = 34
+                    AudienceId = 34,
+                    SpotLengthIds = new List<int> { 3 }
                 };
 
 				/*** Act ***/
@@ -186,7 +188,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FlightStartDate = startDate,
                     FlightEndDate = endDate,
                     PlanDaypartRequests = planDaypartRequests,
-                    AudienceId = 5
+                    AudienceId = 5,
+                    SpotLengthIds = new List<int> { 1, 3 }
                 };
 
 				/*** Act ***/
@@ -238,7 +241,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FlightStartDate = startDate,
                     FlightEndDate = endDate,
                     PlanDaypartRequests = planDaypartRequests,
-                    AudienceId = 5
+                    AudienceId = 5,
+                    SpotLengthIds = new List<int> { 1 }
                 };
 
                 /*** Act ***/
@@ -290,7 +294,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FlightStartDate = startDate,
                     FlightEndDate = endDate,
                     PlanDaypartRequests = planDaypartRequests,
-                    AudienceId = 5
+                    AudienceId = 5,
+                    SpotLengthIds = new List<int> { 1 }
                 };
 
                 /*** Act ***/
@@ -308,24 +313,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                using (new TransactionScopeWrapper())
-                {
-                    /*** Arrange ***/
-                    var startDate = new DateTime(2025, 1, 1);
-                    var endDate = new DateTime(2025, 3, 20);
-                    var daypartIds = new List<int> { 59803 };
+                /*** Arrange ***/
+                var startDate = new DateTime(2025, 1, 1);
+                var endDate = new DateTime(2025, 3, 20);
+                var daypartIds = new List<int> { 59803 };
 
-                    _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025.xlsx",
-                        processInventoryRatings: true);
-                    _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025_4.xlsx",
-                        processInventoryRatings: true);
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025.xlsx",
+                    processInventoryRatings: true);
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025_4.xlsx",
+                    processInventoryRatings: true);
 
-                    _InventoryProprietarySummaryService = IntegrationTestApplicationServiceFactory
-                        .GetApplicationService<IInventoryProprietarySummaryService>();
+                _InventoryProprietarySummaryService = IntegrationTestApplicationServiceFactory
+                    .GetApplicationService<IInventoryProprietarySummaryService>();
 
-                    _InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(5, startDate, endDate);
+                _InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(5, startDate, endDate);
 
-                    var planDaypartRequests = new List<PlanDaypartRequest>
+                var planDaypartRequests = new List<PlanDaypartRequest>
                 {
                     new PlanDaypartRequest
                     {
@@ -341,20 +344,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     }
                 };
 
-                    var request = new InventoryProprietarySummaryRequest
-                    {
-                        FlightStartDate = startDate,
-                        FlightEndDate = endDate,
-                        PlanDaypartRequests = planDaypartRequests,
-                        AudienceId = 5
-                    };
+                var request = new InventoryProprietarySummaryRequest
+                {
+                    FlightStartDate = startDate,
+                    FlightEndDate = endDate,
+                    PlanDaypartRequests = planDaypartRequests,
+                    AudienceId = 5,
+                    SpotLengthIds = new List<int> { 1 }
+                };
 
-                    /*** Act ***/
-                    var result = _InventoryProprietarySummaryService.GetInventoryProprietarySummaries(request);
+                /*** Act ***/
+                var result = _InventoryProprietarySummaryService.GetInventoryProprietarySummaries(request);
 
-                    /*** Assert ***/
-                    Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
-                }
+                /*** Assert ***/
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, _GetJsonSettings()));
             }
         }
 
