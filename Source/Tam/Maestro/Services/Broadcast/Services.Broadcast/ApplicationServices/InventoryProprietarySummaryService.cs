@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Hangfire;
+using Microsoft.VisualBasic;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventoryProprietary;
 using Services.Broadcast.Repositories;
 using Tam.Maestro.Common;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.ApplicationServices
@@ -40,6 +43,12 @@ namespace Services.Broadcast.ApplicationServices
 		protected readonly IMarketCoverageRepository _MarketCoverageRepository;
 		protected readonly IDaypartDefaultRepository _DaypartDefaultRepository;
 		protected readonly IBroadcastAudienceRepository _AudienceRepository;
+		
+		private  const int SPOT_LENGTH_15 = 15;
+		private const int SPOT_LENGTH_30 = 30;
+		private readonly Dictionary<int, int> _SpotLengthMap;
+
+
 		public InventoryProprietarySummaryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
 			IQuarterCalculationEngine quarterCalculationEngine)
 		{
@@ -53,6 +62,7 @@ namespace Services.Broadcast.ApplicationServices
 
 			_MarketCoverageRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
 			_AudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
+			_SpotLengthMap = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
 		}
 
 		public void AggregateInventoryProprietarySummary(int inventorySourceId, DateTime? startDate, DateTime? endDate)
@@ -170,11 +180,10 @@ namespace Services.Broadcast.ApplicationServices
 			var response = new InventoryProprietarySummaryResponse();
 			var QuarterDetails =
 				_QuarterCalculationEngine.GetAllQuartersBetweenDates(inventoryProprietarySummaryRequest.FlightStartDate, inventoryProprietarySummaryRequest.FlightEndDate);
-			if (QuarterDetails.Count() > 1)
-			{
-				response.ValidationMessage = "Plan flight falls in more than one quarter, please update to select Units";
-			}
-			else
+
+			response.ValidationMessage = Validate(inventoryProprietarySummaryRequest, QuarterDetails);
+
+			if (string.IsNullOrEmpty(response.ValidationMessage))
 			{
 				HashSet<int> summaryDayPartIds = _ConvertPlanDayPartIdsToInventoryDayPartIds(inventoryProprietarySummaryRequest, QuarterDetails.Single());
 
@@ -182,16 +191,14 @@ namespace Services.Broadcast.ApplicationServices
 					_InventoryProprietarySummaryRepository.GetInventoryProprietarySummary(
 						QuarterDetails.FirstOrDefault(), summaryDayPartIds);
 			
-				var summaryAudianceIds = _AudienceRepository.GetRatingsAudiencesByMaestroAudience(new List<int> { inventoryProprietarySummaryRequest.AudienceId }).Select(am => am.rating_audience_id).Distinct().ToList();
+				var summaryAudienceIds = _AudienceRepository.GetRatingsAudiencesByMaestroAudience(new List<int> { inventoryProprietarySummaryRequest.AudienceId }).Select(am => am.rating_audience_id).Distinct().ToList();
 
 				foreach (var invPropSummary in invPropSummaryList)
 				{
 
-					invPropSummary.ImpressionsTotal = Math.Round(
-						_InventoryProprietarySummaryRepository.GetTotalImpressionsBySummaryIdAndAudienceIds(invPropSummary.Id, summaryAudianceIds)
-						);
-					var marketCoverage = _InventoryProprietarySummaryRepository.GetTotalMarketCoverageBySummaryId(invPropSummary.Id);
-					invPropSummary.MarketCoverageTotal = Math.Round(marketCoverage, 0); 
+					invPropSummary.ImpressionsTotal=  GetImpressions(inventoryProprietarySummaryRequest, invPropSummary.Id, summaryAudienceIds);
+
+					invPropSummary.MarketCoverageTotal = Math.Round(_InventoryProprietarySummaryRepository.GetTotalMarketCoverageBySummaryId(invPropSummary.Id), 0); 
 				}
 
 				response.summaries = invPropSummaryList;
@@ -200,6 +207,39 @@ namespace Services.Broadcast.ApplicationServices
 			return response;
 		}
 
+		private double GetImpressions(InventoryProprietarySummaryRequest inventoryProprietarySummaryRequest,int invPropSummaryId,  List<int> summaryAudienceIds)
+		{
+			double impressions = Math.Round(_InventoryProprietarySummaryRepository.GetTotalImpressionsBySummaryIdAndAudienceIds(invPropSummaryId, summaryAudienceIds));
+
+			int spotLengthIdI5 = _SpotLengthMap.Where(s => s.Key.Equals(SPOT_LENGTH_15)).Select(s => s.Value).Single();
+			int spotLengthId30 = _SpotLengthMap.Where(s => s.Key.Equals(SPOT_LENGTH_30)).Select(s => s.Value).Single();
+			if (inventoryProprietarySummaryRequest.SpotLengthIds.Contains(spotLengthIdI5) && !inventoryProprietarySummaryRequest.SpotLengthIds.Contains(spotLengthId30))
+			{
+				impressions = impressions / 2;
+			}
+			return impressions;
+		}
+
+
+		protected string Validate(InventoryProprietarySummaryRequest inventoryProprietarySummaryRequest, List<QuarterDetailDto> quarterDetails)
+		{
+			string validationMessage = string.Empty;
+
+			if (quarterDetails.Count() > 1)
+			{
+				validationMessage = "Plan flight falls in more than one quarter, please update to select Units.";
+			}
+			
+			List<int> allowedSpotLengthIds = _SpotLengthMap.Where(s => s.Key.Equals(SPOT_LENGTH_15) || s.Key.Equals(SPOT_LENGTH_30))
+				.Select(s => s.Value).ToList();
+			if (!inventoryProprietarySummaryRequest.SpotLengthIds.Any(s => allowedSpotLengthIds.Contains(s)))
+			{
+				validationMessage += "Units only available for 15 and 30 spot lengths, please update to select Units.";
+				
+			}
+			return validationMessage;
+
+		}
 		private HashSet<int> _ConvertPlanDayPartIdsToInventoryDayPartIds(InventoryProprietarySummaryRequest dto, QuarterDetailDto QuarterDetail)
 		{
 			// First Get all Daypart Ids from InventoryProprietary Summary Service based on quarter

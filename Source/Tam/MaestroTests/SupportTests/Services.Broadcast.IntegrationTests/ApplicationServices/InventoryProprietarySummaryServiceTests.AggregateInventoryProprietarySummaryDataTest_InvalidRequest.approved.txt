@@ -1,4 +1,4 @@
 {
   "summaries": null,
-  "ValidationMessage": "Plan flight falls in more than one quarter, please update to select Units"
+  "ValidationMessage": "Plan flight falls in more than one quarter, please update to select Units.Units only available for 15 and 30 spot lengths, please update to select Units."
 }

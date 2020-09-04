@@ -45,7 +45,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 			using (new TransactionScopeWrapper())
 			{
 				/*** Arrange ***/
-				DateTime StartDate = new DateTime(2025, 1, 1);
+
+				;DateTime StartDate = new DateTime(2025, 1, 1);
 				DateTime EndDate = new DateTime(2025, 3, 31);
 				List<int> DaypartIds = new List<int> { 59803 };
 				_InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025.xlsx",
@@ -65,7 +66,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 					new PlanDaypartRequest{DefaultDayPartId= 16, StartTimeSeconds= 36000, EndTimeSeconds=84600}
 				};
 				InventoryProprietarySummaryRequest req = new InventoryProprietarySummaryRequest
-				{ FlightStartDate = StartDate, FlightEndDate = EndDate, PlanDaypartRequests = planReqList, AudienceId = 5 };
+				{ FlightStartDate = StartDate, FlightEndDate = EndDate, PlanDaypartRequests = planReqList, AudienceId = 5, SpotLengthIds = new List<int>{2,6}};
 
 				/*** Act ***/
 				var result = _InventoryProprietarySummaryService.GetInventoryProprietarySummaries(req);
@@ -102,7 +103,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 					new PlanDaypartRequest{DefaultDayPartId= 4, StartTimeSeconds= 14400, EndTimeSeconds=36000}
 				};
 				InventoryProprietarySummaryRequest req = new InventoryProprietarySummaryRequest
-				{ FlightStartDate = StartDate, FlightEndDate = EndDate, PlanDaypartRequests = planReqList, AudienceId = 34 };
+				{ FlightStartDate = StartDate, FlightEndDate = EndDate, PlanDaypartRequests = planReqList, AudienceId = 34, SpotLengthIds = new List<int> { 3 } };
 
 				/*** Act ***/
 				var result = _InventoryProprietarySummaryService.GetInventoryProprietarySummaries(req);
@@ -139,7 +140,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 					new PlanDaypartRequest{DefaultDayPartId= 4, StartTimeSeconds= 14400, EndTimeSeconds=36000}
 				};
 				InventoryProprietarySummaryRequest req = new InventoryProprietarySummaryRequest
-					{ FlightStartDate = StartDate, FlightEndDate = EndDate, PlanDaypartRequests = planReqList, AudienceId = 5 };
+					{ FlightStartDate = StartDate, FlightEndDate = EndDate, PlanDaypartRequests = planReqList, AudienceId = 5, SpotLengthIds = new List<int> { 1,3 } };
 
 				/*** Act ***/
 				var result = _InventoryProprietarySummaryService.GetInventoryProprietarySummaries(req);

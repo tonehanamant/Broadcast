@@ -10,6 +10,7 @@ namespace Services.Broadcast.Entities.InventoryProprietary
 		public DateTime FlightEndDate { get; set; }
 		public List<PlanDaypartRequest> PlanDaypartRequests { get; set; }
 		public int AudienceId { get; set; }
+		public List<int> SpotLengthIds { get; set; }
 	}
 	public class PlanDaypartRequest
 	{
