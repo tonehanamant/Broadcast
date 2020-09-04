@@ -516,9 +516,9 @@ IF NOT EXISTS(SELECT 1 FROM sys.columns
 			  WHERE object_id = OBJECT_ID('inventory_proprietary_summary') AND 
 			        name = 'inventory_proprietary_daypart_program_mappings_id')
 BEGIN
-	ALTER TABLE [inventory_proprietary_summary] ADD [inventory_proprietary_daypart_program_mappings_id] INT NOT NULL
-
-	TRUNCATE TABLE [inventory_proprietary_summary]
+	DELETE FROM TABLE [inventory_proprietary_summary]
+	
+	ALTER TABLE [inventory_proprietary_summary] ADD [inventory_proprietary_daypart_program_mappings_id] INT NOT NULL	
 
 	ALTER TABLE [inventory_proprietary_summary] WITH CHECK ADD  CONSTRAINT [FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings] FOREIGN KEY([inventory_proprietary_daypart_program_mappings_id])
 	REFERENCES [dbo].inventory_proprietary_daypart_program_mappings ([id])
