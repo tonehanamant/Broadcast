@@ -18,7 +18,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public double? CompetitionFactor { get; set; }
         public double? InflationFactor { get; set; }
         public int UnitCaps { get; set; }
-        public UnitCapEnum UnitCapType { get; set; }
+        public UnitCapEnum UnitCapsType { get; set; }
         public List<PlanBuyingMarketDto> Markets { get; set; } = new List<PlanBuyingMarketDto>();
         public double CoverageGoalPercent { get; set; }
         public double? Margin { get; set; }

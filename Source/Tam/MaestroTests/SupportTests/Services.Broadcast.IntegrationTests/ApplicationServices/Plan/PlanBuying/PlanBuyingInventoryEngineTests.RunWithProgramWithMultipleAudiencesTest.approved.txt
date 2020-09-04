@@ -87,9 +87,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "OwnershipGroupName": "Nexstar",
+      "OwnershipGroupName": "Ownership group 3",
       "RateDataThrough": null,
-      "RepFirmName": "Katz"
+      "RepFirmName": "Sales group 9"
     },
     "Unit": null
   },
@@ -181,9 +181,9 @@
       "MarketCode": 132,
       "ModifiedDate": null,
       "OriginMarket": null,
-      "OwnershipGroupName": "Nexstar",
+      "OwnershipGroupName": "Ownership group 3",
       "RateDataThrough": null,
-      "RepFirmName": "Katz"
+      "RepFirmName": "Sales group 9"
     },
     "Unit": null
   }

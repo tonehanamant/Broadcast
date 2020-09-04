@@ -75,6 +75,6 @@
     "PlanId": 1197,
     "ProprietaryBlend": 0.2,
     "UnitCaps": 10,
-    "UnitCapType": 3
+    "UnitCapsType": 3
   }
 ]

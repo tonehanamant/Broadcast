@@ -1320,7 +1320,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             return new PlanPricingDefaults
             {
                 UnitCaps = 1,
-                UnitCapType = UnitCapEnum.Per30Min,
+                UnitCapsType = UnitCapEnum.Per30Min,
                 InventorySourcePercentages = new List<PlanInventorySourceDto>(),
                 InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>()
             };
@@ -1331,7 +1331,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             return new PlanBuyingDefaults
             {
                 UnitCaps = 1,
-                UnitCapType = UnitCapEnum.Per30Min,
+                UnitCapsType = UnitCapEnum.Per30Min,
                 InventorySourcePercentages = new List<PlanInventorySourceDto>(),
                 InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>()
             };

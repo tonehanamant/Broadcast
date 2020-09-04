@@ -256,7 +256,7 @@ namespace Services.Broadcast.Repositories
                     MinCpm = e.min_cpm,
                     ProprietaryBlend = e.proprietary_blend,
                     UnitCaps = e.unit_caps,
-                    UnitCapType = (UnitCapEnum)e.unit_caps_type,
+                    UnitCapsType = (UnitCapEnum)e.unit_caps_type,
                     InventorySourcePercentages = e.plan_version_buying_parameters_inventory_source_percentages.Select(
                         s => new PlanInventorySourceDto
                         {

@@ -491,7 +491,7 @@ namespace Services.Broadcast.ApplicationServices
             return new PlanPricingDefaults
             {
                 UnitCaps = 1,
-                UnitCapType = UnitCapEnum.Per30Min,
+                UnitCapsType = UnitCapEnum.Per30Min,
                 InventorySourcePercentages = PlanInventorySourceSortEngine.GetSortedInventorySourcePercents(defaultPercent, allSources),
                 InventorySourceTypePercentages = PlanInventorySourceSortEngine.GetSortedInventorySourceTypePercents(defaultPercent),
                 Margin = defaultMargin,

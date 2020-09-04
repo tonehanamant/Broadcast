@@ -2902,7 +2902,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 DeliveryImpressions = Convert.ToDouble(plan.TargetImpressions) / 1000,
                 DeliveryRatingPoints = Convert.ToDouble(plan.TargetRatingPoints),
                 UnitCaps = pricingDefaults.UnitCaps,
-                UnitCapsType = pricingDefaults.UnitCapType,
+                UnitCapsType = pricingDefaults.UnitCapsType,
                 InventorySourcePercentages = pricingDefaults.InventorySourcePercentages,
                 InventorySourceTypePercentages = pricingDefaults.InventorySourceTypePercentages,
                 Margin = pricingDefaults.Margin,
