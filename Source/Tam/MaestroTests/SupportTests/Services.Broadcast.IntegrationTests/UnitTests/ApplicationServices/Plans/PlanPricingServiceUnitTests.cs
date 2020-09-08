@@ -590,8 +590,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var margin = hasMargin ? 20 : (double?)null;
 
             var proprietaryData = hasProprietary ?
-                new ProprietaryInventoryData { TotalImpressions = 10000, TotalCost = 5000 } :
-                new ProprietaryInventoryData { TotalImpressions = 0, TotalCost = 0 };
+                new ProprietaryInventoryData { TotalImpressions = 10000, TotalCostWithMargin = 5000 } :
+                new ProprietaryInventoryData { TotalImpressions = 0, TotalCostWithMargin = 0 };
 
             var spots = new List<PlanPricingAllocatedSpot>
             {

@@ -2,7 +2,7 @@
   {
     "GoalFulfilledByProprietary": false,
     "JobId": 1,
-    "OptimalCpm": 0.2036575228595178719866999000,
+    "OptimalCpm": 0.2202826267664172901080632000,
     "PlanVersionId": 77,
     "Programs": [
       {

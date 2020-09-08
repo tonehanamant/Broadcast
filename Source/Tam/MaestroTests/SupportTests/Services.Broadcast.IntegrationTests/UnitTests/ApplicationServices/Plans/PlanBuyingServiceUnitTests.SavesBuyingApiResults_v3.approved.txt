@@ -1,9 +1,9 @@
 [
   {
+    "BuyingCpm": 0.3735990037359900373599004000,
+    "BuyingVersion": "3",
     "JobId": 1,
     "PlanVersionId": 0,
-    "PricingCpm": 0.3735990037359900373599004000,
-    "PricingVersion": "3",
     "RequestId": "djj4j4399fmmf1m212",
     "Spots": [
       {
@@ -29,9 +29,12 @@
         ],
         "StandardDaypart": {
           "Code": "AMN",
+          "DaypartType": 1,
+          "DefaultEndTimeSeconds": 46799,
+          "DefaultStartTimeSeconds": 14400,
           "FullName": "AM News",
           "Id": 15,
-          "VpvhCalculationSourceType": 0
+          "VpvhCalculationSourceType": 1
         },
         "StationInventoryManifestId": 0,
         "TotalCost": 100.0,
@@ -62,9 +65,12 @@
         ],
         "StandardDaypart": {
           "Code": "AMN",
+          "DaypartType": 1,
+          "DefaultEndTimeSeconds": 46799,
+          "DefaultStartTimeSeconds": 14400,
           "FullName": "AM News",
           "Id": 15,
-          "VpvhCalculationSourceType": 0
+          "VpvhCalculationSourceType": 1
         },
         "StationInventoryManifestId": 0,
         "TotalCost": 100.0,
@@ -95,9 +101,12 @@
         ],
         "StandardDaypart": {
           "Code": "AMN",
+          "DaypartType": 1,
+          "DefaultEndTimeSeconds": 46799,
+          "DefaultStartTimeSeconds": 14400,
           "FullName": "AM News",
           "Id": 15,
-          "VpvhCalculationSourceType": 0
+          "VpvhCalculationSourceType": 1
         },
         "StationInventoryManifestId": 0,
         "TotalCost": 100.0,
@@ -128,9 +137,12 @@
         ],
         "StandardDaypart": {
           "Code": "AMN",
+          "DaypartType": 1,
+          "DefaultEndTimeSeconds": 46799,
+          "DefaultStartTimeSeconds": 14400,
           "FullName": "AM News",
           "Id": 15,
-          "VpvhCalculationSourceType": 0
+          "VpvhCalculationSourceType": 1
         },
         "StationInventoryManifestId": 0,
         "TotalCost": 100.0,
@@ -161,9 +173,12 @@
         ],
         "StandardDaypart": {
           "Code": "AMN",
+          "DaypartType": 1,
+          "DefaultEndTimeSeconds": 46799,
+          "DefaultStartTimeSeconds": 14400,
           "FullName": "AM News",
           "Id": 15,
-          "VpvhCalculationSourceType": 0
+          "VpvhCalculationSourceType": 1
         },
         "StationInventoryManifestId": 0,
         "TotalCost": 100.0,
@@ -194,9 +209,12 @@
         ],
         "StandardDaypart": {
           "Code": "AMN",
+          "DaypartType": 1,
+          "DefaultEndTimeSeconds": 46799,
+          "DefaultStartTimeSeconds": 14400,
           "FullName": "AM News",
           "Id": 15,
-          "VpvhCalculationSourceType": 0
+          "VpvhCalculationSourceType": 1
         },
         "StationInventoryManifestId": 0,
         "TotalCost": 100.0,
@@ -227,9 +245,12 @@
         ],
         "StandardDaypart": {
           "Code": "PMN",
+          "DaypartType": 1,
+          "DefaultEndTimeSeconds": 299,
+          "DefaultStartTimeSeconds": 46800,
           "FullName": "PM News",
           "Id": 16,
-          "VpvhCalculationSourceType": 0
+          "VpvhCalculationSourceType": 2
         },
         "StationInventoryManifestId": 0,
         "TotalCost": 100.0,

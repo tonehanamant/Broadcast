@@ -946,7 +946,6 @@ namespace Services.Broadcast.ApplicationServices
                     MinCPM = planPricingParametersDto.MinCpm,
                     MaxCPM = planPricingParametersDto.MaxCpm,
                     InflationFactor = planPricingParametersDto.InflationFactor,
-                    Margin = planPricingParametersDto.Margin,
                     MarketGroup = planPricingParametersDto.MarketGroup
                 };
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FETCHING_PLAN_AND_PARAMETERS);
@@ -1134,6 +1133,7 @@ namespace Services.Broadcast.ApplicationServices
                 .Sum(x => x.Impressions ?? 0);
 
             result.TotalCost = proprietarySummaries.Sum(x => x.UnitCost);
+            result.TotalCostWithMargin = GeneralMath.CalculateCostWithMargin(result.TotalCost, parameters.Margin);
 
             result.ImpressionsPerMarket = proprietarySummaries
                 .SelectMany(x => x.SummaryByMarketByAudience)
@@ -1587,7 +1587,7 @@ namespace Services.Broadcast.ApplicationServices
 
         internal decimal _CalculatePricingCpm(List<PlanPricingAllocatedSpot> spots, ProprietaryInventoryData proprietaryInventoryData)
         {
-            var totalCost = proprietaryInventoryData.TotalCost;
+            var totalCost = proprietaryInventoryData.TotalCostWithMargin;
             var totalImpressions = proprietaryInventoryData.TotalImpressions;
 
             if (spots.Any())
@@ -1914,7 +1914,6 @@ namespace Services.Broadcast.ApplicationServices
                 MinCPM = requestParameters.MinCpm,
                 MaxCPM = requestParameters.MaxCpm,
                 InflationFactor = requestParameters.InflationFactor,
-                Margin = requestParameters.Margin,
                 MarketGroup = requestParameters.MarketGroup
             };
             var parameters = new PlanPricingParametersDto
@@ -1950,7 +1949,6 @@ namespace Services.Broadcast.ApplicationServices
                 MinCPM = requestParameters.MinCpm,
                 MaxCPM = requestParameters.MaxCpm,
                 InflationFactor = requestParameters.InflationFactor,
-                Margin = requestParameters.Margin,
                 MarketGroup = requestParameters.MarketGroup
             };
             var parameters = new PlanPricingParametersDto
@@ -2220,6 +2218,8 @@ namespace Services.Broadcast.ApplicationServices
             public double TotalImpressions { get; set; }
 
             public decimal TotalCost { get; set; }
+
+            public decimal TotalCostWithMargin { get; set; }
 
             public Dictionary<short, double> ImpressionsPerMarket { get; set; } = new Dictionary<short, double>();
         }
