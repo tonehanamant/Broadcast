@@ -9,13 +9,12 @@
   "DeliveryImpressions": 2000.0,
   "DeliveryRatingPoints": 0.0,
   "InflationFactor": null,
-  "InventorySourcePercentages": [],
-  "InventorySourceTypePercentages": [],
   "Margin": null,
   "MarketGroup": 0,
   "MaxCpm": null,
   "MinCpm": null,
   "ProprietaryBlend": 0.0,
+  "ProprietaryInventory": [],
   "UnitCaps": 10,
   "UnitCapsType": 1
 }

@@ -15,6 +15,12 @@ namespace BroadcastComposerWeb.Controllers
         {
         }
 
+        /// <summary>
+        /// Queues pricing job
+        /// </summary>
+        /// <param name="planPricingRequestDto">
+        /// ProprietaryInventory is a list of proprietary summary ids
+        /// </param>
         [HttpPost]
         [Route("Queue")]
         public BaseResponse<PlanPricingJob> Queue(PricingParametersWithoutPlanDto planPricingRequestDto)

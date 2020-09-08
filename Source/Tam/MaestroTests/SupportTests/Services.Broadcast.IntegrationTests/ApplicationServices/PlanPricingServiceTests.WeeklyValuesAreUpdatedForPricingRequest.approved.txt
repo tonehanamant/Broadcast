@@ -1,7 +1,7 @@
 {
   "contract": [
     {
-      "cpm_goal": 0.16000,
+      "cpm_goal": 1.0000,
       "daypart_weighting": [
         {
           "daypart_goal": 1.0,
@@ -11,8 +11,8 @@
       "frequency_cap_spots": 10,
       "frequency_cap_time": 1.0,
       "frequency_cap_unit": "day",
-      "impression_goal": 10000000.0,
-      "market_coverage_goal": 0.805,
+      "impression_goal": 9998138.0,
+      "market_coverage_goal": 0.0,
       "share_of_voice": [
         {
           "market_code": 100,
@@ -26,7 +26,7 @@
       "week_id": 771
     },
     {
-      "cpm_goal": 0.16000,
+      "cpm_goal": 1.0000,
       "daypart_weighting": [
         {
           "daypart_goal": 1.0,
@@ -36,8 +36,8 @@
       "frequency_cap_spots": 10,
       "frequency_cap_time": 1.0,
       "frequency_cap_unit": "day",
-      "impression_goal": 10000000.0,
-      "market_coverage_goal": 0.805,
+      "impression_goal": 9998138.0,
+      "market_coverage_goal": 0.0,
       "share_of_voice": [
         {
           "market_code": 100,
@@ -51,7 +51,7 @@
       "week_id": 772
     },
     {
-      "cpm_goal": 0.16000,
+      "cpm_goal": 1.0000,
       "daypart_weighting": [
         {
           "daypart_goal": 1.0,
@@ -61,8 +61,8 @@
       "frequency_cap_spots": 10,
       "frequency_cap_time": 1.0,
       "frequency_cap_unit": "day",
-      "impression_goal": 10000000.0,
-      "market_coverage_goal": 0.805,
+      "impression_goal": 9998138.0,
+      "market_coverage_goal": 0.0,
       "share_of_voice": [
         {
           "market_code": 100,
@@ -76,7 +76,7 @@
       "week_id": 773
     },
     {
-      "cpm_goal": 0.16000,
+      "cpm_goal": 1.0000,
       "daypart_weighting": [
         {
           "daypart_goal": 1.0,
@@ -86,8 +86,8 @@
       "frequency_cap_spots": 10,
       "frequency_cap_time": 1.0,
       "frequency_cap_unit": "day",
-      "impression_goal": 10000000.0,
-      "market_coverage_goal": 0.805,
+      "impression_goal": 9998138.0,
+      "market_coverage_goal": 0.0,
       "share_of_voice": [
         {
           "market_code": 100,
@@ -101,7 +101,7 @@
       "week_id": 774
     },
     {
-      "cpm_goal": 0.16000,
+      "cpm_goal": 1.0000,
       "daypart_weighting": [
         {
           "daypart_goal": 1.0,
@@ -111,8 +111,8 @@
       "frequency_cap_spots": 10,
       "frequency_cap_time": 1.0,
       "frequency_cap_unit": "day",
-      "impression_goal": 10000000.0,
-      "market_coverage_goal": 0.805,
+      "impression_goal": 9998138.0,
+      "market_coverage_goal": 0.0,
       "share_of_voice": [
         {
           "market_code": 100,

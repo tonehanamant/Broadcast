@@ -24,14 +24,10 @@ namespace EntityFrameworkMapping.Broadcast
             this.inventory_source_logos = new HashSet<inventory_source_logos>();
             this.inventory_summary = new HashSet<inventory_summary>();
             this.inventory_summary_quarters = new HashSet<inventory_summary_quarters>();
-            this.plan_version_pricing_parameters_inventory_source_percentages = new HashSet<plan_version_pricing_parameters_inventory_source_percentages>();
             this.scx_generation_job_files = new HashSet<scx_generation_job_files>();
             this.scx_generation_jobs = new HashSet<scx_generation_jobs>();
             this.inventory_programs_by_source_jobs = new HashSet<inventory_programs_by_source_jobs>();
-            this.plan_version_pricing_job_inventory_source_estimates = new HashSet<plan_version_pricing_job_inventory_source_estimates>();
             this.inventory_export_jobs = new HashSet<inventory_export_jobs>();
-            this.plan_version_buying_job_inventory_source_estimates = new HashSet<plan_version_buying_job_inventory_source_estimates>();
-            this.plan_version_buying_parameters_inventory_source_percentages = new HashSet<plan_version_buying_parameters_inventory_source_percentages>();
             this.inventory_proprietary_daypart_program_mappings = new HashSet<inventory_proprietary_daypart_program_mappings>();
             this.inventory_proprietary_summary = new HashSet<inventory_proprietary_summary>();
         }
@@ -49,14 +45,10 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<inventory_source_logos> inventory_source_logos { get; set; }
         public virtual ICollection<inventory_summary> inventory_summary { get; set; }
         public virtual ICollection<inventory_summary_quarters> inventory_summary_quarters { get; set; }
-        public virtual ICollection<plan_version_pricing_parameters_inventory_source_percentages> plan_version_pricing_parameters_inventory_source_percentages { get; set; }
         public virtual ICollection<scx_generation_job_files> scx_generation_job_files { get; set; }
         public virtual ICollection<scx_generation_jobs> scx_generation_jobs { get; set; }
         public virtual ICollection<inventory_programs_by_source_jobs> inventory_programs_by_source_jobs { get; set; }
-        public virtual ICollection<plan_version_pricing_job_inventory_source_estimates> plan_version_pricing_job_inventory_source_estimates { get; set; }
         public virtual ICollection<inventory_export_jobs> inventory_export_jobs { get; set; }
-        public virtual ICollection<plan_version_buying_job_inventory_source_estimates> plan_version_buying_job_inventory_source_estimates { get; set; }
-        public virtual ICollection<plan_version_buying_parameters_inventory_source_percentages> plan_version_buying_parameters_inventory_source_percentages { get; set; }
         public virtual ICollection<inventory_proprietary_daypart_program_mappings> inventory_proprietary_daypart_program_mappings { get; set; }
         public virtual ICollection<inventory_proprietary_summary> inventory_proprietary_summary { get; set; }
     }

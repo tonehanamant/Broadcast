@@ -2903,8 +2903,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 DeliveryRatingPoints = Convert.ToDouble(plan.TargetRatingPoints),
                 UnitCaps = pricingDefaults.UnitCaps,
                 UnitCapsType = pricingDefaults.UnitCapsType,
-                InventorySourcePercentages = pricingDefaults.InventorySourcePercentages,
-                InventorySourceTypePercentages = pricingDefaults.InventorySourceTypePercentages,
                 Margin = pricingDefaults.Margin,
                 MarketGroup = pricingDefaults.MarketGroup,
                 CoverageGoalPercent = plan.CoverageGoalPercent,

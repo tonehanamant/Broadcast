@@ -15,11 +15,11 @@
       "DaypartName": "M-SU 8PM-12:05AM",
       "ImpressionsTotal": 0.0,
       "InventorySourceName": "CNN",
-      "MarketCoverageTotal": 0.294,
+      "MarketCoverageTotal": 0.0,
       "UnitCost": 0.0000,
       "UnitName": "CNN PM",
       "UnitType": "PM"
     }
   ],
-  "ValidationMessage": ""
+  "ValidationMessage": null
 }

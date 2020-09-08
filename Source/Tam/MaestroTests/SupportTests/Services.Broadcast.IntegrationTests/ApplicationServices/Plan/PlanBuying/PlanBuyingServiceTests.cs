@@ -2,17 +2,21 @@
 using ApprovalTests.Reporters;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.InventoryProprietary;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
+using Services.Broadcast.IntegrationTests.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs.Plan;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Tam.Maestro.Common.DataLayer;
 using Unity;
@@ -28,6 +32,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         private readonly IPlanService _PlanService;
         private readonly IPlanRepository _PlanRepository;
         private readonly IPlanBuyingRepository _PlanBuyingRepository;
+        private InventoryFileTestHelper _InventoryFileTestHelper;
+        private readonly IInventoryProprietarySummaryService _InventoryProprietarySummaryService;
 
         public PlanBuyingServiceTests()
         {
@@ -36,6 +42,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             _PlanService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanService>();
             _PlanRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _PlanBuyingRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IPlanBuyingRepository>();
+            _InventoryProprietarySummaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryProprietarySummaryService>();
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            _InventoryFileTestHelper = new InventoryFileTestHelper();
         }
 
         [Test]
@@ -146,22 +159,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     InflationFactor = 0.5,
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
-                    UnitCapsType = UnitCapEnum.PerDay,
-                    InventorySourcePercentages = new List<PlanInventorySourceDto>
-                    {
-                        new PlanInventorySourceDto{Id = 3, Percentage = 12},
-                        new PlanInventorySourceDto{Id = 5, Percentage = 13},
-                        new PlanInventorySourceDto{Id = 6, Percentage = 14},
-                        new PlanInventorySourceDto{Id = 7, Percentage = 15},
-                        new PlanInventorySourceDto{Id = 10, Percentage = 16},
-                        new PlanInventorySourceDto{Id = 11, Percentage = 17},
-                        new PlanInventorySourceDto{Id = 12, Percentage = 8},
-                    },
-                    InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>
-                    {
-                        new PlanInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
-                        new PlanInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
-                    }
+                    UnitCapsType = UnitCapEnum.PerDay
                 };
 
                 var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "integration test user");
@@ -297,22 +295,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
-                    MarketGroup = MarketGroupEnum.None,
-                    InventorySourcePercentages = new List<PlanInventorySourceDto>
-                    {
-                        new PlanInventorySourceDto{Id = 3, Percentage = 12},
-                        new PlanInventorySourceDto{Id = 5, Percentage = 13},
-                        new PlanInventorySourceDto{Id = 6, Percentage = 14},
-                        new PlanInventorySourceDto{Id = 7, Percentage = 15},
-                        new PlanInventorySourceDto{Id = 10, Percentage = 16},
-                        new PlanInventorySourceDto{Id = 11, Percentage = 17},
-                        new PlanInventorySourceDto{Id = 12, Percentage = 8},
-                    },
-                    InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>
-                    {
-                        new PlanInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
-                        new PlanInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
-                    }
+                    MarketGroup = MarketGroupEnum.None
                 };
 
                 var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
@@ -377,17 +360,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     CPP = 14.6m,
                     Currency = PlanCurrenciesEnum.Impressions,
                     DeliveryRatingPoints = 1234,
-                    MarketGroup = MarketGroupEnum.None,
-                    InventorySourcePercentages = new List<PlanInventorySourceDto>
-                    {
-                        new PlanInventorySourceDto{Id = 3, Percentage = 12},
-                        new PlanInventorySourceDto{Id = 5, Percentage = 13},
-                        new PlanInventorySourceDto{Id = 6, Percentage = 14},
-                        new PlanInventorySourceDto{Id = 7, Percentage = 15},
-                        new PlanInventorySourceDto{Id = 10, Percentage = 16},
-                        new PlanInventorySourceDto{Id = 11, Percentage = 17},
-                        new PlanInventorySourceDto{Id = 12, Percentage = 8},
-                    }
+                    MarketGroup = MarketGroupEnum.None
                 };
 
                 var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
@@ -433,22 +406,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
-                    MarketGroup = MarketGroupEnum.None,
-                    InventorySourcePercentages = new List<PlanInventorySourceDto>
-                    {
-                        new PlanInventorySourceDto{Id = 3, Percentage = 12},
-                        new PlanInventorySourceDto{Id = 5, Percentage = 13},
-                        new PlanInventorySourceDto{Id = 6, Percentage = 14},
-                        new PlanInventorySourceDto{Id = 7, Percentage = 15},
-                        new PlanInventorySourceDto{Id = 10, Percentage = 16},
-                        new PlanInventorySourceDto{Id = 11, Percentage = 17},
-                        new PlanInventorySourceDto{Id = 12, Percentage = 8},
-                    },
-                    InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>
-                    {
-                        new PlanInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
-                        new PlanInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
-                    }
+                    MarketGroup = MarketGroupEnum.None
                 };
 
                 var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
@@ -626,22 +584,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
-                    MarketGroup = MarketGroupEnum.None,
-                    InventorySourcePercentages = new List<PlanInventorySourceDto>
-                    {
-                        new PlanInventorySourceDto{Id = 3, Percentage = 12},
-                        new PlanInventorySourceDto{Id = 5, Percentage = 13},
-                        new PlanInventorySourceDto{Id = 6, Percentage = 10},
-                        new PlanInventorySourceDto{Id = 7, Percentage = 9},
-                        new PlanInventorySourceDto{Id = 10, Percentage = 8},
-                        new PlanInventorySourceDto{Id = 11, Percentage = 7},
-                        new PlanInventorySourceDto{Id = 12, Percentage = 8},
-                    },
-                    InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>
-                    {
-                        new PlanInventorySourceTypeDto { Id = 4, Name = "Syndication", Percentage = 11 },
-                        new PlanInventorySourceTypeDto { Id = 5, Name = "Diginet", Percentage = 22 }
-                    }
+                    MarketGroup = MarketGroupEnum.None
                 };
 
                 var job = _PlanBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
@@ -690,22 +633,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
-                    MarketGroup = MarketGroupEnum.Top25,
-                    InventorySourcePercentages = new List<PlanInventorySourceDto>
-                    {
-                        new PlanInventorySourceDto{Id = 3, Percentage = 12},
-                        new PlanInventorySourceDto{Id = 5, Percentage = 13},
-                        new PlanInventorySourceDto{Id = 6, Percentage = 10},
-                        new PlanInventorySourceDto{Id = 7, Percentage = 9},
-                        new PlanInventorySourceDto{Id = 10, Percentage = 8},
-                        new PlanInventorySourceDto{Id = 11, Percentage = 7},
-                        new PlanInventorySourceDto{Id = 12, Percentage = 8},
-                    },
-                    InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>
-                    {
-                        new PlanInventorySourceTypeDto { Id = 4, Name = "Syndication", Percentage = 11 },
-                        new PlanInventorySourceTypeDto { Id = 5, Name = "Diginet", Percentage = 22 }
-                    }
+                    MarketGroup = MarketGroupEnum.Top25
                 };
 
                 var job = planBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
@@ -726,6 +654,49 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             }
         }
 
+        private List<int> _CreateProprietaryInventorySummary()
+        {
+            const int inventorySourceId = 5;
+            var startDate = new DateTime(2018, 1, 1);
+            var endDate = new DateTime(2018, 3, 20);
+
+            _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN.xlsx", processInventoryRatings: true);
+
+            _InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(
+                inventorySourceId, 
+                startDate,
+                endDate);
+
+            var planDaypartRequests = new List<PlanDaypartRequest>
+                {
+                    new PlanDaypartRequest
+                    {
+                        DefaultDayPartId = 1,
+                        StartTimeSeconds = 14400,
+                        EndTimeSeconds = 36000
+                    },
+                    new PlanDaypartRequest
+                    {
+                        DefaultDayPartId = 4,
+                        StartTimeSeconds = 14400,
+                        EndTimeSeconds = 36000
+                    }
+                };
+
+            var request = new InventoryProprietarySummaryRequest
+            {
+                FlightStartDate = startDate,
+                FlightEndDate = endDate,
+                PlanDaypartRequests = planDaypartRequests,
+                AudienceId = 5,
+                SpotLengthIds = new List<int> { 1 }
+            };
+
+            var result = _InventoryProprietarySummaryService.GetInventoryProprietarySummaries(request);
+
+            return result.summaries.Select(x => x.Id).ToList();
+        }
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
@@ -733,6 +704,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         {
             using (new TransactionScopeWrapper())
             {
+                var proprietaryInventorySummaryIds = _CreateProprietaryInventorySummary();
+
                 var apiClient = new PlanBuyingApiClientStub();
 
                 IntegrationTestApplicationServiceFactory.Instance.RegisterInstance(apiClient);
@@ -750,7 +723,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
                     UnitCapsType = UnitCapEnum.PerDay,
-                    MarketGroup = MarketGroupEnum.None
+                    MarketGroup = MarketGroupEnum.Top100,
+                    ProprietaryInventory = proprietaryInventorySummaryIds.Select(x => new InventoryProprietarySummary { Id = x }).ToList()
                 };
 
                 var job = planBuyingService.QueueBuyingJob(planBuyingRequestDto, new DateTime(2019, 11, 4), "test user");
@@ -788,22 +762,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 UnitCaps = 10,
                 UnitCapsType = UnitCapEnum.PerDay,
                 MarketGroup = MarketGroupEnum.None,
-                Margin = 20,
-                InventorySourcePercentages = new List<PlanInventorySourceDto>
-                    {
-                        new PlanInventorySourceDto{Id = 3, Percentage = 12},
-                        new PlanInventorySourceDto{Id = 5, Percentage = 13},
-                        new PlanInventorySourceDto{Id = 6, Percentage = 14},
-                        new PlanInventorySourceDto{Id = 7, Percentage = 15},
-                        new PlanInventorySourceDto{Id = 10, Percentage = 16},
-                        new PlanInventorySourceDto{Id = 11, Percentage = 17},
-                        new PlanInventorySourceDto{Id = 12, Percentage = 8},
-                    },
-                InventorySourceTypePercentages = new List<PlanInventorySourceTypeDto>
-                    {
-                        new PlanInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Diginet, Percentage = 11 },
-                        new PlanInventorySourceTypeDto { Id = (int)InventorySourceTypeEnum.Syndication, Percentage = 12 }
-                    }
+                Margin = 20
             };
         }
     }

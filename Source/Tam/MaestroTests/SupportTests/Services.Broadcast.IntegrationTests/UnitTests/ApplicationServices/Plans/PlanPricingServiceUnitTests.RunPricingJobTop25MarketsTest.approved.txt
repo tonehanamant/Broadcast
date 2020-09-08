@@ -2,7 +2,7 @@
   {
     "contract": [
       {
-        "cpm_goal": 240.00,
+        "cpm_goal": 80.00,
         "daypart_weighting": [
           {
             "daypart_goal": 0.6,
@@ -16,7 +16,7 @@
         "frequency_cap_spots": 10,
         "frequency_cap_time": 1.0,
         "frequency_cap_unit": "day",
-        "impression_goal": 30.0,
+        "impression_goal": 150.0,
         "market_coverage_goal": 0.8,
         "share_of_voice": [
           {
@@ -29,7 +29,7 @@
           },
           {
             "market_code": 101,
-            "market_goal": 0.12
+            "market_goal": 0.074
           },
           {
             "market_code": 102,
@@ -39,7 +39,7 @@
         "week_id": 100
       },
       {
-        "cpm_goal": 240.00,
+        "cpm_goal": 48.000,
         "daypart_weighting": [
           {
             "daypart_goal": 0.6,
@@ -53,7 +53,7 @@
         "frequency_cap_spots": 10,
         "frequency_cap_time": 1.0,
         "frequency_cap_unit": "day",
-        "impression_goal": 10.0,
+        "impression_goal": 250.0,
         "market_coverage_goal": 0.8,
         "share_of_voice": [
           {
@@ -66,7 +66,7 @@
           },
           {
             "market_code": 101,
-            "market_goal": 0.12
+            "market_goal": 0.074
           },
           {
             "market_code": 102,
@@ -74,6 +74,43 @@
           }
         ],
         "week_id": 101
+      },
+      {
+        "cpm_goal": 120.00,
+        "daypart_weighting": [
+          {
+            "daypart_goal": 0.6,
+            "daypart_id": 1
+          },
+          {
+            "daypart_goal": 0.4,
+            "daypart_id": 2
+          }
+        ],
+        "frequency_cap_spots": 10,
+        "frequency_cap_time": 1.0,
+        "frequency_cap_unit": "day",
+        "impression_goal": 100.0,
+        "market_coverage_goal": 0.8,
+        "share_of_voice": [
+          {
+            "market_code": 403,
+            "market_goal": 0.0004743
+          },
+          {
+            "market_code": 202,
+            "market_goal": 0.0002942
+          },
+          {
+            "market_code": 101,
+            "market_goal": 0.074
+          },
+          {
+            "market_code": 102,
+            "market_goal": 0.13
+          }
+        ],
+        "week_id": 102
       }
     ],
     "inventory": [
@@ -100,6 +137,18 @@
         "spot_hours": 1.0,
         "station_id": 5,
         "week_id": 101
+      },
+      {
+        "cost": 50.0,
+        "daypart_id": 15,
+        "id": 1,
+        "impressions": 1000.0,
+        "market_code": 101,
+        "percentage_of_us": 0.00101,
+        "spot_days": 1,
+        "spot_hours": 1.0,
+        "station_id": 5,
+        "week_id": 102
       },
       {
         "cost": 60.0,

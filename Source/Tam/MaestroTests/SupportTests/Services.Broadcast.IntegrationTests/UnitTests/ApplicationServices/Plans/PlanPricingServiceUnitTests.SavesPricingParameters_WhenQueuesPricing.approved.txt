@@ -10,50 +10,6 @@
     "DeliveryImpressions": 50000.0,
     "DeliveryRatingPoints": 1.3,
     "InflationFactor": 0.5,
-    "InventorySourcePercentages": [
-      {
-        "Id": 3,
-        "Name": null,
-        "Percentage": 12
-      },
-      {
-        "Id": 5,
-        "Name": null,
-        "Percentage": 13
-      },
-      {
-        "Id": 6,
-        "Name": null,
-        "Percentage": 14
-      },
-      {
-        "Id": 7,
-        "Name": null,
-        "Percentage": 15
-      },
-      {
-        "Id": 10,
-        "Name": null,
-        "Percentage": 16
-      },
-      {
-        "Id": 11,
-        "Name": null,
-        "Percentage": 17
-      },
-      {
-        "Id": 12,
-        "Name": null,
-        "Percentage": 8
-      }
-    ],
-    "InventorySourceTypePercentages": [
-      {
-        "Id": 5,
-        "Name": null,
-        "Percentage": 3
-      }
-    ],
     "JobId": 5,
     "Margin": 14.0,
     "MarketGroup": 1,
@@ -62,6 +18,7 @@
     "PlanId": 222,
     "PlanVersionId": 77,
     "ProprietaryBlend": 0.2,
+    "ProprietaryInventory": [],
     "UnitCaps": 10,
     "UnitCapsType": 3
   }

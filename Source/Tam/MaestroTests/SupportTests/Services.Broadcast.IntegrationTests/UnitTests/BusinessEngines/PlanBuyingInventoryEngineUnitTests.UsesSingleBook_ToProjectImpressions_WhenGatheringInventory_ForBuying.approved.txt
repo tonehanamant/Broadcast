@@ -10,7 +10,6 @@
       "SpotLengthId": 5,
       "PostType": 2
     },
-    "audienceId": 25,
-    "isProprietary": false
+    "audienceId": 25
   }
 }

@@ -180,7 +180,6 @@
       "SpotLengthId": 5,
       "PostType": 1
     },
-    "audienceId": 25,
-    "isProprietary": false
+    "audienceId": 25
   }
 }

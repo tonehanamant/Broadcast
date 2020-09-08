@@ -53,8 +53,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     plan, 
                     new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic,
-                    isProprietary: false);
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -92,8 +91,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         plan,
                         new ProgramInventoryOptionalParametersDto(),
                         _GetAvailableInventorySources(),
-                        diagnostic,
-                        isProprietary: false);
+                        diagnostic);
 
                     var jsonResolver = new IgnorableSerializerContractResolver();
                     jsonResolver.Ignore(typeof(PlanPricingInventoryProgram), "ManifestId");
@@ -128,8 +126,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     plan, 
                     new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic,
-                    isProprietary: false);
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -225,8 +222,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     plan,
                     new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic,
-                    isProprietary: false);
+                    diagnostic);
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingInventoryProgram), "ManifestId");
@@ -259,8 +255,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     plan,
                     new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic,
-                    isProprietary: false);
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -279,8 +274,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     plan, 
                     new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic,
-                    isProprietary: false);
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -307,8 +301,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     plan,
                     new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic,
-                    isProprietary: false);
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -344,8 +337,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     plan,
                     new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic,
-                    isProprietary: false);
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -368,8 +360,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     plan,
                     new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic,
-                    isProprietary: false);
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -388,8 +379,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     plan, 
                     new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic,
-                    isProprietary: false);
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }

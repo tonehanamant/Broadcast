@@ -15,13 +15,13 @@ namespace Services.Broadcast.BusinessEngines
         void ApplyProjectedImpressions(
             IEnumerable<PlanPricingInventoryProgram> programs, 
             ImpressionsRequestDto impressionsRequest, 
-            int audienceId, 
-            bool isProprietary);
+            int audienceId);
+
         void ApplyProjectedImpressions(
             IEnumerable<PlanBuyingInventoryProgram> programs,
             ImpressionsRequestDto impressionsRequest,
-            int audienceId,
-            bool isProprietary);
+            int audienceId);
+
         void ApplyProvidedImpressions(List<PlanPricingInventoryProgram> programs, int audienceId, int spotLengthId, bool equivalized);
 
         void ApplyProvidedImpressions(List<PlanBuyingInventoryProgram> programs, int audienceId, int spotLengthId, bool equivalized);
@@ -107,12 +107,10 @@ namespace Services.Broadcast.BusinessEngines
         public void ApplyProjectedImpressions(
             IEnumerable<PlanPricingInventoryProgram> programs, 
             ImpressionsRequestDto impressionsRequest, 
-            int audienceId,
-            bool isProprietary)
+            int audienceId)
         {
             var impressionRequests = new List<ManifestDetailDaypart>();
             var manifestDaypartImpressions = new Dictionary<int, double>();
-            var manifestDaypartSpotLengthIds = new Dictionary<int, int>();
 
             foreach (var program in programs)
             {
@@ -128,7 +126,6 @@ namespace Services.Broadcast.BusinessEngines
                     impressionRequests.Add(stationDaypart);
 
                     manifestDaypartImpressions[manifestDaypart.Id] = 0;
-                    manifestDaypartSpotLengthIds[manifestDaypart.Id] = program.SpotLengthId;
                 }
             }
 
@@ -139,7 +136,7 @@ namespace Services.Broadcast.BusinessEngines
                     }).Select(r => r.rating_audience_id).Distinct().ToList();
 
             var programImpressions = _GetImpressions(impressionsRequest, ratingAudiences, impressionRequests);
-            _AdjustImpressions(impressionsRequest, programImpressions, manifestDaypartSpotLengthIds, isProprietary);
+            _AdjustImpressions(impressionsRequest, programImpressions);
 
             foreach (var programImpression in programImpressions)
             {
@@ -165,12 +162,10 @@ namespace Services.Broadcast.BusinessEngines
         public void ApplyProjectedImpressions(
             IEnumerable<PlanBuyingInventoryProgram> programs,
             ImpressionsRequestDto impressionsRequest,
-            int audienceId,
-            bool isProprietary)
+            int audienceId)
         {
             var impressionRequests = new List<ManifestDetailDaypart>();
             var manifestDaypartImpressions = new Dictionary<int, double>();
-            var manifestDaypartSpotLengthIds = new Dictionary<int, int>();
 
             foreach (var program in programs)
             {
@@ -186,7 +181,6 @@ namespace Services.Broadcast.BusinessEngines
                     impressionRequests.Add(stationDaypart);
 
                     manifestDaypartImpressions[manifestDaypart.Id] = 0;
-                    manifestDaypartSpotLengthIds[manifestDaypart.Id] = program.SpotLengthId;
                 }
             }
 
@@ -197,7 +191,7 @@ namespace Services.Broadcast.BusinessEngines
                     }).Select(r => r.rating_audience_id).Distinct().ToList();
 
             var programImpressions = _GetImpressions(impressionsRequest, ratingAudiences, impressionRequests);
-            _AdjustImpressions(impressionsRequest, programImpressions, manifestDaypartSpotLengthIds, isProprietary);
+            _AdjustImpressions(impressionsRequest, programImpressions);
 
             foreach (var programImpression in programImpressions)
             {
@@ -291,33 +285,6 @@ namespace Services.Broadcast.BusinessEngines
                         });
                     }
                 }
-            }
-        }
-
-        private void _AdjustImpressions(
-            ImpressionsRequestDto impressionsRequest,
-            List<StationImpressionsWithAudience> programImpressions,
-            Dictionary<int, int> programSpotLengthIds,
-            bool isProprietary)
-        {
-            var ratingAdjustmentMonth = impressionsRequest.HutProjectionBookId ?? impressionsRequest.ShareProjectionBookId.Value;
-
-            foreach (var program in programImpressions)
-            {
-                // for Proprietary we always use the spot length, inventory has been uploaded with
-                // for OpenMarket
-                // if pricing version is 2, we use the first SpotLengthId from a plan
-                // if pricing version is 3, SpotLengthId does not matter because we do not do the equivalization, it`s done by the DS endpoint
-                var spotLengthId = isProprietary ? programSpotLengthIds[program.Id] : impressionsRequest.SpotLengthId;
-                var spotLength = _SpotLengthEngine.GetSpotLengthValueById(spotLengthId);
-
-                program.Impressions = _ImpressionAdjustmentEngine.AdjustImpression(
-                    program.Impressions,
-                    impressionsRequest.Equivalized,
-                    spotLength,
-                    impressionsRequest.PostType,
-                    ratingAdjustmentMonth,
-                    applyAnnualAdjustment: false);
             }
         }
 

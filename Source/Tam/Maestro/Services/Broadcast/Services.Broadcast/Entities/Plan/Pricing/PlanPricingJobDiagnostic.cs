@@ -12,8 +12,6 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public static string SW_KEY_TOTAL_DURATION = "Total duration";
         public static string SW_KEY_SETTING_JOB_STATUS_TO_PROCESSING = "Setting job status to Processing";
         public static string SW_KEY_FETCHING_PLAN_AND_PARAMETERS = "Fetching plan and parameters";
-        public static string SW_KEY_CALCULATING_INVENTORY_SOURCE_ESTIMATES = "Calculating inventory source estimates";
-        public static string SW_KEY_SAVING_INVENTORY_SOURCE_ESTIMATES = "Saving inventory source estimates";
 
         public static string SW_KEY_GATHERING_INVENTORY = "Gathering inventory";
         public static string SW_KEY_CALCULATING_FLIGHT_DATE_RANGES_AND_FLIGHT_DAYS = "Gathering inventory -> Calculating flight date ranges and flight days";
@@ -32,9 +30,10 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public static string SW_KEY_APPLYING_PROVIDED_IMPRESSIONS = "Gathering inventory -> Applying provided impressions";
         public static string SW_KEY_APPLYING_NTI_CONVERSION_TO_NSI = "Gathering inventory -> Applying NTI conversion to NSI";
         public static string SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM = "Gathering inventory -> Filtering out inventory by min and max CPM";
-        
+
+        public static string SW_KEY_CALCULATING_PROPRIETARY_DATA = "Calculating proprietary data";
+        public static string SW_KEY_APPLYING_PROPRIETARY_DATA = "Applying proprietary data";
         public static string SW_KEY_PREPARING_API_REQUEST = "Preparing API request";
-        public static string SW_KEY_SAVING_PRICING_PARAMETERS = "Saving pricing parameters";
         public static string SW_KEY_CALLING_API = "Calling API";
         public static string SW_KEY_MAPPING_ALLOCATED_SPOTS = "Mapping allocated spots";
         public static string SW_KEY_CALCULATING_PRICING_CPM = "Calculating pricing CPM";

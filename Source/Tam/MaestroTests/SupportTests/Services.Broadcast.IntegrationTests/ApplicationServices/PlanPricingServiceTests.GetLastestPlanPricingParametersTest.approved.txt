@@ -1973,44 +1973,6 @@
     "DeliveryImpressions": 20000.0,
     "DeliveryRatingPoints": 1234.0,
     "InflationFactor": 0.5,
-    "InventorySourcePercentages": [
-      {
-        "Id": 10,
-        "Name": "ABC O&O",
-        "Percentage": 16
-      },
-      {
-        "Id": 5,
-        "Name": "CNN",
-        "Percentage": 13
-      },
-      {
-        "Id": 12,
-        "Name": "KATZ",
-        "Percentage": 8
-      },
-      {
-        "Id": 7,
-        "Name": "LilaMax",
-        "Percentage": 15
-      },
-      {
-        "Id": 11,
-        "Name": "NBC O&O",
-        "Percentage": 17
-      },
-      {
-        "Id": 6,
-        "Name": "Sinclair",
-        "Percentage": 14
-      },
-      {
-        "Id": 3,
-        "Name": "TVB",
-        "Percentage": 12
-      }
-    ],
-    "InventorySourceTypePercentages": [],
     "Margin": null,
     "MarketGroup": 5,
     "MaxCpm": 35.0000,
@@ -2018,6 +1980,7 @@
     "PlanId": 1849,
     "PlanVersionId": 7236,
     "ProprietaryBlend": 0.2,
+    "ProprietaryInventory": [],
     "UnitCaps": 10,
     "UnitCapsType": 4
   },

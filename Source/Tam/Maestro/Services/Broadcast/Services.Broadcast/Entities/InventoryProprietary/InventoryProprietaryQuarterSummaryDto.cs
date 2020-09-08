@@ -14,14 +14,9 @@ namespace Services.Broadcast.Entities.InventoryProprietary
         public int SlotNumber { get; set; }
         public int ProprietaryDaypartProgramMappingId { get; set; }
         public List<InventoryProprietarySummaryAudiencesDto> Audiences { get; set; }
-		public List<InventoryProprietarySummaryMarketDto> Markets { get; set; }
-    }
-
-	public class InventoryProprietarySummaryMarketDto
-	{
-		public Int16 MarketCode { get; set; }
-		public double MarketCoverage { get; set; }
+		public List<InventoryProprietarySummaryByMarketByAudience> SummaryByMarketByAudience { get; set; }
 	}
+
 
 	public class InventoryProprietarySummaryAudiencesDto
 	{

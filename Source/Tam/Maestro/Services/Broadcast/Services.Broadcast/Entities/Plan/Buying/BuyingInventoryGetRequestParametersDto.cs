@@ -1,5 +1,4 @@
 ﻿using Services.Broadcast.Entities.Enums;
-using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.Plan.Buying
 {
@@ -10,8 +9,6 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public decimal? MaxCpm { get; set; }
 
         public double? InflationFactor { get; set; }
-
-        public List<int> InventorySourceIds { get; set; } = new List<int>();
 
         public double Margin { get; set; }
 

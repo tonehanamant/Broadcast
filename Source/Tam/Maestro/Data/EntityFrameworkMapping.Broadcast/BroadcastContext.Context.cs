@@ -140,7 +140,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_daypart_show_type_restrictions> plan_version_daypart_show_type_restrictions { get; set; }
         public virtual DbSet<plan_version_daypart_genre_restrictions> plan_version_daypart_genre_restrictions { get; set; }
         public virtual DbSet<plan_version_daypart_program_restrictions> plan_version_daypart_program_restrictions { get; set; }
-        public virtual DbSet<plan_version_pricing_parameters_inventory_source_percentages> plan_version_pricing_parameters_inventory_source_percentages { get; set; }
         public virtual DbSet<affiliate> affiliates { get; set; }
         public virtual DbSet<plan_version_daypart_affiliate_restrictions> plan_version_daypart_affiliate_restrictions { get; set; }
         public virtual DbSet<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
@@ -150,7 +149,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<scx_generation_jobs> scx_generation_jobs { get; set; }
         public virtual DbSet<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
         public virtual DbSet<daypart_defaults> daypart_defaults { get; set; }
-        public virtual DbSet<plan_version_pricing_parameters_inventory_source_type_percentages> plan_version_pricing_parameters_inventory_source_type_percentages { get; set; }
         public virtual DbSet<inventory_summary> inventory_summary { get; set; }
         public virtual DbSet<inventory_summary_gap_ranges> inventory_summary_gap_ranges { get; set; }
         public virtual DbSet<inventory_summary_gaps> inventory_summary_gaps { get; set; }
@@ -174,7 +172,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_flight_days> plan_version_flight_days { get; set; }
         public virtual DbSet<station_mappings> station_mappings { get; set; }
         public virtual DbSet<station_month_details> station_month_details { get; set; }
-        public virtual DbSet<plan_version_pricing_job_inventory_source_estimates> plan_version_pricing_job_inventory_source_estimates { get; set; }
         public virtual DbSet<plan_versions> plan_versions { get; set; }
         public virtual DbSet<plan_version_creative_lengths> plan_version_creative_lengths { get; set; }
         public virtual DbSet<program_name_mappings> program_name_mappings { get; set; }
@@ -202,16 +199,12 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_pricing_job> plan_version_pricing_job { get; set; }
         public virtual DbSet<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
         public virtual DbSet<inventory_proprietary_summary_audiences> inventory_proprietary_summary_audiences { get; set; }
-        public virtual DbSet<inventory_proprietary_summary_markets> inventory_proprietary_summary_markets { get; set; }
         public virtual DbSet<plan_version_buying_api_result_spot_frequencies> plan_version_buying_api_result_spot_frequencies { get; set; }
         public virtual DbSet<plan_version_buying_api_result_spots> plan_version_buying_api_result_spots { get; set; }
         public virtual DbSet<plan_version_buying_api_results> plan_version_buying_api_results { get; set; }
         public virtual DbSet<plan_version_buying_band_details> plan_version_buying_band_details { get; set; }
         public virtual DbSet<plan_version_buying_job> plan_version_buying_job { get; set; }
-        public virtual DbSet<plan_version_buying_job_inventory_source_estimates> plan_version_buying_job_inventory_source_estimates { get; set; }
         public virtual DbSet<plan_version_buying_parameters> plan_version_buying_parameters { get; set; }
-        public virtual DbSet<plan_version_buying_parameters_inventory_source_percentages> plan_version_buying_parameters_inventory_source_percentages { get; set; }
-        public virtual DbSet<plan_version_buying_parameters_inventory_source_type_percentages> plan_version_buying_parameters_inventory_source_type_percentages { get; set; }
         public virtual DbSet<plan_version_buying_result_spots> plan_version_buying_result_spots { get; set; }
         public virtual DbSet<plan_version_buying_station_details> plan_version_buying_station_details { get; set; }
         public virtual DbSet<program_name_mapping_keywords> program_name_mapping_keywords { get; set; }
@@ -224,5 +217,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station> stations { get; set; }
         public virtual DbSet<inventory_proprietary_daypart_programs> inventory_proprietary_daypart_programs { get; set; }
         public virtual DbSet<inventory_proprietary_summary> inventory_proprietary_summary { get; set; }
+        public virtual DbSet<inventory_proprietary_summary_audience_markets> inventory_proprietary_summary_audience_markets { get; set; }
+        public virtual DbSet<plan_version_buying_parameter_inventory_proprietary_summaries> plan_version_buying_parameter_inventory_proprietary_summaries { get; set; }
+        public virtual DbSet<plan_version_pricing_parameter_inventory_proprietary_summaries> plan_version_pricing_parameter_inventory_proprietary_summaries { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 {
   "contract": [
     {
-      "cpm_goal": 0.16000,
+      "cpm_goal": 1.0000,
       "daypart_weighting": [
         {
           "daypart_goal": 1.0,
@@ -11,9 +11,401 @@
       "frequency_cap_spots": 10,
       "frequency_cap_time": 1.0,
       "frequency_cap_unit": "day",
-      "impression_goal": 10000000.0,
-      "market_coverage_goal": 0.805,
+      "impression_goal": 9998138.0,
+      "market_coverage_goal": 0.0,
       "share_of_voice": [
+        {
+          "market_code": 403,
+          "market_goal": 0.04743
+        },
+        {
+          "market_code": 202,
+          "market_goal": 0.02942
+        },
+        {
+          "market_code": 104,
+          "market_goal": 0.02559
+        },
+        {
+          "market_code": 223,
+          "market_goal": 0.02362
+        },
+        {
+          "market_code": 111,
+          "market_goal": 0.02222
+        },
+        {
+          "market_code": 218,
+          "market_goal": 0.022
+        },
+        {
+          "market_code": 407,
+          "market_goal": 0.02186
+        },
+        {
+          "market_code": 124,
+          "market_goal": 0.02184
+        },
+        {
+          "market_code": 106,
+          "market_goal": 0.02163
+        },
+        {
+          "market_code": 353,
+          "market_goal": 0.01712
+        },
+        {
+          "market_code": 419,
+          "market_goal": 0.01677
+        },
+        {
+          "market_code": 139,
+          "market_goal": 0.01676
+        },
+        {
+          "market_code": 105,
+          "market_goal": 0.01587
+        },
+        {
+          "market_code": 213,
+          "market_goal": 0.01543
+        },
+        {
+          "market_code": 128,
+          "market_goal": 0.01496
+        },
+        {
+          "market_code": 351,
+          "market_goal": 0.01417
+        },
+        {
+          "market_code": 134,
+          "market_goal": 0.01360879
+        },
+        {
+          "market_code": 110,
+          "market_goal": 0.01291
+        },
+        {
+          "market_code": 462,
+          "market_goal": 0.0126
+        },
+        {
+          "market_code": 209,
+          "market_goal": 0.01061
+        },
+        {
+          "market_code": 420,
+          "market_goal": 0.01053
+        },
+        {
+          "market_code": 117,
+          "market_goal": 0.01021
+        },
+        {
+          "market_code": 108,
+          "market_goal": 0.01018
+        },
+        {
+          "market_code": 160,
+          "market_goal": 0.0101
+        },
+        {
+          "market_code": 112,
+          "market_goal": 0.00988
+        },
+        {
+          "market_code": 259,
+          "market_goal": 0.00919
+        },
+        {
+          "market_code": 127,
+          "market_goal": 0.00915
+        },
+        {
+          "market_code": 425,
+          "market_goal": 0.00894
+        },
+        {
+          "market_code": 370,
+          "market_goal": 0.00846
+        },
+        {
+          "market_code": 241,
+          "market_goal": 0.00824
+        },
+        {
+          "market_code": 133,
+          "market_goal": 0.00822
+        },
+        {
+          "market_code": 216,
+          "market_goal": 0.00803
+        },
+        {
+          "market_code": 135,
+          "market_goal": 0.008
+        },
+        {
+          "market_code": 115,
+          "market_goal": 0.00778
+        },
+        {
+          "market_code": 217,
+          "market_goal": 0.00774
+        },
+        {
+          "market_code": 148,
+          "market_goal": 0.00739
+        },
+        {
+          "market_code": 167,
+          "market_goal": 0.00722
+        },
+        {
+          "market_code": 235,
+          "market_goal": 0.00706
+        },
+        {
+          "market_code": 439,
+          "market_goal": 0.00675
+        },
+        {
+          "market_code": 250,
+          "market_goal": 0.00629
+        },
+        {
+          "market_code": 161,
+          "market_goal": 0.00625
+        },
+        {
+          "market_code": 163,
+          "market_goal": 0.00615
+        },
+        {
+          "market_code": 230,
+          "market_goal": 0.00613
+        },
+        {
+          "market_code": 166,
+          "market_goal": 0.00609
+        },
+        {
+          "market_code": 390,
+          "market_goal": 0.00602
+        },
+        {
+          "market_code": 144,
+          "market_goal": 0.00601
+        },
+        {
+          "market_code": 118,
+          "market_goal": 0.006
+        },
+        {
+          "market_code": 129,
+          "market_goal": 0.00586
+        },
+        {
+          "market_code": 240,
+          "market_goal": 0.00579
+        },
+        {
+          "market_code": 222,
+          "market_goal": 0.00569
+        },
+        {
+          "market_code": 121,
+          "market_goal": 0.00533
+        },
+        {
+          "market_code": 114,
+          "market_goal": 0.00529
+        },
+        {
+          "market_code": 466,
+          "market_goal": 0.00512
+        },
+        {
+          "market_code": 156,
+          "market_goal": 0.00506
+        },
+        {
+          "market_code": 171,
+          "market_goal": 0.0049
+        },
+        {
+          "market_code": 177,
+          "market_goal": 0.00467
+        },
+        {
+          "market_code": 293,
+          "market_goal": 0.00466
+        },
+        {
+          "market_code": 286,
+          "market_goal": 0.00466
+        },
+        {
+          "market_code": 132,
+          "market_goal": 0.00465
+        },
+        {
+          "market_code": 157,
+          "market_goal": 0.00461
+        },
+        {
+          "market_code": 271,
+          "market_goal": 0.00461
+        },
+        {
+          "market_code": 141,
+          "market_goal": 0.0041
+        },
+        {
+          "market_code": 142,
+          "market_goal": 0.00405
+        },
+        {
+          "market_code": 389,
+          "market_goal": 0.00386
+        },
+        {
+          "market_code": 344,
+          "market_goal": 0.00374
+        },
+        {
+          "market_code": 278,
+          "market_goal": 0.00371
+        },
+        {
+          "market_code": 279,
+          "market_goal": 0.00371
+        },
+        {
+          "market_code": 258,
+          "market_goal": 0.00371
+        },
+        {
+          "market_code": 173,
+          "market_goal": 0.0037
+        },
+        {
+          "market_code": 113,
+          "market_goal": 0.00367
+        },
+        {
+          "market_code": 481,
+          "market_goal": 0.00366
+        },
+        {
+          "market_code": 164,
+          "market_goal": 0.00362
+        },
+        {
+          "market_code": 252,
+          "market_goal": 0.00356
+        },
+        {
+          "market_code": 219,
+          "market_goal": 0.00348
+        },
+        {
+          "market_code": 138,
+          "market_goal": 0.00343
+        },
+        {
+          "market_code": 146,
+          "market_goal": 0.00343
+        },
+        {
+          "market_code": 147,
+          "market_goal": 0.00338
+        },
+        {
+          "market_code": 291,
+          "market_goal": 0.00328
+        },
+        {
+          "market_code": 269,
+          "market_goal": 0.00327
+        },
+        {
+          "market_code": 232,
+          "market_goal": 0.00316
+        },
+        {
+          "market_code": 212,
+          "market_goal": 0.00314
+        },
+        {
+          "market_code": 236,
+          "market_goal": 0.00314
+        },
+        {
+          "market_code": 155,
+          "market_goal": 0.00312
+        },
+        {
+          "market_code": 225,
+          "market_goal": 0.00309
+        },
+        {
+          "market_code": 352,
+          "market_goal": 0.00307
+        },
+        {
+          "market_code": 248,
+          "market_goal": 0.00307
+        },
+        {
+          "market_code": 175,
+          "market_goal": 0.003
+        },
+        {
+          "market_code": 107,
+          "market_goal": 0.00293
+        },
+        {
+          "market_code": 237,
+          "market_goal": 0.0029
+        },
+        {
+          "market_code": 119,
+          "market_goal": 0.00286
+        },
+        {
+          "market_code": 365,
+          "market_goal": 0.00284
+        },
+        {
+          "market_code": 316,
+          "market_goal": 0.00281
+        },
+        {
+          "market_code": 318,
+          "market_goal": 0.00273
+        },
+        {
+          "market_code": 188,
+          "market_goal": 0.00265
+        },
+        {
+          "market_code": 123,
+          "market_goal": 0.00262
+        },
+        {
+          "market_code": 270,
+          "market_goal": 0.00261
+        },
+        {
+          "market_code": 131,
+          "market_goal": 0.00259
+        },
+        {
+          "market_code": 145,
+          "market_goal": 0.00255
+        },
         {
           "market_code": 100,
           "market_goal": 0.222
@@ -26,7 +418,7 @@
       "week_id": 771
     },
     {
-      "cpm_goal": 0.16000,
+      "cpm_goal": 1.0000,
       "daypart_weighting": [
         {
           "daypart_goal": 1.0,
@@ -36,9 +428,401 @@
       "frequency_cap_spots": 10,
       "frequency_cap_time": 1.0,
       "frequency_cap_unit": "day",
-      "impression_goal": 10000000.0,
-      "market_coverage_goal": 0.805,
+      "impression_goal": 9998138.0,
+      "market_coverage_goal": 0.0,
       "share_of_voice": [
+        {
+          "market_code": 403,
+          "market_goal": 0.04743
+        },
+        {
+          "market_code": 202,
+          "market_goal": 0.02942
+        },
+        {
+          "market_code": 104,
+          "market_goal": 0.02559
+        },
+        {
+          "market_code": 223,
+          "market_goal": 0.02362
+        },
+        {
+          "market_code": 111,
+          "market_goal": 0.02222
+        },
+        {
+          "market_code": 218,
+          "market_goal": 0.022
+        },
+        {
+          "market_code": 407,
+          "market_goal": 0.02186
+        },
+        {
+          "market_code": 124,
+          "market_goal": 0.02184
+        },
+        {
+          "market_code": 106,
+          "market_goal": 0.02163
+        },
+        {
+          "market_code": 353,
+          "market_goal": 0.01712
+        },
+        {
+          "market_code": 419,
+          "market_goal": 0.01677
+        },
+        {
+          "market_code": 139,
+          "market_goal": 0.01676
+        },
+        {
+          "market_code": 105,
+          "market_goal": 0.01587
+        },
+        {
+          "market_code": 213,
+          "market_goal": 0.01543
+        },
+        {
+          "market_code": 128,
+          "market_goal": 0.01496
+        },
+        {
+          "market_code": 351,
+          "market_goal": 0.01417
+        },
+        {
+          "market_code": 134,
+          "market_goal": 0.01360879
+        },
+        {
+          "market_code": 110,
+          "market_goal": 0.01291
+        },
+        {
+          "market_code": 462,
+          "market_goal": 0.0126
+        },
+        {
+          "market_code": 209,
+          "market_goal": 0.01061
+        },
+        {
+          "market_code": 420,
+          "market_goal": 0.01053
+        },
+        {
+          "market_code": 117,
+          "market_goal": 0.01021
+        },
+        {
+          "market_code": 108,
+          "market_goal": 0.01018
+        },
+        {
+          "market_code": 160,
+          "market_goal": 0.0101
+        },
+        {
+          "market_code": 112,
+          "market_goal": 0.00988
+        },
+        {
+          "market_code": 259,
+          "market_goal": 0.00919
+        },
+        {
+          "market_code": 127,
+          "market_goal": 0.00915
+        },
+        {
+          "market_code": 425,
+          "market_goal": 0.00894
+        },
+        {
+          "market_code": 370,
+          "market_goal": 0.00846
+        },
+        {
+          "market_code": 241,
+          "market_goal": 0.00824
+        },
+        {
+          "market_code": 133,
+          "market_goal": 0.00822
+        },
+        {
+          "market_code": 216,
+          "market_goal": 0.00803
+        },
+        {
+          "market_code": 135,
+          "market_goal": 0.008
+        },
+        {
+          "market_code": 115,
+          "market_goal": 0.00778
+        },
+        {
+          "market_code": 217,
+          "market_goal": 0.00774
+        },
+        {
+          "market_code": 148,
+          "market_goal": 0.00739
+        },
+        {
+          "market_code": 167,
+          "market_goal": 0.00722
+        },
+        {
+          "market_code": 235,
+          "market_goal": 0.00706
+        },
+        {
+          "market_code": 439,
+          "market_goal": 0.00675
+        },
+        {
+          "market_code": 250,
+          "market_goal": 0.00629
+        },
+        {
+          "market_code": 161,
+          "market_goal": 0.00625
+        },
+        {
+          "market_code": 163,
+          "market_goal": 0.00615
+        },
+        {
+          "market_code": 230,
+          "market_goal": 0.00613
+        },
+        {
+          "market_code": 166,
+          "market_goal": 0.00609
+        },
+        {
+          "market_code": 390,
+          "market_goal": 0.00602
+        },
+        {
+          "market_code": 144,
+          "market_goal": 0.00601
+        },
+        {
+          "market_code": 118,
+          "market_goal": 0.006
+        },
+        {
+          "market_code": 129,
+          "market_goal": 0.00586
+        },
+        {
+          "market_code": 240,
+          "market_goal": 0.00579
+        },
+        {
+          "market_code": 222,
+          "market_goal": 0.00569
+        },
+        {
+          "market_code": 121,
+          "market_goal": 0.00533
+        },
+        {
+          "market_code": 114,
+          "market_goal": 0.00529
+        },
+        {
+          "market_code": 466,
+          "market_goal": 0.00512
+        },
+        {
+          "market_code": 156,
+          "market_goal": 0.00506
+        },
+        {
+          "market_code": 171,
+          "market_goal": 0.0049
+        },
+        {
+          "market_code": 177,
+          "market_goal": 0.00467
+        },
+        {
+          "market_code": 293,
+          "market_goal": 0.00466
+        },
+        {
+          "market_code": 286,
+          "market_goal": 0.00466
+        },
+        {
+          "market_code": 132,
+          "market_goal": 0.00465
+        },
+        {
+          "market_code": 157,
+          "market_goal": 0.00461
+        },
+        {
+          "market_code": 271,
+          "market_goal": 0.00461
+        },
+        {
+          "market_code": 141,
+          "market_goal": 0.0041
+        },
+        {
+          "market_code": 142,
+          "market_goal": 0.00405
+        },
+        {
+          "market_code": 389,
+          "market_goal": 0.00386
+        },
+        {
+          "market_code": 344,
+          "market_goal": 0.00374
+        },
+        {
+          "market_code": 278,
+          "market_goal": 0.00371
+        },
+        {
+          "market_code": 279,
+          "market_goal": 0.00371
+        },
+        {
+          "market_code": 258,
+          "market_goal": 0.00371
+        },
+        {
+          "market_code": 173,
+          "market_goal": 0.0037
+        },
+        {
+          "market_code": 113,
+          "market_goal": 0.00367
+        },
+        {
+          "market_code": 481,
+          "market_goal": 0.00366
+        },
+        {
+          "market_code": 164,
+          "market_goal": 0.00362
+        },
+        {
+          "market_code": 252,
+          "market_goal": 0.00356
+        },
+        {
+          "market_code": 219,
+          "market_goal": 0.00348
+        },
+        {
+          "market_code": 138,
+          "market_goal": 0.00343
+        },
+        {
+          "market_code": 146,
+          "market_goal": 0.00343
+        },
+        {
+          "market_code": 147,
+          "market_goal": 0.00338
+        },
+        {
+          "market_code": 291,
+          "market_goal": 0.00328
+        },
+        {
+          "market_code": 269,
+          "market_goal": 0.00327
+        },
+        {
+          "market_code": 232,
+          "market_goal": 0.00316
+        },
+        {
+          "market_code": 212,
+          "market_goal": 0.00314
+        },
+        {
+          "market_code": 236,
+          "market_goal": 0.00314
+        },
+        {
+          "market_code": 155,
+          "market_goal": 0.00312
+        },
+        {
+          "market_code": 225,
+          "market_goal": 0.00309
+        },
+        {
+          "market_code": 352,
+          "market_goal": 0.00307
+        },
+        {
+          "market_code": 248,
+          "market_goal": 0.00307
+        },
+        {
+          "market_code": 175,
+          "market_goal": 0.003
+        },
+        {
+          "market_code": 107,
+          "market_goal": 0.00293
+        },
+        {
+          "market_code": 237,
+          "market_goal": 0.0029
+        },
+        {
+          "market_code": 119,
+          "market_goal": 0.00286
+        },
+        {
+          "market_code": 365,
+          "market_goal": 0.00284
+        },
+        {
+          "market_code": 316,
+          "market_goal": 0.00281
+        },
+        {
+          "market_code": 318,
+          "market_goal": 0.00273
+        },
+        {
+          "market_code": 188,
+          "market_goal": 0.00265
+        },
+        {
+          "market_code": 123,
+          "market_goal": 0.00262
+        },
+        {
+          "market_code": 270,
+          "market_goal": 0.00261
+        },
+        {
+          "market_code": 131,
+          "market_goal": 0.00259
+        },
+        {
+          "market_code": 145,
+          "market_goal": 0.00255
+        },
         {
           "market_code": 100,
           "market_goal": 0.222
@@ -51,7 +835,7 @@
       "week_id": 772
     },
     {
-      "cpm_goal": 0.16000,
+      "cpm_goal": 1.0000,
       "daypart_weighting": [
         {
           "daypart_goal": 1.0,
@@ -61,9 +845,401 @@
       "frequency_cap_spots": 10,
       "frequency_cap_time": 1.0,
       "frequency_cap_unit": "day",
-      "impression_goal": 10000000.0,
-      "market_coverage_goal": 0.805,
+      "impression_goal": 9998138.0,
+      "market_coverage_goal": 0.0,
       "share_of_voice": [
+        {
+          "market_code": 403,
+          "market_goal": 0.04743
+        },
+        {
+          "market_code": 202,
+          "market_goal": 0.02942
+        },
+        {
+          "market_code": 104,
+          "market_goal": 0.02559
+        },
+        {
+          "market_code": 223,
+          "market_goal": 0.02362
+        },
+        {
+          "market_code": 111,
+          "market_goal": 0.02222
+        },
+        {
+          "market_code": 218,
+          "market_goal": 0.022
+        },
+        {
+          "market_code": 407,
+          "market_goal": 0.02186
+        },
+        {
+          "market_code": 124,
+          "market_goal": 0.02184
+        },
+        {
+          "market_code": 106,
+          "market_goal": 0.02163
+        },
+        {
+          "market_code": 353,
+          "market_goal": 0.01712
+        },
+        {
+          "market_code": 419,
+          "market_goal": 0.01677
+        },
+        {
+          "market_code": 139,
+          "market_goal": 0.01676
+        },
+        {
+          "market_code": 105,
+          "market_goal": 0.01587
+        },
+        {
+          "market_code": 213,
+          "market_goal": 0.01543
+        },
+        {
+          "market_code": 128,
+          "market_goal": 0.01496
+        },
+        {
+          "market_code": 351,
+          "market_goal": 0.01417
+        },
+        {
+          "market_code": 134,
+          "market_goal": 0.01360879
+        },
+        {
+          "market_code": 110,
+          "market_goal": 0.01291
+        },
+        {
+          "market_code": 462,
+          "market_goal": 0.0126
+        },
+        {
+          "market_code": 209,
+          "market_goal": 0.01061
+        },
+        {
+          "market_code": 420,
+          "market_goal": 0.01053
+        },
+        {
+          "market_code": 117,
+          "market_goal": 0.01021
+        },
+        {
+          "market_code": 108,
+          "market_goal": 0.01018
+        },
+        {
+          "market_code": 160,
+          "market_goal": 0.0101
+        },
+        {
+          "market_code": 112,
+          "market_goal": 0.00988
+        },
+        {
+          "market_code": 259,
+          "market_goal": 0.00919
+        },
+        {
+          "market_code": 127,
+          "market_goal": 0.00915
+        },
+        {
+          "market_code": 425,
+          "market_goal": 0.00894
+        },
+        {
+          "market_code": 370,
+          "market_goal": 0.00846
+        },
+        {
+          "market_code": 241,
+          "market_goal": 0.00824
+        },
+        {
+          "market_code": 133,
+          "market_goal": 0.00822
+        },
+        {
+          "market_code": 216,
+          "market_goal": 0.00803
+        },
+        {
+          "market_code": 135,
+          "market_goal": 0.008
+        },
+        {
+          "market_code": 115,
+          "market_goal": 0.00778
+        },
+        {
+          "market_code": 217,
+          "market_goal": 0.00774
+        },
+        {
+          "market_code": 148,
+          "market_goal": 0.00739
+        },
+        {
+          "market_code": 167,
+          "market_goal": 0.00722
+        },
+        {
+          "market_code": 235,
+          "market_goal": 0.00706
+        },
+        {
+          "market_code": 439,
+          "market_goal": 0.00675
+        },
+        {
+          "market_code": 250,
+          "market_goal": 0.00629
+        },
+        {
+          "market_code": 161,
+          "market_goal": 0.00625
+        },
+        {
+          "market_code": 163,
+          "market_goal": 0.00615
+        },
+        {
+          "market_code": 230,
+          "market_goal": 0.00613
+        },
+        {
+          "market_code": 166,
+          "market_goal": 0.00609
+        },
+        {
+          "market_code": 390,
+          "market_goal": 0.00602
+        },
+        {
+          "market_code": 144,
+          "market_goal": 0.00601
+        },
+        {
+          "market_code": 118,
+          "market_goal": 0.006
+        },
+        {
+          "market_code": 129,
+          "market_goal": 0.00586
+        },
+        {
+          "market_code": 240,
+          "market_goal": 0.00579
+        },
+        {
+          "market_code": 222,
+          "market_goal": 0.00569
+        },
+        {
+          "market_code": 121,
+          "market_goal": 0.00533
+        },
+        {
+          "market_code": 114,
+          "market_goal": 0.00529
+        },
+        {
+          "market_code": 466,
+          "market_goal": 0.00512
+        },
+        {
+          "market_code": 156,
+          "market_goal": 0.00506
+        },
+        {
+          "market_code": 171,
+          "market_goal": 0.0049
+        },
+        {
+          "market_code": 177,
+          "market_goal": 0.00467
+        },
+        {
+          "market_code": 293,
+          "market_goal": 0.00466
+        },
+        {
+          "market_code": 286,
+          "market_goal": 0.00466
+        },
+        {
+          "market_code": 132,
+          "market_goal": 0.00465
+        },
+        {
+          "market_code": 157,
+          "market_goal": 0.00461
+        },
+        {
+          "market_code": 271,
+          "market_goal": 0.00461
+        },
+        {
+          "market_code": 141,
+          "market_goal": 0.0041
+        },
+        {
+          "market_code": 142,
+          "market_goal": 0.00405
+        },
+        {
+          "market_code": 389,
+          "market_goal": 0.00386
+        },
+        {
+          "market_code": 344,
+          "market_goal": 0.00374
+        },
+        {
+          "market_code": 278,
+          "market_goal": 0.00371
+        },
+        {
+          "market_code": 279,
+          "market_goal": 0.00371
+        },
+        {
+          "market_code": 258,
+          "market_goal": 0.00371
+        },
+        {
+          "market_code": 173,
+          "market_goal": 0.0037
+        },
+        {
+          "market_code": 113,
+          "market_goal": 0.00367
+        },
+        {
+          "market_code": 481,
+          "market_goal": 0.00366
+        },
+        {
+          "market_code": 164,
+          "market_goal": 0.00362
+        },
+        {
+          "market_code": 252,
+          "market_goal": 0.00356
+        },
+        {
+          "market_code": 219,
+          "market_goal": 0.00348
+        },
+        {
+          "market_code": 138,
+          "market_goal": 0.00343
+        },
+        {
+          "market_code": 146,
+          "market_goal": 0.00343
+        },
+        {
+          "market_code": 147,
+          "market_goal": 0.00338
+        },
+        {
+          "market_code": 291,
+          "market_goal": 0.00328
+        },
+        {
+          "market_code": 269,
+          "market_goal": 0.00327
+        },
+        {
+          "market_code": 232,
+          "market_goal": 0.00316
+        },
+        {
+          "market_code": 212,
+          "market_goal": 0.00314
+        },
+        {
+          "market_code": 236,
+          "market_goal": 0.00314
+        },
+        {
+          "market_code": 155,
+          "market_goal": 0.00312
+        },
+        {
+          "market_code": 225,
+          "market_goal": 0.00309
+        },
+        {
+          "market_code": 352,
+          "market_goal": 0.00307
+        },
+        {
+          "market_code": 248,
+          "market_goal": 0.00307
+        },
+        {
+          "market_code": 175,
+          "market_goal": 0.003
+        },
+        {
+          "market_code": 107,
+          "market_goal": 0.00293
+        },
+        {
+          "market_code": 237,
+          "market_goal": 0.0029
+        },
+        {
+          "market_code": 119,
+          "market_goal": 0.00286
+        },
+        {
+          "market_code": 365,
+          "market_goal": 0.00284
+        },
+        {
+          "market_code": 316,
+          "market_goal": 0.00281
+        },
+        {
+          "market_code": 318,
+          "market_goal": 0.00273
+        },
+        {
+          "market_code": 188,
+          "market_goal": 0.00265
+        },
+        {
+          "market_code": 123,
+          "market_goal": 0.00262
+        },
+        {
+          "market_code": 270,
+          "market_goal": 0.00261
+        },
+        {
+          "market_code": 131,
+          "market_goal": 0.00259
+        },
+        {
+          "market_code": 145,
+          "market_goal": 0.00255
+        },
         {
           "market_code": 100,
           "market_goal": 0.222
@@ -76,7 +1252,7 @@
       "week_id": 773
     },
     {
-      "cpm_goal": 0.16000,
+      "cpm_goal": 1.0000,
       "daypart_weighting": [
         {
           "daypart_goal": 1.0,
@@ -86,9 +1262,401 @@
       "frequency_cap_spots": 10,
       "frequency_cap_time": 1.0,
       "frequency_cap_unit": "day",
-      "impression_goal": 10000000.0,
-      "market_coverage_goal": 0.805,
+      "impression_goal": 9998138.0,
+      "market_coverage_goal": 0.0,
       "share_of_voice": [
+        {
+          "market_code": 403,
+          "market_goal": 0.04743
+        },
+        {
+          "market_code": 202,
+          "market_goal": 0.02942
+        },
+        {
+          "market_code": 104,
+          "market_goal": 0.02559
+        },
+        {
+          "market_code": 223,
+          "market_goal": 0.02362
+        },
+        {
+          "market_code": 111,
+          "market_goal": 0.02222
+        },
+        {
+          "market_code": 218,
+          "market_goal": 0.022
+        },
+        {
+          "market_code": 407,
+          "market_goal": 0.02186
+        },
+        {
+          "market_code": 124,
+          "market_goal": 0.02184
+        },
+        {
+          "market_code": 106,
+          "market_goal": 0.02163
+        },
+        {
+          "market_code": 353,
+          "market_goal": 0.01712
+        },
+        {
+          "market_code": 419,
+          "market_goal": 0.01677
+        },
+        {
+          "market_code": 139,
+          "market_goal": 0.01676
+        },
+        {
+          "market_code": 105,
+          "market_goal": 0.01587
+        },
+        {
+          "market_code": 213,
+          "market_goal": 0.01543
+        },
+        {
+          "market_code": 128,
+          "market_goal": 0.01496
+        },
+        {
+          "market_code": 351,
+          "market_goal": 0.01417
+        },
+        {
+          "market_code": 134,
+          "market_goal": 0.01360879
+        },
+        {
+          "market_code": 110,
+          "market_goal": 0.01291
+        },
+        {
+          "market_code": 462,
+          "market_goal": 0.0126
+        },
+        {
+          "market_code": 209,
+          "market_goal": 0.01061
+        },
+        {
+          "market_code": 420,
+          "market_goal": 0.01053
+        },
+        {
+          "market_code": 117,
+          "market_goal": 0.01021
+        },
+        {
+          "market_code": 108,
+          "market_goal": 0.01018
+        },
+        {
+          "market_code": 160,
+          "market_goal": 0.0101
+        },
+        {
+          "market_code": 112,
+          "market_goal": 0.00988
+        },
+        {
+          "market_code": 259,
+          "market_goal": 0.00919
+        },
+        {
+          "market_code": 127,
+          "market_goal": 0.00915
+        },
+        {
+          "market_code": 425,
+          "market_goal": 0.00894
+        },
+        {
+          "market_code": 370,
+          "market_goal": 0.00846
+        },
+        {
+          "market_code": 241,
+          "market_goal": 0.00824
+        },
+        {
+          "market_code": 133,
+          "market_goal": 0.00822
+        },
+        {
+          "market_code": 216,
+          "market_goal": 0.00803
+        },
+        {
+          "market_code": 135,
+          "market_goal": 0.008
+        },
+        {
+          "market_code": 115,
+          "market_goal": 0.00778
+        },
+        {
+          "market_code": 217,
+          "market_goal": 0.00774
+        },
+        {
+          "market_code": 148,
+          "market_goal": 0.00739
+        },
+        {
+          "market_code": 167,
+          "market_goal": 0.00722
+        },
+        {
+          "market_code": 235,
+          "market_goal": 0.00706
+        },
+        {
+          "market_code": 439,
+          "market_goal": 0.00675
+        },
+        {
+          "market_code": 250,
+          "market_goal": 0.00629
+        },
+        {
+          "market_code": 161,
+          "market_goal": 0.00625
+        },
+        {
+          "market_code": 163,
+          "market_goal": 0.00615
+        },
+        {
+          "market_code": 230,
+          "market_goal": 0.00613
+        },
+        {
+          "market_code": 166,
+          "market_goal": 0.00609
+        },
+        {
+          "market_code": 390,
+          "market_goal": 0.00602
+        },
+        {
+          "market_code": 144,
+          "market_goal": 0.00601
+        },
+        {
+          "market_code": 118,
+          "market_goal": 0.006
+        },
+        {
+          "market_code": 129,
+          "market_goal": 0.00586
+        },
+        {
+          "market_code": 240,
+          "market_goal": 0.00579
+        },
+        {
+          "market_code": 222,
+          "market_goal": 0.00569
+        },
+        {
+          "market_code": 121,
+          "market_goal": 0.00533
+        },
+        {
+          "market_code": 114,
+          "market_goal": 0.00529
+        },
+        {
+          "market_code": 466,
+          "market_goal": 0.00512
+        },
+        {
+          "market_code": 156,
+          "market_goal": 0.00506
+        },
+        {
+          "market_code": 171,
+          "market_goal": 0.0049
+        },
+        {
+          "market_code": 177,
+          "market_goal": 0.00467
+        },
+        {
+          "market_code": 293,
+          "market_goal": 0.00466
+        },
+        {
+          "market_code": 286,
+          "market_goal": 0.00466
+        },
+        {
+          "market_code": 132,
+          "market_goal": 0.00465
+        },
+        {
+          "market_code": 157,
+          "market_goal": 0.00461
+        },
+        {
+          "market_code": 271,
+          "market_goal": 0.00461
+        },
+        {
+          "market_code": 141,
+          "market_goal": 0.0041
+        },
+        {
+          "market_code": 142,
+          "market_goal": 0.00405
+        },
+        {
+          "market_code": 389,
+          "market_goal": 0.00386
+        },
+        {
+          "market_code": 344,
+          "market_goal": 0.00374
+        },
+        {
+          "market_code": 278,
+          "market_goal": 0.00371
+        },
+        {
+          "market_code": 279,
+          "market_goal": 0.00371
+        },
+        {
+          "market_code": 258,
+          "market_goal": 0.00371
+        },
+        {
+          "market_code": 173,
+          "market_goal": 0.0037
+        },
+        {
+          "market_code": 113,
+          "market_goal": 0.00367
+        },
+        {
+          "market_code": 481,
+          "market_goal": 0.00366
+        },
+        {
+          "market_code": 164,
+          "market_goal": 0.00362
+        },
+        {
+          "market_code": 252,
+          "market_goal": 0.00356
+        },
+        {
+          "market_code": 219,
+          "market_goal": 0.00348
+        },
+        {
+          "market_code": 138,
+          "market_goal": 0.00343
+        },
+        {
+          "market_code": 146,
+          "market_goal": 0.00343
+        },
+        {
+          "market_code": 147,
+          "market_goal": 0.00338
+        },
+        {
+          "market_code": 291,
+          "market_goal": 0.00328
+        },
+        {
+          "market_code": 269,
+          "market_goal": 0.00327
+        },
+        {
+          "market_code": 232,
+          "market_goal": 0.00316
+        },
+        {
+          "market_code": 212,
+          "market_goal": 0.00314
+        },
+        {
+          "market_code": 236,
+          "market_goal": 0.00314
+        },
+        {
+          "market_code": 155,
+          "market_goal": 0.00312
+        },
+        {
+          "market_code": 225,
+          "market_goal": 0.00309
+        },
+        {
+          "market_code": 352,
+          "market_goal": 0.00307
+        },
+        {
+          "market_code": 248,
+          "market_goal": 0.00307
+        },
+        {
+          "market_code": 175,
+          "market_goal": 0.003
+        },
+        {
+          "market_code": 107,
+          "market_goal": 0.00293
+        },
+        {
+          "market_code": 237,
+          "market_goal": 0.0029
+        },
+        {
+          "market_code": 119,
+          "market_goal": 0.00286
+        },
+        {
+          "market_code": 365,
+          "market_goal": 0.00284
+        },
+        {
+          "market_code": 316,
+          "market_goal": 0.00281
+        },
+        {
+          "market_code": 318,
+          "market_goal": 0.00273
+        },
+        {
+          "market_code": 188,
+          "market_goal": 0.00265
+        },
+        {
+          "market_code": 123,
+          "market_goal": 0.00262
+        },
+        {
+          "market_code": 270,
+          "market_goal": 0.00261
+        },
+        {
+          "market_code": 131,
+          "market_goal": 0.00259
+        },
+        {
+          "market_code": 145,
+          "market_goal": 0.00255
+        },
         {
           "market_code": 100,
           "market_goal": 0.222
@@ -101,7 +1669,7 @@
       "week_id": 774
     },
     {
-      "cpm_goal": 0.16000,
+      "cpm_goal": 1.0000,
       "daypart_weighting": [
         {
           "daypart_goal": 1.0,
@@ -111,9 +1679,401 @@
       "frequency_cap_spots": 10,
       "frequency_cap_time": 1.0,
       "frequency_cap_unit": "day",
-      "impression_goal": 10000000.0,
-      "market_coverage_goal": 0.805,
+      "impression_goal": 9998138.0,
+      "market_coverage_goal": 0.0,
       "share_of_voice": [
+        {
+          "market_code": 403,
+          "market_goal": 0.04743
+        },
+        {
+          "market_code": 202,
+          "market_goal": 0.02942
+        },
+        {
+          "market_code": 104,
+          "market_goal": 0.02559
+        },
+        {
+          "market_code": 223,
+          "market_goal": 0.02362
+        },
+        {
+          "market_code": 111,
+          "market_goal": 0.02222
+        },
+        {
+          "market_code": 218,
+          "market_goal": 0.022
+        },
+        {
+          "market_code": 407,
+          "market_goal": 0.02186
+        },
+        {
+          "market_code": 124,
+          "market_goal": 0.02184
+        },
+        {
+          "market_code": 106,
+          "market_goal": 0.02163
+        },
+        {
+          "market_code": 353,
+          "market_goal": 0.01712
+        },
+        {
+          "market_code": 419,
+          "market_goal": 0.01677
+        },
+        {
+          "market_code": 139,
+          "market_goal": 0.01676
+        },
+        {
+          "market_code": 105,
+          "market_goal": 0.01587
+        },
+        {
+          "market_code": 213,
+          "market_goal": 0.01543
+        },
+        {
+          "market_code": 128,
+          "market_goal": 0.01496
+        },
+        {
+          "market_code": 351,
+          "market_goal": 0.01417
+        },
+        {
+          "market_code": 134,
+          "market_goal": 0.01360879
+        },
+        {
+          "market_code": 110,
+          "market_goal": 0.01291
+        },
+        {
+          "market_code": 462,
+          "market_goal": 0.0126
+        },
+        {
+          "market_code": 209,
+          "market_goal": 0.01061
+        },
+        {
+          "market_code": 420,
+          "market_goal": 0.01053
+        },
+        {
+          "market_code": 117,
+          "market_goal": 0.01021
+        },
+        {
+          "market_code": 108,
+          "market_goal": 0.01018
+        },
+        {
+          "market_code": 160,
+          "market_goal": 0.0101
+        },
+        {
+          "market_code": 112,
+          "market_goal": 0.00988
+        },
+        {
+          "market_code": 259,
+          "market_goal": 0.00919
+        },
+        {
+          "market_code": 127,
+          "market_goal": 0.00915
+        },
+        {
+          "market_code": 425,
+          "market_goal": 0.00894
+        },
+        {
+          "market_code": 370,
+          "market_goal": 0.00846
+        },
+        {
+          "market_code": 241,
+          "market_goal": 0.00824
+        },
+        {
+          "market_code": 133,
+          "market_goal": 0.00822
+        },
+        {
+          "market_code": 216,
+          "market_goal": 0.00803
+        },
+        {
+          "market_code": 135,
+          "market_goal": 0.008
+        },
+        {
+          "market_code": 115,
+          "market_goal": 0.00778
+        },
+        {
+          "market_code": 217,
+          "market_goal": 0.00774
+        },
+        {
+          "market_code": 148,
+          "market_goal": 0.00739
+        },
+        {
+          "market_code": 167,
+          "market_goal": 0.00722
+        },
+        {
+          "market_code": 235,
+          "market_goal": 0.00706
+        },
+        {
+          "market_code": 439,
+          "market_goal": 0.00675
+        },
+        {
+          "market_code": 250,
+          "market_goal": 0.00629
+        },
+        {
+          "market_code": 161,
+          "market_goal": 0.00625
+        },
+        {
+          "market_code": 163,
+          "market_goal": 0.00615
+        },
+        {
+          "market_code": 230,
+          "market_goal": 0.00613
+        },
+        {
+          "market_code": 166,
+          "market_goal": 0.00609
+        },
+        {
+          "market_code": 390,
+          "market_goal": 0.00602
+        },
+        {
+          "market_code": 144,
+          "market_goal": 0.00601
+        },
+        {
+          "market_code": 118,
+          "market_goal": 0.006
+        },
+        {
+          "market_code": 129,
+          "market_goal": 0.00586
+        },
+        {
+          "market_code": 240,
+          "market_goal": 0.00579
+        },
+        {
+          "market_code": 222,
+          "market_goal": 0.00569
+        },
+        {
+          "market_code": 121,
+          "market_goal": 0.00533
+        },
+        {
+          "market_code": 114,
+          "market_goal": 0.00529
+        },
+        {
+          "market_code": 466,
+          "market_goal": 0.00512
+        },
+        {
+          "market_code": 156,
+          "market_goal": 0.00506
+        },
+        {
+          "market_code": 171,
+          "market_goal": 0.0049
+        },
+        {
+          "market_code": 177,
+          "market_goal": 0.00467
+        },
+        {
+          "market_code": 293,
+          "market_goal": 0.00466
+        },
+        {
+          "market_code": 286,
+          "market_goal": 0.00466
+        },
+        {
+          "market_code": 132,
+          "market_goal": 0.00465
+        },
+        {
+          "market_code": 157,
+          "market_goal": 0.00461
+        },
+        {
+          "market_code": 271,
+          "market_goal": 0.00461
+        },
+        {
+          "market_code": 141,
+          "market_goal": 0.0041
+        },
+        {
+          "market_code": 142,
+          "market_goal": 0.00405
+        },
+        {
+          "market_code": 389,
+          "market_goal": 0.00386
+        },
+        {
+          "market_code": 344,
+          "market_goal": 0.00374
+        },
+        {
+          "market_code": 278,
+          "market_goal": 0.00371
+        },
+        {
+          "market_code": 279,
+          "market_goal": 0.00371
+        },
+        {
+          "market_code": 258,
+          "market_goal": 0.00371
+        },
+        {
+          "market_code": 173,
+          "market_goal": 0.0037
+        },
+        {
+          "market_code": 113,
+          "market_goal": 0.00367
+        },
+        {
+          "market_code": 481,
+          "market_goal": 0.00366
+        },
+        {
+          "market_code": 164,
+          "market_goal": 0.00362
+        },
+        {
+          "market_code": 252,
+          "market_goal": 0.00356
+        },
+        {
+          "market_code": 219,
+          "market_goal": 0.00348
+        },
+        {
+          "market_code": 138,
+          "market_goal": 0.00343
+        },
+        {
+          "market_code": 146,
+          "market_goal": 0.00343
+        },
+        {
+          "market_code": 147,
+          "market_goal": 0.00338
+        },
+        {
+          "market_code": 291,
+          "market_goal": 0.00328
+        },
+        {
+          "market_code": 269,
+          "market_goal": 0.00327
+        },
+        {
+          "market_code": 232,
+          "market_goal": 0.00316
+        },
+        {
+          "market_code": 212,
+          "market_goal": 0.00314
+        },
+        {
+          "market_code": 236,
+          "market_goal": 0.00314
+        },
+        {
+          "market_code": 155,
+          "market_goal": 0.00312
+        },
+        {
+          "market_code": 225,
+          "market_goal": 0.00309
+        },
+        {
+          "market_code": 352,
+          "market_goal": 0.00307
+        },
+        {
+          "market_code": 248,
+          "market_goal": 0.00307
+        },
+        {
+          "market_code": 175,
+          "market_goal": 0.003
+        },
+        {
+          "market_code": 107,
+          "market_goal": 0.00293
+        },
+        {
+          "market_code": 237,
+          "market_goal": 0.0029
+        },
+        {
+          "market_code": 119,
+          "market_goal": 0.00286
+        },
+        {
+          "market_code": 365,
+          "market_goal": 0.00284
+        },
+        {
+          "market_code": 316,
+          "market_goal": 0.00281
+        },
+        {
+          "market_code": 318,
+          "market_goal": 0.00273
+        },
+        {
+          "market_code": 188,
+          "market_goal": 0.00265
+        },
+        {
+          "market_code": 123,
+          "market_goal": 0.00262
+        },
+        {
+          "market_code": 270,
+          "market_goal": 0.00261
+        },
+        {
+          "market_code": 131,
+          "market_goal": 0.00259
+        },
+        {
+          "market_code": 145,
+          "market_goal": 0.00255
+        },
         {
           "market_code": 100,
           "market_goal": 0.222

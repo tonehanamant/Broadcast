@@ -7,48 +7,36 @@ using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventoryProprietary;
-using Services.Broadcast.Entities.Plan;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Common.Services.Extensions;
-using Services.Broadcast.Entities.StationInventory;
-using Tam.Maestro.Services.ContractInterfaces.AudienceAndRatingsBusinessObjects;
-using static Services.Broadcast.Entities.Enums.ProposalEnums;
-using Services.Broadcast.Entities.ProgramMapping;
 
 namespace Services.Broadcast.Repositories
 {
 	public interface IInventoryProprietarySummaryRepository : IDataRepository
 	{
-        /// <summary>
-        ///     Get Data to Load [inventory_proprietary_summary]
-        /// </summary>
-        /// <param name="inventorySource"></param>
-        /// <param name="startDate"></param>
-        /// <param name="endDate"></param>
-        /// <returns></returns>
-        List<InventoryProprietaryQuarterSummaryDto> GetInventoryProprietaryQuarterSummaries(
-            InventorySource inventorySource, DateTime startDate, DateTime endDate);
+		/// <summary>
+		///     Get Data to Load [inventory_proprietary_summary_audiences] and
+		///     [inventory_proprietary_summary_audience_markets]
+		/// </summary>
+		/// <param name="proprietaryInventoryMappingId"></param>
+		/// <param name="startDate"></param>
+		/// <param name="endDate"></param>
+		/// <returns></returns>
+		List<InventoryProprietarySummaryByMarketByAudience> GetInventoryProprietarySummaryByMarketByAudience(
+			int proprietaryInventoryMappingId, 
+			DateTime startDate, 
+			DateTime endDate);
 
-        /// <summary>
-        ///     Get Data to Load [inventory_proprietary_summary_audiences]
-        /// </summary>
-        /// <param name="proprietaryInventoryMappingId"></param>
-        /// <param name="startDate"></param>
-        /// <param name="endDate"></param>
-        /// <returns></returns>
-        List<InventoryProprietarySummaryAudiencesDto> GetInventoryProprietarySummaryAudiences(
-			int proprietaryInventoryMappingId, DateTime startDate, DateTime endDate);
-
-        /// <summary>
-        ///     Get Data to Load [inventory_proprietary_summary_markets]
-        /// </summary>
-        /// <param name="proprietaryInventoryMappingId"></param>
-        /// <param name="startDate"></param>
-        /// <param name="endDate"></param>
-        /// <returns></returns>
-        List<short?> GetMarketCodesForInventoryProprietarySummary(
-            int proprietaryInventoryMappingId, DateTime startDate, DateTime endDate);
+		/// <summary>
+		///     Get Data to Load [inventory_proprietary_summary]
+		/// </summary>
+		/// <param name="inventorySource"></param>
+		/// <param name="startDate"></param>
+		/// <param name="endDate"></param>
+		/// <returns></returns>
+		List<InventoryProprietaryQuarterSummaryDto> GetInventoryProprietaryQuarterSummaries(
+			InventorySource inventorySource, DateTime startDate, DateTime endDate);
 
 		/// <summary>
 		///     Load inventory_proprietary_summary and inventory_proprietary_summary_audiences
@@ -66,12 +54,6 @@ namespace Services.Broadcast.Repositories
 			HashSet<int> daypartIds);
 
         /// <summary>
-        /// </summary>
-        /// <param name="summaryId"></param>
-        /// <returns></returns>
-        double GetTotalMarketCoverageBySummaryId(int summaryId);
-
-        /// <summary>
         ///     Get Total Impressions By SummaryId And AudienceId
         /// </summary>
         /// <param name="summaryId"></param>
@@ -86,12 +68,9 @@ namespace Services.Broadcast.Repositories
 		/// <returns></returns>
 		List<int> GetDaypartIds(QuarterDetailDto quarterDetailDto);
 
-		/// <summary>
-		///     Get list of  Market code and market Coverage
-		/// </summary>
-		/// <param name="ids"></param>
-		/// <returns></returns>
-		List<PlanMarketDto> GetMarketDataBySummaryIds(List<int> ids);
+		List<InventoryProprietaryQuarterSummaryDto> GetInventoryProprietarySummariesByIds(IEnumerable<int> summaryIds);
+
+		List<short> GetMarketCodesBySummaryIds(IEnumerable<int> summaryIds);
 
         decimal? GetProprietarySummaryUnitCost(int id);
     }
@@ -106,6 +85,37 @@ namespace Services.Broadcast.Repositories
 		}
 
 		private const string AggregateInventoryProprietarySummary = "AggregateInventoryProprietarySummary";
+
+		public List<InventoryProprietaryQuarterSummaryDto> GetInventoryProprietarySummariesByIds(IEnumerable<int> summaryIds)
+		{
+			return _InReadUncommitedTransaction(
+				context => 
+				{
+					return context.inventory_proprietary_summary
+						.Where(x => summaryIds.Contains(x.id))
+						.Select(x => new InventoryProprietaryQuarterSummaryDto
+						{ 
+							Id = x.id,
+							UnitCost = x.unit_cost,
+							Audiences = x.inventory_proprietary_summary_audiences
+								.Select(a => new InventoryProprietarySummaryAudiencesDto
+								{
+									AudienceId = a.audience_id,
+									Impressions = a.impressions
+								})
+								.ToList(),
+							SummaryByMarketByAudience = x.inventory_proprietary_summary_audience_markets
+								.Select(y => new InventoryProprietarySummaryByMarketByAudience
+								{
+									AudienceId = y.audience_id,
+									MarketCode = y.market_code,
+									Impressions = y.impressions
+								})
+								.ToList()
+						})
+						.ToList();
+				});
+		}
 
 		/// <inheritdoc />
 		public List<InventoryProprietaryQuarterSummaryDto> GetInventoryProprietaryQuarterSummaries(
@@ -172,13 +182,13 @@ namespace Services.Broadcast.Repositories
 
                         foreach (var manifestId in manifestIds)
                         {
-                            var manifestCostQuery = from manifest in context.station_inventory_manifest
+							var manifestCostQuery = from manifest in context.station_inventory_manifest
                                             join rates in context.station_inventory_manifest_rates
                                                 on manifest.id equals rates.station_inventory_manifest_id
                                             let week = (from week in context.station_inventory_manifest_weeks
                                                         where week.station_inventory_manifest_id == manifest.id
                                                         select week).FirstOrDefault()
-                                            where manifestIds.Contains(manifest.id) &&
+                                            where manifest.id == manifestId &&
                                                   rates.spot_length_id == manifest.spot_length_id
                                             select new { rates, week };
 
@@ -196,106 +206,74 @@ namespace Services.Broadcast.Repositories
 				});
 		}
 
-        public List<short?> GetMarketCodesForInventoryProprietarySummary(
-            int proprietaryInventoryMappingId,
-			DateTime startDate, 
-            DateTime endDate)
+		public List<short> GetMarketCodesBySummaryIds(IEnumerable<int> summaryIds)
 		{
 			return _InReadUncommitedTransaction(
 				context =>
 				{
-                    const int fixedSlotNumber = 1;
-
-					var query = from week in context.station_inventory_manifest_weeks
-						        join manifest in context.station_inventory_manifest 
-                                    on week.station_inventory_manifest_id equals manifest.id
-						        join station in context.stations 
-                                    on manifest.station_id equals station.id
-						        join manifestGroup in context.station_inventory_group 
-                                    on manifest.station_inventory_group_id equals manifestGroup.id
-						        join file in context.inventory_files 
-                                    on manifest.file_id equals file.id
-						        join header in context.inventory_file_proprietary_header 
-                                    on file.id equals header.inventory_file_id
-						        join daypartDefaults in context.daypart_defaults 
-                                    on header.daypart_default_id equals daypartDefaults.id
-                                join mapping in context.inventory_proprietary_daypart_program_mappings
-                                    on new { InventorySourceId = manifest.inventory_source_id, DefaultDaypartId = daypartDefaults.id } equals
-                                    new { InventorySourceId = mapping.inventory_source_id, DefaultDaypartId = mapping.daypart_default_id }
-                                where week.start_date <= endDate && week.end_date >= startDate &&
-                                      mapping.id == proprietaryInventoryMappingId &&
-                                      manifestGroup.slot_number == fixedSlotNumber
-                                group station by station.market_code into g
-						        select g.Key;
-
-					return query.Distinct().ToList();
-				}
-			);
+					return context.inventory_proprietary_summary_audience_markets
+						.Where(x => summaryIds.Contains(x.inventory_proprietary_summary_id))
+						.Select(x => x.market_code)
+						.Distinct()
+						.ToList();
+				});
 		}
 
-		public List<InventoryProprietarySummaryAudiencesDto> GetInventoryProprietarySummaryAudiences(
-			int proprietaryInventoryMappingId, DateTime startDate, DateTime endDate)
+		public List<InventoryProprietarySummaryByMarketByAudience> GetInventoryProprietarySummaryByMarketByAudience(
+			int proprietaryInventoryMappingId,
+			DateTime startDate,
+			DateTime endDate)
 		{
 			return _InReadUncommitedTransaction(
 				context =>
 				{
-                    const int fixedSlotNumber = 1;
+					const int fixedSlotNumber = 1;
 
-                    var manifests = from week in context.station_inventory_manifest_weeks
-                                    join manifest in context.station_inventory_manifest
-                                        on week.station_inventory_manifest_id equals manifest.id
-                                    join manifestGroup in context.station_inventory_group on manifest.station_inventory_group_id
-                                        equals manifestGroup.id
-                                    join file in context.inventory_files
-                                        on manifest.file_id equals file.id
-                                    join header in context.inventory_file_proprietary_header
-                                        on file.id equals header.inventory_file_id
-                                    join daypartDefaults in context.daypart_defaults
-                                        on header.daypart_default_id equals daypartDefaults.id
-                                    join audience in context.station_inventory_manifest_audiences
-                                        on manifest.id equals audience.station_inventory_manifest_id
-                                    join mapping in context.inventory_proprietary_daypart_program_mappings
-                                        on new { InventorySourceId = manifest.inventory_source_id, DefaultDaypartId = daypartDefaults.id } equals
-                                        new { InventorySourceId = mapping.inventory_source_id, DefaultDaypartId = mapping.daypart_default_id }
-                                    where week.start_date <= endDate && week.end_date >= startDate &&
-                                          mapping.id == proprietaryInventoryMappingId &&
-                                          manifestGroup.slot_number == fixedSlotNumber &&
-                                          !audience.is_reference
-                                    group manifest by manifest.id into m
-                                    select m.Key;
+					var manifests = from week in context.station_inventory_manifest_weeks
+									join manifest in context.station_inventory_manifest on week.station_inventory_manifest_id equals manifest.id
+									join manifestGroup in context.station_inventory_group on manifest.station_inventory_group_id equals manifestGroup.id
+									join file in context.inventory_files on manifest.file_id equals file.id
+									join header in context.inventory_file_proprietary_header on file.id equals header.inventory_file_id
+									join daypartDefaults in context.daypart_defaults on header.daypart_default_id equals daypartDefaults.id
+									join audience in context.station_inventory_manifest_audiences on manifest.id equals audience.station_inventory_manifest_id
+									join mapping in context.inventory_proprietary_daypart_program_mappings
+										on new { InventorySourceId = manifest.inventory_source_id, DefaultDaypartId = daypartDefaults.id } equals
+										new { InventorySourceId = mapping.inventory_source_id, DefaultDaypartId = mapping.daypart_default_id }
+									where week.start_date <= endDate && 
+										  week.end_date >= startDate &&
+										  mapping.id == proprietaryInventoryMappingId &&
+										  manifestGroup.slot_number == fixedSlotNumber &&
+										  !audience.is_reference
+									group manifest by manifest.id into m
+									select m.Key;
 
-                    var manifestIds = manifests.ToList();
-                    var audienceDictionary = new Dictionary<int, double>();
+					var manifestIds = manifests.ToList();
 
-                    foreach(var manifestId in manifestIds)
-                    {
-                        var audienceQuery = from manifest in context.station_inventory_manifest
-                                            join audience in context.station_inventory_manifest_audiences
-                                                on manifest.id equals audience.station_inventory_manifest_id
-                                            let week = (from week in context.station_inventory_manifest_weeks
-                                                        where week.station_inventory_manifest_id == manifest.id
-                                                        select week).FirstOrDefault()
-                                            where manifestIds.Contains(manifest.id)
-                                            select new { audience, week };
+					var audienceQuery = from manifest in context.station_inventory_manifest
+										join audience in context.station_inventory_manifest_audiences on manifest.id equals audience.station_inventory_manifest_id
+										join station in context.stations on manifest.station_id equals station.id
+										let week = (from week in context.station_inventory_manifest_weeks
+													where week.station_inventory_manifest_id == manifest.id
+													select week).FirstOrDefault()
+										where manifestIds.Contains(manifest.id)
+										select new { audience, week, station.market_code };
 
-                        var manifestAudiencesAndWeek = audienceQuery.ToList();
+					var manifestAudiencesAndWeek = audienceQuery.ToList();
 
-                        foreach (var manifestAudienceAndWeek in manifestAudiencesAndWeek)
-                        {
-                            var impressions = (manifestAudienceAndWeek.audience.impressions ?? 0) *
-                                                    manifestAudienceAndWeek.week.spots;
+					var result = manifestAudiencesAndWeek
+						.GroupBy(x => new { x.audience.audience_id, market_code = x.market_code.Value })
+						.Select(x =>
+						{
+							return new InventoryProprietarySummaryByMarketByAudience
+							{
+								AudienceId = x.Key.audience_id,
+								MarketCode = x.Key.market_code,
+								Impressions = x.Sum(y => (y.audience.impressions ?? 0) * y.week.spots)
+							};
+						})
+						.ToList();
 
-                            audienceDictionary.TryGetValue(manifestAudienceAndWeek.audience.audience_id, out double totalImpressions);
-
-                            audienceDictionary[manifestAudienceAndWeek.audience.audience_id] = totalImpressions + impressions;
-                        }
-                    }
-
-                    return audienceDictionary.Select(x => new InventoryProprietarySummaryAudiencesDto
-                    {
-                        AudienceId = x.Key,
-                        Impressions = x.Value
-                    }).ToList();
+					return result;
 				});
 		}
 
@@ -305,65 +283,46 @@ namespace Services.Broadcast.Repositories
 			_InReadUncommitedTransaction(
 				context =>
 				{
-					_RemoveExistingInventoryProprietarySummary(inventoryProprietaryQuarterSummaryDto, context);
-                    context.inventory_proprietary_summary.Add(new inventory_proprietary_summary
-                    {
-                        inventory_source_id = inventoryProprietaryQuarterSummaryDto.InventorySourceId,
-                        inventory_proprietary_daypart_program_mappings_id = inventoryProprietaryQuarterSummaryDto.ProprietaryDaypartProgramMappingId,
-                        quarter_number = inventoryProprietaryQuarterSummaryDto.Quarter.Quarter,
+					var oldSummaries = context.inventory_proprietary_summary
+						.Where(s => s.is_active &&
+									s.inventory_source_id == inventoryProprietaryQuarterSummaryDto.InventorySourceId &&
+									s.quarter_year == inventoryProprietaryQuarterSummaryDto.Quarter.Year &&
+									s.quarter_number == inventoryProprietaryQuarterSummaryDto.Quarter.Quarter &&
+									s.inventory_proprietary_daypart_program_mappings_id == inventoryProprietaryQuarterSummaryDto.ProprietaryDaypartProgramMappingId)
+						.ToList();
+
+					oldSummaries.ForEach(x => x.is_active = false);
+
+					context.inventory_proprietary_summary.Add(new inventory_proprietary_summary
+					{
+						is_active = true,
+						inventory_source_id = inventoryProprietaryQuarterSummaryDto.InventorySourceId,
+						inventory_proprietary_daypart_program_mappings_id = inventoryProprietaryQuarterSummaryDto.ProprietaryDaypartProgramMappingId,
+						quarter_number = inventoryProprietaryQuarterSummaryDto.Quarter.Quarter,
 						quarter_year = inventoryProprietaryQuarterSummaryDto.Quarter.Year,
 						unit = inventoryProprietaryQuarterSummaryDto.SlotNumber,
 						created_at = DateTime.Now,
 						created_by = AggregateInventoryProprietarySummary,
-						modified_at = DateTime.Now,
-						modified_by = AggregateInventoryProprietarySummary,
-                        unit_cost = inventoryProprietaryQuarterSummaryDto.UnitCost,
-                        inventory_proprietary_summary_markets = inventoryProprietaryQuarterSummaryDto.Markets?.Select(
-							x => new inventory_proprietary_summary_markets
-							{
-								market_code = x.MarketCode,
-								market_coverage = x.MarketCoverage,
-								created_at = DateTime.Now,
-								created_by = AggregateInventoryProprietarySummary,
-								modified_at = DateTime.Now,
-								modified_by = AggregateInventoryProprietarySummary
-							}).ToList(),
+						unit_cost = inventoryProprietaryQuarterSummaryDto.UnitCost,
 						inventory_proprietary_summary_audiences = inventoryProprietaryQuarterSummaryDto.Audiences
-							?.Select(
-								x => new inventory_proprietary_summary_audiences
-								{
-									audience_id = x.AudienceId,
-									impressions = x.Impressions,
-									created_at = DateTime.Now,
-									created_by = AggregateInventoryProprietarySummary,
-									modified_at = DateTime.Now,
-									modified_by = AggregateInventoryProprietarySummary
-								}).ToList()
+							.Select(x => new inventory_proprietary_summary_audiences
+							{
+								audience_id = x.AudienceId,
+								impressions = x.Impressions
+							})
+							.ToList(),
+						inventory_proprietary_summary_audience_markets = inventoryProprietaryQuarterSummaryDto.SummaryByMarketByAudience
+							.Select(x => new inventory_proprietary_summary_audience_markets
+							{
+								audience_id = x.AudienceId,
+								market_code = x.MarketCode,
+								impressions = x.Impressions
+							})
+							.ToList()
 					});
+
 					context.SaveChanges();
 				});
-		}
-
-		private static void _RemoveExistingInventoryProprietarySummary(InventoryProprietaryQuarterSummaryDto dto,
-			QueryHintBroadcastContext context)
-		{
-			var idList = context.inventory_proprietary_summary
-				.Where(s => s.inventory_source_id.Equals(dto.InventorySourceId) &&
-				            s.quarter_year.Equals(dto.Quarter.Year) && 
-                            s.quarter_number.Equals(dto.Quarter.Quarter) &&
-                            s.inventory_proprietary_daypart_program_mappings_id == dto.ProprietaryDaypartProgramMappingId)
-				.Select(s => s.id).ToList();
-
-            var audiencesToRemoved = context.inventory_proprietary_summary_audiences
-				.Where(a => idList.Contains(a.inventory_proprietary_summary_id)).ToList();
-
-			context.inventory_proprietary_summary_audiences.RemoveRange(audiencesToRemoved);
-
-			var marketsToBeRemoved = context.inventory_proprietary_summary_markets
-				.Where(m => idList.Contains(m.inventory_proprietary_summary_id)).ToList();
-			context.inventory_proprietary_summary_markets.RemoveRange(marketsToBeRemoved);
-			context.inventory_proprietary_summary.RemoveRange(context.inventory_proprietary_summary
-				.Where(s => idList.Contains(s.id)));
 		}
 
 		public List<InventoryProprietarySummary> GetInventoryProprietarySummary(
@@ -373,28 +332,25 @@ namespace Services.Broadcast.Repositories
 			return _InReadUncommitedTransaction(
 				context =>
 				{
-					var query = from summary in context.inventory_proprietary_summary
-						        join source in context.inventory_sources 
-                                    on summary.inventory_source_id equals source.id
-                                join mappings in context.inventory_proprietary_daypart_program_mappings 
-                                    on summary.inventory_proprietary_daypart_program_mappings_id equals mappings.id
-                                join daypartDefault in context.daypart_defaults 
-                                    on mappings.daypart_default_id equals daypartDefault.id
-						        join daypart in context.dayparts 
-                                    on daypartDefault.daypart_id equals daypart.id
-						        join programName in context.inventory_proprietary_daypart_programs 
-                                    on mappings.inventory_proprietary_daypart_programs_id equals programName.id
-                                where defaultDaypartIds.Contains(mappings.daypart_default_id) && 
-                                      summary.quarter_number == quarterDetailDto.Quarter &&
-						              summary.quarter_year == quarterDetailDto.Year
-						        select new InventoryProprietarySummary
-						        {
-                                    Id = summary.id,
-                                    DaypartName = daypart.daypart_text,
-							        InventorySourceName = source.name,
-							        UnitType = programName.unit_type,
-                                    UnitCost = summary.unit_cost
-						        };
+					var query =
+						from summary in context.inventory_proprietary_summary
+						join source in context.inventory_sources on summary.inventory_source_id equals source.id
+						join mappings in context.inventory_proprietary_daypart_program_mappings on summary.inventory_proprietary_daypart_program_mappings_id equals mappings.id
+						join daypartDefault in context.daypart_defaults on mappings.daypart_default_id equals daypartDefault.id
+						join daypart in context.dayparts on daypartDefault.daypart_id equals daypart.id
+						join programName in context.inventory_proprietary_daypart_programs on mappings.inventory_proprietary_daypart_programs_id equals programName.id
+						where summary.is_active &&
+							  defaultDaypartIds.Contains(mappings.daypart_default_id) &&
+							  summary.quarter_number == quarterDetailDto.Quarter &&
+							  summary.quarter_year == quarterDetailDto.Year
+						select new InventoryProprietarySummary
+						{
+							Id = summary.id,
+							DaypartName = daypart.daypart_text,
+							InventorySourceName = source.name,
+							UnitType = programName.unit_type,
+							UnitCost = summary.unit_cost
+						};
 
 					return query.Distinct().ToList();
 				});
@@ -405,30 +361,15 @@ namespace Services.Broadcast.Repositories
 			return _InReadUncommitedTransaction(
 				context =>
 				{
-					var query = context.inventory_proprietary_summary.Where(x => x.id == id)
-						.Select(x => x.inventory_proprietary_summary_audiences
-							.Where(a => audienceIds.Contains(a.audience_id))
-							.GroupBy(y => y.inventory_proprietary_summary_id)
-							.Select(y => y.Sum(z => z.impressions ?? 0))).FirstOrDefault();
-					var entities = query.ToList().FirstOrDefault();
+					var query = (from summary in context.inventory_proprietary_summary
+								 from audience_summary in summary.inventory_proprietary_summary_audiences
+								 where summary.id == id &&
+								 	   audienceIds.Contains(audience_summary.audience_id)
+								 select audience_summary.impressions);
 
-					return entities;
-				});
-		}
+					var totalImpressions = query.Sum(x => x) ?? 0;
 
-		public double GetTotalMarketCoverageBySummaryId(int id)
-		{
-			return _InReadUncommitedTransaction(
-				context =>
-				{
-					var query = context.inventory_proprietary_summary.Where(x =>
-							x.id == id)
-						.Select(x => x.inventory_proprietary_summary_markets
-							.GroupBy(y => y.inventory_proprietary_summary_id)
-							.Select(y => y.Sum(z => z.market_coverage ?? 0))).FirstOrDefault();
-					var entities = query.ToList().FirstOrDefault();
-
-					return entities;
+					return totalImpressions;
 				});
 		}
 
@@ -438,31 +379,14 @@ namespace Services.Broadcast.Repositories
 				context =>
 				{
 					var daypartIds = context.inventory_proprietary_summary
-                            .Include(x => x.inventory_proprietary_daypart_program_mappings)
-                            .Where(x => x.quarter_number == quarterDetailDto.Quarter && 
-                                        x.quarter_year == quarterDetailDto.Year)
-						    .Select(x => x.inventory_proprietary_daypart_program_mappings.daypart_default_id)
-						    .ToList();
+						.Include(x => x.inventory_proprietary_daypart_program_mappings)
+						.Where(x => x.is_active && 
+									x.quarter_number == quarterDetailDto.Quarter &&
+									x.quarter_year == quarterDetailDto.Year)
+						.Select(x => x.inventory_proprietary_daypart_program_mappings.daypart_default_id)
+						.ToList();
 
 					return daypartIds;
-				});
-		}
-
-		public List<PlanMarketDto> GetMarketDataBySummaryIds(List<int> ids)
-		{
-			return _InReadUncommitedTransaction(
-				context =>
-				{
-					var planMarketDtos = context.inventory_proprietary_summary_markets
-						.Where(x =>
-							ids.Contains(x.inventory_proprietary_summary_id)).ToList()
-						.Select(i => new PlanMarketDto
-						{
-							MarketCode = i.market_code,
-							PercentageOfUS = i.market_coverage ?? 0
-						}).ToList();
-
-					return planMarketDtos;
 				});
 		}
 

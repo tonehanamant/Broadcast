@@ -17,7 +17,6 @@ namespace EntityFrameworkMapping.Broadcast
         public plan_version_buying_job()
         {
             this.plan_version_buying_api_results = new HashSet<plan_version_buying_api_results>();
-            this.plan_version_buying_job_inventory_source_estimates = new HashSet<plan_version_buying_job_inventory_source_estimates>();
             this.plan_version_buying_parameters = new HashSet<plan_version_buying_parameters>();
             this.plan_version_buying_results = new HashSet<plan_version_buying_results>();
         }
@@ -32,7 +31,6 @@ namespace EntityFrameworkMapping.Broadcast
         public string hangfire_job_id { get; set; }
     
         public virtual ICollection<plan_version_buying_api_results> plan_version_buying_api_results { get; set; }
-        public virtual ICollection<plan_version_buying_job_inventory_source_estimates> plan_version_buying_job_inventory_source_estimates { get; set; }
         public virtual plan_versions plan_versions { get; set; }
         public virtual ICollection<plan_version_buying_parameters> plan_version_buying_parameters { get; set; }
         public virtual ICollection<plan_version_buying_results> plan_version_buying_results { get; set; }

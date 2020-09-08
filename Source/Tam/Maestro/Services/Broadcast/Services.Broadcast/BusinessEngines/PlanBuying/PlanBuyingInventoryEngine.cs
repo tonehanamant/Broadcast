@@ -28,8 +28,7 @@ namespace Services.Broadcast.BusinessEngines
             PlanDto plan,
             ProgramInventoryOptionalParametersDto parameters,
             IEnumerable<int> inventorySourceIds,
-            PlanBuyingJobDiagnostic diagnostic,
-            bool isProprietary);
+            PlanBuyingJobDiagnostic diagnostic);
     }
 
     public class PlanBuyingInventoryEngine : BroadcastBaseClass, IPlanBuyingInventoryEngine
@@ -81,8 +80,7 @@ namespace Services.Broadcast.BusinessEngines
             PlanDto plan,
             ProgramInventoryOptionalParametersDto parameters,
             IEnumerable<int> inventorySourceIds,
-            PlanBuyingJobDiagnostic diagnostic,
-            bool isProprietary)
+            PlanBuyingJobDiagnostic diagnostic)
         {
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_FLIGHT_DATE_RANGES_AND_FLIGHT_DAYS);
             var flightDateRanges = _GetFlightDateRanges(
@@ -96,8 +94,7 @@ namespace Services.Broadcast.BusinessEngines
             var programs = _GetPrograms(plan, flightDateRanges, inventorySourceIds, diagnostic);
 
             // we don't expect spots other than 30 length spots for OpenMarket
-            if (!isProprietary)
-                programs = programs.Where(x => x.SpotLengthId == BroadcastConstants.SpotLengthId30).ToList();
+            programs = programs.Where(x => x.SpotLengthId == BroadcastConstants.SpotLengthId30).ToList();
 
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_FETCHING_INVENTORY_FROM_DB);
 
@@ -115,11 +112,11 @@ namespace Services.Broadcast.BusinessEngines
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SETTING_INVENTORY_DAYS_BASED_ON_PLAN_DAYS);
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_APPLYING_PROJECTED_IMPRESSIONS);
-            _ApplyProjectedImpressions(programs, plan, isProprietary);
+            _ApplyProjectedImpressions(programs, plan);
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_APPLYING_PROJECTED_IMPRESSIONS);
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_APPLYING_PROVIDED_IMPRESSIONS);
-            _ApplyProvidedImpressions(programs, plan, isProprietary);
+            _ApplyProvidedImpressions(programs, plan);
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_APPLYING_PROVIDED_IMPRESSIONS);
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_APPLYING_NTI_CONVERSION_TO_NSI);
@@ -127,7 +124,7 @@ namespace Services.Broadcast.BusinessEngines
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_APPLYING_NTI_CONVERSION_TO_NSI);
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM);
-            programs = CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, parameters?.MinCPM, parameters?.MaxCPM, isProprietary);
+            programs = CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, parameters?.MinCPM, parameters?.MaxCPM);
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM);
 
             return programs;
@@ -639,20 +636,14 @@ namespace Services.Broadcast.BusinessEngines
         protected List<PlanBuyingInventoryProgram> CalculateProgramCpmAndFilterByMinAndMaxCpm(
             List<PlanBuyingInventoryProgram> programs,
             decimal? minCPM,
-            decimal? maxCPM,
-            bool isProprietary)
+            decimal? maxCPM)
         {
             foreach (var program in programs)
             {
                 decimal cost;
 
-                // for Proprietary, there is always only 1 rate defined for inventory
-                if (isProprietary)
-                {
-                    cost = program.ManifestRates.Single().Cost;
-                }
                 // for buying v2, there is always 1 spot length for inventory
-                else if (BroadcastServiceSystemParameter.PlanPricingEndpointVersion == "2")
+                if (BroadcastServiceSystemParameter.PlanPricingEndpointVersion == "2")
                 {
                     cost = program.ManifestRates.Single().Cost;
                 }
@@ -908,13 +899,11 @@ namespace Services.Broadcast.BusinessEngines
 
         private void _ApplyProvidedImpressions(
             List<PlanBuyingInventoryProgram> programs, 
-            PlanDto plan,
-            bool isProprietary)
+            PlanDto plan)
         {
             // we don`t want to equivalize impressions
             // when BuyingVersion == 3, because this is done by the buying endpoint
-            // when isProprietary == true, because for proprietary, impressions are already converted to the spot length of inventory
-            var equivalized = isProprietary || BroadcastServiceSystemParameter.PlanPricingEndpointVersion == "3" ? false : plan.Equivalized;
+            var equivalized = BroadcastServiceSystemParameter.PlanPricingEndpointVersion == "3" ? false : plan.Equivalized;
 
             // SpotLengthId does not matter for the buying v3, so this code is for the v2
             var spotLengthId = plan.CreativeLengths.First().SpotLengthId;
@@ -933,13 +922,12 @@ namespace Services.Broadcast.BusinessEngines
 
         private void _ApplyProjectedImpressions(
             IEnumerable<PlanBuyingInventoryProgram> programs,
-            PlanDto plan,
-            bool isProprietary)
+            PlanDto plan)
         {
             var impressionsRequest = new ImpressionsRequestDto
             {
                 // we don`t want to equivalize impressions when BuyingVersion == 3, because this is done by the buying endpoint
-                Equivalized = isProprietary || BroadcastServiceSystemParameter.PlanPricingEndpointVersion == "2" ? plan.Equivalized : false,
+                Equivalized = BroadcastServiceSystemParameter.PlanPricingEndpointVersion == "2" ? plan.Equivalized : false,
                 HutProjectionBookId = plan.HUTBookId,
                 PlaybackType = ProposalPlaybackType.LivePlus3,
                 PostType = plan.PostingType,
@@ -949,7 +937,7 @@ namespace Services.Broadcast.BusinessEngines
                 SpotLengthId = plan.CreativeLengths.First().SpotLengthId
             };
 
-            _ImpressionsCalculationEngine.ApplyProjectedImpressions(programs, impressionsRequest, plan.AudienceId, isProprietary);
+            _ImpressionsCalculationEngine.ApplyProjectedImpressions(programs, impressionsRequest, plan.AudienceId);
         }
 
         private void _ApplyProjectedImpressions(

@@ -19,6 +19,12 @@ namespace BroadcastComposerWeb.Controllers
         {
         }
 
+        /// <summary>
+        /// Queues buying job
+        /// </summary>
+        /// <param name="planBuyingRequestDto">
+        /// ProprietaryInventory is a list of proprietary summary ids
+        /// </param>
         [HttpPost]
         [Route("queue")]
         public BaseResponse<PlanBuyingJob> Queue(PlanBuyingParametersDto planBuyingRequestDto)
@@ -86,11 +92,7 @@ namespace BroadcastComposerWeb.Controllers
         /// Allows checking that correct inventory is used for pricing
         /// </summary>
         /// <param name="planId">Plan ID</param>
-        /// <param name="requestParameters">
-        /// InventorySourceIds
-        /// - pass InventorySourceIds only when you want to check what proprietary inventory could be potentially chosen
-        /// - DO NOT pass InventorySourceIds if you want to check what is sent to the pricing model
-        /// </param>
+        /// <param name="requestParameters">Parameters</param>
         [HttpPost]
         [Route("requestprograms")]
         public BaseResponse<PlanBuyingApiRequestDto> GetBuyingProgramApiRequest(int planId, BuyingInventoryGetRequestParametersDto requestParameters)
@@ -102,11 +104,7 @@ namespace BroadcastComposerWeb.Controllers
         /// Allows checking that correct inventory is used for pricing
         /// </summary>
         /// <param name="planId">Plan ID</param>
-        /// <param name="requestParameters">
-        /// InventorySourceIds
-        /// - pass InventorySourceIds only when you want to check what proprietary inventory could be potentially chosen
-        /// - DO NOT pass InventorySourceIds if you want to check what is sent to the pricing model
-        /// </param>
+        /// <param name="requestParameters">Parameters</param>
         [HttpPost]
         [Route("requestprograms3")]
         public BaseResponse<PlanBuyingApiRequestDto_v3> GetBuyingProgramApiRequest_v3(int planId, BuyingInventoryGetRequestParametersDto requestParameters)

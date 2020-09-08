@@ -559,6 +559,181 @@ END
 GO
 /********************************END BP-1088-2********************************************************************/
 
+/*************************************** START - BP-811 ****************************************************/
+
+IF EXISTS (SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_pricing_job_inventory_source_estimates'))
+BEGIN
+	EXEC('drop table plan_version_pricing_job_inventory_source_estimates')
+END
+
+IF EXISTS (SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_job_inventory_source_estimates'))
+BEGIN
+	EXEC('drop table plan_version_buying_job_inventory_source_estimates')
+END
+
+IF EXISTS (SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_pricing_parameters_inventory_source_percentages'))
+BEGIN
+	EXEC('drop table plan_version_pricing_parameters_inventory_source_percentages')
+END
+
+IF EXISTS (SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_parameters_inventory_source_percentages'))
+BEGIN
+	EXEC('drop table plan_version_buying_parameters_inventory_source_percentages')
+END
+
+IF EXISTS (SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_pricing_parameters_inventory_source_type_percentages'))
+BEGIN
+	EXEC('drop table plan_version_pricing_parameters_inventory_source_type_percentages')
+END
+
+IF EXISTS (SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_parameters_inventory_source_type_percentages'))
+BEGIN
+	EXEC('drop table plan_version_buying_parameters_inventory_source_type_percentages')
+END
+
+IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_pricing_parameter_inventory_proprietary_summaries'))
+BEGIN
+	CREATE TABLE [dbo].[plan_version_pricing_parameter_inventory_proprietary_summaries](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_pricing_parameter_id] [int] NOT NULL,	
+		[inventory_proprietary_summary_id] [int] NOT NULL,	
+	 CONSTRAINT [PK_plan_version_pricing_parameter_inventory_proprietary_summaries] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_pricing_parameter_inventory_proprietary_summaries] 
+	WITH CHECK ADD CONSTRAINT [FK_plan_version_pricing_parameter_inventory_proprietary_summaries_plan_version_pricing_parameters] 
+	FOREIGN KEY([plan_version_pricing_parameter_id])
+	REFERENCES [dbo].[plan_version_pricing_parameters] ([id])
+
+	ALTER TABLE [dbo].[plan_version_pricing_parameter_inventory_proprietary_summaries] 
+	CHECK CONSTRAINT [FK_plan_version_pricing_parameter_inventory_proprietary_summaries_plan_version_pricing_parameters]
+
+	ALTER TABLE [dbo].[plan_version_pricing_parameter_inventory_proprietary_summaries] 
+	ADD CONSTRAINT [FK_plan_version_pricing_parameter_inventory_proprietary_summaries_inventory_proprietary_summary] 
+	FOREIGN KEY([inventory_proprietary_summary_id])
+	REFERENCES [dbo].[inventory_proprietary_summary] ([id])
+
+	ALTER TABLE [dbo].[plan_version_pricing_parameter_inventory_proprietary_summaries] 
+	CHECK CONSTRAINT [FK_plan_version_pricing_parameter_inventory_proprietary_summaries_inventory_proprietary_summary]
+END
+
+IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('plan_version_buying_parameter_inventory_proprietary_summaries'))
+BEGIN
+	CREATE TABLE [dbo].[plan_version_buying_parameter_inventory_proprietary_summaries](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[plan_version_buying_parameter_id] [int] NOT NULL,	
+		[inventory_proprietary_summary_id] [int] NOT NULL,	
+	 CONSTRAINT [PK_plan_version_buying_parameter_inventory_proprietary_summaries] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[plan_version_buying_parameter_inventory_proprietary_summaries] 
+	WITH CHECK ADD CONSTRAINT [FK_plan_version_buying_parameter_inventory_proprietary_summaries_plan_version_buying_parameters] 
+	FOREIGN KEY([plan_version_buying_parameter_id])
+	REFERENCES [dbo].[plan_version_buying_parameters] ([id])
+
+	ALTER TABLE [dbo].[plan_version_buying_parameter_inventory_proprietary_summaries] 
+	CHECK CONSTRAINT [FK_plan_version_buying_parameter_inventory_proprietary_summaries_plan_version_buying_parameters]
+
+	ALTER TABLE [dbo].[plan_version_buying_parameter_inventory_proprietary_summaries] 
+	ADD CONSTRAINT [FK_plan_version_buying_parameter_inventory_proprietary_summaries_inventory_proprietary_summary] 
+	FOREIGN KEY([inventory_proprietary_summary_id])
+	REFERENCES [dbo].[inventory_proprietary_summary] ([id])
+
+	ALTER TABLE [dbo].[plan_version_buying_parameter_inventory_proprietary_summaries] 
+	CHECK CONSTRAINT [FK_plan_version_buying_parameter_inventory_proprietary_summaries_inventory_proprietary_summary]
+END
+
+IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('inventory_proprietary_summary_audience_markets'))
+BEGIN
+	CREATE TABLE [dbo].[inventory_proprietary_summary_audience_markets](
+		[id] int IDENTITY(1,1) NOT NULL,	
+		[inventory_proprietary_summary_id] int NOT NULL,
+		[audience_id] int NOT NULL,
+		[market_code] smallint NOT NULL,
+		[impressions] float NOT NULL
+	 CONSTRAINT [PK_inventory_proprietary_summary_audience_markets] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	ALTER TABLE [dbo].[inventory_proprietary_summary_audience_markets] 
+	ADD CONSTRAINT [FK_inventory_proprietary_summary_audience_markets_inventory_proprietary_summary] 
+	FOREIGN KEY([inventory_proprietary_summary_id])
+	REFERENCES [dbo].[inventory_proprietary_summary] ([id])
+
+	ALTER TABLE [dbo].[inventory_proprietary_summary_audience_markets] 
+	CHECK CONSTRAINT [FK_inventory_proprietary_summary_audience_markets_inventory_proprietary_summary]
+
+	ALTER TABLE [dbo].[inventory_proprietary_summary_audience_markets] 
+	ADD CONSTRAINT [FK_inventory_proprietary_summary_audience_markets_audiences] 
+	FOREIGN KEY([audience_id])
+	REFERENCES [dbo].[audiences] ([id])
+
+	ALTER TABLE [dbo].[inventory_proprietary_summary_audience_markets] 
+	CHECK CONSTRAINT [FK_inventory_proprietary_summary_audience_markets_audiences]
+
+	ALTER TABLE [dbo].[inventory_proprietary_summary_audience_markets] 
+	ADD CONSTRAINT [FK_inventory_proprietary_summary_audience_markets_markets] 
+	FOREIGN KEY([market_code])
+	REFERENCES [dbo].[markets] ([market_code])
+
+	ALTER TABLE [dbo].[inventory_proprietary_summary_audience_markets] 
+	CHECK CONSTRAINT [FK_inventory_proprietary_summary_audience_markets_markets]
+END
+
+IF EXISTS (SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('inventory_proprietary_summary_markets'))
+BEGIN
+	EXEC('drop table inventory_proprietary_summary_markets')
+END
+
+IF EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('inventory_proprietary_summary_audiences') AND name = 'created_by')
+BEGIN
+	EXEC('ALTER TABLE [inventory_proprietary_summary_audiences] DROP COLUMN created_by')
+END
+
+IF EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('inventory_proprietary_summary_audiences') AND name = 'created_at')
+BEGIN
+	EXEC('ALTER TABLE [inventory_proprietary_summary_audiences] DROP COLUMN created_at')
+END
+
+IF EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('inventory_proprietary_summary_audiences') AND name = 'modified_by')
+BEGIN
+	EXEC('ALTER TABLE [inventory_proprietary_summary_audiences] DROP COLUMN modified_by')
+END
+
+IF EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('inventory_proprietary_summary_audiences') AND name = 'modified_at')
+BEGIN
+	EXEC('ALTER TABLE [inventory_proprietary_summary_audiences] DROP COLUMN modified_at')
+END
+
+IF EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('inventory_proprietary_summary') AND name = 'modified_by')
+BEGIN
+	EXEC('ALTER TABLE [inventory_proprietary_summary] DROP COLUMN modified_by')
+END
+
+IF EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('inventory_proprietary_summary') AND name = 'modified_at')
+BEGIN
+	EXEC('ALTER TABLE [inventory_proprietary_summary] DROP COLUMN modified_at')
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('inventory_proprietary_summary') AND name = 'is_active')
+BEGIN
+	ALTER TABLE inventory_proprietary_summary ADD is_active bit NULL
+
+	EXEC('UPDATE inventory_proprietary_summary SET is_active = 0')
+
+	ALTER TABLE inventory_proprietary_summary ALTER COLUMN is_active bit NOT NULL
+END
+
+/*************************************** END - BP-811 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

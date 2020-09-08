@@ -23,7 +23,5 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public double CoverageGoalPercent { get; set; }
         public double? Margin { get; set; }
         public int? JobId { get; set; }
-        public List<PlanInventorySourceDto> InventorySourcePercentages { get; set; } = new List<PlanInventorySourceDto>();
-        public List<PlanInventorySourceTypeDto> InventorySourceTypePercentages { get; set; } = new List<PlanInventorySourceTypeDto>();
     }
 }

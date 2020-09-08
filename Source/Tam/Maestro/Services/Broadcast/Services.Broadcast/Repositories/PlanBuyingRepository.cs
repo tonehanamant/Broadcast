@@ -162,13 +162,6 @@ namespace Services.Broadcast.Repositories
         decimal GetGoalCpm(int jobId);
 
         /// <summary>
-        /// Saves the plan buying estimates.
-        /// </summary>
-        /// <param name="jobId">The job identifier.</param>
-        /// <param name="estimates">The estimates.</param>
-        void SavePlanBuyingEstimates(int jobId, List<PlanBuyingEstimate> estimates);
-
-        /// <summary>
         /// Gets the plan buying allocated spots by plan identifier.
         /// </summary>
         /// <param name="planId">The plan identifier.</param>
@@ -234,8 +227,6 @@ namespace Services.Broadcast.Repositories
                     .plan_version_buying_parameters
                     .Include(x => x.plan_versions)
                     .Include(x => x.plan_versions.plan_version_available_markets)
-                    .Include(x => x.plan_version_buying_parameters_inventory_source_percentages)
-                    .Include(x => x.plan_version_buying_parameters_inventory_source_type_percentages)
                     .Where(p => p.plan_versions.plan_id == planId);
 
                 return executions.ToList().Select(e => new PlanBuyingApiRequestParametersDto
@@ -257,20 +248,6 @@ namespace Services.Broadcast.Repositories
                     ProprietaryBlend = e.proprietary_blend,
                     UnitCaps = e.unit_caps,
                     UnitCapsType = (UnitCapEnum)e.unit_caps_type,
-                    InventorySourcePercentages = e.plan_version_buying_parameters_inventory_source_percentages.Select(
-                        s => new PlanInventorySourceDto
-                        {
-                            Id = s.inventory_source_id,
-                            Name = s.inventory_sources.name,
-                            Percentage = s.percentage
-                        }).ToList(),
-                    InventorySourceTypePercentages = e.plan_version_buying_parameters_inventory_source_type_percentages.Select(
-                        s => new PlanInventorySourceTypeDto
-                        {
-                            Id = s.inventory_source_type,
-                            Name = ((InventorySourceTypeEnum)s.inventory_source_type).GetDescriptionAttribute(),
-                            Percentage = s.percentage
-                        }).ToList(),
                     JobId = e.plan_version_buying_job_id,
                     Margin = e.margin
                 }).ToList();
@@ -397,8 +374,6 @@ namespace Services.Broadcast.Repositories
                     .Max();
 
                 var latestParameters = context.plan_version_buying_parameters
-                    .Include(x => x.plan_version_buying_parameters_inventory_source_percentages)
-                    .Include(x => x.plan_version_buying_parameters_inventory_source_type_percentages)
                     .Include(x => x.plan_versions)
                     .Where(x => x.id == latestParametersId)
                     .OrderByDescending(p => p.id)
@@ -432,40 +407,12 @@ namespace Services.Broadcast.Repositories
                 CPP = entity.cpp,
                 DeliveryRatingPoints = entity.rating_points,
                 Margin = entity.margin,
-                InventorySourcePercentages = entity.plan_version_buying_parameters_inventory_source_percentages.Select(_MapPlanInventorySourceDto).ToList(),
-                InventorySourceTypePercentages = entity.plan_version_buying_parameters_inventory_source_type_percentages.Select(_MapPlanInventorySourceTypeDto).ToList(),
                 JobId = entity.plan_version_buying_job_id,
                 PlanVersionId = entity.plan_version_id,
                 AdjustedBudget = entity.budget_adjusted,
                 AdjustedCPM = entity.cpm_adjusted,
                 MarketGroup = (MarketGroupEnum)entity.market_group
             };
-            return dto;
-        }
-
-        private PlanInventorySourceDto _MapPlanInventorySourceDto(
-            plan_version_buying_parameters_inventory_source_percentages entity)
-        {
-            var dto = new PlanInventorySourceDto
-            {
-                Id = entity.inventory_source_id,
-                Name = entity.inventory_sources.name,
-                Percentage = entity.percentage
-            };
-
-            return dto;
-        }
-
-        private PlanInventorySourceTypeDto _MapPlanInventorySourceTypeDto(
-            plan_version_buying_parameters_inventory_source_type_percentages entity)
-        {
-            var dto = new PlanInventorySourceTypeDto
-            {
-                Id = entity.inventory_source_type,
-                Name = ((InventorySourceTypeEnum)entity.inventory_source_type).ToString(),
-                Percentage = entity.percentage
-            };
-
             return dto;
         }
 
@@ -494,24 +441,14 @@ namespace Services.Broadcast.Repositories
                     plan_version_buying_job_id = planBuyingParametersDto.JobId,
                     budget_adjusted = planBuyingParametersDto.AdjustedBudget,
                     cpm_adjusted = planBuyingParametersDto.AdjustedCPM,
-                    market_group = (int)planBuyingParametersDto.MarketGroup
+                    market_group = (int)planBuyingParametersDto.MarketGroup,
+                    plan_version_buying_parameter_inventory_proprietary_summaries = planBuyingParametersDto.ProprietaryInventory
+                        .Select(x => new plan_version_buying_parameter_inventory_proprietary_summaries
+                        {
+                            inventory_proprietary_summary_id = x.Id
+                        })
+                        .ToList()
                 };
-
-                planBuyingParametersDto.InventorySourcePercentages.ForEach(s =>
-                    planBuyingParameters.plan_version_buying_parameters_inventory_source_percentages.Add(
-                        new plan_version_buying_parameters_inventory_source_percentages
-                        {
-                            inventory_source_id = s.Id,
-                            percentage = s.Percentage
-                        }));
-
-                planBuyingParametersDto.InventorySourceTypePercentages.ForEach(s =>
-                    planBuyingParameters.plan_version_buying_parameters_inventory_source_type_percentages.Add(
-                        new plan_version_buying_parameters_inventory_source_type_percentages
-                        {
-                            inventory_source_type = (byte)s.Id,
-                            percentage = s.Percentage
-                        }));
 
                 context.plan_version_buying_parameters.Add(planBuyingParameters);
 
@@ -996,29 +933,6 @@ namespace Services.Broadcast.Repositories
                     .Select(p => p.cpm_goal).FirstOrDefault();
 
                 return result;
-            });
-        }
-
-        /// <inheritdoc/>
-        public void SavePlanBuyingEstimates(int jobId, List<PlanBuyingEstimate> estimates)
-        {
-            _InReadUncommitedTransaction(context =>
-            {
-                var propertiesToIgnore = new List<string>() { "id" };
-
-                var itemsToInsert = estimates
-                    .Select(x => new plan_version_buying_job_inventory_source_estimates
-                    {
-                        media_week_id = x.MediaWeekId,
-                        inventory_source_id = x.InventorySourceId,
-                        inventory_source_type = (int?)x.InventorySourceType,
-                        plan_version_buying_job_id = jobId,
-                        impressions = x.Impressions,
-                        cost = x.Cost
-                    })
-                    .ToList();
-
-                BulkInsert(context, itemsToInsert, propertiesToIgnore);
             });
         }
 

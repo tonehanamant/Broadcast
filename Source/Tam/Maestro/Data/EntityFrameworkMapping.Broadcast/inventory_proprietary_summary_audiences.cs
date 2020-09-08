@@ -18,10 +18,6 @@ namespace EntityFrameworkMapping.Broadcast
         public int inventory_proprietary_summary_id { get; set; }
         public int audience_id { get; set; }
         public Nullable<double> impressions { get; set; }
-        public string created_by { get; set; }
-        public System.DateTime created_at { get; set; }
-        public string modified_by { get; set; }
-        public Nullable<System.DateTime> modified_at { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual inventory_proprietary_summary inventory_proprietary_summary { get; set; }

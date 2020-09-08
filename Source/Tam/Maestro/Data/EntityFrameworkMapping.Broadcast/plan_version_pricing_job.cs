@@ -18,7 +18,6 @@ namespace EntityFrameworkMapping.Broadcast
         {
             this.plan_version_pricing_api_results = new HashSet<plan_version_pricing_api_results>();
             this.plan_version_pricing_bands = new HashSet<plan_version_pricing_bands>();
-            this.plan_version_pricing_job_inventory_source_estimates = new HashSet<plan_version_pricing_job_inventory_source_estimates>();
             this.plan_version_pricing_stations = new HashSet<plan_version_pricing_stations>();
             this.plan_version_pricing_markets = new HashSet<plan_version_pricing_markets>();
             this.plan_version_pricing_parameters = new HashSet<plan_version_pricing_parameters>();
@@ -36,7 +35,6 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual ICollection<plan_version_pricing_api_results> plan_version_pricing_api_results { get; set; }
         public virtual ICollection<plan_version_pricing_bands> plan_version_pricing_bands { get; set; }
-        public virtual ICollection<plan_version_pricing_job_inventory_source_estimates> plan_version_pricing_job_inventory_source_estimates { get; set; }
         public virtual ICollection<plan_version_pricing_stations> plan_version_pricing_stations { get; set; }
         public virtual plan_versions plan_versions { get; set; }
         public virtual ICollection<plan_version_pricing_markets> plan_version_pricing_markets { get; set; }

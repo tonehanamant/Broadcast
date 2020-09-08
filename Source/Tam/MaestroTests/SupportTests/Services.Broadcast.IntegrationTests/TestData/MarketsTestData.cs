@@ -1,5 +1,6 @@
 ﻿using Services.Broadcast.Entities;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.Broadcast.IntegrationTests.TestData
 {
@@ -18,6 +19,15 @@ namespace Services.Broadcast.IntegrationTests.TestData
                     { 403, 0.04743d },
                     { 202, 0.02942d },
                 }
+            };
+        }
+
+        public static MarketCoverageDto GetLatestMarketCoverages()
+        {
+            return new MarketCoverageDto
+            {
+                MarketCoverageFileId = 1,
+                MarketCoveragesByMarketCode = GetMarketsWithLatestCoverage().ToDictionary(x => x.MarketCode, x => x.PercentageOfUS * 100)
             };
         }
 

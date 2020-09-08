@@ -53,8 +53,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     plan, 
                     new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic,
-                    isProprietary: false);
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -91,8 +90,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                         plan,
                         new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto(),
                         _GetAvailableInventorySources(),
-                        diagnostic,
-                        isProprietary: false);
+                        diagnostic);
 
                     var jsonResolver = new IgnorableSerializerContractResolver();
                     jsonResolver.Ignore(typeof(PlanBuyingInventoryProgram), "ManifestId");
@@ -126,8 +124,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     plan, 
                     new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic,
-                    isProprietary: false);
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -145,8 +142,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     plan, 
                     new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic,
-                    isProprietary: false);
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -172,8 +168,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     plan,
                     new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic,
-                    isProprietary: false);
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -208,8 +203,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     plan,
                     new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic,
-                    isProprietary: false);
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -231,8 +225,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     plan,
                     new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic,
-                    isProprietary: false);
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -250,8 +243,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                     plan, 
                     new PlanBuyingInventoryEngine.ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic,
-                    isProprietary: false);
+                    diagnostic);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }

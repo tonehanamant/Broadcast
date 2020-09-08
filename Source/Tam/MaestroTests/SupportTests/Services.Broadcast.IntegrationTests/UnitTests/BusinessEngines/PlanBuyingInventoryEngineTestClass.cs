@@ -44,10 +44,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         public List<PlanBuyingInventoryProgram> UT_FilterProgramsByMinAndMaxCPM(
             List<PlanBuyingInventoryProgram> programs,
             decimal? minCPM,
-            decimal? maxCPM,
-            bool isProprietary)
+            decimal? maxCPM)
         {
-            return CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, minCPM, maxCPM, isProprietary);
+            return CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, minCPM, maxCPM);
         }
 
         public void UT_ApplyInflationFactorToSpotCost(List<PlanBuyingInventoryProgram> programs, double? inflationFactor)

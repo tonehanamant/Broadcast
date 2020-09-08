@@ -4,10 +4,10 @@
     "DefaultDaypartId": null,
     "Id": 0,
     "InventorySourceId": 5,
-    "Markets": null,
     "ProprietaryDaypartProgramMappingId": 1,
     "Quarter": null,
     "SlotNumber": 1,
-    "UnitCost": 708.5560
+    "SummaryByMarketByAudience": null,
+    "UnitCost": 453.4085
   }
 ]

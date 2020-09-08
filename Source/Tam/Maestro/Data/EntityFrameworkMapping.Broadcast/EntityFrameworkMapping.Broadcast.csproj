@@ -430,7 +430,7 @@
     <Compile Include="inventory_proprietary_summary_audiences.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="inventory_proprietary_summary_markets.cs">
+    <Compile Include="inventory_proprietary_summary_audience_markets.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="inventory_sources.cs">
@@ -541,9 +541,6 @@
     <Compile Include="plan_version_buying_job.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="plan_version_buying_job_inventory_source_estimates.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="plan_version_buying_market_details.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
@@ -553,10 +550,7 @@
     <Compile Include="plan_version_buying_parameters.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="plan_version_buying_parameters_inventory_source_percentages.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="plan_version_buying_parameters_inventory_source_type_percentages.cs">
+    <Compile Include="plan_version_buying_parameter_inventory_proprietary_summaries.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="plan_version_buying_rep_firm_details.cs">
@@ -613,9 +607,6 @@
     <Compile Include="plan_version_pricing_job.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="plan_version_pricing_job_inventory_source_estimates.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="plan_version_pricing_markets.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
@@ -625,10 +616,7 @@
     <Compile Include="plan_version_pricing_parameters.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="plan_version_pricing_parameters_inventory_source_percentages.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="plan_version_pricing_parameters_inventory_source_type_percentages.cs">
+    <Compile Include="plan_version_pricing_parameter_inventory_proprietary_summaries.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="plan_version_pricing_results.cs">

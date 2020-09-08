@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast.ApplicationServices.Plan
 {
@@ -229,7 +228,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanValidator.ValidatePlan(plan);
 
             _ConvertImpressionsToRawFormat(plan);
-            _DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
+            plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
             _CalculateDeliveryDataPerAudience(plan);
             _SetPlanVersionNumber(plan);
             _SetPlanFlightDays(plan);
@@ -293,190 +292,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return plan.Id;
         }
 
-        /// <summary>
-        /// Based on the plan delivery type, splits weekly breakdown into all combinations of plan ad lengths and dayparts
-        /// And distributes goals based on ad length and daypart weights
-        /// </summary>
-        private void _DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(PlanDto plan)
-        {
-            if (plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.EvenDelivery ||
-                plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.CustomByWeek)
-            {
-                plan.WeeklyBreakdownWeeks = _DistributeGoals_ByWeekDeliveryType(plan);
-            }
-            else if (plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength)
-            {
-                plan.WeeklyBreakdownWeeks = _DistributeGoals_ByWeekByAdLengthDeliveryType(plan);
-            }
-            else if (plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart)
-            {
-                plan.WeeklyBreakdownWeeks = _DistributeGoals_ByWeekByDaypartDeliveryType(plan);
-            }
-            else
-            {
-                throw new ApplicationException(_UnsupportedDeliveryTypeMessage);
-            }
-        }
-
-        /// <summary>
-        /// Splits each weekly breakdown record using ad length weighting goals to distribute the goals of each record
-        /// </summary>
-        /// <returns>A list of breakdown records with 'by week by ad length by daypart' structure</returns>
-        private List<WeeklyBreakdownWeek> _DistributeGoals_ByWeekByDaypartDeliveryType(PlanDto plan)
-        {
-            var result = new List<WeeklyBreakdownWeek>();
-
-            var weeks = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(plan.WeeklyBreakdownWeeks);
-
-            foreach (var weeklyBreakdown in plan.WeeklyBreakdownWeeks)
-            {
-                var aduImpressionsForBreakdownItem = _WeeklyBreakdownEngine.CalculateWeeklyADUImpressions(weeklyBreakdown, plan.Equivalized
-                                            , plan.ImpressionsPerUnit, plan.CreativeLengths);
-                var unitsImpressionsForBreakdownItem = weeklyBreakdown.WeeklyUnits == 0 ? 0 : weeklyBreakdown.WeeklyImpressions / weeklyBreakdown.WeeklyUnits;
-                var week = weeks.Single(w => w.MediaWeekId == weeklyBreakdown.MediaWeekId);
-
-                // In save plan it's distributing goals for spot length, so it's not necessary to call it again
-                foreach (var distributedSpotLength in plan.CreativeLengths)
-                {
-                    var weighting = GeneralMath.ConvertPercentageToFraction(distributedSpotLength.Weight.GetValueOrDefault());
-
-                    var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
-                    {
-                        WeekNumber = weeklyBreakdown.WeekNumber,
-                        MediaWeekId = weeklyBreakdown.MediaWeekId,
-                        StartDate = weeklyBreakdown.StartDate,
-                        EndDate = weeklyBreakdown.EndDate,
-                        NumberOfActiveDays = weeklyBreakdown.NumberOfActiveDays,
-                        ActiveDays = weeklyBreakdown.ActiveDays,
-                        SpotLengthId = distributedSpotLength.SpotLengthId,
-                        DaypartCodeId = weeklyBreakdown.DaypartCodeId,
-                        AduImpressions = aduImpressionsForBreakdownItem * weighting,
-                        UnitImpressions = unitsImpressionsForBreakdownItem * weighting
-                    };
-
-                    var impressions = weeklyBreakdown.WeeklyImpressions * weighting;
-
-                    _UpdateGoalsForWeeklyBreakdownItem(plan.TargetImpressions.Value,
-                        plan.TargetRatingPoints.Value,
-                        plan.Budget.Value,
-                        newWeeklyBreakdownItem,
-                        impressions,
-                        roundRatings: false);
-
-                    newWeeklyBreakdownItem.PercentageOfWeek = _CalculatePercentageOfWeek(impressions, week.Impressions);
-
-                    result.Add(newWeeklyBreakdownItem);
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Splits each weekly breakdown record using plan daypart weighting goals to distribute the goals of each record
-        /// </summary>
-        /// <returns>A list of breakdown records with 'by week by ad length by daypart' structure</returns>
-        private List<WeeklyBreakdownWeek> _DistributeGoals_ByWeekByAdLengthDeliveryType(PlanDto plan)
-        {
-            var result = new List<WeeklyBreakdownWeek>();
-            var weeks = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(plan.WeeklyBreakdownWeeks);
-            var standardDaypardWeightingGoals = _WeeklyBreakdownEngine.GetStandardDaypardWeightingGoals(plan.Dayparts);
-            foreach (var week in weeks)
-            {
-                foreach (var breakdownItem in plan.WeeklyBreakdownWeeks.Where(x => x.MediaWeekId == week.MediaWeekId))
-                {
-                    double aduImpressionsForBreakdownItem = _WeeklyBreakdownEngine.CalculateWeeklyADUImpressions(breakdownItem, plan.Equivalized
-                        , plan.ImpressionsPerUnit, plan.CreativeLengths);
-                    double unitsImpressionsForBreakdownItem = breakdownItem.WeeklyUnits == 0 ? 0 : breakdownItem.WeeklyImpressions / breakdownItem.WeeklyUnits;
-                    foreach (var item in standardDaypardWeightingGoals)
-                    {
-                        var weighting = GeneralMath.ConvertPercentageToFraction(item.WeightingGoalPercent);
-
-                        var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
-                        {
-                            WeekNumber = week.WeekNumber,
-                            MediaWeekId = week.MediaWeekId,
-                            StartDate = week.StartDate,
-                            EndDate = week.EndDate,
-                            NumberOfActiveDays = week.NumberOfActiveDays,
-                            ActiveDays = week.ActiveDays,
-                            SpotLengthId = breakdownItem.SpotLengthId,
-                            DaypartCodeId = item.DaypartDefaultId,
-                            AduImpressions = aduImpressionsForBreakdownItem * weighting,
-                            UnitImpressions = unitsImpressionsForBreakdownItem * weighting
-                        };
-
-                        var impressions = breakdownItem.WeeklyImpressions * weighting;
-
-                        _UpdateGoalsForWeeklyBreakdownItem(
-                            plan.TargetImpressions.Value,
-                            plan.TargetRatingPoints.Value,
-                            plan.Budget.Value,
-                            newWeeklyBreakdownItem,
-                            impressions,
-                            roundRatings: false);
-
-                        newWeeklyBreakdownItem.PercentageOfWeek = _CalculatePercentageOfWeek(impressions, week.Impressions);
-
-                        result.Add(newWeeklyBreakdownItem);
-                    }
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Splits each weekly breakdown record using plan daypart and ad length weighting goals to distribute the goals of each record
-        /// </summary>
-        /// <returns>A list of breakdown records with 'by week by ad length by daypart' structure</returns>
-        private List<WeeklyBreakdownWeek> _DistributeGoals_ByWeekDeliveryType(PlanDto plan)
-        {
-            var result = new List<WeeklyBreakdownWeek>();
-
-            var allSpotLengthIdAndStandardDaypartIdCombinations =
-                _WeeklyBreakdownEngine.GetWeeklyBreakdownCombinations(plan.CreativeLengths, plan.Dayparts);
-
-            foreach (var week in plan.WeeklyBreakdownWeeks)
-            {
-                var weeklyAduImpressions = _WeeklyBreakdownEngine.CalculateWeeklyADUImpressions(week, plan.Equivalized
-                    , plan.ImpressionsPerUnit, plan.CreativeLengths);
-                var unitsImpressions = week.WeeklyUnits == 0 ? 0 : week.WeeklyImpressions / week.WeeklyUnits;
-                foreach (var combination in allSpotLengthIdAndStandardDaypartIdCombinations)
-                {
-                    var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
-                    {
-                        WeekNumber = week.WeekNumber,
-                        MediaWeekId = week.MediaWeekId,
-                        StartDate = week.StartDate,
-                        EndDate = week.EndDate,
-                        NumberOfActiveDays = week.NumberOfActiveDays,
-                        ActiveDays = week.ActiveDays,
-                        SpotLengthId = combination.SpotLengthId,
-                        DaypartCodeId = combination.DaypartCodeId,
-                        AduImpressions = weeklyAduImpressions * combination.Weighting,
-                        UnitImpressions = unitsImpressions * combination.Weighting
-                    };
-
-                    var impressions = week.WeeklyImpressions * combination.Weighting;
-
-                    _UpdateGoalsForWeeklyBreakdownItem(
-                        plan.TargetImpressions.Value,
-                        plan.TargetRatingPoints.Value,
-                        plan.Budget.Value,
-                        newWeeklyBreakdownItem,
-                        impressions,
-                        roundRatings: false);
-
-                    newWeeklyBreakdownItem.PercentageOfWeek = _CalculatePercentageOfWeek(impressions, week.WeeklyImpressions);
-
-                    result.Add(newWeeklyBreakdownItem);
-                }
-            }
-
-            return result;
-        }
-
         private void _UpdateCampaignLastModified(int campaignId, DateTime modifiedDate, string modifiedBy)
         {
             var key = KeyHelper.GetCampaignLockingKey(campaignId);
@@ -507,8 +322,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 DeliveryRatingPoints = Convert.ToDouble(plan.TargetRatingPoints),
                 UnitCaps = pricingDefaults.UnitCaps,
                 UnitCapsType = pricingDefaults.UnitCapsType,
-                InventorySourcePercentages = pricingDefaults.InventorySourcePercentages,
-                InventorySourceTypePercentages = pricingDefaults.InventorySourceTypePercentages,
                 Margin = pricingDefaults.Margin,
                 PlanVersionId = plan.VersionId,
                 MarketGroup = pricingDefaults.MarketGroup
@@ -908,11 +721,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
         }
 
-        private double _CalculatePercentageOfWeek(double breakdownItemImpressions, double weeklyImpressions)
-        {
-            return weeklyImpressions > 0 ? Math.Round(100 * breakdownItemImpressions / weeklyImpressions) : 0;
-        }
-
         // attribute has to be on the class instead of the interface because this is a recurring job.
         [AutomaticRetry(Attempts = 2, DelaysInSeconds = new int[] { 5 * 60 }, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         public void AutomaticStatusTransitionsJobEntryPoint()
@@ -976,25 +784,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 //this is a new version.
                 plan.VersionNumber = _PlanRepository.GetLatestVersionNumberForPlan(plan.Id) + 1;
             }
-        }
-
-        private void _UpdateGoalsForWeeklyBreakdownItem(
-            double totalImpressions,
-            double totalRatings,
-            decimal totalBudget,
-            WeeklyBreakdownWeek breakdownItem,
-            double impressions,
-            bool roundRatings)
-        {
-            var budgetPerOneImpression = totalBudget / (decimal)totalImpressions;
-            var weeklyRatio = impressions / totalImpressions;
-
-            breakdownItem.WeeklyImpressions = impressions;
-            breakdownItem.WeeklyImpressionsPercentage = Math.Round(100 * weeklyRatio);
-            breakdownItem.WeeklyBudget = (decimal)impressions * budgetPerOneImpression;
-
-            var ratings = totalRatings * weeklyRatio;
-            breakdownItem.WeeklyRatings = roundRatings ? ProposalMath.RoundDownWithDecimals(ratings, 1) : ratings;
         }
 
         private void _DispatchPlanAggregation(PlanDto plan, bool aggregatePlanSynchronously)

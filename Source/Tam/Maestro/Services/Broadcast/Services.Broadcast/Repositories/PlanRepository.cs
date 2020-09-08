@@ -134,8 +134,6 @@ namespace Services.Broadcast.Repositories
 
         PlanPricingParametersDto GetLatestParametersForPlanPricingJob(int jobId);
 
-        void SavePlanPricingEstimates(int jobId, List<PricingEstimate> estimates);
-
         List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanId(int planId);
 
         List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanVersionId(int planVersionId);
@@ -346,13 +344,7 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_summaries))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_weekly_breakdown.Select(y => y.media_weeks)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters))
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(y => y.plan_version_pricing_parameters_inventory_source_percentages)))
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(y => y.plan_version_pricing_parameters_inventory_source_type_percentages)))
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(y => y.plan_version_pricing_parameters_inventory_source_percentages.Select(r => r.inventory_sources))))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_buying_parameters))
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_buying_parameters.Select(y => y.plan_version_buying_parameters_inventory_source_percentages)))
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_buying_parameters.Select(y => y.plan_version_buying_parameters_inventory_source_type_percentages)))
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_buying_parameters.Select(y => y.plan_version_buying_parameters_inventory_source_percentages.Select(r => r.inventory_sources))))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_audience_daypart_vpvh))
                         .Single(s => s.id == planId, "Invalid plan id.");
                     return _MapToDto(entity, markets, versionId);
@@ -579,24 +571,6 @@ namespace Services.Broadcast.Repositories
             if (arg == null)
                 return null;
 
-            var sortedSourcePercents = PlanInventorySourceSortEngine.SortInventorySourcePercents(
-                arg.plan_version_buying_parameters_inventory_source_percentages.Select(i =>
-                new PlanInventorySourceDto
-                {
-                    Id = i.inventory_source_id,
-                    Name = i.inventory_sources.name,
-                    Percentage = i.percentage
-                }).ToList());
-
-            var sortedSourceTypePercents = PlanInventorySourceSortEngine.SortInventorySourceTypePercents(
-                arg.plan_version_buying_parameters_inventory_source_type_percentages.Select(i =>
-                    new PlanInventorySourceTypeDto
-                    {
-                        Id = i.inventory_source_type,
-                        Name = ((InventorySourceTypeEnum)i.inventory_source_type).GetDescriptionAttribute(),
-                        Percentage = i.percentage
-                }).ToList());
-
             return new PlanBuyingParametersDto
             {
                 PlanId = arg.plan_versions.plan_id,
@@ -611,8 +585,6 @@ namespace Services.Broadcast.Repositories
                 CPP = arg.cpp,
                 Currency = (PlanCurrenciesEnum)arg.currency,
                 DeliveryRatingPoints = arg.rating_points,
-                InventorySourcePercentages = sortedSourcePercents,
-                InventorySourceTypePercentages = sortedSourceTypePercents,
                 UnitCaps = arg.unit_caps,
                 UnitCapsType = (UnitCapEnum)arg.unit_caps_type,
                 Margin = arg.margin,
@@ -638,24 +610,6 @@ namespace Services.Broadcast.Repositories
             if (arg == null)
                 return null;
 
-            var sortedSourcePercents = PlanInventorySourceSortEngine.SortInventorySourcePercents(
-                arg.plan_version_pricing_parameters_inventory_source_percentages.Select(i =>
-                new PlanInventorySourceDto
-                {
-                    Id = i.inventory_source_id,
-                    Name = i.inventory_sources.name,
-                    Percentage = i.percentage
-                }).ToList());
-
-            var sortedSourceTypePercents = PlanInventorySourceSortEngine.SortInventorySourceTypePercents(
-                arg.plan_version_pricing_parameters_inventory_source_type_percentages.Select(i =>
-                new PlanInventorySourceTypeDto
-                {
-                    Id = i.inventory_source_type,
-                    Name = ((InventorySourceTypeEnum)i.inventory_source_type).GetDescriptionAttribute(),
-                    Percentage = i.percentage
-                }).ToList());
-
             return new PlanPricingParametersDto
             {
                 PlanId = arg.plan_versions.plan_id,
@@ -670,8 +624,6 @@ namespace Services.Broadcast.Repositories
                 CPP = arg.cpp,
                 Currency = (PlanCurrenciesEnum)arg.currency,
                 DeliveryRatingPoints = arg.rating_points,
-                InventorySourcePercentages = sortedSourcePercents,
-                InventorySourceTypePercentages = sortedSourceTypePercents,
                 UnitCaps = arg.unit_caps,
                 UnitCapsType = (UnitCapEnum)arg.unit_caps_type,
                 Margin = arg.margin,
@@ -1172,8 +1124,6 @@ namespace Services.Broadcast.Repositories
                     .plan_version_pricing_parameters
                     .Include(x => x.plan_versions)
                     .Include(x => x.plan_versions.plan_version_available_markets)
-                    .Include(x => x.plan_version_pricing_parameters_inventory_source_percentages)
-                    .Include(x => x.plan_version_pricing_parameters_inventory_source_type_percentages)
                     .Where(p => p.plan_versions.plan_id == planId);
 
                 return executions.ToList().Select(e => new PlanPricingApiRequestParametersDto
@@ -1195,20 +1145,6 @@ namespace Services.Broadcast.Repositories
                     ProprietaryBlend = e.proprietary_blend,
                     UnitCaps = e.unit_caps,
                     UnitCapsType = (UnitCapEnum)e.unit_caps_type,
-                    InventorySourcePercentages = e.plan_version_pricing_parameters_inventory_source_percentages.Select(
-                        s => new PlanInventorySourceDto
-                        {
-                            Id = s.inventory_source_id,
-                            Name = s.inventory_sources.name,
-                            Percentage = s.percentage
-                        }).ToList(),
-                    InventorySourceTypePercentages = e.plan_version_pricing_parameters_inventory_source_type_percentages.Select(
-                        s => new PlanInventorySourceTypeDto
-                        {
-                            Id = s.inventory_source_type,
-                            Name = ((InventorySourceTypeEnum)s.inventory_source_type).GetDescriptionAttribute(),
-                            Percentage = s.percentage
-                        }).ToList(),
                     JobId = e.plan_version_pricing_job_id,
                     Margin = e.margin
                 }).ToList();
@@ -1383,8 +1319,6 @@ namespace Services.Broadcast.Repositories
                     .Max();
 
                 var latestParameters = context.plan_version_pricing_parameters
-                    .Include(x => x.plan_version_pricing_parameters_inventory_source_percentages)
-                    .Include(x => x.plan_version_pricing_parameters_inventory_source_type_percentages)
                     .Include(x => x.plan_versions)
                     .Where(x => x.id == latestParametersId)
                     .OrderByDescending(p => p.id)
@@ -1418,40 +1352,12 @@ namespace Services.Broadcast.Repositories
                 CPP = entity.cpp,
                 DeliveryRatingPoints = entity.rating_points,
                 Margin = entity.margin,
-                InventorySourcePercentages = entity.plan_version_pricing_parameters_inventory_source_percentages.Select(_MapPlanInventorySourceDto).ToList(),
-                InventorySourceTypePercentages = entity.plan_version_pricing_parameters_inventory_source_type_percentages.Select(_MapPlanInventorySourceTypeDto).ToList(),
                 JobId = entity.plan_version_pricing_job_id,
                 PlanVersionId = entity.plan_version_id,
                 AdjustedBudget = entity.budget_adjusted,
                 AdjustedCPM = entity.cpm_adjusted,
                 MarketGroup = (MarketGroupEnum)entity.market_group
             };
-            return dto;
-        }
-
-        private PlanInventorySourceDto _MapPlanInventorySourceDto(
-            plan_version_pricing_parameters_inventory_source_percentages entity)
-        {
-            var dto = new PlanInventorySourceDto
-            {
-                Id = entity.inventory_source_id,
-                Name = entity.inventory_sources.name,
-                Percentage = entity.percentage
-            };
-
-            return dto;
-        }
-
-        private PlanInventorySourceTypeDto _MapPlanInventorySourceTypeDto(
-            plan_version_pricing_parameters_inventory_source_type_percentages entity)
-        {
-            var dto = new PlanInventorySourceTypeDto
-            {
-                Id = entity.inventory_source_type,
-                Name = ((InventorySourceTypeEnum)entity.inventory_source_type).ToString(),
-                Percentage = entity.percentage
-            };
-
             return dto;
         }
 
@@ -1479,22 +1385,14 @@ namespace Services.Broadcast.Repositories
                     plan_version_pricing_job_id = planPricingParametersDto.JobId,
                     budget_adjusted = planPricingParametersDto.AdjustedBudget,
                     cpm_adjusted = planPricingParametersDto.AdjustedCPM,
-                    market_group = (int)planPricingParametersDto.MarketGroup
+                    market_group = (int)planPricingParametersDto.MarketGroup,
+                    plan_version_pricing_parameter_inventory_proprietary_summaries = planPricingParametersDto.ProprietaryInventory
+                        .Select(x => new plan_version_pricing_parameter_inventory_proprietary_summaries
+                        {
+                            inventory_proprietary_summary_id = x.Id
+                        })
+                        .ToList()
                 };
-
-                planPricingParametersDto.InventorySourcePercentages.ForEach(s => planPricingParameters.plan_version_pricing_parameters_inventory_source_percentages.Add(
-                    new plan_version_pricing_parameters_inventory_source_percentages
-                    {
-                        inventory_source_id = s.Id,
-                        percentage = s.Percentage
-                    }));
-
-                planPricingParametersDto.InventorySourceTypePercentages.ForEach(s => planPricingParameters.plan_version_pricing_parameters_inventory_source_type_percentages.Add(
-                    new plan_version_pricing_parameters_inventory_source_type_percentages
-                    {
-                        inventory_source_type = (byte)s.Id,
-                        percentage = s.Percentage
-                    }));
 
                 context.plan_version_pricing_parameters.Add(planPricingParameters);
 
@@ -1984,28 +1882,6 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public void SavePlanPricingEstimates(int jobId, List<PricingEstimate> estimates)
-        {
-            _InReadUncommitedTransaction(context =>
-            {
-                var propertiesToIgnore = new List<string>() { "id" };
-
-                var itemsToInsert = estimates
-                    .Select(x => new plan_version_pricing_job_inventory_source_estimates
-                    {
-                        media_week_id = x.MediaWeekId,
-                        inventory_source_id = x.InventorySourceId,
-                        inventory_source_type = (int?)x.InventorySourceType,
-                        plan_version_pricing_job_id = jobId,
-                        impressions = x.Impressions,
-                        cost = x.Cost
-                    })
-                    .ToList();
-
-                BulkInsert(context, itemsToInsert, propertiesToIgnore);
-            });
-        }
-
         public List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanId(int planId)
         {
             return _InReadUncommitedTransaction(context =>
@@ -2117,10 +1993,7 @@ namespace Services.Broadcast.Repositories
                 var entity = (from parameters in context.plan_version_pricing_parameters
                               where parameters.plan_version_id == versionId
                               orderby parameters.id descending
-                              select parameters)
-                        .Include(p => p.plan_version_pricing_parameters_inventory_source_percentages)
-                        .Include(p => p.plan_version_pricing_parameters_inventory_source_type_percentages)
-                        .Include(p => p.plan_version_pricing_parameters_inventory_source_percentages.Select(r => r.inventory_sources)); ;
+                              select parameters);
 
                 return _MapPricingParameters(entity.FirstOrDefault());
             });
@@ -2134,10 +2007,7 @@ namespace Services.Broadcast.Repositories
                               where parameters.plan_versions.plan_id == planId &&
                                     parameters.plan_version_id == parameters.plan_versions.plan.latest_version_id
                               orderby parameters.id descending
-                              select parameters)
-                        .Include(p => p.plan_version_pricing_parameters_inventory_source_percentages)
-                        .Include(p => p.plan_version_pricing_parameters_inventory_source_type_percentages)
-                        .Include(p => p.plan_version_pricing_parameters_inventory_source_percentages.Select(r => r.inventory_sources));
+                              select parameters);
 
                 return _MapPricingParameters(entity.FirstOrDefault());
             });

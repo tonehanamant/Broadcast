@@ -16,8 +16,7 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public plan_version_pricing_parameters()
         {
-            this.plan_version_pricing_parameters_inventory_source_percentages = new HashSet<plan_version_pricing_parameters_inventory_source_percentages>();
-            this.plan_version_pricing_parameters_inventory_source_type_percentages = new HashSet<plan_version_pricing_parameters_inventory_source_type_percentages>();
+            this.plan_version_pricing_parameter_inventory_proprietary_summaries = new HashSet<plan_version_pricing_parameter_inventory_proprietary_summaries>();
         }
     
         public int id { get; set; }
@@ -43,8 +42,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int market_group { get; set; }
     
         public virtual plan_version_pricing_job plan_version_pricing_job { get; set; }
-        public virtual ICollection<plan_version_pricing_parameters_inventory_source_percentages> plan_version_pricing_parameters_inventory_source_percentages { get; set; }
-        public virtual ICollection<plan_version_pricing_parameters_inventory_source_type_percentages> plan_version_pricing_parameters_inventory_source_type_percentages { get; set; }
         public virtual plan_versions plan_versions { get; set; }
+        public virtual ICollection<plan_version_pricing_parameter_inventory_proprietary_summaries> plan_version_pricing_parameter_inventory_proprietary_summaries { get; set; }
     }
 }

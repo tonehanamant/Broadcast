@@ -25,8 +25,6 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public double DeliveryRatingPoints { get; set; }
         public double? Margin { get; set; }
         public int? JobId { get; set; }
-        public List<PlanInventorySourceDto> InventorySourcePercentages { get; set; } = new List<PlanInventorySourceDto>();
-        public List<PlanInventorySourceTypeDto> InventorySourceTypePercentages { get; set; } = new List<PlanInventorySourceTypeDto>();
         public List<CreativeLength> CreativeLengths { get; set; } = new List<CreativeLength>();
         public int SpotLengthId { get; set; }
         public bool Equivalized { get; set; }

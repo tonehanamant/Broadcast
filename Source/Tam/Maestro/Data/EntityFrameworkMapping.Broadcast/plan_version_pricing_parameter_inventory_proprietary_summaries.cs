@@ -12,13 +12,13 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class plan_version_buying_parameters_inventory_source_type_percentages
+    public partial class plan_version_pricing_parameter_inventory_proprietary_summaries
     {
         public int id { get; set; }
-        public int plan_version_buying_parameter_id { get; set; }
-        public byte inventory_source_type { get; set; }
-        public int percentage { get; set; }
+        public int plan_version_pricing_parameter_id { get; set; }
+        public int inventory_proprietary_summary_id { get; set; }
     
-        public virtual plan_version_buying_parameters plan_version_buying_parameters { get; set; }
+        public virtual inventory_proprietary_summary inventory_proprietary_summary { get; set; }
+        public virtual plan_version_pricing_parameters plan_version_pricing_parameters { get; set; }
     }
 }

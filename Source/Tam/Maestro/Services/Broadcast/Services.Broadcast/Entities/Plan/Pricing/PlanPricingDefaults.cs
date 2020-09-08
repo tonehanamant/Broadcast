@@ -8,8 +8,6 @@ namespace Services.Broadcast.Entities.Plan.Pricing
     {
         public int UnitCaps { get; set; }
         public UnitCapEnum UnitCapsType { get; set; }
-        public List<PlanInventorySourceDto> InventorySourcePercentages { get; set; }
-        public List<PlanInventorySourceTypeDto> InventorySourceTypePercentages { get; set; }
         public double Margin { get; set; }
         public MarketGroupEnum MarketGroup { get; set; }
     }

@@ -2,7 +2,7 @@
   {
     "JobId": 1,
     "PlanVersionId": 77,
-    "PricingCpm": 54.699248120300751879699248100,
+    "PricingCpm": 0.2036575228595178719866999000,
     "PricingVersion": "2",
     "RequestId": "#q1w2e3",
     "Spots": [

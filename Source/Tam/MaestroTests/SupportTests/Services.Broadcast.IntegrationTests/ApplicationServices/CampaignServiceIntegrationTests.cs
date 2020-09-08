@@ -12,6 +12,7 @@ using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Campaign;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.InventoryProprietary;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
@@ -920,17 +921,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     InflationFactor = 0.5,
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
-                    UnitCapsType = UnitCapEnum.PerDay,
-                    InventorySourcePercentages = new List<PlanInventorySourceDto>
-                    {
-                        new PlanInventorySourceDto{Id = 3, Percentage = 12},
-                        new PlanInventorySourceDto{Id = 5, Percentage = 13},
-                        new PlanInventorySourceDto{Id = 6, Percentage = 14},
-                        new PlanInventorySourceDto{Id = 7, Percentage = 15},
-                        new PlanInventorySourceDto{Id = 10, Percentage = 16},
-                        new PlanInventorySourceDto{Id = 11, Percentage = 17},
-                        new PlanInventorySourceDto{Id = 12, Percentage = 8},
-                    }
+                    UnitCapsType = UnitCapEnum.PerDay
                 };
 
                 var job = planPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "integration test");

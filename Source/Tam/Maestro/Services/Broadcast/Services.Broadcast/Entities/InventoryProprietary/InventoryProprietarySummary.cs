@@ -1,4 +1,6 @@
-﻿namespace Services.Broadcast.Entities.InventoryProprietary
+﻿using System.Collections.Generic;
+
+namespace Services.Broadcast.Entities.InventoryProprietary
 {
 	public class InventoryProprietarySummary
 	{

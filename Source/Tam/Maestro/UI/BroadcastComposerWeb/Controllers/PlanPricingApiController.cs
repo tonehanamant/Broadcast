@@ -24,6 +24,12 @@ namespace BroadcastComposerWeb.Controllers
         {
         }
 
+        /// <summary>
+        /// Queues pricing job
+        /// </summary>
+        /// <param name="planPricingRequestDto">
+        /// ProprietaryInventory is a list of proprietary summary ids
+        /// </param>
         [HttpPost]
         [Route("Queue")]
         public BaseResponse<PlanPricingJob> Queue(PlanPricingParametersDto planPricingRequestDto)
@@ -98,11 +104,7 @@ namespace BroadcastComposerWeb.Controllers
         /// Allows checking that correct inventory is used for pricing
         /// </summary>
         /// <param name="planId">Plan ID</param>
-        /// <param name="requestParameters">
-        /// InventorySourceIds
-        /// - pass InventorySourceIds only when you want to check what proprietary inventory could be potentially chosen
-        /// - DO NOT pass InventorySourceIds if you want to check what is sent to the pricing model
-        /// </param>
+        /// <param name="requestParameters">Parameters</param>
         [HttpPost]
         [Route("PricingApiRequestPrograms")]
         public BaseResponse<PlanPricingApiRequestDto> GetPricingProgramApiRequest(int planId, PricingInventoryGetRequestParametersDto requestParameters)

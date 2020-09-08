@@ -938,32 +938,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     ProvidedImpressions = 23400.0
                 }
             };
-            var result = _PlanBuyingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, (decimal?)minCPM, (decimal?)maxCPM, isProprietary: false);
+            var result = _PlanBuyingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, (decimal?)minCPM, (decimal?)maxCPM);
 
             Assert.AreEqual(expectedCount, result.Count);
-        }
-
-        [Test]
-        public void CalculatesProgramCPM_Proprietary()
-        {
-            var programs = new List<PlanBuyingInventoryProgram>
-            {
-                new PlanBuyingInventoryProgram
-                {
-                    ManifestRates = new List<PlanBuyingInventoryProgram.ManifestRate>
-                    {
-                        new PlanBuyingInventoryProgram.ManifestRate
-                        {
-                            Cost = 50.00M,
-                        }
-                    },
-                    ProvidedImpressions = 10000
-                }
-            };
-
-            var result = _PlanBuyingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, null, null, isProprietary: true);
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
         [Test]
@@ -984,7 +961,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanBuyingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, null, null, isProprietary: false);
+            var result = _PlanBuyingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, null, null);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -1140,7 +1117,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             };
 
             _PlanBuyingInventoryEngine.UT_ApplyInflationFactorToSpotCost(programs, inflationFactor);
-            var result = _PlanBuyingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, (decimal?)minCPM, (decimal?)maxCPM, isProprietary: false);
+            var result = _PlanBuyingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, (decimal?)minCPM, (decimal?)maxCPM);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -1874,17 +1851,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Setup(x => x.ApplyProjectedImpressions(
                     It.IsAny<IEnumerable<PlanBuyingInventoryProgram>>(),
                     It.IsAny<ImpressionsRequestDto>(),
-                    It.IsAny<int>(),
-                    It.IsAny<bool>()))
-                .Callback<IEnumerable<PlanBuyingInventoryProgram>, ImpressionsRequestDto, int, bool>((programs, request, audienceId, isProprietary) =>
+                    It.IsAny<int>()))
+                .Callback<IEnumerable<PlanBuyingInventoryProgram>, ImpressionsRequestDto, int>((programs, request, audienceId) =>
                 {
                     // deep copy
                     passedParameters = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(new
                     {
                         programs,
                         request,
-                        audienceId,
-                        isProprietary
+                        audienceId
                     }));
 
                     foreach (var program in programs)
@@ -1894,7 +1869,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 });
 
             // Act
-            var inventory = _PlanBuyingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, isProprietary: false);
+            var inventory = _PlanBuyingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -2012,17 +1987,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Setup(x => x.ApplyProjectedImpressions(
                     It.IsAny<IEnumerable<PlanBuyingInventoryProgram>>(),
                     It.IsAny<ImpressionsRequestDto>(),
-                    It.IsAny<int>(),
-                    It.IsAny<bool>()))
-                .Callback<IEnumerable<PlanBuyingInventoryProgram>, ImpressionsRequestDto, int, bool>((programs, request, audienceId, isProprietary) =>
+                    It.IsAny<int>()))
+                .Callback<IEnumerable<PlanBuyingInventoryProgram>, ImpressionsRequestDto, int>((programs, request, audienceId) =>
                 {
                     // deep copy
                     passedParameters = JsonConvert.DeserializeObject((JsonConvert.SerializeObject(new
                     {
                         programs,
                         request,
-                        audienceId,
-                        isProprietary
+                        audienceId
                     })));
 
                     foreach (var program in programs)
@@ -2032,7 +2005,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 });
 
             // Act
-            var inventory = _PlanBuyingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, isProprietary: false);
+            var inventory = _PlanBuyingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -2158,17 +2131,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     .Setup(x => x.ApplyProjectedImpressions(
                         It.IsAny<IEnumerable<PlanBuyingInventoryProgram>>(),
                         It.IsAny<ImpressionsRequestDto>(),
-                        It.IsAny<int>(),
-                        It.IsAny<bool>()))
-                    .Callback<IEnumerable<PlanBuyingInventoryProgram>, ImpressionsRequestDto, int, bool>((programs, request, audienceId, isProprietary) =>
+                        It.IsAny<int>()))
+                    .Callback<IEnumerable<PlanBuyingInventoryProgram>, ImpressionsRequestDto, int>((programs, request, audienceId) =>
                     {
                         // deep copy
                         passedParameters = JsonConvert.DeserializeObject((JsonConvert.SerializeObject(new
                         {
                             programs,
                             request,
-                            audienceId,
-                            isProprietary
+                            audienceId
                         })));
 
                         foreach (var program in programs)
@@ -2178,158 +2149,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     });
 
                 // Act
-                var inventory = _PlanBuyingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, isProprietary: false);
-
-                // Assert
-                var resultJson = IntegrationTestHelper.ConvertToJson(new
-                {
-                    passedParameters,
-                    inventory
-                });
-
-                Approvals.Verify(resultJson);
-            }
-            finally
-            {
-                StubbedConfigurationWebApiClient.RunTimeParameters["PlanBuyingEndpointVersion"] = "2";
-            }
-        }
-
-        [Test]
-        public void ProjectsImpressions_WhenGatheringInventory_ForBuying_v3_Proprietary()
-        {
-            try
-            {
-                StubbedConfigurationWebApiClient.RunTimeParameters["PlanBuyingEndpointVersion"] = "3";
-
-                // Arrange
-                var parameters = new ProgramInventoryOptionalParametersDto();
-                var inventorySourceIds = new List<int>();
-                var diagnostic = new PlanBuyingJobDiagnostic();
-
-                var plan = _GetPlan();
-                plan.Equivalized = true;
-                plan.HUTBookId = 202;
-                plan.PostingType = PostingTypeEnum.NSI;
-                plan.ShareBookId = 201;
-                plan.CreativeLengths = new List<CreativeLength>
-                {
-                    new CreativeLength { SpotLengthId = 5, Weight = 50 },
-                    new CreativeLength { SpotLengthId = 2, Weight = 50 }
-                };
-                plan.AudienceId = 25;
-
-                _StationRepositoryMock
-                    .Setup(x => x.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
-                    .Returns(new List<DisplayBroadcastStation>());
-
-                _StationProgramRepositoryMock
-                    .Setup(x => x.GetProgramsForBuyingModel(
-                        It.IsAny<DateTime>(),
-                        It.IsAny<DateTime>(),
-                        It.IsAny<List<int>>(),
-                        It.IsAny<List<int>>(),
-                        It.IsAny<List<int>>()))
-                    .Returns(new List<PlanBuyingInventoryProgram>
-                    {
-                        new PlanBuyingInventoryProgram
-                        {
-                            SpotLengthId = 1,
-                            Station = new DisplayBroadcastStation
-                            {
-                                LegacyCallLetters = "KOB"
-                            },
-                            ManifestWeeks = new List<PlanBuyingInventoryProgram.ManifestWeek>
-                            {
-                                new PlanBuyingInventoryProgram.ManifestWeek
-                                {
-                                    Id = 2
-                                }
-                            },
-                            ManifestDayparts = new List<PlanBuyingInventoryProgram.ManifestDaypart>
-                            {
-                                new PlanBuyingInventoryProgram.ManifestDaypart
-                                {
-                                    Id = 5,
-                                    Daypart = new DisplayDaypart { Id = 5 },
-                                    PrimaryProgramId = 0,
-                                    Programs = new List<BasePlanInventoryProgram.ManifestDaypart.Program>
-                                    {
-                                        new BasePlanInventoryProgram.ManifestDaypart.Program()
-                                    }
-                                }
-                            },
-                            ManifestRates = new List<PlanBuyingInventoryProgram.ManifestRate>
-                            {
-                                new PlanBuyingInventoryProgram.ManifestRate
-                                {
-                                    SpotLengthId = 1,
-                                    Cost = 10
-                                }
-                            }
-                        }
-                    });
-
-                _PlanBuyingInventoryQuarterCalculatorEngineMock
-                    .Setup(x => x.GetFallbackDateRanges(
-                        It.IsAny<DateRange>(),
-                        It.IsAny<QuarterDetailDto>(),
-                        It.IsAny<QuarterDetailDto>()))
-                    .Returns(new List<DateRange>());
-
-                _PlanBuyingInventoryQuarterCalculatorEngineMock
-                    .Setup(x => x.GetPlanQuarter(It.IsAny<PlanDto>()))
-                    .Returns(new QuarterDetailDto
-                    {
-                        StartDate = new DateTime(2020, 1, 1),
-                        EndDate = new DateTime(2020, 3, 31)
-                    });
-
-                _QuarterCalculationEngineMock
-                    .Setup(x => x.GetLastNQuarters(It.IsAny<QuarterDto>(), It.IsAny<int>()))
-                    .Returns(new List<QuarterDetailDto>
-                    {
-                    new QuarterDetailDto
-                    {
-                        StartDate = new DateTime(2020, 4, 1),
-                        EndDate = new DateTime(2020, 6, 30)
-                    }
-                    });
-
-                _StationRepositoryMock
-                    .Setup(x => x.GetLatestStationMonthDetailsForStations(It.IsAny<List<int>>()))
-                    .Returns(new List<StationMonthDetailDto>());
-
-                _DaypartCacheMock
-                    .Setup(x => x.GetDisplayDayparts(It.IsAny<List<int>>()))
-                    .Returns(DaypartsTestData.GetAllDisplayDayparts());
-
-                object passedParameters = null;
-                _ImpressionsCalculationEngineMock
-                    .Setup(x => x.ApplyProjectedImpressions(
-                        It.IsAny<IEnumerable<PlanBuyingInventoryProgram>>(),
-                        It.IsAny<ImpressionsRequestDto>(),
-                        It.IsAny<int>(),
-                        It.IsAny<bool>()))
-                    .Callback<IEnumerable<PlanBuyingInventoryProgram>, ImpressionsRequestDto, int, bool>((programs, request, audienceId, isProprietary) =>
-                    {
-                        // deep copy
-                        passedParameters = JsonConvert.DeserializeObject((JsonConvert.SerializeObject(new
-                        {
-                            programs,
-                            request,
-                            audienceId,
-                            isProprietary
-                        })));
-
-                        foreach (var program in programs)
-                        {
-                            program.ProjectedImpressions = 1500;
-                        }
-                    });
-
-                // Act
-                var inventory = _PlanBuyingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, isProprietary: true);
+                var inventory = _PlanBuyingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
 
                 // Assert
                 var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -2483,166 +2303,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     });
 
                 // Act
-                var inventory = _PlanBuyingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, isProprietary: false);
-
-                // Assert
-                var resultJson = IntegrationTestHelper.ConvertToJson(new
-                {
-                    passedParameters,
-                    inventory
-                });
-
-                Approvals.Verify(resultJson);
-            }
-            finally
-            {
-                StubbedConfigurationWebApiClient.RunTimeParameters["PlanBuyingEndpointVersion"] = "2";
-            }
-        }
-
-        [Test]
-        public void ApplyProvidedImpressions()
-        {//AppliesProvidedImpressions_WhenGatheringInventory_ForBuying_v3_Proprietary
-            try
-            {
-                StubbedConfigurationWebApiClient.RunTimeParameters["PlanBuyingEndpointVersion"] = "3";
-
-                // Arrange
-                var parameters = new ProgramInventoryOptionalParametersDto();
-                var inventorySourceIds = new List<int>();
-                var diagnostic = new PlanBuyingJobDiagnostic();
-
-                var plan = _GetPlan();
-                plan.Equivalized = true;
-                plan.HUTBookId = 202;
-                plan.PostingType = PostingTypeEnum.NSI;
-                plan.ShareBookId = 201;
-                plan.CreativeLengths = new List<CreativeLength>
-                {
-                    new CreativeLength { SpotLengthId = 5, Weight = 50 },
-                    new CreativeLength { SpotLengthId = 2, Weight = 50 }
-                };
-                plan.AudienceId = 25;
-
-                _StationRepositoryMock
-                    .Setup(x => x.GetBroadcastStationsWithLatestDetailsByMarketCodes(It.IsAny<List<short>>()))
-                    .Returns(new List<DisplayBroadcastStation>());
-
-                _StationProgramRepositoryMock
-                    .Setup(x => x.GetProgramsForBuyingModel(
-                        It.IsAny<DateTime>(),
-                        It.IsAny<DateTime>(),
-                        It.IsAny<List<int>>(),
-                        It.IsAny<List<int>>(),
-                        It.IsAny<List<int>>()))
-                    .Returns(new List<PlanBuyingInventoryProgram>
-                    {
-                        new PlanBuyingInventoryProgram
-                        {
-                            SpotLengthId = 1,
-                            Station = new DisplayBroadcastStation
-                            {
-                                LegacyCallLetters = "KOB"
-                            },
-                            ManifestWeeks = new List<PlanBuyingInventoryProgram.ManifestWeek>
-                            {
-                                new PlanBuyingInventoryProgram.ManifestWeek
-                                {
-                                    Id = 2
-                                }
-                            },
-                            ManifestDayparts = new List<PlanBuyingInventoryProgram.ManifestDaypart>
-                            {
-                                new PlanBuyingInventoryProgram.ManifestDaypart
-                                {
-                                    Id = 5,
-                                    Daypart = new DisplayDaypart { Id = 1 },
-                                    PrimaryProgramId = 0,
-                                    Programs = new List<BasePlanInventoryProgram.ManifestDaypart.Program>
-                                    {
-                                        new BasePlanInventoryProgram.ManifestDaypart.Program()
-                                    }
-                                }
-                            },
-                            ManifestRates = new List<PlanBuyingInventoryProgram.ManifestRate>
-                            {
-                                new PlanBuyingInventoryProgram.ManifestRate
-                                {
-                                    SpotLengthId = 1,
-                                    Cost = 10
-                                }
-                            }
-                        }
-                    });
-
-                _PlanBuyingInventoryQuarterCalculatorEngineMock
-                    .Setup(x => x.GetFallbackDateRanges(
-                        It.IsAny<DateRange>(),
-                        It.IsAny<QuarterDetailDto>(),
-                        It.IsAny<QuarterDetailDto>()))
-                    .Returns(new List<DateRange>());
-
-                _PlanBuyingInventoryQuarterCalculatorEngineMock
-                    .Setup(x => x.GetPlanQuarter(It.IsAny<PlanDto>()))
-                    .Returns(new QuarterDetailDto
-                    {
-                        StartDate = new DateTime(2020, 1, 1),
-                        EndDate = new DateTime(2020, 3, 31)
-                    });
-
-                _QuarterCalculationEngineMock
-                    .Setup(x => x.GetLastNQuarters(It.IsAny<QuarterDto>(), It.IsAny<int>()))
-                    .Returns(new List<QuarterDetailDto>
-                    {
-                    new QuarterDetailDto
-                    {
-                        StartDate = new DateTime(2020, 4, 1),
-                        EndDate = new DateTime(2020, 6, 30)
-                    }
-                    });
-
-                _StationRepositoryMock
-                    .Setup(x => x.GetLatestStationMonthDetailsForStations(It.IsAny<List<int>>()))
-                    .Returns(new List<StationMonthDetailDto>());
-
-                var testDaypartDict = new Dictionary<int, DisplayDaypart>();
-                testDaypartDict.Add(1, new DisplayDaypart
-                {
-                    Monday = true,
-                    StartTime = 36000, // 10am
-                    EndTime = 39599 // 11am
-                });
-
-                _DaypartCacheMock
-                    .Setup(x => x.GetDisplayDayparts(It.IsAny<List<int>>()))
-                    .Returns(testDaypartDict);
-
-                object passedParameters = null;
-                _ImpressionsCalculationEngineMock
-                    .Setup(x => x.ApplyProvidedImpressions(
-                        It.IsAny<List<PlanBuyingInventoryProgram>>(),
-                        It.IsAny<int>(),
-                        It.IsAny<int>(),
-                        It.IsAny<bool>()))
-                    .Callback<List<PlanBuyingInventoryProgram>, int, int, bool>((programs, audienceId, spotLengthId, equivalized) =>
-                    {
-                        // deep copy
-                        passedParameters = JsonConvert.DeserializeObject((JsonConvert.SerializeObject(new
-                        {
-                            programs,
-                            audienceId,
-                            spotLengthId,
-                            equivalized
-                        })));
-
-                        foreach (var program in programs)
-                        {
-                            program.ProvidedImpressions = 1500;
-                        }
-                    });
-
-                // Act
-                var inventory = _PlanBuyingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, isProprietary: true);
+                var inventory = _PlanBuyingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
 
                 // Assert
                 var resultJson = IntegrationTestHelper.ConvertToJson(new

@@ -490,7 +490,6 @@
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingOwnershipGroupEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingRepFirmEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingProgramEngine.cs" />
-    <Compile Include="BusinessEngines\PlanInventorySourceSortEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricingBandCalculationEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingInventoryEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingInventoryQuarterCalculatorEngine.cs" />
@@ -595,6 +594,7 @@
     <Compile Include="Entities\HealthResponseDto.cs" />
     <Compile Include="Entities\InventoryProprietary\InventoryProprietaryQuarterSummaryDto.cs" />
     <Compile Include="Entities\InventoryProprietary\InventoryProprietarySummary.cs" />
+    <Compile Include="Entities\InventoryProprietary\InventoryProprietarySummaryByMarketByAudience.cs" />
     <Compile Include="Entities\InventoryProprietary\InventoryProprietarySummaryRequest.cs" />
     <Compile Include="Entities\InventoryProprietary\InventoryProprietarySummaryResponse.cs" />
     <Compile Include="Entities\Inventory\InventoryExportAudienceDto.cs" />
@@ -642,12 +642,9 @@
     <Compile Include="Entities\Nti\NtiUniverseDetail.cs" />
     <Compile Include="Entities\Nti\NtiUniverseHeader.cs" />
     <Compile Include="Entities\Plan\Buying\BuyingInventoryGetRequestParametersDto.cs" />
-    <Compile Include="Entities\Plan\Buying\PlanBuyingEstimate.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingResultRepFirmDto.cs" />
     <Compile Include="Entities\Plan\Buying\PlanBuyingResultOwnershipGroupDto.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\DaypartWeighting.cs" />
-    <Compile Include="Entities\Plan\CommonPricingEntities\PlanInventorySourceDto.cs" />
-    <Compile Include="Entities\Plan\CommonPricingEntities\PlanInventorySourceTypeDto.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\ShareOfVoice.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\SpotCost_v3.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\SpotFrequency.cs" />
@@ -741,7 +738,6 @@
     <Compile Include="Entities\Vpvh\VpvhDefaultsRequest.cs" />
     <Compile Include="Entities\Plan\PlanDaypartVpvhForAudienceDto.cs" />
     <Compile Include="Entities\Plan\WeeklyBreakdownCombination.cs" />
-    <Compile Include="Entities\PricingEstimate.cs" />
     <Compile Include="Entities\PricingInventoryGetRequestParametersDto.cs" />
     <Compile Include="Entities\ProgramGuide\GuideInterfaceExportElement.cs" />
     <Compile Include="Entities\ProgramGuide\GuideResponseProgramDto.cs" />

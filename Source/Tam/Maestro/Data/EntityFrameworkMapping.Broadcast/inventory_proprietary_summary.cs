@@ -16,8 +16,10 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public inventory_proprietary_summary()
         {
+            this.inventory_proprietary_summary_audience_markets = new HashSet<inventory_proprietary_summary_audience_markets>();
             this.inventory_proprietary_summary_audiences = new HashSet<inventory_proprietary_summary_audiences>();
-            this.inventory_proprietary_summary_markets = new HashSet<inventory_proprietary_summary_markets>();
+            this.plan_version_buying_parameter_inventory_proprietary_summaries = new HashSet<plan_version_buying_parameter_inventory_proprietary_summaries>();
+            this.plan_version_pricing_parameter_inventory_proprietary_summaries = new HashSet<plan_version_pricing_parameter_inventory_proprietary_summaries>();
         }
     
         public int id { get; set; }
@@ -27,14 +29,15 @@ namespace EntityFrameworkMapping.Broadcast
         public int unit { get; set; }
         public string created_by { get; set; }
         public System.DateTime created_at { get; set; }
-        public string modified_by { get; set; }
-        public Nullable<System.DateTime> modified_at { get; set; }
         public int inventory_proprietary_daypart_program_mappings_id { get; set; }
         public decimal unit_cost { get; set; }
+        public bool is_active { get; set; }
     
         public virtual inventory_proprietary_daypart_program_mappings inventory_proprietary_daypart_program_mappings { get; set; }
+        public virtual ICollection<inventory_proprietary_summary_audience_markets> inventory_proprietary_summary_audience_markets { get; set; }
         public virtual ICollection<inventory_proprietary_summary_audiences> inventory_proprietary_summary_audiences { get; set; }
         public virtual inventory_sources inventory_sources { get; set; }
-        public virtual ICollection<inventory_proprietary_summary_markets> inventory_proprietary_summary_markets { get; set; }
+        public virtual ICollection<plan_version_buying_parameter_inventory_proprietary_summaries> plan_version_buying_parameter_inventory_proprietary_summaries { get; set; }
+        public virtual ICollection<plan_version_pricing_parameter_inventory_proprietary_summaries> plan_version_pricing_parameter_inventory_proprietary_summaries { get; set; }
     }
 }

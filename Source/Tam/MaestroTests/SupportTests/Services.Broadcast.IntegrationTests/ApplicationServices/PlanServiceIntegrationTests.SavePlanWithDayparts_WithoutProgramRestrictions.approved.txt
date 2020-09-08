@@ -273,60 +273,12 @@
     "DeliveryImpressions": 100.0,
     "DeliveryRatingPoints": 100.0,
     "InflationFactor": null,
-    "InventorySourcePercentages": [
-      {
-        "Id": 10,
-        "Name": "ABC O&O",
-        "Percentage": 0
-      },
-      {
-        "Id": 5,
-        "Name": "CNN",
-        "Percentage": 0
-      },
-      {
-        "Id": 12,
-        "Name": "KATZ",
-        "Percentage": 0
-      },
-      {
-        "Id": 7,
-        "Name": "LilaMax",
-        "Percentage": 0
-      },
-      {
-        "Id": 11,
-        "Name": "NBC O&O",
-        "Percentage": 0
-      },
-      {
-        "Id": 6,
-        "Name": "Sinclair",
-        "Percentage": 0
-      },
-      {
-        "Id": 3,
-        "Name": "TVB",
-        "Percentage": 0
-      }
-    ],
-    "InventorySourceTypePercentages": [
-      {
-        "Id": 4,
-        "Name": "Syndication",
-        "Percentage": 0
-      },
-      {
-        "Id": 5,
-        "Name": "Diginet",
-        "Percentage": 0
-      }
-    ],
     "Margin": 20.0,
     "MarketGroup": 1,
     "MaxCpm": null,
     "MinCpm": null,
     "ProprietaryBlend": 0.0,
+    "ProprietaryInventory": [],
     "UnitCaps": 1,
     "UnitCapsType": 1
   },

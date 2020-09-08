@@ -518,7 +518,6 @@
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryQuarterCalculatorEngineTestClass.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingInventoryQuarterCalculatorEngineUnitTests.cs" />
-    <Compile Include="UnitTests\BusinessEngines\PlanPricingInventorySourceSortEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingStationCalculationEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingMarketResultsEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\PlanPricingUnitCapImpressionsCalculationEngineTests.cs" />

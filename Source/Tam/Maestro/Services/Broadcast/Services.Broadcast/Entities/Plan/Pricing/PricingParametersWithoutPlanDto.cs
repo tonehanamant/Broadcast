@@ -1,5 +1,5 @@
 ﻿using Services.Broadcast.Entities.Enums;
-using Services.Broadcast.Entities.Plan.CommonPricingEntities;
+using Services.Broadcast.Entities.InventoryProprietary;
 using System;
 using System.Collections.Generic;
 
@@ -25,8 +25,6 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public double DeliveryRatingPoints { get; set; }
         public double? Margin { get; set; }
         public int? JobId { get; set; }
-        public List<PlanInventorySourceDto> InventorySourcePercentages { get; set; } = new List<PlanInventorySourceDto>();
-        public List<PlanInventorySourceTypeDto> InventorySourceTypePercentages { get; set; } = new List<PlanInventorySourceTypeDto>();
 
         public List<CreativeLength> CreativeLengths { get; set; } = new List<CreativeLength>();
         public int SpotLengthId { get; set; }
@@ -46,5 +44,6 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public double? TargetRatingPoints { get; set; }
         public double ImpressionsPerUnit { get; set; }
         public PostingTypeEnum PostingType { get; set; }
+        public List<InventoryProprietarySummary> ProprietaryInventory { get; set; } = new List<InventoryProprietarySummary>();
     }
 }

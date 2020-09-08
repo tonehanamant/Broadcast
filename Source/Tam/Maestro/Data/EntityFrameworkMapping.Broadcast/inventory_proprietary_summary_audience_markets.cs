@@ -12,18 +12,16 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class plan_version_buying_job_inventory_source_estimates
+    public partial class inventory_proprietary_summary_audience_markets
     {
         public int id { get; set; }
-        public int media_week_id { get; set; }
-        public Nullable<int> inventory_source_id { get; set; }
-        public int plan_version_buying_job_id { get; set; }
+        public int inventory_proprietary_summary_id { get; set; }
+        public int audience_id { get; set; }
+        public short market_code { get; set; }
         public double impressions { get; set; }
-        public decimal cost { get; set; }
-        public Nullable<int> inventory_source_type { get; set; }
     
-        public virtual inventory_sources inventory_sources { get; set; }
-        public virtual media_weeks media_weeks { get; set; }
-        public virtual plan_version_buying_job plan_version_buying_job { get; set; }
+        public virtual audience audience { get; set; }
+        public virtual inventory_proprietary_summary inventory_proprietary_summary { get; set; }
+        public virtual market market { get; set; }
     }
 }

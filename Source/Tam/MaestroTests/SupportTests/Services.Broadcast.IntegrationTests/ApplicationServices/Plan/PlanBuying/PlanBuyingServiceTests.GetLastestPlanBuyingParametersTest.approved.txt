@@ -1891,44 +1891,6 @@
     "DeliveryImpressions": 20000.0,
     "DeliveryRatingPoints": 1234.0,
     "InflationFactor": 0.5,
-    "InventorySourcePercentages": [
-      {
-        "Id": 10,
-        "Name": "ABC O&O",
-        "Percentage": 16
-      },
-      {
-        "Id": 5,
-        "Name": "CNN",
-        "Percentage": 13
-      },
-      {
-        "Id": 12,
-        "Name": "KATZ",
-        "Percentage": 8
-      },
-      {
-        "Id": 7,
-        "Name": "LilaMax",
-        "Percentage": 15
-      },
-      {
-        "Id": 11,
-        "Name": "NBC O&O",
-        "Percentage": 17
-      },
-      {
-        "Id": 6,
-        "Name": "Sinclair",
-        "Percentage": 14
-      },
-      {
-        "Id": 3,
-        "Name": "TVB",
-        "Percentage": 12
-      }
-    ],
-    "InventorySourceTypePercentages": [],
     "Margin": null,
     "MarketGroup": 5,
     "MaxCpm": 35.0000,
@@ -1936,6 +1898,7 @@
     "PlanId": 1849,
     "PlanVersionId": 7236,
     "ProprietaryBlend": 0.2,
+    "ProprietaryInventory": [],
     "UnitCaps": 10,
     "UnitCapsType": 4
   },
@@ -2031,55 +1994,6 @@
     "DeliveryImpressions": 20000.0,
     "DeliveryRatingPoints": 8.2,
     "InflationFactor": null,
-    "InventorySourcePercentages": [
-      {
-        "Id": 10,
-        "Name": "ABC O&O",
-        "Percentage": 0
-      },
-      {
-        "Id": 5,
-        "Name": "CNN",
-        "Percentage": 0
-      },
-      {
-        "Id": 12,
-        "Name": "KATZ",
-        "Percentage": 0
-      },
-      {
-        "Id": 7,
-        "Name": "LilaMax",
-        "Percentage": 0
-      },
-      {
-        "Id": 11,
-        "Name": "NBC O&O",
-        "Percentage": 0
-      },
-      {
-        "Id": 6,
-        "Name": "Sinclair",
-        "Percentage": 0
-      },
-      {
-        "Id": 3,
-        "Name": "TVB",
-        "Percentage": 0
-      }
-    ],
-    "InventorySourceTypePercentages": [
-      {
-        "Id": 4,
-        "Name": "Syndication",
-        "Percentage": 0
-      },
-      {
-        "Id": 5,
-        "Name": "Diginet",
-        "Percentage": 0
-      }
-    ],
     "JobId": 2701,
     "Margin": 20.0,
     "MarketGroup": 1,
@@ -2088,6 +2002,7 @@
     "PlanId": 1849,
     "PlanVersionId": 7236,
     "ProprietaryBlend": 0.0,
+    "ProprietaryInventory": [],
     "UnitCaps": 1,
     "UnitCapsType": 1
   },

@@ -2,10 +2,76 @@
   {
     "JobId": 1,
     "PlanVersionId": 0,
-    "PricingCpm": 74.341351660939289805269186700,
+    "PricingCpm": 0.3569946035699460356994604000,
     "PricingVersion": "3",
     "RequestId": "djj4j4399fmmf1m212",
     "Spots": [
+      {
+        "ContractMediaWeek": null,
+        "Id": 1,
+        "Impressions30sec": 1000.0,
+        "InventoryMediaWeek": null,
+        "SpotFrequencies": [
+          {
+            "Impressions": 1000.0,
+            "SpotCost": 50.0,
+            "SpotCostWithMargin": 62.5,
+            "SpotLengthId": 1,
+            "Spots": 1
+          },
+          {
+            "Impressions": 500.0,
+            "SpotCost": 50.0,
+            "SpotCostWithMargin": 62.5,
+            "SpotLengthId": 2,
+            "Spots": 1
+          }
+        ],
+        "StandardDaypart": {
+          "Code": "AMN",
+          "FullName": "AM News",
+          "Id": 15,
+          "VpvhCalculationSourceType": 0
+        },
+        "StationInventoryManifestId": 0,
+        "TotalCost": 100.0,
+        "TotalCostWithMargin": 125.0,
+        "TotalImpressions": 1500.0,
+        "TotalSpots": 2
+      },
+      {
+        "ContractMediaWeek": null,
+        "Id": 1,
+        "Impressions30sec": 1000.0,
+        "InventoryMediaWeek": null,
+        "SpotFrequencies": [
+          {
+            "Impressions": 1000.0,
+            "SpotCost": 50.0,
+            "SpotCostWithMargin": 62.5,
+            "SpotLengthId": 1,
+            "Spots": 1
+          },
+          {
+            "Impressions": 500.0,
+            "SpotCost": 50.0,
+            "SpotCostWithMargin": 62.5,
+            "SpotLengthId": 2,
+            "Spots": 1
+          }
+        ],
+        "StandardDaypart": {
+          "Code": "AMN",
+          "FullName": "AM News",
+          "Id": 15,
+          "VpvhCalculationSourceType": 0
+        },
+        "StationInventoryManifestId": 0,
+        "TotalCost": 100.0,
+        "TotalCostWithMargin": 125.0,
+        "TotalImpressions": 1500.0,
+        "TotalSpots": 2
+      },
       {
         "ContractMediaWeek": null,
         "Id": 1,

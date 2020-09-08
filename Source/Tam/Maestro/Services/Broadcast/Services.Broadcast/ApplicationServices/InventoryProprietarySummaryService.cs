@@ -26,7 +26,6 @@ namespace Services.Broadcast.ApplicationServices
 		/// <param name="dto"></param>
 		/// <returns></returns>
 		InventoryProprietarySummaryResponse GetInventoryProprietarySummaries(InventoryProprietarySummaryRequest dto);
-		//	void Test();
 	}
 
 	public class InventoryProprietarySummaryService : BroadcastBaseClass, IInventoryProprietarySummaryService
@@ -39,11 +38,10 @@ namespace Services.Broadcast.ApplicationServices
 		protected readonly IMarketCoverageRepository _MarketCoverageRepository;
 		protected readonly IDaypartDefaultRepository _DaypartDefaultRepository;
 		protected readonly IBroadcastAudienceRepository _AudienceRepository;
-		
-		private  const int SPOT_LENGTH_15 = 15;
+
+		private const int SPOT_LENGTH_15 = 15;
 		private const int SPOT_LENGTH_30 = 30;
 		private readonly Dictionary<int, int> _SpotLengthMap;
-
 
 		public InventoryProprietarySummaryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
 			IQuarterCalculationEngine quarterCalculationEngine)
@@ -63,83 +61,71 @@ namespace Services.Broadcast.ApplicationServices
 
 		public void AggregateInventoryProprietarySummary(int inventorySourceId, DateTime? startDate, DateTime? endDate)
 		{
-			_LogInfo(
-				$"Starting  job AggregateInventoryProprietarySummary. Inventory SourceId = '{inventorySourceId}'; startDate = {startDate}; endDate = {endDate}");
+			_LogInfo($"Starting job AggregateInventoryProprietarySummary. " +
+					 $"Inventory SourceId = '{inventorySourceId}'; " +
+					 $"startDate = {startDate}; " +
+					 $"endDate = {endDate}");
 
             var inventorySource = _InventoryRepository.GetInventorySource(inventorySourceId);
 
-            _LogInfo(
-				$"running  job AggregateInventoryProprietarySummary to GetInventorySource. Inventory Source = '{inventorySource.Name}'");
+            _LogInfo($"running  job AggregateInventoryProprietarySummary to GetInventorySource. " +
+					 $"Inventory Source = '{inventorySource.Name}'");
 
             var quarters = _GetInventoryQuarters(startDate, endDate, DateTime.Now, inventorySourceId);
 
 			foreach (var quarterDetail in quarters)
 			{
-				_LogInfo(
-					$"Running  job AggregateInventoryProprietarySummary to GetInventoryProprietarySummary. Inventory SourceId = '{inventorySourceId}'; startDate = {startDate}; endDate = {endDate}");
+				_LogInfo($"Running job AggregateInventoryProprietarySummary to GetInventoryProprietaryQuarterSummaries. " +
+						 $"Inventory SourceId = '{inventorySourceId}'; " +
+						 $"startDate = {startDate}; " +
+						 $"endDate = {endDate}");
 
-                var inventoryProprietarySummaries =
-					_InventoryProprietarySummaryRepository.GetInventoryProprietaryQuarterSummaries(inventorySource,
-						quarterDetail.StartDate, quarterDetail.EndDate);
+                var inventoryProprietarySummaries = _InventoryProprietarySummaryRepository.GetInventoryProprietaryQuarterSummaries(
+					inventorySource,
+					quarterDetail.StartDate, 
+					quarterDetail.EndDate);
 
 				foreach (var summary in inventoryProprietarySummaries)
 				{
-					_LogInfo(
-						$"Running  job AggregateInventoryProprietarySummary to GetInventorySummaryQuarter. Inventory SourceId = '{inventorySourceId}'; startDate = {startDate}; endDate = {endDate}");
-
-                    summary.Quarter = _GetInventorySummaryQuarter(quarterDetail);
-
-                    _LogInfo(
-						$"Running  job AggregateInventoryProprietarySummary to GetDataForInventoryProprietarySummaryAudiences. Inventory SourceId = '{inventorySourceId}'; startDate = {startDate}; endDate = {endDate}");
-
-                    summary.Audiences = _InventoryProprietarySummaryRepository.GetInventoryProprietarySummaryAudiences(
-                            summary.ProprietaryDaypartProgramMappingId, quarterDetail.StartDate, quarterDetail.EndDate);
-
-                    _LogInfo(
-						$"Running  job AggregateInventoryProprietarySummary to GetMarketCodesForInventoryProprietarySummary. Inventory SourceId = '{inventorySourceId}'; startDate = {startDate}; endDate = {endDate}");
-
-                    var marketCodes =
-						_InventoryProprietarySummaryRepository.GetMarketCodesForInventoryProprietarySummary(
-                            summary.ProprietaryDaypartProgramMappingId, quarterDetail.StartDate, quarterDetail.EndDate);
-
-                    var updatedMarketCodes = marketCodes.Select(m => Convert.ToInt32(m.Value)).ToList();
-
-                    _LogInfo(
-						$"Running  job AggregateInventoryProprietarySummary to GetLatestMarketCoverages. Inventory SourceId = '{inventorySourceId}'; startDate = {startDate}; endDate = {endDate}");
-
-                    var latestMarketCoverages =
-						_MarketCoverageRepository.GetLatestMarketCoverages(updatedMarketCodes);
-
-                    summary.Markets = new List<InventoryProprietarySummaryMarketDto>();
-
-                    foreach (var marketCode in updatedMarketCodes)
+					summary.Quarter = new QuarterDto
 					{
-                        var marketDto = new InventoryProprietarySummaryMarketDto
-                        {
-                            MarketCoverage = latestMarketCoverages.MarketCoveragesByMarketCode[marketCode],
-                            MarketCode = Convert.ToInt16(marketCode)
-                        };
-                        summary.Markets.Add(marketDto);
-					}
+						Quarter = quarterDetail.Quarter,
+						Year = quarterDetail.Year
+					};
 
-					_LogInfo(
-						$"Running  job AggregateInventoryProprietarySummary to start SaveInventoryProprietarySummary. Inventory SourceId = '{inventorySourceId}'; startDate = {startDate}; endDate = {endDate}");
+					_LogInfo($"Running  job AggregateInventoryProprietarySummary to GetMarketCodesForInventoryProprietarySummary. " +
+						 $"Inventory SourceId = '{inventorySourceId}'; " +
+						 $"ProprietaryDaypartProgramMappingId = '{summary.ProprietaryDaypartProgramMappingId}'" +
+						 $"startDate = {startDate}; " +
+						 $"endDate = {endDate}");
 
-                    _InventoryProprietarySummaryRepository.SaveInventoryProprietarySummary(summary);
+					summary.SummaryByMarketByAudience = _InventoryProprietarySummaryRepository.GetInventoryProprietarySummaryByMarketByAudience(
+						summary.ProprietaryDaypartProgramMappingId,
+						quarterDetail.StartDate,
+						quarterDetail.EndDate);
 
-                    _LogInfo(
-						$"Running  job AggregateInventoryProprietarySummary to  end SaveInventoryProprietarySummary. Inventory SourceId = '{inventorySourceId}'; startDate = {startDate}; endDate = {endDate}");
+					summary.Audiences = summary.SummaryByMarketByAudience
+						.GroupBy(x => x.AudienceId)
+						.Select(x => new InventoryProprietarySummaryAudiencesDto
+						{
+							AudienceId = x.Key,
+							Impressions = x.Sum(y => y.Impressions)
+						})
+						.ToList();
+
+					_LogInfo($"Running  job AggregateInventoryProprietarySummary to start SaveInventoryProprietarySummary. " +
+							 $"Inventory SourceId = '{inventorySourceId}'; " +
+							 $"startDate = {startDate}; " +
+							 $"endDate = {endDate}");
+
+					_InventoryProprietarySummaryRepository.SaveInventoryProprietarySummary(summary);
+
+					_LogInfo($"Running  job AggregateInventoryProprietarySummary to  end SaveInventoryProprietarySummary. " +
+							 $"Inventory SourceId = '{inventorySourceId}'; " +
+							 $"startDate = {startDate}; " +
+							 $"endDate = {endDate}");
 				}
 			}
-		}
-
-        private QuarterDto _GetInventorySummaryQuarter(QuarterDetailDto quarterDetail)
-		{
-			return new QuarterDto
-			{
-				Quarter = quarterDetail.Quarter,
-				Year = quarterDetail.Year
-			};
 		}
 
 		private List<QuarterDetailDto> _GetInventoryQuarters(DateTime? startDate, DateTime? endDate,
@@ -184,24 +170,27 @@ namespace Services.Broadcast.ApplicationServices
                 return response;
 			}
 
-            var firstQuarter = quarters.First();
-
-            var summaryDaypartIds = _ConvertPlanDayPartIdsToInventoryDayPartIds(inventoryProprietarySummaryRequest, firstQuarter);
-
-			var proprietarySummaries =
-				_InventoryProprietarySummaryRepository.GetInventoryProprietarySummary(firstQuarter, summaryDaypartIds);
-			
-			var summaryAudienceIds = _AudienceRepository.GetRatingsAudiencesByMaestroAudience(new List<int> { inventoryProprietarySummaryRequest.AudienceId }).Select(am => am.rating_audience_id).Distinct().ToList();
+			var firstQuarter = quarters.First();
+			var summaryDaypartIds = _ConvertPlanDayPartIdsToInventoryDayPartIds(inventoryProprietarySummaryRequest, firstQuarter);
+			var proprietarySummaries = _InventoryProprietarySummaryRepository.GetInventoryProprietarySummary(firstQuarter, summaryDaypartIds);
+			var marketCoverageByMarketCode = _MarketCoverageRepository.GetLatestMarketCoverages().MarketCoveragesByMarketCode;
+			var summaryAudienceIds = _AudienceRepository
+				.GetRatingsAudiencesByMaestroAudience(new List<int> { inventoryProprietarySummaryRequest.AudienceId })
+				.Select(am => am.rating_audience_id)
+				.Distinct()
+				.ToList();
 
 			foreach (var proprietarySummary in proprietarySummaries)
 			{
-                proprietarySummary.ImpressionsTotal = GetImpressions(inventoryProprietarySummaryRequest, proprietarySummary.Id, summaryAudienceIds);
-                proprietarySummary.Cpm = ProposalMath.CalculateCpm(proprietarySummary.UnitCost, proprietarySummary.ImpressionsTotal);
-				var marketCoverage = _InventoryProprietarySummaryRepository.GetTotalMarketCoverageBySummaryId(proprietarySummary.Id);
-                proprietarySummary.MarketCoverageTotal = marketCoverage;
-            }
+				proprietarySummary.ImpressionsTotal = GetImpressions(inventoryProprietarySummaryRequest, proprietarySummary.Id, summaryAudienceIds);
+				proprietarySummary.Cpm = ProposalMath.CalculateCpm(proprietarySummary.UnitCost, proprietarySummary.ImpressionsTotal);
 
-            response.summaries = proprietarySummaries;
+				var marketCodes = _InventoryProprietarySummaryRepository.GetMarketCodesBySummaryIds(new List<int> { proprietarySummary.Id });
+				var totalCoverage = marketCodes.Sum(x => marketCoverageByMarketCode[x]);
+				proprietarySummary.MarketCoverageTotal = totalCoverage;
+			}
+
+			response.summaries = proprietarySummaries;
 
             return response;
 		}
@@ -241,6 +230,7 @@ namespace Services.Broadcast.ApplicationServices
 			return validationMessage;
 
 		}
+			
 		private HashSet<int> _ConvertPlanDayPartIdsToInventoryDayPartIds(InventoryProprietarySummaryRequest dto, QuarterDetailDto QuarterDetail)
 		{
 			// First Get all Daypart Ids from InventoryProprietary Summary Service based on quarter
