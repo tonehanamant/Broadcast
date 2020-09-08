@@ -17,7 +17,7 @@
         "frequency_cap_time": 1.0,
         "frequency_cap_unit": "day",
         "impression_goal": 150.0,
-        "market_coverage_goal": 0.0,
+        "market_coverage_goal": 0.001,
         "share_of_voice": [
           {
             "market_code": 403,
@@ -54,7 +54,7 @@
         "frequency_cap_time": 1.0,
         "frequency_cap_unit": "day",
         "impression_goal": 250.0,
-        "market_coverage_goal": 0.0,
+        "market_coverage_goal": 0.001,
         "share_of_voice": [
           {
             "market_code": 403,
@@ -91,7 +91,7 @@
         "frequency_cap_time": 1.0,
         "frequency_cap_unit": "day",
         "impression_goal": 100.0,
-        "market_coverage_goal": 0.0,
+        "market_coverage_goal": 0.001,
         "share_of_voice": [
           {
             "market_code": 403,

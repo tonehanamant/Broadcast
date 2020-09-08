@@ -572,8 +572,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var buyingModelWeeks = new List<PlanBuyingApiRequestWeekDto>();
             var planImpressionsGoal = plan.BuyingParameters.DeliveryImpressions * 1000;
 
-            // send 0% if any unit is selected
-            var marketCoverageGoal = parameters.ProprietaryInventory.IsEmpty() ? GeneralMath.ConvertPercentageToFraction(plan.CoverageGoalPercent.Value) : 0;
+            // send 0.001% if any unit is selected
+            var marketCoverageGoal = parameters.ProprietaryInventory.IsEmpty() ? GeneralMath.ConvertPercentageToFraction(plan.CoverageGoalPercent.Value) : 0.001;
             var topMarkets = _GetTopMarkets(parameters.MarketGroup);
             var marketsWithSov = plan.AvailableMarkets.Where(x => x.ShareOfVoicePercent.HasValue);
             var shareOfVoice = _GetShareOfVoice(topMarkets, marketsWithSov, proprietaryInventoryData, planImpressionsGoal);
@@ -1230,8 +1230,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var buyingModelWeeks = new List<PlanBuyingApiRequestWeekDto_v3>();
             var planImpressionsGoal = plan.BuyingParameters.DeliveryImpressions * 1000;
 
-            // send 0% if any unit is selected
-            var marketCoverageGoal = parameters.ProprietaryInventory.IsEmpty() ? GeneralMath.ConvertPercentageToFraction(plan.CoverageGoalPercent.Value) : 0;
+            // send 0.001% if any unit is selected
+            var marketCoverageGoal = parameters.ProprietaryInventory.IsEmpty() ? GeneralMath.ConvertPercentageToFraction(plan.CoverageGoalPercent.Value) : 0.001;
             var topMarkets = _GetTopMarkets(parameters.MarketGroup);
             var marketsWithSov = plan.AvailableMarkets.Where(x => x.ShareOfVoicePercent.HasValue);
             var shareOfVoice = _GetShareOfVoice(topMarkets, marketsWithSov, proprietaryInventoryData, planImpressionsGoal);
