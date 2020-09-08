@@ -1,7 +1,6 @@
 ﻿using Common.Services;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
@@ -34,7 +33,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         {
         }
 
-        public List<PlanPricingInventoryProgram> UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(
+        public List<PlanPricingInventoryProgram> UT_FilterProgramsByDaypartAndSetStandardDaypart(
             List<PlanDaypartDto> dayparts,
             List<PlanPricingInventoryProgram> programs,
             DisplayDaypart planDisplayDaypartDays)
@@ -55,9 +54,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             ApplyInflationFactorToSpotCost(programs, inflationFactor);
         }
 
-        public DisplayDaypart UT_GetPlanDaypartDaysFromPlanFlight(List<int> flightDays, List<DateRange> planFlightDateRanges)
+        public DisplayDaypart UT_GetPlanDaypartDaysFromPlanFlight(List<int> flightDays, List<DateRange> planFlightDateRanges, List<int> planDaypartDayIds)
         {
-            return GetDaypartDaysFromFlight(flightDays, planFlightDateRanges);
+            return _GetDaypartDaysFromFlight(flightDays, planFlightDateRanges, planDaypartDayIds);
         }
 
         public void UT_ApplyNTIConversionToNSI(
@@ -76,6 +75,25 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             List<QuarterDetailDto> fallbackQuarters)
         {
             return _GetFullPrograms(dateRanges, spotLengthIds, supportedInventorySourceTypes, availableMarkets, planQuarter, fallbackQuarters);
+        }
+
+        protected override int _GetThresholdInSecondsForProgramIntersect()
+        {
+            return 1800;
+        }
+
+        public string UT_PlanPricingEndpointVersion { get; set; } = "2";
+
+        protected override string _GetPlanPricingEndpointVersion()
+        {
+            return UT_PlanPricingEndpointVersion;
+        }
+
+        public int UT_NumberOfFallbackQuartersForPricing { get; set; } = 8;
+
+        protected override int _GetNumberOfFallbackQuartersForPricing()
+        {
+            return UT_NumberOfFallbackQuartersForPricing;
         }
     }
 }

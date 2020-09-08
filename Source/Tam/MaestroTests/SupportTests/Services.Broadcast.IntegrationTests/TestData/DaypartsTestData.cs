@@ -132,6 +132,19 @@ namespace Services.Broadcast.IntegrationTests.TestData
                 Sunday = true,
                 StartTime = 32400, // 9am
                 EndTime = 39599 // 11am
+            },
+            new DisplayDaypart
+            {
+                Id = 23, // WKD
+                Monday = false,
+                Tuesday = false,
+                Wednesday = false,
+                Thursday = false,
+                Friday = false,
+                Saturday = true,
+                Sunday = true,
+                StartTime = 32400, // 9am
+                EndTime = 71999 // 8pm
             }
         };
 

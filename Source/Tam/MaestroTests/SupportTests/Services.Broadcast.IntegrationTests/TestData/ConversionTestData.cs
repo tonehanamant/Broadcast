@@ -18,6 +18,16 @@ namespace Services.Broadcast.IntegrationTests.TestData
                 {
                     DaypartDefaultId = 2,
                     ConversionRate = 0.85
+                },
+                new NtiToNsiConversionRate
+                {
+                    DaypartDefaultId = 3,
+                    ConversionRate = 0.65
+                },
+                new NtiToNsiConversionRate
+                {
+                    DaypartDefaultId = 23,
+                    ConversionRate = 0.75
                 }
             };
         }
