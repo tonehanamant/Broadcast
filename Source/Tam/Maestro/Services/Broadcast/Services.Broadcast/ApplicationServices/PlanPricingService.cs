@@ -1384,7 +1384,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             SkippedWeeksIds = new List<int>();
             var pricingModelWeeks = new List<PlanPricingApiRequestWeekDto_v3>();
-            var planImpressionsGoal = plan.PricingParameters.DeliveryImpressions * 1000;
+            var planImpressionsGoal = parameters.DeliveryImpressions * 1000;
 
             // send 0.001% if any unit is selected
             var marketCoverageGoal = parameters.ProprietaryInventory.IsEmpty() ? GeneralMath.ConvertPercentageToFraction(plan.CoverageGoalPercent.Value) : 0.001;
@@ -1392,7 +1392,6 @@ namespace Services.Broadcast.ApplicationServices
             var marketsWithSov = plan.AvailableMarkets.Where(x => x.ShareOfVoicePercent.HasValue);
             var shareOfVoice = _GetShareOfVoice(topMarkets, marketsWithSov, proprietaryInventoryData, planImpressionsGoal);
             var daypartsWithWeighting = plan.Dayparts.Where(x => x.WeightingGoalPercent.HasValue);
-            var planPricingParameters = plan.PricingParameters;
 
             var weeklyBreakdownByWeek = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByWeek(plan.WeeklyBreakdownWeeks);
             var spotScaleFactorBySpotLengthId = _GetSpotScaleFactorBySpotLengthId(plan);
@@ -1426,7 +1425,7 @@ namespace Services.Broadcast.ApplicationServices
                     ImpressionGoal = impressionGoal,
                     CpmGoal = ProposalMath.CalculateCpm(weeklyBudget, impressionGoal),
                     MarketCoverageGoal = marketCoverageGoal,
-                    FrequencyCap = FrequencyCapHelper.GetFrequencyCap(planPricingParameters.UnitCapsType, planPricingParameters.UnitCaps),
+                    FrequencyCap = FrequencyCapHelper.GetFrequencyCap(parameters.UnitCapsType, parameters.UnitCaps),
                     ShareOfVoice = shareOfVoice,
                     DaypartWeighting = _GetDaypartGoals(plan, mediaWeekId),
                     SpotLengths = _GetSpotLengthGoals(plan, mediaWeekId, spotScaleFactorBySpotLengthId)
@@ -1954,7 +1953,9 @@ namespace Services.Broadcast.ApplicationServices
             var parameters = new PlanPricingParametersDto
             {
                 MarketGroup = requestParameters.MarketGroup,
-                Margin = requestParameters.Margin
+                Margin = requestParameters.Margin,
+                UnitCapsType = UnitCapEnum.Per30Min,
+                UnitCaps = 1
             };
 
             var plan = _PlanRepository.GetPlan(planId);
