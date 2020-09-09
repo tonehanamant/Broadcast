@@ -49,15 +49,16 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
 
-        protected int? _ThresholdInSecondsForProgramIntersect;
-        protected string _PlanPricingEndpointVersion;
-        protected int? _NumberOfFallbackQuartersForPricing;
-        protected List<Day> _CadentDayDefinitions;
+        private bool? _UseTrueIndependentStations;
+        private int? _ThresholdInSecondsForProgramIntersect;
+        private string _PlanPricingEndpointVersion;
+        private int? _NumberOfFallbackQuartersForPricing;
+        private List<Day> _CadentDayDefinitions;
         /// <summary>
         /// Key = DaypartDefaultId
         /// Values = Day Ids for that Daypart Default.
         /// </summary>
-        protected Dictionary<int, List<int>> _DaypartDefaultDayIds;
+        private Dictionary<int, List<int>> _DaypartDefaultDayIds;
 
         public PlanPricingInventoryEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                           IImpressionsCalculationEngine impressionsCalculationEngine,
@@ -839,8 +840,7 @@ namespace Services.Broadcast.BusinessEngines
 
             var restrictedAffiliates = affiliateRestrictions.Affiliates.Select(x => x.Display);
             bool hasIntersections;
-            if (restrictedAffiliates.Any(x => x.Equals("IND")) 
-                && _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS))
+            if (restrictedAffiliates.Any(x => x.Equals("IND")) && _GetUseTrueIndependentStations())
             {
                 hasIntersections = program.Station.IsTrueInd == true;
             }
@@ -1168,6 +1168,16 @@ namespace Services.Broadcast.BusinessEngines
             }
 
             return _DaypartDefaultDayIds;
+        }
+
+        protected virtual bool _GetUseTrueIndependentStations()
+        {
+            if (!_UseTrueIndependentStations.HasValue)
+            {
+                _UseTrueIndependentStations = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS);
+            }
+
+            return _UseTrueIndependentStations.Value;
         }
 
         private class ProgramInventoryDaypart

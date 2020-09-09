@@ -49,6 +49,8 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
+        private bool? _UseTrueIndependentStations;
+
         public PlanBuyingInventoryEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                           IImpressionsCalculationEngine impressionsCalculationEngine,
                                           IPlanBuyingInventoryQuarterCalculatorEngine planBuyingInventoryQuarterCalculatorEngine,
@@ -736,8 +738,7 @@ namespace Services.Broadcast.BusinessEngines
 
             var restrictedAffiliates = affiliateRestrictions.Affiliates.Select(x => x.Display);
             bool hasIntersections;
-            if (restrictedAffiliates.Any(x => x.Equals("IND"))
-                && _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS))
+            if (restrictedAffiliates.Any(x => x.Equals("IND")) && _GetUseTrueIndependentStations())
             {
                 hasIntersections = program.Station.IsTrueInd == true;
             }
@@ -961,6 +962,16 @@ namespace Services.Broadcast.BusinessEngines
                 .ToList();
 
             _ImpressionsCalculationEngine.ApplyProjectedImpressions(programs, impressionsRequest, audienceIds);
+        }
+
+        protected virtual bool _GetUseTrueIndependentStations()
+        {
+            if (!_UseTrueIndependentStations.HasValue)
+            {
+                _UseTrueIndependentStations = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS);
+            }
+
+            return _UseTrueIndependentStations.Value;
         }
 
         private class ProgramInventoryDaypart
