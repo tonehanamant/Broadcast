@@ -581,6 +581,7 @@
     <Compile Include="Entities\DaypartCleanupDto.cs" />
     <Compile Include="Entities\DaypartDefaultWeightingGoal.cs" />
     <Compile Include="Entities\Enums\BroadcastDayOfWeek.cs" />
+    <Compile Include="Entities\Enums\ProgramMappingMatchTypeEnum.cs" />
     <Compile Include="Entities\Enums\VpvhCalculationSourceTypeEnum.cs" />
     <Compile Include="Entities\Enums\VpvhTypeEnum.cs" />
     <Compile Include="Entities\Enums\InventoryPricingQuarterType.cs" />
@@ -695,6 +696,7 @@
     <Compile Include="Entities\ProgramMapping\ProgramMappingValidationErrorDto.cs" />
     <Compile Include="Entities\ProgramMapping\ProgramNameMappingKeyword.cs" />
     <Compile Include="Entities\Plan\Pricing\ProgramInventoryOptionalParametersDto.cs" />
+    <Compile Include="Entities\ProgramMapping\UnmappedProgramReportData.cs" />
     <Compile Include="Entities\QuoteReport\QuoteProgram.cs" />
     <Compile Include="Entities\QuoteReport\QuoteReportData.cs" />
     <Compile Include="Entities\QuoteReport\QuoteRequestDto.cs" />
@@ -839,6 +841,7 @@
     <Compile Include="ReportGenerators\ProgramLineup\DefaultViewReportGenerator.cs" />
     <Compile Include="ReportGenerators\ProgramLineup\DetailedViewReportGenerator.cs" />
     <Compile Include="ReportGenerators\ProgramMapping\UnMappedProgramNameReportGenerator.cs" />
+    <Compile Include="ReportGenerators\ProgramMapping\UnmappedProgramsReportGenerator.cs" />
     <Compile Include="ReportGenerators\Quote\QuoteReportGenerator.cs" />
     <Compile Include="ReportGenerators\Quote\QuoteReportRateDetailLine.cs" />
     <Compile Include="ReportGenerators\Quote\QuoteReportRateDetailLineAudience.cs" />

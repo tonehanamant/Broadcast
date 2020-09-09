@@ -3,6 +3,7 @@
     "Genre": null,
     "MatchConfidence": 0.0,
     "MatchedName": null,
+    "MatchType": 0,
     "OriginalName": "FAB MORN NWS",
     "ProgramName": "FAB MORNING NEWS",
     "ShowType": null
@@ -11,6 +12,7 @@
     "Genre": null,
     "MatchConfidence": 0.0,
     "MatchedName": null,
+    "MatchType": 0,
     "OriginalName": "*** SEINFELD (ENCORE)",
     "ProgramName": "SEINFELD",
     "ShowType": null
@@ -19,6 +21,7 @@
     "Genre": null,
     "MatchConfidence": 0.0,
     "MatchedName": null,
+    "MatchType": 0,
     "OriginalName": "Super Chess Arena AT 09:00AM-10:00AM",
     "ProgramName": "Super Chess Arena",
     "ShowType": null
@@ -27,6 +30,7 @@
     "Genre": null,
     "MatchConfidence": 0.0,
     "MatchedName": null,
+    "MatchType": 0,
     "OriginalName": "SUN The House of Poker SAT",
     "ProgramName": "The House of Poker",
     "ShowType": null
@@ -35,6 +39,7 @@
     "Genre": null,
     "MatchConfidence": 0.0,
     "MatchedName": null,
+    "MatchType": 0,
     "OriginalName": "10:30AM Ugreen Sytem",
     "ProgramName": "Ugreen Sytem",
     "ShowType": null
@@ -43,6 +48,7 @@
     "Genre": null,
     "MatchConfidence": 0.0,
     "MatchedName": null,
+    "MatchType": 0,
     "OriginalName": "@ 09:00AM-10:00AM Chessmaster",
     "ProgramName": "Chessmaster",
     "ShowType": null
@@ -51,6 +57,7 @@
     "Genre": null,
     "MatchConfidence": 0.0,
     "MatchedName": null,
+    "MatchType": 0,
     "OriginalName": "FT. POP OS",
     "ProgramName": "FORT POP OS",
     "ShowType": null
@@ -59,6 +66,7 @@
     "Genre": null,
     "MatchConfidence": 0.0,
     "MatchedName": null,
+    "MatchType": 0,
     "OriginalName": "GM TODAY",
     "ProgramName": "GOOD MORNING TODAY",
     "ShowType": null
@@ -67,6 +75,7 @@
     "Genre": null,
     "MatchConfidence": 0.0,
     "MatchedName": null,
+    "MatchType": 0,
     "OriginalName": "GD MORNING",
     "ProgramName": "GOOD MORNING",
     "ShowType": null
@@ -75,6 +84,7 @@
     "Genre": null,
     "MatchConfidence": 0.0,
     "MatchedName": null,
+    "MatchType": 0,
     "OriginalName": "PLAYING CHESS ON THE WKND",
     "ProgramName": "PLAYING CHESS ON THE WEEKEND",
     "ShowType": null
@@ -83,6 +93,7 @@
     "Genre": null,
     "MatchConfidence": 0.0,
     "MatchedName": null,
+    "MatchType": 0,
     "OriginalName": "PLAYING W/ YOU",
     "ProgramName": "PLAYING WITH YOU",
     "ShowType": null

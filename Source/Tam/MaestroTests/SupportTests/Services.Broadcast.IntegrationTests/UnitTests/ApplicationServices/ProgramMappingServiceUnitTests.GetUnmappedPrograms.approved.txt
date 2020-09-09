@@ -3,24 +3,45 @@
     "Genre": "NEWS",
     "MatchConfidence": 1.0,
     "MatchedName": "NEWS",
+    "MatchType": 1,
     "OriginalName": "CHANNEL 9 NEWS 6PM",
     "ProgramName": "CHANNEL 9 NEWS",
-    "ShowType": "SERIES"
+    "ShowType": "NEWS"
   },
   {
-    "Genre": null,
-    "MatchConfidence": 0.0,
-    "MatchedName": null,
+    "Genre": "Comedy",
+    "MatchConfidence": 1.0,
+    "MatchedName": "Family Guy",
+    "MatchType": 2,
     "OriginalName": "FAMILY GUY (X2)",
     "ProgramName": "FAMILY GUY",
-    "ShowType": null
+    "ShowType": "Comedy"
   },
   {
-    "Genre": null,
-    "MatchConfidence": 0.0,
-    "MatchedName": null,
+    "Genre": "News",
+    "MatchConfidence": 0.7888889,
+    "MatchedName": "OTHER NEWS",
+    "MatchType": 4,
     "OriginalName": "SOME OTHER NEWS",
     "ProgramName": "SOME OTHER NEWS",
-    "ShowType": null
+    "ShowType": "News"
+  },
+  {
+    "Genre": "Sports",
+    "MatchConfidence": 1.0,
+    "MatchedName": "NFL",
+    "MatchType": 3,
+    "OriginalName": "NFL Post Game Show, The",
+    "ProgramName": "The NFL Post Game Show",
+    "ShowType": "Sports"
+  },
+  {
+    "Genre": "News",
+    "MatchConfidence": 0.5925926,
+    "MatchedName": "OTHER NEWS",
+    "MatchType": 4,
+    "OriginalName": "AMERICA UNDERCOVER",
+    "ProgramName": "AMERICA UNDERCOVER",
+    "ShowType": "News"
   }
 ]

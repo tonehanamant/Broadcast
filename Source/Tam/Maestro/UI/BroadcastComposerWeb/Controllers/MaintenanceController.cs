@@ -201,8 +201,8 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
-        [Route("ExportUnmappedPrograms")]
-        public ActionResult ExportUnmappedPrograms()
+        [Route("ExportUnmappedProgramNames")]
+        public ActionResult ExportUnmappedProgramNames()
         {
             try
             {
@@ -210,6 +210,23 @@ namespace BroadcastComposerWeb.Controllers
                 var result = service.GenerateUnmappedProgramNameReport();
                 return File(result.Stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                     result.Filename);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return View("Index");
+            }
+        }
+
+        [HttpPost]
+        [Route("ExportUnmappedPrograms")]
+        public ActionResult ExportUnmappedPrograms()
+        {
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IProgramMappingService>();
+                var result = service.ExportUnmappedPrograms();
+                return File(result.Stream, "application/zip", result.Filename);
             }
             catch (Exception ex)
             {
@@ -849,5 +866,7 @@ namespace BroadcastComposerWeb.Controllers
 
             return RedirectToAction("Index");
         }      
+
+        
     }
 }

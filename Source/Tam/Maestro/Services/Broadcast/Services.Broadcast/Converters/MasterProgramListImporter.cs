@@ -9,7 +9,7 @@ namespace Services.Broadcast.Converters
 {
     public interface IMasterProgramListImporter
     {
-        List<ProgramMappingsDto> ImportMasterProgramList(Stream stream);
+        List<ProgramMappingsDto> ImportMasterProgramList();
     }
 
     public class MasterProgramListImporter : BroadcastBaseClass, IMasterProgramListImporter
@@ -66,8 +66,10 @@ namespace Services.Broadcast.Converters
             _ShowTypeCache = showTypeCache;
         }
 
-        public List<ProgramMappingsDto> ImportMasterProgramList(Stream stream)
+        public List<ProgramMappingsDto> ImportMasterProgramList()
         {
+            var stream = _GetMasterProgramList();
+
             var csvFileReader = new CsvFileReader(FileHeaders, Delimiters, throwExceptions: false);
             var masterList = new List<ProgramMappingsDto>();
 
@@ -106,6 +108,22 @@ namespace Services.Broadcast.Converters
             }
 
             return masterList;
+        }
+
+        private Stream _GetMasterProgramList()
+        {
+            var appFolder = _GetBroadcastAppFolder();
+            const string masterListFolder = "ProgramMappingMasterList";
+            const string masterListFile = "MasterListWithWwtvTitles.txt";
+
+            var masterListPath = Path.Combine(
+                appFolder,
+                masterListFolder,
+                masterListFile);
+
+            var fileStream = File.OpenText(masterListPath);
+
+            return fileStream.BaseStream;
         }
     }
 }

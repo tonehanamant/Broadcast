@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.ApplicationServices.Inventory.ProgramMapping.Entities
 {
@@ -15,5 +11,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory.ProgramMapping.Entiti
         public string ShowType { get; set; }
 
         public float MatchConfidence { get; set; }
+
+        public ProgramMappingMatchTypeEnum  MatchType { get; set; }
     }
 }

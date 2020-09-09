@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -75,7 +76,10 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns></returns>
         List<UnmappedProgram> GetCleanPrograms(List<string> programList);
 
-
+        /// <summary>
+        /// Export the unmapped programs
+        /// </summary>
+        ReportOutput ExportUnmappedPrograms();
     }
 
     public class ProgramMappingService : BroadcastBaseClass, IProgramMappingService
@@ -92,6 +96,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IProgramMappingCleanupEngine _ProgramCleanupEngine;
         private readonly IProgramNameMappingKeywordRepository _ProgramNameMappingKeywordRepository;
         private readonly IMasterProgramListImporter _MasterProgramListImporter;
+        private readonly IDateTimeEngine _DateTimeEngine;
         private const string MISC_SHOW_TYPE = "Miscellaneous";
         private const string UnmappedProgramReportFileName = "UnmappedProgramReport.xlsx";
         private const float MATCH_EXACT = 1;
@@ -106,7 +111,8 @@ namespace Services.Broadcast.ApplicationServices
             IShowTypeCache showTypeCache,
             IProgramsSearchApiClient programsSearchApiClient,
             IProgramMappingCleanupEngine programMappingCleanupEngine,
-            IMasterProgramListImporter masterListImporter)
+            IMasterProgramListImporter masterListImporter,
+            IDateTimeEngine dateTimeEngine)
         {
             _BackgroundJobClient = backgroundJobClient;
             _ProgramMappingRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramMappingRepository>();
@@ -120,6 +126,7 @@ namespace Services.Broadcast.ApplicationServices
             _ProgramsSearchApiClient = programsSearchApiClient;
             _ProgramCleanupEngine = programMappingCleanupEngine;
             _MasterProgramListImporter = masterListImporter;
+            _DateTimeEngine = dateTimeEngine;
         }
 
         /// <inheritdoc />
@@ -179,7 +186,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             var fullErrorMessage = new StringBuilder();
 
-            foreach(var programMappingError in programMappingErrors)
+            foreach (var programMappingError in programMappingErrors)
             {
                 fullErrorMessage.AppendLine(
                     $"Error parsing program {programMappingError.OfficialProgramName}: {programMappingError.ErrorMessage}");
@@ -190,14 +197,14 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<ProgramMappingValidationErrorDto> _ValidateProgramMappings(List<ProgramMappingsFileRequestDto> uniqueProgramMappings)
         {
-            var masterListPrograms = GetMasterProgramList();
+            var masterListPrograms = _MasterProgramListImporter.ImportMasterProgramList();
             var programNameExceptions = _ProgramNameExceptionsRepository.GetProgramExceptions();
             var programMappingValidationErrors = new List<ProgramMappingValidationErrorDto>();
 
             foreach (var programMapping in uniqueProgramMappings)
             {
-                var masterListProgram = masterListPrograms.FirstOrDefault(p => 
-                            p.OfficialProgramName.Equals(programMapping.OfficialProgramName, 
+                var masterListProgram = masterListPrograms.FirstOrDefault(p =>
+                            p.OfficialProgramName.Equals(programMapping.OfficialProgramName,
                                                          StringComparison.OrdinalIgnoreCase));
 
                 if (masterListProgram == null)
@@ -412,7 +419,7 @@ namespace Services.Broadcast.ApplicationServices
             if (programsMatchedWithMapping.All(p => p.MatchConfidence == MATCH_EXACT))
                 return programsMatchedWithMapping;
 
-            var masterProgramList = GetMasterProgramList();
+            var masterProgramList = _MasterProgramListImporter.ImportMasterProgramList();
 
             var result = _MatchAgainstMasterList(programsMatchedWithMapping, masterProgramList);
 
@@ -441,6 +448,7 @@ namespace Services.Broadcast.ApplicationServices
                         unmatchedProgram.Genre = masterProgramListItem.OfficialGenre.Name;
                         unmatchedProgram.MatchedName = masterProgramListItem.OfficialProgramName;
                         unmatchedProgram.ShowType = masterProgramListItem.OfficialShowType.Name;
+                        unmatchedProgram.MatchType = ProgramMappingMatchTypeEnum.BySimilarity;
                     }
                 }
             }
@@ -460,28 +468,11 @@ namespace Services.Broadcast.ApplicationServices
                     program.Genre = foundMapping.OfficialGenre.Name;
                     program.ShowType = foundMapping.OfficialShowType.Name;
                     program.MatchConfidence = MATCH_EXACT;
+                    program.MatchType = ProgramMappingMatchTypeEnum.ByMasterList;
                 }
             }
 
             return programs;
-        }
-
-        private List<ProgramMappingsDto> GetMasterProgramList()
-        {
-            var appFolder = _GetBroadcastAppFolder();
-            const string masterListFolder = "ProgramMappingMasterList";
-            const string masterListFile = "MasterListWithWwtvTitles.txt";
-
-            var masterListPath = Path.Combine(
-                appFolder,
-                masterListFolder,
-                masterListFile);
-
-            var fileStream = File.OpenText(masterListPath);
-
-            var masterList = _MasterProgramListImporter.ImportMasterProgramList(fileStream.BaseStream);
-
-            return masterList;
         }
 
         private void _MatchProgramByKeyword(List<UnmappedProgram> programs)
@@ -498,6 +489,7 @@ namespace Services.Broadcast.ApplicationServices
                     program.Genre = keyword.Genre.Display;
                     program.ShowType = keyword.ShowType.Display;
                     program.MatchConfidence = MATCH_EXACT;
+                    program.MatchType = ProgramMappingMatchTypeEnum.ByKeyword;
                 }
             }
         }
@@ -519,6 +511,7 @@ namespace Services.Broadcast.ApplicationServices
                     program.Genre = foundMapping.OfficialGenre.Name;
                     program.ShowType = foundMapping.OfficialShowType.Name;
                     program.MatchConfidence = MATCH_EXACT; //Exact match found
+                    program.MatchType = ProgramMappingMatchTypeEnum.ByExistingMapping;
                 }
             }
 
@@ -538,6 +531,61 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             return result;
+        }
+
+        public ReportOutput ExportUnmappedPrograms()
+        {
+            var programs = GetUnmappedPrograms();
+
+            var exactMatches = programs.Where(p => p.MatchType == ProgramMappingMatchTypeEnum.ByMasterList || p.MatchType == ProgramMappingMatchTypeEnum.ByExistingMapping).ToList();
+            var exactReport = _GenerateExcelFile(exactMatches, $"Unmapped_Exact_{_GetCurrentDateOnReportFormat()}.xlsx");
+
+            var keywordMatches = programs.Where(p => p.MatchType == ProgramMappingMatchTypeEnum.ByKeyword).ToList();
+            var keywordReport = _GenerateExcelFile(keywordMatches, $"Unmapped_Keyword_{_GetCurrentDateOnReportFormat()}.xlsx");
+
+            const string SPORTS = "Sports";
+            var sportsMatches = programs.Where(p => p.MatchType == ProgramMappingMatchTypeEnum.BySimilarity && p.Genre.Contains(SPORTS, StringComparison.OrdinalIgnoreCase)).ToList();
+            var sportsReport = _GenerateExcelFile(sportsMatches, $"Unmapped_Sports_{_GetCurrentDateOnReportFormat()}.xlsx");
+
+            const string NEWS = "News";
+            var newsMatches = programs.Where(p => p.MatchType == ProgramMappingMatchTypeEnum.BySimilarity && p.MatchConfidence != MATCH_EXACT && p.Genre.Contains(NEWS, StringComparison.OrdinalIgnoreCase)).ToList();
+            var newsReport = _GenerateExcelFile(newsMatches, $"Unmapped_News_{_GetCurrentDateOnReportFormat()}.xlsx");
+
+            var otherMatches = programs.Where(p => p.MatchType == ProgramMappingMatchTypeEnum.BySimilarity && !p.Genre.Contains(SPORTS, StringComparison.OrdinalIgnoreCase) && !p.Genre.Contains(NEWS, StringComparison.OrdinalIgnoreCase)).ToList();
+            var otherReport = _GenerateExcelFile(otherMatches, $"Unmapped_Other_{_GetCurrentDateOnReportFormat()}.xlsx");
+
+            return _ZipReports(exactReport, keywordReport, sportsReport, newsReport, otherReport);
+        }
+
+        private string _GetCurrentDateOnReportFormat() =>
+            _DateTimeEngine.GetCurrentMoment().ToString("MMddyyy_HHmmss");
+
+        private ReportOutput _ZipReports(params ReportOutput[] reports)
+        {
+            var reportOutput = new ReportOutput($"Unmapped_{_GetCurrentDateOnReportFormat()}.zip");
+
+            using (var archive = new ZipArchive(reportOutput.Stream, ZipArchiveMode.Create, true))
+            {
+                foreach (var report in reports)
+                {
+                    var excelFile = archive.CreateEntry(report.Filename);
+                    using (var entryStream = excelFile.Open())
+                    using (var fileToCompressStream = report.Stream)
+                    {
+                        fileToCompressStream.CopyTo(entryStream);
+                    }
+                }
+            }
+
+            reportOutput.Stream.Position = 0;
+
+            return reportOutput;
+        }
+
+        private ReportOutput _GenerateExcelFile(List<UnmappedProgram> programs, string fileName)
+        {
+            var reportaData = new UnmappedProgramReportData(fileName, programs.OrderByDescending(p => p.MatchConfidence).ThenBy(p => p.OriginalName).ToList());
+            return new UnmappedProgramsReportGenerator().Generate(reportaData);
         }
 
         protected virtual bool _GetEnableInternalProgramSearch()

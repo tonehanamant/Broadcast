@@ -1,22 +1,92 @@
-﻿using System;
+﻿using ApprovalTests;
+using ApprovalTests.Reporters;
+using Moq;
+using NUnit.Framework;
+using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Converters;
+using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ApprovalTests;
-using ApprovalTests.Reporters;
-using Common.Services;
-using NUnit.Framework;
-using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.Enums;
 using Tam.Maestro.Common.DataLayer;
+using Unity;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
     public class ProgramMappingServiceTests
     {
-        private readonly IProgramMappingService _ProgramMappingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProgramMappingService>();
+        private IProgramMappingService _ProgramMappingService; 
+
+        [SetUp]
+        public void SetUp()
+        {
+            // Master list is too big and makes the tests take too long to run
+            var masterListImporterMock = new Mock<IMasterProgramListImporter>();
+            masterListImporterMock.Setup(m => m.ImportMasterProgramList()).Returns(new List<ProgramMappingsDto>
+            {
+                new ProgramMappingsDto
+                {
+                     OfficialGenre = new Genre{ Name = "Comedy" },
+                     OfficialShowType = new ShowTypeDto{ Name = "Comedy"},
+                      OfficialProgramName = "Family Guy"
+                },
+                new ProgramMappingsDto
+                {
+                     OfficialGenre = new Genre{ Name = "News" },
+                     OfficialShowType = new ShowTypeDto{ Name = "News"},
+                      OfficialProgramName = "OTHER NEWS"
+                },
+                new ProgramMappingsDto
+                {
+                     OfficialGenre = new Genre{ Name = "Documentary" },
+                     OfficialShowType = new ShowTypeDto{ Name = "Documentary"},
+                      OfficialProgramName = "An Inconvenient Truth"
+                },
+                new ProgramMappingsDto
+                {
+                     OfficialGenre = new Genre{ Name = "News" },
+                     OfficialShowType = new ShowTypeDto{ Name = "News"},
+                      OfficialProgramName = "NEWS"
+                },
+                new ProgramMappingsDto
+                {
+                     OfficialGenre = new Genre{ Name = "Movie" },
+                     OfficialShowType = new ShowTypeDto{ Name = "Movie"},
+                      OfficialProgramName = "Avengers"
+                },
+                new ProgramMappingsDto
+                {
+                    OfficialProgramName = "2 broke girls",
+                    OfficialGenre = new Genre{ Name = "Series"},
+                    OfficialShowType = new ShowTypeDto{ Name = "Series"},
+                },
+                new ProgramMappingsDto
+                {
+                    OfficialProgramName = "Breaking Bad",
+                    OfficialGenre = new Genre{ Name = "Series"},
+                    OfficialShowType = new ShowTypeDto{ Name = "Series"},
+                },
+                new ProgramMappingsDto
+                {
+                    OfficialProgramName = "Champions League",
+                    OfficialGenre = new Genre{ Name = "Sports"},
+                    OfficialShowType = new ShowTypeDto{ Name = "Sports"},
+                },
+                new ProgramMappingsDto
+                {
+                    OfficialProgramName = "America Undercover",
+                    OfficialGenre = new Genre{ Name = "Documentary"},
+                    OfficialShowType = new ShowTypeDto{ Name = "Documentary"},
+                }
+                
+            });
+            IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IMasterProgramListImporter>(masterListImporterMock.Object);
+
+            _ProgramMappingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IProgramMappingService>();
+        }
 
         [Test]
         public void ExportProgramMappingsFile()
@@ -30,6 +100,30 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             // verify it's named well
             Assert.AreEqual(expectedFileName, exportedFile.Filename);
+
+            // verify the stream has contents
+            string fileContent;
+            using (var reader = new StreamReader(exportedFile.Stream))
+            {
+                fileContent = reader.ReadToEnd();
+            }
+            var hasContent = fileContent.Length > 0;
+            Assert.IsTrue(hasContent);
+        }
+
+        [Test]
+        public void ExportUnmappedPrograms()
+        {
+            // the content format, etc is tested via unit tests.
+            // here we will just test that it runs end to end 
+            // and the export stream is not empty
+            const string expectedFileName = "Unmapped_";
+            const string fileExtension = ".zip";
+            var exportedFile = _ProgramMappingService.ExportUnmappedPrograms();
+
+            // verify it's named well
+            Assert.IsTrue(exportedFile.Filename.StartsWith(expectedFileName));
+            Assert.IsTrue(exportedFile.Filename.EndsWith(fileExtension));
 
             // verify the stream has contents
             string fileContent;

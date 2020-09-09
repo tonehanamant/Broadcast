@@ -25,7 +25,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 			IShowTypeCache showTypeCache,
 			IProgramsSearchApiClient programsSearchApiClient,
 			IProgramMappingCleanupEngine programMappingCleanupEngine,
-            IMasterProgramListImporter masterListImporter)
+            IMasterProgramListImporter masterListImporter,
+			IDateTimeEngine dateTimeEngine)
 			: base(backgroundJobClient,
 				broadcastDataRepositoryFactory,
 				sharedFolderService,
@@ -34,7 +35,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 				showTypeCache,
 				programsSearchApiClient,
 				programMappingCleanupEngine,
-                masterListImporter)
+                masterListImporter,
+				dateTimeEngine)
 		{
 		}
         

@@ -1,6 +1,5 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
-using Common.Services;
 using Common.Services.Repositories;
 using Hangfire;
 using Moq;
@@ -8,6 +7,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Converters;
@@ -41,13 +41,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IProgramMappingCleanupEngine> _ProgramMappingCleanupEngine;
         private Mock<IProgramNameMappingKeywordRepository> _ProgramNameMappingKeywordRepositoryMock;
         private Mock<IMasterProgramListImporter> _MasterListImporterMock;
+        private Mock<IDateTimeEngine> _DateTimeEngineMock;
 
         private IGenreCache _GenreCacheStub;
         private IShowTypeCache _ShowTypeCacheStub;
-
-        private IMasterProgramListImporter _MasterListImporter;
-        private IGenreCache _GenreCache;
-        private IShowTypeCache _ShowTypeCache;
 
         private static bool WRITE_FILE_TO_DISK = false;
 
@@ -68,9 +65,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _ProgramMappingCleanupEngine = new Mock<IProgramMappingCleanupEngine>();
             _ProgramNameMappingKeywordRepositoryMock = new Mock<IProgramNameMappingKeywordRepository>();
             _MasterListImporterMock = new Mock<IMasterProgramListImporter>();
-            _GenreCache = new GenreCache(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory);
-            _ShowTypeCache = new ShowTypeCache(IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory);
-            _MasterListImporter = new MasterProgramListImporter(_GenreCache, _ShowTypeCache);
+            _DateTimeEngineMock = new Mock<IDateTimeEngine>();
 
             // Setup common mocks
             _DataRepositoryFactoryMock
@@ -124,109 +119,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 }
             });
 
-            _MasterListImporterMock.Setup(x => x.ImportMasterProgramList(It.IsAny<Stream>()))
-                .Returns(new List<ProgramMappingsDto>());
-
             // Setup the actual Program Mapping Service
             _ProgramMappingService = new ProgramMappingServiceTestClass(
-                _BackgroundJobClientMock.Object,
-                _DataRepositoryFactoryMock.Object,
-                _SharedFolderServiceMock.Object,
-                null,
-                _GenreCacheStub,
-                _ShowTypeCacheStub, 
-                _ProgramsSearchApiClientMock.Object, 
-                _ProgramMappingCleanupEngine.Object,
-                _MasterListImporterMock.Object);
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void GetUnmappedPrograms()
-        {
-            _InventoryRepositoryMock.Setup(s => s.GetUnmappedPrograms())
-                .Returns(new List<string>()
-                {
-                    "CHANNEL 9 NEWS 6PM", "FAMILY GUY (X2)", "SOME OTHER NEWS"
-                });
-
-            _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("CHANNEL 9 NEWS 6PM"))
-                .Returns("CHANNEL 9 NEWS");
-            _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("FAMILY GUY (X2)"))
-                .Returns("FAMILY GUY");
-            _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("SOME OTHER NEWS"))
-                .Returns("SOME OTHER NEWS");
-
-            _ProgramMappingRepositoryMock.Setup(s => s.GetProgramMappings())
-                .Returns(new List<ProgramMappingsDto>()
-                {
-                    new ProgramMappingsDto()
-                    {
-                        OfficialProgramName = "NEWS",
-                        OriginalProgramName = "CHANNEL 9 NEWS",
-                        OfficialGenre = new Genre()
-                        {
-                             Name = "NEWS"
-                        },
-                        OfficialShowType = new ShowTypeDto()
-                        {
-                            Name = "SERIES"
-                        }
-                    }
-                });
-
-            var result = _ProgramMappingService.GetUnmappedPrograms();
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void GetUnmappedPrograms_MatchByKeyword()
-        {
-            _InventoryRepositoryMock.Setup(s => s.GetUnmappedPrograms())
-               .Returns(new List<string>()
-               {
-                    "CHANNEL 9 NEWS 6PM", "FAMILY GUY (X2)", "SOME OTHER NEWS", "NFL Post Game Show, The"
-               });
-
-            _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("CHANNEL 9 NEWS 6PM"))
-                .Returns("CHANNEL 9 NEWS");
-            _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("FAMILY GUY (X2)"))
-                .Returns("FAMILY GUY");
-            _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("SOME OTHER NEWS"))
-                .Returns("SOME OTHER NEWS");
-            _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("NFL Post Game Show, The"))
-                .Returns("The NFL Post Game Show");
-
-            _ProgramMappingRepositoryMock.Setup(s => s.GetProgramMappings())
-                .Returns(new List<ProgramMappingsDto>()
-                {
-                    new ProgramMappingsDto()
-                    {
-                        OfficialProgramName = "NEWS",
-                        OriginalProgramName = "CHANNEL 9 NEWS",
-                        OfficialGenre = new Genre()
-                        {
-                             Name = "NEWS"
-                        },
-                        OfficialShowType = new ShowTypeDto()
-                        {
-                            Name = "SERIES"
-                        }
-                    }
-                });
-
-            var result = _ProgramMappingService.GetUnmappedPrograms();
-
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void GetUnmappedPrograms_MatchInMasterList()
-        {
-            var programMappingService = new ProgramMappingServiceTestClass(
                 _BackgroundJobClientMock.Object,
                 _DataRepositoryFactoryMock.Object,
                 _SharedFolderServiceMock.Object,
@@ -235,17 +129,23 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _ShowTypeCacheStub,
                 _ProgramsSearchApiClientMock.Object,
                 _ProgramMappingCleanupEngine.Object,
-                _MasterListImporter);
+                _MasterListImporterMock.Object,
+                _DateTimeEngineMock.Object);
+        }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetUnmappedPrograms()
+        {
             _InventoryRepositoryMock.Setup(s => s.GetUnmappedPrograms())
-               .Returns(new List<string>()
-               {
+              .Returns(new List<string>()
+              {
                     "CHANNEL 9 NEWS 6PM",
                    "FAMILY GUY (X2)",
                    "SOME OTHER NEWS",
                    "NFL Post Game Show, The",
                    "AMERICA UNDERCOVER"
-               });
+              });
 
             _ProgramMappingCleanupEngine.Setup(s => s.GetCleanProgram("CHANNEL 9 NEWS 6PM"))
                 .Returns("CHANNEL 9 NEWS");
@@ -271,12 +171,28 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         },
                         OfficialShowType = new ShowTypeDto()
                         {
-                            Name = "SERIES"
+                            Name = "NEWS"
                         }
                     }
                 });
 
-            var result = programMappingService.GetUnmappedPrograms();
+            _MasterListImporterMock.Setup(m => m.ImportMasterProgramList()).Returns(new List<ProgramMappingsDto>
+            {
+                new ProgramMappingsDto
+                {
+                     OfficialGenre = new Genre{ Name = "Comedy" },
+                     OfficialShowType = new ShowTypeDto{ Name = "Comedy"},
+                      OfficialProgramName = "Family Guy"
+                },
+                new ProgramMappingsDto
+                {
+                     OfficialGenre = new Genre{ Name = "News" },
+                     OfficialShowType = new ShowTypeDto{ Name = "News"},
+                      OfficialProgramName = "OTHER NEWS"
+                },
+            });
+
+            var result = _ProgramMappingService.GetUnmappedPrograms();
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -493,7 +409,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IInventoryRepository>())
                 .Returns(inventoryRepository.Object);
 
-            var sut = new ProgramMappingService(null, broadcastDataRepositoryFactory.Object, null, null, null, null, null, null, null);
+            var sut = new ProgramMappingService(null, broadcastDataRepositoryFactory.Object, null, null, null, null, null, null, null, null);
 
             var reportData = sut.GenerateUnmappedProgramNameReport();
             _WriteStream(reportData);
