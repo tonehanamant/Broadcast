@@ -626,7 +626,15 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var program in programs)
             {
                 var planDaypartsMatchedByTimeAndDays = _GetPlanDaypartsThatMatchProgramByTimeAndDays(dayparts, planDays, program);
+                if (planDaypartsMatchedByTimeAndDays.Count == 0)
+                {
+                    continue;
+                }
                 var planDaypartsMatchByRestrictions = _GetPlanDaypartsThatMatchProgramByRestrictions(planDaypartsMatchedByTimeAndDays, program);
+                if (planDaypartsMatchByRestrictions.Count == 0)
+                {
+                    continue;
+                }
                 var planDaypartWithMostIntersectingTime = _FindPlanDaypartWithMostIntersectingTime(planDaypartsMatchByRestrictions);
 
                 if (planDaypartWithMostIntersectingTime != null)
