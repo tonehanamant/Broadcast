@@ -52,6 +52,12 @@ namespace Services.Broadcast.BusinessEngines
         protected int? _ThresholdInSecondsForProgramIntersect;
         protected string _PlanPricingEndpointVersion;
         protected int? _NumberOfFallbackQuartersForPricing;
+        protected List<Day> _CadentDayDefinitions;
+        /// <summary>
+        /// Key = DaypartDefaultId
+        /// Values = Day Ids for that Daypart Default.
+        /// </summary>
+        protected Dictionary<int, List<int>> _DaypartDefaultDayIds;
 
         public PlanPricingInventoryEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                           IImpressionsCalculationEngine impressionsCalculationEngine,
@@ -222,9 +228,11 @@ namespace Services.Broadcast.BusinessEngines
 
         private void _SetProgramsFlightDays<T>(List<T> programs, List<int> flightDays) where T: BasePlanInventoryProgram
         {
+            var daypartDefaultIds = _GetDaypartDefaultDayIds();
+
             foreach (var program in programs)
             {
-                var programStandardDaypartDays = _DaypartDefaultRepository.GetDayIdsFromDaypartDefaults(new List<int> { program.StandardDaypartId });
+                var programStandardDaypartDays = daypartDefaultIds[program.StandardDaypartId];
                 var coveredDayNamesSet = _GetCoveredDayNamesHashSet(flightDays, programStandardDaypartDays);
 
                 foreach (var manifestDaypart in program.ManifestDayparts)
@@ -614,13 +622,12 @@ namespace Services.Broadcast.BusinessEngines
             DisplayDaypart planDays) where T: BasePlanInventoryProgram
         {
             var result = new List<T>();
-            var thresholdInSecondsForProgramIntersect = _GetThresholdInSecondsForProgramIntersect();
 
             foreach (var program in programs)
             {
                 var planDaypartsMatchedByTimeAndDays = _GetPlanDaypartsThatMatchProgramByTimeAndDays(dayparts, planDays, program);
                 var planDaypartsMatchByRestrictions = _GetPlanDaypartsThatMatchProgramByRestrictions(planDaypartsMatchedByTimeAndDays, program);
-                var planDaypartWithMostIntersectingTime = _FindPlanDaypartWithMostIntersectingTime(planDaypartsMatchByRestrictions, thresholdInSecondsForProgramIntersect);
+                var planDaypartWithMostIntersectingTime = _FindPlanDaypartWithMostIntersectingTime(planDaypartsMatchByRestrictions);
 
                 if (planDaypartWithMostIntersectingTime != null)
                 {
@@ -633,8 +640,9 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
-        private ProgramInventoryDaypart _FindPlanDaypartWithMostIntersectingTime<T>(List<T> programInventoryDayparts, int thresholdInSecondsForProgramIntersect) where T: ProgramInventoryDaypart
+        private ProgramInventoryDaypart _FindPlanDaypartWithMostIntersectingTime<T>(List<T> programInventoryDayparts) where T: ProgramInventoryDaypart
         {
+            var daypartDefaultDayIds = _GetDaypartDefaultDayIds();
             var planDaypartWithmostIntersectingTime = programInventoryDayparts
                 .Select(x =>
                 {
@@ -653,7 +661,7 @@ namespace Services.Broadcast.BusinessEngines
                     var singleIntersectionTime = DaypartTimeHelper.GetIntersectingTotalTime(planDaypartTimeRange, inventoryDaypartTimeRange);
 
                     var programDayIds = x.ManifestDaypart.Daypart.Days.Select(d => (int)d);
-                    var daypartDayIds = _DaypartDefaultRepository.GetDayIdsFromDaypartDefaults(new List<int> { x.PlanDaypart.DaypartCodeId });
+                    var daypartDayIds = daypartDefaultDayIds[x.PlanDaypart.DaypartCodeId];
                     var intersectingDayIds = programDayIds.Intersect(daypartDayIds);
 
                     var totalIntersectingTime = singleIntersectionTime * intersectingDayIds.Count();
@@ -928,7 +936,8 @@ namespace Services.Broadcast.BusinessEngines
 
         private DisplayDaypart _GetDisplayDaypartForPlanDaypart(PlanDaypartDto planDaypart, DisplayDaypart planFlightDays)
         {
-            var planDaypartDayIds = _DaypartDefaultRepository.GetDayIdsFromDaypartDefaults(new List<int> {planDaypart.DaypartCodeId});
+            var daypartDefaultDayIds = _GetDaypartDefaultDayIds();
+            var planDaypartDayIds = daypartDefaultDayIds[planDaypart.DaypartCodeId];
             var coveredDayNamesSet = _GetCoveredDayNamesHashSet(planDaypartDayIds);
 
             var blendedFlightDaypart = new DisplayDaypart
@@ -954,9 +963,19 @@ namespace Services.Broadcast.BusinessEngines
             return dayIds;
         }
 
+        protected virtual List<Day> _GetCadentDayDefinitions()
+        {
+            if (_CadentDayDefinitions == null)
+            {
+                _CadentDayDefinitions = _DayRepository.GetDays();
+            }
+
+            return _CadentDayDefinitions;
+        }
+
         private HashSet<string> _GetCoveredDayNamesHashSet(List<int> flightDays, List<int> planDaypartDayIds)
         {
-            var days = _DayRepository.GetDays();
+            var days = _GetCadentDayDefinitions();
             var coveredDayIds = flightDays.Intersect(planDaypartDayIds);
 
             var coveredDayNames = days
@@ -1125,6 +1144,22 @@ namespace Services.Broadcast.BusinessEngines
             }
 
             return _NumberOfFallbackQuartersForPricing.Value;
+        }
+
+        protected virtual Dictionary<int, List<int>> _GetDaypartDefaultDayIds()
+        {
+            if (_DaypartDefaultDayIds == null)
+            {
+                _DaypartDefaultDayIds = new Dictionary<int, List<int>>();
+                var daypartDefaultIds = _DaypartDefaultRepository.GetAllDaypartDefaults().Select(s => s.Id);
+                foreach (var daypartDefaultId in daypartDefaultIds)
+                {
+                    var dayIds = _DaypartDefaultRepository.GetDayIdsFromDaypartDefaults(new List<int> { daypartDefaultId });
+                    _DaypartDefaultDayIds[daypartDefaultId] = dayIds;
+                }
+            }
+
+            return _DaypartDefaultDayIds;
         }
 
         private class ProgramInventoryDaypart
