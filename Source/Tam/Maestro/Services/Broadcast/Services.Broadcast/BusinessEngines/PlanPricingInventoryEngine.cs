@@ -610,12 +610,13 @@ namespace Services.Broadcast.BusinessEngines
             DisplayDaypart planDays) where T: BasePlanInventoryProgram
         {
             var result = new List<T>();
+            var thresholdInSecondsForProgramIntersect = _GetThresholdInSecondsForProgramIntersect();
 
             foreach (var program in programs)
             {
                 var planDaypartsMatchedByTimeAndDays = _GetPlanDaypartsThatMatchProgramByTimeAndDays(dayparts, planDays, program);
                 var planDaypartsMatchByRestrictions = _GetPlanDaypartsThatMatchProgramByRestrictions(planDaypartsMatchedByTimeAndDays, program);
-                var planDaypartWithMostIntersectingTime = _FindPlanDaypartWithMostIntersectingTime(planDaypartsMatchByRestrictions);
+                var planDaypartWithMostIntersectingTime = _FindPlanDaypartWithMostIntersectingTime(planDaypartsMatchByRestrictions, thresholdInSecondsForProgramIntersect);
 
                 if (planDaypartWithMostIntersectingTime != null)
                 {
@@ -628,10 +629,8 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
-        private ProgramInventoryDaypart _FindPlanDaypartWithMostIntersectingTime<T>(List<T> programInventoryDayparts) where T: ProgramInventoryDaypart
+        private ProgramInventoryDaypart _FindPlanDaypartWithMostIntersectingTime<T>(List<T> programInventoryDayparts, int thresholdInSecondsForProgramIntersect) where T: ProgramInventoryDaypart
         {
-            var thresholdInSecondsForProgramIntersect = _GetThresholdInSecondsForProgramIntersect();
-
             var planDaypartWithmostIntersectingTime = programInventoryDayparts
                 .Select(x =>
                 {
