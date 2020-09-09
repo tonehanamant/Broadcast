@@ -987,7 +987,7 @@ namespace Services.Broadcast.BusinessEngines
 
         private HashSet<string> _GetCoveredDayNamesHashSet(List<int> planDaypartDayIds)
         {
-            var days = _DayRepository.GetDays();
+            var days = _GetCadentDayDefinitions();
             var coveredDayIds = planDaypartDayIds;
 
             var coveredDayNames = days
