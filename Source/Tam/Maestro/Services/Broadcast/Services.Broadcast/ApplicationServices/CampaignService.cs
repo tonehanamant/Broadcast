@@ -683,13 +683,13 @@ namespace Services.Broadcast.ApplicationServices
             var advertiser = _TrafficApiCache.GetAdvertiser(campaign.AdvertiserId);
             var guaranteedDemo = _AudienceService.GetAudienceById(plan.AudienceId);
             var spotLengths = _SpotLengthService.GetAllSpotLengths();
-            var allocatedSpots = _PlanRepository.GetPlanPricingAllocatedSpotsByPlanId(planId);
-            var manifestIds = allocatedSpots.Select(x => x.StationInventoryManifestId).Distinct();
-            var manifests = _InventoryRepository.GetStationInventoryManifestsByIds(manifestIds)
+            var allocatedOpenMarketSpots = _PlanRepository.GetPlanPricingAllocatedSpotsByPlanId(planId);
+            var manifestIdsOpenMarket = allocatedOpenMarketSpots.Select(x => x.StationInventoryManifestId).Distinct();
+            var manifestsOpenMarket = _InventoryRepository.GetStationInventoryManifestsByIds(manifestIdsOpenMarket)
                 .Where(x => x.Station != null && x.Station.MarketCode.HasValue)
                 .ToList();
             var marketCoverages = _MarketCoverageRepository.GetLatestMarketCoveragesWithStations();
-            var manifestDaypartIds = manifests.SelectMany(x => x.ManifestDayparts).Select(x => x.Id.Value).Distinct();
+            var manifestDaypartIds = manifestsOpenMarket.SelectMany(x => x.ManifestDayparts).Select(x => x.Id.Value).Distinct();
             var primaryProgramsByManifestDaypartIds = _StationProgramRepository.GetPrimaryProgramsForManifestDayparts(manifestDaypartIds);
 
             return new ProgramLineupReportData(
@@ -700,8 +700,8 @@ namespace Services.Broadcast.ApplicationServices
                 guaranteedDemo, 
                 spotLengths, 
                 currentDate,
-                allocatedSpots,
-                manifests,
+                allocatedOpenMarketSpots,
+                manifestsOpenMarket,
                 marketCoverages,
                 primaryProgramsByManifestDaypartIds);
         }

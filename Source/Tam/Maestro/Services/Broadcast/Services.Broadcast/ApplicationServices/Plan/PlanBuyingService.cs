@@ -946,15 +946,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 .ToList());
 
             result.TotalImpressions = proprietarySummaries
-                .SelectMany(x => x.Audiences)
+                .SelectMany(x => x.SummaryByStationByAudience)
                 .Where(x => ratingAudienceIds.Contains(x.AudienceId))
-                .Sum(x => x.Impressions ?? 0);
+                .Sum(x => x.Impressions);
 
             result.TotalCost = proprietarySummaries.Sum(x => x.UnitCost);
             result.TotalCostWithMargin = GeneralMath.CalculateCostWithMargin(result.TotalCost, parameters.Margin);
 
             result.ImpressionsPerMarket = proprietarySummaries
-                .SelectMany(x => x.SummaryByMarketByAudience)
+                .SelectMany(x => x.SummaryByStationByAudience)
                 .Where(x => ratingAudienceIds.Contains(x.AudienceId))
                 .GroupBy(x => x.MarketCode)
                 .ToDictionary(x => x.Key, x => x.Sum(y => y.Impressions));

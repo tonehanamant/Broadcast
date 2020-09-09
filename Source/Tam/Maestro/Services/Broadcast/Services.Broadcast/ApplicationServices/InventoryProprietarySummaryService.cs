@@ -99,19 +99,10 @@ namespace Services.Broadcast.ApplicationServices
 						 $"startDate = {startDate}; " +
 						 $"endDate = {endDate}");
 
-					summary.SummaryByMarketByAudience = _InventoryProprietarySummaryRepository.GetInventoryProprietarySummaryByMarketByAudience(
+					summary.SummaryByStationByAudience = _InventoryProprietarySummaryRepository.GetInventoryProprietarySummaryByStationByAudience(
 						summary.ProprietaryDaypartProgramMappingId,
 						quarterDetail.StartDate,
 						quarterDetail.EndDate);
-
-					summary.Audiences = summary.SummaryByMarketByAudience
-						.GroupBy(x => x.AudienceId)
-						.Select(x => new InventoryProprietarySummaryAudiencesDto
-						{
-							AudienceId = x.Key,
-							Impressions = x.Sum(y => y.Impressions)
-						})
-						.ToList();
 
 					_LogInfo($"Running  job AggregateInventoryProprietarySummary to start SaveInventoryProprietarySummary. " +
 							 $"Inventory SourceId = '{inventorySourceId}'; " +
@@ -156,6 +147,7 @@ namespace Services.Broadcast.ApplicationServices
 			return new DateRange(datesTuple.Item1, datesTuple.Item2);
 		}
 
+
 		public InventoryProprietarySummaryResponse GetInventoryProprietarySummaries(
 			InventoryProprietarySummaryRequest inventoryProprietarySummaryRequest)
 		{
@@ -195,21 +187,24 @@ namespace Services.Broadcast.ApplicationServices
             return response;
 		}
 
-		private double GetImpressions(InventoryProprietarySummaryRequest inventoryProprietarySummaryRequest,int invPropSummaryId,  List<int> summaryAudienceIds)
+		private double GetImpressions(InventoryProprietarySummaryRequest inventoryProprietarySummaryRequest,int invPropSummaryId
+			,  List<int> summaryAudienceIds)
 		{
 			double impressions = Math.Round(_InventoryProprietarySummaryRepository.GetTotalImpressionsBySummaryIdAndAudienceIds(invPropSummaryId, summaryAudienceIds));
 			int spotLengthIdI5 = _SpotLengthMap.Where(s => s.Key.Equals(SPOT_LENGTH_15)).Select(s => s.Value).Single();
 			int spotLengthId30 = _SpotLengthMap.Where(s => s.Key.Equals(SPOT_LENGTH_30)).Select(s => s.Value).Single();
 
-			if (inventoryProprietarySummaryRequest.SpotLengthIds.Contains(spotLengthIdI5) && !inventoryProprietarySummaryRequest.SpotLengthIds.Contains(spotLengthId30))
+			if (inventoryProprietarySummaryRequest.SpotLengthIds.Contains(spotLengthIdI5) 
+				&& !inventoryProprietarySummaryRequest.SpotLengthIds.Contains(spotLengthId30))
 			{
-				impressions = impressions / 2;
+				impressions /= 2;
 			}
 
 			return impressions;
 		}
 
-		protected string Validate(InventoryProprietarySummaryRequest inventoryProprietarySummaryRequest, List<QuarterDetailDto> quarterDetails)
+		protected string Validate(InventoryProprietarySummaryRequest inventoryProprietarySummaryRequest
+			, List<QuarterDetailDto> quarterDetails)
 		{
 			string validationMessage = null;
 
@@ -231,7 +226,8 @@ namespace Services.Broadcast.ApplicationServices
 
 		}
 			
-		private HashSet<int> _ConvertPlanDayPartIdsToInventoryDayPartIds(InventoryProprietarySummaryRequest dto, QuarterDetailDto QuarterDetail)
+		private HashSet<int> _ConvertPlanDayPartIdsToInventoryDayPartIds(InventoryProprietarySummaryRequest dto
+			, QuarterDetailDto QuarterDetail)
 		{
 			// First Get all Daypart Ids from InventoryProprietary Summary Service based on quarter
 			var inventoryDayPartIds = _InventoryProprietarySummaryRepository.GetDaypartIds(QuarterDetail);
@@ -248,7 +244,8 @@ namespace Services.Broadcast.ApplicationServices
 			return dayPartIdsFinalList;
 		}
 
-		private HashSet<int> _GetIntersectingDayPartIds(InventoryProprietarySummaryRequest dto, List<DisplayDaypart> inventoryDisplayDayParts)
+		private HashSet<int> _GetIntersectingDayPartIds(InventoryProprietarySummaryRequest dto
+			, List<DisplayDaypart> inventoryDisplayDayParts)
 		{
 			HashSet<int> dayPartIdsFinalList = new HashSet<int>();
 			

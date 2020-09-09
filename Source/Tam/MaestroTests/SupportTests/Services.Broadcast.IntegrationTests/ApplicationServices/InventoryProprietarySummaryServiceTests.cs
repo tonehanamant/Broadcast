@@ -12,7 +12,9 @@ using Tam.Maestro.Common.DataLayer;
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
-	public class InventoryProprietarySummaryServiceTests
+    [Category("long_running")]
+    [UseReporter(typeof(DiffReporter))]
+    public class InventoryProprietarySummaryServiceTests
 	{
 		private InventoryFileTestHelper _InventoryFileTestHelper;
 		private IInventoryProprietarySummaryService _InventoryProprietarySummaryService;
@@ -32,8 +34,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 		}
 
 		[Test]
-		[Category("long_running")]
-		[UseReporter(typeof(DiffReporter))]
 		public void AggregateInventoryProprietarySummaryDataTest_InvalidRequest()
 		{
 			using (new TransactionScopeWrapper())
@@ -88,8 +88,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 		}
 
 		[Test]
-		[Category("long_running")]
-		[UseReporter(typeof(DiffReporter))]
 		public void AggregateInventoryProprietarySummaryDataTest_ValidRequest()
 		{
 			using (new TransactionScopeWrapper())
@@ -144,8 +142,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 		}
 
 		[Test]
-		[Category("long_running")]
-		[UseReporter(typeof(DiffReporter))]
 		public void AggregateInventoryProprietarySummaryDataTest_Valid_OverWriteExistingForSameQuarter()
 		{
 			using (new TransactionScopeWrapper())
@@ -201,8 +197,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 		}
 
         [Test]
-        [Category("long_running")]
-        [UseReporter(typeof(DiffReporter))]
         public void AggregateInventoryProprietarySummaryDataTest_ValidWithUnitCost()
         {
             using (new TransactionScopeWrapper())
@@ -254,8 +248,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Category("long_running")]
-        [UseReporter(typeof(DiffReporter))]
         public void AggregateInventoryProprietarySummaryDataTest_ValidWithUnitCostMultipleSpots()
         {
             using (new TransactionScopeWrapper())
@@ -307,8 +299,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [Category("long_running")]
-        [UseReporter(typeof(DiffReporter))]
         public void AggregateInventoryProprietarySummaryDataTest_SameProgramName()
         {
             using (new TransactionScopeWrapper())

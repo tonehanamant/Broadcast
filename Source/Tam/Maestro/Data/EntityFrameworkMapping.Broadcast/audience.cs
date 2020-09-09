@@ -43,8 +43,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.vpvh_audience_mappings = new HashSet<vpvh_audience_mappings>();
             this.vpvh_audience_mappings1 = new HashSet<vpvh_audience_mappings>();
             this.plan_version_audience_daypart_vpvh = new HashSet<plan_version_audience_daypart_vpvh>();
-            this.inventory_proprietary_summary_audience_markets = new HashSet<inventory_proprietary_summary_audience_markets>();
-            this.inventory_proprietary_summary_audiences = new HashSet<inventory_proprietary_summary_audiences>();
+            this.inventory_proprietary_summary_station_audiences = new HashSet<inventory_proprietary_summary_station_audiences>();
         }
     
         public int id { get; set; }
@@ -84,7 +83,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<vpvh_audience_mappings> vpvh_audience_mappings { get; set; }
         public virtual ICollection<vpvh_audience_mappings> vpvh_audience_mappings1 { get; set; }
         public virtual ICollection<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
-        public virtual ICollection<inventory_proprietary_summary_audience_markets> inventory_proprietary_summary_audience_markets { get; set; }
-        public virtual ICollection<inventory_proprietary_summary_audiences> inventory_proprietary_summary_audiences { get; set; }
+        public virtual ICollection<inventory_proprietary_summary_station_audiences> inventory_proprietary_summary_station_audiences { get; set; }
     }
 }

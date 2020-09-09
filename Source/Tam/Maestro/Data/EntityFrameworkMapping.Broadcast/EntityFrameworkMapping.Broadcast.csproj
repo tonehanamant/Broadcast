@@ -427,10 +427,7 @@
     <Compile Include="inventory_proprietary_summary.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="inventory_proprietary_summary_audiences.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="inventory_proprietary_summary_audience_markets.cs">
+    <Compile Include="inventory_proprietary_summary_station_audiences.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="inventory_sources.cs">

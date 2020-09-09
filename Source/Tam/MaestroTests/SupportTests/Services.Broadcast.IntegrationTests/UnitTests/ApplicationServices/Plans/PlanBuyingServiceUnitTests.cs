@@ -1693,76 +1693,56 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             {
                 new InventoryProprietaryQuarterSummaryDto
                 {
-                    UnitCost = 100,
-                    Audiences = new List<InventoryProprietarySummaryAudiencesDto>
+                    UnitCost = 100,                    
+                    SummaryByStationByAudience = new List<InventoryProprietarySummaryByStationByAudience>
                     {
-                        new InventoryProprietarySummaryAudiencesDto
-                        {
-                            AudienceId = 1,
-                            Impressions = highProprietaryNumbers ? 100000000 : 1000000
-                        },
-                        new InventoryProprietarySummaryAudiencesDto
-                        {
-                            AudienceId = 2,
-                            Impressions = highProprietaryNumbers ? 100000000 : 1000000
-                        },
-                        new InventoryProprietarySummaryAudiencesDto
-                        {
-                            AudienceId = 3,
-                            Impressions = highProprietaryNumbers ? 10000000000 : 100000000
-                        }
-                    },
-                    SummaryByMarketByAudience = new List<InventoryProprietarySummaryByMarketByAudience>
-                    {
-                        new InventoryProprietarySummaryByMarketByAudience
+                        new InventoryProprietarySummaryByStationByAudience
                         {
                             AudienceId = 1,
                             MarketCode = 100,
+                            StationId = 5237,
                             Impressions = highProprietaryNumbers ? 30000000 : 300000
                         },
-                        new InventoryProprietarySummaryByMarketByAudience
+                        new InventoryProprietarySummaryByStationByAudience
                         {
                             AudienceId = 1,
                             MarketCode = 101,
+                            StationId = 1467,
                             Impressions = highProprietaryNumbers ? 30000000 : 300000
                         },
-                        new InventoryProprietarySummaryByMarketByAudience
+                        new InventoryProprietarySummaryByStationByAudience
                         {
                             AudienceId = 1,
                             MarketCode = 302,
+                            StationId = 3537,
                             Impressions = highProprietaryNumbers ? 40000000 : 400000
                         },
-                        new InventoryProprietarySummaryByMarketByAudience
+                        new InventoryProprietarySummaryByStationByAudience
                         {
                             AudienceId = 2,
                             MarketCode = 101,
+                            StationId = 5014,
                             Impressions = highProprietaryNumbers ? 100000000 : 1000000
                         },
-                        new InventoryProprietarySummaryByMarketByAudience
+                        new InventoryProprietarySummaryByStationByAudience
                         {
                             AudienceId = 3,
                             MarketCode = 101,
+                            StationId = 5015,
                             Impressions = highProprietaryNumbers ? 1000000000 : 10000000
                         }
                     }
                 },
                 new InventoryProprietaryQuarterSummaryDto
                 {
-                    UnitCost = 100,
-                    Audiences = new List<InventoryProprietarySummaryAudiencesDto>
+                    UnitCost = 100,                   
+                    SummaryByStationByAudience = new List<InventoryProprietarySummaryByStationByAudience>
                     {
-                        new InventoryProprietarySummaryAudiencesDto
-                        {
-                            AudienceId = 1,
-                            Impressions = highProprietaryNumbers ? 100000000 : 1000000
-                        }
-                    },
-                    SummaryByMarketByAudience = new List<InventoryProprietarySummaryByMarketByAudience>
-                    {
-                        new InventoryProprietarySummaryByMarketByAudience
+                        new InventoryProprietarySummaryByStationByAudience
                         {
                             AudienceId = 1,
                             MarketCode = 101,
+                            StationId = 5016,
                             Impressions = highProprietaryNumbers ? 100000000 : 1000000
                         }
                     }

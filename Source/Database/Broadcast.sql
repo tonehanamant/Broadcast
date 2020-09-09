@@ -734,6 +734,54 @@ END
 
 /*************************************** END - BP-811 ****************************************************/
 
+/*************************************** START - BP-1341 ****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('inventory_proprietary_summary_station_audiences'))
+BEGIN
+	CREATE TABLE [dbo].[inventory_proprietary_summary_station_audiences](
+		[id] [int] IDENTITY(1,1) NOT NULL,
+		[inventory_proprietary_summary_id] [int] NOT NULL,	
+		[audience_id] int NOT NULL,
+		[market_code] smallint NOT NULL,
+		[station_id] int NOT NULL,
+		[impressions] float NOT NULL
+	 CONSTRAINT [PK_inventory_proprietary_summary_station_audiences] PRIMARY KEY CLUSTERED 
+	(
+		[id] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+	) ON [PRIMARY]
+	
+	ALTER TABLE [dbo].[inventory_proprietary_summary_station_audiences] 
+	ADD CONSTRAINT [FK_inventory_proprietary_summary_station_audiences_inventory_proprietary_summary] 
+	FOREIGN KEY([inventory_proprietary_summary_id])
+	REFERENCES [dbo].[inventory_proprietary_summary] ([id])
+	
+	ALTER TABLE [dbo].[inventory_proprietary_summary_station_audiences] 
+	ADD CONSTRAINT [FK_inventory_proprietary_summary_station_audiences_stations] 
+	FOREIGN KEY([station_id])
+	REFERENCES [dbo].[stations] ([id])
+
+	ALTER TABLE [dbo].[inventory_proprietary_summary_station_audiences] 
+	ADD CONSTRAINT [FK_inventory_proprietary_summary_station_audiences_markets] 
+	FOREIGN KEY([market_code])
+	REFERENCES [dbo].[markets] ([market_code])
+
+	ALTER TABLE [dbo].[inventory_proprietary_summary_station_audiences] 
+	ADD CONSTRAINT [FK_inventory_proprietary_summary_station_audiences_audiences] 
+	FOREIGN KEY([audience_id])
+	REFERENCES [dbo].[audiences] ([id])
+END
+
+IF EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('inventory_proprietary_summary_audience_markets'))
+BEGIN
+	DROP TABLE [inventory_proprietary_summary_audience_markets]
+END
+
+IF EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('inventory_proprietary_summary_audiences'))
+BEGIN
+	DROP TABLE [inventory_proprietary_summary_audiences]
+END
+/*************************************** END - BP-1341 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

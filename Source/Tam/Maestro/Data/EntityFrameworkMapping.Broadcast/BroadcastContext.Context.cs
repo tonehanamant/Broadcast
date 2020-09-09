@@ -198,7 +198,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_pricing_api_result_spots> plan_version_pricing_api_result_spots { get; set; }
         public virtual DbSet<plan_version_pricing_job> plan_version_pricing_job { get; set; }
         public virtual DbSet<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
-        public virtual DbSet<inventory_proprietary_summary_audiences> inventory_proprietary_summary_audiences { get; set; }
         public virtual DbSet<plan_version_buying_api_result_spot_frequencies> plan_version_buying_api_result_spot_frequencies { get; set; }
         public virtual DbSet<plan_version_buying_api_result_spots> plan_version_buying_api_result_spots { get; set; }
         public virtual DbSet<plan_version_buying_api_results> plan_version_buying_api_results { get; set; }
@@ -217,8 +216,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station> stations { get; set; }
         public virtual DbSet<inventory_proprietary_daypart_programs> inventory_proprietary_daypart_programs { get; set; }
         public virtual DbSet<inventory_proprietary_summary> inventory_proprietary_summary { get; set; }
-        public virtual DbSet<inventory_proprietary_summary_audience_markets> inventory_proprietary_summary_audience_markets { get; set; }
         public virtual DbSet<plan_version_buying_parameter_inventory_proprietary_summaries> plan_version_buying_parameter_inventory_proprietary_summaries { get; set; }
         public virtual DbSet<plan_version_pricing_parameter_inventory_proprietary_summaries> plan_version_pricing_parameter_inventory_proprietary_summaries { get; set; }
+        public virtual DbSet<inventory_proprietary_summary_station_audiences> inventory_proprietary_summary_station_audiences { get; set; }
     }
 }

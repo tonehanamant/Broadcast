@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using EntityFrameworkMapping.Broadcast;
+﻿using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.InventoryProprietary
 {
@@ -13,14 +11,6 @@ namespace Services.Broadcast.Entities.InventoryProprietary
         public decimal UnitCost { get; set; }
         public int SlotNumber { get; set; }
         public int ProprietaryDaypartProgramMappingId { get; set; }
-        public List<InventoryProprietarySummaryAudiencesDto> Audiences { get; set; }
-		public List<InventoryProprietarySummaryByMarketByAudience> SummaryByMarketByAudience { get; set; }
-	}
-
-
-	public class InventoryProprietarySummaryAudiencesDto
-	{
-		public int AudienceId { get; set; }
-		public double? Impressions { get; set; }
+		public List<InventoryProprietarySummaryByStationByAudience> SummaryByStationByAudience { get; set; }
 	}
 }

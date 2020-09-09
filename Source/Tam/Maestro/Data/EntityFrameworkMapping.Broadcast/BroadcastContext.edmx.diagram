@@ -9,7 +9,7 @@
         <EntityTypeShape EntityType="BroadcastModel.audience" Width="1.5" PointX="2.75" PointY="0.5" />
         <EntityTypeShape EntityType="BroadcastModel.daypart" Width="1.5" PointX="13.75" PointY="2.5" />
         <EntityTypeShape EntityType="BroadcastModel.day" Width="1.5" PointX="16" PointY="2.5" />
-        <EntityTypeShape EntityType="BroadcastModel.market_dma_map" Width="1.5" PointX="5.75" PointY="4.5" />
+        <EntityTypeShape EntityType="BroadcastModel.market_dma_map" Width="1.5" PointX="5.75" PointY="4.5" IsExpanded="false" />
         <EntityTypeShape EntityType="BroadcastModel.media_months" Width="1.5" PointX="0.5" PointY="10" />
         <EntityTypeShape EntityType="BroadcastModel.media_weeks" Width="1.5" PointX="12.75" PointY="17.25" />
         <EntityTypeShape EntityType="BroadcastModel.post_file_demos" Width="1.5" PointX="17" PointY="17.75" />
@@ -488,21 +488,19 @@
         <EntityTypeShape EntityType="BroadcastModel.inventory_proprietary_daypart_programs" Width="1.5" PointX="25.375" PointY="71.125" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_daypart_program_mappings_inventory_proprietary_daypart_programs" />
         <EntityTypeShape EntityType="BroadcastModel.inventory_proprietary_summary" Width="1.5" PointX="30.5" PointY="54.375" />
-        <EntityTypeShape EntityType="BroadcastModel.inventory_proprietary_summary_audience_markets" Width="1.5" PointX="36.75" PointY="29.25" />
-        <EntityTypeShape EntityType="BroadcastModel.inventory_proprietary_summary_audiences" Width="1.5" PointX="38.75" PointY="25.375" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_parameter_inventory_proprietary_summaries" Width="1.5" PointX="32.75" PointY="54" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_pricing_parameter_inventory_proprietary_summaries" Width="1.5" PointX="36" PointY="47" />
-        <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_summary_audience_markets_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_summary_audiences_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings" />
-        <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_summary_audience_markets_inventory_proprietary_summary" />
-        <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_summary_inventory_sources" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_parameter_inventory_proprietary_summaries_inventory_proprietary_summary" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_parameter_inventory_proprietary_summaries_inventory_proprietary_summary" />
-        <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_summary_audience_markets_markets" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_parameter_inventory_proprietary_summaries_plan_version_buying_parameters" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_pricing_parameter_inventory_proprietary_summaries_plan_version_pricing_parameters" />
+        <EntityTypeShape EntityType="BroadcastModel.inventory_proprietary_summary_station_audiences" Width="1.5" PointX="10.25" PointY="48" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_markets" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_stations" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_inventory_proprietary_summary" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

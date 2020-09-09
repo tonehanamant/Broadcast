@@ -16,10 +16,9 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public inventory_proprietary_summary()
         {
-            this.inventory_proprietary_summary_audience_markets = new HashSet<inventory_proprietary_summary_audience_markets>();
-            this.inventory_proprietary_summary_audiences = new HashSet<inventory_proprietary_summary_audiences>();
             this.plan_version_buying_parameter_inventory_proprietary_summaries = new HashSet<plan_version_buying_parameter_inventory_proprietary_summaries>();
             this.plan_version_pricing_parameter_inventory_proprietary_summaries = new HashSet<plan_version_pricing_parameter_inventory_proprietary_summaries>();
+            this.inventory_proprietary_summary_station_audiences = new HashSet<inventory_proprietary_summary_station_audiences>();
         }
     
         public int id { get; set; }
@@ -34,10 +33,9 @@ namespace EntityFrameworkMapping.Broadcast
         public bool is_active { get; set; }
     
         public virtual inventory_proprietary_daypart_program_mappings inventory_proprietary_daypart_program_mappings { get; set; }
-        public virtual ICollection<inventory_proprietary_summary_audience_markets> inventory_proprietary_summary_audience_markets { get; set; }
-        public virtual ICollection<inventory_proprietary_summary_audiences> inventory_proprietary_summary_audiences { get; set; }
         public virtual inventory_sources inventory_sources { get; set; }
         public virtual ICollection<plan_version_buying_parameter_inventory_proprietary_summaries> plan_version_buying_parameter_inventory_proprietary_summaries { get; set; }
         public virtual ICollection<plan_version_pricing_parameter_inventory_proprietary_summaries> plan_version_pricing_parameter_inventory_proprietary_summaries { get; set; }
+        public virtual ICollection<inventory_proprietary_summary_station_audiences> inventory_proprietary_summary_station_audiences { get; set; }
     }
 }

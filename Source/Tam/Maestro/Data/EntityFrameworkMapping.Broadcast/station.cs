@@ -24,6 +24,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.station_inventory_spot_snapshots = new HashSet<station_inventory_spot_snapshots>();
             this.station_mappings = new HashSet<station_mappings>();
             this.station_month_details = new HashSet<station_month_details>();
+            this.inventory_proprietary_summary_station_audiences = new HashSet<inventory_proprietary_summary_station_audiences>();
         }
     
         public Nullable<int> station_code { get; set; }
@@ -47,5 +48,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<station_inventory_spot_snapshots> station_inventory_spot_snapshots { get; set; }
         public virtual ICollection<station_mappings> station_mappings { get; set; }
         public virtual ICollection<station_month_details> station_month_details { get; set; }
+        public virtual ICollection<inventory_proprietary_summary_station_audiences> inventory_proprietary_summary_station_audiences { get; set; }
     }
 }

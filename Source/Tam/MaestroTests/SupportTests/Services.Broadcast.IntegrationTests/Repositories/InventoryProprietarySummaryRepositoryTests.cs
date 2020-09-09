@@ -136,7 +136,6 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 		private JsonSerializerSettings _GetJsonSettings()
 		{
 			var jsonResolver = new IgnorableSerializerContractResolver();
-			jsonResolver.Ignore(typeof(List<InventoryProprietarySummaryAudiencesDto>), "Audiences");
 
 			var jsonSettings = new JsonSerializerSettings
 			{

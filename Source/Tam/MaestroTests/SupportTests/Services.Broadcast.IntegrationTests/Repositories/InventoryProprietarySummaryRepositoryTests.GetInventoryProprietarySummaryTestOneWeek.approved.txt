@@ -1,13 +1,12 @@
 [
   {
-    "Audiences": null,
     "DefaultDaypartId": null,
     "Id": 0,
     "InventorySourceId": 5,
     "ProprietaryDaypartProgramMappingId": 1,
     "Quarter": null,
     "SlotNumber": 1,
-    "SummaryByMarketByAudience": null,
+    "SummaryByStationByAudience": null,
     "UnitCost": 453.4085
   }
 ]

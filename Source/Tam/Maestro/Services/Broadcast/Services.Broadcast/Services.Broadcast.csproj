@@ -594,7 +594,7 @@
     <Compile Include="Entities\HealthResponseDto.cs" />
     <Compile Include="Entities\InventoryProprietary\InventoryProprietaryQuarterSummaryDto.cs" />
     <Compile Include="Entities\InventoryProprietary\InventoryProprietarySummary.cs" />
-    <Compile Include="Entities\InventoryProprietary\InventoryProprietarySummaryByMarketByAudience.cs" />
+    <Compile Include="Entities\InventoryProprietary\InventoryProprietarySummaryByStationByAudience.cs" />
     <Compile Include="Entities\InventoryProprietary\InventoryProprietarySummaryRequest.cs" />
     <Compile Include="Entities\InventoryProprietary\InventoryProprietarySummaryResponse.cs" />
     <Compile Include="Entities\Inventory\InventoryExportAudienceDto.cs" />

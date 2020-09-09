@@ -12,14 +12,18 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class inventory_proprietary_summary_audiences
+    public partial class inventory_proprietary_summary_station_audiences
     {
         public int id { get; set; }
         public int inventory_proprietary_summary_id { get; set; }
         public int audience_id { get; set; }
-        public Nullable<double> impressions { get; set; }
+        public short market_code { get; set; }
+        public int station_id { get; set; }
+        public double impressions { get; set; }
     
         public virtual audience audience { get; set; }
+        public virtual market market { get; set; }
+        public virtual station station { get; set; }
         public virtual inventory_proprietary_summary inventory_proprietary_summary { get; set; }
     }
 }

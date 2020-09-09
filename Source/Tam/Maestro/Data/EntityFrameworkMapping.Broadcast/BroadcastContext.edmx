@@ -518,7 +518,7 @@
           <Property Name="unit_cost" Type="money" Nullable="false" />
           <Property Name="is_active" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="inventory_proprietary_summary_audience_markets">
+        <EntityType Name="inventory_proprietary_summary_station_audiences">
           <Key>
             <PropertyRef Name="id" />
           </Key>
@@ -526,16 +526,8 @@
           <Property Name="inventory_proprietary_summary_id" Type="int" Nullable="false" />
           <Property Name="audience_id" Type="int" Nullable="false" />
           <Property Name="market_code" Type="smallint" Nullable="false" />
+          <Property Name="station_id" Type="int" Nullable="false" />
           <Property Name="impressions" Type="float" Nullable="false" />
-        </EntityType>
-        <EntityType Name="inventory_proprietary_summary_audiences">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="inventory_proprietary_summary_id" Type="int" Nullable="false" />
-          <Property Name="audience_id" Type="int" Nullable="false" />
-          <Property Name="impressions" Type="float" />
         </EntityType>
         <EntityType Name="inventory_source_logos">
           <Key>
@@ -2363,7 +2355,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging_sandbox.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -2532,7 +2524,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventor
           <Property Name="vpvh_file_id" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging_sandbox.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -3130,66 +3122,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_inventory_proprietary_summary_audience_markets_audiences">
-          <End Role="audiences" Type="Self.audiences" Multiplicity="1" />
-          <End Role="inventory_proprietary_summary_audience_markets" Type="Self.inventory_proprietary_summary_audience_markets" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="audiences">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_proprietary_summary_audience_markets">
-              <PropertyRef Name="audience_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_inventory_proprietary_summary_audience_markets_inventory_proprietary_summary">
-          <End Role="inventory_proprietary_summary" Type="Self.inventory_proprietary_summary" Multiplicity="1" />
-          <End Role="inventory_proprietary_summary_audience_markets" Type="Self.inventory_proprietary_summary_audience_markets" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="inventory_proprietary_summary">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_proprietary_summary_audience_markets">
-              <PropertyRef Name="inventory_proprietary_summary_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_inventory_proprietary_summary_audience_markets_markets">
-          <End Role="markets" Type="Self.markets" Multiplicity="1" />
-          <End Role="inventory_proprietary_summary_audience_markets" Type="Self.inventory_proprietary_summary_audience_markets" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="markets">
-              <PropertyRef Name="market_code" />
-            </Principal>
-            <Dependent Role="inventory_proprietary_summary_audience_markets">
-              <PropertyRef Name="market_code" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_inventory_proprietary_summary_audiences_audiences">
-          <End Role="audiences" Type="Self.audiences" Multiplicity="1" />
-          <End Role="inventory_proprietary_summary_audiences" Type="Self.inventory_proprietary_summary_audiences" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="audiences">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_proprietary_summary_audiences">
-              <PropertyRef Name="audience_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary">
-          <End Role="inventory_proprietary_summary" Type="Self.inventory_proprietary_summary" Multiplicity="1" />
-          <End Role="inventory_proprietary_summary_audiences" Type="Self.inventory_proprietary_summary_audiences" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="inventory_proprietary_summary">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_proprietary_summary_audiences">
-              <PropertyRef Name="inventory_proprietary_summary_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings">
           <End Role="inventory_proprietary_daypart_program_mappings" Type="Self.inventory_proprietary_daypart_program_mappings" Multiplicity="1" />
           <End Role="inventory_proprietary_summary" Type="Self.inventory_proprietary_summary" Multiplicity="*" />
@@ -3211,6 +3143,54 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="inventory_proprietary_summary">
               <PropertyRef Name="inventory_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_proprietary_summary_station_audiences_audiences">
+          <End Role="audiences" Type="Self.audiences" Multiplicity="1" />
+          <End Role="inventory_proprietary_summary_station_audiences" Type="Self.inventory_proprietary_summary_station_audiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audiences">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_proprietary_summary_station_audiences">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_proprietary_summary_station_audiences_inventory_proprietary_summary">
+          <End Role="inventory_proprietary_summary" Type="Self.inventory_proprietary_summary" Multiplicity="1" />
+          <End Role="inventory_proprietary_summary_station_audiences" Type="Self.inventory_proprietary_summary_station_audiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_proprietary_summary">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_proprietary_summary_station_audiences">
+              <PropertyRef Name="inventory_proprietary_summary_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_proprietary_summary_station_audiences_markets">
+          <End Role="markets" Type="Self.markets" Multiplicity="1" />
+          <End Role="inventory_proprietary_summary_station_audiences" Type="Self.inventory_proprietary_summary_station_audiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="markets">
+              <PropertyRef Name="market_code" />
+            </Principal>
+            <Dependent Role="inventory_proprietary_summary_station_audiences">
+              <PropertyRef Name="market_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_proprietary_summary_station_audiences_stations">
+          <End Role="stations" Type="Self.stations" Multiplicity="1" />
+          <End Role="inventory_proprietary_summary_station_audiences" Type="Self.inventory_proprietary_summary_station_audiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="stations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_proprietary_summary_station_audiences">
+              <PropertyRef Name="station_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6440,8 +6420,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="inventory_proprietary_daypart_program_mappings" EntityType="Self.inventory_proprietary_daypart_program_mappings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_proprietary_daypart_programs" EntityType="Self.inventory_proprietary_daypart_programs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_proprietary_summary" EntityType="Self.inventory_proprietary_summary" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="inventory_proprietary_summary_audience_markets" EntityType="Self.inventory_proprietary_summary_audience_markets" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="inventory_proprietary_summary_audiences" EntityType="Self.inventory_proprietary_summary_audiences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="inventory_proprietary_summary_station_audiences" EntityType="Self.inventory_proprietary_summary_station_audiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_source_logos" EntityType="Self.inventory_source_logos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_sources" EntityType="Self.inventory_sources" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inventory_summary" EntityType="Self.inventory_summary" Schema="dbo" store:Type="Tables" />
@@ -6807,26 +6786,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="inventory_sources" EntitySet="inventory_sources" />
             <End Role="inventory_proprietary_daypart_program_mappings" EntitySet="inventory_proprietary_daypart_program_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK_inventory_proprietary_summary_audience_markets_audiences" Association="Self.FK_inventory_proprietary_summary_audience_markets_audiences">
-            <End Role="audiences" EntitySet="audiences" />
-            <End Role="inventory_proprietary_summary_audience_markets" EntitySet="inventory_proprietary_summary_audience_markets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_inventory_proprietary_summary_audience_markets_inventory_proprietary_summary" Association="Self.FK_inventory_proprietary_summary_audience_markets_inventory_proprietary_summary">
-            <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
-            <End Role="inventory_proprietary_summary_audience_markets" EntitySet="inventory_proprietary_summary_audience_markets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_inventory_proprietary_summary_audience_markets_markets" Association="Self.FK_inventory_proprietary_summary_audience_markets_markets">
-            <End Role="markets" EntitySet="markets" />
-            <End Role="inventory_proprietary_summary_audience_markets" EntitySet="inventory_proprietary_summary_audience_markets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_inventory_proprietary_summary_audiences_audiences" Association="Self.FK_inventory_proprietary_summary_audiences_audiences">
-            <End Role="audiences" EntitySet="audiences" />
-            <End Role="inventory_proprietary_summary_audiences" EntitySet="inventory_proprietary_summary_audiences" />
-          </AssociationSet>
-          <AssociationSet Name="FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary" Association="Self.FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary">
-            <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
-            <End Role="inventory_proprietary_summary_audiences" EntitySet="inventory_proprietary_summary_audiences" />
-          </AssociationSet>
           <AssociationSet Name="FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings" Association="Self.FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings">
             <End Role="inventory_proprietary_daypart_program_mappings" EntitySet="inventory_proprietary_daypart_program_mappings" />
             <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
@@ -6834,6 +6793,22 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_inventory_proprietary_summary_inventory_sources" Association="Self.FK_inventory_proprietary_summary_inventory_sources">
             <End Role="inventory_sources" EntitySet="inventory_sources" />
             <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_proprietary_summary_station_audiences_audiences" Association="Self.FK_inventory_proprietary_summary_station_audiences_audiences">
+            <End Role="audiences" EntitySet="audiences" />
+            <End Role="inventory_proprietary_summary_station_audiences" EntitySet="inventory_proprietary_summary_station_audiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_proprietary_summary_station_audiences_inventory_proprietary_summary" Association="Self.FK_inventory_proprietary_summary_station_audiences_inventory_proprietary_summary">
+            <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
+            <End Role="inventory_proprietary_summary_station_audiences" EntitySet="inventory_proprietary_summary_station_audiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_proprietary_summary_station_audiences_markets" Association="Self.FK_inventory_proprietary_summary_station_audiences_markets">
+            <End Role="markets" EntitySet="markets" />
+            <End Role="inventory_proprietary_summary_station_audiences" EntitySet="inventory_proprietary_summary_station_audiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_proprietary_summary_station_audiences_stations" Association="Self.FK_inventory_proprietary_summary_station_audiences_stations">
+            <End Role="stations" EntitySet="stations" />
+            <End Role="inventory_proprietary_summary_station_audiences" EntitySet="inventory_proprietary_summary_station_audiences" />
           </AssociationSet>
           <AssociationSet Name="FK_inventory_source_logos_inventory_sources" Association="Self.FK_inventory_source_logos_inventory_sources">
             <End Role="inventory_sources" EntitySet="inventory_sources" />
@@ -9188,29 +9163,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="inventory_proprietary_daypart_program_mappings" EntitySet="inventory_proprietary_daypart_program_mappings" />
           </AssociationSet>
           <EntitySet Name="inventory_proprietary_summary" EntityType="BroadcastModel.inventory_proprietary_summary" />
-          <EntitySet Name="inventory_proprietary_summary_audience_markets" EntityType="BroadcastModel.inventory_proprietary_summary_audience_markets" />
-          <EntitySet Name="inventory_proprietary_summary_audiences" EntityType="BroadcastModel.inventory_proprietary_summary_audiences" />
           <EntitySet Name="plan_version_buying_parameter_inventory_proprietary_summaries" EntityType="BroadcastModel.plan_version_buying_parameter_inventory_proprietary_summaries" />
           <EntitySet Name="plan_version_pricing_parameter_inventory_proprietary_summaries" EntityType="BroadcastModel.plan_version_pricing_parameter_inventory_proprietary_summaries" />
-          <AssociationSet Name="FK_inventory_proprietary_summary_audience_markets_audiences" Association="BroadcastModel.FK_inventory_proprietary_summary_audience_markets_audiences">
-            <End Role="audience" EntitySet="audiences" />
-            <End Role="inventory_proprietary_summary_audience_markets" EntitySet="inventory_proprietary_summary_audience_markets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_inventory_proprietary_summary_audiences_audiences" Association="BroadcastModel.FK_inventory_proprietary_summary_audiences_audiences">
-            <End Role="audience" EntitySet="audiences" />
-            <End Role="inventory_proprietary_summary_audiences" EntitySet="inventory_proprietary_summary_audiences" />
-          </AssociationSet>
           <AssociationSet Name="FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings" Association="BroadcastModel.FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings">
             <End Role="inventory_proprietary_daypart_program_mappings" EntitySet="inventory_proprietary_daypart_program_mappings" />
             <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
-          </AssociationSet>
-          <AssociationSet Name="FK_inventory_proprietary_summary_audience_markets_inventory_proprietary_summary" Association="BroadcastModel.FK_inventory_proprietary_summary_audience_markets_inventory_proprietary_summary">
-            <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
-            <End Role="inventory_proprietary_summary_audience_markets" EntitySet="inventory_proprietary_summary_audience_markets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary" Association="BroadcastModel.FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary">
-            <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
-            <End Role="inventory_proprietary_summary_audiences" EntitySet="inventory_proprietary_summary_audiences" />
           </AssociationSet>
           <AssociationSet Name="FK_inventory_proprietary_summary_inventory_sources" Association="BroadcastModel.FK_inventory_proprietary_summary_inventory_sources">
             <End Role="inventory_sources" EntitySet="inventory_sources" />
@@ -9224,10 +9181,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
             <End Role="plan_version_pricing_parameter_inventory_proprietary_summaries" EntitySet="plan_version_pricing_parameter_inventory_proprietary_summaries" />
           </AssociationSet>
-          <AssociationSet Name="FK_inventory_proprietary_summary_audience_markets_markets" Association="BroadcastModel.FK_inventory_proprietary_summary_audience_markets_markets">
-            <End Role="market" EntitySet="markets" />
-            <End Role="inventory_proprietary_summary_audience_markets" EntitySet="inventory_proprietary_summary_audience_markets" />
-          </AssociationSet>
           <AssociationSet Name="FK_plan_version_buying_parameter_inventory_proprietary_summaries_plan_version_buying_parameters" Association="BroadcastModel.FK_plan_version_buying_parameter_inventory_proprietary_summaries_plan_version_buying_parameters">
             <End Role="plan_version_buying_parameters" EntitySet="plan_version_buying_parameters" />
             <End Role="plan_version_buying_parameter_inventory_proprietary_summaries" EntitySet="plan_version_buying_parameter_inventory_proprietary_summaries" />
@@ -9235,6 +9188,23 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_plan_version_pricing_parameter_inventory_proprietary_summaries_plan_version_pricing_parameters" Association="BroadcastModel.FK_plan_version_pricing_parameter_inventory_proprietary_summaries_plan_version_pricing_parameters">
             <End Role="plan_version_pricing_parameters" EntitySet="plan_version_pricing_parameters" />
             <End Role="plan_version_pricing_parameter_inventory_proprietary_summaries" EntitySet="plan_version_pricing_parameter_inventory_proprietary_summaries" />
+          </AssociationSet>
+          <EntitySet Name="inventory_proprietary_summary_station_audiences" EntityType="BroadcastModel.inventory_proprietary_summary_station_audiences" />
+          <AssociationSet Name="FK_inventory_proprietary_summary_station_audiences_audiences" Association="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_audiences">
+            <End Role="audience" EntitySet="audiences" />
+            <End Role="inventory_proprietary_summary_station_audiences" EntitySet="inventory_proprietary_summary_station_audiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_proprietary_summary_station_audiences_markets" Association="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_markets">
+            <End Role="market" EntitySet="markets" />
+            <End Role="inventory_proprietary_summary_station_audiences" EntitySet="inventory_proprietary_summary_station_audiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_proprietary_summary_station_audiences_stations" Association="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_stations">
+            <End Role="station" EntitySet="stations" />
+            <End Role="inventory_proprietary_summary_station_audiences" EntitySet="inventory_proprietary_summary_station_audiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_inventory_proprietary_summary_station_audiences_inventory_proprietary_summary" Association="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_inventory_proprietary_summary">
+            <End Role="inventory_proprietary_summary" EntitySet="inventory_proprietary_summary" />
+            <End Role="inventory_proprietary_summary_station_audiences" EntitySet="inventory_proprietary_summary_station_audiences" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -9288,8 +9258,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="vpvh_audience_mappings" Relationship="BroadcastModel.FK_vpvh_audience_mapping_audiences_compose_audiences" FromRole="audience" ToRole="vpvh_audience_mappings" />
           <NavigationProperty Name="vpvh_audience_mappings1" Relationship="BroadcastModel.FK_vpvh_audience_mappings_audiences" FromRole="audience" ToRole="vpvh_audience_mappings" />
           <NavigationProperty Name="plan_version_audience_daypart_vpvh" Relationship="BroadcastModel.FK_plan_version_audience_daypart_vpvh_audiences" FromRole="audience" ToRole="plan_version_audience_daypart_vpvh" />
-          <NavigationProperty Name="inventory_proprietary_summary_audience_markets" Relationship="BroadcastModel.FK_inventory_proprietary_summary_audience_markets_audiences" FromRole="audience" ToRole="inventory_proprietary_summary_audience_markets" />
-          <NavigationProperty Name="inventory_proprietary_summary_audiences" Relationship="BroadcastModel.FK_inventory_proprietary_summary_audiences_audiences" FromRole="audience" ToRole="inventory_proprietary_summary_audiences" />
+          <NavigationProperty Name="inventory_proprietary_summary_station_audiences" Relationship="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_audiences" FromRole="audience" ToRole="inventory_proprietary_summary_station_audiences" />
         </EntityType>
         <EntityType Name="daypart">
           <Key>
@@ -12331,7 +12300,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_blackout_markets" Relationship="BroadcastModel.FK_plan_blackout_markets_markets" FromRole="market" ToRole="plan_version_blackout_markets" />
           <NavigationProperty Name="station_month_details" Relationship="BroadcastModel.FK_station_month_details_markets" FromRole="market" ToRole="station_month_details" />
           <NavigationProperty Name="stations" Relationship="BroadcastModel.FK_stations_markets" FromRole="market" ToRole="station" />
-          <NavigationProperty Name="inventory_proprietary_summary_audience_markets" Relationship="BroadcastModel.FK_inventory_proprietary_summary_audience_markets_markets" FromRole="market" ToRole="inventory_proprietary_summary_audience_markets" />
+          <NavigationProperty Name="inventory_proprietary_summary_station_audiences" Relationship="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_markets" FromRole="market" ToRole="inventory_proprietary_summary_station_audiences" />
         </EntityType>
         <Association Name="FK_market_coverages_markets">
           <End Type="BroadcastModel.market" Role="market" Multiplicity="1" />
@@ -15835,6 +15804,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="station_inventory_spot_snapshots" Relationship="BroadcastModel.FK_station_inventory_spot_snapshots_stations" FromRole="station" ToRole="station_inventory_spot_snapshots" />
           <NavigationProperty Name="station_mappings" Relationship="BroadcastModel.FK_station_mappings_stations" FromRole="station" ToRole="station_mappings" />
           <NavigationProperty Name="station_month_details" Relationship="BroadcastModel.FK_station_month_details_stations" FromRole="station" ToRole="station_month_details" />
+          <NavigationProperty Name="inventory_proprietary_summary_station_audiences" Relationship="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_stations" FromRole="station" ToRole="inventory_proprietary_summary_station_audiences" />
         </EntityType>
         <Association Name="FK_stations_markets">
           <End Type="BroadcastModel.market" Role="market" Multiplicity="0..1" />
@@ -15984,35 +15954,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="unit_cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="is_active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="inventory_proprietary_daypart_program_mappings" Relationship="BroadcastModel.FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings" FromRole="inventory_proprietary_summary" ToRole="inventory_proprietary_daypart_program_mappings" />
-          <NavigationProperty Name="inventory_proprietary_summary_audience_markets" Relationship="BroadcastModel.FK_inventory_proprietary_summary_audience_markets_inventory_proprietary_summary" FromRole="inventory_proprietary_summary" ToRole="inventory_proprietary_summary_audience_markets" />
-          <NavigationProperty Name="inventory_proprietary_summary_audiences" Relationship="BroadcastModel.FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary" FromRole="inventory_proprietary_summary" ToRole="inventory_proprietary_summary_audiences" />
           <NavigationProperty Name="inventory_sources" Relationship="BroadcastModel.FK_inventory_proprietary_summary_inventory_sources" FromRole="inventory_proprietary_summary" ToRole="inventory_sources" />
           <NavigationProperty Name="plan_version_buying_parameter_inventory_proprietary_summaries" Relationship="BroadcastModel.FK_plan_version_buying_parameter_inventory_proprietary_summaries_inventory_proprietary_summary" FromRole="inventory_proprietary_summary" ToRole="plan_version_buying_parameter_inventory_proprietary_summaries" />
           <NavigationProperty Name="plan_version_pricing_parameter_inventory_proprietary_summaries" Relationship="BroadcastModel.FK_plan_version_pricing_parameter_inventory_proprietary_summaries_inventory_proprietary_summary" FromRole="inventory_proprietary_summary" ToRole="plan_version_pricing_parameter_inventory_proprietary_summaries" />
-        </EntityType>
-        <EntityType Name="inventory_proprietary_summary_audience_markets">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="inventory_proprietary_summary_id" Type="Int32" Nullable="false" />
-          <Property Name="audience_id" Type="Int32" Nullable="false" />
-          <Property Name="market_code" Type="Int16" Nullable="false" />
-          <Property Name="impressions" Type="Double" Nullable="false" />
-          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_inventory_proprietary_summary_audience_markets_audiences" FromRole="inventory_proprietary_summary_audience_markets" ToRole="audience" />
-          <NavigationProperty Name="inventory_proprietary_summary" Relationship="BroadcastModel.FK_inventory_proprietary_summary_audience_markets_inventory_proprietary_summary" FromRole="inventory_proprietary_summary_audience_markets" ToRole="inventory_proprietary_summary" />
-          <NavigationProperty Name="market" Relationship="BroadcastModel.FK_inventory_proprietary_summary_audience_markets_markets" FromRole="inventory_proprietary_summary_audience_markets" ToRole="market" />
-        </EntityType>
-        <EntityType Name="inventory_proprietary_summary_audiences">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="inventory_proprietary_summary_id" Type="Int32" Nullable="false" />
-          <Property Name="audience_id" Type="Int32" Nullable="false" />
-          <Property Name="impressions" Type="Double" />
-          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_inventory_proprietary_summary_audiences_audiences" FromRole="inventory_proprietary_summary_audiences" ToRole="audience" />
-          <NavigationProperty Name="inventory_proprietary_summary" Relationship="BroadcastModel.FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary" FromRole="inventory_proprietary_summary_audiences" ToRole="inventory_proprietary_summary" />
+          <NavigationProperty Name="inventory_proprietary_summary_station_audiences" Relationship="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_inventory_proprietary_summary" FromRole="inventory_proprietary_summary" ToRole="inventory_proprietary_summary_station_audiences" />
         </EntityType>
         <EntityType Name="plan_version_buying_parameter_inventory_proprietary_summaries">
           <Key>
@@ -16034,30 +15979,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="inventory_proprietary_summary" Relationship="BroadcastModel.FK_plan_version_pricing_parameter_inventory_proprietary_summaries_inventory_proprietary_summary" FromRole="plan_version_pricing_parameter_inventory_proprietary_summaries" ToRole="inventory_proprietary_summary" />
           <NavigationProperty Name="plan_version_pricing_parameters" Relationship="BroadcastModel.FK_plan_version_pricing_parameter_inventory_proprietary_summaries_plan_version_pricing_parameters" FromRole="plan_version_pricing_parameter_inventory_proprietary_summaries" ToRole="plan_version_pricing_parameters" />
         </EntityType>
-        <Association Name="FK_inventory_proprietary_summary_audience_markets_audiences">
-          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
-          <End Type="BroadcastModel.inventory_proprietary_summary_audience_markets" Role="inventory_proprietary_summary_audience_markets" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="audience">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_proprietary_summary_audience_markets">
-              <PropertyRef Name="audience_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_inventory_proprietary_summary_audiences_audiences">
-          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
-          <End Type="BroadcastModel.inventory_proprietary_summary_audiences" Role="inventory_proprietary_summary_audiences" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="audience">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_proprietary_summary_audiences">
-              <PropertyRef Name="audience_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings">
           <End Type="BroadcastModel.inventory_proprietary_daypart_program_mappings" Role="inventory_proprietary_daypart_program_mappings" Multiplicity="1" />
           <End Type="BroadcastModel.inventory_proprietary_summary" Role="inventory_proprietary_summary" Multiplicity="*" />
@@ -16067,30 +15988,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="inventory_proprietary_summary">
               <PropertyRef Name="inventory_proprietary_daypart_program_mappings_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_inventory_proprietary_summary_audience_markets_inventory_proprietary_summary">
-          <End Type="BroadcastModel.inventory_proprietary_summary" Role="inventory_proprietary_summary" Multiplicity="1" />
-          <End Type="BroadcastModel.inventory_proprietary_summary_audience_markets" Role="inventory_proprietary_summary_audience_markets" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="inventory_proprietary_summary">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_proprietary_summary_audience_markets">
-              <PropertyRef Name="inventory_proprietary_summary_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_inventory_proprietary_summary_audiences_inventory_proprietary_summary">
-          <End Type="BroadcastModel.inventory_proprietary_summary" Role="inventory_proprietary_summary" Multiplicity="1" />
-          <End Type="BroadcastModel.inventory_proprietary_summary_audiences" Role="inventory_proprietary_summary_audiences" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="inventory_proprietary_summary">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_proprietary_summary_audiences">
-              <PropertyRef Name="inventory_proprietary_summary_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -16130,18 +16027,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_inventory_proprietary_summary_audience_markets_markets">
-          <End Type="BroadcastModel.market" Role="market" Multiplicity="1" />
-          <End Type="BroadcastModel.inventory_proprietary_summary_audience_markets" Role="inventory_proprietary_summary_audience_markets" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="market">
-              <PropertyRef Name="market_code" />
-            </Principal>
-            <Dependent Role="inventory_proprietary_summary_audience_markets">
-              <PropertyRef Name="market_code" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_plan_version_buying_parameter_inventory_proprietary_summaries_plan_version_buying_parameters">
           <End Type="BroadcastModel.plan_version_buying_parameters" Role="plan_version_buying_parameters" Multiplicity="1" />
           <End Type="BroadcastModel.plan_version_buying_parameter_inventory_proprietary_summaries" Role="plan_version_buying_parameter_inventory_proprietary_summaries" Multiplicity="*" />
@@ -16163,6 +16048,69 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_version_pricing_parameter_inventory_proprietary_summaries">
               <PropertyRef Name="plan_version_pricing_parameter_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="inventory_proprietary_summary_station_audiences">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventory_proprietary_summary_id" Type="Int32" Nullable="false" />
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <Property Name="market_code" Type="Int16" Nullable="false" />
+          <Property Name="station_id" Type="Int32" Nullable="false" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
+          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_audiences" FromRole="inventory_proprietary_summary_station_audiences" ToRole="audience" />
+          <NavigationProperty Name="market" Relationship="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_markets" FromRole="inventory_proprietary_summary_station_audiences" ToRole="market" />
+          <NavigationProperty Name="station" Relationship="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_stations" FromRole="inventory_proprietary_summary_station_audiences" ToRole="station" />
+          <NavigationProperty Name="inventory_proprietary_summary" Relationship="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_inventory_proprietary_summary" FromRole="inventory_proprietary_summary_station_audiences" ToRole="inventory_proprietary_summary" />
+        </EntityType>
+        <Association Name="FK_inventory_proprietary_summary_station_audiences_audiences">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_proprietary_summary_station_audiences" Role="inventory_proprietary_summary_station_audiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audience">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_proprietary_summary_station_audiences">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_proprietary_summary_station_audiences_markets">
+          <End Type="BroadcastModel.market" Role="market" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_proprietary_summary_station_audiences" Role="inventory_proprietary_summary_station_audiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="market">
+              <PropertyRef Name="market_code" />
+            </Principal>
+            <Dependent Role="inventory_proprietary_summary_station_audiences">
+              <PropertyRef Name="market_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_proprietary_summary_station_audiences_stations">
+          <End Type="BroadcastModel.station" Role="station" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_proprietary_summary_station_audiences" Role="inventory_proprietary_summary_station_audiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="station">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_proprietary_summary_station_audiences">
+              <PropertyRef Name="station_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_inventory_proprietary_summary_station_audiences_inventory_proprietary_summary">
+          <End Type="BroadcastModel.inventory_proprietary_summary" Role="inventory_proprietary_summary" Multiplicity="1" />
+          <End Type="BroadcastModel.inventory_proprietary_summary_station_audiences" Role="inventory_proprietary_summary_station_audiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory_proprietary_summary">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inventory_proprietary_summary_station_audiences">
+              <PropertyRef Name="inventory_proprietary_summary_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -18848,27 +18796,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="inventory_proprietary_summary_audience_markets">
-            <EntityTypeMapping TypeName="BroadcastModel.inventory_proprietary_summary_audience_markets">
-              <MappingFragment StoreEntitySet="inventory_proprietary_summary_audience_markets">
-                <ScalarProperty Name="impressions" ColumnName="impressions" />
-                <ScalarProperty Name="market_code" ColumnName="market_code" />
-                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
-                <ScalarProperty Name="inventory_proprietary_summary_id" ColumnName="inventory_proprietary_summary_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="inventory_proprietary_summary_audiences">
-            <EntityTypeMapping TypeName="BroadcastModel.inventory_proprietary_summary_audiences">
-              <MappingFragment StoreEntitySet="inventory_proprietary_summary_audiences">
-                <ScalarProperty Name="impressions" ColumnName="impressions" />
-                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
-                <ScalarProperty Name="inventory_proprietary_summary_id" ColumnName="inventory_proprietary_summary_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="plan_version_buying_parameter_inventory_proprietary_summaries">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_buying_parameter_inventory_proprietary_summaries">
               <MappingFragment StoreEntitySet="plan_version_buying_parameter_inventory_proprietary_summaries">
@@ -18883,6 +18810,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <MappingFragment StoreEntitySet="plan_version_pricing_parameter_inventory_proprietary_summaries">
                 <ScalarProperty Name="inventory_proprietary_summary_id" ColumnName="inventory_proprietary_summary_id" />
                 <ScalarProperty Name="plan_version_pricing_parameter_id" ColumnName="plan_version_pricing_parameter_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventory_proprietary_summary_station_audiences">
+            <EntityTypeMapping TypeName="BroadcastModel.inventory_proprietary_summary_station_audiences">
+              <MappingFragment StoreEntitySet="inventory_proprietary_summary_station_audiences">
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="station_id" ColumnName="station_id" />
+                <ScalarProperty Name="market_code" ColumnName="market_code" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
+                <ScalarProperty Name="inventory_proprietary_summary_id" ColumnName="inventory_proprietary_summary_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

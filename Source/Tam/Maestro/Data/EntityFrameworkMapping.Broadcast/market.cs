@@ -25,7 +25,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_blackout_markets = new HashSet<plan_version_blackout_markets>();
             this.station_month_details = new HashSet<station_month_details>();
             this.stations = new HashSet<station>();
-            this.inventory_proprietary_summary_audience_markets = new HashSet<inventory_proprietary_summary_audience_markets>();
+            this.inventory_proprietary_summary_station_audiences = new HashSet<inventory_proprietary_summary_station_audiences>();
         }
     
         public short market_code { get; set; }
@@ -41,6 +41,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_blackout_markets> plan_version_blackout_markets { get; set; }
         public virtual ICollection<station_month_details> station_month_details { get; set; }
         public virtual ICollection<station> stations { get; set; }
-        public virtual ICollection<inventory_proprietary_summary_audience_markets> inventory_proprietary_summary_audience_markets { get; set; }
+        public virtual ICollection<inventory_proprietary_summary_station_audiences> inventory_proprietary_summary_station_audiences { get; set; }
     }
 }
