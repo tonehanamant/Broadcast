@@ -49,6 +49,10 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
 
+        protected int? _ThresholdInSecondsForProgramIntersect;
+        protected string _PlanPricingEndpointVersion;
+        protected int? _NumberOfFallbackQuartersForPricing;
+
         public PlanPricingInventoryEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                           IImpressionsCalculationEngine impressionsCalculationEngine,
                                           IPlanPricingInventoryQuarterCalculatorEngine planPricingInventoryQuarterCalculatorEngine,
@@ -74,7 +78,7 @@ namespace Services.Broadcast.BusinessEngines
             _FeatureToggleHelper = featureToggleHelper;
             _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
         }
-
+        
         public List<QuoteProgram> GetInventoryForQuote(QuoteRequestDto request)
         {
             var inventorySourceTypes = new List<InventorySourceTypeEnum> { InventorySourceTypeEnum.OpenMarket };
@@ -661,7 +665,7 @@ namespace Services.Broadcast.BusinessEngines
                         totalIntersectingTime
                     };
                 })
-                .Where(x => x.singleIntersectionTime >= thresholdInSecondsForProgramIntersect)
+                .Where(x => x.singleIntersectionTime >= _GetThresholdInSecondsForProgramIntersect())
                 .OrderByDescending(x => x.totalIntersectingTime)
                 .Select(x => x.programInventoryDaypart)
                 .FirstOrDefault();
@@ -1095,17 +1099,32 @@ namespace Services.Broadcast.BusinessEngines
 
         protected virtual int _GetThresholdInSecondsForProgramIntersect()
         {
-            return BroadcastServiceSystemParameter.ThresholdInSecondsForProgramIntersectInPricing;
+            if (!_ThresholdInSecondsForProgramIntersect.HasValue)
+            {
+                _ThresholdInSecondsForProgramIntersect = BroadcastServiceSystemParameter.ThresholdInSecondsForProgramIntersectInPricing;
+            }
+
+            return _ThresholdInSecondsForProgramIntersect.Value;
         }
 
         protected virtual string _GetPlanPricingEndpointVersion()
         {
-            return BroadcastServiceSystemParameter.PlanPricingEndpointVersion;
+            if (string.IsNullOrWhiteSpace(_PlanPricingEndpointVersion))
+            {
+                _PlanPricingEndpointVersion = BroadcastServiceSystemParameter.PlanPricingEndpointVersion;
+            }
+
+            return _PlanPricingEndpointVersion;
         }
 
         protected virtual int _GetNumberOfFallbackQuartersForPricing()
         {
-            return BroadcastServiceSystemParameter.NumberOfFallbackQuartersForPricing;
+            if (!_NumberOfFallbackQuartersForPricing.HasValue)
+            {
+                _NumberOfFallbackQuartersForPricing = BroadcastServiceSystemParameter.NumberOfFallbackQuartersForPricing;
+            }
+
+            return _NumberOfFallbackQuartersForPricing.Value;
         }
 
         private class ProgramInventoryDaypart
