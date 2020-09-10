@@ -87,7 +87,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         }
                     };
 
-                    var result = _PlanPricingInventoryEngine.GetInventoryForPlan(
+                    var engine = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingInventoryEngine>();
+                    var result = engine.GetInventoryForPlan(
                         plan,
                         new ProgramInventoryOptionalParametersDto(),
                         _GetAvailableInventorySources(),

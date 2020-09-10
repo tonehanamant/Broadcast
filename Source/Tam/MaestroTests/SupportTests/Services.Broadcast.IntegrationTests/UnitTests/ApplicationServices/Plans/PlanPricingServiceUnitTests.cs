@@ -1913,19 +1913,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             AudienceId = 1,
                             MarketCode = 100,
-                            Impressions = highProprietaryNumbers ? 30000000 : 300000
+                            Impressions = highProprietaryNumbers ? 30000000 : 100000
                         },
                         new InventoryProprietarySummaryByStationByAudience
                         {
                             AudienceId = 1,
                             MarketCode = 101,
-                            Impressions = highProprietaryNumbers ? 30000000 : 300000
+                            Impressions = highProprietaryNumbers ? 30000000 : 100000
                         },
                         new InventoryProprietarySummaryByStationByAudience
                         {
                             AudienceId = 1,
                             MarketCode = 302,
-                            Impressions = highProprietaryNumbers ? 40000000 : 400000
+                            Impressions = highProprietaryNumbers ? 40000000 : 100000
                         },
                         new InventoryProprietarySummaryByStationByAudience
                         {
@@ -8257,8 +8257,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Weight = 50
                     }
                 };
-                plan.PricingParameters.UnitCapsType = UnitCapEnum.Per30Min;
-                plan.PricingParameters.UnitCaps = 3;
+                parameters.UnitCapsType = UnitCapEnum.Per30Min;
+                parameters.UnitCaps = 3;
                 plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
                 {
                     // SpotLengthId = 1, DaypartCodeId = 1
@@ -8514,8 +8514,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Weight = 50
                     }
                 };
-                plan.PricingParameters.UnitCapsType = UnitCapEnum.Per30Min;
-                plan.PricingParameters.UnitCaps = 3;
+                parameters.UnitCapsType = UnitCapEnum.Per30Min;
+                parameters.UnitCaps = 3;
                 plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
                 {
                     // SpotLengthId = 1, DaypartCodeId = 1

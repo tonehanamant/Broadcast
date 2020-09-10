@@ -20,6 +20,10 @@
         "market_coverage_goal": 0.001,
         "share_of_voice": [
           {
+            "market_code": 302,
+            "market_goal": 2E-05
+          },
+          {
             "market_code": 403,
             "market_goal": 0.0004743
           },
@@ -29,7 +33,7 @@
           },
           {
             "market_code": 101,
-            "market_goal": 0.097
+            "market_goal": 0.057
           },
           {
             "market_code": 102,
@@ -57,6 +61,10 @@
         "market_coverage_goal": 0.001,
         "share_of_voice": [
           {
+            "market_code": 302,
+            "market_goal": 2E-05
+          },
+          {
             "market_code": 403,
             "market_goal": 0.0004743
           },
@@ -66,7 +74,7 @@
           },
           {
             "market_code": 101,
-            "market_goal": 0.097
+            "market_goal": 0.057
           },
           {
             "market_code": 102,
@@ -94,6 +102,10 @@
         "market_coverage_goal": 0.001,
         "share_of_voice": [
           {
+            "market_code": 302,
+            "market_goal": 2E-05
+          },
+          {
             "market_code": 403,
             "market_goal": 0.0004743
           },
@@ -103,7 +115,7 @@
           },
           {
             "market_code": 101,
-            "market_goal": 0.097
+            "market_goal": 0.057
           },
           {
             "market_code": 102,

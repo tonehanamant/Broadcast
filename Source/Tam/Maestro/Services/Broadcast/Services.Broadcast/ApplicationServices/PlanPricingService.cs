@@ -11,6 +11,7 @@ using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.QuoteReport;
+using Services.Broadcast.Entities.spotcableXML;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
@@ -24,6 +25,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Tam.Maestro.Common;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -1141,9 +1143,32 @@ namespace Services.Broadcast.ApplicationServices
                 .GroupBy(x => x.MarketCode)
                 .ToDictionary(x => x.Key, x => x.Sum(y => y.Impressions));
 
+            _AdjustProprietaryInventoryDataForActiveWeks(plan, result);
             _AdjustProprietaryInventoryDataFor15SpotLength(plan, result);
 
             return result;
+        }
+
+        private void _AdjustProprietaryInventoryDataForActiveWeks(
+            PlanDto plan,
+            ProprietaryInventoryData proprietaryInventoryData)
+        {
+            // take only those weeks that have some goals
+            var numberOfPlanWeeksWithGoals = plan.WeeklyBreakdownWeeks
+                .GroupBy(x => x.MediaWeekId)
+                .Where(x => x.Any(w => w.WeeklyImpressions > 0))
+                .Count();
+
+            // multiply proprietary inventory by the number of weeks with goals
+            // because proprietary tables store data per one week
+            proprietaryInventoryData.TotalImpressions *= numberOfPlanWeeksWithGoals;
+            proprietaryInventoryData.TotalCost *= numberOfPlanWeeksWithGoals;
+            proprietaryInventoryData.TotalCostWithMargin *= numberOfPlanWeeksWithGoals;
+
+            foreach (var key in proprietaryInventoryData.ImpressionsPerMarket.Keys.ToList())
+            {
+                proprietaryInventoryData.ImpressionsPerMarket[key] *= numberOfPlanWeeksWithGoals;
+            }
         }
 
         private void _AdjustProprietaryInventoryDataFor15SpotLength(
