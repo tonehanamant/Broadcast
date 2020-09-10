@@ -82,8 +82,8 @@ namespace Services.Broadcast.Converters
                     try
                     {
                         var genre = csvFileReader.GetCellValue(Genre);
-                        var sourceGenre = _GenreCache.GetSourceGenreByName(genre, ProgramSourceEnum.Master);
-                        var maestroGenre = _GenreCache.GetMaestroGenreBySourceGenre(sourceGenre, ProgramSourceEnum.Master);
+                        var sourceGenre = _GenreCache.GetSourceGenreLookupDtoByName(genre, ProgramSourceEnum.Master);
+                        var maestroGenre = _GenreCache.GetMaestroGenreLookupDtoBySourceGenre(sourceGenre, ProgramSourceEnum.Master);
                         var officialGenre = _GenreCache.GetMaestroGenreByName(maestroGenre.Display);
 
                         var sourceShowType = _ShowTypeCache.GetMasterShowTypeByName(csvFileReader.GetCellValue(ShowType));

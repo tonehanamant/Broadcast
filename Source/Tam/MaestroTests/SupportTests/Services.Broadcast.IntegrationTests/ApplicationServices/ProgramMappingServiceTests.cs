@@ -271,5 +271,30 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _ProgramMappingService.RunProgramMappingsProcessingJob(fileGuid, "IntegrationTestUser", new DateTime(2020, 8, 28));
             }
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void ProgramMappingTestMappedGenre()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var sharedFolderServiceFake = IntegrationTestApplicationServiceFactory.GetApplicationService<ISharedFolderService>();
+                var fileStream = File.Open(@".\Files\Program Mapping\ProgramMappingsMappedGenre.xlsx", FileMode.Open);
+                var sharedFolderFile = new SharedFolderFile
+                {
+                    FolderPath = Path.GetTempPath(),
+                    FileNameWithExtension = "ProgramMappingsException.xlsx",
+                    FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    FileUsage = SharedFolderFileUsage.ProgramLineup,
+                    CreatedDate = new DateTime(2020, 8, 28),
+                    CreatedBy = "IntegrationTestUser",
+                    FileContent = fileStream
+                };
+                var fileGuid = sharedFolderServiceFake.SaveFile(sharedFolderFile);
+
+                _ProgramMappingService.RunProgramMappingsProcessingJob(fileGuid, "IntegrationTestUser", new DateTime(2020, 8, 28));
+            }
+        }
     }
 }

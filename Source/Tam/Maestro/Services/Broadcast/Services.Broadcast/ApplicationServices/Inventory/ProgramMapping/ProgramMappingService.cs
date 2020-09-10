@@ -225,15 +225,22 @@ namespace Services.Broadcast.ApplicationServices
 
                 try
                 {
-                    var genre = _GenreCache.GetMaestroGenreByName(programMapping.OfficialGenre);
+                    var maestroGenre = _GenreCache.GetMaestroGenreByName(programMapping.OfficialGenre);
                 }
                 catch
                 {
-                    programMappingValidationErrors.Add(new ProgramMappingValidationErrorDto
+                    try
                     {
-                        OfficialProgramName = programMapping.OfficialProgramName,
-                        ErrorMessage = $"Genre not found: {programMapping.OfficialGenre}"
-                    });
+                        var masterGenre = _GenreCache.GetSourceGenreLookupDtoByName(programMapping.OfficialGenre, ProgramSourceEnum.Master);
+                    }
+                    catch
+                    {
+                        programMappingValidationErrors.Add(new ProgramMappingValidationErrorDto
+                        {
+                            OfficialProgramName = programMapping.OfficialProgramName,
+                            ErrorMessage = $"Genre not found: {programMapping.OfficialGenre}"
+                        });
+                    }
                 }
             }
 
@@ -317,9 +324,10 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var mapping in mappings)
             {
+                var genre = _GetGenre(mapping.OfficialGenre);
+
                 if (existingProgramMappingByOriginalProgramName.TryGetValue(mapping.OriginalProgramName, out var existingMapping))
                 {
-                    var genre = _GenreCache.GetMaestroGenreByName(mapping.OfficialGenre);
                     var showType = _ShowTypeCache.GetMaestroShowTypeByName(mapping.OfficialShowType);
 
                     // if there are changes for an existing mapping
@@ -340,13 +348,31 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         OriginalProgramName = mapping.OriginalProgramName,
                         OfficialProgramName = mapping.OfficialProgramName,
-                        OfficialGenre = _GenreCache.GetMaestroGenreByName(mapping.OfficialGenre),
+                        OfficialGenre = genre,
                         OfficialShowType = _ShowTypeCache.GetMaestroShowTypeByName(mapping.OfficialShowType)
                     };
 
                     newProgramMappings.Add(newProgramMapping);
                 }
             }
+        }
+
+        private Genre _GetGenre(string genreName)
+        {
+            Genre genre;
+
+            try
+            {
+                genre = _GenreCache.GetMaestroGenreByName(genreName);
+            }
+            catch
+            {
+                var genreDto = _GenreCache.GetSourceGenreLookupDtoByName(genreName, ProgramSourceEnum.Master);
+
+                genre = _GenreCache.GetMaestroGenreBySourceGenre(genreDto, ProgramSourceEnum.Master);
+            }
+
+            return genre;
         }
 
         private ShowTypeDto _MapToShowTypeDto(LookupDto showTypeLookup)

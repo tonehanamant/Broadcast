@@ -299,8 +299,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
                         try
                         {
-                            var sourceGenre = _GenreCache.GetSourceGenreByName(exported.genre, PROGRAM_SOURCE);
-                            var maestroGenre = _GenreCache.GetMaestroGenreBySourceGenre(sourceGenre, PROGRAM_SOURCE);
+                            var sourceGenre = _GenreCache.GetSourceGenreLookupDtoByName(exported.genre, PROGRAM_SOURCE);
+                            var maestroGenre = _GenreCache.GetMaestroGenreLookupDtoBySourceGenre(sourceGenre, PROGRAM_SOURCE);
 
                             var program = new StationInventoryManifestDaypartProgram
                             {
@@ -986,8 +986,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
         {
             const ProgramSourceEnum PROGRAM_SOURCE = ProgramSourceEnum.Master;
 
-            var sourceGenre = _GenreCache.GetSourceGenreByName(guideProgram.SourceGenre, PROGRAM_SOURCE);
-            var maestroGenre = _GenreCache.GetMaestroGenreBySourceGenre(sourceGenre, PROGRAM_SOURCE);
+            var sourceGenre = _GenreCache.GetSourceGenreLookupDtoByName(guideProgram.SourceGenre, PROGRAM_SOURCE);
+            var maestroGenre = _GenreCache.GetMaestroGenreLookupDtoBySourceGenre(sourceGenre, PROGRAM_SOURCE);
 
             var program = new StationInventoryManifestDaypartProgram
             {

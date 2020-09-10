@@ -724,6 +724,9 @@
     <None Include="Files\Program Mapping\ProgramMappingsInvalidGenre.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\Program Mapping\ProgramMappingsMappedGenre.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\Program Mapping\ProgramMappingsNotInMasterList.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

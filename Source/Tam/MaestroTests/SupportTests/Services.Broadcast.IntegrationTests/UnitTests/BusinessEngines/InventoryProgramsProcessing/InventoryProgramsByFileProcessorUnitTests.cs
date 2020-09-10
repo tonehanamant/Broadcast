@@ -1217,7 +1217,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
             var dataRepoFactory = _GetDataRepositoryFactory();
 
             _GenreCacheMock
-                .Setup(x => x.GetSourceGenreByName(It.IsAny<string>(), It.IsAny<ProgramSourceEnum>()))
+                .Setup(x => x.GetSourceGenreLookupDtoByName(It.IsAny<string>(), It.IsAny<ProgramSourceEnum>()))
                 .Returns<string, ProgramSourceEnum>((p1, p2) => new LookupDto
                 {
                     Id = 1,
@@ -1225,7 +1225,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 });
 
             _GenreCacheMock
-                .Setup(x => x.GetMaestroGenreBySourceGenre(It.IsAny<LookupDto>(), It.IsAny<ProgramSourceEnum>()))
+                .Setup(x => x.GetMaestroGenreLookupDtoBySourceGenre(It.IsAny<LookupDto>(), It.IsAny<ProgramSourceEnum>()))
                 .Returns(new LookupDto
                 {
                     Id = 2,

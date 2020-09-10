@@ -2,10 +2,6 @@
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.IntegrationTests.Stubs
@@ -17,7 +13,7 @@ namespace Services.Broadcast.IntegrationTests.Stubs
             throw new NotImplementedException();
         }
 
-        public LookupDto GetMaestroGenreBySourceGenre(LookupDto sourceGenre, ProgramSourceEnum programSource)
+        public LookupDto GetMaestroGenreLookupDtoBySourceGenre(LookupDto sourceGenre, ProgramSourceEnum programSource)
         {
             throw new NotImplementedException();
         }
@@ -37,13 +33,23 @@ namespace Services.Broadcast.IntegrationTests.Stubs
             };
         }
 
-        public LookupDto GetSourceGenreByName(string genreName, ProgramSourceEnum programSource)
+        public LookupDto GetSourceGenreLookupDtoByName(string genreName, ProgramSourceEnum programSource)
         {
             return new LookupDto
             {
                 Id = (int)programSource,
                 Display = genreName
             };
+        }
+
+        public Genre GetSourceGenreByName(string genreName, ProgramSourceEnum programSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Genre GetMaestroGenreBySourceGenre(LookupDto sourceGenre, ProgramSourceEnum programSource)
+        {
+            throw new NotImplementedException();
         }
     }
 }
