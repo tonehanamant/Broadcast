@@ -46,7 +46,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var ntiUniverse = _NtiUniverseService.GetLatestNtiUniverse(AUDIENCE_ID);
 
-            Assert.AreEqual(120700000, ntiUniverse);
+            Assert.AreEqual(120600000, ntiUniverse);
         }
         
         [Test]

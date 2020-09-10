@@ -5,5 +5,5 @@
   "CPP": 0.0,
   "Impressions": 30.0,
   "RatingPoints": 0.0,
-  "Universe": 120700000.0
+  "Universe": 120600000.0
 }

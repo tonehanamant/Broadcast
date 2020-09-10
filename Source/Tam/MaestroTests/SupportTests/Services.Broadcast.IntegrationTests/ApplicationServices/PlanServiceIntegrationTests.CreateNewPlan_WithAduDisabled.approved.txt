@@ -259,7 +259,7 @@
   "HHCPP": 1000.0000,
   "HHImpressions": 127.38,
   "HHRatingPoints": 0.1,
-  "HHUniverse": 120700000.0,
+  "HHUniverse": 120600000.0,
   "HUTBookId": 437,
   "ImpressionsPerUnit": 5.0,
   "IsAduEnabled": false,
