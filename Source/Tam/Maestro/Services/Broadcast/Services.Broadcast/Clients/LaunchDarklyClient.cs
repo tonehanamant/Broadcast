@@ -41,10 +41,11 @@ namespace Services.Broadcast.Clients
         /// <inheritdoc />
         public bool IsToggleEnabled(string toggleKey, string username)
         {
-            var ldHelper = _GetLaunchDarklyHelper(username, isAnonymous: false);
-            var toggleValue = ldHelper.LdIsFeatureEnabled(toggleKey);
-
-            return toggleValue;
+            using (var ldHelper = _GetLaunchDarklyHelper(username, isAnonymous: false))
+            {
+                var toggleValue = ldHelper.LdIsFeatureEnabled(toggleKey);
+                return toggleValue;
+            }
         }
 
         /// <inheritdoc />
@@ -52,19 +53,21 @@ namespace Services.Broadcast.Clients
         {
             // the anonymous username for the broadcast project.
             const string username = "broadcast_user";
-            var ldHelper = _GetLaunchDarklyHelper(username, isAnonymous: true);
-            var toggleValue = ldHelper.LdIsFeatureEnabled(toggleKey);
-
-            return toggleValue;
+            using (var ldHelper = _GetLaunchDarklyHelper(username, isAnonymous: true))
+            {
+                var toggleValue = ldHelper.LdIsFeatureEnabled(toggleKey);
+                return toggleValue;
+            }
         }
 
         /// <inheritdoc />
         public string Authenticate(string username)
         {
-            var ldHelper = _GetLaunchDarklyHelper(username, isAnonymous: false);
-            var clientHash = ldHelper.LdClientHash;
-
-            return clientHash;
+            using (var ldHelper = _GetLaunchDarklyHelper(username, isAnonymous: false))
+            {
+                var clientHash = ldHelper.LdClientHash;
+                return clientHash;
+            }
         }
 
         private LaunchDarklyHelper _GetLaunchDarklyHelper(string username, bool isAnonymous)

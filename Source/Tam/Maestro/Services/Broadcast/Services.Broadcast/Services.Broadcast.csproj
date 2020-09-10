@@ -116,8 +116,8 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Cadent.Library.Utilities.Standard.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Cadent.Library.Utilities.Standard.Common.1.0.0\lib\netstandard2.0\Cadent.Library.Utilities.Standard.Common.dll</HintPath>
+    <Reference Include="Cadent.Library.Utilities.Standard.Common, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Cadent.Library.Utilities.Standard.Common.1.0.1\lib\netstandard2.0\Cadent.Library.Utilities.Standard.Common.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Common.Logging.3.4.1\lib\net40\Common.Logging.dll</HintPath>
