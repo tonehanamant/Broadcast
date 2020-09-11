@@ -575,6 +575,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
             _SharedFolderServiceMock.Setup(s => s.GetFile(It.IsAny<Guid>())).Returns(sharedFolderFile);
 
+            _ProgramMappingCleanupEngine.Setup(s => s.InvertPrepositions(It.IsAny<string>())).Returns((string x) => { return x; });
+
             // Master list
             _MasterListImporterMock.Setup(m => m.ImportMasterProgramList()).Returns(new List<ProgramMappingsDto>
             {

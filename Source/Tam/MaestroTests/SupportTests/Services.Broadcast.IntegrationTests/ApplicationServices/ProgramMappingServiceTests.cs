@@ -80,8 +80,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     OfficialProgramName = "America Undercover",
                     OfficialGenre = new Genre{ Name = "Documentary"},
                     OfficialShowType = new ShowTypeDto{ Name = "Documentary"},
+                },
+                new ProgramMappingsDto
+                {
+                    OfficialProgramName = "An American in Canada",
+                    OfficialGenre = new Genre{ Name = "Drama"},
+                    OfficialShowType = new ShowTypeDto{ Name = "Series"},
+                },
+                new ProgramMappingsDto
+                {
+                    OfficialProgramName = "The Simpsons",
+                    OfficialGenre = new Genre{ Name = "Comedy"},
+                    OfficialShowType = new ShowTypeDto{ Name = "Series"},
                 }
-                
+
             });
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IMasterProgramListImporter>(masterListImporterMock.Object);
 
@@ -277,6 +289,30 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var sharedFolderServiceFake = IntegrationTestApplicationServiceFactory.GetApplicationService<ISharedFolderService>();
                 var fileStream = File.Open(@".\Files\Program Mapping\ProgramMappingsMappedGenre.xlsx", FileMode.Open);
+                var sharedFolderFile = new SharedFolderFile
+                {
+                    FolderPath = Path.GetTempPath(),
+                    FileNameWithExtension = "ProgramMappingsException.xlsx",
+                    FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    FileUsage = SharedFolderFileUsage.ProgramLineup,
+                    CreatedDate = new DateTime(2020, 8, 28),
+                    CreatedBy = "IntegrationTestUser",
+                    FileContent = fileStream
+                };
+                var fileGuid = sharedFolderServiceFake.SaveFile(sharedFolderFile);
+
+                _ProgramMappingService.RunProgramMappingsProcessingJob(fileGuid, "IntegrationTestUser", new DateTime(2020, 8, 28));
+            }
+        }
+
+        [Test]
+        [Category("long_running")]
+        public void ProgramMappingTestInvertPrepositions()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var sharedFolderServiceFake = IntegrationTestApplicationServiceFactory.GetApplicationService<ISharedFolderService>();
+                var fileStream = File.Open(@".\Files\Program Mapping\ProgramMappingsInvertPreposition.xlsx", FileMode.Open);
                 var sharedFolderFile = new SharedFolderFile
                 {
                     FolderPath = Path.GetTempPath(),

@@ -167,6 +167,8 @@ namespace Services.Broadcast.ApplicationServices
             var masterListPrograms = _MasterProgramListImporter.ImportMasterProgramList();
             var programNameExceptions = _ProgramNameExceptionsRepository.GetProgramExceptions();
 
+            _CleanProgramMappings(uniqueProgramMappings);
+
             var programMappingErrors = _ValidateProgramMappings(uniqueProgramMappings, masterListPrograms, programNameExceptions);
 
             if (programMappingErrors.Any())
@@ -226,6 +228,14 @@ namespace Services.Broadcast.ApplicationServices
                         programMapping.OfficialShowType = MISC_SHOW_TYPE;
                     }
                 }
+            }
+        }
+
+        private void _CleanProgramMappings(List<ProgramMappingsFileRequestDto> uniqueProgramMappings)
+        {
+            foreach(var programMapping in uniqueProgramMappings)
+            {
+                programMapping.OfficialProgramName = _ProgramCleanupEngine.InvertPrepositions(programMapping.OfficialProgramName);
             }
         }
 

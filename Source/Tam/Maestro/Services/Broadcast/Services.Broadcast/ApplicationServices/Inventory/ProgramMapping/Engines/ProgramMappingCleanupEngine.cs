@@ -8,6 +8,8 @@ namespace Services.Broadcast.ApplicationServices.Inventory.ProgramMapping
     public interface IProgramMappingCleanupEngine
     {
         string GetCleanProgram(string programName);
+
+        string InvertPrepositions(string programName);
     }
 
     public class ProgramMappingCleanupEngine : IProgramMappingCleanupEngine
@@ -18,7 +20,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory.ProgramMapping
 
             result = _ApplyRemoval(result);
             result = _ApplyReplacement(result);
-            result = _InvertPrepositions(result);
+            result = InvertPrepositions(result);
             result = result.Trim();
 
             return result;
@@ -101,11 +103,9 @@ namespace Services.Broadcast.ApplicationServices.Inventory.ProgramMapping
             }
 
             return result;
-
-
         }
 
-        private string _InvertPrepositions(string name)
+        public string InvertPrepositions(string name)
         {
             if (!name.Contains(","))
                 return name;
