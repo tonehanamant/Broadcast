@@ -636,7 +636,7 @@ namespace Services.Broadcast.BusinessEngines
                 {
                     continue;
                 }
-                var planDaypartWithMostIntersectingTime = _FindPlanDaypartWithMostIntersectingTime(planDaypartsMatchByRestrictions);
+                var planDaypartWithMostIntersectingTime = _FindPlanDaypartWithMostIntersectingTime(planDaypartsMatchByRestrictions, planDays);
 
                 if (planDaypartWithMostIntersectingTime != null)
                 {
@@ -649,42 +649,62 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
-        private ProgramInventoryDaypart _FindPlanDaypartWithMostIntersectingTime<T>(List<T> programInventoryDayparts) where T: ProgramInventoryDaypart
+        private ProgramFlightDaypartIntersectInfo _CalculateProgramIntersectInfo(ProgramInventoryDaypart x, Dictionary<int, List<int>> daypartDefaultDayIds, DisplayDaypart planDays)
+        {
+            var planDaypartTimeRange = new TimeRange
+            {
+                StartTime = x.PlanDaypart.StartTimeSeconds,
+                EndTime = x.PlanDaypart.EndTimeSeconds
+            };
+
+            var inventoryDaypartTimeRange = new TimeRange
+            {
+                StartTime = x.ManifestDaypart.Daypart.StartTime,
+                EndTime = x.ManifestDaypart.Daypart.EndTime
+            };
+
+            var singleIntersectionTime = DaypartTimeHelper.GetIntersectingTotalTime(planDaypartTimeRange, inventoryDaypartTimeRange);
+            
+            var daypartDayIds = daypartDefaultDayIds[x.PlanDaypart.DaypartCodeId].Select(_ConvertCadentDayIdToSystemDayId).ToList();
+            var flightDayIds = planDays.Days.Select(d => (int)d).ToList();
+            var programDayIds = x.ManifestDaypart.Daypart.Days.Select(d => (int)d).ToList();
+            var intersectingDayIds = programDayIds.Intersect(daypartDayIds).Intersect(flightDayIds).ToList();
+
+            var totalIntersectingTime = singleIntersectionTime * intersectingDayIds.Count();
+
+            var result = new ProgramFlightDaypartIntersectInfo
+            {
+                ProgramInventoryDaypart = x,
+                SingleIntersectionTime = singleIntersectionTime,
+                TotalIntersectingTime = totalIntersectingTime
+            };
+
+            return result;
+        }
+
+        private static int _ConvertCadentDayIdToSystemDayId(int systemDayId)
+        {
+            // Cadent day ids are 1-indexed; Mon=1;Sun=7
+            if (systemDayId == 7)
+            {
+                return 0;
+            }
+            return systemDayId;
+        }
+
+        private ProgramInventoryDaypart _FindPlanDaypartWithMostIntersectingTime<T>(List<T> programInventoryDayparts, DisplayDaypart planDays) 
+            where T: ProgramInventoryDaypart
         {
             var daypartDefaultDayIds = _GetDaypartDefaultDayIds();
-            var planDaypartWithmostIntersectingTime = programInventoryDayparts
-                .Select(x =>
-                {
-                    var planDaypartTimeRange = new TimeRange
-                    {
-                        StartTime = x.PlanDaypart.StartTimeSeconds,
-                        EndTime = x.PlanDaypart.EndTimeSeconds
-                    };
+            
+            var planDaypartsWithIntersectingTime = programInventoryDayparts
+                .Select(x => _CalculateProgramIntersectInfo(x, daypartDefaultDayIds, planDays))
+                .ToList();
 
-                    var inventoryDaypartTimeRange = new TimeRange
-                    {
-                        StartTime = x.ManifestDaypart.Daypart.StartTime,
-                        EndTime = x.ManifestDaypart.Daypart.EndTime
-                    };
-
-                    var singleIntersectionTime = DaypartTimeHelper.GetIntersectingTotalTime(planDaypartTimeRange, inventoryDaypartTimeRange);
-
-                    var programDayIds = x.ManifestDaypart.Daypart.Days.Select(d => (int)d);
-                    var daypartDayIds = daypartDefaultDayIds[x.PlanDaypart.DaypartCodeId];
-                    var intersectingDayIds = programDayIds.Intersect(daypartDayIds);
-
-                    var totalIntersectingTime = singleIntersectionTime * intersectingDayIds.Count();
-
-                    return new
-                    {
-                        programInventoryDaypart = x,
-                        singleIntersectionTime,
-                        totalIntersectingTime
-                    };
-                })
-                .Where(x => x.singleIntersectionTime >= _GetThresholdInSecondsForProgramIntersect())
-                .OrderByDescending(x => x.totalIntersectingTime)
-                .Select(x => x.programInventoryDaypart)
+            var planDaypartWithmostIntersectingTime = planDaypartsWithIntersectingTime
+                .Where(x => x.SingleIntersectionTime >= _GetThresholdInSecondsForProgramIntersect())
+                .OrderByDescending(x => x.TotalIntersectingTime)
+                .Select(x => x.ProgramInventoryDaypart)
                 .FirstOrDefault();
 
             return planDaypartWithmostIntersectingTime;
@@ -1185,6 +1205,13 @@ namespace Services.Broadcast.BusinessEngines
             public PlanDaypartDto PlanDaypart { get; set; }
 
             public BasePlanInventoryProgram.ManifestDaypart ManifestDaypart { get; set; }
+        }
+
+        private class ProgramFlightDaypartIntersectInfo
+        {
+            public ProgramInventoryDaypart ProgramInventoryDaypart { get; set; }
+            public int SingleIntersectionTime { get; set; }
+            public int TotalIntersectingTime { get; set; }
         }
     }
 }

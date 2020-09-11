@@ -747,7 +747,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [Test]
         [TestCase(false)]
         [TestCase(true)]
-        public void AssignesCorrectDaypartWhenDifferentDaypartDays(bool programPlaysOnWeekend)
+        public void AssignsCorrectDaypartWkdMix(bool programPlaysOnWeekend)
         {
             // Expecting to have Daypart 1 to be selected
             const int expectedCount = 1;
@@ -827,6 +827,226 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                                 Friday = true,
                                 Saturday = programPlaysOnWeekend,
                                 Sunday = programPlaysOnWeekend,
+                            },
+                            PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
+                            {
+                                ShowType = "Sports",
+                                Name = "Program B"
+                            },
+                            Programs = new List<PlanPricingInventoryProgram.ManifestDaypart.Program>
+                            {
+                                new PlanPricingInventoryProgram.ManifestDaypart.Program
+                                {
+                                    ShowType = "Sports",
+                                    Name = "Program B"
+                                }
+                            }
+                        }
+                    },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
+                }
+            };
+
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planCoveredDays);
+
+            Assert.AreEqual(expectedCount, result.Count);
+            Assert.AreEqual(expectedProgramStandardDaypartId, result.First().StandardDaypartId);
+        }
+
+        [Test]
+        [TestCase(false)]
+        [TestCase(true)]
+        public void AssignsCorrectDaypartWkdMixAndFlightDays(bool programPlaysOnFriday)
+        {
+            // Expecting to have Daypart 1 to be selected
+            const int expectedCount = 1;
+
+            var plan = _GetPlan();
+            var daypartsData = DaypartsTestData.GetAllDaypartDefaultsWithFullData();
+            var daypartEm = daypartsData.Single(s => s.Code == "EM");
+            var daypartWkd = daypartsData.Single(s => s.Code == "WKD");
+
+            // while WKD covers more time in 1 day, EM covers more time overall.
+            var expectedProgramStandardDaypartId = daypartWkd.Id;
+
+            var restrictions = new PlanDaypartDto.RestrictionsDto
+            {
+                ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                {
+                    ContainType = ContainTypeEnum.Include,
+                    Programs = new List<ProgramDto>
+                    {
+                        new ProgramDto { Name = "Program B" }
+                    }
+                }
+            };
+
+            plan.Dayparts = new List<PlanDaypartDto>
+            {
+                new PlanDaypartDto
+                {
+                    DaypartTypeId = daypartEm.DaypartType,
+                    DaypartCodeId = daypartEm.Id,
+                    StartTimeSeconds = 18000, // 5am
+                    EndTimeSeconds = 21599, // 6am
+                    Restrictions = restrictions
+                },
+                new PlanDaypartDto
+                {
+                    DaypartTypeId = daypartWkd.DaypartType,
+                    DaypartCodeId = daypartWkd.Id,
+                    StartTimeSeconds = 18000, // 5am
+                    EndTimeSeconds = 359999, // 10am
+                    Restrictions = restrictions
+                }
+            };
+
+            // this should account for 
+            // - flight days of the week
+            // - all daypart days of the week
+            var planCoveredDays = new DisplayDaypart
+            {
+                Monday = false,
+                Tuesday = false,
+                Wednesday = false,
+                Thursday = false,
+                Friday = true,
+                Saturday = true,
+                Sunday = true
+            };
+
+            var programs = new List<PlanPricingInventoryProgram>
+            {
+                new PlanPricingInventoryProgram
+                {
+                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
+                    {
+                        new PlanPricingInventoryProgram.ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 999,
+                                StartTime = 18000, // 5am
+                                EndTime = 25199, // 7am
+                                Monday = true,
+                                Tuesday = false,
+                                Wednesday = true,
+                                Thursday = false,
+                                Friday = programPlaysOnFriday,
+                                Saturday = true,
+                                Sunday = true
+                            },
+                            PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
+                            {
+                                ShowType = "Sports",
+                                Name = "Program B"
+                            },
+                            Programs = new List<PlanPricingInventoryProgram.ManifestDaypart.Program>
+                            {
+                                new PlanPricingInventoryProgram.ManifestDaypart.Program
+                                {
+                                    ShowType = "Sports",
+                                    Name = "Program B"
+                                }
+                            }
+                        }
+                    },
+                    ManifestWeeks = new List<PlanPricingInventoryProgram.ManifestWeek>()
+                }
+            };
+
+            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planCoveredDays);
+
+            Assert.AreEqual(expectedCount, result.Count);
+            Assert.AreEqual(expectedProgramStandardDaypartId, result.First().StandardDaypartId);
+        }
+
+        /// <summary>
+        /// In this test the total intersect comes out equal for both dayparts for different reasons.
+        /// We're testing that the selection is then consistent.
+        /// </summary>
+        [Test]
+        [TestCase(false)]
+        [TestCase(true)]
+        public void AssignsCorrectDaypartWkdMixAndFlightDaysTie(bool programPlaysOnSatWed)
+        {
+            // Expecting to have Daypart 1 to be selected
+            const int expectedCount = 1;
+
+            var plan = _GetPlan();
+            var daypartsData = DaypartsTestData.GetAllDaypartDefaultsWithFullData();
+            var daypartEm = daypartsData.Single(s => s.Code == "EM");
+            var daypartWkd = daypartsData.Single(s => s.Code == "WKD");
+
+            // while WKD covers more time in 1 day, EM covers more time overall.
+            var expectedProgramStandardDaypartId = daypartEm.Id;
+
+            var restrictions = new PlanDaypartDto.RestrictionsDto
+            {
+                ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
+                {
+                    ContainType = ContainTypeEnum.Include,
+                    Programs = new List<ProgramDto>
+                    {
+                        new ProgramDto { Name = "Program B" }
+                    }
+                }
+            };
+
+            plan.Dayparts = new List<PlanDaypartDto>
+            {
+                new PlanDaypartDto
+                {
+                    DaypartTypeId = daypartEm.DaypartType,
+                    DaypartCodeId = daypartEm.Id,
+                    StartTimeSeconds = 18000, // 5am
+                    EndTimeSeconds = 21599, // 6am
+                    Restrictions = restrictions
+                },
+                new PlanDaypartDto
+                {
+                    DaypartTypeId = daypartWkd.DaypartType,
+                    DaypartCodeId = daypartWkd.Id,
+                    StartTimeSeconds = 18000, // 5am
+                    EndTimeSeconds = 359999, // 10am
+                    Restrictions = restrictions
+                }
+            };
+
+            // this should account for 
+            // - flight days of the week
+            // - all daypart days of the week
+            var planCoveredDays = new DisplayDaypart
+            {
+                Monday = false,
+                Tuesday = false,
+                Wednesday = true,
+                Thursday = false,
+                Friday = true,
+                Saturday = true,
+                Sunday = true
+            };
+
+            var programs = new List<PlanPricingInventoryProgram>
+            {
+                new PlanPricingInventoryProgram
+                {
+                    ManifestDayparts = new List<PlanPricingInventoryProgram.ManifestDaypart>
+                    {
+                        new PlanPricingInventoryProgram.ManifestDaypart
+                        {
+                            Daypart = new DisplayDaypart
+                            {
+                                Id = 999,
+                                StartTime = 18000, // 5am
+                                EndTime = 25199, // 7am
+                                Monday = true,
+                                Tuesday = false,
+                                Wednesday = programPlaysOnSatWed,
+                                Thursday = false,
+                                Friday = true,
+                                Saturday = programPlaysOnSatWed,
+                                Sunday = true
                             },
                             PrimaryProgram = new PlanPricingInventoryProgram.ManifestDaypart.Program
                             {
