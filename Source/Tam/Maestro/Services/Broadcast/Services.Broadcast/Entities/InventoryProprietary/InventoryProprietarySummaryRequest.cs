@@ -1,6 +1,6 @@
-﻿using Services.Broadcast.Entities.Plan;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Services.Broadcast.Entities.Plan;
 
 namespace Services.Broadcast.Entities.InventoryProprietary
 {
@@ -11,7 +11,9 @@ namespace Services.Broadcast.Entities.InventoryProprietary
 		public List<PlanDaypartRequest> PlanDaypartRequests { get; set; }
 		public int AudienceId { get; set; }
 		public List<int> SpotLengthIds { get; set; }
+		public List<WeeklyBreakdownWeek> WeeklyBreakdownWeeks { get; set; }
 	}
+
 	public class PlanDaypartRequest
 	{
 		public int DefaultDayPartId { get; set; }

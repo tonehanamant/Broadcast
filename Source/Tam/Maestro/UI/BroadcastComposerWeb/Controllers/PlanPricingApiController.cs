@@ -213,9 +213,9 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("PlanProprietarySummary")]
-        public BaseResponse<PlanInventoryProprietarySummaryResponse> GetPlanProprietarySummaryAggregation(PlanInventoryProprietarySummaryRequest request)
+        public BaseResponse<TotalInventoryProprietarySummaryResponse> GetPlanProprietarySummaryAggregation(TotalInventoryProprietarySummaryRequest request)
         {
-	        var service = _ApplicationServiceFactory.GetApplicationService<IPlanInventoryProprietarySummaryService>();
+	        var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProprietarySummaryService>();
 
 	        return _ConvertToBaseResponse(() => service.GetPlanProprietarySummaryAggregation(request));
         }

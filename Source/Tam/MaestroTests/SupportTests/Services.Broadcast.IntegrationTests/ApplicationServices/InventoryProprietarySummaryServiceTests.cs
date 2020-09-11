@@ -7,6 +7,12 @@ using Services.Broadcast.Entities.InventoryProprietary;
 using Services.Broadcast.IntegrationTests.Helpers;
 using System;
 using System.Collections.Generic;
+using Common.Services.Repositories;
+using EntityFrameworkMapping.Broadcast;
+using Moq;
+using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.IntegrationTests.TestData;
+using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
@@ -18,6 +24,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 	{
 		private InventoryFileTestHelper _InventoryFileTestHelper;
 		private IInventoryProprietarySummaryService _InventoryProprietarySummaryService;
+		private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
+		private Mock<IBroadcastAudienceRepository> _BroadcastAudienceRepositoryMock;
+		private Mock<IInventoryProprietarySummaryRepository> _InventoryProprietarySummaryRepository;
+		private Mock<IMarketCoverageRepository> _MarketCoverageRepositoryMock;
+		private IInventoryProprietarySummaryService _InventoryProprietarySummaryServiceMock;
+		private Mock<ISpotLengthRepository> _SpotLengthRepositoryMock;
+
 
 		[SetUp]
 		public void Init()
@@ -25,6 +38,29 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 			try
 			{
 				_InventoryFileTestHelper = new InventoryFileTestHelper();
+				_BroadcastAudienceRepositoryMock = new Mock<IBroadcastAudienceRepository>();
+				_InventoryProprietarySummaryRepository = new Mock<IInventoryProprietarySummaryRepository>();
+				_DataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
+				_MarketCoverageRepositoryMock = new Mock<IMarketCoverageRepository>();
+				_SpotLengthRepositoryMock = new Mock<ISpotLengthRepository>();
+
+				_DataRepositoryFactoryMock
+					.Setup(x => x.GetDataRepository<IBroadcastAudienceRepository>())
+					.Returns(_BroadcastAudienceRepositoryMock.Object);
+
+				_DataRepositoryFactoryMock
+					.Setup(x => x.GetDataRepository<IInventoryProprietarySummaryRepository>())
+					.Returns(_InventoryProprietarySummaryRepository.Object);
+
+				_DataRepositoryFactoryMock
+					.Setup(x => x.GetDataRepository<IMarketCoverageRepository>())
+					.Returns(_MarketCoverageRepositoryMock.Object);
+				_DataRepositoryFactoryMock
+					.Setup(x => x.GetDataRepository<ISpotLengthRepository>())
+					.Returns(_SpotLengthRepositoryMock.Object);
+				_InventoryProprietarySummaryServiceMock =
+					new InventoryProprietarySummaryService(_DataRepositoryFactoryMock.Object,null );
+
 			}
 			catch (Exception e)
 			{
@@ -130,7 +166,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FlightEndDate = EndDate,
                     PlanDaypartRequests = planDaypartRequest,
                     AudienceId = 34,
-                    SpotLengthIds = new List<int> { 3 }
+                    SpotLengthIds = new List<int> { 3 },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+	                    new WeeklyBreakdownWeek
+	                    {
+		                    MediaWeekId = 875,
+		                    DaypartCodeId = null,
+		                    SpotLengthId = null,
+		                    WeeklyAdu = 0,
+		                    WeeklyImpressions = 4000000,
+		                    WeeklyBudget = 100000.00M,
+		                    WeeklyRatings = 29.8892007328832,
+		                    UnitImpressions = 2000000,
+		                    NumberOfActiveDays=7,
+		                    ActiveDays="M-Su"
+	                    }
+                    }
                 };
 
 				/*** Act ***/
@@ -185,7 +237,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FlightEndDate = endDate,
                     PlanDaypartRequests = planDaypartRequests,
                     AudienceId = 5,
-                    SpotLengthIds = new List<int> { 1, 3 }
+                    SpotLengthIds = new List<int> { 1, 3 },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+	                    new WeeklyBreakdownWeek
+	                    {
+		                    MediaWeekId = 875,
+		                    DaypartCodeId = null,
+		                    SpotLengthId = null,
+		                    WeeklyAdu = 0,
+		                    WeeklyImpressions = 4000000,
+		                    WeeklyBudget = 100000.00M,
+		                    WeeklyRatings = 29.8892007328832,
+		                    UnitImpressions = 2000000,
+		                    NumberOfActiveDays=7,
+		                    ActiveDays="M-Su"
+	                    }
+                    }
                 };
 
 				/*** Act ***/
@@ -236,7 +304,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FlightEndDate = endDate,
                     PlanDaypartRequests = planDaypartRequests,
                     AudienceId = 5,
-                    SpotLengthIds = new List<int> { 1 }
+                    SpotLengthIds = new List<int> { 1 },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+	                    new WeeklyBreakdownWeek
+	                    {
+		                    MediaWeekId = 875,
+		                    DaypartCodeId = null,
+		                    SpotLengthId = null,
+		                    WeeklyAdu = 0,
+		                    WeeklyImpressions = 4000000,
+		                    WeeklyBudget = 100000.00M,
+		                    WeeklyRatings = 29.8892007328832,
+		                    UnitImpressions = 2000000,
+		                    NumberOfActiveDays=7,
+		                    ActiveDays="M-Su"
+	                    }
+                    }
                 };
 
                 /*** Act ***/
@@ -287,7 +371,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FlightEndDate = endDate,
                     PlanDaypartRequests = planDaypartRequests,
                     AudienceId = 5,
-                    SpotLengthIds = new List<int> { 1 }
+                    SpotLengthIds = new List<int> { 1 },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+	                    new WeeklyBreakdownWeek
+	                    {
+		                    MediaWeekId = 875,
+		                    DaypartCodeId = null,
+		                    SpotLengthId = null,
+		                    WeeklyAdu = 0,
+		                    WeeklyImpressions = 4000000,
+		                    WeeklyBudget = 100000.00M,
+		                    WeeklyRatings = 29.8892007328832,
+		                    UnitImpressions = 2000000,
+		                    NumberOfActiveDays=7,
+		                    ActiveDays="M-Su"
+	                    }
+                    }
                 };
 
                 /*** Act ***/
@@ -340,7 +440,23 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FlightEndDate = endDate,
                     PlanDaypartRequests = planDaypartRequests,
                     AudienceId = 5,
-                    SpotLengthIds = new List<int> { 1 }
+                    SpotLengthIds = new List<int> { 1 },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+	                    new WeeklyBreakdownWeek
+	                    {
+		                    MediaWeekId = 875,
+		                    DaypartCodeId = null,
+		                    SpotLengthId = null,
+		                    WeeklyAdu = 0,
+		                    WeeklyImpressions = 4000000,
+		                    WeeklyBudget = 100000.00M,
+		                    WeeklyRatings = 29.8892007328832,
+		                    UnitImpressions = 2000000,
+		                    NumberOfActiveDays=7,
+		                    ActiveDays="M-Su"
+	                    }
+                    }
                 };
 
                 /*** Act ***/
@@ -363,6 +479,77 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 				ContractResolver = jsonResolver
 			};
 			return jsonSettings;
+		}
+		[Test]
+		[UseReporter(typeof(DiffReporter))]
+		public void GetPlanProprietarySummaryAggregationTest_fourSummaries()
+		{
+			// Arrange
+			_BroadcastAudienceRepositoryMock
+				.Setup(x => x.GetRatingsAudiencesByMaestroAudience(It.IsAny<List<int>>()))
+				.Returns(new List<audience_audiences>
+				{
+					new audience_audiences {rating_audience_id = 7},
+					new audience_audiences {rating_audience_id = 9}
+				});
+
+			_InventoryProprietarySummaryRepository.Setup(x => x.GetProprietarySummaryUnitCost(1))
+				.Returns(900);
+			_InventoryProprietarySummaryRepository.Setup(x => x.GetProprietarySummaryUnitCost(2))
+				.Returns(1000);
+			_InventoryProprietarySummaryRepository.Setup(x => x.GetProprietarySummaryUnitCost(3))
+				.Returns(600);
+			_InventoryProprietarySummaryRepository.Setup(x => x.GetProprietarySummaryUnitCost(4))
+				.Returns(1600);
+			_InventoryProprietarySummaryRepository
+				.Setup(x => x.GetTotalImpressionsBySummaryIdAndAudienceIds(1, It.IsAny<List<int>>()))
+				.Returns(100000);
+			_InventoryProprietarySummaryRepository
+				.Setup(x => x.GetTotalImpressionsBySummaryIdAndAudienceIds(2, It.IsAny<List<int>>()))
+				.Returns(200000);
+			_InventoryProprietarySummaryRepository
+				.Setup(x => x.GetTotalImpressionsBySummaryIdAndAudienceIds(3, It.IsAny<List<int>>()))
+				.Returns(100000);
+			_InventoryProprietarySummaryRepository
+				.Setup(x => x.GetTotalImpressionsBySummaryIdAndAudienceIds(4, It.IsAny<List<int>>()))
+				.Returns(200000);
+
+			_InventoryProprietarySummaryRepository
+				.Setup(x => x.GetMarketCodesBySummaryIds(It.IsAny<IEnumerable<int>>()))
+				.Returns(new List<short> { 325, 334, 346, 421, 101 });
+
+			_MarketCoverageRepositoryMock
+				.Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
+				.Returns(MarketsTestData.GetLatestMarketCoverages());
+
+			var request = new TotalInventoryProprietarySummaryRequest
+			{
+				InventoryProprietarySummaryIds = new List<int> { 1, 2, 3, 4 },
+				PlanPrimaryAudienceId = 33,
+				PlanGoalImpressions = 900000,
+				WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+				{
+					new WeeklyBreakdownWeek
+					{
+						MediaWeekId = 875,
+						DaypartCodeId = null,
+						SpotLengthId = null,
+						WeeklyAdu = 0,
+						WeeklyImpressions = 4000000,
+						WeeklyBudget = 100000.00M,
+						WeeklyRatings = 29.8892007328832,
+						UnitImpressions = 2000000,
+						NumberOfActiveDays=7,
+						ActiveDays="M-Su"
+					}
+				}
+			};
+
+			// Act
+			var result = _InventoryProprietarySummaryServiceMock.GetPlanProprietarySummaryAggregation(request);
+
+			// Assert
+			Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
 		}
 	}
 }

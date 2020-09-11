@@ -482,7 +482,6 @@
     <Compile Include="ApplicationServices\Inventory\ProgramMapping\Engines\ProgramMappingCleanupEngine.cs" />
     <Compile Include="ApplicationServices\InventoryProprietarySummaryService.cs" />
     <Compile Include="ApplicationServices\Plan\PlanBuyingService.cs" />
-    <Compile Include="ApplicationServices\Plan\PlanInventoryProprietarySummaryService.cs" />
     <Compile Include="ApplicationServices\VpvhService.cs" />
     <Compile Include="BusinessEngines\InventoryProgramsProcessing\InventoryProgramsRepairEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingBandCalculationEngine.cs" />
@@ -598,6 +597,8 @@
     <Compile Include="Entities\InventoryProprietary\InventoryProprietarySummaryByStationByAudience.cs" />
     <Compile Include="Entities\InventoryProprietary\InventoryProprietarySummaryRequest.cs" />
     <Compile Include="Entities\InventoryProprietary\InventoryProprietarySummaryResponse.cs" />
+    <Compile Include="Entities\InventoryProprietary\TotalInventoryProprietarySummaryRequest.cs" />
+    <Compile Include="Entities\InventoryProprietary\TotalInventoryProprietarySummaryResponse.cs" />
     <Compile Include="Entities\Inventory\InventoryExportAudienceDto.cs" />
     <Compile Include="Entities\Inventory\InventoryExportLineWeekDetail.cs" />
     <Compile Include="Entities\Inventory\InventoryExportReportData.cs" />
@@ -683,8 +684,6 @@
     <Compile Include="Entities\Plan\Buying\PlanBuyingResultProgramsDto.cs" />
     <Compile Include="Entities\Plan\Buying\BuyingResultsReportData.cs" />
     <Compile Include="Entities\Plan\CommonPricingEntities\BasePlanInventoryProgram.cs" />
-    <Compile Include="Entities\Plan\PlanProprietarySummary\PlanInventoryProprietarySummaryRequest.cs" />
-    <Compile Include="Entities\Plan\PlanProprietarySummary\PlanInventoryProprietarySummaryResponse.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiRequestDto_v3.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiSpotsResponseDto_v3.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingStationResultDto.cs" />

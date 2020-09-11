@@ -1,6 +1,6 @@
-﻿namespace Services.Broadcast.Entities.Plan
+﻿namespace Services.Broadcast.Entities.InventoryProprietary
 {
-	public class PlanInventoryProprietarySummaryResponse
+	public class TotalInventoryProprietarySummaryResponse
 	{
 		public double Impressions { get; set; }
 		public decimal Cpm { get; set; }
