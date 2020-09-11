@@ -172,7 +172,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
         public void ProgramMappingsTestNoError()
         {
@@ -196,7 +195,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
         public void ProgramMappingsTestProgramNotInMasterList()
         {
@@ -222,7 +220,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
         public void ProgramMappingsTestInvalidGenre()
         {
@@ -248,7 +245,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
         public void ProgramMappingTestProgramInExceptionList()
         {

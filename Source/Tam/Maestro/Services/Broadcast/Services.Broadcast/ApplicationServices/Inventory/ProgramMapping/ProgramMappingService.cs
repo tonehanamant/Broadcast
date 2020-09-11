@@ -2,6 +2,7 @@
 using Common.Services.Repositories;
 using F23.StringSimilarity;
 using Hangfire;
+using Microsoft.EntityFrameworkCore.Internal;
 using OfficeOpenXml;
 using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping;
 using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping.Entities;
@@ -98,6 +99,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IMasterProgramListImporter _MasterProgramListImporter;
         private readonly IDateTimeEngine _DateTimeEngine;
         private const string MISC_SHOW_TYPE = "Miscellaneous";
+        private const string SERIES_SHOW_TYPE = "Series";
         private const string UnmappedProgramReportFileName = "UnmappedProgramReport.xlsx";
         private const float MATCH_EXACT = 1;
         private const float MATCH_NOT_FOUND = 0;
@@ -162,13 +164,18 @@ namespace Services.Broadcast.ApplicationServices
 
             WebUtilityHelper.HtmlDecodeProgramNames(uniqueProgramMappings);
 
-            var programMappingErrors = _ValidateProgramMappings(uniqueProgramMappings);
+            var masterListPrograms = _MasterProgramListImporter.ImportMasterProgramList();
+            var programNameExceptions = _ProgramNameExceptionsRepository.GetProgramExceptions();
+
+            var programMappingErrors = _ValidateProgramMappings(uniqueProgramMappings, masterListPrograms, programNameExceptions);
 
             if (programMappingErrors.Any())
             {
                 _SharedFolderService.RemoveFile(fileId);
                 throw new Exception(_GetErrorMessage(programMappingErrors));
             }
+
+            _PopulateShowTypes(uniqueProgramMappings, masterListPrograms, programNameExceptions);
 
             _ProcessProgramMappings(uniqueProgramMappings, createdDate, userName);
 
@@ -180,6 +187,46 @@ namespace Services.Broadcast.ApplicationServices
 
             var hangfireId = _BackgroundJobClient.Enqueue<IInventoryProgramsProcessingService>(x => x.PerformRepairInventoryPrograms(CancellationToken.None));
             _LogInfo($"RepairInventoryPrograms job has been queued, hangfire id: {hangfireId}");
+        }
+
+        private void _PopulateShowTypes(List<ProgramMappingsFileRequestDto> uniqueProgramMappings,
+            List<ProgramMappingsDto> masterListPrograms, List<ProgramNameExceptionDto> programNameExceptions)
+        {
+            foreach (var programMapping in uniqueProgramMappings)
+            {
+                var foundExceptions = programNameExceptions.Where(p =>
+                           p.CustomProgramName.Equals(programMapping.OfficialProgramName, StringComparison.OrdinalIgnoreCase) &&
+                           p.GenreName.Equals(programMapping.OfficialGenre, StringComparison.OrdinalIgnoreCase)).ToList();
+                if (foundExceptions.Any())
+                {
+                    if (foundExceptions.Any(f => f.ShowTypeName.Equals(SERIES_SHOW_TYPE, StringComparison.OrdinalIgnoreCase)))
+                        programMapping.OfficialShowType = SERIES_SHOW_TYPE;
+                    else
+                        programMapping.OfficialShowType = foundExceptions.FirstOrDefault().ShowTypeName;
+                }
+                else
+                {
+                    var foundMasterList = masterListPrograms.Where(p =>
+                            p.OfficialProgramName.Equals(programMapping.OfficialProgramName, StringComparison.OrdinalIgnoreCase) &&
+                            p.OfficialGenre.Name.Equals(programMapping.OfficialGenre, StringComparison.OrdinalIgnoreCase)).ToList();
+
+                    if (foundMasterList.Any())
+                    {
+                        if (foundMasterList.Any(m => m.OfficialShowType.Name.Equals(SERIES_SHOW_TYPE, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            programMapping.OfficialShowType = SERIES_SHOW_TYPE;
+                        }
+                        else
+                        {
+                            programMapping.OfficialShowType = foundMasterList.FirstOrDefault().OfficialShowType.Name;
+                        }
+                    }
+                    else
+                    {
+                        programMapping.OfficialShowType = MISC_SHOW_TYPE;
+                    }
+                }
+            }
         }
 
         private string _GetErrorMessage(List<ProgramMappingValidationErrorDto> programMappingErrors)
@@ -195,10 +242,9 @@ namespace Services.Broadcast.ApplicationServices
             return fullErrorMessage.ToString();
         }
 
-        private List<ProgramMappingValidationErrorDto> _ValidateProgramMappings(List<ProgramMappingsFileRequestDto> uniqueProgramMappings)
+        private List<ProgramMappingValidationErrorDto> _ValidateProgramMappings(List<ProgramMappingsFileRequestDto> uniqueProgramMappings,
+            List<ProgramMappingsDto> masterListPrograms, List<ProgramNameExceptionDto> programNameExceptions)
         {
-            var masterListPrograms = _MasterProgramListImporter.ImportMasterProgramList();
-            var programNameExceptions = _ProgramNameExceptionsRepository.GetProgramExceptions();
             var programMappingValidationErrors = new List<ProgramMappingValidationErrorDto>();
 
             foreach (var programMapping in uniqueProgramMappings)

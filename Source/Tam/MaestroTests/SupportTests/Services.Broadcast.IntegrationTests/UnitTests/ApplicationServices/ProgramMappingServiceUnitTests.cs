@@ -13,6 +13,7 @@ using Services.Broadcast.Clients;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO.Program;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.ProgramMapping;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.IntegrationTests.Stubs;
@@ -546,6 +547,90 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert
             Assert.IsNotNull(programMappings);
             Assert.AreEqual(expected, programMappings.FirstOrDefault().OfficialShowType);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void RunProgramMappingsProcessingJob()
+        {
+            // Get mapping programs result
+            var programsMapped = new List<ProgramMappingsDto>();
+            _ProgramMappingRepositoryMock.Setup(p => p.UpdateProgramMappings(It.IsAny<IEnumerable<ProgramMappingsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback<IEnumerable<ProgramMappingsDto>, string, DateTime>((p, s, d) => programsMapped.AddRange(p));
+
+            _ProgramMappingRepositoryMock.Setup(p => p.CreateProgramMappings(It.IsAny<IEnumerable<ProgramMappingsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback<IEnumerable<ProgramMappingsDto>, string, DateTime>((p, s, d) => programsMapped.AddRange(p));
+
+            // Import file
+            var fileStream = File.Open(@".\Files\Program Mapping\ProgramMappingsShowType.xlsx", FileMode.Open);
+            var sharedFolderFile = new SharedFolderFile
+            {
+                FolderPath = Path.GetTempPath(),
+                FileNameWithExtension = "ProgramMappings.xlsx",
+                FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                FileUsage = SharedFolderFileUsage.ProgramLineup,
+                CreatedDate = new DateTime(2020, 8, 28),
+                CreatedBy = "IntegrationTestUser",
+                FileContent = fileStream
+            };
+            _SharedFolderServiceMock.Setup(s => s.GetFile(It.IsAny<Guid>())).Returns(sharedFolderFile);
+
+            // Master list
+            _MasterListImporterMock.Setup(m => m.ImportMasterProgramList()).Returns(new List<ProgramMappingsDto>
+            {
+                new ProgramMappingsDto
+                {
+                     OfficialGenre = new Genre{ Name = "Sports" },
+                     OfficialShowType = new ShowTypeDto{ Name = "Sports"},
+                     OfficialProgramName = "Good Morning NFL"
+                },
+                new ProgramMappingsDto
+                {
+                     OfficialGenre = new Genre{ Name = "Drama" },
+                     OfficialShowType = new ShowTypeDto{ Name = "Series"},
+                     OfficialProgramName = "Breaking Bad"
+                },
+                new ProgramMappingsDto
+                {
+                     OfficialGenre = new Genre{ Name = "Drama" },
+                     OfficialShowType = new ShowTypeDto{ Name = "Special"},
+                     OfficialProgramName = "Breaking Bad"
+                },
+                new ProgramMappingsDto
+                {
+                    OfficialGenre = new Genre{Name = "Documentary"},
+                    OfficialShowType = new ShowTypeDto{Name = "Event"},
+                    OfficialProgramName = "America Undercover"
+                }
+            });
+
+            _ProgramNameExceptionRepositoryMock.Setup(e => e.GetProgramExceptions()).Returns(new List<ProgramNameExceptionDto>
+            {
+                new ProgramNameExceptionDto
+                {
+                     CustomProgramName = "The Boys",
+                     GenreName = "Action",
+                     ShowTypeName = "Series"
+                },
+                new ProgramNameExceptionDto
+                {
+                     CustomProgramName = "Community",
+                     GenreName = "Comedy",
+                     ShowTypeName = "Mini-Movie"
+                },
+                new ProgramNameExceptionDto
+                {
+                     CustomProgramName = "Community",
+                     GenreName = "Comedy",
+                     ShowTypeName = "Special"
+                }
+            });
+
+            _ProgramMappingRepositoryMock.Setup(r => r.GetProgramMappingsByOriginalProgramNames(It.IsAny<IEnumerable<string>>())).Returns(new List<ProgramMappingsDto>());
+
+            _ProgramMappingService.RunProgramMappingsProcessingJob(Guid.NewGuid(), "Unit Tests", DateTime.Now);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(programsMapped, _GetJsonSettings()));
         }
 
         private List<SearchProgramDativaResponseDto> _Programs = new List<SearchProgramDativaResponseDto>
