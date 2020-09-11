@@ -18,6 +18,13 @@ namespace BroadcastLogging
             return logMessage;
         }
 
+        public static LogMessage GetApplicationLogMessage(string message, Guid transactionId, Type callingType, string callingMemberName, string userName = null)
+        {
+            var additionalInfo = $"{callingType.FullName}.{callingMemberName}";
+            var logMessage = _CreateLogMessage(message, LogType.STANDARD, transactionId, additionalInfo, userName);
+            return logMessage;
+        }
+
         public static LogMessage GetHttpRequestLogMessage(string message, Guid transactionId, string requestInfo)
         {
             var logMessage = _CreateLogMessage(message, LogType.HTTP_REQUEST, transactionId, null, null);

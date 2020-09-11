@@ -2319,7 +2319,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 });
 
             // Act
-            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, Guid.NewGuid());
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -2455,7 +2455,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 });
 
             // Act
-            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, Guid.NewGuid());
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -2596,7 +2596,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _PlanPricingInventoryEngine.UT_PlanPricingEndpointVersion = "3";
 
                 // Act
-                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
+                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, Guid.NewGuid());
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -2742,7 +2742,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _PlanPricingInventoryEngine.UT_PlanPricingEndpointVersion = "3";
 
                 // Act
-                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
+                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, Guid.NewGuid());
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -2893,7 +2893,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _PlanPricingInventoryEngine.UT_PlanPricingEndpointVersion = "3";
 
                 // Act
-                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
+                var inventory = _PlanPricingInventoryEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, Guid.NewGuid());
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -3239,7 +3239,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 });
 
             // Act
-            var inventory = _PlanPricingInventoryEngine.GetInventoryForQuote(request);
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForQuote(request, Guid.NewGuid());
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -3573,7 +3573,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 });
 
             // Act
-            var inventory = _PlanPricingInventoryEngine.GetInventoryForQuote(request);
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForQuote(request, Guid.NewGuid());
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new
@@ -3907,7 +3907,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 });
 
             // Act
-            var inventory = _PlanPricingInventoryEngine.GetInventoryForQuote(request);
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForQuote(request, Guid.NewGuid());
 
             // Assert
             Assert.IsEmpty(inventory);
@@ -4258,7 +4258,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 });
 
             // Act
-            var inventory = _PlanPricingInventoryEngine.GetInventoryForQuote(request);
+            var inventory = _PlanPricingInventoryEngine.GetInventoryForQuote(request, Guid.NewGuid());
 
             // Assert
             var resultJson = IntegrationTestHelper.ConvertToJson(new

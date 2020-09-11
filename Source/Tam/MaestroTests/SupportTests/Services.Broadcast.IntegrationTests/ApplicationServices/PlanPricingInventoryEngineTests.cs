@@ -53,7 +53,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     plan, 
                     new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic);
+                    diagnostic, Guid.NewGuid());
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -92,7 +92,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         plan,
                         new ProgramInventoryOptionalParametersDto(),
                         _GetAvailableInventorySources(),
-                        diagnostic);
+                        diagnostic, Guid.NewGuid());
 
                     var jsonResolver = new IgnorableSerializerContractResolver();
                     jsonResolver.Ignore(typeof(PlanPricingInventoryProgram), "ManifestId");
@@ -127,7 +127,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     plan, 
                     new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic);
+                    diagnostic, Guid.NewGuid());
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -196,7 +196,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                     var planPricingInventoryEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanPricingInventoryEngine>();
 
-                    var result = planPricingInventoryEngine.GetInventoryForQuote(request);
+                    var result = planPricingInventoryEngine.GetInventoryForQuote(request, Guid.NewGuid());
 
                     Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
                 }
@@ -223,7 +223,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     plan,
                     new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic);
+                    diagnostic, Guid.NewGuid());
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingInventoryProgram), "ManifestId");
@@ -256,7 +256,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     plan,
                     new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic);
+                    diagnostic, Guid.NewGuid());
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -275,7 +275,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     plan, 
                     new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic);
+                    diagnostic, Guid.NewGuid());
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -302,7 +302,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     plan,
                     new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic);
+                    diagnostic, Guid.NewGuid());
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -338,7 +338,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     plan,
                     new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic);
+                    diagnostic, Guid.NewGuid());
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -361,7 +361,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     plan,
                     new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic);
+                    diagnostic, Guid.NewGuid());
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }
@@ -380,7 +380,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     plan, 
                     new ProgramInventoryOptionalParametersDto(),
                     _GetAvailableInventorySources(),
-                    diagnostic);
+                    diagnostic, Guid.NewGuid());
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             }

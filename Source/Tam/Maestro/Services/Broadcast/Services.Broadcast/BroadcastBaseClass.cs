@@ -15,9 +15,17 @@ namespace Services.Broadcast
             _Log = LogManager.GetLogger(GetType());
         }
 
+        #region Logging Methods
+
         protected virtual void _LogInfo(string message, string username = null, [CallerMemberName]string memberName = "")
         {
             var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName, username);
+            _Log.Info(logMessage.ToJson());
+        }
+
+        protected virtual void _LogInfo(string message, Guid transactionId, string username = null, [CallerMemberName] string memberName = "")
+        {
+            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, transactionId, GetType(), memberName, username);
             _Log.Info(logMessage.ToJson());
         }
 
@@ -27,9 +35,21 @@ namespace Services.Broadcast
             _Log.Warn(logMessage.ToJson());
         }
 
+        protected virtual void _LogWarning(string message, Guid transactionId, [CallerMemberName] string memberName = "")
+        {
+            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, transactionId, GetType(), memberName);
+            _Log.Warn(logMessage.ToJson());
+        }
+
         protected virtual void _LogError(string message, Exception ex = null, [CallerMemberName]string memberName = "")
         {
             var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
+            _Log.Error(logMessage.ToJson(), ex);
+        }
+
+        protected virtual void _LogError(string message, Guid transactionId, Exception ex = null, [CallerMemberName] string memberName = "")
+        {
+            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, transactionId, GetType(), memberName);
             _Log.Error(logMessage.ToJson(), ex);
         }
 
@@ -38,6 +58,14 @@ namespace Services.Broadcast
             var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
             _Log.Debug(logMessage.ToJson());
         }
+
+        protected virtual void _LogDebug(string message, Guid transactionId, [CallerMemberName] string memberName = "")
+        {
+            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, transactionId, GetType(), memberName);
+            _Log.Debug(logMessage.ToJson());
+        }
+
+        #endregion // #region Logging Methods
 
         protected virtual string _GetBroadcastAppFolder()
         {

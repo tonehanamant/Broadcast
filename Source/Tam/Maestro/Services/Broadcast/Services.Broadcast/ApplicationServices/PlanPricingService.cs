@@ -231,6 +231,9 @@ namespace Services.Broadcast.ApplicationServices
 
         internal QuoteReportData GetQuoteReportData(QuoteRequestDto request)
         {
+            // used to tie the logging messages together.
+            var processingId = Guid.NewGuid();
+
             // this should be removed in the story that allows user to enter margin
             const int defaultMargin = 20;
             request.Margin = defaultMargin;
@@ -238,10 +241,10 @@ namespace Services.Broadcast.ApplicationServices
             var generatedTimeStamp = _DateTimeEngine.GetCurrentMoment();
             var allAudiences = _AudienceService.GetAudiences();
             var allMarkets = _MarketCoverageRepository.GetMarketsWithLatestCoverage();
-
-            _LogInfo("Starting to gather inventory...");
-            var programs = _PlanPricingInventoryEngine.GetInventoryForQuote(request);
-            _LogInfo($"Finished gather inventory.  Gathered {programs.Count} programs.");
+            
+            _LogInfo("Starting to gather inventory...", processingId);
+            var programs = _PlanPricingInventoryEngine.GetInventoryForQuote(request, processingId);
+            _LogInfo($"Finished gather inventory.  Gathered {programs.Count} programs.", processingId);
 
             var reportData = new QuoteReportData(request, generatedTimeStamp, allAudiences, allMarkets, programs);
             return reportData;
@@ -928,6 +931,10 @@ namespace Services.Broadcast.ApplicationServices
 
         private void _RunPricingJob(PlanPricingParametersDto planPricingParametersDto, PlanDto plan, int jobId, CancellationToken token)
         {
+            // used to tie the logging messages together.
+            var processingId = Guid.NewGuid();
+            _LogInfo("Starting...", processingId);
+
             var diagnostic = new PlanPricingJobDiagnostic();
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_TOTAL_DURATION);
 
@@ -960,7 +967,8 @@ namespace Services.Broadcast.ApplicationServices
                     plan,
                     programInventoryParameters,
                     inventorySourceIds,
-                    diagnostic);
+                    diagnostic,
+                    processingId);
 
                 _ValidateInventory(inventory);
                 diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_GATHERING_INVENTORY);
@@ -1932,6 +1940,10 @@ namespace Services.Broadcast.ApplicationServices
 
         public PlanPricingApiRequestDto GetPricingApiRequestPrograms(int planId, PricingInventoryGetRequestParametersDto requestParameters)
         {
+            // used to tie the logging messages together.
+            var processingId = Guid.NewGuid();
+            _LogInfo("Starting...", processingId);
+
             var diagnostic = new PlanPricingJobDiagnostic();
             var pricingParams = new ProgramInventoryOptionalParametersDto
             {
@@ -1953,7 +1965,8 @@ namespace Services.Broadcast.ApplicationServices
                 plan,
                 pricingParams,
                 inventorySourceIds,
-                diagnostic);
+                diagnostic,
+                processingId);
             var groupedInventory = _GroupInventory(inventory);
 
             var pricingApiRequest = new PlanPricingApiRequestDto
@@ -1967,6 +1980,10 @@ namespace Services.Broadcast.ApplicationServices
 
         public PlanPricingApiRequestDto_v3 GetPricingApiRequestPrograms_v3(int planId, PricingInventoryGetRequestParametersDto requestParameters)
         {
+            // used to tie the logging messages together.
+            var processingId = Guid.NewGuid();
+            _LogInfo("Starting...", processingId);
+
             var diagnostic = new PlanPricingJobDiagnostic();
             var pricingParams = new ProgramInventoryOptionalParametersDto
             {
@@ -1982,7 +1999,7 @@ namespace Services.Broadcast.ApplicationServices
                 UnitCapsType = UnitCapEnum.Per30Min,
                 UnitCaps = 1
             };
-
+            
             var plan = _PlanRepository.GetPlan(planId);
             var inventorySourceIds = _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes());
 
@@ -1990,7 +2007,8 @@ namespace Services.Broadcast.ApplicationServices
                 plan,
                 pricingParams,
                 inventorySourceIds,
-                diagnostic);
+                diagnostic,
+                processingId);
             var groupedInventory = _GroupInventory(inventory);
 
             var pricingApiRequest = new PlanPricingApiRequestDto_v3
@@ -2004,6 +2022,10 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<PlanPricingInventoryProgram> GetPricingInventory(int planId, PricingInventoryGetRequestParametersDto requestParameters)
         {
+            // used to tie the logging messages together.
+            var processingId = Guid.NewGuid();
+            _LogInfo("Starting...", processingId);
+
             var diagnostic = new PlanPricingJobDiagnostic();
             var plan = _PlanRepository.GetPlan(planId);
             var pricingParams = new ProgramInventoryOptionalParametersDto
@@ -2019,7 +2041,8 @@ namespace Services.Broadcast.ApplicationServices
                 plan,
                 pricingParams,
                 inventorySourceIds,
-                diagnostic);
+                diagnostic,
+                processingId);
 
             return inventory;
         }

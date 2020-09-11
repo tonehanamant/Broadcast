@@ -1,4 +1,5 @@
-﻿using Common.Services;
+﻿using System;
+using Common.Services;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
@@ -72,9 +73,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             List<int> supportedInventorySourceTypes, 
             List<short> availableMarkets, 
             QuarterDetailDto planQuarter, 
-            List<QuarterDetailDto> fallbackQuarters)
+            List<QuarterDetailDto> fallbackQuarters,
+            Guid? processingId = null)
         {
-            return _GetFullPrograms(dateRanges, spotLengthIds, supportedInventorySourceTypes, availableMarkets, planQuarter, fallbackQuarters);
+            // right now not testing with the processing Id, so make one up here.
+            return _GetFullPrograms(dateRanges, spotLengthIds, supportedInventorySourceTypes, availableMarkets, planQuarter, fallbackQuarters, processingId ?? Guid.NewGuid());
         }
 
         protected override int _GetThresholdInSecondsForProgramIntersect()

@@ -13,6 +13,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -27,9 +28,10 @@ namespace Services.Broadcast.BusinessEngines
             PlanDto plan,
             ProgramInventoryOptionalParametersDto parameters,
             IEnumerable<int> inventorySourceIds,
-            PlanPricingJobDiagnostic diagnostic);
+            PlanPricingJobDiagnostic diagnostic, 
+            Guid processingId);
 
-        List<QuoteProgram> GetInventoryForQuote(QuoteRequestDto request);
+        List<QuoteProgram> GetInventoryForQuote(QuoteRequestDto request, Guid processingId);
     }
 
     public class PlanPricingInventoryEngine : BroadcastBaseClass, IPlanPricingInventoryEngine
@@ -86,8 +88,10 @@ namespace Services.Broadcast.BusinessEngines
             _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
         }
         
-        public List<QuoteProgram> GetInventoryForQuote(QuoteRequestDto request)
+        public List<QuoteProgram> GetInventoryForQuote(QuoteRequestDto request, Guid processingId)
         {
+            _LogInfo($"Starting to get inventory for quote.", processingId);
+
             var inventorySourceTypes = new List<InventorySourceTypeEnum> { InventorySourceTypeEnum.OpenMarket };
             var inventorySourceIds = _InventoryRepository
                 .GetInventorySources()
@@ -110,21 +114,30 @@ namespace Services.Broadcast.BusinessEngines
                 .Select(x => (short)x.Key)
                 .ToList();
 
+            _LogInfo($"Starting to gather the program inventory for the quote.", processingId);
             var foundPrograms = _GetPrograms(
                 flightDateRanges,
                 inventorySourceIds,
                 spotLengthIds,
-                marketCodes);
+                marketCodes,
+                processingId);
+
+            _LogInfo($"Completed gathering inventory.  Gathered {foundPrograms.Count} records.", processingId);
 
             _PrepareRestrictionsForQuote(request.Dayparts);
+            _LogInfo($"Starting to filter by Daypart... Input Record Count : {foundPrograms.Count};", processingId);
             var programs = FilterProgramsByDaypartAndSetStandardDaypart(request.Dayparts, foundPrograms, daypartDays);
+            _LogInfo($"Filtering complete. Input Record Count : {foundPrograms.Count}; Output Record Count : {programs.Count};", processingId);
 
+            _LogInfo($"Beginning calculations on {programs.Count} records.", processingId);
             _SetProgramsFlightDays(programs, request.FlightDays);
             _ApplyProjectedImpressions(programs, request);
             _ApplyProvidedImpressions(programs, request);
             _ApplyNTIConversionToNSI(programs, request.PostingType);
             _ApplyMargin(programs, request.Margin);
             _CalculateProgramCpm(programs);
+
+            _LogInfo($"Completed and returning {programs.Count} records.", processingId);
 
             return programs;
         }
@@ -158,9 +171,13 @@ namespace Services.Broadcast.BusinessEngines
             PlanDto plan,
             ProgramInventoryOptionalParametersDto parameters,
             IEnumerable<int> inventorySourceIds,
-            PlanPricingJobDiagnostic diagnostic)
+            PlanPricingJobDiagnostic diagnostic,
+            Guid processingId)
         {
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_FLIGHT_DATE_RANGES_AND_FLIGHT_DAYS);
+
+            _LogInfo($"Starting to get inventory for plan. Plan Id : {plan.Id};", processingId);
+
             var flightDateRanges = _GetFlightDateRanges(
                 plan.FlightStartDate.Value,
                 plan.FlightEndDate.Value,
@@ -171,44 +188,56 @@ namespace Services.Broadcast.BusinessEngines
             var daypartDays = _GetDaypartDaysFromFlight(plan.FlightDays, flightDateRanges, planDaypartDayIds);
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_FLIGHT_DATE_RANGES_AND_FLIGHT_DAYS);
 
+            _LogInfo($"Starting to gather the program inventory for the plan. Plan Id : {plan.Id};", processingId);
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FETCHING_INVENTORY_FROM_DB);
-            var programs = _GetPrograms(plan, flightDateRanges, inventorySourceIds, diagnostic);
+            var allPrograms = _GetPrograms(plan, flightDateRanges, inventorySourceIds, diagnostic, processingId);
 
+            _LogInfo($"Completed gathering inventory.  Gathered {allPrograms.Count} records. Plan Id : {plan.Id};", processingId);
+            
             // we don't expect spots other than 30 length spots for OpenMarket
-            programs = programs.Where(x => x.SpotLengthId == BroadcastConstants.SpotLengthId30).ToList();
+            var thirtySecondSpotPrograms = allPrograms.Where(x => x.SpotLengthId == BroadcastConstants.SpotLengthId30).ToList();
+            _LogInfo($"Filtered to only 30 sec spots.  Input Record Count : {allPrograms.Count}; Output Record Count : {thirtySecondSpotPrograms.Count}; Plan Id : {plan.Id};", processingId);
 
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FETCHING_INVENTORY_FROM_DB);
 
+            _LogInfo($"Starting to filter by Daypart... Input Record Count : {thirtySecondSpotPrograms.Count}; Plan Id : {plan.Id}; ", processingId);
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_DAYPARTS_AND_ASSOCIATING_WITH_STANDARD_DAYPART);
-            programs = FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, daypartDays);
+            var filteredPrograms = FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, thirtySecondSpotPrograms, daypartDays);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_DAYPARTS_AND_ASSOCIATING_WITH_STANDARD_DAYPART);
 
+            _LogInfo($"Filtering complete. Input Record Count : {thirtySecondSpotPrograms.Count}; Output Record Count : {filteredPrograms.Count}; Plan Id : {plan.Id};", processingId);
+
+            _LogInfo($"Beginning calculations on {filteredPrograms.Count} records. Plan Id : {plan.Id};", processingId);
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_APPLYING_INFLATION_FACTOR);
-            ApplyInflationFactorToSpotCost(programs, parameters?.InflationFactor);
+            ApplyInflationFactorToSpotCost(filteredPrograms, parameters?.InflationFactor);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_APPLYING_INFLATION_FACTOR);
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_SETTING_INVENTORY_DAYS_BASED_ON_PLAN_DAYS);
             // Set the plan flight days to programs so impressions are calculated for those days.
-            _SetProgramsFlightDays(programs, plan.FlightDays);
+            _SetProgramsFlightDays(filteredPrograms, plan.FlightDays);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_SETTING_INVENTORY_DAYS_BASED_ON_PLAN_DAYS);
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_APPLYING_PROJECTED_IMPRESSIONS);
-            _ApplyProjectedImpressions(programs, plan);
+            _ApplyProjectedImpressions(filteredPrograms, plan);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_APPLYING_PROJECTED_IMPRESSIONS);
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_APPLYING_PROVIDED_IMPRESSIONS);
-            _ApplyProvidedImpressions(programs, plan);
+            _ApplyProvidedImpressions(filteredPrograms, plan);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_APPLYING_PROVIDED_IMPRESSIONS);
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_APPLYING_NTI_CONVERSION_TO_NSI);
-            ApplyNTIConversionToNSI(plan, programs);
+            ApplyNTIConversionToNSI(plan, filteredPrograms);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_APPLYING_NTI_CONVERSION_TO_NSI);
 
+            _LogInfo($"Beginning filtering by calculation results. Input Record Count : {filteredPrograms.Count}; Plan Id : {plan.Id};", processingId);
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM);
-            programs = CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, parameters?.MinCPM, parameters?.MaxCPM);
+            var calculatedFiltered = CalculateProgramCpmAndFilterByMinAndMaxCpm(filteredPrograms, parameters?.MinCPM, parameters?.MaxCPM);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM);
+            _LogInfo($"Completed filtering by calculation results. Input Record Count : {filteredPrograms.Count}; Output Record Count : {calculatedFiltered.Count}; Plan Id : {plan.Id};", processingId);
 
-            return programs;
+            _LogInfo($"Completed and returning {calculatedFiltered.Count} records. Plan Id : {plan.Id};", processingId);
+
+            return calculatedFiltered;
         }
 
         private void _SetProgramDayparts<T>(List<T> programs) where T: BasePlanInventoryProgram
@@ -284,13 +313,16 @@ namespace Services.Broadcast.BusinessEngines
             List<DateRange> dateRanges,
             List<int> spotLengthIds,
             IEnumerable<int> inventorySourceIds,
-            List<short> marketCodes)
+            List<short> marketCodes,
+            Guid processingId)
         {
             var totalInventory = new List<QuoteProgram>();
             var stations = _StationRepository.GetBroadcastStationsWithLatestDetailsByMarketCodes(marketCodes);
 
+            var currentlyProcessingDateRangeIndex = 0;
             foreach (var dateRange in dateRanges)
             {
+                _LogInfo($"Beginning to gather inventory for date range {currentlyProcessingDateRangeIndex} of {dateRanges.Count}", processingId);
                 var ungatheredStationIds = stations.Select(s => s.Id).ToList();
 
                 var inventoryforDateRange = _StationProgramRepository.GetProgramsForQuoteReport(
@@ -318,13 +350,18 @@ namespace Services.Broadcast.BusinessEngines
             IEnumerable<int> inventorySourceIds, 
             List<short> availableMarkets, 
             QuarterDetailDto planQuarter, 
-            List<QuarterDetailDto> fallbackQuarters)
+            List<QuarterDetailDto> fallbackQuarters,
+            Guid processingId)
         {
             var totalInventory = new List<PlanPricingInventoryProgram>();
             var availableStations = _StationRepository.GetBroadcastStationsWithLatestDetailsByMarketCodes(availableMarkets);
 
+            var currentlyProcessingDateRangeIndex = 0;
             foreach (var dateRange in dateRanges)
             {
+                currentlyProcessingDateRangeIndex++;
+                _LogInfo($"Beginning to gather inventory for date range {currentlyProcessingDateRangeIndex} of {dateRanges.Count}", processingId);
+
                 var ungatheredStationIds = availableStations.Select(s => s.Id).ToList();
 
                 // look for inventory from plan quarter
@@ -340,9 +377,13 @@ namespace Services.Broadcast.BusinessEngines
                 var gatheredStationIds = planInventoryForDateRange.Select(s => s.Station.Id).Distinct().ToList();
                 ungatheredStationIds = ungatheredStationIds.Except(gatheredStationIds).ToList();
 
+                var currentlyProcessingFallbackQuarterIndex = 0;
                 // look for inventory from fallback quarters
                 foreach (var fallbackQuarter in fallbackQuarters.OrderByDescending(x => x.Year).ThenByDescending(x => x.Quarter))
                 {
+                    currentlyProcessingFallbackQuarterIndex++;
+                    _LogInfo($"Beginning to gather inventory for date range {currentlyProcessingDateRangeIndex} for fallback quarter {currentlyProcessingFallbackQuarterIndex} of {fallbackQuarters.Count}", processingId);
+
                     if (!ungatheredStationIds.Any())
                         break;
 
@@ -455,17 +496,24 @@ namespace Services.Broadcast.BusinessEngines
             List<DateRange> flightDateRanges,
             List<int> inventorySourceIds,
             List<int> spotLengthIds,
-            List<short> marketCodes)
+            List<short> marketCodes,
+            Guid processingId)
         {
-            var programs = _GetFullPrograms(
+            var fullPrograms = _GetFullPrograms(
                 flightDateRanges, 
                 spotLengthIds, 
                 inventorySourceIds, 
-                marketCodes);
+                marketCodes,
+                processingId);
+
+            _LogInfo($"Found {fullPrograms.Count} programs.", processingId);
 
             // so that programs are not repeated
-            programs = programs.GroupBy(x => x.ManifestId).Select(x => x.First()).ToList();
+            var programs = fullPrograms.GroupBy(x => x.ManifestId).Select(x => x.First()).ToList();
 
+            _LogInfo($"De-duped {fullPrograms.Count} programs to {programs.Count}.", processingId);
+
+            _LogInfo($"Finalizing {programs.Count} programs.", processingId);
             _SetPrimaryProgramForDayparts(programs);
             _SetProgramDayparts(programs);
             _SetProgramStationLatestMonthDetails(programs);
@@ -477,7 +525,8 @@ namespace Services.Broadcast.BusinessEngines
             PlanDto plan, 
             List<DateRange> planFlightDateRanges, 
             IEnumerable<int> inventorySourceIds,
-            PlanPricingJobDiagnostic diagnostic)
+            PlanPricingJobDiagnostic diagnostic,
+            Guid processingId)
         {
             var spotLengthIds = _GetPlanPricingEndpointVersion() == "2" ?
                 plan.CreativeLengths.Select(x => x.SpotLengthId).Take(1).ToList() :
@@ -490,10 +539,12 @@ namespace Services.Broadcast.BusinessEngines
                 _GetNumberOfFallbackQuartersForPricing());
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FETCHING_NOT_POPULATED_INVENTORY);
-            var programs = _GetFullPrograms(planFlightDateRanges, spotLengthIds, inventorySourceIds, marketCodes, planQuarter, fallbackQuarters);
+            var fullPrograms = _GetFullPrograms(planFlightDateRanges, spotLengthIds, inventorySourceIds, marketCodes, planQuarter, fallbackQuarters, processingId);
+
+            _LogInfo($"Found {fullPrograms.Count} programs.", processingId);
 
             // so that programs are not repeated
-            programs = programs.GroupBy(x => x.ManifestId).Select(x =>
+            var programs = fullPrograms.GroupBy(x => x.ManifestId).Select(x =>
             {
                 var first = x.First();
 
@@ -507,7 +558,9 @@ namespace Services.Broadcast.BusinessEngines
                 return first;
             }).ToList();
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FETCHING_NOT_POPULATED_INVENTORY);
+            _LogInfo($"De-duped {fullPrograms.Count} programs to {programs.Count}.", processingId);
 
+            _LogInfo($"Finalizing {programs.Count} programs.", processingId);
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_MATCHING_INVENTORY_WEEKS_WITH_PLAN_WEEKS);
             _SetContractWeekForInventory(programs, planQuarter, fallbackQuarters);
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_MATCHING_INVENTORY_WEEKS_WITH_PLAN_WEEKS);
