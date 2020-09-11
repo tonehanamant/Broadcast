@@ -123,14 +123,14 @@
       "Affiliation": "IND",
       "CallLetters": "KASA-TV 29.1",
       "Code": 11800,
-      "IsTrueInd": false,
+      "IsTrueInd": true,
       "LegacyCallLetters": "RASA",
       "ManifestMaxEndDate": null,
       "MarketCode": 390,
       "OriginMarket": "Albuquerque-Santa Fe",
-      "OwnershipGroupName": "Ramar Communications",
+      "OwnershipGroupName": "Ownership group 3",
       "RateDataThrough": null,
-      "RepFirmName": "Direct"
+      "RepFirmName": "Sales group 3"
     },
     {
       "Affiliation": "IND",
@@ -141,9 +141,9 @@
       "ManifestMaxEndDate": null,
       "MarketCode": 129,
       "OriginMarket": "Louisville",
-      "OwnershipGroupName": "BLOCK COMMUNICATIONS INC",
+      "OwnershipGroupName": "YMYO",
       "RateDataThrough": null,
-      "RepFirmName": "Cox"
+      "RepFirmName": "Sales group 5"
     },
     {
       "Affiliation": "CBS",
