@@ -1,16 +1,19 @@
 {
   "MarketDetails": [
     {
-      "Budget": 1131.0,
-      "Cpm": 22.0,
-      "Impressions": 200.0,
-      "ImpressionsPercentage": 96.0,
+      "Budget": 2262.0,
+      "Cpm": 5.655000,
+      "Impressions": 400.0,
+      "ImpressionsPercentage": 192.0,
+      "IsProprietary": false,
+      "MarketCode": 0,
       "MarketCoveragePercent": 70.0,
       "MarketName": "Chicago",
       "Rank": 2,
       "ShareOfVoiceGoalPercentage": 70.0,
-      "Spots": 3,
-      "Stations": 5
+      "Spots": 6,
+      "Stations": 6,
+      "StationsPerMarket": 0
     }
   ],
   "PlanVersionId": 3,

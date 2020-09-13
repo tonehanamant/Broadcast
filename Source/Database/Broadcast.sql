@@ -782,6 +782,45 @@ BEGIN
 END
 /*************************************** END - BP-1341 ****************************************************/
 
+/*************************************** START - BP-1286 ****************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('inventory_proprietary_summary_station_audiences') AND name = 'spots_per_week')
+BEGIN
+	delete from inventory_proprietary_summary_station_audiences
+	EXEC('ALTER TABLE inventory_proprietary_summary_station_audiences ADD spots_per_week int NOT NULL')
+END
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('inventory_proprietary_summary_station_audiences') AND name = 'cost_per_week')
+BEGIN
+	delete from inventory_proprietary_summary_station_audiences
+	EXEC('ALTER TABLE inventory_proprietary_summary_station_audiences ADD cost_per_week money NOT NULL')
+END
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_market_details') AND name = 'is_proprietary ')
+BEGIN
+	ALTER TABLE plan_version_pricing_market_details ADD is_proprietary bit NULL
+
+	EXEC('UPDATE plan_version_pricing_market_details SET is_proprietary = 0')
+
+	ALTER TABLE plan_version_pricing_market_details ALTER COLUMN is_proprietary bit NOT NULL
+END
+
+IF EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_market_details') AND name = 'cpm ')
+BEGIN
+	EXEC('ALTER TABLE plan_version_pricing_market_details DROP COLUMN cpm')
+END
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_market_details') AND name = 'stations_per_market ')
+BEGIN
+	ALTER TABLE plan_version_pricing_market_details ADD stations_per_market int NULL
+
+	EXEC('UPDATE plan_version_pricing_market_details SET stations_per_market = stations')
+
+	ALTER TABLE plan_version_pricing_market_details ALTER COLUMN stations_per_market int NOT NULL
+END
+
+/*************************************** END - BP-1286 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

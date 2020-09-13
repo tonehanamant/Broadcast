@@ -1637,12 +1637,13 @@ namespace Services.Broadcast.Repositories
                         Rank = s.rank,
                         MarketCoveragePercent = s.market_coverage_percent,
                         Stations = s.stations,
+                        StationsPerMarket = s.stations_per_market,
                         Spots = s.spots,
                         Impressions = s.impressions,
-                        Cpm = Convert.ToDecimal(s.cpm),
                         Budget = Convert.ToDecimal(s.budget),
                         ShareOfVoiceGoalPercentage = s.share_of_voice_goal_percentage,
-                        ImpressionsPercentage = s.impressions_percentage
+                        ImpressionsPercentage = s.impressions_percentage,
+                        IsProprietary = s.is_proprietary
                     }).ToList()
                 };
                 return dto;
@@ -1668,13 +1669,14 @@ namespace Services.Broadcast.Repositories
                         market_name = d.MarketName,
                         market_coverage_percent = d.MarketCoveragePercent,
                         stations = d.Stations,
+                        stations_per_market = d.StationsPerMarket,
                         spots = d.Spots,
                         impressions = d.Impressions,
-                        cpm = Convert.ToDouble(d.Cpm),
                         budget = Convert.ToDouble(d.Budget),
                         impressions_percentage = d.ImpressionsPercentage,
                         share_of_voice_goal_percentage = d.ShareOfVoiceGoalPercentage,
-                        rank = d.Rank
+                        rank = d.Rank,
+                        is_proprietary = d.IsProprietary
                     }).ToList()
                 });
 

@@ -528,6 +528,8 @@
           <Property Name="market_code" Type="smallint" Nullable="false" />
           <Property Name="station_id" Type="int" Nullable="false" />
           <Property Name="impressions" Type="float" Nullable="false" />
+          <Property Name="spots_per_week" Type="int" Nullable="false" />
+          <Property Name="cost_per_week" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="inventory_source_logos">
           <Key>
@@ -1195,11 +1197,12 @@
           <Property Name="stations" Type="int" Nullable="false" />
           <Property Name="spots" Type="int" Nullable="false" />
           <Property Name="impressions" Type="float" Nullable="false" />
-          <Property Name="cpm" Type="float" Nullable="false" />
           <Property Name="budget" Type="float" Nullable="false" />
           <Property Name="impressions_percentage" Type="float" Nullable="false" />
           <Property Name="share_of_voice_goal_percentage" Type="float" />
           <Property Name="market_name" Type="varchar" MaxLength="31" Nullable="false" />
+          <Property Name="is_proprietary" Type="bit" Nullable="false" />
+          <Property Name="stations_per_market" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_markets">
           <Key>
@@ -14803,24 +14806,6 @@ warning 6002: The table/view 'broadcast_integration_staging_sandbox.dbo.vw_ccc_d
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="plan_version_pricing_market_details">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="plan_version_pricing_market_id" Type="Int32" Nullable="false" />
-          <Property Name="rank" Type="Int32" Nullable="false" />
-          <Property Name="market_coverage_percent" Type="Double" Nullable="false" />
-          <Property Name="stations" Type="Int32" Nullable="false" />
-          <Property Name="spots" Type="Int32" Nullable="false" />
-          <Property Name="impressions" Type="Double" Nullable="false" />
-          <Property Name="cpm" Type="Double" Nullable="false" />
-          <Property Name="budget" Type="Double" Nullable="false" />
-          <Property Name="impressions_percentage" Type="Double" Nullable="false" />
-          <Property Name="share_of_voice_goal_percentage" Type="Double" />
-          <NavigationProperty Name="plan_version_pricing_markets" Relationship="BroadcastModel.FK_plan_version_pricing_market_details_pricing_market" FromRole="plan_version_pricing_market_details" ToRole="plan_version_pricing_markets" />
-          <Property Name="market_name" Type="String" Nullable="false" MaxLength="31" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="plan_version_pricing_station_details">
           <Key>
             <PropertyRef Name="id" />
@@ -16061,10 +16046,31 @@ warning 6002: The table/view 'broadcast_integration_staging_sandbox.dbo.vw_ccc_d
           <Property Name="market_code" Type="Int16" Nullable="false" />
           <Property Name="station_id" Type="Int32" Nullable="false" />
           <Property Name="impressions" Type="Double" Nullable="false" />
+          <Property Name="spots_per_week" Type="Int32" Nullable="false" />
           <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_audiences" FromRole="inventory_proprietary_summary_station_audiences" ToRole="audience" />
           <NavigationProperty Name="market" Relationship="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_markets" FromRole="inventory_proprietary_summary_station_audiences" ToRole="market" />
           <NavigationProperty Name="station" Relationship="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_stations" FromRole="inventory_proprietary_summary_station_audiences" ToRole="station" />
           <NavigationProperty Name="inventory_proprietary_summary" Relationship="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_inventory_proprietary_summary" FromRole="inventory_proprietary_summary_station_audiences" ToRole="inventory_proprietary_summary" />
+          <Property Name="cost_per_week" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="plan_version_pricing_market_details">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_version_pricing_market_id" Type="Int32" Nullable="false" />
+          <Property Name="rank" Type="Int32" Nullable="false" />
+          <Property Name="market_coverage_percent" Type="Double" Nullable="false" />
+          <Property Name="stations" Type="Int32" Nullable="false" />
+          <Property Name="spots" Type="Int32" Nullable="false" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
+          <Property Name="budget" Type="Double" Nullable="false" />
+          <Property Name="impressions_percentage" Type="Double" Nullable="false" />
+          <Property Name="share_of_voice_goal_percentage" Type="Double" />
+          <Property Name="market_name" Type="String" Nullable="false" MaxLength="31" FixedLength="false" Unicode="false" />
+          <Property Name="is_proprietary" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="plan_version_pricing_markets" Relationship="BroadcastModel.FK_plan_version_pricing_market_details_pricing_market" FromRole="plan_version_pricing_market_details" ToRole="plan_version_pricing_markets" />
+          <Property Name="stations_per_market" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_inventory_proprietary_summary_station_audiences_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -18354,24 +18360,6 @@ warning 6002: The table/view 'broadcast_integration_staging_sandbox.dbo.vw_ccc_d
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="plan_version_pricing_market_details">
-            <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_market_details">
-              <MappingFragment StoreEntitySet="plan_version_pricing_market_details">
-                <ScalarProperty Name="market_name" ColumnName="market_name" />
-                <ScalarProperty Name="share_of_voice_goal_percentage" ColumnName="share_of_voice_goal_percentage" />
-                <ScalarProperty Name="impressions_percentage" ColumnName="impressions_percentage" />
-                <ScalarProperty Name="budget" ColumnName="budget" />
-                <ScalarProperty Name="cpm" ColumnName="cpm" />
-                <ScalarProperty Name="impressions" ColumnName="impressions" />
-                <ScalarProperty Name="spots" ColumnName="spots" />
-                <ScalarProperty Name="stations" ColumnName="stations" />
-                <ScalarProperty Name="market_coverage_percent" ColumnName="market_coverage_percent" />
-                <ScalarProperty Name="rank" ColumnName="rank" />
-                <ScalarProperty Name="plan_version_pricing_market_id" ColumnName="plan_version_pricing_market_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="plan_version_pricing_station_details">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_station_details">
               <MappingFragment StoreEntitySet="plan_version_pricing_station_details">
@@ -18817,11 +18805,32 @@ warning 6002: The table/view 'broadcast_integration_staging_sandbox.dbo.vw_ccc_d
           <EntitySetMapping Name="inventory_proprietary_summary_station_audiences">
             <EntityTypeMapping TypeName="BroadcastModel.inventory_proprietary_summary_station_audiences">
               <MappingFragment StoreEntitySet="inventory_proprietary_summary_station_audiences">
+                <ScalarProperty Name="cost_per_week" ColumnName="cost_per_week" />
+                <ScalarProperty Name="spots_per_week" ColumnName="spots_per_week" />
                 <ScalarProperty Name="impressions" ColumnName="impressions" />
                 <ScalarProperty Name="station_id" ColumnName="station_id" />
                 <ScalarProperty Name="market_code" ColumnName="market_code" />
                 <ScalarProperty Name="audience_id" ColumnName="audience_id" />
                 <ScalarProperty Name="inventory_proprietary_summary_id" ColumnName="inventory_proprietary_summary_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_version_pricing_market_details">
+            <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_market_details">
+              <MappingFragment StoreEntitySet="plan_version_pricing_market_details">
+                <ScalarProperty Name="stations_per_market" ColumnName="stations_per_market" />
+                <ScalarProperty Name="is_proprietary" ColumnName="is_proprietary" />
+                <ScalarProperty Name="market_name" ColumnName="market_name" />
+                <ScalarProperty Name="share_of_voice_goal_percentage" ColumnName="share_of_voice_goal_percentage" />
+                <ScalarProperty Name="impressions_percentage" ColumnName="impressions_percentage" />
+                <ScalarProperty Name="budget" ColumnName="budget" />
+                <ScalarProperty Name="impressions" ColumnName="impressions" />
+                <ScalarProperty Name="spots" ColumnName="spots" />
+                <ScalarProperty Name="stations" ColumnName="stations" />
+                <ScalarProperty Name="market_coverage_percent" ColumnName="market_coverage_percent" />
+                <ScalarProperty Name="rank" ColumnName="rank" />
+                <ScalarProperty Name="plan_version_pricing_market_id" ColumnName="plan_version_pricing_market_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

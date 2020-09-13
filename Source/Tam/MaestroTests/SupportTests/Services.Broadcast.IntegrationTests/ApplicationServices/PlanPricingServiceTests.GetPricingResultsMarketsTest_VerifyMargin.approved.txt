@@ -2,27 +2,33 @@
   "MarketDetails": [
     {
       "Budget": 10803.75,
-      "Cpm": 14.4271215864325,
+      "Cpm": 14.427121586432529879148027000,
       "Impressions": 748.85,
       "ImpressionsPercentage": 99.10011249,
+      "IsProprietary": false,
+      "MarketCode": 0,
       "MarketCoveragePercent": 10.0,
       "MarketName": "New York",
       "Rank": 1,
       "ShareOfVoiceGoalPercentage": 34.5,
       "Spots": 15,
-      "Stations": 1
+      "Stations": 1,
+      "StationsPerMarket": 0
     },
     {
       "Budget": 371.85,
-      "Cpm": 54.6838235294118,
+      "Cpm": 54.683823529411764705882352900,
       "Impressions": 6.8,
       "ImpressionsPercentage": 0.89988751,
+      "IsProprietary": false,
+      "MarketCode": 0,
       "MarketCoveragePercent": 0.328,
       "MarketName": "Portland-Auburn",
       "Rank": 79,
       "ShareOfVoiceGoalPercentage": 22.2,
       "Spots": 15,
-      "Stations": 1
+      "Stations": 1,
+      "StationsPerMarket": 0
     }
   ],
   "PlanVersionId": 0,

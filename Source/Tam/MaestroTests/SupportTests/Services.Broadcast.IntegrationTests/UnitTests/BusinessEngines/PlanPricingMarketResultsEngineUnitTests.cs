@@ -20,7 +20,52 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         public void Calculate()
         {
             // Arrange
-            var parametersDto = new PlanPricingParametersDto();
+            var proprietaryData = new ProprietaryInventoryData
+            {
+                InventoryProprietarySummaryByStationByAudiences = new List<ProprietaryDataByStationByAudience>
+                {
+                    new ProprietaryDataByStationByAudience
+                    {
+                        MarketCode = 1,
+                        AudienceId = 1,
+                        ProprietarySummaryId = 1,
+                        StationId = 1,
+                        TotalImpressions = 1000,
+                        TotalSpots = 100,
+                        TotalCostWithMargin = 100
+                    },
+                    new ProprietaryDataByStationByAudience
+                    {
+                        MarketCode = 1,
+                        AudienceId = 2,
+                        ProprietarySummaryId = 1,
+                        StationId = 1,
+                        TotalImpressions = 1000,
+                        TotalSpots = 100,
+                        TotalCostWithMargin = 100
+                    },
+                    new ProprietaryDataByStationByAudience
+                    {
+                        MarketCode = 1,
+                        AudienceId = 1,
+                        ProprietarySummaryId = 1,
+                        StationId = 2,
+                        TotalImpressions = 1000,
+                        TotalSpots = 100,
+                        TotalCostWithMargin = 100
+                    },
+                    new ProprietaryDataByStationByAudience
+                    {
+                        MarketCode = 2,
+                        AudienceId = 1,
+                        ProprietarySummaryId = 1,
+                        StationId = 1,
+                        TotalImpressions = 1000,
+                        TotalSpots = 100,
+                        TotalCostWithMargin = 100
+                    }
+                }
+            };
             
             var marketCoverages = Enumerable.Range(1, 10)
                 .Select(s => new MarketCoverage { Market = $"Market {s}", MarketCode = s, Rank = s, PercentageOfUS = 10})
@@ -70,7 +115,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var engine = new PlanPricingMarketResultsEngine();
 
             // Act
-            var result = engine.Calculate(inventory, allocationResult, parametersDto, plan, marketCoverages);
+            var result = engine.Calculate(inventory, allocationResult, plan, marketCoverages, proprietaryData);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -81,7 +126,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         public void Calculate_WithMargin()
         {
             // Arrange
-            var parametersDto = new PlanPricingParametersDto { Margin = 10};
+            var proprietaryData = new ProprietaryInventoryData();
 
             var marketCoverages = Enumerable.Range(1, 10)
                 .Select(s => new MarketCoverage { Market = $"Market {s}", MarketCode = s, Rank = s, PercentageOfUS = 10 })
@@ -131,72 +176,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var engine = new PlanPricingMarketResultsEngine();
 
             // Act
-            var result = engine.Calculate(inventory, allocationResult, parametersDto, plan, marketCoverages);
-
-            // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void Calculate_InventoryWithoutMarketOrStationOrPricingJob()
-        {
-            // Arrange
-            var parametersDto = new PlanPricingParametersDto();
-
-            var marketCoverages = Enumerable.Range(1, 10)
-                .Select(s => new MarketCoverage { Market = $"Market {s}", MarketCode = s, Rank = s, PercentageOfUS = 10 })
-                .ToList();
-            marketCoverages[0].Rank = null;
-
-            var stations = Enumerable.Range(1, 20)
-                .Select(s => new DisplayBroadcastStation { Id = s, MarketCode = (s % marketCoverages.Count) + 1 })
-                .ToList();
-
-            var inventory = Enumerable.Range(1, 20)
-                .Select(s => new PlanPricingInventoryProgram
-                    { ManifestId = s, Station = stations.Single(a => a.Id.Equals(s)) })
-                .ToList();
-
-            // adjust the inventory stations and market for our use cases
-            inventory[0].Station = null;
-            inventory[1].Station.MarketCode = null;
-
-            var allocationResult = new PlanPricingAllocationResult
-            {
-                PlanVersionId = 12,
-                Spots = Enumerable.Range(1, 20)
-                    .Select(s => new PlanPricingAllocatedSpot 
-                    { 
-                        Id = s,
-                        SpotFrequencies = new List<SpotFrequency>
-                        {
-                            new SpotFrequency
-                            {
-                                SpotCost = 10,
-                                SpotCostWithMargin = 10,
-                                Spots = 1,
-                                Impressions = 100
-                            }
-                        },
-                        Impressions30sec = 100
-                    })
-                    .ToList()
-            };
-
-            var plan = new PlanDto
-            {
-                AvailableMarkets = marketCoverages.Select(s => new PlanAvailableMarketDto
-                {
-                    MarketCode = Convert.ToInt16(s.MarketCode),
-                    ShareOfVoicePercent = 10
-                }).ToList()
-            };
-
-            var engine = new PlanPricingMarketResultsEngine();
-
-            // Act
-            var result = engine.Calculate(inventory, allocationResult, parametersDto, plan, marketCoverages);
+            var result = engine.Calculate(inventory, allocationResult, plan, marketCoverages, proprietaryData);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -207,7 +187,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         public void Calculate_WithEmptyPlanMarketShareOfVoice()
         {
             // Arrange
-            var parametersDto = new PlanPricingParametersDto();
+            var proprietaryData = new ProprietaryInventoryData();
 
             var marketCoverages = Enumerable.Range(1, 10)
                 .Select(s => new MarketCoverage { Market = $"Market {s}", MarketCode = s, Rank = s, PercentageOfUS = 10 })
@@ -257,7 +237,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var engine = new PlanPricingMarketResultsEngine();
 
             // Act
-            var result = engine.Calculate(inventory, allocationResult, parametersDto, plan, marketCoverages);
+            var result = engine.Calculate(inventory, allocationResult, plan, marketCoverages, proprietaryData);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));

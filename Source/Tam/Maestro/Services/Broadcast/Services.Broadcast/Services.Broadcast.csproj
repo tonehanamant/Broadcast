@@ -692,6 +692,7 @@
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultMarketsDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultMarketsTotalsDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PricingParametersWithoutPlanDto.cs" />
+    <Compile Include="Entities\Plan\Pricing\ProprietaryInventoryData.cs" />
     <Compile Include="Entities\ProgramMapping\ProgramMappingValidationErrorDto.cs" />
     <Compile Include="Entities\ProgramMapping\ProgramNameMappingKeyword.cs" />
     <Compile Include="Entities\Plan\Pricing\ProgramInventoryOptionalParametersDto.cs" />

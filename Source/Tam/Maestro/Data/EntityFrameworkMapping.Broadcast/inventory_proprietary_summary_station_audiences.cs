@@ -20,6 +20,8 @@ namespace EntityFrameworkMapping.Broadcast
         public short market_code { get; set; }
         public int station_id { get; set; }
         public double impressions { get; set; }
+        public int spots_per_week { get; set; }
+        public decimal cost_per_week { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual market market { get; set; }

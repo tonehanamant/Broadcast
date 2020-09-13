@@ -119,7 +119,9 @@ namespace Services.Broadcast.Repositories
                                     AudienceId = y.audience_id,
                                     MarketCode = y.market_code,
                                     Impressions = y.impressions,
-                                    StationId = y.station_id
+                                    StationId = y.station_id,
+                                    SpotsPerWeek = y.spots_per_week,
+                                    CostPerWeek = y.cost_per_week
                                 })
                                 .ToList()
                         })
@@ -265,14 +267,15 @@ namespace Services.Broadcast.Repositories
                                         join audience in context.station_inventory_manifest_audiences on manifest.id equals audience.station_inventory_manifest_id
                                         join station in context.stations on manifest.station_id equals station.id
                                         join market in context.markets on station.market_code equals market.market_code
+                                        join rate in context.station_inventory_manifest_rates on manifest.id equals rate.station_inventory_manifest_id
                                         let week = (from week in context.station_inventory_manifest_weeks
                                                     where week.station_inventory_manifest_id == manifest.id
                                                     select week).FirstOrDefault()
-                                        where manifestIds.Contains(manifest.id)
-                                        select new { audience, week, station, market };
+                                        where manifestIds.Contains(manifest.id) &&
+                                              rate.spot_length_id == manifest.spot_length_id
+                                        select new { audience, week, station, market, rate };
 
-                    var manifestAudiencesAndWeek = audienceQuery
-                        .ToList();
+                    var manifestAudiencesAndWeek = audienceQuery.ToList();
 
                     var result = manifestAudiencesAndWeek
                         .GroupBy(x => new { x.audience.audience_id, station_id = x.station.id })
@@ -284,7 +287,9 @@ namespace Services.Broadcast.Repositories
                                 AudienceId = x.Key.audience_id,
                                 MarketCode = first.market.market_code,
                                 StationId = x.Key.station_id,
-                                Impressions = x.Sum(y => (y.audience.impressions ?? 0) * y.week.spots)
+                                Impressions = x.Sum(y => (y.audience.impressions ?? 0) * y.week.spots),
+                                SpotsPerWeek = x.Sum(y => y.week.spots),
+                                CostPerWeek = x.Sum(y => y.rate.spot_cost * y.week.spots)
                             };
                         })
                         .ToList();
@@ -327,7 +332,9 @@ namespace Services.Broadcast.Repositories
                                 audience_id = x.AudienceId,
                                 market_code = x.MarketCode,
                                 station_id = x.StationId,
-                                impressions = x.Impressions
+                                impressions = x.Impressions,
+                                spots_per_week = x.SpotsPerWeek,
+                                cost_per_week = x.CostPerWeek
                             })
                             .ToList()
                     });

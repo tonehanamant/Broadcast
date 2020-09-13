@@ -21,11 +21,12 @@ namespace EntityFrameworkMapping.Broadcast
         public int stations { get; set; }
         public int spots { get; set; }
         public double impressions { get; set; }
-        public double cpm { get; set; }
         public double budget { get; set; }
         public double impressions_percentage { get; set; }
         public Nullable<double> share_of_voice_goal_percentage { get; set; }
         public string market_name { get; set; }
+        public bool is_proprietary { get; set; }
+        public int stations_per_market { get; set; }
     
         public virtual plan_version_pricing_markets plan_version_pricing_markets { get; set; }
     }

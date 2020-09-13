@@ -1913,31 +1913,41 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             AudienceId = 1,
                             MarketCode = 100,
-                            Impressions = highProprietaryNumbers ? 30000000 : 100000
+                            Impressions = highProprietaryNumbers ? 30000000 : 100000,
+                            CostPerWeek = 100,
+                            SpotsPerWeek = 2
                         },
                         new InventoryProprietarySummaryByStationByAudience
                         {
                             AudienceId = 1,
                             MarketCode = 101,
-                            Impressions = highProprietaryNumbers ? 30000000 : 100000
+                            Impressions = highProprietaryNumbers ? 30000000 : 100000,
+                            CostPerWeek = 100,
+                            SpotsPerWeek = 2
                         },
                         new InventoryProprietarySummaryByStationByAudience
                         {
                             AudienceId = 1,
                             MarketCode = 302,
-                            Impressions = highProprietaryNumbers ? 40000000 : 100000
+                            Impressions = highProprietaryNumbers ? 40000000 : 100000,
+                            CostPerWeek = 100,
+                            SpotsPerWeek = 2
                         },
                         new InventoryProprietarySummaryByStationByAudience
                         {
                             AudienceId = 2,
                             MarketCode = 101,
-                            Impressions = highProprietaryNumbers ? 100000000 : 1000000
+                            Impressions = highProprietaryNumbers ? 100000000 : 1000000,
+                            CostPerWeek = 100,
+                            SpotsPerWeek = 2
                         },
                         new InventoryProprietarySummaryByStationByAudience
                         {
                             AudienceId = 3,
                             MarketCode = 101,
-                            Impressions = highProprietaryNumbers ? 1000000000 : 10000000
+                            Impressions = highProprietaryNumbers ? 1000000000 : 10000000,
+                            CostPerWeek = 100,
+                            SpotsPerWeek = 2
                         }
                     }
                 },
@@ -1950,7 +1960,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         {
                             AudienceId = 1,
                             MarketCode = 101,
-                            Impressions = highProprietaryNumbers ? 100000000 : 1000000
+                            Impressions = highProprietaryNumbers ? 100000000 : 1000000,
+                            CostPerWeek = 100,
+                            SpotsPerWeek = 2
                         }
                     }
                 }
@@ -6387,6 +6399,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             Rank = 2,
                             ShareOfVoiceGoalPercentage = 70,
                             Stations = 5,
+                            StationsPerMarket = 5,
                             MarketName = "Chicago"
                          }
                     },
@@ -6508,7 +6521,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             Rank = 2,
                             ShareOfVoiceGoalPercentage = 70,
                             Stations = 5,
-                            MarketName = "Chicago"
+                            MarketName = "Chicago",
+                            StationsPerMarket = 6
+                         },
+                         new PlanPricingResultMarketDetailsDto
+                         {
+                            Cpm = 22,
+                            Impressions = 200000,
+                            ImpressionsPercentage = 96,
+                            Budget = 1131,
+                            Spots = 3,
+                            MarketCoveragePercent = 70,
+                            Rank = 2,
+                            ShareOfVoiceGoalPercentage = 70,
+                            Stations = 5,
+                            MarketName = "Chicago",
+                            StationsPerMarket = 1
                          }
                     },
                     PricingJobId = 2,
