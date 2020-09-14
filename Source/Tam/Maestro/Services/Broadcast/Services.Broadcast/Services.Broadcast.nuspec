@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>Services.Broadcast</id>
+    <version>20.10.1</version>
+    <title>Broadcast Services and Entities</title>
+    <authors>Cadent</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <description>Contains Broadcast services and entities.</description>
+    <releaseNotes>Development release.</releaseNotes>
+    <copyright>$copyright$</copyright>
+    <tags>Broadcast Service BroadcastService</tags>
+  </metadata>
+</package>
