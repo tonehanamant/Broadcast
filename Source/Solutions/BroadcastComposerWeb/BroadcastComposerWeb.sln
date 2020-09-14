@@ -109,6 +109,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PricingModelAnalysis", "Pri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PingPricingModelEndpoint", "..\..\Tools\PingPricingModelEndpoint\PingPricingModelEndpoint.csproj", "{9213652F-863E-4645-8669-64FBA9965141}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{06E99D64-5F4B-4F29-BED8-2377DBCF6C75}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Powershell\Nuget\create-nuget-Services.Broadcast.ps1 = ..\..\Powershell\Nuget\create-nuget-Services.Broadcast.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		BroadcastComposerWeb|Any CPU = BroadcastComposerWeb|Any CPU
@@ -1521,6 +1526,7 @@ Global
 		{EB7AB09B-CE8D-4C7E-B346-324FF3420221} = {B7BD734A-111A-486E-B613-7EBE65A8DE1F}
 		{DC2698A8-B951-4482-B180-AF395FE71E5E} = {B7BD734A-111A-486E-B613-7EBE65A8DE1F}
 		{9213652F-863E-4645-8669-64FBA9965141} = {E97233B4-5064-40FD-9BED-ABB601ED054A}
+		{06E99D64-5F4B-4F29-BED8-2377DBCF6C75} = {B7BD734A-111A-486E-B613-7EBE65A8DE1F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4BC15B7E-D396-4ACC-BE2F-1CC4402A6C07}
