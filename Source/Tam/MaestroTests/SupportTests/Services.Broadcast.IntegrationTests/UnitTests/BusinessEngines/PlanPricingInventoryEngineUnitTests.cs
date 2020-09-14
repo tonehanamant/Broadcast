@@ -179,7 +179,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
+            var result = _PlanPricingInventoryEngine.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -219,7 +219,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
+            var result = _PlanPricingInventoryEngine.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -258,7 +258,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
+            var result = _PlanPricingInventoryEngine.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -337,7 +337,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
+            var result = _PlanPricingInventoryEngine.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -414,7 +414,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
+            var result = _PlanPricingInventoryEngine.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -514,7 +514,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 _SpotLengthEngineMock.Object, featureToggleHelper);
 
             var result = _PlanPricingInventoryEngine
-                .UT_FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
+                .FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -591,7 +591,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
+            var result = _PlanPricingInventoryEngine.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -667,7 +667,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
+            var result = _PlanPricingInventoryEngine.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -739,7 +739,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 EndTimeSeconds = 39599 // 11am
             });
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
+            var result = _PlanPricingInventoryEngine.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -847,7 +847,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planCoveredDays);
+            var result = _PlanPricingInventoryEngine.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planCoveredDays);
 
             Assert.AreEqual(expectedCount, result.Count);
             Assert.AreEqual(expectedProgramStandardDaypartId, result.First().StandardDaypartId);
@@ -955,7 +955,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planCoveredDays);
+            var result = _PlanPricingInventoryEngine.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planCoveredDays);
 
             Assert.AreEqual(expectedCount, result.Count);
             Assert.AreEqual(expectedProgramStandardDaypartId, result.First().StandardDaypartId);
@@ -1067,7 +1067,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planCoveredDays);
+            var result = _PlanPricingInventoryEngine.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planCoveredDays);
 
             Assert.AreEqual(expectedCount, result.Count);
             Assert.AreEqual(expectedProgramStandardDaypartId, result.First().StandardDaypartId);
@@ -1237,7 +1237,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
+            var result = _PlanPricingInventoryEngine.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -1300,7 +1300,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     ProvidedImpressions = 23400.0
                 }
             };
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, (decimal?)minCPM, (decimal?)maxCPM);
+            var result = _PlanPricingInventoryEngine.CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, (decimal?)minCPM, (decimal?)maxCPM);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -1324,7 +1324,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, null, null);
+            var result = _PlanPricingInventoryEngine.CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, null, null);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -1355,7 +1355,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             };
             _PlanPricingInventoryEngine.UT_PlanPricingEndpointVersion = "3";
 
-                var result = _PlanPricingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, null, null);
+                var result = _PlanPricingInventoryEngine.CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, null, null);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -1390,7 +1390,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 
             _PlanPricingInventoryEngine.UT_PlanPricingEndpointVersion = "3";
 
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, null, null);
+            var result = _PlanPricingInventoryEngine.CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, null, null);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -1417,7 +1417,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            _PlanPricingInventoryEngine.UT_ApplyInflationFactorToSpotCost(programs, inflationFactor);
+            _PlanPricingInventoryEngine.ApplyInflationFactorToSpotCost(programs, inflationFactor);
 
             Assert.AreEqual((decimal)expectedResult, programs.Single().ManifestRates.Single().Cost);
         }
@@ -1444,7 +1444,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            _PlanPricingInventoryEngine.UT_ApplyInflationFactorToSpotCost(programs, inflationFactor);
+            _PlanPricingInventoryEngine.ApplyInflationFactorToSpotCost(programs, inflationFactor);
 
             Assert.AreEqual((decimal)expectedResult, programs.Single().ManifestRates.Single().Cost);
         }
@@ -1483,7 +1483,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            _PlanPricingInventoryEngine.UT_ApplyInflationFactorToSpotCost(programs, inflationFactor);
+            _PlanPricingInventoryEngine.ApplyInflationFactorToSpotCost(programs, inflationFactor);
 
             Assert.AreEqual((decimal)expectedResult, programs.FirstOrDefault().ManifestRates.Single().Cost);
             Assert.AreEqual(defaultSpotCost, programs.LastOrDefault().ManifestRates.Single().Cost);
@@ -1545,8 +1545,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            _PlanPricingInventoryEngine.UT_ApplyInflationFactorToSpotCost(programs, inflationFactor);
-            var result = _PlanPricingInventoryEngine.UT_FilterProgramsByMinAndMaxCPM(programs, (decimal?)minCPM, (decimal?)maxCPM);
+            _PlanPricingInventoryEngine.ApplyInflationFactorToSpotCost(programs, inflationFactor);
+            var result = _PlanPricingInventoryEngine.CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, (decimal?)minCPM, (decimal?)maxCPM);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -1563,7 +1563,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             var flightDays = new List<int> { 1, 3, 5, 7 };
             var planDaypartDayIds = new List<int> {1, 2, 3, 4, 5, 6, 7};
 
-            var result = _PlanPricingInventoryEngine.UT_GetPlanDaypartDaysFromPlanFlight(flightDays, planFlightDateRanges, planDaypartDayIds);
+            var result = _PlanPricingInventoryEngine._GetDaypartDaysFromFlight(flightDays, planFlightDateRanges, planDaypartDayIds);
 
             Assert.AreEqual(expectedDaypart, result);
         }
@@ -1583,7 +1583,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             };
             var planDaypartDayIds = new List<int> { 6, 7 };
 
-            var result = _PlanPricingInventoryEngine.UT_GetPlanDaypartDaysFromPlanFlight(planFlightDays, planFlightDateRanges, planDaypartDayIds);
+            var result = _PlanPricingInventoryEngine._GetDaypartDaysFromFlight(planFlightDays, planFlightDateRanges, planDaypartDayIds);
 
             Assert.AreEqual(expectedDaypart, result);
         }
@@ -1710,8 +1710,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Returns(inventory);
 
             /*** Act ***/
-            var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, new List<int> { spotLengthId }, supportedInventorySourceTypes,
-                availableMarkets, planQuarter, fallbackQuarters);
+            var result = _PlanPricingInventoryEngine._GetFullPrograms(flightDateRanges, new List<int> { spotLengthId }, supportedInventorySourceTypes,
+                availableMarkets, planQuarter, fallbackQuarters, Guid.NewGuid());
 
             /*** Assert ***/
             Assert.AreEqual(6, result.Count);
@@ -1853,8 +1853,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Returns(inventoryTwo);
 
             /*** Act ***/
-            var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, new List<int> { spotLengthId }, supportedInventorySourceTypes,
-                availableMarkets, planQuarter, fallbackQuarters);
+            var result = _PlanPricingInventoryEngine._GetFullPrograms(flightDateRanges, new List<int> { spotLengthId }, supportedInventorySourceTypes,
+                availableMarkets, planQuarter, fallbackQuarters, Guid.NewGuid());
 
             /*** Assert ***/
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -2002,8 +2002,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Returns(inventoryTwo);
 
             /*** Act ***/
-            var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, new List<int> { spotLengthId }, supportedInventorySourceTypes,
-                availableMarkets, planQuarter, fallbackQuarters);
+            var result = _PlanPricingInventoryEngine._GetFullPrograms(flightDateRanges, new List<int> { spotLengthId }, supportedInventorySourceTypes,
+                availableMarkets, planQuarter, fallbackQuarters, Guid.NewGuid());
 
             /*** Assert ***/
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -2100,8 +2100,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Returns(inventoryTwo);
 
             /*** Act ***/
-            var result = _PlanPricingInventoryEngine.UT_GetFullPrograms(flightDateRanges, new List<int> { spotLengthId }, supportedInventorySourceTypes,
-                availableMarkets, planQuarter, fallbackQuarters);
+            var result = _PlanPricingInventoryEngine._GetFullPrograms(flightDateRanges, new List<int> { spotLengthId }, supportedInventorySourceTypes,
+                availableMarkets, planQuarter, fallbackQuarters, Guid.NewGuid());
 
             /*** Assert ***/
             Assert.AreEqual(5, result.Count);

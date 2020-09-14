@@ -13,7 +13,6 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -51,17 +50,18 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
 
-        private bool? _UseTrueIndependentStations;
-        private int? _ThresholdInSecondsForProgramIntersect;
-        private string _PlanPricingEndpointVersion;
-        private int? _NumberOfFallbackQuartersForPricing;
-        private List<Day> _CadentDayDefinitions;
+        protected Lazy<int> _ThresholdInSecondsForProgramIntersect;
+        protected Lazy<bool> _UseTrueIndependentStations;
+        protected Lazy<string>_PlanPricingEndpointVersion;
+        protected Lazy<int> _NumberOfFallbackQuartersForPricing;
+
+        protected Lazy<List<Day>> _CadentDayDefinitions;
         /// <summary>
         /// Key = DaypartDefaultId
         /// Values = Day Ids for that Daypart Default.
         /// </summary>
-        private Dictionary<int, List<int>> _DaypartDefaultDayIds;
-
+        protected Lazy<Dictionary<int, List<int>>> _DaypartDefaultDayIds;
+        
         public PlanPricingInventoryEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                           IImpressionsCalculationEngine impressionsCalculationEngine,
                                           IPlanPricingInventoryQuarterCalculatorEngine planPricingInventoryQuarterCalculatorEngine,
@@ -86,8 +86,18 @@ namespace Services.Broadcast.BusinessEngines
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _FeatureToggleHelper = featureToggleHelper;
             _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
+
+            // register lazy delegates - settings
+            _ThresholdInSecondsForProgramIntersect = new Lazy<int>(() => BroadcastServiceSystemParameter.ThresholdInSecondsForProgramIntersectInPricing);
+            _UseTrueIndependentStations = new Lazy<bool>(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS));
+            _PlanPricingEndpointVersion = new Lazy<string>(() => BroadcastServiceSystemParameter.PlanPricingEndpointVersion);
+            _NumberOfFallbackQuartersForPricing = new Lazy<int>(() => BroadcastServiceSystemParameter.NumberOfFallbackQuartersForPricing);
+
+            // register lazy delegates - domain data
+            _CadentDayDefinitions = new Lazy<List<Day>>(() => _DayRepository.GetDays());
+            _DaypartDefaultDayIds = new Lazy<Dictionary<int, List<int>>>(_GetDaypartDefaultDayIds);
         }
-        
+
         public List<QuoteProgram> GetInventoryForQuote(QuoteRequestDto request, Guid processingId)
         {
             _LogInfo($"Starting to get inventory for quote.", processingId);
@@ -258,7 +268,7 @@ namespace Services.Broadcast.BusinessEngines
 
         private void _SetProgramsFlightDays<T>(List<T> programs, List<int> flightDays) where T: BasePlanInventoryProgram
         {
-            var daypartDefaultIds = _GetDaypartDefaultDayIds();
+            var daypartDefaultIds = _DaypartDefaultDayIds.Value;
 
             foreach (var program in programs)
             {
@@ -291,7 +301,7 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        protected void ApplyInflationFactorToSpotCost(List<PlanPricingInventoryProgram> programs, double? inflationFactor)
+        internal void ApplyInflationFactorToSpotCost(List<PlanPricingInventoryProgram> programs, double? inflationFactor)
         {
             if (!inflationFactor.HasValue)
                 return;
@@ -344,7 +354,7 @@ namespace Services.Broadcast.BusinessEngines
         /// <remarks>
         /// This does not  address if a plan's flight extends beyond a single quarter.
         /// </remarks>
-        protected List<PlanPricingInventoryProgram> _GetFullPrograms(
+        internal List<PlanPricingInventoryProgram> _GetFullPrograms(
             List<DateRange> dateRanges, 
             List<int> spotLengthIds,
             IEnumerable<int> inventorySourceIds, 
@@ -528,7 +538,7 @@ namespace Services.Broadcast.BusinessEngines
             PlanPricingJobDiagnostic diagnostic,
             Guid processingId)
         {
-            var spotLengthIds = _GetPlanPricingEndpointVersion() == "2" ?
+            var spotLengthIds = _PlanPricingEndpointVersion.Value == "2" ?
                 plan.CreativeLengths.Select(x => x.SpotLengthId).Take(1).ToList() :
                 plan.CreativeLengths.Select(x => x.SpotLengthId).ToList();
 
@@ -536,7 +546,7 @@ namespace Services.Broadcast.BusinessEngines
             var planQuarter = _PlanPricingInventoryQuarterCalculatorEngine.GetPlanQuarter(plan);
             var fallbackQuarters = _QuarterCalculationEngine.GetLastNQuarters(
                 new QuarterDto { Quarter = planQuarter.Quarter, Year = planQuarter.Year },
-                _GetNumberOfFallbackQuartersForPricing());
+                _NumberOfFallbackQuartersForPricing.Value);
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FETCHING_NOT_POPULATED_INVENTORY);
             var fullPrograms = _GetFullPrograms(planFlightDateRanges, spotLengthIds, inventorySourceIds, marketCodes, planQuarter, fallbackQuarters, processingId);
@@ -670,7 +680,7 @@ namespace Services.Broadcast.BusinessEngines
         /// When we start using other sources, the PlanPricingInventoryProgram model structure should be reviewed
         /// Other sources may have more than 1 daypart that this logic does not assume
         /// </summary>
-        protected List<T> FilterProgramsByDaypartAndSetStandardDaypart<T>(
+        internal List<T> FilterProgramsByDaypartAndSetStandardDaypart<T>(
             List<PlanDaypartDto> dayparts,
             List<T> programs,
             DisplayDaypart planDays) where T: BasePlanInventoryProgram
@@ -745,17 +755,15 @@ namespace Services.Broadcast.BusinessEngines
             return systemDayId;
         }
 
-        private ProgramInventoryDaypart _FindPlanDaypartWithMostIntersectingTime<T>(List<T> programInventoryDayparts, DisplayDaypart planDays) 
-            where T: ProgramInventoryDaypart
+        private ProgramInventoryDaypart _FindPlanDaypartWithMostIntersectingTime<T>(List<T> programInventoryDayparts, DisplayDaypart planDays)
+            where T : ProgramInventoryDaypart
         {
-            var daypartDefaultDayIds = _GetDaypartDefaultDayIds();
-            
             var planDaypartsWithIntersectingTime = programInventoryDayparts
-                .Select(x => _CalculateProgramIntersectInfo(x, daypartDefaultDayIds, planDays))
+                .Select(x => _CalculateProgramIntersectInfo(x, _DaypartDefaultDayIds.Value, planDays))
                 .ToList();
 
             var planDaypartWithmostIntersectingTime = planDaypartsWithIntersectingTime
-                .Where(x => x.SingleIntersectionTime >= _GetThresholdInSecondsForProgramIntersect())
+                .Where(x => x.SingleIntersectionTime >= _ThresholdInSecondsForProgramIntersect.Value)
                 .OrderByDescending(x => x.TotalIntersectingTime)
                 .Select(x => x.ProgramInventoryDaypart)
                 .FirstOrDefault();
@@ -810,7 +818,7 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        protected List<PlanPricingInventoryProgram> CalculateProgramCpmAndFilterByMinAndMaxCpm(
+        internal List<PlanPricingInventoryProgram> CalculateProgramCpmAndFilterByMinAndMaxCpm(
             List<PlanPricingInventoryProgram> programs,
             decimal? minCPM,
             decimal? maxCPM)
@@ -820,7 +828,7 @@ namespace Services.Broadcast.BusinessEngines
                 decimal cost;
 
                 // for pricing v2, there is always 1 spot length for inventory
-                if (_GetPlanPricingEndpointVersion() == "2")
+                if (_PlanPricingEndpointVersion.Value == "2")
                 {
                     cost = program.ManifestRates.Single().Cost;
                 }
@@ -913,7 +921,7 @@ namespace Services.Broadcast.BusinessEngines
 
             var restrictedAffiliates = affiliateRestrictions.Affiliates.Select(x => x.Display);
             bool hasIntersections;
-            if (restrictedAffiliates.Any(x => x.Equals("IND")) && _GetUseTrueIndependentStations())
+            if (restrictedAffiliates.Any(x => x.Equals("IND")) && _UseTrueIndependentStations.Value)
             {
                 hasIntersections = program.Station.IsTrueInd == true;
             }
@@ -1017,7 +1025,7 @@ namespace Services.Broadcast.BusinessEngines
 
         private DisplayDaypart _GetDisplayDaypartForPlanDaypart(PlanDaypartDto planDaypart, DisplayDaypart planFlightDays)
         {
-            var daypartDefaultDayIds = _GetDaypartDefaultDayIds();
+            var daypartDefaultDayIds = _DaypartDefaultDayIds.Value;
             var planDaypartDayIds = daypartDefaultDayIds[planDaypart.DaypartCodeId];
             var coveredDayNamesSet = _GetCoveredDayNamesHashSet(planDaypartDayIds);
 
@@ -1044,19 +1052,9 @@ namespace Services.Broadcast.BusinessEngines
             return dayIds;
         }
 
-        protected virtual List<Day> _GetCadentDayDefinitions()
-        {
-            if (_CadentDayDefinitions == null)
-            {
-                _CadentDayDefinitions = _DayRepository.GetDays();
-            }
-
-            return _CadentDayDefinitions;
-        }
-
         private HashSet<string> _GetCoveredDayNamesHashSet(List<int> flightDays, List<int> planDaypartDayIds)
         {
-            var days = _GetCadentDayDefinitions();
+            var days = _CadentDayDefinitions.Value;
             var coveredDayIds = flightDays.Intersect(planDaypartDayIds);
 
             var coveredDayNames = days
@@ -1068,7 +1066,7 @@ namespace Services.Broadcast.BusinessEngines
 
         private HashSet<string> _GetCoveredDayNamesHashSet(List<int> planDaypartDayIds)
         {
-            var days = _GetCadentDayDefinitions();
+            var days = _CadentDayDefinitions.Value;
             var coveredDayIds = planDaypartDayIds;
 
             var coveredDayNames = days
@@ -1078,7 +1076,7 @@ namespace Services.Broadcast.BusinessEngines
             return coveredDayNamesHashSet;
         }
 
-        protected DisplayDaypart _GetDaypartDaysFromFlight(List<int> flightDays, List<DateRange> planFlightDateRanges, List<int> planDaypartDayIds)
+        internal DisplayDaypart _GetDaypartDaysFromFlight(List<int> flightDays, List<DateRange> planFlightDateRanges, List<int> planDaypartDayIds)
         {
             var coveredDayNamesSet = _GetCoveredDayNamesHashSet(flightDays, planDaypartDayIds);
 
@@ -1137,7 +1135,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             // we don`t want to equivalize impressions
             // when PricingVersion == 3, because this is done by the pricing endpoint
-            var equivalized = _GetPlanPricingEndpointVersion() == "3" ? false : plan.Equivalized;
+            var equivalized = _PlanPricingEndpointVersion.Value == "3" ? false : plan.Equivalized;
 
             // SpotLengthId does not matter for the pricing v3, so this code is for the v2
             var spotLengthId = plan.CreativeLengths.First().SpotLengthId;
@@ -1161,7 +1159,7 @@ namespace Services.Broadcast.BusinessEngines
             var impressionsRequest = new ImpressionsRequestDto
             {
                 // we don`t want to equivalize impressions when PricingVersion == 3, because this is done by the pricing endpoint
-                Equivalized = _GetPlanPricingEndpointVersion() == "2" ? plan.Equivalized : false,
+                Equivalized = _PlanPricingEndpointVersion.Value == "2" ? plan.Equivalized : false,
                 HutProjectionBookId = plan.HUTBookId,
                 PlaybackType = ProposalPlaybackType.LivePlus3,
                 PostType = plan.PostingType,
@@ -1197,60 +1195,17 @@ namespace Services.Broadcast.BusinessEngines
             _ImpressionsCalculationEngine.ApplyProjectedImpressions(programs, impressionsRequest, audienceIds);
         }
 
-        protected virtual int _GetThresholdInSecondsForProgramIntersect()
+        private Dictionary<int, List<int>> _GetDaypartDefaultDayIds()
         {
-            if (!_ThresholdInSecondsForProgramIntersect.HasValue)
+            var daypartDefaultDayIds = new Dictionary<int, List<int>>();
+            var daypartDefaultIds = _DaypartDefaultRepository.GetAllDaypartDefaults().Select(s => s.Id);
+            foreach (var daypartDefaultId in daypartDefaultIds)
             {
-                _ThresholdInSecondsForProgramIntersect = BroadcastServiceSystemParameter.ThresholdInSecondsForProgramIntersectInPricing;
+                var dayIds = _DaypartDefaultRepository.GetDayIdsFromDaypartDefaults(new List<int> { daypartDefaultId });
+                daypartDefaultDayIds[daypartDefaultId] = dayIds;
             }
 
-            return _ThresholdInSecondsForProgramIntersect.Value;
-        }
-
-        protected virtual string _GetPlanPricingEndpointVersion()
-        {
-            if (string.IsNullOrWhiteSpace(_PlanPricingEndpointVersion))
-            {
-                _PlanPricingEndpointVersion = BroadcastServiceSystemParameter.PlanPricingEndpointVersion;
-            }
-
-            return _PlanPricingEndpointVersion;
-        }
-
-        protected virtual int _GetNumberOfFallbackQuartersForPricing()
-        {
-            if (!_NumberOfFallbackQuartersForPricing.HasValue)
-            {
-                _NumberOfFallbackQuartersForPricing = BroadcastServiceSystemParameter.NumberOfFallbackQuartersForPricing;
-            }
-
-            return _NumberOfFallbackQuartersForPricing.Value;
-        }
-
-        protected virtual Dictionary<int, List<int>> _GetDaypartDefaultDayIds()
-        {
-            if (_DaypartDefaultDayIds == null)
-            {
-                _DaypartDefaultDayIds = new Dictionary<int, List<int>>();
-                var daypartDefaultIds = _DaypartDefaultRepository.GetAllDaypartDefaults().Select(s => s.Id);
-                foreach (var daypartDefaultId in daypartDefaultIds)
-                {
-                    var dayIds = _DaypartDefaultRepository.GetDayIdsFromDaypartDefaults(new List<int> { daypartDefaultId });
-                    _DaypartDefaultDayIds[daypartDefaultId] = dayIds;
-                }
-            }
-
-            return _DaypartDefaultDayIds;
-        }
-
-        protected virtual bool _GetUseTrueIndependentStations()
-        {
-            if (!_UseTrueIndependentStations.HasValue)
-            {
-                _UseTrueIndependentStations = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS);
-            }
-
-            return _UseTrueIndependentStations.Value;
+            return daypartDefaultDayIds;
         }
 
         private class ProgramInventoryDaypart
