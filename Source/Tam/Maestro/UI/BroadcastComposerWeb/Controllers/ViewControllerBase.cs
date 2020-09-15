@@ -18,6 +18,7 @@ namespace BroadcastComposerWeb.Controllers
 
             ViewBag.DisplayCampaignLink = environmentInfo.DisplayCampaignLink;
             ViewBag.DisplayBuyingLink = environmentInfo.DisplayBuyingLink;
+            ViewBag.DisplayAABLink = environmentInfo.EnableAabNavigation;
 
             base.OnActionExecuting(filterContext);
         }

@@ -72,25 +72,19 @@ namespace Services.Broadcast.ApplicationServices
             return _FeatureToggleHelper.IsToggleEnabledUserAnonymous(key);
         }
 
-        // TODO : Tech-Debt to remove these and have the FE got to LaunchDarkly directly
-        private const string FEATURE_TOGGLE_DISPLAY_CAMPAIGN_LINK = "broadcast-display-campaign-link";
-        private const string FEATURE_TOGGLE_DISPLAY_BUYING_LINK = "broadcast-display-buying-link";
-        private const string FEATURE_TOGGLE_ALLOW_MULTIPLE_CREATIVE_LENGTHS = "broadcast-allow-multiple-creative-lengths";
-        private const string FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT = "broadcast-enable-pricing-in-edit";
-        private const string FEATURE_TOGGLE_ENABLE_EXPORT_PRE_BUY = "broadcast-enable-export-pre-buy";
-        private const string FEATURE_TOGGLE_RUN_PRICING_AUTOMATICALLY = "broadcast-enable-run-pricing-automatically";
-
         public EnvironmentDto GetEnvironmentInfo()
         {
+            // TODO : Tech-Debt to remove these and have the FE got to LaunchDarkly directly
             return new EnvironmentDto
             {
                 Environment = new AppSettings().Environment.ToString(),
-                DisplayCampaignLink = IsFeatureToggleEnabledUserAnonymous(FEATURE_TOGGLE_DISPLAY_CAMPAIGN_LINK),
-                DisplayBuyingLink = IsFeatureToggleEnabledUserAnonymous(FEATURE_TOGGLE_DISPLAY_BUYING_LINK),
-                AllowMultipleCreativeLengths = IsFeatureToggleEnabledUserAnonymous(FEATURE_TOGGLE_ALLOW_MULTIPLE_CREATIVE_LENGTHS),
-                EnablePricingInEdit = IsFeatureToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_PRICING_IN_EDIT),
-                EnableExportPreBuy = IsFeatureToggleEnabledUserAnonymous(FEATURE_TOGGLE_ENABLE_EXPORT_PRE_BUY),
-                EnableRunPricingAutomaticaly = IsFeatureToggleEnabledUserAnonymous(FEATURE_TOGGLE_RUN_PRICING_AUTOMATICALLY)
+                DisplayCampaignLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.DISPLAY_CAMPAIGN_LINK),
+                DisplayBuyingLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.DISPLAY_BUYING_LINK),
+                AllowMultipleCreativeLengths = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS),
+                EnablePricingInEdit = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_IN_EDIT),
+                EnableExportPreBuy = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ENABLE_EXPORT_PRE_BUY),
+                EnableRunPricingAutomaticaly = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.RUN_PRICING_AUTOMATICALLY),
+                EnableAabNavigation = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION)
             };
         }
     }

@@ -15,5 +15,7 @@
         public bool EnableExportPreBuy { get; set; }
 
         public bool EnableRunPricingAutomaticaly { get; set; }
+
+        public bool EnableAabNavigation { get; set; }
     }
 }
