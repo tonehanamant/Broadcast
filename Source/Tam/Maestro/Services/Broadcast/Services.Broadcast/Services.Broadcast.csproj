@@ -853,6 +853,8 @@
     <Compile Include="Repositories\DetectionPostDetailsRepository.cs" />
     <Compile Include="Repositories\DetectionRepository.cs" />
     <Compile Include="Repositories\DetectionTestDataGeneratorRepository.cs" />
+    <Compile Include="Entities\InventoryProprietaryDaypartDto.cs" />
+    <Compile Include="Repositories\InventoryProprietaryDaypartRepository.cs" />
     <Compile Include="Repositories\InventoryProprietarySummaryRepository.cs" />
     <Compile Include="Repositories\Inventory\InventoryExportJobRepository.cs" />
     <Compile Include="Repositories\InventoryProgramsByFileJobsRepository.cs" />

@@ -734,7 +734,10 @@ END
 
 /*************************************** END - BP-811 ****************************************************/
 
+GO
+
 /*************************************** START - BP-1341 ****************************************************/
+
 IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('inventory_proprietary_summary_station_audiences'))
 BEGIN
 	CREATE TABLE [dbo].[inventory_proprietary_summary_station_audiences](
@@ -759,12 +762,12 @@ BEGIN
 	ADD CONSTRAINT [FK_inventory_proprietary_summary_station_audiences_stations] 
 	FOREIGN KEY([station_id])
 	REFERENCES [dbo].[stations] ([id])
-
+	
 	ALTER TABLE [dbo].[inventory_proprietary_summary_station_audiences] 
 	ADD CONSTRAINT [FK_inventory_proprietary_summary_station_audiences_markets] 
 	FOREIGN KEY([market_code])
 	REFERENCES [dbo].[markets] ([market_code])
-
+	
 	ALTER TABLE [dbo].[inventory_proprietary_summary_station_audiences] 
 	ADD CONSTRAINT [FK_inventory_proprietary_summary_station_audiences_audiences] 
 	FOREIGN KEY([audience_id])
@@ -780,6 +783,7 @@ IF EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('inventory_propri
 BEGIN
 	DROP TABLE [inventory_proprietary_summary_audiences]
 END
+
 /*************************************** END - BP-1341 ****************************************************/
 
 /*************************************** START - BP-1286 ****************************************************/
@@ -820,6 +824,76 @@ BEGIN
 END
 
 /*************************************** END - BP-1286 ****************************************************/
+
+GO
+
+/*************************************** START - BP-1283 ****************************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+			  WHERE object_id = OBJECT_ID('inventory_proprietary_daypart_programs') AND 
+			        name = 'genre_id')
+BEGIN
+	ALTER TABLE inventory_proprietary_daypart_programs
+	ADD genre_id INT NULL
+
+	EXEC('UPDATE inventory_proprietary_daypart_programs
+     	  SET genre_id = (select id from genres where name = ''News'' and program_source_id = 1)
+	      WHERE unit_type = ''AM''')
+
+	EXEC('UPDATE inventory_proprietary_daypart_programs
+          SET genre_id = (select id from genres where name = ''News'' and program_source_id = 1)
+	      WHERE unit_type = ''PM''')
+
+	EXEC('UPDATE inventory_proprietary_daypart_programs
+          SET genre_id = (select id from genres where name = ''News'' and program_source_id = 1)
+	      WHERE unit_type = ''News''')
+
+	EXEC('UPDATE inventory_proprietary_daypart_programs
+          SET genre_id = (select id from genres where name = ''Entertainment'' and program_source_id = 1)
+	      WHERE unit_type = ''Syndication''')
+
+	ALTER TABLE inventory_proprietary_daypart_programs
+	ALTER COLUMN genre_id INT NOT NULL
+
+	ALTER TABLE inventory_proprietary_daypart_programs 
+	WITH CHECK ADD CONSTRAINT FK_inventory_proprietary_daypart_programs_genres FOREIGN KEY(genre_id)
+	REFERENCES [dbo].genres ([id])
+END
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+			  WHERE object_id = OBJECT_ID('inventory_proprietary_daypart_programs') AND 
+			        name = 'show_type_id')
+BEGIN
+	ALTER TABLE inventory_proprietary_daypart_programs
+	ADD show_type_id INT NULL
+
+	EXEC('UPDATE inventory_proprietary_daypart_programs
+     	  SET show_type_id = (select id from show_types where name = ''News'' and program_source_id = 1)
+	      WHERE unit_type = ''AM''')
+
+	EXEC('UPDATE inventory_proprietary_daypart_programs
+          SET show_type_id = (select id from show_types where name = ''News'' and program_source_id = 1)
+	      WHERE unit_type = ''PM''')
+
+	EXEC('UPDATE inventory_proprietary_daypart_programs
+          SET show_type_id = (select id from show_types where name = ''News'' and program_source_id = 1)
+	      WHERE unit_type = ''News''')
+
+	EXEC('UPDATE inventory_proprietary_daypart_programs
+          SET show_type_id = (select id from show_types where name = ''Miscellaneous'' and program_source_id = 1)
+	      WHERE unit_type = ''Syndication''')
+
+	ALTER TABLE inventory_proprietary_daypart_programs
+	ALTER COLUMN show_type_id INT NOT NULL
+
+	ALTER TABLE inventory_proprietary_daypart_programs 
+	WITH CHECK ADD CONSTRAINT FK_inventory_proprietary_daypart_programs_genres FOREIGN KEY(show_type_id)
+	REFERENCES [dbo].show_types ([id])
+END
+
+/*************************************** END - BP-1283 ****************************************************/
+
+GO
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

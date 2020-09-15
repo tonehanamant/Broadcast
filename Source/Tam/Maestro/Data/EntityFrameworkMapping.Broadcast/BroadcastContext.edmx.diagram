@@ -501,6 +501,8 @@
         <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_markets" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_stations" />
         <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_inventory_proprietary_summary" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_daypart_programs_genres" />
+        <AssociationConnector Association="BroadcastModel.FK_inventory_proprietary_daypart_programs_show_types" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

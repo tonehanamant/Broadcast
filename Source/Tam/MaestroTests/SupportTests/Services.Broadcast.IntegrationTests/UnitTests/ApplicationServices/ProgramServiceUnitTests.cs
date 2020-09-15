@@ -31,7 +31,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 					{new ProgramNameExceptionDto {GenreId = 33, ShowTypeId = 1, CustomProgramName = "Golf 123"}});
 
 			genreCacheMock
-				.Setup(x => x.GetGenreById(It.IsAny<int>(), It.IsAny<ProgramSourceEnum>()))
+				.Setup(x => x.GetGenreLookupDtoById(It.IsAny<int>()))
 				.Returns(new LookupDto
 				{
 					Id = 1,
@@ -72,7 +72,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 					{new ProgramNameExceptionDto {GenreId = 33, ShowTypeId = 1, CustomProgramName = "Golf 123"}});
 
 			genreCacheMock
-				.Setup(x => x.GetGenreById(It.IsAny<int>(), It.IsAny<ProgramSourceEnum>()))
+				.Setup(x => x.GetGenreLookupDtoById(It.IsAny<int>()))
 				.Returns(new LookupDto
 				{
 					Id = 1,
@@ -113,7 +113,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 					{new ProgramNameExceptionDto {GenreId = 33, ShowTypeId = 1, CustomProgramName = "Golf 123"}});
 
 			genreCacheMock
-				.Setup(x => x.GetGenreById(It.IsAny<int>(), It.IsAny<ProgramSourceEnum>()))
+				.Setup(x => x.GetGenreLookupDtoById(It.IsAny<int>()))
 				.Returns(new LookupDto
 				{
 					Id = 1,

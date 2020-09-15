@@ -138,7 +138,7 @@ namespace Services.Broadcast.ApplicationServices
                 result.Add(new ProgramDto
                 {
                     Name = internalProgram.OfficialProgramName,
-                    Genre = _GenreCache.GetGenreById(internalProgram.GenreId, ProgramSourceEnum.Maestro)
+                    Genre = _GenreCache.GetGenreLookupDtoById(internalProgram.GenreId)
                 });
             }
             return result;
@@ -155,7 +155,7 @@ namespace Services.Broadcast.ApplicationServices
 				result.Add(new ProgramDto
 				{
 					Name = exceptionProgram.CustomProgramName,
-					Genre = _GenreCache.GetGenreById(exceptionProgram.GenreId, ProgramSourceEnum.Maestro)
+					Genre = _GenreCache.GetGenreLookupDtoById(exceptionProgram.GenreId)
 
 				});
 			}

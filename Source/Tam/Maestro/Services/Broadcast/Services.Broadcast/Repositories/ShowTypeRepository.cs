@@ -36,6 +36,8 @@ namespace Services.Broadcast.Repositories
         List<ShowTypeDto> GetMaestroShowTypes();
 
         List<ShowTypeDto> GetMasterShowTypes();
+
+        ShowTypeDto GetMaestroShowType(int showTypeId);
     }
 
     public class ShowTypeRepository : BroadcastRepositoryBase, IShowTypeRepository
@@ -168,6 +170,16 @@ namespace Services.Broadcast.Repositories
                 Id = showType.id,
                 Display = showType.name
             };
+        }
+
+        public ShowTypeDto GetMaestroShowType(int showTypeId)
+        {   
+            return _InReadUncommitedTransaction(context =>
+            {
+                return _MapToDto(context.show_types
+                    .Where(g => g.program_source_id == (int)ProgramSourceEnum.Maestro)
+                    .Single(item => item.id == showTypeId, $"No show type was found by id : {showTypeId}"));
+            });
         }
     }    
 }

@@ -30,6 +30,9 @@ namespace Services.Broadcast.Converters.RateImport
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
         private readonly IFileService _FileService;
         private readonly IStationMappingService _StationMappingService;
+        private readonly IGenreCache _GenreCache;
+        private readonly IShowTypeCache _ShowTypeCache;
+        private readonly IDateTimeEngine _DateTimeEngine;
 
         public ProprietaryFileImporterFactory(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -43,7 +46,10 @@ namespace Services.Broadcast.Converters.RateImport
             IDaypartCache daypartCache,
             IImpressionAdjustmentEngine impressionAdjustmentEngine,
             IFileService fileService,
-            IStationMappingService stationMappingService)
+            IStationMappingService stationMappingService,
+            IGenreCache genreCache,
+            IShowTypeCache showTypeCache,
+            IDateTimeEngine dateTimeEngine)
         {
             _BroadcastDataRepositoryFactory = broadcastDataRepositoryFactory;
             _BroadcastAudiencesCache = broadcastAudiencesCache;
@@ -57,6 +63,9 @@ namespace Services.Broadcast.Converters.RateImport
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
             _FileService = fileService;
             _StationMappingService = stationMappingService;
+            _GenreCache = genreCache;
+            _ShowTypeCache = showTypeCache;
+            _DateTimeEngine = dateTimeEngine;
         }
 
         public ProprietaryFileImporterBase GetFileImporterInstance(InventorySource inventorySource)
@@ -88,7 +97,10 @@ namespace Services.Broadcast.Converters.RateImport
                         _ProprietarySpotCostCalculationEngine,
                         _ImpressionsService,
                         _FileService,
-                        _StationMappingService);
+                        _StationMappingService,
+                        _GenreCache,
+                        _ShowTypeCache,
+                        _DateTimeEngine);
                     break;
 
                 case InventorySourceTypeEnum.Syndication:

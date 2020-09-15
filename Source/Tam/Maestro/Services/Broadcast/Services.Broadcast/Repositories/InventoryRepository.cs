@@ -282,30 +282,69 @@ namespace Services.Broadcast.Repositories
                            .Where(g => g.Id == null)
                            .Select(inventoryGroup => _MapToStationInventoryGroup(inventoryGroup, inventoryFile)).ToList();
 
-                   //process groups
-                   _InsertGroups(context, newGroups);
+                       _InsertGroups(context, newGroups);
 
                        foreach (var group in newGroups)
                        {
                            var mappedManifests = group.station_inventory_manifest.ToList();
 
-                       //process manifests
-                       _InsertManifests(context, mappedManifests, group.id);
+                           _InsertManifests(context, mappedManifests, group.id);
 
-                       //process manifest audiences
-                       _InsertManifestAudiences(context, mappedManifests);
+                           _InsertManifestAudiences(context, mappedManifests);
 
-                       //process manifest dayparts
-                       _InsertManifestDayparts(context, mappedManifests);
+                           _InsertManifestDayparts(context, mappedManifests);
 
-                       //process manifest rates
-                       _InsertManifestRates(context, mappedManifests);
+                           _InsertManifestDaypartPrograms(context, mappedManifests);
 
-                       //process manifest weeks
-                       _InsertManifestWeeks(context, mappedManifests);
+                           _UpdateManfiestDaypartsPrimaryProgram(context, mappedManifests);
+
+                           _InsertManifestRates(context, mappedManifests);
+
+                           _InsertManifestWeeks(context, mappedManifests);
                        }
                    });
             }
+        }
+
+        private void _UpdateManfiestDaypartsPrimaryProgram(QueryHintBroadcastContext context, List<station_inventory_manifest> mappedManifests)
+        {
+            var manifestDaypartIds = mappedManifests.SelectMany(x => x.station_inventory_manifest_dayparts.Select(y => y.id)).ToList();
+            var manifestDayparts = context.station_inventory_manifest_dayparts.Where(x => manifestDaypartIds.Contains(x.id)).ToList();
+            var manifestDaypartPrograms = mappedManifests.SelectMany(x => x.station_inventory_manifest_dayparts.SelectMany(y => y.station_inventory_manifest_daypart_programs)).ToList();
+            manifestDayparts.ForEach(p =>
+            {
+                var daypartProgram = manifestDaypartPrograms.First(x => x.station_inventory_manifest_daypart_id == p.id);
+                p.primary_program_id = daypartProgram.id;
+            });
+
+            context.SaveChanges();
+        }
+
+        private void _InsertManifestDaypartPrograms(QueryHintBroadcastContext context, List<station_inventory_manifest> mappedManifests)
+        {
+            var sw = Stopwatch.StartNew();
+
+            var manifestDaypartProgramId = context.station_inventory_manifest_daypart_programs.Select(x => x.id).Max() + 1;
+
+            mappedManifests.ForEach(m =>
+            {
+                m.station_inventory_manifest_dayparts.ToList().ForEach(md =>
+                {
+                    md.station_inventory_manifest_daypart_programs.ToList().ForEach(dp =>
+                    {
+                        dp.id = manifestDaypartProgramId++;
+                        dp.station_inventory_manifest_daypart_id = md.id;
+                    });
+                });
+            });
+
+            var manifestDaypartPrograms = mappedManifests.SelectMany(x => x.station_inventory_manifest_dayparts.SelectMany(y => y.station_inventory_manifest_daypart_programs)).ToList();
+
+            BulkInsert(context, manifestDaypartPrograms);
+
+            sw.Stop();
+
+            Debug.WriteLine($"Inserted {manifestDaypartPrograms.Count} manifest dayparts in {sw.Elapsed}");
         }
 
         private void _InsertGroups(QueryHintBroadcastContext context, List<station_inventory_group> newGroups)
@@ -336,20 +375,15 @@ namespace Services.Broadcast.Repositories
                             .Select(manifest => _MapToStationInventoryManifest(manifest, inventoryFileId, inventorySourceId))
                             .ToList();
 
-                  //process manifests
-                  _InsertManifests(context, mappedManifests);
+                      _InsertManifests(context, mappedManifests);
 
-                  //process manifest audiences
-                  _InsertManifestAudiences(context, mappedManifests);
+                      _InsertManifestAudiences(context, mappedManifests);
 
-                  //process manifest dayparts
-                  _InsertManifestDayparts(context, mappedManifests);
+                      _InsertManifestDayparts(context, mappedManifests);
 
-                  //process manifest rates
-                  _InsertManifestRates(context, mappedManifests);
+                      _InsertManifestRates(context, mappedManifests);
 
-                  //process manifest weeks
-                  _InsertManifestWeeks(context, mappedManifests);
+                      _InsertManifestWeeks(context, mappedManifests);
                   });
             }
         }
@@ -365,12 +399,14 @@ namespace Services.Broadcast.Repositories
                     mw.station_inventory_manifest_id = m.id;
                 });
             });
+
             var manifestWeeks = mappedManifests.SelectMany(x => x.station_inventory_manifest_weeks).ToList();
             var propertiesToIgnore = new List<string> { "sys_start_date", "sys_end_date", "id" };
 
             BulkInsert(context, manifestWeeks, propertiesToIgnore);
 
             sw.Stop();
+
             Debug.WriteLine($"Inserted {manifestWeeks.Count} manifest weeks in {sw.Elapsed}");
         }
 
@@ -385,11 +421,13 @@ namespace Services.Broadcast.Repositories
                     mr.station_inventory_manifest_id = m.id;
                 });
             });
+
             var manifestRates = mappedManifests.SelectMany(x => x.station_inventory_manifest_rates).ToList();
 
             BulkInsert(context, manifestRates, propertiesToIgnore: new List<string> { "id" });
 
             sw.Stop();
+
             Debug.WriteLine($"Inserted {manifestRates.Count} manifest rates in {sw.Elapsed}");
         }
 
@@ -397,18 +435,23 @@ namespace Services.Broadcast.Repositories
         {
             var sw = Stopwatch.StartNew();
 
+            var manifestDaypartsId = context.station_inventory_manifest_dayparts.Max(x => x.id) + 1;
+
             mappedManifests.ForEach(m =>
             {
                 m.station_inventory_manifest_dayparts.ToList().ForEach(md =>
                 {
+                    md.id = manifestDaypartsId++;
                     md.station_inventory_manifest_id = m.id;
                 });
             });
+
             var manifestDayparts = mappedManifests.SelectMany(x => x.station_inventory_manifest_dayparts).ToList();
 
-            BulkInsert(context, manifestDayparts, propertiesToIgnore: new List<string> { "id" });
+            BulkInsert(context, manifestDayparts);
 
             sw.Stop();
+
             Debug.WriteLine($"Inserted {manifestDayparts.Count} manifest dayparts in {sw.Elapsed}");
         }
 
@@ -423,6 +466,7 @@ namespace Services.Broadcast.Repositories
                     ma.station_inventory_manifest_id = m.id;
                 });
             });
+
             var manifestAudiences = mappedManifests.SelectMany(x => x.station_inventory_manifest_audiences).ToList();
 
             BulkInsert(context, manifestAudiences, propertiesToIgnore: new List<string> { "id" });
@@ -498,7 +542,20 @@ namespace Services.Broadcast.Repositories
                                         {
                                             daypart_id = md.Daypart.Id,
                                             program_name = md.ProgramName,
-                                            daypart_default_id = md.DaypartDefault?.Id
+                                            daypart_default_id = md.DaypartDefault?.Id,
+                                            station_inventory_manifest_daypart_programs = md.Programs.Select(x => new station_inventory_manifest_daypart_programs
+                                            {
+                                                name = x.ProgramName,
+                                                end_date = x.EndDate,
+                                                start_date = x.StartDate,
+                                                maestro_genre_id = x.MaestroGenreId,
+                                                source_genre_id = x.SourceGenreId,
+                                                program_source_id = x.ProgramSourceId,
+                                                start_time = x.StartTime,
+                                                end_time = x.EndTime,
+                                                show_type = x.ShowType,
+                                                created_date = x.CreatedDate
+                                            }).ToList()
                                         }).ToList(),
                 station_inventory_manifest_rates =
                                         manifest.ManifestRates.Select(mr => new station_inventory_manifest_rates()
@@ -530,6 +587,7 @@ namespace Services.Broadcast.Repositories
                                 .Include(x => x.station_inventory_manifest_weeks)
                                 .Include(x => x.station_inventory_manifest_rates)
                                 .Include(x => x.station_inventory_manifest_dayparts)
+                                .Include(x => x.station_inventory_manifest_genres)
                                 .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.daypart_defaults.daypart))
                                 .Include(s => s.station)
                          join g in context.station_inventory_group on m.station_inventory_group_id equals g.id
@@ -604,7 +662,7 @@ namespace Services.Broadcast.Repositories
                 },
                 Manifests = stationInventoryGroup.station_inventory_manifest
                     .Select(manifest => _MapToInventoryManifest(manifest, headerDaypartCode))
-                    .ToList()
+                    .ToList(),
             };
 
             return sig;
@@ -625,7 +683,7 @@ namespace Services.Broadcast.Repositories
                         Code = md.daypart_defaults.code,
                         FullName = md.daypart_defaults.name
                     },
-                Programs = md.station_inventory_manifest_daypart_programs.Select(_MapToInventoryDaypartProgram).ToList()
+                Programs = md.station_inventory_manifest_daypart_programs.Select(_MapToInventoryDaypartProgram).ToList(),
             }).ToList();
 
             return dayparts;
@@ -1885,11 +1943,6 @@ namespace Services.Broadcast.Repositories
                 },
                 ProgramName = entity.program_name,
                 PrimaryProgramId = entity.primary_program_id,
-                Genres = entity.station_inventory_manifest_daypart_genres.Select(g => new LookupDto
-                {
-                    Id = g.genre_id,
-                    Display = g.genre.name
-                }).ToList(),
                 Programs = entity.station_inventory_manifest_daypart_programs.Select(_MapToInventoryManifestDaypartProgram).ToList()
             };
             return dto;

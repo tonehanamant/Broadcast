@@ -11,12 +11,14 @@ using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
+using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Tam.Maestro.Common;
+using Tam.Maestro.Data.Entities.DataTransferObjects;
 using static Services.Broadcast.Entities.ProprietaryInventory.ProprietaryInventoryFile;
 
 namespace Services.Broadcast.Converters.RateImport
@@ -36,6 +38,12 @@ namespace Services.Broadcast.Converters.RateImport
 
         private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
         private readonly IImpressionsService _ImpressionsService;
+        private readonly IInventoryProprietaryDaypartRepository _InventoryProprietaryDaypartRepository;
+        private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
+        private readonly IShowTypeRepository _ShowTypeRepository;
+        private readonly IGenreCache _GenreCache;
+        private readonly IShowTypeCache _ShowTypeCache;
+        private readonly IDateTimeEngine _DateTimeEngine;
 
         const string commentsHeader = "COMMENTS";
         const int unitNameRowIndex = 16;
@@ -53,7 +61,10 @@ namespace Services.Broadcast.Converters.RateImport
             IProprietarySpotCostCalculationEngine proprietarySpotCostCalculationEngine,
             IImpressionsService impressionsService,
             IFileService fileService,
-            IStationMappingService stationMappingService) : base(
+            IStationMappingService stationMappingService,
+            IGenreCache genreCache,
+            IShowTypeCache showTypeCache,
+            IDateTimeEngine dateTimeEngine) : base(
                 broadcastDataRepositoryFactory,
                 broadcastAudiencesCache,
                 inventoryDaypartParsingEngine,
@@ -65,6 +76,12 @@ namespace Services.Broadcast.Converters.RateImport
         {
             _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _ImpressionsService = impressionsService;
+            _InventoryProprietaryDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProprietaryDaypartRepository>();
+            _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
+            _ShowTypeRepository = broadcastDataRepositoryFactory.GetDataRepository<IShowTypeRepository>();
+            _GenreCache = genreCache;
+            _ShowTypeCache = showTypeCache;
+            _DateTimeEngine = dateTimeEngine;
         }
 
         public override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
@@ -467,6 +484,11 @@ namespace Services.Broadcast.Converters.RateImport
         private List<StationInventoryGroup> _GetStationInventoryGroups(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations)
         {
             var fileHeader = proprietaryFile.Header;
+            var defaultDaypart = _DaypartDefaultRepository.GetDaypartDefaultByCode(fileHeader.DaypartCode);
+            var inventoryProprietaryDaypart = _InventoryProprietaryDaypartRepository.GetInventoryProprietaryDaypartMappings(proprietaryFile.InventorySource.Id, defaultDaypart.Id);
+            var maestroGenre = _GenreCache.GetGenreLookupDtoById(inventoryProprietaryDaypart.GenreId);
+            var masterGenre = _GenreCache.GetSourceGenreLookupDtoByName(maestroGenre.Display, ProgramSourceEnum.Master);
+            var maestroShowType = _ShowTypeRepository.GetMaestroShowType(inventoryProprietaryDaypart.ShowTypeId);
             return proprietaryFile.DataLines
                 .SelectMany(x => x.Units, (dataLine, unit) => new
                 {
@@ -503,7 +525,31 @@ namespace Services.Broadcast.Converters.RateImport
                             SpotLengthId = SpotLengthEngine.GetSpotLengthIdByValue(manifestGroup.SpotLength),
                             Comment = manifest.Comment,
                             ManifestWeeks = GetManifestWeeksInRange(fileHeader.EffectiveDate, fileHeader.EndDate, manifest.Spots.Value),
-                            ManifestDayparts = manifest.Dayparts.Select(x => new StationInventoryManifestDaypart { Daypart = x }).ToList(),
+                            ManifestDayparts = manifest.Dayparts.Select(x => new StationInventoryManifestDaypart
+                            {
+                                Daypart = x,
+                                ProgramName = inventoryProprietaryDaypart.ProgramName,
+                                Genres = new List<LookupDto>
+                                {
+                                    new LookupDto { Id = inventoryProprietaryDaypart.GenreId }
+                                },
+                                Programs = new List<StationInventoryManifestDaypartProgram>
+                                {
+                                   new StationInventoryManifestDaypartProgram
+                                   {
+                                       MaestroGenreId = inventoryProprietaryDaypart.GenreId,
+                                       ProgramName = inventoryProprietaryDaypart.ProgramName,
+                                       ProgramSourceId = (int)ProgramSourceEnum.Maestro,
+                                       StartDate = fileHeader.EffectiveDate,
+                                       EndDate = fileHeader.EndDate,
+                                       StartTime = x.StartTime,
+                                       EndTime = x.EndTime,
+                                       ShowType = maestroShowType.Name,
+                                       SourceGenreId = masterGenre.Id,
+                                       CreatedDate = _DateTimeEngine.GetCurrentMoment()
+                                   }
+                                }
+                            }).ToList(),
                             ManifestAudiences = new List<StationInventoryManifestAudience>
                             {
                                 new StationInventoryManifestAudience

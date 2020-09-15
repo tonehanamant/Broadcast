@@ -8,17 +8,12 @@ namespace Services.Broadcast.IntegrationTests.Stubs
 {
     public class GenreCacheStub : IGenreCache
     {
-        public LookupDto GetGenreById(int genreId, ProgramSourceEnum programSource)
+        public Genre GetGenreById(int genreId)
         {
             throw new NotImplementedException();
         }
 
-        public LookupDto GetMaestroGenreLookupDtoBySourceGenre(LookupDto sourceGenre, ProgramSourceEnum programSource)
-        {
-            throw new NotImplementedException();
-        }
-
-        public LookupDto GetMaestroGenreBySourceGenreName(string sourceGenreName, ProgramSourceEnum programSource)
+        public LookupDto GetGenreLookupDtoById(int genreId)
         {
             throw new NotImplementedException();
         }
@@ -33,13 +28,19 @@ namespace Services.Broadcast.IntegrationTests.Stubs
             };
         }
 
-        public LookupDto GetSourceGenreLookupDtoByName(string genreName, ProgramSourceEnum programSource)
+        public Genre GetMaestroGenreBySourceGenre(LookupDto sourceGenre, ProgramSourceEnum programSource)
         {
-            return new LookupDto
-            {
-                Id = (int)programSource,
-                Display = genreName
-            };
+            throw new NotImplementedException();
+        }
+
+        public LookupDto GetMaestroGenreBySourceGenreName(string sourceGenreName, ProgramSourceEnum programSource)
+        {
+            throw new NotImplementedException();
+        }
+
+        public LookupDto GetMaestroGenreLookupDtoBySourceGenre(LookupDto sourceGenre, ProgramSourceEnum programSource)
+        {
+            throw new NotImplementedException();
         }
 
         public Genre GetSourceGenreByName(string genreName, ProgramSourceEnum programSource)
@@ -47,9 +48,13 @@ namespace Services.Broadcast.IntegrationTests.Stubs
             throw new NotImplementedException();
         }
 
-        public Genre GetMaestroGenreBySourceGenre(LookupDto sourceGenre, ProgramSourceEnum programSource)
+        public LookupDto GetSourceGenreLookupDtoByName(string genreName, ProgramSourceEnum programSource)
         {
-            throw new NotImplementedException();
+            return new LookupDto
+            {
+                Id = (int)programSource,
+                Display = genreName
+            };
         }
     }
 }

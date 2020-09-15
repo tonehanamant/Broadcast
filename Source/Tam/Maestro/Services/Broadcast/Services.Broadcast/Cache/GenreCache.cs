@@ -18,7 +18,8 @@ namespace Services.Broadcast.Cache
         Genre GetMaestroGenreBySourceGenre(LookupDto sourceGenre, ProgramSourceEnum programSource);
         Genre GetMaestroGenreByName(string genreName);
         LookupDto GetSourceGenreLookupDtoByName(string genreName, ProgramSourceEnum programSource);
-        LookupDto GetGenreById(int genreId, ProgramSourceEnum programSource);
+        LookupDto GetGenreLookupDtoById(int genreId);
+        Genre GetGenreById(int genreId);
         Genre GetSourceGenreByName(string genreName, ProgramSourceEnum programSource);
     }
 
@@ -100,6 +101,7 @@ namespace Services.Broadcast.Cache
 
             return _ToLookupDto(sourceGenre);
         }
+
         public Genre GetSourceGenreByName(string genreName, ProgramSourceEnum programSource)
         {
             var genresByNames = _GenresByNamesBySource[programSource];
@@ -119,16 +121,24 @@ namespace Services.Broadcast.Cache
             };
         }
 
-        public LookupDto GetGenreById(int genreId, ProgramSourceEnum programSource)
+        public LookupDto GetGenreLookupDtoById(int genreId)
         {
 	        var genre = _GenresByIds[genreId];
 
 	        if (genre == null)
 		        return null;
-	        if (genre.ProgramSourceId != (int)programSource)
-		        return null;
 
 	        return _ToLookupDto(genre);
+        }
+
+        public Genre GetGenreById(int genreId)
+        {
+            var genre = _GenresByIds[genreId];
+
+            if (genre == null)
+                return null;
+
+            return genre;
         }
     }
 }

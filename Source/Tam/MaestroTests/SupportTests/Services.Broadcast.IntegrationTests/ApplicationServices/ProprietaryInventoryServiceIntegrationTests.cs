@@ -78,6 +78,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void SaveBarterInventoryFileWithDefaultProgramNameAndGenre()
+        {
+            const string fileName = @"ProprietaryDataFiles\Barter_CNN.xlsx";
+
+            _VerifyFileInventoryGroups(fileName);
+        }
+
+        [Test]
         [Ignore("This test was used to load data into dbs")]
         [UseReporter(typeof(DiffReporter))]
         public void Barter_LoadBarterFilesIntoDbs()
@@ -885,6 +895,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             jsonResolver.Ignore(typeof(StationInventoryManifestWeek), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifestDaypart), "Id");
             jsonResolver.Ignore(typeof(StationInventoryManifestRate), "Id");
+            jsonResolver.Ignore(typeof(StationInventoryManifestDaypartProgram), "CreatedDate");
             jsonResolver.Ignore(typeof(MediaWeek), "_Id");
             jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
             var jsonSettings = new JsonSerializerSettings()

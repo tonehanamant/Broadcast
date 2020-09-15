@@ -36,7 +36,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
                 dataRepositoryFactory.Object, null, null,
                 null, null, null,
                 null, null, null,
-                null);
+                null, null, null, null);
 
             var result = fileImporter._TransformStationCallsign(rawCallsign);
 

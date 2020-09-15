@@ -26,7 +26,11 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime created_at { get; set; }
         public string modified_by { get; set; }
         public Nullable<System.DateTime> modified_at { get; set; }
+        public int genre_id { get; set; }
+        public int show_type_id { get; set; }
     
         public virtual ICollection<inventory_proprietary_daypart_program_mappings> inventory_proprietary_daypart_program_mappings { get; set; }
+        public virtual genre genre { get; set; }
+        public virtual show_types show_types { get; set; }
     }
 }

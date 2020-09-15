@@ -1,0 +1,4622 @@
+[
+  {
+    "InventorySource": {
+      "Id": 5,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "CNN"
+    },
+    "Manifests": [
+      {
+        "Comment": null,
+        "DaypartCode": "EMN",
+        "InventorySourceId": 5,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 18+",
+              "Id": 34
+            },
+            "CPM": 8.6000,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2018-03-20T00:00:00",
+                "EndTime": 35999,
+                "Id": 14755,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2018-01-01T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633848
+              }
+            ]
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2018-01-07T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-07T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-01T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-01T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-14T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-14T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-08T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-08T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-21T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-21T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-15T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-15T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-28T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-28T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-22T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-22T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-04T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-01-29T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-29T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-11T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-18T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-25T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-25T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-19T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-04T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-02-26T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-26T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-11T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-18T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-20T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-25T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-19T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "CBS",
+          "CallLetters": "WWTV+",
+          "Code": 231,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "WWTV",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 140,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      },
+      {
+        "Comment": null,
+        "DaypartCode": "EMN",
+        "InventorySourceId": 5,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 18+",
+              "Id": 34
+            },
+            "CPM": 8.6000,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2018-03-20T00:00:00",
+                "EndTime": 35999,
+                "Id": 14756,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2018-01-01T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633849
+              }
+            ]
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2018-01-07T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-07T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-01T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-01T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-14T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-14T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-08T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-08T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-21T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-21T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-15T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-15T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-28T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-28T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-22T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-22T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-04T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-01-29T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-29T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-11T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-18T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-25T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-25T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-19T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-04T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-02-26T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-26T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-11T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-18T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-20T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-25T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-19T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "MET",
+          "CallLetters": "WESH 2.2",
+          "Code": 4530,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "EESH",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 134,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      }
+    ],
+    "Name": "AM1",
+    "SlotNumber": 1
+  },
+  {
+    "InventorySource": {
+      "Id": 5,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "CNN"
+    },
+    "Manifests": [
+      {
+        "Comment": null,
+        "DaypartCode": "EMN",
+        "InventorySourceId": 5,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 18+",
+              "Id": 34
+            },
+            "CPM": 8.6000,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2018-03-20T00:00:00",
+                "EndTime": 35999,
+                "Id": 14755,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2018-01-01T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633848
+              }
+            ]
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2018-01-07T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-07T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-01T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-01T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-14T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-14T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-08T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-08T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-21T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-21T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-15T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-15T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-28T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-28T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-22T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-22T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-04T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-01-29T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-29T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-11T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-18T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-25T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-25T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-19T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-04T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-02-26T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-26T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-11T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-18T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-20T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-25T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-19T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "CBS",
+          "CallLetters": "WWTV+",
+          "Code": 231,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "WWTV",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 140,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      },
+      {
+        "Comment": null,
+        "DaypartCode": "EMN",
+        "InventorySourceId": 5,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 18+",
+              "Id": 34
+            },
+            "CPM": 8.6000,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2018-03-20T00:00:00",
+                "EndTime": 35999,
+                "Id": 14756,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2018-01-01T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633849
+              }
+            ]
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2018-01-07T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-07T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-01T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-01T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-14T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-14T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-08T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-08T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-21T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-21T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-15T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-15T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-28T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-28T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-22T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-22T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-04T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-01-29T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-29T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-11T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-18T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-25T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-25T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-19T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-04T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-02-26T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-26T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-11T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-18T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-20T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-25T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-19T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "MET",
+          "CallLetters": "WESH 2.2",
+          "Code": 4530,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "EESH",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 134,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      }
+    ],
+    "Name": "AM1",
+    "SlotNumber": 1
+  },
+  {
+    "InventorySource": {
+      "Id": 5,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "CNN"
+    },
+    "Manifests": [
+      {
+        "Comment": null,
+        "DaypartCode": "EMN",
+        "InventorySourceId": 5,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 18+",
+              "Id": 34
+            },
+            "CPM": 8.6000,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2018-03-20T00:00:00",
+                "EndTime": 35999,
+                "Id": 14757,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2018-01-01T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633850
+              }
+            ]
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2018-01-07T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-07T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-01T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-01T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-14T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-14T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-08T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-08T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-21T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-21T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-15T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-15T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-28T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-28T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-22T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-22T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-04T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-01-29T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-29T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-11T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-18T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-25T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-25T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-19T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-04T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-02-26T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-26T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-11T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-18T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-20T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-25T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-19T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "CBS",
+          "CallLetters": "WWTV+",
+          "Code": 231,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "WWTV",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 140,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      },
+      {
+        "Comment": null,
+        "DaypartCode": "EMN",
+        "InventorySourceId": 5,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 18+",
+              "Id": 34
+            },
+            "CPM": 8.6000,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2018-03-20T00:00:00",
+                "EndTime": 35999,
+                "Id": 14758,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2018-01-01T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633851
+              }
+            ]
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2018-01-07T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-07T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-01T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-01T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-14T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-14T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-08T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-08T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-21T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-21T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-15T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-15T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-28T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-28T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-22T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-22T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-04T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-01-29T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-29T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-11T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-18T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-25T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-25T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-19T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-04T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-02-26T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-26T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-11T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-18T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-20T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-25T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-19T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "MET",
+          "CallLetters": "WESH 2.2",
+          "Code": 4530,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "EESH",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 134,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      }
+    ],
+    "Name": "AM2",
+    "SlotNumber": 2
+  },
+  {
+    "InventorySource": {
+      "Id": 5,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "CNN"
+    },
+    "Manifests": [
+      {
+        "Comment": null,
+        "DaypartCode": "EMN",
+        "InventorySourceId": 5,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 18+",
+              "Id": 34
+            },
+            "CPM": 8.6000,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2018-03-20T00:00:00",
+                "EndTime": 35999,
+                "Id": 14757,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2018-01-01T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633850
+              }
+            ]
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2018-01-07T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-07T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-01T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-01T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-14T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-14T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-08T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-08T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-21T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-21T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-15T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-15T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-28T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-28T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-22T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-22T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-04T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-01-29T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-29T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-11T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-18T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-25T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-25T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-19T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-04T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-02-26T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-26T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-11T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-18T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-20T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-25T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-19T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "CBS",
+          "CallLetters": "WWTV+",
+          "Code": 231,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "WWTV",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 140,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      },
+      {
+        "Comment": null,
+        "DaypartCode": "EMN",
+        "InventorySourceId": 5,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 18+",
+              "Id": 34
+            },
+            "CPM": 8.6000,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2018-03-20T00:00:00",
+                "EndTime": 35999,
+                "Id": 14758,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2018-01-01T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633851
+              }
+            ]
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2018-01-07T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-07T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-01T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-01T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-14T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-14T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-08T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-08T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-21T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-21T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-15T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-15T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-28T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-28T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-22T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-22T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-04T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-01-29T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-29T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-11T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-18T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-25T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-25T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-19T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-04T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-02-26T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-26T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-11T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-18T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-20T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-25T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-19T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "MET",
+          "CallLetters": "WESH 2.2",
+          "Code": 4530,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "EESH",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 134,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      }
+    ],
+    "Name": "AM2",
+    "SlotNumber": 2
+  },
+  {
+    "InventorySource": {
+      "Id": 5,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "CNN"
+    },
+    "Manifests": [
+      {
+        "Comment": null,
+        "DaypartCode": "EMN",
+        "InventorySourceId": 5,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 18+",
+              "Id": 34
+            },
+            "CPM": 8.6000,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2018-03-20T00:00:00",
+                "EndTime": 35999,
+                "Id": 14759,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2018-01-01T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633852
+              }
+            ]
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2018-01-07T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-07T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-01T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-01T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-14T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-14T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-08T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-08T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-21T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-21T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-15T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-15T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-28T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-28T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-22T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-22T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-04T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-01-29T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-29T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-11T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-18T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-25T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-25T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-19T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-04T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-02-26T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-26T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-11T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-18T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-20T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-25T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-19T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "CBS",
+          "CallLetters": "WWTV+",
+          "Code": 231,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "WWTV",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 140,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      },
+      {
+        "Comment": null,
+        "DaypartCode": "EMN",
+        "InventorySourceId": 5,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 18+",
+              "Id": 34
+            },
+            "CPM": 8.6000,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2018-03-20T00:00:00",
+                "EndTime": 35999,
+                "Id": 14760,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2018-01-01T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633853
+              }
+            ]
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2018-01-07T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-07T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-01T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-01T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-14T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-14T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-08T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-08T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-21T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-21T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-15T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-15T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-28T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-28T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-22T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-22T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-04T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-01-29T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-29T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-11T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-18T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-25T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-25T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-19T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-04T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-02-26T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-26T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-11T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-18T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-20T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-25T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-19T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "MET",
+          "CallLetters": "WESH 2.2",
+          "Code": 4530,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "EESH",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 134,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      }
+    ],
+    "Name": "AM3",
+    "SlotNumber": 3
+  },
+  {
+    "InventorySource": {
+      "Id": 5,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "CNN"
+    },
+    "Manifests": [
+      {
+        "Comment": null,
+        "DaypartCode": "EMN",
+        "InventorySourceId": 5,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 18+",
+              "Id": 34
+            },
+            "CPM": 8.6000,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2018-03-20T00:00:00",
+                "EndTime": 35999,
+                "Id": 14759,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2018-01-01T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633852
+              }
+            ]
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2018-01-07T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-07T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-01T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-01T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-14T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-14T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-08T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-08T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-21T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-21T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-15T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-15T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-28T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-28T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-22T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-22T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-04T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-01-29T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-29T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-11T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-18T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-25T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-25T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-19T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-04T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-02-26T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-26T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-11T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-18T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-20T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-25T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-19T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "CBS",
+          "CallLetters": "WWTV+",
+          "Code": 231,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "WWTV",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 140,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      },
+      {
+        "Comment": null,
+        "DaypartCode": "EMN",
+        "InventorySourceId": 5,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 18+",
+              "Id": 34
+            },
+            "CPM": 8.6000,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2018-03-20T00:00:00",
+                "EndTime": 35999,
+                "Id": 14760,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2018-01-01T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633853
+              }
+            ]
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2018-01-07T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-07T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-01T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-01T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-14T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-14T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-08T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-08T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-21T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-21T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-15T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-15T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-28T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-28T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-22T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-22T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-04T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-01-29T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-29T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-11T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-18T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-25T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-25T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-19T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-04T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-02-26T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-26T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-11T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-18T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-20T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-25T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-19T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "MET",
+          "CallLetters": "WESH 2.2",
+          "Code": 4530,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "EESH",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 134,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      }
+    ],
+    "Name": "AM3",
+    "SlotNumber": 3
+  },
+  {
+    "InventorySource": {
+      "Id": 5,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "CNN"
+    },
+    "Manifests": [
+      {
+        "Comment": null,
+        "DaypartCode": "EMN",
+        "InventorySourceId": 5,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 18+",
+              "Id": 34
+            },
+            "CPM": 8.6000,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2018-03-20T00:00:00",
+                "EndTime": 35999,
+                "Id": 14761,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2018-01-01T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633854
+              }
+            ]
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2018-01-07T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-07T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-01T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-01T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-14T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-14T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-08T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-08T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-21T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-21T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-15T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-15T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-28T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-28T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-22T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-22T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-04T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-01-29T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-29T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-11T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-18T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-25T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-25T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-19T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-04T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-02-26T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-26T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-11T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-18T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-20T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-25T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-19T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "CBS",
+          "CallLetters": "WWTV+",
+          "Code": 231,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "WWTV",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 140,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      },
+      {
+        "Comment": null,
+        "DaypartCode": "EMN",
+        "InventorySourceId": 5,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 18+",
+              "Id": 34
+            },
+            "CPM": 8.6000,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2018-03-20T00:00:00",
+                "EndTime": 35999,
+                "Id": 14762,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2018-01-01T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633855
+              }
+            ]
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2018-01-07T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-07T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-01T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-01T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-14T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-14T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-08T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-08T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-21T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-21T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-15T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-15T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-28T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-28T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-22T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-22T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-04T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-01-29T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-29T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-11T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-18T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-25T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-25T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-19T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-04T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-02-26T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-26T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-11T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-18T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-20T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-25T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-19T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "MET",
+          "CallLetters": "WESH 2.2",
+          "Code": 4530,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "EESH",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 134,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      }
+    ],
+    "Name": "AM4",
+    "SlotNumber": 4
+  },
+  {
+    "InventorySource": {
+      "Id": 5,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "CNN"
+    },
+    "Manifests": [
+      {
+        "Comment": null,
+        "DaypartCode": "EMN",
+        "InventorySourceId": 5,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 18+",
+              "Id": 34
+            },
+            "CPM": 8.6000,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2018-03-20T00:00:00",
+                "EndTime": 35999,
+                "Id": 14761,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2018-01-01T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633854
+              }
+            ]
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2018-01-07T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-07T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-01T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-01T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-14T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-14T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-08T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-08T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-21T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-21T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-15T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-15T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-28T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-28T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-22T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-22T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-04T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-01-29T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-29T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-11T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-18T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-25T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-25T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-19T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-04T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-02-26T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-26T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-11T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-18T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-20T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-25T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-19T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "CBS",
+          "CallLetters": "WWTV+",
+          "Code": 231,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "WWTV",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 140,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      },
+      {
+        "Comment": null,
+        "DaypartCode": "EMN",
+        "InventorySourceId": 5,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 18+",
+              "Id": 34
+            },
+            "CPM": 8.6000,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2018-03-20T00:00:00",
+                "EndTime": 35999,
+                "Id": 14762,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2018-01-01T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633855
+              }
+            ]
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2018-01-07T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-07T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-01T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-01T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-14T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-14T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-08T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-08T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-21T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-21T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-15T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-15T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-28T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-28T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-22T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-22T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-04T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-01-29T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-29T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-11T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-18T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-25T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-25T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-19T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-04T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-02-26T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-26T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-11T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-18T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-20T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-25T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-19T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "MET",
+          "CallLetters": "WESH 2.2",
+          "Code": 4530,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "EESH",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 134,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      }
+    ],
+    "Name": "AM4",
+    "SlotNumber": 4
+  },
+  {
+    "InventorySource": {
+      "Id": 5,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "CNN"
+    },
+    "Manifests": [
+      {
+        "Comment": null,
+        "DaypartCode": "EMN",
+        "InventorySourceId": 5,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 18+",
+              "Id": 34
+            },
+            "CPM": 8.6000,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2018-03-20T00:00:00",
+                "EndTime": 35999,
+                "Id": 14763,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2018-01-01T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633856
+              }
+            ]
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2018-01-07T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-07T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-01T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-01T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-14T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-14T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-08T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-08T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-21T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-21T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-15T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-15T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-28T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-28T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-22T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-22T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-04T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-01-29T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-29T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-11T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-18T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-25T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-25T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-19T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-04T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-02-26T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-26T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-11T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-18T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-20T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-25T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-19T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "CBS",
+          "CallLetters": "WWTV+",
+          "Code": 231,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "WWTV",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 140,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      },
+      {
+        "Comment": null,
+        "DaypartCode": "EMN",
+        "InventorySourceId": 5,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 18+",
+              "Id": 34
+            },
+            "CPM": 8.6000,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2018-03-20T00:00:00",
+                "EndTime": 35999,
+                "Id": 14764,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2018-01-01T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633857
+              }
+            ]
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2018-01-07T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-07T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-01T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-01T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-14T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-14T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-08T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-08T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-21T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-21T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-15T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-15T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-28T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-28T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-22T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-22T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-04T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-01-29T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-29T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-11T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-18T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-25T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-25T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-19T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-04T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-02-26T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-26T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-11T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-18T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-20T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-25T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-19T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "MET",
+          "CallLetters": "WESH 2.2",
+          "Code": 4530,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "EESH",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 134,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      }
+    ],
+    "Name": "AM5",
+    "SlotNumber": 5
+  },
+  {
+    "InventorySource": {
+      "Id": 5,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "CNN"
+    },
+    "Manifests": [
+      {
+        "Comment": null,
+        "DaypartCode": "EMN",
+        "InventorySourceId": 5,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 18+",
+              "Id": 34
+            },
+            "CPM": 8.6000,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2018-03-20T00:00:00",
+                "EndTime": 35999,
+                "Id": 14763,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2018-01-01T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633856
+              }
+            ]
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2018-01-07T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-07T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-01T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-01T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-14T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-14T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-08T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-08T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-21T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-21T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-15T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-15T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-28T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-28T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-22T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-22T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-04T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-01-29T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-29T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-11T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-18T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-25T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-25T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-19T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-04T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-02-26T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-26T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-11T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-18T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-20T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-25T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-19T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "CBS",
+          "CallLetters": "WWTV+",
+          "Code": 231,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "WWTV",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 140,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      },
+      {
+        "Comment": null,
+        "DaypartCode": "EMN",
+        "InventorySourceId": 5,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 18+",
+              "Id": 34
+            },
+            "CPM": 8.6000,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "Custom",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "DaypartDefault": null,
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2018-03-20T00:00:00",
+                "EndTime": 35999,
+                "Id": 14764,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2018-01-01T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633857
+              }
+            ]
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2018-01-07T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-07T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-01T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-01T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-14T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-14T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-08T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-08T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-21T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-21T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-15T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-15T00:00:00"
+          },
+          {
+            "EndDate": "2018-01-28T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-01-28T00:00:00",
+              "_MediaMonthId": 436,
+              "_StartDate": "2018-01-22T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-22T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-04T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-01-29T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-01-29T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-11T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-18T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-02-25T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-02-25T00:00:00",
+              "_MediaMonthId": 437,
+              "_StartDate": "2018-02-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-19T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-04T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-04T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-02-26T00:00:00",
+              "_WeekNumber": 1,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-02-26T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-11T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-11T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-05T00:00:00",
+              "_WeekNumber": 2,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-05T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-18T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-18T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-12T00:00:00",
+              "_WeekNumber": 3,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-12T00:00:00"
+          },
+          {
+            "EndDate": "2018-03-20T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2018-03-25T00:00:00",
+              "_MediaMonthId": 438,
+              "_StartDate": "2018-03-19T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 1,
+            "StartDate": "2018-03-19T00:00:00"
+          }
+        ],
+        "SpotLengthId": 1,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "MET",
+          "CallLetters": "WESH 2.2",
+          "Code": 4530,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "EESH",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 134,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      }
+    ],
+    "Name": "AM5",
+    "SlotNumber": 5
+  }
+]

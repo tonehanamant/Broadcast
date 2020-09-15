@@ -23,6 +23,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.program_name_mapping_keywords = new HashSet<program_name_mapping_keywords>();
             this.show_type_mappings = new HashSet<show_type_mappings>();
             this.show_type_mappings1 = new HashSet<show_type_mappings>();
+            this.inventory_proprietary_daypart_programs = new HashSet<inventory_proprietary_daypart_programs>();
         }
     
         public int id { get; set; }
@@ -40,5 +41,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<program_name_mapping_keywords> program_name_mapping_keywords { get; set; }
         public virtual ICollection<show_type_mappings> show_type_mappings { get; set; }
         public virtual ICollection<show_type_mappings> show_type_mappings1 { get; set; }
+        public virtual ICollection<inventory_proprietary_daypart_programs> inventory_proprietary_daypart_programs { get; set; }
     }
 }
