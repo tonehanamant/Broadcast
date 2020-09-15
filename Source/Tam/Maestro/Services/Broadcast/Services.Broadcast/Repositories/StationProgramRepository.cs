@@ -287,7 +287,8 @@ namespace Services.Broadcast.Repositories
                             Code = x.station.station_code,
                             CallLetters = x.station.station_call_letters,
                             LegacyCallLetters = x.station.legacy_call_letters,
-                            MarketCode = x.station.market_code
+                            MarketCode = x.station.market_code,
+                            IsTrueInd = x.station.is_true_ind
                         },
                         InventorySource = new InventorySource
                         {
@@ -401,7 +402,8 @@ namespace Services.Broadcast.Repositories
                             LegacyCallLetters = x.station.legacy_call_letters,
                             MarketCode = x.station.market_code,
                             OwnershipGroupName = x.station.owner_name,
-                            RepFirmName = x.station.rep_firm_name
+                            RepFirmName = x.station.rep_firm_name,
+                            IsTrueInd = x.station.is_true_ind
                         },
                         InventorySource = new InventorySource
                         {

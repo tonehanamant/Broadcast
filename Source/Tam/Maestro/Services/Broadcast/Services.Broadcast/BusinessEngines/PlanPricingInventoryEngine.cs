@@ -1,6 +1,7 @@
 ﻿using Common.Services;
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
@@ -11,8 +12,11 @@ using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation.Language;
+using System.Threading.Tasks;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
@@ -51,7 +55,6 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
 
         protected Lazy<int> _ThresholdInSecondsForProgramIntersect;
-        protected Lazy<bool> _UseTrueIndependentStations;
         protected Lazy<string>_PlanPricingEndpointVersion;
         protected Lazy<int> _NumberOfFallbackQuartersForPricing;
 
@@ -61,7 +64,8 @@ namespace Services.Broadcast.BusinessEngines
         /// Values = Day Ids for that Daypart Default.
         /// </summary>
         protected Lazy<Dictionary<int, List<int>>> _DaypartDefaultDayIds;
-        
+        protected Lazy<bool> _UseTrueIndependentStations;
+
         public PlanPricingInventoryEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                           IImpressionsCalculationEngine impressionsCalculationEngine,
                                           IPlanPricingInventoryQuarterCalculatorEngine planPricingInventoryQuarterCalculatorEngine,
@@ -89,9 +93,9 @@ namespace Services.Broadcast.BusinessEngines
 
             // register lazy delegates - settings
             _ThresholdInSecondsForProgramIntersect = new Lazy<int>(() => BroadcastServiceSystemParameter.ThresholdInSecondsForProgramIntersectInPricing);
-            _UseTrueIndependentStations = new Lazy<bool>(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS));
             _PlanPricingEndpointVersion = new Lazy<string>(() => BroadcastServiceSystemParameter.PlanPricingEndpointVersion);
             _NumberOfFallbackQuartersForPricing = new Lazy<int>(() => BroadcastServiceSystemParameter.NumberOfFallbackQuartersForPricing);
+            _UseTrueIndependentStations = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS));
 
             // register lazy delegates - domain data
             _CadentDayDefinitions = new Lazy<List<Day>>(() => _DayRepository.GetDays());
@@ -888,7 +892,8 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        private List<ProgramInventoryDaypart> _GetPlanDaypartsThatMatchProgramByRestrictions(List<ProgramInventoryDaypart> programInventoryDayparts, BasePlanInventoryProgram program)
+        private List<ProgramInventoryDaypart> _GetPlanDaypartsThatMatchProgramByRestrictions(
+            List<ProgramInventoryDaypart> programInventoryDayparts, BasePlanInventoryProgram program)
         {
             var result = new List<ProgramInventoryDaypart>();
 
@@ -920,7 +925,7 @@ namespace Services.Broadcast.BusinessEngines
                 return true;
 
             var restrictedAffiliates = affiliateRestrictions.Affiliates.Select(x => x.Display);
-            bool hasIntersections;
+            bool hasIntersections;            
             if (restrictedAffiliates.Any(x => x.Equals("IND")) && _UseTrueIndependentStations.Value)
             {
                 hasIntersections = program.Station.IsTrueInd == true;

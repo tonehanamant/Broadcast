@@ -49,9 +49,9 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
-        private bool? _UseTrueIndependentStations;
-        private string _PlanPricingEndpointVersion;
-        private List<Day> _CadentDayDefinitions;
+        private Lazy<bool> _UseTrueIndependentStations;
+        private Lazy<string> _PlanPricingEndpointVersion;
+        private Lazy<List<Day>> _CadentDayDefinitions;
 
         public PlanBuyingInventoryEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                           IImpressionsCalculationEngine impressionsCalculationEngine,
@@ -78,6 +78,13 @@ namespace Services.Broadcast.BusinessEngines
             _MarketCoverageRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _FeatureToggleHelper = featureToggleHelper;
+
+            // register lazy delegates - settings
+            _UseTrueIndependentStations = new Lazy<bool>(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS));
+            _PlanPricingEndpointVersion = new Lazy<string>(() => BroadcastServiceSystemParameter.PlanPricingEndpointVersion);
+
+            // register lazy delegates - domain data
+            _CadentDayDefinitions = new Lazy<List<Day>>(() => _DayRepository.GetDays());
         }
 
         public List<PlanBuyingInventoryProgram> GetInventoryForPlan(
@@ -147,7 +154,7 @@ namespace Services.Broadcast.BusinessEngines
 
         private void _SetProgramsFlightDays<T>(List<T> programs, List<int> flightDays) where T: BasePlanInventoryProgram
         {
-            var days = _GetCadentDayDefinitions();
+            var days = _CadentDayDefinitions.Value;
             var flightDayNames = days
                 .Where(x => flightDays.Contains(x.Id))
                 .Select(x => x.Name);
@@ -398,7 +405,7 @@ namespace Services.Broadcast.BusinessEngines
             IEnumerable<int> inventorySourceIds,
             PlanBuyingJobDiagnostic diagnostic)
         {
-            var spotLengthIds = _GetPlanPricingEndpointVersion() == "2" ?
+            var spotLengthIds = _PlanPricingEndpointVersion.Value == "2" ?
                 plan.CreativeLengths.Select(x => x.SpotLengthId).Take(1).ToList() :
                 plan.CreativeLengths.Select(x => x.SpotLengthId).ToList();
 
@@ -740,7 +747,7 @@ namespace Services.Broadcast.BusinessEngines
 
             var restrictedAffiliates = affiliateRestrictions.Affiliates.Select(x => x.Display);
             bool hasIntersections;
-            if (restrictedAffiliates.Any(x => x.Equals("IND")) && _GetUseTrueIndependentStations())
+            if (restrictedAffiliates.Any(x => x.Equals("IND")) && _UseTrueIndependentStations.Value)
             {
                 hasIntersections = program.Station.IsTrueInd == true;
             }
@@ -845,7 +852,7 @@ namespace Services.Broadcast.BusinessEngines
 
         protected DisplayDaypart GetDaypartDaysFromFlight(List<int> flightDays, List<DateRange> planFlightDateRanges)
         {
-            var days = _GetCadentDayDefinitions();
+            var days = _CadentDayDefinitions.Value;
             var flightDayNames = days
                 .Where(x => flightDays.Contains(x.Id))
                 .Select(x => x.Name);
@@ -906,7 +913,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             // we don`t want to equivalize impressions
             // when BuyingVersion == 3, because this is done by the buying endpoint
-            var equivalized = _GetPlanPricingEndpointVersion() == "3" ? false : plan.Equivalized;
+            var equivalized = _PlanPricingEndpointVersion.Value == "3" ? false : plan.Equivalized;
 
             // SpotLengthId does not matter for the buying v3, so this code is for the v2
             var spotLengthId = plan.CreativeLengths.First().SpotLengthId;
@@ -930,7 +937,7 @@ namespace Services.Broadcast.BusinessEngines
             var impressionsRequest = new ImpressionsRequestDto
             {
                 // we don`t want to equivalize impressions when BuyingVersion == 3, because this is done by the buying endpoint
-                Equivalized = _GetPlanPricingEndpointVersion() == "2" ? plan.Equivalized : false,
+                Equivalized = _PlanPricingEndpointVersion.Value == "2" ? plan.Equivalized : false,
                 HutProjectionBookId = plan.HUTBookId,
                 PlaybackType = ProposalPlaybackType.LivePlus3,
                 PostType = plan.PostingType,
@@ -964,36 +971,6 @@ namespace Services.Broadcast.BusinessEngines
                 .ToList();
 
             _ImpressionsCalculationEngine.ApplyProjectedImpressions(programs, impressionsRequest, audienceIds);
-        }
-
-        protected virtual List<Day> _GetCadentDayDefinitions()
-        {
-            if (_CadentDayDefinitions == null)
-            {
-                _CadentDayDefinitions = _DayRepository.GetDays();
-            }
-
-            return _CadentDayDefinitions;
-        }
-
-        protected virtual string _GetPlanPricingEndpointVersion()
-        {
-            if (string.IsNullOrWhiteSpace(_PlanPricingEndpointVersion))
-            {
-                _PlanPricingEndpointVersion = BroadcastServiceSystemParameter.PlanPricingEndpointVersion;
-            }
-
-            return _PlanPricingEndpointVersion;
-        }
-
-        protected virtual bool _GetUseTrueIndependentStations()
-        {
-            if (!_UseTrueIndependentStations.HasValue)
-            {
-                _UseTrueIndependentStations = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS);
-            }
-
-            return _UseTrueIndependentStations.Value;
         }
 
         private class ProgramInventoryDaypart
