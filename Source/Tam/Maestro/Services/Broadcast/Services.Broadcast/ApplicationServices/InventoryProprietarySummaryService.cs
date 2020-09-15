@@ -63,6 +63,7 @@ namespace Services.Broadcast.ApplicationServices
 			_MarketCoverageRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
 			_AudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
 			_SpotLengthMap = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds();
+			
 		}
 
 		public void AggregateInventoryProprietarySummary(int inventorySourceId, DateTime? startDate, DateTime? endDate)
@@ -183,9 +184,18 @@ namespace Services.Broadcast.ApplicationServices
 
 			foreach (var proprietarySummary in proprietarySummaries)
 			{
-				proprietarySummary.ImpressionsTotal = GetImpressions(inventoryProprietarySummaryRequest, proprietarySummary.Id, summaryAudienceIds, activeWeekCount);
+				proprietarySummary.ImpressionsTotal = _GetImpressions(proprietarySummary.Id, summaryAudienceIds);
 
-				proprietarySummary.UnitCost = proprietarySummary.UnitCost * activeWeekCount;
+				if (activeWeekCount > 1)
+				{
+					proprietarySummary.ImpressionsTotal = activeWeekCount * proprietarySummary.ImpressionsTotal;
+					proprietarySummary.UnitCost = activeWeekCount * proprietarySummary.UnitCost;
+				}
+				if (_IsSpotLengthExist15Not30(inventoryProprietarySummaryRequest.SpotLengthIds))
+				{
+					proprietarySummary.ImpressionsTotal /= 2;
+					proprietarySummary.UnitCost /= 2;
+				}
 				proprietarySummary.Cpm = ProposalMath.CalculateCpm(proprietarySummary.UnitCost, proprietarySummary.ImpressionsTotal);
 
 				var marketCodes = _InventoryProprietarySummaryRepository.GetMarketCodesBySummaryIds(new List<int> { proprietarySummary.Id });
@@ -197,26 +207,20 @@ namespace Services.Broadcast.ApplicationServices
 
             return response;
 		}
-
-		private double GetImpressions(InventoryProprietarySummaryRequest inventoryProprietarySummaryRequest,int invPropSummaryId
-			,  List<int> summaryAudienceIds, int activeWeekCount)
+		protected bool _IsSpotLengthExist15Not30(List<int> spotLengthIds)
 		{
-			double impressions = Math.Round(_InventoryProprietarySummaryRepository.GetTotalImpressionsBySummaryIdAndAudienceIds(invPropSummaryId, summaryAudienceIds));
-			//This will provide us total impressions for selected quarter.
-			double totalImpressions = impressions * activeWeekCount;
-
+			var spotLength15Not30 = false;
 			int spotLengthIdI5 = _SpotLengthMap.Where(s => s.Key.Equals(SPOT_LENGTH_15)).Select(s => s.Value).Single();
 			int spotLengthId30 = _SpotLengthMap.Where(s => s.Key.Equals(SPOT_LENGTH_30)).Select(s => s.Value).Single();
 
-			if (inventoryProprietarySummaryRequest.SpotLengthIds.Contains(spotLengthIdI5) 
-				&& !inventoryProprietarySummaryRequest.SpotLengthIds.Contains(spotLengthId30))
+			if (spotLengthIds.Contains(spotLengthIdI5)
+			    && !spotLengthIds.Contains(spotLengthId30))
 			{
-				totalImpressions /= 2;
+				spotLength15Not30 = true;
 			}
+			return spotLength15Not30;
 
-			return totalImpressions;
 		}
-
 		protected string Validate(InventoryProprietarySummaryRequest inventoryProprietarySummaryRequest
 			, List<QuarterDetailDto> quarterDetails)
 		{
@@ -285,15 +289,29 @@ namespace Services.Broadcast.ApplicationServices
 			var summaryList = new List<InventoryProprietarySummary>();
 			var summaryIds = request.InventoryProprietarySummaryIds;
 			int activeWeekCount = request.WeeklyBreakdownWeeks.Where(w => w.NumberOfActiveDays > 0).ToList().Count;
+			var summaryAudienceIds = _AudienceRepository
+				.GetRatingsAudiencesByMaestroAudience(new List<int> { request.PlanPrimaryAudienceId })
+				.Select(am => am.rating_audience_id).Distinct().ToList();
 
 			foreach (var summaryId in summaryIds)
 			{
 				var summary = new InventoryProprietarySummary
 				{
-					UnitCost = GetUnitCost(summaryId, activeWeekCount),
-					ImpressionsTotal = GetTotalImpressions(summaryId, request.PlanPrimaryAudienceId, activeWeekCount)
+					UnitCost = _GetUnitCost(summaryId),
+					ImpressionsTotal = _GetImpressions(summaryId,summaryAudienceIds)
 				};
 
+				if (activeWeekCount > 1)
+				{
+					summary.ImpressionsTotal = activeWeekCount * summary.ImpressionsTotal;
+					summary.UnitCost = activeWeekCount * summary.UnitCost;
+				}
+
+				if (_IsSpotLengthExist15Not30(request.SpotLengthIds))
+				{
+					summary.ImpressionsTotal /= 2;
+					summary.UnitCost /= 2;
+				}
 				summary.Cpm = ProposalMath.CalculateCpm(summary.UnitCost, summary.ImpressionsTotal);
 
 				summaryList.Add(summary);
@@ -303,29 +321,28 @@ namespace Services.Broadcast.ApplicationServices
 
 			response.Impressions = totalImpressions;
 			response.MarketCoverage = GetTotalMarketCoverage(summaryIds);
-			response.Cpm = GetTotalCpm(summaryList);
+			response.Cpm = _GetTotalCpm(summaryList);
 
 			response.PercentageOfPlanImpressions =
-				GetPercentageOfPlanImpressions(request.PlanGoalImpressions, response.Impressions);
+				_GetPercentageOfPlanImpressions(request.PlanGoalImpressions, response.Impressions);
 
 			return response;
 		}
 
-		private double GetPercentageOfPlanImpressions(double planGoalImpressions, double totalImpressions)
+		private double _GetPercentageOfPlanImpressions(double planGoalImpressions, double totalImpressions)
 		{
 			return Math.Round(GeneralMath.ConvertFractionToPercentage(totalImpressions / planGoalImpressions),
 				0);
 		}
 
-		private decimal GetUnitCost(int id, int activeWeekCount)
+		private decimal _GetUnitCost(int id)
 		{
 			var unitCost = _InventoryProprietarySummaryRepository.GetProprietarySummaryUnitCost(id);
-			var totalUnitCost = unitCost * activeWeekCount;
-
-			return totalUnitCost ?? 0;
+			
+			return unitCost ?? 0;
 		}
 
-		private decimal GetTotalCpm(List<InventoryProprietarySummary> inventoryProprietarySummaries)
+		private decimal _GetTotalCpm(List<InventoryProprietarySummary> inventoryProprietarySummaries)
 		{
 			var totalCost = 0m;
 			var totalImpressions = 0d;
@@ -348,18 +365,13 @@ namespace Services.Broadcast.ApplicationServices
 			return Math.Round(totalCoverage, 0);
 		}
 
-		private double GetTotalImpressions(int id, int planPrimaryAudienceId, int activeWeekCount)
+		private double _GetImpressions(int invPropSummaryId
+			, List<int> summaryAudienceIds)
 		{
-			var summaryAudienceIds = _AudienceRepository
-				.GetRatingsAudiencesByMaestroAudience(new List<int> { planPrimaryAudienceId })
-				.Select(am => am.rating_audience_id).Distinct().ToList();
+			double impressions = _InventoryProprietarySummaryRepository.GetTotalImpressionsBySummaryIdAndAudienceIds(invPropSummaryId, summaryAudienceIds);
+			impressions = Math.Round(impressions/1000);
 
-			var impressions = Math.Round(
-				_InventoryProprietarySummaryRepository.GetTotalImpressionsBySummaryIdAndAudienceIds(id,
-					summaryAudienceIds));
-			var impressionsTotal = impressions * activeWeekCount;
-
-			return impressionsTotal;
+			return impressions;
 		}
 	}
 }

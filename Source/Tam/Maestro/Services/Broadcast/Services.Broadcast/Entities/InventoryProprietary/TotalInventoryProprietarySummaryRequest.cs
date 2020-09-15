@@ -9,5 +9,6 @@ namespace Services.Broadcast.Entities.InventoryProprietary
 		public int PlanPrimaryAudienceId { get; set; }
 		public List<int> InventoryProprietarySummaryIds { get; set; }
 		public List<WeeklyBreakdownWeek> WeeklyBreakdownWeeks { get; set; }
+		public List<int> SpotLengthIds { get; set; }
 	}
 }

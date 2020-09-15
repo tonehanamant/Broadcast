@@ -27,6 +27,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 		private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
 		private Mock<IBroadcastAudienceRepository> _BroadcastAudienceRepositoryMock;
 		private Mock<IInventoryProprietarySummaryRepository> _InventoryProprietarySummaryRepository;
+	
 		private Mock<IMarketCoverageRepository> _MarketCoverageRepositoryMock;
 		private IInventoryProprietarySummaryService _InventoryProprietarySummaryServiceMock;
 		private Mock<ISpotLengthRepository> _SpotLengthRepositoryMock;
@@ -43,7 +44,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 				_DataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
 				_MarketCoverageRepositoryMock = new Mock<IMarketCoverageRepository>();
 				_SpotLengthRepositoryMock = new Mock<ISpotLengthRepository>();
-
+				
 				_DataRepositoryFactoryMock
 					.Setup(x => x.GetDataRepository<IBroadcastAudienceRepository>())
 					.Returns(_BroadcastAudienceRepositoryMock.Object);
@@ -56,8 +57,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 					.Setup(x => x.GetDataRepository<IMarketCoverageRepository>())
 					.Returns(_MarketCoverageRepositoryMock.Object);
 				_DataRepositoryFactoryMock
-					.Setup(x => x.GetDataRepository<ISpotLengthRepository>())
-					.Returns(_SpotLengthRepositoryMock.Object);
+					.Setup(x => x.GetDataRepository<ISpotLengthRepository>().GetSpotLengthAndIds())
+					.Returns(SpotLengthTestData.GetSpotLengthAndIds());
+				
 				_InventoryProprietarySummaryServiceMock =
 					new InventoryProprietarySummaryService(_DataRepositoryFactoryMock.Object,null );
 
@@ -105,6 +107,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                         EndTimeSeconds = 84600
                     }
 				};
+				_SpotLengthRepositoryMock
+					.Setup(x => x.GetSpotLengthAndIds())
+					.Returns(SpotLengthTestData.GetSpotLengthAndIds());
 
 				var request = new InventoryProprietarySummaryRequest
 				{
@@ -112,8 +117,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     FlightEndDate = endDate,
                     PlanDaypartRequests = planDaypartRequests,
                     AudienceId = 5,
-                    SpotLengthIds = new List<int> { 2, 6 }
-                };
+                    SpotLengthIds = new List<int> { 2, 6 },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                    {
+                    new WeeklyBreakdownWeek
+                    {
+                    MediaWeekId = 875,
+                    DaypartCodeId = null,
+                    SpotLengthId = null,
+                    WeeklyAdu = 0,
+                    WeeklyImpressions = 4000000,
+                    WeeklyBudget = 100000.00M,
+                    WeeklyRatings = 29.8892007328832,
+                    UnitImpressions = 2000000,
+                    NumberOfActiveDays=7,
+                    ActiveDays="M-Su"
+				}
+				}
+				};
 
 				/*** Act ***/
 				var result = _InventoryProprietarySummaryService.GetInventoryProprietarySummaries(request);
@@ -137,6 +158,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 					processInventoryRatings: true);
 				_InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025_2.xlsx",
 					processInventoryRatings: false);
+				_SpotLengthRepositoryMock
+					.Setup(x => x.GetSpotLengthAndIds())
+					.Returns(SpotLengthTestData.GetSpotLengthAndIds());
 
 				_InventoryProprietarySummaryService = IntegrationTestApplicationServiceFactory
 					.GetApplicationService<IInventoryProprietarySummaryService>();
@@ -209,7 +233,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 					processInventoryRatings: false);
 				_InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_CNN_Q1_2025_3.xlsx",
 					processInventoryRatings: false);
-
+				_SpotLengthRepositoryMock
+					.Setup(x => x.GetSpotLengthAndIds())
+					.Returns(SpotLengthTestData.GetSpotLengthAndIds());
 				_InventoryProprietarySummaryService = IntegrationTestApplicationServiceFactory
 					.GetApplicationService<IInventoryProprietarySummaryService>();
 
@@ -282,7 +308,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 _InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(5, startDate, endDate);
 
-                var planDaypartRequests = new List<PlanDaypartRequest>
+                _SpotLengthRepositoryMock
+	                .Setup(x => x.GetSpotLengthAndIds())
+	                .Returns(SpotLengthTestData.GetSpotLengthAndIds());
+				var planDaypartRequests = new List<PlanDaypartRequest>
                 {
                     new PlanDaypartRequest
                     {
@@ -348,8 +377,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     .GetApplicationService<IInventoryProprietarySummaryService>();
 
                 _InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(5, startDate, endDate);
+                _SpotLengthRepositoryMock
+	                .Setup(x => x.GetSpotLengthAndIds())
+	                .Returns(SpotLengthTestData.GetSpotLengthAndIds());
 
-                var planDaypartRequests = new List<PlanDaypartRequest>
+				var planDaypartRequests = new List<PlanDaypartRequest>
                 {
                     new PlanDaypartRequest
                     {
@@ -417,8 +449,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     .GetApplicationService<IInventoryProprietarySummaryService>();
 
                 _InventoryProprietarySummaryService.AggregateInventoryProprietarySummary(5, startDate, endDate);
+                _SpotLengthRepositoryMock
+	                .Setup(x => x.GetSpotLengthAndIds())
+	                .Returns(SpotLengthTestData.GetSpotLengthAndIds());
 
-                var planDaypartRequests = new List<PlanDaypartRequest>
+				var planDaypartRequests = new List<PlanDaypartRequest>
                 {
                     new PlanDaypartRequest
                     {
@@ -493,14 +528,15 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 					new audience_audiences {rating_audience_id = 9}
 				});
 
+			
 			_InventoryProprietarySummaryRepository.Setup(x => x.GetProprietarySummaryUnitCost(1))
-				.Returns(900);
+				.Returns(10);
 			_InventoryProprietarySummaryRepository.Setup(x => x.GetProprietarySummaryUnitCost(2))
-				.Returns(1000);
+				.Returns(12);
 			_InventoryProprietarySummaryRepository.Setup(x => x.GetProprietarySummaryUnitCost(3))
-				.Returns(600);
+				.Returns(4);
 			_InventoryProprietarySummaryRepository.Setup(x => x.GetProprietarySummaryUnitCost(4))
-				.Returns(1600);
+				.Returns(8);
 			_InventoryProprietarySummaryRepository
 				.Setup(x => x.GetTotalImpressionsBySummaryIdAndAudienceIds(1, It.IsAny<List<int>>()))
 				.Returns(100000);
@@ -509,10 +545,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 				.Returns(200000);
 			_InventoryProprietarySummaryRepository
 				.Setup(x => x.GetTotalImpressionsBySummaryIdAndAudienceIds(3, It.IsAny<List<int>>()))
-				.Returns(100000);
+				.Returns(300000);
 			_InventoryProprietarySummaryRepository
 				.Setup(x => x.GetTotalImpressionsBySummaryIdAndAudienceIds(4, It.IsAny<List<int>>()))
-				.Returns(200000);
+				.Returns(400000);
 
 			_InventoryProprietarySummaryRepository
 				.Setup(x => x.GetMarketCodesBySummaryIds(It.IsAny<IEnumerable<int>>()))
@@ -522,11 +558,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 				.Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
 				.Returns(MarketsTestData.GetLatestMarketCoverages());
 
+			//_SpotLengthRepositoryMock
+			//	.Setup(x => x.GetSpotLengthAndIds())
+			//	.Returns(SpotLengthTestData.GetSpotLengthAndIds());
+
 			var request = new TotalInventoryProprietarySummaryRequest
 			{
-				InventoryProprietarySummaryIds = new List<int> { 1, 2, 3, 4 },
+				InventoryProprietarySummaryIds = new List<int> { 1, 2,3,4 },
 				PlanPrimaryAudienceId = 33,
-				PlanGoalImpressions = 900000,
+				PlanGoalImpressions = 9000,
+				SpotLengthIds = new List<int> { 1,2,3 },
 				WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
 				{
 					new WeeklyBreakdownWeek
