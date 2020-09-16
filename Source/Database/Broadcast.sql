@@ -887,7 +887,7 @@ BEGIN
 	ALTER COLUMN show_type_id INT NOT NULL
 
 	ALTER TABLE inventory_proprietary_daypart_programs 
-	WITH CHECK ADD CONSTRAINT FK_inventory_proprietary_daypart_programs_genres FOREIGN KEY(show_type_id)
+	WITH CHECK ADD CONSTRAINT FK_inventory_proprietary_daypart_programs_show_types FOREIGN KEY(show_type_id)
 	REFERENCES [dbo].show_types ([id])
 END
 
