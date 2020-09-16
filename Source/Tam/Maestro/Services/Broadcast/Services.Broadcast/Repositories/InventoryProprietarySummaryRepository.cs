@@ -51,7 +51,7 @@ namespace Services.Broadcast.Repositories
         /// <param name="daypartIds">The daypart ids.</param>
         /// <returns>List of InventoryProprietarySummary objects</returns>
         List<InventoryProprietarySummary> GetInventoryProprietarySummary(QuarterDetailDto quarterDetailDto,
-            HashSet<int> daypartIds);
+            List<int> daypartIds);
 
         /// <summary>
         ///     Get Total Impressions By SummaryId And AudienceId
@@ -62,11 +62,11 @@ namespace Services.Broadcast.Repositories
         double GetTotalImpressionsBySummaryIdAndAudienceIds(int summaryId, List<int> audienceIds);
 
         /// <summary>
-        ///     Get DayPartIds from Proprietary Summary Table
+        ///     Get DefaultDayPartIds from Proprietary Summary Table
         /// </summary>
         /// <param name="quarterDetailDto"></param>
         /// <returns></returns>
-        List<int> GetDaypartIds(QuarterDetailDto quarterDetailDto);
+        List<int> GetDayPartDefaultIds(QuarterDetailDto quarterDetailDto);
 
         /// <summary>
         /// Gets the inventory proprietary summaries by ids.
@@ -346,7 +346,7 @@ namespace Services.Broadcast.Repositories
         /// <inheritdoc/>
         public List<InventoryProprietarySummary> GetInventoryProprietarySummary(
             QuarterDetailDto quarterDetailDto,
-            HashSet<int> defaultDaypartIds)
+            List<int> defaultDaypartIds)
         {
             return _InReadUncommitedTransaction(
                 context =>
@@ -390,12 +390,12 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public List<int> GetDaypartIds(QuarterDetailDto quarterDetailDto)
+        public List<int> GetDayPartDefaultIds(QuarterDetailDto quarterDetailDto)
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var daypartIds = context.inventory_proprietary_summary
+                    var dayPartDefaultIds = context.inventory_proprietary_summary
                         .Include(x => x.inventory_proprietary_daypart_program_mappings)
                         .Where(x => x.is_active &&
                                     x.quarter_number == quarterDetailDto.Quarter &&
@@ -403,7 +403,7 @@ namespace Services.Broadcast.Repositories
                         .Select(x => x.inventory_proprietary_daypart_program_mappings.daypart_default_id)
                         .ToList();
 
-                    return daypartIds;
+                    return dayPartDefaultIds;
                 });
         }
 

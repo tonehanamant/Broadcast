@@ -33,7 +33,19 @@ namespace Services.Broadcast.Repositories
         /// <returns>List of <see cref="DaypartDefaultFullDto"/></returns>
         List<DaypartDefaultFullDto> GetAllDaypartDefaultsWithAllData();
 
-        int GetDayprtId(int daypartDefaultId);
+        /// <summary>
+        /// Get DaypartIds List by DefaultDaypartIds
+        /// </summary>
+        /// <param name="defaultDaypartIds"></param>
+        /// <returns></returns>
+        List<int> GetDayPartIds(List<int> dayPartDefaultIds);
+
+        /// <summary>
+        /// Get  daypart_defaults Ids  List by DaypartIds
+        /// </summary>
+        /// <param name="daypartIds"></param>
+        /// <returns></returns>
+        List<int> GetDaypartDefaultIds(List<int> daypartIds);
 
         /// <summary>
         /// Gets the distinct daypart ids related to the daypart defaults.
@@ -92,11 +104,19 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context => _MapToDaypartDefaultFullDto(context.daypart_defaults.Include(d => d.daypart).Include(d => d.daypart.timespan).Single(x => x.id == daypartDefaultId, DaypartDefaultNotFoundMessage)));
         }
-        public int GetDayprtId(int daypartDefaultId)
+        ///<inheritdoc/>
+		public List<int> GetDaypartDefaultIds(List<int> daypartIds)
+		{
+			return _InReadUncommitedTransaction(context => (context.daypart_defaults
+				.Where(d => daypartIds.Contains(d.daypart_id))
+				.Select(d => d.id).ToList()));
+		}
+
+		public List<int> GetDayPartIds(List<int> dayPartDefaultIds)
         {
-            return _InReadUncommitedTransaction(context => (context.daypart_defaults
-                .Where(d => d.id.Equals(daypartDefaultId))
-                .Select(d => d.daypart_id).Single()));
+	        return _InReadUncommitedTransaction(context => (context.daypart_defaults
+		        .Where(d => dayPartDefaultIds.Contains( d.id)))
+		        .Select(d => d.daypart_id).ToList());
         }
         public List<DaypartDefaultDto> GetAllDaypartDefaults()
         {

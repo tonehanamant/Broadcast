@@ -10,6 +10,7 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Tam.Maestro.Common;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
@@ -23,9 +24,9 @@ namespace Services.Broadcast.ApplicationServices
 
 		/// <summary>
 		/// </summary>
-		/// <param name="dto"></param>
+		/// <param name="inventoryProprietarySummaryRequest"></param>
 		/// <returns></returns>
-		InventoryProprietarySummaryResponse GetInventoryProprietarySummaries(InventoryProprietarySummaryRequest dto);
+		InventoryProprietarySummaryResponse GetInventoryProprietarySummaries(InventoryProprietarySummaryRequest inventoryProprietarySummaryRequest);
 		/// <summary>
 		/// </summary>
 		/// <param name="request"></param>
@@ -170,8 +171,8 @@ namespace Services.Broadcast.ApplicationServices
 			}
 
 			var firstQuarter = quarters.First();
-			var summaryDaypartIds = _ConvertPlanDayPartIdsToInventoryDayPartIds(inventoryProprietarySummaryRequest, firstQuarter);
-			var proprietarySummaries = _InventoryProprietarySummaryRepository.GetInventoryProprietarySummary(firstQuarter, summaryDaypartIds);
+			var summaryDaypartDefaultIds = _ConvertPlanDefaultDaypartIdsToInventoryDefaultDaypartIds(inventoryProprietarySummaryRequest, firstQuarter);
+			var proprietarySummaries = _InventoryProprietarySummaryRepository.GetInventoryProprietarySummary(firstQuarter, summaryDaypartDefaultIds);
 			var marketCoverageByMarketCode = _MarketCoverageRepository.GetLatestMarketCoverages().MarketCoveragesByMarketCode;
 			var summaryAudienceIds = _AudienceRepository
 				.GetRatingsAudiencesByMaestroAudience(new List<int> { inventoryProprietarySummaryRequest.AudienceId })
@@ -200,7 +201,8 @@ namespace Services.Broadcast.ApplicationServices
 
 				var marketCodes = _InventoryProprietarySummaryRepository.GetMarketCodesBySummaryIds(new List<int> { proprietarySummary.Id });
 				var totalCoverage = marketCodes.Sum(x => marketCoverageByMarketCode[x]);
-				proprietarySummary.MarketCoverageTotal = totalCoverage;
+				
+				proprietarySummary.MarketCoverageTotal = Math.Round(totalCoverage);
 			}
 
 			response.summaries = proprietarySummaries;
@@ -244,43 +246,45 @@ namespace Services.Broadcast.ApplicationServices
 
 		}
 			
-		private HashSet<int> _ConvertPlanDayPartIdsToInventoryDayPartIds(InventoryProprietarySummaryRequest dto
+		private List<int> _ConvertPlanDefaultDaypartIdsToInventoryDefaultDaypartIds(InventoryProprietarySummaryRequest inventoryProprietarySummaryRequest
 			, QuarterDetailDto QuarterDetail)
 		{
-			// First Get all Daypart Ids from InventoryProprietary Summary Service based on quarter
-			var inventoryDayPartIds = _InventoryProprietarySummaryRepository.GetDaypartIds(QuarterDetail);
+			// First Get all default_daypart_ids  from InventoryProprietary Summary Service based on quarter
+			var daypartDefaultIds = _InventoryProprietarySummaryRepository.GetDayPartDefaultIds(QuarterDetail);
 
+			var daypartIds= _DaypartDefaultRepository.GetDayPartIds(daypartDefaultIds);
 			// Get DisplayDayPart info based on Inventory dayPart Ids
-			var displayDayPartDictionary = DaypartCache.Instance.GetDisplayDayparts(inventoryDayPartIds);
+			var displayDaypartDictionary = DaypartCache.Instance.GetDisplayDayparts(daypartIds);
 
 			// Get DisplayDayPart list from dictionary, which is needed in Intersecting logic
-			List<DisplayDaypart> inventoryDisplayDayParts = displayDayPartDictionary.Select(i => i.Value).ToList();
+			List<DisplayDaypart> inventoryDisplayDayparts = displayDaypartDictionary.Select(i => i.Value).ToList();
 
 			//Get Intersecting daypart_id 
-			HashSet<int> dayPartIdsFinalList = _GetIntersectingDayPartIds(dto, inventoryDisplayDayParts);
-
-			return dayPartIdsFinalList;
+			List<int> daypartIdsFinalList = _GetIntersectingDaypartIds(inventoryProprietarySummaryRequest, inventoryDisplayDayparts).ToList();
+			
+			var summaryDaypartDefaultIds = _DaypartDefaultRepository.GetDaypartDefaultIds(daypartIdsFinalList);
+			return summaryDaypartDefaultIds;
 		}
 
-		private HashSet<int> _GetIntersectingDayPartIds(InventoryProprietarySummaryRequest dto
-			, List<DisplayDaypart> inventoryDisplayDayParts)
+		private HashSet<int> _GetIntersectingDaypartIds(InventoryProprietarySummaryRequest inventoryProprietarySummaryRequest
+			, List<DisplayDaypart> inventoryDisplayDayparts)
 		{
-			HashSet<int> dayPartIdsFinalList = new HashSet<int>();
-			
-			foreach (var planDaypartReq in dto.PlanDaypartRequests)
-			{
-				var planDayPartId = _DaypartDefaultRepository.GetDayprtId(planDaypartReq.DefaultDayPartId);
+			HashSet<int> daypartIdsFinalList = new HashSet<int>();
+			var planDefaultDaypartIds = inventoryProprietarySummaryRequest.PlanDaypartRequests.Select(d => d.DefaultDayPartId).ToList();
+			var planDaypartIds = _DaypartDefaultRepository.GetDayPartIds(planDefaultDaypartIds);
 
-				var planDisplayDaypart = DaypartCache.Instance.GetDisplayDaypart(planDayPartId);
+			foreach (var planDaypartId in planDaypartIds)
+			{
+				var planDisplayDaypart = DaypartCache.Instance.GetDisplayDaypart(planDaypartId);
 
 				DisplayDaypart[] displayDayparts =
-					DisplayDaypart.GetIntersectingDayparts(planDisplayDaypart, inventoryDisplayDayParts.ToArray());
+					DisplayDaypart.GetIntersectingDayparts(planDisplayDaypart, inventoryDisplayDayparts.ToArray());
 
-				displayDayparts.ForEach(dd => dayPartIdsFinalList.Add(dd.Id));
+				displayDayparts.ForEach(dd => daypartIdsFinalList.Add(dd.Id));
 				
 			}
 
-			return dayPartIdsFinalList;
+			return daypartIdsFinalList;
 		}
 		public TotalInventoryProprietarySummaryResponse GetPlanProprietarySummaryAggregation(
 			TotalInventoryProprietarySummaryRequest request)
@@ -331,8 +335,7 @@ namespace Services.Broadcast.ApplicationServices
 
 		private double _GetPercentageOfPlanImpressions(double planGoalImpressions, double totalImpressions)
 		{
-			return Math.Round(GeneralMath.ConvertFractionToPercentage(totalImpressions / planGoalImpressions),
-				0);
+			return Math.Round(GeneralMath.ConvertFractionToPercentage(totalImpressions / planGoalImpressions));
 		}
 
 		private decimal _GetUnitCost(int id)
@@ -362,15 +365,14 @@ namespace Services.Broadcast.ApplicationServices
 			var marketCoverageByMarketCode = _MarketCoverageRepository.GetLatestMarketCoverages().MarketCoveragesByMarketCode;
 			var totalCoverage = marketCodes.Sum(x => marketCoverageByMarketCode[x]);
 
-			return Math.Round(totalCoverage, 0);
+			return Math.Round(totalCoverage);
 		}
 
 		private double _GetImpressions(int invPropSummaryId
 			, List<int> summaryAudienceIds)
 		{
 			double impressions = _InventoryProprietarySummaryRepository.GetTotalImpressionsBySummaryIdAndAudienceIds(invPropSummaryId, summaryAudienceIds);
-			impressions = Math.Round(impressions/1000);
-
+			
 			return impressions;
 		}
 	}
