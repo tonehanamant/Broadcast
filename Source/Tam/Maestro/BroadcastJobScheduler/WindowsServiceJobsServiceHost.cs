@@ -47,6 +47,29 @@ namespace BroadcastJobScheduler
         private void _StartLongRunRecurringJobs()
         {
             _RecurringJobManager.AddOrUpdate(
+                "stations-update",
+                () => _StationService.ImportStationsFromForecastDatabaseJobEntryPoint(RECURRING_JOBS_USERNAME),
+                Cron.Daily(_StationsUpdateJobRunHour()),
+                TimeZoneInfo.Local,
+                queue: "stationsupdate");
+
+            if (_GetEnableProgramEnrichmentJobs())
+            {
+                ScheduleProgramEnrichmentJobs();
+            }
+            else
+            {
+                _LogInfo($"Skipping scheduling the Program Enrichment jobs per the configuration.");
+            }
+        }
+
+        /// <summary>
+        /// These processes enriched the data using Dativa's ProgramGuide.
+        /// That process has been replaced so these are disabled, but we'll keep them just in case.
+        /// </summary>
+        private void ScheduleProgramEnrichmentJobs()
+        {
+            _RecurringJobManager.AddOrUpdate(
                 "inventory-programs-processing-for-weeks",
                 () => _InventoryProgramsProcessingService.QueueProcessInventoryProgramsBySourceForWeeksFromNow(RECURRING_JOBS_USERNAME),
                 Cron.Daily(_GetInventoryProgramsProcessingForWeeksJobRunHour()),
@@ -54,18 +77,16 @@ namespace BroadcastJobScheduler
                 queue: "inventoryprogramsprocessing");
 
             _RecurringJobManager.AddOrUpdate(
-                "stations-update",
-                () => _StationService.ImportStationsFromForecastDatabaseJobEntryPoint(RECURRING_JOBS_USERNAME),
-                Cron.Daily(_StationsUpdateJobRunHour()),
-                TimeZoneInfo.Local,
-                queue: "stationsupdate");
-
-            _RecurringJobManager.AddOrUpdate(
                 "process-program-enriched-inventory-files",
                 () => _InventoryProgramsProcessingService.ProcessProgramEnrichedInventoryFiles(),
                 Cron.Daily(_ProgramEnrichedInventoryFilesJobRunHour()),
                 TimeZoneInfo.Local,
                 queue: "processprogramenrichedinventoryfiles");
+        }
+
+        private bool _GetEnableProgramEnrichmentJobs()
+        {
+            return ConfigurationSettingHelper.GetConfigSetting("EnableProgramEnrichmentJobs", false);
         }
 
         private int _GetInventoryProgramsProcessingForWeeksJobRunHour()
