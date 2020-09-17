@@ -335,7 +335,11 @@ namespace Services.Broadcast.ApplicationServices
 
 		private double _GetPercentageOfPlanImpressions(double planGoalImpressions, double totalImpressions)
 		{
-			return Math.Round(GeneralMath.ConvertFractionToPercentage(totalImpressions / planGoalImpressions));
+			// BP-1462 Plan Goal Impressions are not raw numbers. FE is sending planGoalImpressions/1000 while proprietary impressions are raw numbers.
+			var convertedPlanGoalImpressions = planGoalImpressions * 1000;
+			var percentageOfPlanImpressions =
+				Math.Round(GeneralMath.ConvertFractionToPercentage(totalImpressions / convertedPlanGoalImpressions));
+			return percentageOfPlanImpressions;
 		}
 
 		private decimal _GetUnitCost(int id)
