@@ -689,7 +689,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 FlightEndDate = endDate,
                 PlanDaypartRequests = planDaypartRequests,
                 AudienceId = 5,
-                SpotLengthIds = new List<int> { 1 }
+                SpotLengthIds = new List<int> { 1 },
+                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek() }
             };
 
             var result = _InventoryProprietarySummaryService.GetInventoryProprietarySummaries(request);

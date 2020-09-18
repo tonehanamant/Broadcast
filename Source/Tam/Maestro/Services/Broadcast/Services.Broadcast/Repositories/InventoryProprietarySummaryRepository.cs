@@ -272,7 +272,8 @@ namespace Services.Broadcast.Repositories
                                                     where week.station_inventory_manifest_id == manifest.id
                                                     select week).FirstOrDefault()
                                         where manifestIds.Contains(manifest.id) &&
-                                              rate.spot_length_id == manifest.spot_length_id
+                                              rate.spot_length_id == manifest.spot_length_id &&
+                                              !audience.is_reference
                                         select new { audience, week, station, market, rate };
 
                     var manifestAudiencesAndWeek = audienceQuery.ToList();
