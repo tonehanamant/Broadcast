@@ -1364,7 +1364,10 @@ namespace Services.Broadcast.Repositories
                 PlanVersionId = entity.plan_version_id,
                 AdjustedBudget = entity.budget_adjusted,
                 AdjustedCPM = entity.cpm_adjusted,
-                MarketGroup = (MarketGroupEnum)entity.market_group
+                MarketGroup = (MarketGroupEnum)entity.market_group,
+                ProprietaryInventory = entity.plan_version_pricing_parameter_inventory_proprietary_summaries
+                    .Select(x => new Entities.InventoryProprietary.InventoryProprietarySummary { Id = x.inventory_proprietary_summary_id } )
+                    .ToList()
             };
             return dto;
         }

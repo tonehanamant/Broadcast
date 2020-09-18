@@ -635,7 +635,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             });
 
             // Act
-            var results = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
+            var results = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan, 110, 120);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));

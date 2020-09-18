@@ -8448,7 +8448,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     .Returns(_GetWeeklyBreakDownWeeks());
 
                 _WeeklyBreakdownEngineMock
-                    .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>()))
+                    .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
                     .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
 
                 var requests = new List<PlanPricingApiRequestDto_v3>();
@@ -8705,7 +8705,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     .Returns(_GetWeeklyBreakDownWeeks());
 
                 _WeeklyBreakdownEngineMock
-                    .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>()))
+                    .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
                     .Returns(_GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart());
 
                 var requests = new List<PlanPricingApiRequestDto_v3>();

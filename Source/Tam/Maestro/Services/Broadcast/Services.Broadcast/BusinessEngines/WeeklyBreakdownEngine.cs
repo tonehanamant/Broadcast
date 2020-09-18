@@ -79,7 +79,10 @@ namespace Services.Broadcast.BusinessEngines
         /// Based on the plan delivery type, splits weekly breakdown into all combinations of plan ad lengths and dayparts
         /// And distributes goals based on ad length and daypart weights
         /// </summary>
-        List<WeeklyBreakdownWeek> DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(PlanDto plan);
+        List<WeeklyBreakdownWeek> DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(
+            PlanDto plan,
+            double? customImpressionsGoal = null,
+            decimal? customBudgetGoal = null);
     }
 
     public class WeeklyBreakdownEngine : IWeeklyBreakdownEngine
@@ -108,20 +111,26 @@ namespace Services.Broadcast.BusinessEngines
             _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
         }
 
-        public List<WeeklyBreakdownWeek> DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(PlanDto plan)
+        public List<WeeklyBreakdownWeek> DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(
+            PlanDto plan,
+            double? customImpressionsGoal = null,
+            decimal? customBudgetGoal = null)
         {
+            var impressionsGoal = customImpressionsGoal ?? plan.TargetImpressions.Value;
+            var budgetGoal = customBudgetGoal ?? plan.Budget.Value;
+
             if (plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.EvenDelivery ||
                 plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.CustomByWeek)
             {
-                return _DistributeGoals_ByWeekDeliveryType(plan);
+                return _DistributeGoals_ByWeekDeliveryType(plan, impressionsGoal, budgetGoal);
             }
             else if (plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength)
             {
-                return _DistributeGoals_ByWeekByAdLengthDeliveryType(plan);
+                return _DistributeGoals_ByWeekByAdLengthDeliveryType(plan, impressionsGoal, budgetGoal);
             }
             else if (plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart)
             {
-                return _DistributeGoals_ByWeekByDaypartDeliveryType(plan);
+                return _DistributeGoals_ByWeekByDaypartDeliveryType(plan, impressionsGoal, budgetGoal);
             }
             else
             {
@@ -133,7 +142,10 @@ namespace Services.Broadcast.BusinessEngines
         /// Splits each weekly breakdown record using ad length weighting goals to distribute the goals of each record
         /// </summary>
         /// <returns>A list of breakdown records with 'by week by ad length by daypart' structure</returns>
-        private List<WeeklyBreakdownWeek> _DistributeGoals_ByWeekByDaypartDeliveryType(PlanDto plan)
+        private List<WeeklyBreakdownWeek> _DistributeGoals_ByWeekByDaypartDeliveryType(
+            PlanDto plan,
+            double impressionsGoal,
+            decimal budgetGoal)
         {
             var result = new List<WeeklyBreakdownWeek>();
 
@@ -171,9 +183,10 @@ namespace Services.Broadcast.BusinessEngines
 
                     var impressions = weeklyBreakdown.WeeklyImpressions * weighting;
 
-                    _UpdateGoalsForWeeklyBreakdownItem(plan.TargetImpressions.Value,
+                    _UpdateGoalsForWeeklyBreakdownItem(
+                        impressionsGoal,
                         plan.TargetRatingPoints.Value,
-                        plan.Budget.Value,
+                        budgetGoal,
                         newWeeklyBreakdownItem,
                         impressions,
                         roundRatings: false);
@@ -191,7 +204,10 @@ namespace Services.Broadcast.BusinessEngines
         /// Splits each weekly breakdown record using plan daypart weighting goals to distribute the goals of each record
         /// </summary>
         /// <returns>A list of breakdown records with 'by week by ad length by daypart' structure</returns>
-        private List<WeeklyBreakdownWeek> _DistributeGoals_ByWeekByAdLengthDeliveryType(PlanDto plan)
+        private List<WeeklyBreakdownWeek> _DistributeGoals_ByWeekByAdLengthDeliveryType(
+            PlanDto plan,
+            double impressionsGoal,
+            decimal budgetGoal)
         {
             var result = new List<WeeklyBreakdownWeek>();
             var weeks = GroupWeeklyBreakdownByWeek(plan.WeeklyBreakdownWeeks);
@@ -230,9 +246,9 @@ namespace Services.Broadcast.BusinessEngines
                         var impressions = breakdownItem.WeeklyImpressions * weighting;
 
                         _UpdateGoalsForWeeklyBreakdownItem(
-                            plan.TargetImpressions.Value,
+                            impressionsGoal,
                             plan.TargetRatingPoints.Value,
-                            plan.Budget.Value,
+                            budgetGoal,
                             newWeeklyBreakdownItem,
                             impressions,
                             roundRatings: false);
@@ -251,7 +267,10 @@ namespace Services.Broadcast.BusinessEngines
         /// Splits each weekly breakdown record using plan daypart and ad length weighting goals to distribute the goals of each record
         /// </summary>
         /// <returns>A list of breakdown records with 'by week by ad length by daypart' structure</returns>
-        private List<WeeklyBreakdownWeek> _DistributeGoals_ByWeekDeliveryType(PlanDto plan)
+        private List<WeeklyBreakdownWeek> _DistributeGoals_ByWeekDeliveryType(
+            PlanDto plan,
+            double impressionsGoal,
+            decimal budgetGoal)
         {
             var result = new List<WeeklyBreakdownWeek>();
 
@@ -286,9 +305,9 @@ namespace Services.Broadcast.BusinessEngines
                     var impressions = week.WeeklyImpressions * combination.Weighting;
 
                     _UpdateGoalsForWeeklyBreakdownItem(
-                        plan.TargetImpressions.Value,
+                        impressionsGoal,
                         plan.TargetRatingPoints.Value,
-                        plan.Budget.Value,
+                        budgetGoal,
                         newWeeklyBreakdownItem,
                         impressions,
                         roundRatings: false);
