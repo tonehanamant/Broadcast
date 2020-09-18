@@ -895,6 +895,21 @@ END
 
 GO
 
+/*************************************** START - BP-1090 ****************************************************/
+IF NOT EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_parameter_inventory_proprietary_summaries') AND name = 'unit_number')
+BEGIN
+	ALTER TABLE plan_version_pricing_parameter_inventory_proprietary_summaries
+	ADD unit_number FLOAT NULL
+
+	EXEC('UPDATE plan_version_pricing_parameter_inventory_proprietary_summaries
+	SET unit_number = 1
+	WHERE unit_number IS NULL')
+
+	ALTER TABLE plan_version_pricing_parameter_inventory_proprietary_summaries
+	ALTER COLUMN unit_number FLOAT NOT NULL
+END
+/*************************************** END - BP-1090 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

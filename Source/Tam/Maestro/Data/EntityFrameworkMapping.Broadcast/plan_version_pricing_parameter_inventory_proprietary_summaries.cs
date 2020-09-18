@@ -17,6 +17,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int id { get; set; }
         public int plan_version_pricing_parameter_id { get; set; }
         public int inventory_proprietary_summary_id { get; set; }
+        public double unit_number { get; set; }
     
         public virtual inventory_proprietary_summary inventory_proprietary_summary { get; set; }
         public virtual plan_version_pricing_parameters plan_version_pricing_parameters { get; set; }

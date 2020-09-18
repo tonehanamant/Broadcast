@@ -369,7 +369,7 @@ namespace Services.Broadcast.Repositories
                             DaypartName = daypart.daypart_text,
                             InventorySourceName = source.name,
                             UnitType = programName.unit_type,
-                            UnitCost = summary.unit_cost
+                            UnitCost = summary.unit_cost,
                         };
 
                     return query.Distinct().ToList();

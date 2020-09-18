@@ -2,6 +2,7 @@
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Hangfire;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
@@ -204,6 +205,8 @@ namespace Services.Broadcast.ApplicationServices
                 var totalCoverage = marketCodes.Sum(x => marketCoverageByMarketCode[x]);
 
                 proprietarySummary.MarketCoverageTotal = Math.Round(totalCoverage);
+
+                proprietarySummary.NumberOfUnit = 1;
             }
 
             response.summaries = proprietarySummaries;
@@ -297,13 +300,13 @@ namespace Services.Broadcast.ApplicationServices
                 .GetRatingsAudiencesByMaestroAudience(new List<int> { request.PlanPrimaryAudienceId })
                 .Select(am => am.rating_audience_id).Distinct().ToList();
 
-            foreach (var summaryId in summaryIds)
-            {
-                var summary = new InventoryProprietarySummary
-                {
-                    UnitCost = _GetUnitCost(summaryId),
-                    ImpressionsTotal = _GetImpressions(summaryId, summaryAudienceIds)
-                };
+			foreach (var summaryId in summaryIds)
+			{
+				var summary = new InventoryProprietarySummary
+				{
+					UnitCost = _GetUnitCost(summaryId.Id),
+					ImpressionsTotal = _GetImpressions(summaryId.Id, summaryAudienceIds)
+				};
 
                 if (activeWeekCount > 1)
                 {
@@ -311,24 +314,26 @@ namespace Services.Broadcast.ApplicationServices
                     summary.UnitCost = activeWeekCount * summary.UnitCost;
                 }
 
-                if (_IsSpotLengthExist15Not30(request.SpotLengthIds))
-                {
-                    summary.ImpressionsTotal /= 2;
-                    summary.UnitCost /= 2;
-                }
-                summary.Cpm = ProposalMath.CalculateCpm(summary.UnitCost, summary.ImpressionsTotal);
+				if (_IsSpotLengthExist15Not30(request.SpotLengthIds))
+				{
+					summary.ImpressionsTotal /= 2;
+					summary.UnitCost /= 2;
+				}
+				summary.Cpm = ProposalMath.CalculateCpm(summary.UnitCost, summary.ImpressionsTotal);
+				summary.NumberOfUnit = summaryId.NumberOfUnit;
 
                 summaryList.Add(summary);
             }
 
             var totalImpressions = summaryList.Select(i => i.ImpressionsTotal).Sum();
 
-            response.Impressions = totalImpressions;
-            response.MarketCoverage = GetTotalMarketCoverage(summaryIds);
-            response.Cpm = _GetTotalCpm(summaryList);
+			response.Impressions = totalImpressions;
+			response.MarketCoverage = GetTotalMarketCoverage(summaryIds.Select(s => s.Id).ToList());
+			response.Cpm = _GetTotalCpm(summaryList);
 
-            response.PercentageOfPlanImpressions =
-                _GetPercentageOfPlanImpressions(request.PlanGoalImpressions, response.Impressions);
+			response.PercentageOfPlanImpressions =
+			_GetPercentageOfPlanImpressions(request.PlanGoalImpressions, response.Impressions);
+			response.NumberOfUnits = summaryList.Sum(s => s.NumberOfUnit);
 
             return response;
         }

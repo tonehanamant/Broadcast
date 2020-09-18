@@ -564,7 +564,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
 			var request = new TotalInventoryProprietarySummaryRequest
 			{
-				InventoryProprietarySummaryIds = new List<int> { 1, 2,3,4 },
+				InventoryProprietarySummaryIds = new List<InventoryProprietarySummaryId> { 
+					new InventoryProprietarySummaryId{ Id = 1,  NumberOfUnit = 5 },
+					new InventoryProprietarySummaryId{ Id = 2,  NumberOfUnit = 15 },
+					new InventoryProprietarySummaryId{ Id = 3,  NumberOfUnit = 9 },
+					new InventoryProprietarySummaryId{ Id = 4,  NumberOfUnit = 8 },
+				},
 				PlanPrimaryAudienceId = 33,
 				PlanGoalImpressions = 9000,
 				SpotLengthIds = new List<int> { 1,2,3 },

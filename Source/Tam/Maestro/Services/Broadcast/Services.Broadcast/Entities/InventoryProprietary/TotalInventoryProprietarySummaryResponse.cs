@@ -6,5 +6,6 @@
 		public decimal Cpm { get; set; }
 		public double MarketCoverage { get; set; }
 		public double PercentageOfPlanImpressions { get; set; }
+		public double NumberOfUnits { get; set; }
 	}
 }

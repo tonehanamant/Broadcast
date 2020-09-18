@@ -13,5 +13,6 @@ namespace Services.Broadcast.Entities.InventoryProprietary
 		public string UnitType { get; set; }
 		public string UnitName => $"{InventorySourceName} {UnitType}";
         public decimal Cpm { get; set; }
+		public double NumberOfUnit { get; set; }
     }
 }

@@ -1227,6 +1227,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="plan_version_pricing_parameter_id" Type="int" Nullable="false" />
           <Property Name="inventory_proprietary_summary_id" Type="int" Nullable="false" />
+          <Property Name="unit_number" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_parameters">
           <Key>
@@ -16011,6 +16012,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="inventory_proprietary_summary_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="inventory_proprietary_summary" Relationship="BroadcastModel.FK_plan_version_pricing_parameter_inventory_proprietary_summaries_inventory_proprietary_summary" FromRole="plan_version_pricing_parameter_inventory_proprietary_summaries" ToRole="inventory_proprietary_summary" />
           <NavigationProperty Name="plan_version_pricing_parameters" Relationship="BroadcastModel.FK_plan_version_pricing_parameter_inventory_proprietary_summaries_plan_version_pricing_parameters" FromRole="plan_version_pricing_parameter_inventory_proprietary_summaries" ToRole="plan_version_pricing_parameters" />
+          <Property Name="unit_number" Type="Double" Nullable="false" />
         </EntityType>
         <Association Name="FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings">
           <End Type="BroadcastModel.inventory_proprietary_daypart_program_mappings" Role="inventory_proprietary_daypart_program_mappings" Multiplicity="1" />
@@ -18870,6 +18872,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_pricing_parameter_inventory_proprietary_summaries">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_parameter_inventory_proprietary_summaries">
               <MappingFragment StoreEntitySet="plan_version_pricing_parameter_inventory_proprietary_summaries">
+                <ScalarProperty Name="unit_number" ColumnName="unit_number" />
                 <ScalarProperty Name="inventory_proprietary_summary_id" ColumnName="inventory_proprietary_summary_id" />
                 <ScalarProperty Name="plan_version_pricing_parameter_id" ColumnName="plan_version_pricing_parameter_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
