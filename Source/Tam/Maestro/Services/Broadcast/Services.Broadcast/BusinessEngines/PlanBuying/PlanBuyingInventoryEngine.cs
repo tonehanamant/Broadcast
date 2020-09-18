@@ -33,8 +33,6 @@ namespace Services.Broadcast.BusinessEngines
 
     public class PlanBuyingInventoryEngine : BroadcastBaseClass, IPlanBuyingInventoryEngine
     {
-        private readonly int ThresholdInSecondsForProgramIntersect;
-
         private readonly IStationProgramRepository _StationProgramRepository;
         private readonly IImpressionsCalculationEngine _ImpressionsCalculationEngine;
         private readonly INtiToNsiConversionRepository _NtiToNsiConversionRepository;
@@ -48,10 +46,15 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IMarketCoverageRepository _MarketCoverageRepository;
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
 
-        private Lazy<bool> _UseTrueIndependentStations;
-        private Lazy<string> _PlanPricingEndpointVersion;
+        protected Lazy<bool> _UseTrueIndependentStations;
+        protected Lazy<string> _PlanPricingEndpointVersion;
+        protected Lazy<int> _ThresholdInSecondsForProgramIntersect;
+        protected Lazy<int> _NumberOfFallbackQuarters;
+
         private Lazy<List<Day>> _CadentDayDefinitions;
+        protected Lazy<Dictionary<int, List<int>>> _DaypartDefaultDayIds;
 
         public PlanBuyingInventoryEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                           IImpressionsCalculationEngine impressionsCalculationEngine,
@@ -62,8 +65,6 @@ namespace Services.Broadcast.BusinessEngines
                                           ISpotLengthEngine spotLengthEngine,
                                           IFeatureToggleHelper featureToggleHelper)
         {
-            ThresholdInSecondsForProgramIntersect = BroadcastServiceSystemParameter.ThresholdInSecondsForProgramIntersectInPricing;
-
             _StationProgramRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
             _ImpressionsCalculationEngine = impressionsCalculationEngine;
             _PlanBuyingInventoryQuarterCalculatorEngine = planBuyingInventoryQuarterCalculatorEngine;
@@ -78,13 +79,17 @@ namespace Services.Broadcast.BusinessEngines
             _MarketCoverageRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _FeatureToggleHelper = featureToggleHelper;
+            _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
 
             // register lazy delegates - settings
             _UseTrueIndependentStations = new Lazy<bool>(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS));
             _PlanPricingEndpointVersion = new Lazy<string>(() => BroadcastServiceSystemParameter.PlanPricingEndpointVersion);
+            _ThresholdInSecondsForProgramIntersect = new Lazy<int>(() => BroadcastServiceSystemParameter.ThresholdInSecondsForProgramIntersectInPricing);
+            _NumberOfFallbackQuarters = new Lazy<int>(() => BroadcastServiceSystemParameter.NumberOfFallbackQuartersForPricing);
 
             // register lazy delegates - domain data
             _CadentDayDefinitions = new Lazy<List<Day>>(() => _DayRepository.GetDays());
+            _DaypartDefaultDayIds = new Lazy<Dictionary<int, List<int>>>(_GetDaypartDefaultDayIds);
         }
 
         public List<PlanBuyingInventoryProgram> GetInventoryForPlan(
@@ -98,23 +103,26 @@ namespace Services.Broadcast.BusinessEngines
                 plan.FlightStartDate.Value,
                 plan.FlightEndDate.Value,
                 plan.FlightHiatusDays);
-            var daypartDays = GetDaypartDaysFromFlight(plan.FlightDays, flightDateRanges);
+
+            var planDaypartDayIds = _GetDaypartDayIds(plan.Dayparts);
+
+            var daypartDays = _GetDaypartDaysFromFlight(plan.FlightDays, flightDateRanges, planDaypartDayIds);
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALCULATING_FLIGHT_DATE_RANGES_AND_FLIGHT_DAYS);
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_FETCHING_INVENTORY_FROM_DB);
-            var programs = _GetPrograms(plan, flightDateRanges, inventorySourceIds, diagnostic);
+            var allPrograms = _GetPrograms(plan, flightDateRanges, inventorySourceIds, diagnostic);
 
             // we don't expect spots other than 30 length spots for OpenMarket
-            programs = programs.Where(x => x.SpotLengthId == BroadcastConstants.SpotLengthId30).ToList();
+            var thirtyLengthPrograms = allPrograms.Where(x => x.SpotLengthId == BroadcastConstants.SpotLengthId30).ToList();
 
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_FETCHING_INVENTORY_FROM_DB);
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_DAYPARTS_AND_ASSOCIATING_WITH_STANDARD_DAYPART);
-            programs = FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(plan.Dayparts, programs, daypartDays);
+            var programs = _FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, thirtyLengthPrograms, daypartDays);
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_DAYPARTS_AND_ASSOCIATING_WITH_STANDARD_DAYPART);
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_APPLYING_INFLATION_FACTOR);
-            ApplyInflationFactorToSpotCost(programs, parameters?.InflationFactor);
+            _ApplyInflationFactorToSpotCost(programs, parameters?.InflationFactor);
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_APPLYING_INFLATION_FACTOR);
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SETTING_INVENTORY_DAYS_BASED_ON_PLAN_DAYS);
@@ -131,64 +139,68 @@ namespace Services.Broadcast.BusinessEngines
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_APPLYING_PROVIDED_IMPRESSIONS);
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_APPLYING_NTI_CONVERSION_TO_NSI);
-            ApplyNTIConversionToNSI(plan, programs);
+            _ApplyNTIConversionToNSI(plan, programs);
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_APPLYING_NTI_CONVERSION_TO_NSI);
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM);
-            programs = CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, parameters?.MinCPM, parameters?.MaxCPM);
+            var finishedPrograms = _CalculateProgramCpmAndFilterByMinAndMaxCpms(programs, parameters?.MinCPM, parameters?.MaxCPM);
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_MIN_AND_MAX_CPM);
 
-            return programs;
+            return finishedPrograms;
         }
 
         private void _SetProgramDayparts<T>(List<T> programs) where T: BasePlanInventoryProgram
         {
+            var daypartIds = programs.SelectMany(p => p.ManifestDayparts)
+                .Select(m => m.Daypart.Id)
+                .Distinct().ToList();
+            var cachedDayparts = _DaypartCache.GetDisplayDayparts(daypartIds);
+
             foreach (var program in programs)
             {
                 foreach (var programDaypart in program.ManifestDayparts)
                 {
-                    programDaypart.Daypart = _DaypartCache.GetDisplayDaypart(programDaypart.Daypart.Id);
+                    programDaypart.Daypart = cachedDayparts[programDaypart.Daypart.Id];
                 }
             }
         }
 
         private void _SetProgramsFlightDays<T>(List<T> programs, List<int> flightDays) where T: BasePlanInventoryProgram
         {
-            var days = _CadentDayDefinitions.Value;
-            var flightDayNames = days
-                .Where(x => flightDays.Contains(x.Id))
-                .Select(x => x.Name);
-            var flightDaysSet = new HashSet<string>(flightDayNames);
+            var daypartDefaultIds = _DaypartDefaultDayIds.Value;
 
             foreach (var program in programs)
             {
+                var programStandardDaypartDays = daypartDefaultIds[program.StandardDaypartId];
+                var coveredDayNamesSet = _GetCoveredDayNamesHashSet(flightDays, programStandardDaypartDays);
+
                 foreach (var manifestDaypart in program.ManifestDayparts)
                 {
                     manifestDaypart.Daypart.Sunday =
-                        manifestDaypart.Daypart.Sunday && flightDaysSet.Contains("Sunday");
+                        manifestDaypart.Daypart.Sunday && coveredDayNamesSet.Contains("Sunday");
 
                     manifestDaypart.Daypart.Monday =
-                        manifestDaypart.Daypart.Monday && flightDaysSet.Contains("Monday");
+                        manifestDaypart.Daypart.Monday && coveredDayNamesSet.Contains("Monday");
 
                     manifestDaypart.Daypart.Tuesday =
-                        manifestDaypart.Daypart.Tuesday && flightDaysSet.Contains("Tuesday");
+                        manifestDaypart.Daypart.Tuesday && coveredDayNamesSet.Contains("Tuesday");
 
                     manifestDaypart.Daypart.Wednesday =
-                        manifestDaypart.Daypart.Wednesday && flightDaysSet.Contains("Wednesday");
+                        manifestDaypart.Daypart.Wednesday && coveredDayNamesSet.Contains("Wednesday");
 
                     manifestDaypart.Daypart.Thursday =
-                        manifestDaypart.Daypart.Thursday && flightDaysSet.Contains("Thursday");
+                        manifestDaypart.Daypart.Thursday && coveredDayNamesSet.Contains("Thursday");
 
                     manifestDaypart.Daypart.Friday =
-                        manifestDaypart.Daypart.Friday && flightDaysSet.Contains("Friday");
+                        manifestDaypart.Daypart.Friday && coveredDayNamesSet.Contains("Friday");
 
                     manifestDaypart.Daypart.Saturday =
-                        manifestDaypart.Daypart.Saturday && flightDaysSet.Contains("Saturday");
+                        manifestDaypart.Daypart.Saturday && coveredDayNamesSet.Contains("Saturday");
                 }
             }
         }
 
-        protected void ApplyInflationFactorToSpotCost(List<PlanBuyingInventoryProgram> programs, double? inflationFactor)
+        internal void _ApplyInflationFactorToSpotCost(List<PlanBuyingInventoryProgram> programs, double? inflationFactor)
         {
             if (!inflationFactor.HasValue)
                 return;
@@ -238,7 +250,7 @@ namespace Services.Broadcast.BusinessEngines
         /// <remarks>
         /// This does not  address if a plan's flight extends beyond a single quarter.
         /// </remarks>
-        protected List<PlanBuyingInventoryProgram> _GetFullPrograms(
+        internal List<PlanBuyingInventoryProgram> _GetFullPrograms(
             List<DateRange> dateRanges, 
             List<int> spotLengthIds,
             IEnumerable<int> inventorySourceIds, 
@@ -413,7 +425,7 @@ namespace Services.Broadcast.BusinessEngines
             var planQuarter = _PlanBuyingInventoryQuarterCalculatorEngine.GetPlanQuarter(plan);
             var fallbackQuarters = _QuarterCalculationEngine.GetLastNQuarters(
                 new QuarterDto { Quarter = planQuarter.Quarter, Year = planQuarter.Year },
-                BroadcastServiceSystemParameter.NumberOfFallbackQuartersForPricing);
+                _NumberOfFallbackQuarters.Value);
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_FETCHING_NOT_POPULATED_INVENTORY);
             var programs = _GetFullPrograms(planFlightDateRanges, spotLengthIds, inventorySourceIds, marketCodes, planQuarter, fallbackQuarters);
@@ -543,7 +555,7 @@ namespace Services.Broadcast.BusinessEngines
         /// When we start using other sources, the PlanBuyingInventoryProgram model structure should be reviewed
         /// Other sources may have more than 1 daypart that this logic does not assume
         /// </summary>
-        protected List<T> FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart<T>(
+        internal List<T> _FilterProgramsByDaypartAndSetStandardDaypart<T>(
             List<PlanDaypartDto> dayparts,
             List<T> programs,
             DisplayDaypart planDays) where T: BasePlanInventoryProgram
@@ -552,10 +564,17 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach (var program in programs)
             {
-                var planDayparts = _GetPlanDaypartsThatMatchProgramByTimeAndDays(dayparts, planDays, program);
-                planDayparts = _GetPlanDaypartsThatMatchProgramByRestrictions(planDayparts, program);
-
-                var planDaypartWithMostIntersectingTime = _FindPlanDaypartWithMostIntersectingTime(planDayparts);
+                var planDaypartsMatchedByTimeAndDays = _GetPlanDaypartsThatMatchProgramByTimeAndDays(dayparts, planDays, program);
+                if (planDaypartsMatchedByTimeAndDays.Count == 0)
+                {
+                    continue;
+                }
+                var planDaypartsMatchByRestrictions = _GetPlanDaypartsThatMatchProgramByRestrictions(planDaypartsMatchedByTimeAndDays, program);
+                if (planDaypartsMatchByRestrictions.Count == 0)
+                {
+                    continue;
+                }
+                var planDaypartWithMostIntersectingTime = _FindPlanDaypartWithMostIntersectingTime(planDaypartsMatchByRestrictions, planDays);
 
                 if (planDaypartWithMostIntersectingTime != null)
                 {
@@ -568,36 +587,66 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
-        private ProgramInventoryDaypart _FindPlanDaypartWithMostIntersectingTime<T>(List<T> programInventoryDayparts) where T: ProgramInventoryDaypart
+        private ProgramFlightDaypartIntersectInfo _CalculateProgramIntersectInfo(ProgramInventoryDaypart x, Dictionary<int, List<int>> daypartDefaultDayIds, DisplayDaypart planDays)
         {
-            return programInventoryDayparts
-                .Select(x => 
-                {
-                    var planDaypartTimeRange = new TimeRange
-                    {
-                        StartTime = x.PlanDaypart.StartTimeSeconds,
-                        EndTime = x.PlanDaypart.EndTimeSeconds
-                    };
+            var planDaypartTimeRange = new TimeRange
+            {
+                StartTime = x.PlanDaypart.StartTimeSeconds,
+                EndTime = x.PlanDaypart.EndTimeSeconds
+            };
 
-                    var inventoryDaypartTimeRange = new TimeRange
-                    {
-                        StartTime = x.ManifestDaypart.Daypart.StartTime,
-                        EndTime = x.ManifestDaypart.Daypart.EndTime
-                    };
+            var inventoryDaypartTimeRange = new TimeRange
+            {
+                StartTime = x.ManifestDaypart.Daypart.StartTime,
+                EndTime = x.ManifestDaypart.Daypart.EndTime
+            };
 
-                    return new
-                    {
-                        programInventoryDaypart = x,
-                        instersectionTime = DaypartTimeHelper.GetIntersectingTotalTime(planDaypartTimeRange, inventoryDaypartTimeRange)
-                    };
-                })
-                .Where(x => x.instersectionTime >= ThresholdInSecondsForProgramIntersect)
-                .OrderByDescending(x => x.instersectionTime)
-                .Select(x => x.programInventoryDaypart)
-                .FirstOrDefault();
+            var singleIntersectionTime = DaypartTimeHelper.GetIntersectingTotalTime(planDaypartTimeRange, inventoryDaypartTimeRange);
+
+            var daypartDayIds = daypartDefaultDayIds[x.PlanDaypart.DaypartCodeId].Select(_ConvertCadentDayIdToSystemDayId).ToList();
+            var flightDayIds = planDays.Days.Select(d => (int)d).ToList();
+            var programDayIds = x.ManifestDaypart.Daypart.Days.Select(d => (int)d).ToList();
+            var intersectingDayIds = programDayIds.Intersect(daypartDayIds).Intersect(flightDayIds).ToList();
+
+            var totalIntersectingTime = singleIntersectionTime * intersectingDayIds.Count();
+
+            var result = new ProgramFlightDaypartIntersectInfo
+            {
+                ProgramInventoryDaypart = x,
+                SingleIntersectionTime = singleIntersectionTime,
+                TotalIntersectingTime = totalIntersectingTime
+            };
+
+            return result;
         }
 
-        protected void ApplyNTIConversionToNSI(
+        private static int _ConvertCadentDayIdToSystemDayId(int systemDayId)
+        {
+            // Cadent day ids are 1-indexed; Mon=1;Sun=7
+            if (systemDayId == 7)
+            {
+                return 0;
+            }
+            return systemDayId;
+        }
+
+        private ProgramInventoryDaypart _FindPlanDaypartWithMostIntersectingTime<T>(List<T> programInventoryDayparts, DisplayDaypart planDays) 
+            where T: ProgramInventoryDaypart
+        {
+            var planDaypartsWithIntersectingTime = programInventoryDayparts
+                .Select(x => _CalculateProgramIntersectInfo(x, _DaypartDefaultDayIds.Value, planDays))
+                .ToList();
+
+            var planDaypartWithmostIntersectingTime = planDaypartsWithIntersectingTime
+                .Where(x => x.SingleIntersectionTime >= _ThresholdInSecondsForProgramIntersect.Value)
+                .OrderByDescending(x => x.TotalIntersectingTime)
+                .Select(x => x.ProgramInventoryDaypart)
+                .FirstOrDefault();
+
+            return planDaypartWithmostIntersectingTime;
+        }
+
+        internal void _ApplyNTIConversionToNSI(
             PlanDto plan,
             List<PlanBuyingInventoryProgram> programs)
         {
@@ -644,7 +693,7 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        protected List<PlanBuyingInventoryProgram> CalculateProgramCpmAndFilterByMinAndMaxCpm(
+        internal List<PlanBuyingInventoryProgram> _CalculateProgramCpmAndFilterByMinAndMaxCpms(
             List<PlanBuyingInventoryProgram> programs,
             decimal? minCPM,
             decimal? maxCPM)
@@ -654,7 +703,7 @@ namespace Services.Broadcast.BusinessEngines
                 decimal cost;
 
                 // for buying v2, there is always 1 spot length for inventory
-                if (BroadcastServiceSystemParameter.PlanPricingEndpointVersion == "2")
+                if (_PlanPricingEndpointVersion.Value == "2")
                 {
                     cost = program.ManifestRates.Single().Cost;
                 }
@@ -770,7 +819,7 @@ namespace Services.Broadcast.BusinessEngines
                 return true;
             }
 
-            var restrictedProgramNames = programRestrictions.Programs.Select(x => x.Name.ToLowerInvariant());
+            var restrictedProgramNames = programRestrictions.Programs.Select(x => x.Name.ToLowerInvariant()).ToList();
             var primaryProgramName = programInventoryDaypart.ManifestDaypart.PrimaryProgram.Name.ToLowerInvariant();
             var isInTheList = restrictedProgramNames.Contains(primaryProgramName);
 
@@ -833,16 +882,15 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach (var planDaypart in planDayparts)
             {
-                planDisplayDaypart.StartTime = planDaypart.StartTimeSeconds;
-                planDisplayDaypart.EndTime = planDaypart.EndTimeSeconds;
+                var blendedFlightDaypart = _GetDisplayDaypartForPlanDaypart(planDaypart, planDisplayDaypart);
 
                 var programInventoryDayparts = program.ManifestDayparts
-                    .Where(x => x.Daypart.Intersects(planDisplayDaypart))
+                    .Where(x => x.Daypart.Intersects(blendedFlightDaypart))
                     .Select(x => new ProgramInventoryDaypart
                     {
                         PlanDaypart = planDaypart,
                         ManifestDaypart = x
-                    });
+                    }).ToList();
 
                 result.AddRange(programInventoryDayparts);
             }
@@ -850,14 +898,63 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
-        protected DisplayDaypart GetDaypartDaysFromFlight(List<int> flightDays, List<DateRange> planFlightDateRanges)
+        private DisplayDaypart _GetDisplayDaypartForPlanDaypart(PlanDaypartDto planDaypart, DisplayDaypart planFlightDays)
         {
-            var days = _CadentDayDefinitions.Value;
-            var flightDayNames = days
-                .Where(x => flightDays.Contains(x.Id))
-                .Select(x => x.Name);
+            var daypartDefaultDayIds = _DaypartDefaultDayIds.Value;
+            var planDaypartDayIds = daypartDefaultDayIds[planDaypart.DaypartCodeId];
+            var coveredDayNamesSet = _GetCoveredDayNamesHashSet(planDaypartDayIds);
 
-            var flightDaysSet = new HashSet<string>(flightDayNames);
+            var blendedFlightDaypart = new DisplayDaypart
+            {
+                Monday = planFlightDays.Monday && coveredDayNamesSet.Contains("Monday"),
+                Tuesday = planFlightDays.Tuesday && coveredDayNamesSet.Contains("Tuesday"),
+                Wednesday = planFlightDays.Wednesday && coveredDayNamesSet.Contains("Wednesday"),
+                Thursday = planFlightDays.Thursday && coveredDayNamesSet.Contains("Thursday"),
+                Friday = planFlightDays.Friday && coveredDayNamesSet.Contains("Friday"),
+                Saturday = planFlightDays.Saturday && coveredDayNamesSet.Contains("Saturday"),
+                Sunday = planFlightDays.Sunday && coveredDayNamesSet.Contains("Sunday"),
+                StartTime = planDaypart.StartTimeSeconds,
+                EndTime = planDaypart.EndTimeSeconds
+            };
+
+            return blendedFlightDaypart;
+        }
+
+        private List<int> _GetDaypartDayIds(List<PlanDaypartDto> planDayparts)
+        {
+            var planDefaultDaypartIds = planDayparts.Select(d => d.DaypartCodeId).ToList();
+            var dayIds = _DaypartDefaultRepository.GetDayIdsFromDaypartDefaults(planDefaultDaypartIds);
+            return dayIds;
+        }
+
+        private HashSet<string> _GetCoveredDayNamesHashSet(List<int> flightDays, List<int> planDaypartDayIds)
+        {
+            var days = _DayRepository.GetDays();
+            var coveredDayIds = flightDays.Intersect(planDaypartDayIds);
+
+            var coveredDayNames = days
+                .Where(x => coveredDayIds.Contains(x.Id))
+                .Select(x => x.Name);
+            var coveredDayNamesHashSet = new HashSet<string>(coveredDayNames);
+            return coveredDayNamesHashSet;
+        }
+
+        private HashSet<string> _GetCoveredDayNamesHashSet(List<int> planDaypartDayIds)
+        {
+            var days = _DayRepository.GetDays();
+            var coveredDayIds = planDaypartDayIds;
+
+            var coveredDayNames = days
+                .Where(x => coveredDayIds.Contains(x.Id))
+                .Select(x => x.Name);
+            var coveredDayNamesHashSet = new HashSet<string>(coveredDayNames);
+            return coveredDayNamesHashSet;
+        }
+
+        internal DisplayDaypart _GetDaypartDaysFromFlight(List<int> flightDays, List<DateRange> planFlightDateRanges, List<int> planDaypartDayIds)
+        {
+            var coveredDayNamesSet = _GetCoveredDayNamesHashSet(flightDays, planDaypartDayIds);
+
             var result = new DisplayDaypart
             {
                 Monday = false,
@@ -876,25 +973,25 @@ namespace Services.Broadcast.BusinessEngines
 
                 while (start <= end)
                 {
-                    if (start.DayOfWeek == DayOfWeek.Monday && flightDaysSet.Contains("Monday"))
+                    if (start.DayOfWeek == DayOfWeek.Monday && coveredDayNamesSet.Contains("Monday"))
                         result.Monday = true;
 
-                    if (start.DayOfWeek == DayOfWeek.Tuesday && flightDaysSet.Contains("Tuesday"))
+                    if (start.DayOfWeek == DayOfWeek.Tuesday && coveredDayNamesSet.Contains("Tuesday"))
                         result.Tuesday = true;
 
-                    if (start.DayOfWeek == DayOfWeek.Wednesday && flightDaysSet.Contains("Wednesday"))
+                    if (start.DayOfWeek == DayOfWeek.Wednesday && coveredDayNamesSet.Contains("Wednesday"))
                         result.Wednesday = true;
 
-                    if (start.DayOfWeek == DayOfWeek.Thursday && flightDaysSet.Contains("Thursday"))
+                    if (start.DayOfWeek == DayOfWeek.Thursday && coveredDayNamesSet.Contains("Thursday"))
                         result.Thursday = true;
 
-                    if (start.DayOfWeek == DayOfWeek.Friday && flightDaysSet.Contains("Friday"))
+                    if (start.DayOfWeek == DayOfWeek.Friday && coveredDayNamesSet.Contains("Friday"))
                         result.Friday = true;
 
-                    if (start.DayOfWeek == DayOfWeek.Saturday && flightDaysSet.Contains("Saturday"))
+                    if (start.DayOfWeek == DayOfWeek.Saturday && coveredDayNamesSet.Contains("Saturday"))
                         result.Saturday = true;
 
-                    if (start.DayOfWeek == DayOfWeek.Sunday && flightDaysSet.Contains("Sunday"))
+                    if (start.DayOfWeek == DayOfWeek.Sunday && coveredDayNamesSet.Contains("Sunday"))
                         result.Sunday = true;
 
                     if (result.ActiveDays == 7)
@@ -973,6 +1070,19 @@ namespace Services.Broadcast.BusinessEngines
             _ImpressionsCalculationEngine.ApplyProjectedImpressions(programs, impressionsRequest, audienceIds);
         }
 
+        private Dictionary<int, List<int>> _GetDaypartDefaultDayIds()
+        {
+            var daypartDefaultDayIds = new Dictionary<int, List<int>>();
+            var daypartDefaultIds = _DaypartDefaultRepository.GetAllDaypartDefaults().Select(s => s.Id);
+            foreach (var daypartDefaultId in daypartDefaultIds)
+            {
+                var dayIds = _DaypartDefaultRepository.GetDayIdsFromDaypartDefaults(new List<int> { daypartDefaultId });
+                daypartDefaultDayIds[daypartDefaultId] = dayIds;
+            }
+
+            return daypartDefaultDayIds;
+        }
+
         private class ProgramInventoryDaypart
         {
             public PlanDaypartDto PlanDaypart { get; set; }
@@ -989,6 +1099,13 @@ namespace Services.Broadcast.BusinessEngines
             public double? InflationFactor { get; set; }
 
             public MarketGroupEnum MarketGroup { get; set; }
+        }
+
+        private class ProgramFlightDaypartIntersectInfo
+        {
+            public ProgramInventoryDaypart ProgramInventoryDaypart { get; set; }
+            public int SingleIntersectionTime { get; set; }
+            public int TotalIntersectingTime { get; set; }
         }
     }
 }

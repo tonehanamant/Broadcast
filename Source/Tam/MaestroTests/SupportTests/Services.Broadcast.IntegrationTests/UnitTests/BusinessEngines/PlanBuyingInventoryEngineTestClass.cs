@@ -1,17 +1,18 @@
 ﻿using Common.Services;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
-using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.Plan;
-using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Helpers;
-using System.Collections.Generic;
-using Tam.Maestro.Services.ContractInterfaces.Common;
+using System;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
 {
     public class PlanBuyingInventoryEngineTestClass : PlanBuyingInventoryEngine
     {
+        public int UT_ThresholdInSecondsForProgramIntersect { get; set; } = 1800;
+        public bool UT_UseTrueIndependentStations { get; set; } = false;
+        public string UT_PlanPricingEndpointVersion { get; set; } = "2";
+        public int UT_NumberOfFallbackQuarters { get; set; } = 8;
+
         public PlanBuyingInventoryEngineTestClass(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IImpressionsCalculationEngine impressionsCalculationEngine,
@@ -31,50 +32,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                   spotLengthEngine, 
                   featureToggleHelper)
         {
-        }
-
-        public List<PlanBuyingInventoryProgram> UT_FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(
-            List<PlanDaypartDto> dayparts,
-            List<PlanBuyingInventoryProgram> programs,
-            DisplayDaypart planDisplayDaypartDays)
-        {
-            return FilterProgramsByDaypartsAndAssociateWithAppropriateStandardDaypart(dayparts, programs, planDisplayDaypartDays);
-        }
-
-        public List<PlanBuyingInventoryProgram> UT_FilterProgramsByMinAndMaxCPM(
-            List<PlanBuyingInventoryProgram> programs,
-            decimal? minCPM,
-            decimal? maxCPM)
-        {
-            return CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, minCPM, maxCPM);
-        }
-
-        public void UT_ApplyInflationFactorToSpotCost(List<PlanBuyingInventoryProgram> programs, double? inflationFactor)
-        {
-            ApplyInflationFactorToSpotCost(programs, inflationFactor);
-        }
-
-        public DisplayDaypart UT_GetPlanDaypartDaysFromPlanFlight(List<int> flightDays, List<DateRange> planFlightDateRanges)
-        {
-            return GetDaypartDaysFromFlight(flightDays, planFlightDateRanges);
-        }
-
-        public void UT_ApplyNTIConversionToNSI(
-            PlanDto plan,
-            List<PlanBuyingInventoryProgram> programs)
-        {
-            ApplyNTIConversionToNSI(plan, programs);
-        }
-
-        public List<PlanBuyingInventoryProgram> UT_GetFullPrograms(
-            List<DateRange> dateRanges, 
-            List<int> spotLengthIds,
-            List<int> supportedInventorySourceTypes, 
-            List<short> availableMarkets, 
-            QuarterDetailDto planQuarter, 
-            List<QuarterDetailDto> fallbackQuarters)
-        {
-            return _GetFullPrograms(dateRanges, spotLengthIds, supportedInventorySourceTypes, availableMarkets, planQuarter, fallbackQuarters);
+            // override our lazy delegates
+            _ThresholdInSecondsForProgramIntersect = new Lazy<int>(() => UT_ThresholdInSecondsForProgramIntersect);
+            _UseTrueIndependentStations = new Lazy<bool>(() => UT_UseTrueIndependentStations);
+            _PlanPricingEndpointVersion = new Lazy<string>(() => UT_PlanPricingEndpointVersion);
+            _NumberOfFallbackQuarters = new Lazy<int>(() => UT_NumberOfFallbackQuarters);
         }
     }
 }

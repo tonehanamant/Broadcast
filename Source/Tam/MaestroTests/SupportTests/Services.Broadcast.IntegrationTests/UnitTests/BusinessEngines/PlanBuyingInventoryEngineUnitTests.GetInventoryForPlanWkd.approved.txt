@@ -1,36 +1,36 @@
 {
   "inventory": [
     {
-      "Cpm": 6.6666666666666666666666667000,
-      "Impressions": 1500.0,
-      "InventoryBuyingQuarterType": "Plan",
+      "Cpm": 13.333333333333333333333333300,
+      "Impressions": 1125.0,
+      "InventoryBuyingQuarterType": "Fallback",
       "InventorySource": null,
       "ManifestAudiences": null,
       "ManifestDayparts": [
         {
           "Daypart": {
             "_Code": "",
-            "_EndTime": 39599,
+            "_EndTime": 71999,
             "_Friday": false,
-            "_Id": 5,
+            "_Id": 23,
             "_Is24Hour": false,
             "_LastEndTime": 0,
             "_LastStartTime": 0,
-            "_Monday": true,
+            "_Monday": false,
             "_Name": "",
-            "_Saturday": false,
-            "_StartTime": 36000,
-            "_Sunday": false,
+            "_Saturday": true,
+            "_StartTime": 32400,
+            "_Sunday": true,
             "_Thursday": false,
             "_Tuesday": false,
             "_Wednesday": false
           },
-          "Id": 5,
+          "Id": 0,
           "PrimaryProgram": {
             "EndTime": 0,
             "Genre": null,
             "Id": 2,
-            "Name": null,
+            "Name": "Program B",
             "ShowType": null,
             "StartTime": 0
           },
@@ -40,42 +40,50 @@
             {
               "EndTime": 0,
               "Genre": null,
+              "Id": 1,
+              "Name": "Program A",
+              "ShowType": null,
+              "StartTime": 0
+            },
+            {
+              "EndTime": 0,
+              "Genre": null,
               "Id": 2,
-              "Name": null,
+              "Name": "Program B",
               "ShowType": null,
               "StartTime": 0
             }
           ]
         }
       ],
-      "ManifestId": 0,
+      "ManifestId": 1,
       "ManifestRates": [
         {
-          "Cost": 10.0,
+          "Cost": 15.0,
           "SpotLengthId": 1
         }
       ],
       "ManifestWeeks": [
         {
           "ContractMediaWeekId": 0,
-          "Id": 2,
+          "Id": 12,
           "InventoryMediaWeekId": 0,
           "Spots": 0
         }
       ],
-      "ProjectedImpressions": 0.0,
-      "ProvidedImpressions": 1500.0,
+      "ProjectedImpressions": 1125.0,
+      "ProvidedImpressions": null,
       "SpotLengthId": 1,
-      "StandardDaypartId": 1,
+      "StandardDaypartId": 23,
       "Station": {
-        "Affiliation": null,
-        "CallLetters": null,
-        "Code": null,
-        "Id": 0,
+        "Affiliation": "NBC latest",
+        "CallLetters": "KOB+",
+        "Code": 101,
+        "Id": 1,
         "IsTrueInd": false,
         "LegacyCallLetters": "KOB",
         "ManifestMaxEndDate": null,
-        "MarketCode": null,
+        "MarketCode": 100,
         "ModifiedDate": null,
         "OriginMarket": null,
         "OwnershipGroupName": null,
@@ -85,7 +93,7 @@
       "Unit": null
     }
   ],
-  "passedParameters": {
+  "parametersApplyProvidedImpressions": {
     "programs": [
       {
         "ProjectedImpressions": 0.0,
@@ -94,26 +102,26 @@
         "Cpm": 0.0,
         "Unit": null,
         "InventorySource": null,
-        "InventoryBuyingQuarterType": "Plan",
+        "InventoryBuyingQuarterType": "Fallback",
         "SpotLengthId": 1,
         "ManifestWeeks": [
           {
-            "Id": 2,
+            "Id": 12,
             "InventoryMediaWeekId": 0,
             "ContractMediaWeekId": 0,
             "Spots": 0
           }
         ],
-        "ManifestId": 0,
-        "StandardDaypartId": 1,
+        "ManifestId": 1,
+        "StandardDaypartId": 23,
         "Station": {
-          "Id": 0,
-          "Code": null,
-          "CallLetters": null,
+          "Id": 1,
+          "Code": 101,
+          "CallLetters": "KOB+",
           "LegacyCallLetters": "KOB",
           "OriginMarket": null,
-          "MarketCode": null,
-          "Affiliation": null,
+          "MarketCode": 100,
+          "Affiliation": "NBC latest",
           "RateDataThrough": null,
           "ModifiedDate": null,
           "ManifestMaxEndDate": null,
@@ -124,33 +132,33 @@
         "ManifestRates": [
           {
             "SpotLengthId": 1,
-            "Cost": 10.0
+            "Cost": 15.0
           }
         ],
         "ManifestAudiences": null,
         "ManifestDayparts": [
           {
-            "Id": 5,
+            "Id": 0,
             "Daypart": {
-              "_Id": 5,
+              "_Id": 23,
               "_Code": "",
               "_Name": "",
-              "_StartTime": 36000,
-              "_EndTime": 39599,
-              "_Monday": true,
+              "_StartTime": 32400,
+              "_EndTime": 71999,
+              "_Monday": false,
               "_Tuesday": false,
               "_Wednesday": false,
               "_Thursday": false,
               "_Friday": false,
-              "_Saturday": false,
-              "_Sunday": false,
+              "_Saturday": true,
+              "_Sunday": true,
               "_Is24Hour": false,
               "_LastStartTime": 0,
               "_LastEndTime": 0
             },
             "PrimaryProgram": {
               "Id": 2,
-              "Name": null,
+              "Name": "Program B",
               "ShowType": null,
               "Genre": null,
               "StartTime": 0,
@@ -159,8 +167,16 @@
             "PrimaryProgramId": 2,
             "Programs": [
               {
+                "Id": 1,
+                "Name": "Program A",
+                "ShowType": null,
+                "Genre": null,
+                "StartTime": 0,
+                "EndTime": 0
+              },
+              {
                 "Id": 2,
-                "Name": null,
+                "Name": "Program B",
                 "ShowType": null,
                 "Genre": null,
                 "StartTime": 0,
@@ -172,8 +188,24 @@
         ]
       }
     ],
-    "audienceId": 25,
-    "spotLengthId": 5,
-    "equivalized": false
-  }
+    "request": {
+      "PlaybackType": 4,
+      "ShareProjectionBookId": 102,
+      "HutProjectionBookId": 101,
+      "Equivalized": true,
+      "SpotLengthId": 5,
+      "PostType": 2
+    },
+    "audienceId": 12
+  },
+  "parametersGetBroadcastStationsWithLatestDetailsByMarketCodes": [
+    []
+  ],
+  "parametersGetLatestStationMonthDetailsForStations": [
+    [
+      1,
+      2,
+      3
+    ]
+  ]
 }

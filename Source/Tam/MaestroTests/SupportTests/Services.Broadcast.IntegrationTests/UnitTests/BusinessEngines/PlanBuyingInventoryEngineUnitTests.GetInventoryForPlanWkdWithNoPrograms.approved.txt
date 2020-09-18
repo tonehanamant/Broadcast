@@ -1,0 +1,25 @@
+{
+  "inventory": [],
+  "parametersApplyProvidedImpressions": {
+    "programs": [],
+    "request": {
+      "PlaybackType": 4,
+      "ShareProjectionBookId": 102,
+      "HutProjectionBookId": 101,
+      "Equivalized": true,
+      "SpotLengthId": 5,
+      "PostType": 2
+    },
+    "audienceId": 12
+  },
+  "parametersGetBroadcastStationsWithLatestDetailsByMarketCodes": [
+    []
+  ],
+  "parametersGetLatestStationMonthDetailsForStations": [
+    [
+      1,
+      2,
+      3
+    ]
+  ]
+}

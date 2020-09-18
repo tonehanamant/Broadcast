@@ -1,12 +1,182 @@
 {
-  "inventory": [],
+  "inventory": [
+    {
+      "Cpm": 6.6666666666666666666666667000,
+      "Impressions": 1500.0,
+      "InventoryBuyingQuarterType": "Plan",
+      "InventorySource": null,
+      "ManifestAudiences": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 39599,
+            "_Friday": false,
+            "_Id": 5,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 36000,
+            "_Sunday": false,
+            "_Thursday": false,
+            "_Tuesday": false,
+            "_Wednesday": false
+          },
+          "Id": 5,
+          "PrimaryProgram": {
+            "EndTime": 0,
+            "Genre": null,
+            "Id": 0,
+            "Name": null,
+            "ShowType": null,
+            "StartTime": 0
+          },
+          "PrimaryProgramId": 0,
+          "ProgramName": null,
+          "Programs": [
+            {
+              "EndTime": 0,
+              "Genre": null,
+              "Id": 0,
+              "Name": null,
+              "ShowType": null,
+              "StartTime": 0
+            }
+          ]
+        }
+      ],
+      "ManifestId": 0,
+      "ManifestRates": [
+        {
+          "Cost": 10.0,
+          "SpotLengthId": 1
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "ContractMediaWeekId": 0,
+          "Id": 2,
+          "InventoryMediaWeekId": 0,
+          "Spots": 0
+        }
+      ],
+      "ProjectedImpressions": 1500.0,
+      "ProvidedImpressions": null,
+      "SpotLengthId": 1,
+      "StandardDaypartId": 1,
+      "Station": {
+        "Affiliation": null,
+        "CallLetters": null,
+        "Code": null,
+        "Id": 0,
+        "IsTrueInd": false,
+        "LegacyCallLetters": "KOB",
+        "ManifestMaxEndDate": null,
+        "MarketCode": null,
+        "ModifiedDate": null,
+        "OriginMarket": null,
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "RepFirmName": null
+      },
+      "Unit": null
+    }
+  ],
   "passedParameters": {
-    "programs": [],
+    "programs": [
+      {
+        "ProjectedImpressions": 0.0,
+        "ProvidedImpressions": null,
+        "Impressions": 0.0,
+        "Cpm": 0.0,
+        "Unit": null,
+        "InventorySource": null,
+        "InventoryBuyingQuarterType": "Plan",
+        "SpotLengthId": 1,
+        "ManifestWeeks": [
+          {
+            "Id": 2,
+            "InventoryMediaWeekId": 0,
+            "ContractMediaWeekId": 0,
+            "Spots": 0
+          }
+        ],
+        "ManifestId": 0,
+        "StandardDaypartId": 1,
+        "Station": {
+          "Id": 0,
+          "Code": null,
+          "CallLetters": null,
+          "LegacyCallLetters": "KOB",
+          "OriginMarket": null,
+          "MarketCode": null,
+          "Affiliation": null,
+          "RateDataThrough": null,
+          "ModifiedDate": null,
+          "ManifestMaxEndDate": null,
+          "OwnershipGroupName": null,
+          "RepFirmName": null,
+          "IsTrueInd": false
+        },
+        "ManifestRates": [
+          {
+            "SpotLengthId": 1,
+            "Cost": 10.0
+          }
+        ],
+        "ManifestAudiences": null,
+        "ManifestDayparts": [
+          {
+            "Id": 5,
+            "Daypart": {
+              "_Id": 5,
+              "_Code": "",
+              "_Name": "",
+              "_StartTime": 36000,
+              "_EndTime": 39599,
+              "_Monday": true,
+              "_Tuesday": false,
+              "_Wednesday": false,
+              "_Thursday": false,
+              "_Friday": false,
+              "_Saturday": false,
+              "_Sunday": false,
+              "_Is24Hour": false,
+              "_LastStartTime": 0,
+              "_LastEndTime": 0
+            },
+            "PrimaryProgram": {
+              "Id": 0,
+              "Name": null,
+              "ShowType": null,
+              "Genre": null,
+              "StartTime": 0,
+              "EndTime": 0
+            },
+            "PrimaryProgramId": 0,
+            "Programs": [
+              {
+                "Id": 0,
+                "Name": null,
+                "ShowType": null,
+                "Genre": null,
+                "StartTime": 0,
+                "EndTime": 0
+              }
+            ],
+            "ProgramName": null
+          }
+        ]
+      }
+    ],
     "request": {
       "PlaybackType": 4,
       "ShareProjectionBookId": 201,
       "HutProjectionBookId": 202,
-      "Equivalized": true,
+      "Equivalized": false,
       "SpotLengthId": 5,
       "PostType": 1
     },

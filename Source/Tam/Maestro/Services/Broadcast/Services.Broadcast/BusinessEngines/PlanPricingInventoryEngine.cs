@@ -57,6 +57,7 @@ namespace Services.Broadcast.BusinessEngines
         protected Lazy<int> _ThresholdInSecondsForProgramIntersect;
         protected Lazy<string>_PlanPricingEndpointVersion;
         protected Lazy<int> _NumberOfFallbackQuartersForPricing;
+        protected Lazy<bool> _UseTrueIndependentStations;
 
         protected Lazy<List<Day>> _CadentDayDefinitions;
         /// <summary>
@@ -64,7 +65,6 @@ namespace Services.Broadcast.BusinessEngines
         /// Values = Day Ids for that Daypart Default.
         /// </summary>
         protected Lazy<Dictionary<int, List<int>>> _DaypartDefaultDayIds;
-        protected Lazy<bool> _UseTrueIndependentStations;
 
         public PlanPricingInventoryEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                           IImpressionsCalculationEngine impressionsCalculationEngine,

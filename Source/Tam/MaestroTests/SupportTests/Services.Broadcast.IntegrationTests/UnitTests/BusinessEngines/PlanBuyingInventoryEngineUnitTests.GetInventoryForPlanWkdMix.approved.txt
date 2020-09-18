@@ -1,0 +1,379 @@
+{
+  "inventory": [
+    {
+      "Cpm": 13.333333333333333333333333300,
+      "Impressions": 1125.0,
+      "InventoryBuyingQuarterType": "Fallback",
+      "InventorySource": null,
+      "ManifestAudiences": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 71999,
+            "_Friday": false,
+            "_Id": 23,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": false,
+            "_Name": "",
+            "_Saturday": true,
+            "_StartTime": 32400,
+            "_Sunday": true,
+            "_Thursday": false,
+            "_Tuesday": false,
+            "_Wednesday": false
+          },
+          "Id": 0,
+          "PrimaryProgram": {
+            "EndTime": 0,
+            "Genre": null,
+            "Id": 2,
+            "Name": "Program B",
+            "ShowType": null,
+            "StartTime": 0
+          },
+          "PrimaryProgramId": 2,
+          "ProgramName": null,
+          "Programs": [
+            {
+              "EndTime": 0,
+              "Genre": null,
+              "Id": 1,
+              "Name": "Program A",
+              "ShowType": null,
+              "StartTime": 0
+            },
+            {
+              "EndTime": 0,
+              "Genre": null,
+              "Id": 2,
+              "Name": "Program B",
+              "ShowType": null,
+              "StartTime": 0
+            }
+          ]
+        }
+      ],
+      "ManifestId": 1,
+      "ManifestRates": [
+        {
+          "Cost": 15.0,
+          "SpotLengthId": 1
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "ContractMediaWeekId": 0,
+          "Id": 12,
+          "InventoryMediaWeekId": 0,
+          "Spots": 0
+        }
+      ],
+      "ProjectedImpressions": 1125.0,
+      "ProvidedImpressions": null,
+      "SpotLengthId": 1,
+      "StandardDaypartId": 23,
+      "Station": {
+        "Affiliation": "NBC latest",
+        "CallLetters": "KOB+",
+        "Code": 101,
+        "Id": 1,
+        "IsTrueInd": false,
+        "LegacyCallLetters": "KOB",
+        "ManifestMaxEndDate": null,
+        "MarketCode": 100,
+        "ModifiedDate": null,
+        "OriginMarket": null,
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "RepFirmName": null
+      },
+      "Unit": null
+    },
+    {
+      "Cpm": 15.384615384615384615384615400,
+      "Impressions": 975.0,
+      "InventoryBuyingQuarterType": "Fallback",
+      "InventorySource": null,
+      "ManifestAudiences": null,
+      "ManifestDayparts": [
+        {
+          "Daypart": {
+            "_Code": "",
+            "_EndTime": 79199,
+            "_Friday": true,
+            "_Id": 3,
+            "_Is24Hour": false,
+            "_LastEndTime": 0,
+            "_LastStartTime": 0,
+            "_Monday": true,
+            "_Name": "",
+            "_Saturday": false,
+            "_StartTime": 72000,
+            "_Sunday": true,
+            "_Thursday": false,
+            "_Tuesday": false,
+            "_Wednesday": true
+          },
+          "Id": 0,
+          "PrimaryProgram": {
+            "EndTime": 0,
+            "Genre": null,
+            "Id": 1,
+            "Name": "Program D",
+            "ShowType": null,
+            "StartTime": 0
+          },
+          "PrimaryProgramId": 1,
+          "ProgramName": null,
+          "Programs": [
+            {
+              "EndTime": 0,
+              "Genre": null,
+              "Id": 1,
+              "Name": "Program D",
+              "ShowType": null,
+              "StartTime": 0
+            }
+          ]
+        }
+      ],
+      "ManifestId": 3,
+      "ManifestRates": [
+        {
+          "Cost": 15.0,
+          "SpotLengthId": 1
+        }
+      ],
+      "ManifestWeeks": [
+        {
+          "ContractMediaWeekId": 0,
+          "Id": 12,
+          "InventoryMediaWeekId": 0,
+          "Spots": 0
+        }
+      ],
+      "ProjectedImpressions": 975.0,
+      "ProvidedImpressions": null,
+      "SpotLengthId": 1,
+      "StandardDaypartId": 3,
+      "Station": {
+        "Affiliation": "CBS",
+        "CallLetters": "WRGB+",
+        "Code": 103,
+        "Id": 3,
+        "IsTrueInd": false,
+        "LegacyCallLetters": "WRGB",
+        "ManifestMaxEndDate": null,
+        "MarketCode": 3,
+        "ModifiedDate": null,
+        "OriginMarket": null,
+        "OwnershipGroupName": null,
+        "RateDataThrough": null,
+        "RepFirmName": null
+      },
+      "Unit": null
+    }
+  ],
+  "parametersApplyProvidedImpressions": {
+    "programs": [
+      {
+        "ProjectedImpressions": 0.0,
+        "ProvidedImpressions": null,
+        "Impressions": 0.0,
+        "Cpm": 0.0,
+        "Unit": null,
+        "InventorySource": null,
+        "InventoryBuyingQuarterType": "Fallback",
+        "SpotLengthId": 1,
+        "ManifestWeeks": [
+          {
+            "Id": 12,
+            "InventoryMediaWeekId": 0,
+            "ContractMediaWeekId": 0,
+            "Spots": 0
+          }
+        ],
+        "ManifestId": 1,
+        "StandardDaypartId": 23,
+        "Station": {
+          "Id": 1,
+          "Code": 101,
+          "CallLetters": "KOB+",
+          "LegacyCallLetters": "KOB",
+          "OriginMarket": null,
+          "MarketCode": 100,
+          "Affiliation": "NBC latest",
+          "RateDataThrough": null,
+          "ModifiedDate": null,
+          "ManifestMaxEndDate": null,
+          "OwnershipGroupName": null,
+          "RepFirmName": null,
+          "IsTrueInd": false
+        },
+        "ManifestRates": [
+          {
+            "SpotLengthId": 1,
+            "Cost": 15.0
+          }
+        ],
+        "ManifestAudiences": null,
+        "ManifestDayparts": [
+          {
+            "Id": 0,
+            "Daypart": {
+              "_Id": 23,
+              "_Code": "",
+              "_Name": "",
+              "_StartTime": 32400,
+              "_EndTime": 71999,
+              "_Monday": false,
+              "_Tuesday": false,
+              "_Wednesday": false,
+              "_Thursday": false,
+              "_Friday": false,
+              "_Saturday": true,
+              "_Sunday": true,
+              "_Is24Hour": false,
+              "_LastStartTime": 0,
+              "_LastEndTime": 0
+            },
+            "PrimaryProgram": {
+              "Id": 2,
+              "Name": "Program B",
+              "ShowType": null,
+              "Genre": null,
+              "StartTime": 0,
+              "EndTime": 0
+            },
+            "PrimaryProgramId": 2,
+            "Programs": [
+              {
+                "Id": 1,
+                "Name": "Program A",
+                "ShowType": null,
+                "Genre": null,
+                "StartTime": 0,
+                "EndTime": 0
+              },
+              {
+                "Id": 2,
+                "Name": "Program B",
+                "ShowType": null,
+                "Genre": null,
+                "StartTime": 0,
+                "EndTime": 0
+              }
+            ],
+            "ProgramName": null
+          }
+        ]
+      },
+      {
+        "ProjectedImpressions": 0.0,
+        "ProvidedImpressions": null,
+        "Impressions": 0.0,
+        "Cpm": 0.0,
+        "Unit": null,
+        "InventorySource": null,
+        "InventoryBuyingQuarterType": "Fallback",
+        "SpotLengthId": 1,
+        "ManifestWeeks": [
+          {
+            "Id": 12,
+            "InventoryMediaWeekId": 0,
+            "ContractMediaWeekId": 0,
+            "Spots": 0
+          }
+        ],
+        "ManifestId": 3,
+        "StandardDaypartId": 3,
+        "Station": {
+          "Id": 3,
+          "Code": 103,
+          "CallLetters": "WRGB+",
+          "LegacyCallLetters": "WRGB",
+          "OriginMarket": null,
+          "MarketCode": 3,
+          "Affiliation": "CBS",
+          "RateDataThrough": null,
+          "ModifiedDate": null,
+          "ManifestMaxEndDate": null,
+          "OwnershipGroupName": null,
+          "RepFirmName": null,
+          "IsTrueInd": false
+        },
+        "ManifestRates": [
+          {
+            "SpotLengthId": 1,
+            "Cost": 15.0
+          }
+        ],
+        "ManifestAudiences": null,
+        "ManifestDayparts": [
+          {
+            "Id": 0,
+            "Daypart": {
+              "_Id": 3,
+              "_Code": "",
+              "_Name": "",
+              "_StartTime": 72000,
+              "_EndTime": 79199,
+              "_Monday": true,
+              "_Tuesday": false,
+              "_Wednesday": true,
+              "_Thursday": false,
+              "_Friday": true,
+              "_Saturday": false,
+              "_Sunday": true,
+              "_Is24Hour": false,
+              "_LastStartTime": 0,
+              "_LastEndTime": 0
+            },
+            "PrimaryProgram": {
+              "Id": 1,
+              "Name": "Program D",
+              "ShowType": null,
+              "Genre": null,
+              "StartTime": 0,
+              "EndTime": 0
+            },
+            "PrimaryProgramId": 1,
+            "Programs": [
+              {
+                "Id": 1,
+                "Name": "Program D",
+                "ShowType": null,
+                "Genre": null,
+                "StartTime": 0,
+                "EndTime": 0
+              }
+            ],
+            "ProgramName": null
+          }
+        ]
+      }
+    ],
+    "request": {
+      "PlaybackType": 4,
+      "ShareProjectionBookId": 102,
+      "HutProjectionBookId": 101,
+      "Equivalized": true,
+      "SpotLengthId": 5,
+      "PostType": 2
+    },
+    "audienceId": 12
+  },
+  "parametersGetBroadcastStationsWithLatestDetailsByMarketCodes": [
+    []
+  ],
+  "parametersGetLatestStationMonthDetailsForStations": [
+    [
+      1,
+      2,
+      3
+    ]
+  ]
+}
