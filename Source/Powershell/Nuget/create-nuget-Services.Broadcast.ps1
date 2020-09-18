@@ -3,76 +3,78 @@
 
 param
 (    
-    [switch] $SkipIncrementVersion
+    [switch] $SkipVersionIncrement,
+    [switch] $SkipProjectBuild
 )
 
-$repositoryPath = '..\..\Solutions\BroadcastComposerWeb\packages'
-$targetProjectFile = '..\..\Tam\Maestro\Services\Broadcast\Services.Broadcast\Services.Broadcast.csproj'
+$targetProjectName = 'Services.Broadcast'
+$targetProjectDirectory = '..\..\Tam\Maestro\Services\Broadcast\Services.Broadcast'
 
-Write-Host "Beginning nuget package creation for 'Services.Broadcast'."
+Write-Host "Beginning nuget package creation for '$targetProjectName'." -ForegroundColor Green
 
-$targetProjectPropertiesFile = '..\..\Tam\Maestro\Services\Broadcast\Services.Broadcast\Properties\AssemblyInfo.cs'
-$targetProjectNuspecFile = '..\..\Tam\Maestro\Services\Broadcast\Services.Broadcast\Services.Broadcast.nuspec'
+Write-Host "Resolving paths..." -ForegroundColor Green 
 
-Write-Host "Resolving paths..."
+$targetProjectFilePath = [System.Io.Path]::Combine($targetProjectDirectory, $("{0}.csproj" -f $targetProjectName))
+$targetProjectNuspecFilePath = [System.Io.Path]::Combine($targetProjectDirectory, $("{0}.nuspec" -f $targetProjectName))
 
-$fullRepositoryPath = Resolve-Path -Path "$repositoryPath"
-$fullTargetProjectFilePath = Resolve-Path -Path "$targetProjectFile"
+$fullTargetProjectFilePath = Resolve-Path -Path "$targetProjectFilePath"
+$fullTargetProjectNuspecFilePath = Resolve-Path -Path "$targetProjectNuspecFilePath"
 
-if ($SkipIncrementVersion.IsPresent -eq $false)
+if ($SkipVersionIncrement.IsPresent -eq $false)
 {
-    Write-Host "Detecting version information..."
-
-    $assemblyVersionSplits=$null
-    $nugetSpecVersion=$null
-
-    Get-Content $targetProjectPropertiesFile | ForEach-Object {    
-        $splits = ([string]$_).Split('"');
-        if ($splits[0] -eq "[assembly: AssemblyVersion(")
-        {     
-            $assemblyVersionSplits = $($splits[1]).Split('.')
-        }    
-    }
-
-    Get-Content $targetProjectNuspecFile | ForEach-Object {        
-        if ($_ -like "*<version>*</version>")
-        {
-            $raw = $($($_ -replace ' ', '') -replace '<version>', '') -replace '</version>', ''
-            $nugetSpecVersion = $raw.Split('.');        
-        }    
-    }
-
-    $sectorOneAndTwoMatch = $($assemblyVersionSplits[0] -eq $nugetSpecVersion[0]) -and $($assemblyVersionSplits[1] -eq $nugetSpecVersion[1])
-    if ($sectorOneAndTwoMatch -ne $true)
-    {
-        $newPackageVersion = "{0}.{1}.{2}" -f $assemblyVersionSplits[0], $assemblyVersionSplits[1], $assemblyVersionSplits[2]
-    }
-    else
-    {    
-        $newPatchNumber = [int]$nugetSpecVersion[2] + 1        
-        $newPackageVersion = "{0}.{1}.{2}" -f $nugetSpecVersion[0], $nugetSpecVersion[1], $newPatchNumber
-    }
-
-    Write-Host "Changing the package version to '$newPackageVersion'"
-    $newPackageVersionString="    <version>{0}</version>" -f $newPackageVersion
-
+    Write-Host "Detecting version information..." -ForegroundColor Green
+    
+    $nugetSpecVersion = $null
+    $toWrite = $null
     $newNuspeclines = [System.Collections.ArrayList]@()
-    Get-Content $targetProjectNuspecFile | ForEach-Object {
-        $toWrite = $_
-        if ($toWrite -like "*<version>*")
-        {
-            $toWrite = $newPackageVersionString
-        }
-        $newNuspeclines += $toWrite
-    }
 
-    Set-Content $targetProjectNuspecFile $newNuspeclines
+    Get-Content $fullTargetProjectNuspecFilePath | ForEach-Object {        
+        $toWrite = $_
+        if ($toWrite -like "*<version>*</version>")
+        {
+            $raw = $($($toWrite  -replace ' ', '') -replace '<version>', '') -replace '</version>', ''
+            $nugetSpecVersion = $raw.Split('.');
+
+            $newPatchNumber = [int]$nugetSpecVersion[2] + 1        
+            $newPackageVersion = "{0}.{1}.{2}" -f $nugetSpecVersion[0], $nugetSpecVersion[1], $newPatchNumber
+            Write-Host "Changing the package version to '$newPackageVersion'" -ForegroundColor Green
+            
+            $newPackageVersionString = "    <version>{0}</version>" -f $newPackageVersion
+            $toWrite  = $newPackageVersionString
+        }    
+        $newNuspeclines += $toWrite
+    }    
+
+    Set-Content $fullTargetProjectNuspecFilePath $newNuspeclines
+}
+else
+{
+    Write-Host "Skipping package version incrementation per switch." -ForegroundColor Yellow
 }
 
-Write-Host "Redirecting package source repo to '$fullRepositoryPath'"
-.\nuget.exe config -Set repositoryPath="$fullRepositoryPath"
+Write-Host "Building our package..." -ForegroundColor Green
+if ($SkipProjectBuild.IsPresent -eq $false)
+{
+    .\nuget.exe pack $fullTargetProjectFilePath -IncludeReferencedProjects -Build -properties Configuration=Release
+}
+else 
+{
+    Write-Host "Skipping project build per switch." -ForegroundColor Yellow
+    .\nuget.exe pack $fullTargetProjectFilePath -IncludeReferencedProjects -properties Configuration=Release
+}
 
-Write-Host "Building our package..."
-.\nuget.exe pack $targetProjectFile -IncludeReferencedProjects -Build -properties Configuration=Release
+invoke-item .
 
-Write-Host "All done"
+Write-Host "Package built!!!" -ForegroundColor Green
+
+if ($SkipVersionIncrement.IsPresent -eq $true)
+{
+    Write-Host "Skipped package version incrementation per switch." -ForegroundColor Yellow
+}
+
+if ($SkipProjectBuild.IsPresent -eq $true)
+{
+    Write-Host "Skipped project build per switch." -ForegroundColor Yellow
+}
+
+Write-Host "All done" -ForegroundColor Green
