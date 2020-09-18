@@ -6,7 +6,6 @@ namespace Services.Broadcast.Entities
     {
         public int MarketCoverageFileId { get; set; }
         public List<Market> Markets { get; set; }
-
         public class Market
         {
             public int MarketCode { get; set; }
@@ -14,12 +13,12 @@ namespace Services.Broadcast.Entities
             public double Coverage { get; set; }
             public int Rank { get; set; }
             public List<Station> Stations { get; set; }
-
-            public class Station
-            {
-                public int Id { get; set; }
-                public string LegacyCallLetters { get; set; }
-            }
-        } 
+        }
+        public class Station
+        {
+            public int Id { get; set; }
+            public string LegacyCallLetters { get; set; }
+            public string Affiliation { get; set; }
+        }
     }
 }

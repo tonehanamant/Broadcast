@@ -24,6 +24,7 @@ using Common.Services;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Buying;
+using Services.Broadcast.Entities.Campaign;
 
 namespace Services.Broadcast.Repositories
 {
@@ -177,6 +178,13 @@ namespace Services.Broadcast.Repositories
         void UpdatePlanPricingVersionId(int versionId, int oldPlanVersionId);
         PlanPricingParametersDto GetPricingParametersForVersion(int versionId);
         PlanPricingParametersDto GetLatestPricingParameters(int planId);
+
+        /// <summary>
+        /// Gets the proprietary inventory for program lineup.
+        /// </summary>
+        /// <param name="jobId">The job identifier.</param>
+        /// <returns>List of ProgramLineupProprietaryInventory objects</returns>
+        List<ProgramLineupProprietaryInventory> GetProprietaryInventoryForProgramLineup(int jobId);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -1222,7 +1230,7 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
             {
                 var latestJob = (from pvpj in context.plan_version_pricing_job
-                                 where pvpj.plan_versions.plan_id == planId && 
+                                 where pvpj.plan_versions.plan_id == planId &&
                                        pvpj.plan_version_id == pvpj.plan_versions.plan.latest_version_id
                                  select pvpj)
                                 // ignore canceled runs
@@ -1988,6 +1996,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        /// <inheritdoc/>
         public PlanPricingParametersDto GetPricingParametersForVersion(int versionId)
         {
             return _InReadUncommitedTransaction(context =>
@@ -2001,6 +2010,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
+        /// <inheritdoc/>
         public PlanPricingParametersDto GetLatestPricingParameters(int planId)
         {
             return _InReadUncommitedTransaction(context =>
@@ -2012,6 +2022,79 @@ namespace Services.Broadcast.Repositories
                               select parameters);
 
                 return _MapPricingParameters(entity.FirstOrDefault());
+            });
+        }
+
+        /// <inheritdoc/>
+        public List<ProgramLineupProprietaryInventory> GetProprietaryInventoryForProgramLineup(int jobId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var planVersion = (from pricingJob in context.plan_version_pricing_job
+                                   join pv in context.plan_versions on pricingJob.plan_version_id equals pv.id
+                                   where pricingJob.id == jobId
+                                   select pv).Single($"Could not find plan for job id = {jobId}");
+
+                //get all summary ids selected on the plan
+                var summaryIds = (from pv_ips in context.plan_version_pricing_parameter_inventory_proprietary_summaries
+                                  join pv_pp in context.plan_version_pricing_parameters
+                                    on pv_ips.plan_version_pricing_parameter_id equals pv_pp.id
+                                  where pv_pp.plan_version_pricing_job_id == jobId
+                                  select pv_ips.inventory_proprietary_summary_id).ToList();
+
+                //get all records based on the summary ids and plan target audience
+                var result = (from ips in context.inventory_proprietary_summary
+                              join ssa in context.inventory_proprietary_summary_station_audiences
+                                 on ips.id equals ssa.inventory_proprietary_summary_id
+                              join dpm in context.inventory_proprietary_daypart_program_mappings
+                                 on ips.inventory_proprietary_daypart_program_mappings_id equals dpm.id
+                              join dp in context.inventory_proprietary_daypart_programs
+                                 on dpm.inventory_proprietary_daypart_programs_id equals dp.id
+                              join aa in context.audience_audiences on ssa.audience_id equals aa.rating_audience_id
+                              join dd in context.daypart_defaults on dpm.daypart_default_id equals dd.id
+                              join g in context.genres on dp.genre_id equals g.id
+                              join s in context.stations on ssa.station_id equals s.id
+                              where summaryIds.Contains(ips.id)
+                                    && aa.rating_category_group_id == BroadcastConstants.RatingsGroupId
+                                    && aa.custom_audience_id == planVersion.target_audience_id
+                              select new
+                              {
+                                  ssa.station_id,
+                                  s.market_code,
+                                  dpm.daypart_default_id,
+                                  dpm.inventory_proprietary_daypart_programs_id,
+                                  ssa.impressions,
+                                  dp.program_name,
+                                  dd.daypart_id,
+                                  genre_name = g.name,
+                                  s.affiliation,
+                                  s.legacy_call_letters
+                              }).ToList();
+
+                if (result == null)
+                    throw new Exception($"No proprietary inventory summary were found for the plan {planVersion.plan_id}");
+
+                return result.GroupBy(x => new { x.station_id, x.daypart_default_id, x.inventory_proprietary_daypart_programs_id })
+                .Select(x =>
+                {
+                    var first = x.First();
+                    return new ProgramLineupProprietaryInventory
+                    {
+                        Station = new MarketCoverageByStation.Station
+                        {
+                            Id = x.Key.station_id,
+                            Affiliation = first.affiliation,
+                            LegacyCallLetters = first.legacy_call_letters
+                        },
+                        InventoryProprietaryDaypartProgramId = x.Key.inventory_proprietary_daypart_programs_id,
+                        ImpressionsPerWeek = x.Sum(y => y.impressions),
+                        ProgramName = first.program_name,
+                        Genre = first.genre_name,
+                        DaypartId = first.daypart_id,
+                        MarketCode = first.market_code.Value,
+                    };
+                })
+                .ToList();
             });
         }
     }

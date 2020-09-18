@@ -179,7 +179,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IDaypartDefaultService>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<ISharedFolderService>(),
                     IntegrationTestApplicationServiceFactory.Instance.Resolve<IDateTimeEngine>(),
-                    _WeeklyBreakdownEngine);
+                    _WeeklyBreakdownEngine,
+                    DaypartCache.Instance);
 
                 var campaign = _GetValidCampaignForSave();
                 campaign.Id = 1;
@@ -600,7 +601,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IDaypartDefaultService>(),
                 sharedFolderService,
                 IntegrationTestApplicationServiceFactory.Instance.Resolve<IDateTimeEngine>(),
-                _WeeklyBreakdownEngine);
+                _WeeklyBreakdownEngine,
+                DaypartCache.Instance);
 
             return campaignService;
         }
@@ -902,7 +904,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [Category("long_running")]
         public void ProgramLineupExport()
-        {           
+        {
             using (new TransactionScopeWrapper())
             {
                 const int planId = 1197;

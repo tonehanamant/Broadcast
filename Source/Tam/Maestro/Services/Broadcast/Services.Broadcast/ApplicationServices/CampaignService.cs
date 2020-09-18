@@ -1,4 +1,5 @@
-﻿using Common.Services.ApplicationServices;
+﻿using Common.Services;
+using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Hangfire;
@@ -129,7 +130,7 @@ namespace Services.Broadcast.ApplicationServices
     /// Operations related to the Campaign domain.
     /// </summary>
     /// <seealso cref="ICampaignService" />
-    public class CampaignService :BroadcastBaseClass, ICampaignService
+    public class CampaignService : BroadcastBaseClass, ICampaignService
     {
         private readonly ICampaignValidator _CampaignValidator;
         private readonly ICampaignRepository _CampaignRepository;
@@ -150,6 +151,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IStationProgramRepository _StationProgramRepository;
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
+        private readonly IDaypartCache _DaypartCache;
 
         public CampaignService(
             IDataRepositoryFactory dataRepositoryFactory,
@@ -165,7 +167,8 @@ namespace Services.Broadcast.ApplicationServices
             IDaypartDefaultService daypartDefaultService,
             ISharedFolderService sharedFolderService,
             IDateTimeEngine _dateTimeEngine,
-            IWeeklyBreakdownEngine weeklyBreakdownEngine)
+            IWeeklyBreakdownEngine weeklyBreakdownEngine,
+            IDaypartCache daypartCache)
         {
             _CampaignRepository = dataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _CampaignValidator = campaignValidator;
@@ -186,6 +189,7 @@ namespace Services.Broadcast.ApplicationServices
             _StationProgramRepository = dataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
             _DateTimeEngine = _dateTimeEngine;
             _WeeklyBreakdownEngine = weeklyBreakdownEngine;
+            _DaypartCache = daypartCache;
         }
 
         /// <inheritdoc />
@@ -488,12 +492,12 @@ namespace Services.Broadcast.ApplicationServices
         public CampaignReportData GetAndValidateCampaignReportData(CampaignReportRequest request)
         {
             var campaign = _CampaignRepository.GetCampaign(request.CampaignId);
-            
+
             if (!request.SelectedPlans.IsEmpty())
             {
                 campaign.Plans = campaign.Plans.Where(x => request.SelectedPlans.Contains(x.PlanId)).ToList();
             }
-            
+
             _ValidateCampaignLocking(campaign.Id);
             _ValidateSelectedPlans(request.ExportType, campaign.Plans);
 
@@ -538,7 +542,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             _ValidatePostingType(plans);
             _ValidateExportType(exportType, plans);
-            
+
             foreach (var plan in plans)
             {
                 _ValidatePlanLocking(plan.PlanId);
@@ -607,7 +611,7 @@ namespace Services.Broadcast.ApplicationServices
                 return;
 
             var firstPlanSecondaryAudiencesIds = plans.First().SecondaryAudiences.Select(x => x.AudienceId).ToList();
-            foreach(var plan in plans.Skip(1))
+            foreach (var plan in plans.Skip(1))
             {
                 if (plan.SecondaryAudiences.Count != firstPlanSecondaryAudiencesIds.Count ||
                     plan.SecondaryAudiences.Any(x => !firstPlanSecondaryAudiencesIds.Contains(x.AudienceId)))
@@ -647,18 +651,18 @@ namespace Services.Broadcast.ApplicationServices
                 }
             }
         }
-        
-        public Guid GenerateProgramLineupReport(ProgramLineupReportRequest request, string userName, 
+
+        public Guid GenerateProgramLineupReport(ProgramLineupReportRequest request, string userName,
             DateTime currentDate, string templatesFilePath)
         {
             var programLineupReportData = GetProgramLineupReportData(request, currentDate);
             var reportGenerator = new ProgramLineupReportGenerator(templatesFilePath);
             var report = reportGenerator.Generate(programLineupReportData);
-            
-			return _SharedFolderService.SaveFile(new SharedFolderFile
+
+            return _SharedFolderService.SaveFile(new SharedFolderFile
             {
-	            FolderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.PROGRAM_LINEUP_REPORTS),
-				FileNameWithExtension = report.Filename,
+                FolderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.PROGRAM_LINEUP_REPORTS),
+                FileNameWithExtension = report.Filename,
                 FileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 FileUsage = SharedFolderFileUsage.ProgramLineup,
                 CreatedDate = currentDate,
@@ -666,7 +670,7 @@ namespace Services.Broadcast.ApplicationServices
                 FileContent = report.Stream
             });
         }
-        
+
         public ProgramLineupReportData GetProgramLineupReportData(ProgramLineupReportRequest request, DateTime currentDate)
         {
             if (request.SelectedPlans.IsEmpty())
@@ -678,12 +682,16 @@ namespace Services.Broadcast.ApplicationServices
             var pricingJob = _GetLatestPricingJob(planId);
             var plan = _PlanRepository.GetPlan(planId);
             _ValidateCampaignLocking(plan.CampaignId);
-            var campaign = _CampaignRepository.GetCampaign(plan.CampaignId);            
+            var campaign = _CampaignRepository.GetCampaign(plan.CampaignId);
             var agency = _TrafficApiCache.GetAgency(campaign.AgencyId);
             var advertiser = _TrafficApiCache.GetAdvertiser(campaign.AdvertiserId);
             var guaranteedDemo = _AudienceService.GetAudienceById(plan.AudienceId);
             var spotLengths = _SpotLengthService.GetAllSpotLengths();
             var allocatedOpenMarketSpots = _PlanRepository.GetPlanPricingAllocatedSpotsByPlanId(planId);
+            var proprietaryInventory = _PlanRepository
+                .GetProprietaryInventoryForProgramLineup(plan.PricingParameters.JobId.Value);
+            _SetSpotLengthIdAndCalculateImpressions(plan, proprietaryInventory, spotLengths);
+            _LoadDaypartData(proprietaryInventory);
             var manifestIdsOpenMarket = allocatedOpenMarketSpots.Select(x => x.StationInventoryManifestId).Distinct();
             var manifestsOpenMarket = _InventoryRepository.GetStationInventoryManifestsByIds(manifestIdsOpenMarket)
                 .Where(x => x.Station != null && x.Station.MarketCode.HasValue)
@@ -693,17 +701,54 @@ namespace Services.Broadcast.ApplicationServices
             var primaryProgramsByManifestDaypartIds = _StationProgramRepository.GetPrimaryProgramsForManifestDayparts(manifestDaypartIds);
 
             return new ProgramLineupReportData(
-                plan, 
-                pricingJob, 
-                agency, 
-                advertiser, 
-                guaranteedDemo, 
-                spotLengths, 
+                plan,
+                pricingJob,
+                agency,
+                advertiser,
+                guaranteedDemo,
+                spotLengths,
                 currentDate,
                 allocatedOpenMarketSpots,
                 manifestsOpenMarket,
                 marketCoverages,
-                primaryProgramsByManifestDaypartIds);
+                primaryProgramsByManifestDaypartIds,
+                proprietaryInventory);
+        }
+
+        private void _LoadDaypartData(List<ProgramLineupProprietaryInventory> proprietaryInventory)
+        {
+            proprietaryInventory.ForEach(x => x.Daypart = _DaypartCache.GetDisplayDaypart(x.DaypartId));
+        }
+
+        private void _SetSpotLengthIdAndCalculateImpressions(PlanDto plan
+            , List<ProgramLineupProprietaryInventory> proprietaryInventory
+            , List<LookupDto> spotLengths)
+        {
+            const string SPOT_LENGTH_15 = "15";
+            const string SPOT_LENGTH_30 = "30";
+
+            int spotLengthIdI5 = spotLengths.Where(x => x.Display.Equals(SPOT_LENGTH_15)).Select(x => x.Id).Single();
+            int spotLengthId30 = spotLengths.Where(x => x.Display.Equals(SPOT_LENGTH_30)).Select(x => x.Id).Single();
+
+            int activeWeekCount = plan.WeeklyBreakdownWeeks.Where(w => w.NumberOfActiveDays > 0).Count();
+            var planspotLengthIds = plan.CreativeLengths.Select(x => x.SpotLengthId);
+
+            if (planspotLengthIds.Contains(spotLengthIdI5) && !planspotLengthIds.Contains(spotLengthId30))
+            {
+                proprietaryInventory.ForEach(x =>
+                {
+                    x.TotalImpressions = x.ImpressionsPerWeek * activeWeekCount / 2;
+                    x.SpotLengthId = spotLengthIdI5;
+                });
+            }
+            else
+            {
+                proprietaryInventory.ForEach(x =>
+                {
+                    x.TotalImpressions = x.ImpressionsPerWeek * activeWeekCount;
+                    x.SpotLengthId = spotLengthId30;
+                });
+            }
         }
 
         private PlanPricingJob _GetLatestPricingJob(int planId)

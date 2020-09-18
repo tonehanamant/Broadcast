@@ -512,6 +512,7 @@
     <Compile Include="Converters\MasterProgramListImporter.cs" />
     <Compile Include="Converters\VpvhFileImporter.cs" />
     <Compile Include="Entities\BroadcastEmployeeDto.cs" />
+    <Compile Include="Entities\Campaign\ProgramLineupProprietaryInventory.cs" />
     <Compile Include="Entities\CreativeLength.cs" />
     <Compile Include="ApplicationServices\StationMappingService.cs" />
     <Compile Include="ApplicationServices\NtiUniverseService.cs" />

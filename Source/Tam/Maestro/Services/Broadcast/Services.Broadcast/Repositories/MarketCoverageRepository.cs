@@ -197,7 +197,7 @@ namespace Services.Broadcast.Repositories
                             MarketName = x.market.geography_name,
                             Rank = x.rank,
                             Coverage = x.percentage_of_us,
-                            Stations = x.market.stations.Select(s => new MarketCoverageByStation.Market.Station
+                            Stations = x.market.stations.Select(s => new MarketCoverageByStation.Station
                             {
                                 Id = s.id,
                                 LegacyCallLetters = s.legacy_call_letters
@@ -225,7 +225,7 @@ namespace Services.Broadcast.Repositories
                             MarketCode = x.market_code,
                             Rank = x.rank,
                             Coverage = x.percentage_of_us,
-                            Stations = x.market.stations.Select(s => new MarketCoverageByStation.Market.Station
+                            Stations = x.market.stations.Select(s => new MarketCoverageByStation.Station
                             {
                                 LegacyCallLetters = s.legacy_call_letters
                             }).ToList()

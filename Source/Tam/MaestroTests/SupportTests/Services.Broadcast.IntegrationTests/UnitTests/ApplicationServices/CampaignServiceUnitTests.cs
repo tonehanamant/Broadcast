@@ -1,5 +1,6 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
+using Common.Services;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Moq;
@@ -26,11 +27,13 @@ using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using Unity;
 using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram.ManifestDaypart;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
     [Category("short_running")]
+    [UseReporter(typeof(DiffReporter))]
     public class CampaignServiceUnitTests
     {
         private const string _User = "UnitTest_User";
@@ -57,6 +60,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IStationProgramRepository> _StationProgramRepositoryMock;
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
         private Mock<IWeeklyBreakdownEngine> _WeeklyBreakdownEngineMock;
+        private readonly Mock<IDaypartCache> _DaypartCacheMock = new Mock<IDaypartCache>();
+
 
         [SetUp]
         public void SetUp()
@@ -112,7 +117,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void ReturnsFilteredCampaigns()
         {
             // Arrange
@@ -152,7 +156,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void ReturnsCampaignsFilteredUsingDefaultFilter()
         {
             // Arrange
@@ -464,7 +467,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual("Error from SaveSummary", caught.Message);
             _CampaignAggregatorMock.Verify(s => s.Aggregate(campaignId), Times.Once);
             _CampaignSummaryRepositoryMock.Verify(s => s.SaveSummary(It.IsAny<CampaignSummaryDto>()), Times.Once);
-            _CampaignSummaryRepositoryMock.Verify(s => 
+            _CampaignSummaryRepositoryMock.Verify(s =>
                 s.SetSummaryProcessingStatusToError(campaignId, $"Exception caught during processing : Error from SaveSummary"), Times.Once);
         }
 
@@ -814,7 +817,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _PlanRepositoryMock
                 .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(new PlanDto
-                { 
+                {
                     Dayparts = _GetPlanDayparts()
                 });
 
@@ -850,7 +853,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _PlanRepositoryMock
                 .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(new PlanDto
-                { 
+                {
                     Dayparts = _GetPlanDayparts()
                 });
 
@@ -878,7 +881,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void ReturnsData_ProgramLineupReport_45UnEquivalized()
         {
             // Arrange
@@ -907,8 +909,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Equivalized = false,
                     PostingType = PostingTypeEnum.NTI,
                     TargetImpressions = 250,
-                    Dayparts = _GetPlanDayparts()
+                    Dayparts = _GetPlanDayparts(),
+                    PricingParameters = new PlanPricingParametersDto { JobId = 1 },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { NumberOfActiveDays = 7 } }
                 });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetProprietaryInventoryForProgramLineup(It.IsAny<int>()))
+                .Returns(_GetProprietaryLineupData());
 
             _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(It.IsAny<int>()))
@@ -924,6 +932,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 {
                     Success = true
                 });
+
+            _DaypartCacheMock.Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                .Returns(_GetDisplayDaypart());
 
             _SetupBaseProgramLineupTestData();
 
@@ -957,7 +968,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void ProgramLineup_MultipleCreativeLengths()
         {
             // Arrange
@@ -990,8 +1000,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Equivalized = true,
                     PostingType = PostingTypeEnum.NTI,
                     TargetImpressions = 250,
-                    Dayparts = _GetPlanDayparts()
+                    Dayparts = _GetPlanDayparts(),
+                    PricingParameters = new PlanPricingParametersDto { JobId = 1 },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { NumberOfActiveDays = 7 } }
                 });
+            _PlanRepositoryMock
+                .Setup(x => x.GetProprietaryInventoryForProgramLineup(It.IsAny<int>()))
+                .Returns(_GetProprietaryLineupData());
 
             _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(It.IsAny<int>()))
@@ -1007,6 +1022,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 {
                     Success = true
                 });
+
+            _DaypartCacheMock.Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                .Returns(_GetDisplayDaypart());
 
             _SetupBaseProgramLineupTestData();
 
@@ -1039,51 +1057,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
-        private List<PlanDaypartDto> _GetPlanDayparts()
-        {
-            return new List<PlanDaypartDto>
-            {
-                new PlanDaypartDto
-                {
-                    DaypartCodeId = 10001,
-                    StartTimeSeconds = 50,
-                    EndTimeSeconds = 150
-                },
-                new PlanDaypartDto
-                {
-                    DaypartCodeId = 20001,
-                    StartTimeSeconds = 230,
-                    EndTimeSeconds = 280
-                },
-                new PlanDaypartDto
-                {
-                    DaypartCodeId = 30002,
-                    StartTimeSeconds = 350,
-                    EndTimeSeconds = 450
-                },
-                new PlanDaypartDto
-                {
-                    DaypartCodeId = 40001,
-                    StartTimeSeconds = 100,
-                    EndTimeSeconds = 200
-                },
-                new PlanDaypartDto
-                {
-                    DaypartCodeId = 50001,
-                    StartTimeSeconds = 100,
-                    EndTimeSeconds = 200
-                },
-                new PlanDaypartDto
-                {
-                    DaypartCodeId = 60001,
-                    StartTimeSeconds = 200,
-                    EndTimeSeconds = 299
-                }
-            };
-        }
-
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void ProgramLineup_MultipleCreativeLengths_UnEquivalized()
         {
             // Arrange
@@ -1116,8 +1090,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Equivalized = false,
                     PostingType = PostingTypeEnum.NTI,
                     TargetImpressions = 250,
-                    Dayparts = _GetPlanDayparts()
+                    Dayparts = _GetPlanDayparts(),
+                    PricingParameters = new PlanPricingParametersDto { JobId = 1 },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { NumberOfActiveDays = 7 } }
                 });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetProprietaryInventoryForProgramLineup(It.IsAny<int>()))
+                .Returns(_GetProprietaryLineupData());
 
             _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(It.IsAny<int>()))
@@ -1133,6 +1113,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 {
                     Success = true
                 });
+
+            _DaypartCacheMock.Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                .Returns(_GetDisplayDaypart());
 
             _SetupBaseProgramLineupTestData();
 
@@ -1155,7 +1138,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void ReturnsData_ProgramLineup_45Equivalized()
         {
             // Arrange
@@ -1184,8 +1166,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Equivalized = true,
                     PostingType = PostingTypeEnum.NTI,
                     TargetImpressions = 250,
-                    Dayparts = _GetPlanDayparts()
+                    Dayparts = _GetPlanDayparts(),
+                    PricingParameters = new PlanPricingParametersDto { JobId = 1 },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { NumberOfActiveDays = 7 } }
                 });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetProprietaryInventoryForProgramLineup(It.IsAny<int>()))
+                .Returns(_GetProprietaryLineupData());
 
             _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(It.IsAny<int>()))
@@ -1201,6 +1189,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 {
                     Success = true
                 });
+
+            _DaypartCacheMock.Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                .Returns(_GetDisplayDaypart());
 
             _SetupBaseProgramLineupTestData();
 
@@ -1234,7 +1225,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void ReturnsData_ProgramLineup_30Equivalized()
         {
             // Arrange
@@ -1263,8 +1253,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Equivalized = true,
                     PostingType = PostingTypeEnum.NTI,
                     TargetImpressions = 250,
-                    Dayparts = _GetPlanDayparts()
+                    Dayparts = _GetPlanDayparts(),
+                    PricingParameters = new PlanPricingParametersDto { JobId = 1 },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { NumberOfActiveDays = 7 } }
                 });
+
+            _PlanRepositoryMock
+                .Setup(x => x.GetProprietaryInventoryForProgramLineup(It.IsAny<int>()))
+                .Returns(_GetProprietaryLineupData());
 
             _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(It.IsAny<int>()))
@@ -1280,6 +1276,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                  {
                      Success = true
                  });
+
+            _DaypartCacheMock.Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                .Returns(_GetDisplayDaypart());
 
             _SetupBaseProgramLineupTestData();
 
@@ -1313,7 +1312,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void ProgramLineup_RollupStationSpecificNewsPrograms()
         {
             // Arrange
@@ -1368,10 +1366,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                             StartTimeSeconds = 72000,
                             EndTimeSeconds = 299
                         }
-                    }
+                    },
+                    PricingParameters = new PlanPricingParametersDto { JobId = 1 },
+                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek { NumberOfActiveDays = 7 } }
                 });
 
-        _CampaignRepositoryMock
+            _PlanRepositoryMock
+                .Setup(x => x.GetProprietaryInventoryForProgramLineup(It.IsAny<int>()))
+                .Returns(_GetProprietaryLineupData());
+
+            _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(It.IsAny<int>()))
                 .Returns(new CampaignDto
                 {
@@ -1385,6 +1389,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 {
                     Success = true
                 });
+
+            _DaypartCacheMock.Setup(x => x.GetDisplayDaypart(It.IsAny<int>()))
+                .Returns(_GetDisplayDaypart());
 
             _SetupBaseProgramLineupForRollupTestData();
 
@@ -1418,7 +1425,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void CampaignExport_MultipleCreativeLengths()
         {
             // Arrange
@@ -1571,7 +1577,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void CampaignExport_MultipleCreativeLengths_BP1_229()
         {
             // Arrange
@@ -1755,7 +1760,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void CampaignExport_DuplicateProgramName()
         {
             // Arrange
@@ -1912,7 +1916,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
         public void CampaignExport_CustomDaypart()
         {
             // Arrange
@@ -2342,19 +2345,43 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     {
                         MarketCode = 100,
                         Rank = 2,
-                        MarketName = "Binghamton"
+                        MarketName = "Binghamton",
+                        Stations = new List<MarketCoverageByStation.Station>
+                        {
+                            new MarketCoverageByStation.Station
+                            {
+                                Id = 101,
+                                LegacyCallLetters = "A101"
+                            }
+                        }
                     },
                     new MarketCoverageByStation.Market
                     {
                         MarketCode = 200,
                         Rank = 1,
-                        MarketName = "New York"
+                        MarketName = "New York",
+                        Stations = new List<MarketCoverageByStation.Station>
+                        {
+                            new MarketCoverageByStation.Station
+                            {
+                                Id = 201,
+                                LegacyCallLetters = "B201"
+                            }
+                        }
                     },
                     new MarketCoverageByStation.Market
                     {
                         MarketCode = 300,
                         Rank = 3,
-                        MarketName = "Macon"
+                        MarketName = "Macon",
+                        Stations = new List<MarketCoverageByStation.Station>
+                        {
+                            new MarketCoverageByStation.Station
+                            {
+                                Id = 301,
+                                LegacyCallLetters = "C301"
+                            }
+                        }
                     }
                 }
             };
@@ -2989,7 +3016,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _DaypartDefaultServiceMock.Object,
                 _SharedFolderServiceMock.Object,
                 _DateTimeEngineMock.Object,
-                _WeeklyBreakdownEngineMock.Object);
+                _WeeklyBreakdownEngineMock.Object,
+                _DaypartCacheMock.Object);
         }
 
         private CampaignDto _GetCampaignForExport(int campaignId, List<int> selectedPlanIds)
@@ -3113,7 +3141,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                             }
                         }
                     }
-                }                
+                }
             };
             planDto.WeeklyBreakdownWeeks = _GetWeeklyBreakdownWeeks(planDto, new List<int> { 846, 847, 848, 849, 850 });
             return planDto;
@@ -3122,7 +3150,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private List<WeeklyBreakdownWeek> _GetWeeklyBreakdownWeeks(PlanDto planDto, List<int> weekIds)
         {
             List<WeeklyBreakdownWeek> result = new List<WeeklyBreakdownWeek>();
-            foreach(int id in weekIds)
+            foreach (int id in weekIds)
             {
                 foreach (var c in planDto.CreativeLengths)
                 {
@@ -3244,6 +3272,85 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                         ModifiedDate = new DateTime(2017,10,17),
                         CampaignStatus = PlanStatusEnum.Working
                     }
+                }
+            };
+        }
+
+        private List<ProgramLineupProprietaryInventory> _GetProprietaryLineupData()
+        {
+            return new List<ProgramLineupProprietaryInventory>
+            {
+                new ProgramLineupProprietaryInventory{
+                    Genre = "Comedy",
+                    ProgramName = "The big bang theory",
+                    DaypartId = 19,
+                    InventoryProprietaryDaypartProgramId  = 1,
+                    MarketCode = 100,
+                    SpotLengthId = 1,
+                    Station = new MarketCoverageByStation.Station{
+                        Affiliation = "A101 Affiliation",
+                        Id = 101,
+                        LegacyCallLetters = "WNBC"
+                    },
+                    ImpressionsPerWeek = 19999
+                }
+            };
+        }
+
+        private DisplayDaypart _GetDisplayDaypart()
+        {
+            return new DisplayDaypart
+            {
+                Code = "PRA",
+                Name = "Prime Access",
+                Monday = true,
+                Thursday = true,
+                Sunday = true,
+                StartTime = 120,
+                EndTime = 45600,
+                StartAMPM = "6PM-8PM"
+            };
+        }
+
+        private List<PlanDaypartDto> _GetPlanDayparts()
+        {
+            return new List<PlanDaypartDto>
+            {
+                new PlanDaypartDto
+                {
+                    DaypartCodeId = 10001,
+                    StartTimeSeconds = 50,
+                    EndTimeSeconds = 150
+                },
+                new PlanDaypartDto
+                {
+                    DaypartCodeId = 20001,
+                    StartTimeSeconds = 230,
+                    EndTimeSeconds = 280
+                },
+                new PlanDaypartDto
+                {
+                    DaypartCodeId = 30002,
+                    StartTimeSeconds = 350,
+                    EndTimeSeconds = 450
+                },
+                new PlanDaypartDto
+                {
+                    DaypartCodeId = 40001,
+                    StartTimeSeconds = 100,
+                    EndTimeSeconds = 200
+                },
+                new PlanDaypartDto
+                {
+                    DaypartCodeId = 50001,
+                    StartTimeSeconds = 100,
+                    EndTimeSeconds = 200
+                },
+                new PlanDaypartDto
+                {
+                    DaypartCodeId = 60001,
+                    StartTimeSeconds = 200,
+                    EndTimeSeconds = 299
                 }
             };
         }

@@ -52,17 +52,22 @@ namespace Services.Broadcast.Entities.Campaign
             List<PlanPricingAllocatedSpot> allocatedSpots,
             List<StationInventoryManifest> manifests,
             MarketCoverageByStation marketCoverageByStation,
-            Dictionary<int, Program> primaryProgramsByManifestDaypartIds)
+            Dictionary<int, Program> primaryProgramsByManifestDaypartIds,
+            List<ProgramLineupProprietaryInventory> proprietaryInventory)
         {
             ExportFileName = string.Format(FILENAME_FORMAT, plan.Name, currentDate.ToString(DATE_FORMAT_FILENAME));
+            var marketCoverageByMarketCode = marketCoverageByStation.Markets.ToDictionary(x => x.MarketCode, x => x);
 
             _PopulateHeaderData(plan, planPricingJob, agency, advertiser, guaranteedDemo, spotLengths, currentDate);
-            IEnumerable<DetailedViewRowData> detailedRowsData = _GetDetailedViewRowData(
-                plan,
-                allocatedSpots,
-                manifests,
-                marketCoverageByStation,
-                primaryProgramsByManifestDaypartIds);
+
+            List<DetailedViewRowData> detailedRowsData = _GetDetailedViewRowDataForOpenMarket(
+                                                        plan,
+                                                        allocatedSpots,
+                                                        manifests,
+                                                        marketCoverageByMarketCode,
+                                                        primaryProgramsByManifestDaypartIds);
+            detailedRowsData.AddRange(_GetDetailedViewRowDataForProprietary(proprietaryInventory, marketCoverageByMarketCode));
+
             double totalAllocatedImpressions = detailedRowsData.Sum(x => x.TotalSpotsImpressions);
             DetailedViewRows = _MapToDetailedViewRows(detailedRowsData);
 
@@ -75,28 +80,39 @@ namespace Services.Broadcast.Entities.Campaign
                 , true);
             AllocationByDMAViewRows = _MapDMAToAllocationViewRows(detailedRowsData, totalAllocatedImpressions);
 
-            AllocationBySpotLengthViewRows = _MapSpotLengthToAllocationViewRows(allocatedSpots, totalAllocatedImpressions, spotLengths, plan.Equivalized);
+            AllocationBySpotLengthViewRows = _MapSpotLengthToAllocationViewRows(allocatedSpots, proprietaryInventory, totalAllocatedImpressions, spotLengths, plan.Equivalized);
+        }
+
+        private IEnumerable<DetailedViewRowData> _GetDetailedViewRowDataForProprietary(
+            List<ProgramLineupProprietaryInventory> proprietaryInventory
+            , Dictionary<int, MarketCoverageByStation.Market> markets)
+        {
+            return proprietaryInventory.Select(x =>
+            {
+                return new DetailedViewRowData
+                {
+                    DaypartCode = x.Daypart.Code,
+                    Dayparts = new List<DisplayDaypart> { x.Daypart },
+                    Genre = x.Genre,
+                    MarketGeographyName = markets[x.MarketCode].MarketName,
+                    Rank = markets[x.MarketCode].Rank,
+                    ProgramName = x.ProgramName,
+                    StationAffiliation = x.Station.Affiliation,
+                    StationLegacyCallLetters = x.Station.LegacyCallLetters,
+                    TotalSpotsImpressions = x.TotalImpressions
+                };
+            }).ToList();
         }
 
         private List<AllocationViewRowDisplay> _MapSpotLengthToAllocationViewRows(List<PlanPricingAllocatedSpot> allocatedSpots
+            , List<ProgramLineupProprietaryInventory> proprietaryInventory
             , double totalAllocatedImpressions, List<LookupDto> spotLengths, bool equivalized)
         {
             Dictionary<int, double> data = new Dictionary<int, double>();
-            allocatedSpots.ForEach(spot =>
-            {
-                spot.SpotFrequencies.ForEach(frequency =>
-               {
-                   if (data.ContainsKey(frequency.SpotLengthId)){
-                       data[frequency.SpotLengthId] += frequency.Spots * frequency.Impressions;
-                   }
-                   else
-                   {
-                       data.Add(frequency.SpotLengthId, frequency.Spots * frequency.Impressions);
-                   }
-               });
-            });
+            _LoadImpressionsBySpotLengthForOpenMarket(allocatedSpots, data);
+            _LoadImpressionsBySpotLengthForProprietary(proprietaryInventory, data);
             return data
-                .OrderBy(x=> int.Parse(spotLengths.Single(w => w.Id == x.Key).Display))
+                .OrderBy(x => int.Parse(spotLengths.Single(w => w.Id == x.Key).Display))
                 .Select(x =>
                 {
                     var spotLengthDisplay = spotLengths.Single(w => w.Id == x.Key).Display;
@@ -132,11 +148,11 @@ namespace Services.Broadcast.Entities.Campaign
             ClientContact = string.Empty;
         }
 
-        private IEnumerable<DetailedViewRowData> _GetDetailedViewRowData(
+        private List<DetailedViewRowData> _GetDetailedViewRowDataForOpenMarket(
             PlanDto plan,
             List<PlanPricingAllocatedSpot> allocatedSpots,
             List<StationInventoryManifest> manifests,
-            MarketCoverageByStation marketCoverageByStation,
+            Dictionary<int, MarketCoverageByStation.Market> markets,
             Dictionary<int, Program> primaryProgramsByManifestDaypartIds)
         {
             var dataRows = new List<DetailedViewRowData>();
@@ -148,14 +164,12 @@ namespace Services.Broadcast.Entities.Campaign
                 .GroupBy(x => x.StationInventoryManifestId)
                 .ToDictionary(x => x.Key, x => x.ToList());
 
-            var marketCoverageByMarketCode = marketCoverageByStation.Markets.ToDictionary(x => x.MarketCode, x => x);
-
             foreach (var manifest in manifests)
             {
                 if (!spotsByManifest.TryGetValue(manifest.Id.Value, out var allocatedSpotsForManifest))
                     continue;
 
-                var coverage = marketCoverageByMarketCode[manifest.Station.MarketCode.Value];
+                var coverage = markets[manifest.Station.MarketCode.Value];
 
                 // OpenMarket manifest has only one daypart
                 // This needs to be updated when we start passing other sources to pricing
@@ -237,17 +251,22 @@ namespace Services.Broadcast.Entities.Campaign
                 .OrderBy(x => x.Rank)
                 .ThenBy(x => x.StationAffiliation)
                 .ThenBy(x => x.ProgramName)
-                .Select(x => new DetailedViewRowDisplay
+                .GroupBy(x => new { x.DaypartCode, x.Genre, x.MarketGeographyName, x.ProgramName, x.Rank, x.StationLegacyCallLetters })
+                .Select(x =>
                 {
-                    Rank = x.Rank,
-                    DMA = x.MarketGeographyName.ToUpper(),
-                    Station = x.StationLegacyCallLetters.ToUpper(),
-                    NetworkAffiliation = x.StationAffiliation.ToUpper(),
-                    Days = _CalculateActiveDays(x.Dayparts.First().Days),
-                    TimePeriods = string.Join(", ", x.Dayparts.Select(y => y.ToTimeString().ToUpper())),
-                    Program = x.ProgramName.ToUpper(),
-                    Genre = x.Genre.ToUpper(),
-                    Daypart = x.DaypartCode.ToUpper()
+                    var first = x.First();
+                    return new DetailedViewRowDisplay
+                    {
+                        Rank = x.Key.Rank,
+                        DMA = x.Key.MarketGeographyName.ToUpper(),
+                        Station = x.Key.StationLegacyCallLetters.ToUpper(),
+                        NetworkAffiliation = first.StationAffiliation.ToUpper(),
+                        Days = _CalculateActiveDays(first.Dayparts.First().Days),
+                        TimePeriods = string.Join(", ", first.Dayparts.Select(y => y.ToTimeString().ToUpper())),
+                        Program = x.Key.ProgramName.ToUpper(),
+                        Genre = x.Key.Genre.ToUpper(),
+                        Daypart = first.DaypartCode.ToUpper()
+                    };
                 })
                 .ToList();
         }
@@ -422,6 +441,41 @@ namespace Services.Broadcast.Entities.Campaign
             return totalAllocatedImpressions == 0
                 ? 0
                 : impressions / totalAllocatedImpressions;
+        }
+
+        private static void _LoadImpressionsBySpotLengthForProprietary(List<ProgramLineupProprietaryInventory> proprietaryInventory
+            , Dictionary<int, double> data)
+        {
+            proprietaryInventory.ForEach(spot =>
+            {
+                if (data.ContainsKey(spot.SpotLengthId))
+                {
+                    data[spot.SpotLengthId] += spot.TotalImpressions;
+                }
+                else
+                {
+                    data.Add(spot.SpotLengthId, spot.TotalImpressions);
+                }
+            });
+        }
+
+        private static void _LoadImpressionsBySpotLengthForOpenMarket(List<PlanPricingAllocatedSpot> allocatedSpots
+            , Dictionary<int, double> data)
+        {
+            allocatedSpots.ForEach(spot =>
+            {
+                spot.SpotFrequencies.ForEach(frequency =>
+                {
+                    if (data.ContainsKey(frequency.SpotLengthId))
+                    {
+                        data[frequency.SpotLengthId] += frequency.Spots * frequency.Impressions;
+                    }
+                    else
+                    {
+                        data.Add(frequency.SpotLengthId, frequency.Spots * frequency.Impressions);
+                    }
+                });
+            });
         }
 
         public class DetailedViewRowDisplay

@@ -4,36 +4,44 @@
   "Agency": "1st Image Marketing",
   "AllocationByDaypartViewRows": [
     {
+      "FilterLabel": "PRA",
+      "Weight": 0.99502463
+    },
+    {
       "FilterLabel": "LN",
-      "Weight": 0.4
+      "Weight": 0.00199015
     },
     {
       "FilterLabel": "EM",
-      "Weight": 0.4
+      "Weight": 0.00199015
     },
     {
       "FilterLabel": "EMN",
-      "Weight": 0.2
+      "Weight": 0.00099507
     }
   ],
   "AllocationByDMAViewRows": [
     {
       "FilterLabel": "NEW YORK",
-      "Weight": 0.4
+      "Weight": 0.00199015
     },
     {
       "FilterLabel": "BINGHAMTON",
-      "Weight": 0.2
+      "Weight": 0.9960197
     },
     {
       "FilterLabel": "MACON",
-      "Weight": 0.4
+      "Weight": 0.00199015
     }
   ],
   "AllocationByGenreViewRows": [
     {
+      "FilterLabel": "COMEDY",
+      "Weight": 0.99502463
+    },
+    {
       "FilterLabel": "NEWS",
-      "Weight": 1.0
+      "Weight": 0.00497537
     }
   ],
   "AllocationBySpotLengthViewRows": [
@@ -46,32 +54,39 @@
   "ClientContact": "",
   "DefaultViewRows": [
     {
+      "Genre": "COMEDY",
+      "NoOfMarkets": 1,
+      "NoOfStations": 1,
+      "Program": "THE BIG BANG THEORY",
+      "Weight": 0.99502463
+    },
+    {
       "Genre": "NEWS",
       "NoOfMarkets": 1,
       "NoOfStations": 1,
       "Program": "MIDDAY NEWS",
-      "Weight": 0.4
+      "Weight": 0.00199015
     },
     {
       "Genre": "NEWS",
       "NoOfMarkets": 1,
       "NoOfStations": 1,
       "Program": "MORNING NEWS",
-      "Weight": 0.2
+      "Weight": 0.00099507
     },
     {
       "Genre": "NEWS",
       "NoOfMarkets": 1,
       "NoOfStations": 1,
       "Program": "EVENING NEWS",
-      "Weight": 0.2
+      "Weight": 0.00099507
     },
     {
       "Genre": "NEWS",
       "NoOfMarkets": 1,
       "NoOfStations": 1,
       "Program": "LATE NEWS",
-      "Weight": 0.2
+      "Weight": 0.00099507
     }
   ],
   "DetailedViewRows": [
@@ -85,6 +100,17 @@
       "Rank": 1,
       "Station": "WTTV",
       "TimePeriods": "11AM-1PM"
+    },
+    {
+      "Daypart": "PRA",
+      "Days": "M-Su",
+      "DMA": "BINGHAMTON",
+      "Genre": "COMEDY",
+      "NetworkAffiliation": "A101 AFFILIATION",
+      "Program": "THE BIG BANG THEORY",
+      "Rank": 2,
+      "Station": "WNBC",
+      "TimePeriods": "12:02AM-12:40PM"
     },
     {
       "Daypart": "EMN",

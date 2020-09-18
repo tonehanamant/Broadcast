@@ -65,28 +65,6 @@
     },
     {
       "Daypart": "MDN",
-      "Days": "Sa-Su",
-      "DMA": "NEW YORK",
-      "Genre": "CHILDREN",
-      "NetworkAffiliation": "CW",
-      "Program": "EARLY NEWS",
-      "Rank": 1,
-      "Station": "WPIX",
-      "TimePeriods": "12AM-12:30AM"
-    },
-    {
-      "Daypart": "MDN",
-      "Days": "Sa-Su",
-      "DMA": "NEW YORK",
-      "Genre": "CHILDREN",
-      "NetworkAffiliation": "CW",
-      "Program": "EARLY NEWS",
-      "Rank": 1,
-      "Station": "WPIX",
-      "TimePeriods": "12AM-12:33AM"
-    },
-    {
-      "Daypart": "MDN",
       "Days": "M-F",
       "DMA": "PORTLAND-AUBURN",
       "Genre": "COMEDY",
@@ -95,28 +73,6 @@
       "Rank": 79,
       "Station": "WPFO",
       "TimePeriods": "12AM-12:30AM"
-    },
-    {
-      "Daypart": "MDN",
-      "Days": "Sa-Su",
-      "DMA": "PORTLAND-AUBURN",
-      "Genre": "COMEDY",
-      "NetworkAffiliation": "FOX",
-      "Program": "LATE NEWS",
-      "Rank": 79,
-      "Station": "WPFO",
-      "TimePeriods": "12AM-12:33AM"
-    },
-    {
-      "Daypart": "MDN",
-      "Days": "Sa-Su",
-      "DMA": "PORTLAND-AUBURN",
-      "Genre": "COMEDY",
-      "NetworkAffiliation": "FOX",
-      "Program": "LATE NEWS",
-      "Rank": 79,
-      "Station": "WPFO",
-      "TimePeriods": "12AM-12:33AM"
     }
   ],
   "ExportFileName": "Program_Lineup_Report_Plan Pricing 2_04042020.xlsx",
