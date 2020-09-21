@@ -217,7 +217,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IAdvertiserService, AdvertiserService>();
             unityContainer.RegisterType<IProductService, ProductService>();
             
-            unityContainer.RegisterType<IDaypartDefaultService, DaypartDefaultService>();
+            unityContainer.RegisterType<IStandardDaypartService, StandardDaypartService>();
             unityContainer.RegisterType<IShowTypeService, ShowTypeService>();
             unityContainer.RegisterType<IContainTypeService, ContainTypeService>();
             unityContainer.RegisterType<IAffiliateService, AffiliateService>();

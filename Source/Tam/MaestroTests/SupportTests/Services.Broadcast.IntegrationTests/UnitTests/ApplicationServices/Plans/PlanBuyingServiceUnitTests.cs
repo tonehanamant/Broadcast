@@ -48,7 +48,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IStationProgramRepository> _StationProgramRepositoryMock;
         private Mock<IMarketRepository> _MarketRepositoryMock;
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
-        private Mock<IDaypartDefaultRepository> _DaypartDefaultRepositoryMock;
+        private Mock<IStandardDaypartRepository> _StandardDaypartRepositoryMock;
         private Mock<ICampaignRepository> _CampaignRepositoryMock;
         private Mock<IWeeklyBreakdownEngine> _WeeklyBreakdownEngineMock;
         private Mock<IPlanBuyingBandCalculationEngine> _PlanBuyingBandCalculationEngineMock;
@@ -100,7 +100,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _StationProgramRepositoryMock = new Mock<IStationProgramRepository>();
             _MarketRepositoryMock = new Mock<IMarketRepository>();
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
-            _DaypartDefaultRepositoryMock = new Mock<IDaypartDefaultRepository>();
+            _StandardDaypartRepositoryMock = new Mock<IStandardDaypartRepository>();
             _CampaignRepositoryMock = new Mock<ICampaignRepository>();
             _WeeklyBreakdownEngineMock = new Mock<IWeeklyBreakdownEngine>();
             _PlanBuyingBandCalculationEngineMock = new Mock<IPlanBuyingBandCalculationEngine>();
@@ -130,9 +130,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetCurrentMoment())
                 .Returns(new DateTime(2020, 2, 4, 15, 31, 27));
 
-            _DaypartDefaultRepositoryMock
-                .Setup(x => x.GetAllDaypartDefaults())
-                .Returns(DaypartsTestData.GetAllDaypartDefaultsWithBaseData());
+            _StandardDaypartRepositoryMock
+                .Setup(x => x.GetAllStandardDayparts())
+                .Returns(DaypartsTestData.GetAllStandardDaypartsWithBaseData());
 
             _InventoryRepositoryMock
                 .Setup(x => x.GetInventorySources())
@@ -159,8 +159,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_StationProgramRepositoryMock.Object);
 
             _DataRepositoryFactoryMock
-                .Setup(x => x.GetDataRepository<IDaypartDefaultRepository>())
-                .Returns(_DaypartDefaultRepositoryMock.Object);
+                .Setup(x => x.GetDataRepository<IStandardDaypartRepository>())
+                .Returns(_StandardDaypartRepositoryMock.Object);
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IMarketRepository>())

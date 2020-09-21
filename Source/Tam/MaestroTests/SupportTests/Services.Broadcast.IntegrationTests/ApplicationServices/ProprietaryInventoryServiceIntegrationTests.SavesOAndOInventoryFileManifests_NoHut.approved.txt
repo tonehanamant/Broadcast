@@ -37,11 +37,11 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News/GMA Weekend",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [],
@@ -140,11 +140,11 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News/GMA Weekend",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [],
@@ -231,11 +231,11 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News/GMA Weekend",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [],

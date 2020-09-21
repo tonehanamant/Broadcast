@@ -37,11 +37,11 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News at 430a",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [],
@@ -116,11 +116,11 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News/GMA Weekend",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [],
@@ -219,11 +219,11 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News/GMA Weekend",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [],
@@ -310,11 +310,11 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News at Noon",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [],
@@ -389,11 +389,11 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News at 4p",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [],
@@ -504,11 +504,11 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News at 5p",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [],
@@ -607,11 +607,11 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News at 11p",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [],
@@ -722,11 +722,11 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News at 430a",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [],
@@ -801,11 +801,11 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News/GMA Weekend",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [],
@@ -904,11 +904,11 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News/GMA Weekend",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [],
@@ -995,11 +995,11 @@
           "_Tuesday": false,
           "_Wednesday": false
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "Eyewitness News/GMA Weekend",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [],

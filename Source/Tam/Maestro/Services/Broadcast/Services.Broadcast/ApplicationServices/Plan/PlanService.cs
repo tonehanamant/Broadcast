@@ -152,7 +152,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IMediaMonthAndWeekAggregateCache _MediaWeekCache;
         private readonly IPlanAggregator _PlanAggregator;
         private readonly IPlanSummaryRepository _PlanSummaryRepository;
-        private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
+        private readonly IStandardDaypartRepository _StandardDaypartRepository;
         private readonly ICampaignRepository _CampaignRepository;
         private readonly ICampaignAggregationJobTrigger _CampaignAggregationJobTrigger;
         private readonly ISpotLengthEngine _SpotLengthEngine;
@@ -160,13 +160,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IPlanPricingService _PlanPricingService;
         private readonly IPlanBuyingService _PlanBuyingService;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
-        private readonly IDaypartDefaultService _DaypartDefaultService;
+        private readonly IStandardDaypartService _StandardDaypartService;
         private readonly IDayRepository _DayRepository;
         private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
-        private const string _DaypartDefaultNotFoundMessage = "Unable to find daypart default";
-        private const string _UnsupportedDeliveryTypeMessage = "Unsupported Delivery Type";
+        private const string _StandardDaypartNotFoundMessage = "Unable to find standard daypart";
         
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator
@@ -179,7 +178,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , IPlanPricingService planPricingService
             , IPlanBuyingService planBuyingService
             , IQuarterCalculationEngine quarterCalculationEngine
-            , IDaypartDefaultService daypartDefaultService
+            , IStandardDaypartService standardDaypartService
             , IWeeklyBreakdownEngine weeklyBreakdownEngine
             , ICreativeLengthEngine creativeLengthEngine, IFeatureToggleHelper featureToggleHelper)
         {
@@ -190,7 +189,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _CampaignRepository = broadcastDataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _PlanSummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanSummaryRepository>();
-            _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
+            _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
             _DayRepository = broadcastDataRepositoryFactory.GetDataRepository<IDayRepository>();
             _PlanAggregator = planAggregator;
             _CampaignAggregationJobTrigger = campaignAggregationJobTrigger;
@@ -199,7 +198,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanPricingService = planPricingService;
             _PlanBuyingService = planBuyingService;
             _QuarterCalculationEngine = quarterCalculationEngine;
-            _DaypartDefaultService = daypartDefaultService;
+            _StandardDaypartService = standardDaypartService;
             _WeeklyBreakdownEngine = weeklyBreakdownEngine;
             _CreativeLengthEngine = creativeLengthEngine;
             _FeatureToggleHelper = featureToggleHelper;
@@ -385,14 +384,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private void _CalculateDaypartOverrides(List<PlanDaypartDto> planDayparts)
         {
-            var daypartDefaults = _DaypartDefaultRepository.GetAllDaypartDefaultsWithAllData();
+            var standardDayparts = _StandardDaypartRepository.GetAllStandardDaypartsWithAllData();
 
             foreach (var planDaypart in planDayparts)
             {
-                var daypartDefault = daypartDefaults.Single(x => x.Id == planDaypart.DaypartCodeId, _DaypartDefaultNotFoundMessage);
+                var standardDaypart = standardDayparts.Single(x => x.Id == planDaypart.DaypartCodeId, _StandardDaypartNotFoundMessage);
 
-                planDaypart.IsStartTimeModified = planDaypart.StartTimeSeconds != daypartDefault.DefaultStartTimeSeconds;
-                planDaypart.IsEndTimeModified = planDaypart.EndTimeSeconds != daypartDefault.DefaultEndTimeSeconds;
+                planDaypart.IsStartTimeModified = planDaypart.StartTimeSeconds != standardDaypart.DefaultStartTimeSeconds;
+                planDaypart.IsEndTimeModified = planDaypart.EndTimeSeconds != standardDaypart.DefaultEndTimeSeconds;
             }
         }
 
@@ -448,7 +447,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private void _SortPlanDayparts(PlanDto plan)
         {
-            var daypartDefaults = _DaypartDefaultService.GetAllDaypartDefaults();
+            var standardDayparts = _StandardDaypartService.GetAllStandardDayparts();
 
             var planDayparts = plan.Dayparts.Select(x => new PlanDaypart
             {
@@ -466,7 +465,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 VpvhForAudiences = x.VpvhForAudiences,
             }).ToList();
 
-            plan.Dayparts = planDayparts.OrderDayparts(daypartDefaults);
+            plan.Dayparts = planDayparts.OrderDayparts(standardDayparts);
         }
 
         private void _SortProgramRestrictions(PlanDto plan)

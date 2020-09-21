@@ -53,13 +53,13 @@ namespace Services.Broadcast.Entities.Campaign
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly List<LookupDto> _AllSpotLengths;
-        private static List<DaypartDefaultDto> _DaypartDefaultList;
+        private static List<StandardDaypartDto> _StandardDaypartList;
 
         public CampaignReportData(CampaignExportTypeEnum exportType, CampaignDto campaign
             , List<PlanDto> plans, AgencyDto agency, AdvertiserDto advertiser
             , List<PlanAudienceDisplay> guaranteedDemos
             , List<LookupDto> spotLengths
-            , List<DaypartDefaultDto> daypartDefaults
+            , List<StandardDaypartDto> standardDayparts
             , List<PlanAudienceDisplay> orderedAudiences
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
             , IQuarterCalculationEngine quarterCalculationEngine
@@ -71,7 +71,7 @@ namespace Services.Broadcast.Entities.Campaign
             _QuarterCalculationEngine = quarterCalculationEngine;
 
             _AllSpotLengths = spotLengths;
-            _DaypartDefaultList = daypartDefaults;
+            _StandardDaypartList = standardDayparts;
             HasSecondaryAudiences = plans.Any(x => x.SecondaryAudiences.Any());
 
             List<PlanProjectionForCampaignExport> projectedPlans = _ProjectPlansForProposalExport(plans);
@@ -366,7 +366,7 @@ namespace Services.Broadcast.Entities.Campaign
                 WeekStartDate = mediaWeek?.StartDate,
                 MediaMonthName = mediaWeek != null ? mediaMonths.Single(y => y.Id == mediaWeek.MediaMonthId).LongMonthName : null,
                 DaypartCodeId = daypart.DaypartCodeId,
-                DaypartCode = _DaypartDefaultList.Single(y => y.Id == daypart.DaypartCodeId).Code,
+                DaypartCode = _StandardDaypartList.Single(y => y.Id == daypart.DaypartCodeId).Code,
                 DaypartStartTime = DaypartTimeHelper.ConvertSecondsToFormattedTime(daypart.StartTimeSeconds, "hh:mmtt"),
                 DaypartEndTime = DaypartTimeHelper.ConvertSecondsToFormattedTime(daypart.EndTimeSeconds, "hh:mmtt"),
                 SpotLengthId = spotLength.Id,

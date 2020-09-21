@@ -314,7 +314,6 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "News 10 @ Noon",
@@ -330,7 +329,8 @@
             "StartDate": "2019-02-01T00:00:00",
             "StartTime": 3600
           }
-        ]
+        ],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [
@@ -726,7 +726,6 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "News 10 @ Noon",
@@ -753,7 +752,8 @@
             "StartDate": "2019-02-01T00:00:00",
             "StartTime": 3600
           }
-        ]
+        ],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [
@@ -1205,7 +1205,6 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "News 10 @ Noon",
@@ -1221,7 +1220,8 @@
             "StartDate": "2019-02-01T00:00:00",
             "StartTime": 3600
           }
-        ]
+        ],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [
@@ -1617,7 +1617,6 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "News 10 @ Noon",
@@ -1644,7 +1643,8 @@
             "StartDate": "2019-02-01T00:00:00",
             "StartTime": 3600
           }
-        ]
+        ],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [

@@ -25,13 +25,13 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> hut_projection_book_id { get; set; }
         public Nullable<int> playback_type { get; set; }
         public Nullable<decimal> nti_to_nsi_increase { get; set; }
-        public Nullable<int> daypart_default_id { get; set; }
+        public Nullable<int> standard_daypart_id { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual daypart daypart { get; set; }
         public virtual inventory_files inventory_files { get; set; }
         public virtual media_months media_months { get; set; }
         public virtual media_months media_months1 { get; set; }
-        public virtual daypart_defaults daypart_defaults { get; set; }
+        public virtual standard_dayparts standard_dayparts { get; set; }
     }
 }

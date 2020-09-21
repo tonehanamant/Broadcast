@@ -11,22 +11,22 @@ namespace Services.Broadcast.IntegrationTests.TestData
             {
                 new NtiToNsiConversionRate
                 {
-                    DaypartDefaultId = 1,
+                    StandardDaypartId = 1,
                     ConversionRate = 0.75
                 },
                 new NtiToNsiConversionRate
                 {
-                    DaypartDefaultId = 2,
+                    StandardDaypartId = 2,
                     ConversionRate = 0.85
                 },
                 new NtiToNsiConversionRate
                 {
-                    DaypartDefaultId = 3,
+                    StandardDaypartId = 3,
                     ConversionRate = 0.65
                 },
                 new NtiToNsiConversionRate
                 {
-                    DaypartDefaultId = 23,
+                    StandardDaypartId = 23,
                     ConversionRate = 0.75
                 }
             };

@@ -2,7 +2,7 @@
 
 namespace Services.Broadcast.Entities
 {
-    public class DaypartDefaultDto
+    public class StandardDaypartDto
     {
         public int Id { get; set; }
         public string Code { get; set; }

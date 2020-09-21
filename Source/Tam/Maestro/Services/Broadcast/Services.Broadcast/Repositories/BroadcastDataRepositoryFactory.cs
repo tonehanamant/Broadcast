@@ -84,7 +84,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<ISpotTrackerRepository, SpotTrackerRepository>();
             instance.RegisterType<IStationProcessingEngine, StationProcessingEngine>();
             instance.RegisterType<IProprietaryRepository, ProprietaryInventoryRepository>();
-            instance.RegisterType<IDaypartDefaultRepository, DaypartDefaultRepository>();
+            instance.RegisterType<IStandardDaypartRepository, StandardDaypartRepository>();
             instance.RegisterType<IInventorySummaryRepository, InventorySummaryRepository>();
             instance.RegisterType<IProgramRepository, ProgramRepository>();
             instance.RegisterType<IProgramMappingRepository, ProgramMappingRepository>();

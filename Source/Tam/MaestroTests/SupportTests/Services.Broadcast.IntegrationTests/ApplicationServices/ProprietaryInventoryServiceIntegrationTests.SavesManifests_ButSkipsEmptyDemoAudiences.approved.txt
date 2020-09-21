@@ -37,16 +37,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -126,16 +126,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -215,16 +215,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -304,16 +304,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -393,16 +393,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -482,16 +482,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -571,16 +571,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -660,16 +660,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -749,16 +749,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -838,16 +838,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -927,16 +927,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -1016,16 +1016,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -1105,16 +1105,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -1194,16 +1194,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -1283,16 +1283,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -1372,16 +1372,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -1461,16 +1461,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -1550,16 +1550,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -1639,16 +1639,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -1728,16 +1728,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -1817,16 +1817,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -1906,16 +1906,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -1995,16 +1995,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -2084,16 +2084,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -2173,16 +2173,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -2262,16 +2262,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -2351,16 +2351,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -2440,16 +2440,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -2529,16 +2529,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -2618,16 +2618,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -2707,16 +2707,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -2796,16 +2796,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -2885,16 +2885,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -2974,16 +2974,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -3063,16 +3063,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -3152,16 +3152,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -3241,16 +3241,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -3330,16 +3330,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -3419,16 +3419,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -3508,16 +3508,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -3597,16 +3597,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -3686,16 +3686,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -3775,16 +3775,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -3864,16 +3864,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -3953,16 +3953,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -4042,16 +4042,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -4131,16 +4131,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -4220,16 +4220,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -4309,16 +4309,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -4398,16 +4398,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -4487,16 +4487,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -4576,16 +4576,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -4665,16 +4665,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -4754,16 +4754,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -4843,16 +4843,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -4932,16 +4932,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -5021,16 +5021,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -5110,16 +5110,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -5199,16 +5199,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -5288,16 +5288,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -5377,16 +5377,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -5466,16 +5466,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -5555,16 +5555,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -5644,16 +5644,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -5733,16 +5733,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -5822,16 +5822,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -5911,16 +5911,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -6000,16 +6000,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -6089,16 +6089,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -6178,16 +6178,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -6267,16 +6267,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -6356,16 +6356,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -6445,16 +6445,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -6534,16 +6534,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -6623,16 +6623,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -6712,16 +6712,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -6801,16 +6801,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -6890,16 +6890,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -6979,16 +6979,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -7068,16 +7068,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -7157,16 +7157,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -7246,16 +7246,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -7335,16 +7335,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -7424,16 +7424,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -7513,16 +7513,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -7602,16 +7602,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -7691,16 +7691,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -7780,16 +7780,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -7869,16 +7869,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -7958,16 +7958,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -8047,16 +8047,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -8136,16 +8136,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -8225,16 +8225,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -8314,16 +8314,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -8403,16 +8403,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -8492,16 +8492,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -8581,16 +8581,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -8670,16 +8670,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -8759,16 +8759,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -8848,16 +8848,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -8937,16 +8937,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -9026,16 +9026,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -9115,16 +9115,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -9204,16 +9204,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -9293,16 +9293,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -9382,16 +9382,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -9471,16 +9471,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -9560,16 +9560,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -9649,16 +9649,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -9738,16 +9738,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -9827,16 +9827,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -9916,16 +9916,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -10005,16 +10005,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -10094,16 +10094,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -10183,16 +10183,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -10272,16 +10272,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -10361,16 +10361,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -10450,16 +10450,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -10539,16 +10539,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -10628,16 +10628,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -10717,16 +10717,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -10806,16 +10806,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -10895,16 +10895,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -10984,16 +10984,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -11086,16 +11086,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -11188,16 +11188,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -11290,16 +11290,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -11392,16 +11392,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -11494,16 +11494,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -11596,16 +11596,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -11698,16 +11698,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -11800,16 +11800,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -11902,16 +11902,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -12004,16 +12004,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -12106,16 +12106,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -12208,16 +12208,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -12310,16 +12310,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -12412,16 +12412,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -12514,16 +12514,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -12616,16 +12616,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -12718,16 +12718,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -12820,16 +12820,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -12922,16 +12922,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -13024,16 +13024,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -13126,16 +13126,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -13228,16 +13228,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -13330,16 +13330,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -13432,16 +13432,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -13534,16 +13534,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -13636,16 +13636,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -13738,16 +13738,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -13840,16 +13840,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -13942,16 +13942,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -14044,16 +14044,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -14146,16 +14146,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -14248,16 +14248,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -14350,16 +14350,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -14452,16 +14452,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -14554,16 +14554,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -14656,16 +14656,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -14758,16 +14758,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -14860,16 +14860,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -14962,16 +14962,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -15064,16 +15064,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -15166,16 +15166,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -15268,16 +15268,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -15370,16 +15370,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -15472,16 +15472,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -15574,16 +15574,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -15676,16 +15676,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -15778,16 +15778,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -15880,16 +15880,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -15982,16 +15982,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -16084,16 +16084,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -16186,16 +16186,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -16288,16 +16288,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -16390,16 +16390,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -16492,16 +16492,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -16594,16 +16594,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -16696,16 +16696,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -16798,16 +16798,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -16900,16 +16900,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -17002,16 +17002,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -17104,16 +17104,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -17206,16 +17206,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -17308,16 +17308,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -17410,16 +17410,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -17512,16 +17512,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -17614,16 +17614,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -17716,16 +17716,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -17818,16 +17818,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -17920,16 +17920,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -18022,16 +18022,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -18124,16 +18124,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -18226,16 +18226,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -18328,16 +18328,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -18430,16 +18430,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -18532,16 +18532,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -18634,16 +18634,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -18736,16 +18736,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -18838,16 +18838,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -18940,16 +18940,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -19042,16 +19042,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -19144,16 +19144,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -19246,16 +19246,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -19348,16 +19348,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -19450,16 +19450,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -19552,16 +19552,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -19654,16 +19654,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -19756,16 +19756,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -19858,16 +19858,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -19960,16 +19960,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -20062,16 +20062,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -20164,16 +20164,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -20266,16 +20266,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -20368,16 +20368,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -20470,16 +20470,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -20572,16 +20572,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -20674,16 +20674,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -20776,16 +20776,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -20878,16 +20878,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -20980,16 +20980,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -21082,16 +21082,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -21184,16 +21184,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -21286,16 +21286,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -21388,16 +21388,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -21490,16 +21490,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -21592,16 +21592,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -21694,16 +21694,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -21796,16 +21796,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -21898,16 +21898,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -22000,16 +22000,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -22102,16 +22102,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -22204,16 +22204,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -22306,16 +22306,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -22408,16 +22408,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -22510,16 +22510,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -22612,16 +22612,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -22714,16 +22714,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -22816,16 +22816,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -22918,16 +22918,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -23020,16 +23020,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -23122,16 +23122,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -23224,16 +23224,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -23326,16 +23326,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -23428,16 +23428,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -23530,16 +23530,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [
@@ -23632,16 +23632,16 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": {
+        "Genres": [],
+        "PrimaryProgramId": null,
+        "ProgramName": null,
+        "Programs": [],
+        "StandardDaypart": {
           "Code": "EM",
           "FullName": "Early morning",
           "Id": 14,
           "VpvhCalculationSourceType": 0
-        },
-        "Genres": [],
-        "PrimaryProgramId": null,
-        "ProgramName": null,
-        "Programs": []
+        }
       }
     ],
     "ManifestRates": [

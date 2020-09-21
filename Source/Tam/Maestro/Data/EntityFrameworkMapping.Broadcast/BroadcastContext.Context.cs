@@ -148,7 +148,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<scx_generation_job_files> scx_generation_job_files { get; set; }
         public virtual DbSet<scx_generation_jobs> scx_generation_jobs { get; set; }
         public virtual DbSet<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
-        public virtual DbSet<daypart_defaults> daypart_defaults { get; set; }
         public virtual DbSet<inventory_summary> inventory_summary { get; set; }
         public virtual DbSet<inventory_summary_gap_ranges> inventory_summary_gap_ranges { get; set; }
         public virtual DbSet<inventory_summary_gaps> inventory_summary_gaps { get; set; }
@@ -219,5 +218,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_buying_parameter_inventory_proprietary_summaries> plan_version_buying_parameter_inventory_proprietary_summaries { get; set; }
         public virtual DbSet<plan_version_pricing_parameter_inventory_proprietary_summaries> plan_version_pricing_parameter_inventory_proprietary_summaries { get; set; }
         public virtual DbSet<inventory_proprietary_summary_station_audiences> inventory_proprietary_summary_station_audiences { get; set; }
+        public virtual DbSet<standard_dayparts> standard_dayparts { get; set; }
     }
 }

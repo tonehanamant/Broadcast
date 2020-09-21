@@ -2002,7 +2002,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [UseReporter(typeof(DiffReporter))]
         public void Plan_WeeklyBreakdown_CustomByWeekByDaypart_WKD()
         {
-            const int daypartDefaultIdWKD = 23;
+            const int standardDaypartIdWKD = 23;
 
             using (new TransactionScopeWrapper())
             {
@@ -2020,7 +2020,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Dayparts = new List<PlanDaypartDto>
                     {
                         new PlanDaypartDto{ DaypartCodeId = 1, WeightingGoalPercent = 60 },
-                        new PlanDaypartDto { DaypartCodeId = daypartDefaultIdWKD }
+                        new PlanDaypartDto { DaypartCodeId = standardDaypartIdWKD }
                     }
                 });
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));

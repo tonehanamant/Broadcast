@@ -1,0 +1,102 @@
+[
+  {
+    "Code": "AMN",
+    "FullName": "AM News",
+    "VpvhCalculationSourceType": 1
+  },
+  {
+    "Code": "DAY",
+    "FullName": "Daytime",
+    "VpvhCalculationSourceType": 3
+  },
+  {
+    "Code": "EF",
+    "FullName": "Early Fringe",
+    "VpvhCalculationSourceType": 3
+  },
+  {
+    "Code": "EM",
+    "FullName": "Early morning",
+    "VpvhCalculationSourceType": 3
+  },
+  {
+    "Code": "EMN",
+    "FullName": "Early Morning News",
+    "VpvhCalculationSourceType": 1
+  },
+  {
+    "Code": "EN",
+    "FullName": "Evening News",
+    "VpvhCalculationSourceType": 2
+  },
+  {
+    "Code": "ENLN",
+    "FullName": "Evening News/Late News",
+    "VpvhCalculationSourceType": 2
+  },
+  {
+    "Code": "LF",
+    "FullName": "Late Fringe",
+    "VpvhCalculationSourceType": 3
+  },
+  {
+    "Code": "LN",
+    "FullName": "Late News",
+    "VpvhCalculationSourceType": 2
+  },
+  {
+    "Code": "MDN",
+    "FullName": "Midday News",
+    "VpvhCalculationSourceType": 1
+  },
+  {
+    "Code": "OVN",
+    "FullName": "Overnights",
+    "VpvhCalculationSourceType": 3
+  },
+  {
+    "Code": "PA",
+    "FullName": "Prime Access",
+    "VpvhCalculationSourceType": 3
+  },
+  {
+    "Code": "PMN",
+    "FullName": "PM News",
+    "VpvhCalculationSourceType": 2
+  },
+  {
+    "Code": "PT",
+    "FullName": "Prime",
+    "VpvhCalculationSourceType": 3
+  },
+  {
+    "Code": "ROSP",
+    "FullName": "ROS Programming",
+    "VpvhCalculationSourceType": 3
+  },
+  {
+    "Code": "ROSS",
+    "FullName": "ROS Syndication",
+    "VpvhCalculationSourceType": 3
+  },
+  {
+    "Code": "SPORTS",
+    "FullName": "ROS Sports",
+    "VpvhCalculationSourceType": 3
+  },
+  {
+    "Code": "SYN",
+    "FullName": "Total Day Syndication",
+    "VpvhCalculationSourceType": 3
+  },
+  {
+    "Code": "TDN",
+    "FullName": "Total Day News",
+    "VpvhCalculationSourceType": 4
+  },
+  {
+    "Code": "TDNS",
+    "FullName": "Total Day News and Syndication",
+    "VpvhCalculationSourceType": 5
+  }
+]

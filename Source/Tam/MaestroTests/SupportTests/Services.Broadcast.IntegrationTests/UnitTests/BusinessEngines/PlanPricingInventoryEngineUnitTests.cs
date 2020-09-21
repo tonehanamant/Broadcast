@@ -44,7 +44,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         private Mock<IQuarterCalculationEngine> _QuarterCalculationEngineMock;
         private Mock<ISpotLengthEngine> _SpotLengthEngineMock;
         private Mock<IMarketCoverageRepository> _MarketCoverageRepositoryMock;
-        private Mock<IDaypartDefaultRepository> _DaypartDefaultRepository;
+        private Mock<IStandardDaypartRepository> _StandardDaypartRepository;
 
         [SetUp]
         public void SetUp()
@@ -63,7 +63,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _QuarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
             _SpotLengthEngineMock = new Mock<ISpotLengthEngine>();
             _MarketCoverageRepositoryMock = new Mock<IMarketCoverageRepository>();
-            _DaypartDefaultRepository = _GetMockDaypartDefaultRepository();
+            _StandardDaypartRepository = _GetMockStandardDaypartRepository();
 
             _DayRepositoryMock
                 .Setup(x => x.GetDays())
@@ -98,8 +98,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Returns(_MarketCoverageRepositoryMock.Object);
 
             _DataRepositoryFactoryMock
-                .Setup(x => x.GetDataRepository<IDaypartDefaultRepository>())
-                .Returns(_DaypartDefaultRepository.Object);
+                .Setup(x => x.GetDataRepository<IStandardDaypartRepository>())
+                .Returns(_StandardDaypartRepository.Object);
 
             _MediaMonthAndWeekAggregateCache
                 .Setup(s => s.GetMediaWeeksIntersecting(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
@@ -120,18 +120,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 _SpotLengthEngineMock.Object, featureToggleHelper);
         }
 
-        private Mock<IDaypartDefaultRepository> _GetMockDaypartDefaultRepository()
+        private Mock<IStandardDaypartRepository> _GetMockStandardDaypartRepository()
         {
-            var daypartDefaultRepository = new Mock<IDaypartDefaultRepository>();
+            var standardDaypartRepository = new Mock<IStandardDaypartRepository>();
 
-            daypartDefaultRepository.Setup(s => s.GetAllDaypartDefaults())
-                .Returns(DaypartsTestData.GetAllDaypartDefaultsWithBaseData);
+            standardDaypartRepository.Setup(s => s.GetAllStandardDayparts())
+                .Returns(DaypartsTestData.GetAllStandardDaypartsWithBaseData);
 
-            daypartDefaultRepository.Setup(s => s.GetAllDaypartDefaultsWithAllData())
-                .Returns(DaypartsTestData.GetAllDaypartDefaultsWithFullData);
+            standardDaypartRepository.Setup(s => s.GetAllStandardDaypartsWithAllData())
+                .Returns(DaypartsTestData.GetAllStandardDaypartsWithFullData);
 
-            var testDefaultDays = DaypartsTestData.GetDayIdsFromDaypartDefaults();
-            daypartDefaultRepository.Setup(s => s.GetDayIdsFromDaypartDefaults(It.IsAny<List<int>>()))
+            var testDefaultDays = DaypartsTestData.GetDayIdsFromStandardDayparts();
+            standardDaypartRepository.Setup(s => s.GetDayIdsFromStandardDayparts(It.IsAny<List<int>>()))
                 .Returns<List<int>>((ids) =>
                 {
                     var items = new List<int>();
@@ -142,7 +142,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     return items.Distinct().ToList();
                 });
 
-            return daypartDefaultRepository;
+            return standardDaypartRepository;
         }
 
         [Test]
@@ -753,7 +753,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             const int expectedCount = 1;
 
             var plan = _GetPlan();
-            var daypartsData = DaypartsTestData.GetAllDaypartDefaultsWithFullData();
+            var daypartsData = DaypartsTestData.GetAllStandardDaypartsWithFullData();
             var daypartEm = daypartsData.Single(s => s.Code == "EM");
             var daypartWkd = daypartsData.Single(s => s.Code == "WKD");
 
@@ -862,7 +862,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             const int expectedCount = 1;
 
             var plan = _GetPlan();
-            var daypartsData = DaypartsTestData.GetAllDaypartDefaultsWithFullData();
+            var daypartsData = DaypartsTestData.GetAllStandardDaypartsWithFullData();
             var daypartEm = daypartsData.Single(s => s.Code == "EM");
             var daypartWkd = daypartsData.Single(s => s.Code == "WKD");
 
@@ -974,7 +974,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             const int expectedCount = 1;
 
             var plan = _GetPlan();
-            var daypartsData = DaypartsTestData.GetAllDaypartDefaultsWithFullData();
+            var daypartsData = DaypartsTestData.GetAllStandardDaypartsWithFullData();
             var daypartEm = daypartsData.Single(s => s.Code == "EM");
             var daypartWkd = daypartsData.Single(s => s.Code == "WKD");
 
@@ -3260,7 +3260,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         public void GetsInventoryForQuoteFileGenerationWkd()
         {
             // Arrange
-            var wkdDaypart = DaypartsTestData.GetAllDaypartDefaultsWithFullData().Single(s => s.Code.Equals("WKD"));
+            var wkdDaypart = DaypartsTestData.GetAllStandardDaypartsWithFullData().Single(s => s.Code.Equals("WKD"));
 
             var request = new QuoteRequestDto
             {
@@ -3593,7 +3593,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         public void GetsInventoryForQuoteFileGenerationWkdWithNoPrograms()
         {
             // Arrange
-            var wkdDaypart = DaypartsTestData.GetAllDaypartDefaultsWithFullData().Single(s => s.Code.Equals("WKD"));
+            var wkdDaypart = DaypartsTestData.GetAllStandardDaypartsWithFullData().Single(s => s.Code.Equals("WKD"));
 
             var request = new QuoteRequestDto
             {
@@ -3918,7 +3918,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         public void GetsInventoryForQuoteFileGenerationWkdMix()
         {
             // Arrange
-            var wkdDaypart = DaypartsTestData.GetAllDaypartDefaultsWithFullData().Single(s => s.Code.Equals("WKD"));
+            var wkdDaypart = DaypartsTestData.GetAllStandardDaypartsWithFullData().Single(s => s.Code.Equals("WKD"));
 
             var request = new QuoteRequestDto
             {

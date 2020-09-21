@@ -579,7 +579,7 @@
     <Compile Include="Entities\CampaignQuarterDto.cs" />
     <Compile Include="Entities\Day.cs" />
     <Compile Include="Entities\DaypartCleanupDto.cs" />
-    <Compile Include="Entities\DaypartDefaultWeightingGoal.cs" />
+    <Compile Include="Entities\StandardDaypartWeightingGoal.cs" />
     <Compile Include="Entities\Enums\BroadcastDayOfWeek.cs" />
     <Compile Include="Entities\Enums\ProgramMappingMatchTypeEnum.cs" />
     <Compile Include="Entities\Enums\VpvhCalculationSourceTypeEnum.cs" />
@@ -778,7 +778,7 @@
     <Compile Include="Entities\ImpressionsDaypartResultForTwoBooks.cs" />
     <Compile Include="Entities\ImpressionsPointInTimeResult.cs" />
     <Compile Include="Entities\MarketPlaybackType.cs" />
-    <Compile Include="Entities\DaypartDefaultFullDto.cs" />
+    <Compile Include="Entities\StandardDaypartFullDto.cs" />
     <Compile Include="Entities\Plan\PlanAvailableMarketDto.cs" />
     <Compile Include="Entities\Plan\PlanDaypartDto.cs" />
     <Compile Include="Entities\Plan\PlanBudgetDeliveryCalculator.cs" />
@@ -901,7 +901,7 @@
     <Compile Include="Converters\RateImport\OAndOProprietaryFileImporter.cs" />
     <Compile Include="Converters\RateImport\SyndicationFileImporter.cs" />
     <Compile Include="Entities\DateRange.cs" />
-    <Compile Include="Entities\DaypartDefaultDto.cs" />
+    <Compile Include="Entities\StandardDaypartDto.cs" />
     <Compile Include="Entities\Enums\RatesTimeframe.cs" />
     <Compile Include="Entities\InventoryLogo.cs" />
     <Compile Include="Entities\InventorySummary\InventorySummaryDto.cs" />

@@ -1,9 +1,9 @@
 ﻿{
   "CompletedAt": "2019-07-11T00:00:00",
   "InventoryScxDownloadRequest": {
-    "DaypartDefaultId": 1,
     "EndDate": "2019-03-31T00:00:00",
     "InventorySourceId": 7,
+    "StandardDaypartId": 1,
     "StartDate": "2018-12-31T00:00:00",
     "UnitNames": [
       "ExpiresGroupsTest"

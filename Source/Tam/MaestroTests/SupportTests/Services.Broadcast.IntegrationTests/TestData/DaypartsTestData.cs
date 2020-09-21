@@ -27,21 +27,21 @@ namespace Services.Broadcast.IntegrationTests.TestData
             return dict[defaultKey];
         }
 
-        public static List<DaypartDefaultFullDto> GetAllDaypartDefaultsWithFullData()
+        public static List<StandardDaypartFullDto> GetAllStandardDaypartsWithFullData()
         {
-            return _AllDaypartDefaultsWithFullData;
+            return _AllStandardDaypartsWithFullData;
         }
 
-        public static List<DaypartDefaultDto> GetAllDaypartDefaultsWithBaseData()
+        public static List<StandardDaypartDto> GetAllStandardDaypartsWithBaseData()
         {
-            return _AllDaypartDefaultsWithFullData.ToList<DaypartDefaultDto>();
+            return _AllStandardDaypartsWithFullData.ToList<StandardDaypartDto>();
         }
 
-        public static Dictionary<int, List<int>> GetDayIdsFromDaypartDefaults()
+        public static Dictionary<int, List<int>> GetDayIdsFromStandardDayparts()
         {
             var weekendCodes = new List<string> { "WKD" };
             var dayIdDict = new Dictionary<int, List<int>>();
-            var full = GetAllDaypartDefaultsWithFullData();
+            var full = GetAllStandardDaypartsWithFullData();
             full.ForEach(d =>
             {
                 dayIdDict[d.Id] = weekendCodes.Contains(d.Code)
@@ -148,29 +148,29 @@ namespace Services.Broadcast.IntegrationTests.TestData
             }
         };
 
-        private static List<DaypartDefaultFullDto> _AllDaypartDefaultsWithFullData = new List<DaypartDefaultFullDto>
+        private static List<StandardDaypartFullDto> _AllStandardDaypartsWithFullData = new List<StandardDaypartFullDto>
         {
-            new DaypartDefaultFullDto  { Id = 1, Code = "EMN", FullName = "Early Morning News", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)1, DaypartType = (DaypartTypeEnum)1, DefaultStartTimeSeconds = 14400, DefaultEndTimeSeconds = 35999},
-            new DaypartDefaultFullDto  { Id = 2, Code = "MDN", FullName = "Midday News", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)1, DaypartType = (DaypartTypeEnum)1, DefaultStartTimeSeconds = 39600, DefaultEndTimeSeconds = 46799},
-            new DaypartDefaultFullDto  { Id = 3, Code = "EN", FullName = "Evening News", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)2, DaypartType = (DaypartTypeEnum)1, DefaultStartTimeSeconds = 57600, DefaultEndTimeSeconds = 68399},
-            new DaypartDefaultFullDto  { Id = 4, Code = "LN", FullName = "Late News", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)2, DaypartType = (DaypartTypeEnum)1, DefaultStartTimeSeconds = 72000, DefaultEndTimeSeconds = 299},
-            new DaypartDefaultFullDto  { Id = 5, Code = "ENLN", FullName = "Evening News/Late News", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)2, DaypartType = (DaypartTypeEnum)1, DefaultStartTimeSeconds = 57600, DefaultEndTimeSeconds = 299},
-            new DaypartDefaultFullDto  { Id = 6, Code = "EF", FullName = "Early Fringe", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 54000, DefaultEndTimeSeconds = 64799},
-            new DaypartDefaultFullDto  { Id = 7, Code = "PA", FullName = "Prime Access", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 64800, DefaultEndTimeSeconds = 71999},
-            new DaypartDefaultFullDto  { Id = 8, Code = "PT", FullName = "Prime", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 72000, DefaultEndTimeSeconds = 82799},
-            new DaypartDefaultFullDto  { Id = 9, Code = "LF", FullName = "Late Fringe", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 82800, DefaultEndTimeSeconds = 7199},
-            new DaypartDefaultFullDto  { Id = 10, Code = "SYN", FullName = "Total Day Syndication", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 21600, DefaultEndTimeSeconds = 7499},
-            new DaypartDefaultFullDto  { Id = 11, Code = "OVN", FullName = "Overnights", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 7200, DefaultEndTimeSeconds = 21599},
-            new DaypartDefaultFullDto  { Id = 12, Code = "DAY", FullName = "Daytime", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 32400, DefaultEndTimeSeconds = 57599},
-            new DaypartDefaultFullDto  { Id = 14, Code = "EM", FullName = "Early morning", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 21600, DefaultEndTimeSeconds = 32399},
-            new DaypartDefaultFullDto  { Id = 15, Code = "AMN", FullName = "AM News", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)1, DaypartType = (DaypartTypeEnum)1, DefaultStartTimeSeconds = 14400, DefaultEndTimeSeconds = 46799},
-            new DaypartDefaultFullDto  { Id = 16, Code = "PMN", FullName = "PM News", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)2, DaypartType = (DaypartTypeEnum)1, DefaultStartTimeSeconds = 46800, DefaultEndTimeSeconds = 299},
-            new DaypartDefaultFullDto  { Id = 17, Code = "TDN", FullName = "Total Day News", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)4, DaypartType = (DaypartTypeEnum)1, DefaultStartTimeSeconds = 14400, DefaultEndTimeSeconds = 299},
-            new DaypartDefaultFullDto  { Id = 19, Code = "ROSS", FullName = "ROS Syndication", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 21600, DefaultEndTimeSeconds = 7499},
-            new DaypartDefaultFullDto  { Id = 20, Code = "SPORTS", FullName = "ROS Sports", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 21600, DefaultEndTimeSeconds = 7499},
-            new DaypartDefaultFullDto  { Id = 21, Code = "ROSP", FullName = "ROS Programming", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 21600, DefaultEndTimeSeconds = 7499},
-            new DaypartDefaultFullDto  { Id = 22, Code = "TDNS", FullName = "Total Day News and Syndication", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)5, DaypartType = (DaypartTypeEnum)3, DefaultStartTimeSeconds = 14400, DefaultEndTimeSeconds = 7499},
-            new DaypartDefaultFullDto  { Id = 23, Code = "WKD", FullName = "Weekend", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 32400, DefaultEndTimeSeconds = 71999},
+            new StandardDaypartFullDto  { Id = 1, Code = "EMN", FullName = "Early Morning News", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)1, DaypartType = (DaypartTypeEnum)1, DefaultStartTimeSeconds = 14400, DefaultEndTimeSeconds = 35999},
+            new StandardDaypartFullDto  { Id = 2, Code = "MDN", FullName = "Midday News", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)1, DaypartType = (DaypartTypeEnum)1, DefaultStartTimeSeconds = 39600, DefaultEndTimeSeconds = 46799},
+            new StandardDaypartFullDto  { Id = 3, Code = "EN", FullName = "Evening News", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)2, DaypartType = (DaypartTypeEnum)1, DefaultStartTimeSeconds = 57600, DefaultEndTimeSeconds = 68399},
+            new StandardDaypartFullDto  { Id = 4, Code = "LN", FullName = "Late News", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)2, DaypartType = (DaypartTypeEnum)1, DefaultStartTimeSeconds = 72000, DefaultEndTimeSeconds = 299},
+            new StandardDaypartFullDto  { Id = 5, Code = "ENLN", FullName = "Evening News/Late News", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)2, DaypartType = (DaypartTypeEnum)1, DefaultStartTimeSeconds = 57600, DefaultEndTimeSeconds = 299},
+            new StandardDaypartFullDto  { Id = 6, Code = "EF", FullName = "Early Fringe", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 54000, DefaultEndTimeSeconds = 64799},
+            new StandardDaypartFullDto  { Id = 7, Code = "PA", FullName = "Prime Access", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 64800, DefaultEndTimeSeconds = 71999},
+            new StandardDaypartFullDto  { Id = 8, Code = "PT", FullName = "Prime", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 72000, DefaultEndTimeSeconds = 82799},
+            new StandardDaypartFullDto  { Id = 9, Code = "LF", FullName = "Late Fringe", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 82800, DefaultEndTimeSeconds = 7199},
+            new StandardDaypartFullDto  { Id = 10, Code = "SYN", FullName = "Total Day Syndication", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 21600, DefaultEndTimeSeconds = 7499},
+            new StandardDaypartFullDto  { Id = 11, Code = "OVN", FullName = "Overnights", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 7200, DefaultEndTimeSeconds = 21599},
+            new StandardDaypartFullDto  { Id = 12, Code = "DAY", FullName = "Daytime", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 32400, DefaultEndTimeSeconds = 57599},
+            new StandardDaypartFullDto  { Id = 14, Code = "EM", FullName = "Early morning", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 21600, DefaultEndTimeSeconds = 32399},
+            new StandardDaypartFullDto  { Id = 15, Code = "AMN", FullName = "AM News", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)1, DaypartType = (DaypartTypeEnum)1, DefaultStartTimeSeconds = 14400, DefaultEndTimeSeconds = 46799},
+            new StandardDaypartFullDto  { Id = 16, Code = "PMN", FullName = "PM News", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)2, DaypartType = (DaypartTypeEnum)1, DefaultStartTimeSeconds = 46800, DefaultEndTimeSeconds = 299},
+            new StandardDaypartFullDto  { Id = 17, Code = "TDN", FullName = "Total Day News", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)4, DaypartType = (DaypartTypeEnum)1, DefaultStartTimeSeconds = 14400, DefaultEndTimeSeconds = 299},
+            new StandardDaypartFullDto  { Id = 19, Code = "ROSS", FullName = "ROS Syndication", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 21600, DefaultEndTimeSeconds = 7499},
+            new StandardDaypartFullDto  { Id = 20, Code = "SPORTS", FullName = "ROS Sports", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 21600, DefaultEndTimeSeconds = 7499},
+            new StandardDaypartFullDto  { Id = 21, Code = "ROSP", FullName = "ROS Programming", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 21600, DefaultEndTimeSeconds = 7499},
+            new StandardDaypartFullDto  { Id = 22, Code = "TDNS", FullName = "Total Day News and Syndication", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)5, DaypartType = (DaypartTypeEnum)3, DefaultStartTimeSeconds = 14400, DefaultEndTimeSeconds = 7499},
+            new StandardDaypartFullDto  { Id = 23, Code = "WKD", FullName = "Weekend", VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)3, DaypartType = (DaypartTypeEnum)2, DefaultStartTimeSeconds = 32400, DefaultEndTimeSeconds = 71999},
         };
 
         #endregion // #region Lists Data

@@ -46,7 +46,6 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
             "ProgramName": "Early Morning News",
@@ -64,7 +63,8 @@
                 "StartTime": 32400,
                 "StationInventoryManifestDaypartId": 633848
               }
-            ]
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -271,7 +271,6 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
             "ProgramName": "Early Morning News",
@@ -289,7 +288,8 @@
                 "StartTime": 32400,
                 "StationInventoryManifestDaypartId": 633849
               }
-            ]
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -508,7 +508,6 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
             "ProgramName": "Early Morning News",
@@ -526,7 +525,8 @@
                 "StartTime": 32400,
                 "StationInventoryManifestDaypartId": 633848
               }
-            ]
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -733,7 +733,6 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
             "ProgramName": "Early Morning News",
@@ -751,7 +750,8 @@
                 "StartTime": 32400,
                 "StationInventoryManifestDaypartId": 633849
               }
-            ]
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -970,7 +970,6 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
             "ProgramName": "Early Morning News",
@@ -988,7 +987,8 @@
                 "StartTime": 32400,
                 "StationInventoryManifestDaypartId": 633850
               }
-            ]
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -1195,7 +1195,6 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
             "ProgramName": "Early Morning News",
@@ -1213,7 +1212,8 @@
                 "StartTime": 32400,
                 "StationInventoryManifestDaypartId": 633851
               }
-            ]
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -1432,7 +1432,6 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
             "ProgramName": "Early Morning News",
@@ -1450,7 +1449,8 @@
                 "StartTime": 32400,
                 "StationInventoryManifestDaypartId": 633850
               }
-            ]
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -1657,7 +1657,6 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
             "ProgramName": "Early Morning News",
@@ -1675,7 +1674,8 @@
                 "StartTime": 32400,
                 "StationInventoryManifestDaypartId": 633851
               }
-            ]
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -1894,7 +1894,6 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
             "ProgramName": "Early Morning News",
@@ -1912,7 +1911,8 @@
                 "StartTime": 32400,
                 "StationInventoryManifestDaypartId": 633852
               }
-            ]
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -2119,7 +2119,6 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
             "ProgramName": "Early Morning News",
@@ -2137,7 +2136,8 @@
                 "StartTime": 32400,
                 "StationInventoryManifestDaypartId": 633853
               }
-            ]
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -2356,7 +2356,6 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
             "ProgramName": "Early Morning News",
@@ -2374,7 +2373,8 @@
                 "StartTime": 32400,
                 "StationInventoryManifestDaypartId": 633852
               }
-            ]
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -2581,7 +2581,6 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
             "ProgramName": "Early Morning News",
@@ -2599,7 +2598,8 @@
                 "StartTime": 32400,
                 "StationInventoryManifestDaypartId": 633853
               }
-            ]
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -2818,7 +2818,6 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
             "ProgramName": "Early Morning News",
@@ -2836,7 +2835,8 @@
                 "StartTime": 32400,
                 "StationInventoryManifestDaypartId": 633854
               }
-            ]
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -3043,7 +3043,6 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
             "ProgramName": "Early Morning News",
@@ -3061,7 +3060,8 @@
                 "StartTime": 32400,
                 "StationInventoryManifestDaypartId": 633855
               }
-            ]
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -3280,7 +3280,6 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
             "ProgramName": "Early Morning News",
@@ -3298,7 +3297,8 @@
                 "StartTime": 32400,
                 "StationInventoryManifestDaypartId": 633854
               }
-            ]
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -3505,7 +3505,6 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
             "ProgramName": "Early Morning News",
@@ -3523,7 +3522,8 @@
                 "StartTime": 32400,
                 "StationInventoryManifestDaypartId": 633855
               }
-            ]
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -3742,7 +3742,6 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
             "ProgramName": "Early Morning News",
@@ -3760,7 +3759,8 @@
                 "StartTime": 32400,
                 "StationInventoryManifestDaypartId": 633856
               }
-            ]
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -3967,7 +3967,6 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
             "ProgramName": "Early Morning News",
@@ -3985,7 +3984,8 @@
                 "StartTime": 32400,
                 "StationInventoryManifestDaypartId": 633857
               }
-            ]
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -4204,7 +4204,6 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
             "ProgramName": "Early Morning News",
@@ -4222,7 +4221,8 @@
                 "StartTime": 32400,
                 "StationInventoryManifestDaypartId": 633856
               }
-            ]
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -4429,7 +4429,6 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
             "ProgramName": "Early Morning News",
@@ -4447,7 +4446,8 @@
                 "StartTime": 32400,
                 "StationInventoryManifestDaypartId": 633857
               }
-            ]
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],

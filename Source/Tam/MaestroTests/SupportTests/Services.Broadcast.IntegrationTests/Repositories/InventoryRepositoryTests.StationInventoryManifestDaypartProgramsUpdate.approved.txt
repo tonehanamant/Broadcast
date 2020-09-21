@@ -18,7 +18,6 @@
         "_Tuesday": false,
         "_Wednesday": false
       },
-      "DaypartDefault": null,
       "Genres": [],
       "PrimaryProgramId": null,
       "ProgramName": "FRIENDS",
@@ -89,7 +88,8 @@
           "StartDate": "2019-02-01T00:00:00",
           "StartTime": 3600
         }
-      ]
+      ],
+      "StandardDaypart": null
     },
     {
       "Daypart": {
@@ -109,7 +109,6 @@
         "_Tuesday": false,
         "_Wednesday": false
       },
-      "DaypartDefault": null,
       "Genres": [],
       "PrimaryProgramId": null,
       "ProgramName": "TWO & A HALF MEN",
@@ -180,7 +179,8 @@
           "StartDate": "2019-02-01T00:00:00",
           "StartTime": 3600
         }
-      ]
+      ],
+      "StandardDaypart": null
     },
     {
       "Daypart": {
@@ -200,7 +200,6 @@
         "_Tuesday": false,
         "_Wednesday": false
       },
-      "DaypartDefault": null,
       "Genres": [],
       "PrimaryProgramId": 11247,
       "ProgramName": "FRIENDS",
@@ -282,7 +281,8 @@
           "StartDate": "2019-02-01T00:00:00",
           "StartTime": 3600
         }
-      ]
+      ],
+      "StandardDaypart": null
     },
     {
       "Daypart": {
@@ -302,7 +302,6 @@
         "_Tuesday": false,
         "_Wednesday": false
       },
-      "DaypartDefault": null,
       "Genres": [],
       "PrimaryProgramId": 11248,
       "ProgramName": "FRIENDS",
@@ -384,7 +383,8 @@
           "StartDate": "2019-02-01T00:00:00",
           "StartTime": 3600
         }
-      ]
+      ],
+      "StandardDaypart": null
     },
     {
       "Daypart": {
@@ -404,7 +404,6 @@
         "_Tuesday": false,
         "_Wednesday": false
       },
-      "DaypartDefault": null,
       "Genres": [],
       "PrimaryProgramId": 11249,
       "ProgramName": "FRIENDS 2X",
@@ -486,7 +485,8 @@
           "StartDate": "2019-02-01T00:00:00",
           "StartTime": 3600
         }
-      ]
+      ],
+      "StandardDaypart": null
     },
     {
       "Daypart": {
@@ -506,7 +506,6 @@
         "_Tuesday": false,
         "_Wednesday": false
       },
-      "DaypartDefault": null,
       "Genres": [],
       "PrimaryProgramId": 11250,
       "ProgramName": "TWO & HALF MEN",
@@ -588,7 +587,8 @@
           "StartDate": "2019-02-01T00:00:00",
           "StartTime": 3600
         }
-      ]
+      ],
+      "StandardDaypart": null
     },
     {
       "Daypart": {
@@ -608,7 +608,6 @@
         "_Tuesday": false,
         "_Wednesday": false
       },
-      "DaypartDefault": null,
       "Genres": [],
       "PrimaryProgramId": null,
       "ProgramName": "2.5 MEN X2",
@@ -679,7 +678,8 @@
           "StartDate": "2019-02-01T00:00:00",
           "StartTime": 3600
         }
-      ]
+      ],
+      "StandardDaypart": null
     },
     {
       "Daypart": {
@@ -699,7 +699,6 @@
         "_Tuesday": false,
         "_Wednesday": false
       },
-      "DaypartDefault": null,
       "Genres": [],
       "PrimaryProgramId": null,
       "ProgramName": "SEINFELD X2",
@@ -770,7 +769,8 @@
           "StartDate": "2019-02-01T00:00:00",
           "StartTime": 3600
         }
-      ]
+      ],
+      "StandardDaypart": null
     },
     {
       "Daypart": {
@@ -790,7 +790,6 @@
         "_Tuesday": false,
         "_Wednesday": false
       },
-      "DaypartDefault": null,
       "Genres": [],
       "PrimaryProgramId": null,
       "ProgramName": "2 BROKE GIRLS",
@@ -861,7 +860,8 @@
           "StartDate": "2019-02-01T00:00:00",
           "StartTime": 3600
         }
-      ]
+      ],
+      "StandardDaypart": null
     }
   ],
   "afterPrograms": [
@@ -1523,7 +1523,6 @@
         "_Tuesday": false,
         "_Wednesday": false
       },
-      "DaypartDefault": null,
       "Genres": [],
       "PrimaryProgramId": 11245,
       "ProgramName": "FRIENDS",
@@ -1539,7 +1538,8 @@
           "StartDate": "2019-02-04T00:00:00",
           "StartTime": 3600
         }
-      ]
+      ],
+      "StandardDaypart": null
     },
     {
       "Daypart": {
@@ -1559,7 +1559,6 @@
         "_Tuesday": false,
         "_Wednesday": false
       },
-      "DaypartDefault": null,
       "Genres": [],
       "PrimaryProgramId": 11246,
       "ProgramName": "TWO & A HALF MEN",
@@ -1575,7 +1574,8 @@
           "StartDate": "2019-02-04T00:00:00",
           "StartTime": 3600
         }
-      ]
+      ],
+      "StandardDaypart": null
     },
     {
       "Daypart": {
@@ -1595,7 +1595,6 @@
         "_Tuesday": false,
         "_Wednesday": false
       },
-      "DaypartDefault": null,
       "Genres": [],
       "PrimaryProgramId": 11247,
       "ProgramName": "FRIENDS",
@@ -1611,7 +1610,8 @@
           "StartDate": "2019-01-05T00:00:00",
           "StartTime": 3600
         }
-      ]
+      ],
+      "StandardDaypart": null
     },
     {
       "Daypart": {
@@ -1631,7 +1631,6 @@
         "_Tuesday": false,
         "_Wednesday": false
       },
-      "DaypartDefault": null,
       "Genres": [],
       "PrimaryProgramId": 11248,
       "ProgramName": "FRIENDS",
@@ -1647,7 +1646,8 @@
           "StartDate": "2019-01-05T00:00:00",
           "StartTime": 3600
         }
-      ]
+      ],
+      "StandardDaypart": null
     },
     {
       "Daypart": {
@@ -1667,7 +1667,6 @@
         "_Tuesday": false,
         "_Wednesday": false
       },
-      "DaypartDefault": null,
       "Genres": [],
       "PrimaryProgramId": 11249,
       "ProgramName": "FRIENDS 2X",
@@ -1683,7 +1682,8 @@
           "StartDate": "2019-01-05T00:00:00",
           "StartTime": 3600
         }
-      ]
+      ],
+      "StandardDaypart": null
     },
     {
       "Daypart": {
@@ -1703,7 +1703,6 @@
         "_Tuesday": false,
         "_Wednesday": false
       },
-      "DaypartDefault": null,
       "Genres": [],
       "PrimaryProgramId": 11250,
       "ProgramName": "TWO & HALF MEN",
@@ -1719,7 +1718,8 @@
           "StartDate": "2019-01-05T00:00:00",
           "StartTime": 3600
         }
-      ]
+      ],
+      "StandardDaypart": null
     },
     {
       "Daypart": {
@@ -1739,7 +1739,6 @@
         "_Tuesday": false,
         "_Wednesday": false
       },
-      "DaypartDefault": null,
       "Genres": [],
       "PrimaryProgramId": 11251,
       "ProgramName": "2.5 MEN X2",
@@ -1755,7 +1754,8 @@
           "StartDate": "2019-02-04T00:00:00",
           "StartTime": 3600
         }
-      ]
+      ],
+      "StandardDaypart": null
     },
     {
       "Daypart": {
@@ -1775,7 +1775,6 @@
         "_Tuesday": false,
         "_Wednesday": false
       },
-      "DaypartDefault": null,
       "Genres": [],
       "PrimaryProgramId": 11252,
       "ProgramName": "SEINFELD X2",
@@ -1791,7 +1790,8 @@
           "StartDate": "2019-02-04T00:00:00",
           "StartTime": 3600
         }
-      ]
+      ],
+      "StandardDaypart": null
     },
     {
       "Daypart": {
@@ -1811,7 +1811,6 @@
         "_Tuesday": false,
         "_Wednesday": false
       },
-      "DaypartDefault": null,
       "Genres": [],
       "PrimaryProgramId": 11253,
       "ProgramName": "2 BROKE GIRLS",
@@ -1827,7 +1826,8 @@
           "StartDate": "2019-02-04T00:00:00",
           "StartTime": 3600
         }
-      ]
+      ],
+      "StandardDaypart": null
     }
   ],
   "beforePrograms": [

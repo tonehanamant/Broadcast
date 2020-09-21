@@ -44,15 +44,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Extensions
                 new PlanDaypart { DaypartCodeId = 4, StartTimeSeconds = 1500, EndTimeSeconds = 2788, FlightDays = new List<int> { 2 } }
             };
 
-            var daypartDefaults = new List<DaypartDefaultDto>
+            var standardDayparts = new List<StandardDaypartDto>
             {
-                new DaypartDefaultDto { Id = 1, Code = "OVN" },
-                new DaypartDefaultDto { Id = 2, Code = "EF" },
-                new DaypartDefaultDto { Id = 3, Code = "LF" },
-                new DaypartDefaultDto { Id = 4, Code = "PA" },
+                new StandardDaypartDto { Id = 1, Code = "OVN" },
+                new StandardDaypartDto { Id = 2, Code = "EF" },
+                new StandardDaypartDto { Id = 3, Code = "LF" },
+                new StandardDaypartDto { Id = 4, Code = "PA" },
             };
 
-            var orderedPlanDayparts = planDayparts.OrderDayparts(daypartDefaults);
+            var orderedPlanDayparts = planDayparts.OrderDayparts(standardDayparts);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(orderedPlanDayparts));
         }

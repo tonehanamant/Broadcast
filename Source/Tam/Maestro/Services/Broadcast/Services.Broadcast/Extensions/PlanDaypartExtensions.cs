@@ -9,7 +9,7 @@ namespace Services.Broadcast.Extensions
 {
     public static class PlanDaypartExtensions
     {
-        public static List<PlanDaypartDto> OrderDayparts(this List<PlanDaypart> planDaypartList, List<DaypartDefaultDto> daypartDefaults)
+        public static List<PlanDaypartDto> OrderDayparts(this List<PlanDaypart> planDaypartList, List<StandardDaypartDto> standardDayparts)
         {
             const int MONDAY = 1;
             const int TUESDAY = 2;
@@ -20,14 +20,14 @@ namespace Services.Broadcast.Extensions
 
             // join the plans dayparts with daypart defaults, so that later we can order them
             var mappedPlanDaypartList = planDaypartList.Join(
-                daypartDefaults,
+                standardDayparts,
                 planDaypart => planDaypart.DaypartCodeId,
-                daypartDefault => daypartDefault.Id,
-                (planDaypart, daypartDefault) => new
+                standardDaypart => standardDaypart.Id,
+                (planDaypart, standardDaypart) => new
                 {
                     planDaypart.DaypartCodeId,
-                    daypartDefault.Code,
-                    daypartDefault.FullName,
+                    standardDaypart.Code,
+                    standardDaypart.FullName,
                     planDaypart.DaypartTypeId,
                     planDaypart.StartTimeSeconds,
                     planDaypart.EndTimeSeconds,

@@ -312,11 +312,11 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "News 10 @ Noon",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [
@@ -755,11 +755,11 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "News 10 @ Noon",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [

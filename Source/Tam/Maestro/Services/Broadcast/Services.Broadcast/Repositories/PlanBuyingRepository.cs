@@ -561,7 +561,7 @@ namespace Services.Broadcast.Repositories
                             StartDate = x.contract_media_week.start_date,
                             EndDate = x.contract_media_week.end_date
                         },
-                        StandardDaypart = _MapToDaypartDefaultDto(x.daypart_defaults)
+                        StandardDaypart = _MapToStandardDaypartDto(x.standard_dayparts)
                     }).ToList()
                 };
             });
@@ -732,16 +732,16 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        private DaypartDefaultDto _MapToDaypartDefaultDto(daypart_defaults daypartDefault)
+        private StandardDaypartDto _MapToStandardDaypartDto(standard_dayparts standardDaypart)
         {
-            if (daypartDefault == null)
+            if (standardDaypart == null)
                 return null;
 
-            return new DaypartDefaultDto
+            return new StandardDaypartDto
             {
-                Id = daypartDefault.id,
-                Code = daypartDefault.code,
-                FullName = daypartDefault.name
+                Id = standardDaypart.id,
+                Code = standardDaypart.code,
+                FullName = standardDaypart.name
             };
         }
 
@@ -1011,7 +1011,7 @@ namespace Services.Broadcast.Repositories
                     StartDate = spot.contract_media_week.start_date,
                     EndDate = spot.contract_media_week.end_date
                 },
-                StandardDaypart = _MapToDaypartDefaultDto(spot.daypart_defaults)
+                StandardDaypart = _MapToStandardDaypartDto(spot.standard_dayparts)
             };
         }
 

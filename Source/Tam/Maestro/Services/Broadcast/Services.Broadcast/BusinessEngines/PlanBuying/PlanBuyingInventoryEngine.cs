@@ -46,7 +46,7 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IMarketCoverageRepository _MarketCoverageRepository;
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
+        private readonly IStandardDaypartRepository _StandardDaypartRepository;
 
         protected Lazy<bool> _UseTrueIndependentStations;
         protected Lazy<string> _PlanPricingEndpointVersion;
@@ -79,7 +79,7 @@ namespace Services.Broadcast.BusinessEngines
             _MarketCoverageRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _FeatureToggleHelper = featureToggleHelper;
-            _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
+            _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
 
             // register lazy delegates - settings
             _UseTrueIndependentStations = new Lazy<bool>(_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS));
@@ -655,7 +655,7 @@ namespace Services.Broadcast.BusinessEngines
 
             var conversionRatesByDaypartCodeId = _NtiToNsiConversionRepository
                     .GetLatestNtiToNsiConversionRates()
-                    .ToDictionary(x => x.DaypartDefaultId, x => x.ConversionRate);
+                    .ToDictionary(x => x.StandardDaypartId, x => x.ConversionRate);
 
             foreach (var program in programs)
             {
@@ -677,7 +677,7 @@ namespace Services.Broadcast.BusinessEngines
 
             var conversionRatesByDaypartCodeId = _NtiToNsiConversionRepository
                     .GetLatestNtiToNsiConversionRates()
-                    .ToDictionary(x => x.DaypartDefaultId, x => x.ConversionRate);
+                    .ToDictionary(x => x.StandardDaypartId, x => x.ConversionRate);
 
             foreach (var program in programs)
             {
@@ -923,7 +923,7 @@ namespace Services.Broadcast.BusinessEngines
         private List<int> _GetDaypartDayIds(List<PlanDaypartDto> planDayparts)
         {
             var planDefaultDaypartIds = planDayparts.Select(d => d.DaypartCodeId).ToList();
-            var dayIds = _DaypartDefaultRepository.GetDayIdsFromDaypartDefaults(planDefaultDaypartIds);
+            var dayIds = _StandardDaypartRepository.GetDayIdsFromStandardDayparts(planDefaultDaypartIds);
             return dayIds;
         }
 
@@ -1073,10 +1073,10 @@ namespace Services.Broadcast.BusinessEngines
         private Dictionary<int, List<int>> _GetDaypartDefaultDayIds()
         {
             var daypartDefaultDayIds = new Dictionary<int, List<int>>();
-            var daypartDefaultIds = _DaypartDefaultRepository.GetAllDaypartDefaults().Select(s => s.Id);
+            var daypartDefaultIds = _StandardDaypartRepository.GetAllStandardDayparts().Select(s => s.Id);
             foreach (var daypartDefaultId in daypartDefaultIds)
             {
-                var dayIds = _DaypartDefaultRepository.GetDayIdsFromDaypartDefaults(new List<int> { daypartDefaultId });
+                var dayIds = _StandardDaypartRepository.GetDayIdsFromStandardDayparts(new List<int> { daypartDefaultId });
                 daypartDefaultDayIds[daypartDefaultId] = dayIds;
             }
 

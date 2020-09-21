@@ -50,11 +50,11 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "House",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [
@@ -134,11 +134,11 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "Modern Family Weekend",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [
@@ -218,11 +218,11 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "Page Six",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [
@@ -302,11 +302,11 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "True Crime Files",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [
@@ -386,11 +386,11 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "Wendy Williams",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [
@@ -470,11 +470,11 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "PrimaryProgramId": null,
         "ProgramName": "Cleveland/King of the Hill Combo",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [

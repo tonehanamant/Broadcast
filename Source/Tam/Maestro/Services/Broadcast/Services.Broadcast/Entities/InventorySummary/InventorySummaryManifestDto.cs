@@ -6,7 +6,7 @@ namespace Services.Broadcast.Entities.InventorySummary
     {
         public int? StationId { get; set; }
         public short? MarketCode { get; set; }
-        public List<int> DaypartDefaultIds { get; set; }
+        public List<int> StandardDaypartIds { get; set; }
         public string UnitName { get; set; }
         public int? FileId { get; set; }
         public int ManifestId { get; set; }

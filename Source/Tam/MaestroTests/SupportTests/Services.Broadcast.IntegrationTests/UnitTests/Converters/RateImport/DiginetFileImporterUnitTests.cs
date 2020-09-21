@@ -41,13 +41,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
         private readonly Mock<IImpressionAdjustmentEngine> _ImpressionAdjustmentEngine = new Mock<IImpressionAdjustmentEngine>();
         private readonly Mock<IFileService> _FileService = new Mock<IFileService>();
 
-        private readonly Mock<IDaypartDefaultRepository> _DaypartDefaultRepository = new Mock<IDaypartDefaultRepository>();
+        private readonly Mock<IStandardDaypartRepository> _StandardDaypartRepository = new Mock<IStandardDaypartRepository>();
         private readonly Mock<IStationMappingService> _StationMappingService = new Mock<IStationMappingService>();
 
         private DiginetFileImporter _GetDiginetFileImporter()
         {
-            _BroadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
-                .Returns(_DaypartDefaultRepository.Object);
+            _BroadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
+                .Returns(_StandardDaypartRepository.Object);
 
             return new DiginetFileImporter(
                 _BroadcastDataRepositoryFactory.Object,
@@ -217,9 +217,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
             _SpotLengthEngine.Setup(s => s.GetSpotLengthIdByValue(It.IsAny<int>()))
                 .Returns(3);
 
-            var daypartDefaults = _GetDaypartDefaults();
-            _DaypartDefaultRepository.Setup(s => s.GetAllDaypartDefaults())
-                .Returns(daypartDefaults);
+            var standardDayparts = _GetStandardDayparts();
+            _StandardDaypartRepository.Setup(s => s.GetAllStandardDayparts())
+                .Returns(standardDayparts);
 
             _ImpressionAdjustmentEngine.Setup(s =>
                     s.ConvertNtiImpressionsToNsi(It.IsAny<double>(), It.IsAny<double>()))
@@ -273,9 +273,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
             _SpotLengthEngine.Setup(s => s.GetSpotLengthIdByValue(It.IsAny<int>()))
                 .Returns(3);
 
-            var daypartDefaults = _GetDaypartDefaults();
-            _DaypartDefaultRepository.Setup(s => s.GetAllDaypartDefaults())
-                .Returns(daypartDefaults);
+            var standardDayparts = _GetStandardDayparts();
+            _StandardDaypartRepository.Setup(s => s.GetAllStandardDayparts())
+                .Returns(standardDayparts);
 
             _ImpressionAdjustmentEngine.Setup(s =>
                     s.ConvertNtiImpressionsToNsi(It.IsAny<double>(), It.IsAny<double>()))
@@ -331,30 +331,30 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
             return lines;
         }
 
-        private List<DaypartDefaultDto> _GetDaypartDefaults()
+        private List<StandardDaypartDto> _GetStandardDayparts()
         {
-            return new List<DaypartDefaultDto>
+            return new List<StandardDaypartDto>
             {
-                new DaypartDefaultDto { Id = 1, Code = "EMN", FullName = "Early Morning News"},
-                new DaypartDefaultDto { Id = 2, Code = "MDN", FullName = "Midday News"},
-                new DaypartDefaultDto { Id = 3, Code = "EN", FullName = "Evening News"},
-                new DaypartDefaultDto { Id = 4, Code = "LN", FullName = "Late News"},
-                new DaypartDefaultDto { Id = 5, Code = "ENLN", FullName = "Evening News/Late News"},
-                new DaypartDefaultDto { Id = 6, Code = "EF", FullName = "Early Fringe"},
-                new DaypartDefaultDto { Id = 7, Code = "PA", FullName = "Prime Access"},
-                new DaypartDefaultDto { Id = 8, Code = "PT", FullName = "Prime"},
-                new DaypartDefaultDto { Id = 9, Code = "LF", FullName = "Late Fringe"},
-                new DaypartDefaultDto { Id = 10, Code = "SYN", FullName = "Total Day Syndication"},
-                new DaypartDefaultDto { Id = 11, Code = "OVN", FullName = "Overnights"},
-                new DaypartDefaultDto { Id = 12, Code = "DAY", FullName = "Daytime"},
-                new DaypartDefaultDto { Id = 14, Code = "EM", FullName = "Early morning"},
-                new DaypartDefaultDto { Id = 15, Code = "AMN", FullName = "AM News"},
-                new DaypartDefaultDto { Id = 16, Code = "PMN", FullName = "PM News"},
-                new DaypartDefaultDto { Id = 17, Code = "TDN", FullName = "Total Day News"},
-                new DaypartDefaultDto { Id = 19, Code = "ROSS", FullName = "ROS Syndication"},
-                new DaypartDefaultDto { Id = 20, Code = "SPORTS", FullName = "ROS Sports"},
-                new DaypartDefaultDto { Id = 21, Code = "ROSP", FullName = "ROS Programming"},
-                new DaypartDefaultDto { Id = 22, Code = "TDNS", FullName = "Total Day News and Syndication"},
+                new StandardDaypartDto { Id = 1, Code = "EMN", FullName = "Early Morning News"},
+                new StandardDaypartDto { Id = 2, Code = "MDN", FullName = "Midday News"},
+                new StandardDaypartDto { Id = 3, Code = "EN", FullName = "Evening News"},
+                new StandardDaypartDto { Id = 4, Code = "LN", FullName = "Late News"},
+                new StandardDaypartDto { Id = 5, Code = "ENLN", FullName = "Evening News/Late News"},
+                new StandardDaypartDto { Id = 6, Code = "EF", FullName = "Early Fringe"},
+                new StandardDaypartDto { Id = 7, Code = "PA", FullName = "Prime Access"},
+                new StandardDaypartDto { Id = 8, Code = "PT", FullName = "Prime"},
+                new StandardDaypartDto { Id = 9, Code = "LF", FullName = "Late Fringe"},
+                new StandardDaypartDto { Id = 10, Code = "SYN", FullName = "Total Day Syndication"},
+                new StandardDaypartDto { Id = 11, Code = "OVN", FullName = "Overnights"},
+                new StandardDaypartDto { Id = 12, Code = "DAY", FullName = "Daytime"},
+                new StandardDaypartDto { Id = 14, Code = "EM", FullName = "Early morning"},
+                new StandardDaypartDto { Id = 15, Code = "AMN", FullName = "AM News"},
+                new StandardDaypartDto { Id = 16, Code = "PMN", FullName = "PM News"},
+                new StandardDaypartDto { Id = 17, Code = "TDN", FullName = "Total Day News"},
+                new StandardDaypartDto { Id = 19, Code = "ROSS", FullName = "ROS Syndication"},
+                new StandardDaypartDto { Id = 20, Code = "SPORTS", FullName = "ROS Sports"},
+                new StandardDaypartDto { Id = 21, Code = "ROSP", FullName = "ROS Programming"},
+                new StandardDaypartDto { Id = 22, Code = "TDNS", FullName = "Total Day News and Syndication"},
             };
         }
 

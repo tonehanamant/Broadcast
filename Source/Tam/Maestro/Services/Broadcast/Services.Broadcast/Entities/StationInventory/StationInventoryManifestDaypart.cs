@@ -9,7 +9,7 @@ namespace Services.Broadcast.Entities.StationInventory
         public int? Id { get; set; }
         public DisplayDaypart Daypart { get; set; }
         public string ProgramName { get; set; }
-        public DaypartDefaultDto DaypartDefault { get; set; }
+        public StandardDaypartDto StandardDaypart { get; set; }
         public List<LookupDto> Genres { get; set; } = new List<LookupDto>();
         public int? PrimaryProgramId { get; set; }
         public List<StationInventoryManifestDaypartProgram> Programs = new List<StationInventoryManifestDaypartProgram>();

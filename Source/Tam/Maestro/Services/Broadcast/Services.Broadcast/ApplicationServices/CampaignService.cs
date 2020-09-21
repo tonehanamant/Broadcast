@@ -144,7 +144,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ITrafficApiCache _TrafficApiCache;
         private readonly IAudienceService _AudienceService;
         private readonly ISpotLengthService _SpotLengthService;
-        private readonly IDaypartDefaultService _DaypartDefaultService;
+        private readonly IStandardDaypartService _StandardDaypartService;
         private readonly ISharedFolderService _SharedFolderService;
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IMarketCoverageRepository _MarketCoverageRepository;
@@ -164,7 +164,7 @@ namespace Services.Broadcast.ApplicationServices
             ITrafficApiCache trafficApiCache,
             IAudienceService audienceService,
             ISpotLengthService spotLengthService,
-            IDaypartDefaultService daypartDefaultService,
+            IStandardDaypartService standardDaypartService,
             ISharedFolderService sharedFolderService,
             IDateTimeEngine _dateTimeEngine,
             IWeeklyBreakdownEngine weeklyBreakdownEngine,
@@ -182,7 +182,7 @@ namespace Services.Broadcast.ApplicationServices
             _PlanRepository = dataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _AudienceService = audienceService;
             _SpotLengthService = spotLengthService;
-            _DaypartDefaultService = daypartDefaultService;
+            _StandardDaypartService = standardDaypartService;
             _SharedFolderService = sharedFolderService;
             _InventoryRepository = dataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _MarketCoverageRepository = dataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
@@ -516,7 +516,7 @@ namespace Services.Broadcast.ApplicationServices
                 .Select(x => _AudienceService.GetAudienceById(x)).ToList();
             return new CampaignReportData(request.ExportType, campaign, plans, agency, advertiser, guaranteedDemos,
                 _SpotLengthService.GetAllSpotLengths(),
-                _DaypartDefaultService.GetAllDaypartDefaults(),
+                _StandardDaypartService.GetAllStandardDayparts(),
                  _AudienceService.GetAudiences(),
                  _MediaMonthAndWeekAggregateCache,
                 _QuarterCalculationEngine,

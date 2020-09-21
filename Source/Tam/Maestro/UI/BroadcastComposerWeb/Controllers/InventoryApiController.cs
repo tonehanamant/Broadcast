@@ -62,21 +62,21 @@ namespace BroadcastComposerWeb.Controllers
         /// Make a request without parameters or only with one of the parameters specified 
         /// in order to get a list of quarters for all sources
         /// 
-        /// Make a request with both inventorySourceId and daypartDefaultId specified in order to get 
+        /// Make a request with both inventorySourceId and standardDaypartId specified in order to get 
         /// a list of quarters for specific inventory source and daypart
         /// </remarks>
         /// <param name="inventorySourceId">Unique identifier of inventory source which is used to filter inventory out</param>
-        /// <param name="daypartDefaultId">Unique identifier of daypart default which is used to filter inventory out</param>
+        /// <param name="standardDaypartId">Unique identifier of daypart default which is used to filter inventory out</param>
         [HttpGet]
         [Route("Quarters")]
-        public BaseResponse<InventoryQuartersDto> GetInventoryQuarters(int? inventorySourceId = null, int? daypartDefaultId = null)
+        public BaseResponse<InventoryQuartersDto> GetInventoryQuarters(int? inventorySourceId = null, int? standardDaypartId = null)
         {
             return _ConvertToBaseResponse(() =>
             {
                 var service = _ApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
 
-                return inventorySourceId.HasValue && daypartDefaultId.HasValue ?
-                    service.GetInventoryQuarters(inventorySourceId.Value, daypartDefaultId.Value) :
+                return inventorySourceId.HasValue && standardDaypartId.HasValue ?
+                    service.GetInventoryQuarters(inventorySourceId.Value, standardDaypartId.Value) :
                     service.GetInventoryQuarters(DateTime.Now);
             });
         }
@@ -197,19 +197,18 @@ namespace BroadcastComposerWeb.Controllers
                 };
             }
         }
-        
+
         /// <summary>
-        /// Get all daypart defaults for inventory
+        /// Get a list of all available standard dayparts for specific inventory
         /// </summary>
-        /// <remarks>
-        /// Get a list of all available daypart defaults for specific inventory
-        /// </remarks>
-        /// <param name="inventorySourceId">Unique identifier of inventory source</param>
+        /// <param name="inventorySourceId">The inventory source identifier.</param>
+        /// <returns></returns>
         [HttpGet]
-        [Route("DaypartDefaults")]
-        public BaseResponse<List<DaypartDefaultDto>> GetDaypartDefaults(int inventorySourceId)
+        [Route("standarddayparts")]
+        public BaseResponse<List<StandardDaypartDto>> GetStandardDayparts(int inventorySourceId)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IInventorySummaryService>().GetDaypartDefaults(inventorySourceId));
+            return _ConvertToBaseResponse(() => 
+                _ApplicationServiceFactory.GetApplicationService<IInventorySummaryService>().GetStandardDayparts(inventorySourceId));
         }
 
         /// <summary>
@@ -219,16 +218,16 @@ namespace BroadcastComposerWeb.Controllers
         /// Get a list of units for which there is available inventory that match inventory source, daypart code, start date, end date
         /// </remarks>
         /// <param name="inventorySourceId">Unique identifier of inventory source which is used to filter inventory out</param>
-        /// <param name="daypartDefaultId">Unique identifier of daypart default which is used to filter inventory out</param>
+        /// <param name="standardDaypartId">Unique identifier of daypart default which is used to filter inventory out</param>
         /// <param name="startDate">Start date of the period for which inventory needs to be found</param>
         /// <param name="endDate">End date of the period for which inventory needs to be found</param>
         [HttpGet]
         [Route("Units")]
-        public BaseResponse<List<string>> GetUnits(int inventorySourceId, int daypartDefaultId, DateTime startDate, DateTime endDate)
+        public BaseResponse<List<string>> GetUnits(int inventorySourceId, int standardDaypartId, DateTime startDate, DateTime endDate)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory
                 .GetApplicationService<IInventorySummaryService>()
-                .GetInventoryUnits(inventorySourceId, daypartDefaultId, startDate, endDate));
+                .GetInventoryUnits(inventorySourceId, standardDaypartId, startDate, endDate));
         }
 
 

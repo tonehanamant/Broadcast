@@ -24,14 +24,14 @@ namespace EntityFrameworkMapping.Broadcast
         public double rating_points { get; set; }
         public decimal budget { get; set; }
         public Nullable<int> spot_length_id { get; set; }
-        public Nullable<int> daypart_default_id { get; set; }
         public Nullable<double> percentage_of_week { get; set; }
         public double adu_impressions { get; set; }
         public Nullable<double> unit_impressions { get; set; }
+        public Nullable<int> standard_daypart_id { get; set; }
     
-        public virtual daypart_defaults daypart_defaults { get; set; }
         public virtual media_weeks media_weeks { get; set; }
         public virtual plan_versions plan_versions { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
+        public virtual standard_dayparts standard_dayparts { get; set; }
     }
 }

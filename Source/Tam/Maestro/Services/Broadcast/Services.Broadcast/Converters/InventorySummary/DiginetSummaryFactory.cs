@@ -32,7 +32,7 @@ namespace Services.Broadcast.Converters.InventorySummary
         }
 
         public override InventoryQuarterSummary CreateInventorySummary(InventorySource inventorySource, int householdAudienceId, 
-            QuarterDetailDto quarterDetail, List<InventorySummaryManifestDto> inventorySummaryManifests, List<DaypartDefaultDto> daypartDefaults,
+            QuarterDetailDto quarterDetail, List<InventorySummaryManifestDto> inventorySummaryManifests, List<StandardDaypartDto> standardDayparts,
             InventoryAvailability inventoryAvailability)
         {
             
@@ -50,7 +50,7 @@ namespace Services.Broadcast.Converters.InventorySummary
             {
                 InventorySourceId = inventorySource.Id,
                 Quarter = GetInventorySummaryQuarter( quarterDetail),
-                TotalDaypartCodes = inventorySummaryManifests.SelectMany(x => x.DaypartDefaultIds).Distinct().Count(),
+                TotalDaypartCodes = inventorySummaryManifests.SelectMany(x => x.StandardDaypartIds).Distinct().Count(),
                 LastUpdatedDate = DateTime.Now,
                 RatesAvailableFromQuarter = inventoryAvailability.StartQuarter,
                 RatesAvailableToQuarter = inventoryAvailability.EndQuarter,
@@ -64,17 +64,17 @@ namespace Services.Broadcast.Converters.InventorySummary
             , List<StationInventoryManifest> stationInventoryManifests, int householdAudienceId)
         {
             var result = new List<InventoryQuarterSummary.Detail>();
-            var allDaypartDefaults = allSummaryManifests.SelectMany(x => x.DaypartDefaultIds).Distinct();
+            var allStandardDayparts = allSummaryManifests.SelectMany(x => x.StandardDaypartIds).Distinct();
 
-            foreach (var daypartDefaultId in allDaypartDefaults)
+            foreach (var standardDaypartId in allStandardDayparts)
             {
-                var manifests = stationInventoryManifests.Where(x => x.ManifestDayparts.Any(d => d.DaypartDefault.Id == daypartDefaultId));
+                var manifests = stationInventoryManifests.Where(x => x.ManifestDayparts.Any(d => d.StandardDaypart.Id == standardDaypartId));
 
-                _CalculateHouseHoldImpressionsAndCPMUsingDaypartCodePortion(manifests, householdAudienceId, daypartDefaultId, out var householdImpressions, out var cpm);
+                _CalculateHouseHoldImpressionsAndCPMUsingDaypartCodePortion(manifests, householdAudienceId, standardDaypartId, out var householdImpressions, out var cpm);
 
                 result.Add(new InventoryQuarterSummary.Detail
                 {
-                    DaypartDefaultId = daypartDefaultId,
+                    StandardDaypartId = standardDaypartId,
                     TotalProjectedHouseholdImpressions = householdImpressions,
                     CPM = cpm,
                 });
@@ -108,7 +108,7 @@ namespace Services.Broadcast.Converters.InventorySummary
 
                 var manifestDayparts = manifest.ManifestDayparts.ToList();
                 var totalTimeDuration = manifestDayparts.Sum(x => x.Daypart.GetTotalDurationInSeconds());
-                var totalTimeDurationForDaypartCode = manifestDayparts.Where(x => x.DaypartDefault.Id == daypartCode).Sum(x => x.Daypart.GetTotalDurationInSeconds());
+                var totalTimeDurationForDaypartCode = manifestDayparts.Where(x => x.StandardDaypart.Id == daypartCode).Sum(x => x.Daypart.GetTotalDurationInSeconds());
 
                 if (totalTimeDuration == 0 || totalTimeDurationForDaypartCode == 0)
                     throw new Exception("Invalid daypart with zero time found");

@@ -25,7 +25,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.station_inventory_spot_snapshots = new HashSet<station_inventory_spot_snapshots>();
             this.inventory_file_proprietary_header = new HashSet<inventory_file_proprietary_header>();
             this.station_inventory_manifest_dayparts = new HashSet<station_inventory_manifest_dayparts>();
-            this.daypart_defaults = new HashSet<daypart_defaults>();
+            this.standard_dayparts = new HashSet<standard_dayparts>();
         }
     
         public int id { get; set; }
@@ -46,6 +46,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual timespan timespan { get; set; }
         public virtual ICollection<inventory_file_proprietary_header> inventory_file_proprietary_header { get; set; }
         public virtual ICollection<station_inventory_manifest_dayparts> station_inventory_manifest_dayparts { get; set; }
-        public virtual ICollection<daypart_defaults> daypart_defaults { get; set; }
+        public virtual ICollection<standard_dayparts> standard_dayparts { get; set; }
     }
 }

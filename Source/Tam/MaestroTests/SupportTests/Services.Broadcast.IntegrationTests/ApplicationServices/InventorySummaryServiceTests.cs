@@ -30,7 +30,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IInventorySummaryService _InventorySummaryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventorySummaryService>();
         private readonly IInventorySummaryCache _InventorySummaryCache = IntegrationTestApplicationServiceFactory.Instance.Resolve<IInventorySummaryCache>();
         private readonly IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-        private readonly IDaypartDefaultRepository _DaypartDefaultRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
+        private readonly IStandardDaypartRepository _StandardDaypartRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
         private readonly IInventoryExportRepository _InventoryExportRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryExportRepository>();
 
         private InventoryFileTestHelper _InventoryFileTestHelper;
@@ -324,11 +324,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void GetInventoryUnitsTest()
         {
             var inventorySourceId = 4; // TTWN
-            var daypartCodeId = 1; // EMN
+            var standardDaypartId = 1; // EMN
             var startDate = new DateTime(2019, 4, 1);
             var endDate = new DateTime(2019, 6, 30, 23, 59, 59);
 
-            var units = _InventorySummaryService.GetInventoryUnits(inventorySourceId, daypartCodeId, startDate, endDate);
+            var units = _InventorySummaryService.GetInventoryUnits(inventorySourceId, standardDaypartId, startDate, endDate);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(units));
         }
@@ -343,11 +343,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_Q1_2025.xlsx", processInventoryRatings: true);
 
                 var inventorySourceId = 4; // TTWN
-                var daypartCodeId = 1; // EMN
+                var standardDaypartId = 1; // EMN
                 var startDate = new DateTime(2025, 1, 1);
                 var endDate = new DateTime(2025, 3, 31);
 
-                var units = _InventorySummaryService.GetInventoryUnits(inventorySourceId, daypartCodeId, startDate, endDate);
+                var units = _InventorySummaryService.GetInventoryUnits(inventorySourceId, standardDaypartId, startDate, endDate);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(units));
             }
@@ -363,11 +363,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_Q1_2025.xlsx", processInventoryRatings: false);
 
                 var inventorySourceId = 4; // TTWN
-                var daypartCodeId = 1; // EMN
+                var standardDaypartId = 1; // EMN
                 var startDate = new DateTime(2025, 1, 1);
                 var endDate = new DateTime(2025, 3, 31);
 
-                var units = _InventorySummaryService.GetInventoryUnits(inventorySourceId, daypartCodeId, startDate, endDate);
+                var units = _InventorySummaryService.GetInventoryUnits(inventorySourceId, standardDaypartId, startDate, endDate);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(units));
             }
@@ -384,11 +384,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_Q1_2025_2.xlsx", processInventoryRatings: false);
 
                 var inventorySourceId = 4; // TTWN
-                var daypartCodeId = 1; // EMN
+                var standardDaypartId = 1; // EMN
                 var startDate = new DateTime(2025, 1, 1);
                 var endDate = new DateTime(2025, 3, 31);
 
-                var units = _InventorySummaryService.GetInventoryUnits(inventorySourceId, daypartCodeId, startDate, endDate);
+                var units = _InventorySummaryService.GetInventoryUnits(inventorySourceId, standardDaypartId, startDate, endDate);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(units));
             }
@@ -401,9 +401,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var daypartCodeId = _DaypartDefaultRepository.GetDaypartDefaultByCode("OVN").Id;
+                var standardDaypartId = _StandardDaypartRepository.GetStandardDaypartByCode("OVN").Id;
 
-                var quarters = _InventorySummaryService.GetInventoryQuarters(nbcOAndO_InventorySourceId, daypartCodeId);
+                var quarters = _InventorySummaryService.GetInventoryQuarters(nbcOAndO_InventorySourceId, standardDaypartId);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(quarters));
             }
@@ -412,12 +412,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
-        public void GetDaypartDefaultTest()
+        public void GetStandardDaypartTest()
         {
-            var daypartCodes = _InventorySummaryService.GetDaypartDefaults(nbcOAndO_InventorySourceId);
+            var daypartCodes = _InventorySummaryService.GetStandardDayparts(nbcOAndO_InventorySourceId);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(DaypartDefaultDto), "Id");
+            jsonResolver.Ignore(typeof(StandardDaypartDto), "Id");
             var jsonSettings = new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -582,7 +582,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
-        public void GetInventorySummaryFilterByDaypartCodeIdTest()
+        public void GetInventorySummaryFilterBystandardDaypartIdTest()
         {
             var inventoryCards = _InventorySummaryService.GetInventorySummaries(new InventorySummaryFilterDto
             {
@@ -591,7 +591,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     Quarter = 1,
                     Year = 2019
                 },
-                DaypartDefaultId = 1
+                StandardDaypartId = 1
             }, new DateTime(2019, 04, 01));
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));

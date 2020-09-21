@@ -108,13 +108,13 @@
     "ShowType": "News"
   },
   {
-    "Genre": "Documentary",
-    "MatchConfidence": 0.517335,
-    "MatchedName": "An Inconvenient Truth",
+    "Genre": "Drama",
+    "MatchConfidence": 0.560011148,
+    "MatchedName": "An American in Canada",
     "MatchType": 4,
     "OriginalName": "8 News Late Edition",
     "ProgramName": "8 News Late Edition",
-    "ShowType": "Documentary"
+    "ShowType": "Series"
   },
   {
     "Genre": "Documentary",
@@ -189,9 +189,9 @@
     "ShowType": "News"
   },
   {
-    "Genre": "Series",
-    "MatchConfidence": 0.465811968,
-    "MatchedName": "2 broke girls",
+    "Genre": "Drama",
+    "MatchConfidence": 0.484126985,
+    "MatchedName": "An American in Canada",
     "MatchType": 4,
     "OriginalName": "KWWL Today In Iowa At 6",
     "ProgramName": "KWWL Today In Iowa",
@@ -279,13 +279,13 @@
     "ShowType": "News"
   },
   {
-    "Genre": "Documentary",
-    "MatchConfidence": 0.474236876,
-    "MatchedName": "An Inconvenient Truth",
+    "Genre": "Drama",
+    "MatchConfidence": 0.4993895,
+    "MatchedName": "An American in Canada",
     "MatchType": 4,
     "OriginalName": "DAILY MAIL TV 2X",
     "ProgramName": "DAILY MAIL TV",
-    "ShowType": "Documentary"
+    "ShowType": "Series"
   },
   {
     "Genre": "News",
@@ -342,13 +342,13 @@
     "ShowType": "Movie"
   },
   {
-    "Genre": "Documentary",
-    "MatchConfidence": 0.4397759,
-    "MatchedName": "An Inconvenient Truth",
+    "Genre": "Drama",
+    "MatchConfidence": 0.444070965,
+    "MatchedName": "An American in Canada",
     "MatchType": 4,
     "OriginalName": "ATLANTA & COMPANY",
     "ProgramName": "ATLANTA & COMPANY",
-    "ShowType": "Documentary"
+    "ShowType": "Series"
   },
   {
     "Genre": "News",
@@ -477,13 +477,13 @@
     "ShowType": "News"
   },
   {
-    "Genre": "Documentary",
-    "MatchConfidence": 0.433751047,
-    "MatchedName": "An Inconvenient Truth",
+    "Genre": "Drama",
+    "MatchConfidence": 0.5004177,
+    "MatchedName": "An American in Canada",
     "MatchType": 4,
     "OriginalName": "LAST CALL W/ DALY",
     "ProgramName": "LAST CALL WITH DALY",
-    "ShowType": "Documentary"
+    "ShowType": "Series"
   },
   {
     "Genre": "News",
@@ -631,12 +631,12 @@
   },
   {
     "Genre": "Comedy",
-    "MatchConfidence": 0.495833337,
-    "MatchedName": "Family Guy",
+    "MatchConfidence": 0.5277778,
+    "MatchedName": "The Simpsons",
     "MatchType": 4,
     "OriginalName": "Talk Of The Town",
     "ProgramName": "Talk Of The Town",
-    "ShowType": "Comedy"
+    "ShowType": "Series"
   },
   {
     "Genre": "News",
@@ -648,13 +648,13 @@
     "ShowType": "News"
   },
   {
-    "Genre": "Movie",
-    "MatchConfidence": 0.5675926,
-    "MatchedName": "Avengers",
+    "Genre": "Comedy",
+    "MatchConfidence": 0.5787037,
+    "MatchedName": "The Simpsons",
     "MatchType": 4,
     "OriginalName": "My Three Sons-MeTV",
     "ProgramName": "My Three Sons-MeTV",
-    "ShowType": "Movie"
+    "ShowType": "Series"
   },
   {
     "Genre": "Sports",
@@ -684,13 +684,13 @@
     "ShowType": "News"
   },
   {
-    "Genre": "Movie",
-    "MatchConfidence": 0.51096493,
-    "MatchedName": "Avengers",
+    "Genre": "Drama",
+    "MatchConfidence": 0.517335,
+    "MatchedName": "An American in Canada",
     "MatchType": 4,
     "OriginalName": "WAVY News 10 Sunday",
     "ProgramName": "WAVY News 10 Sunday",
-    "ShowType": "Movie"
+    "ShowType": "Series"
   },
   {
     "Genre": "News",

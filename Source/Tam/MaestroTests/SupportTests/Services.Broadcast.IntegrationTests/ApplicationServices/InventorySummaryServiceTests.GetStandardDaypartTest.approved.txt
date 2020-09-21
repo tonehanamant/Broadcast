@@ -1,0 +1,12 @@
+[
+  {
+    "Code": "EMN",
+    "FullName": "Early Morning News",
+    "VpvhCalculationSourceType": 1
+  },
+  {
+    "Code": "OVN",
+    "FullName": "Overnights",
+    "VpvhCalculationSourceType": 3
+  }
+]

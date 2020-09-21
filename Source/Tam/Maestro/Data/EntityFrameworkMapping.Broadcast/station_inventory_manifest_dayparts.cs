@@ -24,14 +24,14 @@ namespace EntityFrameworkMapping.Broadcast
         public int station_inventory_manifest_id { get; set; }
         public int id { get; set; }
         public string program_name { get; set; }
-        public Nullable<int> daypart_default_id { get; set; }
         public Nullable<int> primary_program_id { get; set; }
+        public Nullable<int> standard_daypart_id { get; set; }
     
         public virtual daypart daypart { get; set; }
         public virtual station_inventory_manifest station_inventory_manifest { get; set; }
         public virtual ICollection<station_inventory_manifest_daypart_genres> station_inventory_manifest_daypart_genres { get; set; }
-        public virtual daypart_defaults daypart_defaults { get; set; }
         public virtual ICollection<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs { get; set; }
         public virtual station_inventory_manifest_daypart_programs station_inventory_manifest_daypart_programs1 { get; set; }
+        public virtual standard_dayparts standard_dayparts { get; set; }
     }
 }

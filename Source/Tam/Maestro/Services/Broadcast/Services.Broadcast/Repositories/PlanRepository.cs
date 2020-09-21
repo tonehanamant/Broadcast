@@ -411,7 +411,7 @@ namespace Services.Broadcast.Repositories
                         TargetAudienceId = x.target_audience_id,
                         Dayparts = x.plan_version_dayparts.Select(y => new PlanDaypartDto
                         {
-                            DaypartCodeId = y.daypart_default_id,
+                            DaypartCodeId = y.standard_daypart_id,
                             EndTimeSeconds = y.end_time_seconds,
                             IsEndTimeModified = y.is_end_time_modified,
                             IsStartTimeModified = y.is_start_time_modified,
@@ -663,7 +663,7 @@ namespace Services.Broadcast.Repositories
                 WeeklyBudget = arg.budget,
                 AduImpressions = arg.adu_impressions,
                 SpotLengthId = arg.spot_length_id,
-                DaypartCodeId = arg.daypart_default_id,
+                DaypartCodeId = arg.standard_daypart_id,
                 PercentageOfWeek = arg.percentage_of_week,
                 UnitImpressions = arg.unit_impressions ?? 0
             };
@@ -757,7 +757,7 @@ namespace Services.Broadcast.Repositories
                     budget = d.WeeklyBudget,
                     adu_impressions = d.AduImpressions,
                     spot_length_id = d.SpotLengthId,
-                    daypart_default_id = d.DaypartCodeId,
+                    standard_daypart_id = d.DaypartCodeId,
                     percentage_of_week = d.PercentageOfWeek,
                     unit_impressions = d.UnitImpressions
                 });
@@ -805,7 +805,7 @@ namespace Services.Broadcast.Repositories
         {
             var dto = new PlanDaypartDto
             {
-                DaypartCodeId = entity.daypart_default_id,
+                DaypartCodeId = entity.standard_daypart_id,
                 DaypartTypeId = EnumHelper.GetEnum<DaypartTypeEnum>(entity.daypart_type),
                 StartTimeSeconds = entity.start_time_seconds,
                 IsStartTimeModified = entity.is_start_time_modified,
@@ -815,7 +815,7 @@ namespace Services.Broadcast.Repositories
                 WeekdaysWeighting = entity.weekdays_weighting,
                 WeekendWeighting = entity.weekend_weighting,
                 VpvhForAudiences = planVersion.plan_version_audience_daypart_vpvh
-                    .Where(x => x.daypart_default_id == entity.daypart_default_id)
+                    .Where(x => x.standard_daypart_id == entity.standard_daypart_id)
                     .Select(x => new PlanDaypartVpvhForAudienceDto
                     {
                         AudienceId = x.audience_id,
@@ -916,7 +916,7 @@ namespace Services.Broadcast.Repositories
             {
                 var newDaypart = new plan_version_dayparts
                 {
-                    daypart_default_id = daypart.DaypartCodeId,
+                    standard_daypart_id = daypart.DaypartCodeId,
                     daypart_type = (int)daypart.DaypartTypeId,
                     start_time_seconds = daypart.StartTimeSeconds,
                     is_start_time_modified = daypart.IsStartTimeModified,
@@ -950,7 +950,7 @@ namespace Services.Broadcast.Repositories
                     entity.plan_version_audience_daypart_vpvh.Add(new plan_version_audience_daypart_vpvh
                     {
                         audience_id = vpvhForAudience.AudienceId,
-                        daypart_default_id = daypart.DaypartCodeId,
+                        standard_daypart_id = daypart.DaypartCodeId,
                         vpvh_type = (int)vpvhForAudience.VpvhType,
                         vpvh_value = vpvhForAudience.Vpvh,
                         starting_point = vpvhForAudience.StartingPoint
@@ -1520,7 +1520,7 @@ namespace Services.Broadcast.Repositories
                             StartDate = x.contract_media_week.start_date,
                             EndDate = x.contract_media_week.end_date
                         },
-                        StandardDaypart = _MapToDaypartDefaultDto(x.daypart_defaults)
+                        StandardDaypart = _MapToStandardDaypartDto(x.standard_dayparts)
                     }).ToList()
                 };
             });
@@ -1703,16 +1703,16 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        private DaypartDefaultDto _MapToDaypartDefaultDto(daypart_defaults daypartDefault)
+        private StandardDaypartDto _MapToStandardDaypartDto(standard_dayparts standardDaypart)
         {
-            if (daypartDefault == null)
+            if (standardDaypart == null)
                 return null;
 
-            return new DaypartDefaultDto
+            return new StandardDaypartDto
             {
-                Id = daypartDefault.id,
-                Code = daypartDefault.code,
-                FullName = daypartDefault.name
+                Id = standardDaypart.id,
+                Code = standardDaypart.code,
+                FullName = standardDaypart.name
             };
         }
 
@@ -1976,7 +1976,7 @@ namespace Services.Broadcast.Repositories
                     StartDate = spot.contract_media_week.start_date,
                     EndDate = spot.contract_media_week.end_date
                 },
-                StandardDaypart = _MapToDaypartDefaultDto(spot.daypart_defaults)
+                StandardDaypart = _MapToStandardDaypartDto(spot.standard_dayparts)
             };
         }
 
@@ -2062,7 +2062,7 @@ namespace Services.Broadcast.Repositories
                               join dp in context.inventory_proprietary_daypart_programs
                                  on dpm.inventory_proprietary_daypart_programs_id equals dp.id
                               join aa in context.audience_audiences on ssa.audience_id equals aa.rating_audience_id
-                              join dd in context.daypart_defaults on dpm.daypart_default_id equals dd.id
+                              join dd in context.standard_dayparts on dpm.standard_daypart_id equals dd.id
                               join g in context.genres on dp.genre_id equals g.id
                               join s in context.stations on ssa.station_id equals s.id
                               where summaryIds.Contains(ips.id)
@@ -2072,7 +2072,7 @@ namespace Services.Broadcast.Repositories
                               {
                                   ssa.station_id,
                                   s.market_code,
-                                  dpm.daypart_default_id,
+                                  dpm.standard_daypart_id,
                                   dpm.inventory_proprietary_daypart_programs_id,
                                   ssa.impressions,
                                   dp.program_name,
@@ -2085,7 +2085,7 @@ namespace Services.Broadcast.Repositories
                 if (result == null)
                     throw new Exception($"No proprietary inventory summary were found for the plan {planVersion.plan_id}");
 
-                return result.GroupBy(x => new { x.station_id, x.daypart_default_id, x.inventory_proprietary_daypart_programs_id })
+                return result.GroupBy(x => new { x.station_id, x.standard_daypart_id, x.inventory_proprietary_daypart_programs_id })
                 .Select(x =>
                 {
                     var first = x.First();

@@ -165,7 +165,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IBroadcastLockingManagerApplicationService _LockingManagerApplicationService;
         private readonly IMarketCoverageRepository _MarketCoverageRepository;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
-        private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
+        private readonly IStandardDaypartRepository _StandardDaypartRepository;
         private readonly IStationProgramRepository _StationProgramRepository;
         private readonly IMarketRepository _MarketRepository;
         private readonly IDateTimeEngine _DateTimeEngine;
@@ -208,7 +208,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _LockingManagerApplicationService = lockingManagerApplicationService;
             _MarketCoverageRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
-            _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
+            _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
             _StationProgramRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationProgramRepository>();
             _MarketRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketRepository>();
             _DateTimeEngine = dateTimeEngine;
@@ -1510,8 +1510,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             PlanBuyingParametersDto parameters)
         {
             var results = new List<PlanBuyingAllocatedSpot>();
-            var daypartDefaultsById = _DaypartDefaultRepository
-                .GetAllDaypartDefaults()
+            var standardDaypartById = _StandardDaypartRepository
+                .GetAllStandardDayparts()
                 .ToDictionary(x => x.Id, x => x);
 
             foreach (var allocation in apiSpotsResults.Results)
@@ -1552,7 +1552,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             Impressions = originalSpot.Impressions
                         }
                     },
-                    StandardDaypart = daypartDefaultsById[originalSpot.DaypartId],
+                    StandardDaypart = standardDaypartById[originalSpot.DaypartId],
                     Impressions30sec = originalSpot.Impressions,
                     ContractMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.ContractMediaWeekId),
                     InventoryMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.InventoryMediaWeekId)
@@ -1574,8 +1574,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             PlanDto plan)
         {
             var results = new List<PlanBuyingAllocatedSpot>();
-            var daypartDefaultsById = _DaypartDefaultRepository
-                .GetAllDaypartDefaults()
+            var standardDaypartById = _StandardDaypartRepository
+                .GetAllStandardDayparts()
                 .ToDictionary(x => x.Id, x => x);
             var spotScaleFactorBySpotLengthId = _GetSpotScaleFactorBySpotLengthId(plan);
 
@@ -1618,7 +1618,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                             Impressions = originalSpot.Impressions30sec * spotScaleFactorBySpotLengthId[x.SpotLengthId]
                         })
                         .ToList(),
-                    StandardDaypart = daypartDefaultsById[originalSpot.DaypartId],
+                    StandardDaypart = standardDaypartById[originalSpot.DaypartId],
                     Impressions30sec = originalSpot.Impressions30sec,
                     ContractMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.ContractMediaWeekId),
                     InventoryMediaWeek = _MediaMonthAndWeekAggregateCache.GetMediaWeekById(inventoryWeek.InventoryMediaWeekId)

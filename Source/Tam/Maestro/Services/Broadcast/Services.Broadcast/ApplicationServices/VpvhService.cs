@@ -66,7 +66,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IVpvhFileImporter _VpvhFileImporter;
         private readonly IVpvhRepository _VpvhRepository;
         private readonly IVpvhExportEngine _VpvhExportEngine;
-        private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
+        private readonly IStandardDaypartRepository _StandardDaypartRepository;
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
 
@@ -88,7 +88,7 @@ namespace Services.Broadcast.ApplicationServices
             IQuarterCalculationEngine quarterCalculationEngine)
         {
             _VpvhRepository = broadcastDataRepositoryFactory.GetDataRepository<IVpvhRepository>();
-            _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
+            _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
             _VpvhFileImporter = vpvhFileImporter;
             _BroadcastAudiencesCache = broadcastAudiencesCache;
             _VpvhExportEngine = vpvhExportEngine;
@@ -98,7 +98,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<VpvhDefaultResponse> GetVpvhDefaults(VpvhDefaultsRequest request)
         {
-            var standardDayparts = _DaypartDefaultRepository.GetAllDaypartDefaults();
+            var standardDayparts = _StandardDaypartRepository.GetAllStandardDayparts();
             return _GetFourBookAverage(request.AudienceIds, standardDayparts);
         }
 
@@ -119,7 +119,7 @@ namespace Services.Broadcast.ApplicationServices
 
         private List<VpvhDefaultResponse> _CalculateFourBookAverageVpvhPerDaypartPerAudience(
             List<VpvhQuarter> vpvhQuarters,
-            List<DaypartDefaultDto> standardDayparts,
+            List<StandardDaypartDto> standardDayparts,
             List<int> audienceIds)
         {
             var currentDate = _DateTimeEngine.GetCurrentMoment();
@@ -366,7 +366,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<VpvhResponse> GetVpvhs(VpvhRequest request)
         {
-            var daypartDefault = _DaypartDefaultRepository.GetDaypartDefaultById(request.StandardDaypartId);
+            var standardDaypart = _StandardDaypartRepository.GetStandardDaypartById(request.StandardDaypartId);
             var currentDate = _DateTimeEngine.GetCurrentMoment();
 
             var previousQuarter = _QuarterCalculationEngine.GetQuarterRangeByDate(currentDate.AddMonths(-3));
@@ -374,7 +374,7 @@ namespace Services.Broadcast.ApplicationServices
 
             var previousVpvhQuarters = _VpvhRepository.GetQuarters(previousQuarter.Year, previousQuarter.Quarter, request.AudienceIds);
             var lastYearVpvhQuarters = _VpvhRepository.GetQuarters(lastYearQuarter.Year, lastYearQuarter.Quarter, request.AudienceIds);
-            var fourBookAverages = _GetFourBookAverage(request.AudienceIds, new List<DaypartDefaultDto> { daypartDefault });
+            var fourBookAverages = _GetFourBookAverage(request.AudienceIds, new List<StandardDaypartDto> { standardDaypart });
 
             var response = new List<VpvhResponse>();
 
@@ -387,7 +387,7 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         AudienceId = audienceId,
                         StartingPoint = currentDate,
-                        StandardDaypartId = daypartDefault.Id,
+                        StandardDaypartId = standardDaypart.Id,
                         LastYearVpvh = 1,
                         PreviousQuarterVpvh = 1,
                         FourBookAverageVpvh = 1,
@@ -405,9 +405,9 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     AudienceId = audienceId,
                     StartingPoint = currentDate,
-                    StandardDaypartId = daypartDefault.Id,
-                    LastYearVpvh = _GetVpvhValue(lastYearVpvhQuarter, daypartDefault.VpvhCalculationSourceType),
-                    PreviousQuarterVpvh = _GetVpvhValue(previousVpvhQuarter, daypartDefault.VpvhCalculationSourceType),
+                    StandardDaypartId = standardDaypart.Id,
+                    LastYearVpvh = _GetVpvhValue(lastYearVpvhQuarter, standardDaypart.VpvhCalculationSourceType),
+                    PreviousQuarterVpvh = _GetVpvhValue(previousVpvhQuarter, standardDaypart.VpvhCalculationSourceType),
                     FourBookAverageVpvh = fourBookAverages.SingleOrDefault(v => v.AudienceId == audienceId)?.Vpvh,
                     PreviousQuarter = new QuarterDto(previousQuarter.Quarter, previousQuarter.Year),
                     LastYearQuarter = new QuarterDto(lastYearQuarter.Quarter, lastYearQuarter.Year)
@@ -424,11 +424,11 @@ namespace Services.Broadcast.ApplicationServices
             return response;
         }
 
-        private List<VpvhDefaultResponse> _GetFourBookAverage(List<int> audienceIds, List<DaypartDefaultDto> daypartDefaults)
+        private List<VpvhDefaultResponse> _GetFourBookAverage(List<int> audienceIds, List<StandardDaypartDto> standardDayparts)
         {
             // last 4 available quarter average (we use all available quarters if there are less than 4 available), including future quarters
             var lastFourQuartersVpvhData = _GetLastFourQuartersVpvhData();
-            var result = _CalculateFourBookAverageVpvhPerDaypartPerAudience(lastFourQuartersVpvhData, daypartDefaults, audienceIds);
+            var result = _CalculateFourBookAverageVpvhPerDaypartPerAudience(lastFourQuartersVpvhData, standardDayparts, audienceIds);
             return result;
         }
 

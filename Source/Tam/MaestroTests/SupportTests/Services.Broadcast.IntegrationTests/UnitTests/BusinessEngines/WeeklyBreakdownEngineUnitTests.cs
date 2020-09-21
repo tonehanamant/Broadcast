@@ -37,8 +37,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             _SpotLengthEngineMock = new Mock<ISpotLengthEngine>();
 
             var dataRepositoryFactory = new Mock<IDataRepositoryFactory>();
-            dataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
-                .Returns(_GetMockDaypartDefaultRepository().Object);
+            dataRepositoryFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
+                .Returns(_GetMockStandardDaypartRepository().Object);
 
             _SpotLengthEngineMock.Setup(x => x.GetDeliveryMultipliersBySpotLengthId())
                 .Returns(_SpotLengthMultiplier);
@@ -51,18 +51,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                 dataRepositoryFactory.Object);
         }
 
-        private Mock<IDaypartDefaultRepository> _GetMockDaypartDefaultRepository()
+        private Mock<IStandardDaypartRepository> _GetMockStandardDaypartRepository()
         {
-            var daypartDefaultRepository = new Mock<IDaypartDefaultRepository>();
+            var standardDaypartRepository = new Mock<IStandardDaypartRepository>();
             
-            daypartDefaultRepository.Setup(s => s.GetAllDaypartDefaults())
-                .Returns(DaypartsTestData.GetAllDaypartDefaultsWithBaseData);
+            standardDaypartRepository.Setup(s => s.GetAllStandardDayparts())
+                .Returns(DaypartsTestData.GetAllStandardDaypartsWithBaseData);
             
-            daypartDefaultRepository.Setup(s => s.GetAllDaypartDefaultsWithAllData())
-                .Returns(DaypartsTestData.GetAllDaypartDefaultsWithFullData);
+            standardDaypartRepository.Setup(s => s.GetAllStandardDaypartsWithAllData())
+                .Returns(DaypartsTestData.GetAllStandardDaypartsWithFullData);
 
-            var testDefaultDays = DaypartsTestData.GetDayIdsFromDaypartDefaults();
-            daypartDefaultRepository.Setup(s => s.GetDayIdsFromDaypartDefaults(It.IsAny<List<int>>()))
+            var testDefaultDays = DaypartsTestData.GetDayIdsFromStandardDayparts();
+            standardDaypartRepository.Setup(s => s.GetDayIdsFromStandardDayparts(It.IsAny<List<int>>()))
                 .Returns<List<int>>((ids) =>
                 {
                     var items = new List<int>();
@@ -73,7 +73,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
                     return items.Distinct().ToList();
                 });
 
-            return daypartDefaultRepository;
+            return standardDaypartRepository;
         }
 
         [Test]
@@ -380,8 +380,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         public void GroupsWeeklyBreakdownByWeek()
         {
             var dataRepositoryFactory = new Mock<IDataRepositoryFactory>();
-            dataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
-                .Returns(_GetMockDaypartDefaultRepository().Object);
+            dataRepositoryFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
+                .Returns(_GetMockStandardDaypartRepository().Object);
 
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             spotLengthEngine.Setup(x => x.GetDeliveryMultipliersBySpotLengthId())
@@ -401,8 +401,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         public void GroupsWeeklyBreakdownByWeekBySpotLength()
         {
             var dataRepositoryFactory = new Mock<IDataRepositoryFactory>();
-            dataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
-                .Returns(_GetMockDaypartDefaultRepository().Object);
+            dataRepositoryFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
+                .Returns(_GetMockStandardDaypartRepository().Object);
 
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             spotLengthEngine.Setup(x => x.GetDeliveryMultipliersBySpotLengthId())
@@ -422,8 +422,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         public void GroupWeeklyBreakdownByWeekByDaypart()
         {
             var dataRepositoryFactory = new Mock<IDataRepositoryFactory>();
-            dataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
-                .Returns(_GetMockDaypartDefaultRepository().Object);
+            dataRepositoryFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
+                .Returns(_GetMockStandardDaypartRepository().Object);
 
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             spotLengthEngine.Setup(x => x.GetDeliveryMultipliersBySpotLengthId())
@@ -530,7 +530,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             var dayparts = new List<PlanDaypartDto>();
 
             const string daypartCodeWeekend = "WKD";
-            var allDayparts = DaypartsTestData.GetAllDaypartDefaultsWithFullData();
+            var allDayparts = DaypartsTestData.GetAllStandardDaypartsWithFullData();
 
             if (hasFullWeekDaypart)
             {

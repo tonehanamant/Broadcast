@@ -34,7 +34,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IVpvhRepository> _VpvhRepositoryMock;
         private Mock<IVpvhExportEngine> _VpvhExportEngine;
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
-        private Mock<IDaypartDefaultRepository> _DaypartDefaultRepositoryMock;
+        private Mock<IStandardDaypartRepository> _StandardDaypartRepositoryMock;
         private Mock<IQuarterCalculationEngine> _QuarterCalculationEngineMock;
 
         [SetUp]
@@ -46,7 +46,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _VpvhRepositoryMock = new Mock<IVpvhRepository>();
             _VpvhExportEngine = new Mock<IVpvhExportEngine>();
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
-            _DaypartDefaultRepositoryMock = new Mock<IDaypartDefaultRepository>();
+            _StandardDaypartRepositoryMock = new Mock<IStandardDaypartRepository>();
             _QuarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
 
             _DateTimeEngineMock
@@ -58,16 +58,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(_VpvhRepositoryMock.Object);
 
             dataRepositoryFactoryMock
-                .Setup(x => x.GetDataRepository<IDaypartDefaultRepository>())
-                .Returns(_DaypartDefaultRepositoryMock.Object);
+                .Setup(x => x.GetDataRepository<IStandardDaypartRepository>())
+                .Returns(_StandardDaypartRepositoryMock.Object);
 
             _VpvhRepositoryMock
                 .Setup(x => x.GetQuartersWithVpvhData())
                 .Returns(_GetQuartersWithVpvhData());
 
-            _DaypartDefaultRepositoryMock
-                .Setup(x => x.GetAllDaypartDefaults())
-                .Returns(_GetDaypartDefaults());
+            _StandardDaypartRepositoryMock
+                .Setup(x => x.GetAllStandardDayparts())
+                .Returns(_GetStandardDayparts());
 
             _VpvhRepositoryMock
                 .Setup(x => x.GetQuartersByYears(It.IsAny<IEnumerable<int>>()))
@@ -333,12 +333,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 AudienceIds = new List<int> { 1 }
             };
 
-            var allDaypartDefaults = _GetDaypartDefaults();
-            allDaypartDefaults.First().VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)999999;
+            var allStandardDayparts = _GetStandardDayparts();
+            allStandardDayparts.First().VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)999999;
 
-            _DaypartDefaultRepositoryMock
-                .Setup(x => x.GetAllDaypartDefaults())
-                .Returns(allDaypartDefaults);
+            _StandardDaypartRepositoryMock
+                .Setup(x => x.GetAllStandardDayparts())
+                .Returns(allStandardDayparts);
 
             // Act
             var exception = Assert.Throws<Exception>(() => _VpvhService.GetVpvhDefaults(request));
@@ -362,7 +362,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 StandardDaypartId = 34 
             };
 
-            _DaypartDefaultRepositoryMock.Setup(d => d.GetDaypartDefaultById(It.IsAny<int>())).Returns(_GetDaypartDefaults().First());
+            _StandardDaypartRepositoryMock.Setup(d => d.GetStandardDaypartById(It.IsAny<int>())).Returns(_GetStandardDayparts().First());
             _QuarterCalculationEngineMock.Setup(q => q.GetQuarterRangeByDate(PreviousQuarterDate)).Returns(_GetPreviousQuarter());
             _QuarterCalculationEngineMock.Setup(q => q.GetQuarterRangeByDate(PreviousYearDate)).Returns(_GetPreviousYearQuarter());
 
@@ -384,15 +384,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private QuarterDetailDto _GetPreviousQuarter() =>
             new QuarterDetailDto { Quarter = 1, Year = 2022 };
 
-        private List<DaypartDefaultDto> _GetDaypartDefaults()
+        private List<StandardDaypartDto> _GetStandardDayparts()
         {
-            return new List<DaypartDefaultDto>
+            return new List<StandardDaypartDto>
             {
-                new DaypartDefaultDto { Id = 1, Code = "EMN", FullName = "Early Morning News", VpvhCalculationSourceType = VpvhCalculationSourceTypeEnum.AM_NEWS },
-                new DaypartDefaultDto { Id = 3, Code = "EN", FullName = "Evening News", VpvhCalculationSourceType = VpvhCalculationSourceTypeEnum.PM_NEWS },
-                new DaypartDefaultDto { Id = 7, Code = "PA", FullName = "Prime Access", VpvhCalculationSourceType = VpvhCalculationSourceTypeEnum.SYN_All },
-                new DaypartDefaultDto { Id = 17, Code = "TDN", FullName = "Total Day News", VpvhCalculationSourceType = VpvhCalculationSourceTypeEnum.AVG_OF_AM_NEWS_AND_PM_NEWS },
-                new DaypartDefaultDto { Id = 22, Code = "TDNS", FullName = "Total Day News and Syndication", VpvhCalculationSourceType = VpvhCalculationSourceTypeEnum.AVG_OF_AM_NEWS_AND_PM_NEWS_AND_SYN_ALL },
+                new StandardDaypartDto { Id = 1, Code = "EMN", FullName = "Early Morning News", VpvhCalculationSourceType = VpvhCalculationSourceTypeEnum.AM_NEWS },
+                new StandardDaypartDto { Id = 3, Code = "EN", FullName = "Evening News", VpvhCalculationSourceType = VpvhCalculationSourceTypeEnum.PM_NEWS },
+                new StandardDaypartDto { Id = 7, Code = "PA", FullName = "Prime Access", VpvhCalculationSourceType = VpvhCalculationSourceTypeEnum.SYN_All },
+                new StandardDaypartDto { Id = 17, Code = "TDN", FullName = "Total Day News", VpvhCalculationSourceType = VpvhCalculationSourceTypeEnum.AVG_OF_AM_NEWS_AND_PM_NEWS },
+                new StandardDaypartDto { Id = 22, Code = "TDNS", FullName = "Total Day News and Syndication", VpvhCalculationSourceType = VpvhCalculationSourceTypeEnum.AVG_OF_AM_NEWS_AND_PM_NEWS_AND_SYN_ALL },
             };
         }
 

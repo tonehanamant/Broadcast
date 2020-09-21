@@ -39,7 +39,7 @@ namespace Services.Broadcast.Converters.RateImport
         private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
         private readonly IImpressionsService _ImpressionsService;
         private readonly IInventoryProprietaryDaypartRepository _InventoryProprietaryDaypartRepository;
-        private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
+        private readonly IStandardDaypartRepository _StandardDaypartRepository;
         private readonly IShowTypeRepository _ShowTypeRepository;
         private readonly IGenreCache _GenreCache;
         private readonly IShowTypeCache _ShowTypeCache;
@@ -77,7 +77,7 @@ namespace Services.Broadcast.Converters.RateImport
             _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _ImpressionsService = impressionsService;
             _InventoryProprietaryDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProprietaryDaypartRepository>();
-            _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
+            _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
             _ShowTypeRepository = broadcastDataRepositoryFactory.GetDataRepository<IShowTypeRepository>();
             _GenreCache = genreCache;
             _ShowTypeCache = showTypeCache;
@@ -111,7 +111,7 @@ namespace Services.Broadcast.Converters.RateImport
 
             var daypartCode = worksheet.Cells[DAYPART_CODE_CELL.ToString()].GetStringValue();
 
-            if (!DaypartDefaultRepository.DaypartDefaultExists(daypartCode))
+            if (!StandardDaypartRepository.StandardDaypartExists(daypartCode))
             {
                 var errorMessage = "Not acceptable daypart code is specified";
                 validationProblems.Add(errorMessage);
@@ -484,7 +484,7 @@ namespace Services.Broadcast.Converters.RateImport
         private List<StationInventoryGroup> _GetStationInventoryGroups(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations)
         {
             var fileHeader = proprietaryFile.Header;
-            var defaultDaypart = _DaypartDefaultRepository.GetDaypartDefaultByCode(fileHeader.DaypartCode);
+            var defaultDaypart = _StandardDaypartRepository.GetStandardDaypartByCode(fileHeader.DaypartCode);
             var inventoryProprietaryDaypart = _InventoryProprietaryDaypartRepository.GetInventoryProprietaryDaypartMappings(proprietaryFile.InventorySource.Id, defaultDaypart.Id);
             var maestroGenre = _GenreCache.GetGenreLookupDtoById(inventoryProprietaryDaypart.GenreId);
             var masterGenre = _GenreCache.GetSourceGenreLookupDtoByName(maestroGenre.Display, ProgramSourceEnum.Master);

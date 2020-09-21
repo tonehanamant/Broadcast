@@ -37,7 +37,7 @@ namespace Services.Broadcast.Converters.RateImport
         private readonly FileCell NTI_TO_NSI_INCREASE_CELL = new FileCell { ColumnLetter = "B", RowIndex = 6 };
 
         private readonly IImpressionAdjustmentEngine _ImpressionAdjustmentEngine;
-        private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
+        private readonly IStandardDaypartRepository _StandardDaypartRepository;
 
         private int _ErrorColumnIndex = 0;
         private const int audienceRowIndex = 11;
@@ -69,7 +69,7 @@ namespace Services.Broadcast.Converters.RateImport
                 stationMappingService)
         {
             _ImpressionAdjustmentEngine = impressionAdjustmentEngine;
-            _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
+            _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
         }
 
         public override void LoadAndValidateHeaderData(ExcelWorksheet worksheet, ProprietaryInventoryFile proprietaryFile)
@@ -428,7 +428,7 @@ namespace Services.Broadcast.Converters.RateImport
             var fileHeader = proprietaryFile.Header;
             var ntiToNsiIncreaseInDecimals = (double)(fileHeader.NtiToNsiIncrease.Value / 100);
             var defaultSpotLengthId = SpotLengthEngine.GetSpotLengthIdByValue(defaultSpotLength);
-            var allDaypartCodes = _DaypartDefaultRepository.GetAllDaypartDefaults();
+            var allDaypartCodes = _StandardDaypartRepository.GetAllStandardDayparts();
 
             proprietaryFile.InventoryManifests = proprietaryFile.DataLines.Select(x =>
                 new StationInventoryManifest
@@ -439,7 +439,7 @@ namespace Services.Broadcast.Converters.RateImport
                     ManifestDayparts = x.Dayparts.Select(d => new StationInventoryManifestDaypart
                     {
                         Daypart = d,
-                        DaypartDefault = _MapToDaypartCode(d, allDaypartCodes)
+                        StandardDaypart = _MapToDaypartCode(d, allDaypartCodes)
                     }).ToList(),
                     ManifestWeeks = GetManifestWeeksInRange(fileHeader.EffectiveDate, fileHeader.EndDate,
                         defaultSpotsNumberPerWeek),
@@ -464,7 +464,7 @@ namespace Services.Broadcast.Converters.RateImport
             ).Where(manifest => manifest.Station != null).ToList();
         }
 
-        private DaypartDefaultDto _MapToDaypartCode(DisplayDaypart displayDaypart, List<DaypartDefaultDto> allDaypartDefaults)
+        private StandardDaypartDto _MapToDaypartCode(DisplayDaypart displayDaypart, List<StandardDaypartDto> allStandardDayparts)
         {
             var startHour = int.Parse(displayDaypart.StartHourFullPercision);
             var endHour = int.Parse(displayDaypart.EndHourFullPercision);
@@ -484,7 +484,7 @@ namespace Services.Broadcast.Converters.RateImport
                               startHour == 23 ? "LF" :
                               _IsBetween(startHour, 0, 1) ? "LF" : string.Empty;
 
-            return allDaypartDefaults.SingleOrDefault(dc => dc.Code == daypartCode);
+            return allStandardDayparts.SingleOrDefault(dc => dc.Code == daypartCode);
         }
 
         private bool _IsBetween(int hour, int start, int end)

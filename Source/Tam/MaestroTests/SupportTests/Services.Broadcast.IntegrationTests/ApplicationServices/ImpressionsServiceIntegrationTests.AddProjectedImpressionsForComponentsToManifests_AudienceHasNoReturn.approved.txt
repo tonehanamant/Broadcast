@@ -366,12 +366,12 @@
           "_Tuesday": true,
           "_Wednesday": true
         },
-        "DaypartDefault": null,
         "Genres": [],
         "Id": 362548,
         "PrimaryProgramId": null,
         "ProgramName": "MORNING DOSE",
-        "Programs": []
+        "Programs": [],
+        "StandardDaypart": null
       }
     ],
     "ManifestRates": [

@@ -52,7 +52,7 @@ namespace Services.Broadcast.BusinessEngines
         private readonly IMarketCoverageRepository _MarketCoverageRepository;
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
+        private readonly IStandardDaypartRepository _StandardDaypartRepository;
 
         protected Lazy<int> _ThresholdInSecondsForProgramIntersect;
         protected Lazy<string>_PlanPricingEndpointVersion;
@@ -61,10 +61,10 @@ namespace Services.Broadcast.BusinessEngines
 
         protected Lazy<List<Day>> _CadentDayDefinitions;
         /// <summary>
-        /// Key = DaypartDefaultId
+        /// Key = StandardDaypartId
         /// Values = Day Ids for that Daypart Default.
         /// </summary>
-        protected Lazy<Dictionary<int, List<int>>> _DaypartDefaultDayIds;
+        protected Lazy<Dictionary<int, List<int>>> _StandardDaypartDayIds;
 
         public PlanPricingInventoryEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                           IImpressionsCalculationEngine impressionsCalculationEngine,
@@ -89,7 +89,7 @@ namespace Services.Broadcast.BusinessEngines
             _MarketCoverageRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _FeatureToggleHelper = featureToggleHelper;
-            _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
+            _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
 
             // register lazy delegates - settings
             _ThresholdInSecondsForProgramIntersect = new Lazy<int>(() => BroadcastServiceSystemParameter.ThresholdInSecondsForProgramIntersectInPricing);
@@ -99,7 +99,7 @@ namespace Services.Broadcast.BusinessEngines
 
             // register lazy delegates - domain data
             _CadentDayDefinitions = new Lazy<List<Day>>(() => _DayRepository.GetDays());
-            _DaypartDefaultDayIds = new Lazy<Dictionary<int, List<int>>>(_GetDaypartDefaultDayIds);
+            _StandardDaypartDayIds = new Lazy<Dictionary<int, List<int>>>(_GetStandardDaypartDayIds);
         }
 
         public List<QuoteProgram> GetInventoryForQuote(QuoteRequestDto request, Guid processingId)
@@ -272,11 +272,11 @@ namespace Services.Broadcast.BusinessEngines
 
         private void _SetProgramsFlightDays<T>(List<T> programs, List<int> flightDays) where T: BasePlanInventoryProgram
         {
-            var daypartDefaultIds = _DaypartDefaultDayIds.Value;
+            var standardDaypartIds = _StandardDaypartDayIds.Value;
 
             foreach (var program in programs)
             {
-                var programStandardDaypartDays = daypartDefaultIds[program.StandardDaypartId];
+                var programStandardDaypartDays = standardDaypartIds[program.StandardDaypartId];
                 var coveredDayNamesSet = _GetCoveredDayNamesHashSet(flightDays, programStandardDaypartDays);
 
                 foreach (var manifestDaypart in program.ManifestDayparts)
@@ -716,7 +716,7 @@ namespace Services.Broadcast.BusinessEngines
             return result;
         }
 
-        private ProgramFlightDaypartIntersectInfo _CalculateProgramIntersectInfo(ProgramInventoryDaypart x, Dictionary<int, List<int>> daypartDefaultDayIds, DisplayDaypart planDays)
+        private ProgramFlightDaypartIntersectInfo _CalculateProgramIntersectInfo(ProgramInventoryDaypart x, Dictionary<int, List<int>> standardDaypartDayIds, DisplayDaypart planDays)
         {
             var planDaypartTimeRange = new TimeRange
             {
@@ -732,7 +732,7 @@ namespace Services.Broadcast.BusinessEngines
 
             var singleIntersectionTime = DaypartTimeHelper.GetIntersectingTotalTime(planDaypartTimeRange, inventoryDaypartTimeRange);
             
-            var daypartDayIds = daypartDefaultDayIds[x.PlanDaypart.DaypartCodeId].Select(_ConvertCadentDayIdToSystemDayId).ToList();
+            var daypartDayIds = standardDaypartDayIds[x.PlanDaypart.DaypartCodeId].Select(_ConvertCadentDayIdToSystemDayId).ToList();
             var flightDayIds = planDays.Days.Select(d => (int)d).ToList();
             var programDayIds = x.ManifestDaypart.Daypart.Days.Select(d => (int)d).ToList();
             var intersectingDayIds = programDayIds.Intersect(daypartDayIds).Intersect(flightDayIds).ToList();
@@ -763,7 +763,7 @@ namespace Services.Broadcast.BusinessEngines
             where T : ProgramInventoryDaypart
         {
             var planDaypartsWithIntersectingTime = programInventoryDayparts
-                .Select(x => _CalculateProgramIntersectInfo(x, _DaypartDefaultDayIds.Value, planDays))
+                .Select(x => _CalculateProgramIntersectInfo(x, _StandardDaypartDayIds.Value, planDays))
                 .ToList();
 
             var planDaypartWithmostIntersectingTime = planDaypartsWithIntersectingTime
@@ -784,7 +784,7 @@ namespace Services.Broadcast.BusinessEngines
 
             var conversionRatesByDaypartCodeId = _NtiToNsiConversionRepository
                     .GetLatestNtiToNsiConversionRates()
-                    .ToDictionary(x => x.DaypartDefaultId, x => x.ConversionRate);
+                    .ToDictionary(x => x.StandardDaypartId, x => x.ConversionRate);
 
             foreach (var program in programs)
             {
@@ -806,7 +806,7 @@ namespace Services.Broadcast.BusinessEngines
 
             var conversionRatesByDaypartCodeId = _NtiToNsiConversionRepository
                     .GetLatestNtiToNsiConversionRates()
-                    .ToDictionary(x => x.DaypartDefaultId, x => x.ConversionRate);
+                    .ToDictionary(x => x.StandardDaypartId, x => x.ConversionRate);
 
             foreach (var program in programs)
             {
@@ -1030,8 +1030,8 @@ namespace Services.Broadcast.BusinessEngines
 
         private DisplayDaypart _GetDisplayDaypartForPlanDaypart(PlanDaypartDto planDaypart, DisplayDaypart planFlightDays)
         {
-            var daypartDefaultDayIds = _DaypartDefaultDayIds.Value;
-            var planDaypartDayIds = daypartDefaultDayIds[planDaypart.DaypartCodeId];
+            var standardDaypartDayIds = _StandardDaypartDayIds.Value;
+            var planDaypartDayIds = standardDaypartDayIds[planDaypart.DaypartCodeId];
             var coveredDayNamesSet = _GetCoveredDayNamesHashSet(planDaypartDayIds);
 
             var blendedFlightDaypart = new DisplayDaypart
@@ -1053,7 +1053,7 @@ namespace Services.Broadcast.BusinessEngines
         private List<int> _GetDaypartDayIds(List<PlanDaypartDto> planDayparts)
         {
             var planDefaultDaypartIds = planDayparts.Select(d => d.DaypartCodeId).ToList();
-            var dayIds = _DaypartDefaultRepository.GetDayIdsFromDaypartDefaults(planDefaultDaypartIds);
+            var dayIds = _StandardDaypartRepository.GetDayIdsFromStandardDayparts(planDefaultDaypartIds);
             return dayIds;
         }
 
@@ -1200,17 +1200,17 @@ namespace Services.Broadcast.BusinessEngines
             _ImpressionsCalculationEngine.ApplyProjectedImpressions(programs, impressionsRequest, audienceIds);
         }
 
-        private Dictionary<int, List<int>> _GetDaypartDefaultDayIds()
+        private Dictionary<int, List<int>> _GetStandardDaypartDayIds()
         {
-            var daypartDefaultDayIds = new Dictionary<int, List<int>>();
-            var daypartDefaultIds = _DaypartDefaultRepository.GetAllDaypartDefaults().Select(s => s.Id);
-            foreach (var daypartDefaultId in daypartDefaultIds)
+            var standardDaypartDayIds = new Dictionary<int, List<int>>();
+            var standardDaypartIds = _StandardDaypartRepository.GetAllStandardDayparts().Select(s => s.Id);
+            foreach (var id in standardDaypartIds)
             {
-                var dayIds = _DaypartDefaultRepository.GetDayIdsFromDaypartDefaults(new List<int> { daypartDefaultId });
-                daypartDefaultDayIds[daypartDefaultId] = dayIds;
+                var dayIds = _StandardDaypartRepository.GetDayIdsFromStandardDayparts(new List<int> { id });
+                standardDaypartDayIds[id] = dayIds;
             }
 
-            return daypartDefaultDayIds;
+            return standardDaypartDayIds;
         }
 
         private class ProgramInventoryDaypart

@@ -20,12 +20,12 @@ namespace Services.Broadcast.ApplicationServices
     public interface IInventorySummaryService : IApplicationService
     {
         List<InventorySource> GetInventorySources();
-        InventoryQuartersDto GetInventoryQuarters(int inventorySourceId, int daypartDefaultId);
+        InventoryQuartersDto GetInventoryQuarters(int inventorySourceId, int standardDaypartId);
         InventoryQuartersDto GetInventoryQuarters(DateTime currentDate);
         List<InventorySummaryDto> GetInventorySummaries(InventorySummaryFilterDto inventorySummaryFilterDto, DateTime currentDate);
         List<InventorySummaryDto> GetInventorySummariesWithCache(InventorySummaryFilterDto inventorySummaryFilterDto, DateTime currentDate);
-        List<DaypartDefaultDto> GetDaypartDefaults(int inventorySourceId);
-        List<string> GetInventoryUnits(int inventorySourceId, int daypartDefaultId, DateTime startDate, DateTime endDate);
+        List<StandardDaypartDto> GetStandardDayparts(int inventorySourceId);
+        List<string> GetInventoryUnits(int inventorySourceId, int standardDaypartId, DateTime startDate, DateTime endDate);
         List<LookupDto> GetInventorySourceTypes();
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryRepository _InventoryRepository;
         private readonly IInventorySummaryRepository _InventorySummaryRepository;
         private readonly IProgramRepository _ProgramRepository;
-        private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
+        private readonly IStandardDaypartRepository _StandardDaypartRepository;
         private readonly List<InventorySourceTypeEnum> SummariesSourceTypes = new List<InventorySourceTypeEnum>
         {
             InventorySourceTypeEnum.Barter,
@@ -86,7 +86,7 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>(); ;
             _InventorySummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventorySummaryRepository>();
             _ProgramRepository = broadcastDataRepositoryFactory.GetDataRepository<IProgramRepository>();
-            _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
+            _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
             _MarketCoverageCache = marketCoverageCache;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _InventoryGapCalculationEngine = inventoryGapCalculationEngine;
@@ -117,9 +117,9 @@ namespace Services.Broadcast.ApplicationServices
             };
         }
 
-        public InventoryQuartersDto GetInventoryQuarters(int inventorySourceId, int daypartDefaultId)
+        public InventoryQuartersDto GetInventoryQuarters(int inventorySourceId, int standardDaypartId)
         {
-            var weeks = _InventoryRepository.GetStationInventoryManifestWeeks(inventorySourceId, daypartDefaultId);
+            var weeks = _InventoryRepository.GetStationInventoryManifestWeeks(inventorySourceId, standardDaypartId);
             var mediaMonthIds = weeks.Select(x => x.MediaWeek.MediaMonthId).Distinct();
             var mediaMonths = _MediaMonthAndWeekAggregateCache.GetMediaMonthsByIds(mediaMonthIds);
             var quarters = mediaMonths
@@ -175,7 +175,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 var data = _InventorySummaryRepository.GetInventorySummaryDataForSources(inventorySource, quarterDetail.Quarter, quarterDetail.Year);
 
-                if (_ShouldFilterOutDataByDaypartDefault(data, inventorySummaryFilterDto))
+                if (_ShouldFilterOutDataByStandardDaypart(data, inventorySummaryFilterDto))
                 {
                     continue;
                 }
@@ -198,7 +198,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var data = _InventorySummaryRepository.GetInventorySummaryDataForSources(inventorySource, quarterDetail.Quarter, quarterDetail.Year);
 
-                if (_ShouldFilterOutDataByDaypartDefault(data, inventorySummaryFilterDto))
+                if (_ShouldFilterOutDataByStandardDaypart(data, inventorySummaryFilterDto))
                 {
                     continue;
                 }
@@ -230,7 +230,7 @@ namespace Services.Broadcast.ApplicationServices
                 return result;
             }
 
-            var daypartDefaultsAndIds = _DaypartDefaultRepository.GetAllDaypartDefaults();
+            var standardDayparts = _StandardDaypartRepository.GetAllStandardDayparts();
             foreach (var quarterDetail in quarters)
             {
                 InventoryQuarterSummary summaryData;
@@ -239,14 +239,14 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     summaryData = inventorySummaryFactory.CreateInventorySummary
                         (inventorySource, householdAudienceId, quarterDetail,
-                        daypartDefaultsAndIds, inventoryAvailability);
+                        standardDayparts, inventoryAvailability);
                 }
                 else
                 {
                     var manifests = _GetInventorySummaryManifests(inventorySource, quarterDetail);
                     summaryData = inventorySummaryFactory.CreateInventorySummary
                     (inventorySource, householdAudienceId, quarterDetail, manifests,
-                    daypartDefaultsAndIds, inventoryAvailability);
+                    standardDayparts, inventoryAvailability);
                 }
                 sw.Stop();
                 Debug.WriteLine($"Created inventory summary in {sw.Elapsed}");
@@ -281,7 +281,7 @@ namespace Services.Broadcast.ApplicationServices
                 return result;
             }
 
-            var daypartDefaultsAndIds = _DaypartDefaultRepository.GetAllDaypartDefaults();
+            var standardDayparts = _StandardDaypartRepository.GetAllStandardDayparts();
             foreach (var quarterDetail in quarters)
             {
                 InventoryQuarterSummary summaryData;
@@ -290,14 +290,14 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     summaryData = inventorySummaryFactory.CreateInventorySummary
                         (inventorySource, householdAudienceId, quarterDetail,
-                        daypartDefaultsAndIds, inventoryAvailability);
+                        standardDayparts, inventoryAvailability);
                 }
                 else
                 {
                     var manifests = _GetInventorySummaryManifests(inventorySource, quarterDetail);
                     summaryData = inventorySummaryFactory.CreateInventorySummary
                     (inventorySource, householdAudienceId, quarterDetail, manifests,
-                    daypartDefaultsAndIds, inventoryAvailability);
+                    standardDayparts, inventoryAvailability);
                 }
                 sw.Stop();
                 Debug.WriteLine($"Created inventory summary in {sw.Elapsed}");
@@ -339,11 +339,11 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private bool _ShouldFilterOutDataByDaypartDefault(InventoryQuarterSummary data, InventorySummaryFilterDto inventorySummaryFilterDto)
+        private bool _ShouldFilterOutDataByStandardDaypart(InventoryQuarterSummary data, InventorySummaryFilterDto inventorySummaryFilterDto)
         {
-            var daypartDefaultId = inventorySummaryFilterDto.DaypartDefaultId;
+            var standardDaypartId = inventorySummaryFilterDto.StandardDaypartId;
 
-            if (daypartDefaultId.HasValue)
+            if (standardDaypartId.HasValue)
             {
                 // don't add empty objects
                 if (!data.HasInventorySourceSummary || !data.HasInventorySourceSummaryQuarterDetails)
@@ -351,9 +351,9 @@ namespace Services.Broadcast.ApplicationServices
                     return true;
                 }
 
-                var daypartDefaultIds = data.Details.Select(m => m.DaypartDefaultId).Distinct().ToList();
+                var standardDaypartIds = data.Details.Select(m => m.StandardDaypartId).Distinct();
 
-                return !daypartDefaultIds.Contains(daypartDefaultId.Value);
+                return !standardDaypartIds.Contains(standardDaypartId.Value);
             }
 
             return false;
@@ -494,19 +494,19 @@ namespace Services.Broadcast.ApplicationServices
             return new DateRange(datesTuple.Item1, datesTuple.Item2);
         }
 
-        public List<DaypartDefaultDto> GetDaypartDefaults(int inventorySourceId)
+        public List<StandardDaypartDto> GetStandardDayparts(int inventorySourceId)
         {
-            return _DaypartDefaultRepository.GetDaypartDefaultsByInventorySource(inventorySourceId);
+            return _StandardDaypartRepository.GetStandardDaypartsByInventorySource(inventorySourceId);
         }
 
-        public List<string> GetInventoryUnits(int inventorySourceId, int daypartDefaultId, DateTime startDate, DateTime endDate)
+        public List<string> GetInventoryUnits(int inventorySourceId, int standardDaypartId, DateTime startDate, DateTime endDate)
         {
             if (startDate > endDate)
             {
                 return new List<string>();
             }
 
-            var groups = _InventoryRepository.GetInventoryGroups(inventorySourceId, daypartDefaultId, startDate, endDate);
+            var groups = _InventoryRepository.GetInventoryGroups(inventorySourceId, standardDaypartId, startDate, endDate);
 
             return groups.Select(x => x.Name).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
         }

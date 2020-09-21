@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using Services.Broadcast.Entities.Enums;
+﻿using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Entities
 {
     /// <summary>
     /// Default data for daypart defaults.
     /// </summary>
-    public class DaypartDefaultFullDto : DaypartDefaultDto
+    public class StandardDaypartFullDto : StandardDaypartDto
     {
         /// <summary>
         /// Gets or sets the daypart type.

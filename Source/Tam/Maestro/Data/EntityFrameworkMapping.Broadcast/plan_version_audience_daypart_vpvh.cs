@@ -17,13 +17,13 @@ namespace EntityFrameworkMapping.Broadcast
         public int id { get; set; }
         public int plan_version_id { get; set; }
         public int audience_id { get; set; }
-        public int daypart_default_id { get; set; }
         public int vpvh_type { get; set; }
         public double vpvh_value { get; set; }
         public System.DateTime starting_point { get; set; }
+        public int standard_daypart_id { get; set; }
     
         public virtual audience audience { get; set; }
-        public virtual daypart_defaults daypart_defaults { get; set; }
         public virtual plan_versions plan_versions { get; set; }
+        public virtual standard_dayparts standard_dayparts { get; set; }
     }
 }

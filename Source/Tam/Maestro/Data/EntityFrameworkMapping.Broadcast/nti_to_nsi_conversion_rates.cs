@@ -16,10 +16,10 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public int id { get; set; }
         public double conversion_rate { get; set; }
-        public int daypart_default_id { get; set; }
         public int media_month_id { get; set; }
+        public int standard_daypart_id { get; set; }
     
-        public virtual daypart_defaults daypart_defaults { get; set; }
         public virtual media_months media_months { get; set; }
+        public virtual standard_dayparts standard_dayparts { get; set; }
     }
 }

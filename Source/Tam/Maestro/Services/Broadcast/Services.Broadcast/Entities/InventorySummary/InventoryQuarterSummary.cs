@@ -30,7 +30,7 @@ namespace Services.Broadcast.Entities.InventorySummary
 
         public class Detail
         {
-            public int DaypartDefaultId { get; set; }
+            public int StandardDaypartId { get; set; }
             public string DaypartCode { get; set; }
             public int TotalMarkets { get; set; }
             public double TotalCoverage { get; set; }

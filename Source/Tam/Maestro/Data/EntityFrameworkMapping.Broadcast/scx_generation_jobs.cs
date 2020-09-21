@@ -22,17 +22,17 @@ namespace EntityFrameworkMapping.Broadcast
     
         public int id { get; set; }
         public int inventory_source_id { get; set; }
-        public int daypart_default_id { get; set; }
         public System.DateTime start_date { get; set; }
         public System.DateTime end_date { get; set; }
         public int status { get; set; }
         public System.DateTime queued_at { get; set; }
         public Nullable<System.DateTime> completed_at { get; set; }
         public string requested_by { get; set; }
+        public int standard_daypart_id { get; set; }
     
         public virtual inventory_sources inventory_sources { get; set; }
         public virtual ICollection<scx_generation_job_files> scx_generation_job_files { get; set; }
         public virtual ICollection<scx_generation_job_units> scx_generation_job_units { get; set; }
-        public virtual daypart_defaults daypart_defaults { get; set; }
+        public virtual standard_dayparts standard_dayparts { get; set; }
     }
 }

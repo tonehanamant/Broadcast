@@ -38,7 +38,7 @@ namespace Services.Broadcast.Repositories
                         {
                             Id = x.id,
                             ConversionRate = x.conversion_rate,
-                            DaypartDefaultId = x.daypart_default_id,
+                            StandardDaypartId = x.standard_daypart_id,
                             MediaMonthId = x.media_month_id
                         })
                         .ToList();

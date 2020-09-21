@@ -9,18 +9,18 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
     [Category("short_running")]
-    public class DaypartDefaultServiceTests
+    public class StandardDaypartServiceTests
     {
-        private readonly IDaypartDefaultService _DaypartDefaultService = IntegrationTestApplicationServiceFactory.GetApplicationService<IDaypartDefaultService>();
+        private readonly IStandardDaypartService _StandardDaypartService = IntegrationTestApplicationServiceFactory.GetApplicationService<IStandardDaypartService>();
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetAllDaypartDefaults()
+        public void GetAllStandardDayparts()
         {
-            var daypartCodes = _DaypartDefaultService.GetAllDaypartDefaults();
+            var daypartCodes = _StandardDaypartService.GetAllStandardDayparts();
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(DaypartDefaultDto), "Id");
+            jsonResolver.Ignore(typeof(StandardDaypartDto), "Id");
             var jsonSettings = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -32,19 +32,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetAllDaypartDefaultsWithAllData()
+        public void GetAllStandardDaypartsWithAllData()
         {
-            var daypartDefaults = _DaypartDefaultService.GetAllDaypartDefaultsWithAllData();
+            var standardDayparts = _StandardDaypartService.GetAllStandardDaypartsWithAllData();
 
             var jsonResolver = new IgnorableSerializerContractResolver();
-            jsonResolver.Ignore(typeof(DaypartDefaultDto), "Id");
+            jsonResolver.Ignore(typeof(StandardDaypartDto), "Id");
             var jsonSettings = new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 ContractResolver = jsonResolver
             };
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(daypartDefaults, jsonSettings));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(standardDayparts, jsonSettings));
         }
     }
 }

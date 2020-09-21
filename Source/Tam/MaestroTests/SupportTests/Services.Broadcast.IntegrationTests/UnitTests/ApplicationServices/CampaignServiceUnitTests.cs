@@ -50,7 +50,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<ITrafficApiCache> _TrafficApiCacheMock;
         private Mock<IAudienceService> _AudienceServiceMock;
         private Mock<ISpotLengthService> _SpotLengthServiceMock;
-        private Mock<IDaypartDefaultService> _DaypartDefaultServiceMock;
+        private Mock<IStandardDaypartService> _StandardDaypartServiceMock;
         private Mock<ISharedFolderService> _SharedFolderServiceMock;
         private Mock<ICampaignAggregationJobTrigger> _CampaignAggregationJobTriggerMock;
         private Mock<ICampaignSummaryRepository> _CampaignSummaryRepositoryMock;
@@ -77,7 +77,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _TrafficApiCacheMock = new Mock<ITrafficApiCache>();
             _AudienceServiceMock = new Mock<IAudienceService>();
             _SpotLengthServiceMock = new Mock<ISpotLengthService>();
-            _DaypartDefaultServiceMock = new Mock<IDaypartDefaultService>();
+            _StandardDaypartServiceMock = new Mock<IStandardDaypartService>();
             _SharedFolderServiceMock = new Mock<ISharedFolderService>();
             _CampaignAggregationJobTriggerMock = new Mock<ICampaignAggregationJobTrigger>();
             _CampaignSummaryRepositoryMock = new Mock<ICampaignSummaryRepository>();
@@ -1465,9 +1465,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GetAllSpotLengths())
                 .Returns(_GetAllSpotLengths());
 
-            _DaypartDefaultServiceMock
-                .Setup(s => s.GetAllDaypartDefaults())
-                .Returns(_GetDaypartDefaults());
+            _StandardDaypartServiceMock
+                .Setup(s => s.GetAllStandardDayparts())
+                .Returns(_GetStandardDayparts());
 
             _QuarterCalculationEngineMock
                 .Setup(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
@@ -1648,9 +1648,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GetAllSpotLengths())
                 .Returns(_GetAllSpotLengths());
 
-            _DaypartDefaultServiceMock
-                .Setup(s => s.GetAllDaypartDefaults())
-                .Returns(_GetDaypartDefaults());
+            _StandardDaypartServiceMock
+                .Setup(s => s.GetAllStandardDayparts())
+                .Returns(_GetStandardDayparts());
 
             _QuarterCalculationEngineMock
                 .Setup(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
@@ -1813,9 +1813,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _SpotLengthServiceMock
                 .Setup(x => x.GetAllSpotLengths())
                 .Returns(_GetAllSpotLengths());
-            _DaypartDefaultServiceMock
-                .Setup(s => s.GetAllDaypartDefaults())
-                .Returns(_GetDaypartDefaults());
+            _StandardDaypartServiceMock
+                .Setup(s => s.GetAllStandardDayparts())
+                .Returns(_GetStandardDayparts());
             _QuarterCalculationEngineMock
                 .Setup(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(new List<QuarterDetailDto>
@@ -1979,9 +1979,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _SpotLengthServiceMock
                 .Setup(x => x.GetAllSpotLengths())
                 .Returns(_GetAllSpotLengths());
-            _DaypartDefaultServiceMock
-                .Setup(s => s.GetAllDaypartDefaults())
-                .Returns(_GetDaypartDefaults());
+            _StandardDaypartServiceMock
+                .Setup(s => s.GetAllStandardDayparts())
+                .Returns(_GetStandardDayparts());
             _QuarterCalculationEngineMock
                 .Setup(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(new List<QuarterDetailDto>
@@ -2117,21 +2117,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             return result;
         }
 
-        private List<DaypartDefaultDto> _GetDaypartDefaults()
+        private List<StandardDaypartDto> _GetStandardDayparts()
         {
-            return new List<DaypartDefaultDto>
+            return new List<StandardDaypartDto>
             {
-                new DaypartDefaultDto
+                new StandardDaypartDto
                 {
                     Code = "MDN",
                     Id = 2
                 },
-                new DaypartDefaultDto
+                new StandardDaypartDto
                 {
                     Code = "EF",
                     Id = 6
                 },
-                new DaypartDefaultDto
+                new StandardDaypartDto
                 {
                     Code = "EM",
                     Id = 14
@@ -2394,7 +2394,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 10,
-                    StandardDaypart = new DaypartDefaultDto
+                    StandardDaypart = new StandardDaypartDto
                     {
                         Id = 10001,
                         Code = "EMN"
@@ -2413,7 +2413,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 10,
-                    StandardDaypart = new DaypartDefaultDto
+                    StandardDaypart = new StandardDaypartDto
                     {
                         Id = 10002,
                         Code = "EM"
@@ -2432,7 +2432,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 20,
-                    StandardDaypart = new DaypartDefaultDto
+                    StandardDaypart = new StandardDaypartDto
                     {
                         Id = 20001,
                         Code = "LN"
@@ -2451,7 +2451,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 20,
-                    StandardDaypart = new DaypartDefaultDto
+                    StandardDaypart = new StandardDaypartDto
                     {
                         Id = 20002,
                         Code = "EM"
@@ -2470,7 +2470,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 30,
-                    StandardDaypart = new DaypartDefaultDto
+                    StandardDaypart = new StandardDaypartDto
                     {
                         Id = 30001,
                         Code = "EM"
@@ -2489,7 +2489,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 30,
-                    StandardDaypart = new DaypartDefaultDto
+                    StandardDaypart = new StandardDaypartDto
                     {
                         Id = 30002,
                         Code = "EM"
@@ -2508,7 +2508,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 40,
-                    StandardDaypart = new DaypartDefaultDto
+                    StandardDaypart = new StandardDaypartDto
                     {
                         Id = 40001,
                         Code = "EM"
@@ -2526,7 +2526,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 },new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 40,
-                    StandardDaypart = new DaypartDefaultDto
+                    StandardDaypart = new StandardDaypartDto
                     {
                         Id = 40002,
                         Code = "EM"
@@ -2552,7 +2552,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 10,
-                    StandardDaypart = new DaypartDefaultDto
+                    StandardDaypart = new StandardDaypartDto
                     {
                         Id = 10001,
                         Code = "EMN"
@@ -2583,7 +2583,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 20,
-                    StandardDaypart = new DaypartDefaultDto
+                    StandardDaypart = new StandardDaypartDto
                     {
                         Id = 20001,
                         Code = "LN"
@@ -2614,7 +2614,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 30,
-                    StandardDaypart = new DaypartDefaultDto
+                    StandardDaypart = new StandardDaypartDto
                     {
                         Id = 30002,
                         Code = "EM"
@@ -2645,7 +2645,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 40,
-                    StandardDaypart = new DaypartDefaultDto
+                    StandardDaypart = new StandardDaypartDto
                     {
                         Id = 40001,
                         Code = "EM"
@@ -2676,7 +2676,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 50,
-                    StandardDaypart = new DaypartDefaultDto
+                    StandardDaypart = new StandardDaypartDto
                     {
                         Id = 50001,
                         Code = "LN"
@@ -2707,7 +2707,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 60,
-                    StandardDaypart = new DaypartDefaultDto
+                    StandardDaypart = new StandardDaypartDto
                     {
                         Id = 60001,
                         Code = "LN"
@@ -2726,7 +2726,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new PlanPricingAllocatedSpot
                 {
                     StationInventoryManifestId = 70,
-                    StandardDaypart = new DaypartDefaultDto
+                    StandardDaypart = new StandardDaypartDto
                     {
                         Id = 60001,
                         Code = "LN"
@@ -3013,7 +3013,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _TrafficApiCacheMock.Object,
                 _AudienceServiceMock.Object,
                 _SpotLengthServiceMock.Object,
-                _DaypartDefaultServiceMock.Object,
+                _StandardDaypartServiceMock.Object,
                 _SharedFolderServiceMock.Object,
                 _DateTimeEngineMock.Object,
                 _WeeklyBreakdownEngineMock.Object,

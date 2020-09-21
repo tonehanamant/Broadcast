@@ -33,7 +33,7 @@ namespace Services.Broadcast.Converters.InventorySummary
                                                 int householdAudienceId,
                                                 QuarterDetailDto quarterDetail,
                                                 List<InventorySummaryManifestDto> inventorySummaryManifests,
-                                                List<DaypartDefaultDto> daypartDefaults,
+                                                List<StandardDaypartDto> standardDayparts,
                                                 InventoryAvailability inventoryAvailability)
         {
             
@@ -50,7 +50,7 @@ namespace Services.Broadcast.Converters.InventorySummary
             // For O&O source, there is always only 1 daypart code for 1 manifest. 
             // The collection is needed because we use a common model InventorySummaryManifestDto for all the sources 
             // and Diginet can have several daypart codes
-            var totalDaypartCodes = inventorySummaryManifests.GroupBy(x => x.DaypartDefaultIds.Single()).Count();
+            var totalDaypartCodes = inventorySummaryManifests.GroupBy(x => x.StandardDaypartIds.Single()).Count();
 
             var result = new InventoryQuarterSummary
             {
@@ -86,7 +86,7 @@ namespace Services.Broadcast.Converters.InventorySummary
             // For O&O source, there is always only 1 daypart code for 1 manifest. 
             // The collection is needed because we use a common model InventorySummaryManifestDto for all the sources 
             // and Diginet can have several daypart codes
-            var allManifestsGroupedByDaypart = allSummaryManifests.GroupBy(x => x.DaypartDefaultIds.Single());
+            var allManifestsGroupedByDaypart = allSummaryManifests.GroupBy(x => x.StandardDaypartIds.Single());
 
             foreach (var manifestsGrouping in allManifestsGroupedByDaypart)
             {
@@ -100,7 +100,7 @@ namespace Services.Broadcast.Converters.InventorySummary
 
                 result.Add(new InventoryQuarterSummary.Detail
                 {
-                    DaypartDefaultId = manifestsGrouping.Key,
+                    StandardDaypartId = manifestsGrouping.Key,
                     TotalMarkets = marketCodes.Count(),
                     TotalCoverage = MarketCoverageCache.GetMarketCoverages(marketCodes).Sum(x => x.Value),
                     TotalPrograms = GetTotalPrograms(manifests),

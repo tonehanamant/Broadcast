@@ -304,11 +304,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
 
         private PlanAggregatorUnitTestClass GetEmptyTestClass()
         {
-            var daypartCodeRepository = new Mock<IDaypartDefaultRepository>();
+            var daypartCodeRepository = new Mock<IStandardDaypartRepository>();
             var audienceRepository = new Mock<IAudienceRepository>();
             var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
             var trafficApiCache = new TrafficApiCache(new TrafficApiClientStub());
-            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
                 .Returns(daypartCodeRepository.Object);
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IAudienceRepository>())
                 .Returns(audienceRepository.Object);
@@ -324,11 +324,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
 
         private PlanAggregatorUnitTestClass GetTestClassFullySetup()
         {
-            var daypartCodeRepository = new Mock<IDaypartDefaultRepository>();
+            var daypartCodeRepository = new Mock<IStandardDaypartRepository>();
             var audienceRepository = new Mock<IAudienceRepository>();
             var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
             var trafficApiCache = new TrafficApiCache(new TrafficApiClientStub());
-            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
                 .Returns(daypartCodeRepository.Object);
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IAudienceRepository>())
                 .Returns(audienceRepository.Object);
@@ -354,11 +354,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
 
         private PlanAggregatorUnitTestClass GetTestClassSetupForAudiences()
         {
-            var daypartCodeRepository = new Mock<IDaypartDefaultRepository>();
+            var daypartCodeRepository = new Mock<IStandardDaypartRepository>();
             var audienceRepository = new Mock<IAudienceRepository>();
             var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
             var trafficApiCache = new TrafficApiCache(new TrafficApiClientStub());
-            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
                 .Returns(daypartCodeRepository.Object);
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IAudienceRepository>())
                 .Returns(audienceRepository.Object);
@@ -374,11 +374,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
 
         private PlanAggregatorUnitTestClass GetTestClassSetupForQuarters(List<QuarterDetailDto> getQuartersReturn)
         {
-            var daypartCodeRepository = new Mock<IDaypartDefaultRepository>();
+            var daypartCodeRepository = new Mock<IStandardDaypartRepository>();
             var audienceRepository = new Mock<IAudienceRepository>();
             var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
             var trafficApiCache = new TrafficApiCache(new TrafficApiClientStub());
-            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
                 .Returns(daypartCodeRepository.Object);
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IAudienceRepository>())
                 .Returns(audienceRepository.Object);
@@ -399,11 +399,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
 
         private PlanAggregatorUnitTestClass GetTestClassSetupForProducts()
         {
-            var daypartCodeRepository = new Mock<IDaypartDefaultRepository>();
+            var daypartCodeRepository = new Mock<IStandardDaypartRepository>();
             var audienceRepository = new Mock<IAudienceRepository>();
             var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
             var trafficApiCache = new TrafficApiCache(new TrafficApiClientStub());
-            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
+            broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
                 .Returns(daypartCodeRepository.Object);
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IAudienceRepository>())
                 .Returns(audienceRepository.Object);
@@ -538,11 +538,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             return selectedMarkets;
         }
 
-        private List<DaypartDefaultFullDto> GetTestDaypartDefaultFullDtos()
+        private List<StandardDaypartFullDto> GetTestStandardDaypartFullDtos()
         {
-            var result = new List<DaypartDefaultFullDto>
+            var result = new List<StandardDaypartFullDto>
             {
-                new DaypartDefaultFullDto
+                new StandardDaypartFullDto
                 {
                     Id = 1,
                     Code = "DP1",
@@ -551,7 +551,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
                     DefaultStartTimeSeconds = 12,
                     DefaultEndTimeSeconds = 12
                 },
-                new DaypartDefaultFullDto
+                new StandardDaypartFullDto
                 {
                     Id = 2,
                     Code = "DP2",
@@ -560,7 +560,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
                     DefaultStartTimeSeconds = 12,
                     DefaultEndTimeSeconds = 12
                 },
-                new DaypartDefaultFullDto
+                new StandardDaypartFullDto
                 {
                     Id = 3,
                     Code = "DP3",

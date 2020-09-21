@@ -60,7 +60,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IStationProgramRepository> _StationProgramRepositoryMock;
         private Mock<IMarketRepository> _MarketRepositoryMock;
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
-        private Mock<IDaypartDefaultRepository> _DaypartDefaultRepositoryMock;
+        private Mock<IStandardDaypartRepository> _StandardDaypartRepositoryMock;
         private Mock<ICampaignRepository> _CampaignRepositoryMock;
         private Mock<IWeeklyBreakdownEngine> _WeeklyBreakdownEngineMock;
         private Mock<IPlanPricingBandCalculationEngine> _PlanPricingBandCalculationEngineMock;
@@ -90,7 +90,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _StationProgramRepositoryMock = new Mock<IStationProgramRepository>();
             _MarketRepositoryMock = new Mock<IMarketRepository>();
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
-            _DaypartDefaultRepositoryMock = new Mock<IDaypartDefaultRepository>();
+            _StandardDaypartRepositoryMock = new Mock<IStandardDaypartRepository>();
             _CampaignRepositoryMock = new Mock<ICampaignRepository>();
             _WeeklyBreakdownEngineMock = new Mock<IWeeklyBreakdownEngine>();
             _PlanPricingBandCalculationEngineMock = new Mock<IPlanPricingBandCalculationEngine>();
@@ -108,9 +108,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetCurrentMoment())
                 .Returns(new DateTime(2020, 2, 4, 15, 31, 27));
 
-            _DaypartDefaultRepositoryMock
-                .Setup(x => x.GetAllDaypartDefaults())
-                .Returns(_GetDaypartDefaults());
+            _StandardDaypartRepositoryMock
+                .Setup(x => x.GetAllStandardDayparts())
+                .Returns(_GetStandardDayparts());
 
             _InventoryRepositoryMock
                 .Setup(x => x.GetInventorySources())
@@ -137,8 +137,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Returns(_StationProgramRepositoryMock.Object);
 
             _DataRepositoryFactoryMock
-                .Setup(x => x.GetDataRepository<IDaypartDefaultRepository>())
-                .Returns(_DaypartDefaultRepositoryMock.Object);
+                .Setup(x => x.GetDataRepository<IStandardDaypartRepository>())
+                .Returns(_StandardDaypartRepositoryMock.Object);
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IMarketRepository>())
@@ -159,30 +159,30 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
         }
 
-        private List<DaypartDefaultDto> _GetDaypartDefaults()
+        private List<StandardDaypartDto> _GetStandardDayparts()
         {
-            return new List<DaypartDefaultDto>
+            return new List<StandardDaypartDto>
             {
-                new DaypartDefaultDto { Id = 1, Code = "EMN", FullName = "Early Morning News"},
-                new DaypartDefaultDto { Id = 2, Code = "MDN", FullName = "Midday News"},
-                new DaypartDefaultDto { Id = 3, Code = "EN", FullName = "Evening News"},
-                new DaypartDefaultDto { Id = 4, Code = "LN", FullName = "Late News"},
-                new DaypartDefaultDto { Id = 5, Code = "ENLN", FullName = "Evening News/Late News"},
-                new DaypartDefaultDto { Id = 6, Code = "EF", FullName = "Early Fringe"},
-                new DaypartDefaultDto { Id = 7, Code = "PA", FullName = "Prime Access"},
-                new DaypartDefaultDto { Id = 8, Code = "PT", FullName = "Prime"},
-                new DaypartDefaultDto { Id = 9, Code = "LF", FullName = "Late Fringe"},
-                new DaypartDefaultDto { Id = 10, Code = "SYN", FullName = "Total Day Syndication"},
-                new DaypartDefaultDto { Id = 11, Code = "OVN", FullName = "Overnights"},
-                new DaypartDefaultDto { Id = 12, Code = "DAY", FullName = "Daytime"},
-                new DaypartDefaultDto { Id = 14, Code = "EM", FullName = "Early morning"},
-                new DaypartDefaultDto { Id = 15, Code = "AMN", FullName = "AM News"},
-                new DaypartDefaultDto { Id = 16, Code = "PMN", FullName = "PM News"},
-                new DaypartDefaultDto { Id = 17, Code = "TDN", FullName = "Total Day News"},
-                new DaypartDefaultDto { Id = 19, Code = "ROSS", FullName = "ROS Syndication"},
-                new DaypartDefaultDto { Id = 20, Code = "SPORTS", FullName = "ROS Sports"},
-                new DaypartDefaultDto { Id = 21, Code = "ROSP", FullName = "ROS Programming"},
-                new DaypartDefaultDto { Id = 22, Code = "TDNS", FullName = "Total Day News and Syndication"},
+                new StandardDaypartDto { Id = 1, Code = "EMN", FullName = "Early Morning News"},
+                new StandardDaypartDto { Id = 2, Code = "MDN", FullName = "Midday News"},
+                new StandardDaypartDto { Id = 3, Code = "EN", FullName = "Evening News"},
+                new StandardDaypartDto { Id = 4, Code = "LN", FullName = "Late News"},
+                new StandardDaypartDto { Id = 5, Code = "ENLN", FullName = "Evening News/Late News"},
+                new StandardDaypartDto { Id = 6, Code = "EF", FullName = "Early Fringe"},
+                new StandardDaypartDto { Id = 7, Code = "PA", FullName = "Prime Access"},
+                new StandardDaypartDto { Id = 8, Code = "PT", FullName = "Prime"},
+                new StandardDaypartDto { Id = 9, Code = "LF", FullName = "Late Fringe"},
+                new StandardDaypartDto { Id = 10, Code = "SYN", FullName = "Total Day Syndication"},
+                new StandardDaypartDto { Id = 11, Code = "OVN", FullName = "Overnights"},
+                new StandardDaypartDto { Id = 12, Code = "DAY", FullName = "Daytime"},
+                new StandardDaypartDto { Id = 14, Code = "EM", FullName = "Early morning"},
+                new StandardDaypartDto { Id = 15, Code = "AMN", FullName = "AM News"},
+                new StandardDaypartDto { Id = 16, Code = "PMN", FullName = "PM News"},
+                new StandardDaypartDto { Id = 17, Code = "TDN", FullName = "Total Day News"},
+                new StandardDaypartDto { Id = 19, Code = "ROSS", FullName = "ROS Syndication"},
+                new StandardDaypartDto { Id = 20, Code = "SPORTS", FullName = "ROS Sports"},
+                new StandardDaypartDto { Id = 21, Code = "ROSP", FullName = "ROS Programming"},
+                new StandardDaypartDto { Id = 22, Code = "TDNS", FullName = "Total Day News and Syndication"},
             };
         }
 
@@ -347,7 +347,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             }
                         },
                         StationInventoryManifestId = 1,
-                        StandardDaypart = new DaypartDefaultDto
+                        StandardDaypart = new StandardDaypartDto
                         {
                             Code = "EF"
                         },
@@ -374,7 +374,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             }
                         },
                         StationInventoryManifestId = 1,
-                        StandardDaypart = new DaypartDefaultDto
+                        StandardDaypart = new StandardDaypartDto
                         {
                             Code = "EF"
                         },
@@ -401,7 +401,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             }
                         },
                         StationInventoryManifestId = 2,
-                        StandardDaypart = new DaypartDefaultDto
+                        StandardDaypart = new StandardDaypartDto
                         {
                             Code = "PA"
                         },
@@ -428,7 +428,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             }
                         },
                         StationInventoryManifestId = 3,
-                        StandardDaypart = new DaypartDefaultDto
+                        StandardDaypart = new StandardDaypartDto
                         {
                             Code = "PT"
                         },

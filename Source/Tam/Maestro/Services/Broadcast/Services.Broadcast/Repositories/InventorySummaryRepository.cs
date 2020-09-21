@@ -58,14 +58,14 @@ namespace Services.Broadcast.Repositories
                             join station in context.stations on manifest.station_id equals station.id
                             join file in context.inventory_files on manifest.file_id equals file.id
                             join header in context.inventory_file_proprietary_header on file.id equals header.inventory_file_id
-                            join daypartDefaults in context.daypart_defaults on header.daypart_default_id equals daypartDefaults.id
+                            join standardDayparts in context.standard_dayparts on header.standard_daypart_id equals standardDayparts.id
                             where week.start_date <= endDate && week.end_date >= startDate && manifest.inventory_source_id == inventorySource.Id
                             select new InventorySummaryManifestDto
                             {
                                 ManifestId = manifest.id,
                                 StationId = station.id,
                                 MarketCode = station.market_code,
-                                DaypartDefaultIds = new List<int> { daypartDefaults.id },
+                                StandardDaypartIds = new List<int> { standardDayparts.id },
                                 UnitName = manifestGroup.name,
                                 FileId = file.id
                             })
@@ -110,7 +110,7 @@ namespace Services.Broadcast.Repositories
                             cpm = summaryForQuarter.CPM,
                             inventory_summary_quarter_details = summaryForQuarter.Details?.Select(x => new inventory_summary_quarter_details
                             {
-                                daypart_default_id = x.DaypartDefaultId,
+                                standard_daypart_id = x.StandardDaypartId,
                                 cpm = x.CPM,
                                 total_coverage = x.TotalCoverage,
                                 total_markets = x.TotalMarkets,
@@ -158,14 +158,14 @@ namespace Services.Broadcast.Repositories
                             join station in context.stations on manifest.station_id equals station.id
                             join file in context.inventory_files on manifest.file_id equals file.id
                             join header in context.inventory_file_proprietary_header on file.id equals header.inventory_file_id
-                            join daypartDefaults in context.daypart_defaults on header.daypart_default_id equals daypartDefaults.id
+                            join standardDayparts in context.standard_dayparts on header.standard_daypart_id equals standardDayparts.id
                             where week.start_date <= endDate && week.end_date >= startDate && manifest.inventory_source_id == inventorySource.Id
                             select new InventorySummaryManifestDto
                             {
                                 ManifestId = manifest.id,
                                 StationId = station.id,
                                 MarketCode = station.market_code,
-                                DaypartDefaultIds = new List<int> { daypartDefaults.id },
+                                StandardDaypartIds = new List<int> { standardDayparts.id },
                                 FileId = file.id
                             })
                             .GroupBy(x => x.ManifestId)
@@ -183,12 +183,12 @@ namespace Services.Broadcast.Repositories
                             join manifest in context.station_inventory_manifest on week.station_inventory_manifest_id equals manifest.id
                             join file in context.inventory_files on manifest.file_id equals file.id
                             join header in context.inventory_file_proprietary_header on file.id equals header.inventory_file_id
-                            join daypartDefaults in context.daypart_defaults on header.daypart_default_id equals daypartDefaults.id
+                            join standardDayparts in context.standard_dayparts on header.standard_daypart_id equals standardDayparts.id
                             where week.start_date <= endDate && week.end_date >= startDate && manifest.inventory_source_id == inventorySource.Id
                             select new InventorySummaryManifestDto
                             {
                                 ManifestId = manifest.id,
-                                DaypartDefaultIds = new List<int> { daypartDefaults.id },
+                                StandardDaypartIds = new List<int> { standardDayparts.id },
                                 FileId = file.id
                             })
                             .GroupBy(x => x.ManifestId)
@@ -206,12 +206,12 @@ namespace Services.Broadcast.Repositories
                     return (from week in context.station_inventory_manifest_weeks
                             join manifest in context.station_inventory_manifest on week.station_inventory_manifest_id equals manifest.id
                             join manifestDaypart in context.station_inventory_manifest_dayparts on manifest.id equals manifestDaypart.station_inventory_manifest_id
-                            join manifestDaypartDefault in context.daypart_defaults on manifestDaypart.daypart_default_id equals manifestDaypartDefault.id
+                            join manifestStandardDaypart in context.standard_dayparts on manifestDaypart.standard_daypart_id equals manifestStandardDaypart.id
                             where week.start_date <= endDate && week.end_date >= startDate && manifest.inventory_source_id == inventorySource.Id
                             select new
                             {
                                 ManifestId = manifest.id,
-                                DaypartCode = manifestDaypartDefault.id,
+                                DaypartCode = manifestStandardDaypart.id,
                                 FileId = manifest.file_id
                             })
                             .GroupBy(x => x.ManifestId)
@@ -219,7 +219,7 @@ namespace Services.Broadcast.Repositories
                             {
                                 ManifestId = x.Key,
                                 FileId = x.FirstOrDefault().FileId,
-                                DaypartDefaultIds = x.Select(d => d.DaypartCode).Distinct().ToList()
+                                StandardDaypartIds = x.Select(d => d.DaypartCode).Distinct().ToList()
                             })
                             .ToList();
                 });
@@ -375,8 +375,8 @@ namespace Services.Broadcast.Repositories
                     summaryAggregationData.Details = quarterData.inventory_summary_quarter_details.Select(x => new InventoryQuarterSummary.Detail
                     {
                         CPM = x.cpm,
-                        DaypartDefaultId = x.daypart_default_id,
-                        DaypartCode = x.daypart_defaults?.code,
+                        StandardDaypartId = x.standard_daypart_id,
+                        DaypartCode = x.standard_dayparts?.code,
                         TotalCoverage = x.total_coverage,
                         TotalMarkets = x.total_markets,
                         TotalProjectedHouseholdImpressions = x.total_projected_impressions,
@@ -384,7 +384,7 @@ namespace Services.Broadcast.Repositories
                         MaxSpotsPerWeek = x.max_spots_per_week,
                         MinSpotsPerWeek = x.min_spots_per_week,
                         TotalPrograms = x.total_programs
-                    }).OrderBy(x => x.DaypartDefaultId).ToList();
+                    }).OrderBy(x => x.StandardDaypartId).ToList();
                 }
 
                 return summaryAggregationData;

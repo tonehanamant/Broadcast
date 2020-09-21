@@ -36,7 +36,7 @@ namespace Services.Broadcast.BusinessEngines
         /// Remaining weight is distributed evenly
         /// When weight can not be split evenly we split it into equal pieces and add what`s left to the first daypart that takes part in the distribution
         /// </summary>
-        List<DaypartDefaultWeightingGoal> GetStandardDaypardWeightingGoals(List<PlanDaypartDto> dayparts);
+        List<StandardDaypartWeightingGoal> GetStandardDaypardWeightingGoals(List<PlanDaypartDto> dayparts);
 
         WeeklyBreakdownResponseDto CalculatePlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request);
         List<WeeklyBreakdownByStandardDaypart> GroupWeeklyBreakdownByStandardDaypart(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown);
@@ -96,7 +96,7 @@ namespace Services.Broadcast.BusinessEngines
         private const double _DefaultImpressionsPerUnitForOldPlans = 500000;
         private const string _UnsupportedDeliveryTypeMessage = "Unsupported Delivery Type";
 
-        private IDaypartDefaultRepository _DaypartDefaultRepository; 
+        private IStandardDaypartRepository _StandardDaypartRepository; 
 
         public WeeklyBreakdownEngine(IPlanValidator planValidator,
                                          IMediaMonthAndWeekAggregateCache mediaWeekCache,
@@ -108,7 +108,7 @@ namespace Services.Broadcast.BusinessEngines
             _MediaWeekCache = mediaWeekCache;
             _CreativeLengthEngine = creativeLengthEngine;
             _SpotLengthMultiplier = spotLengthEngine.GetDeliveryMultipliersBySpotLengthId();
-            _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
+            _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
         }
 
         public List<WeeklyBreakdownWeek> DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(
@@ -238,7 +238,7 @@ namespace Services.Broadcast.BusinessEngines
                             NumberOfActiveDays = week.NumberOfActiveDays,
                             ActiveDays = week.ActiveDays,
                             SpotLengthId = breakdownItem.SpotLengthId,
-                            DaypartCodeId = item.DaypartDefaultId,
+                            DaypartCodeId = item.StandardDaypartId,
                             AduImpressions = aduImpressionsForBreakdownItem * weighting,
                             UnitImpressions = unitsImpressionsForBreakdownItem * weighting
                         };
@@ -501,11 +501,11 @@ namespace Services.Broadcast.BusinessEngines
             }
             else if (request.DeliveryType == PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart)
             {
-                var daypartDefaults = GetStandardDaypardWeightingGoals(request.Dayparts);
+                var standardDaypart = GetStandardDaypardWeightingGoals(request.Dayparts);
                 if (isInitialLoad)
-                    response = _CalculateInitialCustomByWeekByDaypartWeeklyGoalBreadkdown(request, weeks, daypartDefaults);
+                    response = _CalculateInitialCustomByWeekByDaypartWeeklyGoalBreadkdown(request, weeks, standardDaypart);
                 else
-                    response = _CalculateCustomByWeekByDaypartWeeklyGoalBreadkdown(request, weeks, daypartDefaults);
+                    response = _CalculateCustomByWeekByDaypartWeeklyGoalBreadkdown(request, weeks, standardDaypart);
             }
             else
             {
@@ -555,11 +555,11 @@ namespace Services.Broadcast.BusinessEngines
         /// <summary>
         /// Calculate the initial load of weekly brekdown using the delivery type By Week By Daypart
         /// </summary>
-        private WeeklyBreakdownResponseDto _CalculateInitialCustomByWeekByDaypartWeeklyGoalBreadkdown(WeeklyBreakdownRequest request, List<DisplayMediaWeek> weeks, List<DaypartDefaultWeightingGoal> daypartDefaults)
+        private WeeklyBreakdownResponseDto _CalculateInitialCustomByWeekByDaypartWeeklyGoalBreadkdown(WeeklyBreakdownRequest request, List<DisplayMediaWeek> weeks, List<StandardDaypartWeightingGoal> standardDayparts)
         {
             var result = new WeeklyBreakdownResponseDto();
 
-            _AddNewWeeksByDaypartToWeeklyBreakdownResult(result, weeks, request, daypartDefaults);
+            _AddNewWeeksByDaypartToWeeklyBreakdownResult(result, weeks, request, standardDayparts);
             _CalculateGoalsForCustomByWeekByPercentageOfWeek(request, result.Weeks);
             RecalculatePercentageOfWeekBasedOnImpressions(result.Weeks);
 
@@ -569,7 +569,7 @@ namespace Services.Broadcast.BusinessEngines
         /// <summary>
         /// Calculate the weekly brekdown with existing values using the delivery type By Week By Daypart
         /// </summary>
-        private WeeklyBreakdownResponseDto _CalculateCustomByWeekByDaypartWeeklyGoalBreadkdown(WeeklyBreakdownRequest request, List<DisplayMediaWeek> weeks, List<DaypartDefaultWeightingGoal> daypartDefaults)
+        private WeeklyBreakdownResponseDto _CalculateCustomByWeekByDaypartWeeklyGoalBreadkdown(WeeklyBreakdownRequest request, List<DisplayMediaWeek> weeks, List<StandardDaypartWeightingGoal> standardDayparts)
         {
             var result = new WeeklyBreakdownResponseDto();
 
@@ -588,12 +588,12 @@ namespace Services.Broadcast.BusinessEngines
             // Add new dayparts in the remain weeks
             var remainMediaWeekIds = result.Weeks.Select(y => y.MediaWeekId).ToList();
             var remainWeeks = weeks.Where(x => remainMediaWeekIds.Contains(x.Id)).ToList();
-            _AddNewDaypartsInTheExistingWeeks(request, result, remainWeeks, daypartDefaults);
+            _AddNewDaypartsInTheExistingWeeks(request, result, remainWeeks, standardDayparts);
 
             // Add new weeks
             var oldMediaWeekIds = request.Weeks.Select(y => y.MediaWeekId).ToList();
             var newWeeks = weeks.Where(x => !oldMediaWeekIds.Contains(x.Id)).ToList();
-            _AddNewWeeksByDaypartToWeeklyBreakdownResult(result, newWeeks, request, daypartDefaults);
+            _AddNewWeeksByDaypartToWeeklyBreakdownResult(result, newWeeks, request, standardDayparts);
 
             //only adjust first week if redistributing
             if (result.Weeks.Where(w => w.NumberOfActiveDays > 0).Any() && redistributeCustom)
@@ -629,13 +629,13 @@ namespace Services.Broadcast.BusinessEngines
         private void _AddNewDaypartsInTheExistingWeeks(WeeklyBreakdownRequest request,
             WeeklyBreakdownResponseDto response,
             List<DisplayMediaWeek> existingWeeks,
-            List<DaypartDefaultWeightingGoal> daypartDefaults)
+            List<StandardDaypartWeightingGoal> standardDayparts)
         {
             // Get the existing daypart ids in the existing weeks
             var existingWeekDaypartIds = response.Weeks.Select(w => w.DaypartCodeId.Value).Distinct();
 
             // Add new dayparts to existin weeks
-            var daypartsToAdd = daypartDefaults.Where(d => !existingWeekDaypartIds.Contains(d.DaypartDefaultId)).ToList();
+            var daypartsToAdd = standardDayparts.Where(d => !existingWeekDaypartIds.Contains(d.StandardDaypartId)).ToList();
             if (daypartsToAdd.Any())
             {
                 _AddNewWeeksByDaypartToWeeklyBreakdownResult(response, existingWeeks, request, daypartsToAdd);
@@ -905,13 +905,13 @@ namespace Services.Broadcast.BusinessEngines
             WeeklyBreakdownResponseDto result,
             List<DisplayMediaWeek> weeks,
             WeeklyBreakdownRequest request,
-            List<DaypartDefaultWeightingGoal> daypartDefaults)
+            List<StandardDaypartWeightingGoal> standardDayparts)
         {
             foreach (DisplayMediaWeek week in weeks)
             {
-                foreach (var item in daypartDefaults)
+                foreach (var item in standardDayparts)
                 {
-                    var planDayparts = request.Dayparts.Where(d => d.DaypartCodeId == item.DaypartDefaultId).ToList();
+                    var planDayparts = request.Dayparts.Where(d => d.DaypartCodeId == item.StandardDaypartId).ToList();
                     var activeDays = _CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, request.FlightDays, request.FlightHiatusDays, planDayparts, out string activeDaysString);
                     result.Weeks.Add(new WeeklyBreakdownWeek
                     {
@@ -920,7 +920,7 @@ namespace Services.Broadcast.BusinessEngines
                         StartDate = week.WeekStartDate,
                         EndDate = week.WeekEndDate,
                         MediaWeekId = week.Id,
-                        DaypartCodeId = item.DaypartDefaultId,
+                        DaypartCodeId = item.StandardDaypartId,
                         PercentageOfWeek = item.WeightingGoalPercent
                     });
                 }
@@ -1067,7 +1067,7 @@ namespace Services.Broadcast.BusinessEngines
             }
 
             var planDefaultDaypartIds = planDayparts.Select(d => d.DaypartCodeId).ToList();
-            var dayIds = _DaypartDefaultRepository.GetDayIdsFromDaypartDefaults(planDefaultDaypartIds);
+            var dayIds = _StandardDaypartRepository.GetDayIdsFromStandardDayparts(planDefaultDaypartIds);
             return dayIds;
         }
 
@@ -1311,14 +1311,14 @@ namespace Services.Broadcast.BusinessEngines
             new WeeklyBreakdownCombination
             {
                 SpotLengthId = a.SpotLengthId,
-                DaypartCodeId = b.DaypartDefaultId,
+                DaypartCodeId = b.StandardDaypartId,
                 Weighting = GeneralMath.ConvertPercentageToFraction(a.Weight.Value) * GeneralMath.ConvertPercentageToFraction(b.WeightingGoalPercent)
             }).ToList();
             return allSpotLengthIdAndStandardDaypartIdCombinations;
         }
 
         /// <inheritdoc />
-        public List<DaypartDefaultWeightingGoal> GetStandardDaypardWeightingGoals(List<PlanDaypartDto> dayparts)
+        public List<StandardDaypartWeightingGoal> GetStandardDaypardWeightingGoals(List<PlanDaypartDto> dayparts)
         {
             var weightingGoalPercentByStandardDaypartIdDictionary = new Dictionary<int, double>();
 
@@ -1342,7 +1342,11 @@ namespace Services.Broadcast.BusinessEngines
 
             // to keep the original order
             return dayparts
-                .Select(x => new DaypartDefaultWeightingGoal(x.DaypartCodeId, weightingGoalPercentByStandardDaypartIdDictionary[x.DaypartCodeId]))
+                .Select(x => new StandardDaypartWeightingGoal
+                {
+                    StandardDaypartId = x.DaypartCodeId,
+                    WeightingGoalPercent = weightingGoalPercentByStandardDaypartIdDictionary[x.DaypartCodeId]
+                })
                 .ToList();
         }
 

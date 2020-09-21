@@ -12,63 +12,63 @@ using Tam.Maestro.Data.EntityFrameworkMapping;
 
 namespace Services.Broadcast.Repositories
 {
-    public interface IDaypartDefaultRepository : IDataRepository
+    public interface IStandardDaypartRepository : IDataRepository
     {
-        bool DaypartDefaultExists(string daypartCode);
-        DaypartDefaultDto GetDaypartDefaultByCode(string daypartCode);
-        List<DaypartDefaultDto> GetDaypartDefaultsByInventorySource(int inventorySourceId);
-        List<DaypartDefaultDto> GetAllDaypartDefaults();
-        DaypartDefaultDto GetDaypartDefaultById(int daypartDefaultId);
+        bool StandardDaypartExists(string daypartCode);
+        StandardDaypartDto GetStandardDaypartByCode(string daypartCode);
+        List<StandardDaypartDto> GetStandardDaypartsByInventorySource(int inventorySourceId);
+        List<StandardDaypartDto> GetAllStandardDayparts();
+        StandardDaypartDto GetStandardDaypartById(int standardDaypartId);
 
         /// <summary>
-        /// Gets the daypart defaults by id.
+        /// Gets the standard daypart with all data by identifier.
         /// </summary>
-        /// <param name="daypartDefaultId">The daypart default identifier.</param>
+        /// <param name="standardDaypartId">The standard daypart identifier.</param>
         /// <returns></returns>
-        DaypartDefaultFullDto GetDaypartDefaultWithAllDataById(int daypartDefaultId);
+        StandardDaypartFullDto GetStandardDaypartWithAllDataById(int standardDaypartId);
 
         /// <summary>
-        /// Gets the daypart defaults.
+        /// Gets all standard daypart fs with all data.
         /// </summary>
-        /// <returns>List of <see cref="DaypartDefaultFullDto"/></returns>
-        List<DaypartDefaultFullDto> GetAllDaypartDefaultsWithAllData();
-
-        /// <summary>
-        /// Get DaypartIds List by DefaultDaypartIds
-        /// </summary>
-        /// <param name="defaultDaypartIds"></param>
         /// <returns></returns>
-        List<int> GetDayPartIds(List<int> dayPartDefaultIds);
+        List<StandardDaypartFullDto> GetAllStandardDaypartsWithAllData();
 
         /// <summary>
-        /// Get  daypart_defaults Ids  List by DaypartIds
+        /// Get DaypartIds List by standard daypart ids
+        /// </summary>
+        /// <param name="standardDaypartIds"></param>
+        /// <returns></returns>
+        List<int> GetDayPartIds(List<int> standardDaypartIds);
+
+        /// <summary>
+        /// Get  standard_dayparts Ids  List by DaypartIds
         /// </summary>
         /// <param name="daypartIds"></param>
         /// <returns></returns>
-        List<int> GetDaypartDefaultIds(List<int> daypartIds);
+        List<int> GetStandardDaypartIds(List<int> daypartIds);
 
         /// <summary>
         /// Gets the distinct daypart ids related to the daypart defaults.
         /// </summary>
-        /// <param name="daypartDefaultIds">The ids for the daypart_default records.</param>
+        /// <param name="standardDaypartIds">The ids for the daypart_default records.</param>
         /// <returns>A distinct list of daypart ids covered by the given parameters.</returns>
-        List<int> GetDayIdsFromDaypartDefaults(List<int> daypartDefaultIds);
+        List<int> GetDayIdsFromStandardDayparts(List<int> standardDaypartIds);
     }
 
-    public class DaypartDefaultRepository : BroadcastRepositoryBase, IDaypartDefaultRepository
+    public class StandardDaypartRepository : BroadcastRepositoryBase, IStandardDaypartRepository
     {
-        private const string DaypartDefaultNotFoundMessage = "Unable to find daypart default";
+        private const string StandardDaypartNotFoundMessage = "Unable to find standard daypart";
 
-        public DaypartDefaultRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+        public StandardDaypartRepository(IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
             ITransactionHelper pTransactionHelper, IConfigurationWebApiClient pConfigurationWebApiClient)
             : base(pBroadcastContextFactory, pTransactionHelper, pConfigurationWebApiClient) { }
 
-        public bool DaypartDefaultExists(string daypartCode)
+        public bool StandardDaypartExists(string daypartCode)
         {
-            return _InReadUncommitedTransaction(context => context.daypart_defaults.Any(x => x.code == daypartCode));
+            return _InReadUncommitedTransaction(context => context.standard_dayparts.Any(x => x.code == daypartCode));
         }
 
-        public List<DaypartDefaultDto> GetDaypartDefaultsByInventorySource(int inventorySourceId)
+        public List<StandardDaypartDto> GetStandardDaypartsByInventorySource(int inventorySourceId)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -77,80 +77,85 @@ namespace Services.Broadcast.Repositories
                              join manifest in context.station_inventory_manifest on week.station_inventory_manifest_id equals manifest.id
                              join inventoryFile in context.inventory_files on manifest.file_id equals inventoryFile.id
                              join inventoryFileHeader in context.inventory_file_proprietary_header on inventoryFile.id equals inventoryFileHeader.inventory_file_id
-                             join daypartDefault in context.daypart_defaults on inventoryFileHeader.daypart_default_id equals daypartDefault.id
+                             join standardDaypart in context.standard_dayparts on inventoryFileHeader.standard_daypart_id equals standardDaypart.id
                              join ratingProcessingJob in context.inventory_file_ratings_jobs on inventoryFile.id equals ratingProcessingJob.inventory_file_id
                              where manifest.inventory_source_id == inventorySourceId &&
                                    week.spots > 0 &&
                                    ratingProcessingJob.status == (int)BackgroundJobProcessingStatus.Succeeded
-                             group daypartDefault by daypartDefault.id into daypartCodeGroup
+                             group standardDaypart by standardDaypart.id into daypartCodeGroup
                              select daypartCodeGroup.FirstOrDefault());
 
-                return query.Select(_MapToDaypartDefaultDto).ToList();
+                return query.Select(_MapToStandardDaypartDto).ToList();
             });
         }
 
-        public DaypartDefaultDto GetDaypartDefaultByCode(string daypartCode)
+        public StandardDaypartDto GetStandardDaypartByCode(string daypartCode)
         {
-            return _InReadUncommitedTransaction(context => _MapToDaypartDefaultDto(context.daypart_defaults.Single(x => x.code == daypartCode, DaypartDefaultNotFoundMessage)));
+            return _InReadUncommitedTransaction(context =>
+                    _MapToStandardDaypartDto(context.standard_dayparts.Single(x => x.code == daypartCode, StandardDaypartNotFoundMessage)));
         }
 
-        public DaypartDefaultDto GetDaypartDefaultById(int daypartDefaulId)
+        public StandardDaypartDto GetStandardDaypartById(int standardDaypartId)
         {
-            return _InReadUncommitedTransaction(context => _MapToDaypartDefaultDto(context.daypart_defaults.Single(x => x.id == daypartDefaulId, DaypartDefaultNotFoundMessage)));
+            return _InReadUncommitedTransaction(context =>
+                _MapToStandardDaypartDto(context.standard_dayparts.Single(x => x.id == standardDaypartId, StandardDaypartNotFoundMessage)));
         }
 
         ///<inheritdoc/>
-        public DaypartDefaultFullDto GetDaypartDefaultWithAllDataById(int daypartDefaultId)
+        public StandardDaypartFullDto GetStandardDaypartWithAllDataById(int standardDaypartId)
         {
-            return _InReadUncommitedTransaction(context => _MapToDaypartDefaultFullDto(context.daypart_defaults.Include(d => d.daypart).Include(d => d.daypart.timespan).Single(x => x.id == daypartDefaultId, DaypartDefaultNotFoundMessage)));
+            return _InReadUncommitedTransaction(context => 
+                _MapToStandardDaypartFullDto(context.standard_dayparts.Include(d => d.daypart).Include(d => d.daypart.timespan)
+                                .Single(x => x.id == standardDaypartId, StandardDaypartNotFoundMessage)));
         }
         ///<inheritdoc/>
-		public List<int> GetDaypartDefaultIds(List<int> daypartIds)
-		{
-			return _InReadUncommitedTransaction(context => (context.daypart_defaults
-				.Where(d => daypartIds.Contains(d.daypart_id))
-				.Select(d => d.id).ToList()));
-		}
-
-		public List<int> GetDayPartIds(List<int> dayPartDefaultIds)
+		public List<int> GetStandardDaypartIds(List<int> daypartIds)
         {
-	        return _InReadUncommitedTransaction(context => (context.daypart_defaults
-		        .Where(d => dayPartDefaultIds.Contains( d.id)))
-		        .Select(d => d.daypart_id).ToList());
+            return _InReadUncommitedTransaction(context => (context.standard_dayparts
+                .Where(d => daypartIds.Contains(d.daypart_id))
+                .Select(d => d.id).ToList()));
         }
-        public List<DaypartDefaultDto> GetAllDaypartDefaults()
+
+        public List<int> GetDayPartIds(List<int> standardDaypartIds)
         {
-            return _InReadUncommitedTransaction(context => {
-                return context.daypart_defaults
-                    .Select(_MapToDaypartDefaultDto)
+            return _InReadUncommitedTransaction(context => (context.standard_dayparts
+                .Where(d => standardDaypartIds.Contains(d.id)))
+                .Select(d => d.daypart_id).ToList());
+        }
+        public List<StandardDaypartDto> GetAllStandardDayparts()
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                return context.standard_dayparts
+                    .Select(_MapToStandardDaypartDto)
                     .OrderBy(x => x.Code)
                     .ToList();
             });
         }
 
         ///<inheritdoc/>
-        public List<DaypartDefaultFullDto> GetAllDaypartDefaultsWithAllData()
+        public List<StandardDaypartFullDto> GetAllStandardDaypartsWithAllData()
         {
             return _InReadUncommitedTransaction(context =>
             {
-                return context.daypart_defaults
+                return context.standard_dayparts
                     .Include(d => d.daypart)
                     .Include(d => d.daypart.timespan)
-                    .Select(_MapToDaypartDefaultFullDto)
+                    .Select(_MapToStandardDaypartFullDto)
                     .OrderBy(x => x.Code)
                     .ToList();
             });
         }
 
         ///<inheritdoc/>
-        public List<int> GetDayIdsFromDaypartDefaults(List<int> daypartDefaultIds)
+        public List<int> GetDayIdsFromStandardDayparts(List<int> standardDaypartIds)
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var dayIds = context.daypart_defaults
+                var dayIds = context.standard_dayparts
                     .Include(d => d.daypart)
                     .Include(d => d.daypart.days)
-                    .Where(d => daypartDefaultIds.Contains(d.id))
+                    .Where(d => standardDaypartIds.Contains(d.id))
                     .SelectMany(d => d.daypart.days.Select(s => s.id))
                     .Distinct()
                     .ToList();
@@ -159,33 +164,33 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        private DaypartDefaultDto _MapToDaypartDefaultDto(daypart_defaults daypartDefault)
+        private StandardDaypartDto _MapToStandardDaypartDto(standard_dayparts standardDaypart)
         {
-            if (daypartDefault == null)
+            if (standardDaypart == null)
                 return null;
 
-            return new DaypartDefaultDto
+            return new StandardDaypartDto
             {
-                Id = daypartDefault.id,
-                Code = daypartDefault.code,
-                FullName = daypartDefault.name,
-                VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)daypartDefault.vpvh_calculation_source_type
+                Id = standardDaypart.id,
+                Code = standardDaypart.code,
+                FullName = standardDaypart.name,
+                VpvhCalculationSourceType = (VpvhCalculationSourceTypeEnum)standardDaypart.vpvh_calculation_source_type
             };
         }
 
-        private DaypartDefaultFullDto _MapToDaypartDefaultFullDto(daypart_defaults daypartDefault)
+        private StandardDaypartFullDto _MapToStandardDaypartFullDto(standard_dayparts standard_daypart)
         {
-            if (daypartDefault == null)
+            if (standard_daypart == null)
                 return null;
 
-            return new DaypartDefaultFullDto
+            return new StandardDaypartFullDto
             {
-                Id = daypartDefault.id,
-                Code = daypartDefault.code,
-                FullName = daypartDefault.name,
-                DaypartType = (DaypartTypeEnum)daypartDefault.daypart_type,
-                DefaultStartTimeSeconds = daypartDefault.daypart.timespan.start_time,
-                DefaultEndTimeSeconds = daypartDefault.daypart.timespan.end_time
+                Id = standard_daypart.id,
+                Code = standard_daypart.code,
+                FullName = standard_daypart.name,
+                DaypartType = (DaypartTypeEnum)standard_daypart.daypart_type,
+                DefaultStartTimeSeconds = standard_daypart.daypart.timespan.start_time,
+                DefaultEndTimeSeconds = standard_daypart.daypart.timespan.end_time
             };
         }
     }

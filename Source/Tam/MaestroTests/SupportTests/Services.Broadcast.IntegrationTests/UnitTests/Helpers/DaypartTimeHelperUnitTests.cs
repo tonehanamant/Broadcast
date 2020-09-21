@@ -18,14 +18,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
         [TestCase(nameof(DaypartTimeHelper.AddOneSecondToEndTime), typeof(PlanDaypartDto), nameof(PlanDaypartDto.EndTimeSeconds), BroadcastConstants.OneDayInSeconds - 1, 0)]
         [TestCase(nameof(DaypartTimeHelper.AddOneSecondToEndTime), typeof(PlanDaypartDto), nameof(PlanDaypartDto.EndTimeSeconds), 0, 1)]
         [TestCase(nameof(DaypartTimeHelper.AddOneSecondToEndTime), typeof(PlanDaypartDto), nameof(PlanDaypartDto.StartTimeSeconds), 400, 400)]
-        [TestCase(nameof(DaypartTimeHelper.AddOneSecondToEndTime), typeof(DaypartDefaultFullDto), nameof(DaypartDefaultFullDto.DefaultEndTimeSeconds), 400, 401)]
-        [TestCase(nameof(DaypartTimeHelper.AddOneSecondToEndTime), typeof(DaypartDefaultFullDto), nameof(DaypartDefaultFullDto.DefaultStartTimeSeconds), 400, 400)]
+        [TestCase(nameof(DaypartTimeHelper.AddOneSecondToEndTime), typeof(StandardDaypartFullDto), nameof(StandardDaypartFullDto.DefaultEndTimeSeconds), 400, 401)]
+        [TestCase(nameof(DaypartTimeHelper.AddOneSecondToEndTime), typeof(StandardDaypartFullDto), nameof(StandardDaypartFullDto.DefaultStartTimeSeconds), 400, 400)]
         [TestCase(nameof(DaypartTimeHelper.SubtractOneSecondToEndTime), typeof(PlanDaypartDto), nameof(PlanDaypartDto.EndTimeSeconds), 400, 399)]
         [TestCase(nameof(DaypartTimeHelper.SubtractOneSecondToEndTime), typeof(PlanDaypartDto), nameof(PlanDaypartDto.EndTimeSeconds), 0, BroadcastConstants.OneDayInSeconds - 1)]
         [TestCase(nameof(DaypartTimeHelper.SubtractOneSecondToEndTime), typeof(PlanDaypartDto), nameof(PlanDaypartDto.EndTimeSeconds), BroadcastConstants.OneDayInSeconds - 1, BroadcastConstants.OneDayInSeconds - 2)]
         [TestCase(nameof(DaypartTimeHelper.SubtractOneSecondToEndTime), typeof(PlanDaypartDto), nameof(PlanDaypartDto.StartTimeSeconds), 400, 400)]
-        [TestCase(nameof(DaypartTimeHelper.SubtractOneSecondToEndTime), typeof(DaypartDefaultFullDto), nameof(DaypartDefaultFullDto.DefaultEndTimeSeconds), 400, 399)]
-        [TestCase(nameof(DaypartTimeHelper.SubtractOneSecondToEndTime), typeof(DaypartDefaultFullDto), nameof(DaypartDefaultFullDto.DefaultStartTimeSeconds), 400, 400)]
+        [TestCase(nameof(DaypartTimeHelper.SubtractOneSecondToEndTime), typeof(StandardDaypartFullDto), nameof(StandardDaypartFullDto.DefaultEndTimeSeconds), 400, 399)]
+        [TestCase(nameof(DaypartTimeHelper.SubtractOneSecondToEndTime), typeof(StandardDaypartFullDto), nameof(StandardDaypartFullDto.DefaultStartTimeSeconds), 400, 400)]
         public void InvokeMethodAndCheckProperty(string methodName, Type t, string propertyName, int testValue, int expectedValue)
         {
             var candidates = ReflectionTestHelper.CreateGenericList(t);

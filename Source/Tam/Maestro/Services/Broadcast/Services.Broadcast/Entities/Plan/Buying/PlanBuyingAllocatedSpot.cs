@@ -12,7 +12,7 @@ namespace Services.Broadcast.Entities.Plan.Buying
         public MediaWeek InventoryMediaWeek { get; set; }
         public MediaWeek ContractMediaWeek { get; set; }
         public double Impressions30sec { get; set; }
-        public DaypartDefaultDto StandardDaypart { get; set; }
+        public StandardDaypartDto StandardDaypart { get; set; }
         public List<SpotFrequency> SpotFrequencies { get;set; }
 
         public double TotalImpressions => SpotFrequencies.Sum(x => x.Impressions * x.Spots);

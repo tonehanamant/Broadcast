@@ -38,7 +38,7 @@ namespace Services.Broadcast.Repositories
                     var inventoryProprietaryMappings = context.inventory_proprietary_daypart_program_mappings
                                 .Include(x => x.inventory_proprietary_daypart_programs)
                                 .Where(x => x.inventory_source_id == inventorySourceId &&
-                                            x.daypart_default_id == defaultDaypartId)
+                                            x.standard_daypart_id == defaultDaypartId)
                                  .Single($"Inventory proprietary mappings not found for inventory source {inventorySourceId} and daypart {defaultDaypartId}");
 
                     return _MapToDto(inventoryProprietaryMappings);
@@ -50,7 +50,7 @@ namespace Services.Broadcast.Repositories
             return new InventoryProprietaryDaypartDto
             {
                 InventorySourceId = inventoryProprietaryMappings.inventory_source_id,
-                DefaultDaypartId = inventoryProprietaryMappings.daypart_default_id,
+                DefaultDaypartId = inventoryProprietaryMappings.standard_daypart_id,
                 ProgramName = inventoryProprietaryMappings.inventory_proprietary_daypart_programs.program_name,
                 GenreId = inventoryProprietaryMappings.inventory_proprietary_daypart_programs.genre_id,
                 ShowTypeId = inventoryProprietaryMappings.inventory_proprietary_daypart_programs.show_type_id

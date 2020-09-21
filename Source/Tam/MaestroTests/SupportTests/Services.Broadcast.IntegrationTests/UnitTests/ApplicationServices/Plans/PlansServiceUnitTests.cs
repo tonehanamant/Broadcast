@@ -44,7 +44,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IPlanPricingService> _PlanPricingServiceMock;
         private Mock<IPlanBuyingService> _PlanBuyingServiceMock;
         private Mock<IQuarterCalculationEngine> _QuarterCalculationEngineMock;
-        private Mock<IDaypartDefaultService> _DaypartDefaultServiceMock;
+        private Mock<IStandardDaypartService> _StandardDaypartServiceMock;
         private Mock<IWeeklyBreakdownEngine> _WeeklyBreakdownEngineMock;
         private Mock<ICreativeLengthEngine> _CreativeLengthEngineMock;
         private LaunchDarklyClientStub _LaunchDarklyClientStub;
@@ -67,7 +67,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanBuyingServiceMock = new Mock<IPlanBuyingService>();
             _SpotLengthEngineMock = new Mock<ISpotLengthEngine>();
             _QuarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
-            _DaypartDefaultServiceMock = new Mock<IDaypartDefaultService>();
+            _StandardDaypartServiceMock = new Mock<IStandardDaypartService>();
             _WeeklyBreakdownEngineMock = new Mock<IWeeklyBreakdownEngine>();
             _CreativeLengthEngineMock = new Mock<ICreativeLengthEngine>();
             _BroadcastLockingManagerApplicationServiceMock
@@ -99,12 +99,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(s => s.GetDataRepository<IPlanRepository>())
                 .Returns(_PlanRepositoryMock.Object);
 
-            var daypartCodeRepository = new Mock<IDaypartDefaultRepository>();
+            var daypartCodeRepository = new Mock<IStandardDaypartRepository>();
             daypartCodeRepository
-                .Setup(s => s.GetAllDaypartDefaultsWithAllData())
+                .Setup(s => s.GetAllStandardDaypartsWithAllData())
                 .Returns(_GetDaypartCodeDefaultsFull());
             _DataRepositoryFactoryMock
-                .Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
+                .Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
                 .Returns(daypartCodeRepository.Object);
 
             _PlanSummaryRepositoryMock = new Mock<IPlanSummaryRepository>();
@@ -124,9 +124,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
                 .Returns(_GetPlanDeliveryBudget());
 
-            _DaypartDefaultServiceMock
-                .Setup(s => s.GetAllDaypartDefaults())
-                .Returns(new List<DaypartDefaultDto>());
+            _StandardDaypartServiceMock
+                .Setup(s => s.GetAllStandardDayparts())
+                .Returns(new List<StandardDaypartDto>());
 
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownByStandardDaypart(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
@@ -162,7 +162,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     _PlanPricingServiceMock.Object,
                     _PlanBuyingServiceMock.Object,
                     _QuarterCalculationEngineMock.Object,
-                    _DaypartDefaultServiceMock.Object,
+                    _StandardDaypartServiceMock.Object,
                     _WeeklyBreakdownEngineMock.Object,
                     _CreativeLengthEngineMock.Object,
                     featureToggleHelper
@@ -879,12 +879,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             };
         }
 
-        private static List<DaypartDefaultFullDto> _GetDaypartCodeDefaultsFull()
+        private static List<StandardDaypartFullDto> _GetDaypartCodeDefaultsFull()
         {
-            return new List<DaypartDefaultFullDto>
+            return new List<StandardDaypartFullDto>
             {
-                new DaypartDefaultFullDto { Id = 2, DaypartType = DaypartTypeEnum.News, DefaultEndTimeSeconds = 0, DefaultStartTimeSeconds = 2000 },
-                new DaypartDefaultFullDto { Id = 11, DaypartType = DaypartTypeEnum.News, DefaultEndTimeSeconds = 5000, DefaultStartTimeSeconds = 6000 },
+                new StandardDaypartFullDto { Id = 2, DaypartType = DaypartTypeEnum.News, DefaultEndTimeSeconds = 0, DefaultStartTimeSeconds = 2000 },
+                new StandardDaypartFullDto { Id = 11, DaypartType = DaypartTypeEnum.News, DefaultEndTimeSeconds = 5000, DefaultStartTimeSeconds = 6000 },
             };
         }
 

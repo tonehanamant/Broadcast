@@ -44,7 +44,7 @@ namespace Services.Broadcast.ApplicationServices
         protected readonly IInventoryRepository InventoryRepository;
         protected readonly IStationRepository _StationRepository;
         protected readonly IMarketCoverageRepository _MarketCoverageRepository;
-        protected readonly IDaypartDefaultRepository _DaypartDefaultRepository;
+        protected readonly IStandardDaypartRepository _StandardDaypartRepository;
         protected readonly IBroadcastAudienceRepository _AudienceRepository;
 
         private const int SPOT_LENGTH_15 = 15;
@@ -57,7 +57,7 @@ namespace Services.Broadcast.ApplicationServices
             _QuarterCalculationEngine = quarterCalculationEngine;
 
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
-            _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
+            _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
 
             _InventoryProprietarySummaryRepository = broadcastDataRepositoryFactory
                 .GetDataRepository<IInventoryProprietarySummaryRepository>();
@@ -172,8 +172,8 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             var firstQuarter = quarters.First();
-            var summaryDaypartDefaultIds = _ConvertPlanDefaultDaypartIdsToInventoryDefaultDaypartIds(inventoryProprietarySummaryRequest, firstQuarter);
-            var proprietarySummaries = _InventoryProprietarySummaryRepository.GetInventoryProprietarySummary(firstQuarter, summaryDaypartDefaultIds);
+            var summaryStandardDaypartIds = _ConvertPlanStandardDaypartIdsToInventoryStandardDaypartIds(inventoryProprietarySummaryRequest, firstQuarter);
+            var proprietarySummaries = _InventoryProprietarySummaryRepository.GetInventoryProprietarySummary(firstQuarter, summaryStandardDaypartIds);
             var marketCoverageByMarketCode = _MarketCoverageRepository.GetLatestMarketCoverages().MarketCoveragesByMarketCode;
             var summaryAudienceIds = _AudienceRepository
                 .GetRatingsAudiencesByMaestroAudience(new List<int> { inventoryProprietarySummaryRequest.AudienceId })
@@ -249,13 +249,13 @@ namespace Services.Broadcast.ApplicationServices
 
         }
 
-        private List<int> _ConvertPlanDefaultDaypartIdsToInventoryDefaultDaypartIds(InventoryProprietarySummaryRequest inventoryProprietarySummaryRequest
+        private List<int> _ConvertPlanStandardDaypartIdsToInventoryStandardDaypartIds(InventoryProprietarySummaryRequest inventoryProprietarySummaryRequest
             , QuarterDetailDto QuarterDetail)
         {
             // First Get all default_daypart_ids  from InventoryProprietary Summary Service based on quarter
-            var daypartDefaultIds = _InventoryProprietarySummaryRepository.GetDayPartDefaultIds(QuarterDetail);
+            var standardDaypartIds = _InventoryProprietarySummaryRepository.GetStandardDaypartIds(QuarterDetail);
 
-            var daypartIds = _DaypartDefaultRepository.GetDayPartIds(daypartDefaultIds);
+            var daypartIds = _StandardDaypartRepository.GetDayPartIds(standardDaypartIds);
             // Get DisplayDayPart info based on Inventory dayPart Ids
             var displayDaypartDictionary = DaypartCache.Instance.GetDisplayDayparts(daypartIds);
 
@@ -265,8 +265,7 @@ namespace Services.Broadcast.ApplicationServices
             //Get Intersecting daypart_id 
             List<int> daypartIdsFinalList = _GetIntersectingDaypartIds(inventoryProprietarySummaryRequest, inventoryDisplayDayparts).ToList();
 
-            var summaryDaypartDefaultIds = _DaypartDefaultRepository.GetDaypartDefaultIds(daypartIdsFinalList);
-            return summaryDaypartDefaultIds;
+            return _StandardDaypartRepository.GetStandardDaypartIds(daypartIdsFinalList);
         }
 
         private HashSet<int> _GetIntersectingDaypartIds(InventoryProprietarySummaryRequest inventoryProprietarySummaryRequest
@@ -274,7 +273,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             HashSet<int> daypartIdsFinalList = new HashSet<int>();
             var planDefaultDaypartIds = inventoryProprietarySummaryRequest.PlanDaypartRequests.Select(d => d.DefaultDayPartId).ToList();
-            var planDaypartIds = _DaypartDefaultRepository.GetDayPartIds(planDefaultDaypartIds);
+            var planDaypartIds = _StandardDaypartRepository.GetDayPartIds(planDefaultDaypartIds);
 
             foreach (var planDaypartId in planDaypartIds)
             {

@@ -66,7 +66,7 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="quarterDetailDto"></param>
         /// <returns></returns>
-        List<int> GetDayPartDefaultIds(QuarterDetailDto quarterDetailDto);
+        List<int> GetStandardDaypartIds(QuarterDetailDto quarterDetailDto);
 
         /// <summary>
         /// Gets the inventory proprietary summaries by ids.
@@ -149,11 +149,11 @@ namespace Services.Broadcast.Repositories
                                                         on manifest.file_id equals file.id
                                                     join header in context.inventory_file_proprietary_header
                                                         on file.id equals header.inventory_file_id
-                                                    join daypartDefaults in context.daypart_defaults
-                                                        on header.daypart_default_id equals daypartDefaults.id
+                                                    join standardDayparts in context.standard_dayparts
+                                                        on header.standard_daypart_id equals standardDayparts.id
                                                     join mappings in context.inventory_proprietary_daypart_program_mappings
-                                                        on new { InventorySourceId = inventorySource.Id, DefaultDaypartId = daypartDefaults.id } equals
-                                                        new { InventorySourceId = mappings.inventory_source_id, DefaultDaypartId = mappings.daypart_default_id }
+                                                        on new { InventorySourceId = inventorySource.Id, DefaultDaypartId = standardDayparts.id } equals
+                                                        new { InventorySourceId = mappings.inventory_source_id, DefaultDaypartId = mappings.standard_daypart_id }
                                                     where week.start_date <= endDate && week.end_date >= startDate &&
                                                           manifest.inventory_source_id == inventorySource.Id &&
                                                           manifestGroup.slot_number == fixedSlotNumber
@@ -179,11 +179,11 @@ namespace Services.Broadcast.Repositories
                                                    on manifest.file_id equals file.id
                                                join header in context.inventory_file_proprietary_header
                                                    on file.id equals header.inventory_file_id
-                                               join daypartDefaults in context.daypart_defaults
-                                                   on header.daypart_default_id equals daypartDefaults.id
+                                               join standardDayparts in context.standard_dayparts
+                                                   on header.standard_daypart_id equals standardDayparts.id
                                                join mappings in context.inventory_proprietary_daypart_program_mappings
-                                                   on new { InventorySourceId = inventorySource.Id, DefaultDaypartId = daypartDefaults.id } equals
-                                                   new { InventorySourceId = mappings.inventory_source_id, DefaultDaypartId = mappings.daypart_default_id }
+                                                   on new { InventorySourceId = inventorySource.Id, DefaultDaypartId = standardDayparts.id } equals
+                                                   new { InventorySourceId = mappings.inventory_source_id, DefaultDaypartId = mappings.standard_daypart_id }
                                                where week.start_date <= endDate && week.end_date >= startDate &&
                                                      mappings.id == proprietarySummary.ProprietaryDaypartProgramMappingId &&
                                                      manifestGroup.slot_number == fixedSlotNumber
@@ -248,11 +248,11 @@ namespace Services.Broadcast.Repositories
                                     join manifestGroup in context.station_inventory_group on manifest.station_inventory_group_id equals manifestGroup.id
                                     join file in context.inventory_files on manifest.file_id equals file.id
                                     join header in context.inventory_file_proprietary_header on file.id equals header.inventory_file_id
-                                    join daypartDefaults in context.daypart_defaults on header.daypart_default_id equals daypartDefaults.id
+                                    join standardDayparts in context.standard_dayparts on header.standard_daypart_id equals standardDayparts.id
                                     join audience in context.station_inventory_manifest_audiences on manifest.id equals audience.station_inventory_manifest_id
                                     join mapping in context.inventory_proprietary_daypart_program_mappings
-                                        on new { InventorySourceId = manifest.inventory_source_id, DefaultDaypartId = daypartDefaults.id } equals
-                                        new { InventorySourceId = mapping.inventory_source_id, DefaultDaypartId = mapping.daypart_default_id }
+                                        on new { InventorySourceId = manifest.inventory_source_id, DefaultDaypartId = standardDayparts.id } equals
+                                        new { InventorySourceId = mapping.inventory_source_id, DefaultDaypartId = mapping.standard_daypart_id }
                                     where week.start_date <= endDate &&
                                           week.end_date >= startDate &&
                                           mapping.id == proprietaryInventoryMappingId &&
@@ -356,11 +356,11 @@ namespace Services.Broadcast.Repositories
                         from summary in context.inventory_proprietary_summary
                         join source in context.inventory_sources on summary.inventory_source_id equals source.id
                         join mappings in context.inventory_proprietary_daypart_program_mappings on summary.inventory_proprietary_daypart_program_mappings_id equals mappings.id
-                        join daypartDefault in context.daypart_defaults on mappings.daypart_default_id equals daypartDefault.id
-                        join daypart in context.dayparts on daypartDefault.daypart_id equals daypart.id
+                        join standardDaypart in context.standard_dayparts on mappings.standard_daypart_id equals standardDaypart.id
+                        join daypart in context.dayparts on standardDaypart.daypart_id equals daypart.id
                         join programName in context.inventory_proprietary_daypart_programs on mappings.inventory_proprietary_daypart_programs_id equals programName.id
                         where summary.is_active &&
-                              defaultDaypartIds.Contains(mappings.daypart_default_id) &&
+                              defaultDaypartIds.Contains(mappings.standard_daypart_id) &&
                               summary.quarter_number == quarterDetailDto.Quarter &&
                               summary.quarter_year == quarterDetailDto.Year
                         select new InventoryProprietarySummary
@@ -391,20 +391,20 @@ namespace Services.Broadcast.Repositories
         }
 
         /// <inheritdoc/>
-        public List<int> GetDayPartDefaultIds(QuarterDetailDto quarterDetailDto)
+        public List<int> GetStandardDaypartIds(QuarterDetailDto quarterDetailDto)
         {
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var dayPartDefaultIds = context.inventory_proprietary_summary
+                    var standardDaypartIds = context.inventory_proprietary_summary
                         .Include(x => x.inventory_proprietary_daypart_program_mappings)
                         .Where(x => x.is_active &&
                                     x.quarter_number == quarterDetailDto.Quarter &&
                                     x.quarter_year == quarterDetailDto.Year)
-                        .Select(x => x.inventory_proprietary_daypart_program_mappings.daypart_default_id)
+                        .Select(x => x.inventory_proprietary_daypart_program_mappings.standard_daypart_id)
                         .ToList();
 
-                    return dayPartDefaultIds;
+                    return standardDaypartIds;
                 });
         }
 

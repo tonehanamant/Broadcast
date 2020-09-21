@@ -113,12 +113,12 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "FOX NFL SUNDAY WRAP-UP",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -413,12 +413,12 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "IN DEPTH WITH GRAHAM B",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -713,12 +713,12 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "THE BIG BANG THEORY 2X",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -1013,12 +1013,12 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "FULL MEASURE",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -1313,12 +1313,12 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "SEINFELD 2X",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -1613,12 +1613,12 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "FOX NETWORK",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -1913,12 +1913,12 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "SATURDAY ACCESS ROS",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -2213,12 +2213,12 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "MODERN FAMILY",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -2513,12 +2513,12 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "MODERN FAMILY",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -2813,12 +2813,12 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "SAT FRINGE/ACCESS ROS",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -3113,12 +3113,12 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "FAMILY FEUD X2",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -3413,12 +3413,12 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "KMPH 2P MOVIE",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -3713,12 +3713,12 @@
             "_Tuesday": false,
             "_Wednesday": false
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "KMPH 12N MOVIE",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -4013,12 +4013,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "2 BROKE GIRLS",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -4313,12 +4313,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "MIKE & MOLLY",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -4613,12 +4613,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "MIKE & MOLLY",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -4913,12 +4913,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "SEINFELD",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -5213,12 +5213,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "SEINFELD",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -5513,12 +5513,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "MODERN FAMILY ROTATOR",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -5813,12 +5813,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "MODERN FAMILY",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -6113,12 +6113,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "MODERN FAMILY",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -6413,12 +6413,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "MODERN FAMILY",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -6713,12 +6713,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "MODERN FAMILY",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -7013,12 +7013,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "BIG BANG THEORY",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -7313,12 +7313,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "BIG BANG THEORY",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -7613,12 +7613,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "SIMPSONS",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -7913,12 +7913,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "SIMPSONS",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -8213,12 +8213,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "FAMILY FEUD",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -8513,12 +8513,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "BIG BANG THEORY",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -8813,12 +8813,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "BIG BANG THEORY",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -9113,12 +9113,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "FRINGE/ACCESS ROTATOR",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -9413,12 +9413,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "FRINGE ROTATOR",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -9713,12 +9713,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "SIMPSONS",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -10013,12 +10013,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "SIMPSONS",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -10313,12 +10313,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "FAMILY FEUD",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -10613,12 +10613,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "JUDGE JUDY X2",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -10913,12 +10913,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "HOT BENCH X2",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -11213,12 +11213,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "PEOPLE'S COURT",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -11513,12 +11513,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "COPS",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -11813,12 +11813,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "AM ROTATION",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -12113,12 +12113,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "LIFESTYLE MATTERS",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [
@@ -12413,12 +12413,12 @@
             "_Tuesday": true,
             "_Wednesday": true
           },
-          "DaypartDefault": null,
           "Genres": [],
           "Id": null,
           "PrimaryProgramId": null,
           "ProgramName": "WENDY WILLIAMS",
-          "Programs": []
+          "Programs": [],
+          "StandardDaypart": null
         }
       ],
       "ManifestRates": [

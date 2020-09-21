@@ -910,6 +910,8 @@ BEGIN
 END
 /*************************************** END - BP-1090 ****************************************************/
 
+GO
+
 /*************************************** START - BP-812 ****************************************************/
 
 IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_band_details') AND name = 'is_proprietary ')
@@ -922,6 +924,119 @@ BEGIN
 END
 
 /*************************************** END - BP-812 ****************************************************/
+
+GO
+
+/*************************************** START BP-1467 *******************************************************/
+IF EXISTS (SELECT 1 FROM sys.objects WHERE object_id = OBJECT_ID('daypart_defaults'))
+BEGIN
+	EXEC sp_rename [dbo.daypart_defaults],  [standard_dayparts]
+
+	--rename columns
+	IF EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('inventory_file_proprietary_header') AND name = 'daypart_default_id')
+	BEGIN
+		EXEC sp_rename [dbo.inventory_file_proprietary_header.daypart_default_id], [standard_daypart_id], 'COLUMN'
+	END
+	IF EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('inventory_proprietary_daypart_program_mappings') AND name = 'daypart_default_id')
+	BEGIN
+		EXEC sp_rename [dbo.inventory_proprietary_daypart_program_mappings.daypart_default_id], [standard_daypart_id], 'COLUMN'
+	END
+	IF EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('inventory_summary_quarter_details') AND name = 'daypart_default_id')
+	BEGIN
+		EXEC sp_rename [dbo.inventory_summary_quarter_details.daypart_default_id], [standard_daypart_id], 'COLUMN'
+	END
+	IF EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('nti_to_nsi_conversion_rates') AND name = 'daypart_default_id')
+	BEGIN
+		EXEC sp_rename [dbo.nti_to_nsi_conversion_rates.daypart_default_id], [standard_daypart_id], 'COLUMN'
+	END
+	IF EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_audience_daypart_vpvh') AND name = 'daypart_default_id')
+	BEGIN
+		EXEC sp_rename [dbo.plan_version_audience_daypart_vpvh.daypart_default_id], [standard_daypart_id], 'COLUMN'
+	END
+	IF EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_dayparts') AND name = 'daypart_default_id')
+	BEGIN
+		EXEC sp_rename [dbo.plan_version_dayparts.daypart_default_id], [standard_daypart_id], 'COLUMN'
+	END
+	IF EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_weekly_breakdown') AND name = 'daypart_default_id')
+	BEGIN
+		EXEC sp_rename [dbo.plan_version_weekly_breakdown.daypart_default_id], [standard_daypart_id], 'COLUMN'
+	END
+	IF EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('scx_generation_job_files') AND name = 'daypart_default_id')
+	BEGIN
+		EXEC sp_rename [dbo.scx_generation_job_files.daypart_default_id], [standard_daypart_id], 'COLUMN'
+	END
+	IF EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('scx_generation_jobs') AND name = 'daypart_default_id')
+	BEGIN
+		EXEC sp_rename [dbo.scx_generation_jobs.daypart_default_id], [standard_daypart_id], 'COLUMN'
+	END
+	IF EXISTS(SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('station_inventory_manifest_dayparts') AND name = 'daypart_default_id')
+	BEGIN
+		EXEC sp_rename [dbo.station_inventory_manifest_dayparts.daypart_default_id], [standard_daypart_id], 'COLUMN'
+	END
+
+	--rename FKs
+	IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id  = OBJECT_ID('inventory_file_proprietary_header') 
+		AND name = 'FK_inventory_file_proprietary_header_daypart_codes')
+	BEGIN
+		EXEC sp_rename [dbo.FK_inventory_file_proprietary_header_daypart_codes]
+			, [FK_inventory_file_proprietary_header_standard_dayparts]
+	END
+	IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id  = OBJECT_ID('inventory_proprietary_daypart_program_mappings') 
+		AND name = 'FK_inventory_proprietary_daypart_program_mappings_daypart_defaults')
+	BEGIN
+		EXEC sp_rename [dbo.FK_inventory_proprietary_daypart_program_mappings_daypart_defaults]
+			, [FK_inventory_proprietary_daypart_program_mappings_standard_dayparts]
+	END
+	IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id  = OBJECT_ID('inventory_summary_quarter_details') 
+		AND name = 'FK_inventory_summary_quarter_details_daypart_codes')
+	BEGIN
+		EXEC sp_rename [dbo.FK_inventory_summary_quarter_details_daypart_codes]
+			, [FK_inventory_summary_quarter_details_standard_dayparts]
+	END
+	IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id  = OBJECT_ID('nti_to_nsi_conversion_rates') 
+		AND name = 'FK_nti_to_nsi_conversion_rates_daypart_defaults')
+	BEGIN
+		EXEC sp_rename [dbo.FK_nti_to_nsi_conversion_rates_daypart_defaults]
+			, [FK_nti_to_nsi_conversion_rates_standard_dayparts]
+	END
+	IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id  = OBJECT_ID('plan_version_dayparts') 
+		AND name = 'FK_plan_dayparts_daypart_codes')
+	BEGIN
+		EXEC sp_rename [dbo.FK_plan_dayparts_daypart_codes]
+			, [FK_plan_dayparts_standard_dayparts]
+	END
+	IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id  = OBJECT_ID('plan_version_audience_daypart_vpvh') 
+		AND name = 'FK_plan_version_audience_daypart_vpvh_daypart_defaults')
+	BEGIN
+		EXEC sp_rename [dbo.FK_plan_version_audience_daypart_vpvh_daypart_defaults]
+			, [FK_plan_version_audience_daypart_vpvh_standard_dayparts]
+	END
+	IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id  = OBJECT_ID('plan_version_weekly_breakdown') 
+		AND name = 'FK_plan_version_weekly_breakdown_daypart_defaults')
+	BEGIN
+		EXEC sp_rename [dbo.FK_plan_version_weekly_breakdown_daypart_defaults]
+			, [FK_plan_version_weekly_breakdown_standard_dayparts]
+	END
+	IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id  = OBJECT_ID('scx_generation_job_files') 
+		AND name = 'FK_scx_generation_job_files_daypart_codes')
+	BEGIN
+		EXEC sp_rename [dbo.FK_scx_generation_job_files_daypart_codes]
+			, [FK_scx_generation_job_files_standard_dayparts]
+	END
+	IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id  = OBJECT_ID('scx_generation_jobs') 
+		AND name = 'FK_scx_generation_jobs_daypart_codes')
+	BEGIN
+		EXEC sp_rename [dbo.FK_scx_generation_jobs_daypart_codes]
+			, [FK_scx_generation_jobs_standard_dayparts]
+	END
+	IF EXISTS(SELECT 1 FROM sys.foreign_keys WHERE parent_object_id  = OBJECT_ID('station_inventory_manifest_dayparts') 
+		AND name = 'FK_station_inventory_manifest_dayparts_daypart_codes')
+	BEGIN
+		EXEC sp_rename [dbo.FK_station_inventory_manifest_dayparts_daypart_codes]
+			, [FK_station_inventory_manifest_dayparts_standard_dayparts]
+	END
+END
+/*************************************** END BP-1467 *******************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

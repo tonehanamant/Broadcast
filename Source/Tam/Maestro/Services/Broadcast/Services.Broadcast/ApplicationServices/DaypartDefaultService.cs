@@ -9,52 +9,52 @@ using System.Linq;
 
 namespace Services.Broadcast.ApplicationServices
 {
-    public interface IDaypartDefaultService : IApplicationService
+    public interface IStandardDaypartService : IApplicationService
     {
-        List<DaypartDefaultDto> GetAllDaypartDefaults();
+        List<StandardDaypartDto> GetAllStandardDayparts();
 
         /// <summary>
-        /// Gets the daypart code defaults.
+        /// Gets all standard dayparts with all data.
         /// </summary>
-        /// <returns>List of <see cref="DaypartDefaultFullDto"/></returns>
-        List<DaypartDefaultFullDto> GetAllDaypartDefaultsWithAllData();
+        /// <returns></returns>
+        List<StandardDaypartFullDto> GetAllStandardDaypartsWithAllData();
     }
 
-    public class DaypartDefaultService : IDaypartDefaultService
+    public class StandardDaypartService : IStandardDaypartService
     {        
-        internal const string DEFAULT_DAYPART_CODE_WEEKEND = "WKD";
+        internal const string STANDARD_DAYPART_CODE_WEEKEND = "WKD";
 
-        private readonly IDaypartDefaultRepository _DaypartDefaultRepository;
+        private readonly IStandardDaypartRepository _StandardDaypartRepository;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
-        public DaypartDefaultService(IDataRepositoryFactory broadcastDataRepositoryFactory,
+        public StandardDaypartService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IFeatureToggleHelper featureToggleHelper)
         {
-            _DaypartDefaultRepository = broadcastDataRepositoryFactory.GetDataRepository<IDaypartDefaultRepository>();
+            _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
             _FeatureToggleHelper = featureToggleHelper;
         }
 
-        public List<DaypartDefaultDto> GetAllDaypartDefaults()
+        public List<StandardDaypartDto> GetAllStandardDayparts()
         {
-            var dayparts = _DaypartDefaultRepository.GetAllDaypartDefaults();
+            var dayparts = _StandardDaypartRepository.GetAllStandardDayparts();
             AssertToggle_EnableDaypartWKD(dayparts);
             return dayparts;
         }
 
         ///<inheritdoc/>
-        public List<DaypartDefaultFullDto> GetAllDaypartDefaultsWithAllData()
+        public List<StandardDaypartFullDto> GetAllStandardDaypartsWithAllData()
         {
-            var defaultDaypartDtos = _DaypartDefaultRepository.GetAllDaypartDefaultsWithAllData();
-            DaypartTimeHelper.AddOneSecondToEndTime(defaultDaypartDtos);
-            AssertToggle_EnableDaypartWKD(defaultDaypartDtos);
-            return defaultDaypartDtos;
+            var standardDaypartDtos = _StandardDaypartRepository.GetAllStandardDaypartsWithAllData();
+            DaypartTimeHelper.AddOneSecondToEndTime(standardDaypartDtos);
+            AssertToggle_EnableDaypartWKD(standardDaypartDtos);
+            return standardDaypartDtos;
         }
 
-        private void AssertToggle_EnableDaypartWKD<T>(List<T> dayparts) where T : DaypartDefaultDto
+        private void AssertToggle_EnableDaypartWKD<T>(List<T> dayparts) where T : StandardDaypartDto
         {
             if (!_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_DAYPART_WKD))
             {
-                var toRemove = dayparts.SingleOrDefault(d => d.Code.Equals(DEFAULT_DAYPART_CODE_WEEKEND, StringComparison.OrdinalIgnoreCase));
+                var toRemove = dayparts.SingleOrDefault(d => d.Code.Equals(STANDARD_DAYPART_CODE_WEEKEND, StringComparison.OrdinalIgnoreCase));
                 if (toRemove != null)
                 {
                     dayparts.Remove(toRemove);

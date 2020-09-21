@@ -6,7 +6,7 @@
 
         public double ConversionRate { get; set; }
 
-        public int DaypartDefaultId { get; set; }
+        public int StandardDaypartId { get; set; }
 
         public int MediaMonthId { get; set; }
     }

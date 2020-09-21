@@ -24,9 +24,9 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<decimal> cpm { get; set; }
         public Nullable<int> min_spots_per_week { get; set; }
         public Nullable<int> max_spots_per_week { get; set; }
-        public int daypart_default_id { get; set; }
+        public int standard_daypart_id { get; set; }
     
         public virtual inventory_summary_quarters inventory_summary_quarters { get; set; }
-        public virtual daypart_defaults daypart_defaults { get; set; }
+        public virtual standard_dayparts standard_dayparts { get; set; }
     }
 }

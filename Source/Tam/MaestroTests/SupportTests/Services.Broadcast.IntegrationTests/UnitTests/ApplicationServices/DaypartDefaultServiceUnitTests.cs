@@ -15,9 +15,9 @@ using Services.Broadcast.Repositories;
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
     [TestFixture]
-    public class DaypartDefaultServiceUnitTests
+    public class StandardDaypartServiceUnitTests
     {
-        private DaypartDefaultService _GetService(bool enableDaypartWKD = true)
+        private StandardDaypartService _GetService(bool enableDaypartWKD = true)
         {
             // setup feature flags
             var launchDarklyClientStub = new LaunchDarklyClientStub();
@@ -25,24 +25,24 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
 
             // setup data repos
-            var daypartDefaultRepository = new Mock<IDaypartDefaultRepository>();
-            daypartDefaultRepository.Setup(s => s.GetAllDaypartDefaults())
-                .Returns(DaypartsTestData.GetAllDaypartDefaultsWithBaseData);
-            daypartDefaultRepository.Setup(s => s.GetAllDaypartDefaultsWithAllData())
-                .Returns(_GetDeepCopy(DaypartsTestData.GetAllDaypartDefaultsWithFullData()));
+            var standardDaypartRepository = new Mock<IStandardDaypartRepository>();
+            standardDaypartRepository.Setup(s => s.GetAllStandardDayparts())
+                .Returns(DaypartsTestData.GetAllStandardDaypartsWithBaseData);
+            standardDaypartRepository.Setup(s => s.GetAllStandardDaypartsWithAllData())
+                .Returns(_GetDeepCopy(DaypartsTestData.GetAllStandardDaypartsWithFullData()));
 
             var repoFactory  = new Mock<IDataRepositoryFactory>();
-            repoFactory.Setup(s => s.GetDataRepository<IDaypartDefaultRepository>())
-                .Returns(daypartDefaultRepository.Object);
+            repoFactory.Setup(s => s.GetDataRepository<IStandardDaypartRepository>())
+                .Returns(standardDaypartRepository.Object);
             
             // create the service for return
-            var service = new DaypartDefaultService(repoFactory.Object, featureToggleHelper);
+            var service = new StandardDaypartService(repoFactory.Object, featureToggleHelper);
             return service;
         }
 
-        private List<DaypartDefaultFullDto> _GetDeepCopy(List<DaypartDefaultFullDto> toCopy)
+        private List<StandardDaypartFullDto> _GetDeepCopy(List<StandardDaypartFullDto> toCopy)
         {
-            var copy = toCopy.Select(c => new DaypartDefaultFullDto
+            var copy = toCopy.Select(c => new StandardDaypartFullDto
             {
                 Id = c.Id,
                 Code = c.Code,
@@ -57,13 +57,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetAllDaypartDefaults()
+        public void GetAllStandardDayparts()
         {
             // Arrange
             var service = _GetService();
 
             // Act
-            var results = service.GetAllDaypartDefaults();
+            var results = service.GetAllStandardDayparts();
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
@@ -71,14 +71,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetAllDaypartDefaultsEnableWKDOff()
+        public void GetAllStandardDaypartsEnableWKDOff()
         {
             // Arrange
             const bool enableDaypartWKD = false;
             var service = _GetService(enableDaypartWKD);
 
             // Act
-            var results = service.GetAllDaypartDefaultsWithAllData();
+            var results = service.GetAllStandardDaypartsWithAllData();
 
             // Assert
             // daypart with code 'WKD' should be filtered out.
@@ -87,13 +87,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetAllDaypartDefaultsWithAllData()
+        public void GetAllStandardDaypartsWithAllData()
         {
             // Arrange
             var service = _GetService();
 
             // Act
-            var results = service.GetAllDaypartDefaultsWithAllData();
+            var results = service.GetAllStandardDaypartsWithAllData();
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(results));
@@ -101,14 +101,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
-        public void GetAllDaypartDefaultsWithAllDataEnableWKDOff()
+        public void GetAllStandardDaypartsWithAllDataEnableWKDOff()
         {
             // Arrange
             const bool enableDaypartWKD = false;
             var service = _GetService(enableDaypartWKD);
 
             // Act
-            var results = service.GetAllDaypartDefaultsWithAllData();
+            var results = service.GetAllStandardDaypartsWithAllData();
 
             // Assert
             // daypart with code 'WKD' should be filtered out.

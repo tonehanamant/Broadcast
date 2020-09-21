@@ -363,9 +363,6 @@
     <Compile Include="daypart.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="daypart_defaults.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="detection_files.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
@@ -814,6 +811,9 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="spot_tracker_file_details.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="standard_dayparts.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="station.cs">

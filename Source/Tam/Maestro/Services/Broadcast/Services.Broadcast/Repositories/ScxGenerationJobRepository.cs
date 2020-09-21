@@ -55,7 +55,7 @@ namespace Services.Broadcast.Repositories
                     var scxJob = new scx_generation_jobs
                     {
                         inventory_source_id = job.InventoryScxDownloadRequest.InventorySourceId,
-                        daypart_default_id = job.InventoryScxDownloadRequest.DaypartDefaultId,
+                        standard_daypart_id = job.InventoryScxDownloadRequest.StandardDaypartId,
                         start_date = job.InventoryScxDownloadRequest.StartDate,
                         end_date = job.InventoryScxDownloadRequest.EndDate,
                         status = (int)job.Status,
@@ -129,7 +129,7 @@ namespace Services.Broadcast.Repositories
                 InventoryScxDownloadRequest = new InventoryScxDownloadRequest
                 {
                     InventorySourceId = scxJob.inventory_source_id,
-                    DaypartDefaultId = scxJob.daypart_default_id,
+                    StandardDaypartId = scxJob.standard_daypart_id,
                     StartDate = scxJob.start_date,
                     EndDate = scxJob.end_date,
                     UnitNames = scxJob.scx_generation_job_units.Select(u => u.unit_name).ToList()
@@ -153,7 +153,7 @@ namespace Services.Broadcast.Repositories
                             scx_generation_job_id = job.Id,
                             file_name = file.FileName,
                             inventory_source_id = file.InventorySource.Id,
-                            daypart_default_id = file.DaypartCodeId,
+                            standard_daypart_id = file.DaypartCodeId,
                             start_date = file.StartDate,
                             end_date = file.EndDate,
                             unit_name = file.UnitName
@@ -182,7 +182,7 @@ namespace Services.Broadcast.Repositories
             var details = (from j in context.scx_generation_jobs 
                     join f in context.scx_generation_job_files on j.id equals f.scx_generation_job_id into fs
                     from f in fs.DefaultIfEmpty()
-                    join d in context.daypart_defaults on f.daypart_default_id equals d.id into ds
+                    join d in context.standard_dayparts on f.standard_daypart_id equals d.id into ds
                     from d in ds.DefaultIfEmpty()
                     where j.inventory_source_id.Equals(inventorySourceId)
                     select new ScxFileGenerationDetailDto
