@@ -10,7 +10,8 @@ namespace Services.Broadcast.BusinessEngines
         PlanPricingBandDto CalculatePricingBands(
             List<PlanPricingInventoryProgram> inventory,
             PlanPricingAllocationResult allocationResult,
-            PlanPricingParametersDto parametersDto);
+            PlanPricingParametersDto parametersDto,
+            ProprietaryInventoryData proprietaryInventoryData);
     }
 
     public class PlanPricingBandCalculationEngine : IPlanPricingBandCalculationEngine
@@ -26,55 +27,130 @@ namespace Services.Broadcast.BusinessEngines
         public PlanPricingBandDto CalculatePricingBands(
             List<PlanPricingInventoryProgram> inventory,
             PlanPricingAllocationResult allocationResult,
-            PlanPricingParametersDto parametersDto)
+            PlanPricingParametersDto parametersDto,
+            ProprietaryInventoryData proprietaryInventoryData)
         {
+            var allocatedInventory = _GetAllocatedInventory(allocationResult);
             var pricingBandDto = new PlanPricingBandDto
             {
-                Bands = _CreateBands(parametersDto.AdjustedCPM),
                 PlanVersionId = allocationResult.PlanVersionId,
-                JobId = allocationResult.JobId
+                JobId = allocationResult.JobId,
+                Totals = _GetPricingBandTotals(allocatedInventory, proprietaryInventoryData)
             };
 
-            var allocatedInventory = _GetAllocatedInventory(allocationResult);
-            var totalAllocatedCost = allocatedInventory.Sum(x => x.TotalCost);
-            var totalAllocatedImpressions = allocatedInventory.Sum(x => x.TotalImpressions);
-            var totalAllocatedSpots = allocatedInventory.Sum(x => x.TotalSpots);
+            var allBands = _CreateBands(parametersDto.AdjustedCPM);
 
-            foreach (var band in pricingBandDto.Bands)
+            foreach (var band in allBands)
             {
-                var minBand = 0m;
+                var minBand = band.MinBand ?? 0m;
+                var maxBand = band.MaxBand ?? decimal.MaxValue;
+                var proprietarySummaries = proprietaryInventoryData.ProprietarySummaries.Where(x => x.Cpm >= minBand && x.Cpm < maxBand).ToList();
 
-                if (band.MinBand.HasValue)
-                    minBand = band.MinBand.Value;
+                var openMarketBand = _GetOpenMarketBand(minBand, maxBand, band.MinBand, band.MaxBand, allocatedInventory);
+                var proprietaryBand = _GetProprietaryBand(band.MinBand, band.MaxBand, proprietarySummaries);
+                var bands = new List<PlanPricingBandDetailDto> { openMarketBand, proprietaryBand };
 
-                var maxBand = decimal.MaxValue;
+                _CalculateAllocatedInventoryPercentage(bands, pricingBandDto.Totals.Impressions);
+                _CalculateAvailableInventoryPercentage(
+                    minBand,
+                    maxBand,
+                    bands,
+                    inventory,
+                    parametersDto,
+                    proprietarySummaries);
 
-                if (band.MaxBand.HasValue)
-                    maxBand = band.MaxBand.Value;
-
-                var allocatedBandPrograms = allocatedInventory.Where(x => x.AvgCpm >= minBand && x.AvgCpm < maxBand);
-                var inventoryBandPrograms = inventory.Where(x => x.Cpm >= minBand && x.Cpm < maxBand).ToList();
-                var totalInventoryImpressions = 
-                    _PlanPricingUnitCapImpressionsCalculationEngine.CalculateTotalImpressionsForUnitCaps(inventoryBandPrograms, parametersDto);
-                band.Spots = allocatedBandPrograms.Sum(x => x.TotalSpots);
-                band.Impressions = allocatedBandPrograms.Sum(x => x.TotalImpressions);
-                band.Budget = allocatedBandPrograms.Sum(x => x.TotalCost);
-                band.Cpm = ProposalMath.CalculateCpm(band.Budget, band.Impressions);
-                band.ImpressionsPercentage = totalAllocatedImpressions == 0 ?
-                    0 : (band.Impressions / totalAllocatedImpressions) * 100;
-                band.AvailableInventoryPercent = totalInventoryImpressions == 0 ?
-                    0 : (band.Impressions / totalInventoryImpressions)  * 100;
+                pricingBandDto.Bands.AddRange(bands);
             }
 
-            pricingBandDto.Totals = new PlanPricingBandTotalsDto
+            return pricingBandDto;
+        }
+
+        private void _CalculateAllocatedInventoryPercentage(
+            List<PlanPricingBandDetailDto> bands,
+            double totalAllocatedImpressions)
+        {
+            foreach (var band in bands)
             {
-                Spots = totalAllocatedSpots,
+                band.ImpressionsPercentage = totalAllocatedImpressions == 0 ? 0 : (band.Impressions / totalAllocatedImpressions) * 100;
+            }
+        }
+
+        private void _CalculateAvailableInventoryPercentage(
+            decimal minBand,
+            decimal maxBand,
+            List<PlanPricingBandDetailDto> bands,
+            List<PlanPricingInventoryProgram> inventory,
+            PlanPricingParametersDto parametersDto,
+            List<ProprietarySummary> proprietarySummaries)
+        {
+            var inventoryBandPrograms = inventory.Where(x => x.Cpm >= minBand && x.Cpm < maxBand).ToList();
+            var totalOpenMarketInventoryImpressions = _PlanPricingUnitCapImpressionsCalculationEngine.CalculateTotalImpressionsForUnitCaps(inventoryBandPrograms, parametersDto);
+            var totalProprietaryInventoryImpressions = proprietarySummaries.Sum(x => x.TotalImpressions);
+            var totalInventoryImpressions = totalOpenMarketInventoryImpressions + totalProprietaryInventoryImpressions;
+
+            foreach (var band in bands)
+            {
+                band.AvailableInventoryPercent = totalInventoryImpressions == 0 ? 0 : (band.Impressions / totalInventoryImpressions) * 100;
+            }
+        }
+
+        private PlanPricingBandDetailDto _GetProprietaryBand(
+            decimal? originalMinBand,
+            decimal? originalMaxBand,
+            List<ProprietarySummary> proprietarySummaries)
+        {
+            var impressions = proprietarySummaries.Sum(x => x.TotalImpressions);
+            var budget = proprietarySummaries.Sum(x => x.TotalCostWithMargin);
+
+            return new PlanPricingBandDetailDto
+            {
+                IsProprietary = true,
+                MinBand = originalMinBand,
+                MaxBand = originalMaxBand,
+                Spots = proprietarySummaries.Sum(x => x.TotalSpots),
+                Impressions = impressions,
+                Budget = budget,
+                Cpm = ProposalMath.CalculateCpm(budget, impressions)
+            };
+        }
+
+        private PlanPricingBandDetailDto _GetOpenMarketBand(
+            decimal minBand,
+            decimal maxBand,
+            decimal? originalMinBand,
+            decimal? originalMaxBand,
+            List<PlanPricingProgram> allocatedInventory)
+        {
+            var allocatedBandPrograms = allocatedInventory.Where(x => x.AvgCpm >= minBand && x.AvgCpm < maxBand);
+            var impressions = allocatedBandPrograms.Sum(x => x.TotalImpressions);
+            var budget = allocatedBandPrograms.Sum(x => x.TotalCost);
+
+            return new PlanPricingBandDetailDto
+            {
+                IsProprietary = false,
+                MinBand = originalMinBand,
+                MaxBand = originalMaxBand,
+                Spots = allocatedBandPrograms.Sum(x => x.TotalSpots),
+                Impressions = impressions,
+                Budget = budget,
+                Cpm = ProposalMath.CalculateCpm(budget, impressions)
+            };
+        }
+
+        private PlanPricingBandTotalsDto _GetPricingBandTotals(
+            List<PlanPricingProgram> allocatedInventory,
+            ProprietaryInventoryData proprietaryInventoryData)
+        {
+            var totalAllocatedCost = allocatedInventory.Sum(x => x.TotalCost) + proprietaryInventoryData.TotalCostWithMargin;
+            var totalAllocatedImpressions = allocatedInventory.Sum(x => x.TotalImpressions) + proprietaryInventoryData.TotalImpressions;
+
+            return new PlanPricingBandTotalsDto
+            {
+                Spots = allocatedInventory.Sum(x => x.TotalSpots) + proprietaryInventoryData.TotalSpots,
                 Impressions = totalAllocatedImpressions,
                 Budget = totalAllocatedCost,
                 Cpm = ProposalMath.CalculateCpm(totalAllocatedCost, totalAllocatedImpressions),
             };
-
-            return pricingBandDto;
         }
 
         private List<PlanPricingBandDetailDto> _CreateBands(decimal pricingCpm)

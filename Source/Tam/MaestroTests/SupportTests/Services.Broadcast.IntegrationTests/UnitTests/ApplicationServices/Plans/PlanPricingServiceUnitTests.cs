@@ -590,8 +590,30 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var margin = hasMargin ? 20 : (double?)null;
 
             var proprietaryData = hasProprietary ?
-                new ProprietaryInventoryData { TotalImpressions = 10000, TotalCostWithMargin = 5000 } :
-                new ProprietaryInventoryData { TotalImpressions = 0, TotalCostWithMargin = 0 };
+                new ProprietaryInventoryData
+                {
+                    ProprietarySummaries = new List<ProprietarySummary>
+                    {
+                        new ProprietarySummary
+                        {
+                            ProprietarySummaryByStations = new List<ProprietarySummaryByStation>
+                            {
+                                new ProprietarySummaryByStation
+                                {
+                                    TotalCostWithMargin = 5000,
+                                    ProprietarySummaryByAudiences = new List<ProprietarySummaryByAudience>
+                                    {
+                                        new ProprietarySummaryByAudience
+                                        {
+                                            TotalImpressions = 10000
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } :
+                new ProprietaryInventoryData();
 
             var spots = new List<PlanPricingAllocatedSpot>
             {
@@ -1914,40 +1936,45 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             AudienceId = 1,
                             MarketCode = 100,
                             Impressions = highProprietaryNumbers ? 30000000 : 100000,
-                            CostPerWeek = 100,
-                            SpotsPerWeek = 2
+                            CostPerWeek = 50,
+                            SpotsPerWeek = 2,
+                            StationId = 100
                         },
                         new InventoryProprietarySummaryByStationByAudience
                         {
                             AudienceId = 1,
                             MarketCode = 101,
                             Impressions = highProprietaryNumbers ? 30000000 : 100000,
-                            CostPerWeek = 100,
-                            SpotsPerWeek = 2
+                            CostPerWeek = 50,
+                            SpotsPerWeek = 2,
+                            StationId = 101
                         },
                         new InventoryProprietarySummaryByStationByAudience
                         {
                             AudienceId = 1,
                             MarketCode = 302,
                             Impressions = highProprietaryNumbers ? 40000000 : 100000,
-                            CostPerWeek = 100,
-                            SpotsPerWeek = 2
+                            CostPerWeek = 50,
+                            SpotsPerWeek = 2,
+                            StationId = 302
                         },
                         new InventoryProprietarySummaryByStationByAudience
                         {
                             AudienceId = 2,
                             MarketCode = 101,
                             Impressions = highProprietaryNumbers ? 100000000 : 1000000,
-                            CostPerWeek = 100,
-                            SpotsPerWeek = 2
+                            CostPerWeek = 50,
+                            SpotsPerWeek = 2,
+                            StationId = 101
                         },
                         new InventoryProprietarySummaryByStationByAudience
                         {
                             AudienceId = 3,
                             MarketCode = 101,
                             Impressions = highProprietaryNumbers ? 1000000000 : 10000000,
-                            CostPerWeek = 100,
-                            SpotsPerWeek = 2
+                            CostPerWeek = 50,
+                            SpotsPerWeek = 2,
+                            StationId = 101
                         }
                     }
                 },
@@ -1961,8 +1988,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             AudienceId = 1,
                             MarketCode = 101,
                             Impressions = highProprietaryNumbers ? 100000000 : 1000000,
-                            CostPerWeek = 100,
-                            SpotsPerWeek = 2
+                            CostPerWeek = 50,
+                            SpotsPerWeek = 2,
+                            StationId = 101
                         }
                     }
                 }
@@ -6653,12 +6681,49 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                          {
                             Cpm = 22,
                             Impressions = 200000,
-                            ImpressionsPercentage = 96,
+                            ImpressionsPercentage = 32,
                             Budget = 1131,
                             Spots = 3,
-                            AvailableInventoryPercent = 70,
+                            AvailableInventoryPercent = 20,
                             MaxBand = 5,
                             MinBand = 1,
+                            IsProprietary = false
+                         },
+                         new PlanPricingBandDetailDto
+                         {
+                            Cpm = 10,
+                            Impressions = 100000,
+                            ImpressionsPercentage = 22,
+                            Budget = 2131,
+                            Spots = 4,
+                            AvailableInventoryPercent = 10,
+                            MaxBand = 5,
+                            MinBand = 1,
+                            IsProprietary = true
+                         },
+                         new PlanPricingBandDetailDto
+                         {
+                            Cpm = 22,
+                            Impressions = 200000,
+                            ImpressionsPercentage = 32,
+                            Budget = 1131,
+                            Spots = 3,
+                            AvailableInventoryPercent = 20,
+                            MaxBand = 5,
+                            MinBand = null,
+                            IsProprietary = false
+                         },
+                         new PlanPricingBandDetailDto
+                         {
+                            Cpm = 10,
+                            Impressions = 100000,
+                            ImpressionsPercentage = 22,
+                            Budget = 2131,
+                            Spots = 4,
+                            AvailableInventoryPercent = 10,
+                            MaxBand = 5,
+                            MinBand = null,
+                            IsProprietary = true
                          }
                      },
                     Totals = new PlanPricingBandTotalsDto
@@ -7785,8 +7850,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var allocations = new List<PlanPricingAllocationResult>();
             _PlanPricingBandCalculationEngineMock
-                .Setup(x => x.CalculatePricingBands(It.IsAny<List<PlanPricingInventoryProgram>>(), It.IsAny<PlanPricingAllocationResult>(), It.IsAny<PlanPricingParametersDto>()))
-                .Callback<List<PlanPricingInventoryProgram>, PlanPricingAllocationResult, PlanPricingParametersDto>((inventory, allocation, pricingParameters) => allocations.Add(allocation));
+                .Setup(x => x.CalculatePricingBands(
+                    It.IsAny<List<PlanPricingInventoryProgram>>(), 
+                    It.IsAny<PlanPricingAllocationResult>(), 
+                    It.IsAny<PlanPricingParametersDto>(),
+                    It.IsAny<ProprietaryInventoryData>()))
+                .Callback<List<PlanPricingInventoryProgram>, 
+                          PlanPricingAllocationResult, 
+                          PlanPricingParametersDto,
+                          ProprietaryInventoryData>((inventory, allocation, pricingParameters, proprietaryInventoryData) => allocations.Add(allocation));
 
             var service = _GetService();
 

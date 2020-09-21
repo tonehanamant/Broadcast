@@ -865,9 +865,11 @@ namespace Services.Broadcast.ApplicationServices
             topMarketsShareOfVoice.AddRange(planShareOfVoices);
 
             var impressionsPerOnePercent = planImpressionsGoal / 100;
-            var impressionsPerMarket = proprietaryInventoryData.InventoryProprietarySummaryByStationByAudiences
+            var impressionsPerMarket = proprietaryInventoryData.ProprietarySummaries
+                .SelectMany(x => x.ProprietarySummaryByStations)
                 .GroupBy(x => x.MarketCode)
-                .ToDictionary(x => x.Key, x => x.Sum(y => y.TotalImpressions));
+                .ToDictionary(x => x.Key, 
+                              x => x.Sum(y => y.TotalImpressions));
 
             foreach (var market in topMarketsShareOfVoice)
             {
@@ -1035,7 +1037,7 @@ namespace Services.Broadcast.ApplicationServices
                 var calculatePricingBandsTask = new Task<PlanPricingBandDto>(() =>
                 {
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_BANDS);
-                    var pricingBands = _PlanPricingBandCalculationEngine.CalculatePricingBands(inventory, allocationResult, planPricingParametersDto);
+                    var pricingBands = _PlanPricingBandCalculationEngine.CalculatePricingBands(inventory, allocationResult, planPricingParametersDto, proprietaryInventoryData);
                     diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_BANDS);
                     return pricingBands;
                 });
@@ -1134,51 +1136,65 @@ namespace Services.Broadcast.ApplicationServices
 
             var proprietarySummaryIds = parameters.ProprietaryInventory.Select(x => x.Id).ToList();
             var proprietarySummaries = _InventoryProprietarySummaryRepository.GetInventoryProprietarySummariesByIds(proprietarySummaryIds);
+
+            // do not change the order
+            result.ProprietarySummaries = _GroupProprietaryInventory(plan, proprietarySummaries);
+            _AdjustProprietaryInventoryFor15SpotLength(plan, result);
+            _CalculateProprietaryInventoryBasedOnActiveWeks(plan, result, parameters);
+            _CalculateCPMForEachProprietaryInventoryUnit(result);
+
+            return result;
+        }
+
+        private List<ProprietarySummary> _GroupProprietaryInventory(
+            PlanDto plan,
+            List<InventoryProprietaryQuarterSummaryDto> proprietarySummaries)
+        {
             var ratingAudienceIds = new HashSet<int>(_BroadcastAudienceRepository
                 .GetRatingsAudiencesByMaestroAudience(new List<int> { plan.AudienceId })
                 .Select(am => am.rating_audience_id)
                 .Distinct()
                 .ToList());
 
-            foreach (var summary in proprietarySummaries)
-            {
-                var summaries = summary.SummaryByStationByAudience
-                    .Where(x => ratingAudienceIds.Contains(x.AudienceId))
-                    .Select(x => new ProprietaryDataByStationByAudience
-                    {
-                        ProprietarySummaryId = summary.Id,
-                        AudienceId = x.AudienceId,
-                        MarketCode = x.MarketCode,
-                        StationId = x.StationId,
-                        ImpressionsPerWeek = x.Impressions,
-                        SpotsPerWeek = x.SpotsPerWeek,
-                        CostPerWeek = x.CostPerWeek
-                    })
-                    .ToList();
+            return proprietarySummaries
+                .Select(summary => new ProprietarySummary
+                {
+                    ProprietarySummaryId = summary.Id,
+                    ProprietarySummaryByStations = summary.SummaryByStationByAudience
+                        .Where(x => ratingAudienceIds.Contains(x.AudienceId))
+                        .GroupBy(x => x.StationId)
+                        .Select(groupingByStation =>
+                        {
+                            var first = groupingByStation.First();
 
-                result.InventoryProprietarySummaryByStationByAudiences.AddRange(summaries);
-            }
+                            return new ProprietarySummaryByStation
+                            {
+                                StationId = first.StationId,
+                                MarketCode = first.MarketCode,
 
-            // do not change the order
-            _AdjustProprietaryInventoryFor15SpotLength(plan, result);
-            _CalculateProprietaryInventoryBasedOnActiveWeks(plan, result, parameters);
-            _CalculateProprietaryInventoryTotals(result, parameters);
-
-            return result;
+                                // Number of spots and cost is the same for each audience within summary and station
+                                SpotsPerWeek = first.SpotsPerWeek,
+                                CostPerWeek = first.CostPerWeek,
+                                ProprietarySummaryByAudiences = groupingByStation
+                                    .Select(x => new ProprietarySummaryByAudience
+                                    {
+                                        AudienceId = x.AudienceId,
+                                        ImpressionsPerWeek = x.Impressions
+                                    })
+                                    .ToList()
+                            };
+                        })
+                        .ToList()
+                })
+                .ToList();
         }
 
-        private void _CalculateProprietaryInventoryTotals(
-            ProprietaryInventoryData proprietaryInventoryData,
-            PlanPricingParametersDto parameters)
+        private void _CalculateCPMForEachProprietaryInventoryUnit(ProprietaryInventoryData proprietaryInventoryData)
         {
-            proprietaryInventoryData.TotalImpressions = proprietaryInventoryData.InventoryProprietarySummaryByStationByAudiences.Sum(x => x.TotalImpressions);
-
-            // for given proprietary summary and station, TotalCost should be the same for all records, only audience data differs
-            proprietaryInventoryData.TotalCost = proprietaryInventoryData.InventoryProprietarySummaryByStationByAudiences
-                .GroupBy(x => new { x.ProprietarySummaryId, x.StationId })
-                .Sum(x => x.First().TotalCost);
-
-            proprietaryInventoryData.TotalCostWithMargin = GeneralMath.CalculateCostWithMargin(proprietaryInventoryData.TotalCost, parameters.Margin);
+            foreach (var summary in proprietaryInventoryData.ProprietarySummaries)
+            {
+                summary.Cpm = ProposalMath.CalculateCpm(summary.TotalCostWithMargin, summary.TotalImpressions);
+            }
         }
 
         private void _CalculateProprietaryInventoryBasedOnActiveWeks(
@@ -1193,13 +1209,15 @@ namespace Services.Broadcast.ApplicationServices
                 .Count();
 
             // multiply proprietary inventory by the number of weeks with goals
-            proprietaryInventoryData.InventoryProprietarySummaryByStationByAudiences.ForEach(x =>
-            {
-                x.TotalImpressions = x.ImpressionsPerWeek * numberOfPlanWeeksWithGoals;
-                x.TotalSpots = x.SpotsPerWeek * numberOfPlanWeeksWithGoals;
-                x.TotalCost = x.CostPerWeek * numberOfPlanWeeksWithGoals;
-                x.TotalCostWithMargin = GeneralMath.CalculateCostWithMargin(x.TotalCost, parameters.Margin);
-            });
+            proprietaryInventoryData.ProprietarySummaries
+                .SelectMany(x => x.ProprietarySummaryByStations).ForEach(x =>
+                {
+                    x.TotalSpots = x.SpotsPerWeek * numberOfPlanWeeksWithGoals;
+                    x.TotalCost = x.CostPerWeek * numberOfPlanWeeksWithGoals;
+                    x.TotalCostWithMargin = GeneralMath.CalculateCostWithMargin(x.TotalCost, parameters.Margin);
+
+                    x.ProprietarySummaryByAudiences.ForEach(y => y.TotalImpressions = y.ImpressionsPerWeek * numberOfPlanWeeksWithGoals);
+                });
         }
 
         private void _AdjustProprietaryInventoryFor15SpotLength(
@@ -1213,11 +1231,13 @@ namespace Services.Broadcast.ApplicationServices
                 plan.CreativeLengths.All(x => x.SpotLengthId != spotLengthId30))
             {
                 // If the plan is 15 spot length only use half cost and impressions for each unit
-                proprietaryInventoryData.InventoryProprietarySummaryByStationByAudiences.ForEach(x =>
-                {
-                    x.ImpressionsPerWeek /= 2;
-                    x.CostPerWeek /= 2;
-                });
+                proprietaryInventoryData.ProprietarySummaries
+                    .SelectMany(x => x.ProprietarySummaryByStations)
+                    .ForEach(x =>
+                    {
+                        x.CostPerWeek /= 2;
+                        x.ProprietarySummaryByAudiences.ForEach(y => y.ImpressionsPerWeek /= 2);
+                    });
             }
         }
 
@@ -2149,9 +2169,37 @@ namespace Services.Broadcast.ApplicationServices
             if (results == null)
                 return null;
 
+            results.Bands = _GroupBandsByRange(results.Bands);
+
             _ConvertPricingBandImpressionsToUserFormat(results);
 
+            results.Bands = results.Bands.OrderBy(x => x.MinBand).ToList();
+
             return results;
+        }
+
+        private List<PlanPricingBandDetailDto> _GroupBandsByRange(List<PlanPricingBandDetailDto> bands)
+        {
+            return bands
+                .GroupBy(x => new { x.MinBand, x.MaxBand })
+                .Select(x =>
+                {
+                    var impressions = x.Sum(y => y.Impressions);
+                    var budget = x.Sum(y => y.Budget);
+
+                    return new PlanPricingBandDetailDto
+                    {
+                        MinBand = x.Key.MinBand,
+                        MaxBand = x.Key.MaxBand,
+                        Spots = x.Sum(y => y.Spots),
+                        Impressions = impressions,
+                        Budget = budget,
+                        Cpm = ProposalMath.CalculateCpm(budget, impressions),
+                        ImpressionsPercentage = x.Sum(y => y.ImpressionsPercentage),
+                        AvailableInventoryPercent = x.Sum(y => y.AvailableInventoryPercent)
+                    };
+                })
+                .ToList();
         }
 
         public PlanPricingBandDto GetPricingBands(int planId)

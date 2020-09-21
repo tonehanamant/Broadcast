@@ -1,15 +1,28 @@
 {
   "Bands": [
     {
-      "AvailableInventoryPercent": 70.0,
-      "Budget": 1131.0,
-      "Cpm": 22.0,
+      "AvailableInventoryPercent": 30.0,
+      "Budget": 3262.0,
+      "Cpm": 10.873333333333333333333333300,
       "Id": 0,
-      "Impressions": 200.0,
-      "ImpressionsPercentage": 96.0,
+      "Impressions": 300.0,
+      "ImpressionsPercentage": 54.0,
+      "IsProprietary": false,
+      "MaxBand": 5.0,
+      "MinBand": null,
+      "Spots": 7
+    },
+    {
+      "AvailableInventoryPercent": 30.0,
+      "Budget": 3262.0,
+      "Cpm": 10.873333333333333333333333300,
+      "Id": 0,
+      "Impressions": 300.0,
+      "ImpressionsPercentage": 54.0,
+      "IsProprietary": false,
       "MaxBand": 5.0,
       "MinBand": 1.0,
-      "Spots": 3
+      "Spots": 7
     }
   ],
   "Id": 0,

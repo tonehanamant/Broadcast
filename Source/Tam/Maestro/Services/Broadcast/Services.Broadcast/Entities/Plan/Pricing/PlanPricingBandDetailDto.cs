@@ -11,5 +11,6 @@
         public decimal Cpm { get; set; }
         public double ImpressionsPercentage { get; set; }
         public double AvailableInventoryPercent { get; set; }
+        public bool IsProprietary { get; set; }
     }
 }

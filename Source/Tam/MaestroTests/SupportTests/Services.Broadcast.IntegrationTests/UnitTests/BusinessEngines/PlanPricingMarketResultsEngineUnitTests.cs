@@ -22,47 +22,64 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             // Arrange
             var proprietaryData = new ProprietaryInventoryData
             {
-                InventoryProprietarySummaryByStationByAudiences = new List<ProprietaryDataByStationByAudience>
+                ProprietarySummaries = new List<ProprietarySummary>
                 {
-                    new ProprietaryDataByStationByAudience
+                    new ProprietarySummary
                     {
-                        MarketCode = 1,
-                        AudienceId = 1,
                         ProprietarySummaryId = 1,
-                        StationId = 1,
-                        TotalImpressions = 1000,
-                        TotalSpots = 100,
-                        TotalCostWithMargin = 100
-                    },
-                    new ProprietaryDataByStationByAudience
-                    {
-                        MarketCode = 1,
-                        AudienceId = 2,
-                        ProprietarySummaryId = 1,
-                        StationId = 1,
-                        TotalImpressions = 1000,
-                        TotalSpots = 100,
-                        TotalCostWithMargin = 100
-                    },
-                    new ProprietaryDataByStationByAudience
-                    {
-                        MarketCode = 1,
-                        AudienceId = 1,
-                        ProprietarySummaryId = 1,
-                        StationId = 2,
-                        TotalImpressions = 1000,
-                        TotalSpots = 100,
-                        TotalCostWithMargin = 100
-                    },
-                    new ProprietaryDataByStationByAudience
-                    {
-                        MarketCode = 2,
-                        AudienceId = 1,
-                        ProprietarySummaryId = 1,
-                        StationId = 1,
-                        TotalImpressions = 1000,
-                        TotalSpots = 100,
-                        TotalCostWithMargin = 100
+                        ProprietarySummaryByStations = new List<ProprietarySummaryByStation>
+                        {
+                            new ProprietarySummaryByStation
+                            {
+                                StationId = 1,
+                                MarketCode = 1,
+                                TotalSpots = 100,
+                                TotalCostWithMargin = 100,
+                                ProprietarySummaryByAudiences = new List<ProprietarySummaryByAudience>
+                                {
+                                    new ProprietarySummaryByAudience
+                                    {
+                                        AudienceId = 1,
+                                        TotalImpressions = 1000
+                                    },
+                                    new ProprietarySummaryByAudience
+                                    {
+                                        AudienceId = 2,
+                                        TotalImpressions = 1000,
+                                    }
+                                }
+                            },
+                            new ProprietarySummaryByStation
+                            {
+                                StationId = 2,
+                                MarketCode = 1,
+                                TotalSpots = 100,
+                                TotalCostWithMargin = 100,
+                                ProprietarySummaryByAudiences = new List<ProprietarySummaryByAudience>
+                                {
+                                    new ProprietarySummaryByAudience
+                                    {
+                                        AudienceId = 1,
+                                        TotalImpressions = 1000
+                                    },
+                                }
+                            },
+                            new ProprietarySummaryByStation
+                            {
+                                StationId = 3,
+                                MarketCode = 2,
+                                TotalSpots = 100,
+                                TotalCostWithMargin = 100,
+                                ProprietarySummaryByAudiences = new List<ProprietarySummaryByAudience>
+                                {
+                                    new ProprietarySummaryByAudience
+                                    {
+                                        AudienceId = 1,
+                                        TotalImpressions = 1000
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             };

@@ -7,6 +7,7 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using System.Collections.Generic;
+using System.Linq;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
@@ -29,6 +30,50 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         public void CalculatePricingBandTest()
         {
             var inventory = _GetInventory();
+            var proprietaryInventory = new ProprietaryInventoryData
+            {
+                ProprietarySummaries = new List<ProprietarySummary>
+                {
+                    new ProprietarySummary
+                    {
+                        Cpm = 1,
+                        ProprietarySummaryByStations = new List<ProprietarySummaryByStation>
+                        {
+                            new ProprietarySummaryByStation
+                            {
+                                TotalCostWithMargin = 100,
+                                TotalSpots = 5,
+                                ProprietarySummaryByAudiences = new List<ProprietarySummaryByAudience>
+                                {
+                                    new ProprietarySummaryByAudience
+                                    {
+                                        TotalImpressions = 1000
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    new ProprietarySummary
+                    {
+                        Cpm = 4,
+                        ProprietarySummaryByStations = new List<ProprietarySummaryByStation>
+                        {
+                            new ProprietarySummaryByStation
+                            {
+                                TotalCostWithMargin = 200,
+                                TotalSpots = 7,
+                                ProprietarySummaryByAudiences = new List<ProprietarySummaryByAudience>
+                                {
+                                    new ProprietarySummaryByAudience
+                                    {
+                                        TotalImpressions = 2000
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
 
             var allocationResult = new PlanPricingAllocationResult()
             {
@@ -63,7 +108,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 UnitCapsType = UnitCapEnum.PerHour
             };
 
-            var bands = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters);
+            var bands = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(bands));
         }
@@ -73,6 +118,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         public void CalculatePricingBandTest_VerifyMarginUsage()
         {
             var inventory = _GetInventory();
+            var proprietaryInventory = new ProprietaryInventoryData();
 
             var allocationResult = new PlanPricingAllocationResult()
             {
@@ -108,7 +154,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 UnitCapsType = UnitCapEnum.PerHour
             };
 
-            var bands = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters);
+            var bands = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(bands));
         }
@@ -117,6 +163,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         public void CalculatePricingBandTest_HasNineBands()
         {
             var inventory = _GetInventory();
+            var proprietaryInventory = new ProprietaryInventoryData();
 
             var allocationResult = new PlanPricingAllocationResult()
             {
@@ -150,15 +197,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 UnitCapsType = UnitCapEnum.PerHour
             };
 
-            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters);
+            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory);
 
-            Assert.AreEqual(9, pricingBand.Bands.Count);
+            Assert.AreEqual(9, pricingBand.Bands.GroupBy(x => new { x.MinBand, x.MaxBand }).Count());
         }
 
         [Test]
         public void CalculatePricingBandTest_MinBandIsTenPercentOfCpm()
         {
             var inventory = _GetInventory();
+            var proprietaryInventory = new ProprietaryInventoryData();
 
             var allocationResult = new PlanPricingAllocationResult()
             {
@@ -192,7 +240,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 UnitCapsType = UnitCapEnum.PerHour
             };
 
-            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters);
+            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory);
 
             Assert.AreEqual(1, pricingBand.Bands[0].MaxBand);
         }
@@ -201,6 +249,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         public void CalculatePricingBandTest_MaxBandIsTwoTimesTheCpm()
         {
             var inventory = _GetInventory();
+            var proprietaryInventory = new ProprietaryInventoryData();
 
             var allocationResult = new PlanPricingAllocationResult()
             {
@@ -234,15 +283,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 UnitCapsType = UnitCapEnum.PerHour
             };
 
-            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters);
+            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory);
 
-            Assert.AreEqual(20, pricingBand.Bands[8].MinBand);
+            Assert.AreEqual(20, pricingBand.Bands[16].MinBand);
         }
 
         [Test]
         public void CalculatePricingBandTest_BandHasValidLimitCpms()
         {
             var inventory = _GetInventory();
+            var proprietaryInventory = new ProprietaryInventoryData();
 
             var allocationResult = new PlanPricingAllocationResult()
             {
@@ -276,16 +326,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 UnitCapsType = UnitCapEnum.PerHour
             };
 
-            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters);
+            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory);
            
-            Assert.AreEqual(7, pricingBand.Bands[1].MinBand);
-            Assert.AreEqual(26, pricingBand.Bands[1].MaxBand);
+            Assert.AreEqual(7, pricingBand.Bands[2].MinBand);
+            Assert.AreEqual(26, pricingBand.Bands[2].MaxBand);
         }
 
         [Test]
         public void CalculatePricingBandTest_ProgramIsOnlyInOneBand()
         {
             var inventory = _GetInventory();
+            var proprietaryInventory = new ProprietaryInventoryData();
 
             var allocationResult = new PlanPricingAllocationResult()
             {
@@ -320,16 +371,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 UnitCapsType = UnitCapEnum.PerHour
             };
 
-            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters);
+            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory);
 
             Assert.AreEqual(0, pricingBand.Bands[0].Impressions);
-            Assert.AreEqual(1000, pricingBand.Bands[1].Impressions);
+            Assert.AreEqual(1000, pricingBand.Bands[2].Impressions);
         }
 
         [Test]
         public void CalculatePricingBandTest_ImpressionsPercentage()
         {
             var inventory = _GetInventory();
+            var proprietaryInventory = new ProprietaryInventoryData();
 
             var allocationResult = new PlanPricingAllocationResult()
             {
@@ -364,10 +416,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 UnitCapsType = UnitCapEnum.PerHour
             };
 
-            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters);
+            var pricingBand = _BandCalculator.CalculatePricingBands(inventory, allocationResult, parameters, proprietaryInventory);
 
-            Assert.AreEqual(100, pricingBand.Bands[1].ImpressionsPercentage);
-            Assert.AreEqual(20, pricingBand.Bands[1].AvailableInventoryPercent);
+            Assert.AreEqual(100, pricingBand.Bands[2].ImpressionsPercentage);
+            Assert.AreEqual(20, pricingBand.Bands[2].AvailableInventoryPercent);
         }
 
         private List<PlanPricingInventoryProgram> _GetInventory()

@@ -7,6 +7,7 @@
       "Id": 0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
+      "IsProprietary": false,
       "MaxBand": 1.0,
       "MinBand": null,
       "Spots": 0
@@ -18,6 +19,19 @@
       "Id": 0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
+      "IsProprietary": true,
+      "MaxBand": 1.0,
+      "MinBand": null,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0,
+      "Cpm": 0.0,
+      "Id": 0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "IsProprietary": false,
       "MaxBand": 3.7142857142857142857142857143,
       "MinBand": 1.0,
       "Spots": 0
@@ -29,6 +43,19 @@
       "Id": 0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
+      "IsProprietary": true,
+      "MaxBand": 3.7142857142857142857142857143,
+      "MinBand": 1.0,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0,
+      "Cpm": 0.0,
+      "Id": 0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "IsProprietary": false,
       "MaxBand": 6.4285714285714285714285714286,
       "MinBand": 3.7142857142857142857142857143,
       "Spots": 0
@@ -40,6 +67,31 @@
       "Id": 0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
+      "IsProprietary": true,
+      "MaxBand": 6.4285714285714285714285714286,
+      "MinBand": 3.7142857142857142857142857143,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0,
+      "Cpm": 0.0,
+      "Id": 0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "IsProprietary": false,
+      "MaxBand": 9.142857142857142857142857143,
+      "MinBand": 6.4285714285714285714285714286,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0,
+      "Cpm": 0.0,
+      "Id": 0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "IsProprietary": true,
       "MaxBand": 9.142857142857142857142857143,
       "MinBand": 6.4285714285714285714285714286,
       "Spots": 0
@@ -51,6 +103,7 @@
       "Id": 0,
       "Impressions": 50000.0,
       "ImpressionsPercentage": 100.0,
+      "IsProprietary": false,
       "MaxBand": 11.857142857142857142857142857,
       "MinBand": 9.142857142857142857142857143,
       "Spots": 10
@@ -62,6 +115,19 @@
       "Id": 0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
+      "IsProprietary": true,
+      "MaxBand": 11.857142857142857142857142857,
+      "MinBand": 9.142857142857142857142857143,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0,
+      "Cpm": 0.0,
+      "Id": 0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "IsProprietary": false,
       "MaxBand": 14.571428571428571428571428571,
       "MinBand": 11.857142857142857142857142857,
       "Spots": 0
@@ -73,6 +139,19 @@
       "Id": 0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
+      "IsProprietary": true,
+      "MaxBand": 14.571428571428571428571428571,
+      "MinBand": 11.857142857142857142857142857,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0,
+      "Cpm": 0.0,
+      "Id": 0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "IsProprietary": false,
       "MaxBand": 17.285714285714285714285714285,
       "MinBand": 14.571428571428571428571428571,
       "Spots": 0
@@ -84,6 +163,19 @@
       "Id": 0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
+      "IsProprietary": true,
+      "MaxBand": 17.285714285714285714285714285,
+      "MinBand": 14.571428571428571428571428571,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0,
+      "Cpm": 0.0,
+      "Id": 0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "IsProprietary": false,
       "MaxBand": 19.999999999999999999999999999,
       "MinBand": 17.285714285714285714285714285,
       "Spots": 0
@@ -95,6 +187,31 @@
       "Id": 0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
+      "IsProprietary": true,
+      "MaxBand": 19.999999999999999999999999999,
+      "MinBand": 17.285714285714285714285714285,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0,
+      "Cpm": 0.0,
+      "Id": 0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "IsProprietary": false,
+      "MaxBand": null,
+      "MinBand": 20.0,
+      "Spots": 0
+    },
+    {
+      "AvailableInventoryPercent": 0.0,
+      "Budget": 0.0,
+      "Cpm": 0.0,
+      "Id": 0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "IsProprietary": true,
       "MaxBand": null,
       "MinBand": 20.0,
       "Spots": 0

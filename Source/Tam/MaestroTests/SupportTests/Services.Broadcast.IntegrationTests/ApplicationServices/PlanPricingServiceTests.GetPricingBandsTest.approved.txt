@@ -3,9 +3,10 @@
     {
       "AvailableInventoryPercent": 0.0,
       "Budget": 0.0000,
-      "Cpm": 0.0000,
+      "Cpm": 0.0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
+      "IsProprietary": false,
       "MaxBand": 0.0016,
       "MinBand": null,
       "Spots": 0
@@ -13,9 +14,10 @@
     {
       "AvailableInventoryPercent": 0.0,
       "Budget": 0.0000,
-      "Cpm": 0.0000,
+      "Cpm": 0.0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
+      "IsProprietary": false,
       "MaxBand": 0.0059,
       "MinBand": 0.0016,
       "Spots": 0
@@ -23,9 +25,10 @@
     {
       "AvailableInventoryPercent": 0.0,
       "Budget": 0.0000,
-      "Cpm": 0.0000,
+      "Cpm": 0.0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
+      "IsProprietary": false,
       "MaxBand": 0.0102,
       "MinBand": 0.0059,
       "Spots": 0
@@ -33,9 +36,10 @@
     {
       "AvailableInventoryPercent": 0.0,
       "Budget": 0.0000,
-      "Cpm": 0.0000,
+      "Cpm": 0.0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
+      "IsProprietary": false,
       "MaxBand": 0.0146,
       "MinBand": 0.0102,
       "Spots": 0
@@ -43,9 +47,10 @@
     {
       "AvailableInventoryPercent": 0.0,
       "Budget": 0.0000,
-      "Cpm": 0.0000,
+      "Cpm": 0.0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
+      "IsProprietary": false,
       "MaxBand": 0.0189,
       "MinBand": 0.0146,
       "Spots": 0
@@ -53,9 +58,10 @@
     {
       "AvailableInventoryPercent": 0.0,
       "Budget": 0.0000,
-      "Cpm": 0.0000,
+      "Cpm": 0.0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
+      "IsProprietary": false,
       "MaxBand": 0.0233,
       "MinBand": 0.0189,
       "Spots": 0
@@ -63,9 +69,10 @@
     {
       "AvailableInventoryPercent": 0.0,
       "Budget": 0.0000,
-      "Cpm": 0.0000,
+      "Cpm": 0.0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
+      "IsProprietary": false,
       "MaxBand": 0.0276,
       "MinBand": 0.0233,
       "Spots": 0
@@ -73,9 +80,10 @@
     {
       "AvailableInventoryPercent": 0.0,
       "Budget": 0.0000,
-      "Cpm": 0.0000,
+      "Cpm": 0.0,
       "Impressions": 0.0,
       "ImpressionsPercentage": 0.0,
+      "IsProprietary": false,
       "MaxBand": 0.0319,
       "MinBand": 0.0276,
       "Spots": 0
@@ -83,9 +91,10 @@
     {
       "AvailableInventoryPercent": 5.1091954,
       "Budget": 13969.5000,
-      "Cpm": 18.4867,
+      "Cpm": 18.486733275987560378482101500,
       "Impressions": 755.65,
       "ImpressionsPercentage": 100.0,
+      "IsProprietary": false,
       "MaxBand": null,
       "MinBand": 0.0320,
       "Spots": 30

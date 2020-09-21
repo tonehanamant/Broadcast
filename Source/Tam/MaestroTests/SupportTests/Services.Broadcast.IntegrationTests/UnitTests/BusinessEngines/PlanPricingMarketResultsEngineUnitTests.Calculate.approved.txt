@@ -13,7 +13,7 @@
       "ShareOfVoiceGoalPercentage": 10.0,
       "Spots": 2,
       "Stations": 2,
-      "StationsPerMarket": 2
+      "StationsPerMarket": 3
     },
     {
       "Budget": 20.0,
@@ -178,7 +178,7 @@
       "ShareOfVoiceGoalPercentage": 10.0,
       "Spots": 100,
       "Stations": 1,
-      "StationsPerMarket": 2
+      "StationsPerMarket": 3
     }
   ],
   "PlanVersionId": 12,

@@ -24,6 +24,7 @@ namespace EntityFrameworkMapping.Broadcast
         public decimal budget { get; set; }
         public double impressions_percentage { get; set; }
         public double available_inventory_percentage { get; set; }
+        public bool is_proprietary { get; set; }
     
         public virtual plan_version_pricing_bands plan_version_pricing_bands { get; set; }
     }

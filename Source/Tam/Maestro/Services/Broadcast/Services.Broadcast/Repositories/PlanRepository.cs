@@ -1558,8 +1558,9 @@ namespace Services.Broadcast.Repositories
                         Budget = r.budget,
                         Cpm = r.cpm,
                         ImpressionsPercentage = r.impressions_percentage,
-                        AvailableInventoryPercent = r.available_inventory_percentage
-                    }).OrderBy(p => p.MinBand).ToList()
+                        AvailableInventoryPercent = r.available_inventory_percentage,
+                        IsProprietary = r.is_proprietary
+                    }).ToList()
                 };
             });
         }
@@ -1585,7 +1586,8 @@ namespace Services.Broadcast.Repositories
                             spots = x.Spots,
                             impressions = x.Impressions,
                             impressions_percentage = x.ImpressionsPercentage,
-                            available_inventory_percentage = x.AvailableInventoryPercent
+                            available_inventory_percentage = x.AvailableInventoryPercent,
+                            is_proprietary = x.IsProprietary
                         }).ToList()
                 });
 

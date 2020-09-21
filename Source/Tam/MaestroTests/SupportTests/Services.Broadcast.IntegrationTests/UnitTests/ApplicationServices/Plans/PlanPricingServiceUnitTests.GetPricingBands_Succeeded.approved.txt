@@ -3,10 +3,11 @@
     {
       "AvailableInventoryPercent": 70.0,
       "Budget": 1131.0,
-      "Cpm": 22.0,
+      "Cpm": 5.655000,
       "Id": 0,
       "Impressions": 200.0,
       "ImpressionsPercentage": 96.0,
+      "IsProprietary": false,
       "MaxBand": 5.0,
       "MinBand": 1.0,
       "Spots": 3

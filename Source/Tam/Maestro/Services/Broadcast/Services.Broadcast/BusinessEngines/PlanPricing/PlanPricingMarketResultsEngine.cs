@@ -1,8 +1,6 @@
-﻿using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
-using Services.Broadcast.Entities;
+﻿using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -72,18 +70,11 @@ namespace Services.Broadcast.BusinessEngines.PlanPricing
 
             var result = new List<PlanPricingResultMarketDetailsDto>();
 
-            foreach (var groupingByMarket in proprietaryInventoryData.InventoryProprietarySummaryByStationByAudiences.GroupBy(x => x.MarketCode))
+            foreach (var groupingByMarket in proprietaryInventoryData.ProprietarySummaries.SelectMany(x => x.ProprietarySummaryByStations).GroupBy(x => x.MarketCode))
             {
                 var marketCode = groupingByMarket.Key;
                 var marketCoverage = marketCoverageByMarketCode[marketCode];
                 var marketGroup = groupingByMarket.ToList();
-
-                // Number of spots and cost is the same for each audience within summary and station
-                // We need to take them only one time
-                var groupingBySummaryAndStation = marketGroup
-                    .GroupBy(x => new { x.ProprietarySummaryId, x.StationId })
-                    .Select(x => x.First())
-                    .ToList();
 
                 var stationIds = marketGroup.Select(s => s.StationId).Distinct().ToList();
 
@@ -98,9 +89,9 @@ namespace Services.Broadcast.BusinessEngines.PlanPricing
                     Rank = marketCoverage.Rank.Value,
                     MarketCoveragePercent = marketCoverage.PercentageOfUS,
                     Stations = stationIds.Count,
-                    Impressions = marketGroup.Sum(s => s.TotalImpressions),
-                    Budget = groupingBySummaryAndStation.Sum(s => s.TotalCostWithMargin),
-                    Spots = groupingBySummaryAndStation.Sum(x => x.TotalSpots),
+                    Impressions = marketGroup.Sum(x => x.TotalImpressions),
+                    Budget = marketGroup.Sum(s => s.TotalCostWithMargin),
+                    Spots = marketGroup.Sum(x => x.TotalSpots),
                     IsProprietary = true
                 };
 

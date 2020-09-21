@@ -910,6 +910,19 @@ BEGIN
 END
 /*************************************** END - BP-1090 ****************************************************/
 
+/*************************************** START - BP-812 ****************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_band_details') AND name = 'is_proprietary ')
+BEGIN
+	ALTER TABLE plan_version_pricing_band_details ADD is_proprietary bit NULL
+
+	EXEC('UPDATE plan_version_pricing_band_details SET is_proprietary = 0')
+
+	ALTER TABLE plan_version_pricing_band_details ALTER COLUMN is_proprietary bit NOT NULL
+END
+
+/*************************************** END - BP-812 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
