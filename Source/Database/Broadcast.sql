@@ -1042,7 +1042,8 @@ END
 
 -- Update the Schema Version of the database to the current release version
 UPDATE system_component_parameters 
-SET parameter_value = '20.10.1' -- Current release version
+SET parameter_value = '20.10.1', -- Current release version
+description = 'Schema Version'
 WHERE parameter_key = 'SchemaVersion'
 GO
 
