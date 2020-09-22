@@ -211,7 +211,7 @@
         <button class="tablinks" id="settings-tab" onclick="openTab('settings')">Status & Configuration</button>
         <button class="tablinks" id="data-maintenance-tab" onclick="openTab('data_maintenance')">Data Maintenance</button>
     </div>
-    @if (@ViewBag.Message != null)
+    @if (ViewBag.Message != null)
     {
         <div id="text-bar" class="text-bar">
             @ViewBag.Message
