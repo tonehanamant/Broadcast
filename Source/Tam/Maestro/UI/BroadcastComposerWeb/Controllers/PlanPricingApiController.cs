@@ -206,6 +206,7 @@ namespace BroadcastComposerWeb.Controllers
 
 	        return _ConvertToBaseResponse(() => service.GetInventoryProprietarySummaries(request));
         }
+
         /// <summary>
         /// Lists the Inventory Proprietary Summaries
         /// </summary>

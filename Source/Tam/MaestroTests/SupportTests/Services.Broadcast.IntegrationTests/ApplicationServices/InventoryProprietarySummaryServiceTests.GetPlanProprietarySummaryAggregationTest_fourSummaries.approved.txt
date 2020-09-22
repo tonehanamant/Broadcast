@@ -1,7 +1,7 @@
 {
-  "Cpm": 0.034000,
-  "Impressions": 1000000.0,
+  "Cpm": 0.0036170212765957446808511000,
+  "Impressions": 9400000.0,
   "MarketCoverage": 7.0,
-  "PercentageOfPlanImpressions": 11.0,
-  "Unit": 37.0
+  "NumberOfUnits": 37.0,
+  "PercentageOfPlanImpressions": 104.0
 }

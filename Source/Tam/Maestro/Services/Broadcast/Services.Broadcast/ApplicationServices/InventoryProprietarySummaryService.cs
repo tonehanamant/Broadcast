@@ -187,7 +187,9 @@ namespace Services.Broadcast.ApplicationServices
 
             foreach (var proprietarySummary in proprietarySummaries)
             {
-                proprietarySummary.ImpressionsTotal = _GetImpressions(proprietarySummary.Id, summaryAudienceIds);
+                proprietarySummary.NumberOfUnit = 1;
+                proprietarySummary.ImpressionsTotal = _GetImpressions(proprietarySummary.Id, summaryAudienceIds) * proprietarySummary.NumberOfUnit.GetValueOrDefault();
+                
 
                 if (activeWeekCount > 1)
                 {
@@ -205,8 +207,6 @@ namespace Services.Broadcast.ApplicationServices
                 var totalCoverage = marketCodes.Sum(x => marketCoverageByMarketCode[x]);
 
                 proprietarySummary.MarketCoverageTotal = Math.Round(totalCoverage);
-
-                proprietarySummary.NumberOfUnit = 1;
             }
 
             response.summaries = proprietarySummaries;
@@ -299,13 +299,15 @@ namespace Services.Broadcast.ApplicationServices
                 .GetRatingsAudiencesByMaestroAudience(new List<int> { request.PlanPrimaryAudienceId })
                 .Select(am => am.rating_audience_id).Distinct().ToList();
 
-			foreach (var summaryId in summaryIds)
-			{
-				var summary = new InventoryProprietarySummary
-				{
-					UnitCost = _GetUnitCost(summaryId.Id),
-					ImpressionsTotal = _GetImpressions(summaryId.Id, summaryAudienceIds)
-				};
+            foreach (var summaryId in summaryIds)
+            {
+                var numberOfUnit = summaryId.NumberOfUnit ?? 1;
+
+                var summary = new InventoryProprietarySummary
+                {
+                    UnitCost = _GetUnitCost(summaryId.Id),
+                    ImpressionsTotal = _GetImpressions(summaryId.Id, summaryAudienceIds) * numberOfUnit
+                };
 
                 if (activeWeekCount > 1)
                 {
@@ -313,37 +315,35 @@ namespace Services.Broadcast.ApplicationServices
                     summary.UnitCost = activeWeekCount * summary.UnitCost;
                 }
 
-				if (_IsSpotLengthExist15Not30(request.SpotLengthIds))
-				{
-					summary.ImpressionsTotal /= 2;
-					summary.UnitCost /= 2;
-				}
-				summary.Cpm = ProposalMath.CalculateCpm(summary.UnitCost, summary.ImpressionsTotal);
-				summary.NumberOfUnit = summaryId.NumberOfUnit;
+                if (_IsSpotLengthExist15Not30(request.SpotLengthIds))
+                {
+                    summary.ImpressionsTotal /= 2;
+                    summary.UnitCost /= 2;
+                }
+                summary.Cpm = ProposalMath.CalculateCpm(summary.UnitCost, summary.ImpressionsTotal);
+                summary.NumberOfUnit = numberOfUnit;
 
                 summaryList.Add(summary);
             }
 
-            var totalImpressions = summaryList.Select(i => i.ImpressionsTotal).Sum();
+            response.Impressions = summaryList.Sum(i => i.ImpressionsTotal);
+            response.MarketCoverage = GetTotalMarketCoverage(summaryIds.Select(s => s.Id).ToList());
+            response.Cpm = _GetTotalCpm(summaryList);
 
-			response.Impressions = totalImpressions;
-			response.MarketCoverage = GetTotalMarketCoverage(summaryIds.Select(s => s.Id).ToList());
-			response.Cpm = _GetTotalCpm(summaryList);
-
-			response.PercentageOfPlanImpressions =
-			_GetPercentageOfPlanImpressions(request.PlanGoalImpressions, response.Impressions);
-			response.NumberOfUnits = summaryList.Sum(s => s.NumberOfUnit);
+            response.PercentageOfPlanImpressions =
+            _GetPercentageOfPlanImpressions(request.PlanGoalImpressions, response.Impressions);
+            response.NumberOfUnits = summaryList.Sum(s => s.NumberOfUnit.GetValueOrDefault());
 
             return response;
         }
 
         private double _GetPercentageOfPlanImpressions(double planGoalImpressions, double totalImpressions)
         {
-			// BP-1462 Plan Goal Impressions are not raw numbers. FE is sending planGoalImpressions/1000 while proprietary impressions are raw numbers.
-			var convertedPlanGoalImpressions = planGoalImpressions * 1000;
-			var percentageOfPlanImpressions =
-				Math.Round(GeneralMath.ConvertFractionToPercentage(totalImpressions / convertedPlanGoalImpressions));
-			return percentageOfPlanImpressions;
+            // BP-1462 Plan Goal Impressions are not raw numbers. FE is sending planGoalImpressions/1000 while proprietary impressions are raw numbers.
+            var convertedPlanGoalImpressions = planGoalImpressions * 1000;
+            var percentageOfPlanImpressions =
+                Math.Round(GeneralMath.ConvertFractionToPercentage(totalImpressions / convertedPlanGoalImpressions));
+            return percentageOfPlanImpressions;
         }
 
         private decimal _GetUnitCost(int id)

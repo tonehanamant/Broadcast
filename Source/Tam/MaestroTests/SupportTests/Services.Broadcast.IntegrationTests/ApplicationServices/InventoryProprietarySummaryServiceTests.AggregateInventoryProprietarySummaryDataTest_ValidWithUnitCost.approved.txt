@@ -6,6 +6,7 @@
       "ImpressionsTotal": 108.18393853,
       "InventorySourceName": "CNN",
       "MarketCoverageTotal": 2.0,
+      "NumberOfUnit": 1.0,
       "UnitCost": 90.6817,
       "UnitName": "CNN AM",
       "UnitType": "AM"

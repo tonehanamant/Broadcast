@@ -1406,7 +1406,7 @@ namespace Services.Broadcast.Repositories
                         .Select(x => new plan_version_pricing_parameter_inventory_proprietary_summaries
                         {
                             inventory_proprietary_summary_id = x.Id,
-                            unit_number = x.NumberOfUnit
+                            unit_number = x.NumberOfUnit.GetValueOrDefault()
                         })
                         .ToList()
                 };

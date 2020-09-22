@@ -15,7 +15,7 @@ namespace Services.Broadcast.Entities.InventoryProprietary
 	public class InventoryProprietarySummaryId
 	{
 		public int Id { get; set; }
-		public double NumberOfUnit { get; set; }
+		public double? NumberOfUnit { get; set; }
 	}
 
 }

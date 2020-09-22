@@ -515,6 +515,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 			};
 			return jsonSettings;
 		}
+
 		[Test]
 		[UseReporter(typeof(DiffReporter))]
 		public void GetPlanProprietarySummaryAggregationTest_fourSummaries()
