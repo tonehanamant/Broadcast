@@ -1756,7 +1756,8 @@ namespace Services.Broadcast.Repositories
                         station_count = program.StationCount,
                         budget = program.Budget,
                         spots = program.Spots,
-                        impressions = program.Impressions
+                        impressions = program.Impressions,
+                        is_proprietary = program.IsProprietary
                     };
 
                     spots.Add(planPricingResultSpots);
@@ -1806,7 +1807,7 @@ namespace Services.Broadcast.Repositories
                         StationCount = r.station_count,
                         Impressions = r.impressions,
                         Budget = r.budget,
-                        Spots = r.spots
+                        Spots = r.spots                        
                     }).OrderByDescending(p => p.ImpressionsPercentage)
                        .ThenByDescending(p => p.AvgCpm)
                        .ThenBy(p => p.ProgramName).ToList()

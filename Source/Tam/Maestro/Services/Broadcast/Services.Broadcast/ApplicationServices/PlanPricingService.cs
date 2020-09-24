@@ -152,6 +152,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IPlanPricingBandCalculationEngine _PlanPricingBandCalculationEngine;
         private readonly IPlanPricingStationCalculationEngine _PlanPricingStationCalculationEngine;
         private readonly IPlanPricingMarketResultsEngine _PlanPricingMarketResultsEngine;
+        private readonly IPlanPricingProgramCalculationEngine _PlanPricingProgramCalculationEngine;
         private readonly IPricingRequestLogClient _PricingRequestLogClient;
         private readonly IPlanValidator _PlanValidator;
         private readonly ISharedFolderService _SharedFolderService;
@@ -172,6 +173,7 @@ namespace Services.Broadcast.ApplicationServices
                                   IPlanPricingBandCalculationEngine planPricingBandCalculationEngine,
                                   IPlanPricingStationCalculationEngine planPricingStationCalculationEngine,
                                   IPlanPricingMarketResultsEngine planPricingMarketResultsEngine,
+                                  IPlanPricingProgramCalculationEngine planPricingProgramCalculationEngine,
                                   IPricingRequestLogClient pricingRequestLogClient,
                                   IPlanValidator planValidator,
                                   ISharedFolderService sharedFolderService,
@@ -196,6 +198,7 @@ namespace Services.Broadcast.ApplicationServices
             _PlanPricingBandCalculationEngine = planPricingBandCalculationEngine;
             _PlanPricingStationCalculationEngine = planPricingStationCalculationEngine;
             _PlanPricingMarketResultsEngine = planPricingMarketResultsEngine;
+            _PlanPricingProgramCalculationEngine = planPricingProgramCalculationEngine;
             _PricingRequestLogClient = pricingRequestLogClient;
             _PlanValidator = planValidator;
             _SharedFolderService = sharedFolderService;
@@ -1029,7 +1032,7 @@ namespace Services.Broadcast.ApplicationServices
                 var aggregateResultsTask = new Task<PlanPricingResultBaseDto>(() =>
                 {
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
-                    var aggregatedResults = _AggregateResults(inventory, allocationResult, goalsFulfilledByProprietaryInventory);
+                    var aggregatedResults = _PlanPricingProgramCalculationEngine.CalculateProgramResults(inventory, allocationResult, goalsFulfilledByProprietaryInventory, proprietaryInventoryData);
                     diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_ALLOCATION_RESULTS);
                     return aggregatedResults;
                 });
@@ -1160,6 +1163,8 @@ namespace Services.Broadcast.ApplicationServices
                 .Select(summary => new ProprietarySummary
                 {
                     ProprietarySummaryId = summary.Id,
+                    ProgramName = summary.ProgramName,
+                    Genre = summary.Genre,
                     ProprietarySummaryByStations = summary.SummaryByStationByAudience
                         .Where(x => ratingAudienceIds.Contains(x.AudienceId))
                         .GroupBy(x => x.StationId)
@@ -1845,137 +1850,6 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var msg = $"The api returned no spots for request '{apiResponse.RequestId}'.";
                 throw new Exception(msg);
-            }
-        }
-
-        private PlanPricingResultBaseDto _AggregateResults(
-            List<PlanPricingInventoryProgram> inventory,
-            PlanPricingAllocationResult apiResponse,
-            bool goalsFulfilledByProprietaryInventory)
-        {
-            var result = new PlanPricingResultBaseDto();
-            var programs = _GetPrograms(inventory, apiResponse);
-            var totalCostForAllPrograms = programs.Sum(x => x.TotalCost);
-            var totalImpressionsForAllPrograms = programs.Sum(x => x.TotalImpressions);
-            var totalSpotsForAllPrograms = programs.Sum(x => x.TotalSpots);
-
-            result.Programs.AddRange(programs.Select(x => new PlanPricingProgramDto
-            {
-                ProgramName = x.ProgramName,
-                Genre = x.Genre,
-                StationCount = x.Stations.Count,
-                MarketCount = x.MarketCodes.Count,
-                AvgImpressions = x.AvgImpressions,
-                Impressions = x.TotalImpressions,
-                AvgCpm = x.AvgCpm,
-                PercentageOfBuy = ProposalMath.CalculateImpressionsPercentage(x.TotalImpressions, totalImpressionsForAllPrograms),
-                Budget = x.TotalCost,
-                Spots = x.TotalSpots
-            }));
-
-            result.Totals = new PlanPricingProgramTotalsDto
-            {
-                MarketCount = programs.SelectMany(x => x.MarketCodes).Distinct().Count(),
-                StationCount = programs.SelectMany(x => x.Stations).Distinct().Count(),
-                AvgImpressions = ProposalMath.CalculateAvgImpressions(totalImpressionsForAllPrograms, totalSpotsForAllPrograms),
-                AvgCpm = ProposalMath.CalculateCpm(totalCostForAllPrograms, totalImpressionsForAllPrograms),
-                Budget = totalCostForAllPrograms,
-                Impressions = totalImpressionsForAllPrograms,
-                Spots = totalSpotsForAllPrograms,
-            };
-
-            result.GoalFulfilledByProprietary = goalsFulfilledByProprietaryInventory;
-            result.OptimalCpm = apiResponse.PricingCpm;
-            result.JobId = apiResponse.JobId;
-            result.PlanVersionId = apiResponse.PlanVersionId;
-
-            return result;
-        }
-
-        private List<PlanPricingProgram> _GetPrograms(
-            List<PlanPricingInventoryProgram> inventory,
-            PlanPricingAllocationResult apiResponse)
-        {
-            var result = new List<PlanPricingProgram>();
-            var inventoryGroupedByProgramName = inventory
-                .SelectMany(x => x.ManifestDayparts.Select(d => new PlanPricingManifestWithManifestDaypart
-                {
-                    Manifest = x,
-                    ManifestDaypart = d
-                }))
-                .GroupBy(x => x.ManifestDaypart.PrimaryProgram.Name);
-
-            foreach (var inventoryByProgramName in inventoryGroupedByProgramName)
-            {
-                var programInventory = inventoryByProgramName.ToList();
-                var allocatedStations = _GetAllocatedStations(apiResponse, programInventory);
-                var allocatedProgramSpots = _GetAllocatedProgramSpots(apiResponse, programInventory);
-
-                _CalculateProgramTotals(allocatedProgramSpots, out var programCost, out var programImpressions, out var programSpots);
-
-                if (programSpots == 0)
-                    continue;
-
-                var program = new PlanPricingProgram
-                {
-                    ProgramName = inventoryByProgramName.Key,
-                    Genre = inventoryByProgramName.First().ManifestDaypart.PrimaryProgram.Genre, // we assume all programs with the same name have the same genre
-                    AvgImpressions = ProposalMath.CalculateAvgImpressions(programImpressions, programSpots),
-                    AvgCpm = ProposalMath.CalculateCpm(programCost, programImpressions),
-                    TotalImpressions = programImpressions,
-                    TotalCost = programCost,
-                    TotalSpots = programSpots,
-                    Stations = allocatedStations.Select(s => s.LegacyCallLetters).Distinct().ToList(),
-                    MarketCodes = allocatedStations.Select(s => s.MarketCode.Value).Distinct().ToList()
-                };
-
-                result.Add(program);
-            };
-
-            return result;
-        }
-
-        private List<DisplayBroadcastStation> _GetAllocatedStations(PlanPricingAllocationResult apiResponse, List<PlanPricingManifestWithManifestDaypart> programInventory)
-        {
-            var manifestIds = apiResponse.Spots.Select(s => s.Id).Distinct();
-            var result = new List<PlanPricingManifestWithManifestDaypart>();
-            return programInventory.Where(p => manifestIds.Contains(p.Manifest.ManifestId)).Select(p => p.Manifest.Station).ToList();
-        }
-
-        private List<PlanPricingAllocatedSpot> _GetAllocatedProgramSpots(PlanPricingAllocationResult apiResponse, List<PlanPricingManifestWithManifestDaypart> programInventory)
-        {
-            var result = new List<PlanPricingAllocatedSpot>();
-
-            foreach (var spot in apiResponse.Spots)
-            {
-                // until we use only OpenMarket inventory it`s fine
-                // this needs to be updated when we start using inventory that can have more than one daypart
-                // we should match spots by some unique value which represents a combination of a manifest week and a manifest daypart
-                // and not by manifest id as it is done now
-                if (programInventory.Any(x => x.Manifest.ManifestId == spot.Id))
-                {
-                    result.Add(spot);
-                }
-            }
-
-            return result;
-        }
-
-        private void _CalculateProgramTotals(
-            IEnumerable<PlanPricingAllocatedSpot> allocatedProgramSpots,
-            out decimal totalProgramCost,
-            out double totalProgramImpressions,
-            out int totalProgramSpots)
-        {
-            totalProgramCost = 0;
-            totalProgramImpressions = 0;
-            totalProgramSpots = 0;
-
-            foreach (var apiProgram in allocatedProgramSpots)
-            {
-                totalProgramCost += apiProgram.TotalCostWithMargin;
-                totalProgramImpressions += apiProgram.TotalImpressions;
-                totalProgramSpots += apiProgram.TotalSpots;
             }
         }
 

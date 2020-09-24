@@ -1,0 +1,57 @@
+{
+  "GoalFulfilledByProprietary": false,
+  "JobId": 1,
+  "OptimalCpm": 10.0,
+  "PlanVersionId": 1,
+  "Programs": [
+    {
+      "AvgCpm": 10.00,
+      "AvgImpressions": 5000.0,
+      "Budget": 500.0,
+      "Genre": null,
+      "Id": 0,
+      "Impressions": 50000.0,
+      "MarketCount": 1,
+      "PercentageOfBuy": 94.33962264,
+      "ProgramName": "True Detective",
+      "Spots": 10,
+      "StationCount": 1
+    },
+    {
+      "AvgCpm": 1.0,
+      "AvgImpressions": 1000.0,
+      "Budget": 100.0,
+      "Genre": "News",
+      "Id": 0,
+      "Impressions": 1000.0,
+      "MarketCount": 1,
+      "PercentageOfBuy": 1.88679245,
+      "ProgramName": "Early Morning News",
+      "Spots": 5,
+      "StationCount": 1
+    },
+    {
+      "AvgCpm": 4.0,
+      "AvgImpressions": 2000.0,
+      "Budget": 200.0,
+      "Genre": "News",
+      "Id": 0,
+      "Impressions": 2000.0,
+      "MarketCount": 1,
+      "PercentageOfBuy": 3.77358491,
+      "ProgramName": "Late Morning News",
+      "Spots": 7,
+      "StationCount": 1
+    }
+  ],
+  "Totals": {
+    "AvgCpm": 15.094339622641509433962264200,
+    "AvgImpressions": 2409.09090909,
+    "Budget": 800.0,
+    "Impressions": 53000.0,
+    "ImpressionsPercentage": 0.0,
+    "MarketCount": 2,
+    "Spots": 22,
+    "StationCount": 2
+  }
+}

@@ -271,6 +271,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IPlanPricingUnitCapImpressionsCalculationEngine, PlanPricingUnitCapImpressionsCalculationEngine>();
             unityContainer.RegisterType<IPlanPricingStationCalculationEngine, PlanPricingStationCalculationEngine>();
             unityContainer.RegisterType<IPlanPricingMarketResultsEngine, PlanPricingMarketResultsEngine>();
+            unityContainer.RegisterType<IPlanPricingProgramCalculationEngine, PlanPricingProgramCalculationEngine>();
             unityContainer.RegisterType<IHealthService, HealthService>();
 
             //plan buying tab

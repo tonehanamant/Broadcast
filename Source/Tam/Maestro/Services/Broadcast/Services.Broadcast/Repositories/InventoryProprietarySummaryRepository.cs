@@ -113,6 +113,8 @@ namespace Services.Broadcast.Repositories
                         {
                             Id = x.id,
                             UnitCost = x.unit_cost,
+                            ProgramName = x.inventory_proprietary_daypart_program_mappings.inventory_proprietary_daypart_programs.program_name,
+                            Genre = x.inventory_proprietary_daypart_program_mappings.inventory_proprietary_daypart_programs.genre.name,
                             SummaryByStationByAudience = x.inventory_proprietary_summary_station_audiences
                                 .Select(y => new InventoryProprietarySummaryByStationByAudience
                                 {

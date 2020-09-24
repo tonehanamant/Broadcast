@@ -493,6 +493,7 @@
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingInventoryEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingInventoryQuarterCalculatorEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingStationEngine.cs" />
+    <Compile Include="BusinessEngines\PlanPricingProgramCalculationEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricingStationCalculationEngine.cs" />
     <Compile Include="BusinessEngines\PlanBuying\PlanBuyingUnitCapImpressionsCalculationEngine.cs" />
     <Compile Include="BusinessEngines\PlanPricing\PlanPricingMarketResultsEngine.cs" />

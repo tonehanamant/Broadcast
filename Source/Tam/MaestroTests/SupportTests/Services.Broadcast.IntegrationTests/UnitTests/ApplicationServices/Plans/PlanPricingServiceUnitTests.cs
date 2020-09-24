@@ -66,6 +66,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IPlanPricingBandCalculationEngine> _PlanPricingBandCalculationEngineMock;
         private Mock<IPlanPricingStationCalculationEngine> _PlanPricingStationCalculationEngineMock;
         private Mock<IPlanPricingMarketResultsEngine> _PlanPricingMarketResultsEngine;
+        private Mock<IPlanPricingProgramCalculationEngine> _PlanPricingProgramCalculationEngine;
         private Mock<IPricingRequestLogClient> _PricingRequestLogClient;
         private Mock<IPlanValidator> _PlanValidatorMock;
         private Mock<ISharedFolderService> _SharedFolderServiceMock;
@@ -103,6 +104,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _CreativeLengthEngineMock = new Mock<ICreativeLengthEngine>();
             _InventoryProprietarySummaryRepositoryMock = new Mock<IInventoryProprietarySummaryRepository>();
             _BroadcastAudienceRepositoryMock = new Mock<IBroadcastAudienceRepository>();
+            _PlanPricingProgramCalculationEngine = new Mock<IPlanPricingProgramCalculationEngine>();
 
             _DateTimeEngineMock
                 .Setup(x => x.GetCurrentMoment())
@@ -1096,6 +1098,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _PlanPricingBandCalculationEngineMock.Object,
                 _PlanPricingStationCalculationEngineMock.Object,
                 _PlanPricingMarketResultsEngine.Object,
+                _PlanPricingProgramCalculationEngine.Object,
                 _PricingRequestLogClient.Object,
                 _PlanValidatorMock.Object,
                 _SharedFolderServiceMock.Object,

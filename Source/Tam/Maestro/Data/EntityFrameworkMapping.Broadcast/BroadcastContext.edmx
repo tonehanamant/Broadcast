@@ -1261,6 +1261,7 @@
           <Property Name="budget" Type="money" Nullable="false" />
           <Property Name="spots" Type="int" Nullable="false" />
           <Property Name="impressions" Type="float" Nullable="false" />
+          <Property Name="is_proprietary" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_results">
           <Key>
@@ -13592,6 +13593,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="spots" Type="Int32" Nullable="false" />
           <Property Name="impressions" Type="Double" Nullable="false" />
           <NavigationProperty Name="plan_version_pricing_results" Relationship="BroadcastModel.FK_plan_version_pricing_result_spots_plan_version_pricing_results" FromRole="plan_version_pricing_result_spots" ToRole="plan_version_pricing_results" />
+          <Property Name="is_proprietary" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="shared_folder_files">
           <Key>
@@ -17786,6 +17788,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_pricing_result_spots">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_result_spots">
               <MappingFragment StoreEntitySet="plan_version_pricing_result_spots">
+                <ScalarProperty Name="is_proprietary" ColumnName="is_proprietary" />
                 <ScalarProperty Name="impressions" ColumnName="impressions" />
                 <ScalarProperty Name="spots" ColumnName="spots" />
                 <ScalarProperty Name="budget" ColumnName="budget" />

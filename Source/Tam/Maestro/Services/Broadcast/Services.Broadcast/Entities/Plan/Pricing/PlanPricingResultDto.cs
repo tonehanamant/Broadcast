@@ -30,6 +30,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public double PercentageOfBuy { get; set; }
         public int Spots { get; set; }
         public decimal Budget { get; set; }
+        public bool IsProprietary { get; set; }
     }
 
     public class PlanPricingProgramTotalsDto

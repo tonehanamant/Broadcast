@@ -12,5 +12,7 @@ namespace Services.Broadcast.Entities.InventoryProprietary
         public int SlotNumber { get; set; }
         public int ProprietaryDaypartProgramMappingId { get; set; }
 		public List<InventoryProprietarySummaryByStationByAudience> SummaryByStationByAudience { get; set; }
-	}
+        public string ProgramName { get; set; }
+        public string Genre { get; set; }
+    }
 }

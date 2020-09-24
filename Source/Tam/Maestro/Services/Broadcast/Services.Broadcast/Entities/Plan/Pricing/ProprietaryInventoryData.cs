@@ -31,6 +31,10 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public decimal TotalCostWithMargin => ProprietarySummaryByStations.Sum(x => x.TotalCostWithMargin);
 
         public int TotalSpots => ProprietarySummaryByStations.Sum(x => x.TotalSpots);
+
+        public string ProgramName { get; set; }
+
+        public string Genre { get; set; }
     }
 
     public class ProprietarySummaryByStation
