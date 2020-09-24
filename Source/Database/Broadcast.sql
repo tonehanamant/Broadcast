@@ -1047,6 +1047,14 @@ BEGIN
 END
 /*************************************** END - BP-1288 ****************************************************/
 
+/*************************************** START - BP-1287 ****************************************************/
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_result_spots') AND name = 'is_proprietary ')
+BEGIN
+	ALTER TABLE plan_version_pricing_result_spots ADD is_proprietary bit NULL
+	EXEC('UPDATE plan_version_pricing_result_spots SET is_proprietary = 0')
+	ALTER TABLE plan_version_pricing_result_spots ALTER COLUMN is_proprietary bit NOT NULL
+END
+/*************************************** END - BP-1287 ****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
