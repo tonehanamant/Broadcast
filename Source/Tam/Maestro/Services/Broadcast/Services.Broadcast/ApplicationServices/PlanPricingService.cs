@@ -1037,7 +1037,7 @@ namespace Services.Broadcast.ApplicationServices
                     return aggregatedResults;
                 });
 
-                var calculatePricingBandsTask = new Task<PlanPricingBandDto>(() =>
+                var calculatePricingBandsTask = new Task<PlanPricingBand>(() =>
                 {
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_BANDS);
                     var pricingBands = _PlanPricingBandCalculationEngine.CalculatePricingBands(inventory, allocationResult, planPricingParametersDto, proprietaryInventoryData);
@@ -1045,15 +1045,15 @@ namespace Services.Broadcast.ApplicationServices
                     return pricingBands;
                 });
 
-                var calculatePricingStationsTask = new Task<PlanPricingStationResultDto>(() =>
+                var calculatePricingStationsTask = new Task<PlanPricingStationResult>(() =>
                 {
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_STATIONS);
-                    var pricingStations = _PlanPricingStationCalculationEngine.Calculate(inventory, allocationResult, planPricingParametersDto);
+                    var pricingStations = _PlanPricingStationCalculationEngine.Calculate(inventory, allocationResult, planPricingParametersDto, proprietaryInventoryData);
                     diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_CALCULATING_PRICING_STATIONS);
                     return pricingStations;
                 });
 
-                var aggregateMarketResultsTask = new Task<PlanPricingResultMarketsDto>(() =>
+                var aggregateMarketResultsTask = new Task<PlanPricingResultMarkets>(() =>
                 {
                     diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_AGGREGATING_MARKET_RESULTS);
                     var marketCoverages = _MarketCoverageRepository.GetMarketsWithLatestCoverage();
@@ -2179,9 +2179,34 @@ namespace Services.Broadcast.ApplicationServices
             if (result == null)
                 return null;
 
+            result.Stations = _GroupStationDetailsByStation(result.Stations);
+
             _ConvertPricingStationResultDtoToUserFormat(result);
 
             return result;
+        }
+
+        private List<PlanPricingStationDto> _GroupStationDetailsByStation(List<PlanPricingStationDto> stations)
+        {
+            return stations
+                .GroupBy(x => x.Station)
+                .Select(x =>
+                {
+                    var impressions = x.Sum(y => y.Impressions);
+                    var budget = x.Sum(y => y.Budget);
+
+                    return new PlanPricingStationDto
+                    {
+                        Station = x.Key,
+                        Market = x.First().Market,
+                        Spots = x.Sum(y => y.Spots),
+                        Impressions = impressions,
+                        Budget = budget,
+                        ImpressionsPercentage = x.Sum(y => y.ImpressionsPercentage),
+                        Cpm = ProposalMath.CalculateCpm(budget, impressions)
+                    };
+                })
+                .ToList();
         }
 
         public PlanPricingStationResultDto GetStations(int planId)

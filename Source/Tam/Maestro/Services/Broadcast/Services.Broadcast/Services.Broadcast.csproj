@@ -580,6 +580,9 @@
     <Compile Include="Entities\CampaignQuarterDto.cs" />
     <Compile Include="Entities\Day.cs" />
     <Compile Include="Entities\DaypartCleanupDto.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingBand.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingResultMarkets.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingStationResult.cs" />
     <Compile Include="Entities\StandardDaypartWeightingGoal.cs" />
     <Compile Include="Entities\Enums\BroadcastDayOfWeek.cs" />
     <Compile Include="Entities\Enums\ProgramMappingMatchTypeEnum.cs" />
@@ -690,9 +693,7 @@
     <Compile Include="Entities\Plan\Pricing\PlanPricingApiSpotsResponseDto_v3.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingStationResultDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingInventoryGroup.cs" />
-    <Compile Include="Entities\Plan\Pricing\PlanPricingResultMarketDetailsDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingResultMarketsDto.cs" />
-    <Compile Include="Entities\Plan\Pricing\PlanPricingResultMarketsTotalsDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PricingParametersWithoutPlanDto.cs" />
     <Compile Include="Entities\Plan\Pricing\ProprietaryInventoryData.cs" />
     <Compile Include="Entities\ProgramMapping\ProgramMappingValidationErrorDto.cs" />
@@ -710,9 +711,7 @@
     <Compile Include="Entities\Plan\PlanAudienceDisplay.cs" />
     <Compile Include="Entities\Buying\Buying.cs" />
     <Compile Include="Entities\Plan\Pricing\CurrentPricingExecution.cs" />
-    <Compile Include="Entities\Plan\Pricing\PlanPricingBandsDto.cs" />
-    <Compile Include="Entities\Plan\Pricing\PlanPricingBandTotalsDto.cs" />
-    <Compile Include="Entities\Plan\Pricing\PlanPricingBandDetailDto.cs" />
+    <Compile Include="Entities\Plan\Pricing\PlanPricingBandDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PricingProgramsResultDto.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingAllocatedSpot.cs" />
     <Compile Include="Entities\Plan\Pricing\PlanPricingAllocationResult.cs" />

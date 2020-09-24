@@ -9,6 +9,7 @@
       "Id": 0,
       "Impressions": 2500.0,
       "ImpressionsPercentage": 52.63157895,
+      "IsProprietary": false,
       "Market": "New York",
       "Spots": 5,
       "Station": "KOB"
@@ -19,6 +20,7 @@
       "Id": 0,
       "Impressions": 2250.0,
       "ImpressionsPercentage": 47.36842105,
+      "IsProprietary": false,
       "Market": "Las Vegas",
       "Spots": 3,
       "Station": "KOTA"

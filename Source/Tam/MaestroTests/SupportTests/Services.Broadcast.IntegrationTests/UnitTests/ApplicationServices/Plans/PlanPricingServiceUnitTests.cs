@@ -6195,6 +6195,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             ImpressionsPercentage = 96,
                             Budget = 1131,
                             Spots = 3
+                         },
+                         new PlanPricingStationDto
+                         {
+                            Id = 8,
+                            Cpm = 11,
+                            Market = "NY",
+                            Station = "ESPN",
+                            Impressions = 2000,
+                            ImpressionsPercentage = 4,
+                            Budget = 100,
+                            Spots = 2
                          }
                     },
                     Totals = new PlanPricingStationTotalsDto
@@ -6689,8 +6700,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             Spots = 3,
                             AvailableInventoryPercent = 20,
                             MaxBand = 5,
-                            MinBand = 1,
-                            IsProprietary = false
+                            MinBand = 1
                          },
                          new PlanPricingBandDetailDto
                          {
@@ -6701,8 +6711,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             Spots = 4,
                             AvailableInventoryPercent = 10,
                             MaxBand = 5,
-                            MinBand = 1,
-                            IsProprietary = true
+                            MinBand = 1
                          },
                          new PlanPricingBandDetailDto
                          {
@@ -6713,8 +6722,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             Spots = 3,
                             AvailableInventoryPercent = 20,
                             MaxBand = 5,
-                            MinBand = null,
-                            IsProprietary = false
+                            MinBand = null
                          },
                          new PlanPricingBandDetailDto
                          {
@@ -6725,8 +6733,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             Spots = 4,
                             AvailableInventoryPercent = 10,
                             MaxBand = 5,
-                            MinBand = null,
-                            IsProprietary = true
+                            MinBand = null
                          }
                      },
                     Totals = new PlanPricingBandTotalsDto

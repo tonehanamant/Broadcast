@@ -8,7 +8,8 @@
       "Cpm": 31.000,
       "Id": 0,
       "Impressions": 2500.0,
-      "ImpressionsPercentage": 52.63157895,
+      "ImpressionsPercentage": 27.02702703,
+      "IsProprietary": false,
       "Market": "New York",
       "Spots": 5,
       "Station": "KOB"
@@ -18,18 +19,41 @@
       "Cpm": 13.32000,
       "Id": 0,
       "Impressions": 2250.0,
-      "ImpressionsPercentage": 47.36842105,
+      "ImpressionsPercentage": 24.32432432,
+      "IsProprietary": false,
       "Market": "Las Vegas",
       "Spots": 3,
+      "Station": "KOTA"
+    },
+    {
+      "Budget": 100.0,
+      "Cpm": 33.333333333333333333333333300,
+      "Id": 0,
+      "Impressions": 3000.0,
+      "ImpressionsPercentage": 32.43243243,
+      "IsProprietary": true,
+      "Market": "New York",
+      "Spots": 20,
+      "Station": "KOB"
+    },
+    {
+      "Budget": 50.0,
+      "Cpm": 33.333333333333333333333333300,
+      "Id": 0,
+      "Impressions": 1500.0,
+      "ImpressionsPercentage": 16.21621622,
+      "IsProprietary": true,
+      "Market": "Las Vegas",
+      "Spots": 10,
       "Station": "KOTA"
     }
   ],
   "Totals": {
-    "Budget": 107.47,
-    "Cpm": 22.625263157894736842105263200,
-    "Impressions": 4750.0,
+    "Budget": 257.47,
+    "Cpm": 27.834594594594594594594594600,
+    "Impressions": 9250.0,
     "ImpressionsPercentage": 100.0,
-    "Spots": 8,
+    "Spots": 38,
     "Station": 2
   }
 }

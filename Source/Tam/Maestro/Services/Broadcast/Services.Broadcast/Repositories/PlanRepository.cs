@@ -145,11 +145,11 @@ namespace Services.Broadcast.Repositories
 
         PlanPricingBandDto GetPlanPricingBandByJobId(int jobId);
 
-        void SavePlanPricingBands(PlanPricingBandDto planPricingBandDto);
+        void SavePlanPricingBands(PlanPricingBand planPricingBand);
 
         PlanPricingResultMarketsDto GetPlanPricingResultMarketsByJobId(int jobId);
 
-        void SavePlanPricingMarketResults(PlanPricingResultMarketsDto dto);
+        void SavePlanPricingMarketResults(PlanPricingResultMarkets planPricingResultMarkets);
 
         /// <summary>
         /// Get Goal CPM value
@@ -168,7 +168,7 @@ namespace Services.Broadcast.Repositories
 
         PlanPricingStationResultDto GetPricingStationsResultByJobId(int jobId);
 
-        void SavePlanPricingStations(PlanPricingStationResultDto planPricingStationResultDto);
+        void SavePlanPricingStations(PlanPricingStationResult planPricingStationResult);
 
         /// <summary>
         /// Updates plan pricing version to point to the previous version of the plan pricing data
@@ -1558,25 +1558,24 @@ namespace Services.Broadcast.Repositories
                         Budget = r.budget,
                         Cpm = r.cpm,
                         ImpressionsPercentage = r.impressions_percentage,
-                        AvailableInventoryPercent = r.available_inventory_percentage,
-                        IsProprietary = r.is_proprietary
+                        AvailableInventoryPercent = r.available_inventory_percentage
                     }).ToList()
                 };
             });
         }
 
-        public void SavePlanPricingBands(PlanPricingBandDto planPricingBandDto)
+        public void SavePlanPricingBands(PlanPricingBand planPricingBand)
         {
             _InReadUncommitedTransaction(context =>
             {
                 context.plan_version_pricing_bands.Add(new plan_version_pricing_bands
                 {
-                    plan_version_pricing_job_id = planPricingBandDto.JobId,
-                    total_budget = planPricingBandDto.Totals.Budget,
-                    total_cpm = planPricingBandDto.Totals.Cpm,
-                    total_impressions = planPricingBandDto.Totals.Impressions,
-                    total_spots = planPricingBandDto.Totals.Spots,
-                    plan_version_pricing_band_details = planPricingBandDto.Bands.Select(x =>
+                    plan_version_pricing_job_id = planPricingBand.JobId,
+                    total_budget = planPricingBand.Totals.Budget,
+                    total_cpm = planPricingBand.Totals.Cpm,
+                    total_impressions = planPricingBand.Totals.Impressions,
+                    total_spots = planPricingBand.Totals.Spots,
+                    plan_version_pricing_band_details = planPricingBand.Bands.Select(x =>
                         new plan_version_pricing_band_details
                         {
                             cpm = x.Cpm,
@@ -1595,20 +1594,20 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public void SavePlanPricingStations(PlanPricingStationResultDto planPricingStationResultDto)
+        public void SavePlanPricingStations(PlanPricingStationResult planPricingStationResult)
         {
             _InReadUncommitedTransaction(context =>
             {
 
                 context.plan_version_pricing_stations.Add(new plan_version_pricing_stations
                 {
-                    plan_version_pricing_job_id = planPricingStationResultDto.JobId,
-                    total_budget = planPricingStationResultDto.Totals.Budget,
-                    total_cpm = planPricingStationResultDto.Totals.Cpm,
-                    total_impressions = planPricingStationResultDto.Totals.Impressions,
-                    total_spots = planPricingStationResultDto.Totals.Spots,
-                    total_stations = planPricingStationResultDto.Totals.Station,
-                    plan_version_pricing_station_details = planPricingStationResultDto.Stations
+                    plan_version_pricing_job_id = planPricingStationResult.JobId,
+                    total_budget = planPricingStationResult.Totals.Budget,
+                    total_cpm = planPricingStationResult.Totals.Cpm,
+                    total_impressions = planPricingStationResult.Totals.Impressions,
+                    total_spots = planPricingStationResult.Totals.Spots,
+                    total_stations = planPricingStationResult.Totals.Station,
+                    plan_version_pricing_station_details = planPricingStationResult.Stations
                             .Select(stationDto => new plan_version_pricing_station_details
                             {
                                 cpm = stationDto.Cpm,
@@ -1618,6 +1617,7 @@ namespace Services.Broadcast.Repositories
                                 impressions_percentage = stationDto.ImpressionsPercentage,
                                 market = stationDto.Market,
                                 station = stationDto.Station,
+                                is_proprietary = stationDto.IsProprietary
                             }).ToList()
                 });
 
@@ -1661,29 +1661,28 @@ namespace Services.Broadcast.Repositories
                         Impressions = s.impressions,
                         Budget = Convert.ToDecimal(s.budget),
                         ShareOfVoiceGoalPercentage = s.share_of_voice_goal_percentage,
-                        ImpressionsPercentage = s.impressions_percentage,
-                        IsProprietary = s.is_proprietary
+                        ImpressionsPercentage = s.impressions_percentage
                     }).ToList()
                 };
                 return dto;
             });
         }
 
-        public void SavePlanPricingMarketResults(PlanPricingResultMarketsDto dto)
+        public void SavePlanPricingMarketResults(PlanPricingResultMarkets planPricingResultMarkets)
         {
             _InReadUncommitedTransaction(context =>
             {
                 context.plan_version_pricing_markets.Add(new plan_version_pricing_markets
                 {
-                    plan_version_pricing_job_id = dto.PricingJobId,
-                    total_markets = dto.Totals.Markets,
-                    total_coverage_percent = dto.Totals.CoveragePercent,
-                    total_stations = dto.Totals.Stations,
-                    total_spots = dto.Totals.Spots,
-                    total_impressions = dto.Totals.Impressions,
-                    total_cpm = Convert.ToDouble(dto.Totals.Cpm),
-                    total_budget = Convert.ToDouble(dto.Totals.Budget),
-                    plan_version_pricing_market_details = dto.MarketDetails.Select(d => new plan_version_pricing_market_details
+                    plan_version_pricing_job_id = planPricingResultMarkets.PricingJobId,
+                    total_markets = planPricingResultMarkets.Totals.Markets,
+                    total_coverage_percent = planPricingResultMarkets.Totals.CoveragePercent,
+                    total_stations = planPricingResultMarkets.Totals.Stations,
+                    total_spots = planPricingResultMarkets.Totals.Spots,
+                    total_impressions = planPricingResultMarkets.Totals.Impressions,
+                    total_cpm = Convert.ToDouble(planPricingResultMarkets.Totals.Cpm),
+                    total_budget = Convert.ToDouble(planPricingResultMarkets.Totals.Budget),
+                    plan_version_pricing_market_details = planPricingResultMarkets.MarketDetails.Select(d => new plan_version_pricing_market_details
                     {
                         market_name = d.MarketName,
                         market_coverage_percent = d.MarketCoveragePercent,
@@ -1876,7 +1875,7 @@ namespace Services.Broadcast.Repositories
                         Market = d.market,
                         Spots = d.spots,
                         Station = d.station
-                    }).OrderByDescending(p => p.ImpressionsPercentage).ToList()
+                    }).ToList()
                 };
             });
         }

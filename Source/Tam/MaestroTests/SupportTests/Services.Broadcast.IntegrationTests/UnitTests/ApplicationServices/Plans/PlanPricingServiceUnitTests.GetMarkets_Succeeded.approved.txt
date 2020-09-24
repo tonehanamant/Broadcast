@@ -5,7 +5,6 @@
       "Cpm": 5.655000,
       "Impressions": 400.0,
       "ImpressionsPercentage": 192.0,
-      "IsProprietary": false,
       "MarketCode": 0,
       "MarketCoveragePercent": 70.0,
       "MarketName": "Chicago",

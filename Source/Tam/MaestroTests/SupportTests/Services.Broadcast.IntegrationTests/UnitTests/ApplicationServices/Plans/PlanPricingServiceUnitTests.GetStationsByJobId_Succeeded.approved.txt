@@ -4,13 +4,13 @@
   "PlanVersionId": null,
   "Stations": [
     {
-      "Budget": 1131.0,
-      "Cpm": 22.0,
-      "Id": 7,
-      "Impressions": 200.0,
-      "ImpressionsPercentage": 96.0,
+      "Budget": 1231.0,
+      "Cpm": 6.0940594059405940594059406000,
+      "Id": 0,
+      "Impressions": 202.0,
+      "ImpressionsPercentage": 100.0,
       "Market": "NY",
-      "Spots": 3,
+      "Spots": 5,
       "Station": "ESPN"
     }
   ],

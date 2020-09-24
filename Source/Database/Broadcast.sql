@@ -1038,6 +1038,16 @@ BEGIN
 END
 /*************************************** END BP-1467 *******************************************************/
 
+/*************************************** START - BP-1288 ****************************************************/
+IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('plan_version_pricing_station_details') AND name = 'is_proprietary ')
+BEGIN
+	ALTER TABLE plan_version_pricing_station_details ADD is_proprietary bit NULL
+	EXEC('UPDATE plan_version_pricing_station_details SET is_proprietary = 0')
+	ALTER TABLE plan_version_pricing_station_details ALTER COLUMN is_proprietary bit NOT NULL
+END
+/*************************************** END - BP-1288 ****************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

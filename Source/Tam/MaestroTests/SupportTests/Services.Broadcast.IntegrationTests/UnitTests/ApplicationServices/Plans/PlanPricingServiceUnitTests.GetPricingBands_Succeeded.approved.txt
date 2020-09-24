@@ -7,7 +7,6 @@
       "Id": 0,
       "Impressions": 200.0,
       "ImpressionsPercentage": 96.0,
-      "IsProprietary": false,
       "MaxBand": 5.0,
       "MinBand": 1.0,
       "Spots": 3

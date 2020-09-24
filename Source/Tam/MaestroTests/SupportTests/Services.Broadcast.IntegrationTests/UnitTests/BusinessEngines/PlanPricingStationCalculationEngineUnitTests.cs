@@ -1,6 +1,7 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using Common.Services.Repositories;
+using EntityFrameworkMapping.Broadcast;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
@@ -34,6 +35,51 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Setup(x => x.GetDataRepository<IStationRepository>())
                 .Returns(_StationRepository.Object);
 
+            _StationRepository
+                .Setup(x => x.GetBroadcastStationsByIds(It.IsAny<List<int>>()))
+                .Returns(new List<DisplayBroadcastStation>
+                { 
+                    new DisplayBroadcastStation
+                    {
+                        Id = 30,
+                        LegacyCallLetters = "KOB",
+                        MarketCode = 100
+                    },
+                    new DisplayBroadcastStation
+                    {
+                        Id = 27,
+                        LegacyCallLetters = "KOTA",
+                        MarketCode = 200
+                    },
+                    new DisplayBroadcastStation
+                    {
+                        Id = 99,
+                        LegacyCallLetters = "TVX",
+                        MarketCode = 300
+                    }
+                });
+
+            _MarketRepository
+                .Setup(x => x.GetMarketsByMarketCodes(It.IsAny<List<int>>()))
+                .Returns(new List<market>
+                {
+                    new market
+                    {
+                        market_code = 100,
+                        geography_name = "New York"
+                    },
+                    new market
+                    {
+                        market_code = 200,
+                        geography_name = "Las Vegas"
+                    },
+                    new market
+                    {
+                        market_code = 300,
+                        geography_name = "Seattle"
+                    }
+                });
+
             _PlanPricingStationCalculationEngine = new PlanPricingStationCalculationEngine(dataRepositoryFactoryMock.Object);
         }
 
@@ -41,17 +87,89 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [UseReporter(typeof(DiffReporter))]
         public void Calculate_Success()
         {
-            _StationRepository.Setup(s => s.GetLatestStationMonthDetailsForStations(It.IsAny<List<int>>())).Returns(_GetStationMonthDetails());
+            var proprietaryInventory = new ProprietaryInventoryData
+            {
+                ProprietarySummaries = new List<ProprietarySummary>
+                {
+                    new ProprietarySummary
+                    {
+                        ProprietarySummaryByStations = new List<ProprietarySummaryByStation>
+                        {
+                            new ProprietarySummaryByStation
+                            {
+                                StationId = 30,
+                                TotalSpots = 10,
+                                TotalCostWithMargin = 50,
+                                ProprietarySummaryByAudiences = new List<ProprietarySummaryByAudience>
+                                {
+                                    new ProprietarySummaryByAudience
+                                    {
+                                        AudienceId = 1,
+                                        TotalImpressions = 500
+                                    },
+                                    new ProprietarySummaryByAudience
+                                    {
+                                        AudienceId = 2,
+                                        TotalImpressions = 1000
+                                    }
+                                }
+                            },
+                            new ProprietarySummaryByStation
+                            {
+                                StationId = 27,
+                                TotalSpots = 10,
+                                TotalCostWithMargin = 50,
+                                ProprietarySummaryByAudiences = new List<ProprietarySummaryByAudience>
+                                {
+                                    new ProprietarySummaryByAudience
+                                    {
+                                        AudienceId = 1,
+                                        TotalImpressions = 500
+                                    },
+                                    new ProprietarySummaryByAudience
+                                    {
+                                        AudienceId = 2,
+                                        TotalImpressions = 1000
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    new ProprietarySummary
+                    {
+                        ProprietarySummaryByStations = new List<ProprietarySummaryByStation>
+                        {
+                            new ProprietarySummaryByStation
+                            {
+                                StationId = 30,
+                                TotalSpots = 10,
+                                TotalCostWithMargin = 50,
+                                ProprietarySummaryByAudiences = new List<ProprietarySummaryByAudience>
+                                {
+                                    new ProprietarySummaryByAudience
+                                    {
+                                        AudienceId = 1,
+                                        TotalImpressions = 500
+                                    },
+                                    new ProprietarySummaryByAudience
+                                    {
+                                        AudienceId = 2,
+                                        TotalImpressions = 1000
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
 
-            _MarketRepository.Setup(m => m.GetMarket(100)).Returns(new Tam.Maestro.Data.Entities.DataTransferObjects.LookupDto(100, "New York"));
-            _MarketRepository.Setup(m => m.GetMarket(200)).Returns(new Tam.Maestro.Data.Entities.DataTransferObjects.LookupDto(200, "Las Vegas"));
-            _MarketRepository.Setup(m => m.GetMarket(300)).Returns(new Tam.Maestro.Data.Entities.DataTransferObjects.LookupDto(300, "Seattle"));
+            _StationRepository.Setup(s => s.GetLatestStationMonthDetailsForStations(It.IsAny<List<int>>())).Returns(_GetStationMonthDetails());
 
             var planPricingParameters = _GetPlanPricingParametersDto();
             var allocationResult = _GetPlanPricingAllocationResult();
             var inventory = _GetPlanPricingInventoryPrograms();
 
-            var result = _PlanPricingStationCalculationEngine.Calculate(inventory, allocationResult, planPricingParameters);
+            var result = _PlanPricingStationCalculationEngine.Calculate(inventory, allocationResult, planPricingParameters, proprietaryInventory);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -60,18 +178,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [UseReporter(typeof(DiffReporter))]
         public void Calculate_SuccessNoStationMonthDetails()
         {
-            _StationRepository.Setup(s => s.GetLatestStationMonthDetailsForStations(It.IsAny<List<int>>())).Returns(new List<StationMonthDetailDto>());
-            _StationRepository.Setup(s => s.GetBroadcastStationById(It.IsAny<int>())).Returns(_GetStationById());
+            var proprietaryInventory = new ProprietaryInventoryData();
 
-            _MarketRepository.Setup(m => m.GetMarket(100)).Returns(new Tam.Maestro.Data.Entities.DataTransferObjects.LookupDto(100, "New York"));
-            _MarketRepository.Setup(m => m.GetMarket(200)).Returns(new Tam.Maestro.Data.Entities.DataTransferObjects.LookupDto(200, "Las Vegas"));
-            _MarketRepository.Setup(m => m.GetMarket(300)).Returns(new Tam.Maestro.Data.Entities.DataTransferObjects.LookupDto(300, "Seattle"));
+            _StationRepository.Setup(s => s.GetLatestStationMonthDetailsForStations(It.IsAny<List<int>>())).Returns(new List<StationMonthDetailDto>());
 
             var planPricingParameters = _GetPlanPricingParametersDto();
             var allocationResult = _GetPlanPricingAllocationResult();
             var inventory = _GetPlanPricingInventoryPrograms();
 
-            var result = _PlanPricingStationCalculationEngine.Calculate(inventory, allocationResult, planPricingParameters);
+            var result = _PlanPricingStationCalculationEngine.Calculate(inventory, allocationResult, planPricingParameters, proprietaryInventory);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
@@ -80,27 +195,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [UseReporter(typeof(DiffReporter))]
         public void Calculate_SuccessWithMargin()
         {
-            _StationRepository.Setup(s => s.GetLatestStationMonthDetailsForStations(It.IsAny<List<int>>())).Returns(_GetStationMonthDetails());
+            var proprietaryInventory = new ProprietaryInventoryData();
 
-            _MarketRepository.Setup(m => m.GetMarket(100)).Returns(new Tam.Maestro.Data.Entities.DataTransferObjects.LookupDto(100, "New York"));
-            _MarketRepository.Setup(m => m.GetMarket(200)).Returns(new Tam.Maestro.Data.Entities.DataTransferObjects.LookupDto(200, "Las Vegas"));
-            _MarketRepository.Setup(m => m.GetMarket(300)).Returns(new Tam.Maestro.Data.Entities.DataTransferObjects.LookupDto(300, "Seattle"));
+            _StationRepository.Setup(s => s.GetLatestStationMonthDetailsForStations(It.IsAny<List<int>>())).Returns(_GetStationMonthDetails());
 
             var planPricingParameters = _GetPlanPricingParametersDto();
             var allocationResult = _GetPlanPricingAllocationResultWithMargin();
             var inventory = _GetPlanPricingInventoryPrograms();
 
-            var result = _PlanPricingStationCalculationEngine.Calculate(inventory, allocationResult, planPricingParameters);
+            var result = _PlanPricingStationCalculationEngine.Calculate(inventory, allocationResult, planPricingParameters, proprietaryInventory);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
-
-        private DisplayBroadcastStation _GetStationById() =>
-            new DisplayBroadcastStation
-            {
-                Id = 30,
-                MarketCode = 100
-            };
         
         private List<StationMonthDetailDto> _GetStationMonthDetails() =>
                 new List<StationMonthDetailDto>
@@ -213,7 +319,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 new PlanPricingInventoryProgram
                 {
                      ManifestId = 5,
-                     Station = new Entities.DisplayBroadcastStation
+                     Station = new DisplayBroadcastStation
                      {
                           Id = 30,
                           LegacyCallLetters = "KOB",
@@ -222,7 +328,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 new PlanPricingInventoryProgram
                 {
                      ManifestId = 20,
-                     Station = new Entities.DisplayBroadcastStation
+                     Station = new DisplayBroadcastStation
                      {
                           Id = 27,
                           LegacyCallLetters = "KOTA",
@@ -230,17 +336,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 },
                 new PlanPricingInventoryProgram
                 {
-                     ManifestId = 5,
-                     Station = new Entities.DisplayBroadcastStation
-                     {
-                          Id = 30,
-                          LegacyCallLetters = "KOB",
-                     }
-                },
-                new PlanPricingInventoryProgram
-                {
                      ManifestId = 6,
-                     Station = new Entities.DisplayBroadcastStation
+                     Station = new DisplayBroadcastStation
                      {
                           Id = 99,
                           LegacyCallLetters = "TVX",

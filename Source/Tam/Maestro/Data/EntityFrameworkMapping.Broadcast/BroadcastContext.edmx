@@ -1292,6 +1292,7 @@
           <Property Name="cpm" Type="money" Nullable="false" />
           <Property Name="budget" Type="money" Nullable="false" />
           <Property Name="impressions_percentage" Type="float" Nullable="false" />
+          <Property Name="is_proprietary" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_stations">
           <Key>
@@ -14709,6 +14710,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="budget" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="impressions_percentage" Type="Double" Nullable="false" />
           <NavigationProperty Name="plan_version_pricing_stations" Relationship="BroadcastModel.FK_plan_version_pricing_stations_plan_version_pricing_station_details" FromRole="plan_version_pricing_station_details" ToRole="plan_version_pricing_stations" />
+          <Property Name="is_proprietary" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_pricing_api_results">
           <Key>
@@ -18415,6 +18417,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_pricing_station_details">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_pricing_station_details">
               <MappingFragment StoreEntitySet="plan_version_pricing_station_details">
+                <ScalarProperty Name="is_proprietary" ColumnName="is_proprietary" />
                 <ScalarProperty Name="impressions_percentage" ColumnName="impressions_percentage" />
                 <ScalarProperty Name="budget" ColumnName="budget" />
                 <ScalarProperty Name="cpm" ColumnName="cpm" />

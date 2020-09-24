@@ -8,7 +8,7 @@ namespace Services.Broadcast.BusinessEngines.PlanPricing
 {
     public interface IPlanPricingMarketResultsEngine
     {
-        PlanPricingResultMarketsDto Calculate(List<PlanPricingInventoryProgram> inventory,
+        PlanPricingResultMarkets Calculate(List<PlanPricingInventoryProgram> inventory,
             PlanPricingAllocationResult allocationResult,
             PlanDto plan,
             List<MarketCoverage> marketCoverages,
@@ -17,14 +17,14 @@ namespace Services.Broadcast.BusinessEngines.PlanPricing
 
     public class PlanPricingMarketResultsEngine : IPlanPricingMarketResultsEngine
     {
-        public PlanPricingResultMarketsDto Calculate(
+        public PlanPricingResultMarkets Calculate(
             List<PlanPricingInventoryProgram> inventory,
             PlanPricingAllocationResult allocationResult,
             PlanDto plan,
             List<MarketCoverage> marketCoverages,
             ProprietaryInventoryData proprietaryInventoryData)
         {
-            var result = new PlanPricingResultMarketsDto
+            var result = new PlanPricingResultMarkets
             {
                 PlanVersionId = allocationResult.PlanVersionId,
                 PricingJobId = allocationResult.JobId
@@ -59,7 +59,7 @@ namespace Services.Broadcast.BusinessEngines.PlanPricing
             return result;
         }
 
-        private List<PlanPricingResultMarketDetailsDto> _GetProprietaryMarketDetails(
+        private List<PlanPricingResultMarketDetails> _GetProprietaryMarketDetails(
             ProprietaryInventoryData proprietaryInventoryData,
             Dictionary<int, MarketCoverage> marketCoverageByMarketCode,
             Dictionary<short, PlanAvailableMarketDto> planMarketByMarketCode,
@@ -68,7 +68,7 @@ namespace Services.Broadcast.BusinessEngines.PlanPricing
         {
             allStationIds = new List<int>();
 
-            var result = new List<PlanPricingResultMarketDetailsDto>();
+            var result = new List<PlanPricingResultMarketDetails>();
 
             foreach (var groupingByMarket in proprietaryInventoryData.ProprietarySummaries.SelectMany(x => x.ProprietarySummaryByStations).GroupBy(x => x.MarketCode))
             {
@@ -82,7 +82,7 @@ namespace Services.Broadcast.BusinessEngines.PlanPricing
                     existingStationIds.Union(stationIds).ToList() :
                     stationIds;
 
-                var detail = new PlanPricingResultMarketDetailsDto
+                var detail = new PlanPricingResultMarketDetails
                 {
                     MarketCode = marketCode,
                     MarketName = marketCoverage.Market,
@@ -104,8 +104,8 @@ namespace Services.Broadcast.BusinessEngines.PlanPricing
             return result;
         }
 
-        private PlanPricingResultMarketsTotalsDto _GetTotals(
-            List<PlanPricingResultMarketDetailsDto> details,
+        private PlanPricingResultMarketsTotals _GetTotals(
+            List<PlanPricingResultMarketDetails> details,
             Dictionary<int, MarketCoverage> marketCoverageByMarketCode,
             List<int> stationIds)
         {
@@ -113,7 +113,7 @@ namespace Services.Broadcast.BusinessEngines.PlanPricing
             var totalBudget = details.Sum(d => d.Budget);
             var marketCodes = details.Select(x => x.MarketCode).Distinct().ToList();
 
-            return new PlanPricingResultMarketsTotalsDto
+            return new PlanPricingResultMarketsTotals
             {
                 Markets = marketCodes.Count,
                 CoveragePercent = marketCodes.Sum(x => marketCoverageByMarketCode[x].PercentageOfUS),
@@ -125,7 +125,7 @@ namespace Services.Broadcast.BusinessEngines.PlanPricing
             };
         }
 
-        private List<PlanPricingResultMarketDetailsDto> _GetOpenMarketMarketDetails(
+        private List<PlanPricingResultMarketDetails> _GetOpenMarketMarketDetails(
             List<PlanPricingInventoryProgram> inventory,
             PlanPricingAllocationResult allocationResult,
             Dictionary<int, MarketCoverage> marketCoverageByMarketCode,
@@ -135,7 +135,7 @@ namespace Services.Broadcast.BusinessEngines.PlanPricing
         {
             allStationIds = new List<int>();
 
-            var result = new List<PlanPricingResultMarketDetailsDto>();
+            var result = new List<PlanPricingResultMarketDetails>();
             var inventoryByManifestId = inventory.ToDictionary(x => x.ManifestId, x => x);
 
             // flatten out to something we can easily aggregate.
@@ -166,7 +166,7 @@ namespace Services.Broadcast.BusinessEngines.PlanPricing
                 var stationIds = marketGroup.Select(s => s.StationId).Distinct().ToList();
                 stationsByMarketCode[marketCode] = stationIds;
 
-                var detail = new PlanPricingResultMarketDetailsDto
+                var detail = new PlanPricingResultMarketDetails
                 {
                     MarketCode = marketCode,
                     MarketName = marketCoverage.Market,

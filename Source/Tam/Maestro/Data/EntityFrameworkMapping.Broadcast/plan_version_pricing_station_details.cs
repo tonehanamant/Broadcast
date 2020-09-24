@@ -23,6 +23,7 @@ namespace EntityFrameworkMapping.Broadcast
         public decimal cpm { get; set; }
         public decimal budget { get; set; }
         public double impressions_percentage { get; set; }
+        public bool is_proprietary { get; set; }
     
         public virtual plan_version_pricing_stations plan_version_pricing_stations { get; set; }
     }

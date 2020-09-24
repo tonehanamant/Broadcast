@@ -2,15 +2,15 @@
 
 namespace Services.Broadcast.Entities.Plan.Pricing
 {
-    public class PlanPricingResultMarketsDto
+    public class PlanPricingResultMarkets
     {
         public int PlanVersionId { get; set; }
         public int? PricingJobId { get; set; }
-        public PlanPricingResultMarketsTotalsDto Totals { get; set; }
-        public List<PlanPricingResultMarketDetailsDto> MarketDetails { get; set; } = new List<PlanPricingResultMarketDetailsDto>();
+        public PlanPricingResultMarketsTotals Totals { get; set; }
+        public List<PlanPricingResultMarketDetails> MarketDetails { get; set; } = new List<PlanPricingResultMarketDetails>();
     }
 
-    public class PlanPricingResultMarketsTotalsDto
+    public class PlanPricingResultMarketsTotals
     {
         public int Markets { get; set; }
         public double CoveragePercent { get; set; }
@@ -21,7 +21,7 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public decimal Budget { get; set; }
     }
 
-    public class PlanPricingResultMarketDetailsDto
+    public class PlanPricingResultMarketDetails
     {
         public short MarketCode { get; set; }
         public int Rank { get; set; }
@@ -35,5 +35,6 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public double? ShareOfVoiceGoalPercentage { get; set; }
         public double ImpressionsPercentage { get; set; }
         public string MarketName { get; set; }
+        public bool IsProprietary { get; set; }
     }
 }

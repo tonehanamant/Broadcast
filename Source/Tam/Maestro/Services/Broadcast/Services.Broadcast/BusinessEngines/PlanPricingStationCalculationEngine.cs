@@ -9,10 +9,11 @@ namespace Services.Broadcast.BusinessEngines
 {
     public interface IPlanPricingStationCalculationEngine
     {
-        PlanPricingStationResultDto Calculate(
+        PlanPricingStationResult Calculate(
             List<PlanPricingInventoryProgram> inventories,
             PlanPricingAllocationResult apiResponse,
-            PlanPricingParametersDto parametersDto);
+            PlanPricingParametersDto parametersDto,
+            ProprietaryInventoryData proprietaryInventoryData);
     }
 
     public class PlanPricingStationCalculationEngine : IPlanPricingStationCalculationEngine
@@ -26,121 +27,141 @@ namespace Services.Broadcast.BusinessEngines
             _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
         }
 
-        public PlanPricingStationResultDto Calculate(List<PlanPricingInventoryProgram> inventories, PlanPricingAllocationResult apiResponse, PlanPricingParametersDto parametersDto)
+        public PlanPricingStationResult Calculate(
+            List<PlanPricingInventoryProgram> inventories, 
+            PlanPricingAllocationResult apiResponse, 
+            PlanPricingParametersDto parametersDto,
+            ProprietaryInventoryData proprietaryInventoryData)
         {
-            var result = new PlanPricingStationResultDto()
+            var result = new PlanPricingStationResult()
             {
                 JobId = parametersDto.JobId,
                 PlanVersionId = parametersDto.PlanVersionId,
             };
 
-            var allocatedStationIds = _GetAllocatedStationIds(apiResponse, inventories);
-            var stationMonthDetails = _StationRepository.GetLatestStationMonthDetailsForStations(allocatedStationIds);
-            var inventoriesByStation = inventories.Where(i => allocatedStationIds.Contains(i.Station.Id)).GroupBy(i => i.Station.Id);
+            result.Stations.AddRange(_GetOpenMarketAggregationByStation(inventories, apiResponse));
+            result.Stations.AddRange(_GetProprietaryAggregationByStation(proprietaryInventoryData));
 
-            int totalSpots = 0;
-            double totalImpressions = 0;
-            decimal totalBudget = 0;
+            result.Totals = _GetTotals(result.Stations);
 
-            foreach (var inventoryByStation in inventoriesByStation)
-            {
-                var inventoryItems = inventoryByStation.ToList();
-                var allocatedSpots = _GetAllocatedProgramSpots(apiResponse, inventoryItems);
-
-                int totalSpotsPerStation = 0;
-                double totalImpressionsPerStation = 0;
-                decimal totalBudgetPerStation = 0;
-
-                foreach (var allocatedSpot in allocatedSpots)
-                {
-                    totalSpotsPerStation += allocatedSpot.TotalSpots;
-                    totalImpressionsPerStation += allocatedSpot.TotalImpressions;
-                    totalBudgetPerStation += allocatedSpot.TotalCostWithMargin;
-                }
-
-                var marketDisplay = _GetMarketDisplay(stationMonthDetails, inventoryByStation);
-
-                var pricingStationDto = new PlanPricingStationDto
-                {
-                    Station = inventoryItems.First().Station.LegacyCallLetters,
-                    Cpm = ProposalMath.CalculateCpm(totalBudgetPerStation, totalImpressionsPerStation),
-                    Budget = totalBudgetPerStation,
-                    Impressions = totalImpressionsPerStation,
-                    Market = marketDisplay,
-                    Spots = totalSpotsPerStation
-                };
-
-                totalSpots += totalSpotsPerStation;
-                totalImpressions += totalImpressionsPerStation;
-                totalBudget += totalBudgetPerStation;
-
-                result.Stations.Add(pricingStationDto);
-            }
-
-            result.Totals.Station = result.Stations.Count;
-            result.Totals.Spots = totalSpots;
-            result.Totals.Impressions = totalImpressions;
-            result.Totals.ImpressionsPercentage = 100;
-            result.Totals.Cpm = ProposalMath.CalculateCpm(totalBudget, totalImpressions);
-            result.Totals.Budget = totalBudget;
-
-            result.Stations.ForEach(s => s.ImpressionsPercentage = ProposalMath.CalculateImpressionsPercentage(s.Impressions, totalImpressions));
+            result.Stations.ForEach(s => s.ImpressionsPercentage = ProposalMath.CalculateImpressionsPercentage(s.Impressions, result.Totals.Impressions));
 
             return result;
         }
 
-        private string _GetMarketDisplay(List<StationMonthDetailDto> stationMonthDetails, IGrouping<int, PlanPricingInventoryProgram> inventoryByStation)
+        private PlanPricingStationTotals _GetTotals(List<PlanPricingStation> stations)
         {
-            var stationMonthDetail = stationMonthDetails.FirstOrDefault(s => s.StationId == inventoryByStation.Key);
+            var result = new PlanPricingStationTotals();
 
-            int? marketCode;
+            result.Station = stations.GroupBy(x => x.Station).Count();
+            result.Spots = stations.Sum(x => x.Spots);
+            result.Impressions = stations.Sum(x => x.Impressions);
+            result.ImpressionsPercentage = 100;
+            result.Budget = stations.Sum(x => x.Budget);
+            result.Cpm = ProposalMath.CalculateCpm(result.Budget, result.Impressions);
 
-            if (stationMonthDetail == null)
-            {
-                var station = _StationRepository.GetBroadcastStationById(inventoryByStation.Key);
-                marketCode = station.MarketCode;
-            }
-            else
-            {
-                marketCode = stationMonthDetail.MarketCode;
-            }
-
-            var marketDisplay = string.Empty;
-
-            if (marketCode.HasValue)
-            {
-                var market = _MarketRepository.GetMarket(marketCode.Value);
-
-                marketDisplay = market?.Display;
-            }
-
-            return marketDisplay;
+            return result;
         }
 
-        private List<int> _GetAllocatedStationIds(PlanPricingAllocationResult apiResponse, List<PlanPricingInventoryProgram> inventories)
+        private List<PlanPricingStation> _GetProprietaryAggregationByStation(ProprietaryInventoryData proprietaryInventoryData)
         {
-            var manifestIds = apiResponse.Spots.Select(s => s.Id).Distinct();
-            return inventories
-                .Where(i => manifestIds.Contains(i.ManifestId))
-                .Select(i => i.Station.Id)
-                .Distinct()
+            var result = new List<PlanPricingStation>();
+
+            var summaryByStation = proprietaryInventoryData.ProprietarySummaries
+                .SelectMany(x => x.ProprietarySummaryByStations)
+                .GroupBy(x => x.StationId)
                 .ToList();
+
+            var stationIds = summaryByStation.Select(x => x.Key).ToList();
+            var stationById = _StationRepository.GetBroadcastStationsByIds(stationIds).ToDictionary(x => x.Id, x => x);
+            var marketDisplayByStationId = _GetMarketDisplayByStationId(stationIds, stationById);
+
+            foreach (var grouping in summaryByStation)
+            {
+                var items = grouping.ToList();
+
+                var pricingStation = new PlanPricingStation
+                {
+                    Station = stationById[grouping.Key].LegacyCallLetters,
+                    Market = marketDisplayByStationId[grouping.Key],
+                    Spots = items.Sum(x => x.TotalSpots),
+                    Impressions = items.Sum(x => x.TotalImpressions),
+                    Budget = items.Sum(x => x.TotalCostWithMargin),
+                    IsProprietary = true
+                };
+
+                pricingStation.Cpm = ProposalMath.CalculateCpm(pricingStation.Budget, pricingStation.Impressions);
+
+                result.Add(pricingStation);
+            }
+
+            return result;
         }
 
-        private List<PlanPricingAllocatedSpot> _GetAllocatedProgramSpots(PlanPricingAllocationResult apiResponse, List<PlanPricingInventoryProgram> inventories)
+        private List<PlanPricingStation> _GetOpenMarketAggregationByStation(
+            List<PlanPricingInventoryProgram> inventories,
+            PlanPricingAllocationResult apiResponse)
         {
-            var result = new List<PlanPricingAllocatedSpot>();
+            var result = new List<PlanPricingStation>();
 
-            foreach (var spot in apiResponse.Spots)
-            {
-                // until we use only OpenMarket inventory it`s fine
-                // this needs to be updated when we start using inventory that can have more than one daypart
-                // we should match spots by some unique value which represents a combination of a manifest week and a manifest daypart
-                // and not by manifest id as it is done now
-                if (inventories.Any(x => x.ManifestId == spot.Id))
+            var inventoryByManifestId = inventories.ToDictionary(x => x.ManifestId, x => x);
+            var allocatedSpotsWithInventory = apiResponse.Spots
+                .Select(x => new
                 {
-                    result.Add(spot);
-                }
+                    allocatedSpot = x,
+                    inventory = inventoryByManifestId[x.Id]
+                })
+                .ToList();
+
+            var stationIds = allocatedSpotsWithInventory.Select(x => x.inventory.Station.Id).Distinct().ToList();
+            var stationById = _StationRepository.GetBroadcastStationsByIds(stationIds).ToDictionary(x => x.Id, x => x);
+            var marketDisplayByStationId = _GetMarketDisplayByStationId(stationIds, stationById);
+
+            foreach (var grouping in allocatedSpotsWithInventory.GroupBy(x => x.inventory.Station.Id))
+            {
+                var items = grouping.ToList();
+
+                var pricingStation = new PlanPricingStation
+                {
+                    Station = items.First().inventory.Station.LegacyCallLetters,
+                    Market = marketDisplayByStationId[grouping.Key],
+                    Spots = items.Sum(x => x.allocatedSpot.TotalSpots),
+                    Impressions = items.Sum(x => x.allocatedSpot.TotalImpressions),
+                    Budget = items.Sum(x => x.allocatedSpot.TotalCostWithMargin),
+                    IsProprietary = false
+                };
+
+                pricingStation.Cpm = ProposalMath.CalculateCpm(pricingStation.Budget, pricingStation.Impressions);
+
+                result.Add(pricingStation);
+            }
+
+            return result;
+        }
+
+        private Dictionary<int, string> _GetMarketDisplayByStationId(
+            List<int> stationIds,
+            Dictionary<int, DisplayBroadcastStation> stationById)
+        {
+            var result = new Dictionary<int, string>();
+            var marketCodeByStationId = new Dictionary<int, int>();
+
+            var stationMonthDetails = _StationRepository.GetLatestStationMonthDetailsForStations(stationIds);
+
+            foreach (var stationId in stationIds)
+            {
+                var stationMonthDetail = stationMonthDetails.FirstOrDefault(s => s.StationId == stationId);
+                marketCodeByStationId[stationId] = stationMonthDetail?.MarketCode ?? stationById[stationId].MarketCode.Value;
+            }
+
+            var marketNameByMarketCode = _MarketRepository
+                .GetMarketsByMarketCodes(marketCodeByStationId.Values.ToList())
+                .ToDictionary(x => x.market_code, x => x.geography_name);
+
+            foreach (var stationId in stationIds)
+            {
+                var marketCode = marketCodeByStationId[stationId];
+                result[stationId] = marketNameByMarketCode[(short)marketCode];
             }
 
             return result;

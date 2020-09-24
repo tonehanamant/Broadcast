@@ -109,6 +109,8 @@ namespace Services.Broadcast.Repositories
         /// <param name="user">The user making the update.</param>
         /// <param name="timeStamp">The time stamp when the update was done.</param>
         void UpdateStation(string ownerName, string repFirmName, int stationId, bool isTrueInd, string user, DateTime timeStamp);
+
+        List<DisplayBroadcastStation> GetBroadcastStationsByIds(IEnumerable<int> stationIds);
     }
 
     public class StationRepository : BroadcastRepositoryBase, IStationRepository
@@ -141,6 +143,19 @@ namespace Services.Broadcast.Repositories
                         select s).Single("No station found with id: " + id);
 
                     return _MapToDto(station);
+                });
+        }
+
+        public List<DisplayBroadcastStation> GetBroadcastStationsByIds(IEnumerable<int> stationIds)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    return context.stations
+                        .Where(x => stationIds.Contains(x.id))
+                        .ToList()
+                        .Select(_MapToDto)
+                        .ToList();
                 });
         }
 
