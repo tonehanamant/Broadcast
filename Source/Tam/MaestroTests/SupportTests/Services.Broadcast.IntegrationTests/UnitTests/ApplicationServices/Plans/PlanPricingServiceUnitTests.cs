@@ -8360,8 +8360,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Weight = 50
                     }
                 };
+
                 parameters.UnitCapsType = UnitCapEnum.Per30Min;
                 parameters.UnitCaps = 3;
+
+                plan.PricingParameters.UnitCapsType = parameters.UnitCapsType;
+                plan.PricingParameters.UnitCaps = parameters.UnitCaps;
+
                 plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
                 {
                     // SpotLengthId = 1, DaypartCodeId = 1
@@ -8617,8 +8622,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Weight = 50
                     }
                 };
+
                 parameters.UnitCapsType = UnitCapEnum.Per30Min;
                 parameters.UnitCaps = 3;
+
+                plan.PricingParameters.UnitCapsType = parameters.UnitCapsType;
+                plan.PricingParameters.UnitCaps = parameters.UnitCaps;
+
                 plan.WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
                 {
                     // SpotLengthId = 1, DaypartCodeId = 1
