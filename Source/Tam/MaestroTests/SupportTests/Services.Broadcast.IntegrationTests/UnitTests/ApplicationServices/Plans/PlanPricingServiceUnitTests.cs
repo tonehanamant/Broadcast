@@ -6441,7 +6441,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             Rank = 2,
                             ShareOfVoiceGoalPercentage = 70,
                             Stations = 5,
-                            StationsPerMarket = 5,
                             MarketName = "Chicago"
                          }
                     },
@@ -6562,9 +6561,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCoveragePercent = 70,
                             Rank = 2,
                             ShareOfVoiceGoalPercentage = 70,
-                            Stations = 5,
-                            MarketName = "Chicago",
-                            StationsPerMarket = 6
+                            Stations = 6,
+                            MarketName = "Chicago"
                          },
                          new PlanPricingResultMarketDetailsDto
                          {
@@ -6576,9 +6574,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             MarketCoveragePercent = 70,
                             Rank = 2,
                             ShareOfVoiceGoalPercentage = 70,
-                            Stations = 5,
-                            MarketName = "Chicago",
-                            StationsPerMarket = 1
+                            Stations = 1,
+                            MarketName = "Chicago"
                          }
                     },
                     PricingJobId = 2,

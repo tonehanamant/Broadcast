@@ -2136,7 +2136,7 @@ namespace Services.Broadcast.ApplicationServices
                         MarketName = first.MarketName,
                         MarketCoveragePercent = first.MarketCoveragePercent,
                         ShareOfVoiceGoalPercentage = first.ShareOfVoiceGoalPercentage,
-                        Stations = first.StationsPerMarket, // Contains stations from both OpenMarket and Proprietary inventory
+                        Stations = first.Stations, // Contains stations from both OpenMarket and Proprietary inventory, look at repo where it`s set
                         Impressions = impressions,
                         Budget = budget,
                         Cpm = ProposalMath.CalculateCpm(budget, impressions),

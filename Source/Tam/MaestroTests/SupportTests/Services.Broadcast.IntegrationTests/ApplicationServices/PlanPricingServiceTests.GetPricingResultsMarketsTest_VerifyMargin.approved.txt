@@ -11,8 +11,7 @@
       "Rank": 1,
       "ShareOfVoiceGoalPercentage": 34.5,
       "Spots": 15,
-      "Stations": 1,
-      "StationsPerMarket": 0
+      "Stations": 1
     },
     {
       "Budget": 371.85,
@@ -25,8 +24,7 @@
       "Rank": 79,
       "ShareOfVoiceGoalPercentage": 22.2,
       "Spots": 15,
-      "Stations": 1,
-      "StationsPerMarket": 0
+      "Stations": 1
     }
   ],
   "PlanVersionId": 0,

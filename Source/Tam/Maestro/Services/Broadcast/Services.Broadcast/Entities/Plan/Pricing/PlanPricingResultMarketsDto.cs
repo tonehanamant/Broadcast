@@ -27,7 +27,6 @@ namespace Services.Broadcast.Entities.Plan.Pricing
         public int Rank { get; set; }
         public double MarketCoveragePercent { get; set; }
         public int Stations { get; set; }
-        public int StationsPerMarket { get; set; }
         public int Spots { get; set; }
         public double Impressions { get; set; }
         public decimal Cpm { get; set; }
