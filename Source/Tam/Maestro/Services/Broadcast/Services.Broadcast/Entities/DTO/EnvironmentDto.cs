@@ -4,6 +4,8 @@
     {
         public string Environment { get; set; }
 
+        public string HostName { get; set; }
+
         public bool DisplayCampaignLink { get; set; }
 
         public bool DisplayBuyingLink { get; set; }

@@ -74,18 +74,21 @@ namespace Services.Broadcast.ApplicationServices
 
         public EnvironmentDto GetEnvironmentInfo()
         {
-            // TODO : Tech-Debt to remove these and have the FE got to LaunchDarkly directly
-            return new EnvironmentDto
+            var environmentInfo = new EnvironmentDto
             {
                 Environment = new AppSettings().Environment.ToString(),
+                HostName = Environment.MachineName,
+                // TODO : Tech-Debt to remove these and have the FE got to LaunchDarkly directly
                 DisplayCampaignLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.DISPLAY_CAMPAIGN_LINK),
                 DisplayBuyingLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.DISPLAY_BUYING_LINK),
                 AllowMultipleCreativeLengths = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS),
                 EnablePricingInEdit = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_IN_EDIT),
                 EnableExportPreBuy = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ENABLE_EXPORT_PRE_BUY),
                 EnableRunPricingAutomaticaly = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.RUN_PRICING_AUTOMATICALLY),
-                EnableAabNavigation = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION)
+                EnableAabNavigation = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_NAVIGATION),
             };
+            
+            return environmentInfo;
         }
     }
 }
