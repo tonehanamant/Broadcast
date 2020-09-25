@@ -188,8 +188,8 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var proprietarySummary in proprietarySummaries)
             {
                 proprietarySummary.NumberOfUnit = 1;
-                proprietarySummary.ImpressionsTotal = _GetImpressions(proprietarySummary.Id, summaryAudienceIds) * proprietarySummary.NumberOfUnit.GetValueOrDefault();
-                
+                proprietarySummary.ImpressionsTotal = _GetImpressions(proprietarySummary.Id, summaryAudienceIds, proprietarySummary.NumberOfUnit.GetValueOrDefault());
+
 
                 if (activeWeekCount > 1)
                 {
@@ -305,8 +305,8 @@ namespace Services.Broadcast.ApplicationServices
 
                 var summary = new InventoryProprietarySummary
                 {
-                    UnitCost = _GetUnitCost(summaryId.Id),
-                    ImpressionsTotal = _GetImpressions(summaryId.Id, summaryAudienceIds) * numberOfUnit
+                    UnitCost = _GetUnitCost(summaryId.Id, numberOfUnit),
+                    ImpressionsTotal = _GetImpressions(summaryId.Id, summaryAudienceIds, numberOfUnit)
                 };
 
                 if (activeWeekCount > 1)
@@ -346,11 +346,11 @@ namespace Services.Broadcast.ApplicationServices
             return percentageOfPlanImpressions;
         }
 
-        private decimal _GetUnitCost(int id)
+        private decimal _GetUnitCost(int id, double numberOfUnit)
         {
             var unitCost = _InventoryProprietarySummaryRepository.GetProprietarySummaryUnitCost(id);
 
-            return unitCost ?? 0;
+            return unitCost.HasValue ? unitCost.Value * (decimal)numberOfUnit : 0;
         }
 
         private decimal _GetTotalCpm(List<InventoryProprietarySummary> inventoryProprietarySummaries)
@@ -376,12 +376,11 @@ namespace Services.Broadcast.ApplicationServices
             return Math.Round(totalCoverage);
         }
 
-        private double _GetImpressions(int invPropSummaryId
-            , List<int> summaryAudienceIds)
+        private double _GetImpressions(int invPropSummaryId, List<int> summaryAudienceIds, double numberOfUnit)
         {
             double impressions = _InventoryProprietarySummaryRepository.GetTotalImpressionsBySummaryIdAndAudienceIds(invPropSummaryId, summaryAudienceIds);
 
-            return impressions;
+            return impressions * numberOfUnit;
         }
     }
 }

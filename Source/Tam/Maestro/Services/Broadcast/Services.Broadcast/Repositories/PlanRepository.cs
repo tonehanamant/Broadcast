@@ -640,7 +640,8 @@ namespace Services.Broadcast.Repositories
                 AdjustedCPM = arg.cpm_adjusted,
                 AdjustedBudget = arg.budget_adjusted,
                 MarketGroup = (MarketGroupEnum)arg.market_group,
-                ProprietaryInventory = arg.plan_version_pricing_parameter_inventory_proprietary_summaries.Select(p => new Entities.InventoryProprietary.InventoryProprietarySummary
+                ProprietaryInventory = arg.plan_version_pricing_parameter_inventory_proprietary_summaries.Where(x => x.inventory_proprietary_summary.is_active)
+                .Select(p => new Entities.InventoryProprietary.InventoryProprietarySummary
                 {
                     NumberOfUnit = p.unit_number,
                     Id = p.inventory_proprietary_summary_id,
@@ -1333,6 +1334,8 @@ namespace Services.Broadcast.Repositories
 
                 var latestParameters = context.plan_version_pricing_parameters
                     .Include(x => x.plan_versions)
+                    .Include(x => x.plan_version_pricing_parameter_inventory_proprietary_summaries)
+                    .Include(x => x.plan_version_pricing_parameter_inventory_proprietary_summaries.Select(y => y.inventory_proprietary_summary))
                     .Where(x => x.id == latestParametersId)
                     .OrderByDescending(p => p.id)
                     .FirstOrDefault();
@@ -1370,8 +1373,8 @@ namespace Services.Broadcast.Repositories
                 AdjustedBudget = entity.budget_adjusted,
                 AdjustedCPM = entity.cpm_adjusted,
                 MarketGroup = (MarketGroupEnum)entity.market_group,
-                ProprietaryInventory = entity.plan_version_pricing_parameter_inventory_proprietary_summaries
-                    .Select(x => new Entities.InventoryProprietary.InventoryProprietarySummary { Id = x.inventory_proprietary_summary_id } )
+                ProprietaryInventory = entity.plan_version_pricing_parameter_inventory_proprietary_summaries.Where(p => p.inventory_proprietary_summary.is_active)
+                    .Select(x => new Entities.InventoryProprietary.InventoryProprietarySummary { Id = x.inventory_proprietary_summary_id, NumberOfUnit = x.unit_number } )
                     .ToList()
             };
             return dto;
