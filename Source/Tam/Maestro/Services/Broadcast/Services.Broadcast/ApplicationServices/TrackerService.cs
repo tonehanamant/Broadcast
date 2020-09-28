@@ -377,11 +377,20 @@ namespace Services.Broadcast.ApplicationServices
             var errorMessage = string.Empty;
             var hasErrors = false;
 
+            var txId = Guid.NewGuid();
+            var totalFileCount = request.Files.Count;
+            var currentFileIndex = 0;
+
+            _LogInfo($"Starting request to process {totalFileCount} files.  IsSigmaUpload = '{isSigmaUpload}'", txId, username);
+
             foreach (var requestDetectionFile in request.Files)
             {
+                currentFileIndex++;
+                _LogInfo($"Beginning file {currentFileIndex} of {totalFileCount}.  FileName = '{requestDetectionFile.FileName}'; FileLength = '{requestDetectionFile.RawData.Length}'", txId, username);
                 try
                 {
-                    errorMessage += string.Format("Starting upload for file '{0}' . . .", requestDetectionFile.FileName);
+                    errorMessage += string.Format("Starting upload for file '{0}' . . .",
+                        requestDetectionFile.FileName);
 
                     //compute file hash to check against duplicate files being loaded
                     var hash = HashGenerator.ComputeHash(StreamHelper.ReadToEnd(requestDetectionFile.StreamData));
@@ -389,21 +398,27 @@ namespace Services.Broadcast.ApplicationServices
                     //check if file has already been loaded
                     if (bvsRepo.GetDetectionFileIdByHash(hash) > 0)
                     {
-                        throw new ApplicationException("Unable to load post log file. The selected post log file has already been loaded.");
+                        throw new ApplicationException(
+                            "Unable to load post log file. The selected post log file has already been loaded.");
                     }
 
                     //we made it this far, it must be a new file - persist the file
                     string message = string.Empty;
                     TrackerFile<DetectionFileDetail> detectionFile = new TrackerFile<DetectionFileDetail>();
-                    Dictionary<TrackerFileDetailKey<DetectionFileDetail>, int> lineInfo = new Dictionary<TrackerFileDetailKey<DetectionFileDetail>, int>();
+                    Dictionary<TrackerFileDetailKey<DetectionFileDetail>, int> lineInfo =
+                        new Dictionary<TrackerFileDetailKey<DetectionFileDetail>, int>();
+
+                    _LogInfo($"Beginning file data extract...", txId, username);
 
                     if (isSigmaUpload)
                     {
-                        detectionFile = _SigmaConverter.ExtractSigmaData(requestDetectionFile.StreamData, hash, username, requestDetectionFile.FileName, out lineInfo);
+                        detectionFile = _SigmaConverter.ExtractSigmaData(requestDetectionFile.StreamData, hash,
+                            username, requestDetectionFile.FileName, out lineInfo);
                     }
                     else
                     {
-                        detectionFile = _DetectionConverter.ExtractDetectionData(requestDetectionFile.StreamData, hash, username, requestDetectionFile.FileName, out message, out lineInfo);
+                        detectionFile = _DetectionConverter.ExtractDetectionData(requestDetectionFile.StreamData, hash,
+                            username, requestDetectionFile.FileName, out message, out lineInfo);
                     }
 
                     if (!string.IsNullOrEmpty(message))
@@ -412,16 +427,25 @@ namespace Services.Broadcast.ApplicationServices
                         hasErrors = true;
                     }
 
+                    _LogInfo($"Extracted {detectionFile.FileDetails.Count} detail items.", txId, username);
+                    _LogInfo($"Beginning file data filter...", txId, username);
+
                     var filterResult = bvsRepo.FilterOutExistingDetails(detectionFile.FileDetails.ToList());
                     detectionFile.FileDetails = filterResult.New;
 
+                    _LogInfo($"Filtered down to {detectionFile.FileDetails.Count} detail items. Updated {filterResult.Updated.Count}. Ignored {filterResult.Ignored.Count}.", txId, username);
+
                     if (filterResult.Ignored.Any())
                     {
-                        duplicateMessage += "<p>The following line(s) were previously imported and were ignored:</p><ul>";
+                        duplicateMessage +=
+                            "<p>The following line(s) were previously imported and were ignored:</p><ul>";
                         foreach (var file in filterResult.Ignored)
                         {
-                            duplicateMessage += string.Format("<li>Line {0}: Station {1}, Date {2}, Time Aired {3}, ISCI {4}, Spot Length {5}, Campaign {6}, Advertiser {7}</li>",
-                                lineInfo[new TrackerFileDetailKey<DetectionFileDetail>(file)], file.Station, file.DateAired, file.TimeAired, file.Isci, file.SpotLength, file.EstimateId, file.Advertiser);
+                            duplicateMessage += string.Format(
+                                "<li>Line {0}: Station {1}, Date {2}, Time Aired {3}, ISCI {4}, Spot Length {5}, Campaign {6}, Advertiser {7}</li>",
+                                lineInfo[new TrackerFileDetailKey<DetectionFileDetail>(file)], file.Station,
+                                file.DateAired, file.TimeAired, file.Isci, file.SpotLength, file.EstimateId,
+                                file.Advertiser);
                         }
 
                         duplicateMessage += "</ul>";
@@ -429,38 +453,52 @@ namespace Services.Broadcast.ApplicationServices
 
                     if (filterResult.Updated.Any())
                     {
-                        duplicateMessage += "<p>The following line(s) were previously imported and were updated with new program name:</p><ul>";
+                        duplicateMessage +=
+                            "<p>The following line(s) were previously imported and were updated with new program name:</p><ul>";
                         foreach (var file in filterResult.Updated)
                         {
-                            duplicateMessage += string.Format("<li>Line {0}: Station {1}, Date {2}, Time Aired {3}, ISCI {4}, Spot Length {5}, Campaign {6}, Advertiser {7}, Program Name {8}</li>",
-                                lineInfo[new TrackerFileDetailKey<DetectionFileDetail>(file)], file.Station, file.DateAired, file.TimeAired, file.Isci, file.SpotLength, file.EstimateId, file.Advertiser, file.ProgramName);
+                            duplicateMessage += string.Format(
+                                "<li>Line {0}: Station {1}, Date {2}, Time Aired {3}, ISCI {4}, Spot Length {5}, Campaign {6}, Advertiser {7}, Program Name {8}</li>",
+                                lineInfo[new TrackerFileDetailKey<DetectionFileDetail>(file)], file.Station,
+                                file.DateAired, file.TimeAired, file.Isci, file.SpotLength, file.EstimateId,
+                                file.Advertiser, file.ProgramName);
                         }
 
                         duplicateMessage += "</ul>";
                     }
 
                     bvsIds.Add(bvsRepo.SaveDetectionFile(detectionFile));
-                    errorMessage += string.Format("File '{0}' uploaded successfully.<br />", requestDetectionFile.FileName);
+                    errorMessage += string.Format("File '{0}' uploaded successfully.<br />",
+                        requestDetectionFile.FileName);
                 }
                 catch (Exception e)
                 {
                     hasErrors = true;
-                    errorMessage += string.Format("<br /> Error processing file '{0}'. <br />Message:<br />{1}<br />{2}<br />", requestDetectionFile.FileName, e.Message, e.StackTrace);
+                    errorMessage +=
+                        string.Format("<br /> Error processing file '{0}'. <br />Message:<br />{1}<br />{2}<br />",
+                            requestDetectionFile.FileName, e.Message, e.StackTrace);
 
-                    _LogError("Error caught attempt to save the file.", e);
+                    _LogError($"Error caught attempt to save file {currentFileIndex} of {totalFileCount}.  FileName = '{requestDetectionFile.FileName}'; FileLength = '{requestDetectionFile.RawData.Length}'", txId, e, username);
 
                     var innerEx = e.InnerException;
                     var level = 1;
                     while (innerEx != null)
                     {
-                        errorMessage += string.Format("\r\nInner Exception Details: {0}<br />{1}<br />", innerEx.Message, innerEx.StackTrace);
+                        errorMessage += string.Format("\r\nInner Exception Details: {0}<br />{1}<br />",
+                            innerEx.Message, innerEx.StackTrace);
                         _LogError($"Inner Exception Level {level}", innerEx);
                         level++;
                         innerEx = innerEx.InnerException;
                     }
                 }
+                finally
+                {
+                    _LogInfo($"Completed file {currentFileIndex} of {totalFileCount}.  FileName = '{requestDetectionFile.FileName}'; FileLength = '{requestDetectionFile.RawData.Length}'", txId, username);
+                }
             }
-            
+
+            _LogInfo($"Finalizing processing request of {totalFileCount} files.", txId, username);
+
             var estimateIds = _BroadcastDataRepositoryFactory.GetDataRepository<IDetectionRepository>().GetEstimateIdsWithSchedulesByFileIds(bvsIds);
             foreach (var estimateId in estimateIds)
             {
@@ -469,6 +507,8 @@ namespace Services.Broadcast.ApplicationServices
 
                 _TrackingEngine.TrackDetectionByEstimateId(estimateId);
             }
+
+            _LogInfo($"Completed processing request of {totalFileCount} files.", txId, username);
 
             if (hasErrors)
                 throw new ExtractDetectionException(errorMessage);

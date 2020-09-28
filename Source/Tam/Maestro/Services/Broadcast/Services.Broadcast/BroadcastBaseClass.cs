@@ -47,9 +47,9 @@ namespace Services.Broadcast
             _Log.Error(logMessage.ToJson(), ex);
         }
 
-        protected virtual void _LogError(string message, Guid transactionId, Exception ex = null, [CallerMemberName] string memberName = "")
+        protected virtual void _LogError(string message, Guid transactionId, Exception ex = null, string username = null, [CallerMemberName] string memberName = "")
         {
-            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, transactionId, GetType(), memberName);
+            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, transactionId, GetType(), memberName, username);
             _Log.Error(logMessage.ToJson(), ex);
         }
 
