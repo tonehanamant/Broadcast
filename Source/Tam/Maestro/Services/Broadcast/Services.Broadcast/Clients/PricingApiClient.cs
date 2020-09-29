@@ -1,6 +1,7 @@
 ﻿using Services.Broadcast.Entities.Plan.Pricing;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
@@ -15,6 +16,8 @@ namespace Services.Broadcast.Clients
 
     public class PricingApiClient : IPricingApiClient
     {
+        private const int ASYNC_API_TIMEOUT_SECONDS = 900;
+
         private readonly string _OpenMarketSpotsAllocationUrl;
         private readonly string _OpenMarketSpotsAllocationUrl_v3;
 
@@ -39,10 +42,15 @@ namespace Services.Broadcast.Clients
         protected virtual T _Post<T>(string url, object data)
         {
             T output;
+
             using (var client = new HttpClient())
             {
-                var serviceResponse = client.PostAsJsonAsync(url, data).Result;
+                client.Timeout = new TimeSpan(0, 0, ASYNC_API_TIMEOUT_SECONDS);
 
+                var rawServiceResponse = client.PostAsJsonAsync(url, data);
+                rawServiceResponse.Wait();
+
+                var serviceResponse = rawServiceResponse.Result;
                 if (serviceResponse.IsSuccessStatusCode == false)
                 {
                     try
@@ -54,7 +62,6 @@ namespace Services.Broadcast.Clients
                     {
                         throw new Exception($"Error connecting to Pricing API for post data. : {serviceResponse}");
                     }
-                    
                 }
 
                 try
