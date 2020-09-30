@@ -523,7 +523,8 @@ namespace Services.Broadcast.ApplicationServices
             {
                 foreach (var unmatchedProgram in unmatchedPrograms)
                 {
-                    var similarity = jaroWinkler.Similarity(unmatchedProgram.ProgramName, masterProgramListItem.OfficialProgramName);
+                    // The algorithm is case sensitive, so it's necessary both string have the same case
+                    var similarity = jaroWinkler.Similarity(unmatchedProgram.ProgramName.ToLower(), masterProgramListItem.OfficialProgramName.ToLower());
                     if (similarity > unmatchedProgram.MatchConfidence)
                     {
                         unmatchedProgram.MatchConfidence = (float)similarity;

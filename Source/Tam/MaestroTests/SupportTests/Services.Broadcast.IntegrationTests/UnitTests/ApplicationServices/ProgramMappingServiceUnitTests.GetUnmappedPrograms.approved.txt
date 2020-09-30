@@ -36,12 +36,12 @@
     "ShowType": "Sports"
   },
   {
-    "Genre": "News",
+    "Genre": "Comedy",
     "MatchConfidence": 0.5925926,
-    "MatchedName": "OTHER NEWS",
+    "MatchedName": "Family Guy",
     "MatchType": 4,
     "OriginalName": "AMERICA UNDERCOVER",
     "ProgramName": "AMERICA UNDERCOVER",
-    "ShowType": "News"
+    "ShowType": "Comedy"
   }
 ]
