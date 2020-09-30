@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Castle.Components.DictionaryAdapter;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
@@ -1917,6 +1918,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 {
                     new audience_audiences { rating_audience_id = 1 },
                     new audience_audiences { rating_audience_id = 2 }
+                });
+
+            _PlanPricingProgramCalculationEngine.Setup(s => s.CalculateProgramResults(
+                    It.IsAny<List<PlanPricingInventoryProgram>>(), It.IsAny<PlanPricingAllocationResult>(),
+                    It.IsAny<bool>(), It.IsAny<ProprietaryInventoryData>()))
+                .Returns(new PlanPricingResultBaseDto
+                {
+                    GoalFulfilledByProprietary = true,
+                    JobId = 1,
+                    OptimalCpm = 0.0006666666666666666666667000m,
                 });
 
             var service = _GetService();
@@ -4645,6 +4656,59 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanRepositoryMock
                 .Setup(x => x.SavePricingAggregateResults(It.IsAny<PlanPricingResultBaseDto>()))
                 .Callback<PlanPricingResultBaseDto>(p => passedParameters.Add(p));
+
+            _PlanPricingProgramCalculationEngine.Setup(s => s.CalculateProgramResults(
+                    It.IsAny<List<PlanPricingInventoryProgram>>(), It.IsAny<PlanPricingAllocationResult>(),
+                    It.IsAny<bool>(), It.IsAny<ProprietaryInventoryData>()))
+                .Returns(new PlanPricingResultBaseDto
+                {
+                    GoalFulfilledByProprietary = false,
+                    JobId = 1,
+                    OptimalCpm = 0.1682953311617806731813246000m,
+                    PlanVersionId = 77,
+                    Programs = new List<PlanPricingProgramDto>
+                    {
+                        new PlanPricingProgramDto
+                        {
+                            AvgCpm = 62.5000m,
+                            AvgImpressions = 1000,
+                            Budget = 187.5m,
+                            Genre = "Sport",
+                            Id = 0,
+                            Impressions = 3000,
+                            MarketCount = 1,
+                            PercentageOfBuy = 40,
+                            ProgramName = "seinfeld_2",
+                            Spots = 3,
+                            StationCount = 1
+                        },
+                        new PlanPricingProgramDto
+                        {
+                            AvgCpm = 50.00m,
+                            AvgImpressions = 1500,
+                            Budget = 225m,
+                            Genre = "News",
+                            Id = 0,
+                            Impressions = 4500,
+                            MarketCount = 1,
+                            PercentageOfBuy = 60,
+                            ProgramName = "seinfeld",
+                            Spots = 3,
+                            StationCount = 1
+                        }
+                    },
+                    Totals = new PlanPricingProgramTotalsDto
+                    {
+                        AvgCpm = 55.000m,
+                        AvgImpressions = 1250,
+                        Budget = 412.5m,
+                        Impressions = 7500,
+                        ImpressionsPercentage = 0,
+                        MarketCount = 2,
+                        Spots = 6,
+                        StationCount = 2
+                    }
+                });
 
             var service = _GetService();
 
