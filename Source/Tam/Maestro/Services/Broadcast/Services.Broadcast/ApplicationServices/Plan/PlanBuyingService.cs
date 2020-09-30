@@ -179,6 +179,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IPlanBuyingRequestLogClient _BuyingRequestLogClient;
         private readonly IInventoryProprietarySummaryRepository _InventoryProprietarySummaryRepository;
         private readonly IBroadcastAudienceRepository _AudienceRepository;
+        private readonly IAsyncTaskHelper _AsyncTaskHelper;
 
         public PlanBuyingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -195,7 +196,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                   IPlanBuyingMarketResultsEngine planBuyingMarketResultsEngine,
                                   IPlanBuyingRequestLogClient buyingRequestLogClient,
                                   IPlanBuyingOwnershipGroupEngine planBuyingOwnershipGroupEngine,
-                                  IPlanBuyingRepFirmEngine planBuyingRepFirmEngine)
+                                  IPlanBuyingRepFirmEngine planBuyingRepFirmEngine,
+                                  IAsyncTaskHelper asyncTaskHelper)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _PlanBuyingRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanBuyingRepository>();
@@ -222,6 +224,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanBuyingRepFirmEngine = planBuyingRepFirmEngine;
             _InventoryProprietarySummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProprietarySummaryRepository>();
             _AudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
+            _AsyncTaskHelper = asyncTaskHelper;
         }
 
         public ReportOutput GenerateBuyingResultsReport(int planId, int? planVersionNumber, string templatesFilePath)
@@ -1113,7 +1116,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Spots = spots
             };
 
-            _BackgroundJobClient.Enqueue<IPlanBuyingService>(x => x.SaveBuyingRequest(plan.Id, buyingApiRequest));
+            _AsyncTaskHelper.TaskFireAndForget(() => SaveBuyingRequest(plan.Id, buyingApiRequest));
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALLING_API);
             var apiAllocationResult = _BuyingApiClient.GetBuyingSpotsResult(buyingApiRequest);
@@ -1158,7 +1161,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Spots = spots
             };
 
-            _BackgroundJobClient.Enqueue<IPlanBuyingService>(x => x.SaveBuyingRequest(plan.Id, buyingApiRequest));
+            _AsyncTaskHelper.TaskFireAndForget(() => SaveBuyingRequest(plan.Id, buyingApiRequest));
 
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_CALLING_API);
             var apiAllocationResult = _BuyingApiClient.GetBuyingSpotsResult(buyingApiRequest);

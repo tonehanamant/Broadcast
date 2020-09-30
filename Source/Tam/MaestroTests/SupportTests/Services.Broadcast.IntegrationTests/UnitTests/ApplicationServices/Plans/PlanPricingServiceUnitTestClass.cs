@@ -6,6 +6,7 @@ using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Clients;
 using System;
 using Services.Broadcast.BusinessEngines.PlanPricing;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Validators;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
@@ -29,7 +30,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                   IPlanValidator planValidator,
                                   ISharedFolderService sharedFolderService,
                                   IAudienceService audienceService, 
-                                  ICreativeLengthEngine creativeLengthEngine)
+                                  ICreativeLengthEngine creativeLengthEngine,
+                                  IAsyncTaskHelper asyncTaskHelper)
         : base(
             broadcastDataRepositoryFactory,
             spotLengthEngine,
@@ -48,7 +50,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             planValidator,
             sharedFolderService,
             audienceService,
-            creativeLengthEngine)
+            creativeLengthEngine,
+            asyncTaskHelper)
         {
         }
 

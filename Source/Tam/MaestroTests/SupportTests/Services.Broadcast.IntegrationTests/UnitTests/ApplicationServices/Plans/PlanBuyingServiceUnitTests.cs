@@ -61,6 +61,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IInventoryProprietarySummaryRepository> _InventoryProprietarySummaryRepositoryMock;
         private Mock<IBroadcastAudienceRepository> _BroadcastAudienceRepositoryMock;
         private Mock<IPlanBuyingRepository> _PlanBuyingRepositoryMock;
+        private IAsyncTaskHelper _AsyncTaskHelper;
 
         protected PlanBuyingService _GetService()
         {
@@ -80,7 +81,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _PlanBuyingMarketResultsEngine.Object,
                 _PlanBuyingRequestLogClient.Object,
                 _PlanBuyingOwnershipGroupEngine.Object,
-                _PlanBuyingRepFirmEngine.Object
+                _PlanBuyingRepFirmEngine.Object,
+                _AsyncTaskHelper
             );
         }
 
@@ -113,6 +115,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _InventoryProprietarySummaryRepositoryMock = new Mock<IInventoryProprietarySummaryRepository>();
             _BroadcastAudienceRepositoryMock = new Mock<IBroadcastAudienceRepository>();
             _PlanBuyingRepositoryMock = new Mock<IPlanBuyingRepository>();
+            _AsyncTaskHelper = new AsyncTaskHelperStub();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IPlanBuyingRepository>())

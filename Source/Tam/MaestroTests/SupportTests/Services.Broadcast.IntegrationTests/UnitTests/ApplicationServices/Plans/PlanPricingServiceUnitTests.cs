@@ -74,6 +74,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<ICreativeLengthEngine> _CreativeLengthEngineMock;
         private Mock<IInventoryProprietarySummaryRepository> _InventoryProprietarySummaryRepositoryMock;
         private Mock<IBroadcastAudienceRepository> _BroadcastAudienceRepositoryMock;
+        private AsyncTaskHelperStub _AsyncTaskHelperStub;
 
         [SetUp]
         public void SetUp()
@@ -105,6 +106,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _InventoryProprietarySummaryRepositoryMock = new Mock<IInventoryProprietarySummaryRepository>();
             _BroadcastAudienceRepositoryMock = new Mock<IBroadcastAudienceRepository>();
             _PlanPricingProgramCalculationEngine = new Mock<IPlanPricingProgramCalculationEngine>();
+            _AsyncTaskHelperStub = new AsyncTaskHelperStub();
 
             _DateTimeEngineMock
                 .Setup(x => x.GetCurrentMoment())
@@ -1103,7 +1105,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _PlanValidatorMock.Object,
                 _SharedFolderServiceMock.Object,
                 _AudienceServiceMock.Object,
-                _CreativeLengthEngineMock.Object);
+                _CreativeLengthEngineMock.Object,
+                _AsyncTaskHelperStub);
         }
 
         private PlanPricingParametersDto _GetPlanPricingParametersDto()
@@ -8290,13 +8293,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var requests = new List<PlanPricingApiRequestDto>();
             _PricingApiClientMock
-                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()));
-
-            var passedParameters = new List<object>();
-            _BackgroundJobClientMock
-                .Setup(x => x.Create(It.IsAny<Job>(), It.IsAny<IState>()))
-                .Callback<Job, IState>((job, state) => passedParameters.Add(new { job, state }))
-                .Returns("hangfire job 35");
+                .Setup(x => x.GetPricingSpotsResult(It.IsAny<PlanPricingApiRequestDto>()))
+                .Returns(new PlanPricingApiSpotsResponseDto { RequestId = "Request1" });
 
             var service = _GetService();
 
@@ -8312,6 +8310,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 ContractResolver = jsonResolver
             };
+            var passedParameters = _AsyncTaskHelperStub.TaskFireAndForgetActions;
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters, settings));
@@ -8545,12 +8544,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         Results = new List<PlanPricingApiSpotsResultDto_v3>()
                     });
 
-                var passedParameters = new List<object>();
-                _BackgroundJobClientMock
-                    .Setup(x => x.Create(It.IsAny<Job>(), It.IsAny<IState>()))
-                    .Callback<Job, IState>((job, state) => passedParameters.Add(new { job, state }))
-                    .Returns("hangfire job 35");
-
                 _SpotLengthEngineMock
                     .Setup(x => x.GetDeliveryMultiplierBySpotLengthId(It.IsAny<int>()))
                     .Returns<int>(id => id == 1 ? 1 : 0.5);
@@ -8569,6 +8562,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     ContractResolver = jsonResolver
                 };
+                var passedParameters = _AsyncTaskHelperStub.TaskFireAndForgetActions;
 
                 // Assert
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters, settings));

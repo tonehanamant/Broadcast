@@ -71,6 +71,8 @@ namespace Services.Broadcast.ApplicationServices
                         _instance.RegisterType<IBackgroundJobClient, BackgroundJobClient>();
                         _instance.RegisterType<IBackgroundJobStateChanger, BackgroundJobStateChanger>();
 
+                        _instance.RegisterType<IAsyncTaskHelper, AsyncTaskHelper>();
+
                         SystemComponentParameterHelper.SetConfigurationClient(ConfigurationClientSwitch.Handler);
                         RegisterApplicationServices(_instance);
                     }

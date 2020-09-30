@@ -160,6 +160,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ICreativeLengthEngine _CreativeLengthEngine;
         private readonly IInventoryProprietarySummaryRepository _InventoryProprietarySummaryRepository;
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
+        private readonly IAsyncTaskHelper _AsyncTaskHelper;
 
         public PlanPricingService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                   ISpotLengthEngine spotLengthEngine,
@@ -178,7 +179,8 @@ namespace Services.Broadcast.ApplicationServices
                                   IPlanValidator planValidator,
                                   ISharedFolderService sharedFolderService,
                                   IAudienceService audienceService,
-                                  ICreativeLengthEngine creativeLengthEngine)
+                                  ICreativeLengthEngine creativeLengthEngine,
+                                  IAsyncTaskHelper asyncTaskHelper)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _InventoryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -206,6 +208,7 @@ namespace Services.Broadcast.ApplicationServices
             _CreativeLengthEngine = creativeLengthEngine;
             _InventoryProprietarySummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProprietarySummaryRepository>();
             _BroadcastAudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
+            _AsyncTaskHelper = asyncTaskHelper;
         }
 
         public Guid RunQuote(QuoteRequestDto request, string userName, string templatesFilePath)
@@ -1312,7 +1315,7 @@ namespace Services.Broadcast.ApplicationServices
                 Spots = spots
             };
 
-            _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.SavePricingRequest(plan.Id, pricingApiRequest));
+            _AsyncTaskHelper.TaskFireAndForget(() => SavePricingRequest(plan.Id, pricingApiRequest));
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
             var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
@@ -1362,7 +1365,7 @@ namespace Services.Broadcast.ApplicationServices
                 Spots = spots
             };
 
-            _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.SavePricingRequest(plan.Id, pricingApiRequest));
+            _AsyncTaskHelper.TaskFireAndForget(() => SavePricingRequest(plan.Id, pricingApiRequest));
 
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_CALLING_API);
             var apiAllocationResult = _PricingApiClient.GetPricingSpotsResult(pricingApiRequest);
@@ -1608,25 +1611,27 @@ namespace Services.Broadcast.ApplicationServices
 
         public void SavePricingRequest(int planId, PlanPricingApiRequestDto pricingApiRequest)
         {
+            _LogInfo($"Saving the pricing API Request.  PlanId = '{planId}'.");
             try
             {
                 _PricingRequestLogClient.SavePricingRequest(planId, pricingApiRequest);
             }
             catch (Exception exception)
             {
-                _LogError("Failed to save pricing API request", exception);
+                _LogError($"Failed to save pricing API request.  PlanId = '{planId}'.", exception);
             }
         }
 
         public void SavePricingRequest(int planId, PlanPricingApiRequestDto_v3 pricingApiRequest)
         {
+            _LogInfo($"Saving the pricing API Request.  PlanId = '{planId}'.");
             try
             {
                 _PricingRequestLogClient.SavePricingRequest(planId, pricingApiRequest);
             }
             catch (Exception exception)
             {
-                _LogError("Failed to save pricing API request", exception);
+                _LogError("Failed to save pricing API request.  PlanId = '{planId}'.", exception);
             }
         }
 
