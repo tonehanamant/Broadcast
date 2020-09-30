@@ -1,8 +1,10 @@
 [
   {
     "DefaultDaypartId": null,
+    "Genre": null,
     "Id": 0,
     "InventorySourceId": 5,
+    "ProgramName": null,
     "ProprietaryDaypartProgramMappingId": 1,
     "Quarter": null,
     "SlotNumber": 1,

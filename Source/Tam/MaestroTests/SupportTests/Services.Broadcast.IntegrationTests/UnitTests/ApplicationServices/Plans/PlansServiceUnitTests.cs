@@ -9,6 +9,7 @@ using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.InventoryProprietary;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
@@ -33,6 +34,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
         private Mock<IPlanRepository> _PlanRepositoryMock;
         private Mock<IPlanSummaryRepository> _PlanSummaryRepositoryMock;
+        private Mock<IInventoryProprietarySummaryRepository> _InventoryProprietarySummaryRepositoryMock;
         private Mock<IDayRepository> _DayRepositoryMock;
         private Mock<IPlanValidator> _PlanValidatorMock;
         private Mock<IPlanBudgetDeliveryCalculator> _PlanBudgetDeliveryCalculatorMock;
@@ -70,6 +72,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _StandardDaypartServiceMock = new Mock<IStandardDaypartService>();
             _WeeklyBreakdownEngineMock = new Mock<IWeeklyBreakdownEngine>();
             _CreativeLengthEngineMock = new Mock<ICreativeLengthEngine>();
+            _InventoryProprietarySummaryRepositoryMock = new Mock<IInventoryProprietarySummaryRepository>();
             _BroadcastLockingManagerApplicationServiceMock
                 .Setup(x => x.LockObject(It.IsAny<string>()))
                 .Returns(new LockResponse
@@ -98,6 +101,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DataRepositoryFactoryMock
                 .Setup(s => s.GetDataRepository<IPlanRepository>())
                 .Returns(_PlanRepositoryMock.Object);
+
+            _DataRepositoryFactoryMock
+               .Setup(s => s.GetDataRepository<IInventoryProprietarySummaryRepository>())
+               .Returns(_InventoryProprietarySummaryRepositoryMock.Object);
 
             var daypartCodeRepository = new Mock<IStandardDaypartRepository>();
             daypartCodeRepository
@@ -277,14 +284,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             // Arrange
             var planToReturn = _GetNewPlan();
+
+            _InventoryProprietarySummaryRepositoryMock
+                .Setup(x => x.GetInventorySummaryDataById(It.IsAny<IEnumerable<int>>()))
+                .Returns(_GetInventorySummaryProprietaryData());
+
             _PlanRepositoryMock
                 .Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns((int planId, int versionId) =>
-                 {
-                     planToReturn.Id = planId;
-                     planToReturn.VersionId = versionId;
-                     return planToReturn;
-                 });
+                {
+                    planToReturn.Id = planId;
+                    planToReturn.VersionId = versionId;
+                    return planToReturn;
+                });
             _SpotLengthEngineMock
                 .Setup(a => a.GetSpotLengths())
                 .Returns(new Dictionary<int, int> { { 30, 1 } });
@@ -307,7 +319,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
-
+               
         [Test]
         public void PlanStatusTransitionFailsOnLockedPlans()
         {
@@ -875,7 +887,27 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 TargetRatingPoints = 50,
                 TargetCPP = 50,
                 GoalBreakdownType = PlanGoalBreakdownTypeEnum.EvenDelivery,
-                ImpressionsPerUnit = 20
+                ImpressionsPerUnit = 20,
+                PricingParameters = new PlanPricingParametersDto
+                {
+                    AdjustedBudget = 80m,
+                    AdjustedCPM = 10m,
+                    CPM = 12m,
+                    Budget = 100m,
+                    Currency = PlanCurrenciesEnum.Impressions,
+                    DeliveryImpressions = 100d,
+                    InflationFactor = 10,
+                    JobId = 1,
+                    PlanId = 1,
+                    PlanVersionId = 1,
+                    ProprietaryInventory = new List<InventoryProprietarySummary>
+                    {
+                        new InventoryProprietarySummary
+                        {
+                            Id = 1
+                        }
+                    }
+                }
             };
         }
 
@@ -1020,5 +1052,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             { 1,1}, { 2, 2}, { 3, 0.5}
         };
+
+        private static Dictionary<int, InventoryProprietarySummary> _GetInventorySummaryProprietaryData()
+        {
+            return new Dictionary<int, InventoryProprietarySummary> {
+                    { 1, 
+                        new InventoryProprietarySummary
+                        {
+                            Id = 1,
+                            DaypartName = "Daypart name",
+                            InventorySourceName = "CNN",
+                            UnitType = "PM"
+                        }
+                    }
+                };
+        }
+
     }
 }

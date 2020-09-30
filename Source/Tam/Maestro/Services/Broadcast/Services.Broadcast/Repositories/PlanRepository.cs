@@ -640,11 +640,12 @@ namespace Services.Broadcast.Repositories
                 AdjustedCPM = arg.cpm_adjusted,
                 AdjustedBudget = arg.budget_adjusted,
                 MarketGroup = (MarketGroupEnum)arg.market_group,
-                ProprietaryInventory = arg.plan_version_pricing_parameter_inventory_proprietary_summaries.Where(x => x.inventory_proprietary_summary.is_active)
+                ProprietaryInventory = arg.plan_version_pricing_parameter_inventory_proprietary_summaries
+                                .Where(x => x.inventory_proprietary_summary.is_active)
                 .Select(p => new Entities.InventoryProprietary.InventoryProprietarySummary
                 {
                     NumberOfUnit = p.unit_number,
-                    Id = p.inventory_proprietary_summary_id,
+                    Id = p.inventory_proprietary_summary_id
                 }).ToList()
             };
         }

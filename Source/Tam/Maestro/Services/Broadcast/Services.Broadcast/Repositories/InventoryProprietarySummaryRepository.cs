@@ -76,6 +76,13 @@ namespace Services.Broadcast.Repositories
         List<InventoryProprietaryQuarterSummaryDto> GetInventoryProprietarySummariesByIds(IEnumerable<int> summaryIds);
 
         /// <summary>
+        /// Gets the inventory proprietary summaries by ids.
+        /// </summary>
+        /// <param name="summaryIds">The summary ids.</param>
+        /// <returns>Dictionary containing the inventory proprietary summary data</returns>
+        Dictionary<int, InventoryProprietarySummary> GetInventorySummaryDataById(IEnumerable<int> summaryIds);
+
+        /// <summary>
         /// Gets the market codes by summary ids.
         /// </summary>
         /// <param name="summaryIds">The summary ids.</param>
@@ -420,6 +427,38 @@ namespace Services.Broadcast.Repositories
                         .SingleOrDefault(x => x.id == proprietarySummaryId);
 
                     return proprietarySummary?.unit_cost;
+                });
+        }
+
+        /// <inheritdoc/>
+        public Dictionary<int, InventoryProprietarySummary> GetInventorySummaryDataById(IEnumerable<int> summaryIds)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var query =
+                        from summary in context.inventory_proprietary_summary
+                        join source in context.inventory_sources 
+                            on summary.inventory_source_id equals source.id
+                        join mappings in context.inventory_proprietary_daypart_program_mappings 
+                            on summary.inventory_proprietary_daypart_program_mappings_id equals mappings.id
+                        join standardDaypart in context.standard_dayparts 
+                            on mappings.standard_daypart_id equals standardDaypart.id
+                        join daypart in context.dayparts 
+                            on standardDaypart.daypart_id equals daypart.id
+                        join programName in context.inventory_proprietary_daypart_programs 
+                            on mappings.inventory_proprietary_daypart_programs_id equals programName.id
+                        where summaryIds.Contains(summary.id)
+                        select new InventoryProprietarySummary
+                        {
+                            Id = summary.id,
+                            DaypartName = daypart.daypart_text,
+                            InventorySourceName = source.name,
+                            UnitType = programName.unit_type,
+                            UnitCost = summary.unit_cost,
+                        };
+
+                    return query.ToDictionary(key => key.Id, value => value);
                 });
         }
     }

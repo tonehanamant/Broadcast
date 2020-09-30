@@ -7,6 +7,7 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.InventoryProprietary;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Extensions;
@@ -146,6 +147,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
     public class PlanService : IPlanService
     {
         private readonly IPlanRepository _PlanRepository;
+        private readonly IInventoryProprietarySummaryRepository _InventoryProprietarySummaryRepository;
         private readonly IPlanValidator _PlanValidator;
         private readonly ICreativeLengthEngine _CreativeLengthEngine;
         private readonly IPlanBudgetDeliveryCalculator _BudgetCalculator;
@@ -187,6 +189,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _BudgetCalculator = planBudgetDeliveryCalculator;
 
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
+            _InventoryProprietarySummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProprietarySummaryRepository>();
             _CampaignRepository = broadcastDataRepositoryFactory.GetDataRepository<ICampaignRepository>();
             _PlanSummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanSummaryRepository>();
             _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
@@ -403,6 +406,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             plan.IsPricingModelRunning = _PlanPricingService.IsPricingModelRunningForPlan(planId);
             plan.IsBuyingModelRunning = _PlanBuyingService.IsBuyingModelRunning(planId);
 
+            _PopulateProprietaryInventoryData(plan.PricingParameters.ProprietaryInventory);
+
             // Because in DB we store weekly breakdown split 'by week by ad length by daypart'
             // we need to group them back based on the plan delivery type
             plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(plan);
@@ -419,6 +424,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _SortCreativeLengths(plan);
 
             return plan;
+        }
+
+        private void _PopulateProprietaryInventoryData(List<InventoryProprietarySummary> proprietaryInventory)
+        {
+            Dictionary<int, InventoryProprietarySummary> data = _InventoryProprietarySummaryRepository
+                .GetInventorySummaryDataById(proprietaryInventory.Select(y => y.Id));
+            proprietaryInventory.ForEach(x =>
+            {
+                x.InventorySourceName = data[x.Id].InventorySourceName;
+                x.UnitType = data[x.Id].UnitType;
+                x.DaypartName = data[x.Id].DaypartName;
+            });
         }
 
         private void _SortCreativeLengths(PlanDto plan)
