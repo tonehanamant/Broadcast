@@ -406,7 +406,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             plan.IsPricingModelRunning = _PlanPricingService.IsPricingModelRunningForPlan(planId);
             plan.IsBuyingModelRunning = _PlanBuyingService.IsBuyingModelRunning(planId);
 
-            _PopulateProprietaryInventoryData(plan.PricingParameters.ProprietaryInventory);
+            if(plan.PricingParameters != null && plan.PricingParameters.ProprietaryInventory.Any())
+            {
+                _PopulateProprietaryInventoryData(plan.PricingParameters.ProprietaryInventory);
+            }
 
             // Because in DB we store weekly breakdown split 'by week by ad length by daypart'
             // we need to group them back based on the plan delivery type
