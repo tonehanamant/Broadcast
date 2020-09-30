@@ -926,7 +926,7 @@ namespace Services.Broadcast.BusinessEngines
 
             var restrictedAffiliates = affiliateRestrictions.Affiliates.Select(x => x.Display);
             bool hasIntersections;            
-            if (restrictedAffiliates.Any(x => x.Equals("IND")) && _UseTrueIndependentStations.Value)
+            if (restrictedAffiliates.Any(x => x.Equals("IND")) && _UseTrueIndependentStations.Value && program.Station.Affiliation.Equals("IND"))
             {
                 hasIntersections = program.Station.IsTrueInd == true;
             }
