@@ -1,8 +1,7 @@
 ﻿using Services.Broadcast.Entities.Plan;
-using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
-using Services.Broadcast.Entities.spotcableXML;
 using Services.Broadcast.Entities.StationInventory;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
@@ -41,6 +40,10 @@ namespace Services.Broadcast.Entities.Campaign
         private const string DATE_FORMAT_SHORT_YEAR_SLASHES = "MM/dd/yy";
         private const string DATE_FORMAT_SHORT_YEAR_SINGLE_DIGIT = "M/d/yy";
 
+        internal ProgramLineupReportData()
+        {
+        }
+
         public ProgramLineupReportData(
             PlanDto plan,
             PlanPricingJob planPricingJob,
@@ -55,7 +58,7 @@ namespace Services.Broadcast.Entities.Campaign
             Dictionary<int, Program> primaryProgramsByManifestDaypartIds,
             List<ProgramLineupProprietaryInventory> proprietaryInventory)
         {
-            ExportFileName = string.Format(FILENAME_FORMAT, plan.Name, currentDate.ToString(DATE_FORMAT_FILENAME));
+            ExportFileName = _GetFileName(plan.Name, currentDate);
             var marketCoverageByMarketCode = marketCoverageByStation.Markets.ToDictionary(x => x.MarketCode, x => x);
 
             _PopulateHeaderData(plan, planPricingJob, agency, advertiser, guaranteedDemo, spotLengths, currentDate);
@@ -81,6 +84,13 @@ namespace Services.Broadcast.Entities.Campaign
             AllocationByDMAViewRows = _MapDMAToAllocationViewRows(detailedRowsData, totalAllocatedImpressions);
 
             AllocationBySpotLengthViewRows = _MapSpotLengthToAllocationViewRows(allocatedSpots, proprietaryInventory, totalAllocatedImpressions, spotLengths, plan.Equivalized);
+        }
+
+        internal string _GetFileName(string planName, DateTime currentDate)
+        {
+            var rawFileName = string.Format(FILENAME_FORMAT, planName, currentDate.ToString(DATE_FORMAT_FILENAME));
+            var fileName = rawFileName.PrepareForUsingInFileName();
+            return fileName;
         }
 
         private IEnumerable<DetailedViewRowData> _GetDetailedViewRowDataForProprietary(
