@@ -144,7 +144,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         List<LengthMakeUpTableRow> CalculateLengthMakeUpTable(LengthMakeUpRequest request);
     }
 
-    public class PlanService : IPlanService
+    public class PlanService : BroadcastBaseClass, IPlanService
     {
         private readonly IPlanRepository _PlanRepository;
         private readonly IInventoryProprietarySummaryRepository _InventoryProprietarySummaryRepository;
@@ -215,6 +215,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 throw new Exception("The pricing model is running for the plan");
             }
 
+            var creatingNewPlan = PlanComparisonHelper.IsCreatingNewPLan(plan);
+
+            PlanDto beforePlan = null;
+            if (creatingNewPlan == false)
+            {
+                // get the "before plan" before we save.
+                // used later for comparison
+                beforePlan = _PlanRepository.GetPlan(plan.Id);
+            }
+
             if (plan.CreativeLengths.Count == 1)
             {//if there is only 1 creative length, set the weight to 100%
                 plan.CreativeLengths.Single().Weight = 100;
@@ -242,12 +252,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             _VerifyWeeklyAdu(plan.IsAduEnabled, plan.WeeklyBreakdownWeeks);
 
-            if (plan.VersionId == 0 || plan.Id == 0)
+            if (creatingNewPlan)
             {
                 _PlanRepository.SaveNewPlan(plan, createdBy, createdDate);
-
-                if (_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_IN_EDIT) && plan.JobId.HasValue)
-                    _PlanRepository.SetPricingPlanVersionId(plan.JobId.Value, plan.VersionId);
             }
             else
             {
@@ -262,6 +269,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     }
                     else
                     {
+                        // TODO: SDE If pricing was already run do we have pricing parameters here?
                         _PlanRepository.SavePlan(plan, createdBy, createdDate);
                     }
                 }
@@ -272,8 +280,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             _UpdateCampaignLastModified(plan.CampaignId, createdDate, createdBy);
 
-            _SetPlanPricingParameters(plan);
-
             // We only aggregate data for versions, not drafts.
             if (!plan.IsDraft)
             {
@@ -281,16 +287,94 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, createdBy);
             }
 
+            // plan pricing parameters is null when passed by UI.
+            //      if populated, they cannot be trusted, so don't use them, they may be cloned from somewhere...
+            // This sets the default parameters
+            _SetPlanPricingParameters(plan);
+
+            /*** Handle Pricing ***/
+            var afterPlan = _PlanRepository.GetPlan(plan.Id);
+
+            var hasJobResultsForThisPlan = false;
+            var planPropertiesOutOfSync = false;
+
+            // do we have job results and are they for this plan (or came along with a copied plan?)
+            if (plan.JobId.HasValue)
+            {
+                var jobPlanId = _PlanRepository.GetPlanIdFromPricingJob(plan.JobId.Value);
+
+                if (creatingNewPlan && jobPlanId.HasValue == false)
+                {
+                    hasJobResultsForThisPlan = true;
+                }
+                else
+                {
+                    hasJobResultsForThisPlan = jobPlanId.HasValue && plan.Id == jobPlanId;
+                }
+            }
+            
+            if (hasJobResultsForThisPlan)
+            {
+                // are the inputs the same?
+
+                // 1) compare the plan itself, sans the pricing parameters
+                if (creatingNewPlan)
+                {
+                    // if we're creating a new plan then we don't have a plan structure to rely upon...
+                    // We will give the user the benefit of the doubt and assume they ran pricing then saved without further changes.
+                    planPropertiesOutOfSync = false;
+                }
+                else
+                {
+                    // if modifying an existing plan then we can compare the previous to the new
+                    planPropertiesOutOfSync = PlanComparisonHelper.PlanPricingInputsAreOutOfSync(beforePlan, afterPlan);
+                }
+
+                // 2) compare the pricing parameters
+                // we can get the pricing parameters for the referenced job to say "was run with this",
+                //      but we don't have the pricing parameters for "now".
+                // thus no point in comparing at all.
+                // and we'll give the user the benefit of the doubt that they hit run pricing then hit save.
+
+                // changes towards better
+                // if BE could get 100% of the picture these gaps could be closed:
+                // 1) when BE runs pricing it stores the plan properties relevant to pricing with the pricing job outside the plan tables
+                // 2) when FE saves it sends the last pricing parameters used for this plan (if they ran during this session)
+            }
+
+            var planPricingResultsAreCurrent = hasJobResultsForThisPlan && planPropertiesOutOfSync == false;
+
+            var autoTriggeredPricing = false;
             if (_FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.RUN_PRICING_AUTOMATICALLY))
             {
-                if((plan.VersionNumber == 1 && !plan.JobId.HasValue) || plan.IsOutOfSync)
+                if (planPricingResultsAreCurrent == false)
                 {
+                    _LogInfo($"Automatically triggering Pricing. Plan.Id = {plan.Id} BeforeVersion = {beforePlan?.VersionId ?? 0}; AfterVersion = {afterPlan.VersionId}");
+                    
                     _PlanPricingService.QueuePricingJob(plan.PricingParameters, createdDate, createdBy);
+                    autoTriggeredPricing = true;
                 }
             }
             else
+            {
                 _PlanRepository.SavePlanPricingParameters(plan.PricingParameters);
+            }
 
+            // do we have to tie a job result to the new plan version?
+            if (autoTriggeredPricing == false && planPricingResultsAreCurrent)
+            {
+                if (creatingNewPlan)
+                {
+                    _LogInfo($"Pricing not triggered while creating a new plan.  Relating previous pricing results to the new plan version. Plan.Id = {plan.Id} BeforeVersion = 'null'; AfterVersion = {afterPlan.VersionId}");
+                    _PlanRepository.SetPricingPlanVersionId(plan.JobId.Value, plan.VersionId);
+                }
+                else
+                {
+                    _LogInfo($"Pricing not triggered while updating an existing plan.  Relating previous pricing results to the new plan version. Plan.Id = {plan.Id} BeforeVersion = {beforePlan?.VersionId ?? 0}; AfterVersion = {afterPlan.VersionId}");
+                    _PlanRepository.UpdatePlanPricingVersionId(afterPlan.VersionId, beforePlan.VersionId);
+                }
+            }
+            
             return plan.Id;
         }
 
@@ -326,7 +410,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 UnitCapsType = pricingDefaults.UnitCapsType,
                 Margin = pricingDefaults.Margin,
                 PlanVersionId = plan.VersionId,
-                MarketGroup = pricingDefaults.MarketGroup
+                MarketGroup = pricingDefaults.MarketGroup,
             };
 
             _PlanPricingService.ValidateAndApplyMargin(plan.PricingParameters);

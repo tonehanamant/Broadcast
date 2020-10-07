@@ -2,7 +2,7 @@
 
 namespace Services.Broadcast.Helpers
 {
-    public static class StreamHelper
+    public static class BroadcastStreamHelper
     {
         public static Stream CreateStreamFromString(string s)
         {

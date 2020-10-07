@@ -133,6 +133,11 @@ namespace Services.Broadcast.Repositories
 
         PlanPricingJob GetPlanPricingJob(int jobId);
 
+        /// <summary>
+        /// Get the plan id for the pricing job.  Null if there was not plan id for the job.
+        /// </summary>
+        int? GetPlanIdFromPricingJob(int jobId);
+
         PlanPricingParametersDto GetLatestParametersForPlanPricingJob(int jobId);
 
         List<PlanPricingAllocatedSpot> GetPlanPricingAllocatedSpotsByPlanId(int planId);
@@ -620,7 +625,7 @@ namespace Services.Broadcast.Repositories
 
             return new PlanPricingParametersDto
             {
-                PlanId = arg.plan_versions.plan_id,
+                PlanId = arg.plan_versions?.plan_id,
                 Budget = arg.budget_goal,
                 CompetitionFactor = arg.competition_factor,
                 CPM = arg.cpm_goal,
@@ -1316,6 +1321,21 @@ namespace Services.Broadcast.Repositories
                     ErrorMessage = job.error_message,
                     DiagnosticResult = job.diagnostic_result
                 };
+            });
+        }
+
+        /// <inheritdoc/>
+        public int? GetPlanIdFromPricingJob(int jobId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var job = context.plan_version_pricing_job
+                    .Include(x => x.plan_versions)
+                    .Single(x => x.id == jobId, $"Job id {jobId} not found.");
+
+                // job.plan_versions will be null if ran while creating a plan.
+                var result = job.plan_versions?.plan_id;
+                return result;
             });
         }
 

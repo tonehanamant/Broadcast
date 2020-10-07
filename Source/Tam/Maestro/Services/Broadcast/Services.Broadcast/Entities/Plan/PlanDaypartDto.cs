@@ -2,6 +2,7 @@
 using Services.Broadcast.Entities.Enums;
 using System;
 using System.Collections.Generic;
+using Amazon.Runtime.Internal;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.Entities.Plan
@@ -92,36 +93,36 @@ namespace Services.Broadcast.Entities.Plan
 
         public class RestrictionsDto
         {
-            public ShowTypeRestrictionsDto ShowTypeRestrictions { get; set; }
+            public ShowTypeRestrictionsDto ShowTypeRestrictions { get; set; } = new ShowTypeRestrictionsDto();
 
-            public GenreRestrictionsDto GenreRestrictions { get; set; }
+            public GenreRestrictionsDto GenreRestrictions { get; set; } = new GenreRestrictionsDto();
 
-            public ProgramRestrictionDto ProgramRestrictions { get; set; }
+            public ProgramRestrictionDto ProgramRestrictions { get; set; } = new ProgramRestrictionDto();
 
-            public AffiliateRestrictionsDto AffiliateRestrictions { get; set; }
+            public AffiliateRestrictionsDto AffiliateRestrictions { get; set; } = new AffiliateRestrictionsDto();
 
             public class ShowTypeRestrictionsDto
             {
-                public ContainTypeEnum ContainType { get; set; }
-                public List<LookupDto> ShowTypes { get; set; }
+                public ContainTypeEnum ContainType { get; set; } = ContainTypeEnum.Exclude;
+                public List<LookupDto> ShowTypes { get; set; } = new List<LookupDto>();
             }
 
             public class GenreRestrictionsDto
             {
-                public ContainTypeEnum ContainType { get; set; }
-                public List<LookupDto> Genres { get; set; }
+                public ContainTypeEnum ContainType { get; set; } = ContainTypeEnum.Exclude;
+                public List<LookupDto> Genres { get; set; } = new List<LookupDto>();
             }
 
             public class ProgramRestrictionDto
             {
-                public ContainTypeEnum ContainType { get; set; }
-                public List<ProgramDto> Programs { get; set; }
+                public ContainTypeEnum ContainType { get; set; } = ContainTypeEnum.Exclude;
+                public List<ProgramDto> Programs { get; set; } = new AutoConstructedList<ProgramDto>();
             }
 
             public class AffiliateRestrictionsDto
             {
-                public ContainTypeEnum ContainType { get; set; }
-                public List<LookupDto> Affiliates { get; set; }
+                public ContainTypeEnum ContainType { get; set; } = ContainTypeEnum.Exclude;
+                public List<LookupDto> Affiliates { get; set; } = new List<LookupDto>();
             }
         }
     }

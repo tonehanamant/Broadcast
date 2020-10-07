@@ -38,7 +38,7 @@ namespace Services.Broadcast.Clients
 
             using (var client = new AmazonS3Client(_AccessKeyId, _SecretAccessKey, _BucketRegion))
             {
-                using (var apiRequestMemoryStream = Helpers.StreamHelper.CreateStreamFromString(SerializationHelper.ConvertToJson(data)))
+                using (var apiRequestMemoryStream = Helpers.BroadcastStreamHelper.CreateStreamFromString(SerializationHelper.ConvertToJson(data)))
                 {
                     using (var fileMemoryStream = new MemoryStream())
                     {

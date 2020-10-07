@@ -820,7 +820,11 @@
     <Compile Include="Helpers\FeatureToggleHelper.cs" />
     <Compile Include="Helpers\FrequencyCapHelper.cs" />
     <Compile Include="Helpers\GroupHelper.cs" />
-    <Compile Include="Helpers\StreamHelper.cs" />
+    <Compile Include="Helpers\BroadcastStreamHelper.cs" />
+    <Compile Include="Helpers\Json\IgnorableSerializerContractResolver.cs" />
+    <Compile Include="Helpers\Json\IJsonIgnorignator.cs" />
+    <Compile Include="Helpers\Json\JsonSerializerHelper.cs" />
+    <Compile Include="Helpers\PlanComparisonHelper.cs" />
     <Compile Include="Helpers\WebUtilityHelper.cs" />
     <Compile Include="Helpers\KeyHelper.cs" />
     <Compile Include="BusinessEngines\PlanPricingInventoryQuarterCalculatorEngine.cs" />
