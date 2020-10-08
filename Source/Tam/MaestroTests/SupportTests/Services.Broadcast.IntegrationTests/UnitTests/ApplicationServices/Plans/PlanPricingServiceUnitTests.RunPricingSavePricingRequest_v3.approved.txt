@@ -64,10 +64,22 @@
             "IsEndTimeModified": false,
             "IsStartTimeModified": false,
             "Restrictions": {
-              "AffiliateRestrictions": null,
-              "GenreRestrictions": null,
-              "ProgramRestrictions": null,
-              "ShowTypeRestrictions": null
+              "AffiliateRestrictions": {
+                "Affiliates": [],
+                "ContainType": 2
+              },
+              "GenreRestrictions": {
+                "ContainType": 2,
+                "Genres": []
+              },
+              "ProgramRestrictions": {
+                "ContainType": 2,
+                "Programs": []
+              },
+              "ShowTypeRestrictions": {
+                "ContainType": 2,
+                "ShowTypes": []
+              }
             },
             "StartTimeSeconds": 0,
             "VpvhForAudiences": [],
@@ -82,10 +94,22 @@
             "IsEndTimeModified": false,
             "IsStartTimeModified": false,
             "Restrictions": {
-              "AffiliateRestrictions": null,
-              "GenreRestrictions": null,
-              "ProgramRestrictions": null,
-              "ShowTypeRestrictions": null
+              "AffiliateRestrictions": {
+                "Affiliates": [],
+                "ContainType": 2
+              },
+              "GenreRestrictions": {
+                "ContainType": 2,
+                "Genres": []
+              },
+              "ProgramRestrictions": {
+                "ContainType": 2,
+                "Programs": []
+              },
+              "ShowTypeRestrictions": {
+                "ContainType": 2,
+                "ShowTypes": []
+              }
             },
             "StartTimeSeconds": 0,
             "VpvhForAudiences": [],
