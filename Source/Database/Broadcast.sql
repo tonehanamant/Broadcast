@@ -1056,6 +1056,47 @@ BEGIN
 END
 /*************************************** END - BP-1287 ****************************************************/
 
+/*************************************** START - BP-1592 ****************************************************/
+GO
+
+IF EXISTS (SELECT 1 FROM sys.indexes WHERE name='IX_station_inventory_manifest_weeks_media_week_id' AND object_id = OBJECT_ID('station_inventory_manifest_weeks'))
+BEGIN 
+	DROP INDEX [IX_station_inventory_manifest_weeks_media_week_id] ON [dbo].[station_inventory_manifest_weeks]
+END
+
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name='IX_station_inventory_manifest_weeks_media_week_id' AND object_id = OBJECT_ID('station_inventory_manifest_weeks'))
+BEGIN 
+	CREATE NONCLUSTERED INDEX [IX_station_inventory_manifest_weeks_media_week_id] ON [dbo].[station_inventory_manifest_weeks]
+	(
+		[media_week_id] ASC
+	)
+	INCLUDE ([station_inventory_manifest_id]) 
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]	
+END
+
+GO
+
+DECLARE @HistoryRetentionPeriod INT = -1
+DECLARE @RetentionUnitDescription VARCHAR(50) = NULL
+
+SELECT  @HistoryRetentionPeriod = T1.history_retention_period
+	, @RetentionUnitDescription = T1.history_retention_period_unit_desc
+FROM sys.tables T1
+OUTER APPLY (select is_temporal_history_retention_enabled from sys.databases where name = DB_NAME()) AS DB
+LEFT JOIN sys.tables T2
+	ON T1.history_table_id = T2.object_id WHERE T1.temporal_type = 2
+AND T1.Name = 'station_inventory_manifest_weeks'
+
+IF (@HistoryRetentionPeriod <> 12 OR @RetentionUnitDescription <> 'MONTH')
+BEGIN
+	ALTER TABLE station_inventory_manifest_weeks
+		SET (SYSTEM_VERSIONING = ON (HISTORY_RETENTION_PERIOD = 12 MONTH));
+END
+
+GO
+
+/*************************************** END - BP-1592 ****************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
