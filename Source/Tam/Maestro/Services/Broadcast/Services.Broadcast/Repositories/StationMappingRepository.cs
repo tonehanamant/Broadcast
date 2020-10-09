@@ -252,22 +252,37 @@ namespace Services.Broadcast.Repositories
         /// <inheritdoc />
         public DisplayBroadcastStation GetBroadcastStationStartingWithCallLetters(string callLetters, bool throwIfNotFound = true)
         {
-            var result = _InReadUncommitedTransaction(context =>
-                {
-                    var query = context.stations
-                        .Include(x => x.station_mappings)
-                        .Include(x => x.market)
-                        .Where(station =>
-                            station.station_mappings.Any(mapping => mapping.mapped_call_letters.StartsWith(callLetters)));
+            var variant1 = $"{callLetters} ";
+            var variant2 = $"{callLetters}-";
+            var variant3 = $"{callLetters}_";
+            var variant4 = $"{callLetters}.";
 
-                    return _MapToDisplayBroadcastStationDto(query.SingleOrDefault());
-                });
+            var result = _InReadUncommitedTransaction(context =>
+            {
+                var found = context.stations
+                    .Include(x => x.station_mappings)
+                    .Include(x => x.market)
+                    .Where(station =>
+                        station.station_mappings.Any(mapping =>
+                            mapping.mapped_call_letters.StartsWith(variant1) ||
+                            mapping.mapped_call_letters.StartsWith(variant2) ||
+                            mapping.mapped_call_letters.StartsWith(variant3) ||
+                            mapping.mapped_call_letters.StartsWith(variant4)))
+                    .ToList();
+
+                if (found.Count > 1)
+                {
+                    throw new Exception($"Call letters {callLetters} yielded more than 1 match. Match Count : {found.Count}");
+                }
+
+                return _MapToDisplayBroadcastStationDto(found.SingleOrDefault());
+            });
 
             if (result == null && throwIfNotFound)
             {
                 throw new Exception($"Could not determine station for call letters {callLetters}");
             }
-            
+
             return result;
         }
     }

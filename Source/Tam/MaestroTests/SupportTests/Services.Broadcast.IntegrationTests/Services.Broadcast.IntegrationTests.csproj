@@ -445,6 +445,7 @@
     <Compile Include="Repositories\ProgramNameRepositoryTests.cs" />
     <Compile Include="Repositories\RatingForcastRepositoryTests.cs" />
     <Compile Include="Repositories\PostRepositoryTests.cs" />
+    <Compile Include="Repositories\StationMappingRepositoryTests.cs" />
     <Compile Include="Repositories\StationRepositoryTests.cs" />
     <Compile Include="Stubs\AsyncTaskHelperStub.cs" />
     <Compile Include="Stubs\DataLakeFileServiceStub.cs" />

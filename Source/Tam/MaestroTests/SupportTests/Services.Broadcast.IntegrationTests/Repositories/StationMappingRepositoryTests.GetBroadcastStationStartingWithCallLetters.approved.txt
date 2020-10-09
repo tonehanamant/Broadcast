@@ -1,0 +1,13 @@
+{
+  "Affiliation": "FOX",
+  "CallLetters": "KFXO-CD 39.1",
+  "Code": 7560,
+  "IsTrueInd": false,
+  "LegacyCallLetters": "KFXO",
+  "ManifestMaxEndDate": null,
+  "MarketCode": 421,
+  "OriginMarket": "Bend, OR",
+  "OwnershipGroupName": null,
+  "RateDataThrough": null,
+  "RepFirmName": null
+}
