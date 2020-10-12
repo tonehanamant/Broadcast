@@ -749,6 +749,9 @@
     <None Include="Files\ProprietaryDataFiles\Barter_CNN_2.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Files\ProprietaryDataFiles\Barter_CNN_InvalidDaypart.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\ProprietaryDataFiles\Barter_CNN_OneWeek.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

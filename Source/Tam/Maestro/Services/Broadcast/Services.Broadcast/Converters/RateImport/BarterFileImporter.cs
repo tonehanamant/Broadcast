@@ -39,7 +39,6 @@ namespace Services.Broadcast.Converters.RateImport
         private readonly IProprietarySpotCostCalculationEngine _ProprietarySpotCostCalculationEngine;
         private readonly IImpressionsService _ImpressionsService;
         private readonly IInventoryProprietaryDaypartRepository _InventoryProprietaryDaypartRepository;
-        private readonly IStandardDaypartRepository _StandardDaypartRepository;
         private readonly IShowTypeRepository _ShowTypeRepository;
         private readonly IGenreCache _GenreCache;
         private readonly IShowTypeCache _ShowTypeCache;
@@ -77,7 +76,6 @@ namespace Services.Broadcast.Converters.RateImport
             _ProprietarySpotCostCalculationEngine = proprietarySpotCostCalculationEngine;
             _ImpressionsService = impressionsService;
             _InventoryProprietaryDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProprietaryDaypartRepository>();
-            _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
             _ShowTypeRepository = broadcastDataRepositoryFactory.GetDataRepository<IShowTypeRepository>();
             _GenreCache = genreCache;
             _ShowTypeCache = showTypeCache;
@@ -110,8 +108,8 @@ namespace Services.Broadcast.Converters.RateImport
             }
 
             var daypartCode = worksheet.Cells[DAYPART_CODE_CELL.ToString()].GetStringValue();
-
-            if (!StandardDaypartRepository.StandardDaypartExists(daypartCode))
+            var isDaypartValidForInventorySource = _IsDaypartValidForInventorySource(daypartCode, proprietaryFile.InventorySource);
+            if (!isDaypartValidForInventorySource)
             {
                 var errorMessage = "Not acceptable daypart code is specified";
                 validationProblems.Add(errorMessage);
@@ -264,6 +262,24 @@ namespace Services.Broadcast.Converters.RateImport
 
             proprietaryFile.Header = header;
             proprietaryFile.ValidationProblems.AddRange(validationProblems);
+        }
+
+        private bool _IsDaypartValidForInventorySource(string daypartCode, InventorySource source)
+        {
+            var standardDaypart = StandardDaypartRepository.GetStandardDaypartByCode(daypartCode);
+            if (standardDaypart == null)
+            {
+                return false;
+            }
+
+            var sourceDaypartMapping = _InventoryProprietaryDaypartRepository.GetInventoryProprietaryDaypartMappings(source.Id,
+                standardDaypart.Id);
+            if (sourceDaypartMapping == null)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -484,19 +500,29 @@ namespace Services.Broadcast.Converters.RateImport
         private List<StationInventoryGroup> _GetStationInventoryGroups(ProprietaryInventoryFile proprietaryFile, List<DisplayBroadcastStation> stations)
         {
             var fileHeader = proprietaryFile.Header;
-            var defaultDaypart = _StandardDaypartRepository.GetStandardDaypartByCode(fileHeader.DaypartCode);
+            var defaultDaypart = StandardDaypartRepository.GetStandardDaypartByCode(fileHeader.DaypartCode);
+
             var inventoryProprietaryDaypart = _InventoryProprietaryDaypartRepository.GetInventoryProprietaryDaypartMappings(proprietaryFile.InventorySource.Id, defaultDaypart.Id);
+
+            if (inventoryProprietaryDaypart == null)
+            {
+                throw new ApplicationException($"Invalid daypart code of '{fileHeader.DaypartCode}' given for source '{proprietaryFile.InventorySource.Name}'.");
+            }
+
+            var daypartGenres = new List<LookupDto> {new LookupDto {Id = inventoryProprietaryDaypart.GenreId}};
             var maestroGenre = _GenreCache.GetGenreLookupDtoById(inventoryProprietaryDaypart.GenreId);
             var masterGenre = _GenreCache.GetSourceGenreLookupDtoByName(maestroGenre.Display, ProgramSourceEnum.Master);
             var maestroShowType = _ShowTypeRepository.GetMaestroShowType(inventoryProprietaryDaypart.ShowTypeId);
-            return proprietaryFile.DataLines
+            var daypartProgramName = inventoryProprietaryDaypart.ProgramName;
+
+            var groups = proprietaryFile.DataLines
                 .SelectMany(x => x.Units, (dataLine, unit) => new
                 {
                     dataLine,
                     unit.ProprietaryInventoryUnit,
                     unit.Spots
                 })
-                .GroupBy(x => new { x.ProprietaryInventoryUnit.Name, x.ProprietaryInventoryUnit.SpotLength })
+                .GroupBy(x => new {x.ProprietaryInventoryUnit.Name, x.ProprietaryInventoryUnit.SpotLength})
                 .Select(groupingByUnit => new
                 {
                     UnitName = groupingByUnit.Key.Name,
@@ -510,12 +536,14 @@ namespace Services.Broadcast.Converters.RateImport
                     })
                 })
                 .Where(x => x.Manifests.Any(y => y.Spots != null))  // exclude empty manifest groups
-                .Select(manifestGroup => new StationInventoryGroup
-                {
-                    Name = manifestGroup.UnitName,
-                    InventorySource = proprietaryFile.InventorySource,
-                    SlotNumber = _ParseSlotNumber(manifestGroup.UnitName),
-                    Manifests = manifestGroup.Manifests
+                .ToList();
+
+            var result = groups.Select(manifestGroup => new StationInventoryGroup
+            {
+                Name = manifestGroup.UnitName,
+                InventorySource = proprietaryFile.InventorySource,
+                SlotNumber = _ParseSlotNumber(manifestGroup.UnitName),
+                Manifests = manifestGroup.Manifests
                         .Where(x => x.Spots != null) // exclude empty manifests
                         .Select(manifest => new StationInventoryManifest
                         {
@@ -528,27 +556,10 @@ namespace Services.Broadcast.Converters.RateImport
                             ManifestDayparts = manifest.Dayparts.Select(x => new StationInventoryManifestDaypart
                             {
                                 Daypart = x,
-                                ProgramName = inventoryProprietaryDaypart.ProgramName,
-                                Genres = new List<LookupDto>
-                                {
-                                    new LookupDto { Id = inventoryProprietaryDaypart.GenreId }
-                                },
-                                Programs = new List<StationInventoryManifestDaypartProgram>
-                                {
-                                   new StationInventoryManifestDaypartProgram
-                                   {
-                                       MaestroGenreId = inventoryProprietaryDaypart.GenreId,
-                                       ProgramName = inventoryProprietaryDaypart.ProgramName,
-                                       ProgramSourceId = (int)ProgramSourceEnum.Maestro,
-                                       StartDate = fileHeader.EffectiveDate,
-                                       EndDate = fileHeader.EndDate,
-                                       StartTime = x.StartTime,
-                                       EndTime = x.EndTime,
-                                       ShowType = maestroShowType.Name,
-                                       SourceGenreId = masterGenre.Id,
-                                       CreatedDate = _DateTimeEngine.GetCurrentMoment()
-                                   }
-                                }
+                                ProgramName = daypartProgramName,
+                                Genres = daypartGenres,
+                                Programs = _GetStationInventoryManifestDaypartPrograms(inventoryProprietaryDaypart, maestroShowType, masterGenre,
+                                    fileHeader.EffectiveDate, fileHeader.EndDate, x.StartTime, x.EndTime)
                             }).ToList(),
                             ManifestAudiences = new List<StationInventoryManifestAudience>
                             {
@@ -560,7 +571,36 @@ namespace Services.Broadcast.Converters.RateImport
                                 }
                             }
                         }).ToList()
-                }).ToList();
+            }).ToList();
+
+            return result;
+        }
+
+        private List<StationInventoryManifestDaypartProgram> _GetStationInventoryManifestDaypartPrograms(
+            InventoryProprietaryDaypartDto inventoryProprietaryDaypart, ShowTypeDto maestroShowType,
+            LookupDto masterGenre, DateTime startDate, DateTime endDate, int startTime, int endTime)
+        {
+            var result = new List<StationInventoryManifestDaypartProgram>();
+
+            if (inventoryProprietaryDaypart != null)
+            {
+                var item = new StationInventoryManifestDaypartProgram
+                {
+                    MaestroGenreId = inventoryProprietaryDaypart.GenreId,
+                    ProgramName = inventoryProprietaryDaypart.ProgramName,
+                    ProgramSourceId = (int) ProgramSourceEnum.Maestro,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    StartTime = startTime,
+                    EndTime = endTime,
+                    ShowType = maestroShowType.Name,
+                    SourceGenreId = masterGenre.Id,
+                    CreatedDate = _DateTimeEngine.GetCurrentMoment()
+                };
+                result.Add(item);
+            }
+
+            return result;
         }
 
         private int _ParseSlotNumber(string unitName)

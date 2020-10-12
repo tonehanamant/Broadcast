@@ -1,0 +1,45 @@
+{
+  "CreatedBy": null,
+  "CreatedDate": "0001-01-01T00:00:00",
+  "DataLines": [],
+  "EffectiveDate": null,
+  "EndDate": null,
+  "FileName": "Barter_CNN.xlsx",
+  "FileStatus": 0,
+  "Hash": null,
+  "Header": {
+    "Audience": {
+      "_CategoryCode": 0,
+      "_Code": null,
+      "_Custom": false,
+      "_Id": 31,
+      "_Name": "Households",
+      "_RangeEnd": null,
+      "_RangeStart": null,
+      "_SubCategoryCode": null,
+      "IsDirty": true
+    },
+    "ContractedDaypartId": 1,
+    "Cpm": 8.6,
+    "DaypartCode": "EMN",
+    "EffectiveDate": "2018-01-01T00:00:00",
+    "EndDate": "2018-03-20T00:00:00",
+    "HutBookId": 471,
+    "NtiToNsiIncrease": null,
+    "PlaybackType": 1,
+    "ShareBookId": 471,
+    "SpotLengthId": null
+  },
+  "Id": 0,
+  "InventoryGroups": [],
+  "InventoryManifests": [],
+  "InventorySource": {
+    "Id": 1,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "CNN"
+  },
+  "RowsProcessed": null,
+  "UniqueIdentifier": null,
+  "ValidationProblems": []
+}

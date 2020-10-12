@@ -1,17 +1,12 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services.Extensions;
+using Common.Services.Repositories;
 using ConfigurationService.Client;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
-using System;
-using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Linq.Expressions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using System.Data.Entity;
-using Common.Services.Extensions;
 
 namespace Services.Broadcast.Repositories
 {
@@ -35,13 +30,14 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(
                 context =>
                 {
-                    var inventoryProprietaryMappings = context.inventory_proprietary_daypart_program_mappings
-                                .Include(x => x.inventory_proprietary_daypart_programs)
-                                .Where(x => x.inventory_source_id == inventorySourceId &&
-                                            x.standard_daypart_id == defaultDaypartId)
-                                 .Single($"Inventory proprietary mappings not found for inventory source {inventorySourceId} and daypart {defaultDaypartId}");
+                    var mapping = context.inventory_proprietary_daypart_program_mappings
+                        .Include(x => x.inventory_proprietary_daypart_programs)
+                        .Where(x => x.inventory_source_id == inventorySourceId &&
+                                    x.standard_daypart_id == defaultDaypartId)
+                        .SingleOrDefault($"Too many Inventory proprietary mappings found for inventory source {inventorySourceId} and daypart {defaultDaypartId}.");
 
-                    return _MapToDto(inventoryProprietaryMappings);
+                    var result = mapping == null ? null : _MapToDto(mapping);
+                    return result;
                 });
         }
 

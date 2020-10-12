@@ -1,0 +1,1267 @@
+[
+  {
+    "Id": null,
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "CNN"
+    },
+    "Manifests": [
+      {
+        "Comment": null,
+        "DaypartCode": null,
+        "Id": null,
+        "InventoryFileId": 21,
+        "InventorySourceId": 1,
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "House Hold",
+              "Id": 33
+            },
+            "CPM": 12.3,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestAudiencesReferences": [],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Genres": [
+              {
+                "Display": null,
+                "Id": 5
+              }
+            ],
+            "Id": null,
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning",
+            "Programs": [
+              {
+                "CreatedDate": "2020-10-17T07:34:12",
+                "EndDate": "2020-10-18T00:00:00",
+                "EndTime": 35999,
+                "Id": 0,
+                "MaestroGenreId": 5,
+                "ProgramName": "Early Morning",
+                "ProgramSourceId": 1,
+                "ShowType": "Series",
+                "SourceGenreId": 6,
+                "StartDate": "2020-10-05T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 0
+              }
+            ],
+            "StandardDaypart": null
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "0001-01-01T00:00:00",
+            "Id": 0,
+            "MediaWeek": {
+              "_EndDate": "0001-01-01T00:00:00",
+              "_Id": 0,
+              "_MediaMonthId": 0,
+              "_StartDate": "0001-01-01T00:00:00",
+              "_WeekNumber": 0,
+              "IsDirty": false
+            },
+            "Spots": 1,
+            "StartDate": "0001-01-01T00:00:00"
+          },
+          {
+            "EndDate": "0001-01-01T00:00:00",
+            "Id": 0,
+            "MediaWeek": {
+              "_EndDate": "0001-01-01T00:00:00",
+              "_Id": 0,
+              "_MediaMonthId": 0,
+              "_StartDate": "0001-01-01T00:00:00",
+              "_WeekNumber": 0,
+              "IsDirty": false
+            },
+            "Spots": 1,
+            "StartDate": "0001-01-01T00:00:00"
+          }
+        ],
+        "ProjectedStationImpressions": [],
+        "SpotLengthId": 3,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": null,
+          "CallLetters": null,
+          "Code": null,
+          "Id": 0,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "WWTV",
+          "ManifestMaxEndDate": null,
+          "MarketCode": null,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      },
+      {
+        "Comment": null,
+        "DaypartCode": null,
+        "Id": null,
+        "InventoryFileId": 21,
+        "InventorySourceId": 1,
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "House Hold",
+              "Id": 33
+            },
+            "CPM": 12.3,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestAudiencesReferences": [],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Genres": [
+              {
+                "Display": null,
+                "Id": 5
+              }
+            ],
+            "Id": null,
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning",
+            "Programs": [
+              {
+                "CreatedDate": "2020-10-17T07:34:12",
+                "EndDate": "2020-10-18T00:00:00",
+                "EndTime": 35999,
+                "Id": 0,
+                "MaestroGenreId": 5,
+                "ProgramName": "Early Morning",
+                "ProgramSourceId": 1,
+                "ShowType": "Series",
+                "SourceGenreId": 6,
+                "StartDate": "2020-10-05T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 0
+              }
+            ],
+            "StandardDaypart": null
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "0001-01-01T00:00:00",
+            "Id": 0,
+            "MediaWeek": {
+              "_EndDate": "0001-01-01T00:00:00",
+              "_Id": 0,
+              "_MediaMonthId": 0,
+              "_StartDate": "0001-01-01T00:00:00",
+              "_WeekNumber": 0,
+              "IsDirty": false
+            },
+            "Spots": 1,
+            "StartDate": "0001-01-01T00:00:00"
+          },
+          {
+            "EndDate": "0001-01-01T00:00:00",
+            "Id": 0,
+            "MediaWeek": {
+              "_EndDate": "0001-01-01T00:00:00",
+              "_Id": 0,
+              "_MediaMonthId": 0,
+              "_StartDate": "0001-01-01T00:00:00",
+              "_WeekNumber": 0,
+              "IsDirty": false
+            },
+            "Spots": 1,
+            "StartDate": "0001-01-01T00:00:00"
+          }
+        ],
+        "ProjectedStationImpressions": [],
+        "SpotLengthId": 3,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": null,
+          "CallLetters": null,
+          "Code": null,
+          "Id": 0,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "EESH",
+          "ManifestMaxEndDate": null,
+          "MarketCode": null,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      }
+    ],
+    "Name": "AM1",
+    "SlotNumber": 1
+  },
+  {
+    "Id": null,
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "CNN"
+    },
+    "Manifests": [
+      {
+        "Comment": null,
+        "DaypartCode": null,
+        "Id": null,
+        "InventoryFileId": 21,
+        "InventorySourceId": 1,
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "House Hold",
+              "Id": 33
+            },
+            "CPM": 12.3,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestAudiencesReferences": [],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Genres": [
+              {
+                "Display": null,
+                "Id": 5
+              }
+            ],
+            "Id": null,
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning",
+            "Programs": [
+              {
+                "CreatedDate": "2020-10-17T07:34:12",
+                "EndDate": "2020-10-18T00:00:00",
+                "EndTime": 35999,
+                "Id": 0,
+                "MaestroGenreId": 5,
+                "ProgramName": "Early Morning",
+                "ProgramSourceId": 1,
+                "ShowType": "Series",
+                "SourceGenreId": 6,
+                "StartDate": "2020-10-05T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 0
+              }
+            ],
+            "StandardDaypart": null
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "0001-01-01T00:00:00",
+            "Id": 0,
+            "MediaWeek": {
+              "_EndDate": "0001-01-01T00:00:00",
+              "_Id": 0,
+              "_MediaMonthId": 0,
+              "_StartDate": "0001-01-01T00:00:00",
+              "_WeekNumber": 0,
+              "IsDirty": false
+            },
+            "Spots": 1,
+            "StartDate": "0001-01-01T00:00:00"
+          },
+          {
+            "EndDate": "0001-01-01T00:00:00",
+            "Id": 0,
+            "MediaWeek": {
+              "_EndDate": "0001-01-01T00:00:00",
+              "_Id": 0,
+              "_MediaMonthId": 0,
+              "_StartDate": "0001-01-01T00:00:00",
+              "_WeekNumber": 0,
+              "IsDirty": false
+            },
+            "Spots": 1,
+            "StartDate": "0001-01-01T00:00:00"
+          }
+        ],
+        "ProjectedStationImpressions": [],
+        "SpotLengthId": 3,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": null,
+          "CallLetters": null,
+          "Code": null,
+          "Id": 0,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "WWTV",
+          "ManifestMaxEndDate": null,
+          "MarketCode": null,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      },
+      {
+        "Comment": null,
+        "DaypartCode": null,
+        "Id": null,
+        "InventoryFileId": 21,
+        "InventorySourceId": 1,
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "House Hold",
+              "Id": 33
+            },
+            "CPM": 12.3,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestAudiencesReferences": [],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Genres": [
+              {
+                "Display": null,
+                "Id": 5
+              }
+            ],
+            "Id": null,
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning",
+            "Programs": [
+              {
+                "CreatedDate": "2020-10-17T07:34:12",
+                "EndDate": "2020-10-18T00:00:00",
+                "EndTime": 35999,
+                "Id": 0,
+                "MaestroGenreId": 5,
+                "ProgramName": "Early Morning",
+                "ProgramSourceId": 1,
+                "ShowType": "Series",
+                "SourceGenreId": 6,
+                "StartDate": "2020-10-05T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 0
+              }
+            ],
+            "StandardDaypart": null
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "0001-01-01T00:00:00",
+            "Id": 0,
+            "MediaWeek": {
+              "_EndDate": "0001-01-01T00:00:00",
+              "_Id": 0,
+              "_MediaMonthId": 0,
+              "_StartDate": "0001-01-01T00:00:00",
+              "_WeekNumber": 0,
+              "IsDirty": false
+            },
+            "Spots": 1,
+            "StartDate": "0001-01-01T00:00:00"
+          },
+          {
+            "EndDate": "0001-01-01T00:00:00",
+            "Id": 0,
+            "MediaWeek": {
+              "_EndDate": "0001-01-01T00:00:00",
+              "_Id": 0,
+              "_MediaMonthId": 0,
+              "_StartDate": "0001-01-01T00:00:00",
+              "_WeekNumber": 0,
+              "IsDirty": false
+            },
+            "Spots": 1,
+            "StartDate": "0001-01-01T00:00:00"
+          }
+        ],
+        "ProjectedStationImpressions": [],
+        "SpotLengthId": 3,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": null,
+          "CallLetters": null,
+          "Code": null,
+          "Id": 0,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "EESH",
+          "ManifestMaxEndDate": null,
+          "MarketCode": null,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      }
+    ],
+    "Name": "AM2",
+    "SlotNumber": 2
+  },
+  {
+    "Id": null,
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "CNN"
+    },
+    "Manifests": [
+      {
+        "Comment": null,
+        "DaypartCode": null,
+        "Id": null,
+        "InventoryFileId": 21,
+        "InventorySourceId": 1,
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "House Hold",
+              "Id": 33
+            },
+            "CPM": 12.3,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestAudiencesReferences": [],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Genres": [
+              {
+                "Display": null,
+                "Id": 5
+              }
+            ],
+            "Id": null,
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning",
+            "Programs": [
+              {
+                "CreatedDate": "2020-10-17T07:34:12",
+                "EndDate": "2020-10-18T00:00:00",
+                "EndTime": 35999,
+                "Id": 0,
+                "MaestroGenreId": 5,
+                "ProgramName": "Early Morning",
+                "ProgramSourceId": 1,
+                "ShowType": "Series",
+                "SourceGenreId": 6,
+                "StartDate": "2020-10-05T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 0
+              }
+            ],
+            "StandardDaypart": null
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "0001-01-01T00:00:00",
+            "Id": 0,
+            "MediaWeek": {
+              "_EndDate": "0001-01-01T00:00:00",
+              "_Id": 0,
+              "_MediaMonthId": 0,
+              "_StartDate": "0001-01-01T00:00:00",
+              "_WeekNumber": 0,
+              "IsDirty": false
+            },
+            "Spots": 1,
+            "StartDate": "0001-01-01T00:00:00"
+          },
+          {
+            "EndDate": "0001-01-01T00:00:00",
+            "Id": 0,
+            "MediaWeek": {
+              "_EndDate": "0001-01-01T00:00:00",
+              "_Id": 0,
+              "_MediaMonthId": 0,
+              "_StartDate": "0001-01-01T00:00:00",
+              "_WeekNumber": 0,
+              "IsDirty": false
+            },
+            "Spots": 1,
+            "StartDate": "0001-01-01T00:00:00"
+          }
+        ],
+        "ProjectedStationImpressions": [],
+        "SpotLengthId": 3,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": null,
+          "CallLetters": null,
+          "Code": null,
+          "Id": 0,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "WWTV",
+          "ManifestMaxEndDate": null,
+          "MarketCode": null,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      },
+      {
+        "Comment": null,
+        "DaypartCode": null,
+        "Id": null,
+        "InventoryFileId": 21,
+        "InventorySourceId": 1,
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "House Hold",
+              "Id": 33
+            },
+            "CPM": 12.3,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestAudiencesReferences": [],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Genres": [
+              {
+                "Display": null,
+                "Id": 5
+              }
+            ],
+            "Id": null,
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning",
+            "Programs": [
+              {
+                "CreatedDate": "2020-10-17T07:34:12",
+                "EndDate": "2020-10-18T00:00:00",
+                "EndTime": 35999,
+                "Id": 0,
+                "MaestroGenreId": 5,
+                "ProgramName": "Early Morning",
+                "ProgramSourceId": 1,
+                "ShowType": "Series",
+                "SourceGenreId": 6,
+                "StartDate": "2020-10-05T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 0
+              }
+            ],
+            "StandardDaypart": null
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "0001-01-01T00:00:00",
+            "Id": 0,
+            "MediaWeek": {
+              "_EndDate": "0001-01-01T00:00:00",
+              "_Id": 0,
+              "_MediaMonthId": 0,
+              "_StartDate": "0001-01-01T00:00:00",
+              "_WeekNumber": 0,
+              "IsDirty": false
+            },
+            "Spots": 1,
+            "StartDate": "0001-01-01T00:00:00"
+          },
+          {
+            "EndDate": "0001-01-01T00:00:00",
+            "Id": 0,
+            "MediaWeek": {
+              "_EndDate": "0001-01-01T00:00:00",
+              "_Id": 0,
+              "_MediaMonthId": 0,
+              "_StartDate": "0001-01-01T00:00:00",
+              "_WeekNumber": 0,
+              "IsDirty": false
+            },
+            "Spots": 1,
+            "StartDate": "0001-01-01T00:00:00"
+          }
+        ],
+        "ProjectedStationImpressions": [],
+        "SpotLengthId": 3,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": null,
+          "CallLetters": null,
+          "Code": null,
+          "Id": 0,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "EESH",
+          "ManifestMaxEndDate": null,
+          "MarketCode": null,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      }
+    ],
+    "Name": "AM3",
+    "SlotNumber": 3
+  },
+  {
+    "Id": null,
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "CNN"
+    },
+    "Manifests": [
+      {
+        "Comment": null,
+        "DaypartCode": null,
+        "Id": null,
+        "InventoryFileId": 21,
+        "InventorySourceId": 1,
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "House Hold",
+              "Id": 33
+            },
+            "CPM": 12.3,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestAudiencesReferences": [],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Genres": [
+              {
+                "Display": null,
+                "Id": 5
+              }
+            ],
+            "Id": null,
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning",
+            "Programs": [
+              {
+                "CreatedDate": "2020-10-17T07:34:12",
+                "EndDate": "2020-10-18T00:00:00",
+                "EndTime": 35999,
+                "Id": 0,
+                "MaestroGenreId": 5,
+                "ProgramName": "Early Morning",
+                "ProgramSourceId": 1,
+                "ShowType": "Series",
+                "SourceGenreId": 6,
+                "StartDate": "2020-10-05T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 0
+              }
+            ],
+            "StandardDaypart": null
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "0001-01-01T00:00:00",
+            "Id": 0,
+            "MediaWeek": {
+              "_EndDate": "0001-01-01T00:00:00",
+              "_Id": 0,
+              "_MediaMonthId": 0,
+              "_StartDate": "0001-01-01T00:00:00",
+              "_WeekNumber": 0,
+              "IsDirty": false
+            },
+            "Spots": 1,
+            "StartDate": "0001-01-01T00:00:00"
+          },
+          {
+            "EndDate": "0001-01-01T00:00:00",
+            "Id": 0,
+            "MediaWeek": {
+              "_EndDate": "0001-01-01T00:00:00",
+              "_Id": 0,
+              "_MediaMonthId": 0,
+              "_StartDate": "0001-01-01T00:00:00",
+              "_WeekNumber": 0,
+              "IsDirty": false
+            },
+            "Spots": 1,
+            "StartDate": "0001-01-01T00:00:00"
+          }
+        ],
+        "ProjectedStationImpressions": [],
+        "SpotLengthId": 3,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": null,
+          "CallLetters": null,
+          "Code": null,
+          "Id": 0,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "WWTV",
+          "ManifestMaxEndDate": null,
+          "MarketCode": null,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      },
+      {
+        "Comment": null,
+        "DaypartCode": null,
+        "Id": null,
+        "InventoryFileId": 21,
+        "InventorySourceId": 1,
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "House Hold",
+              "Id": 33
+            },
+            "CPM": 12.3,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestAudiencesReferences": [],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Genres": [
+              {
+                "Display": null,
+                "Id": 5
+              }
+            ],
+            "Id": null,
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning",
+            "Programs": [
+              {
+                "CreatedDate": "2020-10-17T07:34:12",
+                "EndDate": "2020-10-18T00:00:00",
+                "EndTime": 35999,
+                "Id": 0,
+                "MaestroGenreId": 5,
+                "ProgramName": "Early Morning",
+                "ProgramSourceId": 1,
+                "ShowType": "Series",
+                "SourceGenreId": 6,
+                "StartDate": "2020-10-05T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 0
+              }
+            ],
+            "StandardDaypart": null
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "0001-01-01T00:00:00",
+            "Id": 0,
+            "MediaWeek": {
+              "_EndDate": "0001-01-01T00:00:00",
+              "_Id": 0,
+              "_MediaMonthId": 0,
+              "_StartDate": "0001-01-01T00:00:00",
+              "_WeekNumber": 0,
+              "IsDirty": false
+            },
+            "Spots": 1,
+            "StartDate": "0001-01-01T00:00:00"
+          },
+          {
+            "EndDate": "0001-01-01T00:00:00",
+            "Id": 0,
+            "MediaWeek": {
+              "_EndDate": "0001-01-01T00:00:00",
+              "_Id": 0,
+              "_MediaMonthId": 0,
+              "_StartDate": "0001-01-01T00:00:00",
+              "_WeekNumber": 0,
+              "IsDirty": false
+            },
+            "Spots": 1,
+            "StartDate": "0001-01-01T00:00:00"
+          }
+        ],
+        "ProjectedStationImpressions": [],
+        "SpotLengthId": 3,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": null,
+          "CallLetters": null,
+          "Code": null,
+          "Id": 0,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "EESH",
+          "ManifestMaxEndDate": null,
+          "MarketCode": null,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      }
+    ],
+    "Name": "AM4",
+    "SlotNumber": 4
+  },
+  {
+    "Id": null,
+    "InventorySource": {
+      "Id": 1,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "CNN"
+    },
+    "Manifests": [
+      {
+        "Comment": null,
+        "DaypartCode": null,
+        "Id": null,
+        "InventoryFileId": 21,
+        "InventorySourceId": 1,
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "House Hold",
+              "Id": 33
+            },
+            "CPM": 12.3,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestAudiencesReferences": [],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Genres": [
+              {
+                "Display": null,
+                "Id": 5
+              }
+            ],
+            "Id": null,
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning",
+            "Programs": [
+              {
+                "CreatedDate": "2020-10-17T07:34:12",
+                "EndDate": "2020-10-18T00:00:00",
+                "EndTime": 35999,
+                "Id": 0,
+                "MaestroGenreId": 5,
+                "ProgramName": "Early Morning",
+                "ProgramSourceId": 1,
+                "ShowType": "Series",
+                "SourceGenreId": 6,
+                "StartDate": "2020-10-05T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 0
+              }
+            ],
+            "StandardDaypart": null
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "0001-01-01T00:00:00",
+            "Id": 0,
+            "MediaWeek": {
+              "_EndDate": "0001-01-01T00:00:00",
+              "_Id": 0,
+              "_MediaMonthId": 0,
+              "_StartDate": "0001-01-01T00:00:00",
+              "_WeekNumber": 0,
+              "IsDirty": false
+            },
+            "Spots": 1,
+            "StartDate": "0001-01-01T00:00:00"
+          },
+          {
+            "EndDate": "0001-01-01T00:00:00",
+            "Id": 0,
+            "MediaWeek": {
+              "_EndDate": "0001-01-01T00:00:00",
+              "_Id": 0,
+              "_MediaMonthId": 0,
+              "_StartDate": "0001-01-01T00:00:00",
+              "_WeekNumber": 0,
+              "IsDirty": false
+            },
+            "Spots": 1,
+            "StartDate": "0001-01-01T00:00:00"
+          }
+        ],
+        "ProjectedStationImpressions": [],
+        "SpotLengthId": 3,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": null,
+          "CallLetters": null,
+          "Code": null,
+          "Id": 0,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "WWTV",
+          "ManifestMaxEndDate": null,
+          "MarketCode": null,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      },
+      {
+        "Comment": null,
+        "DaypartCode": null,
+        "Id": null,
+        "InventoryFileId": 21,
+        "InventorySourceId": 1,
+        "ManifestAudiences": [
+          {
+            "Audience": {
+              "AudienceString": "House Hold",
+              "Id": 33
+            },
+            "CPM": 12.3,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestAudiencesReferences": [],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "",
+              "_EndTime": 35999,
+              "_Friday": true,
+              "_Id": 6724,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "",
+              "_Saturday": false,
+              "_StartTime": 32400,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Genres": [
+              {
+                "Display": null,
+                "Id": 5
+              }
+            ],
+            "Id": null,
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning",
+            "Programs": [
+              {
+                "CreatedDate": "2020-10-17T07:34:12",
+                "EndDate": "2020-10-18T00:00:00",
+                "EndTime": 35999,
+                "Id": 0,
+                "MaestroGenreId": 5,
+                "ProgramName": "Early Morning",
+                "ProgramSourceId": 1,
+                "ShowType": "Series",
+                "SourceGenreId": 6,
+                "StartDate": "2020-10-05T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 0
+              }
+            ],
+            "StandardDaypart": null
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "0001-01-01T00:00:00",
+            "Id": 0,
+            "MediaWeek": {
+              "_EndDate": "0001-01-01T00:00:00",
+              "_Id": 0,
+              "_MediaMonthId": 0,
+              "_StartDate": "0001-01-01T00:00:00",
+              "_WeekNumber": 0,
+              "IsDirty": false
+            },
+            "Spots": 1,
+            "StartDate": "0001-01-01T00:00:00"
+          },
+          {
+            "EndDate": "0001-01-01T00:00:00",
+            "Id": 0,
+            "MediaWeek": {
+              "_EndDate": "0001-01-01T00:00:00",
+              "_Id": 0,
+              "_MediaMonthId": 0,
+              "_StartDate": "0001-01-01T00:00:00",
+              "_WeekNumber": 0,
+              "IsDirty": false
+            },
+            "Spots": 1,
+            "StartDate": "0001-01-01T00:00:00"
+          }
+        ],
+        "ProjectedStationImpressions": [],
+        "SpotLengthId": 3,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": null,
+          "CallLetters": null,
+          "Code": null,
+          "Id": 0,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "EESH",
+          "ManifestMaxEndDate": null,
+          "MarketCode": null,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      }
+    ],
+    "Name": "AM5",
+    "SlotNumber": 5
+  }
+]
