@@ -106,6 +106,9 @@
     <Reference Include="EPPlus, Version=4.5.3.3, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\EPPlus.4.5.3.3\lib\net40\EPPlus.dll</HintPath>
     </Reference>
+    <Reference Include="FizzWare.NBuilder, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5651b03e12e42c12, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\NBuilder.6.1.0\lib\net40\FizzWare.NBuilder.dll</HintPath>
+    </Reference>
     <Reference Include="Moq.AutoMock, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Solutions\BroadcastComposerWeb\packages\Moq.AutoMock.2.0.1\lib\net45\Moq.AutoMock.dll</HintPath>
     </Reference>
@@ -552,6 +555,7 @@
     <Compile Include="UnitTests\Helpers\KeyHelperUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\WebUtilityHelperUnitTests.cs" />
     <Compile Include="UnitTests\InventoryRatingsProcessing\MediaMonthCrunchStatusTests.cs" />
+    <Compile Include="UnitTests\PostingBookServiceTests.cs" />
     <Compile Include="UnitTests\ReportGenerator\ProgramLineupReportDataTests.cs" />
     <Compile Include="UnitTests\ReportGenerator\UnMappedProgramNameReportGeneratorTest.cs" />
     <Compile Include="UnitTests\ReportGenerator\UnMappedProgramNameReportGeneratorTestClass.cs" />

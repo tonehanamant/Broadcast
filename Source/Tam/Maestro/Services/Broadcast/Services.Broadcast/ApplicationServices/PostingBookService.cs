@@ -76,19 +76,23 @@ namespace Services.Broadcast.ApplicationServices
         public List<LookupDto> GetHUTBooks(int shareBookId)
         {
             var MonthsInAYear = 12;
-            var shareBookDate = _MediaMonths.Single(b => b.Id == shareBookId).StartDate;
+            var shareBookDate = _MediaMonths.SingleOrDefault(b => b.Id == shareBookId)?.StartDate;
 
-            //var currentQuarter = _QuartersEngine.GetQuarterRangeByDate(shareBookDate);
-            //var lastYearQuarter = _QuartersEngine.GetQuarterDetail(currentQuarter.Quarter, shareBookDate.Year - 1);
+            if (shareBookDate == null)
+            {
+                throw new ArgumentException($"Invalid Share book Id {shareBookId}", nameof(shareBookId));
+            }
 
-            //var defaultHUTBook = _MediaMonths
-            //    .Where(x => x.EndDate <= lastYearQuarter.EndDate).First();
+            var defaultHUTBook = _MediaMonths.Where(m => m.Id <= shareBookId - MonthsInAYear)
+                .OrderByDescending(m => m.Id)
+                .FirstOrDefault();
 
-            var defaultHUTBook = _MediaMonths.Where(m => m.Id <= shareBookId - MonthsInAYear).OrderByDescending(m => m.Id).First();
+            var availableMediaMonthsForHUT = _MediaMonths.Where(x => x.StartDate < shareBookDate)
+                .OrderByDescending(x => x.Id == defaultHUTBook?.Id);
 
-            return _ToLookupDto(_MediaMonths.Where(x => x.StartDate < shareBookDate)
-                .OrderByDescending(x => x.Id == defaultHUTBook.Id));
+            var mediaMonthsForHUTDto = _ToLookupDto(availableMediaMonthsForHUT);
 
+            return mediaMonthsForHUTDto;
         }
 
         ///<inheritdoc/>
