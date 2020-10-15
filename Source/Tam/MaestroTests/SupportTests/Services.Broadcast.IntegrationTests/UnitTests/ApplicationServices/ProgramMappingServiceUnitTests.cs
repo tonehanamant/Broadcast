@@ -195,7 +195,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             var result = _ProgramMappingService.GetUnmappedPrograms();
 
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJsonMoreRounding(result));
         }
 
         [Test]

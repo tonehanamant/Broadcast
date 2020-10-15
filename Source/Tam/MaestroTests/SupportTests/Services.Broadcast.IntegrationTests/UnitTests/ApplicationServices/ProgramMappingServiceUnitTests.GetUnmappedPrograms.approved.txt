@@ -19,7 +19,7 @@
   },
   {
     "Genre": "News",
-    "MatchConfidence": 0.7888889,
+    "MatchConfidence": 0.78889,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "SOME OTHER NEWS",
@@ -37,7 +37,7 @@
   },
   {
     "Genre": "Comedy",
-    "MatchConfidence": 0.5925926,
+    "MatchConfidence": 0.59259,
     "MatchedName": "Family Guy",
     "MatchType": 4,
     "OriginalName": "AMERICA UNDERCOVER",
