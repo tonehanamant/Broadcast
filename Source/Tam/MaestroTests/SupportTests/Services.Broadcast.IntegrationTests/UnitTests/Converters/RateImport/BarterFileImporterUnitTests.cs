@@ -130,6 +130,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
                 InventorySource = _GetInventorySource(inventorySourceName)
             };
 
+            const bool daypartIsFound = true;
+            _StandardDaypartRepository.Setup(s => s.StandardDaypartExists(It.IsAny<string>()))
+                .Returns(daypartIsFound);
+
             _StandardDaypartRepository.Setup(s => s.GetStandardDaypartByCode(It.IsAny<string>()))
                 .Returns(new StandardDaypartDto { Id = 2, Code = "ELN", FullName = "Early Morning News", VpvhCalculationSourceType = VpvhCalculationSourceTypeEnum.AM_NEWS });
 
@@ -176,6 +180,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
                 InventorySource = _GetInventorySource(inventorySourceName)
             };
 
+            const bool daypartIsFound = false;
+            _StandardDaypartRepository.Setup(s => s.StandardDaypartExists(It.IsAny<string>()))
+                .Returns(daypartIsFound);
+
             _StandardDaypartRepository.Setup(s => s.GetStandardDaypartByCode(It.IsAny<string>()))
                 .Returns((StandardDaypartDto)null);
 
@@ -221,6 +229,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Converters.RateImport
                 FileName = fileName,
                 InventorySource = _GetInventorySource(inventorySourceName)
             };
+
+            const bool daypartIsFound = true;
+            _StandardDaypartRepository.Setup(s => s.StandardDaypartExists(It.IsAny<string>()))
+                .Returns(daypartIsFound);
 
             _StandardDaypartRepository.Setup(s => s.GetStandardDaypartByCode(It.IsAny<string>()))
                 .Returns(new StandardDaypartDto { Id = 2, Code = "ELN", FullName = "Early Morning News", VpvhCalculationSourceType = VpvhCalculationSourceTypeEnum.AM_NEWS });

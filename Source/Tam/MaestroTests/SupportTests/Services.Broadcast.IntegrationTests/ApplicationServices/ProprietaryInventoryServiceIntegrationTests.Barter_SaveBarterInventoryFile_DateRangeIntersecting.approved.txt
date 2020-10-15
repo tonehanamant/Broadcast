@@ -1,16 +1,16 @@
 ﻿[
   {
     "InventorySource": {
-      "Id": 4,
+      "Id": 3,
       "InventoryType": 2,
       "IsActive": true,
-      "Name": "TTWN"
+      "Name": "TVB"
     },
     "Manifests": [
       {
         "Comment": "Test12",
-        "DaypartCode": "LN",
-        "InventorySourceId": 4,
+        "DaypartCode": "ENLN",
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -46,11 +46,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-03-30T00:00:00",
+                "EndTime": 21599,
+                "Id": 14755,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-03-22T00:00:00",
+                "StartTime": 18000,
+                "StationInventoryManifestDaypartId": 633848
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -100,8 +114,8 @@
       },
       {
         "Comment": null,
-        "DaypartCode": "LN",
-        "InventorySourceId": 4,
+        "DaypartCode": "ENLN",
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -137,205 +151,25 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
-          }
-        ],
-        "ManifestRates": [],
-        "ManifestWeeks": [
-          {
-            "EndDate": "2019-03-24T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-03-24T00:00:00",
-              "_MediaMonthId": 450,
-              "_StartDate": "2019-03-18T00:00:00",
-              "_WeekNumber": 4,
-              "IsDirty": true
-            },
-            "Spots": 0,
-            "StartDate": "2019-03-22T00:00:00"
-          },
-          {
-            "EndDate": "2019-03-30T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-03-31T00:00:00",
-              "_MediaMonthId": 450,
-              "_StartDate": "2019-03-25T00:00:00",
-              "_WeekNumber": 5,
-              "IsDirty": true
-            },
-            "Spots": 0,
-            "StartDate": "2019-03-25T00:00:00"
-          }
-        ],
-        "SpotLengthId": 2,
-        "SpotsPerDay": null,
-        "SpotsPerWeek": null,
-        "Station": {
-          "Affiliation": "FOX",
-          "CallLetters": "WNYW 5.1",
-          "Code": 5010,
-          "IsTrueInd": false,
-          "LegacyCallLetters": "WNYW",
-          "ManifestMaxEndDate": null,
-          "MarketCode": 101,
-          "ModifiedDate": null,
-          "OriginMarket": null,
-          "OwnershipGroupName": null,
-          "RateDataThrough": null,
-          "RepFirmName": null
-        }
-      }
-    ],
-    "Name": "AM 1",
-    "SlotNumber": 1
-  },
-  {
-    "InventorySource": {
-      "Id": 4,
-      "InventoryType": 2,
-      "IsActive": true,
-      "Name": "TTWN"
-    },
-    "Manifests": [
-      {
-        "Comment": "Test12",
-        "DaypartCode": "LN",
-        "InventorySourceId": 4,
-        "ManifestAudiences": [],
-        "ManifestAudiencesReferences": [
-          {
-            "Audience": {
-              "AudienceString": "Adults 25-54",
-              "Id": 37
-            },
-            "CPM": 222.2200,
-            "HutPlaybackType": null,
-            "Impressions": null,
-            "IsReference": true,
-            "Rating": null,
-            "SharePlaybackType": null,
-            "Vpvh": null
-          }
-        ],
-        "ManifestDayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 21599,
-              "_Friday": true,
-              "_Id": 29862,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": true,
-              "_Name": "BRDCST DP362",
-              "_Saturday": false,
-              "_StartTime": 18000,
-              "_Sunday": false,
-              "_Thursday": true,
-              "_Tuesday": true,
-              "_Wednesday": true
-            },
-            "DaypartDefault": null,
-            "Genres": [],
-            "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
-          }
-        ],
-        "ManifestRates": [],
-        "ManifestWeeks": [
-          {
-            "EndDate": "2019-03-24T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-03-24T00:00:00",
-              "_MediaMonthId": 450,
-              "_StartDate": "2019-03-18T00:00:00",
-              "_WeekNumber": 4,
-              "IsDirty": true
-            },
-            "Spots": 0,
-            "StartDate": "2019-03-22T00:00:00"
-          },
-          {
-            "EndDate": "2019-03-30T00:00:00",
-            "MediaWeek": {
-              "_EndDate": "2019-03-31T00:00:00",
-              "_MediaMonthId": 450,
-              "_StartDate": "2019-03-25T00:00:00",
-              "_WeekNumber": 5,
-              "IsDirty": true
-            },
-            "Spots": 0,
-            "StartDate": "2019-03-25T00:00:00"
-          }
-        ],
-        "SpotLengthId": 2,
-        "SpotsPerDay": null,
-        "SpotsPerWeek": null,
-        "Station": {
-          "Affiliation": "CBS",
-          "CallLetters": "WCBS-TV 2.1",
-          "Code": 5012,
-          "IsTrueInd": false,
-          "LegacyCallLetters": "WCBS",
-          "ManifestMaxEndDate": null,
-          "MarketCode": 101,
-          "ModifiedDate": null,
-          "OriginMarket": null,
-          "OwnershipGroupName": null,
-          "RateDataThrough": null,
-          "RepFirmName": null
-        }
-      },
-      {
-        "Comment": null,
-        "DaypartCode": "LN",
-        "InventorySourceId": 4,
-        "ManifestAudiences": [],
-        "ManifestAudiencesReferences": [
-          {
-            "Audience": {
-              "AudienceString": "Adults 25-54",
-              "Id": 37
-            },
-            "CPM": 222.2200,
-            "HutPlaybackType": null,
-            "Impressions": null,
-            "IsReference": true,
-            "Rating": null,
-            "SharePlaybackType": null,
-            "Vpvh": null
-          }
-        ],
-        "ManifestDayparts": [
-          {
-            "Daypart": {
-              "_Code": "CUS",
-              "_EndTime": 23399,
-              "_Friday": false,
-              "_Id": 30028,
-              "_Is24Hour": false,
-              "_LastEndTime": 0,
-              "_LastStartTime": 0,
-              "_Monday": false,
-              "_Name": "BRDCST DP362",
-              "_Saturday": true,
-              "_StartTime": 21600,
-              "_Sunday": true,
-              "_Thursday": false,
-              "_Tuesday": false,
-              "_Wednesday": false
-            },
-            "DaypartDefault": null,
-            "Genres": [],
-            "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-03-30T00:00:00",
+                "EndTime": 23399,
+                "Id": 14756,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-03-22T00:00:00",
+                "StartTime": 21600,
+                "StationInventoryManifestDaypartId": 633849
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -389,16 +223,16 @@
   },
   {
     "InventorySource": {
-      "Id": 4,
+      "Id": 3,
       "InventoryType": 2,
       "IsActive": true,
-      "Name": "TTWN"
+      "Name": "TVB"
     },
     "Manifests": [
       {
         "Comment": "Test12",
-        "DaypartCode": "LN",
-        "InventorySourceId": 4,
+        "DaypartCode": "ENLN",
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -434,11 +268,247 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-03-30T00:00:00",
+                "EndTime": 21599,
+                "Id": 14755,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-03-22T00:00:00",
+                "StartTime": 18000,
+                "StationInventoryManifestDaypartId": 633848
+              }
+            ],
+            "StandardDaypart": null
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2019-03-24T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2019-03-24T00:00:00",
+              "_MediaMonthId": 450,
+              "_StartDate": "2019-03-18T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 0,
+            "StartDate": "2019-03-22T00:00:00"
+          },
+          {
+            "EndDate": "2019-03-30T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2019-03-31T00:00:00",
+              "_MediaMonthId": 450,
+              "_StartDate": "2019-03-25T00:00:00",
+              "_WeekNumber": 5,
+              "IsDirty": true
+            },
+            "Spots": 0,
+            "StartDate": "2019-03-25T00:00:00"
+          }
+        ],
+        "SpotLengthId": 2,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "CBS",
+          "CallLetters": "WCBS-TV 2.1",
+          "Code": 5012,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "WCBS",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 101,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      },
+      {
+        "Comment": null,
+        "DaypartCode": "ENLN",
+        "InventorySourceId": 3,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 25-54",
+              "Id": 37
+            },
+            "CPM": 222.2200,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 23399,
+              "_Friday": false,
+              "_Id": 30028,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": false,
+              "_Name": "BRDCST DP362",
+              "_Saturday": true,
+              "_StartTime": 21600,
+              "_Sunday": true,
+              "_Thursday": false,
+              "_Tuesday": false,
+              "_Wednesday": false
+            },
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-03-30T00:00:00",
+                "EndTime": 23399,
+                "Id": 14756,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-03-22T00:00:00",
+                "StartTime": 21600,
+                "StationInventoryManifestDaypartId": 633849
+              }
+            ],
+            "StandardDaypart": null
+          }
+        ],
+        "ManifestRates": [],
+        "ManifestWeeks": [
+          {
+            "EndDate": "2019-03-24T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2019-03-24T00:00:00",
+              "_MediaMonthId": 450,
+              "_StartDate": "2019-03-18T00:00:00",
+              "_WeekNumber": 4,
+              "IsDirty": true
+            },
+            "Spots": 0,
+            "StartDate": "2019-03-22T00:00:00"
+          },
+          {
+            "EndDate": "2019-03-30T00:00:00",
+            "MediaWeek": {
+              "_EndDate": "2019-03-31T00:00:00",
+              "_MediaMonthId": 450,
+              "_StartDate": "2019-03-25T00:00:00",
+              "_WeekNumber": 5,
+              "IsDirty": true
+            },
+            "Spots": 0,
+            "StartDate": "2019-03-25T00:00:00"
+          }
+        ],
+        "SpotLengthId": 2,
+        "SpotsPerDay": null,
+        "SpotsPerWeek": null,
+        "Station": {
+          "Affiliation": "FOX",
+          "CallLetters": "WNYW 5.1",
+          "Code": 5010,
+          "IsTrueInd": false,
+          "LegacyCallLetters": "WNYW",
+          "ManifestMaxEndDate": null,
+          "MarketCode": 101,
+          "ModifiedDate": null,
+          "OriginMarket": null,
+          "OwnershipGroupName": null,
+          "RateDataThrough": null,
+          "RepFirmName": null
+        }
+      }
+    ],
+    "Name": "AM 1",
+    "SlotNumber": 1
+  },
+  {
+    "InventorySource": {
+      "Id": 3,
+      "InventoryType": 2,
+      "IsActive": true,
+      "Name": "TVB"
+    },
+    "Manifests": [
+      {
+        "Comment": "Test12",
+        "DaypartCode": "ENLN",
+        "InventorySourceId": 3,
+        "ManifestAudiences": [],
+        "ManifestAudiencesReferences": [
+          {
+            "Audience": {
+              "AudienceString": "Adults 25-54",
+              "Id": 37
+            },
+            "CPM": 222.2200,
+            "HutPlaybackType": null,
+            "Impressions": null,
+            "IsReference": true,
+            "Rating": null,
+            "SharePlaybackType": null,
+            "Vpvh": null
+          }
+        ],
+        "ManifestDayparts": [
+          {
+            "Daypart": {
+              "_Code": "CUS",
+              "_EndTime": 21599,
+              "_Friday": true,
+              "_Id": 29862,
+              "_Is24Hour": false,
+              "_LastEndTime": 0,
+              "_LastStartTime": 0,
+              "_Monday": true,
+              "_Name": "BRDCST DP362",
+              "_Saturday": false,
+              "_StartTime": 18000,
+              "_Sunday": false,
+              "_Thursday": true,
+              "_Tuesday": true,
+              "_Wednesday": true
+            },
+            "Genres": [],
+            "PrimaryProgramId": null,
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-03-30T00:00:00",
+                "EndTime": 21599,
+                "Id": 14757,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-03-22T00:00:00",
+                "StartTime": 18000,
+                "StationInventoryManifestDaypartId": 633850
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -488,8 +558,8 @@
       },
       {
         "Comment": null,
-        "DaypartCode": "LN",
-        "InventorySourceId": 4,
+        "DaypartCode": "ENLN",
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -525,11 +595,25 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-03-30T00:00:00",
+                "EndTime": 23399,
+                "Id": 14758,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-03-22T00:00:00",
+                "StartTime": 21600,
+                "StationInventoryManifestDaypartId": 633851
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -583,16 +667,16 @@
   },
   {
     "InventorySource": {
-      "Id": 4,
+      "Id": 3,
       "InventoryType": 2,
       "IsActive": true,
-      "Name": "TTWN"
+      "Name": "TVB"
     },
     "Manifests": [
       {
         "Comment": "Test12",
-        "DaypartCode": "LN",
-        "InventorySourceId": 4,
+        "DaypartCode": "ENLN",
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -628,11 +712,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-03-30T00:00:00",
+                "EndTime": 21599,
+                "Id": 14757,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-03-22T00:00:00",
+                "StartTime": 18000,
+                "StationInventoryManifestDaypartId": 633850
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -682,8 +780,8 @@
       },
       {
         "Comment": null,
-        "DaypartCode": "LN",
-        "InventorySourceId": 4,
+        "DaypartCode": "ENLN",
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -719,11 +817,25 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-03-30T00:00:00",
+                "EndTime": 23399,
+                "Id": 14758,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-03-22T00:00:00",
+                "StartTime": 21600,
+                "StationInventoryManifestDaypartId": 633851
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -777,16 +889,16 @@
   },
   {
     "InventorySource": {
-      "Id": 4,
+      "Id": 3,
       "InventoryType": 2,
       "IsActive": true,
-      "Name": "TTWN"
+      "Name": "TVB"
     },
     "Manifests": [
       {
         "Comment": "Test12",
-        "DaypartCode": "LN",
-        "InventorySourceId": 4,
+        "DaypartCode": "ENLN",
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -822,11 +934,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-03-30T00:00:00",
+                "EndTime": 21599,
+                "Id": 14759,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-03-22T00:00:00",
+                "StartTime": 18000,
+                "StationInventoryManifestDaypartId": 633852
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -876,8 +1002,8 @@
       },
       {
         "Comment": null,
-        "DaypartCode": "LN",
-        "InventorySourceId": 4,
+        "DaypartCode": "ENLN",
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -913,11 +1039,25 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-03-30T00:00:00",
+                "EndTime": 23399,
+                "Id": 14760,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-03-22T00:00:00",
+                "StartTime": 21600,
+                "StationInventoryManifestDaypartId": 633853
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -971,16 +1111,16 @@
   },
   {
     "InventorySource": {
-      "Id": 4,
+      "Id": 3,
       "InventoryType": 2,
       "IsActive": true,
-      "Name": "TTWN"
+      "Name": "TVB"
     },
     "Manifests": [
       {
         "Comment": "Test12",
-        "DaypartCode": "LN",
-        "InventorySourceId": 4,
+        "DaypartCode": "ENLN",
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -1016,11 +1156,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-03-30T00:00:00",
+                "EndTime": 21599,
+                "Id": 14759,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-03-22T00:00:00",
+                "StartTime": 18000,
+                "StationInventoryManifestDaypartId": 633852
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -1070,8 +1224,8 @@
       },
       {
         "Comment": null,
-        "DaypartCode": "LN",
-        "InventorySourceId": 4,
+        "DaypartCode": "ENLN",
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -1107,11 +1261,25 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-03-30T00:00:00",
+                "EndTime": 23399,
+                "Id": 14760,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-03-22T00:00:00",
+                "StartTime": 21600,
+                "StationInventoryManifestDaypartId": 633853
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -1165,16 +1333,16 @@
   },
   {
     "InventorySource": {
-      "Id": 4,
+      "Id": 3,
       "InventoryType": 2,
       "IsActive": true,
-      "Name": "TTWN"
+      "Name": "TVB"
     },
     "Manifests": [
       {
         "Comment": "Test12",
-        "DaypartCode": "LN",
-        "InventorySourceId": 4,
+        "DaypartCode": "ENLN",
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -1210,11 +1378,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-03-30T00:00:00",
+                "EndTime": 21599,
+                "Id": 14761,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-03-22T00:00:00",
+                "StartTime": 18000,
+                "StationInventoryManifestDaypartId": 633854
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -1264,8 +1446,8 @@
       },
       {
         "Comment": null,
-        "DaypartCode": "LN",
-        "InventorySourceId": 4,
+        "DaypartCode": "ENLN",
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -1301,11 +1483,25 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-03-30T00:00:00",
+                "EndTime": 23399,
+                "Id": 14762,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-03-22T00:00:00",
+                "StartTime": 21600,
+                "StationInventoryManifestDaypartId": 633855
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -1359,16 +1555,16 @@
   },
   {
     "InventorySource": {
-      "Id": 4,
+      "Id": 3,
       "InventoryType": 2,
       "IsActive": true,
-      "Name": "TTWN"
+      "Name": "TVB"
     },
     "Manifests": [
       {
         "Comment": "Test12",
-        "DaypartCode": "LN",
-        "InventorySourceId": 4,
+        "DaypartCode": "ENLN",
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -1404,11 +1600,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-03-30T00:00:00",
+                "EndTime": 21599,
+                "Id": 14761,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-03-22T00:00:00",
+                "StartTime": 18000,
+                "StationInventoryManifestDaypartId": 633854
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -1458,8 +1668,8 @@
       },
       {
         "Comment": null,
-        "DaypartCode": "LN",
-        "InventorySourceId": 4,
+        "DaypartCode": "ENLN",
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -1495,11 +1705,25 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-03-30T00:00:00",
+                "EndTime": 23399,
+                "Id": 14762,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-03-22T00:00:00",
+                "StartTime": 21600,
+                "StationInventoryManifestDaypartId": 633855
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],

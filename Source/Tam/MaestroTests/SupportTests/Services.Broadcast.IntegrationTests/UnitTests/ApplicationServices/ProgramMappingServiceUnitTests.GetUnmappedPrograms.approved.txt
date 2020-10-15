@@ -19,7 +19,7 @@
   },
   {
     "Genre": "News",
-    "MatchConfidence": 0.788888931,
+    "MatchConfidence": 0.7888889,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "SOME OTHER NEWS",

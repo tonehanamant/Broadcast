@@ -11,6 +11,7 @@ using Services.Broadcast.Entities.ProprietaryInventory;
 using System;
 using System.IO;
 using System.Linq;
+using Services.Broadcast.Repositories;
 using Tam.Maestro.Common.DataLayer;
 using Unity;
 
@@ -19,13 +20,24 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
     [TestFixture]
     public class ProprietaryFileImporterIntegrationTests
     {
+        private const string inventorySourceTvb = "TVB";
+        private const string inventorySourceMLB = "MLB";
+        private const string inventorySourceBounce = "Bounce";
+        private const string inventorySourceKatz = "KATZ";
+        private const string inventorySourceNbcSyn = "NBCU Syn";
+        private const string inventorySourceCbsSyn = "CBS Synd";
+        private const string inventorySourceCourTV = "Escape"; // CourTV became TruTV became Escape
+
         private IProprietaryFileImporterFactory _ProprietaryFileImporterFactory;
+        private IInventoryRepository _InventoryRepository;
 
         [SetUp]
         public void SetUp()
         {
             IntegrationTestApplicationServiceFactory.Instance.RegisterInstance<IFileService>(new FileService());
             _ProprietaryFileImporterFactory = IntegrationTestApplicationServiceFactory.GetApplicationService<IProprietaryFileImporterFactory>();
+
+            _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         }
 
         [Test]
@@ -34,7 +46,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void Barter_GetPendingBarterInventoryFile()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_GetPendingBarterInventoryFile.xlsx";
-            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
+            var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceTvb);
             var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
 
             using (new TransactionScopeWrapper())
@@ -48,7 +60,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 fileImporter.LoadFromSaveRequest(request);
 
                 fileImporter.CheckFileHash();
-                var file = fileImporter.GetPendingProprietaryInventoryFile("integration test", null);
+                var file = fileImporter.GetPendingProprietaryInventoryFile("integration test", inventorySource);
 
                 _VerifyProprietaryInventoryFile(file);
             }
@@ -60,7 +72,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void Barter_ExtractData_BadFormats()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_BadFormats.xlsx";
-            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
+            var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceTvb);
             var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
 
             using (new TransactionScopeWrapper())
@@ -72,7 +84,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 fileImporter.LoadFromSaveRequest(request);
-                ProprietaryInventoryFile file = fileImporter.GetPendingProprietaryInventoryFile("integration test", null);
+                ProprietaryInventoryFile file = fileImporter.GetPendingProprietaryInventoryFile("integration test", inventorySource);
                 fileImporter.ExtractData(file);
                 _VerifyProprietaryInventoryFile(file);
             }
@@ -84,7 +96,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void Barter_ExtractData_PRI5379()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_BadFormats_PRI5379.xlsx";
-            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
+            var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceTvb);
             var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
 
             using (new TransactionScopeWrapper())
@@ -96,7 +108,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 fileImporter.LoadFromSaveRequest(request);
-                ProprietaryInventoryFile file = fileImporter.GetPendingProprietaryInventoryFile("integration test", null);
+                ProprietaryInventoryFile file = fileImporter.GetPendingProprietaryInventoryFile("integration test", inventorySource);
                 fileImporter.ExtractData(file);
                 _VerifyProprietaryInventoryFile(file);
             }
@@ -108,7 +120,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void Barter_ExtractData_MoreBadFormats()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_BadFormats2.xlsx";
-            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
+            var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceTvb);
             var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
 
             using (new TransactionScopeWrapper())
@@ -120,7 +132,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 fileImporter.LoadFromSaveRequest(request);
-                ProprietaryInventoryFile file = fileImporter.GetPendingProprietaryInventoryFile("integration test", null);
+                ProprietaryInventoryFile file = fileImporter.GetPendingProprietaryInventoryFile("integration test", inventorySource);
                 fileImporter.ExtractData(file);
                 _VerifyProprietaryInventoryFile(file);
             }
@@ -132,7 +144,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void Barter_ExtractData_BadFormatsAgain()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_BadFormats3.xlsx";
-            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
+            var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceTvb);
             var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
 
             using (new TransactionScopeWrapper())
@@ -144,7 +156,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 fileImporter.LoadFromSaveRequest(request);
-                ProprietaryInventoryFile file = fileImporter.GetPendingProprietaryInventoryFile("integration test", null);
+                ProprietaryInventoryFile file = fileImporter.GetPendingProprietaryInventoryFile("integration test", inventorySource);
                 fileImporter.ExtractData(file);
                 _VerifyProprietaryInventoryFile(file);
             }
@@ -157,10 +169,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Barter_DataLines file with valid data.xlsx";
             var barterFile = new ProprietaryInventoryFile();
+            var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceMLB);
 
             using (var package = new ExcelPackage(new FileInfo(fileName)))
             {
-                var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
                 var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
                 fileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], barterFile);
             }
@@ -177,7 +189,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             using (var package = new ExcelPackage(new FileInfo(fileName)))
             {
-                var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
+                var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceMLB);
                 var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
                 var proprietaryFile = new ProprietaryInventoryFile();
                 fileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], proprietaryFile);
@@ -194,7 +206,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             using (var package = new ExcelPackage(new FileInfo(fileName)))
             {
-                var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
+                var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceMLB);
                 var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
                 var proprietaryFile = new ProprietaryInventoryFile();
                 fileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], proprietaryFile);
@@ -211,7 +223,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             using (var package = new ExcelPackage(new FileInfo(fileName)))
             {
-                var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
+                var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceMLB);
                 var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
                 var proprietaryFile = new ProprietaryInventoryFile();
                 fileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], proprietaryFile);
@@ -228,7 +240,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             using (var package = new ExcelPackage(new FileInfo(fileName)))
             {
-                var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
+                var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceMLB);
                 var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
                 var proprietaryFile = new ProprietaryInventoryFile();
                 fileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], proprietaryFile);
@@ -246,7 +258,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             using (var package = new ExcelPackage(new FileInfo(fileName)))
             {
-                var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
+                var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceMLB);
                 var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
                 var proprietaryFile = new ProprietaryInventoryFile();
                 fileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], proprietaryFile);
@@ -263,7 +275,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             using (var package = new ExcelPackage(new FileInfo(fileName)))
             {
-                var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
+                var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceTvb);
                 var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
                 var proprietaryFile = new ProprietaryInventoryFile();
                 fileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], proprietaryFile);
@@ -280,7 +292,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             using (var package = new ExcelPackage(new FileInfo(fileName)))
             {
-                var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
+                var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceMLB);
                 var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
                 fileImporter.LoadAndValidateDataLines(package.Workbook.Worksheets[1], new ProprietaryInventoryFile());
             }
@@ -292,7 +304,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void Barter_ExtractData_PRI5667()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_BadFormats_PRI5667.xlsx";
-            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
+            var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceTvb);
             var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
 
             using (new TransactionScopeWrapper())
@@ -304,7 +316,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
 
                 fileImporter.LoadFromSaveRequest(request);
-                ProprietaryInventoryFile file = fileImporter.GetPendingProprietaryInventoryFile("integration test", null);
+                ProprietaryInventoryFile file = fileImporter.GetPendingProprietaryInventoryFile("integration test", inventorySource);
                 fileImporter.ExtractData(file);
                 _VerifyProprietaryInventoryFile(file);
             }
@@ -316,7 +328,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void Barter_ExtractData_PRI5980()
         {
             const string fileName = @"ProprietaryDataFiles\Barter_BadFormats_PRI5980.xlsx";
-            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
+            var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceTvb);
             var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
 
             using (new TransactionScopeWrapper())
@@ -356,7 +368,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("short_running")]
         public void Barter_SaveErrorsToFile()
         {
-            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
+            var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceTvb);
             var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
             const string fileName = @"ProprietaryDataFiles\Barter_invalid1.xlsx";
 
@@ -388,7 +400,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("short_running")]
         public void Diginet_SaveErrorsToFile()
         {
-            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Diginet };
+            var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceBounce);
             var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
             const string fileName = @"ProprietaryDataFiles\Diginet_invalidFile12.xlsx";
 
@@ -420,7 +432,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("short_running")]
         public void Diginet_ExtractData_Bounce_Audience()
         {
-            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Diginet };
+            var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceBounce);
             var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
             const string fileName = @"ProprietaryDataFiles\Diginet_Bounce_M18+_7.1.19 .xlsx";
 
@@ -452,7 +464,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("short_running")]
         public void OAndO_SaveErrorsToFile()
         {
-            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.ProprietaryOAndO };
+            var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceKatz);
             var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
             const string fileName = @"ProprietaryDataFiles\OAndO_InvalidFile5.xlsx";
 
@@ -484,7 +496,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("short_running")]
         public void Syndicator_SaveErrorsToFile()
         {
-            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Syndication };
+            var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceNbcSyn);
             var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
             const string fileName = @"ProprietaryDataFiles\Syndication_InvalidFile9.xlsx";
 
@@ -517,7 +529,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void Barter_AudienceMap()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Barter_Valid_AudienceMap1.xlsx";
-            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Barter };
+            var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceTvb);
             _VerifyFile(fileName, inventorySource);
         }
 
@@ -527,7 +539,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void Syndication_AudienceMap()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Syndicator_Valid_AudienceMap1.xlsx";
-            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Syndication };
+            var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceCbsSyn);
             _VerifyFile(fileName, inventorySource);
         }
 
@@ -537,7 +549,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void Diginet_AudienceMap()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Diginet_Valid_AudienceMap1.xlsx";
-            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Diginet };
+            var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceCourTV);
             _VerifyFile(fileName, inventorySource);
         }
 
@@ -547,7 +559,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void Diginet_AudienceMap_PRI11102()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Diginet_Bounce_M18+_7.1.19 .xlsx";
-            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Diginet };
+            var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceBounce);
             _VerifyFile(fileName, inventorySource);
         }
 
@@ -557,7 +569,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void Syndicator_AudienceMap_PRI11102()
         {
             const string fileName = @".\Files\ProprietaryDataFiles\Syndicator NBCUSyn M35+ 07-01-2019 .xlsx";
-            var inventorySource = new InventorySource { InventoryType = InventorySourceTypeEnum.Syndication };
+            var inventorySource = _InventoryRepository.GetInventorySourceByName(inventorySourceNbcSyn);
             _VerifyFile(fileName, inventorySource);
         }
 

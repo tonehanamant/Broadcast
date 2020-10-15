@@ -6,7 +6,7 @@
   "EndDate": "2020-01-05T00:00:00",
   "FileName": "ProprietaryDataFiles\\Barter_ValidFormat.xlsx",
   "FileStatus": 2,
-  "Hash": "40-77-EC-CA-94-1F-52-3B-D1-F0-72-AE-F9-BE-3E-80-F8-A5-6A-29",
+  "Hash": "4F-F7-53-58-7C-11-B5-3C-8F-1C-BE-7D-14-AE-87-FA-95-B1-81-4C",
   "Header": {
     "Audience": {
       "_CategoryCode": 0,
@@ -33,10 +33,10 @@
   "InventoryGroups": [],
   "InventoryManifests": [],
   "InventorySource": {
-    "Id": 4,
+    "Id": 3,
     "InventoryType": 2,
     "IsActive": true,
-    "Name": "TTWN"
+    "Name": "TVB"
   },
   "RowsProcessed": 2,
   "UniqueIdentifier": null,

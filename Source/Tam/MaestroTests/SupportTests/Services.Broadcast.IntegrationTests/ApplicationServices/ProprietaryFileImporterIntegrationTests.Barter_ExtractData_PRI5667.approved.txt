@@ -84,7 +84,7 @@
   "EndDate": null,
   "FileName": "ProprietaryDataFiles\\Barter_BadFormats_PRI5667.xlsx",
   "FileStatus": 1,
-  "Hash": "8A-ED-EA-21-9E-2C-C1-5D-FB-90-1A-70-F0-BB-01-F2-AE-68-38-75",
+  "Hash": "F8-F2-86-EC-C9-E9-42-B7-69-BF-0F-3A-A9-98-39-42-05-57-3B-40",
   "Header": {
     "Audience": {
       "_CategoryCode": 0,
@@ -98,7 +98,7 @@
       "IsDirty": true
     },
     "Cpm": 222.22,
-    "DaypartCode": "LN",
+    "DaypartCode": "EMN",
     "EffectiveDate": "2019-05-22T00:00:00",
     "EndDate": "2019-05-30T00:00:00",
     "HutBookId": 449,
@@ -109,7 +109,12 @@
   },
   "InventoryGroups": [],
   "InventoryManifests": [],
-  "InventorySource": null,
+  "InventorySource": {
+    "Id": 3,
+    "InventoryType": 2,
+    "IsActive": true,
+    "Name": "TVB"
+  },
   "RowsProcessed": null,
   "UniqueIdentifier": null,
   "ValidationProblems": []

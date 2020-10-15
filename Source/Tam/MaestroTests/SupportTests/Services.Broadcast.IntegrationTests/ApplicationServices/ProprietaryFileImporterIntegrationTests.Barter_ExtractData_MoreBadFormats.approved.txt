@@ -5,7 +5,7 @@
   "EndDate": null,
   "FileName": "ProprietaryDataFiles\\Barter_BadFormats2.xlsx",
   "FileStatus": 1,
-  "Hash": "CA-DD-52-15-DB-67-C0-10-C8-3E-67-D0-73-6C-B1-CF-56-13-D8-96",
+  "Hash": "37-B6-D2-AE-51-54-DC-67-66-32-DD-B2-3A-2D-00-4B-0A-9E-88-3A",
   "Header": {
     "Audience": {
       "_CategoryCode": 0,
@@ -30,7 +30,12 @@
   },
   "InventoryGroups": [],
   "InventoryManifests": [],
-  "InventorySource": null,
+  "InventorySource": {
+    "Id": 3,
+    "InventoryType": 2,
+    "IsActive": true,
+    "Name": "TVB"
+  },
   "RowsProcessed": null,
   "UniqueIdentifier": null,
   "ValidationProblems": [

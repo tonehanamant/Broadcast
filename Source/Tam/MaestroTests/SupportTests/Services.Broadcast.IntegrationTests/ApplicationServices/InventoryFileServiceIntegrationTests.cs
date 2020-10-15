@@ -1597,7 +1597,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("long_running")]
         public void CanGetProprietaryUploadHistory()
         {
-            var inventorySourceId = 4; // TTWN
+            var inventorySourceId = 3; // TVB
 
             using (new TransactionScopeWrapper())
             {
@@ -1623,7 +1623,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("long_running")]
         public void CanGetProprietaryUploadHistoryWithQuarterFIlter()
         {
-            var inventorySourceId = 4; // TTWN
+            var inventorySourceId = 3; // TVB
 
             using (new TransactionScopeWrapper())
             {
@@ -1778,8 +1778,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("long_running")]
         public void CanGetUploadHistoryQuartersProprietary()
         {
-            // TTWN.
-            var inventorySourceId = 4;
+            // TVB.
+            var inventorySourceId = 3;
 
             using (new TransactionScopeWrapper())
             {

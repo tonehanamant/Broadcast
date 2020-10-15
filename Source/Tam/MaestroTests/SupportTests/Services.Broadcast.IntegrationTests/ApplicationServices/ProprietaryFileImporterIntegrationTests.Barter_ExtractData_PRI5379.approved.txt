@@ -126,7 +126,7 @@
   "EndDate": null,
   "FileName": "ProprietaryDataFiles\\Barter_BadFormats_PRI5379.xlsx",
   "FileStatus": 1,
-  "Hash": "73-28-0D-ED-A7-61-3E-49-5B-27-89-43-59-2A-AA-96-F9-9A-3B-38",
+  "Hash": "2D-B5-78-42-C1-66-1E-4F-E2-C1-9C-42-34-98-67-1F-3F-0C-E6-B8",
   "Header": {
     "Audience": {
       "_CategoryCode": 0,
@@ -151,7 +151,12 @@
   },
   "InventoryGroups": [],
   "InventoryManifests": [],
-  "InventorySource": null,
+  "InventorySource": {
+    "Id": 3,
+    "InventoryType": 2,
+    "IsActive": true,
+    "Name": "TVB"
+  },
   "RowsProcessed": null,
   "UniqueIdentifier": null,
   "ValidationProblems": [

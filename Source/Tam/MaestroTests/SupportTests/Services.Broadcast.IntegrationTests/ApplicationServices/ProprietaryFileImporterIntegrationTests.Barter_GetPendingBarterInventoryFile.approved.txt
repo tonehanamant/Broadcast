@@ -5,11 +5,16 @@
   "EndDate": null,
   "FileName": "ProprietaryDataFiles\\Barter_GetPendingBarterInventoryFile.xlsx",
   "FileStatus": 1,
-  "Hash": "12-30-BF-B9-80-07-2E-87-83-EA-F4-15-DD-4E-8A-3A-47-2C-EF-B2",
+  "Hash": "8D-23-80-C4-17-41-91-B0-0B-74-A9-E3-05-AB-11-BD-A6-EA-AD-EE",
   "Header": null,
   "InventoryGroups": [],
   "InventoryManifests": [],
-  "InventorySource": null,
+  "InventorySource": {
+    "Id": 3,
+    "InventoryType": 2,
+    "IsActive": true,
+    "Name": "TVB"
+  },
   "RowsProcessed": null,
   "UniqueIdentifier": null,
   "ValidationProblems": []

@@ -386,7 +386,7 @@ namespace Services.Broadcast.ApplicationServices
             foreach (var requestDetectionFile in request.Files)
             {
                 currentFileIndex++;
-                _LogInfo($"Beginning file {currentFileIndex} of {totalFileCount}.  FileName = '{requestDetectionFile.FileName}'; FileLength = '{requestDetectionFile.RawData.Length}'", txId, username);
+                _LogInfo($"Beginning file {currentFileIndex} of {totalFileCount}.  FileName = '{requestDetectionFile.FileName}'; FileLength = '{requestDetectionFile?.RawData?.Length ?? 0}'", txId, username);
                 try
                 {
                     errorMessage += string.Format("Starting upload for file '{0}' . . .",
@@ -478,7 +478,7 @@ namespace Services.Broadcast.ApplicationServices
                         string.Format("<br /> Error processing file '{0}'. <br />Message:<br />{1}<br />{2}<br />",
                             requestDetectionFile.FileName, e.Message, e.StackTrace);
 
-                    _LogError($"Error caught attempt to save file {currentFileIndex} of {totalFileCount}.  FileName = '{requestDetectionFile.FileName}'; FileLength = '{requestDetectionFile.RawData.Length}'", txId, e, username);
+                    _LogError($"Error caught attempt to save file {currentFileIndex} of {totalFileCount}.  FileName = '{requestDetectionFile.FileName}'; FileLength = '{requestDetectionFile?.RawData?.Length ?? 0}'", txId, e, username);
 
                     var innerEx = e.InnerException;
                     var level = 1;
@@ -493,7 +493,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
                 finally
                 {
-                    _LogInfo($"Completed file {currentFileIndex} of {totalFileCount}.  FileName = '{requestDetectionFile.FileName}'; FileLength = '{requestDetectionFile.RawData.Length}'", txId, username);
+                    _LogInfo($"Completed file {currentFileIndex} of {totalFileCount}.  FileName = '{requestDetectionFile.FileName}'; FileLength = '{requestDetectionFile?.RawData?.Length ?? 0}'", txId, username);
                 }
             }
 

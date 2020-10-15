@@ -1,16 +1,16 @@
 ﻿[
   {
     "InventorySource": {
-      "Id": 4,
+      "Id": 3,
       "InventoryType": 2,
       "IsActive": true,
-      "Name": "TTWN"
+      "Name": "TVB"
     },
     "Manifests": [
       {
         "Comment": "Comment 1",
         "DaypartCode": "EMN",
-        "InventorySourceId": 4,
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -46,11 +46,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 35999,
+                "Id": 14755,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633848
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -125,7 +139,7 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "EMN",
-        "InventorySourceId": 4,
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -161,11 +175,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 81299,
+                "Id": 14756,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 79200,
+                "StationInventoryManifestDaypartId": 633849
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -240,7 +268,7 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "EMN",
-        "InventorySourceId": 4,
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -276,11 +304,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 86399,
+                "Id": 14757,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633850
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -355,7 +397,7 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "EMN",
-        "InventorySourceId": 4,
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -391,11 +433,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 68399,
+                "Id": 14758,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 61200,
+                "StationInventoryManifestDaypartId": 633851
+              }
+            ],
+            "StandardDaypart": null
           },
           {
             "Daypart": {
@@ -415,11 +471,25 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 66599,
+                "Id": 14759,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 64800,
+                "StationInventoryManifestDaypartId": 633852
+              }
+            ],
+            "StandardDaypart": null
           },
           {
             "Daypart": {
@@ -439,11 +509,25 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 68399,
+                "Id": 14760,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 64800,
+                "StationInventoryManifestDaypartId": 633853
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -521,16 +605,16 @@
   },
   {
     "InventorySource": {
-      "Id": 4,
+      "Id": 3,
       "InventoryType": 2,
       "IsActive": true,
-      "Name": "TTWN"
+      "Name": "TVB"
     },
     "Manifests": [
       {
         "Comment": "Comment 1",
         "DaypartCode": "EMN",
-        "InventorySourceId": 4,
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -566,11 +650,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 35999,
+                "Id": 14755,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633848
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -645,7 +743,7 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "EMN",
-        "InventorySourceId": 4,
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -681,11 +779,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 81299,
+                "Id": 14756,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 79200,
+                "StationInventoryManifestDaypartId": 633849
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -760,7 +872,7 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "EMN",
-        "InventorySourceId": 4,
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -796,11 +908,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 86399,
+                "Id": 14757,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633850
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -875,7 +1001,7 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "EMN",
-        "InventorySourceId": 4,
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -911,11 +1037,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 68399,
+                "Id": 14758,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 61200,
+                "StationInventoryManifestDaypartId": 633851
+              }
+            ],
+            "StandardDaypart": null
           },
           {
             "Daypart": {
@@ -935,11 +1075,25 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 66599,
+                "Id": 14759,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 64800,
+                "StationInventoryManifestDaypartId": 633852
+              }
+            ],
+            "StandardDaypart": null
           },
           {
             "Daypart": {
@@ -959,11 +1113,25 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 68399,
+                "Id": 14760,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 64800,
+                "StationInventoryManifestDaypartId": 633853
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -1041,16 +1209,16 @@
   },
   {
     "InventorySource": {
-      "Id": 4,
+      "Id": 3,
       "InventoryType": 2,
       "IsActive": true,
-      "Name": "TTWN"
+      "Name": "TVB"
     },
     "Manifests": [
       {
         "Comment": "Comment 1",
         "DaypartCode": "EMN",
-        "InventorySourceId": 4,
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -1086,11 +1254,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 35999,
+                "Id": 14755,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633848
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -1165,7 +1347,7 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "EMN",
-        "InventorySourceId": 4,
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -1201,11 +1383,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 81299,
+                "Id": 14756,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 79200,
+                "StationInventoryManifestDaypartId": 633849
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -1280,7 +1476,7 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "EMN",
-        "InventorySourceId": 4,
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -1316,11 +1512,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 86399,
+                "Id": 14757,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633850
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -1395,7 +1605,7 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "EMN",
-        "InventorySourceId": 4,
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -1431,11 +1641,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 68399,
+                "Id": 14758,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 61200,
+                "StationInventoryManifestDaypartId": 633851
+              }
+            ],
+            "StandardDaypart": null
           },
           {
             "Daypart": {
@@ -1455,11 +1679,25 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 66599,
+                "Id": 14759,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 64800,
+                "StationInventoryManifestDaypartId": 633852
+              }
+            ],
+            "StandardDaypart": null
           },
           {
             "Daypart": {
@@ -1479,11 +1717,25 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 68399,
+                "Id": 14760,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 64800,
+                "StationInventoryManifestDaypartId": 633853
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -1561,16 +1813,16 @@
   },
   {
     "InventorySource": {
-      "Id": 4,
+      "Id": 3,
       "InventoryType": 2,
       "IsActive": true,
-      "Name": "TTWN"
+      "Name": "TVB"
     },
     "Manifests": [
       {
         "Comment": "Comment 1",
         "DaypartCode": "EMN",
-        "InventorySourceId": 4,
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -1606,11 +1858,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 35999,
+                "Id": 14755,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633848
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -1685,7 +1951,7 @@
       {
         "Comment": "Comment 2",
         "DaypartCode": "EMN",
-        "InventorySourceId": 4,
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -1721,11 +1987,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 81299,
+                "Id": 14756,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 79200,
+                "StationInventoryManifestDaypartId": 633849
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -1800,7 +2080,7 @@
       {
         "Comment": "Comment 3",
         "DaypartCode": "EMN",
-        "InventorySourceId": 4,
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -1836,11 +2116,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 86399,
+                "Id": 14757,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 32400,
+                "StationInventoryManifestDaypartId": 633850
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],
@@ -1915,7 +2209,7 @@
       {
         "Comment": "Comment 4",
         "DaypartCode": "EMN",
-        "InventorySourceId": 4,
+        "InventorySourceId": 3,
         "ManifestAudiences": [],
         "ManifestAudiencesReferences": [
           {
@@ -1951,11 +2245,25 @@
               "_Tuesday": true,
               "_Wednesday": true
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 68399,
+                "Id": 14758,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 61200,
+                "StationInventoryManifestDaypartId": 633851
+              }
+            ],
+            "StandardDaypart": null
           },
           {
             "Daypart": {
@@ -1975,11 +2283,25 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 66599,
+                "Id": 14759,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 64800,
+                "StationInventoryManifestDaypartId": 633852
+              }
+            ],
+            "StandardDaypart": null
           },
           {
             "Daypart": {
@@ -1999,11 +2321,25 @@
               "_Tuesday": false,
               "_Wednesday": false
             },
-            "DaypartDefault": null,
             "Genres": [],
             "PrimaryProgramId": null,
-            "ProgramName": null,
-            "Programs": []
+            "ProgramName": "Early Morning News",
+            "Programs": [
+              {
+                "EndDate": "2019-12-30T00:00:00",
+                "EndTime": 68399,
+                "Id": 14760,
+                "MaestroGenreId": 34,
+                "ProgramName": "Early Morning News",
+                "ProgramSourceId": 1,
+                "ShowType": "News",
+                "SourceGenreId": 90,
+                "StartDate": "2019-12-10T00:00:00",
+                "StartTime": 64800,
+                "StationInventoryManifestDaypartId": 633853
+              }
+            ],
+            "StandardDaypart": null
           }
         ],
         "ManifestRates": [],

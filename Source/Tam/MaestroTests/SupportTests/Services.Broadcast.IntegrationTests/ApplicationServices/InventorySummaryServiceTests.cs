@@ -323,7 +323,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("short_running")]
         public void GetInventoryUnitsTest()
         {
-            var inventorySourceId = 4; // TTWN
+            var inventorySourceId = 4; // TVB
             var standardDaypartId = 1; // EMN
             var startDate = new DateTime(2019, 4, 1);
             var endDate = new DateTime(2019, 6, 30, 23, 59, 59);
@@ -342,7 +342,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_Q1_2025.xlsx", processInventoryRatings: true);
 
-                var inventorySourceId = 4; // TTWN
+                var inventorySourceId = 3; // TVB
                 var standardDaypartId = 1; // EMN
                 var startDate = new DateTime(2025, 1, 1);
                 var endDate = new DateTime(2025, 3, 31);
@@ -362,7 +362,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_Q1_2025.xlsx", processInventoryRatings: false);
 
-                var inventorySourceId = 4; // TTWN
+                var inventorySourceId = 3; // TVB
                 var standardDaypartId = 1; // EMN
                 var startDate = new DateTime(2025, 1, 1);
                 var endDate = new DateTime(2025, 3, 31);
@@ -383,7 +383,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_Q1_2025.xlsx", processInventoryRatings: true);
                 _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_Q1_2025_2.xlsx", processInventoryRatings: false);
 
-                var inventorySourceId = 4; // TTWN
+                var inventorySourceId = 3; // TVB
                 var standardDaypartId = 1; // EMN
                 var startDate = new DateTime(2025, 1, 1);
                 var endDate = new DateTime(2025, 3, 31);

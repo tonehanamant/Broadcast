@@ -266,12 +266,13 @@ namespace Services.Broadcast.Converters.RateImport
 
         private bool _IsDaypartValidForInventorySource(string daypartCode, InventorySource source)
         {
-            var standardDaypart = StandardDaypartRepository.GetStandardDaypartByCode(daypartCode);
-            if (standardDaypart == null)
+            var daypartExists = StandardDaypartRepository.StandardDaypartExists(daypartCode);
+            if (!daypartExists)
             {
                 return false;
             }
 
+            var standardDaypart = StandardDaypartRepository.GetStandardDaypartByCode(daypartCode);
             var sourceDaypartMapping = _InventoryProprietaryDaypartRepository.GetInventoryProprietaryDaypartMappings(source.Id,
                 standardDaypart.Id);
             if (sourceDaypartMapping == null)

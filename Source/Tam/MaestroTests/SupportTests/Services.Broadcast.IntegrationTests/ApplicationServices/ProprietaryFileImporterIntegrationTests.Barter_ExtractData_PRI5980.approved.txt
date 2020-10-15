@@ -110,10 +110,10 @@
   "InventoryGroups": [],
   "InventoryManifests": [],
   "InventorySource": {
-    "Id": 0,
+    "Id": 3,
     "InventoryType": 2,
-    "IsActive": false,
-    "Name": null
+    "IsActive": true,
+    "Name": "TVB"
   },
   "RowsProcessed": null,
   "UniqueIdentifier": null,

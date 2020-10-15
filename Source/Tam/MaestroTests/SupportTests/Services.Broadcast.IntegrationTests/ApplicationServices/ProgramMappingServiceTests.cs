@@ -180,7 +180,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
             // Take 100 programs only otherwise the result file is too big and the file comparer
             // is not able to compare the results.
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result.Take(100)));
+            Approvals.Verify(IntegrationTestHelper.ConvertToJsonMoreRounding(result.Take(100)));
         }
 
         [Test]
