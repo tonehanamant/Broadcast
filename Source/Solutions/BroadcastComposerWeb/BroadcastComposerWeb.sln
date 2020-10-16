@@ -104,6 +104,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy website", "Deploy we
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PricingModelAnalysis", "PricingModelAnalysis", "{DC2698A8-B951-4482-B180-AF395FE71E5E}"
 	ProjectSection(SolutionItems) = preProject
+		..\..\Powershell\PricingModelAnalysis\Pricing-InputJsonToSql-V2.ps1 = ..\..\Powershell\PricingModelAnalysis\Pricing-InputJsonToSql-V2.ps1
 		..\..\Powershell\PricingModelAnalysis\Pricing-InputJsonToSql.ps1 = ..\..\Powershell\PricingModelAnalysis\Pricing-InputJsonToSql.ps1
 	EndProjectSection
 EndProject
