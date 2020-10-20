@@ -3,6 +3,7 @@ using log4net;
 using System;
 using System.IO;
 using System.Runtime.CompilerServices;
+using Tam.Maestro.Services.Cable.SystemComponentParameters;
 
 namespace Services.Broadcast
 {
