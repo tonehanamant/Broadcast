@@ -36,6 +36,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DatabaseScripts", "Database
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{ACCFBE65-F3F0-4CE3-A59F-31F94A8527D6}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Configurations\NuGet.Config = ..\..\..\Configurations\NuGet.Config
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BroadcastComposerWeb", "BroadcastComposerWeb", "{15B42F1A-1DB8-4944-9583-3BCFF04286CD}"
 EndProject
