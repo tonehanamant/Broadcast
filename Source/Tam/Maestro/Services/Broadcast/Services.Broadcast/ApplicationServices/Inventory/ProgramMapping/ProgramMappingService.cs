@@ -159,6 +159,8 @@ namespace Services.Broadcast.ApplicationServices
             _LogInfo($"Started processing the program mapping file {file.FileNameWithExtension}");
 
             var programMappings = _ReadProgramMappingsFile(file.FileContent);
+            // clean before de-dupping in case a clean produces a dup.
+            _CleanProgramMappings(programMappings);
             var uniqueProgramMappings = _RemoveDuplicateMappings(programMappings);
             _LogInfo($"The selected program mapping file has {programMappings.Count} rows, unique mappings: {uniqueProgramMappings.Count}");
 
@@ -166,8 +168,6 @@ namespace Services.Broadcast.ApplicationServices
 
             var masterListPrograms = _MasterProgramListImporter.ImportMasterProgramList();
             var programNameExceptions = _ProgramNameExceptionsRepository.GetProgramExceptions();
-
-            _CleanProgramMappings(uniqueProgramMappings);
 
             var programMappingErrors = _ValidateProgramMappings(uniqueProgramMappings, masterListPrograms, programNameExceptions);
 
@@ -231,12 +231,9 @@ namespace Services.Broadcast.ApplicationServices
             }
         }
 
-        private void _CleanProgramMappings(List<ProgramMappingsFileRequestDto> uniqueProgramMappings)
+        private void _CleanProgramMappings(List<ProgramMappingsFileRequestDto> programMappings)
         {
-            foreach(var programMapping in uniqueProgramMappings)
-            {
-                programMapping.OfficialProgramName = _ProgramCleanupEngine.InvertPrepositions(programMapping.OfficialProgramName);
-            }
+            programMappings.ForEach(pm => pm.OfficialProgramName = _ProgramCleanupEngine.InvertPrepositions(pm.OfficialProgramName).Trim());
         }
 
         private string _GetErrorMessage(List<ProgramMappingValidationErrorDto> programMappingErrors)

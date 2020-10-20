@@ -1097,6 +1097,65 @@ GO
 
 /*************************************** END - BP-1592 ****************************************************/
 
+/*************************************** START - BP-1587 ****************************************************/
+
+DECLARE @GenreId_Various INT
+DECLARE @ShowTypeId_Miscellaneous INT
+DECLARE @ShowTypeId_Sports INT
+
+DECLARE @ProgramNameExceptionsToAdd TABLE
+(
+	custom_program_name NVARCHAR(500),
+	genre_id int,
+	show_type_id int
+)
+
+SELECT @GenreId_Various = id FROM genres WHERE [name] = 'Various'
+SELECT @ShowTypeId_Miscellaneous = id FROM show_types WHERE [name] = 'Miscellaneous'
+SELECT @ShowTypeId_Sports = id FROM show_types WHERE [name] = 'Sports'
+
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('CBS ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('CHRISTMAS DAY ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('DAILY ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('DAYTIME ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('EARLY FRINGE ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('EARLY MORNING ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('EVENING NEWS ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('EVENING ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('GAME SHOW ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('GAMESHOW ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('HOLIDAY ROTATION', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('KIDS ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('LATE FRINGE ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('MID DAY ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('MORNING ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('MOVIE ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('OVERNIGHT ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('PRIME ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('RELIGIOUS ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('ROS ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('SPORT ROTATOR', @GenreId_Various, @ShowTypeId_Sports)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('STATION ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('TODAY SHOW ROTATION', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('WEATHER ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('WEEKEND EARLY MORNING ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('WEEKEND MORNING ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+INSERT INTO @ProgramNameExceptionsToAdd (custom_program_name, genre_id, show_type_id) VALUES ('WEEKEND ROTATOR', @GenreId_Various, @ShowTypeId_Miscellaneous)
+
+INSERT INTO program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_At)
+	SELECT n.custom_program_name, n.genre_id, n.show_type_id, 'BP-1587', SYSDATETIME()
+	FROM @ProgramNameExceptionsToAdd n
+	LEFT OUTER JOIN program_name_exceptions e
+		ON n.custom_program_name = e.custom_program_name
+		AND n.genre_id = e.genre_id
+		AND n.show_type_id = e.show_type_id
+	WHERE e.id IS NULL
+
+GO
+
+/*************************************** END - BP-1587 ****************************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using BroadcastLogging;
+﻿using BroadcastLogging;
 using log4net;
-using Tam.Maestro.Services.Cable.SystemComponentParameters; //leave this for the if debug
+using System;
+using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace Services.Broadcast
 {
@@ -70,7 +70,7 @@ namespace Services.Broadcast
         protected virtual string _GetBroadcastAppFolder()
         {
 #if DEBUG
-            return Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            return Path.GetTempPath();
 #else
             return BroadcastServiceSystemParameter.BroadcastAppFolder;
 #endif
