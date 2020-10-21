@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ApprovalTests;
+﻿using ApprovalTests;
 using ApprovalTests.Reporters;
 using NUnit.Framework;
 using Services.Broadcast.Entities.ProgramMapping;
 using Services.Broadcast.Repositories;
+using System.Collections.Generic;
 using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.IntegrationTests.Repositories
 {
-	[TestFixture]
+    [TestFixture]
 	public class ProgramNameExceptionsRepositoryTest
 	{
 		private readonly IProgramNameExceptionsRepository _ProgramNameExceptionsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IProgramNameExceptionsRepository>();

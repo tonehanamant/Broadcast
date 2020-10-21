@@ -56,10 +56,26 @@
     "ShowTypeName": "News"
   },
   {
+    "CustomProgramName": "CBS ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 64,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
     "CustomProgramName": "CHILDREN ROTATOR",
     "GenreId": 52,
     "GenreName": "Children",
     "Id": 12,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "CHRISTMAS DAY ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 65,
     "ShowTypeId": 2,
     "ShowTypeName": "Miscellaneous"
   },
@@ -100,6 +116,14 @@
     "GenreId": 11,
     "GenreName": "Crime",
     "Id": 17,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "DAILY ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 66,
     "ShowTypeId": 2,
     "ShowTypeName": "Miscellaneous"
   },
@@ -208,6 +232,22 @@
     "ShowTypeName": "News"
   },
   {
+    "CustomProgramName": "EVENING NEWS ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 67,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "EVENING ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 68,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
     "CustomProgramName": "FRINGE ACCESS ROTATOR",
     "GenreId": 107,
     "GenreName": "Various",
@@ -224,12 +264,36 @@
     "ShowTypeName": "Miscellaneous"
   },
   {
+    "CustomProgramName": "GAME SHOW ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 69,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "GAMESHOW ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 70,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
     "CustomProgramName": "Golf",
     "GenreId": 44,
     "GenreName": "Sports",
     "Id": 1,
     "ShowTypeId": 10,
     "ShowTypeName": "Sports"
+  },
+  {
+    "CustomProgramName": "HOLIDAY ROTATION",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 71,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
   },
   {
     "CustomProgramName": "HOLIDAY ROTATOR",
@@ -244,6 +308,14 @@
     "GenreId": 26,
     "GenreName": "Informational",
     "Id": 34,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "KIDS ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 72,
     "ShowTypeId": 2,
     "ShowTypeName": "Miscellaneous"
   },
@@ -268,6 +340,30 @@
     "GenreId": 107,
     "GenreName": "Various",
     "Id": 37,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "MID DAY ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 73,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "MORNING ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 74,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "MOVIE ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 75,
     "ShowTypeId": 2,
     "ShowTypeName": "Miscellaneous"
   },
@@ -336,6 +432,14 @@
     "ShowTypeName": "Miscellaneous"
   },
   {
+    "CustomProgramName": "RELIGIOUS ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 76,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
     "CustomProgramName": "ROS ROTATOR",
     "GenreId": 107,
     "GenreName": "Various",
@@ -376,12 +480,28 @@
     "ShowTypeName": "Movie"
   },
   {
+    "CustomProgramName": "SPORT ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 77,
+    "ShowTypeId": 10,
+    "ShowTypeName": "Sports"
+  },
+  {
     "CustomProgramName": "SPORTS ROTATOR",
     "GenreId": 44,
     "GenreName": "Sports",
     "Id": 48,
     "ShowTypeId": 10,
     "ShowTypeName": "Sports"
+  },
+  {
+    "CustomProgramName": "STATION ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 78,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
   },
   {
     "CustomProgramName": "SYNDICATION ROTATOR",
@@ -400,10 +520,26 @@
     "ShowTypeName": "Miscellaneous"
   },
   {
+    "CustomProgramName": "TODAY SHOW ROTATION",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 79,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
     "CustomProgramName": "UNMATCHED",
     "GenreId": 107,
     "GenreName": "Various",
     "Id": 63,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "WEATHER ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 80,
     "ShowTypeId": 2,
     "ShowTypeName": "Miscellaneous"
   },
@@ -456,6 +592,14 @@
     "ShowTypeName": "Miscellaneous"
   },
   {
+    "CustomProgramName": "WEEKEND MORNING ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 81,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
     "CustomProgramName": "WEEKEND MOVIE ROTATOR",
     "GenreId": 113,
     "GenreName": "Movie",
@@ -476,6 +620,14 @@
     "GenreId": 107,
     "GenreName": "Various",
     "Id": 59,
+    "ShowTypeId": 2,
+    "ShowTypeName": "Miscellaneous"
+  },
+  {
+    "CustomProgramName": "WEEKEND ROTATOR",
+    "GenreId": 107,
+    "GenreName": "Various",
+    "Id": 82,
     "ShowTypeId": 2,
     "ShowTypeName": "Miscellaneous"
   },
