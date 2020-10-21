@@ -871,6 +871,7 @@ namespace Services.Broadcast.ApplicationServices
             if (scheduleDto == null || scheduleDto.estimate_id == null)
                 throw new Exception("Could not load schedule from Id=" + scheduleId);
 
+            _DetectionPostingEngine.PostDetectionDataByEstimate((int)scheduleDto.estimate_id.Value);
             _TrackingEngine.TrackDetectionByEstimateId(scheduleDto.estimate_id.Value);
 
             return true;
