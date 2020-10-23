@@ -979,7 +979,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         private static void _WriteStream(ReportOutput reportOutput)
         {
-            using (var destinationFileStream = new FileStream($@"C:\Users\sroibu\Downloads\integration_tests_exports\{reportOutput.Filename}", FileMode.OpenOrCreate))
+            using (var destinationFileStream = new FileStream($@"C:\temp\{reportOutput.Filename}", FileMode.OpenOrCreate))
             {
                 while (reportOutput.Stream.Position < reportOutput.Stream.Length)
                 {

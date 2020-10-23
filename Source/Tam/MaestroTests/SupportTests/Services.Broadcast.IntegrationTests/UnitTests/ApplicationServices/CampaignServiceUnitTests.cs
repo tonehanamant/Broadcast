@@ -2,7 +2,6 @@
 using ApprovalTests.Reporters;
 using Common.Services;
 using Common.Services.Repositories;
-using EntityFrameworkMapping.Broadcast;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
@@ -16,20 +15,20 @@ using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Helpers;
+using Services.Broadcast.Helpers.Json;
 using Services.Broadcast.IntegrationTests.Stubs;
+using Services.Broadcast.IntegrationTests.TestData;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Management.Automation;
-using Services.Broadcast.IntegrationTests.TestData;
+using Services.Broadcast.Entities.DTO.Program;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces;
 using Tam.Maestro.Services.ContractInterfaces.Common;
-using Unity;
-using static Services.Broadcast.Entities.Plan.Pricing.PlanPricingInventoryProgram.ManifestDaypart;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -168,13 +167,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             _CampaignRepositoryMock.Setup(x => x.GetCampaignsWithSummary(It.IsAny<DateTime>(), It.IsAny<DateTime>(), null))
                 .Returns(_GetCampaignWithsummeriesReturn(agency, advertiser));
-            _QuarterCalculationEngineMock.Setup(x => x.GetQuarterRangeByDate(_CurrentDate)).Returns(new QuarterDetailDto
-            {
-                Year = 2019,
-                Quarter = 2
-            });
-            _QuarterCalculationEngineMock.Setup(x => x.GetQuarterDateRange(2, 2019)).Returns(new DateRange(new DateTime(2008, 12, 29)
-                , new DateTime(2009, 3, 29)));
 
             _TrafficApiCacheMock
                 .Setup(x => x.GetAgency(It.IsAny<int>()))
@@ -1429,664 +1421,164 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        public void CampaignExport_MultipleCreativeLengths()
+        public void GetAndValidateCampaignReportDataWithCustomDaypart()
         {
             // Arrange
-            const int planId = 1853;
-            const int campaignId = 652;
-
-            var request = new CampaignReportRequest
-            {
-                CampaignId = campaignId,
-                ExportType = CampaignExportTypeEnum.Contract,
-                SelectedPlans = new List<int> { planId }
-            };
-
-            _WeeklyBreakdownEngineMock
-                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
-                        , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
-                .Returns(_GetWeeklyBreakdownByWeek());
-            _CampaignRepositoryMock
-                .Setup(x => x.GetCampaign(campaignId))
-                .Returns(_GetCampaignForExport(campaignId, request.SelectedPlans));
-
-            _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(It.IsAny<string>()))
-                .Returns(new LockResponse
-                {
-                    Success = true
-                });
-
-            var planDto = _GetPlanForCampaignExport(planId, campaignId);
-            _PlanRepositoryMock
-                .Setup(x => x.GetPlan(It.IsAny<int>(), null))
-                .Returns(planDto);
-
-            _SpotLengthRepositoryMock
-                .Setup(x => x.GetSpotLengths())
-                .Returns(SpotLengthTestData.GetAllSpotLengths());
-
-            _SpotLengthRepositoryMock.Setup(s => s.GetDeliveryMultipliersBySpotLengthId())
-                .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
-
-            _StandardDaypartServiceMock
-                .Setup(s => s.GetAllStandardDayparts())
-                .Returns(_GetStandardDayparts());
-
-            _QuarterCalculationEngineMock
-                .Setup(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(new List<QuarterDetailDto>
-                    {
-                        new QuarterDetailDto { Quarter = 1, Year = 2020,
-                            StartDate = new DateTime(2020,01,01),
-                            EndDate = new DateTime(2020,03,31)
-                        },
-                        new QuarterDetailDto { Quarter = 2, Year = 2020,
-                            StartDate = new DateTime(2020,04,01),
-                            EndDate = new DateTime(2020,06,30)}
-                    });
-            _QuarterCalculationEngineMock
-                .Setup(s => s.GetQuarterRangeByDate(It.IsAny<DateTime>()))
-                .Returns(new QuarterDetailDto
-                {
-                    Quarter = 1,
-                    Year = 2020
-                });
-            _QuarterCalculationEngineMock
-                .Setup(s => s.GetQuarterDetail(1, 2020))
-                .Returns(new QuarterDetailDto
-                {
-                    Quarter = 1,
-                    Year = 2020,
-
-                });
-            _QuarterCalculationEngineMock
-                .Setup(s => s.GetQuarterDetail(2, 2020))
-                .Returns(new QuarterDetailDto
-                {
-                    Quarter = 2,
-                    Year = 2020
-                });
-
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaWeeksByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(_GetTheSameMediaWeeksAsThePlan(planDto));
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaWeeksInRange(new DateTime(2020, 01, 01), new DateTime(2020, 03, 31)))
-                .Returns(new List<MediaWeek> {
-                    _GetMediaWeek(846, "2020-03-09", "2020-03-15", 462),
-                    _GetMediaWeek(847, "2020-03-16", "2020-03-22", 462),
-                    _GetMediaWeek(848, "2020-03-23", "2020-03-29", 462)
-                });
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaWeeksInRange(new DateTime(2020, 04, 01), new DateTime(2020, 06, 30)))
-                .Returns(new List<MediaWeek> {
-                    _GetMediaWeek(849, "2020-03-30", "2020-04-05", 463),
-                    _GetMediaWeek(850, "2020-04-06", "2020-04-12", 463)
-                });
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaWeeksByMediaMonth(462))
-                .Returns(new List<MediaWeek> {
-                    _GetMediaWeek(846, "2020-03-09", "2020-03-15", 462),
-                    _GetMediaWeek(847, "2020-03-16", "2020-03-22", 462),
-                    _GetMediaWeek(848, "2020-03-23", "2020-03-29", 462)
-                });
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaWeeksByMediaMonth(463))
-                .Returns(new List<MediaWeek> {
-                    _GetMediaWeek(849, "2020-03-30", "2020-04-05", 463),
-                    _GetMediaWeek(850, "2020-04-06", "2020-04-12", 463)
-                });
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaMonthsBetweenDatesInclusive(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(new List<MediaMonth> {
-                    new MediaMonth{Id = 463, MediaMonthX = "April"}, new MediaMonth{ Id = 462, MediaMonthX = "March"}
-                });
-
-            _TrafficApiCacheMock
-                .Setup(x => x.GetAgency(It.IsAny<int>()))
-                .Returns(new AgencyDto { Id = 1, Name = "Name1" });
-            _TrafficApiCacheMock
-                .Setup(x => x.GetAdvertiser(It.IsAny<int>()))
-                .Returns(new AdvertiserDto { Id = 2, Name = "Name2", AgencyId = 1 });
-
-            _AudienceServiceMock
-                .Setup(x => x.GetAudienceById(It.IsAny<int>()))
-                .Returns(new PlanAudienceDisplay
-                {
-                    Code = "A18-20",
-                    Id = 1
-                });
-            _AudienceServiceMock
-                .Setup(x => x.GetAudiences())
-                .Returns(new List<PlanAudienceDisplay> {
-                    new PlanAudienceDisplay
-                    {
-                        Code = "A18-20",
-                        Id = 1
-                    }
-                });
-
-            _DateTimeEngineMock
-                .Setup(x => x.GetCurrentMoment())
-                .Returns(new DateTime(2020, 01, 01));
-
-            var tc = _BuildCampaignService();
-
-            // Act
-            var response = tc.GetAndValidateCampaignReportData(request);
-
-            // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
-        }
-
-        [Test]
-        public void CampaignExport_MultipleCreativeLengths_BP1_229()
-        {
-            // Arrange
-            const int campaignId = 1;
-
-            var request = new CampaignReportRequest
-            {
-                CampaignId = 1,
-                ExportType = CampaignExportTypeEnum.Contract,
-                SelectedPlans = new List<int> { 1, 2, 3 }
-            };
-
-            _WeeklyBreakdownEngineMock
-                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
-                    , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
-                .Returns(_GetWeeklyBreakdownByWeek());
-            _CampaignRepositoryMock
-                .Setup(x => x.GetCampaign(campaignId))
-                .Returns(_GetCampaignForExport(campaignId, request.SelectedPlans));
-
-            _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(It.IsAny<string>()))
-                .Returns(new LockResponse
-                {
-                    Success = true
-                });
-
-            var plan1 = _GetPlanForCampaignExport(1, campaignId);
-            plan1.Equivalized = true;
-            plan1.CreativeLengths = new List<CreativeLength>
-            {
-                new CreativeLength { SpotLengthId = 9, Weight = 10},
-                new CreativeLength { SpotLengthId = 4, Weight = 2},
-                new CreativeLength { SpotLengthId = 1, Weight = 75},
-                new CreativeLength { SpotLengthId = 6, Weight = 13}
-            };
-            _PlanRepositoryMock
-                .Setup(x => x.GetPlan(1, null))
-                .Returns(plan1);
-
-            var plan2 = _GetPlanForCampaignExport(2, campaignId);
-            plan2.CreativeLengths = new List<CreativeLength>
-            {
-                new CreativeLength { SpotLengthId = 1, Weight = 10},
-                new CreativeLength { SpotLengthId = 3, Weight = 80},
-                new CreativeLength { SpotLengthId = 9, Weight = 10}
-            };
-            _PlanRepositoryMock
-                .Setup(x => x.GetPlan(2, null))
-                .Returns(plan2);
-
-            var plan3 = _GetPlanForCampaignExport(3, campaignId);
-            plan3.Equivalized = true;
-            plan3.CreativeLengths = new List<CreativeLength>
-            {
-                new CreativeLength { SpotLengthId = 5, Weight = 27},
-                new CreativeLength { SpotLengthId = 2, Weight = 19},
-                new CreativeLength { SpotLengthId = 9, Weight = 53},
-                new CreativeLength { SpotLengthId = 3, Weight = 1}
-            };
-            _PlanRepositoryMock
-                .Setup(x => x.GetPlan(3, null))
-                .Returns(plan3);
-
-            _SpotLengthRepositoryMock
-                .Setup(x => x.GetSpotLengths())
-                .Returns(SpotLengthTestData.GetAllSpotLengths());
-
-            _SpotLengthRepositoryMock.Setup(s => s.GetDeliveryMultipliersBySpotLengthId())
-                .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
-
-            _StandardDaypartServiceMock
-                .Setup(s => s.GetAllStandardDayparts())
-                .Returns(_GetStandardDayparts());
-
-            _QuarterCalculationEngineMock
-                .Setup(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(new List<QuarterDetailDto>
-                    {
-                        new QuarterDetailDto { Quarter = 1, Year = 2020,
-                            StartDate = new DateTime(2020,01,01),
-                            EndDate = new DateTime(2020,03,31)
-                        },
-                        new QuarterDetailDto { Quarter = 2, Year = 2020,
-                            StartDate = new DateTime(2020,04,01),
-                            EndDate = new DateTime(2020,06,30)}
-                    });
-            _QuarterCalculationEngineMock
-                .Setup(s => s.GetQuarterRangeByDate(It.IsAny<DateTime>()))
-                .Returns(new QuarterDetailDto
-                {
-                    Quarter = 1,
-                    Year = 2020
-                });
-            _QuarterCalculationEngineMock
-                .Setup(s => s.GetQuarterDetail(1, 2020))
-                .Returns(new QuarterDetailDto
-                {
-                    Quarter = 1,
-                    Year = 2020,
-
-                });
-            _QuarterCalculationEngineMock
-                .Setup(s => s.GetQuarterDetail(2, 2020))
-                .Returns(new QuarterDetailDto
-                {
-                    Quarter = 2,
-                    Year = 2020
-                });
-
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaWeeksByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(_GetTheSameMediaWeeksAsThePlan(plan1));
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaWeeksInRange(new DateTime(2020, 01, 01), new DateTime(2020, 03, 31)))
-                .Returns(new List<MediaWeek> {
-                    _GetMediaWeek(846, "2020-03-09", "2020-03-15", 462),
-                    _GetMediaWeek(847, "2020-03-16", "2020-03-22", 462),
-                    _GetMediaWeek(848, "2020-03-23", "2020-03-29", 462)
-                });
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaWeeksInRange(new DateTime(2020, 04, 01), new DateTime(2020, 06, 30)))
-                .Returns(new List<MediaWeek> {
-                    _GetMediaWeek(849, "2020-03-30", "2020-04-05", 463),
-                    _GetMediaWeek(850, "2020-04-06", "2020-04-12", 463)
-                });
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaWeeksByMediaMonth(462))
-                .Returns(new List<MediaWeek> {
-                    _GetMediaWeek(846, "2020-03-09", "2020-03-15", 462),
-                    _GetMediaWeek(847, "2020-03-16", "2020-03-22", 462),
-                    _GetMediaWeek(848, "2020-03-23", "2020-03-29", 462)
-                });
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaWeeksByMediaMonth(463))
-                .Returns(new List<MediaWeek> {
-                    _GetMediaWeek(849, "2020-03-30", "2020-04-05", 463),
-                    _GetMediaWeek(850, "2020-04-06", "2020-04-12", 463)
-                });
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaMonthsBetweenDatesInclusive(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(new List<MediaMonth> {
-                    new MediaMonth{Id = 463, MediaMonthX = "April"}, new MediaMonth{ Id = 462, MediaMonthX = "March"}
-                });
-
-            _TrafficApiCacheMock
-                .Setup(x => x.GetAgency(It.IsAny<int>()))
-                .Returns(new AgencyDto { Id = 1, Name = "Name1" });
-            _TrafficApiCacheMock
-                .Setup(x => x.GetAdvertiser(It.IsAny<int>()))
-                .Returns(new AdvertiserDto { Id = 2, Name = "Name2", AgencyId = 1 });
-
-            _AudienceServiceMock
-                .Setup(x => x.GetAudienceById(It.IsAny<int>()))
-                .Returns(new PlanAudienceDisplay
-                {
-                    Code = "A18-20",
-                    Id = 1
-                });
-            _AudienceServiceMock
-                .Setup(x => x.GetAudiences())
-                .Returns(new List<PlanAudienceDisplay> {
-                    new PlanAudienceDisplay
-                    {
-                        Code = "A18-20",
-                        Id = 1
-                    }
-                });
-
-            _DateTimeEngineMock
-                .Setup(x => x.GetCurrentMoment())
-                .Returns(new DateTime(2020, 01, 01));
-
-            var tc = _BuildCampaignService();
-
-            // Act
-            var response = tc.GetAndValidateCampaignReportData(request);
-
-            // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
-        }
-
-        [Test]
-        public void CampaignExport_DuplicateProgramName()
-        {
-            // Arrange
-            const int planId = 1853;
-            const int campaignId = 652;
-            var request = new CampaignReportRequest
-            {
-                CampaignId = campaignId,
-                ExportType = CampaignExportTypeEnum.Contract,
-                SelectedPlans = new List<int> { planId }
-            };
-            _WeeklyBreakdownEngineMock
-                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
-                    , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
-                .Returns(_GetWeeklyBreakdownByWeek());
-            _CampaignRepositoryMock
-                .Setup(x => x.GetCampaign(campaignId))
-                .Returns(_GetCampaignForExport(campaignId, request.SelectedPlans));
-            _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(It.IsAny<string>()))
-                .Returns(new LockResponse
-                {
-                    Success = true
-                });
-            var planDto = _GetPlanForCampaignExport(planId, campaignId);
-            planDto.Dayparts.First().Restrictions.ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
-            {
-                ContainType = ContainTypeEnum.Exclude,
-                Programs = new List<Entities.DTO.Program.ProgramDto>
-                {
-                    new Entities.DTO.Program.ProgramDto
-                    {
-                         ContentRating = "PG",
-                          Name = "Mom",
-                           Genre = new LookupDto{ Id = 9 }
-                    },
-                    new Entities.DTO.Program.ProgramDto
-                    {
-                         ContentRating = "PG",
-                          Name = "Mom",
-                           Genre = new LookupDto{ Id = 53 }
-                    }
-                }
-            };
-            _PlanRepositoryMock
-                .Setup(x => x.GetPlan(It.IsAny<int>(), null))
-                .Returns(planDto);
-
-            _SpotLengthRepositoryMock
-                .Setup(x => x.GetSpotLengths())
-                .Returns(SpotLengthTestData.GetAllSpotLengths());
-
-            _SpotLengthRepositoryMock.Setup(s => s.GetDeliveryMultipliersBySpotLengthId())
-                .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
-
-            _StandardDaypartServiceMock
-                .Setup(s => s.GetAllStandardDayparts())
-                .Returns(_GetStandardDayparts());
-            _QuarterCalculationEngineMock
-                .Setup(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(new List<QuarterDetailDto>
-                    {
-                        new QuarterDetailDto { Quarter = 1, Year = 2020,
-                            StartDate = new DateTime(2020,01,01),
-                            EndDate = new DateTime(2020,03,31)
-                        },
-                        new QuarterDetailDto { Quarter = 2, Year = 2020,
-                            StartDate = new DateTime(2020,04,01),
-                            EndDate = new DateTime(2020,06,30)}
-                    });
-            _QuarterCalculationEngineMock
-                .Setup(s => s.GetQuarterRangeByDate(It.IsAny<DateTime>()))
-                .Returns(new QuarterDetailDto
-                {
-                    Quarter = 1,
-                    Year = 2020
-                });
-            _QuarterCalculationEngineMock
-                .Setup(s => s.GetQuarterDetail(1, 2020))
-                .Returns(new QuarterDetailDto
-                {
-                    Quarter = 1,
-                    Year = 2020,
-                });
-            _QuarterCalculationEngineMock
-                .Setup(s => s.GetQuarterDetail(2, 2020))
-                .Returns(new QuarterDetailDto
-                {
-                    Quarter = 2,
-                    Year = 2020
-                });
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaWeeksByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(_GetTheSameMediaWeeksAsThePlan(planDto));
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaWeeksInRange(new DateTime(2020, 01, 01), new DateTime(2020, 03, 31)))
-                .Returns(new List<MediaWeek> {
-                    _GetMediaWeek(846, "2020-03-09", "2020-03-15", 462),
-                    _GetMediaWeek(847, "2020-03-16", "2020-03-22", 462),
-                    _GetMediaWeek(848, "2020-03-23", "2020-03-29", 462)
-                });
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaWeeksInRange(new DateTime(2020, 04, 01), new DateTime(2020, 06, 30)))
-                .Returns(new List<MediaWeek> {
-                    _GetMediaWeek(849, "2020-03-30", "2020-04-05", 463),
-                    _GetMediaWeek(850, "2020-04-06", "2020-04-12", 463)
-                });
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaWeeksByMediaMonth(462))
-                .Returns(new List<MediaWeek> {
-                    _GetMediaWeek(846, "2020-03-09", "2020-03-15", 462),
-                    _GetMediaWeek(847, "2020-03-16", "2020-03-22", 462),
-                    _GetMediaWeek(848, "2020-03-23", "2020-03-29", 462)
-                });
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaWeeksByMediaMonth(463))
-                .Returns(new List<MediaWeek> {
-                    _GetMediaWeek(849, "2020-03-30", "2020-04-05", 463),
-                    _GetMediaWeek(850, "2020-04-06", "2020-04-12", 463)
-                });
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaMonthsBetweenDatesInclusive(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(new List<MediaMonth> {
-                    new MediaMonth{Id = 463, MediaMonthX = "April"}, new MediaMonth{ Id = 462, MediaMonthX = "March"}
-                });
-            _TrafficApiCacheMock
-                .Setup(x => x.GetAgency(It.IsAny<int>()))
-                .Returns(new AgencyDto { Id = 1, Name = "Name1" });
-            _TrafficApiCacheMock
-                .Setup(x => x.GetAdvertiser(It.IsAny<int>()))
-                .Returns(new AdvertiserDto { Id = 2, Name = "Name2", AgencyId = 1 });
-            _AudienceServiceMock
-                .Setup(x => x.GetAudienceById(It.IsAny<int>()))
-                .Returns(new PlanAudienceDisplay
-                {
-                    Code = "A18-20",
-                    Id = 1
-                });
-            _AudienceServiceMock
-                .Setup(x => x.GetAudiences())
-                .Returns(new List<PlanAudienceDisplay> {
-                    new PlanAudienceDisplay
-                    {
-                        Code = "A18-20",
-                        Id = 1
-                    }
-                });
-            _DateTimeEngineMock
-                .Setup(x => x.GetCurrentMoment())
-                .Returns(new DateTime(2020, 01, 01));
-            var tc = _BuildCampaignService();
-            // Act
-            var response = tc.GetAndValidateCampaignReportData(request);
-            // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
-        }
-
-        [Test]
-        public void CampaignExport_CustomDaypart()
-        {
-            // Arrange
-            const int planId1 = 1;
-            const int planId2 = 2;
-            const int campaignId = 652;
-            var request = new CampaignReportRequest
-            {
-                CampaignId = campaignId,
-                ExportType = CampaignExportTypeEnum.Contract,
-                SelectedPlans = new List<int> { planId1, planId2 }
-            };
-            _WeeklyBreakdownEngineMock
-                .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
-                    , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
-                .Returns(_GetWeeklyBreakdownByWeek());
-            _CampaignRepositoryMock
-                .Setup(x => x.GetCampaign(campaignId))
-                .Returns(_GetCampaignForExport(campaignId, request.SelectedPlans));
-            _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(It.IsAny<string>()))
-                .Returns(new LockResponse
-                {
-                    Success = true
-                });
-            var planDto = _GetPlanForCampaignExport(planId1, campaignId);
-            planDto.Dayparts.First().Restrictions.ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
-            {
-                ContainType = ContainTypeEnum.Exclude,
-                Programs = new List<Entities.DTO.Program.ProgramDto>
-                {
-                    new Entities.DTO.Program.ProgramDto
-                    {
-                         ContentRating = "PG",
-                          Name = "Mom",
-                           Genre = new LookupDto{ Id = 9 }
-                    },
-                    new Entities.DTO.Program.ProgramDto
-                    {
-                         ContentRating = "PG",
-                          Name = "Mom",
-                           Genre = new LookupDto{ Id = 53 }
-                    }
-                }
-            };
+            var planOne = _GetBasePlanForCampaignExport();
+            planOne.Name = "Plan One";
 
             //change daypart start/end time
-            var planDto2 = _GetPlanForCampaignExport(planId2, campaignId);
-            planDto2.Dayparts.First().StartTimeSeconds = 42000;
-            planDto2.Dayparts.First().EndTimeSeconds = 45000;
+            var planTwo = _GetBasePlanForCampaignExport();
+            planTwo.Id++; 
+            planTwo.Name = "Plan Two";
+            planTwo.Dayparts.First().StartTimeSeconds = 42000;
+            planTwo.Dayparts.First().EndTimeSeconds = 44999;
 
-            _PlanRepositoryMock
-                .Setup(x => x.GetPlan(1, null))
-                .Returns(planDto);
-            _PlanRepositoryMock
-                .Setup(x => x.GetPlan(2, null))
-                .Returns(planDto2);
+            var plansDict = new Dictionary<int, PlanDto>
+            {
+                { planOne.Id, planOne },
+                { planTwo.Id, planTwo },
+            };
 
-            _SpotLengthRepositoryMock
-                .Setup(x => x.GetSpotLengths())
-                .Returns(SpotLengthTestData.GetAllSpotLengths());
+            var campaignId = planOne.CampaignId;
+            var request = new CampaignReportRequest
+            {
+                CampaignId = campaignId,
+                ExportType = CampaignExportTypeEnum.Proposal,
+                SelectedPlans = new List<int> { planOne.Id, planTwo.Id }
+            };
+            var campaign = _GetCampaignForExport(campaignId, new List<PlanDto> { planOne, planTwo });
+            var campaignLocksWell = true;
+            var agency = new AgencyDto { Id = 1, Name = "Agent1" };
+            var advertiser = new AdvertiserDto { Id = 1, Name = "Advertiser1", AgencyId = agency.Id };
 
-            _SpotLengthRepositoryMock.Setup(s => s.GetDeliveryMultipliersBySpotLengthId())
-                .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
-
-            _StandardDaypartServiceMock
-                .Setup(s => s.GetAllStandardDayparts())
-                .Returns(_GetStandardDayparts());
-            _QuarterCalculationEngineMock
-                .Setup(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(new List<QuarterDetailDto>
-                    {
-                        new QuarterDetailDto { Quarter = 1, Year = 2020,
-                            StartDate = new DateTime(2020,01,01),
-                            EndDate = new DateTime(2020,03,31)
-                        },
-                        new QuarterDetailDto { Quarter = 2, Year = 2020,
-                            StartDate = new DateTime(2020,04,01),
-                            EndDate = new DateTime(2020,06,30)}
-                    });
-            _QuarterCalculationEngineMock
-                .Setup(s => s.GetQuarterRangeByDate(It.IsAny<DateTime>()))
-                .Returns(new QuarterDetailDto
-                {
-                    Quarter = 1,
-                    Year = 2020
-                });
-            _QuarterCalculationEngineMock
-                .Setup(s => s.GetQuarterDetail(1, 2020))
-                .Returns(new QuarterDetailDto
-                {
-                    Quarter = 1,
-                    Year = 2020,
-                });
-            _QuarterCalculationEngineMock
-                .Setup(s => s.GetQuarterDetail(2, 2020))
-                .Returns(new QuarterDetailDto
-                {
-                    Quarter = 2,
-                    Year = 2020
-                });
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaWeeksByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(_GetTheSameMediaWeeksAsThePlan(planDto));
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaWeeksInRange(new DateTime(2020, 01, 01), new DateTime(2020, 03, 31)))
-                .Returns(new List<MediaWeek> {
-                    _GetMediaWeek(846, "2020-03-09", "2020-03-15", 462),
-                    _GetMediaWeek(847, "2020-03-16", "2020-03-22", 462),
-                    _GetMediaWeek(848, "2020-03-23", "2020-03-29", 462)
-                });
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaWeeksInRange(new DateTime(2020, 04, 01), new DateTime(2020, 06, 30)))
-                .Returns(new List<MediaWeek> {
-                    _GetMediaWeek(849, "2020-03-30", "2020-04-05", 463),
-                    _GetMediaWeek(850, "2020-04-06", "2020-04-12", 463)
-                });
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaWeeksByMediaMonth(462))
-                .Returns(new List<MediaWeek> {
-                    _GetMediaWeek(846, "2020-03-09", "2020-03-15", 462),
-                    _GetMediaWeek(847, "2020-03-16", "2020-03-22", 462),
-                    _GetMediaWeek(848, "2020-03-23", "2020-03-29", 462)
-                });
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaWeeksByMediaMonth(463))
-                .Returns(new List<MediaWeek> {
-                    _GetMediaWeek(849, "2020-03-30", "2020-04-05", 463),
-                    _GetMediaWeek(850, "2020-04-06", "2020-04-12", 463)
-                });
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(s => s.GetMediaMonthsBetweenDatesInclusive(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(new List<MediaMonth> {
-                    new MediaMonth{Id = 463, MediaMonthX = "April"}, new MediaMonth{ Id = 462, MediaMonthX = "March"}
-                });
-            _TrafficApiCacheMock
-                .Setup(x => x.GetAgency(It.IsAny<int>()))
-                .Returns(new AgencyDto { Id = 1, Name = "Name1" });
-            _TrafficApiCacheMock
-                .Setup(x => x.GetAdvertiser(It.IsAny<int>()))
-                .Returns(new AdvertiserDto { Id = 2, Name = "Name2", AgencyId = 1 });
-            _AudienceServiceMock
-                .Setup(x => x.GetAudienceById(It.IsAny<int>()))
-                .Returns(new PlanAudienceDisplay
-                {
-                    Code = "A18-20",
-                    Id = 1
-                });
-            _AudienceServiceMock
-                .Setup(x => x.GetAudiences())
-                .Returns(new List<PlanAudienceDisplay> {
-                    new PlanAudienceDisplay
-                    {
-                        Code = "A18-20",
-                        Id = 1
-                    }
-                });
+            _CampaignRepositoryMock
+                .Setup(x => x.GetCampaign(campaignId))
+                .Returns(campaign);
+            _PlanRepositoryMock.Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns<int, int?>((i, b) => plansDict[i]);
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(It.IsAny<string>()))
+                .Returns(new LockResponse { Success = campaignLocksWell });
+            _TrafficApiCacheMock.Setup(x => x.GetAgency(It.IsAny<int>()))
+                .Returns(agency);
+            _TrafficApiCacheMock.Setup(x => x.GetAdvertiser(It.IsAny<int>()))
+                .Returns(advertiser);
             _DateTimeEngineMock
                 .Setup(x => x.GetCurrentMoment())
                 .Returns(new DateTime(2020, 01, 01));
+
             var tc = _BuildCampaignService();
             // Act
             var response = tc.GetAndValidateCampaignReportData(request);
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
+        }
+
+        [Test]
+        public void GetAndValidateCampaignReportDataWithDuplicateProgramName()
+        {
+            // Arrange
+            var plan = _GetBasePlanForCampaignExport();
+            plan.Dayparts.First().Restrictions.ProgramRestrictions = new PlanDaypartDto.RestrictionsDto.ProgramRestrictionDto
+            {
+                ContainType = ContainTypeEnum.Exclude,
+                Programs = new List<Entities.DTO.Program.ProgramDto>
+                {
+                    new Entities.DTO.Program.ProgramDto
+                    {
+                        ContentRating = "PG",
+                        Name = "Mom",
+                        Genre = new LookupDto{ Id = 9 }
+                    },
+                    new Entities.DTO.Program.ProgramDto
+                    {
+                        ContentRating = "PG",
+                        Name = "Mom",
+                        Genre = new LookupDto{ Id = 53 }
+                    }
+                }
+            };
+
+            var campaignId = plan.CampaignId;
+            var planId = plan.Id;
+            var request = new CampaignReportRequest
+            {
+                CampaignId = campaignId,
+                ExportType = CampaignExportTypeEnum.Proposal,
+                SelectedPlans = new List<int> { planId }
+            };
+            var campaign = _GetCampaignForExport(campaignId, new List<PlanDto> { plan });
+            var campaignLocksWell = true;
+            var agency = new AgencyDto { Id = 1, Name = "Agent1" };
+            var advertiser = new AdvertiserDto { Id = 1, Name = "Advertiser1", AgencyId = agency.Id };
+
+            _CampaignRepositoryMock
+                .Setup(x => x.GetCampaign(campaignId))
+                .Returns(campaign);
+            _PlanRepositoryMock.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(plan);
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(It.IsAny<string>()))
+                .Returns(new LockResponse { Success = campaignLocksWell });
+            _TrafficApiCacheMock.Setup(x => x.GetAgency(It.IsAny<int>()))
+                .Returns(agency);
+            _TrafficApiCacheMock.Setup(x => x.GetAdvertiser(It.IsAny<int>()))
+                .Returns(advertiser);
+
+            var tc = _BuildCampaignService();
+            // Act
+            var response = tc.GetAndValidateCampaignReportData(request);
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
+        }
+
+        [Test]
+        public void GetAndValidateCampaignReportData()
+        {
+            // Arrange
+            var plan = _GetBasePlanForCampaignExport();
+            var campaignId = plan.CampaignId;
+            var planId = plan.Id;
+            var request = new CampaignReportRequest
+            {
+                CampaignId = campaignId,
+                ExportType = CampaignExportTypeEnum.Proposal,
+                SelectedPlans = new List<int> { planId }
+            };
+            var campaign = _GetCampaignForExport(campaignId, new List<PlanDto> { plan });
+            var campaignLocksWell = true;
+            var agency = new AgencyDto {Id = 1, Name = "Agent1"};
+            var advertiser = new AdvertiserDto {Id = 1, Name = "Advertiser1", AgencyId = agency.Id};
+
+            _CampaignRepositoryMock
+                .Setup(x => x.GetCampaign(campaignId))
+                .Returns(campaign);
+            _PlanRepositoryMock.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(plan);
+            _LockingManagerApplicationServiceMock
+                .Setup(x => x.GetLockObject(It.IsAny<string>()))
+                .Returns(new LockResponse { Success = campaignLocksWell});
+            _TrafficApiCacheMock.Setup(x => x.GetAgency(It.IsAny<int>()))
+                .Returns(agency);
+            _TrafficApiCacheMock.Setup(x => x.GetAdvertiser(It.IsAny<int>()))
+                .Returns(advertiser);
+
+            var tc = _BuildCampaignService();
+            // Act
+            var response = tc.GetAndValidateCampaignReportData(request);
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
+        }
+
+        private PlanDto _GetBasePlanForCampaignExport()
+        {
+            const string fileName = "BasePlanForCampaignExportUnitTests.json";
+            const string directoryName = @".\Files\Campaign export";
+            var filePath = Path.Combine(directoryName, fileName);
+            var planJson = File.ReadAllText(filePath);
+            var plan = JsonSerializerHelper.ConvertFromJson<PlanDto>(planJson);
+            return plan;
         }
 
         private static MediaWeek _GetMediaWeek(int id, string weekStartDate = null, string weekEndDate = null, int? mediaMonthId = null)
@@ -2163,20 +1655,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 {
                     Name = "PetMed Express, Inc"
                 });
-
-            _AudienceServiceMock
-                .Setup(x => x.GetAudienceById(It.IsAny<int>()))
-                .Returns(new PlanAudienceDisplay
-                {
-                    Code = "A18-20"
-                });
-
-            _SpotLengthRepositoryMock
-                .Setup(x => x.GetSpotLengths())
-                .Returns(SpotLengthTestData.GetAllSpotLengths());
-
-            _SpotLengthRepositoryMock.Setup(s => s.GetDeliveryMultipliersBySpotLengthId())
-                .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
 
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestMarketCoveragesWithStations())
@@ -3001,6 +2479,36 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
         private CampaignService _BuildCampaignService()
         {
+            // Tie in base data.
+            _AudienceServiceMock.Setup(s => s.GetAudienceById(It.IsAny<int>()))
+                .Returns<int>(AudienceTestData.GetAudienceById);
+            _AudienceServiceMock.Setup(s => s.GetAudiences())
+                .Returns(AudienceTestData.GetAudiences());
+            _SpotLengthRepositoryMock
+                .Setup(x => x.GetSpotLengths())
+                .Returns(SpotLengthTestData.GetAllSpotLengths());
+            _SpotLengthRepositoryMock.Setup(s => s.GetDeliveryMultipliersBySpotLengthId())
+                .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
+            _StandardDaypartServiceMock.Setup(s => s.GetAllStandardDayparts())
+                .Returns(DaypartsTestData.GetAllStandardDaypartsWithBaseData);
+            _QuarterCalculationEngineMock
+                .Setup(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns<DateTime, DateTime>(QuartersTestData.GetAllQuartersBetweenDates);
+            _QuarterCalculationEngineMock.Setup(s => s.GetQuarterRangeByDate(It.IsAny<DateTime>()))
+                .Returns<DateTime>(QuartersTestData.GetQuarterRangeByDate);
+            _QuarterCalculationEngineMock.Setup(s => s.GetQuarterDetail(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns<int, int>(QuartersTestData.GetQuarterDetail);
+            _QuarterCalculationEngineMock.Setup(s => s.GetQuarterDateRange(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns<int, int>(QuartersTestData.GetQuarterDateRange);
+            _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaWeeksByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns<DateTime, DateTime>(MediaMonthAndWeekTestData.GetMediaWeeksIntersecting);
+            _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaWeeksInRange(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns<DateTime, DateTime>(MediaMonthAndWeekTestData.GetMediaWeeksIntersecting);
+            _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaMonthsBetweenDatesInclusive(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns<DateTime, DateTime>(MediaMonthAndWeekTestData.GetMediaMonthsIntersecting);
+            _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaWeeksByMediaMonth(It.IsAny<int>()))
+                .Returns<int>(MediaMonthAndWeekTestData.GetMediaWeeksByMediaMonth);
+
             return new CampaignService(
                 _DataRepositoryFactoryMock.Object,
                 _CampaignValidatorMock.Object,
@@ -3018,6 +2526,25 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _DaypartCacheMock.Object);
         }
 
+        private CampaignDto _GetCampaignForExport(int campaignId, List<PlanDto> selectedPlans)
+        {
+            var campaign = new CampaignDto
+            {
+                Id = campaignId,
+                Plans = new List<PlanSummaryDto>()
+            };
+            selectedPlans.ForEach(p => campaign.Plans.Add(
+                new PlanSummaryDto
+                {
+                    PlanId = p.Id,
+                    ProcessingStatus = PlanAggregationProcessingStatusEnum.Idle,
+                    Status = p.Status,
+                    PostingType = p.PostingType,
+                    AudienceId = p.AudienceId
+                }));
+            return campaign;
+        }
+
         private CampaignDto _GetCampaignForExport(int campaignId, List<int> selectedPlanIds)
         {
             var campaign = new CampaignDto
@@ -3030,7 +2557,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 {
                     PlanId = id,
                     ProcessingStatus = PlanAggregationProcessingStatusEnum.Idle,
-                    Status = PlanStatusEnum.Complete
+                    Status = PlanStatusEnum.Working,
+                    PostingType = PostingTypeEnum.NTI,
+                    AudienceId = 33
                 }));
             return campaign;
         }
@@ -3044,107 +2573,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 Dayparts = _GetPlanDayparts()
             };
         }
-
-        private PlanDto _GetPlanForCampaignExport(int planId, int campaignId)
-        {
-            var planDto = new PlanDto
-            {
-                Id = planId,
-                CampaignId = campaignId,
-                CreativeLengths = new List<CreativeLength>
-                {
-                    new CreativeLength
-                    {
-                        SpotLengthId = 1, //30
-                        Weight = 50
-                    },
-                    new CreativeLength
-                    {
-                        SpotLengthId = 2, //60
-                        Weight = 40
-                    },
-                    new CreativeLength
-                    {
-                        SpotLengthId = 3, //15
-                        Weight = 10
-                    }
-                },
-                FlightStartDate = new DateTime(2020, 03, 14),
-                FlightEndDate = new DateTime(2020, 04, 12),
-                TargetImpressions = 20000000,
-                ImpressionsPerUnit = 4000000,
-                TargetRatingPoints = 149.446003664416,
-                HHImpressions = 40000000,
-                HHRatingPoints = 36.2916732747755,
-                AudienceId = 1,
-                Vpvh = 0.5,
-                Budget = 500000.00M,
-                PostingType = PostingTypeEnum.NTI,
-                CoverageGoalPercent = 1,
-                AvailableMarkets = new List<PlanAvailableMarketDto>
-                {
-                    new PlanAvailableMarketDto { Id = 1, ShareOfVoicePercent = 1, Market = "Some Market"}
-                },
-                FlightDays = new List<int> { 3, 4, 5, 6, 7 },
-                Dayparts = new List<PlanDaypartDto>
-                {
-                    new PlanDaypartDto
-                    {
-                        DaypartCodeId = 2,
-                        WeightingGoalPercent = 20,
-                        StartTimeSeconds = 39600,
-                        EndTimeSeconds = 46799,
-                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
-                        {
-                            new PlanDaypartVpvhForAudienceDto
-                            {
-                                AudienceId = 1,
-                                Vpvh = 0.4,
-                                VpvhType = VpvhTypeEnum.FourBookAverage,
-                                StartingPoint = new DateTime(2020, 2, 10)
-                            }
-                        }
-                    },
-                    new PlanDaypartDto
-                    {
-                        DaypartCodeId = 6,
-                        WeightingGoalPercent = 40,
-                        StartTimeSeconds = 54000,
-                        EndTimeSeconds = 64799,
-                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
-                        {
-                            new PlanDaypartVpvhForAudienceDto
-                            {
-                                AudienceId = 1,
-                                Vpvh = 0.5,
-                                VpvhType = VpvhTypeEnum.FourBookAverage,
-                                StartingPoint = new DateTime(2020, 2, 10)
-                            }
-                        }
-                    },
-                    new PlanDaypartDto
-                    {
-                        DaypartCodeId = 14,
-                        WeightingGoalPercent = null,
-                        StartTimeSeconds = 21600,
-                        EndTimeSeconds = 32399,
-                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
-                        {
-                            new PlanDaypartVpvhForAudienceDto
-                            {
-                                AudienceId = 1,
-                                Vpvh = 0.6,
-                                VpvhType = VpvhTypeEnum.FourBookAverage,
-                                StartingPoint = new DateTime(2020, 2, 10)
-                            }
-                        }
-                    }
-                }
-            };
-            planDto.WeeklyBreakdownWeeks = _GetWeeklyBreakdownWeeks(planDto, new List<int> { 846, 847, 848, 849, 850 });
-            return planDto;
-        }
-
+        
         private List<WeeklyBreakdownWeek> _GetWeeklyBreakdownWeeks(PlanDto planDto, List<int> weekIds)
         {
             List<WeeklyBreakdownWeek> result = new List<WeeklyBreakdownWeek>();

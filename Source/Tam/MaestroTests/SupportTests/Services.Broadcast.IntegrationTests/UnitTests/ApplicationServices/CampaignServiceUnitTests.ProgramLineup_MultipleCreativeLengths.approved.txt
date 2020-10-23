@@ -165,7 +165,7 @@
   "ExportFileName": "Program_Lineup_Report_Brave Plan_10172017.xlsx",
   "FlightEndDate": "03/14/20",
   "FlightStartDate": "03/01/20",
-  "GuaranteedDemo": "A18-20",
+  "GuaranteedDemo": "W18-20",
   "PlanHeaderName": "Brave Plan | Program Lineup*",
   "PostingType": "NTI",
   "ReportGeneratedDate": "10/17/17",

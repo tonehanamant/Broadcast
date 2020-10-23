@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.Text;
+using ThirdParty.Json.LitJson;
 
 namespace Services.Broadcast.Helpers.Json
 {
@@ -41,6 +42,18 @@ namespace Services.Broadcast.Helpers.Json
 
             var json = sw.ToString();
             return json;
+        }
+
+        /// <summary>
+        /// Deserialize from the json string.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="json"></param>
+        /// <returns></returns>
+        public static T ConvertFromJson<T>(string json)
+        {
+            var item = JsonConvert.DeserializeObject<T>(json);
+            return item;
         }
         
         private static JsonSerializerSettings _GetJsonSettings()

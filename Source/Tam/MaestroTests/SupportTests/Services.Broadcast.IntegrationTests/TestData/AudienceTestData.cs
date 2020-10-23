@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using Services.Broadcast.Entities.Plan;
+﻿using Services.Broadcast.Entities.Plan;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.Broadcast.IntegrationTests.TestData
 {
@@ -100,6 +101,13 @@ namespace Services.Broadcast.IntegrationTests.TestData
             #endregion // #region Big List - Audiences
 
             return audiences;
+        }
+
+        public static PlanAudienceDisplay GetAudienceById(int id)
+        {
+            var audiences = GetAudiences();
+            var found = audiences.First(a => a.Id == id);
+            return found;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Plan;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,6 +30,57 @@ namespace Services.Broadcast.IntegrationTests.TestData
                 MarketCoverageFileId = 1,
                 MarketCoveragesByMarketCode = GetMarketsWithLatestCoverage().ToDictionary(x => x.MarketCode, x => x.PercentageOfUS * 100)
             };
+        }
+
+        /// <summary>
+        /// Formatted for a plan, get all the markets as available markets
+        /// </summary>
+        /// <param name="marketCodes">Null to return all.  Provide values for just those values.</param>
+        public static List<PlanAvailableMarketDto> GetPlanAvailableMarkets(List<int> marketCodes = null)
+        {
+            var markets = GetMarketsWithLatestCoverage();
+            if (marketCodes?.Any() == true)
+            {
+                var requestedMarkets = markets.Where(s => marketCodes.Contains(s.MarketCode)).ToList();
+                markets = requestedMarkets;
+            }
+
+            var result = markets.Select(m => new PlanAvailableMarketDto
+            {
+                Market = m.Market,
+                MarketCode = (short)m.MarketCode,
+                MarketCoverageFileId = m.MarketCoverageFileId,
+                PercentageOfUS = m.PercentageOfUS,
+                Rank = m.Rank.HasValue ? m.Rank.Value : -1,
+                ShareOfVoicePercent = null
+            }).ToList();
+
+            return result;
+        }
+
+        /// <summary>
+        /// Formatted for a plan, get all the markets as blackout markets
+        /// </summary>
+        /// <param name="marketCodes">Null to return all.  Provide values for just those values.</param>
+        public static List<PlanBlackoutMarketDto> GetPlanBlackoutMarketDtos(List<int> marketCodes = null)
+        {
+            var markets = GetMarketsWithLatestCoverage();
+            if (marketCodes?.Any() == true)
+            {
+                var requestedMarkets = markets.Where(s => marketCodes.Contains(s.MarketCode)).ToList();
+                markets = requestedMarkets;
+            }
+
+            var result = markets.Select(m => new PlanBlackoutMarketDto
+            {
+                Market = m.Market,
+                MarketCode = (short)m.MarketCode,
+                MarketCoverageFileId = m.MarketCoverageFileId,
+                PercentageOfUS = m.PercentageOfUS,
+                Rank = m.Rank.HasValue ? m.Rank.Value : -1
+            }).ToList();
+
+            return result;
         }
 
         public static List<MarketCoverage> GetMarketsWithLatestCoverage()

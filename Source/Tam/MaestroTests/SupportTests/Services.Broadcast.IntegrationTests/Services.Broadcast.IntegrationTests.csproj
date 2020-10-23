@@ -430,6 +430,9 @@
     <Compile Include="ApplicationServices\BroadcastAudienceCacheIntegrationTests.cs" />
     <Compile Include="DaypartCacheTests.cs" />
     <Compile Include="ApplicationServices\FeatureToggleHelperTests.cs" />
+    <None Include="Files\Campaign export\BasePlanForCampaignExportUnitTests.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Compile Include="Helpers\ReflectionTestHelper.cs" />
     <Compile Include="Helpers\InventoryFileTestHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
@@ -480,6 +483,7 @@
     <Compile Include="TestData\InventoryTestData.cs" />
     <Compile Include="TestData\MarketsTestData.cs" />
     <Compile Include="TestData\MediaMonthAndWeekTestData.cs" />
+    <Compile Include="TestData\QuartersTestData.cs" />
     <Compile Include="TestData\SpotLengthTestData.cs" />
     <Compile Include="TestData\StationsTestData.cs" />
     <Compile Include="UnitTests\ApplicationServices\DaypartDefaultServiceUnitTests.cs" />
@@ -629,7 +633,9 @@
     <None Include="Files\BVS Load For Invalid Media Week right limit.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Files\Campaign export\CampaignExport_30SecEquivalizedAndNot.xlsx" />
+    <None Include="Files\Campaign export\CampaignExport_30SecEquivalizedAndNot.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Files\Campaign export\CampaignExport_ContractOnlyPlans.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

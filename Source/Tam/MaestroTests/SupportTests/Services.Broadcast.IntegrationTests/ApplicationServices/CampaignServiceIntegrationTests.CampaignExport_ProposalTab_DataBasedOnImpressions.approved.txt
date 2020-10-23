@@ -156,10 +156,10 @@
         0.0,
         0.0,
         0.0,
-        0.5525,
+        1.1045,
         0.0,
-        0.552,
-        1.1045
+        1.1045,
+        2.209
       ],
       "WeeksStartDate": [
         "2019-12-30T00:00:00",
@@ -310,10 +310,10 @@
         0.0,
         0.0,
         0.0,
-        0.5525,
+        1.1045,
         0.0,
-        0.552,
-        1.1045
+        1.1045,
+        2.209
       ],
       "WeeksStartDate": [
         "2019-12-30T00:00:00",
@@ -353,8 +353,8 @@
           "CPM": 100.49796283386147578089633318,
           "CPP": 123333.33327777777777777777778,
           "DaypartCode": null,
-          "Impressions": 2000.0,
-          "RatingPoints": 1.6296967,
+          "Impressions": 1000.0,
+          "RatingPoints": 0.81484835,
           "SpotLengthLabel": null,
           "TotalImpressions": 2209.0,
           "TotalRatingPoints": 1.8,
@@ -364,8 +364,8 @@
           "CPM": 100.49796283386147578089633318,
           "CPP": 123333.33327777777777777777778,
           "DaypartCode": null,
-          "Impressions": 2000.0,
-          "RatingPoints": 1.6296967,
+          "Impressions": 1000.0,
+          "RatingPoints": 0.81484835,
           "SpotLengthLabel": null,
           "TotalImpressions": 2209.0,
           "TotalRatingPoints": 1.8,
@@ -373,8 +373,8 @@
         },
         "SpotLengthLabel": "30",
         "TotalCost": 221999.9999,
-        "Units": 1.1045,
-        "UnitsCost": 200995.92566772295156179266636
+        "Units": 2.209,
+        "UnitsCost": 100497.96283386147578089633318
       }
     ],
     "SecondaryAudiencesTables": [],
@@ -404,7 +404,7 @@
       },
       "SpotLengthLabel": null,
       "TotalCost": 221999.9999,
-      "Units": 1.1045,
+      "Units": 2.209,
       "UnitsCost": 0.0
     }
   },
@@ -419,8 +419,8 @@
             "CPM": 100.49796283386147578089633318,
             "CPP": 123333.33327777777777777777778,
             "DaypartCode": null,
-            "Impressions": 2000.0,
-            "RatingPoints": 1.6296967,
+            "Impressions": 1000.0,
+            "RatingPoints": 0.81484835,
             "SpotLengthLabel": null,
             "TotalImpressions": 2209.0,
             "TotalRatingPoints": 1.8,
@@ -430,8 +430,8 @@
             "CPM": 100.49796283386147578089633318,
             "CPP": 123333.33327777777777777777778,
             "DaypartCode": null,
-            "Impressions": 2000.0,
-            "RatingPoints": 1.6296967,
+            "Impressions": 1000.0,
+            "RatingPoints": 0.81484835,
             "SpotLengthLabel": null,
             "TotalImpressions": 2209.0,
             "TotalRatingPoints": 1.8,
@@ -439,8 +439,8 @@
           },
           "SpotLengthLabel": "30",
           "TotalCost": 221999.9999,
-          "Units": 1.1045,
-          "UnitsCost": 200995.92566772295156179266636
+          "Units": 2.209,
+          "UnitsCost": 100497.96283386147578089633318
         }
       ],
       "SecondaryAudiencesTables": [],
@@ -470,7 +470,7 @@
         },
         "SpotLengthLabel": null,
         "TotalCost": 221999.9999,
-        "Units": 1.1045,
+        "Units": 2.209,
         "UnitsCost": 0.0
       }
     }

@@ -1,0 +1,1254 @@
+{
+  "AgencyName": "Agent1",
+  "CampaignEndQuarter": "Q4'20",
+  "CampaignExportFileName": "Advertiser1 DAY PA Q4'20 Plan Rev - 01-01.xlsx",
+  "CampaignFlightEndDate": "11/08/20",
+  "CampaignFlightStartDate": "10/12/20",
+  "CampaignName": null,
+  "CampaignStartQuarter": "Q4'20",
+  "ClientName": "Advertiser1",
+  "ContractQuarterTables": [],
+  "ContractTotals": [],
+  "CreatedDate": "01/01/01",
+  "DaypartsData": [
+    {
+      "DaypartCode": "DAY",
+      "DaypartCodeId": 12,
+      "EndTime": "11:00am",
+      "FlightDays": "M-SU",
+      "GenreRestrictions": [
+        {
+          "ContainType": 2,
+          "PlanId": 1252,
+          "Restrictions": [
+            "News",
+            "Religious",
+            "Paid Program"
+          ]
+        }
+      ],
+      "ProgramRestrictions": [],
+      "StartTime": "09:00am"
+    },
+    {
+      "DaypartCode": "PA",
+      "DaypartCodeId": 7,
+      "EndTime": "08:00pm",
+      "FlightDays": "M-SU",
+      "GenreRestrictions": [
+        {
+          "ContainType": 2,
+          "PlanId": 1252,
+          "Restrictions": [
+            "News",
+            "Religious",
+            "Paid Program"
+          ]
+        }
+      ],
+      "ProgramRestrictions": [],
+      "StartTime": "06:00pm"
+    }
+  ],
+  "FlightHiatuses": [],
+  "FlowChartQuarterTables": [
+    {
+      "CostValues": [
+        0.0,
+        0.0,
+        35999.9999,
+        35999.9999,
+        35999.9999,
+        35999.9999,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        143999.9996
+      ],
+      "CPMValues": [
+        0.0,
+        0.0,
+        13.333333296296296296296296296,
+        13.333333296296296296296296296,
+        13.333333296296296296296296296,
+        13.333333296296296296296296296,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        13.333333296296296296296296296
+      ],
+      "DaypartCode": "DAY",
+      "DistributionPercentages": [
+        0.0,
+        0.0,
+        0.09,
+        0.09,
+        0.09,
+        0.09,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.36
+      ],
+      "HiatusDays": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "HiatusDaysFormattedValues": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        null
+      ],
+      "ImpressionsValues": [
+        0.0,
+        0.0,
+        2700.0,
+        2700.0,
+        2700.0,
+        2700.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        10800.0
+      ],
+      "Months": [
+        {
+          "Item1": "October",
+          "Item2": 4
+        },
+        {
+          "Item1": "November",
+          "Item2": 5
+        },
+        {
+          "Item1": "December",
+          "Item2": 4
+        }
+      ],
+      "QuarterLabel": "4Q '20",
+      "TableTitle": "4Q '20 DAY :15s eq.",
+      "TotalWeeksInQuarter": 13,
+      "UnitsValues": [
+        0.0,
+        0.0,
+        54.0,
+        54.0,
+        54.0,
+        54.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        216.0
+      ],
+      "WeeksStartDate": [
+        "2020-09-28T00:00:00",
+        "2020-10-05T00:00:00",
+        "2020-10-12T00:00:00",
+        "2020-10-19T00:00:00",
+        "2020-10-26T00:00:00",
+        "2020-11-02T00:00:00",
+        "2020-11-09T00:00:00",
+        "2020-11-16T00:00:00",
+        "2020-11-23T00:00:00",
+        "2020-11-30T00:00:00",
+        "2020-12-07T00:00:00",
+        "2020-12-14T00:00:00",
+        "2020-12-21T00:00:00"
+      ]
+    },
+    {
+      "CostValues": [
+        0.0,
+        0.0,
+        23999.9999,
+        23999.9999,
+        23999.9999,
+        23999.9999,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        95999.9996
+      ],
+      "CPMValues": [
+        0.0,
+        0.0,
+        13.333333277777777777777777778,
+        13.333333277777777777777777778,
+        13.333333277777777777777777778,
+        13.333333277777777777777777778,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        13.333333277777777777777777778
+      ],
+      "DaypartCode": "DAY",
+      "DistributionPercentages": [
+        0.0,
+        0.0,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.24
+      ],
+      "HiatusDays": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "HiatusDaysFormattedValues": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        null
+      ],
+      "ImpressionsValues": [
+        0.0,
+        0.0,
+        1800.0,
+        1800.0,
+        1800.0,
+        1800.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        7200.0
+      ],
+      "Months": [
+        {
+          "Item1": "October",
+          "Item2": 4
+        },
+        {
+          "Item1": "November",
+          "Item2": 5
+        },
+        {
+          "Item1": "December",
+          "Item2": 4
+        }
+      ],
+      "QuarterLabel": "4Q '20",
+      "TableTitle": "4Q '20 DAY :30s",
+      "TotalWeeksInQuarter": 13,
+      "UnitsValues": [
+        0.0,
+        0.0,
+        18.0,
+        18.0,
+        18.0,
+        18.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        72.0
+      ],
+      "WeeksStartDate": [
+        "2020-09-28T00:00:00",
+        "2020-10-05T00:00:00",
+        "2020-10-12T00:00:00",
+        "2020-10-19T00:00:00",
+        "2020-10-26T00:00:00",
+        "2020-11-02T00:00:00",
+        "2020-11-09T00:00:00",
+        "2020-11-16T00:00:00",
+        "2020-11-23T00:00:00",
+        "2020-11-30T00:00:00",
+        "2020-12-07T00:00:00",
+        "2020-12-14T00:00:00",
+        "2020-12-21T00:00:00"
+      ]
+    },
+    {
+      "CostValues": [
+        0.0,
+        0.0,
+        59999.9998,
+        59999.9998,
+        59999.9998,
+        59999.9998,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        239999.9992
+      ],
+      "CPMValues": [
+        0.0,
+        0.0,
+        13.333333288888888888888888889,
+        13.333333288888888888888888889,
+        13.333333288888888888888888889,
+        13.333333288888888888888888889,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        13.333333288888888888888888889
+      ],
+      "DaypartCode": null,
+      "DistributionPercentages": [
+        0.0,
+        0.0,
+        0.15,
+        0.15,
+        0.15,
+        0.15,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.6
+      ],
+      "HiatusDays": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "HiatusDaysFormattedValues": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        null
+      ],
+      "ImpressionsValues": [
+        0.0,
+        0.0,
+        4500.0,
+        4500.0,
+        4500.0,
+        4500.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        18000.0
+      ],
+      "Months": [
+        {
+          "Item1": "October",
+          "Item2": 4
+        },
+        {
+          "Item1": "November",
+          "Item2": 5
+        },
+        {
+          "Item1": "December",
+          "Item2": 4
+        }
+      ],
+      "QuarterLabel": null,
+      "TableTitle": "4Q '20 DAY Total",
+      "TotalWeeksInQuarter": 13,
+      "UnitsValues": [
+        0.0,
+        0.0,
+        72.0,
+        72.0,
+        72.0,
+        72.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        288.0
+      ],
+      "WeeksStartDate": [
+        "2020-09-28T00:00:00",
+        "2020-10-05T00:00:00",
+        "2020-10-12T00:00:00",
+        "2020-10-19T00:00:00",
+        "2020-10-26T00:00:00",
+        "2020-11-02T00:00:00",
+        "2020-11-09T00:00:00",
+        "2020-11-16T00:00:00",
+        "2020-11-23T00:00:00",
+        "2020-11-30T00:00:00",
+        "2020-12-07T00:00:00",
+        "2020-12-14T00:00:00",
+        "2020-12-21T00:00:00"
+      ]
+    },
+    {
+      "CostValues": [
+        0.0,
+        0.0,
+        23999.9999,
+        23999.9999,
+        23999.9999,
+        23999.9999,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        95999.9996
+      ],
+      "CPMValues": [
+        0.0,
+        0.0,
+        13.333333277777777777777777778,
+        13.333333277777777777777777778,
+        13.333333277777777777777777778,
+        13.333333277777777777777777778,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        13.333333277777777777777777778
+      ],
+      "DaypartCode": "PA",
+      "DistributionPercentages": [
+        0.0,
+        0.0,
+        0.06,
+        0.06,
+        0.06,
+        0.06,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.24
+      ],
+      "HiatusDays": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "HiatusDaysFormattedValues": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        null
+      ],
+      "ImpressionsValues": [
+        0.0,
+        0.0,
+        1800.0,
+        1800.0,
+        1800.0,
+        1800.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        7200.0
+      ],
+      "Months": [
+        {
+          "Item1": "October",
+          "Item2": 4
+        },
+        {
+          "Item1": "November",
+          "Item2": 5
+        },
+        {
+          "Item1": "December",
+          "Item2": 4
+        }
+      ],
+      "QuarterLabel": "4Q '20",
+      "TableTitle": "4Q '20 PA :15s eq.",
+      "TotalWeeksInQuarter": 13,
+      "UnitsValues": [
+        0.0,
+        0.0,
+        36.0,
+        36.0,
+        36.0,
+        36.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        144.0
+      ],
+      "WeeksStartDate": [
+        "2020-09-28T00:00:00",
+        "2020-10-05T00:00:00",
+        "2020-10-12T00:00:00",
+        "2020-10-19T00:00:00",
+        "2020-10-26T00:00:00",
+        "2020-11-02T00:00:00",
+        "2020-11-09T00:00:00",
+        "2020-11-16T00:00:00",
+        "2020-11-23T00:00:00",
+        "2020-11-30T00:00:00",
+        "2020-12-07T00:00:00",
+        "2020-12-14T00:00:00",
+        "2020-12-21T00:00:00"
+      ]
+    },
+    {
+      "CostValues": [
+        0.0,
+        0.0,
+        15999.9999,
+        15999.9999,
+        15999.9999,
+        15999.9999,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        63999.9996
+      ],
+      "CPMValues": [
+        0.0,
+        0.0,
+        13.33333325,
+        13.33333325,
+        13.33333325,
+        13.33333325,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        13.33333325
+      ],
+      "DaypartCode": "PA",
+      "DistributionPercentages": [
+        0.0,
+        0.0,
+        0.04,
+        0.04,
+        0.04,
+        0.04,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.16
+      ],
+      "HiatusDays": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "HiatusDaysFormattedValues": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        null
+      ],
+      "ImpressionsValues": [
+        0.0,
+        0.0,
+        1200.0,
+        1200.0,
+        1200.0,
+        1200.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        4800.0
+      ],
+      "Months": [
+        {
+          "Item1": "October",
+          "Item2": 4
+        },
+        {
+          "Item1": "November",
+          "Item2": 5
+        },
+        {
+          "Item1": "December",
+          "Item2": 4
+        }
+      ],
+      "QuarterLabel": "4Q '20",
+      "TableTitle": "4Q '20 PA :30s",
+      "TotalWeeksInQuarter": 13,
+      "UnitsValues": [
+        0.0,
+        0.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        48.0
+      ],
+      "WeeksStartDate": [
+        "2020-09-28T00:00:00",
+        "2020-10-05T00:00:00",
+        "2020-10-12T00:00:00",
+        "2020-10-19T00:00:00",
+        "2020-10-26T00:00:00",
+        "2020-11-02T00:00:00",
+        "2020-11-09T00:00:00",
+        "2020-11-16T00:00:00",
+        "2020-11-23T00:00:00",
+        "2020-11-30T00:00:00",
+        "2020-12-07T00:00:00",
+        "2020-12-14T00:00:00",
+        "2020-12-21T00:00:00"
+      ]
+    },
+    {
+      "CostValues": [
+        0.0,
+        0.0,
+        39999.9998,
+        39999.9998,
+        39999.9998,
+        39999.9998,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        159999.9992
+      ],
+      "CPMValues": [
+        0.0,
+        0.0,
+        13.333333266666666666666666667,
+        13.333333266666666666666666667,
+        13.333333266666666666666666667,
+        13.333333266666666666666666667,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        13.333333266666666666666666667
+      ],
+      "DaypartCode": null,
+      "DistributionPercentages": [
+        0.0,
+        0.0,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.4
+      ],
+      "HiatusDays": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "HiatusDaysFormattedValues": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        null
+      ],
+      "ImpressionsValues": [
+        0.0,
+        0.0,
+        3000.0,
+        3000.0,
+        3000.0,
+        3000.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        12000.0
+      ],
+      "Months": [
+        {
+          "Item1": "October",
+          "Item2": 4
+        },
+        {
+          "Item1": "November",
+          "Item2": 5
+        },
+        {
+          "Item1": "December",
+          "Item2": 4
+        }
+      ],
+      "QuarterLabel": null,
+      "TableTitle": "4Q '20 PA Total",
+      "TotalWeeksInQuarter": 13,
+      "UnitsValues": [
+        0.0,
+        0.0,
+        48.0,
+        48.0,
+        48.0,
+        48.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        192.0
+      ],
+      "WeeksStartDate": [
+        "2020-09-28T00:00:00",
+        "2020-10-05T00:00:00",
+        "2020-10-12T00:00:00",
+        "2020-10-19T00:00:00",
+        "2020-10-26T00:00:00",
+        "2020-11-02T00:00:00",
+        "2020-11-09T00:00:00",
+        "2020-11-16T00:00:00",
+        "2020-11-23T00:00:00",
+        "2020-11-30T00:00:00",
+        "2020-12-07T00:00:00",
+        "2020-12-14T00:00:00",
+        "2020-12-21T00:00:00"
+      ]
+    }
+  ],
+  "GuaranteedDemo": [
+    "A25-54"
+  ],
+  "HasSecondaryAudiences": false,
+  "MarketCoverageData": {
+    "BlackoutMarketsName": [],
+    "CoveragePercentage": 80.0,
+    "PreferentialMarketsName": []
+  },
+  "Notes": "All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.",
+  "PostingType": "NTI",
+  "ProposalCampaignTotalsTable": {
+    "HasSecondaryAudiences": false,
+    "QuarterLabel": "Campaign Totals",
+    "Rows": [
+      {
+        "DaypartCode": "DAY",
+        "GuaranteedData": {
+          "CPM": 13.333333296296296296296296296,
+          "CPP": 16129.032213261648745519713262,
+          "DaypartCode": null,
+          "Impressions": 50.0,
+          "RatingPoints": 0.04133333,
+          "SpotLengthLabel": null,
+          "TotalImpressions": 10800.0,
+          "TotalRatingPoints": 8.928,
+          "VPVH": 0.424
+        },
+        "HHData": {
+          "CPM": 5.6533333176296400987654030179,
+          "CPP": 6814.3099376869218831926086409,
+          "DaypartCode": null,
+          "Impressions": 117.9245283,
+          "RatingPoints": 0.09783333,
+          "SpotLengthLabel": null,
+          "TotalImpressions": 25471.69811321,
+          "TotalRatingPoints": 21.13200029,
+          "VPVH": 0.0
+        },
+        "SpotLengthLabel": "15 eq.",
+        "TotalCost": 143999.9996,
+        "Units": 216.0,
+        "UnitsCost": 666.66666481481481481481481481
+      },
+      {
+        "DaypartCode": "DAY",
+        "GuaranteedData": {
+          "CPM": 13.333333277777777777777777778,
+          "CPP": 16129.03219086021505376344086,
+          "DaypartCode": null,
+          "Impressions": 100.0,
+          "RatingPoints": 0.08266667,
+          "SpotLengthLabel": null,
+          "TotalImpressions": 7200.0,
+          "TotalRatingPoints": 5.952,
+          "VPVH": 0.424
+        },
+        "HHData": {
+          "CPM": 5.6533333097777771496296322469,
+          "CPP": 6814.3099282226024990043299582,
+          "DaypartCode": null,
+          "Impressions": 235.8490566,
+          "RatingPoints": 0.19566667,
+          "SpotLengthLabel": null,
+          "TotalImpressions": 16981.13207547,
+          "TotalRatingPoints": 14.0880002,
+          "VPVH": 0.0
+        },
+        "SpotLengthLabel": "30",
+        "TotalCost": 95999.9996,
+        "Units": 72.0,
+        "UnitsCost": 1333.3333277777777777777777778
+      },
+      {
+        "DaypartCode": "PA",
+        "GuaranteedData": {
+          "CPM": 13.333333277777777777777777778,
+          "CPP": 16129.03219086021505376344086,
+          "DaypartCode": null,
+          "Impressions": 50.0,
+          "RatingPoints": 0.04133333,
+          "SpotLengthLabel": null,
+          "TotalImpressions": 7200.0,
+          "TotalRatingPoints": 5.952,
+          "VPVH": 0.424
+        },
+        "HHData": {
+          "CPM": 5.6533333097777771496296322469,
+          "CPP": 6814.3099282226024990043299582,
+          "DaypartCode": null,
+          "Impressions": 117.9245283,
+          "RatingPoints": 0.09783333,
+          "SpotLengthLabel": null,
+          "TotalImpressions": 16981.13207547,
+          "TotalRatingPoints": 14.0880002,
+          "VPVH": 0.0
+        },
+        "SpotLengthLabel": "15 eq.",
+        "TotalCost": 95999.9996,
+        "Units": 144.0,
+        "UnitsCost": 666.66666388888888888888888889
+      },
+      {
+        "DaypartCode": "PA",
+        "GuaranteedData": {
+          "CPM": 13.33333325,
+          "CPP": 16129.032157258064516129032258,
+          "DaypartCode": null,
+          "Impressions": 100.0,
+          "RatingPoints": 0.08266667,
+          "SpotLengthLabel": null,
+          "TotalImpressions": 4800.0,
+          "TotalRatingPoints": 3.968,
+          "VPVH": 0.424
+        },
+        "HHData": {
+          "CPM": 5.6533332980000160177776776667,
+          "CPP": 6814.3099140261185857615062453,
+          "DaypartCode": null,
+          "Impressions": 235.8490566,
+          "RatingPoints": 0.19566667,
+          "SpotLengthLabel": null,
+          "TotalImpressions": 11320.75471698,
+          "TotalRatingPoints": 9.39200013,
+          "VPVH": 0.0
+        },
+        "SpotLengthLabel": "30",
+        "TotalCost": 63999.9996,
+        "Units": 48.0,
+        "UnitsCost": 1333.333325
+      }
+    ],
+    "SecondaryAudiencesTables": [],
+    "TotalRow": {
+      "DaypartCode": null,
+      "GuaranteedData": {
+        "CPM": 13.33333328,
+        "CPP": 16129.032193548387096774193548,
+        "DaypartCode": null,
+        "Impressions": 0.0,
+        "RatingPoints": 0.0,
+        "SpotLengthLabel": null,
+        "TotalImpressions": 30000.0,
+        "TotalRatingPoints": 24.8,
+        "VPVH": 0.0
+      },
+      "HHData": {
+        "CPM": 5.6533333107199980401777856171,
+        "CPP": 6814.3099293583246946752566576,
+        "DaypartCode": null,
+        "Impressions": 0.0,
+        "RatingPoints": 0.0,
+        "SpotLengthLabel": null,
+        "TotalImpressions": 70754.71698113,
+        "TotalRatingPoints": 58.70000081,
+        "VPVH": 0.0
+      },
+      "SpotLengthLabel": null,
+      "TotalCost": 399999.9984,
+      "Units": 480.0,
+      "UnitsCost": 0.0
+    }
+  },
+  "ProposalQuarterTables": [
+    {
+      "HasSecondaryAudiences": false,
+      "QuarterLabel": "Q4 2020",
+      "Rows": [
+        {
+          "DaypartCode": "DAY",
+          "GuaranteedData": {
+            "CPM": 13.333333296296296296296296296,
+            "CPP": 16129.032213261648745519713262,
+            "DaypartCode": null,
+            "Impressions": 50.0,
+            "RatingPoints": 0.04133333,
+            "SpotLengthLabel": null,
+            "TotalImpressions": 10800.0,
+            "TotalRatingPoints": 8.928,
+            "VPVH": 0.424
+          },
+          "HHData": {
+            "CPM": 5.6533333176296400987654030179,
+            "CPP": 6814.3099376869218831926086409,
+            "DaypartCode": null,
+            "Impressions": 117.9245283,
+            "RatingPoints": 0.09783333,
+            "SpotLengthLabel": null,
+            "TotalImpressions": 25471.69811321,
+            "TotalRatingPoints": 21.13200029,
+            "VPVH": 0.0
+          },
+          "SpotLengthLabel": "15 eq.",
+          "TotalCost": 143999.9996,
+          "Units": 216.0,
+          "UnitsCost": 666.66666481481481481481481481
+        },
+        {
+          "DaypartCode": "DAY",
+          "GuaranteedData": {
+            "CPM": 13.333333277777777777777777778,
+            "CPP": 16129.03219086021505376344086,
+            "DaypartCode": null,
+            "Impressions": 100.0,
+            "RatingPoints": 0.08266667,
+            "SpotLengthLabel": null,
+            "TotalImpressions": 7200.0,
+            "TotalRatingPoints": 5.952,
+            "VPVH": 0.424
+          },
+          "HHData": {
+            "CPM": 5.6533333097777771496296322469,
+            "CPP": 6814.3099282226024990043299582,
+            "DaypartCode": null,
+            "Impressions": 235.8490566,
+            "RatingPoints": 0.19566667,
+            "SpotLengthLabel": null,
+            "TotalImpressions": 16981.13207547,
+            "TotalRatingPoints": 14.0880002,
+            "VPVH": 0.0
+          },
+          "SpotLengthLabel": "30",
+          "TotalCost": 95999.9996,
+          "Units": 72.0,
+          "UnitsCost": 1333.3333277777777777777777778
+        },
+        {
+          "DaypartCode": "PA",
+          "GuaranteedData": {
+            "CPM": 13.333333277777777777777777778,
+            "CPP": 16129.03219086021505376344086,
+            "DaypartCode": null,
+            "Impressions": 50.0,
+            "RatingPoints": 0.04133333,
+            "SpotLengthLabel": null,
+            "TotalImpressions": 7200.0,
+            "TotalRatingPoints": 5.952,
+            "VPVH": 0.424
+          },
+          "HHData": {
+            "CPM": 5.6533333097777771496296322469,
+            "CPP": 6814.3099282226024990043299582,
+            "DaypartCode": null,
+            "Impressions": 117.9245283,
+            "RatingPoints": 0.09783333,
+            "SpotLengthLabel": null,
+            "TotalImpressions": 16981.13207547,
+            "TotalRatingPoints": 14.0880002,
+            "VPVH": 0.0
+          },
+          "SpotLengthLabel": "15 eq.",
+          "TotalCost": 95999.9996,
+          "Units": 144.0,
+          "UnitsCost": 666.66666388888888888888888889
+        },
+        {
+          "DaypartCode": "PA",
+          "GuaranteedData": {
+            "CPM": 13.33333325,
+            "CPP": 16129.032157258064516129032258,
+            "DaypartCode": null,
+            "Impressions": 100.0,
+            "RatingPoints": 0.08266667,
+            "SpotLengthLabel": null,
+            "TotalImpressions": 4800.0,
+            "TotalRatingPoints": 3.968,
+            "VPVH": 0.424
+          },
+          "HHData": {
+            "CPM": 5.6533332980000160177776776667,
+            "CPP": 6814.3099140261185857615062453,
+            "DaypartCode": null,
+            "Impressions": 235.8490566,
+            "RatingPoints": 0.19566667,
+            "SpotLengthLabel": null,
+            "TotalImpressions": 11320.75471698,
+            "TotalRatingPoints": 9.39200013,
+            "VPVH": 0.0
+          },
+          "SpotLengthLabel": "30",
+          "TotalCost": 63999.9996,
+          "Units": 48.0,
+          "UnitsCost": 1333.333325
+        }
+      ],
+      "SecondaryAudiencesTables": [],
+      "TotalRow": {
+        "DaypartCode": null,
+        "GuaranteedData": {
+          "CPM": 13.33333328,
+          "CPP": 16129.032193548387096774193548,
+          "DaypartCode": null,
+          "Impressions": 0.0,
+          "RatingPoints": 0.0,
+          "SpotLengthLabel": null,
+          "TotalImpressions": 30000.0,
+          "TotalRatingPoints": 24.8,
+          "VPVH": 0.0
+        },
+        "HHData": {
+          "CPM": 5.6533333107199980401777856171,
+          "CPP": 6814.3099293583246946752566576,
+          "DaypartCode": null,
+          "Impressions": 0.0,
+          "RatingPoints": 0.0,
+          "SpotLengthLabel": null,
+          "TotalImpressions": 70754.71698113,
+          "TotalRatingPoints": 58.70000081,
+          "VPVH": 0.0
+        },
+        "SpotLengthLabel": null,
+        "TotalCost": 399999.9984,
+        "Units": 480.0,
+        "UnitsCost": 0.0
+      }
+    }
+  ],
+  "SpotLengths": [
+    ":15 eq.",
+    ":30"
+  ],
+  "Status": "Proposal"
+}

@@ -49,5 +49,15 @@ namespace Services.Broadcast.Extensions
         {
             return date.DayOfWeek == DayOfWeek.Sunday ? Entities.Enums.BroadcastDayOfWeek.Sunday : (BroadcastDayOfWeek)(int)date.DayOfWeek;
         }
+
+        /// <summary>
+        /// Returns if the candidate is within the given dates.
+        /// Equality is within.
+        /// </summary>
+        public static bool IsBetween(this DateTime candidate, DateTime start, DateTime end)
+        {
+            var result = candidate >= start && candidate <= end;
+            return result;
+        }
     }
 }

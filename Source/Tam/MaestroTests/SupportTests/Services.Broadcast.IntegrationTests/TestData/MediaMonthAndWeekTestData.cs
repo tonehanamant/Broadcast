@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.ServiceModel.Channels;
 using Tam.Maestro.Data.Entities;
 
 namespace Services.Broadcast.IntegrationTests.TestData
@@ -10,7 +9,23 @@ namespace Services.Broadcast.IntegrationTests.TestData
     {
         public static List<MediaWeek> GetMediaWeeksIntersecting(DateTime start, DateTime end)
         {
-            return _MediaWeeks.Where(w => w.StartDate <= end || w.EndDate >= start).ToList();
+            var result = _MediaWeeks.Where(w => w.StartDate <= end && w.EndDate >= start)
+                .OrderBy(m => m.StartDate).ToList();
+            return result;
+        }
+
+        public static List<MediaMonth> GetMediaMonthsIntersecting(DateTime start, DateTime end)
+        {
+            var result = _MediaMonths.Where(w => w.StartDate <= end && w.EndDate >= start)
+                .OrderBy(m => m.StartDate).ToList();
+            return result;
+        }
+
+        public static List<MediaWeek> GetMediaWeeksByMediaMonth(int mediaMonthId)
+        {
+            var result = _MediaWeeks.Where(w => w.MediaMonthId == mediaMonthId)
+                .OrderBy(m => m.StartDate).ToList();
+            return result;
         }
 
         #region Big Lists
@@ -228,7 +243,71 @@ namespace Services.Broadcast.IntegrationTests.TestData
             new MediaWeek(680, 424, 2, DateTime.Parse("Jan  2 2017 12:00AM"), DateTime.Parse("Jan  8 2017 12:00AM"))
         };
 
-        #endregion // #region Big Lists
+        private static List<MediaMonth> _MediaMonths = new List<MediaMonth>
+        {
+            new MediaMonth { Id = 424, Year = 2017 , Month = 1, MediaMonthX = "0117", StartDate = DateTime.Parse("2016-12-26"), EndDate = DateTime.Parse("2017-01-29") },
+            new MediaMonth { Id = 425, Year = 2017 , Month = 2, MediaMonthX = "0217", StartDate = DateTime.Parse("2017-01-30"), EndDate = DateTime.Parse("2017-02-26") },
+            new MediaMonth { Id = 426, Year = 2017 , Month = 3, MediaMonthX = "0317", StartDate = DateTime.Parse("2017-02-27"), EndDate = DateTime.Parse("2017-03-26") },
+            new MediaMonth { Id = 427, Year = 2017 , Month = 4, MediaMonthX = "0417", StartDate = DateTime.Parse("2017-03-27"), EndDate = DateTime.Parse("2017-04-30") },
+            new MediaMonth { Id = 428, Year = 2017 , Month = 5, MediaMonthX = "0517", StartDate = DateTime.Parse("2017-05-01"), EndDate = DateTime.Parse("2017-05-28") },
+            new MediaMonth { Id = 429, Year = 2017 , Month = 6, MediaMonthX = "0617", StartDate = DateTime.Parse("2017-05-29"), EndDate = DateTime.Parse("2017-06-25") },
+            new MediaMonth { Id = 430, Year = 2017 , Month = 7, MediaMonthX = "0717", StartDate = DateTime.Parse("2017-06-26"), EndDate = DateTime.Parse("2017-07-30") },
+            new MediaMonth { Id = 431, Year = 2017 , Month = 8, MediaMonthX = "0817", StartDate = DateTime.Parse("2017-07-31"), EndDate = DateTime.Parse("2017-08-27") },
+            new MediaMonth { Id = 432, Year = 2017 , Month = 9, MediaMonthX = "0917", StartDate = DateTime.Parse("2017-08-28"), EndDate = DateTime.Parse("2017-09-24") },
+            new MediaMonth { Id = 433, Year = 2017 , Month = 10, MediaMonthX = "1017", StartDate = DateTime.Parse("2017-09-25"), EndDate = DateTime.Parse("2017-10-29") },
+            new MediaMonth { Id = 434, Year = 2017 , Month = 11, MediaMonthX = "1117", StartDate = DateTime.Parse("2017-10-30"), EndDate = DateTime.Parse("2017-11-26") },
+            new MediaMonth { Id = 435, Year = 2017 , Month = 12, MediaMonthX = "1217", StartDate = DateTime.Parse("2017-11-27"), EndDate = DateTime.Parse("2017-12-31") },
+            new MediaMonth { Id = 436, Year = 2018 , Month = 1, MediaMonthX = "0118", StartDate = DateTime.Parse("2018-01-01"), EndDate = DateTime.Parse("2018-01-28") },
+            new MediaMonth { Id = 437, Year = 2018 , Month = 2, MediaMonthX = "0218", StartDate = DateTime.Parse("2018-01-29"), EndDate = DateTime.Parse("2018-02-25") },
+            new MediaMonth { Id = 438, Year = 2018 , Month = 3, MediaMonthX = "0318", StartDate = DateTime.Parse("2018-02-26"), EndDate = DateTime.Parse("2018-03-25") },
+            new MediaMonth { Id = 439, Year = 2018 , Month = 4, MediaMonthX = "0418", StartDate = DateTime.Parse("2018-03-26"), EndDate = DateTime.Parse("2018-04-29") },
+            new MediaMonth { Id = 440, Year = 2018 , Month = 5, MediaMonthX = "0518", StartDate = DateTime.Parse("2018-04-30"), EndDate = DateTime.Parse("2018-05-27") },
+            new MediaMonth { Id = 441, Year = 2018 , Month = 6, MediaMonthX = "0618", StartDate = DateTime.Parse("2018-05-28"), EndDate = DateTime.Parse("2018-06-24") },
+            new MediaMonth { Id = 442, Year = 2018 , Month = 7, MediaMonthX = "0718", StartDate = DateTime.Parse("2018-06-25"), EndDate = DateTime.Parse("2018-07-29") },
+            new MediaMonth { Id = 443, Year = 2018 , Month = 8, MediaMonthX = "0818", StartDate = DateTime.Parse("2018-07-30"), EndDate = DateTime.Parse("2018-08-26") },
+            new MediaMonth { Id = 444, Year = 2018 , Month = 9, MediaMonthX = "0918", StartDate = DateTime.Parse("2018-08-27"), EndDate = DateTime.Parse("2018-09-30") },
+            new MediaMonth { Id = 445, Year = 2018 , Month = 10, MediaMonthX = "1018", StartDate = DateTime.Parse("2018-10-01"), EndDate = DateTime.Parse("2018-10-28") },
+            new MediaMonth { Id = 446, Year = 2018 , Month = 11, MediaMonthX = "1118", StartDate = DateTime.Parse("2018-10-29"), EndDate = DateTime.Parse("2018-11-25") },
+            new MediaMonth { Id = 447, Year = 2018 , Month = 12, MediaMonthX = "1218", StartDate = DateTime.Parse("2018-11-26"), EndDate = DateTime.Parse("2018-12-30") },
+            new MediaMonth { Id = 448, Year = 2019 , Month = 1, MediaMonthX = "0119", StartDate = DateTime.Parse("2018-12-31"), EndDate = DateTime.Parse("2019-01-27") },
+            new MediaMonth { Id = 449, Year = 2019 , Month = 2, MediaMonthX = "0219", StartDate = DateTime.Parse("2019-01-28"), EndDate = DateTime.Parse("2019-02-24") },
+            new MediaMonth { Id = 450, Year = 2019 , Month = 3, MediaMonthX = "0319", StartDate = DateTime.Parse("2019-02-25"), EndDate = DateTime.Parse("2019-03-31") },
+            new MediaMonth { Id = 451, Year = 2019 , Month = 4, MediaMonthX = "0419", StartDate = DateTime.Parse("2019-04-01"), EndDate = DateTime.Parse("2019-04-28") },
+            new MediaMonth { Id = 452, Year = 2019 , Month = 5, MediaMonthX = "0519", StartDate = DateTime.Parse("2019-04-29"), EndDate = DateTime.Parse("2019-05-26") },
+            new MediaMonth { Id = 453, Year = 2019 , Month = 6, MediaMonthX = "0619", StartDate = DateTime.Parse("2019-05-27"), EndDate = DateTime.Parse("2019-06-30") },
+            new MediaMonth { Id = 454, Year = 2019 , Month = 7, MediaMonthX = "0719", StartDate = DateTime.Parse("2019-07-01"), EndDate = DateTime.Parse("2019-07-28") },
+            new MediaMonth { Id = 455, Year = 2019 , Month = 8, MediaMonthX = "0819", StartDate = DateTime.Parse("2019-07-29"), EndDate = DateTime.Parse("2019-08-25") },
+            new MediaMonth { Id = 456, Year = 2019 , Month = 9, MediaMonthX = "0919", StartDate = DateTime.Parse("2019-08-26"), EndDate = DateTime.Parse("2019-09-29") },
+            new MediaMonth { Id = 457, Year = 2019 , Month = 10, MediaMonthX = "1019", StartDate = DateTime.Parse("2019-09-30"), EndDate = DateTime.Parse("2019-10-27") },
+            new MediaMonth { Id = 458, Year = 2019 , Month = 11, MediaMonthX = "1119", StartDate = DateTime.Parse("2019-10-28"), EndDate = DateTime.Parse("2019-11-24") },
+            new MediaMonth { Id = 459, Year = 2019 , Month = 12, MediaMonthX = "1219", StartDate = DateTime.Parse("2019-11-25"), EndDate = DateTime.Parse("2019-12-29") },
+            new MediaMonth { Id = 460, Year = 2020 , Month = 1, MediaMonthX = "0120", StartDate = DateTime.Parse("2019-12-30"), EndDate = DateTime.Parse("2020-01-26") },
+            new MediaMonth { Id = 461, Year = 2020 , Month = 2, MediaMonthX = "0220", StartDate = DateTime.Parse("2020-01-27"), EndDate = DateTime.Parse("2020-02-23") },
+            new MediaMonth { Id = 462, Year = 2020 , Month = 3, MediaMonthX = "0320", StartDate = DateTime.Parse("2020-02-24"), EndDate = DateTime.Parse("2020-03-29") },
+            new MediaMonth { Id = 463, Year = 2020 , Month = 4, MediaMonthX = "0420", StartDate = DateTime.Parse("2020-03-30"), EndDate = DateTime.Parse("2020-04-26") },
+            new MediaMonth { Id = 464, Year = 2020 , Month = 5, MediaMonthX = "0520", StartDate = DateTime.Parse("2020-04-27"), EndDate = DateTime.Parse("2020-05-31") },
+            new MediaMonth { Id = 465, Year = 2020 , Month = 6, MediaMonthX = "0620", StartDate = DateTime.Parse("2020-06-01"), EndDate = DateTime.Parse("2020-06-28") },
+            new MediaMonth { Id = 466, Year = 2020 , Month = 7, MediaMonthX = "0720", StartDate = DateTime.Parse("2020-06-29"), EndDate = DateTime.Parse("2020-07-26") },
+            new MediaMonth { Id = 467, Year = 2020 , Month = 8, MediaMonthX = "0820", StartDate = DateTime.Parse("2020-07-27"), EndDate = DateTime.Parse("2020-08-30") },
+            new MediaMonth { Id = 468, Year = 2020 , Month = 9, MediaMonthX = "0920", StartDate = DateTime.Parse("2020-08-31"), EndDate = DateTime.Parse("2020-09-27") },
+            new MediaMonth { Id = 469, Year = 2020 , Month = 10, MediaMonthX = "1020", StartDate = DateTime.Parse("2020-09-28"), EndDate = DateTime.Parse("2020-10-25") },
+            new MediaMonth { Id = 470, Year = 2020 , Month = 11, MediaMonthX = "1120", StartDate = DateTime.Parse("2020-10-26"), EndDate = DateTime.Parse("2020-11-29") },
+            new MediaMonth { Id = 471, Year = 2020 , Month = 12, MediaMonthX = "1220", StartDate = DateTime.Parse("2020-11-30"), EndDate = DateTime.Parse("2020-12-27") },
+            new MediaMonth { Id = 472, Year = 2021 , Month = 1, MediaMonthX = "0121", StartDate = DateTime.Parse("2020-12-28"), EndDate = DateTime.Parse("2021-01-31") },
+            new MediaMonth { Id = 473, Year = 2021 , Month = 2, MediaMonthX = "0221", StartDate = DateTime.Parse("2021-02-01"), EndDate = DateTime.Parse("2021-02-28") },
+            new MediaMonth { Id = 474, Year = 2021 , Month = 3, MediaMonthX = "0321", StartDate = DateTime.Parse("2021-03-01"), EndDate = DateTime.Parse("2021-03-28") },
+            new MediaMonth { Id = 475, Year = 2021 , Month = 4, MediaMonthX = "0421", StartDate = DateTime.Parse("2021-03-29"), EndDate = DateTime.Parse("2021-04-25") },
+            new MediaMonth { Id = 476, Year = 2021 , Month = 5, MediaMonthX = "0521", StartDate = DateTime.Parse("2021-04-26"), EndDate = DateTime.Parse("2021-05-30") },
+            new MediaMonth { Id = 477, Year = 2021 , Month = 6, MediaMonthX = "0621", StartDate = DateTime.Parse("2021-05-31"), EndDate = DateTime.Parse("2021-06-27") },
+            new MediaMonth { Id = 478, Year = 2021 , Month = 7, MediaMonthX = "0721", StartDate = DateTime.Parse("2021-06-28"), EndDate = DateTime.Parse("2021-07-25") },
+            new MediaMonth { Id = 479, Year = 2021 , Month = 8, MediaMonthX = "0821", StartDate = DateTime.Parse("2021-07-26"), EndDate = DateTime.Parse("2021-08-29") },
+            new MediaMonth { Id = 480, Year = 2021 , Month = 9, MediaMonthX = "0921", StartDate = DateTime.Parse("2021-08-30"), EndDate = DateTime.Parse("2021-09-26") },
+            new MediaMonth { Id = 481, Year = 2021 , Month = 10, MediaMonthX = "1021", StartDate = DateTime.Parse("2021-09-27"), EndDate = DateTime.Parse("2021-10-31") },
+            new MediaMonth { Id = 482, Year = 2021 , Month = 11, MediaMonthX = "1121", StartDate = DateTime.Parse("2021-11-01"), EndDate = DateTime.Parse("2021-11-28") },
+            new MediaMonth { Id = 483, Year = 2021 , Month = 12, MediaMonthX = "1221", StartDate = DateTime.Parse("2021-11-29"), EndDate = DateTime.Parse("2021-12-26") },
 
+        };
+
+        #endregion // #region Big Lists
     }
 }
