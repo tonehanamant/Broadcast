@@ -135,6 +135,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ICampaignValidator _CampaignValidator;
         private readonly ICampaignRepository _CampaignRepository;
         private readonly IPlanRepository _PlanRepository;
+        private readonly ISpotLengthRepository _SpotLengthRepository;
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly IBroadcastLockingManagerApplicationService _LockingManagerApplicationService;
@@ -143,7 +144,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly ICampaignAggregationJobTrigger _CampaignAggregationJobTrigger;
         private readonly ITrafficApiCache _TrafficApiCache;
         private readonly IAudienceService _AudienceService;
-        private readonly ISpotLengthService _SpotLengthService;
         private readonly IStandardDaypartService _StandardDaypartService;
         private readonly ISharedFolderService _SharedFolderService;
         private readonly IInventoryRepository _InventoryRepository;
@@ -163,7 +163,6 @@ namespace Services.Broadcast.ApplicationServices
             ICampaignAggregationJobTrigger campaignAggregationJobTrigger,
             ITrafficApiCache trafficApiCache,
             IAudienceService audienceService,
-            ISpotLengthService spotLengthService,
             IStandardDaypartService standardDaypartService,
             ISharedFolderService sharedFolderService,
             IDateTimeEngine _dateTimeEngine,
@@ -181,7 +180,7 @@ namespace Services.Broadcast.ApplicationServices
             _TrafficApiCache = trafficApiCache;
             _PlanRepository = dataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _AudienceService = audienceService;
-            _SpotLengthService = spotLengthService;
+            _SpotLengthRepository = dataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             _StandardDaypartService = standardDaypartService;
             _SharedFolderService = sharedFolderService;
             _InventoryRepository = dataRepositoryFactory.GetDataRepository<IInventoryRepository>();
@@ -514,14 +513,23 @@ namespace Services.Broadcast.ApplicationServices
             _ValidateSecondaryAudiences(plans);
             List<PlanAudienceDisplay> guaranteedDemos = plans.Select(x => x.AudienceId).Distinct()
                 .Select(x => _AudienceService.GetAudienceById(x)).ToList();
-            return new CampaignReportData(request.ExportType, campaign, plans, agency, advertiser, guaranteedDemos,
-                _SpotLengthService.GetAllSpotLengths(),
-                _StandardDaypartService.GetAllStandardDayparts(),
-                 _AudienceService.GetAudiences(),
+            
+            var spotLengths = _SpotLengthRepository.GetSpotLengths();
+            var spotLengthDeliveryMultipliers = _SpotLengthRepository.GetDeliveryMultipliersBySpotLengthId();
+            var standardDayparts = _StandardDaypartService.GetAllStandardDayparts();
+            var audiences = _AudienceService.GetAudiences();
+
+            var campaignReportData = new CampaignReportData(request.ExportType, campaign, plans, agency, advertiser, guaranteedDemos,
+                spotLengths,
+                spotLengthDeliveryMultipliers,
+                standardDayparts,
+                audiences,
                  _MediaMonthAndWeekAggregateCache,
                 _QuarterCalculationEngine,
                 _DateTimeEngine,
                 _WeeklyBreakdownEngine);
+
+            return campaignReportData;
         }
 
         private void _ValidateCampaignLocking(int campaignId)
@@ -686,7 +694,7 @@ namespace Services.Broadcast.ApplicationServices
             var agency = _TrafficApiCache.GetAgency(campaign.AgencyId);
             var advertiser = _TrafficApiCache.GetAdvertiser(campaign.AdvertiserId);
             var guaranteedDemo = _AudienceService.GetAudienceById(plan.AudienceId);
-            var spotLengths = _SpotLengthService.GetAllSpotLengths();
+            var spotLengths = _SpotLengthRepository.GetSpotLengths();
             var allocatedOpenMarketSpots = _PlanRepository.GetPlanPricingAllocatedSpotsByPlanId(planId);
             var proprietaryInventory = _PlanRepository
                 .GetProprietaryInventoryForProgramLineup(plan.PricingParameters.JobId.Value);

@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
+using Services.Broadcast.IntegrationTests.TestData;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces;
@@ -49,7 +50,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<ICampaignAggregator> _CampaignAggregatorMock;
         private Mock<ITrafficApiCache> _TrafficApiCacheMock;
         private Mock<IAudienceService> _AudienceServiceMock;
-        private Mock<ISpotLengthService> _SpotLengthServiceMock;
         private Mock<IStandardDaypartService> _StandardDaypartServiceMock;
         private Mock<ISharedFolderService> _SharedFolderServiceMock;
         private Mock<ICampaignAggregationJobTrigger> _CampaignAggregationJobTriggerMock;
@@ -61,7 +61,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
         private Mock<IWeeklyBreakdownEngine> _WeeklyBreakdownEngineMock;
         private readonly Mock<IDaypartCache> _DaypartCacheMock = new Mock<IDaypartCache>();
-
+        private Mock<ISpotLengthRepository> _SpotLengthRepositoryMock;
 
         [SetUp]
         public void SetUp()
@@ -76,7 +76,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _TrafficApiCacheMock = new Mock<ITrafficApiCache>();
             _TrafficApiCacheMock = new Mock<ITrafficApiCache>();
             _AudienceServiceMock = new Mock<IAudienceService>();
-            _SpotLengthServiceMock = new Mock<ISpotLengthService>();
             _StandardDaypartServiceMock = new Mock<IStandardDaypartService>();
             _SharedFolderServiceMock = new Mock<ISharedFolderService>();
             _CampaignAggregationJobTriggerMock = new Mock<ICampaignAggregationJobTrigger>();
@@ -87,6 +86,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _StationProgramRepositoryMock = new Mock<IStationProgramRepository>();
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
             _WeeklyBreakdownEngineMock = new Mock<IWeeklyBreakdownEngine>();
+            _SpotLengthRepositoryMock = new Mock<ISpotLengthRepository>();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IStationProgramRepository>())
@@ -111,6 +111,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IMarketCoverageRepository>())
                 .Returns(_MarketCoverageRepositoryMock.Object);
+
+            _DataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<ISpotLengthRepository>())
+                .Returns(_SpotLengthRepositoryMock.Object);
 
             var stubbedConfigurationClient = new StubbedConfigurationWebApiClient();
             SystemComponentParameterHelper.SetConfigurationClient(stubbedConfigurationClient);
@@ -950,7 +954,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _TrafficApiCacheMock.Verify(x => x.GetAgency(agencyId), Times.Once);
             _TrafficApiCacheMock.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
-            _SpotLengthServiceMock.Verify(x => x.GetAllSpotLengths(), Times.Once);
+            _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
             _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId), Times.Once);
             _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
 
@@ -1040,7 +1044,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _TrafficApiCacheMock.Verify(x => x.GetAgency(agencyId), Times.Once);
             _TrafficApiCacheMock.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
-            _SpotLengthServiceMock.Verify(x => x.GetAllSpotLengths(), Times.Once);
+            _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
             _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId), Times.Once);
             _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
 
@@ -1207,7 +1211,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _TrafficApiCacheMock.Verify(x => x.GetAgency(agencyId), Times.Once);
             _TrafficApiCacheMock.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
-            _SpotLengthServiceMock.Verify(x => x.GetAllSpotLengths(), Times.Once);
+            _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
             _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId), Times.Once);
             _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
 
@@ -1294,7 +1298,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _TrafficApiCacheMock.Verify(x => x.GetAgency(agencyId), Times.Once);
             _TrafficApiCacheMock.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
-            _SpotLengthServiceMock.Verify(x => x.GetAllSpotLengths(), Times.Once);
+            _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
             _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId), Times.Once);
             _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
 
@@ -1407,7 +1411,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _TrafficApiCacheMock.Verify(x => x.GetAgency(agencyId), Times.Once);
             _TrafficApiCacheMock.Verify(x => x.GetAdvertiser(advertiserId), Times.Once);
             _AudienceServiceMock.Verify(x => x.GetAudienceById(audienceId), Times.Once);
-            _SpotLengthServiceMock.Verify(x => x.GetAllSpotLengths(), Times.Once);
+            _SpotLengthRepositoryMock.Verify(x => x.GetSpotLengths(), Times.Once);
             _PlanRepositoryMock.Verify(x => x.GetPlanPricingAllocatedSpotsByPlanId(firstPlanId), Times.Once);
             _MarketCoverageRepositoryMock.Verify(x => x.GetLatestMarketCoveragesWithStations(), Times.Once);
 
@@ -1442,9 +1446,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
                         , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
                 .Returns(_GetWeeklyBreakdownByWeek());
-            _WeeklyBreakdownEngineMock
-                .Setup(x => x.GetWeeklyBreakdownCombinations(It.IsAny<List<CreativeLength>>(), It.IsAny<List<PlanDaypartDto>>()))
-                .Returns(_GetWeeklyBreakdownCombinations());
             _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(campaignId))
                 .Returns(_GetCampaignForExport(campaignId, request.SelectedPlans));
@@ -1461,9 +1462,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GetPlan(It.IsAny<int>(), null))
                 .Returns(planDto);
 
-            _SpotLengthServiceMock
-                .Setup(x => x.GetAllSpotLengths())
-                .Returns(_GetAllSpotLengths());
+            _SpotLengthRepositoryMock
+                .Setup(x => x.GetSpotLengths())
+                .Returns(SpotLengthTestData.GetAllSpotLengths());
+
+            _SpotLengthRepositoryMock.Setup(s => s.GetDeliveryMultipliersBySpotLengthId())
+                .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
 
             _StandardDaypartServiceMock
                 .Setup(s => s.GetAllStandardDayparts())
@@ -1593,9 +1597,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
                     , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
                 .Returns(_GetWeeklyBreakdownByWeek());
-            _WeeklyBreakdownEngineMock
-                .Setup(x => x.GetWeeklyBreakdownCombinations(It.IsAny<List<CreativeLength>>(), It.IsAny<List<PlanDaypartDto>>()))
-                .Returns(_GetWeeklyBreakdownCombinations());
             _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(campaignId))
                 .Returns(_GetCampaignForExport(campaignId, request.SelectedPlans));
@@ -1644,9 +1645,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GetPlan(3, null))
                 .Returns(plan3);
 
-            _SpotLengthServiceMock
-                .Setup(x => x.GetAllSpotLengths())
-                .Returns(_GetAllSpotLengths());
+            _SpotLengthRepositoryMock
+                .Setup(x => x.GetSpotLengths())
+                .Returns(SpotLengthTestData.GetAllSpotLengths());
+
+            _SpotLengthRepositoryMock.Setup(s => s.GetDeliveryMultipliersBySpotLengthId())
+                .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
 
             _StandardDaypartServiceMock
                 .Setup(s => s.GetAllStandardDayparts())
@@ -1775,9 +1779,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
                     , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
                 .Returns(_GetWeeklyBreakdownByWeek());
-            _WeeklyBreakdownEngineMock
-                .Setup(x => x.GetWeeklyBreakdownCombinations(It.IsAny<List<CreativeLength>>(), It.IsAny<List<PlanDaypartDto>>()))
-                .Returns(_GetWeeklyBreakdownCombinations());
             _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(campaignId))
                 .Returns(_GetCampaignForExport(campaignId, request.SelectedPlans));
@@ -1810,9 +1811,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _PlanRepositoryMock
                 .Setup(x => x.GetPlan(It.IsAny<int>(), null))
                 .Returns(planDto);
-            _SpotLengthServiceMock
-                .Setup(x => x.GetAllSpotLengths())
-                .Returns(_GetAllSpotLengths());
+
+            _SpotLengthRepositoryMock
+                .Setup(x => x.GetSpotLengths())
+                .Returns(SpotLengthTestData.GetAllSpotLengths());
+
+            _SpotLengthRepositoryMock.Setup(s => s.GetDeliveryMultipliersBySpotLengthId())
+                .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
+
             _StandardDaypartServiceMock
                 .Setup(s => s.GetAllStandardDayparts())
                 .Returns(_GetStandardDayparts());
@@ -1932,9 +1938,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Setup(x => x.GroupWeeklyBreakdownByWeek(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()
                     , It.IsAny<double>(), It.IsAny<List<CreativeLength>>(), It.IsAny<bool>()))
                 .Returns(_GetWeeklyBreakdownByWeek());
-            _WeeklyBreakdownEngineMock
-                .Setup(x => x.GetWeeklyBreakdownCombinations(It.IsAny<List<CreativeLength>>(), It.IsAny<List<PlanDaypartDto>>()))
-                .Returns(_GetWeeklyBreakdownCombinations());
             _CampaignRepositoryMock
                 .Setup(x => x.GetCampaign(campaignId))
                 .Returns(_GetCampaignForExport(campaignId, request.SelectedPlans));
@@ -1976,9 +1979,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _PlanRepositoryMock
                 .Setup(x => x.GetPlan(2, null))
                 .Returns(planDto2);
-            _SpotLengthServiceMock
-                .Setup(x => x.GetAllSpotLengths())
-                .Returns(_GetAllSpotLengths());
+
+            _SpotLengthRepositoryMock
+                .Setup(x => x.GetSpotLengths())
+                .Returns(SpotLengthTestData.GetAllSpotLengths());
+
+            _SpotLengthRepositoryMock.Setup(s => s.GetDeliveryMultipliersBySpotLengthId())
+                .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
+
             _StandardDaypartServiceMock
                 .Setup(s => s.GetAllStandardDayparts())
                 .Returns(_GetStandardDayparts());
@@ -2081,21 +2089,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
         }
 
-        private List<WeeklyBreakdownCombination> _GetWeeklyBreakdownCombinations()
-        {
-            return new List<WeeklyBreakdownCombination> {
-                    new WeeklyBreakdownCombination{ SpotLengthId = 1, DaypartCodeId = 2, Weighting = 0.3},
-                    new WeeklyBreakdownCombination{ SpotLengthId = 1, DaypartCodeId = 6, Weighting = 0.2},
-                    new WeeklyBreakdownCombination{ SpotLengthId = 1, DaypartCodeId = 14, Weighting = 0.2},
-                    new WeeklyBreakdownCombination{ SpotLengthId = 2, DaypartCodeId = 2, Weighting = 0.15},
-                    new WeeklyBreakdownCombination{ SpotLengthId = 2, DaypartCodeId = 6, Weighting = 0.1},
-                    new WeeklyBreakdownCombination{ SpotLengthId = 2, DaypartCodeId = 14, Weighting = 0.2},
-                    new WeeklyBreakdownCombination{ SpotLengthId = 3, DaypartCodeId = 2, Weighting = 0.15},
-                    new WeeklyBreakdownCombination{ SpotLengthId = 3, DaypartCodeId = 6, Weighting = 0.1},
-                    new WeeklyBreakdownCombination{ SpotLengthId = 3, DaypartCodeId = 14, Weighting = 0.2}
-                };
-        }
-
         private static MediaWeek _GetMediaWeek(int id, string weekStartDate = null, string weekEndDate = null, int? mediaMonthId = null)
         {
             return new MediaWeek
@@ -2178,9 +2171,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Code = "A18-20"
                 });
 
-            _SpotLengthServiceMock
-                .Setup(x => x.GetAllSpotLengths())
-                .Returns(_GetAllSpotLengths());
+            _SpotLengthRepositoryMock
+                .Setup(x => x.GetSpotLengths())
+                .Returns(SpotLengthTestData.GetAllSpotLengths());
+
+            _SpotLengthRepositoryMock.Setup(s => s.GetDeliveryMultipliersBySpotLengthId())
+                .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
 
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestMarketCoveragesWithStations())
@@ -2188,11 +2184,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             _StationProgramRepositoryMock
                 .Setup(x => x.GetPrimaryProgramsForManifestDayparts(It.IsAny<IEnumerable<int>>()))
-                .Returns(new Dictionary<int, Program>
+                .Returns(new Dictionary<int, BasePlanInventoryProgram.ManifestDaypart.Program>
                 {
                     {
                         1001,
-                        new Program
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
                         {
                             Genre = "News",
                             Name = "KPLR 1001 Morning NEWS"
@@ -2200,7 +2196,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                     {
                         1002,
-                        new Program
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
                         {
                             Genre = "News",
                             Name = "KPLR 1002 Morning NEWS"
@@ -2208,7 +2204,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                     {
                         2001,
-                        new Program
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
                         {
                             Genre = "News",
                             Name = "KPLR 2001 Midday NEWS"
@@ -2216,7 +2212,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                      {
                         2002,
-                        new Program
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
                         {
                             Genre = "News",
                             Name = "KPLR 2002 Midday NEWS"
@@ -2224,7 +2220,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                      {
                         3001,
-                        new Program
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
                         {
                             Genre = "News",
                             Name = "KPLR 3001 Evening NEWS"
@@ -2232,7 +2228,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                      {
                         3002,
-                        new Program
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
                         {
                             Genre = "News",
                             Name = "KPLR 3002 Evening NEWS"
@@ -2240,7 +2236,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                      {
                         4001,
-                        new Program
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
                         {
                             Genre = "News",
                             Name = "KPLR 4001 Late NEWS"
@@ -2248,7 +2244,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                      {
                         4002,
-                        new Program
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
                         {
                             Genre = "News",
                             Name = "KPLR 4002 Late NEWS"
@@ -2296,9 +2292,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Code = "A18-20"
                 });
 
-            _SpotLengthServiceMock
-                .Setup(x => x.GetAllSpotLengths())
-                .Returns(_GetAllSpotLengths());
+            _SpotLengthRepositoryMock
+                .Setup(x => x.GetSpotLengths())
+                .Returns(SpotLengthTestData.GetAllSpotLengths());
+
+            _SpotLengthRepositoryMock.Setup(s => s.GetDeliveryMultipliersBySpotLengthId())
+                .Returns(SpotLengthTestData.GetDeliveryMultipliersBySpotLengthId);
 
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestMarketCoveragesWithStations())
@@ -2306,11 +2305,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             _StationProgramRepositoryMock
                 .Setup(x => x.GetPrimaryProgramsForManifestDayparts(It.IsAny<IEnumerable<int>>()))
-                .Returns(new Dictionary<int, Program>
+                .Returns(new Dictionary<int, BasePlanInventoryProgram.ManifestDaypart.Program>
                 {
                     {
                         1001,
-                        new Program
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
                         {
                             Genre = "Movie",
                             Name = "Joker"
@@ -2318,7 +2317,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                     {
                         2001,
-                        new Program
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
                         {
                             Genre = "News",
                             Name = "Late News"
@@ -2326,7 +2325,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     },
                     {
                         3001,
-                        new Program
+                        new BasePlanInventoryProgram.ManifestDaypart.Program
                         {
                             Genre = "Movie",
                             Name = "1917"
@@ -3012,7 +3011,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _CampaignAggregationJobTriggerMock.Object,
                 _TrafficApiCacheMock.Object,
                 _AudienceServiceMock.Object,
-                _SpotLengthServiceMock.Object,
                 _StandardDaypartServiceMock.Object,
                 _SharedFolderServiceMock.Object,
                 _DateTimeEngineMock.Object,
@@ -3208,23 +3206,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     Budget = 100000.00M,
                 }
             };
-        }
-
-        private List<LookupDto> _GetAllSpotLengths()
-        {
-            return new List<LookupDto>
-                {
-                new LookupDto { Id = 1, Display = "30" },
-                new LookupDto { Id = 2, Display = "60" },
-                new LookupDto { Id = 3, Display = "15" },
-                new LookupDto { Id = 4, Display = "120" },
-                new LookupDto { Id = 5, Display = "180" },
-                new LookupDto { Id = 6, Display = "300" },
-                new LookupDto { Id = 7, Display = "90" },
-                new LookupDto { Id = 8, Display = "45" },
-                new LookupDto { Id = 9, Display = "10" },
-                new LookupDto { Id = 10, Display = "150" }
-                };
         }
 
         private static List<CampaignWithSummary> _GetCampaignWithsummeriesReturn(AgencyDto agency, AdvertiserDto advertiser)
