@@ -218,7 +218,6 @@ namespace Services.Broadcast.Entities.Campaign
                 var planDeliveryImpressions = plan.TargetImpressions.Value;
 
                 List<QuarterDetailDto> planQuarters = _QuarterCalculationEngine.GetAllQuartersBetweenDates(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
-                var allSpotLengthIdAndStandardDaypartIdCombinations = PlanGoalHelper.GetWeeklyBreakdownCombinations(plan.CreativeLengths, plan.Dayparts);
                 foreach (var quarter in planQuarters)
                 {
                     //store the week ids from the current quarter in a list
@@ -226,6 +225,7 @@ namespace Services.Broadcast.Entities.Campaign
 
                     //all the plan week components in current quarter
                     var quarterPlanWeeksComponents = plan.WeeklyBreakdownWeeks.Where(x => quarterTotalWeeksIdList.Contains(x.MediaWeekId)).ToList();
+
                     foreach (var weekComponent in quarterPlanWeeksComponents)
                     {
                         var newProjectedPlan = _GetEmptyWeek(null, plan, quarter, null,
@@ -233,8 +233,7 @@ namespace Services.Broadcast.Entities.Campaign
                             plan.Dayparts.Single(x => x.DaypartCodeId == weekComponent.DaypartCodeId));
 
                         newProjectedPlan.TotalCost = weekComponent.WeeklyBudget;
-                        newProjectedPlan.Units = _CalculateUnitsForWeekComponent(weekComponent, planImpressionsPerUnit, planDeliveryImpressions, 
-                            allSpotLengthIdAndStandardDaypartIdCombinations, _SpotLengthDeliveryMultipliers);
+                        newProjectedPlan.Units = _CalculateUnitsForWeekComponent(weekComponent, planImpressionsPerUnit, _SpotLengthDeliveryMultipliers);
 
                         _ProjectGuaranteedAudienceDataByWeek(plan, weekComponent, newProjectedPlan);
                         _ProjectHHAudienceData(plan, weekComponent, newProjectedPlan);
@@ -321,7 +320,6 @@ namespace Services.Broadcast.Entities.Campaign
                             continue;
                         }
 
-                        //all the plan week components in current quarter
                         var quarterPlanWeeksComponents = plan.WeeklyBreakdownWeeks.Where(x => x.MediaWeekId == week.Id).ToList();
                         foreach (var weekComponent in quarterPlanWeeksComponents)
                         {
@@ -330,8 +328,7 @@ namespace Services.Broadcast.Entities.Campaign
                                 , plan.Dayparts.Single(x => x.DaypartCodeId == weekComponent.DaypartCodeId));
 
                             newProjectedPlan.TotalCost = weekComponent.WeeklyBudget;
-                            newProjectedPlan.Units = _CalculateUnitsForWeekComponent(weekComponent, planImpressionsPerUnit, planDeliveryImpressions,
-                                allSpotLengthIdAndStandardDaypartIdCombinations, _SpotLengthDeliveryMultipliers);
+                            newProjectedPlan.Units = _CalculateUnitsForWeekComponent(weekComponent, planImpressionsPerUnit, _SpotLengthDeliveryMultipliers);
 
                             //guaranteed audience data
                             _ProjectGuaranteedAudienceDataByWeek(plan, weekComponent, newProjectedPlan);
@@ -346,8 +343,7 @@ namespace Services.Broadcast.Entities.Campaign
             return result;
         }
 
-        private static double _CalculateUnitsForWeekComponent(WeeklyBreakdownWeek planWeek, double planImpressionsPerUnit, double planDeliveryImpressions,
-            List<WeeklyBreakdownCombination> combinations, Dictionary<int, double> spotLengthDeliveryMultipliers)
+        private static double _CalculateUnitsForWeekComponent(WeeklyBreakdownWeek planWeek, double planImpressionsPerUnit, Dictionary<int, double> spotLengthDeliveryMultipliers)
         {
             if (planWeek.WeeklyImpressions == 0)
             {
@@ -355,19 +351,13 @@ namespace Services.Broadcast.Entities.Campaign
                 return 0;
             }
             var spotLengthId = planWeek.SpotLengthId.Value;
-            var daypartCodeId = planWeek.DaypartCodeId.Value;
-            var totalCombinationCountPerWeek = combinations.Count;
-            
             var deliveryMultiplier = spotLengthDeliveryMultipliers[spotLengthId];
-            var combination = combinations.Single(x => x.DaypartCodeId == daypartCodeId && x.SpotLengthId == spotLengthId);
-            
-            var totalWeekImpressionsWeighted = (planDeliveryImpressions * combination.Weighting) / 1000;
-            var weekUnits = totalWeekImpressionsWeighted / (planImpressionsPerUnit * deliveryMultiplier);
-            
-            // divide by the week-component count and they will aggregate correctly in the end.
-            var componentWeekUnits = weekUnits / totalCombinationCountPerWeek;
 
-            return componentWeekUnits;
+            // WeeklyImpressions is from the weekly breakdown results and already weighted
+            var weekImpressions = planWeek.WeeklyImpressions / 1000;
+            var deliveryUnitsForThisWeek = weekImpressions / (planImpressionsPerUnit * deliveryMultiplier);
+
+            return deliveryUnitsForThisWeek;
         }
 
         private List<PlanProjectionForCampaignExport> _AddEmptyWeeksForPlanSpotLengthDaypartCombinations(MediaWeek mediaWeek, PlanDto plan,
