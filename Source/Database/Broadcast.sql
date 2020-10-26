@@ -416,7 +416,7 @@ BEGIN
 
 	EXEC ('INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
 	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
-	VALUES (5,15,1,''Admin'',GETDATE(),''Admin'',GETDATE())''')
+	VALUES (5,15,1,''Admin'',GETDATE(),''Admin'',GETDATE())')
 
 	EXEC ('INSERT INTO [dbo].[inventory_proprietary_daypart_program_mappings]
 	([inventory_source_id],[daypart_default_id],[inventory_proprietary_daypart_programs_id],[created_by],[created_at],[modified_by],[modified_at])
