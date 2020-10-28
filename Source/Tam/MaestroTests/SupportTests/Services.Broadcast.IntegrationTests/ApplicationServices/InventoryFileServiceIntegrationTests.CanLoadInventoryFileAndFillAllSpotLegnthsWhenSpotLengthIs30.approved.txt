@@ -1504,11 +1504,19 @@
     "SpotLengthId": 8
   },
   {
-    "SpotCost": 37.5000,
+    "SpotCost": 41.6666,
     "SpotLengthId": 9
   },
   {
     "SpotCost": 625.0000,
     "SpotLengthId": 10
+  },
+  {
+    "SpotCost": 312.5000,
+    "SpotLengthId": 11
+  },
+  {
+    "SpotCost": 208.3333,
+    "SpotLengthId": 12
   }
 ]

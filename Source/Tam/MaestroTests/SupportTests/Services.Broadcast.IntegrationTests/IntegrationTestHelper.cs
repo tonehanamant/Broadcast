@@ -87,7 +87,7 @@ namespace Services.Broadcast.IntegrationTests
         public static string GetBroadcastAppFolder()
         {
 #if DEBUG
-            return Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            return Path.GetTempPath();
 #else
             return BroadcastServiceSystemParameter.BroadcastAppFolder;
 #endif

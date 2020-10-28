@@ -164,13 +164,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 19.500,
+          "SpotCost": 21.66664500,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 325.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 162.500,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 108.333333329000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -464,13 +474,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 15.000,
+          "SpotCost": 16.66665000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 250.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 125.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 83.333333330000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -764,13 +784,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 21.000,
+          "SpotCost": 23.33331000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 350.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 175.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 116.666666662000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -1064,13 +1094,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 15.000,
+          "SpotCost": 16.66665000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 250.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 125.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 83.333333330000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -1364,13 +1404,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 10.500,
+          "SpotCost": 11.66665500,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 175.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 87.500,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 58.333333331000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -1664,13 +1714,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 12.000,
+          "SpotCost": 13.33332000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 200.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 100.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 66.666666664000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -1964,13 +2024,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 37.500,
+          "SpotCost": 41.66662500,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 625.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 312.500,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 208.333333325000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -2264,13 +2334,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 45.000,
+          "SpotCost": 49.99995000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 750.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 375.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 249.999999990000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -2564,13 +2644,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 45.000,
+          "SpotCost": 49.99995000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 750.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 375.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 249.999999990000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -2864,13 +2954,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 37.500,
+          "SpotCost": 41.66662500,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 625.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 312.500,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 208.333333325000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -3164,13 +3264,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 15.000,
+          "SpotCost": 16.66665000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 250.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 125.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 83.333333330000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -3464,13 +3574,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 15.000,
+          "SpotCost": 16.66665000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 250.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 125.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 83.333333330000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -3764,13 +3884,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 15.000,
+          "SpotCost": 16.66665000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 250.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 125.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 83.333333330000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -4064,13 +4194,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 12.000,
+          "SpotCost": 13.33332000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 200.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 100.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 66.666666664000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -4364,13 +4504,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 21.000,
+          "SpotCost": 23.33331000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 350.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 175.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 116.666666662000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -4664,13 +4814,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 21.000,
+          "SpotCost": 23.33331000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 350.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 175.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 116.666666662000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -4964,13 +5124,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 27.000,
+          "SpotCost": 29.99997000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 450.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 225.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 149.999999994000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -5264,13 +5434,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 27.000,
+          "SpotCost": 29.99997000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 450.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 225.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 149.999999994000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -5564,13 +5744,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 75.000,
+          "SpotCost": 83.33325000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 1250.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 625.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 416.666666650000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -5864,13 +6054,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 82.500,
+          "SpotCost": 91.66657500,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 1375.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 687.500,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 458.333333315000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -6164,13 +6364,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 82.500,
+          "SpotCost": 91.66657500,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 1375.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 687.500,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 458.333333315000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -6464,13 +6674,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 82.500,
+          "SpotCost": 91.66657500,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 1375.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 687.500,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 458.333333315000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -6764,13 +6984,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 82.500,
+          "SpotCost": 91.66657500,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 1375.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 687.500,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 458.333333315000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -7064,13 +7294,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 52.500,
+          "SpotCost": 58.33327500,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 875.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 437.500,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 291.666666655000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -7364,13 +7604,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 52.500,
+          "SpotCost": 58.33327500,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 875.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 437.500,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 291.666666655000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -7664,13 +7914,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 27.000,
+          "SpotCost": 29.99997000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 450.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 225.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 149.999999994000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -7964,13 +8224,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 27.000,
+          "SpotCost": 29.99997000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 450.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 225.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 149.999999994000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -8264,13 +8534,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 24.000,
+          "SpotCost": 26.66664000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 400.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 200.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 133.333333328000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -8564,13 +8844,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 52.500,
+          "SpotCost": 58.33327500,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 875.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 437.500,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 291.666666655000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -8864,13 +9154,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 52.500,
+          "SpotCost": 58.33327500,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 875.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 437.500,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 291.666666655000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -9164,13 +9464,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 45.000,
+          "SpotCost": 49.99995000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 750.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 375.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 249.999999990000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -9464,13 +9774,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 37.500,
+          "SpotCost": 41.66662500,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 625.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 312.500,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 208.333333325000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -9764,13 +10084,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 27.000,
+          "SpotCost": 29.99997000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 450.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 225.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 149.999999994000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -10064,13 +10394,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 27.000,
+          "SpotCost": 29.99997000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 450.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 225.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 149.999999994000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -10364,13 +10704,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 24.000,
+          "SpotCost": 26.66664000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 400.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 200.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 133.333333328000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -10664,13 +11014,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 15.000,
+          "SpotCost": 16.66665000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 250.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 125.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 83.333333330000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -10964,13 +11324,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 15.000,
+          "SpotCost": 16.66665000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 250.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 125.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 83.333333330000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -11264,13 +11634,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 15.000,
+          "SpotCost": 16.66665000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 250.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 125.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 83.333333330000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -11564,13 +11944,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 15.000,
+          "SpotCost": 16.66665000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 250.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 125.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 83.333333330000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -11864,13 +12254,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 12.000,
+          "SpotCost": 13.33332000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 200.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 100.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 66.666666664000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -12164,13 +12564,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 12.000,
+          "SpotCost": 13.33332000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 200.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 100.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 66.666666664000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [
@@ -12464,13 +12874,23 @@
         },
         {
           "Id": 0,
-          "SpotCost": 15.000,
+          "SpotCost": 16.66665000,
           "SpotLengthId": 9
         },
         {
           "Id": 0,
           "SpotCost": 250.00,
           "SpotLengthId": 10
+        },
+        {
+          "Id": 0,
+          "SpotCost": 125.000,
+          "SpotLengthId": 11
+        },
+        {
+          "Id": 0,
+          "SpotCost": 83.333333330000,
+          "SpotLengthId": 12
         }
       ],
       "ManifestWeeks": [

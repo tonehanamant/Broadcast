@@ -1155,6 +1155,123 @@ GO
 
 /*************************************** END - BP-1587 ****************************************************/
 
+/*************************************** START - Add Spot Lengths ****************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM spot_lengths WHERE [length] = 75)
+BEGIN 
+	/***  Add the new records ***/
+	DECLARE @NewSpotLengths TABLE 
+	(
+		[length] INT,
+		delivery_multiplier FLOAT,
+		cost_multiplier FLOAT,	
+		is_default BIT,
+		spot_length_id INT,
+		order_by INT,
+		multiplier_id INT
+	)
+
+	DECLARE @ExistingOrderBy INT,
+		@IsDefault BIT = 0
+
+	SELECT @ExistingOrderBy = MAX(order_by) FROM spot_lengths
+
+	INSERT INTO @NewSpotLengths ([length], delivery_multiplier, cost_multiplier, is_default) VALUES 
+		(75, 2.5, 2.5, @IsDefault), -- NEW
+		(5, 1.6666666666 , 1.6666666666 ,@IsDefault), -- NEW
+		(10, 0.333333,  0.333333, @IsDefault) -- UPDATE
+
+	UPDATE n SET
+		spot_length_id = s.id,
+		order_by = s.order_by
+	FROM @NewSpotLengths n
+	JOIN spot_lengths s
+		ON n.[length] = s.[length]
+
+	UPDATE @NewSpotLengths SET
+		order_by = @ExistingOrderBy + 1
+	WHERE order_by IS NULL
+	AND [length] = 75
+
+	SET @ExistingOrderBy = @ExistingOrderBy + 1
+
+	UPDATE @NewSpotLengths SET
+		order_by = @ExistingOrderBy + 1
+	WHERE order_by IS NULL
+	AND [length] = 5
+
+	UPDATE n SET
+		multiplier_id = m.id
+	FROM @NewSpotLengths n
+	JOIN spot_length_cost_multipliers m
+		ON n.spot_length_id = m.spot_length_id
+
+	UPDATE s SET
+		delivery_multiplier = n.delivery_multiplier	
+	FROM spot_lengths s
+	JOIN @NewSpotLengths n
+		ON n.spot_length_id = s.id
+
+	UPDATE m SET
+		cost_multiplier = n.cost_multiplier
+	FROM spot_length_cost_multipliers m
+	JOIN @NewSpotLengths n
+		ON n.multiplier_id = m.id
+
+	INSERT INTO spot_lengths ([length], delivery_multiplier, order_by, is_default) 
+		SELECT [length], delivery_multiplier, order_by, @IsDefault
+		FROM @NewSpotLengths
+		WHERE spot_length_id IS NULL
+
+	UPDATE n SET
+		spot_length_id = s.id
+	FROM @NewSpotLengths n
+	JOIN spot_lengths s
+		ON n.[length] = s.[length]
+	WHERE n.spot_length_id IS NULL
+
+	INSERT INTO spot_length_cost_multipliers (spot_length_id, cost_multiplier)
+		SELECT spot_length_id, cost_multiplier
+		FROM @NewSpotLengths
+		WHERE multiplier_id IS NULL
+
+	/*** Update the Open Market Inventory ***/
+	-- this part took 1m20s in CD a few days after a Prod refresh
+	-- delete what we're about to redo
+	DELETE FROM station_inventory_manifest_rates WHERE id IN 
+	(
+		SELECT r.ID
+		FROM station_inventory_manifest i
+		JOIN station_inventory_manifest_rates r
+			ON i.id = r.station_inventory_manifest_id
+		WHERE i.inventory_source_id = 1 -- open market
+		AND r.spot_length_id IN (SELECT id FROM spot_lengths WHERE [length] IN (10, 75, 5))
+	) 
+
+	INSERT INTO station_inventory_manifest_rates (station_inventory_manifest_id, spot_length_id, spot_cost)	
+		SELECT b.inventory_id, s.spot_length_id
+			, NewCost = ThirtySecondCost * cost_multiplier
+		FROM 
+		(
+			SELECT i.id AS inventory_id, r.spot_cost AS ThirtySecondCost
+			FROM station_inventory_manifest i
+			JOIN station_inventory_manifest_rates r
+				ON i.id = r.station_inventory_manifest_id
+			WHERE i.inventory_source_id = 1 -- open market
+			AND r.spot_length_id IN (SELECT id FROM spot_lengths WHERE [length] = 30)
+		) b,
+		(
+			SELECT l.id AS spot_length_id, l.[length], m.cost_multiplier
+			FROM spot_lengths l
+			JOIN spot_length_cost_multipliers m
+				ON l.id = m.spot_length_id
+			WHERE [length] IN (10, 75, 5)
+		) s
+
+END 
+
+GO
+/*************************************** END - Add Spot Lengths ****************************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
