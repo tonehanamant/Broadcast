@@ -414,6 +414,21 @@
         "Id": 1010172,
         "SpotCost": 30.0000,
         "SpotLengthId": 8
+      },
+      {
+        "Id": 22887954,
+        "SpotCost": 6.6667,
+        "SpotLengthId": 9
+      },
+      {
+        "Id": 22898604,
+        "SpotCost": 50.0000,
+        "SpotLengthId": 11
+      },
+      {
+        "Id": 22909254,
+        "SpotCost": 33.3333,
+        "SpotLengthId": 12
       }
     ],
     "ManifestWeeks": [

@@ -373,6 +373,21 @@
         "Id": 1649467,
         "SpotCost": 112.5000,
         "SpotLengthId": 8
+      },
+      {
+        "Id": 22888312,
+        "SpotCost": 25.0000,
+        "SpotLengthId": 9
+      },
+      {
+        "Id": 22898962,
+        "SpotCost": 187.5000,
+        "SpotLengthId": 11
+      },
+      {
+        "Id": 22909612,
+        "SpotCost": 125.0000,
+        "SpotLengthId": 12
       }
     ],
     "ManifestWeeks": [
@@ -796,6 +811,21 @@
         "Id": 1649475,
         "SpotCost": 112.5000,
         "SpotLengthId": 8
+      },
+      {
+        "Id": 22888313,
+        "SpotCost": 25.0000,
+        "SpotLengthId": 9
+      },
+      {
+        "Id": 22898963,
+        "SpotCost": 187.5000,
+        "SpotLengthId": 11
+      },
+      {
+        "Id": 22909613,
+        "SpotCost": 125.0000,
+        "SpotLengthId": 12
       }
     ],
     "ManifestWeeks": [
@@ -1264,6 +1294,21 @@
         "Id": 1649483,
         "SpotCost": 112.5000,
         "SpotLengthId": 8
+      },
+      {
+        "Id": 22888314,
+        "SpotCost": 25.0000,
+        "SpotLengthId": 9
+      },
+      {
+        "Id": 22898964,
+        "SpotCost": 187.5000,
+        "SpotLengthId": 11
+      },
+      {
+        "Id": 22909614,
+        "SpotCost": 125.0000,
+        "SpotLengthId": 12
       }
     ],
     "ManifestWeeks": [
@@ -1687,6 +1732,21 @@
         "Id": 1649491,
         "SpotCost": 112.5000,
         "SpotLengthId": 8
+      },
+      {
+        "Id": 22888315,
+        "SpotCost": 25.0000,
+        "SpotLengthId": 9
+      },
+      {
+        "Id": 22898965,
+        "SpotCost": 187.5000,
+        "SpotLengthId": 11
+      },
+      {
+        "Id": 22909615,
+        "SpotCost": 125.0000,
+        "SpotLengthId": 12
       }
     ],
     "ManifestWeeks": [
